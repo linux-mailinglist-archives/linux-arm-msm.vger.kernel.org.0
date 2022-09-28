@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AAE795EE2FB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 19:24:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F2515EE305
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 19:25:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229698AbiI1RYZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 13:24:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59776 "EHLO
+        id S234034AbiI1RZX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 13:25:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234278AbiI1RYG (ORCPT
+        with ESMTP id S234523AbiI1RZM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 13:24:06 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 799D585F9F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 10:23:59 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id g20so15085614ljg.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 10:23:58 -0700 (PDT)
+        Wed, 28 Sep 2022 13:25:12 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6A5332046
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 10:25:10 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id t16so11090474ljh.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 10:25:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:references
          :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
          :date;
-        bh=MwZOOjSe5EvqawjxEnJ7FpDAPkEwDQh4cjtEeodqDpo=;
-        b=ZzZ7DIVntT7aI1nDfftM+iWVT5R1Jw4M0n+AsVEFM9LxzmG638WQlH8T1wqhfT2Anl
-         Wn3Rv6N743EPx4DAQY3XundnbjSvraW2HAe47+2XHDTp3DwxozCJIsZumiRpDVVBycJa
-         hOA/V/EffgoKN/UbKrDG1kNuaqjuS0DSVNXxx4libAgLqP7bO/w4OvOq9lx13gZGJFYZ
-         pvCUROJipwFBcyVCPuF6+mnTycLw9HN1Tf2kjdGXmlbQD7/mCD739R7NyunzYuuZWj00
-         IUw3tnP7DJ6hQ3bOZY48aoOV1QbYNlC+mfA/WpIo93gay5ui0tvziG84RzG7tEPwhRTe
-         vHsA==
+        bh=LLveNPC/uBKK+oW5nMcZ4j8fgkAZZZSanakE2vr1K3U=;
+        b=DF75UBCgCORqNvJeBnIRoGdgRm1Qf/DBY/8DUJQ0/nGYJZ4dblozIgLxYWmktMl+ni
+         pMKyf2sRTaFelJzfkU0QOF/EQ+vmh+PhqJKcoIRCa6l4SAWOWOmFTzFhYM5bfV3HzRlX
+         cBNe0H6cDPXLJT50YZFnyV2I0JwSUiM18P9I5Zw9FrBSp4nQqIL1YFnTUQL6tDnGKZ8R
+         kk0fvuK8tg0h8lREj/seyMbkt9+IPY1+vO+tkgkY8J6NwLISeXsRo3ya2ZeqF3NEfKvE
+         GyBh40dPXFN5YH6AlVPSxDbfoP2h4XcO4JbWwia4Aw0Ohhmz9OHmqs8iKig4FA0VAbSr
+         XobA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:references
          :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
          :from:to:cc:subject:date;
-        bh=MwZOOjSe5EvqawjxEnJ7FpDAPkEwDQh4cjtEeodqDpo=;
-        b=TJdEHNFuWsMEgl7qKheul9XNSE0uPlnB5+iVMEbCJ5vaGYvpQ9upi2RWtIDOHRNrAo
-         uiScqiXO5cdd5cQWiUGMUGBQrzWL4ryR1w9TBHdkVAuUofcfeYpf/agk3xbcQYgFAUkR
-         d4W5piZddLF3tAJuHIoI18682NtknaIoM02LN/EegjiepUEUS0tw+trWHsFOLGym44U/
-         pfsTwyphYSrvaW50soa5IL1Pz5sCc1VXViXiF2DxOSAptcKfXD78LURgElIBbuOCwt8N
-         my5tiy8xIGy6xm6NtzVRb+l0K58fljG1F18r3RuxrMoowAEeZHOZgrH6HcXvsB8xO8b4
-         iJPw==
-X-Gm-Message-State: ACrzQf1/k42WmE37UI1IWfgHZiHdWS+u6h/OD0uUQy2rKEudKLj21BdK
-        UyjmS5nQKnnVJtY0o48eszAZ3A==
-X-Google-Smtp-Source: AMsMyM6VLlCeQHckt8SN5QNWyY/DXEQ6oobDBfMuKTAPAsCeQGpo2az/688Am9GDyV02N5Umat1Y6w==
-X-Received: by 2002:a2e:22c6:0:b0:26d:94f3:1142 with SMTP id i189-20020a2e22c6000000b0026d94f31142mr6637214lji.101.1664385837246;
-        Wed, 28 Sep 2022 10:23:57 -0700 (PDT)
+        bh=LLveNPC/uBKK+oW5nMcZ4j8fgkAZZZSanakE2vr1K3U=;
+        b=mivEUze1i6IpJpOb2myol6x0gmYq6DvAJ/9gfMJh+zYSEE+f1O+6Rw5qogEYvP37zN
+         uPSohP2+fkxndJ27GiqPJmNFawdMl5Bn0Luiq/9ZM3WvwaliGgOyTD0zcxwcvzaJrx4I
+         1G2XUeZIDZk0Qd1Ket4fsZV1pwTCcJbs6N+x6ye0+9K2htKILPM+5t9hcBHFW81ETav+
+         HGxkQB0BaBJtO84vwzxScPSYQw+zmYdOLX1Z7SxbvkJE/oKDeA9WV2/ECtVwC4Ef/nHe
+         XMDh6mrJOjHPg8euDJbYBXoVYnQWDMdsh4o/xmFVJNbhREP1PqOzrTY54hyF12HrD2Q2
+         B4GA==
+X-Gm-Message-State: ACrzQf1GNu92GRry/ECYz5I0Sm6FbYlEYp/glehpglv1TLql2q/WSLJW
+        9IVR9206Tj/3Gn41lCPxV5U+CA==
+X-Google-Smtp-Source: AMsMyM7RW774YN8ALEcVWSVPaktJMWCyv4As8SHHLXGQagPlqVLdtHEBDYK691kHI8HOg1NMASUeKw==
+X-Received: by 2002:a05:651c:a08:b0:26c:539d:440a with SMTP id k8-20020a05651c0a0800b0026c539d440amr11804380ljq.264.1664385909038;
+        Wed, 28 Sep 2022 10:25:09 -0700 (PDT)
 Received: from [127.0.0.1] ([94.25.229.4])
-        by smtp.gmail.com with ESMTPSA id a17-20020a05651c031100b0026c5b16b87dsm495445ljp.5.2022.09.28.10.23.56
+        by smtp.gmail.com with ESMTPSA id s2-20020a056512202200b0049480c8e7bcsm526986lfs.176.2022.09.28.10.25.08
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Sep 2022 10:23:56 -0700 (PDT)
-Date:   Wed, 28 Sep 2022 20:23:53 +0300
+        Wed, 28 Sep 2022 10:25:08 -0700 (PDT)
+Date:   Wed, 28 Sep 2022 20:25:05 +0300
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>
@@ -60,19 +60,18 @@ CC:     Andy Gross <agross@kernel.org>,
         Kishon Vijay Abraham I <kishon@ti.com>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_03/13=5D_phy=3A_qcom-qmp-pcie?= =?US-ASCII?Q?=3A_drop_unused_common-block_registers?=
+Subject: Re: [PATCH 02/13] phy: qcom-qmp-combo: drop unused UFS reset
 User-Agent: K-9 Mail for Android
-In-Reply-To: <20220928152822.30687-4-johan+linaro@kernel.org>
-References: <20220928152822.30687-1-johan+linaro@kernel.org> <20220928152822.30687-4-johan+linaro@kernel.org>
-Message-ID: <DF75CC1B-4455-470D-8A30-8CDE55F36537@linaro.org>
+In-Reply-To: <20220928152822.30687-3-johan+linaro@kernel.org>
+References: <20220928152822.30687-1-johan+linaro@kernel.org> <20220928152822.30687-3-johan+linaro@kernel.org>
+Message-ID: <EB4CF062-87D4-4FE6-ABCA-526E7C8F4F4A@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -81,22 +80,20 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 28 September 2022 18:28:12 GMT+03:00, Johan Hovold <johan+linaro@kernel=
+On 28 September 2022 18:28:11 GMT+03:00, Johan Hovold <johan+linaro@kernel=
 =2Eorg> wrote:
->Drop the common-block register defines that are unused since the QMP
->driver split=2E
-
-I'd mention that they were only used for msm8996 pcie phy=2E Nevertheless:
-
-Reviewed-by: Dmitry Baryshkov<dmitry=2Ebaryshkov@linaro=2Eorg>
-
+>Drop the unused UFS reset code which isn't used since the QMP driver
+>split=2E
 >
 >Signed-off-by: Johan Hovold <johan+linaro@kernel=2Eorg>
 >---
-> drivers/phy/qualcomm/phy-qcom-qmp-pcie=2Ec | 9 ---------
+> drivers/phy/qualcomm/phy-qcom-qmp-combo=2Ec | 9 ---------
 > 1 file changed, 9 deletions(-)
 >
 
+Reviewed-by: Dmitry Baryshkov<dmitry=2Ebaryshkov@linaro=2Eorg>
+
+>=20
 
 --=20
 With best wishes
