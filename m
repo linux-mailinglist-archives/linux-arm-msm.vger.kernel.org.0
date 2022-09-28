@@ -2,139 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50F185EE48F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 20:45:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6060B5EE4CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 21:10:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234070AbiI1So4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 14:44:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47436 "EHLO
+        id S233015AbiI1TKK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 15:10:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234114AbiI1Sos (ORCPT
+        with ESMTP id S229486AbiI1TKI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 14:44:48 -0400
-Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57C7911A0B;
-        Wed, 28 Sep 2022 11:44:42 -0700 (PDT)
-Date:   Wed, 28 Sep 2022 18:44:36 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1664390681; x=1664649881;
-        bh=XpZbDM+upygRTlijf/OSRl41+UlZ87vL8pT9rplz1UM=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID;
-        b=jUQ0ZD9gOj1I7lAJragr/717l3sL05BAR8Qn+ibt4SEq7gVgrajploWcAAhKC0rFs
-         u2k+rAJgLKqAOsXQeubH0K3t3zwQNuTeneIVkYnPt38W8aIae+KiF5zJdd+/z636MY
-         xRkD9uZb9ICPQV5aZ7zr8YZhhwGEXM5MK1xI8GsNEH9F15gR9ZNk+g6lZnDIIXMU/V
-         BlD0qbdXrRnWzFbQauA/1cpbEhEkCRZT1jb32AbOXoTWI4XOmtzC6u7n5d5vNajjK/
-         gt1V2HF2HDHz8lhJPo0ljT/3p9eJKzbER8t6Spsi8sL8nrt5for3A8s7217urQV3Pl
-         mDCLcxhEXzMCg==
-To:     devicetree@vger.kernel.org
-From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Cc:     Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>,
-        Julian Ribbeck <julian.ribbeck@gmx.de>,
-        Josef W Menad <JosefWMenad@protonmail.ch>,
-        Markuss Broks <markuss.broks@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Andy Gross <agross@kernel.org>,
+        Wed, 28 Sep 2022 15:10:08 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D57131100
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 12:10:04 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id g20so15379517ljg.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 12:10:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=cP+0I3mOs2L1eIjpsJ/L9c174FcHhto93z5jVh+tc0g=;
+        b=k0KtMBwhj90pHjs/axB9uH2GwSCWiySEVILQVZb+aLITWPo+4e/xOTrnXSeyfXhP8+
+         WUJpwSsQOcuDRr6LkhtREjRJmACOcjjQrZlhr4weZBBw98ujBEGcj+lSdo0NMjrMkuxE
+         HZ/oqxKHUxTjwxIXDKXmdwrwkFFfHllLa9roMLyXjF4eWU+PQVf0Sk0CyrgHM9J9qx1Q
+         nY4kSM8V5dV2LhaFiyvDSsED5X1XKIIip65LFJPfiHWE0QK5OnyIL+7G5NJzI5vzZKHf
+         /3Dtn5mAbjPjRGXd99wF3PMoxJO+/EBez63XhUA5eeBWm53U5DDhpmWPmYbYCdxGCgbU
+         M/GQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=cP+0I3mOs2L1eIjpsJ/L9c174FcHhto93z5jVh+tc0g=;
+        b=LsKxDHboabMwbScPJYkoEAfcT8aEKSius6EfMbkbyTK3FkpaoQYS5GO2Vyt6cwGHWM
+         azb7FnjGJFGRsZwkQEV3odQygg8LAmhJP7+gt3Bo7D/v1IwfTfPM6YebBg63b9D8Fw/u
+         N0EyBCncvlY5FbtvfKoLrZTxXouxsezqM9jY2Kyd5OET+wYlRlFZ6OSrFNebSLQ37IEG
+         npXOJaaSIYZdG9xgio4FMVd3dER+cYBT/GAeRUErLud6uWOSlRpIoXTIsxxGAIbLZjjy
+         5ZSLcfNTXNdRbHj05H1SwrOvmYqWySueRNGDZdko9V/wDVav3LH/rZObVgWQZTN5LkxP
+         ipmA==
+X-Gm-Message-State: ACrzQf0C2xWeIIb9a3a+QGBKYiiAyz5Wyh5015aBc2nqCdjLWIzbDr5U
+        ZOoFluwt0BtOXM0UX4LJhz97gQ==
+X-Google-Smtp-Source: AMsMyM74hGFUFf9B9nArhWD7MayY4zuDeYdL2If2toJlhwy/g3tvy4kLs1xzd1Nf/dJDpKGQGSnxxw==
+X-Received: by 2002:a2e:91ca:0:b0:26b:efd1:112c with SMTP id u10-20020a2e91ca000000b0026befd1112cmr11777214ljg.26.1664392203203;
+        Wed, 28 Sep 2022 12:10:03 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id u11-20020ac243cb000000b00497ad8e6d07sm548957lfl.222.2022.09.28.12.10.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Sep 2022 12:10:02 -0700 (PDT)
+Message-ID: <2bc50ea4-ec29-cacc-216b-1c21d2d2f0bc@linaro.org>
+Date:   Wed, 28 Sep 2022 22:10:02 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH 06/13] phy: qcom-qmp-pcie: drop bogus register update
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: [PATCH v5 4/4] arm64: dts: qcom: msm8916-samsung-j5-common: Add Hall sensor
-Message-ID: <20220928184325.186866-1-linmengbo0689@protonmail.com>
-In-Reply-To: <20220928184155.186632-1-linmengbo0689@protonmail.com>
-References: <20220928184155.186632-1-linmengbo0689@protonmail.com>
-Feedback-ID: 40467236:user:proton
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+References: <20220928152822.30687-1-johan+linaro@kernel.org>
+ <20220928152822.30687-7-johan+linaro@kernel.org>
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220928152822.30687-7-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Samsung Galaxy J5 2015 and 2016 have a Hall sensor on GPIO pin 52.
-Add GPIO Hall sensor for them.
+On 28/09/2022 18:28, Johan Hovold wrote:
+> Since commit 0d58280cf1e6 ("phy: Update PHY power control sequence") the
+> PHY is powered on before configuring the registers and only the MSM8996
+> PCIe PHY, which includes the POWER_DOWN_CONTROL register in its PCS
+> initialisation table, may possibly require a second update afterwards.
+> 
+> To make things worse, the POWER_DOWN_CONTROL register lies at a
+> different offset on more recent SoCs so that the second update, which
+> still used a hard-coded offset, would write to an unrelated register
+> (e.g. a revision-id register on SC8280XP).
+> 
+> As the MSM8996 PCIe PHY is now handled by a separate driver, simply drop
+> the bogus register update.
+> 
+> Fixes: e4d8b05ad5f9 ("phy: qcom-qmp: Use proper PWRDOWN offset for sm8150 USB") added support
 
-Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
----
- .../boot/dts/qcom/msm8916-samsung-j3.dts      |  4 +++
- .../dts/qcom/msm8916-samsung-j5-common.dtsi   | 26 +++++++++++++++++++
- 2 files changed, 30 insertions(+)
+I'm not sure about the particular fixes tag. Backporting from the split 
+driver into old qmp driver would be a complete pain.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j3.dts b/arch/arm64/b=
-oot/dts/qcom/msm8916-samsung-j3.dts
-index 35d3e9c6d012..7cfc6f8f5fcf 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-j3.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j3.dts
-@@ -19,3 +19,7 @@ tz-apps@85800000 {
- =09=09};
- =09};
- };
-+
-+&gpio_hall_sensor {
-+=09status =3D "disabled";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi b/arch=
-/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
-index 502b38d4a61e..5755b360c6ed 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
-@@ -2,6 +2,7 @@
-=20
- #include "msm8916-pm8916.dtsi"
- #include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-=20
- / {
- =09aliases {
-@@ -20,6 +21,23 @@ tz-apps@85500000 {
- =09=09};
- =09};
-=20
-+=09gpio_hall_sensor: gpio-hall-sensor {
-+=09=09compatible =3D "gpio-keys";
-+
-+=09=09pinctrl-names =3D "default";
-+=09=09pinctrl-0 =3D <&gpio_hall_sensor_default>;
-+
-+=09=09label =3D "GPIO Hall Effect Sensor";
-+
-+=09=09event-hall-sensor {
-+=09=09=09label =3D "Hall Effect Sensor";
-+=09=09=09gpios =3D <&msmgpio 52 GPIO_ACTIVE_LOW>;
-+=09=09=09linux,input-type =3D <EV_SW>;
-+=09=09=09linux,code =3D <SW_LID>;
-+=09=09=09linux,can-disable;
-+=09=09};
-+=09};
-+
- =09gpio-keys {
- =09=09compatible =3D "gpio-keys";
-=20
-@@ -192,6 +210,14 @@ l18 {
- };
-=20
- &msmgpio {
-+=09gpio_hall_sensor_default: gpio-hall-sensor-default-state {
-+=09=09pins =3D "gpio52";
-+=09=09function =3D "gpio";
-+
-+=09=09drive-strength =3D <2>;
-+=09=09bias-disable;
-+=09};
-+
- =09gpio_keys_default: gpio-keys-default-state {
- =09=09pins =3D "gpio107", "gpio109";
- =09=09function =3D "gpio";
---=20
-2.30.2
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 6 ------
+>   1 file changed, 6 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index 4146545fdf5f..eea66c24cf7e 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -1953,12 +1953,6 @@ static int qmp_pcie_power_on(struct phy *phy)
+>   	qmp_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl, cfg->pcs_misc_tbl_num);
+>   	qmp_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl_sec, cfg->pcs_misc_tbl_num_sec);
+>   
+> -	/*
+> -	 * Pull out PHY from POWER DOWN state.
+> -	 * This is active low enable signal to power-down PHY.
+> -	 */
+> -	qphy_setbits(pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL, cfg->pwrdn_ctrl);
+> -
+>   	if (cfg->has_pwrdn_delay)
+>   		usleep_range(cfg->pwrdn_delay_min, cfg->pwrdn_delay_max);
+>   
+
+-- 
+With best wishes
+Dmitry
 
