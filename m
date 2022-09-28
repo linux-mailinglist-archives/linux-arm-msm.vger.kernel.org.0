@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9ED8E5ED70D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 10:03:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67E055ED711
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 10:04:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233817AbiI1IDl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 04:03:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47316 "EHLO
+        id S233925AbiI1IEB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 04:04:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233931AbiI1IDj (ORCPT
+        with ESMTP id S233922AbiI1ID7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 04:03:39 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48E607B784
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 01:03:38 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id j16so19217150lfg.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 01:03:38 -0700 (PDT)
+        Wed, 28 Sep 2022 04:03:59 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7D0F1F0CEF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 01:03:56 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id a10so13531608ljq.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 01:03:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=XwUsEk+Rjap/yTJlcalNvg3xlLZS5J+olMeJh8xlh6g=;
-        b=Elx7DSsBZ7tXoSnr00JBxqGacZWHrIIWBypZ1Xg6ivb3plbZipywaBm6a4DHnd3Z9i
-         CngVvKmrQJnvqcB4Fj9O7Xvbossggv8CMz0NMdZxWDQTrfFOKNxUMfG9G9SD0zqmejw9
-         F8yOwoszrz3GxQxe+uKaYQaW+bMuafW/iZHzZmHF6dQSb19ONeigdoMo28kj69oSMXSY
-         XjdgvPWQIeAd8hQYEzLCBnpGlpTRXDA/NXKnEZWogPZrbj64UELWaCD/aXDrNKHwcP2s
-         bYnPNha9LnorycZJ6Lz8ddpwSBdJAInRZVshmUe9RQwTnM8WxnF/DzDBT+u7BTAbCARO
-         nxSA==
+        bh=Q+qofBWz+0h5soM+cd3c8OecdVeByx6iP98hMMfm5A4=;
+        b=HhfGtaRfPvI7Dp1xpn3/+YngA18bQcoG3SFzdfeNjwcOJHDTBtAvjGhZr28Poy0tZA
+         Rct7Xu4/1NNPcm8splB+XjEIlqJMr4sEt1NKMAHv+ZkkxPUcrMMJaZFc04F1Vk77ZfqN
+         VkUd6rWMK4kdx6sn3H/U4+3wK/A6btmUBhy4rNKFbdndOtH3mjsD4vnFrZtbpvWt+Aww
+         q1nlC/zkiLLVEFzWfCKxt+fXK/ho+JHgikNCu6m6TzcThfD+sJFQ3AZTBWCyXItNjith
+         BU2Rgce8ukThlBdz0+Rp5/tcjDs5Q+YCrNbd5wBVM7qOnPGDv7H3GJ2isq4iCOimbDF5
+         z4SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=XwUsEk+Rjap/yTJlcalNvg3xlLZS5J+olMeJh8xlh6g=;
-        b=axJe0c0hU1I+RRtJfBYPaZ6SmfFdOsHEjLL31lhWItClJhgbPG7nll1QfrQG8DwQx5
-         aEYpUKq144n8SV2uG0rkqiL5r2l91eHxH6HtN7iNVID2Y5eCLe2RxGQMxuLCIznqcjWG
-         O1HtgUXbk4NoInHnz3YOGqGlhhuGNh6EFzzvSAOVQUNSrKReiPPT6FF0HkEFfVkelTwM
-         GRPJzAQ/vLF6p8IKpysRqkatJZHssVMuIVOF3vms/YR02q/jTA5tvkIsU06HxYcGC0Pj
-         5RBrzgZ657/bgVElHq/aYJ5pUZ+OVM3lqrnh+MXBcWMv6ksqLiq4qLCvYHidtmrwznbW
-         4+7w==
-X-Gm-Message-State: ACrzQf2W3eWoxP40DTomYclXlRGva/7z11PP47yE2IhkWdU/pKyF6Dz+
-        Yjm8Y9gt4Wzkc6U6mU1L+BggNA==
-X-Google-Smtp-Source: AMsMyM5OMggdDcDt9tiAF+qSaGT2pL3sFWbXDzeUJw2Ym+6LVF4OwoWI14xxEPaI4Qwsw7yhOXGkQA==
-X-Received: by 2002:a05:6512:3502:b0:496:8e:9307 with SMTP id h2-20020a056512350200b00496008e9307mr12262052lfs.504.1664352216681;
-        Wed, 28 Sep 2022 01:03:36 -0700 (PDT)
+        bh=Q+qofBWz+0h5soM+cd3c8OecdVeByx6iP98hMMfm5A4=;
+        b=QXjUhx6KQeLM1ipGOAGbhpSfF29HY/KXkaSwbcK2mkRLmBNIBtmz4ch24xGOyjdLdT
+         3JOOpZPVIxlQHD7HhC68iyOHl9tI+/aj761RkkpXBun/x6WU2gVabk9SRe8444cTYpDY
+         nnytbT9c/l8aEWyWr/1VZ1PXBG556Rl6Rv12P1TmBcOCC5A8ILdd7HZYSt+LYvASGfPw
+         656dcO90EyigzhhKR8rjnsiJ6Q7SLMJ+1ejGAB15aIoqprMTiBsHbykoGCRGc8u5b5NA
+         MyFWvEQyTcTXhBy3q2LmLE0MoR5N4Dk4Z/qq4WeLlT5H4OYgfwbmaaXSVYAYH2JLgAZX
+         x51Q==
+X-Gm-Message-State: ACrzQf1gwobqwzd9MgJRFSUQrYKpR79YZarjjp7q1f/K7qqZPT/rpD97
+        SqYopKqoOch4uu9WPUNNOXpSYw==
+X-Google-Smtp-Source: AMsMyM43muVNeouI1iLWWmLpqW44zuLJ5rJoFJcAuiE0Ujmpx6tu8yA3J+wdDcCX2zYO9CD60p2wEw==
+X-Received: by 2002:a2e:a602:0:b0:264:5132:f59 with SMTP id v2-20020a2ea602000000b0026451320f59mr11699153ljp.0.1664352235096;
+        Wed, 28 Sep 2022 01:03:55 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id h27-20020ac2597b000000b0049f54a976e3sm406028lfp.58.2022.09.28.01.03.35
+        by smtp.gmail.com with ESMTPSA id o6-20020a05651238a600b004a100c21eaesm403424lft.97.2022.09.28.01.03.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Sep 2022 01:03:35 -0700 (PDT)
-Message-ID: <6ef4588e-5d03-953c-1ce3-14ee1a456545@linaro.org>
-Date:   Wed, 28 Sep 2022 10:03:34 +0200
+        Wed, 28 Sep 2022 01:03:54 -0700 (PDT)
+Message-ID: <44bbb266-bb31-e036-ee37-ec52c33ef0a1@linaro.org>
+Date:   Wed, 28 Sep 2022 10:03:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: ipq6018: fix NAND node name
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: cp01-c1: remove bootargs-append
 Content-Language: en-US
 To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@somainline.org,
         robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20220927201218.1264506-1-robimarko@gmail.com>
+References: <20220927201415.1265191-1-robimarko@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220927201218.1264506-1-robimarko@gmail.com>
+In-Reply-To: <20220927201415.1265191-1-robimarko@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -76,9 +76,9 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/09/2022 22:12, Robert Marko wrote:
-> Per schema it should be nand-controller@79b0000 instead of nand@79b0000.
-> Fix it to match nand-controller.yaml requirements.
+On 27/09/2022 22:14, Robert Marko wrote:
+> bootargs-append is a leftover from the vendor SDK, and does not exist
+> in the mainline kernel at all, so remove it.
 > 
 > Signed-off-by: Robert Marko <robimarko@gmail.com>
 
