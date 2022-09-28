@@ -2,75 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BFB75EE59E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 21:25:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DC3F5EE602
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 21:48:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232144AbiI1TZJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 15:25:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44756 "EHLO
+        id S231499AbiI1Tsr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 15:48:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234515AbiI1TYs (ORCPT
+        with ESMTP id S229725AbiI1Tso (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 15:24:48 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B72517AB6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 12:24:46 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id g8so11020701iob.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 12:24:46 -0700 (PDT)
+        Wed, 28 Sep 2022 15:48:44 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9255C7AC29
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 12:48:43 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id a3so21874098lfk.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 12:48:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=MO1VbxnfAHIl77onNuYWJWsBzJp4QOHXVNC5oK8Yuqk=;
-        b=VGhasSHLM0UkJ9hO2GsiyUwH4ah5kerBGf+crFciQjqxDNeERk5jKuYEJ5Yba9Go0q
-         IgtJJf3agMY6KjseD9Gyn/BnWrwXU0+KleAvQiAzyMtGEiCWn49FGbq2bFProuD3p50Q
-         aotr66sKe46RnRQvVkj4ufBvdi5IhntQhj5nw=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=XZ2C8PFfFGZso1Vlxd/6CVlqAXMIAAgQjF1Biv8y1Og=;
+        b=oCTGbIFkQYEci/Hbrd+xQ2vUzu1JTp4bVF0X114/0S8uFUFyZ3oPjwFO5UCnnYpzCf
+         aTd0405dOaHXJb7smPuSto6XHWEHX8gG8L1nIBWyRr5k6bF6IMHHgNsTklxaAHwyBHWf
+         v7Ph2+oE1wSbZ9zKE/YGhty3gzsBDLGLsVQFl/ytM3utLvNNseVAPrK2a3qfy7LQdNGy
+         wpu7QCR2VSsgMU+FVCOJyoga4qlSyxao/0OQSC6tTszGEZwHTuDDa6uHREbfBxhPRrfP
+         sRtMRKTiyv/6rUDU1GYQytaUGQoOV5ypAYLH5kb6H2bnBe2zXGGoTjJ2J3AzWvvyOUiP
+         LFIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=MO1VbxnfAHIl77onNuYWJWsBzJp4QOHXVNC5oK8Yuqk=;
-        b=k9BEr/ZlqivUw+04OjJ3MMZIGVHjg01SJpCHgpqvQaL9p+/MyrbPRDn5Ef1f6iy9ec
-         /oRRDYNdv7mt/SgP8/GRQ08cTAmkFMYaZ9p9/9QxaYjvbReNaczCv14QbNDpVwCOYH5/
-         QH1SDDndbD8WYL5wdQTjLSJzToTF1UF658yKqXy+siCyPtwZpgpHF+PuDJys21SwCQNr
-         uiqTHUHjEAzG4JBseR+n7uilWPeyuyTbqgrWXBGURF6KSz2/IdMvZuDvJSkqFV/7nJnG
-         lY2mHpCUkVxDQRXKkUdXVHz/uGVrnCxIi8QV0E1OkyNOS0KYq5YBdvquATzXS7fumxV6
-         SDYQ==
-X-Gm-Message-State: ACrzQf3VZicYJ026EFMVdKkC1Ku9m7z4X2/SxHyb+Dm2gpvMIx8g+RHq
-        Oy5j1yr5+qkgkgewO8l7mJNSpQ==
-X-Google-Smtp-Source: AMsMyM4Fl42E9H+wUQXKwFcdMnU08P+BAXhYmjSJDqL8xOBr7TJo2zF9ZAwd9zNUMHuvxLdD4XgIRg==
-X-Received: by 2002:a05:6602:2d83:b0:6a4:ea1e:3fe8 with SMTP id k3-20020a0566022d8300b006a4ea1e3fe8mr5216114iow.163.1664393085395;
-        Wed, 28 Sep 2022 12:24:45 -0700 (PDT)
-Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with UTF8SMTPSA id r2-20020a056e02108200b002f6460e4d90sm1904897ilj.85.2022.09.28.12.24.44
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=XZ2C8PFfFGZso1Vlxd/6CVlqAXMIAAgQjF1Biv8y1Og=;
+        b=XuqOzEaxhhUVBgcZcMdGZe/LPtuFERwJcYZtS0yG0X9DIE+v38Vzg3bXue+63UC32D
+         cBDR/uawhSloak3qH8BuDjZ2EXpTOPXkJaMoOVm/vsN0/TwU9gqv8Lg9j2U1F5Hr8UzX
+         yrjnbxpxd+6Ss5lnUYVnkwB5qIwkWuNWbqsamNfkPmpHbw2Bzr+AMbd5sSRZ3QkAHELy
+         yKDg26A24QSv/7lOJVfWe5Mt/A9B+s7A0vucVVtCi26x6oFIuJARt5nVR5T/r0ghe3bX
+         sIXxIkwTDpDUngLsD4dHC6B9FVx6krgHzGhUgUc4MgaG6UuBAeCmzCW6emh7xetC1Jqx
+         6iSQ==
+X-Gm-Message-State: ACrzQf0DJD2nTmm/QFpQXZtgHkP5elME5TFANC5nUAGv1VgI/gajqYVG
+        t73e0uc36pW2trnRO927oBWopg==
+X-Google-Smtp-Source: AMsMyM5XvHWk0KfJlDfwWXBgryoUNqTHEfxcLsVWW9BozcMHMnmLr5A58Hhz+IkNmELGPVFaP9fDzg==
+X-Received: by 2002:a05:6512:3f97:b0:4a1:f6b9:5198 with SMTP id x23-20020a0565123f9700b004a1f6b95198mr2368963lfa.588.1664394521910;
+        Wed, 28 Sep 2022 12:48:41 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id g19-20020ac25393000000b0049482adb3basm558108lfh.63.2022.09.28.12.48.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Sep 2022 12:24:44 -0700 (PDT)
-Date:   Wed, 28 Sep 2022 19:24:43 +0000
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7180: Configure USB as wakeup
- source
-Message-ID: <YzSfe2dY2fyXDJLl@google.com>
-References: <20220901102946.v2.1.I347ea409ee3134bd32a29e33fecd1a6ef32085a0@changeid>
- <CAD=FV=WBzVTaz1dtMswNMWhBzBBUQZTxqXff_DgiuP6WJgG8Qg@mail.gmail.com>
- <YxeZrvKvRB/ct3Ss@google.com>
- <CAD=FV=VsRi2kt9K9E+VOEGqdJFT43-aj415Gk2Q=OP64L-JAUA@mail.gmail.com>
+        Wed, 28 Sep 2022 12:48:41 -0700 (PDT)
+Message-ID: <f9d0fb60-3e62-8f55-015e-88ca2e209323@linaro.org>
+Date:   Wed, 28 Sep 2022 22:48:40 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=VsRi2kt9K9E+VOEGqdJFT43-aj415Gk2Q=OP64L-JAUA@mail.gmail.com>
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH 06/13] phy: qcom-qmp-pcie: drop bogus register update
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+References: <20220928152822.30687-1-johan+linaro@kernel.org>
+ <20220928152822.30687-7-johan+linaro@kernel.org>
+ <2bc50ea4-ec29-cacc-216b-1c21d2d2f0bc@linaro.org>
+In-Reply-To: <2bc50ea4-ec29-cacc-216b-1c21d2d2f0bc@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,74 +81,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
-
-This patch should be ready for landing, could you pick it?
-
-Thanks
-
-Matthias
-
-On Tue, Sep 06, 2022 at 12:22:42PM -0700, Doug Anderson wrote:
-> Hi,
+On 28/09/2022 22:10, Dmitry Baryshkov wrote:
+> On 28/09/2022 18:28, Johan Hovold wrote:
+>> Since commit 0d58280cf1e6 ("phy: Update PHY power control sequence") the
+>> PHY is powered on before configuring the registers and only the MSM8996
+>> PCIe PHY, which includes the POWER_DOWN_CONTROL register in its PCS
+>> initialisation table, may possibly require a second update afterwards.
+>>
+>> To make things worse, the POWER_DOWN_CONTROL register lies at a
+>> different offset on more recent SoCs so that the second update, which
+>> still used a hard-coded offset, would write to an unrelated register
+>> (e.g. a revision-id register on SC8280XP).
+>>
+>> As the MSM8996 PCIe PHY is now handled by a separate driver, simply drop
+>> the bogus register update.
+>>
+>> Fixes: e4d8b05ad5f9 ("phy: qcom-qmp: Use proper PWRDOWN offset for 
+>> sm8150 USB") added support
 > 
-> On Tue, Sep 6, 2022 at 12:04 PM Matthias Kaehlcke <mka@chromium.org> wrote:
-> >
-> > Hi Doug,
-> >
-> > On Tue, Sep 06, 2022 at 11:33:56AM -0700, Doug Anderson wrote:
-> > > Hi,
-> > >
-> > > On Thu, Sep 1, 2022 at 10:29 AM Matthias Kaehlcke <mka@chromium.org> wrote:
-> > > >
-> > > > The dwc3 USB controller of the sc7180 supports USB remote
-> > > > wakeup, configure it as a wakeup source.
-> > > >
-> > > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> > > > ---
-> > > >
-> > > > Changes in v2:
-> > > > - use qcom/arm64-for-6.1 as base, v1 was unintendedly based on a
-> > > >   downstream branch that was used for testing
-> > > >
-> > > >  arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 ++
-> > > >  1 file changed, 2 insertions(+)
-> > > >
-> > > > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > > > index e8debb0da411..af5bab27eaf3 100644
-> > > > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > > > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > > > @@ -2782,6 +2782,8 @@ usb_1: usb@a6f8800 {
-> > > >                                         <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3 0>;
-> > > >                         interconnect-names = "usb-ddr", "apps-usb";
-> > > >
-> > > > +                       wakeup-source;
-> > > > +
-> > >
-> > > The patch documenting this property has landed in commit 416b61893860
-> > > ("dt-bindings: usb: qcom,dwc3: add wakeup-source property"). I guess
-> > > the only question is whether this should be in the general sc7180
-> > > device tree file or just for trogdor.
-> >
-> > I had a similar comment on the patch for sc7280 [1], there the rationale
-> > for putting the property into the .dtsi of the SoC was that the wakeup
-> > capability is provided by the SoC.
-> >
-> > For sc8280xp.dtsi the property is also in the .dtsi of the SoC:
-> >
-> > https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/tree/arch/arm64/boot/dts/qcom/sc8280xp.dtsi?h=arm64-for-6.1#n1315
-> >
-> > > Any chance it could cause problems for devices that aren't designed like
-> > > trogdor?
-> >
-> > Probably not in a functional sense, however power consumption during system
-> > suspend is slightly higher (2-3 mW) when USB wakeup is enabled. Boards can
-> > disable wakeup by deleting the property in their .dtsi file, though it
-> > is not necessarily evident that this is an option to reduce power
-> > consumption.
-> >
-> > [1] https://patchwork.kernel.org/project/linux-arm-msm/patch/1649321104-31322-7-git-send-email-quic_c_sanm@quicinc.com/
+> I'm not sure about the particular fixes tag. Backporting from the split 
+> driver into old qmp driver would be a complete pain.
 > 
-> OK then.
+>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > 
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+After digging some more, I stumbled upon the commit 0d58280cf1e6 ("phy: 
+Update PHY power control sequence"), which puts explicit register write 
+here, telling that 'PCIe PHYs need an extra power control before 
+deasserts reset state'.
+
+I can confirm this with the register tables from downstream dtsi. E.g. 
+consider sdm845-pcie.dts, pcie0 table. The PCS_POWER_DOWN_CONTROL is the 
+register 0x804.
+
+The programmings starts with <0x804 0x1 0x0>, writing 1 to 
+PCS_POWER_DOWN_CONTROL (which if I'm not mistaken we do not do at this 
+moment). Then after writing all the serdes/tx/rx/pcs/pcs_misc tables 
+comes the write <0x804 0x3 0x0> (which you are trying to remove here).
+
+Same sequence applies to the PCIe PHY on msm8998.
+
+Most newer PHYs have the expected sequence (of writing 0x3 to 
+PCS_POWER_DOWN_CONTROL) before writing all registers.
+
+As a short summary: unless we get any additional information that 8998 
+and sdm845 tables are incorrect, I'd suggest adding a conditional here 
+(ugh) and using it here and in qmp_pcie_init() call.
+
+Vinod, Bjorn, do you have any additional info?
+
+> 
+>> ---
+>>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 6 ------
+>>   1 file changed, 6 deletions(-)
+>>
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c 
+>> b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>> index 4146545fdf5f..eea66c24cf7e 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>> @@ -1953,12 +1953,6 @@ static int qmp_pcie_power_on(struct phy *phy)
+>>       qmp_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl, 
+>> cfg->pcs_misc_tbl_num);
+>>       qmp_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl_sec, 
+>> cfg->pcs_misc_tbl_num_sec);
+>> -    /*
+>> -     * Pull out PHY from POWER DOWN state.
+>> -     * This is active low enable signal to power-down PHY.
+>> -     */
+>> -    qphy_setbits(pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL, cfg->pwrdn_ctrl);
+>> -
+>>       if (cfg->has_pwrdn_delay)
+>>           usleep_range(cfg->pwrdn_delay_min, cfg->pwrdn_delay_max);
+> 
+
+-- 
+With best wishes
+Dmitry
+
