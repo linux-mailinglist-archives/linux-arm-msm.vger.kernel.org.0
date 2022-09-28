@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 47EE95EDFFD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 17:20:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F05BF5EDFFC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 17:20:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234644AbiI1PUk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 11:20:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34490 "EHLO
+        id S234648AbiI1PUj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 11:20:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234242AbiI1PUi (ORCPT
+        with ESMTP id S234627AbiI1PUh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 11:20:38 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A2AE5754D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:20:36 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id a2so20871283lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:20:36 -0700 (PDT)
+        Wed, 28 Sep 2022 11:20:37 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1C035726E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:20:35 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id j16so20913028lfg.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:20:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=o6z/7qFA6aTihIkRQlQVaaDZnJmWKtOGTISKDfUokng=;
-        b=j25kiT8VnKGSOkq1tFxRLGMrqmV7bc5kSuNe6rED5H5ELh4c73c5GGHbrrVWjPVCh/
-         zVwCUiI+eY7ke7Dp3Y2qUiSVD4qpSZepTH4XchPvfgxh+SBxTO4yZUILl4dsEphwneCW
-         QCiX40qRwnixWarJMF2mfOlCAYzvOCNUthj1Iu1L6nCRNL95WL/DOnR498J5MlYHDi9X
-         GDl6kzN4PGLruIhogiKUFvS4XSTJ5vaGPoY6gF2a4z4xyMH3PLCsAq6YYkPDOt/Hv7/o
-         lY6nAA8RGrO+922kU2jOVka1sDDuePvKN/uHzF9Ql1/RNtGjFWs5yQN+ZqoMAr+km5hC
-         PaZw==
+        bh=N5iR35AZK7Pq7du6XK86lz6F1DzAFtqNxi6z9fgTPVE=;
+        b=pPXCdKtPXCy691JtUyWZcgY9kFLzjkUwm9LKRUJsPt2sL6Us5s97bXSoIPR/pYB2Kd
+         3WKqp2DsGQOnj3bEA4bWysKYMSU85xCMNpQk94tQuc1pmK3bO9JZWHqgqtKw4B1nxx98
+         4afALGP4IvVFrlfn0zCMm8dDUSwYwRoiFkkKnJVxK0bAgd0A0c2odF6d9yvcQeciZ2yZ
+         3L5nEiMx6Ljn9CywCKnheC5KYsY9VeW5mwo8cw6oPI5nrgKxzFPFuJ7Hne5dijXG0fXP
+         UDhOYBcTo41pjYar/TbxNtapkFtg//OivNe8/H/Q9QfhmwGC2MS9swr89XJb3wpqDwEb
+         OhhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=o6z/7qFA6aTihIkRQlQVaaDZnJmWKtOGTISKDfUokng=;
-        b=66l+h1YttFqZL1wZ2jbfbr/d6EkKggkK2kZGOzCf4OiioGEAzx0pEnXIMhK/kt9vMw
-         cKbonkx9rTT6b21qELHOVy5bu1RPHuCpZIzLZAEWzy8Xmli+c7tjm5b5t19pMNkPMRDG
-         zj2GUUiwaaSrlgz3Nh3gtBWp5z213itOXBKg19eB6mZq/1YtDYmOrrVPWA6Lk1yGgED9
-         ChR5EWmLTU8+cLcPYt/yenuBx/gOSCaFa2zL7DBmuBHWL1pDms11ywN1+uG5B83x7RQW
-         Xr0rMuBlM0TBQSzFCkx00c+6mB7Ym1dIJusjGGdK8iya3i+nsRuA7dpg1AnyxQKWUyiY
-         ogZA==
-X-Gm-Message-State: ACrzQf2g+7wmYyzYP3NHTsc5lAgPpREhAztMvr2QDUIkQTjOp36S50VF
-        CMqOlQy1w94zGZqzDqoV6q2/Eg==
-X-Google-Smtp-Source: AMsMyM5iIpHnFvI01xKPQmtcSKnVEWQ7ni5Fcd/dJO7PhSyM7oqJ3Lg4MJHgBgjoyypLJWhp1562Ew==
-X-Received: by 2002:a05:6512:1055:b0:49a:de51:5458 with SMTP id c21-20020a056512105500b0049ade515458mr13216754lfb.585.1664378432933;
-        Wed, 28 Sep 2022 08:20:32 -0700 (PDT)
+        bh=N5iR35AZK7Pq7du6XK86lz6F1DzAFtqNxi6z9fgTPVE=;
+        b=Hu2VrmVjU5xT4+qM1RjY3AnoahU4+cxNTYFbnqHey29idym3OQHkUq2weCKwGeGVkz
+         70LTuQkwTNcp7TaXt+S98mDl1X5PzW79+RkXePpPJM2N/XHuTG1oqnoQBNZFZQfbZImI
+         G6qtHNS1TkSyL8JbxbJZm+tlUWnEjyIH2TER4dDBWJDSjX7csljg3ekduJfQNgpLypjz
+         LFDi1vD8aVdZu1erSatx2/ALFz4iLEA5WumLp0XZTV1EZawzSw6GedgMVQ9lJCgwjBAw
+         luP+jK0WOm8RCHL430T1T3L9OAumh3sPycfdP8v9xkDPilMGsPVKY1w2/l/nT9YwHXoQ
+         jl5A==
+X-Gm-Message-State: ACrzQf0oKAExxjgEvtiADO+WkwXjwoWCCx/7la7P6xJk7HOX33siVqB5
+        mqDVMH6jP5k2nWsUrr++xOJ/LphDi3pdMQ==
+X-Google-Smtp-Source: AMsMyM53pVtExjzequhQZRO9qgs2HsHlqeUIc+D3ThXfCoNdLy4ZlOddGRgUIahVHdpixQ76jJlYXg==
+X-Received: by 2002:a05:6512:3b20:b0:498:d7bc:28af with SMTP id f32-20020a0565123b2000b00498d7bc28afmr13083842lfv.65.1664378434177;
+        Wed, 28 Sep 2022 08:20:34 -0700 (PDT)
 Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id v2-20020a056512048200b00497a41b3a42sm503023lfq.88.2022.09.28.08.20.31
+        by smtp.gmail.com with ESMTPSA id v2-20020a056512048200b00497a41b3a42sm503023lfq.88.2022.09.28.08.20.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 08:20:32 -0700 (PDT)
+        Wed, 28 Sep 2022 08:20:33 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -58,11 +58,10 @@ To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>
-Subject: [PATCH v2 01/11] arm64: dts: qcom: sdm845: drop unused slimbus properties
-Date:   Wed, 28 Sep 2022 17:20:17 +0200
-Message-Id: <20220928152027.489543-2-krzysztof.kozlowski@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 02/11] arm64: dts: qcom: msm8996: drop unused slimbus reg-mames
+Date:   Wed, 28 Sep 2022 17:20:18 +0200
+Message-Id: <20220928152027.489543-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220928152027.489543-1-krzysztof.kozlowski@linaro.org>
 References: <20220928152027.489543-1-krzysztof.kozlowski@linaro.org>
@@ -78,30 +77,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Drop properties from slimbus node: unneeded status and
-downstream-related qcom,apps-ch-pipes/qcom,ea-pc (not documented, not
-used).
+Drop undocumented reg-names from slimbus node - there is only one
+address range and Linux implementation does not use it.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Steev Klimaszewski <steev@kali.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 3 ---
- 1 file changed, 3 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index d761da47220d..9db1fce6b198 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -3828,9 +3828,6 @@ slim: slim@171c0000 {
- 			reg = <0 0x171c0000 0 0x2c000>;
- 			interrupts = <GIC_SPI 163 IRQ_TYPE_LEVEL_HIGH>;
- 
--			qcom,apps-ch-pipes = <0x780000>;
--			qcom,ea-pc = <0x270>;
--			status = "okay";
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index ae31393081dd..903c443a867f 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -3312,7 +3312,6 @@ slimbam: dma-controller@9184000 {
+ 		slim_msm: slim@91c0000 {
+ 			compatible = "qcom,slim-ngd-v1.5.0";
+ 			reg = <0x091c0000 0x2C000>;
+-			reg-names = "ctrl";
+ 			interrupts = <0 163 IRQ_TYPE_LEVEL_HIGH>;
  			dmas = <&slimbam 3>, <&slimbam 4>,
  				<&slimbam 5>, <&slimbam 6>;
- 			dma-names = "rx", "tx", "tx2", "rx2";
 -- 
 2.34.1
 
