@@ -2,57 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 74CFD5EDE61
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 16:04:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0364D5EDE88
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 16:14:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233386AbiI1OE1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 10:04:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46950 "EHLO
+        id S233331AbiI1OOz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 10:14:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231567AbiI1OE0 (ORCPT
+        with ESMTP id S233648AbiI1OOy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 10:04:26 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2DF07C77B;
-        Wed, 28 Sep 2022 07:04:24 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3F4C961EB0;
-        Wed, 28 Sep 2022 14:04:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F13C433D6;
-        Wed, 28 Sep 2022 14:04:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664373863;
-        bh=eGsDXMtLRzTOXZ9qGIM2z2RwI0km/E3ySdsgOm3wVCU=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=bp5QH/+e3R/xu5ro+6KrGaH/s19oKhKmoF8XDk75ck6tI8f5ak9nKFJrgekgHxDPz
-         jSsLbvD81N1OUnnOZ3hbkDQ0OwaFhwkvOBX6vVV3gDEK58zEN/Mhww0jkQZMXKjiLa
-         7RBWKqIM8gT2LB7ampbVNhbHK+8DRJurMKdsSooa+7ofdE4896u6ftgCP0Syw+LgFP
-         ROKY9TLk3tHyoSNs2nUd34nMkfzHDIFoT+XzABtHdSIlrnmoDO9oK/sCugaqmECgwX
-         +iSjcECXlAh5ZcRGINTN5eVROIraBYudoI2OaeNOAUNTY0RP/347CSTFCt9FihOgd5
-         M4zFpaduNyqag==
-Date:   Wed, 28 Sep 2022 07:04:21 -0700
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     patchwork-bot+netdevbpf@kernel.org, Alex Elder <elder@linaro.org>,
-        davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
-        mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next 00/15] net: ipa: generalized register
- definitions
-Message-ID: <20220928070421.12b7021a@kernel.org>
-In-Reply-To: <166433041840.32421.1858136173918846349.git-patchwork-notify@kernel.org>
-References: <20220926220931.3261749-1-elder@linaro.org>
-        <166433041840.32421.1858136173918846349.git-patchwork-notify@kernel.org>
+        Wed, 28 Sep 2022 10:14:54 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F6292F390
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 07:14:52 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id a3so20529206lfk.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 07:14:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=OTPmRt98xA3kHqeuFiou7zsehbKe+hz1Lsg8cgktI8o=;
+        b=eI5zqZ9oj34395/K1AVbL/BpEEe+nM2dwo69rVgoNqazUG1qU3VSaaNeSoXAxY1/RV
+         dUN/tDClhDq1K5yFurg93Lke3olHKxUihimISCxd2KiZA8tNqBGMKy8yZmLUADVvdR9W
+         +cUHxcoWH9lmcDPYNHoQrhXHqztJqdpk5hbgdzf3lCJGW2Jdkt9jF7rEX1jtBrOmIOPk
+         CbDBZpYFI/rkotKemeBGyrGmg8MjKwzQtkgi0bGzn4RbDvgtDSMMCVGcSgpFeUl7IbAL
+         UwrtnhCZK9nN0d+FcLnGpCCQyabMJQ9yuSsqa1uymZkP+SiEZ4Qjf+PVFcLZECTzXIzR
+         z7LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=OTPmRt98xA3kHqeuFiou7zsehbKe+hz1Lsg8cgktI8o=;
+        b=5QYwhIsBD7FdMUTTKNGCzr4Q05fxa8P1LHhNgqzZB5x+u2ym7tFJm5PZqziMV5UF8x
+         teGNLPU42SaWmofy6tlfMnBDyrklx+AbZZze+dcSQpofBJL5NWToj68wiLo5K7gRPCD2
+         VuOePRlkTFNcWPc7fIxq/4pM/T3gAQK46oStOxAqDHNskvIEfFNAZCPMnmEPp/KfQfp9
+         qNyDGDl2eN4dZSsdVV+MouRreoNm8s3NJX0lHCtdAiClc5W60wE8MHuAhwJs/eC1EQlO
+         POWuk0U/TKOB3e2OjiiCWKxFhcNUgEgqmwQj9Vai4rqThbEZJbjYl0Z1ZrdaRo1+MkKS
+         nWCw==
+X-Gm-Message-State: ACrzQf3amENALbg/duIsB0W6qo8NSlHDZCBylFAKsoKhHvVlTw70BzlE
+        PCW6//PPtqY1GtpCHb2MYXbQ/A==
+X-Google-Smtp-Source: AMsMyM4Rd9kNIwum5szSAw6ZmVI6A0QszE+VdTWlDnD0Ivs7fHdME9wOBCJMfDBmxqT7cAOv2/8N1w==
+X-Received: by 2002:a05:6512:3e17:b0:49d:9fd5:da61 with SMTP id i23-20020a0565123e1700b0049d9fd5da61mr14295963lfv.270.1664374490428;
+        Wed, 28 Sep 2022 07:14:50 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id t6-20020a19ad06000000b00498f32ae907sm487217lfc.95.2022.09.28.07.14.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Sep 2022 07:14:49 -0700 (PDT)
+Message-ID: <1292244e-6e7f-4402-6418-add40772f5bc@linaro.org>
+Date:   Wed, 28 Sep 2022 16:14:48 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH v2 0/4] arm64: dts: qcom: msm8916-samsung-j5: Use common
+ device tree
+Content-Language: en-US
+To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
+        devicetree@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Julian Ribbeck <julian.ribbeck@gmx.de>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>,
+        Josef W Menad <JosefWMenad@protonmail.ch>,
+        Markuss Broks <markuss.broks@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20220928110049.96047-1-linmengbo0689@protonmail.com>
+ <20220928121717.102402-1-linmengbo0689@protonmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220928121717.102402-1-linmengbo0689@protonmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,66 +87,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 28 Sep 2022 02:00:18 +0000 patchwork-bot+netdevbpf@kernel.org
-wrote:
-> Hello:
+On 28/09/2022 14:19, Lin, Meng-Bo wrote:
+> v2: Reword and resend. Split common dtsi patch.
+> Add missing suffix state in pinctrl.
 > 
-> This series was applied to netdev/net-next.git (master)
-> by Jakub Kicinski <kuba@kernel.org>:
-> 
-> On Mon, 26 Sep 2022 17:09:16 -0500 you wrote:
-> > This series is quite a bit bigger than what I normally like to send,
-> > and I apologize for that.  I would like it to get incorporated in
-> > its entirety this week if possible, and splitting up the series
-> > carries a small risk that wouldn't happen.
-> > 
-> > Each IPA register has a defined offset, and in most cases, a set
-> > of masks that define the width and position of fields within the
-> > register.  Most registers currently use the same offset for all
-> > versions of IPA.  Usually fields within registers are also the same
-> > across many versions.  Offsets and fields like this are defined
-> > using preprocessor constants.
-> > 
-> > [...]  
-> 
-> Here is the summary with links:
->   - [net-next,01/15] net: ipa: introduce IPA register IDs
->     https://git.kernel.org/netdev/net-next/c/98e2dd71a826
->   - [net-next,02/15] net: ipa: use IPA register IDs to determine offsets
->     https://git.kernel.org/netdev/net-next/c/6bfb753850d3
->   - [net-next,03/15] net: ipa: add per-version IPA register definition files
->     https://git.kernel.org/netdev/net-next/c/07f120bcf76b
->   - [net-next,04/15] net: ipa: use ipa_reg[] array for register offsets
->     https://git.kernel.org/netdev/net-next/c/82a06807453a
->   - [net-next,05/15] net: ipa: introduce ipa_reg()
->     (no matching commit)
->   - [net-next,06/15] net: ipa: introduce ipa_reg field masks
->     https://git.kernel.org/netdev/net-next/c/a5ad8956f97a
->   - [net-next,07/15] net: ipa: define COMP_CFG IPA register fields
->     https://git.kernel.org/netdev/net-next/c/12c7ea7dfd2c
->   - [net-next,08/15] net: ipa: define CLKON_CFG and ROUTE IPA register fields
->     (no matching commit)
->   - [net-next,09/15] net: ipa: define some more IPA register fields
->     (no matching commit)
->   - [net-next,10/15] net: ipa: define more IPA register fields
->     (no matching commit)
->   - [net-next,11/15] net: ipa: define even more IPA register fields
->     (no matching commit)
->   - [net-next,12/15] net: ipa: define resource group/type IPA register fields
->     (no matching commit)
->   - [net-next,13/15] net: ipa: define some IPA endpoint register fields
->     (no matching commit)
->   - [net-next,14/15] net: ipa: define more IPA endpoint register fields
->     (no matching commit)
->   - [net-next,15/15] net: ipa: define remaining IPA register fields
->     (no matching commit)
-> 
-> You are awesome, thank you!
+> The smartphones below are using the MSM8916 SoC,
+> which are released in 2015-2016:
 
-Hi Konstantin,
+Thanks for the changes. Do not attach further versions to some other
+threads, because it messes up with our inboxes. Each patchset is a
+separate thread.
 
-did anything change in the pw-bot in the last couple of weeks?
+Best regards,
+Krzysztof
 
-I didn't touch these patches and yet half got missed.
-Do you recommend we slap a Link on all patches? Currently I only 
-add it to the cover letter / merge commit.
