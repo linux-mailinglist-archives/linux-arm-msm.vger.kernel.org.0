@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CCF55EDF7D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 17:00:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A0075EDF89
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 17:00:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234693AbiI1PAg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 11:00:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37442 "EHLO
+        id S234619AbiI1PAq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 11:00:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234635AbiI1PAN (ORCPT
+        with ESMTP id S234645AbiI1PAT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 11:00:13 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEF65BF55
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:00:09 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id a8so20752235lff.13
+        Wed, 28 Sep 2022 11:00:19 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FC3D1A040
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:00:10 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id g1so3168792lfu.12
         for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:00:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=LtgKFbu4xqrBfa/UrtX2sBDc1GeFUYPgf38w51iW7Nk=;
-        b=Iv35MiLznn/D0K8UTRyRcqgGBwwGImiPAYgqYnb+ZzlkVb3BcS9NVIUNjDYi5nB3Pb
-         WK9EjEtjpWBDVSFuE/lQibiPhn74MWHfsx62bmFd+wjS7yMLouMVm1+sZ0gZ5SGOhM0a
-         WoOagqQkrTPRLTvdtTvcAUb9/tEKt1DP2taUN3ghOLOJhHTlV+2ZBvezH8TNRIwzBsEf
-         B5JrOa4tRWAdAhi7FRmSnraHrrGcfBPqEuhCFwtU9z1gZaUUxvSBSQTP+8AyVuxms1lS
-         hgMN6fhk3oQQAbMwQaLaCYk7HeyOevF4zQ4pwXgahvyGnDV/AwqKONdSNnXXsfU41kDJ
-         icmg==
+        bh=Gv+TB5vz0jii361bUqWIooViGxmGQPct0fTOn1q1P3o=;
+        b=g3r+hb6XIf8X+C3ses6PuIx0RVsHov7HhClz0ZX/jDhI2KJcEQ4MS862BV0Cw+ExXe
+         1kh196l24uxLctMgqvX/RVlaTrulILQnGEN36KFG6BIhdgD30EFQZv2MniHoXFokpw3b
+         TNTvMXUfMYwbSyqjOZqMqGfQNZUvjQBacJOx/LjG2oM3zzWZUouMGXXlaQ+q5IqY2/Xd
+         VvjclNlEeiJ5SJmya8OnisNOABYlbXpqHjxw/wc/wsAfIQIGucOgh7eBRrZ1rP+0L4Pt
+         AB891HjYfz9F/qvs5D5Pk1fR+FbbebfdSJL2R9DyxJzWxdpAYB7C/ETuQb19m7hybwMn
+         ZOyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=LtgKFbu4xqrBfa/UrtX2sBDc1GeFUYPgf38w51iW7Nk=;
-        b=SKseVA4w74m0E2PSf9CN6353aCMsqfVaiI1Jmphe/t6OQ1xzydsoGlsa3FX59Mfzke
-         /j6FUKecHgq5RZfzqoQ2wTTVGgbv3KVHrPcBq/gcNEQIdlyIalcIEe5GN3Qlom7P+Jy4
-         BhSp7/O4dhyoe0BjQl4BTfa7+HGmqFtib3p+7HdR1yZZucGWPHxlxYRyfbwKYtZf9+lZ
-         y/WgG4UnxmljfCFPFNDsFEBZX6FvIjbl4ksd0EpXRAurrnoxwM7/wMlIx+K0WW7MTgiB
-         f7LFvoecqSVX0pp+hdJzDkQZcDiOhzzBHc1GQ8Qa3aAHfRg/L4TJyOA/kPIHdoH+e+7D
-         I/QA==
-X-Gm-Message-State: ACrzQf38d7hwG1DiZBuhWwkYsWIXrZIHftCbC0Z9xy3mt4UIGqIPGakz
-        5BZ+d5TNbNKjxSOHCclwDlsWmw==
-X-Google-Smtp-Source: AMsMyM4FREszGlL2+XHKulFWgB1264kaoph75qVa8jSSu2nL5puYWiGKb2yxb9iuFhfkdBFVhDkWoA==
-X-Received: by 2002:ac2:57c9:0:b0:49c:3e64:de95 with SMTP id k9-20020ac257c9000000b0049c3e64de95mr13703590lfo.452.1664377207499;
-        Wed, 28 Sep 2022 08:00:07 -0700 (PDT)
+        bh=Gv+TB5vz0jii361bUqWIooViGxmGQPct0fTOn1q1P3o=;
+        b=8GpFByd2JlVFUHCBOHB3WgpI0s57xWEzjS0LbjZrkp3z09K13vvCWg3IuwJJ6EWUYj
+         ozfFBMjwF/JPYMypujZO+blWW/zXLjFdPsLUGdH37kOwT7bAtu/2lErUVNzF/kAhCDnk
+         ocimYGvpO/r+e2a457RYbsScDGIwIBw1Vla0BsOidRDlenAgcarjxtTB95uu/BXqX/Ly
+         +vjGvXRWyddwcckuqy2Dh5IAsPN5Rvc4cc41qi+xYFzBB4dWJVykfmnHV4qnSxk6Fshx
+         Z4u6OTIbGT/nWsySW9bFRqMwVVrE3ivQEO077fsOghvJxHVMPB4doLuBnlnQt1TIHzZD
+         ccYw==
+X-Gm-Message-State: ACrzQf09ppW0J0nuylZFJQzTWV0CQ80CF2+Vib/ewpk3DRMuHlBMdPAw
+        /Ws7nqDz5pcADT6eI+ryLEsFBw==
+X-Google-Smtp-Source: AMsMyM6+32vjuH06+MaZVY7m2dFezl2OxIKB66cvsrnIjyMoz0Vk+W7GBmOh4h6UI0C5MESuIaknMA==
+X-Received: by 2002:a05:6512:2384:b0:497:ad1c:799 with SMTP id c4-20020a056512238400b00497ad1c0799mr13258871lfv.294.1664377208230;
+        Wed, 28 Sep 2022 08:00:08 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id be36-20020a056512252400b00492c017de43sm494996lfb.127.2022.09.28.08.00.06
+        by smtp.gmail.com with ESMTPSA id be36-20020a056512252400b00492c017de43sm494996lfb.127.2022.09.28.08.00.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 28 Sep 2022 08:00:07 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -60,9 +60,9 @@ To:     Andy Gross <agross@kernel.org>,
         Taniya Das <quic_tdas@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH 10/11] ARM: dts: qcom: msm8974: add clocks and clock-names to gcc device
-Date:   Wed, 28 Sep 2022 17:59:57 +0300
-Message-Id: <20220928145958.376288-11-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 11/11] ARM: dts: qcom: msm8974: add clocks and clock-names to mmcc device
+Date:   Wed, 28 Sep 2022 17:59:58 +0300
+Message-Id: <20220928145958.376288-12-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220928145958.376288-1-dmitry.baryshkov@linaro.org>
 References: <20220928145958.376288-1-dmitry.baryshkov@linaro.org>
@@ -70,36 +70,57 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add clocks and clock-names nodes to the gcc device to bind clocks using
+Add clocks and clock-names nodes to the mmcc device to bind clocks using
 the DT links.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm/boot/dts/qcom-msm8974.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm/boot/dts/qcom-msm8974.dtsi | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
 diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index 810a163ca14f..68ef494ca87a 100644
+index 68ef494ca87a..3b7940022cdd 100644
 --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
 +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -1054,6 +1054,10 @@ gcc: clock-controller@fc400000 {
+@@ -1493,6 +1493,30 @@ mmcc: clock-controller@fd8c0000 {
  			#reset-cells = <1>;
  			#power-domain-cells = <1>;
- 			reg = <0xfc400000 0x4000>;
-+
-+			clock-names = "xo", "sleep_clk";
+ 			reg = <0xfd8c0000 0x6000>;
 +			clocks = <&xo_board>,
-+				 <&sleep_clk>;
++				 <&gcc GCC_MMSS_GPLL0_CLK_SRC>,
++				 <&gcc GPLL0_VOTE>,
++				 <&gcc GPLL1_VOTE>,
++				 <&rpmcc RPM_SMD_GFX3D_CLK_SRC>,
++				 <&dsi0_phy 1>,
++				 <&dsi0_phy 0>,
++				 <&dsi1_phy 1>,
++				 <&dsi1_phy 0>,
++				 <0>,
++				 <0>,
++				 <0>;
++			clock-names = "xo",
++				      "mmss_gpll0_vote",
++				      "gpll0_vote",
++				      "gpll1_vote",
++				      "gfx3d_clk_src",
++				      "dsi0pll",
++				      "dsi0pllbyte",
++				      "dsi1pll",
++				      "dsi1pllbyte",
++				      "hdmipll",
++				      "edp_link_clk",
++				      "edp_vco_div";
  		};
  
- 		rpm_msg_ram: memory@fc428000 {
+ 		mdss: mdss@fd900000 {
 -- 
 2.35.1
 
