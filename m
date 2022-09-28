@@ -2,310 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B33F45EE01A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 17:21:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A07EE5EE034
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 17:24:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234774AbiI1PVd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 11:21:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34604 "EHLO
+        id S234320AbiI1PYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 11:24:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234114AbiI1PVJ (ORCPT
+        with ESMTP id S233341AbiI1PYE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 11:21:09 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1FEF5BC3D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:20:46 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id b6so14689275ljr.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:20:46 -0700 (PDT)
+        Wed, 28 Sep 2022 11:24:04 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5408FB5E7F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:22:48 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id e10-20020a05600c4e4a00b003b4eff4ab2cso1478721wmq.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:22:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=Ap86oaX2me6LTIfHjN4MG9KcHVBwjDqudIZuJpAwdCI=;
-        b=r0nknO9O4RLaj4hC2Y+XYYFZgnRhgnHvRdHYbBHhBMYvEHW3c7GIcYsIDH7b3XoE+O
-         9eWnl61JVTAwK0VMgQPw9TXIgU8+w0Vt0qzMEIfPLLkZd7BkW8LOPmr+C5KpwuXknb7t
-         tdws40dJtduiv7OCW8mACe0Mv/6HkuEvV4pcpw4kQcDofryBg8ND4gAIx3tXkgCgnz7C
-         y4o4uIFCQgomvp6Ex2vx2kJ0fVL4BxY+ofuP+BGJBPJ0KmR7wVDJ1XU3PeYdUonwKrlK
-         fKn4pIq1YdssWhJ0g4+jwFUr1wEGMEGotptptvY5hFMIA2N8HSPt8tJ7/sy6xsO7eXLc
-         Kbcw==
+        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
+         :references:cc:to:content-language:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date;
+        bh=lWeGi0gBGrGKUrvIMJh2ce84Y/XoNjjWvMsSIb73vv0=;
+        b=F3QqFGhiuBtanG4NhqX19aMF8z8mUPtzQixe48RgjnTcpwS6bv5sjLGjWqxfELD1FP
+         gQ+rXEm3uA7tFMDN2HTOUluMJ/1voMiCNgUoZ2p6qBMHMEyAiopDLBMm8BTvz14CzJ1M
+         3bqPi78NyRvEodgXb3YmGIR45fHjlCu3zywETU84PQ+ihDAZ2rL4aFGLHqSQe82fe1+A
+         eQo/5+sj4zRKKDU2RA9PSmg45Rpvrs+WtVVnQcB14NR/AsydJygNNs0rLOF9Ki0HawD3
+         y50rmDFvKTmp2gSCoqsQaAAn/1SHiXhnfzGkXRd5Q/s/R3Q0yucSaLTKu+d9F8LtjEEo
+         syIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=Ap86oaX2me6LTIfHjN4MG9KcHVBwjDqudIZuJpAwdCI=;
-        b=3Xtmxn1aPbfYYFpnI6fhPGPMSTLkcoZUI8be/5DxEGJvpxuUfkLgagzj/lRWprzpPf
-         zFLC68Xiy6WR2vZ1FTaNjwtJLZcLAD1JdtCDPb7LAr3nUEXFZ0JoByhGPCcfje3LWeHn
-         J/2226RjJFvUjUjXDSe3RIYEE+fFF5VnSnhjeD5HL8jZlipTU9IBTVdJeM634vq9R11z
-         A89y5duEbYwqrAMsxpz/9Ia9r5Iq05ervZIUmiTRhhXEj2vh3VkK1wNHZbzKVR7Qg2jM
-         ph0fWli9r8u2+szVCwgnwst4tJf8QZKDlV9IzcndspclSp57py/OWv+B7iYi74UdHNCv
-         EtZQ==
-X-Gm-Message-State: ACrzQf0snUE3Kx/n4N8gSY9W5BTCXxJJvnv4RicDgAlGi4MO8Pl04aiM
-        RZQRyIPMth82yaAf7OEqw89S7g==
-X-Google-Smtp-Source: AMsMyM7kw7pi094V6o9qurMVZ0dvLd2F1wG+kqjI0ZCAc2o0mrbyTly60r9u6BoNnfLe2Ce7XGhA/Q==
-X-Received: by 2002:a2e:ba08:0:b0:26c:14d6:9b97 with SMTP id p8-20020a2eba08000000b0026c14d69b97mr11872009lja.222.1664378446051;
-        Wed, 28 Sep 2022 08:20:46 -0700 (PDT)
-Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id v2-20020a056512048200b00497a41b3a42sm503023lfq.88.2022.09.28.08.20.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 08:20:45 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
+         :references:cc:to:content-language:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date;
+        bh=lWeGi0gBGrGKUrvIMJh2ce84Y/XoNjjWvMsSIb73vv0=;
+        b=Z5YdKgMoh9wTSPpa4HgySgWDHSHI8TvC5Zeytl890u2L02b7cnAXxlLrqFoKXWexRo
+         YFoVI1meN92B9O1zDH/BejVjSv4VOvCPYaYbqdQZkjxI9KAfArIt+e8bKKdakunpkkdp
+         WA5nLPDpstk0qwE+BrR90IFvWq84Jh6MGIK11Im1zZoXjky3Pt+T4cy0yiBROw48w0Cr
+         HuMg6nHv15RYO3Rj9bEsi9pUD6b2rM223jFTasuDU5gK9YOvF63cyTnNUkYrpA58nM/G
+         liT9V2Vtr0B0L6KMO+wWUclKvzzfFv6cVsGe51aSm3rMP93z8xKgBoHFtNKNHcF1YR7+
+         AFBg==
+X-Gm-Message-State: ACrzQf2bomDD3ArkPlYPcYrY9r4FazCpVmjbJn9iUUM29ovH48uTN0tz
+        yn7BmBVucKodGAe0NUD+dKQesQ==
+X-Google-Smtp-Source: AMsMyM7eApu/zDXm34C5IhYJCj/BGmPCbLgryIq2I36PR8WzGV4eGAS4hQK/Na1Zn5JOm9ZE0HdLsA==
+X-Received: by 2002:a05:600c:4211:b0:3b4:6334:9940 with SMTP id x17-20020a05600c421100b003b463349940mr7464641wmh.166.1664378566363;
+        Wed, 28 Sep 2022 08:22:46 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:11d4:7c71:accf:6521? ([2a01:e0a:982:cbb0:11d4:7c71:accf:6521])
+        by smtp.gmail.com with ESMTPSA id c3-20020a05600c0a4300b003b4fdbb6319sm2529820wmq.21.2022.09.28.08.22.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Sep 2022 08:22:45 -0700 (PDT)
+Message-ID: <909dacda-c44f-638e-77e2-6f1bb3adda56@linaro.org>
+Date:   Wed, 28 Sep 2022 17:22:45 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 04/11] clk: qcom: gcc-msm8974: move clock parent tables
+ down
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh@kernel.org>
-Subject: [PATCH v2 11/11] dt-bindings: slimbus: qcom,slim-ngd: convert to DT schema
-Date:   Wed, 28 Sep 2022 17:20:27 +0200
-Message-Id: <20220928152027.489543-12-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220928152027.489543-1-krzysztof.kozlowski@linaro.org>
-References: <20220928152027.489543-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20220928145958.376288-1-dmitry.baryshkov@linaro.org>
+ <20220928145958.376288-5-dmitry.baryshkov@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20220928145958.376288-5-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the Qualcomm SoC SLIMBus Non Generic Device (NGD) controller
-bindings to DT Schema.
+On 28/09/2022 16:59, Dmitry Baryshkov wrote:
+> Move clock parent tables down, after the PLL declrataions, so that we
+typo:                                        s/declrataions/declarations/
+> can use pll hw clock fields in the next commit.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/clk/qcom/gcc-msm8974.c | 98 +++++++++++++++++-----------------
+>   1 file changed, 49 insertions(+), 49 deletions(-)
 
-During conversion add iommus already present in DTS and extend the
-example based on SDM845.
+<snip
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
----
- .../bindings/slimbus/qcom,slim-ngd.yaml       | 120 ++++++++++++++++++
- .../bindings/slimbus/slim-ngd-qcom-ctrl.txt   |  82 ------------
- 2 files changed, 120 insertions(+), 82 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/slimbus/qcom,slim-ngd.yaml
- delete mode 100644 Documentation/devicetree/bindings/slimbus/slim-ngd-qcom-ctrl.txt
 
-diff --git a/Documentation/devicetree/bindings/slimbus/qcom,slim-ngd.yaml b/Documentation/devicetree/bindings/slimbus/qcom,slim-ngd.yaml
-new file mode 100644
-index 000000000000..abf61c15246e
---- /dev/null
-+++ b/Documentation/devicetree/bindings/slimbus/qcom,slim-ngd.yaml
-@@ -0,0 +1,120 @@
-+# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/slimbus/qcom,slim-ngd.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SoC SLIMBus Non Generic Device (NGD) Controller
-+
-+maintainers:
-+  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-+  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+
-+description:
-+  SLIMBus NGD controller is a light-weight driver responsible for communicating
-+  with SLIMBus slaves directly over the bus using messaging interface and
-+  communicating with master component residing on ADSP for bandwidth and
-+  data-channel management
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,slim-ngd-v1.5.0        # for MSM8996
-+      - qcom,slim-ngd-v2.1.0        # for SDM845
-+
-+  reg:
-+    maxItems: 1
-+
-+  "#address-cells":
-+    const: 1
-+
-+  "#size-cells":
-+    const: 0
-+
-+  dmas:
-+    maxItems: 2
-+
-+  dma-names:
-+    items:
-+      - const: rx
-+      - const: tx
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  iommus:
-+    maxItems: 1
-+
-+patternProperties:
-+  "^slim@[0-9a-f]+$":
-+    type: object
-+    $ref: slimbus.yaml#
-+    description:
-+      Each subnode represents an instance of NGD
-+
-+    properties:
-+      reg:
-+        maxItems: 1
-+
-+    unevaluatedProperties: false
-+
-+required:
-+  - compatible
-+  - reg
-+  - "#address-cells"
-+  - "#size-cells"
-+  - dmas
-+  - dma-names
-+  - interrupts
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/gpio/gpio.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+    slim-ngd@171c0000 {
-+        compatible = "qcom,slim-ngd-v2.1.0";
-+        reg = <0x171c0000 0x2c000>;
-+        interrupts = <GIC_SPI 163 IRQ_TYPE_LEVEL_HIGH>;
-+
-+        dmas = <&slimbam 3>, <&slimbam 4>;
-+        dma-names = "rx", "tx";
-+        iommus = <&apps_smmu 0x1806 0x0>;
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+
-+        slim@1 {
-+            reg = <1>;
-+            #address-cells = <2>;
-+            #size-cells = <0>;
-+
-+            codec@1,0 {
-+                compatible = "slim217,250";
-+                reg = <1 0>;
-+                slim-ifc-dev = <&wcd9340_ifd>;
-+
-+                #sound-dai-cells = <1>;
-+
-+                interrupts-extended = <&tlmm 54 IRQ_TYPE_LEVEL_HIGH>;
-+                interrupt-controller;
-+                #interrupt-cells = <1>;
-+
-+                #clock-cells = <0>;
-+                clock-frequency = <9600000>;
-+                clock-output-names = "mclk";
-+                qcom,micbias1-microvolt = <1800000>;
-+                qcom,micbias2-microvolt = <1800000>;
-+                qcom,micbias3-microvolt = <1800000>;
-+                qcom,micbias4-microvolt = <1800000>;
-+
-+                #address-cells = <1>;
-+                #size-cells = <1>;
-+
-+                reset-gpios = <&tlmm 64 GPIO_ACTIVE_HIGH>;
-+
-+                /* Rest of the WCD9340 codec */
-+            };
-+        };
-+    };
-diff --git a/Documentation/devicetree/bindings/slimbus/slim-ngd-qcom-ctrl.txt b/Documentation/devicetree/bindings/slimbus/slim-ngd-qcom-ctrl.txt
-deleted file mode 100644
-index 7c3d9eb6af5d..000000000000
---- a/Documentation/devicetree/bindings/slimbus/slim-ngd-qcom-ctrl.txt
-+++ /dev/null
-@@ -1,82 +0,0 @@
--Qualcomm SLIMBus Non Generic Device (NGD) Controller binding
--
--SLIMBus NGD controller is a light-weight driver responsible for communicating
--with SLIMBus slaves directly over the bus using messaging interface and
--communicating with master component residing on ADSP for bandwidth and
--data-channel management
--
--- compatible:
--	Usage: required
--	Value type: <stringlist>
--	Definition: must be "qcom,slim-ngd-v<MAJOR>.<MINOR>.<STEP>"
--	must be one of the following.
--	"qcom,slim-ngd-v1.5.0" for MSM8996
--	"qcom,slim-ngd-v2.1.0" for SDM845
--
--- reg:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: must specify the base address and size of the controller
--		    register space.
--- dmas
--	Usage: required
--	Value type: <array of phandles>
--	Definition: List of rx and tx dma channels
--
--- dma-names
--	Usage: required
--	Value type: <stringlist>
--	Definition: must be "rx" and "tx".
--
--- interrupts:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: must list controller IRQ.
--
--#address-cells
--	Usage: required
--	Value type: <u32>
--	Definition: Should be 1, reflecting the instance id of ngd.
--
--#size-cells
--	Usage: required
--	Value type: <u32>
--	Definition: Should be 0
--
--= NGD Devices
--Each subnode represents an instance of NGD, must contain the following
--properties:
--
--- reg:
--	Usage: required
--	Value type: <u32>
--	Definition: Should be instance id of ngd.
--
--#address-cells
--	Usage: required
--	Refer to slimbus/bus.txt for details of the common SLIMBus bindings.
--
--#size-cells
--	Usage: required
--	Refer to slimbus/bus.txt for details of the common SLIMBus bindings.
--
--= EXAMPLE
--
--slim@91c0000 {
--	compatible = "qcom,slim-ngd-v1.5.0";
--	reg = <0x91c0000 0x2c000>;
--	interrupts = <0 163 0>;
--	dmas =	<&slimbam 3>, <&slimbam 4>;
--	dma-names = "rx", "tx";
--	#address-cells = <1>;
--	#size-cells = <0>;
--	ngd@1 {
--		reg = <1>;
--		#address-cells = <1>;
--		#size-cells = <1>;
--		codec@1 {
--			compatible = "slim217,1a0";
--			reg  = <1 0>;
--		};
--	};
--};
--- 
-2.34.1
+> +static struct clk_pll gpll4 = {
+> +	.l_reg = 0x1dc4,
+> +	.m_reg = 0x1dc8,
+> +	.n_reg = 0x1dcc,
+> +	.config_reg = 0x1dd4,
+> +	.mode_reg = 0x1dc0,
+> +	.status_reg = 0x1ddc,
+> +	.status_bit = 17,
+> +	.clkr.hw.init = &(struct clk_init_data){
+> +		.name = "gpll4",
+> +		.parent_names = (const char *[]){ "xo" },
+> +		.num_parents = 1,
+> +		.ops = &clk_pll_ops,
+> +	},
+> +};
+> +
+> +static struct clk_regmap gpll4_vote = {
+> +	.enable_reg = 0x1480,
+> +	.enable_mask = BIT(4),
+> +	.hw.init = &(struct clk_init_data){
+> +		.name = "gpll4_vote",
+> +		.parent_names = (const char *[]){ "gpll4" },
+> +		.num_parents = 1,
+> +		.ops = &clk_pll_vote_ops,
+> +	},
+> +};
+> +
 
+<snip>
+
+>   
+> -static struct clk_pll gpll4 = {
+> -	.l_reg = 0x1dc4,
+> -	.m_reg = 0x1dc8,
+> -	.n_reg = 0x1dcc,
+> -	.config_reg = 0x1dd4,
+> -	.mode_reg = 0x1dc0,
+> -	.status_reg = 0x1ddc,
+> -	.status_bit = 17,
+> -	.clkr.hw.init = &(struct clk_init_data){
+> -		.name = "gpll4",
+> -		.parent_names = (const char *[]){ "xo" },
+> -		.num_parents = 1,
+> -		.ops = &clk_pll_ops,
+> -	},
+> -};
+> -
+> -static struct clk_regmap gpll4_vote = {
+> -	.enable_reg = 0x1480,
+> -	.enable_mask = BIT(4),
+> -	.hw.init = &(struct clk_init_data){
+> -		.name = "gpll4_vote",
+> -		.parent_names = (const char *[]){ "gpll4" },
+> -		.num_parents = 1,
+> -		.ops = &clk_pll_vote_ops,
+> -	},
+> -};
+
+<snip>
+
+nitpick: you're also moving pll4 up, it's worth adding it to commit message
+
+Neil
