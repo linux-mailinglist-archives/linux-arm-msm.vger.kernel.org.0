@@ -2,187 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 35EFC5ED9FB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 12:21:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E789B5EDA2A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 12:35:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233775AbiI1KVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 06:21:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45972 "EHLO
+        id S233634AbiI1Kfa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 06:35:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233518AbiI1KVE (ORCPT
+        with ESMTP id S233693AbiI1KfN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 06:21:04 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 165F94DF2C;
-        Wed, 28 Sep 2022 03:20:40 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 04FD0CE1DF8;
-        Wed, 28 Sep 2022 10:20:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B28C433D6;
-        Wed, 28 Sep 2022 10:20:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664360437;
-        bh=02Nc3lwRfKOpCLR9xKRHRLQevx+nIiW23nOTuHf7wqY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qmnDPSIDKdt96Vmr6EE3B9hUMl2je3ULkA5piFlmofsRsD8siKYVGGGS+NvtgfZws
-         7lMyNzm2DQPt2M3JB03vqxLpoWpTx8GPqdgHNAMH7sjgjTRuowPBCP4Ov0KhsMDUuf
-         wxHwUIH/TtD5AIet5Aa+v5HFqthb9r6ckbPpnfERZR2+Nkw7aB0unWCPnJWg2nfBrO
-         WzthXKvf96t1gBn0v3rO0D2YD8teV0wevj51slwELW7nIcWgRiw2UEGa8ki/dV98ST
-         yJ8h/h4xgGT7oUrIbI0oH0KZLtplMk6W3FM401Z8xB8WBLFEA6i9VZ08/0gpcPGky+
-         dBDk8cyxNMTbg==
-Date:   Wed, 28 Sep 2022 11:20:30 +0100
-From:   Lee Jones <lee@kernel.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Lee Jones <lee.jones@linaro.org>,
-        Satya Priya Kakitapalli <quic_c_skakit@quicinc.com>,
-        Mark Brown <broonie@kernel.org>,
+        Wed, 28 Sep 2022 06:35:13 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ADA82034A;
+        Wed, 28 Sep 2022 03:35:12 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id r6so1798487wru.8;
+        Wed, 28 Sep 2022 03:35:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=2EKFXqMd/jHYrZWo2upnC6kyYWp51DY/ODXj5PBookc=;
+        b=qj7fqkQnHaGTVP03hnkdR8iYZaPBDLAzvlIlw7/7TeIj5tNlUhKxU5A6vnOVbwHiGp
+         8Op7PLXHtJoNqzSltyuYp/DNOqo/fJO1DaSgG2LFP0M8VsKU2RQLOiTsXFlwswO6MSLj
+         NRk+I+QC8lyJXJ5p5t8TVb7vqQtTKUhy+Lea9bE1fyuAmrtyxdcpDuTjT6socBUb0Ocl
+         8ZjptnrX2T282n1yV+Nv7l/Hkl9r4YV4MEA0VUFNqN3nZHaG0OmvOFGLde4lJX9bdE74
+         3m4I30Fe9dBDzYVWPTpF2D8hoCtgRrvHTbE5ZK4Plkw6x+H4sgopZJok2ZJ+oHoPGj3H
+         78yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=2EKFXqMd/jHYrZWo2upnC6kyYWp51DY/ODXj5PBookc=;
+        b=i8ck0eAkxqt16mPMG7t7xX3YBnUF/B9iuZweA1OJ46ywQMl48R6sfwX8Cd+Sd5/ej+
+         VGkrq/8+9VJ8yY1eO9IN5QR1THLyMyaLiy33LLhx6XbSmuLcuC9x4BiwkcRogTctrEC8
+         OdP156wRI8Ds47jqIebs4po02E8vloiDAv4Q7Y83uY7DkahHbXqkNu8CJJ2W/XPFraWJ
+         KAZS2V5L59O+9RJnj+5FfSLSfMM1bWrXAeXKDv4GJJekiLT0ORkUv6cFNo1GNs+d4JmX
+         0514CwqNu2wFSwLtcr/6qsPPoRnuhemmuwLQ5fYHnpopLu/TkL9M8NeujrH57oEYkXKc
+         M+ZA==
+X-Gm-Message-State: ACrzQf3GeBnU1QFMoEFA0mnbrldRYkAtaOjNVFnlki/uuNS9nRMatsnR
+        d58YVUy45iMzabL+8DhDJyMQJZcg+cs=
+X-Google-Smtp-Source: AMsMyM7jFkYdRoHbkp2MTZkCad9Y6lvBQOInAB5gp1QwQp4ptKebVAZUdSwuEHGb0ysAUvERbP0Gpg==
+X-Received: by 2002:adf:f743:0:b0:22c:c939:bcc with SMTP id z3-20020adff743000000b0022cc9390bccmr1307843wrp.95.1664361310531;
+        Wed, 28 Sep 2022 03:35:10 -0700 (PDT)
+Received: from localhost.localdomain ([46.216.9.29])
+        by smtp.googlemail.com with ESMTPSA id x4-20020adfdcc4000000b0022b11a27e39sm3974476wrm.1.2022.09.28.03.35.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Sep 2022 03:35:10 -0700 (PDT)
+From:   Dzmitry Sankouski <dsankouski@gmail.com>
+To:     linux-kernel@vger.kernel.org
+Cc:     Dzmitry Sankouski <dsankouski@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com,
-        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com
-Subject: Re: [PATCH V15 6/9] mfd: pm8008: Use i2c_new_dummy_device() API
-Message-ID: <YzQf7hf15vvLeGse@google.com>
-References: <Yr66ZZqEnBApHYMA@google.com>
- <0481d3cc-4bb9-4969-0232-76ba57ff260d@quicinc.com>
- <YsLhxx+L3+GJDRyO@google.com>
- <bcc5f059-b991-296a-bba6-9cb1236097f2@quicinc.com>
- <Ys1tYAO39LKzEAOE@google.com>
- <dc737abb-041b-491a-14f1-a584f9e64a3d@quicinc.com>
- <CAE-0n528QaTtZFp=WAaHShegFRpKVN_67jQfUJTtsRPr6s--zA@mail.gmail.com>
- <52039cd1-4390-7abb-d296-0eb7ac0c3b15@quicinc.com>
- <Yuz2O+lZ5W7RviuA@google.com>
- <CAE-0n507SLeYB7XVzGFk=RO6YjOPoGpux+_N2AyrmL354mQJ-g@mail.gmail.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH v2 0/2] add device Xiaomi Mi 6 sagit and board binding
+Date:   Wed, 28 Sep 2022 13:33:17 +0300
+Message-Id: <20220928103319.621698-1-dsankouski@gmail.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAE-0n507SLeYB7XVzGFk=RO6YjOPoGpux+_N2AyrmL354mQJ-g@mail.gmail.com>
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 08 Aug 2022, Stephen Boyd wrote:
+Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+To: linux-kernel@vger.kernel.org
+CC: Andy Gross <agross@kernel.org> (maintainer:ARM/QUALCOMM SUPPORT)
+CC: Bjorn Andersson <bjorn.andersson@linaro.org> (maintainer:ARM/QUALCOMM SUPPORT)
+CC: Konrad Dybcio <konrad.dybcio@somainline.org> (reviewer:ARM/QUALCOMM SUPPORT)
+CC: Rob Herring <robh+dt@kernel.org> (maintainer:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS)
+CC: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org> (maintainer:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS)
+CC: linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT)
+CC: devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS)
 
-> Quoting Lee Jones (2022-08-05 03:51:39)
-> > On Tue, 02 Aug 2022, Satya Priya Kakitapalli (Temp) wrote:
-> >
-> > >
-> > > On 7/27/2022 6:49 AM, Stephen Boyd wrote:
-> > > > Quoting Satya Priya Kakitapalli (Temp) (2022-07-21 23:31:16)
-> > > > >               regulator-name = "pm8008_l6";
-> > > > >           };
-> > > > >
-> > > > >           pm8008_l7: ldo7@4600 {
-> > > > >               reg = <0x4600>;
-> > > > >               regulator-name = "pm8008_l7";
-> > > > >           };
-> > > > >       };
-> > > > > };
-> > > > >
-> > > > >
-> > > > > Stephen/Mark, Please do let me know if you are OK with this design.
-> > > > >
-> > > > I was happy with the previous version of the DT node. That had one node
-> > > > for the "pm8008 chip", which is important because it really is one
-> > > > package. Why isn't that possible to implement and also register i2c
-> > > > devices on the i2c bus for the second address?
-> >
-> > If devices have different addresses, they should have their own nodes, no?
-> 
-> There are nodes for the devices at different addresses in the design we
-> had settled on earlier.
-> 
->         pm8008: pmic@8 {
->                 compatible = "qcom,pm8008";
->                 reg = <0x8>;
->                 #address-cells = <2>;
->                 #size-cells = <0>;
->                 #interrupt-cells = <2>;
-> 
->                 pm8008_l1: ldo1@1,4000 {
->                         compatible = "qcom,pm8008-regulator";
->                         reg = <0x1 0x4000>;
->                         regulator-name = "pm8008_ldo1";
->                 };
-> 
-> 		...
-> 
-> 	};
-> 
-> pmic@8 is the i2c device at i2c address 8. ldo1@1,4000 is the i2c device
-> at address 9 (8 + 1) with control for ldo1 at register offset 0x4000.
-> 
-> I think your concern is more about the fact that the regulator sub-nodes
-> are platform device drivers instead of i2c device drivers. I'm not an
-> i2c expert but from what I can tell we only describe one i2c address in
-> DT and then do something like this to describe the other i2c addresses
-> when one physical chip responds to multiple addresses on the i2c bus.
-> See i2c_new_dummy_device() and i2c_new_ancillary_device() kerneldoc for
-> slightly more background.
-> 
-> It may need some modifications to the i2c core to make the regulator
-> nodes into i2c devices. I suspect the qcom,pm8008 i2c driver needs to
-> look at the 'reg' property and translate that to the parent node's reg
-> property (8) plus the first cell (1) to determine the i2c device's final
-> i2c address. Then the i2c core needs to register i2c devices that are
-> bound to the lifetime of the "primary" i2c device (pmic@8). The driver
-> for the regulator can parse the second cell of the reg property to
-> determine the register offset within that i2c address to use to control
-> the regulator. That would make it possible to create an i2c device for
-> each regulator node, but I don't think that is correct because the
-> second reg property isn't an i2c address, it's a register offset inside
-> the i2c address.
-> 
-> It sort of looks like we need to use i2c_new_ancillary_device() here. IF
-> we did that the DT would look like this:
-> 
->         pm8008: pmic@8 {
->                 compatible = "qcom,pm8008";
->                 reg = <0x8>, <0x9>;
-> 		reg-names = "core", "regulators";
->                 #address-cells = <2>;
->                 #size-cells = <0>;
->                 #interrupt-cells = <2>;
-> 
->                 pm8008_l1: ldo1@1,4000 {
->                         compatible = "qcom,pm8008-regulator";
->                         reg = <0x1 0x4000>;
->                         regulator-name = "pm8008_ldo1";
->                 };
-> 
-> 		...
-> 
-> 	};
-> 
-> And a dummy i2c device would be created for i2c address 0x9 bound to the
-> dummy i2c driver when we called i2c_new_ancillary_device() with
-> "regulators" for the name. The binding of the dummy driver is preventing
-> us from binding another i2c driver to the i2c address. Why can't we call
-> i2c_new_client_device() but avoid binding a dummy driver to it like
-> i2c_new_ancillary_device() does? If that can be done, then the single
-> i2c device at 0x9 can be a pm8008-regulators (plural) device that probes
-> a single i2c driver that parses the subnodes looking for regulator
-> nodes.
-> 
-> Note: There is really one i2c device at address 0x9, that corresponds to
-> the regulators, but in DT we need to have one node per regulator so we
-> can configure constraints.
+Dzmitry Sankouski (2):
+  arm64: dts: qcom: sagit: add initial device tree for sagit
+  dt-bindings: arm: add xiaomi,sagit board based on msm8998 chip
 
-Wouldn't it make more sense to simply separate the instantiation of
-the 2 I2C devices?  Similar to what you suggested [0] in v9.  That way
-they can handle their own resources and we can avoid all of the I2C
-dummy / shared Regmap passing faff.
-
-[0] https://lore.kernel.org/all/CAE-0n53G-atsuwqcgNvi3nvWyiO3P=pSj5zDUMYj0ELVYJE54Q@mail.gmail.com/
+ .../devicetree/bindings/arm/qcom.yaml         |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/msm8998-xiaomi-sagit.dts    | 682 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/pm8998.dtsi          |   6 +
+ 4 files changed, 691 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts
 
 -- 
-Lee Jones [李琼斯]
+2.30.2
+
