@@ -2,170 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FDF85EE272
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 19:00:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E1905EE2A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 19:11:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234179AbiI1RAi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 13:00:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35644 "EHLO
+        id S234354AbiI1RLE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 13:11:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234191AbiI1RAg (ORCPT
+        with ESMTP id S234331AbiI1RLC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 13:00:36 -0400
-Received: from mail-4324.protonmail.ch (mail-4324.protonmail.ch [185.70.43.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5327785A4;
-        Wed, 28 Sep 2022 10:00:34 -0700 (PDT)
-Date:   Wed, 28 Sep 2022 17:00:27 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1664384432; x=1664643632;
-        bh=fNdKw7rnRuBz2C10AejMFBYbvX0k55cR42beHrm7Qxk=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID;
-        b=bhDyxDCRfF9x3MdMNVkah+Iq1a1r+UVJc39W8TsIlGherikodGa1DglK69bFiTu6M
-         F2WdrhjV/jmOHxGcwtfMk+03Faak/OMe2bd7ifjRsZdDBzatRs2ffcdOypG/Sq4UM2
-         1Al5jI0LpJGrajlkDdFAtKSZA4rPYz9OmAJupIWOahDaP5Tl7QxyH0Wvk3ZS20VXYI
-         HAVCC9XheebUYciKp0krrF88FQ2mJ1Ttf3d6O/oyRoLgJ5hBwvq3fk/pZoAJubxec4
-         +WAPkd0xty0Byfq4D1Ci2ZoQmLGdnwPpGfL7OJvVK09/Z8XPJnDw0AxTkukv3+V45E
-         fi0itSC6AFR+Q==
-To:     devicetree@vger.kernel.org
-From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Cc:     Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>,
-        Julian Ribbeck <julian.ribbeck@gmx.de>,
-        Josef W Menad <JosefWMenad@protonmail.ch>,
-        Markuss Broks <markuss.broks@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
+        Wed, 28 Sep 2022 13:11:02 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C160CE998B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 10:11:00 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id g1so3732724lfu.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 10:11:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=iZLMwu3BF/t4R2IMVX7ZdZKBFfNgmWUXpfgEF5atWY4=;
+        b=hFFDqFfms2s94TPUFzYYZ+siLNodOd+2HLWMfNn1e/KwtLanwfuOy3M+PpVm5gFg03
+         OnUj2b8CWyfgnhvoUry83lugF4J2puaOA/q6CvV/RAmfc3bQ/tA4WAeClyBJj6pcLSmJ
+         /NuecAgAGiro4GFDzpYwZhGgKzBN2QrQ4H6WcMIWj4OlLpINikQbRhMaf4QGXrmJHWgQ
+         bedxo5zWPiT2fCqMMe91vOojYgOh+lU7D1IuUZLPd1Jl+Yv4jmZJMOg8FeB9EAJ8KyLa
+         5nMiugsLZGiNWzJBxdlzCHddSer9UREJegFMvp24rk5o1v9sriJk/6jlIGYYsnRH90KB
+         CkRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=iZLMwu3BF/t4R2IMVX7ZdZKBFfNgmWUXpfgEF5atWY4=;
+        b=NZVRmRgAtYQgq4v+PXCMSafiTrWsE6fI37fjEl0aEeOrc8oyRAYH5ZCNW7DOIiz3EB
+         i1tFyjEZDpI/qgW/R72TaqnCGk1hvJ1FdizpWPPFFwcBHgWmz2d9HZTF8YJR9iQQahqd
+         VCDNR+jqmYTa5SJVx4oZ0Kija0H+nPHP/g3ZB95P5c9tIX9u28BefLONdF+kWpRRIjww
+         K2Q5zqKRGBJhdF2boPpSg0jcDMRYq74/Yn8z3LVvmTn0bjKRu0cBrFSvLnaUzXYBoJiN
+         4dJnZ1spwgcjiJY1dJPAiQOYXelJlJu8VBYLWN/E8RF8TeWTx2lxfEsRpsQo+HoNYOND
+         rd1g==
+X-Gm-Message-State: ACrzQf1WQudXoMsax7T7TN5osIKC/lLHFmbCniwjgFuhRCftMvx3vM2b
+        KBFl/LTHdAwruM7NjKZwpaJAUA==
+X-Google-Smtp-Source: AMsMyM7JNbNJ5v50tEMFjQ/PFrPlZsFEiRNawid2ZCvshRNElBT/qtWheK5uNWmOS4pBQc9PWu7cCA==
+X-Received: by 2002:ac2:4d2b:0:b0:498:fbf0:4f89 with SMTP id h11-20020ac24d2b000000b00498fbf04f89mr13322798lfk.500.1664385058974;
+        Wed, 28 Sep 2022 10:10:58 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id v13-20020a05651203ad00b00492eb7205b0sm521870lfp.210.2022.09.28.10.10.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Sep 2022 10:10:58 -0700 (PDT)
+Message-ID: <c5b6880c-de8a-026b-9a5a-7731428498d2@linaro.org>
+Date:   Wed, 28 Sep 2022 19:10:57 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH 01/11] dt-bindings: clock: split qcom,gcc-msm8974,-msm8226
+ to the separate file
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: [PATCH v3 4/5] arm64: dts: qcom: msm8916-samsung-j5: Use common device tree
-Message-ID: <20220928165932.181146-1-linmengbo0689@protonmail.com>
-In-Reply-To: <20220928164806.179314-1-linmengbo0689@protonmail.com>
-References: <20220928164806.179314-1-linmengbo0689@protonmail.com>
-Feedback-ID: 40467236:user:proton
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20220928145958.376288-1-dmitry.baryshkov@linaro.org>
+ <20220928145958.376288-2-dmitry.baryshkov@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220928145958.376288-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-After moving msm8916-samsung-j5.dts to msm8916-samsung-j5-common.dtsi,
-Add new J3, J5 2015/2016 device trees.
+On 28/09/2022 16:59, Dmitry Baryshkov wrote:
+> Move schema for the GCC on MSM8974 and MSM8226 platforms to a separate
+> file to be able to define device-specific clock properties.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../bindings/clock/qcom,gcc-msm8974.yaml      | 65 +++++++++++++++++++
+>  .../bindings/clock/qcom,gcc-other.yaml        |  9 +--
+>  2 files changed, 66 insertions(+), 8 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8974.yaml
 
-[Add j5x device tree]
-Co-developed-by: Josef W Menad <JosefWMenad@protonmail.ch>
-Signed-off-by: Josef W Menad <JosefWMenad@protonmail.ch>
-[Use &pm8916_usbin as USB extcon and add chassis-type for j5x]
-Co-developed-by: Stephan Gerhold <stephan@gerhold.net>
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-[Use common init device tree and add j3 device tree]
-Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
----
- arch/arm64/boot/dts/qcom/Makefile             |  3 +++
- .../boot/dts/qcom/msm8916-samsung-j3.dts      | 21 +++++++++++++++++++
- .../boot/dts/qcom/msm8916-samsung-j5.dts      | 15 +++++++++++++
- .../boot/dts/qcom/msm8916-samsung-j5x.dts     | 11 ++++++++++
- 4 files changed, 50 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-j3.dts
- create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts
- create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-j5x.dts
+Thank you for your patch. There is something to discuss/improve.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/M=
-akefile
-index 6db7d9d791d5..357a2529fe74 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -15,6 +15,9 @@ dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-longcheer-l8910.dt=
-b
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-samsung-a3u-eur.dtb
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-samsung-a5u-eur.dtb
-+dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-samsung-j3.dtb
-+dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-samsung-j5.dtb
-+dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-samsung-j5x.dtb
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-samsung-serranove.dtb
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-wingtech-wt88047.dtb
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8992-lg-bullhead-rev-10.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j3.dts b/arch/arm64/b=
-oot/dts/qcom/msm8916-samsung-j3.dts
-new file mode 100644
-index 000000000000..bf8672ebedcd
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j3.dts
-@@ -0,0 +1,21 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/dts-v1/;
-+
-+#include "msm8916-samsung-j5-common.dtsi"
-+
-+/ {
-+=09model =3D "Samsung Galaxy J3 (2016)";
-+=09compatible =3D "samsung,j3", "qcom,msm8916";
-+=09chassis-type =3D "handset";
-+
-+=09reserved-memory {
-+=09=09/delete-node/ tz-apps@85500000;
-+
-+=09=09/* Additional memory used by Samsung firmware modifications */
-+=09=09tz-apps@85a00000 {
-+=09=09=09reg =3D <0x0 0x85800000 0x0 0x800000>;
-+=09=09=09no-map;
-+=09=09};
-+=09};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts b/arch/arm64/b=
-oot/dts/qcom/msm8916-samsung-j5.dts
-new file mode 100644
-index 000000000000..0a32d33e9778
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts
-@@ -0,0 +1,15 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/dts-v1/;
-+
-+#include "msm8916-samsung-j5-common.dtsi"
-+
-+/ {
-+=09model =3D "Samsung Galaxy J5 (2015)";
-+=09compatible =3D "samsung,j5", "qcom,msm8916";
-+=09chassis-type =3D "handset";
-+};
-+
-+&usb_hs_phy {
-+=09qcom,init-seq =3D /bits/ 8 <0x1 0x19 0x2 0x0b>;
-+};
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5x.dts b/arch/arm64/=
-boot/dts/qcom/msm8916-samsung-j5x.dts
-new file mode 100644
-index 000000000000..7656ac4508cf
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5x.dts
-@@ -0,0 +1,11 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/dts-v1/;
-+
-+#include "msm8916-samsung-j5-common.dtsi"
-+
-+/ {
-+=09model =3D "Samsung Galaxy J5 (2016)";
-+=09compatible =3D "samsung,j5x", "qcom,msm8916";
-+=09chassis-type =3D "handset";
-+};
---=20
-2.30.2
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8974.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8974.yaml
+> new file mode 100644
+> index 000000000000..72e8f54d0e0e
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8974.yaml
+> @@ -0,0 +1,65 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
 
+Dual license
+
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,gcc-msm8974.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Global Clock & Reset Controller Binding for MSM8226 and
+> +  MSM8974, including Pro variants
+> +
+> +maintainers:
+> +  - Stephen Boyd <sboyd@kernel.org>
+> +  - Taniya Das <tdas@codeaurora.org>
+
+That's not valid email anymore, I think.
+
+> +
+> +description: |
+> +  Qualcomm global clock control module which supports the clocks, resets and
+> +  power domains on SDM630, SDM636 and SDM660
+
+The model numbers need updates.
+
+> +
+> +  See also:
+> +  - dt-bindings/clock/qcom,gcc-msm8974.h (qcom,gcc-msm8226 and qcom,gcc-msm8974)
+> +  - dt-bindings/reset/qcom,gcc-msm8974.h (qcom,gcc-msm8226 and qcom,gcc-msm8974)
+> +
+> +$ref: qcom,gcc.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,gcc-msm8226
+> +      - qcom,gcc-msm8974
+> +      - qcom,gcc-msm8974pro
+> +      - qcom,gcc-msm8974pro-ac
+> +
+> +  clocks:
+> +    items:
+> +      - description: XO source
+> +      - description: Sleep clock source
+> +
+> +  clock-names:
+> +    items:
+> +      - const: xo
+> +      - const: sleep_clk
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  # Example for GCC for SDM660:
+
+Maybe skip the comment?
+
+> +  - |
+> +    #include <dt-bindings/clock/qcom,rpmh.h>
+> +    clock-controller@fc400000 {
+> +        compatible = "qcom,gcc-msm8974";
+> +        #clock-cells = <1>;
+> +        #reset-cells = <1>;
+> +        #power-domain-cells = <1>;
+> +        reg = <0x00100000 0x94000>;
+
+reg goes usually after compatible.
+
+> +
+> +        clock-names = "xo", "sleep_clk";
+> +        clocks = <&xo_board>,
+> +                 <&sleep_clk>;
+> +    };
+> +...
+
+Best regards,
+Krzysztof
 
