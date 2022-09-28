@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 590845EE349
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 19:38:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E10085EE34F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 19:39:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234635AbiI1Rig (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 13:38:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39450 "EHLO
+        id S230015AbiI1RjR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 13:39:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234624AbiI1Rif (ORCPT
+        with ESMTP id S234278AbiI1RjQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 13:38:35 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB32DF3909
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 10:38:33 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id p5so15117041ljc.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 10:38:33 -0700 (PDT)
+        Wed, 28 Sep 2022 13:39:16 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61413F3F83
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 10:39:15 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id s6so21427927lfo.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 10:39:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=WJrEm7Gj+RhCZrHxWWorpZ5+layPSsIO3kU2CBr8RUk=;
-        b=kRrYubDuvhSHWTCTehEWYzr77FQ7wdJ7osLeHoj+8yRP5S8AtQgL9fXNusXJuLcBVx
-         3wi7k1LomwlCl4Xo9UMqDEY23MH8rUzwewo/t6rAV+V+T5JIhNDwXGj/hY7xzWOPzSx1
-         +juhKcmddu2oEngNSUlYkAIlBQ32DrPabMnqnbEx+2LnKLiJ8YZ/L8FAIugigEHRVGGF
-         gAX7AU0ohWUK02FzN2bXkwqrQNmYREvhlBG461Tal2E798fAjbE0iPdkocyljZKcrrJg
-         cNys14SXZVlpRDlfLgkjsp1U0QhwsQsEX+m3qDEFxsq7BR/8ZI9sbmdf/GMtTir39dYA
-         d8aQ==
+        bh=IxJXSEam7tFBgvUgNhfn02/DoOyHrM5vTWh4d13Llgg=;
+        b=rTMqvq0IZYRzK+NFwXM2Ka46LsX0BfAaP7Iuvrk73pFKNeodd6XxTTEKGP03ijVY5e
+         CMZwRqiQxd7XCrpxvTQdp/TBKQKXd1P1l/VWRqvyOLXHIF7slAS2eombGYHWpiXjiHvg
+         JtoU86vrteD3HACPbExNDFEYORfMLN10O9/3/GGkZAPQapMMQXm/ilV9mTKrs0qBjfqz
+         u5LGF63Bek9XT+HFMUArSH9D5nJwEzcq4j10xvQ2DdPO+YKHYqIjJOLIOvn8RQmyGI95
+         bTR6SgO6k1WNPwX7HRs2hzEyJcs1ORBtQl/0GZiv3Drh03rC7AjjUrWCPmzDFr8aDD6f
+         lr+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=WJrEm7Gj+RhCZrHxWWorpZ5+layPSsIO3kU2CBr8RUk=;
-        b=JEbpFAcFxJ+B0fk6emKHt+ESiUSCbmTOvdpYrnQYLX/P4h+7scy8YZZ4a1sCJ1YIGt
-         ff4qojVNrseNoiX0iUi2J0dnwJHsbq5FOIh0nD2FZhXdfXG4HioMV+efPh0o1S1ZW4nY
-         Hx1Onh8h+le/kd+HwpaB7pG4SW4WlZf6kiJU1KmGbJo/RleOq5KhQwkXIFkbFEhW+o/D
-         AOKSESp2vSGx+D5o0Bo516b7P1pyZvkrJWo6Qi2w4u16LrsI+Rv48kv5vgv6E0Sxf+ri
-         szT/6n9pjWNvuzoqPU1kGG+j8HleRyP01G0Tk5Z8y+mr9cyWOgQC25dS3DZG9LBmTrgp
-         +JIA==
-X-Gm-Message-State: ACrzQf3p93CJXkZ9c9VEkqsOFkt9+G572ZjNxNgvg3usvP9UL3hVinxd
-        2pXHFNz3WgBnp3kEVHaT0+Xv3A==
-X-Google-Smtp-Source: AMsMyM6B8xC1DZl6OlVbrJI9+S2jVaPRXzvyUtj6TyE2ZIHu8rbXrB11fu2rr8BEymohlF0MeAXLrg==
-X-Received: by 2002:a2e:9c2:0:b0:26a:cbe5:21ae with SMTP id 185-20020a2e09c2000000b0026acbe521aemr12589964ljj.354.1664386712146;
-        Wed, 28 Sep 2022 10:38:32 -0700 (PDT)
+        bh=IxJXSEam7tFBgvUgNhfn02/DoOyHrM5vTWh4d13Llgg=;
+        b=uM0pkZrGd7WoKuQ9PItvCXQB4WD2wI3arjBoRqRfyn3DjgBvHE7tiGRV/Hl9rNWiiN
+         QmZYaubRoJvtELEoe+j9cSGOky4IAlAMZd0gR30QZugjxCDX2SLCJvfGKH7kqKx0jkV7
+         mPVjHZljs34OdpZdRUub+4CfmB6QPJdEpY2ZIYOATujBjhsZO2iMfHvhSt7yR7Af1lvl
+         dC/WbqpWp5W6nqBzUaqAe+cvv5v0jSjrQlhBn9WgMu6qp4sJ3F2VW6eC8nbJPgLKrdHz
+         cxoEqlx8E8iNVQbLZlUBkhbvNRDLs1q0nXK4blYAImlkKiWqW7IdTQgh3yB05EbBiLFp
+         I2vw==
+X-Gm-Message-State: ACrzQf2oYYM9rJCoOUM/7Z4EmERVZU9RMOXMWYBZyw/4wvMKoEz8fwoB
+        cwST3JftHz6Xhw5atYFSkBshIg==
+X-Google-Smtp-Source: AMsMyM4ApYrvFe6rCUKeLGAtNzo0h8VZ3efl73bxTdB0vXIGtLXoFy+UwE10qTTvxhbdMTw1xa+FoA==
+X-Received: by 2002:a05:6512:3984:b0:49e:19a6:a302 with SMTP id j4-20020a056512398400b0049e19a6a302mr13806325lfu.492.1664386753720;
+        Wed, 28 Sep 2022 10:39:13 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id 16-20020ac24d50000000b0049908e21e26sm527051lfp.253.2022.09.28.10.38.30
+        by smtp.gmail.com with ESMTPSA id v18-20020a2e9612000000b0026c0158b87csm496134ljh.29.2022.09.28.10.39.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Sep 2022 10:38:30 -0700 (PDT)
-Message-ID: <7c65e6f6-54f8-3582-0409-c800e16b8fcb@linaro.org>
-Date:   Wed, 28 Sep 2022 19:38:30 +0200
+        Wed, 28 Sep 2022 10:39:13 -0700 (PDT)
+Message-ID: <9c733ae5-bbe4-308b-d0d1-63e5c3d24db6@linaro.org>
+Date:   Wed, 28 Sep 2022 19:39:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
@@ -76,7 +76,8 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -128,62 +129,9 @@ On 28/09/2022 16:58, Dmitry Baryshkov wrote:
 > +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
 > +title: Qualcomm Global Clock & Reset Controller Binding for SDM660/SDM630/SDM636
-> +
-> +maintainers:
-> +  - Stephen Boyd <sboyd@kernel.org>
-> +  - Taniya Das <tdas@codeaurora.org>
 
-I guess email is not valid anymore.
-
-> +
-> +description: |
-> +  Qualcomm global clock control module which supports the clocks, resets and
-> +  power domains on SDM630, SDM636 and SDM660
-> +
-> +  See also:
-> +  - dt-bindings/clock/qcom,gcc-sdm660.h  (qcom,gcc-sdm630 and qcom,gcc-sdm660)
-> +
-> +$ref: qcom,gcc.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,gcc-sdm630
-> +      - qcom,gcc-sdm660
-> +
-> +  clocks:
-> +    items:
-> +      - description: XO source
-> +      - description: Sleep clock source
-> +
-> +  clock-names:
-> +    items:
-> +      - const: xo
-> +      - const: sleep_clk
-> +
-> +  power-domains:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  # Example for GCC for SDM660:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,rpmh.h>
-> +    clock-controller@100000 {
-> +        compatible = "qcom,gcc-sdm660";
-> +        #clock-cells = <1>;
-> +        #reset-cells = <1>;
-> +        #power-domain-cells = <1>;
-> +        reg = <0x00100000 0x94000>;
-
-reg after compatible?
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
+And one more comment: drop "Binding". Title is for hardware, so for example:
+Qualcomm SDM660/SDM630/SDM636 Global Clock & Reset Controller
 
 Best regards,
 Krzysztof
