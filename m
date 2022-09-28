@@ -2,115 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5D3E5ED58C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 08:59:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F04C45ED5D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 09:19:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232623AbiI1G7X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 02:59:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46244 "EHLO
+        id S233011AbiI1HTh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 03:19:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233357AbiI1G7E (ORCPT
+        with ESMTP id S232753AbiI1HTd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 02:59:04 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E190A00E9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 23:58:55 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id d42so19072360lfv.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 23:58:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=Qh1HEBzOLKDQSq0ZCiaGc/8pGpWdAfOlGQkcVarHmY8=;
-        b=kW9bbA11CiWU1L2dWJmMwja44loWoFbidpsQJ5KAS+WpEfkOZXCxUMegXZsEYoFj9q
-         4VBXxNL2nRP46fTS5BDRiLvegZxm7ZZVg6kFZbHGhsQQ/D+Uuc7nCggqJAw7rNV/AMoz
-         TSePwOkEupsjhipwKygDqUr7Jar1FE7Wkn5/pf+NL0dxAGr3jNHO5hMspe9+YFJVO5Rt
-         LcJXxMsepP7F50m3f2t9NvT+mtiCANcL9D93dYPVcwxZsfFyiKRaKJRe+Yzp8cY0l97R
-         Lrx2jCclRRzR5eu00Y0bqg45MkIYrt4wxh8HzbmJXl2ZoCXgfdiDjZszSRqe7yAxgwQr
-         loQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=Qh1HEBzOLKDQSq0ZCiaGc/8pGpWdAfOlGQkcVarHmY8=;
-        b=Pna6rvbVAJ8PSk43WoEaANCKfnaVqYUOySRSvnB6F4OQbWUEFeSic92JQjLvs89Qu9
-         J5Ci6UU0yaxM1dqyDke3jtdgy+YExDV6PKyLLtPqK8cgZ/F9os22kNt6eSrZStaf2jW0
-         F1Pxrolung5IjKggzUhBOwDrl74M7RngStxVBdPJzqQ5VKqvPsfEv98zy3/zmJBTQnjh
-         +hHPm1aVxmMjwYqJ1jbJbWa4wSV0V+BWR5FbVjyUp1Y396vCTrZJxYf6aJZQicbukGbF
-         XFhuLe6pXiz2wmJKSiSdDQOfMo/JyaI1wQxPgimuVwhUYh2zly6w58/sLRJVKhSLo6RN
-         9A4g==
-X-Gm-Message-State: ACrzQf3eBCtv/R2fql5SyXMYY/d87n8DzgWvMIeepKqT60Ytndpjamdn
-        DuutWdiYTefO7rAUmAz3Gzt0Sw==
-X-Google-Smtp-Source: AMsMyM6ZOnG6OM/VwMga05nNjO5UO83JomTav5VouqvC5bQK33X7nG932sZ9IrZriMo0gRh2lG+S5w==
-X-Received: by 2002:a05:6512:3b91:b0:49f:d530:97 with SMTP id g17-20020a0565123b9100b0049fd5300097mr12283022lfv.172.1664348333477;
-        Tue, 27 Sep 2022 23:58:53 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id h4-20020a056512220400b0048b969ac5cdsm389758lfu.5.2022.09.27.23.58.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Sep 2022 23:58:52 -0700 (PDT)
-Message-ID: <3e9ca09c-4134-e05c-3a48-3f0467ba7e8a@linaro.org>
-Date:   Wed, 28 Sep 2022 08:58:50 +0200
+        Wed, 28 Sep 2022 03:19:33 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2CF986827;
+        Wed, 28 Sep 2022 00:19:29 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28S7Abku028860;
+        Wed, 28 Sep 2022 07:19:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=O9hgHb8+fOlzcHV44iEHkJrs6lWrqSeu/CKj2wc7fcg=;
+ b=fIOEXwLmTNI2xexclZB7uaKHV8Ipr7ACYcjL5+5aPmZiBATi9H6E48OIJ9fusFxjMAAQ
+ oACv5vHv7NCwQ7WK4EbZI9JjERE5n7krTkXZSREmcYvRcliQXwVMNx8rNYmoVdzdaent
+ 5/LoWAL9wRIjLcYsfh9MYH4jYvZMMpnbg1pxa8+ZiwCeLArIgsdEgz+4mPyO1FlDDgUF
+ F49lvpDcAdNs+EW8/Wzp2WmkY4Mp5iGmNDWh70ybrIgMJ0brurEgekAFtclesRtqhq19
+ cZvk6wI8Nm0A3JU7wPOoBDLrLQ9474CxUzHaXONHlkhxLw7vxP/Tx/oC0UihK1PNpt73 2w== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jvbf0gs3v-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 28 Sep 2022 07:19:24 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28S7JNoq010629
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 28 Sep 2022 07:19:23 GMT
+Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Wed, 28 Sep 2022 00:19:18 -0700
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     freedreno <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>
+CC:     Jonathan Marek <jonathan@marek.ca>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH 1/2] drm/msm/a6xx: Replace kcalloc() with kvzalloc()
+Date:   Wed, 28 Sep 2022 12:48:59 +0530
+Message-ID: <20220928124830.1.I8ea24a8d586b4978823b848adde000f92f74d5c2@changeid>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH v9 1/7] dt-bindings: remoteproc: qcom: Add SC7280 ADSP
- support
-Content-Language: en-US
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        linux-remoteproc@vger.kernel.org, agross@kernel.org,
-        andersson@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-        robh+dt@kernel.org, quic_plai@quicinc.com, bgoswami@quicinc.com,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org, devicetree@vger.kernel.org
-References: <1664287003-31450-1-git-send-email-quic_srivasam@quicinc.com>
- <1664287003-31450-2-git-send-email-quic_srivasam@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1664287003-31450-2-git-send-email-quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 7hPNQeTt59QRMJ-ilRfg0CsJzF7oGOHo
+X-Proofpoint-ORIG-GUID: 7hPNQeTt59QRMJ-ilRfg0CsJzF7oGOHo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-28_02,2022-09-27_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ mlxscore=0 priorityscore=1501 phishscore=0 impostorscore=0
+ lowpriorityscore=0 mlxlogscore=999 adultscore=0 clxscore=1011 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2209280043
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/09/2022 15:56, Srinivasa Rao Mandadapu wrote:
-> Add ADSP PIL loading support for SC7280 SoCs.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> ---
+In order to reduce chance of allocation failure while capturing a6xx
+gpu state, use kvzalloc() instead of kcalloc() in state_kcalloc().
 
-Thank you for your patch. There is something to discuss/improve.
+Indirectly, this patch helps to fix leaking memory allocated for
+gmu_debug object.
 
-> +  qcom,smem-state-names:
-> +    description: The names of the state bits used for SMP2P output
-> +    const: stop
-> +
-> +  qcom,qmp:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: Reference to the AOSS side-channel message RAM.
-> +
-> +  glink-edge:
-> +    $ref: qcom,glink-edge.yaml#
-> +    type: object
+Fixes: b859f9b009b (drm/msm/gpu: Snapshot GMU debug buffer)
+Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+---
 
-You still miss here unevaluatedProperties: false on this level of
-indentation.
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-> +    description: |
-> +      Qualcomm G-Link subnode which represents communication edge, channels
-> +      and devices related to the ADSP.
-> +
-Best regards,
-Krzysztof
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index 55f4433..3c112a6 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -91,7 +91,7 @@ struct a6xx_state_memobj {
+ static void *state_kcalloc(struct a6xx_gpu_state *a6xx_state, int nr, size_t objsize)
+ {
+ 	struct a6xx_state_memobj *obj =
+-		kzalloc((nr * objsize) + sizeof(*obj), GFP_KERNEL);
++		kvzalloc((nr * objsize) + sizeof(*obj), GFP_KERNEL);
+ 
+ 	if (!obj)
+ 		return NULL;
+@@ -819,7 +819,7 @@ static struct msm_gpu_state_bo *a6xx_snapshot_gmu_bo(
+ 
+ 	snapshot->iova = bo->iova;
+ 	snapshot->size = bo->size;
+-	snapshot->data = kvzalloc(snapshot->size, GFP_KERNEL);
++	snapshot->data = state_kcalloc(a6xx_state, 1, snapshot->size);
+ 	if (!snapshot->data)
+ 		return NULL;
+ 
+@@ -1034,14 +1034,8 @@ static void a6xx_gpu_state_destroy(struct kref *kref)
+ 	struct a6xx_gpu_state *a6xx_state = container_of(state,
+ 			struct a6xx_gpu_state, base);
+ 
+-	if (a6xx_state->gmu_log)
+-		kvfree(a6xx_state->gmu_log->data);
+-
+-	if (a6xx_state->gmu_hfi)
+-		kvfree(a6xx_state->gmu_hfi->data);
+-
+ 	list_for_each_entry_safe(obj, tmp, &a6xx_state->objs, node)
+-		kfree(obj);
++		kvfree(obj);
+ 
+ 	adreno_gpu_state_destroy(state);
+ 	kfree(a6xx_state);
+-- 
+2.7.4
 
