@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0BAE5EE395
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 19:53:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 501125EE3A3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 19:56:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234777AbiI1Rxv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 13:53:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50492 "EHLO
+        id S233137AbiI1R4C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 13:56:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234790AbiI1Rxh (ORCPT
+        with ESMTP id S234264AbiI1Rzx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 13:53:37 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B779EFB310
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 10:53:11 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id u18so21471753lfo.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 10:53:11 -0700 (PDT)
+        Wed, 28 Sep 2022 13:55:53 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BD56F8FB8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 10:55:49 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id a2so21502100lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 10:55:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=Vcqtdnkvj8E1ldfON+g0kjMIXp26wYlPSwSJlx1Z+zI=;
-        b=byoMi1LOklJOZFggEC3HYt59rIuVIY4Dvo+Ov6JeKwMDS4MTeiIQT3AkJjA1NfqLVT
-         AEcTPXUh9FVRicqzFZqFJMCkybWI1HnQv1npA01/ROhBSBYjda0jrVVsOeId0Pyf5vp4
-         h347cFliyzHKADtvSMqeEdAyBAoi7C+DB/hv1shT6QE5LM6g6kiDAJybZX2bBifr1FaO
-         kv+RvDX0t27zZYriMdWus7AI4tK/IzWkcU5zHXzqVkBDPRmqadWRQxv62uFMf5pesOVG
-         QTLTtOgXCzBrsnNRntsYBWLzTY73PBXfad9DZYFs4yzh5Q12hsfAmB5uM40fwLmoGGo2
-         bSbw==
+        bh=RySF/FjOO1GJmZpMt3yLrNw0vVaRtkwBKj/MtxZCzyE=;
+        b=I8SJ9poqEvCIk2DgzRT7ZquaH5ic5s5zWfRGu57XknDzHcbJ0d2+5tufNgaX+SZOgK
+         iXa5GECZs0kE8YaAazIruVRlIwbRUXnhGZXgr2YB/YXf/7pBfQBJaovfCJVNFXH5DO4m
+         w8EQuty5M4R+O3vn8fxtE9FkV2mHoq3ino3thSrjFV89HwX98HlYZAljHJ7p98i7eScu
+         SCmXEyzlUS4NU0cGFyVlbClD0mnM85qZVR9lTT9IJvg3EsFAbNfwF2ZsNlLI/o6VLQwl
+         A03to7J8JTG535P4/tSjV3epoBL0kAydF+bxmJelz0uoN6rfjSjEM6cDW4oI16+GXXhh
+         /ILw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=Vcqtdnkvj8E1ldfON+g0kjMIXp26wYlPSwSJlx1Z+zI=;
-        b=DR6bUnAW9wo2F6JUrsmm0ccHplTlH83kC0OrSHagIJt8Mrwg1NO0osoyIlgYOj/vsB
-         23h9ySI+GrBmY2jJ0frk8jHwgIMbauP6F9PPDoosZkl3HUZzbKCJpoIDQnJP3u36tvLf
-         v1WyqQVZc6zT/dpMETUTghVKBr8k/XoZ9/kVYLmRJKXL1mvSl4e3PmU8OSU1kkCCAeYG
-         0y38Dy2twOn8Umz3/xVgnXznJ+KGtFX4SY7f2wrNNCp3s1yU87efMhNDT7VJAMeDHSnN
-         Aswl8w/rsHNegvnLiyZg1kupy/xpNXx/PHGXTXmMKoyis25kS3xU7ADb/GT+2l1j+38u
-         7+Eg==
-X-Gm-Message-State: ACrzQf3o38qbUSnvHkeRN8xMJ2K+DhSclmB1WroOm8lZYWY77oxW1czj
-        yc3G+0YSNbfbnZj6DnFSivGMDXUu3RecIQ==
-X-Google-Smtp-Source: AMsMyM6BgzODaHTfBrx34XfoJcT/1t178R/FMLrqgzid4kU4W+U6XHasiC4SuUJmMszh6C3eQ42dFg==
-X-Received: by 2002:a05:6512:22c7:b0:49f:c780:4886 with SMTP id g7-20020a05651222c700b0049fc7804886mr13118925lfu.389.1664387589153;
-        Wed, 28 Sep 2022 10:53:09 -0700 (PDT)
+        bh=RySF/FjOO1GJmZpMt3yLrNw0vVaRtkwBKj/MtxZCzyE=;
+        b=PfuRbLrg743wXXlGY+wdK1KCgrkgZi4FS6iW1om6bKjCmdQ4cLXdavdy8ZfxuSq28u
+         W5PkahQTFukaeaI5Y5sOz5JS/TEHRsrJ7kh/pQD8tTb+u1l2kNUhGB45zajDFNHUKUt6
+         oS6yDWvgwbv2Hhfi+9ueh81ewkvR/TqF6xG9FvdjhYOSk7H/FOMn+K1Whh4YKSQdXX2h
+         AKhIYBZUsFSAMDtzr+frHi6KTCLjfl7MC9knA8y0xBtzHdZi4UjRvyhfwoUi7ec2bOB2
+         6nv1JuHa5TxU1SaYvGCDhkyfQQ3doQ9hKa+g96N0aZAJjFsadYdsJbby8xmqLpPXJg5l
+         I+pA==
+X-Gm-Message-State: ACrzQf3bzEGRgoshOlxky3+k+KsZS3kgSd/eI7sPwSeCu7VlVUXe3RxV
+        QYBYztBAYZ3DiWzii9MvRFqVVg==
+X-Google-Smtp-Source: AMsMyM4PwrV47R+BLXnK2qxEhAboUnRzt6mhHLgt2feQ3YoLSJUFN+6Ute7NLQOGoXEJwNd4u8VQjQ==
+X-Received: by 2002:a05:6512:3c88:b0:499:c78:5bb1 with SMTP id h8-20020a0565123c8800b004990c785bb1mr13483062lfv.503.1664387748009;
+        Wed, 28 Sep 2022 10:55:48 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id bp39-20020a05651215a700b0049fb08e91cesm531101lfb.214.2022.09.28.10.53.08
+        by smtp.gmail.com with ESMTPSA id z12-20020ac25dec000000b00493014c3d7csm528592lfq.309.2022.09.28.10.55.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Sep 2022 10:53:08 -0700 (PDT)
-Message-ID: <a58a4022-ab21-6833-d13d-c3f35fc7caec@linaro.org>
-Date:   Wed, 28 Sep 2022 19:53:08 +0200
+        Wed, 28 Sep 2022 10:55:47 -0700 (PDT)
+Message-ID: <2529003b-b253-9764-1060-02aafdcd44e3@linaro.org>
+Date:   Wed, 28 Sep 2022 19:55:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Subject: Re: [PATCH v1 1/7] dt-bindings: arm: qcom: document the
- swir,mangoh-green-wp8548 board
+Subject: Re: [PATCH v1 2/7] arm: dts: qcom: mdm9615*: add
+ SPDX-License-Identifier
 Content-Language: en-US
 To:     Neil Armstrong <neil.armstrong@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -67,9 +67,9 @@ To:     Neil Armstrong <neil.armstrong@linaro.org>,
 Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
 References: <20220928-mdm9615-dt-schema-fixes-v1-0-b6e63a7df1e8@linaro.org>
- <20220928-mdm9615-dt-schema-fixes-v1-1-b6e63a7df1e8@linaro.org>
+ <20220928-mdm9615-dt-schema-fixes-v1-2-b6e63a7df1e8@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220928-mdm9615-dt-schema-fixes-v1-1-b6e63a7df1e8@linaro.org>
+In-Reply-To: <20220928-mdm9615-dt-schema-fixes-v1-2-b6e63a7df1e8@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,15 +83,67 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 28/09/2022 11:14, Neil Armstrong wrote:
-> The qcom.yaml was lacking documentation of this board, fix this.
-
-It is documented in:
-Documentation/devicetree/bindings/arm/swir.txt
-
-so remove that other file and instead describe it like a conversion.
-
+> Replace the licence blob by a clean SPDX-License-Identifier
 > 
 > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> 
+
+
+Rebase on linux-next - you use old Bjorn's email address.
+
+> diff --git a/arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dts b/arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dts
+> index 0827de5426c1..073c15354483 100644
+> --- a/arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dts
+> +++ b/arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dts
+> @@ -1,46 +1,9 @@
+> +// SPDX-License-Identifier: GPL-2.0+ OR X11
+>  /*
+>   * Device Tree Source for mangOH Green Board with WP8548 Module
+>   *
+>   * Copyright (C) 2016 BayLibre, SAS.
+>   * Author : Neil Armstrong <narmstrong@baylibre.com>
+> - *
+> - * This file is dual-licensed: you can use it either under the terms
+> - * of the GPL or the X11 license, at your option. Note that this dual
+> - * licensing only applies to this file, and not this project as a
+> - * whole.
+> - *
+> - *  a) This file is free software; you can redistribute it and/or
+> - *     modify it under the terms of the GNU General Public License as
+> - *     published by the Free Software Foundation; either version 2 of the
+> - *     License, or (at your option) any later version.
+> - *
+> - *     This file is distributed in the hope that it will be useful,
+> - *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+> - *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> - *     GNU General Public License for more details.
+> - *
+> - * Or, alternatively,
+> - *
+> - *  b) Permission is hereby granted, free of charge, to any person
+> - *     obtaining a copy of this software and associated documentation
+> - *     files (the "Software"), to deal in the Software without
+> - *     restriction, including without limitation the rights to use,
+> - *     copy, modify, merge, publish, distribute, sublicense, and/or
+> - *     sell copies of the Software, and to permit persons to whom the
+> - *     Software is furnished to do so, subject to the following
+> - *     conditions:
+> - *
+> - *     The above copyright notice and this permission notice shall be
+> - *     included in all copies or substantial portions of the Software.
+> - *
+> - *     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+> - *     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+> - *     OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+> - *     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+> - *     HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+> - *     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+> - *     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+> - *     OTHER DEALINGS IN THE SOFTWARE.
+
+The text is actually MIT, not X11. I think they differ by last X11
+trademark statement.
+
 Best regards,
 Krzysztof
 
