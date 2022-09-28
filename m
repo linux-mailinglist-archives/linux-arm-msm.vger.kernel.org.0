@@ -2,162 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8EAE5ED5D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 09:20:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF6C35ED60E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 09:28:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233386AbiI1HUM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 03:20:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43302 "EHLO
+        id S231143AbiI1H2v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 03:28:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233410AbiI1HUJ (ORCPT
+        with ESMTP id S233616AbiI1H2A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 03:20:09 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE5F110FFC;
-        Wed, 28 Sep 2022 00:20:04 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28S5XAT8031779;
-        Wed, 28 Sep 2022 07:19:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=ptAp81tTYiqQkYXMiOQMfTlvGSo562gUuwCLSQk+Kwk=;
- b=KpW5ovxpCS1En1rCViwAkwkeiEIs99ZI46d+NFfvbMD5bWvD4/fJCAHCvDzLDBTVwP2j
- B62odRURoiFwKjDG3Jd108hbfk7iYxQndAS4pFOa3DJ+NDTEKdfNyQ3TPaxF3yDVuIYj
- DESk5YLEHa7XpjTMYBMadru8vEV1ksNbXTOygRxiynMmrarziiOO/AIrxdwweNN2z4Uz
- WBxbc1Lg1bBCNjjk/DnJkvMPE/lNxLirVPAKhN1fzywTeOxkMWa9ucbEibfK9lOgU3b+
- pkLiAr8AGicuaUlndBxAdF/RJ2tXYvvaTaoyZuTJP1KAuD1e68+45Dd9ofW6GQuOfCQV 0A== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3juwru42jd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 28 Sep 2022 07:19:30 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28S7JTwT027164
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 28 Sep 2022 07:19:29 GMT
-Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Wed, 28 Sep 2022 00:19:23 -0700
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-To:     freedreno <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>
-CC:     Jonathan Marek <jonathan@marek.ca>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Sean Paul <sean@poorly.run>,
-        "Vladimir Lypak" <vladimir.lypak@gmail.com>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH 2/2] drm/msm/gpu: Fix crash during system suspend after unbind
-Date:   Wed, 28 Sep 2022 12:49:00 +0530
-Message-ID: <20220928124830.2.I5ee0ac073ccdeb81961e5ec0cce5f741a7207a71@changeid>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <20220928124830.1.I8ea24a8d586b4978823b848adde000f92f74d5c2@changeid>
-References: <20220928124830.1.I8ea24a8d586b4978823b848adde000f92f74d5c2@changeid>
+        Wed, 28 Sep 2022 03:28:00 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F816B284F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 00:25:04 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id z4so1244141lft.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 00:25:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=1Fcjg+cr/kivPTm/GJb7y8jmzhRLvf3S0ZdXAVdnOJ4=;
+        b=pIEAF7CmpeuNeerOjifq8bpwxJUxDu0IhdixG7O6Bzt6ga6FDxRzK3xVNbtzdFk8aJ
+         qO8xeH0alV1B3+7fjnQQoIP8pUUTg2xON02V1lW+2DLgMYtwxnjqbpLKkRd6ia54NygP
+         gQPPmzMxhwfFz6CTG8z+0T7wPnGAC5HGlZ4pKwMjk0OIDDAqgU3gy4b6+iFcxOBq+Ix5
+         vfLMwYsHxSHmQh2YBNKXjAfVQwmmwbj0TSuTezApYhPO0DTMPREMpRUG+rBLal0Qyudh
+         5I0Fx9H/4zUjLCX1v69tmiU4UK5+gDf44feD4RL75X3052nPOxWT8+tulsy45arbovLF
+         kHww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=1Fcjg+cr/kivPTm/GJb7y8jmzhRLvf3S0ZdXAVdnOJ4=;
+        b=urTqODVxivB/5FrlTZ7rQpAf685tNJwrkLZa/812OVdPcRwmFVKLGnQQRNHkx7JUdb
+         +P6r065hEm1swT06nnMHdF/cJsRtiPeiOudbTGeMNm6ENl4a224NfN6KObO1zNfxEkOH
+         0EADwZj/+LHfsaLV+LioueuqYdtWKKSkRd/3KChZyPgJD8Jz47yqZzpnbCHkas8NIHC9
+         0RiDIgK33Jog0R9lwyC7Gxlg5eKIjQFR4c7XIlI38ulal17dKofqLjki/1xzeziWPDHJ
+         a0upxOJUvQ4uZqGsZnsFwSsQLht56In8yhCP4GaP2csfsFHfs21VS1HClX4kOZ2RrYfS
+         kOvA==
+X-Gm-Message-State: ACrzQf2PM1MR943+FMWs5uw5LZfRxw0iaVotUx8Q5qY7Zdzr4x10FupB
+        moQ9Z4sUfny+YZLdKyvKu0mJnw==
+X-Google-Smtp-Source: AMsMyM6kIwuBG/XkP+Hl8WnArBsRLdJDRAI28PZIjVFq8EEHgxYrmDVoYYp+8AujJn5Gftc+Hy7wFg==
+X-Received: by 2002:a19:490b:0:b0:49f:52cf:aeaf with SMTP id w11-20020a19490b000000b0049f52cfaeafmr12249740lfa.46.1664349863733;
+        Wed, 28 Sep 2022 00:24:23 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id s12-20020a05651c048c00b0026da7734d7bsm357017ljc.112.2022.09.28.00.24.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Sep 2022 00:24:22 -0700 (PDT)
+Message-ID: <a3d2d7db-e27b-3d6b-2bbf-9f8b258a23b4@linaro.org>
+Date:   Wed, 28 Sep 2022 09:24:22 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: QbvX70lX0tv8POGZLNW_qBuZkeLP_tn7
-X-Proofpoint-ORIG-GUID: QbvX70lX0tv8POGZLNW_qBuZkeLP_tn7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-28_02,2022-09-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 clxscore=1011 phishscore=0
- lowpriorityscore=0 mlxlogscore=999 mlxscore=0 bulkscore=0 suspectscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209280043
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH 2/3] ARM: dts: qcom: pm8941: adjust node names to bindings
+Content-Language: en-US
+To:     Luca Weiss <luca@z3ntu.xyz>, neil.armstrong@linaro.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220925210229.128462-1-luca@z3ntu.xyz>
+ <3070538e-fa8d-4506-bbf8-c2770d092eb5@linaro.org>
+ <3dda8e86-b92b-488a-5afb-0cb49e7e52ae@linaro.org>
+ <13105309.uLZWGnKmhe@g550jk>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <13105309.uLZWGnKmhe@g550jk>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In adreno_unbind, we should clean up gpu device's drvdata to avoid
-accessing a stale pointer during system suspend. Also, check for NULL
-ptr in both system suspend/resume callbacks.
+On 26/09/2022 17:07, Luca Weiss wrote:
+> Hi Krzysztof,
+> 
+> On Montag, 26. September 2022 12:29:11 CEST Krzysztof Kozlowski wrote:
+>> On 26/09/2022 12:04, Neil Armstrong wrote:
+>>> On 26/09/2022 11:22, Krzysztof Kozlowski wrote:
+>>>>>   		};
+>>>>>
+>>>>> -		usb_id: misc@900 {
+>>>>> +		usb_id: extcon@900 {
+>>>>
+>>>> Why? extcon is Linux specific name and should not be added to DTS.
+>>>> Anything requires it?
+>>>
+>>> It matches the current dt bindings:
+>> Then instead maybe let's fix it in the bindings and DTS?
+> 
+> What node name do you propose? I doubt "misc" is a better name as it really 
+> doesn't describe anything so I don't really have a suggestion here..
+> 
 
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
----
-Rebased on msm-next + some external fixes to boot sc7280 device.
+Some manufacturers call it a muic (Micro-USB IC), but maybe just
+usb-detect? The role of this device is accessory and cable detection.
 
- drivers/gpu/drm/msm/adreno/adreno_device.c | 10 +++++++++-
- drivers/gpu/drm/msm/msm_gpu.c              |  2 ++
- drivers/gpu/drm/msm/msm_gpu.h              |  4 ++++
- 3 files changed, 15 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 24b489b..6288064 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -679,6 +679,9 @@ static int adreno_system_suspend(struct device *dev)
- 	struct msm_gpu *gpu = dev_to_gpu(dev);
- 	int remaining, ret;
- 
-+	if (!gpu)
-+		return 0;
-+
- 	suspend_scheduler(gpu);
- 
- 	remaining = wait_event_timeout(gpu->retire_event,
-@@ -700,7 +703,12 @@ static int adreno_system_suspend(struct device *dev)
- 
- static int adreno_system_resume(struct device *dev)
- {
--	resume_scheduler(dev_to_gpu(dev));
-+	struct msm_gpu *gpu = dev_to_gpu(dev);
-+
-+	if (!gpu)
-+		return 0;
-+
-+	resume_scheduler(gpu);
- 	return pm_runtime_force_resume(dev);
- }
- 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 0098ee8..021f4e2 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -997,4 +997,6 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
- 	}
- 
- 	msm_devfreq_cleanup(gpu);
-+
-+	platform_set_drvdata(gpu->pdev, NULL);
- }
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index ff911e73..58a72e6 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -280,6 +280,10 @@ struct msm_gpu {
- static inline struct msm_gpu *dev_to_gpu(struct device *dev)
- {
- 	struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(dev);
-+
-+	if (!adreno_smmu)
-+		return NULL;
-+
- 	return container_of(adreno_smmu, struct msm_gpu, adreno_smmu);
- }
- 
--- 
-2.7.4
+Best regards,
+Krzysztof
 
