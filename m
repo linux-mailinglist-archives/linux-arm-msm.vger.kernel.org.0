@@ -2,78 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 35C105ED46F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 08:01:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 694025ED489
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 08:16:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232069AbiI1GBV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 02:01:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36822 "EHLO
+        id S232069AbiI1GQa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 02:16:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232201AbiI1GBT (ORCPT
+        with ESMTP id S231278AbiI1GQ3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 02:01:19 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04B1A115F70;
-        Tue, 27 Sep 2022 23:01:17 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28S5vPqe031680;
-        Wed, 28 Sep 2022 06:01:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=LdAjZt19MQNoCbmkPUETxV5QHUxWqUO1Lrwgb0M8N/E=;
- b=nBrBuCAV9ZjpdSzSSIcA2QErngzWrrQt+lDMd3w8ilbOfonEWEq1D9e10GOLk4SWlqJ9
- eRWLiy8E/Gb9VekKBhwQAWX12jo7dxzcYx7uJUpNSqkjMaadxFgWiArcCI55F9Sd74PZ
- dcb9Yrawcmawx9MENmycNqk9CCVL3A+Fj6iXrOkyS1B9qapegqxdf1qewWQpD2RgOcVR
- 6qAFtmbQR32wMvI7gxNI2tMwF7qWrCwH3lPue36WS15YXvDMCMMRX7KhWD1+cIcnrNvJ
- pKxSmr2NlVhcD1cyAJJR7CW8pCAuDCWqx9rQtj0psyP0DfmlhYnM0EURukJK7WqvEIMA pQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3juvejawdn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 28 Sep 2022 06:01:10 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28S619rC031054
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 28 Sep 2022 06:01:09 GMT
-Received: from [10.216.15.174] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 27 Sep
- 2022 23:01:05 -0700
-Message-ID: <3b6a7af1-7396-6df5-0b47-0834c2deacac@quicinc.com>
-Date:   Wed, 28 Sep 2022 11:31:00 +0530
+        Wed, 28 Sep 2022 02:16:29 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 099E91114ED;
+        Tue, 27 Sep 2022 23:16:28 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9991C61D05;
+        Wed, 28 Sep 2022 06:16:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02370C433D6;
+        Wed, 28 Sep 2022 06:16:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1664345788;
+        bh=LJ9f0Td4pC/PwOOx+1Koup4UTrM2b9rxSdN1wHR8l7o=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=YUcoEH0L4QtFW691ED3O7SySHUiXfrmEPPDpjrftf3wUe/TTnq/T8WmeZUYKToDnB
+         DTWKAXV+Bx1LzEQCsZhPrEHQr7Xmz89mlGxGXZc913XWIM0ApBW3k0Soh7uPm97tsB
+         Tt66bE6234qsiquPfWPxd99eRRsV2f/2H6j8eSQKAKGYZW1D/OYBMzCKHSES5OzYyI
+         vFVXQOjWmubwad4C8RiUxovNH0o16Vxikin8T5i1TjEBmoyXKrD7WaSF5/6dmLEFnd
+         yICv5GnXhvVSO0DHUL9zcmZSg1ZD5gtPNoLOItCO2Rjwe//nFsIMNZwI43SIB5oWcZ
+         UyEJXhcuix0+w==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1odQMz-0005ku-LX; Wed, 28 Sep 2022 08:16:33 +0200
+Date:   Wed, 28 Sep 2022 08:16:33 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc:     Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] PCI: qcom: Add support for modular builds
+Message-ID: <YzPmwWeSu9OVWwMf@hovoldconsulting.com>
+References: <20220721064720.10762-1-johan+linaro@kernel.org>
+ <Yyl+PNcbtSwzlgvh@hovoldconsulting.com>
+ <YzL6aS6mktksLnqn@lpieralisi>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Add nodes to support WoW on
- WCN6750
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>
-References: <20220926045735.719-1-quic_mpubbise@quicinc.com>
- <f0bf8546-3def-a6a7-1d66-7367a9955289@somainline.org>
-From:   Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
-In-Reply-To: <f0bf8546-3def-a6a7-1d66-7367a9955289@somainline.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZMnXZHxt291hPkhl5g3CtGOc_9brj6kj
-X-Proofpoint-ORIG-GUID: ZMnXZHxt291hPkhl5g3CtGOc_9brj6kj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-28_02,2022-09-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
- clxscore=1015 lowpriorityscore=0 adultscore=0 phishscore=0 mlxlogscore=801
- priorityscore=1501 impostorscore=0 malwarescore=0 suspectscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209280035
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YzL6aS6mktksLnqn@lpieralisi>
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,61 +67,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 9/27/2022 6:38 PM, Konrad Dybcio wrote:
+On Tue, Sep 27, 2022 at 03:28:09PM +0200, Lorenzo Pieralisi wrote:
+> On Tue, Sep 20, 2022 at 10:47:56AM +0200, Johan Hovold wrote:
+> > Hi Lorenzo,
+> > 
+> > On Thu, Jul 21, 2022 at 08:47:20AM +0200, Johan Hovold wrote:
+> > > Allow the Qualcomm PCIe controller driver to be built as a module, which
+> > > is useful for multi-platform kernels as well as during development.
+> > > 
+> > > Reviewed-by: Rob Herring <robh@kernel.org>
+> > > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > > ---
+> > > 
+> > > Changes in v2
+> > >  - rebase on next-20220720 (adjust context)
+> > >  - add Rob and Mani's reviewed-by tags
+> > 
+> > Have you had a change to look at this one since you got back from
+> > vacation?
+> > 
+> > I believe this should be uncontroversial as we already have other
+> > modular dwc drivers and there's no mapping of legacy INTx interrupts
+> > involved.
 > 
+> Sincere apologies for the delay.
 > 
-> On 26.09.2022 06:57, Manikanta Pubbisetty wrote:
->> Add DT nodes to support WoW (Wake on Wireless) feature on WCN6750
->> WiFi hardware on SC7280 SoC.
->>
->> Signed-off-by: Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
->> ---
->> Changes from V1:
->> - Rebased on ToT
->>
->>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 13 +++++++++++++
->>   1 file changed, 13 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index 212580316d3e..3f6a3f575339 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -752,6 +752,17 @@ wpss_smp2p_in: slave-kernel {
->>   			interrupt-controller;
->>   			#interrupt-cells = <2>;
->>   		};
->> +
->> +		wlan_smp2p_out: wlan-ap-to-wpss {
->> +			qcom,entry-name = "wlan";
->> +			#qcom,smem-state-cells = <1>;
->> +		};
->> +
->> +		wlan_smp2p_in: wlan-wpss-to-ap {
->> +			qcom,entry-name = "wlan";
->> +			interrupt-controller;
->> +			#interrupt-cells = <2>;
->> +		};
->>   	};
->>   
->>   	pmu {
->> @@ -2004,6 +2015,8 @@ wifi: wifi@17a10040 {
->>   			qcom,rproc = <&remoteproc_wpss>;
->>   			memory-region = <&wlan_fw_mem>, <&wlan_ce_mem>;
->>   			status = "disabled";
->> +			qcom,smem-states = <&wlan_smp2p_out 0>;
->> +			qcom,smem-state-names = "wlan-smp2p-out";
-> Keep status last, please.
-> 
+> I am afraid it does look controversial - I need some time to go through
+> the full discussion and make up my mind, unfortunately we are late in
+> the cycle and I am dealing with the patch backlog, I believe this may
+> end up being a discussion targeting the v6.2 merge window I am afraid.
 
-Sure.
+No worries. Thanks for taking a look.
 
-> Other than that:
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> 
-
-Thanks for the review.
-
-Manikanta
+Johan
