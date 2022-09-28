@@ -2,129 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 089BC5ED4D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 08:27:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 827BE5ED558
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 08:49:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232974AbiI1G1F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 02:27:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57878 "EHLO
+        id S233302AbiI1GtK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 02:49:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232599AbiI1G1E (ORCPT
+        with ESMTP id S233483AbiI1Gsl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 02:27:04 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48A7511E97A;
-        Tue, 27 Sep 2022 23:27:03 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28S5vOZN032745;
-        Wed, 28 Sep 2022 06:26:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=96GX6WGAtIGy7fAFvigC5uxOtxBtb05yV5CxoED/WjM=;
- b=GU48KVCJvHW4HtOLjVWaoZSk9DM0k/RU83CrH2Qg3AhfuKWbgpFPnYq6XHbOYelZHRyR
- H28n5vyk7lRwpMHwyVhLyKUhNGo30/aioDDc+MAkvRCltUDI2qea4EHLPiN5YiU6h34H
- WG4LYGPUyWt84S07LU+BWJR4+Qvh/SUpNY+asHPMatrl6DM5Z2H1yOpXU3HJPUUi6pyQ
- W+HnPt0FP/6N5seJVaNvV4ecbQYscLpmIoBbV/vhE5hxkbJXFkRZkJ4fMgtuIflw6kMw
- nCgMfCwiOsr6UEn7rlSOHsx0PFKo5HU3rh0qdFF43coa6K/acUxSXUU+dxXgHjtxU4ez dA== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3juw262u4m-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 28 Sep 2022 06:26:54 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28S6Qriv022437
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 28 Sep 2022 06:26:53 GMT
-Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 27 Sep
- 2022 23:26:52 -0700
-Date:   Tue, 27 Sep 2022 23:26:51 -0700
-From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-CC:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <martin.botka@somainline.org>,
-        <angelogioacchino.delregno@somainline.org>,
-        <marijn.suijten@somainline.org>, <jamipkettunen@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] dt-bindings: firmware: document Qualcomm SM6375 SCM
-Message-ID: <20220928062651.GA9662@quicinc.com>
-References: <20220921001020.55307-1-konrad.dybcio@somainline.org>
- <95fb2bfb-6eb8-012d-88f8-c739d229ef70@linaro.org>
- <8faecd72-0cfd-18eb-d07a-53b3a23ed05a@somainline.org>
- <20220924000932.GA1450@quicinc.com>
- <fcc5bc9f-6b6b-b9ca-45aa-ff2c880a4774@linaro.org>
- <20220926165904.GA17938@quicinc.com>
- <90185f20-f91a-54b9-bb46-d186419b5169@linaro.org>
+        Wed, 28 Sep 2022 02:48:41 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA8551F5A34
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 23:47:11 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id o2so18901501lfc.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 23:47:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=7C7Gh5iO8tmlmQKsKFP7N50PmWc8XDX+LyCFteb17tw=;
+        b=XtgZivkxidkQGoZr99gC9PGUBcFFLZxx94SpLLKqNeFtO9VVs9ByK0toPcKONhDvUn
+         gxi9PxJ0Faswd1kXJueS09XKx0BcStX7L5GshgRa++lmqKzPEsbBlVMFA9Ri3f3qIt3J
+         Fnu5GWtHMpB1BsGrHsJKefwACCZYv9yu2PGvXG36wn8fnmTJOzE726hQH9p6S6ZnsDsG
+         Lso1dUVO4geL4mJB3IEmAvkNsG0UtGW3WnwECyQytNJlOtBmufYTON3Sdsy+aE1ZRqRi
+         oLmlhV4RwgaIgX4vm0cOiAwQh3OQA1vczT5RAtwI86NBGbAU3GMZm96QLfQnyLGF4Cfu
+         mU8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=7C7Gh5iO8tmlmQKsKFP7N50PmWc8XDX+LyCFteb17tw=;
+        b=Chh/Ckp6hb/zn6mc0k7XstZ29cLUYqYwECMTcSkSs4EkF2RZYLe++qhIKhGCIjn32c
+         njcq17Y9TuOTKLwgNzG1I9PNI8oVQS/+ylRKpowWOrFUHo5NPZHeglm8juIGF7PJabUn
+         geSniBzKp+R0xLG4mXBmtbT6Ps588zozvlZr+CTWKyFd76lb7ivcZ72RamDaTm7dXjvR
+         UOyvNaQ7uFzOqvwKI+wnjp6fQ1vI6t+ZPbgOigOIjuqaRPr4a6JLn6fnmjkW1ymjUn+K
+         ggSPnFUc1ogZH7ND0SeV7ePAIGWHoVtXdGuf3TNsQN/dkUgtvsDUSifzdha0FR8f/0hv
+         DK+w==
+X-Gm-Message-State: ACrzQf1v5ZzXNKI2RgSJ4iNYIdbx/lcr6RuSns7CzCI20GsfuftD6kVl
+        bbf7R+i9cATDLKvq0fY3DCCBLoGpBvgZHw==
+X-Google-Smtp-Source: AMsMyM4kWC7L7n0CSqtnXqJa/ZYGzj34wMrvdjJt1nZRVEm+xdjwSS/nG6RAF60VDlLdMIRSfdXpXw==
+X-Received: by 2002:a05:6512:b08:b0:4a1:d704:fc59 with SMTP id w8-20020a0565120b0800b004a1d704fc59mr5116375lfu.629.1664347629778;
+        Tue, 27 Sep 2022 23:47:09 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id cf32-20020a056512282000b0049adf925d00sm386736lfb.1.2022.09.27.23.47.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Sep 2022 23:47:08 -0700 (PDT)
+Message-ID: <f7ea53ce-421f-f608-ba50-f107a7f5cb87@linaro.org>
+Date:   Wed, 28 Sep 2022 08:47:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <90185f20-f91a-54b9-bb46-d186419b5169@linaro.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: OB53b7PgTQxNLfEVIL6dSAGKPrs8CnYw
-X-Proofpoint-ORIG-GUID: OB53b7PgTQxNLfEVIL6dSAGKPrs8CnYw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-28_02,2022-09-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- priorityscore=1501 mlxlogscore=994 mlxscore=0 spamscore=0 impostorscore=0
- phishscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0
- suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209280037
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Add nodes to support WoW on
+ WCN6750
+To:     Manikanta Pubbisetty <quic_mpubbise@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220926045735.719-1-quic_mpubbise@quicinc.com>
+ <f1057c78-39a2-6b26-f3c9-51cd99450dd2@linaro.org>
+ <a6e94553-c62f-128a-4122-94483b02bee7@quicinc.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <a6e94553-c62f-128a-4122-94483b02bee7@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sep 27 2022 13:42, Krzysztof Kozlowski wrote:
-> On 26/09/2022 18:59, Guru Das Srinagesh wrote:
-> > On Sep 24 2022 10:17, Krzysztof Kozlowski wrote:
-> >> On 24/09/2022 02:09, Guru Das Srinagesh wrote:
-> >>> On Sep 21 2022 20:43, Konrad Dybcio wrote:
-> >>>> Does it? I did not define this compatible in the driver, so it does
-> >>>> not consume any clocks.
-> >>>
-> >>> The bindings should describe only those compatibles that the driver supports -
-> >>> that is, both the driver and its bindings should be in sync.
-> >>
-> >> That's not entirely true. Bindings describe the hardware in the most
-> >> complete way we can. Not the driver. Whether driver supports something
-> >> or not, is not relevant here, except that we don't want to document
-> >> non-existing things or stuff out of tree.
-> > 
-> > Is this only applicable to compatibles or device tree properties in general?
+On 28/09/2022 08:00, Manikanta Pubbisetty wrote:
+> On 9/26/2022 2:30 PM, Krzysztof Kozlowski wrote:
+>> On 26/09/2022 06:57, Manikanta Pubbisetty wrote:
+>>> Add DT nodes to support WoW (Wake on Wireless) feature on WCN6750
+>>> WiFi hardware on SC7280 SoC.
+>>>
+>>> Signed-off-by: Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
+>>
+>> Thank you for your patch. There is something to discuss/improve.
+>>
+>>
+>>> ---
+>>> Changes from V1:
+>>> - Rebased on ToT
+>>>
+>>>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 13 +++++++++++++
+>>>   1 file changed, 13 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>>> index 212580316d3e..3f6a3f575339 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>>> @@ -752,6 +752,17 @@ wpss_smp2p_in: slave-kernel {
+>>>   			interrupt-controller;
+>>>   			#interrupt-cells = <2>;
+>>>   		};
+>>> +
+>>> +		wlan_smp2p_out: wlan-ap-to-wpss {
+>>
+>> Does not look like you tested the DTS against bindings. Please run `make
+>> dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
+>> for instructions).
+>>
 > 
-> This applies to everything.
-> 
-> > 
-> >>>
-> >>> Could you please update the driver with this compatible as well? Let's not
-> >>> merge this change without that first.
-> >>
-> >> This could be even merged without change in the driver. However it's not
-> >> the case here as driver already supports it, so your request is fulfilled.
-> > 
-> > My concern is that if somebody specifies a compatible/device tree property that
-> > the driver doesn't support, their expectations from adding that change will not
-> > be met. In addition to having the bindings describe HW in full, I think the
-> > driver should also be in sync with it for this reason.
-> 
-> As Rob answered, it might be difficult to keep all drivers in all
-> operating systems, bootloaders and firmware components to be in sync. :)
+> I'm sorry I was not aware of checking the DTS against bindings. I'll do 
+> the due diligence going forward. `make dtbs_check is throwing error of 
+> "No rule to make target". Not sure if we need pass any options to the 
+> command. I did try to understand the problem but all went in vain. Pls 
+> help understand if I'm missing anything.
 
-Ack.
+There is doc explaining possible usage, but in general works perfect
+without argument. If you do not have such target, means you run it on
+some ancient kernel, so anyway patch cannot be accepted and has to be
+rebased. Please always develop on newest kernel - newest mainline rc,
+maintainer's for-next branch or linux-next.
+
+Best regards,
+Krzysztof
+
