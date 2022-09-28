@@ -2,221 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F2D55EDCAA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 14:30:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33F415EDCEA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 14:38:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234021AbiI1MaI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 08:30:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38468 "EHLO
+        id S234046AbiI1Miq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 08:38:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233840AbiI1M3r (ORCPT
+        with ESMTP id S233263AbiI1Mip (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 08:29:47 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EFF62EF01;
-        Wed, 28 Sep 2022 05:29:42 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28SA6B06000601;
-        Wed, 28 Sep 2022 12:29:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=80Zx/fpfN738Afn5maYFKuP5UtNBBeyq0CUNs+Odxys=;
- b=QHK8rumMQb5qUKP8tXjHfDAhVwJsl2tb788lqrsymvhLgslRIjUAW4mjyty5wqadvPPG
- eQPkmDexnmxZFEJmuA3RHEXQpofangA1XZ/RNki0fTVxf92BDKGQAmSrqaYOha2sHllp
- nsTmikxdGmJDEyYPy4LvdY6gNr9Np5mVBd/7V+unLsYVHkeGKRKUwprCWDpMI+FCk5gh
- gp0wcNWGScdqCoy3Scy8DLtic5ePxTNxGlcjein1fADBp1g3cti4Mzal4736UmYil1/A
- WL2S5lUscaMeIFcpRMozhVctd+b3VqYLXBV4hw1kEEZB+6CPgWJXF8F8ssvy8VHpo8bV jA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jvep6sdg2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 28 Sep 2022 12:29:00 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28SCT0k0028720
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 28 Sep 2022 12:29:00 GMT
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Wed, 28 Sep 2022 05:28:54 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <linux-remoteproc@vger.kernel.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, <devicetree@vger.kernel.org>,
-        <krzysztof.kozlowski@linaro.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH v10 7/7] remoteproc: qcom: Add support for memory sandbox
-Date:   Wed, 28 Sep 2022 17:57:53 +0530
-Message-ID: <1664368073-13659-8-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1664368073-13659-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1664368073-13659-1-git-send-email-quic_srivasam@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: zpRcH8S1zFwzgjIhWxRYP_UvGPvMMhWW
-X-Proofpoint-ORIG-GUID: zpRcH8S1zFwzgjIhWxRYP_UvGPvMMhWW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-28_05,2022-09-28_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=999 mlxscore=0 spamscore=0 clxscore=1015 impostorscore=0
- phishscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0 malwarescore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209280077
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 28 Sep 2022 08:38:45 -0400
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9C75FDF;
+        Wed, 28 Sep 2022 05:38:43 -0700 (PDT)
+Received: by mail-oi1-f171.google.com with SMTP id o64so15189548oib.12;
+        Wed, 28 Sep 2022 05:38:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=message-id:date:subject:references:in-reply-to:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=MVE7K3TrhAl4+bBgRcalQ9xAo1RSSurrDIzau4FAdiA=;
+        b=J9HUrJ6Z3bmfY36G1y0e+yZTpqwYPCVpzYdolYvn3oYEf7G5jCEUdoyforxyd/+eNM
+         DJK9DkApjj+uiJqOLtgmOoHKrdz0xQOKRkwHiugS1cByLGiWyFipV2CbRi10RF4lH5ZY
+         lHoY7uBxz1IkvUh7ubwZEASn8zQpB5/Va4XL4FqUXxvZ/d2VB7mqSAPuZ63CjNmG7VB1
+         fnd2utfdhRZqTarCjUJff+Cj45U/hhFNHeBvHd4lHi7YcBchHGKo7mFpAshXlRJeHoVb
+         ZFQBYzCJG+iNEER2Epdj6mP1uTNK8sUJPIQEfYMFtrvBNVkd++zhXWb2me+7rnFfO1+e
+         cB5A==
+X-Gm-Message-State: ACrzQf1LnRjBt8rWwgRZ8BmW6HrNQz3nnha6H2G4/Mmbvb7y3l0ncmTF
+        NBXm67FrhLAM4NJ8lho5PC2z3N0BJQ==
+X-Google-Smtp-Source: AMsMyM6gmQL+Dwu1iC9t3a9GqCF7S4OOJ6ebtc4RVLBssqrpheYyby+MPcboUXEzzAY54JgKCPmtLw==
+X-Received: by 2002:a54:4105:0:b0:351:6350:5f73 with SMTP id l5-20020a544105000000b0035163505f73mr3024696oic.226.1664368722083;
+        Wed, 28 Sep 2022 05:38:42 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id i42-20020a056870892a00b00127a6357bd5sm2382714oao.49.2022.09.28.05.38.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Sep 2022 05:38:41 -0700 (PDT)
+Received: (nullmailer pid 4136674 invoked by uid 1000);
+        Wed, 28 Sep 2022 12:38:41 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_subbaram@quicinc.com, Pavel Machek <pavel@ucw.cz>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-leds@vger.kernel.org,
+        quic_collinsd@quicinc.com, linux-kernel@vger.kernel.org
+In-Reply-To: <20220928024239.3843909-3-quic_fenglinw@quicinc.com>
+References: <20220928024239.3843909-1-quic_fenglinw@quicinc.com> <20220928024239.3843909-3-quic_fenglinw@quicinc.com>
+Subject: Re: [PATCH v1 2/2] dt-bindings: add bindings for QCOM flash LED
+Date:   Wed, 28 Sep 2022 07:38:41 -0500
+Message-Id: <1664368721.029242.4136673.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update pil driver with SMMU mapping for allowing authorised
-memory access to ADSP firmware, by carveout reserved adsp memory
-region from device tree file.
+On Wed, 28 Sep 2022 10:42:39 +0800, Fenglin Wu wrote:
+> Add binding document for flash LED module inside Qualcomm Technologies,
+> Inc. PMICs.
+> 
+> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> ---
+>  .../bindings/leds/leds-qcom-flash.yaml        | 108 ++++++++++++++++++
+>  1 file changed, 108 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/leds/leds-qcom-flash.yaml
+> 
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
----
-Changes since V6:
-	-- Update smmu map and unmap function names.
-	-- Revert adsp_ops const change.
-	-- Move iommu check to within smmu map/unmap functions.
-Changes since V5:
-	-- Remove adsp_rproc_unmap_smmu, adsp_of_unmap_smmu, adsp_of_map_smmu and 
-	   adsp_rproc_map_smmu functions.
-	-- Remove find_loaded_rsc_table call back initialization.
-	-- Rename adsp_sandbox_needed to has_iommu.
-Changes since V4:
-	-- Split the code and add appropriate APIs for resource allocation and free.
-	-- Update adsp_unmap_smmu with missing free ops call.
-	-- Update normalizing length value in adsp_of_unmap_smmu.
-Changes since V3:
-	-- Rename is_adsp_sb_needed to adsp_sandbox_needed.
-	-- Add smmu unmapping in error case and in adsp stop.
-Changes since V2:
-	-- Replace platform_bus_type with adsp->dev->bus.
-	-- Use API of_parse_phandle_with_args() instead of of_parse_phandle_with_fixed_args().
-	-- Replace adsp->is_wpss with adsp->is_adsp.
-	-- Update error handling in adsp_start().
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
- drivers/remoteproc/qcom_q6v5_adsp.c | 56 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 55 insertions(+), 1 deletion(-)
+yamllint warnings/errors:
 
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index 4e70e76..2dc850f 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -9,6 +9,7 @@
- #include <linux/firmware.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
-+#include <linux/iommu.h>
- #include <linux/iopoll.h>
- #include <linux/kernel.h>
- #include <linux/mfd/syscon.h>
-@@ -48,6 +49,8 @@
- #define LPASS_PWR_ON_REG		0x10
- #define LPASS_HALTREQ_REG		0x0
- 
-+#define SID_MASK_DEFAULT        0xF
-+
- #define QDSP6SS_XO_CBCR		0x38
- #define QDSP6SS_CORE_CBCR	0x20
- #define QDSP6SS_SLEEP_CBCR	0x3c
-@@ -332,6 +335,47 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
- 	return 0;
- }
- 
-+static void adsp_unmap_carveout(struct rproc *rproc)
-+{
-+	struct qcom_adsp *adsp = rproc->priv;
-+
-+	if (adsp->has_iommu)
-+		iommu_unmap(rproc->domain, adsp->mem_phys, adsp->mem_size);
-+}
-+
-+static int adsp_map_carveout(struct rproc *rproc)
-+{
-+	struct qcom_adsp *adsp = rproc->priv;
-+	struct of_phandle_args args;
-+	long long sid;
-+	unsigned long iova;
-+	int ret;
-+
-+	if (!adsp->has_iommu)
-+		return 0;
-+
-+	if (!rproc->domain)
-+		return -EINVAL;
-+
-+	ret = of_parse_phandle_with_args(adsp->dev->of_node, "iommus", "#iommu-cells", 0, &args);
-+	if (ret < 0)
-+		return ret;
-+
-+	sid = args.args[0] & SID_MASK_DEFAULT;
-+
-+	/* Add SID configuration for ADSP Firmware to SMMU */
-+	iova =  adsp->mem_phys | (sid << 32);
-+
-+	ret = iommu_map(rproc->domain, iova, adsp->mem_phys,
-+			adsp->mem_size,	IOMMU_READ | IOMMU_WRITE);
-+	if (ret) {
-+		dev_err(adsp->dev, "Unable to map ADSP Physical Memory\n");
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
- static int adsp_start(struct rproc *rproc)
- {
- 	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
-@@ -342,9 +386,15 @@ static int adsp_start(struct rproc *rproc)
- 	if (ret)
- 		return ret;
- 
-+	ret = adsp_map_carveout(rproc);
-+	if (ret) {
-+		dev_err(adsp->dev, "ADSP smmu mapping failed\n");
-+		goto disable_irqs;
-+	}
-+
- 	ret = clk_prepare_enable(adsp->xo);
- 	if (ret)
--		goto disable_irqs;
-+		goto adsp_smmu_unmap;
- 
- 	ret = qcom_rproc_pds_enable(adsp, adsp->proxy_pds,
- 				    adsp->proxy_pd_count);
-@@ -400,6 +450,8 @@ static int adsp_start(struct rproc *rproc)
- 	qcom_rproc_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
- disable_xo_clk:
- 	clk_disable_unprepare(adsp->xo);
-+adsp_smmu_unmap:
-+	adsp_unmap_carveout(rproc);
- disable_irqs:
- 	qcom_q6v5_unprepare(&adsp->q6v5);
- 
-@@ -428,6 +480,8 @@ static int adsp_stop(struct rproc *rproc)
- 	if (ret)
- 		dev_err(adsp->dev, "failed to shutdown: %d\n", ret);
- 
-+	adsp_unmap_carveout(rproc);
-+
- 	handover = qcom_q6v5_unprepare(&adsp->q6v5);
- 	if (handover)
- 		qcom_adsp_pil_handover(&adsp->q6v5);
--- 
-2.7.4
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/leds/leds-qcom-flash.example.dts:21.17-32: Warning (reg_format): /example-0/flash-led@ee00:reg: property has invalid length (4 bytes) (#address-cells == 1, #size-cells == 1)
+Documentation/devicetree/bindings/leds/leds-qcom-flash.example.dts:23.23-31.19: Warning (unit_address_vs_reg): /example-0/flash-led@ee00/led@0: node has a unit name, but no reg or ranges property
+Documentation/devicetree/bindings/leds/leds-qcom-flash.example.dts:33.23-41.19: Warning (unit_address_vs_reg): /example-0/flash-led@ee00/led@1: node has a unit name, but no reg or ranges property
+Documentation/devicetree/bindings/leds/leds-qcom-flash.example.dtb: Warning (pci_device_reg): Failed prerequisite 'reg_format'
+Documentation/devicetree/bindings/leds/leds-qcom-flash.example.dtb: Warning (pci_device_bus_num): Failed prerequisite 'reg_format'
+Documentation/devicetree/bindings/leds/leds-qcom-flash.example.dtb: Warning (simple_bus_reg): Failed prerequisite 'reg_format'
+Documentation/devicetree/bindings/leds/leds-qcom-flash.example.dtb: Warning (i2c_bus_reg): Failed prerequisite 'reg_format'
+Documentation/devicetree/bindings/leds/leds-qcom-flash.example.dtb: Warning (spi_bus_reg): Failed prerequisite 'reg_format'
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
 
