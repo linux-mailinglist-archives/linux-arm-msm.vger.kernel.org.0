@@ -2,110 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 755BE5EDC7E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 14:24:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D88095EDC8D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 14:28:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231920AbiI1MYk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 08:24:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54650 "EHLO
+        id S233669AbiI1M2n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 08:28:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbiI1MYi (ORCPT
+        with ESMTP id S233644AbiI1M2j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 08:24:38 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF8FD1117C;
-        Wed, 28 Sep 2022 05:24:36 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8B00D61D15;
-        Wed, 28 Sep 2022 12:24:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3412C433C1;
-        Wed, 28 Sep 2022 12:24:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664367876;
-        bh=dBwYyIOq7xKF2yq5mWzeWyI6QLDHI+INr6nNI1xPzAo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=VpuW2ZIyPzbpYaGo3QDSDvBrtWqXtDUC+j3uR7J3Bojq4/w5XMcNNuN1MTSMm3AH1
-         M2soWfAHndJq5YYyEMVkglILBCy85fKd4Vx9y27d5Vyn1ux+VVMARTqmWpJOwxvpk/
-         kr/XrqEokc8BN4DvN/MWjY/22JOzvDwwuxsdc2zG2URG8BAZqAUsKk39G0enec/fS4
-         yl2hygFdXnojRHQiXobCPhN7bRw9QNyH5lIo3ce7pnw+xCYp6sOOWl4ax3V5F5fT5w
-         1aNnSi49wg8Wt3RUx4GL2iK5R5+zaryKXyjRN+f2UNvpsELPgLjLmDDxc806OLwZhh
-         XHlVMPz+GExoA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1odW7E-0001cB-VT; Wed, 28 Sep 2022 14:24:41 +0200
-Date:   Wed, 28 Sep 2022 14:24:40 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 09/10] drm/msm/dp: drop modeset sanity checks
-Message-ID: <YzQ9CPwxZXFJCQGG@hovoldconsulting.com>
-References: <20220913085320.8577-1-johan+linaro@kernel.org>
- <20220913085320.8577-10-johan+linaro@kernel.org>
- <d05290d8-7603-13b3-3cc4-d8509b03fc02@quicinc.com>
- <YzKi8XfV6V0p0TJi@hovoldconsulting.com>
- <d7688497-6229-40d4-3378-5036d699dfd7@quicinc.com>
+        Wed, 28 Sep 2022 08:28:39 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17B0E91D3F;
+        Wed, 28 Sep 2022 05:28:37 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28SCRw7s015032;
+        Wed, 28 Sep 2022 12:28:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=LJiOaGL2VVuoViglQqnwwg6m1j1+ldTNGNUKoaPwF/A=;
+ b=OrhXGJuv4TQxrN7njd0cDelmAUgflzjYQB5bNrMe7b60KpAxHb6u8GgWLJibnk9jWgQt
+ 9a9++w5651q9pzXteD9mEBSToU7mHDDQIQmVOYQcSKX6TJ+fK8Qpw3O+aSTPjkdxQqdC
+ fcY0OW+GjsM5LOz5LfHnkiRjP0ip0jn3HGhqAWc4rKp6pRPgezRhyQRcjmwx1TkVTfXw
+ +Qb4z5ClIPNUtjYHxDL0KeN0tl72m2ifef/pzgEgFAU3hupWG72g+fN7Yqp4B90mtEeB
+ 7Sc+n4lurdR9YSYuWKwGdTSnwVK6sXXNmlRNYZ7q6LY1bIgIbX//BZdWuZtWZS/4wcqJ 2w== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jvm4vg7p2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 28 Sep 2022 12:28:19 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28SCSIrJ028982
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 28 Sep 2022 12:28:18 GMT
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Wed, 28 Sep 2022 05:28:12 -0700
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <linux-remoteproc@vger.kernel.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>, <devicetree@vger.kernel.org>,
+        <krzysztof.kozlowski@linaro.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v10 0/7] Update ADSP pil loader for SC7280 platform
+Date:   Wed, 28 Sep 2022 17:57:46 +0530
+Message-ID: <1664368073-13659-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d7688497-6229-40d4-3378-5036d699dfd7@quicinc.com>
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 5ltP-N2xlDEkrKbm4mGJo01E7aDAeZDv
+X-Proofpoint-GUID: 5ltP-N2xlDEkrKbm4mGJo01E7aDAeZDv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-28_05,2022-09-28_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
+ suspectscore=0 clxscore=1015 adultscore=0 mlxlogscore=999 spamscore=0
+ mlxscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2209280077
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 27, 2022 at 11:42:53AM -0700, Abhinav Kumar wrote:
-> On 9/27/2022 12:14 AM, Johan Hovold wrote:
-> > On Mon, Sep 26, 2022 at 11:17:20AM -0700, Abhinav Kumar wrote:
-> >> On 9/13/2022 1:53 AM, Johan Hovold wrote:
-> >>> Drop the overly defensive modeset sanity checks of function parameters
-> >>> which have already been checked or used by the callers.
-> >>>
-> >>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> >>
-> >> The change LGTM, hence
-> >>
-> >> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> >>
-> >> I think we can use below fixes tag so that we can pick up this entire
-> >> series for the fixes cycle.
-> >>
-> >> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-> > 
-> > Perhaps that's a requirement for drm, but I wouldn't add a Fixes tag for
-> > this otherwise as it's not a bug.
-> > 
-> > You also have to watch out for Sasha and his autosel scripts which will
-> > probably try to backport this to stable if it finds a Fixes tag.
+Update ADSP pil loader driver for SC7280 platforms.
 
-> Discussed with Rob on IRC, we will apply everything except the last two 
-> patches of this series in the -fixes and take these two for the next 
-> kernel rev push.
+Changes since V9:
+	-- Add missing unevaluatedProperties in dt-bindings glink-edge.
+Changes since V8:
+	-- Add glink-edge reference in dt-bindings.
+	-- Remove redundant glinke-edge properties in dt-bindings.
+	-- Make all reg propertioes as mandatory in dt-bindings.
+	-- Add iommus property in dt-bindings.
+Changes since V7:
+	-- Drop out of reset time out patch.
+	-- Remove redundant clocks in dt bindings.
+	-- Fix dt compilation error in dt bindings.
+Changes since V6:
+	-- Update dt-bindings with glink-edge
+	-- Add qcom,qmp property.
+	-- Update parse firmware callback.
+	-- Update commit message.
+	-- Update smmu map and unmap function names.
+	-- Revert adsp_ops const change.
+	-- Move iommu check to within smmu map/unmap functions.
+Changes since V5:
+	-- Remove adsp_rproc_unmap_smmu, adsp_of_unmap_smmu, adsp_of_map_smmu and 
+	   adsp_rproc_map_smmu functions.
+	-- Remove find_loaded_rsc_table call back initialization.
+	-- Rename adsp_sandbox_needed to has_iommu.
+	-- Update parse_fw callback in rproc ops.
+	-- Remove qcom,adsp-memory-regions property in dt-bindings.
+	-- Change adsp binary extension name.
+Changes since V4:
+	-- Update halt registers description in dt bindings.
+	-- Update Memory sandboxing with proper APIs for resource
+	   allocation and free.
+Changes since V3:
+	-- Rename is_adsp_sb_needed to adsp_sandbox_needed.
+	-- Update sc7280 compatible name entry in sorted order.
+	-- Add smmu unmapping in error case and in adsp stop.
+	-- Revert converting sdm845 dt bindings to generic and 
+	   create new dt bindings for sc7280.
+Changes since V2:
+	-- Generated patch with -M flag.
+	-- Add Clock property in dt bindings.
+	-- Add qcom,adsp-memory-regions property.
+	-- Add is_adsp_sb_needed flag instead of is_wpss.
+	-- Initialize is_adsp_sb_needed flag.
+	-- Remove empty proxy pds array.
+	-- Replace platform_bus_type with adsp->dev->bus.
+	-- Use API of_parse_phandle_with_args() instead of 
+	    of_parse_phandle_with_fixed_args().
+	-- Replace adsp->is_wpss with adsp->is_adsp.
+	-- Update error handling in adsp_start().
+Changes since V1:
+	-- Change reg property maxItems to minItems and update description.
+	-- Fix typo errors.
 
-So the fixes go in 6.0 and the two follow-on cleanups in 6.1? Or did you
-mean 6.1 and 6.2?
+Srinivasa Rao Mandadapu (7):
+  dt-bindings: remoteproc: qcom: Add SC7280 ADSP support
+  remoteproc: qcom: Add flag in adsp private data structure
+  remoteproc: qcom: Add compatible name for SC7280 ADSP
+  remoteproc: qcom: Update rproc parse firmware callback
+  remoteproc: qcom: Replace hard coded values with macros
+  remoteproc: qcom: Add efuse evb selection control
+  remoteproc: qcom: Add support for memory sandbox
 
-Johan
+ .../bindings/remoteproc/qcom,sc7280-adsp-pil.yaml  | 195 +++++++++++++++++++++
+ drivers/remoteproc/qcom_q6v5_adsp.c                | 124 ++++++++++++-
+ 2 files changed, 315 insertions(+), 4 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
+
+-- 
+2.7.4
+
