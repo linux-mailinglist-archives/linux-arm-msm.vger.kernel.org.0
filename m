@@ -2,75 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C2EF5ED7A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 10:25:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3349D5ED7C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 10:30:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233231AbiI1IZZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 04:25:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47460 "EHLO
+        id S233766AbiI1IaQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 04:30:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233055AbiI1IZY (ORCPT
+        with ESMTP id S233681AbiI1IaH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 04:25:24 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E83FE5072E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 01:25:18 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id a8so19230857lff.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 01:25:18 -0700 (PDT)
+        Wed, 28 Sep 2022 04:30:07 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A698552085
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 01:30:05 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id g1so1645665lfu.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 01:30:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=44BDHNSti79tl8v1Eaa7d6KYOVFkLP1VzWu1QAI0Esc=;
-        b=RRP7gVQNWd4jOJ3YkjEKGjRwsb/inj6ShkxUxpCzFUXnrrLQAvUEXls71fGmU57mg9
-         LIXaW33WyWLiPEqPFCufgX99n/i1w+ksxWFx/3TCuyAK0TZ9Untje5vKu+Z9YBXl0Ft+
-         bdRQzvgON66SjoXR9sVSQHP5r0F4SA/hY4Q8+3pcno+C5/p0F/0H32fBKmSwFJ/q+nQC
-         hWoBPILfKg9g/OJvDcfb4J9lGLKh+mUImjWDOibS8joTGtZT/vooOkn603u9pOcULjKL
-         wSkSm1JjugUmiQ910+kGAJ0kYD2KWdI8raE4jFySNrNDlTWqHHBP5YQHB2amClo5DhVH
-         AIFA==
+        bh=NCs5vawQU96pEooh4cqbFuck7uG4MvVs+nCclYJ20Lc=;
+        b=izxF/Q1zZ+0VT46yoktPGdqNU3gKyH3DV0xGCXmhsQI0OCUsYpmvzfmNyAJFRYxGZX
+         RtqorzvQxpeSVHRc+l2xzolAwvOj6Jbj8ClFbiPK/FBqZAgNr1s3SNNT73Y9T9eY8lzH
+         f1nXlErTNLOzTL9g5uibixKpp47kKtcC/6hfSc63MBt6TT0ccyr6S+LAv5JORm4HarU+
+         dGGcGX9ZZMHpwYrXS5uXTQLPP7Lxme25KN/AdH4Fml+pmPqJHK0J3s3wOsxJewRjZ3Sf
+         3pQRnviXH/5+V4qAs3lZNJ8fTKaYitFjG4lcrHHxdFMn32dNrPF5XeKLSSn/GxZWwynf
+         YSzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=44BDHNSti79tl8v1Eaa7d6KYOVFkLP1VzWu1QAI0Esc=;
-        b=1gzKFZRyxqGGtcoEnOTdLRtyRVrbX7BXN4bd4nNQ2nSEBarenJkdxBeLvjO/UPgbwL
-         KXshcrplQLZ/I2m19jGQ3+NnKadsPk1WZ3sD1vXjqtTA5e12Hp8031QNu6am+7RrpY9r
-         c8vBb3dYHqPS4qZIGqXPq75Jsbd05tvQMK7cHI3Dn+tuIz/5LneMmqoXFgIvv1AT9+cz
-         GgdflI4lwASIq+5NEuB51SdWlc0uy0dlIgT62g/Aqq1TyR1RO01qWLPkxQw8RMe+fuEr
-         BSaqZAE+bpjenRdER9LWzulmc8+sk6bE714r/9ggV7Ob7u0basF/qSN6mzeOOFrTqop8
-         eWaQ==
-X-Gm-Message-State: ACrzQf1xIN6Y7MluYRPQVaqGr+a1ihdtNRl2TrKgR0iXuTdhGINEAvyC
-        Lhm7MNshr99i1TQG6dyGKdAI9g==
-X-Google-Smtp-Source: AMsMyM7mHw+7O59tuyhPhnTMDLtidSY7Y9Ozeqjd0eFgcm1SvbjWGeI0J7uO+JL8WwD3O6Ty62EexQ==
-X-Received: by 2002:a05:6512:159e:b0:498:f1eb:f7a with SMTP id bp30-20020a056512159e00b00498f1eb0f7amr12170717lfb.425.1664353517084;
-        Wed, 28 Sep 2022 01:25:17 -0700 (PDT)
+        bh=NCs5vawQU96pEooh4cqbFuck7uG4MvVs+nCclYJ20Lc=;
+        b=xe9jBYR3VAxp5dP+0lpvRXBaLKI5j7HHe0T/hqz1TDgaAUYGsHEfQmRmLl38l69ubK
+         SdaWap2dY58mpy0/ovdOei8A6C5Fgomt89MkQ4bXZ1V87ktvzm9J7ZVe5ddl2QRRT9PO
+         YgqUxuQoKVO8UFVHnkMTAg/roOScnj15cIz47L5gGN6TnQXD2ws8yWd8UmhqIO0tqTyg
+         aLHDb3bgFQjW98Qzx/esvcw3+mUwC77XuGoqQpmYy61KhtkgNIL9cAcLxhOvxKt8OG2g
+         +7VArcUGsF5dyQjXmnxiw6a8MV9zQpXr6YjhO9vkYhGpS4lcwnqyzrmdvheQAp1+GwWo
+         o65Q==
+X-Gm-Message-State: ACrzQf1bKC8yqNDkHmkbNoxcOl9vYy9Jz3aWqqRURVk78Pt+NqoWn+Qb
+        7PAEBVT/jcL/V4IuqxJhT5A2oQ==
+X-Google-Smtp-Source: AMsMyM7WVCkxYWM9czOkGqjZbJb1PFZ7Z6R2P1OEocB90/+Nr7YuvYckWdW0uC++w6j+Xcl1lkxb5Q==
+X-Received: by 2002:a05:6512:798:b0:497:aa2b:8b10 with SMTP id x24-20020a056512079800b00497aa2b8b10mr13910475lfr.636.1664353804044;
+        Wed, 28 Sep 2022 01:30:04 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id n13-20020a05651203ed00b004978e51b691sm408596lfq.266.2022.09.28.01.25.15
+        by smtp.gmail.com with ESMTPSA id k20-20020a05651c10b400b0026aba858fbfsm371190ljn.137.2022.09.28.01.30.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Sep 2022 01:25:16 -0700 (PDT)
-Message-ID: <7757c8bd-67cc-17cf-657d-da83fb3994b7@linaro.org>
-Date:   Wed, 28 Sep 2022 10:25:15 +0200
+        Wed, 28 Sep 2022 01:30:02 -0700 (PDT)
+Message-ID: <2bd60261-a977-3225-8d41-4987252e6abb@linaro.org>
+Date:   Wed, 28 Sep 2022 10:30:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Subject: Re: [PATCH v5 1/3] dt-bindings: pinctrl: qcom: add sdm670 pinctrl
+Subject: Re: [PATCH v4 1/5] dt-bindings: mfd: qcom-spmi-pmic: Add pm6125
+ compatible
 Content-Language: en-US
-To:     Richard Acayan <mailingradian@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20220927230833.125749-1-mailingradian@gmail.com>
- <20220927230833.125749-2-mailingradian@gmail.com>
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220926190148.283805-1-marijn.suijten@somainline.org>
+ <20220926190148.283805-2-marijn.suijten@somainline.org>
+ <052630d0-299e-e468-b2dd-266d371e2b0f@linaro.org>
+ <20220928081055.p66huqct2wnrsrdx@SoMainline.org>
+ <3f2e62f5-a6e4-7011-3f5b-29a6657eae79@linaro.org>
+ <20220928082340.mkn23ersrtzb5oth@SoMainline.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220927230833.125749-2-mailingradian@gmail.com>
+In-Reply-To: <20220928082340.mkn23ersrtzb5oth@SoMainline.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,155 +90,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/09/2022 01:08, Richard Acayan wrote:
-> There is a new driver for the Snapdragon 670 TLMM (Top-Level Mode
-> Multiplexer). Document it.
+On 28/09/2022 10:23, Marijn Suijten wrote:
+>>
+>>
+>> This is a automated message, don't get it too personal. A lot of people
+>> are not aware they have to do it, so I just one, same reply. I don't
+>> know whether you are aware of the process and just forgot to include it.
+>> If that's the case, just ignore the message.
 > 
-> Adapted from qcom,sm6350-pinctrl.yaml.
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../bindings/pinctrl/qcom,sdm670-tlmm.yaml    | 138 ++++++++++++++++++
->  1 file changed, 138 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
-> new file mode 100644
-> index 000000000000..1d8e76db57c6
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
-> @@ -0,0 +1,138 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pinctrl/qcom,sdm670-tlmm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. SDM670 TLMM block
-> +
-> +maintainers:
-> +  - Richard Acayan <mailingradian@gmail.com>
-> +
-> +description: |
-> +  This binding describes the Top Level Mode Multiplexer (TLMM) block found
-> +  in the SDM670 platform.
-> +
-> +allOf:
-> +  - $ref: pinctrl.yaml#
-> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sdm670-tlmm
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts: true
-> +  interrupt-controller: true
-> +  '#interrupt-cells': true
-> +  gpio-controller: true
-> +  gpio-reserved-ranges:
-> +    minItems: 1
-> +    maxItems: 75
-> +
-> +  '#gpio-cells': true
-> +  gpio-ranges: true
-> +  wakeup-parent: true
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +additionalProperties: false
-> +
-> +patternProperties:
-> +  '-state$':
+> That's useful, what software are you using for this?  Perhaps I can run
+> it as well, both to preempt myself and others.
 
-Use " quotes here.
+https://gitlab.com/robherring/pw-utils/-/blob/master/mail-add-acks-reply
+https://gitlab.com/robherring/pw-utils/-/blob/master/pw-review#L97
 
-> +    oneOf:
-> +      - $ref: "#/$defs/qcom-sdm670-tlmm-state"
-> +      - patternProperties:
-> +          "-pins$":
-> +            $ref: "#/$defs/qcom-sdm670-tlmm-state"
-> +        additionalProperties: false
-> +
-> +$defs:
-> +  qcom-sdm670-tlmm-state:
-> +    type: object
-> +    description:
-> +      Pinctrl node's client devices use subnodes for desired pin configuration.
-> +      Client device subnodes use below standard properties.
-> +
-> +    properties:
-> +      pins:
-> +        description:
-> +          List of gpio pins affected by the properties specified in this
-> +          subnode.
-> +        items:
-> +          oneOf:
-> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-4][0-9])$"
-> +            - enum: [ ufs_reset, sdc1_rclk, sdc1_clk, sdc1_cmd, sdc1_data,
-> +                      sdc2_clk, sdc2_cmd, sdc2_data ]
-> +        minItems: 1
-> +        maxItems: 36
-> +
-> +      function:
-> +        description:
-> +          Specify the alternative function to be configured for the specified
-> +          pins.
-> +
-> +        enum: [ adsp_ext, agera_pll, atest_char, atest_tsens, atest_tsens2, atest_usb1, atest_usb10,
-> +                atest_usb11, atest_usb12, atest_usb13, atest_usb2, atest_usb20, atest_usb21,
-> +                atest_usb22, atest_usb23, cam_mclk, cci_async, cci_i2c, cci_timer0, cci_timer1,
-> +                cci_timer2, cci_timer3, cci_timer4, copy_gp, copy_phase, dbg_out, ddr_bist,
-> +                ddr_pxi0, ddr_pxi1, ddr_pxi2, ddr_pxi3, edp_hot, edp_lcd, gcc_gp1, gcc_gp2, gcc_gp3,
-> +                gp_pdm0, gp_pdm1, gp_pdm2, gpio, gps_tx, jitter_bist, ldo_en, ldo_update,
-> +                lpass_slimbus, m_voc, mdp_vsync, mdp_vsync0, mdp_vsync1, mdp_vsync2, mdp_vsync3,
-> +                mss_lte, nav_pps, pa_indicator, pci_e0, pci_e1, phase_flag, pll_bist, pll_bypassnl,
-> +                pll_reset, pri_mi2s, pri_mi2s_ws, prng_rosc, qdss_cti, qdss, qlink_enable,
-> +                qlink_request, qua_mi2s, qup0, qup1, qup10, qup11, qup12, qup13, qup14, qup15, qup2,
-> +                qup3, qup4, qup5, qup6, qup7, qup8, qup9, qup_l4, qup_l5, qup_l6, sdc4_clk,
-> +                sdc4_cmd, sdc4_data, sd_write, sec_mi2s, ter_mi2s, tgu_ch0, tgu_ch1, tgu_ch2,
-> +                tgu_ch3, tsif1_clk, tsif1_data, tsif1_en, tsif1_error, tsif1_sync, tsif2_clk,
-> +                tsif2_data, tsif2_en, tsif2_error, tsif2_sync, uim1_clk, uim1_data, uim1_present,
-> +                uim1_reset, uim2_clk, uim2_data, uim2_present, uim2_reset, uim_batt, usb_phy, vfr_1,
-> +                vsense_trigger, wlan1_adc0, wlan1_adc1, wlan2_adc0, wlan2_adc1, wsa_clk, wsa_data, ]
-> +
-> +
-> +      bias-disable: true
-> +      bias-pull-down: true
-> +      bias-pull-up: true
-> +      drive-strength: true
-> +      input-enable: true
-> +      output-high: true
-> +      output-low: true
-> +
-> +    required:
-> +      - pins
-> +
-> +    allOf:
-> +      - $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
+> (Side-note: I should get accustomed to `b4 shazam` to automatically pick
+>  this up from the list, instead of rebasing / re-applying local patches)
 
-Drop quotes.
-
-> +      - if:
-> +          properties:
-> +            pins:
-> +              pattern: "^gpio([0-9]|[1-9][0-9]|1[0-4][0-9])$"
-> +        then:
-> +          required:
-> +            - function
-> +
-
-You can drop it (and move the ref just after description). This will be
-handled with common schema:
-https://lore.kernel.org/linux-devicetree/20220927173702.5200-1-krzysztof.kozlowski@linaro.org/T/#m48dedb167f16315dbacd5c56c57f9033fe28a5d9
-
-This however is not a dependency - if you remove these lines, your patch
-can still be applied independently of mine.
+Would be nice if b4 could update patches in current branch adding the
+tags... but git reset --hard && b4 shazam should work as well.
 
 Best regards,
 Krzysztof
