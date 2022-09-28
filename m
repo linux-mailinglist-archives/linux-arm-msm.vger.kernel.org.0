@@ -2,139 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C98AA5EDCFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 14:40:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B27BC5EDD94
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 15:20:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233733AbiI1Mkw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 08:40:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37182 "EHLO
+        id S233480AbiI1NUZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 09:20:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234089AbiI1Mki (ORCPT
+        with ESMTP id S232866AbiI1NUY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 08:40:38 -0400
-Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FEAE4B0D6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 05:40:24 -0700 (PDT)
-Date:   Wed, 28 Sep 2022 12:40:01 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1664368815; x=1664628015;
-        bh=gUhqstaRapz/dEFPQohg3Styf6DL29cIpA3fSfsODL0=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID;
-        b=uKBl0duHxBU6/3DfUmYyFojQeFiDvH357JUuEaqkUNCQasEkSULs5UyM3MJhF+ZU3
-         kERKMcAta7fX7gD1vUibykJ2OY59v8LxBynlLjtQ76x6Y2nlWNRTC2kQz4m4ryuFhg
-         7JS49SLypKLK182MRKiC9Wde2xj33htrUGbIEqSjbNlxWWvPSKF8ZlU9VUv/hf2Jpk
-         zPiiGQAGibOuYze/BxGcRxRnTtu5c+glzko/2ZHEHoIBpQpowwVBkFSZQ75qQypGQ8
-         FaR8ffQ+8uiCBpOYoWI/B21YYEaF9w/m4ok7etQwAtcgXV7AaSrOUBRlNyUaV8ODoe
-         0D7cfAjKYZCBw==
-To:     devicetree@vger.kernel.org
-From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Cc:     Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>,
-        Josef W Menad <JosefWMenad@protonmail.ch>,
-        Markuss Broks <markuss.broks@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
-        "Lin, Andy Gross" <agross@kernel.org>,
+        Wed, 28 Sep 2022 09:20:24 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 838A077EB2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 06:20:21 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id i26so20310592lfp.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 06:20:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=RRNTzceZaqHDiT7tFNItA9BVbwZc1ms7T50MCemBqpU=;
+        b=rVkVuZcZqaqAfme+jh1CDACtX+SwjXoV0UESeIDb/J0HFkb+9oXE7cUVeFcBaHH0Te
+         6SwOKSUy0wEFq5dcEWyhMTV+e5KEjWnhA+td+2kJhcVq5gRYVtEtcgT04Fn+3TpbN4Zy
+         bV42wGyJ31F/XiPJMuT74R1Q7BSb7FEcUHvPI5zrv1759dlvQ5bzIDb/oGmd0HQv2BZR
+         yGLGAoKB4d1Xhz+zClWSd6vfgrFUzFEu0vMflGAFxtHtWc7g9LXdF081rrKk+WLUFqOQ
+         gXKuymnh4lLO4r4ZJ0O0zKeX8f/M66/6URraNrbJA7e8ark0hpe733WKUK6vCHoysy4r
+         R1Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=RRNTzceZaqHDiT7tFNItA9BVbwZc1ms7T50MCemBqpU=;
+        b=fZSve21GMo1iCgabYwmZ4tA1GB9zX2NxT2KU+xlFMdnPDOIClTNKl7Gv3Sh6h612DT
+         7C626nqhFH5FwKwTOjVnzm5IsMdNz+8olCRjO4gLj/JdLorSgyO6hrnx69CfxH6JFyHd
+         WGUSepmWjVGNrZ30VI+lTNN8YHUNAm4nMt2DiZOvKDh8Lzn7mxWB7+UmEpMv8XwYnNEd
+         Aqgt+clqXIKyrP3vNRD6omv0twFDC9CyivK0IYaIHFYkNCHGSHa6xt4qhS4d0IFn+iBv
+         KeIMVU6yF/p23BAKmuyzwcSQHf+ZXlH0Eyv9MlXTx8DvNlfW9n8eX4W5K7YnK7AMgnYE
+         bxfA==
+X-Gm-Message-State: ACrzQf3/XgBjy/0mwhX6pUSB5IIAOhHU0CIbWiapQGGbJy+CGfU7mG58
+        SpfDAAeAE2JNWheXe1MlQhYyRA==
+X-Google-Smtp-Source: AMsMyM7AaHNbIOeJKncxN0eTy/GThqjSlw30ZOShYas28fF/AtZNvH2FVKtnPvrEx45dIben3y+maQ==
+X-Received: by 2002:ac2:54a4:0:b0:498:f55c:7fc0 with SMTP id w4-20020ac254a4000000b00498f55c7fc0mr12420848lfk.420.1664371219806;
+        Wed, 28 Sep 2022 06:20:19 -0700 (PDT)
+Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id p11-20020ac246cb000000b00497ad9ae486sm478484lfo.62.2022.09.28.06.20.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Sep 2022 06:20:19 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: [PATCH v2 4/4] arm64: dts: qcom: msm8916-samsung-j5-common: Add Hall sensor
-Message-ID: <20220928123851.104761-1-linmengbo0689@protonmail.com>
-In-Reply-To: <20220928121717.102402-1-linmengbo0689@protonmail.com>
-References: <20220928110049.96047-1-linmengbo0689@protonmail.com> <20220928121717.102402-1-linmengbo0689@protonmail.com>
-Feedback-ID: 40467236:user:proton
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+Subject: [PATCH 1/2] slimbus: qcom-ngd-ctrl: check for device runtime PM status during ISR
+Date:   Wed, 28 Sep 2022 15:20:10 +0200
+Message-Id: <20220928132011.455347-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Samsung Galaxy J5 2015 and 2016 have a Hall sensor on GPIO pin 52.
-Add GPIO Hall sensor for them.
+Slimbus core interrupt is getting fired after suspend. At this point
+ADSP slimbus hardware is off with gated clocks which is leading to an
+unclocked access when HLOS slimbus tried to read the interrupt
+status register in the ISR.
 
-Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+Co-developed-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+Signed-off-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- .../boot/dts/qcom/msm8916-samsung-j3.dts      |  4 +++
- .../dts/qcom/msm8916-samsung-j5-common.dtsi   | 26 +++++++++++++++++++
- 2 files changed, 30 insertions(+)
+ drivers/slimbus/qcom-ngd-ctrl.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j3.dts b/arch/arm64/b=
-oot/dts/qcom/msm8916-samsung-j3.dts
-index bf8672ebedcd..7fd357b7f728 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-j3.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j3.dts
-@@ -19,3 +19,7 @@ tz-apps@85a00000 {
- =09=09};
- =09};
- };
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index cec11aa106bf..ba36eb5c0de3 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -763,7 +763,14 @@ static irqreturn_t qcom_slim_ngd_interrupt(int irq, void *d)
+ {
+ 	struct qcom_slim_ngd_ctrl *ctrl = d;
+ 	void __iomem *base = ctrl->ngd->base;
+-	u32 stat = readl(base + NGD_INT_STAT);
++	u32 stat;
 +
-+&gpio_hall_sensor {
-+=09status =3D "disabled";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi b/arch=
-/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
-index 4f71609bf6f8..54190144f823 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
-@@ -3,6 +3,7 @@
- #include "msm8916-pm8916.dtsi"
-=20
- #include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-=20
- / {
- =09aliases {
-@@ -21,6 +22,23 @@ tz-apps@85500000 {
- =09=09};
- =09};
-=20
-+=09gpio_hall_sensor: gpio-hall-sensor {
-+=09=09compatible =3D "gpio-keys";
++	if (pm_runtime_suspended(ctrl->ctrl.dev)) {
++		dev_warn_once(ctrl->dev, "Interrupt received while suspended\n");
++		return IRQ_NONE;
++	}
 +
-+=09=09pinctrl-names =3D "default";
-+=09=09pinctrl-0 =3D <&gpio_hall_sensor_default>;
-+
-+=09=09label =3D "GPIO Hall Effect Sensor";
-+
-+=09=09event-hall-sensor {
-+=09=09=09label =3D "Hall Effect Sensor";
-+=09=09=09gpios =3D <&msmgpio 52 GPIO_ACTIVE_LOW>;
-+=09=09=09linux,input-type =3D <EV_SW>;
-+=09=09=09linux,code =3D <SW_LID>;
-+=09=09=09linux,can-disable;
-+=09=09};
-+=09};
-+
- =09gpio-keys {
- =09=09compatible =3D "gpio-keys";
-=20
-@@ -193,6 +211,14 @@ l18 {
- };
-=20
- &msmgpio {
-+=09gpio_hall_sensor_default: gpio-hall-sensor-default-state {
-+=09=09pins =3D "gpio52";
-+=09=09function =3D "gpio";
-+
-+=09=09drive-strength =3D <2>;
-+=09=09bias-disable;
-+=09};
-+
- =09gpio_keys_default: gpio-keys-default-state {
- =09=09pins =3D "gpio107", "gpio109";
- =09=09function =3D "gpio";
---=20
-2.30.2
-
++	stat = readl(base + NGD_INT_STAT);
+ 
+ 	if ((stat & NGD_INT_MSG_BUF_CONTE) ||
+ 		(stat & NGD_INT_MSG_TX_INVAL) || (stat & NGD_INT_DEV_ERR) ||
+-- 
+2.34.1
 
