@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D32D5EDF73
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 17:00:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 534275EDF79
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 17:00:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234657AbiI1PA2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 11:00:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38392 "EHLO
+        id S234692AbiI1PAc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 11:00:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234658AbiI1PAI (ORCPT
+        with ESMTP id S234665AbiI1PAK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 11:00:08 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05DE12ED54
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:00:02 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id j24so14643955lja.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:00:02 -0700 (PDT)
+        Wed, 28 Sep 2022 11:00:10 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEA752ED77
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:00:03 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id a2so20772298lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:00:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=qzCxOTmp+gxnMgVdAJunjjkZh8T2GclSG/MzKsGIiUY=;
-        b=NIQb8EfBe92SnYRtXYZjYgO8aXOfamVx2hYlMg6azG7W5+C8LsZJNRbxSmyrhF47w9
-         kgpf+KO+5Jp7Ve6+VMgVYkGNCjYDfFqpSyTt/8R5a4O7f0jcFI0IMvEQvtrKLZjSUvL+
-         ziqRbFHB4++sG6ybw2a8pQY4EWEEyTHCaxJ4MZAQkOHfzEmytscTV//Flh8zc5RCWvb0
-         C2wYnuGzyFRaC5Xg4MLQa67fOfmxUzKr+9SA+/FdeVWN3pph5Khsq1fCYeqC0AinsgP2
-         cstQFHZfiaaeBIa9uIOeUGUQJjcyxnpihAyP1HeFuVet2cquF4dLFShI4r74MEB9HiEy
-         ZRbA==
+        bh=qM++dOOdxNq2arb6uMckrS2brFOjaJGV3RM2kNir3B8=;
+        b=kO4OdXiaoIFCxO3qD8o2DHgPuB6DOnejXQhxA0lKvO4OTLdTS9lpVMnhl8qU9FUbrK
+         q3ofJjqcy+1+F8stypHzRnFvrzJn6YDjlgQ2jpD/+UuINqPqYAJUkvVbXhP63u26z81f
+         Gi1Uh3yh7DOlVz88Mb58kbeCjCYqF6hCoeH5o8tPosPW2qg2KMHgvpIuOyeLQnOjA0gX
+         rU4cHTOCi8+7gtT7s74cWb1A7mBah+JMW82Aeb7SCoHd0Wu1sSlg6Wf9XflMeq0oKbW5
+         yuV/UXFGuTVak7p6h+JJoJVmagTtFG20s8lUJE/j+t+IXxhJbGMDxYfxy01fdXtr0BwH
+         z5cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=qzCxOTmp+gxnMgVdAJunjjkZh8T2GclSG/MzKsGIiUY=;
-        b=YASWXxSZhMBCKzils4Rs7hXtAfcH64RgpXPfxbBNK2wEwx87/8rQgN9pxwO0mIluqo
-         SOtnxjlpewKNd6qkabt48bCfC8cgzSPSUrB7sNBwfOV9jh/PKzV7XLcLuBmNvhGTInKG
-         HftlaxkA4aVW7/iplg5AlvHjkvMl+gX8joSQY2fojh3FoWUHzY5Oxtk6glOWnVabzVtR
-         hZnYF2vUNX9iPX7fj+R9BM0nNBU7fXCz4C3Eq8zVpf2WT+4cJwF0oWkUpntQ0LAuFLMU
-         iJ5eQ4msmTdz/tgaC/fuG134C0V7Z9vzy3WphEhSnnUejCj6l0Q90h52osudfaxg9TG/
-         kdOA==
-X-Gm-Message-State: ACrzQf3GXpBtIs/3OxAxQfK2fcbd3gXE+vYveLJ6YSbwPU2mGeIPdxOW
-        Ptf96KURR+1XGFacIupO+2JBuQ==
-X-Google-Smtp-Source: AMsMyM5ruvrENEeGdlBxYOCN0yHTNa3cSP7FoEJE2ODTWDxMM7xcWr29/rJcssZ5L8edv984J8KOZw==
-X-Received: by 2002:a2e:a4db:0:b0:26c:784f:e513 with SMTP id p27-20020a2ea4db000000b0026c784fe513mr10896154ljm.310.1664377200547;
-        Wed, 28 Sep 2022 08:00:00 -0700 (PDT)
+        bh=qM++dOOdxNq2arb6uMckrS2brFOjaJGV3RM2kNir3B8=;
+        b=0kXeL2t30HcEjrbhfXVbleapDabnF6IdcB8lrEPbf1v0J1Y6c5RnJTlswPoSZWEMdA
+         ul2EwOJm+xHmSvUqjLnZEeDYb/nR8mg3CMCdEDXXGcoXWbmjm4v5kN2dnAzdpiRcdSfk
+         bhZ7CATR59lQqfmDc+mk5GezpI8otpua7rGPwl3uEu4+28e/+he9t3Ym6fA0NpewGpzW
+         cYROR2zMrpgHLjjrs4aVyUzCqe8UuVRtPZRbBgOTIgeRIUFbxcnHeHhrJ6Zqg4MGVW1+
+         xrFReFWbhLpfAcw+t0r78PX59eDRXxPI4pBvN9SyfnC4NsgeOZXf/MpeLcFZrB3GHa0K
+         jhLg==
+X-Gm-Message-State: ACrzQf0tAT/m++/k7dNAp8E7rFCZAU14E5z/5UdGmfjkK7x/yMxCfxQa
+        GJlIg1VC7brvi+QYY5wscDI1uA==
+X-Google-Smtp-Source: AMsMyM5dvqccT2NsgQuQ02tsXZBfzXh7YPjCAI+YQBt0m87zrJfxxKh4u4SnBtrkt2BRBlPDpDkrBg==
+X-Received: by 2002:a05:6512:cd:b0:49f:ba50:ec6 with SMTP id c13-20020a05651200cd00b0049fba500ec6mr12861483lfp.654.1664377201324;
+        Wed, 28 Sep 2022 08:00:01 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id be36-20020a056512252400b00492c017de43sm494996lfb.127.2022.09.28.07.59.59
+        by smtp.gmail.com with ESMTPSA id be36-20020a056512252400b00492c017de43sm494996lfb.127.2022.09.28.08.00.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 28 Sep 2022 08:00:00 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -60,9 +60,9 @@ To:     Andy Gross <agross@kernel.org>,
         Taniya Das <quic_tdas@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH 01/11] dt-bindings: clock: split qcom,gcc-msm8974,-msm8226 to the separate file
-Date:   Wed, 28 Sep 2022 17:59:48 +0300
-Message-Id: <20220928145958.376288-2-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 02/11] dt-bindings: clocks: qcom,mmcc: define clocks/clock-names for MSM8974
+Date:   Wed, 28 Sep 2022 17:59:49 +0300
+Message-Id: <20220928145958.376288-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220928145958.376288-1-dmitry.baryshkov@linaro.org>
 References: <20220928145958.376288-1-dmitry.baryshkov@linaro.org>
@@ -78,124 +78,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move schema for the GCC on MSM8974 and MSM8226 platforms to a separate
-file to be able to define device-specific clock properties.
+Define clock/clock-names properties of the MMCC device node to be used
+on MSM8974 platform.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../bindings/clock/qcom,gcc-msm8974.yaml      | 65 +++++++++++++++++++
- .../bindings/clock/qcom,gcc-other.yaml        |  9 +--
- 2 files changed, 66 insertions(+), 8 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8974.yaml
+ .../devicetree/bindings/clock/qcom,mmcc.yaml  | 38 +++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8974.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8974.yaml
-new file mode 100644
-index 000000000000..72e8f54d0e0e
---- /dev/null
-+++ b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8974.yaml
-@@ -0,0 +1,65 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/clock/qcom,gcc-msm8974.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Global Clock & Reset Controller Binding for MSM8226 and
-+  MSM8974, including Pro variants
-+
-+maintainers:
-+  - Stephen Boyd <sboyd@kernel.org>
-+  - Taniya Das <tdas@codeaurora.org>
-+
-+description: |
-+  Qualcomm global clock control module which supports the clocks, resets and
-+  power domains on SDM630, SDM636 and SDM660
-+
-+  See also:
-+  - dt-bindings/clock/qcom,gcc-msm8974.h (qcom,gcc-msm8226 and qcom,gcc-msm8974)
-+  - dt-bindings/reset/qcom,gcc-msm8974.h (qcom,gcc-msm8226 and qcom,gcc-msm8974)
-+
-+$ref: qcom,gcc.yaml#
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,gcc-msm8226
-+      - qcom,gcc-msm8974
-+      - qcom,gcc-msm8974pro
-+      - qcom,gcc-msm8974pro-ac
-+
-+  clocks:
-+    items:
-+      - description: XO source
-+      - description: Sleep clock source
-+
-+  clock-names:
-+    items:
-+      - const: xo
-+      - const: sleep_clk
-+
-+  power-domains:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  # Example for GCC for SDM660:
-+  - |
-+    #include <dt-bindings/clock/qcom,rpmh.h>
-+    clock-controller@fc400000 {
-+        compatible = "qcom,gcc-msm8974";
-+        #clock-cells = <1>;
-+        #reset-cells = <1>;
-+        #power-domain-cells = <1>;
-+        reg = <0x00100000 0x94000>;
-+
-+        clock-names = "xo", "sleep_clk";
-+        clocks = <&xo_board>,
-+                 <&sleep_clk>;
-+    };
-+...
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
-index 35fc22a19000..0ec8ff215007 100644
---- a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
-@@ -19,8 +19,6 @@ description: |
-   - dt-bindings/clock/qcom,gcc-ipq6018.h
-   - dt-bindings/reset/qcom,gcc-ipq6018.h
-   - dt-bindings/clock/qcom,gcc-msm8953.h
--  - dt-bindings/clock/qcom,gcc-msm8974.h (qcom,gcc-msm8226 and qcom,gcc-msm8974)
--  - dt-bindings/reset/qcom,gcc-msm8974.h (qcom,gcc-msm8226 and qcom,gcc-msm8974)
-   - dt-bindings/clock/qcom,gcc-mdm9607.h
-   - dt-bindings/clock/qcom,gcc-mdm9615.h
-   - dt-bindings/reset/qcom,gcc-mdm9615.h
-@@ -34,11 +32,7 @@ properties:
-       - qcom,gcc-ipq4019
-       - qcom,gcc-ipq6018
-       - qcom,gcc-mdm9607
--      - qcom,gcc-msm8226
-       - qcom,gcc-msm8953
--      - qcom,gcc-msm8974
--      - qcom,gcc-msm8974pro
--      - qcom,gcc-msm8974pro-ac
-       - qcom,gcc-mdm9615
+diff --git a/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml b/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
+index 03faab5b6a41..78473475c68d 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
+@@ -99,6 +99,44 @@ allOf:
+             - const: dsi2pllbyte
+             - const: hdmipll
  
- required:
-@@ -47,10 +41,9 @@ required:
- unevaluatedProperties: false
- 
- examples:
--  # Example for GCC for MSM8974:
-   - |
-     clock-controller@900000 {
--      compatible = "qcom,gcc-msm8974";
-+      compatible = "qcom,gcc-mdm9607";
-       reg = <0x900000 0x4000>;
-       #clock-cells = <1>;
-       #reset-cells = <1>;
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,mmcc-msm8974
++    then:
++      properties:
++        clocks:
++          items:
++            - description: Board XO source
++            - description: MMSS GPLL0 voted clock
++            - description: GPLL0 voted clock
++            - description: GPLL1 voted clock
++            - description: GFX3D clock source
++            - description: DSI phy instance 0 dsi clock
++            - description: DSI phy instance 0 byte clock
++            - description: DSI phy instance 1 dsi clock
++            - description: DSI phy instance 1 byte clock
++            - description: HDMI phy PLL clock
++            - description: eDP phy PLL link clock
++            - description: eDP phy PLL vco clock
++
++        clock-names:
++          items:
++            - const: xo
++            - const: mmss_gpll0_vote
++            - const: gpll0_vote
++            - const: gpll1_vote
++            - const: gfx3d_clk_src
++            - const: dsi0pll
++            - const: dsi0pllbyte
++            - const: dsi1pll
++            - const: dsi1pllbyte
++            - const: hdmipll
++            - const: edp_link_clk
++            - const: edp_vco_div
++
+   - if:
+       properties:
+         compatible:
 -- 
 2.35.1
 
