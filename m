@@ -2,31 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F0D95EE242
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 18:50:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E02CD5EE253
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 18:54:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234232AbiI1QuS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 12:50:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40554 "EHLO
+        id S233848AbiI1Qye (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 12:54:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234115AbiI1QuR (ORCPT
+        with ESMTP id S233724AbiI1Qyc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 12:50:17 -0400
-Received: from mail-40137.protonmail.ch (mail-40137.protonmail.ch [185.70.40.137])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 862EB75CF0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 09:50:16 -0700 (PDT)
-Date:   Wed, 28 Sep 2022 16:50:04 +0000
+        Wed, 28 Sep 2022 12:54:32 -0400
+Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CF63BDC;
+        Wed, 28 Sep 2022 09:54:31 -0700 (PDT)
+Date:   Wed, 28 Sep 2022 16:54:17 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1664383814; x=1664643014;
-        bh=o11CrCXx0Cb6C3dCffIEI1V7Knf/291iZPlpw60/k7s=;
-        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-         Subject:Reply-To:Feedback-ID:Message-ID;
-        b=wqn3bFFtbPzeDvuatqWT+QHMChrXBU2xzAwob5hZ85MjeWi+xmxnEes2mIyYiG3af
-         1AT5iSvrltQrgz/KO9QWqSoYl4UMufWxuD9wJdmV8hiMbty3S5AULwkxqV6CRcGSaC
-         yP8rCpkBGeAnQSRQR6oJM1vlbsWgCTR/qs0TxjHRBsc+8oYK1fNnt7O1gKq/PaM2aV
-         5sx16n1UgNU1FjcvU62Xz1yGI0KU9W0HJA5yn6foJptRtqPebCqjlUA+vRvN9HvTaq
-         ouQCZujD+q2BPb4xKZhFdFhlBCei2wfjEWkO1nrkYYXcttSLDyWhqCryvOcH6wHAax
-         fMC3o/k9El+7w==
+        s=protonmail3; t=1664384070; x=1664643270;
+        bh=bx6LkYA6tSEHnMC6YQRX0QPXJeIZTYibdxAR1z0B574=;
+        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID;
+        b=FEI7Ps4IxloClhD6QzBL2QqFYBwXGTRsVnsnPiNErKx4MiaqbSGxxkGa047sqiuAT
+         5DpZhe6OjBjKOlngzNjR4eQ2yKBZfYXABJBXPAnAUBOAkTfs7olAyn05Mwev8O55p9
+         3nOnsRFDj0YeO9v6UukztWylriBBIGGEmjqX7u6ppMWNQBcwsnmK7EvPwlyHW2b1FA
+         ThY57qBXlSyCBcEzbLDEAEJAEUgrLq8IIsJN2RSLw2c6F8MKLC0R/0ABxwr41K2Qb0
+         WaIvipuE3Do1Ftf83gaATkdet1Yt+3SW94Nm7puKdZzGQGkuINFx9cXKRIqV/W+eyv
+         VFLsZ5m0Hkq8A==
 To:     devicetree@vger.kernel.org
 From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -41,48 +42,49 @@ Cc:     Andy Gross <agross@kernel.org>,
         Markuss Broks <markuss.broks@gmail.com>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht
-Subject: [RESEND PATCH v3 0/5] arm64: dts: qcom: msm8916-samsung-j5: Use common device tree
-Message-ID: <20220928164806.179314-1-linmengbo0689@protonmail.com>
+Subject: [PATCH v3 1/5] dt-bindings: qcom: Document bindings for new msm8916-samsung-j5 devices
+Message-ID: <20220928165118.179493-1-linmengbo0689@protonmail.com>
+In-Reply-To: <20220928164806.179314-1-linmengbo0689@protonmail.com>
+References: <20220928164806.179314-1-linmengbo0689@protonmail.com>
 Feedback-ID: 40467236:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no
-        version=3.4.6
+        FREEMAIL_FROM,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-v3: Drop msm8916-samsung-j5.dts temporarily before moving it.
-Minor rewords.
-v2: Reword and resend. Split common dtsi patch.
-Add missing suffix state in pinctrl.
+Document the new samsung-j3/j5x device tree bindings used in their
+device trees.
 
-The smartphones below are using the MSM8916 SoC,
-which are released in 2015-2016:
+Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Samsung Galaxy J5 2015 (SM-J500*)
-Samsung Galaxy J5 2016 (SM-J510*)
-Samsung Galaxy J3 2016
-- SM-J3109/SM-J320Y/SM-J320YZ
-- SM-J320N0/SM-J320ZN
-- SM-J320P/SM-J320R4/SM-J320V/SM-S320VL
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentatio=
+n/devicetree/bindings/arm/qcom.yaml
+index fb1d00bcc847..b1c69d4d9a9a 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -176,7 +176,9 @@ properties:
+               - longcheer,l8910
+               - samsung,a3u-eur
+               - samsung,a5u-eur
++              - samsung,j3
+               - samsung,j5
++              - samsung,j5x
+               - samsung,serranove
+               - wingtech,wt88047
+           - const: qcom,msm8916
+--=20
+2.30.2
 
-Add a common device tree for with initial support for:
-
-- GPIO keys
-- SDHCI (internal and external storage)
-- USB Device Mode
-- UART (on USB connector via the SM5703 MUIC)
-- WCNSS (WiFi/BT)
-- Regulators
-
-The three devices (some varints of J3, all other variants of J5 released
-in 2015 and J5X released in 2016) are very similar, with some differences
-in display and GPIO pins. The common parts are shared in
-msm8916-samsung-j5-common.dtsi to reduce duplication.
 
