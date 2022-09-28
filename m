@@ -2,227 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C8F65EE528
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 21:18:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F5885EE4E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 21:15:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234300AbiI1TSS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 15:18:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54940 "EHLO
+        id S233190AbiI1TPw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 15:15:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234302AbiI1TSB (ORCPT
+        with ESMTP id S233749AbiI1TPv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 15:18:01 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 473ACEB127;
-        Wed, 28 Sep 2022 12:17:45 -0700 (PDT)
-Received: from dimapc.. (unknown [109.252.125.248])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: dmitry.osipenko)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id CA6C366022AC;
-        Wed, 28 Sep 2022 20:17:39 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1664392662;
-        bh=hhlvXQ3Lswdygs1+cny74JgxIYMvmDTe9Q+VdXTTZlY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Qj5emPk0/6+TVDGIarVYZvtLsFvzvyjwMyXEdA4KLuAi8tGIffgJ278o7W6uHwvnW
-         U88Zjp/AiFpp3wJDZBrgN3zBoxqUmRiw4pD+ywZ5kXsxxCR84+8buy2u7MXaSMebOK
-         JaXEP/ydnBDNzI3vDg7tTz7Vf7jJ1twFsZ2SfKQNV/w9c6DXrSlx23qJoR5fPsRHbQ
-         qORujCosVCPFK7JurkYuHQ/8kaLPg06t32Tzg1kLW4QsIAF8dbsvewI+kCoU2vDSAX
-         mAI2FEWBPgH9kdkTZ7ToPYqgDRJXsrrbFyAhhTVJELwdAvPFON2BaY8+MdLIOE0guw
-         3QoezSsEusU3Q==
-From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To:     David Airlie <airlied@linux.ie>, Gerd Hoffmann <kraxel@redhat.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Daniel Almeida <daniel.almeida@collabora.com>,
-        Gert Wollny <gert.wollny@collabora.com>,
-        Gustavo Padovan <gustavo.padovan@collabora.com>,
-        Daniel Stone <daniel@fooishbar.org>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Rob Clark <robdclark@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        =?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas_os@shipmail.org>,
-        Qiang Yu <yuq825@gmail.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Jason Gunthorpe <jgg@ziepe.ca>,
-        Leon Romanovsky <leon@kernel.org>,
-        Juergen Gross <jgross@suse.com>,
-        Stefano Stabellini <sstabellini@kernel.org>,
-        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Christian Gmeiner <christian.gmeiner@gmail.com>,
-        Ruhl Michael J <michael.j.ruhl@intel.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Dmitry Osipenko <digetx@gmail.com>,
-        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
-        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        kernel@collabora.com, virtualization@lists.linux-foundation.org,
-        linux-rdma@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v6 06/21] drm/i915: Prepare to dynamic dma-buf locking specification
-Date:   Wed, 28 Sep 2022 22:15:45 +0300
-Message-Id: <20220928191600.5874-7-dmitry.osipenko@collabora.com>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20220928191600.5874-1-dmitry.osipenko@collabora.com>
-References: <20220928191600.5874-1-dmitry.osipenko@collabora.com>
+        Wed, 28 Sep 2022 15:15:51 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E0CCCF4AA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 12:15:49 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id d42so21911098lfv.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 12:15:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=v9AUnRjO2I6miLavN2yEnEf1RGDOOvreZhD6/ZtXL0c=;
+        b=O5XQ8YaQgffej3awuvAT1+h+SmTlKX2PrkfOu3buOEqj9nkkAG496M4zpid4tF5yDu
+         g6vNQcL4RTvGoJKuvVnYBZhult/bGdv5lQG8/9vg5vJp/yiuMM0b0zhSZAbnR8oEpBLG
+         7mSLdkM2w9P1Ep1kVJDyLLM7gvDHyofBYnPvcWzXT0Gq2kx18IKcWmic8S4lioH/a6b3
+         VNvF0WPZPS7dARP+owjdaiRcfg3PnrV7bGpaidDR1agFqvaeTscCAGurM3CL4pxc3Zof
+         sBgd1Dbn9n1Sy97CU6hAB3PVZ5tyM9vK7xbPeY7i6wYL8ZMXTzKhijdO0IiTc1BfwyCV
+         H3Qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=v9AUnRjO2I6miLavN2yEnEf1RGDOOvreZhD6/ZtXL0c=;
+        b=RztPc8T0Horvlz9WaYieJZY7XKaBnf/wmJn/11BsN3nGGoqDTanCafW3Atb1QkQ/1d
+         DtyLVR+SEYDANcc/yl8qfar5Hu4P9sU1zghIKhgiD57nRiLWcrG0xqtt//HcWyNRq5xF
+         AgD8hNy059yWZVs5NTKXdtuENtdP9BDno2HMJrQ2Cz3nzfENSxXgCXoyKtryslGYbrn6
+         fB1eqN/cTlhhtLcQmJ6M0LCKM2Ljo6a0KQWNF2LYQ+cHUYUvLZjUPOp+ApTqYU/ZoYXQ
+         JWRIONO+ct7FxgvhH+xq/TfYwktoL72Qa0k1+Y1WLQQXV2KtL5WZRhg4nKAywHn7p5T+
+         n6UQ==
+X-Gm-Message-State: ACrzQf23s4mjX9JN5Ngfyv7IafpEyiR6uNJJbJ3RNWnXxxcbhXRNTtPb
+        8zB8CL+oTq/xVY4XkIYQ81WCag==
+X-Google-Smtp-Source: AMsMyM7uFp6b3scZvJgm5d/f0hHy6uDvB0ECqwfcwJQtQ5AKsRY1t945LjU8a/xIXxais1OIskGI7g==
+X-Received: by 2002:a05:6512:1151:b0:4a0:50f2:9509 with SMTP id m17-20020a056512115100b004a050f29509mr13049964lfg.297.1664392547558;
+        Wed, 28 Sep 2022 12:15:47 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id r11-20020a056512102b00b0049d0a98f73csm548977lfr.154.2022.09.28.12.15.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Sep 2022 12:15:47 -0700 (PDT)
+Message-ID: <c3d39c4e-2099-b09a-8486-8abae7336611@linaro.org>
+Date:   Wed, 28 Sep 2022 22:15:46 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH 07/13] phy: qcom-qmp-pcie: clean up power-down handling
+Content-Language: en-GB
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+References: <20220928152822.30687-1-johan+linaro@kernel.org>
+ <20220928152822.30687-8-johan+linaro@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220928152822.30687-8-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Prepare i915 driver to the common dynamic dma-buf locking convention
-by starting to use the unlocked versions of dma-buf API functions
-and handling cases where importer now holds the reservation lock.
+On 28/09/2022 18:28, Johan Hovold wrote:
+> Always define the POWER_DOWN_CONTROL register instead of falling back to
+> the v2 offset during power on and power off.
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 20 ++++++--------------
+>   1 file changed, 6 insertions(+), 14 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index eea66c24cf7e..47cdb9ed80cd 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -90,12 +90,14 @@ static const unsigned int pciephy_regs_layout[QPHY_LAYOUT_SIZE] = {
+>   	[QPHY_SW_RESET]			= 0x00,
+>   	[QPHY_START_CTRL]		= 0x08,
+>   	[QPHY_PCS_STATUS]		= 0x174,
+> +	[QPHY_PCS_POWER_DOWN_CONTROL]	= 0x04,
+>   };
 
-Acked-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
----
- drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c       |  2 +-
- drivers/gpu/drm/i915/gem/i915_gem_object.c       | 14 ++++++++++++++
- .../gpu/drm/i915/gem/selftests/i915_gem_dmabuf.c | 16 ++++++++--------
- 3 files changed, 23 insertions(+), 9 deletions(-)
+Without symbolic names it's not obvious that 0x04 (and thus this 
+regs_layout) can be used for v2 and v3, but not for v4.
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c b/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c
-index f5062d0c6333..07eee1c09aaf 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c
-@@ -72,7 +72,7 @@ static int i915_gem_dmabuf_vmap(struct dma_buf *dma_buf,
- 	struct drm_i915_gem_object *obj = dma_buf_to_obj(dma_buf);
- 	void *vaddr;
- 
--	vaddr = i915_gem_object_pin_map_unlocked(obj, I915_MAP_WB);
-+	vaddr = i915_gem_object_pin_map(obj, I915_MAP_WB);
- 	if (IS_ERR(vaddr))
- 		return PTR_ERR(vaddr);
- 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_object.c b/drivers/gpu/drm/i915/gem/i915_gem_object.c
-index 7ff9c7877bec..3e3f63f86629 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_object.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_object.c
-@@ -290,7 +290,21 @@ void __i915_gem_object_pages_fini(struct drm_i915_gem_object *obj)
- 	__i915_gem_object_free_mmaps(obj);
- 
- 	atomic_set(&obj->mm.pages_pin_count, 0);
-+
-+	/*
-+	 * dma_buf_unmap_attachment() requires reservation to be
-+	 * locked. The imported GEM shouldn't share reservation lock
-+	 * and ttm_bo_cleanup_memtype_use() shouldn't be invoked for
-+	 * dma-buf, so it's safe to take the lock.
-+	 */
-+	if (obj->base.import_attach)
-+		i915_gem_object_lock(obj, NULL);
-+
- 	__i915_gem_object_put_pages(obj);
-+
-+	if (obj->base.import_attach)
-+		i915_gem_object_unlock(obj);
-+
- 	GEM_BUG_ON(i915_gem_object_has_pages(obj));
- }
- 
-diff --git a/drivers/gpu/drm/i915/gem/selftests/i915_gem_dmabuf.c b/drivers/gpu/drm/i915/gem/selftests/i915_gem_dmabuf.c
-index 51ed824b020c..f2f3cfad807b 100644
---- a/drivers/gpu/drm/i915/gem/selftests/i915_gem_dmabuf.c
-+++ b/drivers/gpu/drm/i915/gem/selftests/i915_gem_dmabuf.c
-@@ -213,7 +213,7 @@ static int igt_dmabuf_import_same_driver(struct drm_i915_private *i915,
- 		goto out_import;
- 	}
- 
--	st = dma_buf_map_attachment(import_attach, DMA_BIDIRECTIONAL);
-+	st = dma_buf_map_attachment_unlocked(import_attach, DMA_BIDIRECTIONAL);
- 	if (IS_ERR(st)) {
- 		err = PTR_ERR(st);
- 		goto out_detach;
-@@ -226,7 +226,7 @@ static int igt_dmabuf_import_same_driver(struct drm_i915_private *i915,
- 		timeout = -ETIME;
- 	}
- 	err = timeout > 0 ? 0 : timeout;
--	dma_buf_unmap_attachment(import_attach, st, DMA_BIDIRECTIONAL);
-+	dma_buf_unmap_attachment_unlocked(import_attach, st, DMA_BIDIRECTIONAL);
- out_detach:
- 	dma_buf_detach(dmabuf, import_attach);
- out_import:
-@@ -296,7 +296,7 @@ static int igt_dmabuf_import(void *arg)
- 		goto out_obj;
- 	}
- 
--	err = dma_buf_vmap(dmabuf, &map);
-+	err = dma_buf_vmap_unlocked(dmabuf, &map);
- 	dma_map = err ? NULL : map.vaddr;
- 	if (!dma_map) {
- 		pr_err("dma_buf_vmap failed\n");
-@@ -337,7 +337,7 @@ static int igt_dmabuf_import(void *arg)
- 
- 	err = 0;
- out_dma_map:
--	dma_buf_vunmap(dmabuf, &map);
-+	dma_buf_vunmap_unlocked(dmabuf, &map);
- out_obj:
- 	i915_gem_object_put(obj);
- out_dmabuf:
-@@ -358,7 +358,7 @@ static int igt_dmabuf_import_ownership(void *arg)
- 	if (IS_ERR(dmabuf))
- 		return PTR_ERR(dmabuf);
- 
--	err = dma_buf_vmap(dmabuf, &map);
-+	err = dma_buf_vmap_unlocked(dmabuf, &map);
- 	ptr = err ? NULL : map.vaddr;
- 	if (!ptr) {
- 		pr_err("dma_buf_vmap failed\n");
-@@ -367,7 +367,7 @@ static int igt_dmabuf_import_ownership(void *arg)
- 	}
- 
- 	memset(ptr, 0xc5, PAGE_SIZE);
--	dma_buf_vunmap(dmabuf, &map);
-+	dma_buf_vunmap_unlocked(dmabuf, &map);
- 
- 	obj = to_intel_bo(i915_gem_prime_import(&i915->drm, dmabuf));
- 	if (IS_ERR(obj)) {
-@@ -418,7 +418,7 @@ static int igt_dmabuf_export_vmap(void *arg)
- 	}
- 	i915_gem_object_put(obj);
- 
--	err = dma_buf_vmap(dmabuf, &map);
-+	err = dma_buf_vmap_unlocked(dmabuf, &map);
- 	ptr = err ? NULL : map.vaddr;
- 	if (!ptr) {
- 		pr_err("dma_buf_vmap failed\n");
-@@ -435,7 +435,7 @@ static int igt_dmabuf_export_vmap(void *arg)
- 	memset(ptr, 0xc5, dmabuf->size);
- 
- 	err = 0;
--	dma_buf_vunmap(dmabuf, &map);
-+	dma_buf_vunmap_unlocked(dmabuf, &map);
- out:
- 	dma_buf_put(dmabuf);
- 	return err;
+>   
+>   static const unsigned int sdm845_qhp_pciephy_regs_layout[QPHY_LAYOUT_SIZE] = {
+>   	[QPHY_SW_RESET]			= 0x00,
+>   	[QPHY_START_CTRL]		= 0x08,
+>   	[QPHY_PCS_STATUS]		= 0x2ac,
+> +	[QPHY_PCS_POWER_DOWN_CONTROL]	= 0x04,
+>   };
+>   
+>   static const unsigned int sm8250_pcie_regs_layout[QPHY_LAYOUT_SIZE] = {
+> @@ -1872,13 +1874,8 @@ static int qmp_pcie_init(struct phy *phy)
+>   	if (ret)
+>   		goto err_assert_reset;
+>   
+> -	if (cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL])
+> -		qphy_setbits(pcs,
+> -				cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
+> -				cfg->pwrdn_ctrl);
+> -	else
+> -		qphy_setbits(pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL,
+> -				cfg->pwrdn_ctrl);
+> +	qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
+> +			cfg->pwrdn_ctrl);
+>   
+>   	return 0;
+>   
+> @@ -1995,13 +1992,8 @@ static int qmp_pcie_power_off(struct phy *phy)
+>   	qphy_clrbits(qphy->pcs, cfg->regs[QPHY_START_CTRL], cfg->start_ctrl);
+>   
+>   	/* Put PHY into POWER DOWN state: active low */
+> -	if (cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL]) {
+> -		qphy_clrbits(qphy->pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
+> -			     cfg->pwrdn_ctrl);
+> -	} else {
+> -		qphy_clrbits(qphy->pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL,
+> -				cfg->pwrdn_ctrl);
+> -	}
+> +	qphy_clrbits(qphy->pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
+> +			cfg->pwrdn_ctrl);
+>   
+>   	return 0;
+>   }
+
 -- 
-2.37.3
+With best wishes
+Dmitry
 
