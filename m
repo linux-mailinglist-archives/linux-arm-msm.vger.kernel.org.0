@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BE835EE9EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 01:10:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C92B55EE9F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 01:10:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232938AbiI1XKa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 19:10:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49834 "EHLO
+        id S233739AbiI1XKc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 19:10:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234253AbiI1XKV (ORCPT
+        with ESMTP id S233134AbiI1XKW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 19:10:21 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 293B3186D3
+        Wed, 28 Sep 2022 19:10:22 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17BB32A95F
         for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 16:10:20 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id k10so22571268lfm.4
+Received: by mail-lf1-x12c.google.com with SMTP id a8so22520584lff.13
         for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 16:10:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=pGT763Ruuj1rRpQ5GP5KiZ/2Tu//UxTgarC85JTTSvY=;
-        b=NAiVgohJYXoSq1Rk+IPUues5TnQU+fkoJ57Zj+/Ssh5abLT4TxRNQncb8tzMkqTg6N
-         r4whax2KDu//QcbvRzMjgvtuoLhGBD3kXf0fy09Ve1CDBclW2XIQYg/2O2CZmSk20G9j
-         RuQRbVA2QeGmLvjzGIrntZHLz05hjKoUFmbCl1HReer5hyNOxQGfHZEMW+rkRjUvGUlD
-         tSOP4u1ZQEflDbjA9bEJ4IPckFf6PTe9bzEN3CtDGYszUGkX1Ua79mg48ECATQmvsGBk
-         cF3WstoCQpR0SFh/ds1zAIcy5nkqhmv1U3fzbCrAoYypNj73KoGZ2BLotQIK67NvcSMl
-         cGGQ==
+        bh=ZjxL8JpqOHRf8ei/lLU7w0LbF8sHURWW068haj65LQI=;
+        b=BEFT7v8K9Bg0MxWasSUH0TmrXxEmqJZsGIaW0cNQxNckfDaV754Ck1/wJOUgLBdnC+
+         PMP9vbdQt6bGW1WlHj94qzHSCuWFswKTinNoI3nXAmLpdeq9fwTSGNA8sRYxLX3fcFy+
+         o4LYs19tEl4GuC0VobovD9PZBBO7Z+mtV0R5o0NqzGs83cr+G9NNiiSb3Er0NdhMTk2p
+         kf6U7kbKEVK9g3+FkV4xhzTGz0dPK3kz1N7Y4BPm1AjBIOGEQ3DKa04A/b513fGI8z3I
+         JSGl49FIHTEUjkaCqXUEJWDmzB5bnVPNo+hIndzsNaocYcjEQEQIsfrHWZYx/z7KYmt+
+         nPXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=pGT763Ruuj1rRpQ5GP5KiZ/2Tu//UxTgarC85JTTSvY=;
-        b=DL+32eSXKsZfHQzH3ghEsqB9OWXJ8XM9ld1sXElIIO0qIxdYTYU97Pc4vzJ2u2dksr
-         rGo/20EIwUVYRRtJLztCZqq1ITISoAJWfeSuVhDlywO1C6pRUha4pf6aQZG+BECllYg7
-         n9vqLi8z1u7OKFqooPs160zpa8BPPfSmtUUwoYNn92amAMhDsZNjqALDEEP88bN+ie98
-         1FJLZvftjB3/CEw/h25+flj7SKFZ92JRcxzH4gniJGA6BJChO6sy3o98hMwMCWzGJ4qN
-         iRCcwdH6AsxidD8dEdyJX2MHPgIVm853N+cjg4QP/PEyvew1MzvC3m/mBQ3TgvkY5NwN
-         NC5Q==
-X-Gm-Message-State: ACrzQf0b15pdhhjhBfcipUoyjywC4SocBY7hQc6cPc6I3REV2EuJu4Nr
-        EITwmlaalOTHgJjXNW//J4u4ew==
-X-Google-Smtp-Source: AMsMyM6xq/f0k7XGHDfsNpgbaa6xiOL7J5ZVdWD3/ZUKaZEVqiwrO2ck2qTcgR2Po/drVeKbXX/6mA==
-X-Received: by 2002:a05:6512:39c3:b0:49f:dee8:c100 with SMTP id k3-20020a05651239c300b0049fdee8c100mr134986lfu.168.1664406618525;
-        Wed, 28 Sep 2022 16:10:18 -0700 (PDT)
+        bh=ZjxL8JpqOHRf8ei/lLU7w0LbF8sHURWW068haj65LQI=;
+        b=gUh1LnV0KMXOdku0dcCcNQBwCnovMfhri2ogPDb7qk17Nh5gT0QAiiQ5UWPoQFVC58
+         627TFLPFaLmNg8xEMjx9XAyDwvKgddpP43vSosK4y1XvSFuR5pLCsZ0Y6fq0IPNMD6uO
+         IyFJqnTItU8lEUNiFK6iRvvAAlzi5ktyL9wALWz0jX08rZivPw8fZb/80x9/JfiX+lOL
+         a7+rQWv+SY7sAlnrHXC3pFmeyT8oIejJf6qZ4JD2a7Lis1XfvOMg5PUP3Fq6OUl8nM5r
+         ohiLxaJ0zpy2pgluEtJGa11054/RV44FSTtNFs9pOiQ4Kq/MfABzIjsIFCXtLFxYBLdq
+         M4vg==
+X-Gm-Message-State: ACrzQf16ZGkGRqRXLIumAWQBplKCCuU1bvSE6a53INM1A4bQU5UJRXwR
+        ko0hQNEjW5t7J6r5lpzUCbfZOQ==
+X-Google-Smtp-Source: AMsMyM4NdRvm4xr7ZI4GnHs6jRWy5XWglseDufrHYmKdy8F5VUdPauguGjg8r/Vm/bx/i7sgwoPHWA==
+X-Received: by 2002:ac2:5e3c:0:b0:49c:9cc3:a530 with SMTP id o28-20020ac25e3c000000b0049c9cc3a530mr121587lfg.486.1664406619262;
+        Wed, 28 Sep 2022 16:10:19 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id o16-20020ac24950000000b0049d5733fb3fsm597587lfi.212.2022.09.28.16.10.17
+        by smtp.gmail.com with ESMTPSA id o16-20020ac24950000000b0049d5733fb3fsm597587lfi.212.2022.09.28.16.10.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 28 Sep 2022 16:10:18 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -59,9 +59,9 @@ Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         Johan Hovold <johan@kernel.org>,
         Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 03/18] phy: qcom-qmp-pcie-msm8996: clean up power-down handling
-Date:   Thu, 29 Sep 2022 02:09:59 +0300
-Message-Id: <20220928231014.455201-4-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 04/18] phy: qcom-qmp-combo: clean up power-down handling
+Date:   Thu, 29 Sep 2022 02:10:00 +0300
+Message-Id: <20220928231014.455201-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220928231014.455201-1-dmitry.baryshkov@linaro.org>
 References: <20220928231014.455201-1-dmitry.baryshkov@linaro.org>
@@ -78,46 +78,60 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-This driver uses v2 registers only so drop the unnecessary
-POWER_DOWN_CONTROL override.
-
-Note that this register is already hard-coded when powering on the PHY.
+Always define the POWER_DOWN_CONTROL register instead of falling back to
+the v2 (and v3) offset during power on and power off.
 
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
-index 461f0b5d464a..a5ebd77d5905 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
-@@ -91,7 +91,6 @@ enum qphy_reg_layout {
- 	QPHY_SW_RESET,
- 	QPHY_START_CTRL,
- 	QPHY_PCS_STATUS,
--	QPHY_PCS_POWER_DOWN_CONTROL,
- 	/* Keep last to ensure regs_layout arrays are properly initialized */
- 	QPHY_LAYOUT_SIZE
- };
-@@ -591,13 +590,8 @@ static int qmp_pcie_msm8996_power_off(struct phy *phy)
- 	qphy_clrbits(qphy->pcs, cfg->regs[QPHY_START_CTRL], cfg->start_ctrl);
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index 9807c4d935cd..c30af34d7f65 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -121,6 +121,7 @@ static const unsigned int qmp_v3_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_SW_RESET]			= 0x00,
+ 	[QPHY_START_CTRL]		= 0x08,
+ 	[QPHY_PCS_STATUS]		= 0x174,
++	[QPHY_PCS_POWER_DOWN_CONTROL]	= 0x04,
+ 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= 0x0d8,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR]  = 0x0dc,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_STATUS] = 0x170,
+@@ -1994,13 +1995,8 @@ static int qmp_combo_com_init(struct qmp_phy *qphy)
+ 	qphy_clrbits(dp_com, QPHY_V3_DP_COM_SWI_CTRL, 0x03);
+ 	qphy_clrbits(dp_com, QPHY_V3_DP_COM_SW_RESET, SW_RESET);
  
- 	/* Put PHY into POWER DOWN state: active low */
--	if (cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL]) {
--		qphy_clrbits(qphy->pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
--			     cfg->pwrdn_ctrl);
--	} else {
--		qphy_clrbits(qphy->pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL,
+-	if (cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL])
+-		qphy_setbits(pcs,
+-				cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
 -				cfg->pwrdn_ctrl);
--	}
-+	qphy_clrbits(qphy->pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL,
+-	else
+-		qphy_setbits(pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL,
+-				cfg->pwrdn_ctrl);
++	qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
 +			cfg->pwrdn_ctrl);
  
+ 	mutex_unlock(&qmp->phy_mutex);
+ 
+@@ -2153,13 +2149,8 @@ static int qmp_combo_power_off(struct phy *phy)
+ 		qphy_clrbits(qphy->pcs, cfg->regs[QPHY_START_CTRL], cfg->start_ctrl);
+ 
+ 		/* Put PHY into POWER DOWN state: active low */
+-		if (cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL]) {
+-			qphy_clrbits(qphy->pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
+-				     cfg->pwrdn_ctrl);
+-		} else {
+-			qphy_clrbits(qphy->pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL,
+-					cfg->pwrdn_ctrl);
+-		}
++		qphy_clrbits(qphy->pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
++				cfg->pwrdn_ctrl);
+ 	}
+ 
  	return 0;
- }
 -- 
 2.35.1
 
