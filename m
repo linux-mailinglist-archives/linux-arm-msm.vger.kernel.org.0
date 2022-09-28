@@ -2,118 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B53195EDDAD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 15:31:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74CFD5EDE61
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 16:04:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233407AbiI1NbW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 09:31:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33320 "EHLO
+        id S233386AbiI1OE1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 10:04:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232599AbiI1NbW (ORCPT
+        with ESMTP id S231567AbiI1OE0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 09:31:22 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB9A9A1D77
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 06:31:19 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id 13so27162545ejn.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 06:31:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=n3qQR+aqK3MBkpPhhE7yG0JzICbbOFyRcGevTT/H8DY=;
-        b=MVeVzTtAnaZhe+EoVGaEnkpifnw/hFsnyVLN58MUI492PeZ58ECotTixHYDryoIQys
-         22MSjzFXpNbc1k11Kg2gvhhGDfJTw09+oD5vaM+h2mlpSm1vvGTKIKlid4s5jqhKWGQp
-         v3miQP7Cbf5oXutuuQBo27dxTIL7HWjlw5KvBMeyt+qsEoS9hICqhvxxR/RBc7VPIFlA
-         Igo27gSvRFshssr2bdp0DMbJ1hS8V3R7XLYGvSusgCyH6EVoWi5A+nF8mavYal9YT3SB
-         VjlSj/P8u7x45vl4S3k659wLSvFqYg2bSMEW5ne6pT7LHP+wH+RB1aQWh91EsH92B7Oc
-         N4lQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=n3qQR+aqK3MBkpPhhE7yG0JzICbbOFyRcGevTT/H8DY=;
-        b=7OSW2rGgYiphsI53lARM5jnhT1OemYudKDR9oyBoKwTbpITfrXH6oXUWRY5pAYjOTH
-         OSzNhkn2cUxkhhGxfIws3ZLRdSYeGn06Jy0TIptrglBevMVmSP1IWh+jbHyYZfGXq/mm
-         xM+MokfdEHMC31fo+ILHZCQOZmD2TiLuSw4aZk1bUvdJ+V3W3GU3TqiJEdBCBoZoM0YP
-         j0WZwhHMljlrCWow0mP1WvhFmjSNWj5dG2xJIBTCXzqS0qtuXGY2bMWko/7dsWcmB6ET
-         +hxcS9IDAagwPEgDa98J5O7L2jEtHGs2Y5nFAqsXqNWPq62/2MpkdH9b+PSZgIwFIGVz
-         o91w==
-X-Gm-Message-State: ACrzQf2tFN2DVhHaLiGjZIUkB8tY8Embh1yegJ7F5HxnbWE2jCjC0jN1
-        laeMqWvdGPwGWo315KWPHVuBXLOFJai82w==
-X-Google-Smtp-Source: AMsMyM6cihZ44FvcUe0BRre7FY4VoB3qwNPZoBjybGrc2Xnj5NprI+bSfV7OA1i9lnIJidtBUAxA9Q==
-X-Received: by 2002:a17:907:72c4:b0:783:4fe0:daca with SMTP id du4-20020a17090772c400b007834fe0dacamr14835994ejc.455.1664371878293;
-        Wed, 28 Sep 2022 06:31:18 -0700 (PDT)
-Received: from otso.. (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id q1-20020a50cc81000000b00457618d3409sm3366096edi.68.2022.09.28.06.31.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 06:31:17 -0700 (PDT)
-From:   Luca Weiss <luca.weiss@fairphone.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] clk: qcom: gcc-sm6350: Update the .pwrsts for usb gdscs
-Date:   Wed, 28 Sep 2022 15:28:54 +0200
-Message-Id: <20220928132853.179425-1-luca.weiss@fairphone.com>
-X-Mailer: git-send-email 2.37.3
+        Wed, 28 Sep 2022 10:04:26 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2DF07C77B;
+        Wed, 28 Sep 2022 07:04:24 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3F4C961EB0;
+        Wed, 28 Sep 2022 14:04:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F13C433D6;
+        Wed, 28 Sep 2022 14:04:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1664373863;
+        bh=eGsDXMtLRzTOXZ9qGIM2z2RwI0km/E3ySdsgOm3wVCU=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=bp5QH/+e3R/xu5ro+6KrGaH/s19oKhKmoF8XDk75ck6tI8f5ak9nKFJrgekgHxDPz
+         jSsLbvD81N1OUnnOZ3hbkDQ0OwaFhwkvOBX6vVV3gDEK58zEN/Mhww0jkQZMXKjiLa
+         7RBWKqIM8gT2LB7ampbVNhbHK+8DRJurMKdsSooa+7ofdE4896u6ftgCP0Syw+LgFP
+         ROKY9TLk3tHyoSNs2nUd34nMkfzHDIFoT+XzABtHdSIlrnmoDO9oK/sCugaqmECgwX
+         +iSjcECXlAh5ZcRGINTN5eVROIraBYudoI2OaeNOAUNTY0RP/347CSTFCt9FihOgd5
+         M4zFpaduNyqag==
+Date:   Wed, 28 Sep 2022 07:04:21 -0700
+From:   Jakub Kicinski <kuba@kernel.org>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     patchwork-bot+netdevbpf@kernel.org, Alex Elder <elder@linaro.org>,
+        davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+        mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next 00/15] net: ipa: generalized register
+ definitions
+Message-ID: <20220928070421.12b7021a@kernel.org>
+In-Reply-To: <166433041840.32421.1858136173918846349.git-patchwork-notify@kernel.org>
+References: <20220926220931.3261749-1-elder@linaro.org>
+        <166433041840.32421.1858136173918846349.git-patchwork-notify@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The USB controllers on sm6350 do not retain the state when
-the system goes into low power state and the GDSCs are
-turned off.
+On Wed, 28 Sep 2022 02:00:18 +0000 patchwork-bot+netdevbpf@kernel.org
+wrote:
+> Hello:
+> 
+> This series was applied to netdev/net-next.git (master)
+> by Jakub Kicinski <kuba@kernel.org>:
+> 
+> On Mon, 26 Sep 2022 17:09:16 -0500 you wrote:
+> > This series is quite a bit bigger than what I normally like to send,
+> > and I apologize for that.  I would like it to get incorporated in
+> > its entirety this week if possible, and splitting up the series
+> > carries a small risk that wouldn't happen.
+> > 
+> > Each IPA register has a defined offset, and in most cases, a set
+> > of masks that define the width and position of fields within the
+> > register.  Most registers currently use the same offset for all
+> > versions of IPA.  Usually fields within registers are also the same
+> > across many versions.  Offsets and fields like this are defined
+> > using preprocessor constants.
+> > 
+> > [...]  
+> 
+> Here is the summary with links:
+>   - [net-next,01/15] net: ipa: introduce IPA register IDs
+>     https://git.kernel.org/netdev/net-next/c/98e2dd71a826
+>   - [net-next,02/15] net: ipa: use IPA register IDs to determine offsets
+>     https://git.kernel.org/netdev/net-next/c/6bfb753850d3
+>   - [net-next,03/15] net: ipa: add per-version IPA register definition files
+>     https://git.kernel.org/netdev/net-next/c/07f120bcf76b
+>   - [net-next,04/15] net: ipa: use ipa_reg[] array for register offsets
+>     https://git.kernel.org/netdev/net-next/c/82a06807453a
+>   - [net-next,05/15] net: ipa: introduce ipa_reg()
+>     (no matching commit)
+>   - [net-next,06/15] net: ipa: introduce ipa_reg field masks
+>     https://git.kernel.org/netdev/net-next/c/a5ad8956f97a
+>   - [net-next,07/15] net: ipa: define COMP_CFG IPA register fields
+>     https://git.kernel.org/netdev/net-next/c/12c7ea7dfd2c
+>   - [net-next,08/15] net: ipa: define CLKON_CFG and ROUTE IPA register fields
+>     (no matching commit)
+>   - [net-next,09/15] net: ipa: define some more IPA register fields
+>     (no matching commit)
+>   - [net-next,10/15] net: ipa: define more IPA register fields
+>     (no matching commit)
+>   - [net-next,11/15] net: ipa: define even more IPA register fields
+>     (no matching commit)
+>   - [net-next,12/15] net: ipa: define resource group/type IPA register fields
+>     (no matching commit)
+>   - [net-next,13/15] net: ipa: define some IPA endpoint register fields
+>     (no matching commit)
+>   - [net-next,14/15] net: ipa: define more IPA endpoint register fields
+>     (no matching commit)
+>   - [net-next,15/15] net: ipa: define remaining IPA register fields
+>     (no matching commit)
+> 
+> You are awesome, thank you!
 
-This can be observed by the USB connection not coming back alive after
-putting the device into suspend, essentially breaking USB.
+Hi Konstantin,
 
-Fix this by updating the .pwrsts for the USB GDSCs so they only
-transition to retention state in low power.
+did anything change in the pw-bot in the last couple of weeks?
 
-Cc: Rajendra Nayak <quic_rjendra@quicinc.com>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
-Similar to sc7180 & sc7280 patches that have been applied recently:
-https://lore.kernel.org/linux-arm-msm/20220927170516.zrkzn3xl7oedzi4l@builder.lan/T/
-
-@Rajendra Nayak: Maybe you know a bit more about the internals of
-sm6350&sm7225. As described in the commit message USB just stops working
-after suspend, with this it comes back after wakeup from suspend and
-continues working. If any details in the commit message are somehow
-wrong or I can add something, please let me know!
-Thanks for fixing this on sc7180&sc7280!
-
- drivers/clk/qcom/gcc-sm6350.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/clk/qcom/gcc-sm6350.c b/drivers/clk/qcom/gcc-sm6350.c
-index 69412400efa4..9b4e4bb05963 100644
---- a/drivers/clk/qcom/gcc-sm6350.c
-+++ b/drivers/clk/qcom/gcc-sm6350.c
-@@ -2316,7 +2316,7 @@ static struct gdsc usb30_prim_gdsc = {
- 	.pd = {
- 		.name = "usb30_prim_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- };
- 
- static struct gdsc ufs_phy_gdsc = {
--- 
-2.37.3
-
+I didn't touch these patches and yet half got missed.
+Do you recommend we slap a Link on all patches? Currently I only 
+add it to the cover letter / merge commit.
