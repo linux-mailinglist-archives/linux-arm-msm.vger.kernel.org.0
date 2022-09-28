@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BC215EE9F4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 01:10:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD0FF5EE9F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 01:10:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233683AbiI1XKf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 19:10:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50194 "EHLO
+        id S233695AbiI1XKc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 19:10:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233770AbiI1XKZ (ORCPT
+        with ESMTP id S233739AbiI1XKZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 28 Sep 2022 19:10:25 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC7B340E2D
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D46820F52
         for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 16:10:23 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id j24so15930269lja.4
+Received: by mail-lf1-x135.google.com with SMTP id a8so22520739lff.13
         for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 16:10:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=RzM6oG5KE0UQHyUy9DXhvNhkfU1/HJx9u02ula3G0dk=;
-        b=Zg/jexQa/2/TUCTMu6s+YkSBISFsIoiTJYlNORWF8Vrpezv8Wzwl1U8U/AM3iO4m9J
-         eK2L4260K6vadnRBPngwNm9z/bMq8PEwBkbH7sIY6sfWcwG6TNQmE4ylOt/U9UFIP+S5
-         fDUsCpGSlbaNcqRc1cBqNoJBCmOfmPd/TN9zhqjNAaOTUejOtrolgWlahtcyUkuQw91Q
-         SB3vYN4yOr6EXpR3MJdWp3hK/IeoFYxekfqW6F4/31v6UKTH57/FKd7s1Xyl608+Xelb
-         zSX1eDa/VydSPvTUkxEXIkDBoNBzm0JmbWTyBn94Nr5X6UyOkbWxVtjWW+Ze31dCwVwD
-         5e/Q==
+        bh=lM73YaOk7Ye2eNHUAiU/uaRTXDAevXaPiBfAgPfz7sU=;
+        b=y+uWwj+0jX1TgKw4ywyRYuXYNPvfvS00oVZ2561jOjdbS5OP8vMLlFlwBVzRnRaWga
+         BIvtO3ZLjD+ZJSFguqaHQQqo11ocY/Wy1VTjwlz/lSOCq0hMhxcBK29Uf6nx5IVNSgQU
+         zjRZ/XZo6iMBoMWvvCxvM+FCY7hnb5eKjneDnDW0d4lLd7qKyerzrUdzdWLDy6Ivbvsc
+         c+gw8rKpYd5eHZ8e3xonbjiVAEgYp0r1KTmdFS2MGrLtRyfvFRjYi5KPj4PExrsdt05y
+         ISmtTGAQ2Ne5s4sIDfksFbEsCMMQ8WaNvVLF1nX9hb3OoKamTAk9KLDLYn07L+fZVCX5
+         F0Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=RzM6oG5KE0UQHyUy9DXhvNhkfU1/HJx9u02ula3G0dk=;
-        b=VNq0GhoPbw7zWYyiZe8hj+NMzb7fa8D4haanBH4XqEaucIf96UsQKvkltgEcwBtbBD
-         Hv7/d6cEHpqwK0UTW0IjxzIDunP4GcZNivTFpyO15bOrvRFEnWMwsBAqO69uZnZzc3Cb
-         hE8heG6uZOfppvo+LsJQxtXzNISTyElA5LfxrfnE2VASpuH3BA9n6F+nC7QTBlxi82Ed
-         GliY71TKMd5YpCGq2T9utth1Y/1bJDlqbjvLejcABtMMnArttu7/ujal3eZLnHkmpmSY
-         6QeoYczRNZy6M7gwL/74/ZHpbXTFzGdtWh5kZfhH/aPT2QKAdvF2E5/uA705OJZP8YM7
-         qeQg==
-X-Gm-Message-State: ACrzQf0wvvSyMGWzz+6UU/UjQGoAEzn3oicHb+f0igRj+cBGJLbdh4eQ
-        LB0nl81HCLSzVrRLOIrScxtxiw==
-X-Google-Smtp-Source: AMsMyM4z50TVRzfN3Fp7111dX49lquGVhigTtPSJZDmAPonJ47iUSFuUFv/CXfWYzG2gpfFujhSBfA==
-X-Received: by 2002:a2e:a54c:0:b0:26c:50c6:75c1 with SMTP id e12-20020a2ea54c000000b0026c50c675c1mr57651ljn.408.1664406622241;
+        bh=lM73YaOk7Ye2eNHUAiU/uaRTXDAevXaPiBfAgPfz7sU=;
+        b=hJLwgxGHX+KDuJ9792usSvknxttRkDHybcDizswJYoqrsV/2m5i/UUlgMzm+lgtl9Z
+         UudkAx38trDneQN4RPn4evo5n/9vgFKuWa/jX5pYHBP8UyomTb/fP81bXK1AVpQMK78i
+         6ZqXO1+zxI0HIz33nqRH6hAnDbGFd26B52aOJrDW3zf/PwcoEYvdVWsnVSIF9WGTcjK0
+         uxs01Zuk0PQAxIafLQ7YjYwVpUEgNBhWjrgva410PbzE32PLel8g/n/7VEZWERa9AkqD
+         jKlAhwiqBIVebVHU2XjmSM7fUDekzO02i/e0QD6dryf0uejRfL2JFC3yYGg9iE86iCxB
+         skKw==
+X-Gm-Message-State: ACrzQf3q3IBJcJzGoafCXi6dmx1ipTBtFEAbKBdSlLAkIkOTmySXXgIS
+        dGAVrseq8BM4liRqtMe7QrlSfQ==
+X-Google-Smtp-Source: AMsMyM7aOo/mpjs+kCiTH5ywyIukeD8EngtQUJCy+8AN146MGB48Mz85Rxdw8AinpcgPvVxXNSTnFw==
+X-Received: by 2002:ac2:4c50:0:b0:49a:3768:da81 with SMTP id o16-20020ac24c50000000b0049a3768da81mr106417lfk.247.1664406622925;
         Wed, 28 Sep 2022 16:10:22 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id o16-20020ac24950000000b0049d5733fb3fsm597587lfi.212.2022.09.28.16.10.21
+        by smtp.gmail.com with ESMTPSA id o16-20020ac24950000000b0049d5733fb3fsm597587lfi.212.2022.09.28.16.10.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 16:10:21 -0700 (PDT)
+        Wed, 28 Sep 2022 16:10:22 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -58,9 +58,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         Johan Hovold <johan@kernel.org>
-Subject: [PATCH 08/18] phy: qcom-qmp-pcie: rename regs layout arrays
-Date:   Thu, 29 Sep 2022 02:10:04 +0300
-Message-Id: <20220928231014.455201-9-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 09/18] phy: qcom-qmp-ufs: split UFS-specific v2 PCS registers to a separate header
+Date:   Thu, 29 Sep 2022 02:10:05 +0300
+Message-Id: <20220928231014.455201-10-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220928231014.455201-1-dmitry.baryshkov@linaro.org>
 References: <20220928231014.455201-1-dmitry.baryshkov@linaro.org>
@@ -75,149 +75,114 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rename regs layouts to follow the QMP PHY version.
+Follow other QMP headers, split and rename UFS-specific PCS registers to
+ease comparing regs differences.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 35 ++++++++++--------------
- 1 file changed, 14 insertions(+), 21 deletions(-)
+ .../phy/qualcomm/phy-qcom-qmp-pcs-ufs-v2.h    | 20 +++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v2.h    | 11 ----------
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       | 18 ++++++++---------
+ drivers/phy/qualcomm/phy-qcom-qmp.h           |  1 +
+ 4 files changed, 30 insertions(+), 20 deletions(-)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v2.h
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index c68815be8d4d..688d9eb78a82 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -86,21 +86,14 @@ enum qphy_reg_layout {
- 	QPHY_LAYOUT_SIZE
- };
- 
--static const unsigned int ipq_pciephy_gen3_regs_layout[QPHY_LAYOUT_SIZE] = {
--	[QPHY_SW_RESET]				= QPHY_V4_PCS_SW_RESET,
--	[QPHY_START_CTRL]			= QPHY_V4_PCS_START_CONTROL,
--	[QPHY_PCS_STATUS]			= QPHY_V4_PCS_PCS_STATUS1,
--	[QPHY_PCS_POWER_DOWN_CONTROL]		= QPHY_V4_PCS_POWER_DOWN_CONTROL,
--};
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v2.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v2.h
+new file mode 100644
+index 000000000000..af870669a904
+--- /dev/null
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v2.h
+@@ -0,0 +1,20 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2017, The Linux Foundation. All rights reserved.
++ */
++
++#ifndef QCOM_PHY_QMP_PCS_UFS_V2_H_
++#define QCOM_PHY_QMP_PCS_UFS_V2_H_
++
++#define QPHY_V2_PCS_UFS_TX_LARGE_AMP_DRV_LVL		0x034
++#define QPHY_V2_PCS_UFS_TX_LARGE_AMP_POST_EMP_LVL	0x038
++#define QPHY_V2_PCS_UFS_TX_SMALL_AMP_DRV_LVL		0x03c
++#define QPHY_V2_PCS_UFS_TX_SMALL_AMP_POST_EMP_LVL	0x040
++
++#define QPHY_V2_PCS_UFS_RX_MIN_STALL_NOCONFIG_TIME_CAP	0x0cc
++#define QPHY_V2_PCS_UFS_RX_SYM_RESYNC_CTRL			0x13c
++#define QPHY_V2_PCS_UFS_RX_MIN_HIBERN8_TIME			0x140
++#define QPHY_V2_PCS_UFS_RX_SIGDET_CTRL2			0x148
++#define QPHY_V2_PCS_UFS_RX_PWM_GEAR_BAND			0x154
++
++#endif
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v2.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v2.h
+index 2624a1ec3e73..431e9148b8d0 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v2.h
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v2.h
+@@ -12,10 +12,6 @@
+ #define QPHY_V2_PCS_START_CONTROL			0x008
+ #define QPHY_V2_PCS_TXDEEMPH_M6DB_V0			0x024
+ #define QPHY_V2_PCS_TXDEEMPH_M3P5DB_V0			0x028
+-#define QPHY_V2_PCS_TX_LARGE_AMP_DRV_LVL		0x034
+-#define QPHY_V2_PCS_TX_LARGE_AMP_POST_EMP_LVL		0x038
+-#define QPHY_V2_PCS_TX_SMALL_AMP_DRV_LVL		0x03c
+-#define QPHY_V2_PCS_TX_SMALL_AMP_POST_EMP_LVL		0x040
+ #define QPHY_V2_PCS_ENDPOINT_REFCLK_DRIVE		0x054
+ #define QPHY_V2_PCS_RX_IDLE_DTCT_CNTRL			0x058
+ #define QPHY_V2_PCS_POWER_STATE_CONFIG1			0x060
+@@ -32,13 +28,6 @@
+ #define QPHY_V2_PCS_FLL_CNT_VAL_L			0x0c8
+ #define QPHY_V2_PCS_FLL_CNT_VAL_H_TOL			0x0cc
+ #define QPHY_V2_PCS_FLL_MAN_CODE			0x0d0
 -
--static const unsigned int pciephy_regs_layout[QPHY_LAYOUT_SIZE] = {
-+static const unsigned int pciephy_v2_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	[QPHY_SW_RESET]			= QPHY_V2_PCS_SW_RESET,
- 	[QPHY_START_CTRL]		= QPHY_V2_PCS_START_CONTROL,
- 	[QPHY_PCS_STATUS]		= QPHY_V2_PCS_PCI_PCS_STATUS,
- 	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V2_PCS_POWER_DOWN_CONTROL,
+-/* UFS only ? */
+-#define QPHY_V2_PCS_RX_MIN_STALL_NOCONFIG_TIME_CAP	0x0cc
+-#define QPHY_V2_PCS_RX_SYM_RESYNC_CTRL			0x13c
+-#define QPHY_V2_PCS_RX_MIN_HIBERN8_TIME			0x140
+-#define QPHY_V2_PCS_RX_SIGDET_CTRL2			0x148
+-#define QPHY_V2_PCS_RX_PWM_GEAR_BAND			0x154
+ #define QPHY_V2_PCS_PLL_LOCK_CHK_DLY_TIME_AUXCLK_LSB	0x1a8
+ #define QPHY_V2_PCS_OSC_DTCT_ACTIONS			0x1ac
+ #define QPHY_V2_PCS_RX_SIGDET_LVL			0x1d8
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+index 738ec1e49ec6..e9c04b88f541 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+@@ -259,15 +259,15 @@ static const struct qmp_phy_init_tbl sm6115_ufsphy_rx_tbl[] = {
  };
  
--static const unsigned int sdm845_qmp_pciephy_regs_layout[QPHY_LAYOUT_SIZE] = {
-+static const unsigned int pciephy_v3_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	[QPHY_SW_RESET]			= QPHY_V3_PCS_SW_RESET,
- 	[QPHY_START_CTRL]		= QPHY_V3_PCS_START_CONTROL,
- 	[QPHY_PCS_STATUS]		= QPHY_V3_PCS_PCS_STATUS,
-@@ -114,7 +107,7 @@ static const unsigned int sdm845_qhp_pciephy_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	[QPHY_PCS_POWER_DOWN_CONTROL]	= 0x04,
+ static const struct qmp_phy_init_tbl sm6115_ufsphy_pcs_tbl[] = {
+-	QMP_PHY_INIT_CFG(QPHY_V2_PCS_RX_PWM_GEAR_BAND, 0x15),
+-	QMP_PHY_INIT_CFG(QPHY_V2_PCS_RX_SIGDET_CTRL2, 0x6d),
+-	QMP_PHY_INIT_CFG(QPHY_V2_PCS_TX_LARGE_AMP_DRV_LVL, 0x0f),
+-	QMP_PHY_INIT_CFG(QPHY_V2_PCS_TX_SMALL_AMP_DRV_LVL, 0x02),
+-	QMP_PHY_INIT_CFG(QPHY_V2_PCS_RX_MIN_STALL_NOCONFIG_TIME_CAP, 0x28),
+-	QMP_PHY_INIT_CFG(QPHY_V2_PCS_RX_SYM_RESYNC_CTRL, 0x03),
+-	QMP_PHY_INIT_CFG(QPHY_V2_PCS_TX_LARGE_AMP_POST_EMP_LVL, 0x12),
+-	QMP_PHY_INIT_CFG(QPHY_V2_PCS_TX_SMALL_AMP_POST_EMP_LVL, 0x0f),
+-	QMP_PHY_INIT_CFG(QPHY_V2_PCS_RX_MIN_HIBERN8_TIME, 0x9a), /* 8 us */
++	QMP_PHY_INIT_CFG(QPHY_V2_PCS_UFS_RX_PWM_GEAR_BAND, 0x15),
++	QMP_PHY_INIT_CFG(QPHY_V2_PCS_UFS_RX_SIGDET_CTRL2, 0x6d),
++	QMP_PHY_INIT_CFG(QPHY_V2_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0f),
++	QMP_PHY_INIT_CFG(QPHY_V2_PCS_UFS_TX_SMALL_AMP_DRV_LVL, 0x02),
++	QMP_PHY_INIT_CFG(QPHY_V2_PCS_UFS_RX_MIN_STALL_NOCONFIG_TIME_CAP, 0x28),
++	QMP_PHY_INIT_CFG(QPHY_V2_PCS_UFS_RX_SYM_RESYNC_CTRL, 0x03),
++	QMP_PHY_INIT_CFG(QPHY_V2_PCS_UFS_TX_LARGE_AMP_POST_EMP_LVL, 0x12),
++	QMP_PHY_INIT_CFG(QPHY_V2_PCS_UFS_TX_SMALL_AMP_POST_EMP_LVL, 0x0f),
++	QMP_PHY_INIT_CFG(QPHY_V2_PCS_UFS_RX_MIN_HIBERN8_TIME, 0x9a), /* 8 us */
  };
  
--static const unsigned int sm8250_pcie_regs_layout[QPHY_LAYOUT_SIZE] = {
-+static const unsigned int pciephy_v4_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	[QPHY_SW_RESET]			= QPHY_V4_PCS_SW_RESET,
- 	[QPHY_START_CTRL]		= QPHY_V4_PCS_START_CONTROL,
- 	[QPHY_PCS_STATUS]		= QPHY_V4_PCS_PCS_STATUS1,
-@@ -1467,7 +1460,7 @@ static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
- 	.num_resets		= ARRAY_SIZE(ipq8074_pciephy_reset_l),
- 	.vreg_list		= NULL,
- 	.num_vregs		= 0,
--	.regs			= pciephy_regs_layout,
-+	.regs			= pciephy_v2_regs_layout,
+ static const struct qmp_phy_init_tbl sdm845_ufsphy_serdes_tbl[] = {
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
+index 26274e3c0cf9..e6f327acbf19 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.h
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
+@@ -24,6 +24,7 @@
+ #include "phy-qcom-qmp-qserdes-pll.h"
  
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-@@ -1495,7 +1488,7 @@ static const struct qmp_phy_cfg ipq8074_pciephy_gen3_cfg = {
- 	.num_resets		= ARRAY_SIZE(ipq8074_pciephy_reset_l),
- 	.vreg_list		= NULL,
- 	.num_vregs		= 0,
--	.regs			= ipq_pciephy_gen3_regs_layout,
-+	.regs			= pciephy_v4_regs_layout,
+ #include "phy-qcom-qmp-pcs-v2.h"
++#include "phy-qcom-qmp-pcs-ufs-v2.h"
  
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-@@ -1526,7 +1519,7 @@ static const struct qmp_phy_cfg ipq6018_pciephy_cfg = {
- 	.num_resets		= ARRAY_SIZE(ipq8074_pciephy_reset_l),
- 	.vreg_list		= NULL,
- 	.num_vregs		= 0,
--	.regs			= ipq_pciephy_gen3_regs_layout,
-+	.regs			= pciephy_v4_regs_layout,
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-@@ -1555,7 +1548,7 @@ static const struct qmp_phy_cfg sdm845_qmp_pciephy_cfg = {
- 	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
--	.regs			= sdm845_qmp_pciephy_regs_layout,
-+	.regs			= pciephy_v3_regs_layout,
- 
- 	.start_ctrl		= PCS_START | SERDES_START,
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-@@ -1621,7 +1614,7 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x1_pciephy_cfg = {
- 	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
--	.regs			= sm8250_pcie_regs_layout,
-+	.regs			= pciephy_v4_regs_layout,
- 
- 	.start_ctrl		= PCS_START | SERDES_START,
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-@@ -1659,7 +1652,7 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x2_pciephy_cfg = {
- 	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
--	.regs			= sm8250_pcie_regs_layout,
-+	.regs			= pciephy_v4_regs_layout,
- 
- 	.start_ctrl		= PCS_START | SERDES_START,
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-@@ -1687,7 +1680,7 @@ static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
- 	.num_resets		= ARRAY_SIZE(ipq8074_pciephy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
--	.regs			= pciephy_regs_layout,
-+	.regs			= pciephy_v3_regs_layout,
- 
- 	.start_ctrl             = SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-@@ -1713,7 +1706,7 @@ static const struct qmp_phy_cfg sc8180x_pciephy_cfg = {
- 	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
--	.regs			= sm8250_pcie_regs_layout,
-+	.regs			= pciephy_v4_regs_layout,
- 
- 	.start_ctrl		= PCS_START | SERDES_START,
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-@@ -1742,7 +1735,7 @@ static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
- 	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
--	.regs			= sm8250_pcie_regs_layout,
-+	.regs			= pciephy_v4_regs_layout,
- 
- 	.start_ctrl		= PCS_START | SERDES_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
-@@ -1772,7 +1765,7 @@ static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
- 	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
--	.regs			= sm8250_pcie_regs_layout,
-+	.regs			= pciephy_v4_regs_layout,
- 
- 	.start_ctrl             = SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-@@ -1802,7 +1795,7 @@ static const struct qmp_phy_cfg sm8450_qmp_gen4x2_pciephy_cfg = {
- 	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
--	.regs			= sm8250_pcie_regs_layout,
-+	.regs			= pciephy_v4_regs_layout,
- 
- 	.start_ctrl             = SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+ #include "phy-qcom-qmp-pcs-v3.h"
+ #include "phy-qcom-qmp-pcs-misc-v3.h"
 -- 
 2.35.1
 
