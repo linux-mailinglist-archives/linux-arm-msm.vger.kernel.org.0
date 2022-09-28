@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 862855EDF96
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 17:02:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EA095EDFA1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 17:05:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234595AbiI1PCG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 11:02:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47058 "EHLO
+        id S234229AbiI1PFt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 11:05:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234523AbiI1PCF (ORCPT
+        with ESMTP id S233287AbiI1PFs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 11:02:05 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3518193784
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:02:03 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id s14so20330745wro.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:02:03 -0700 (PDT)
+        Wed, 28 Sep 2022 11:05:48 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C0433ED6D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:05:47 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id ay36so8731649wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 08:05:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=UMwaiHo1eLQK8IfkiAfCU0lkKLmszBUs//Hb1jAlWoY=;
-        b=enbOhPsr6zIPkBsmx40qOuouUrPan0+01WARY8T73AICUgpKOA6dEbIUNaSEO5MUTU
-         p2+hCJztXY9lEySCO9QuW5pFkIycqcz2Cmde3ZCUgUPwpkmdFaHn5dVl4gjHo54gg4QE
-         7Ar9im1vCB9d6BsOs0r3APyf23A2xbY0fyG4wbSb2VO5x/rthaJNwG1p3Nc8HuEXDwB3
-         MXVF5O0e1cZxnKLOw76xhxUQ1qkVP0uLawoIIdzDlvFyf2Yqvo/OmxbYAp//SgVHSq/w
-         ybkXgYTKqrsdG4mZiyZemMpp6LUhZy0l4LMerVubMyufYovZby+mRNUbuJJgYW1L5FvI
-         DlqA==
+        bh=LbkiTn2AAWuuc6hV3bxP0WyO4RfSlFoBB5RRyBhKRLQ=;
+        b=Od4C1bLx1Yl3Hz1HqnUnvOL+CIUbylDRF341Sr1tz74+sJKO+9rAULiR7NPW7hyipZ
+         VTab/cPzacGT1fmJD5KvIZ9ZtbAn+yWCjmiZSOBFXPr/s0GtDMmwo6M1QrDPgkk+b7L6
+         t+vKGQGUBmtCYFVWkUoptgsRh+VcRFPoOI0JBXuuQjMVvPbAgEESwsbCqtx8zQty41YZ
+         XaBMm5Wh3kom2H1VeMvQBChgapUMiovWpcSVGiRG8Udn4dYWQ8rDbI7RvAdrACcSfisS
+         QN9MWjTUgASv7pnioG6a+7EOA/ULIGSJMOp+ex8QXjolUYFj/fr3TZT19ilvBPVwzIE2
+         8z1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=UMwaiHo1eLQK8IfkiAfCU0lkKLmszBUs//Hb1jAlWoY=;
-        b=sxH+0Oi4nItjEX/nRCC5QpoI5dXSMVeNSYq5Q9X0muLwpdnzkSBl1ma3lrJ8yWYvaY
-         pSRNluaElTljV3WDfqd4DB0x6V611mGUqj1i9tJkJ/F53sLBzNJhtoCJXLeIzPhc4QBH
-         GFtpyolAGuJGRVQA74B4FSYNI3obY+NT4A6mo2Yq6r93shUTgrSSu4jZkvI8GbloN1Vl
-         9ExhURZeaO0g5oku+Uc/vKFuSOOWkhscbVNwBA5vX0OMAPWOah195NnUSAKtWm/Uu01F
-         hOb/kgTY9OwEtG7gfdK0xxfGA2qvUkTsLghpIvFTzRcgx2L5HrBUxMgOxVGrqpDXFsvD
-         cb6g==
-X-Gm-Message-State: ACrzQf233pd0S+9icimz9wUDLlKHqv3INxFiyGdsQvpbsP0Y8PKv+m4X
-        N44++kut5lM/WiOXEfq07Xbyeg==
-X-Google-Smtp-Source: AMsMyM42uI+yVH19PPnULaoaWHiL4YsvauLxANPEcxM5bMgKTHG0BrNhtSEP2dzZ5ETDA2rVtU/4zw==
-X-Received: by 2002:adf:a41e:0:b0:22c:c70e:5202 with SMTP id d30-20020adfa41e000000b0022cc70e5202mr3211113wra.412.1664377321759;
-        Wed, 28 Sep 2022 08:02:01 -0700 (PDT)
+        bh=LbkiTn2AAWuuc6hV3bxP0WyO4RfSlFoBB5RRyBhKRLQ=;
+        b=M27ZJUyuWUbaqdXK56sg3aRzECprblxwqeZS3tg4Fb+88/DcUxWi8m+pCTNyW7ecqP
+         Z6ZhgF1T1dTV+/H8I4XXWODKSUyUlGwBbLNhDiuWccKCNLm+Lsvnrk8h4GSNJN6FUyYc
+         BRN1B09tbOF/RLt/UJLjEi0ARr4NfZunVHJehVxVYn7graXye7iD21CiWLaRM4y1lANj
+         1cu8r7MzpJw8j4yoN7oVm+jTSK+tw+S1F/p+qVWv4KkeGoPUF1VkkQeJSdMknwCpZ7uw
+         sV3qDXq6cAflgQ3qaCjqgrsMqZk3fl73chtR2KotLdavBB9PcRmxGStYLG8Cl3r6NzST
+         B3lQ==
+X-Gm-Message-State: ACrzQf1pG21mYDDmIPapD8E6coEuoOTplrx6atCVux8Hu6V9HMcki91f
+        zan1jkDJcUYbawytVnqcvDS67g==
+X-Google-Smtp-Source: AMsMyM4K0lTNM9cpGRumIQstlHDzumN0c1uVyJVGDQHeRJexGeR7LIBt+gRTfzXJUPQqpWvp8TNPHQ==
+X-Received: by 2002:a05:600c:310b:b0:3b4:c618:180d with SMTP id g11-20020a05600c310b00b003b4c618180dmr7221013wmo.25.1664377545649;
+        Wed, 28 Sep 2022 08:05:45 -0700 (PDT)
 Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id z8-20020a1cf408000000b003b56be51313sm1449795wma.44.2022.09.28.08.02.00
+        by smtp.gmail.com with ESMTPSA id w1-20020a5d5441000000b0022cc0a2cbecsm4072327wrv.15.2022.09.28.08.05.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Sep 2022 08:02:01 -0700 (PDT)
-Message-ID: <edbe66fd-1956-6e1f-b7a0-228e1b6ba2fa@linaro.org>
-Date:   Wed, 28 Sep 2022 16:02:00 +0100
+        Wed, 28 Sep 2022 08:05:45 -0700 (PDT)
+Message-ID: <cd9a50f4-ff42-a87d-bcea-0af0509cb592@linaro.org>
+Date:   Wed, 28 Sep 2022 16:05:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.0
-Subject: Re: [PATCH 3/3] clk: qcom: gcc-msm8939: use ARRAY_SIZE instead of
- specifying num_parents
+Subject: Re: [PATCH 1/3] dt-bindings: clock: move qcom,gcc-msm8939 to
+ qcom,gcc-msm8916.yaml
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -70,14 +70,15 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
 References: <20220928145609.375860-1-dmitry.baryshkov@linaro.org>
- <20220928145609.375860-4-dmitry.baryshkov@linaro.org>
+ <20220928145609.375860-2-dmitry.baryshkov@linaro.org>
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20220928145609.375860-4-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220928145609.375860-2-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,28 +86,12 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 28/09/2022 15:56, Dmitry Baryshkov wrote:
-> Use ARRAY_SIZE() instead of manually specifying num_parents. This makes
-> adding/removing entries to/from parent_data easy and errorproof.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/clk/qcom/gcc-msm8939.c | 120 ++++++++++++++++-----------------
->   1 file changed, 60 insertions(+), 60 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/gcc-msm8939.c b/drivers/clk/qcom/gcc-msm8939.c
-> index 9d4f35716990..af608f165896 100644
-> --- a/drivers/clk/qcom/gcc-msm8939.c
-> +++ b/drivers/clk/qcom/gcc-msm8939.c
-> @@ -614,7 +614,7 @@ static struct clk_rcg2 pcnoc_bfdcd_clk_src = {
->   	.clkr.hw.init = &(struct clk_init_data){
->   		.name = "pcnoc_bfdcd_clk_src",
->   		.parent_data = gcc_xo_gpll0_parent_data,
-> -		.num_parents = 2,
-> +		.num_parents = ARRAY_SIZE(gcc_xo_gpll0_parent_data),
->   		.ops = &clk_rcg2_ops,
->   	},
->   };
+> The MSM8939 GCC bindings are fully comptible with MSM8916, the clock
+> controller requires the same parent clocks, move MSM8939 GCC compatible
+> to qcom,msm8916.yaml
 
-Nice
+I'm not sure they are _all_ the same but definitely agree the two trees 
+are so close they should live in the same file.
 
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
