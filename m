@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4F4E5ED46D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 08:00:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35C105ED46F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 08:01:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232616AbiI1GAw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 02:00:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36058 "EHLO
+        id S232069AbiI1GBV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 02:01:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231278AbiI1GAv (ORCPT
+        with ESMTP id S232201AbiI1GBT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 02:00:51 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88A3010B22A;
-        Tue, 27 Sep 2022 23:00:49 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28S5WxcE017949;
-        Wed, 28 Sep 2022 06:00:43 GMT
+        Wed, 28 Sep 2022 02:01:19 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04B1A115F70;
+        Tue, 27 Sep 2022 23:01:17 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28S5vPqe031680;
+        Wed, 28 Sep 2022 06:01:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=wDkYFD21cAegiPDyEU2Zngt/OjDAme3eFDqP3dI6Q/0=;
- b=PIWiPgEbjIJXnEwlIiwwPmU38Vy7O0uyHQL5kTxPdeQld+CKknO5/+z9LnRo3b+SGvlK
- NeFT11cbfMRHIPZBVEAjqmvukAFp96WZ1Grf5tRB132ly2ZZHrdll85AXY77IgF4ufzu
- 0ON3hhFKyf1q0c1J99x2Z6hipyB6FCx51LLv7gR82kWsoD4WHZf6es4jSv4U6PXdfXRu
- xcnddm1Q3HxHEO1bM3l4yv574bERt78uTkKMSklc3BSlFbSdUtY1klhrCQt0JvvpcsOX
- iWTGY2apCB7yECHANx8Hjq/BQwY44EZ9U4uQIAa+uP2ydzGjJykn5lwhlTRS4SMYXooW Jw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jva6qs01s-1
+ bh=LdAjZt19MQNoCbmkPUETxV5QHUxWqUO1Lrwgb0M8N/E=;
+ b=nBrBuCAV9ZjpdSzSSIcA2QErngzWrrQt+lDMd3w8ilbOfonEWEq1D9e10GOLk4SWlqJ9
+ eRWLiy8E/Gb9VekKBhwQAWX12jo7dxzcYx7uJUpNSqkjMaadxFgWiArcCI55F9Sd74PZ
+ dcb9Yrawcmawx9MENmycNqk9CCVL3A+Fj6iXrOkyS1B9qapegqxdf1qewWQpD2RgOcVR
+ 6qAFtmbQR32wMvI7gxNI2tMwF7qWrCwH3lPue36WS15YXvDMCMMRX7KhWD1+cIcnrNvJ
+ pKxSmr2NlVhcD1cyAJJR7CW8pCAuDCWqx9rQtj0psyP0DfmlhYnM0EURukJK7WqvEIMA pQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3juvejawdn-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 28 Sep 2022 06:00:42 +0000
+        Wed, 28 Sep 2022 06:01:10 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28S60gvW011634
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28S619rC031054
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 28 Sep 2022 06:00:42 GMT
+        Wed, 28 Sep 2022 06:01:09 GMT
 Received: from [10.216.15.174] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 27 Sep
- 2022 23:00:38 -0700
-Message-ID: <a6e94553-c62f-128a-4122-94483b02bee7@quicinc.com>
-Date:   Wed, 28 Sep 2022 11:30:32 +0530
+ 2022 23:01:05 -0700
+Message-ID: <3b6a7af1-7396-6df5-0b47-0834c2deacac@quicinc.com>
+Date:   Wed, 28 Sep 2022 11:31:00 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
 Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Add nodes to support WoW on
  WCN6750
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@somainline.org>, <robh+dt@kernel.org>,
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
         <krzysztof.kozlowski+dt@linaro.org>
 CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>
 References: <20220926045735.719-1-quic_mpubbise@quicinc.com>
- <f1057c78-39a2-6b26-f3c9-51cd99450dd2@linaro.org>
+ <f0bf8546-3def-a6a7-1d66-7367a9955289@somainline.org>
 From:   Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
-In-Reply-To: <f1057c78-39a2-6b26-f3c9-51cd99450dd2@linaro.org>
+In-Reply-To: <f0bf8546-3def-a6a7-1d66-7367a9955289@somainline.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -63,15 +62,15 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1IVxFBWkHhh18n1eTU0V7YNkOsmK5y5b
-X-Proofpoint-ORIG-GUID: 1IVxFBWkHhh18n1eTU0V7YNkOsmK5y5b
+X-Proofpoint-GUID: ZMnXZHxt291hPkhl5g3CtGOc_9brj6kj
+X-Proofpoint-ORIG-GUID: ZMnXZHxt291hPkhl5g3CtGOc_9brj6kj
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
  definitions=2022-09-28_02,2022-09-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 adultscore=0 phishscore=0 mlxlogscore=856 bulkscore=0
- clxscore=1011 impostorscore=0 mlxscore=0 spamscore=0 priorityscore=1501
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ clxscore=1015 lowpriorityscore=0 adultscore=0 phishscore=0 mlxlogscore=801
+ priorityscore=1501 impostorscore=0 malwarescore=0 suspectscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2209130000 definitions=main-2209280035
 X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
@@ -82,16 +81,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/26/2022 2:30 PM, Krzysztof Kozlowski wrote:
-> On 26/09/2022 06:57, Manikanta Pubbisetty wrote:
+
+
+On 9/27/2022 6:38 PM, Konrad Dybcio wrote:
+> 
+> 
+> On 26.09.2022 06:57, Manikanta Pubbisetty wrote:
 >> Add DT nodes to support WoW (Wake on Wireless) feature on WCN6750
 >> WiFi hardware on SC7280 SoC.
 >>
 >> Signed-off-by: Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
-> 
-> Thank you for your patch. There is something to discuss/improve.
-> 
-> 
 >> ---
 >> Changes from V1:
 >> - Rebased on ToT
@@ -109,18 +108,6 @@ On 9/26/2022 2:30 PM, Krzysztof Kozlowski wrote:
 >>   		};
 >> +
 >> +		wlan_smp2p_out: wlan-ap-to-wpss {
-> 
-> Does not look like you tested the DTS against bindings. Please run `make
-> dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
-> for instructions).
-> 
-
-I'm sorry I was not aware of checking the DTS against bindings. I'll do 
-the due diligence going forward. `make dtbs_check is throwing error of 
-"No rule to make target". Not sure if we need pass any options to the 
-command. I did try to understand the problem but all went in vain. Pls 
-help understand if I'm missing anything.
-
 >> +			qcom,entry-name = "wlan";
 >> +			#qcom,smem-state-cells = <1>;
 >> +		};
@@ -137,21 +124,18 @@ help understand if I'm missing anything.
 >>   			qcom,rproc = <&remoteproc_wpss>;
 >>   			memory-region = <&wlan_fw_mem>, <&wlan_ce_mem>;
 >>   			status = "disabled";
+>> +			qcom,smem-states = <&wlan_smp2p_out 0>;
+>> +			qcom,smem-state-names = "wlan-smp2p-out";
+> Keep status last, please.
 > 
-> status is the last.
 
 Sure.
 
+> Other than that:
 > 
->> +			qcom,smem-states = <&wlan_smp2p_out 0>;
->> +			qcom,smem-state-names = "wlan-smp2p-out";
-> 
-> Are these valid properties for this node? Did you check with bindings?
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > 
 
-These are valid properties IIUC. Pls help check the binding here 
-https://patchwork.kernel.org/project/linux-wireless/patch/20220902112520.24804-2-quic_mpubbise@quicinc.com/ 
-.
+Thanks for the review.
 
-Thanks,
 Manikanta
