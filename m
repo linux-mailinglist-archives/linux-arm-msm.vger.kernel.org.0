@@ -2,104 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB2E75EE30D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 19:26:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C38D35EE326
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 19:30:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232599AbiI1R03 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 13:26:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40378 "EHLO
+        id S234069AbiI1RaU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 13:30:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233247AbiI1R00 (ORCPT
+        with ESMTP id S234185AbiI1RaQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 13:26:26 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66253481E4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 10:26:25 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id j16so21432911lfg.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 10:26:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date;
-        bh=vdzPIwg7C3PKLnfi0wdXAYz0fhgIghBeZanBr7yxrY4=;
-        b=Jam549HMJC/Vz7pu5ChRmT5oSoI6/N0XhYy0mQLM/dqrkUVdL6fnaM7NR6qHVjUUgb
-         74VhpNqQJ9zFlLNfJsRFIfD34wyqjskcbdu+cg/o73KImxXq8NeDl3NrZsuPvF56msRs
-         STg/Rbty+f3ORXIFRzXLQaumRivNxLCdjYQSxErKhsvY9kkSNhuLzm/Of+134EWJkRFx
-         Fg/xvL8xS8tCJGLAFEo8bkl7j9x+djwBHAANxlIXf4LUFyFXKTgH0jEZ6qkFvZvFd/uP
-         /3aqrFKO3S2j7k5wvzAXAanDHwNC4SDwWBnNSfpsh22zl9E6jV7rBiZtUkRCApGM0cTu
-         geIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=vdzPIwg7C3PKLnfi0wdXAYz0fhgIghBeZanBr7yxrY4=;
-        b=KdxRsZGbOTr2yOZy0+SHmmmeSEQLY0vT9gIEWxDixaV1kdjef+xxjEbRBCBfuOM1Vu
-         jcA6Dyjew7e1pfUwY7Xo8By7KrxZ9fpMsFzDt5E7MyhvFO8hQO/5ZE6CqN7XALBJ04SP
-         HgZnVVcKUS8ayKcoosTx1UXu7jPKfWph25tLZoWPpEaFGuLl8OLQYhF8lUOtyXFwpDAt
-         R0prPaozU4ea386weNjNdK/xWz3mgYMdebUY8B2GxJSMFkKj36juenBKxa9xh3bN+CfH
-         p5bI8sNgJAwnsC4j9YD+gKCZ01SKJRLx0wESy7BsTfXbgpEaxcIjtN/Dk2OpCXRJ48Xy
-         j/fA==
-X-Gm-Message-State: ACrzQf38k38s1DRoi9Z5k9ysbN08F8ln11h9r2vfSLMBASaKPHdQNAih
-        1fe419KbVNfLFZM/LpQlLiwWA6M/PCz3VA==
-X-Google-Smtp-Source: AMsMyM5xaNiPkfM7hlZSxiQtNaOcfzJRqrNabhOO3y0wIWWqI5mu+EqnaUjtgRH6j+ZJyqZmk7ypBQ==
-X-Received: by 2002:a05:6512:22ce:b0:497:499e:c966 with SMTP id g14-20020a05651222ce00b00497499ec966mr13242274lfu.402.1664385983807;
-        Wed, 28 Sep 2022 10:26:23 -0700 (PDT)
-Received: from [127.0.0.1] ([94.25.229.4])
-        by smtp.gmail.com with ESMTPSA id f1-20020a056512360100b00492dbf809e8sm526869lfs.118.2022.09.28.10.26.23
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Sep 2022 10:26:23 -0700 (PDT)
-Date:   Wed, 28 Sep 2022 20:26:20 +0300
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 01/13] phy: qcom-qmp: fix obsolete lane comments
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20220928152822.30687-2-johan+linaro@kernel.org>
-References: <20220928152822.30687-1-johan+linaro@kernel.org> <20220928152822.30687-2-johan+linaro@kernel.org>
-Message-ID: <829EB2BC-4DFF-48FB-BB16-944D6597C601@linaro.org>
+        Wed, 28 Sep 2022 13:30:16 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82036101E1;
+        Wed, 28 Sep 2022 10:30:14 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3D84AB82188;
+        Wed, 28 Sep 2022 17:30:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B36C433D6;
+        Wed, 28 Sep 2022 17:30:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1664386212;
+        bh=had18nHIWk58wHIEUYBL8s5bf2zGuGtjvjtrM+XgU3w=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=U2/i9hdRC3qmwAnSJroV7/p49fAgUfqa7khD2K5Q3FIUcrAmvI09JOibqi1GavBBF
+         kqWr+vDGhmw8PW8aZZ3WKFnal2tBrZcxr05Plg+ptFQcd5AO+iN6cYGXGgaUxdItzt
+         nToszzQtaBkj3S1B6bMRNIb8CeNT0+Dob4cutWIpdztQeoVNKiQn/tYvD8Lmx9+I8/
+         ZnkcPGlfpaQd7swcJ361l+PMspA1dzv6REkk2+gzGKtGo0UnnMCtLm1RRvjuzvXjTc
+         K1VOWpUC6oJgB3uczF7k1DN5bqjYpcN7EuMG/vr7YiOTy2ZoNJLsg+HKRu5v5YQVCt
+         vWy2sSAWMkDYg==
+Message-ID: <4d0f7a01-1995-1b1e-40b9-125c3447b8c7@kernel.org>
+Date:   Wed, 28 Sep 2022 19:30:06 +0200
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH V14 1/7] dt-bindings: Added the yaml bindings for DCC
+Content-Language: en-US
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, vkoul@kernel.org
+References: <cover.1664383851.git.quic_schowdhu@quicinc.com>
+ <e320555b2075c94946ef3f9c78732dc84ba39449.1664383851.git.quic_schowdhu@quicinc.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <e320555b2075c94946ef3f9c78732dc84ba39449.1664383851.git.quic_schowdhu@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-9.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 28/09/2022 19:11, Souradeep Chowdhury wrote:
+> Documentation for Data Capture and Compare(DCC) device tree bindings
+> in yaml format.
+> 
+> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+
+I asked last time and there was just partial improvement, so let me be
+clear: you must rebase on latest kernel and use scripts/get_maintainers.pl.
+
+I am repeating myself, which should not be actually needed... but then
+maybe my comment was not accurate? If so, please post the output of `git
+describe` and `scripts/get_maintainers.pl __on_your_patches__` and let's
+go line by line...
 
 
-On 28 September 2022 18:28:10 GMT+03:00, Johan Hovold <johan+linaro@kernel=
-=2Eorg> wrote:
->All QMP drivers but the MSM8996 and combo ones handle exactly one PHY
->and the corresponding memory resources are not per-lane, but per PHY=2E
->
->Update the obsolete comments=2E
->
->Signed-off-by: Johan Hovold <johan+linaro@kernel=2Eorg>
->---
-> drivers/phy/qualcomm/phy-qcom-qmp-combo=2Ec        | 2 +-
-> drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996=2Ec | 2 +-
-> drivers/phy/qualcomm/phy-qcom-qmp-pcie=2Ec         | 2 +-
-> drivers/phy/qualcomm/phy-qcom-qmp-ufs=2Ec          | 2 +-
-> drivers/phy/qualcomm/phy-qcom-qmp-usb=2Ec          | 2 +-
-> 5 files changed, 5 insertions(+), 5 deletions(-)
->
+> ---
+>  .../devicetree/bindings/soc/qcom/qcom,dcc.yaml     | 44 ++++++++++++++++++++++
+>  1 file changed, 44 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml
+> new file mode 100644
+> index 0000000..8396b0c
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml
+> @@ -0,0 +1,44 @@
+> +# SPDX-License-Identifier: (GPL-2.0-or-later OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/arm/msm/qcom,dcc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Data Capture and Compare
+> +
+> +maintainers:
+> +  - Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> +
+> +description: |
+> +    DCC (Data Capture and Compare) is a DMA engine which is used to save
+> +    configuration data or system memory contents during catastrophic failure
+> +    or SW trigger. DCC is used to capture and store data for debugging purpose
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,sm8150-dcc
+> +          - qcom,sc7280-dcc
+> +          - qcom,sc7180-dcc
+> +          - qcom,sdm845-dcc
+> +      - const: qcom,dcc
+> +
+> +  reg:
+> +    items:
+> +      - description: DCC base register region
+> +      - description: DCC RAM base register region
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    dma@10a2000{
+> +                compatible = "qcom,sm8150-dcc","qcom,dcc";
 
-Reviewed-by: Dmitry Baryshkov<dmitry=2Ebaryshkov@linaro=2Eorg>
+odd indentation. Use 4 spaces for example indentation.
 
---=20
-With best wishes
-Dmitry
+> +                reg = <0x010a2000 0x1000>,
+> +                      <0x010ad000 0x2000>;
+> +    };
+
+Best regards,
+Krzysztof
+
