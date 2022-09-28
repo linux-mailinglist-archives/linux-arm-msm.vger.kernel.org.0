@@ -2,185 +2,269 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 500D15EE9FC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 01:10:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 790B65EEA38
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 01:37:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234023AbiI1XKn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 19:10:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50946 "EHLO
+        id S234536AbiI1Xhs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 19:37:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234253AbiI1XKf (ORCPT
+        with ESMTP id S234166AbiI1Xh2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 19:10:35 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2ECE4C60A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 16:10:32 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id a8so22521143lff.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 16:10:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=bBleQqpHTorXjkfdMp9ADhfccQLxPaCPN1KQqTkgy1s=;
-        b=Q7HJObxn1LBEh0NWEishjQdgx9kVPgzOyR167X72itC8hBeLjFngX6q2LdZ2B1NS0F
-         v8SjyhRTLm8S8YLtjPYSgBj4idpE7xiX1P81C/ZfBoubWFMAFvLLGqUzwYcsb3/H5FrJ
-         oLzJ2xmcH333phHqb2DmOHgFCCA3B7jTPLWrPjs2uNzuGWRe2NMYTeZtFKxOJbyxgkZQ
-         99EK5xlVJOounnNlrxNGHQZ02o1PG7ulTJF3KVHI4eomoqWEWYCT9u7iPyGOUpLbLJfA
-         kdaGXVRaTWlr/5ayGCV4n4mmVtnUny2O7WeYinxjot4O1LDPWCKPmIlv+1h/sMfz7KxD
-         btWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=bBleQqpHTorXjkfdMp9ADhfccQLxPaCPN1KQqTkgy1s=;
-        b=sOx+HhRL+HLttu1yrDugMh97saLOqsbry5j5yxmIyxi+LI6eM6tvVKicsTdUCgsoGe
-         5+gUTZmF33ZPPOOv79/o+WQi+nusYnVcYiPsHKKVvREGqQHbQiEXky/rrkjwsCdNjU7/
-         jEpTDVsAgjuM4Z6CBl81AVjZKsOCzeSFJ5OcTILsdOMhBBvnGojvgP1U34ZSadM0Jg7y
-         pN1hi/UWj63EL9CZ4raCXKSRaubXs5VE0Hk6IQUCpVQh8d4HvmW9m42vuuk+tiHOEuX5
-         1eALZR379/h9BU/dlc09gYgS+MEcU5kth5XNoLeEYuPeRG0AWNCEzjuJptKzaDx+tUvs
-         iWfA==
-X-Gm-Message-State: ACrzQf3OL6GJxGbPefklBmwq4Pty6f95Cw7fUkNkknMl0/bRGfo+mnVi
-        SwMRS4CTir9zu7b27A66C6nLgg==
-X-Google-Smtp-Source: AMsMyM7J6q1FxgW51WqE1zvLRf3Qszwqpbf7aqsoKaQ6fhfMZwl4J6AfjhAJVr/y8xuL0bV59oZSxA==
-X-Received: by 2002:ac2:5317:0:b0:4a1:abe3:93c3 with SMTP id c23-20020ac25317000000b004a1abe393c3mr102174lfh.527.1664406632336;
-        Wed, 28 Sep 2022 16:10:32 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id o16-20020ac24950000000b0049d5733fb3fsm597587lfi.212.2022.09.28.16.10.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 16:10:31 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        Johan Hovold <johan@kernel.org>
-Subject: [PATCH 18/18] phy: qcom-qmp: move type-specific headers to particular driver
-Date:   Thu, 29 Sep 2022 02:10:14 +0300
-Message-Id: <20220928231014.455201-19-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220928231014.455201-1-dmitry.baryshkov@linaro.org>
-References: <20220928231014.455201-1-dmitry.baryshkov@linaro.org>
+        Wed, 28 Sep 2022 19:37:28 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29887118DE2;
+        Wed, 28 Sep 2022 16:37:10 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28SNb17J009059;
+        Wed, 28 Sep 2022 23:37:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=Zd45c/hgZZuCLai6o7t3FSRC6D70oFwVVFawrcbyb50=;
+ b=YpJDx3c9hPQxl+gvVz0AZU6xZhIw9PQ/+tey1otVnoDZuRjxAhGJwmNe1D2AYmajRxbd
+ F/mdiBG3HDGPU1JcyJT2x1gufkuD9P8ZDxi6nbYB3uxHX5zY0kRnzN5oFh680lh3aG2e
+ Hk/j80IBNXbwbB8dVPkgVy5RyR22OJIDiokN26RczoQqJkw4FUSQM00gtlu9cmcYzf7Q
+ Iy+Lo5bs5eZNwEXxZ1MWEd62cOpVH55GOr+2Vo8EtFA3d41GYlcXGz31JSpVmEW6LYyU
+ Nwn1AsQl9FspZ4tR4wqFGuwqHvvlGbs0wy9aGgZtf/hV9T4MhCjVQJO0j6iwxkj+WFwu KA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jvfp3tyq1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 28 Sep 2022 23:37:01 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28SNb0UM007855
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 28 Sep 2022 23:37:00 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Wed, 28 Sep 2022 16:37:00 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
+        <airlied@linux.ie>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_khsieh@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v6] drm/msm/dp: add atomic_check to bridge ops
+Date:   Wed, 28 Sep 2022 16:36:51 -0700
+Message-ID: <1664408211-25314-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: IopRrCuWW5FYaS8Q40SyQtIbsBSj-xjF
+X-Proofpoint-GUID: IopRrCuWW5FYaS8Q40SyQtIbsBSj-xjF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-28_11,2022-09-28_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
+ malwarescore=0 lowpriorityscore=0 phishscore=0 mlxscore=0 bulkscore=0
+ priorityscore=1501 suspectscore=0 mlxlogscore=999 adultscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2209280139
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove QMP PHY type-specific headers inclusion from the common header
-and move them to the specific PHY drivers to cleanup the namespaces used
-by different drivers.
+DRM commit_tails() will disable downstream crtc/encoder/bridge if
+both disable crtc is required and crtc->active is set before pushing
+a new frame downstream.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+There is a rare case that user space display manager issue an extra
+screen update immediately followed by close DRM device while down
+stream display interface is disabled. This extra screen update will
+timeout due to the downstream interface is disabled but will cause
+crtc->active be set. Hence the followed commit_tails() called by
+drm_release() will pass the disable downstream crtc/encoder/bridge
+conditions checking even downstream interface is disabled.
+This cause the crash to happen at dp_bridge_disable() due to it trying
+to access the main link register to push the idle pattern out while main
+link clocks is disabled.
+
+This patch adds atomic_check to prevent the extra frame will not
+be pushed down if display interface is down so that crtc->active
+will not be set neither. This will fail the conditions checking
+of disabling down stream crtc/encoder/bridge which prevent
+drm_release() from calling dp_bridge_disable() so that crash
+at dp_bridge_disable() prevented.
+
+There is no protection in the DRM framework to check if the display
+pipeline has been already disabled before trying again. The only
+check is the crtc_state->active but this is controlled by usermode
+using UAPI. Hence if the usermode sets this and then crashes, the
+driver needs to protect against double disable.
+
+SError Interrupt on CPU7, code 0x00000000be000411 -- SError
+CPU: 7 PID: 3878 Comm: Xorg Not tainted 5.19.0-stb-cbq #19
+Hardware name: Google Lazor (rev3 - 8) (DT)
+pstate: a04000c9 (NzCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : __cmpxchg_case_acq_32+0x14/0x2c
+lr : do_raw_spin_lock+0xa4/0xdc
+sp : ffffffc01092b6a0
+x29: ffffffc01092b6a0 x28: 0000000000000028 x27: 0000000000000038
+x26: 0000000000000004 x25: ffffffd2973dce48 x24: 0000000000000000
+x23: 00000000ffffffff x22: 00000000ffffffff x21: ffffffd2978d0008
+x20: ffffffd2978d0008 x19: ffffff80ff759fc0 x18: 0000000000000000
+x17: 004800a501260460 x16: 0441043b04600438 x15: 04380000089807d0
+x14: 07b0089807800780 x13: 0000000000000000 x12: 0000000000000000
+x11: 0000000000000438 x10: 00000000000007d0 x9 : ffffffd2973e09e4
+x8 : ffffff8092d53300 x7 : ffffff808902e8b8 x6 : 0000000000000001
+x5 : ffffff808902e880 x4 : 0000000000000000 x3 : ffffff80ff759fc0
+x2 : 0000000000000001 x1 : 0000000000000000 x0 : ffffff80ff759fc0
+Kernel panic - not syncing: Asynchronous SError Interrupt
+CPU: 7 PID: 3878 Comm: Xorg Not tainted 5.19.0-stb-cbq #19
+Hardware name: Google Lazor (rev3 - 8) (DT)
+Call trace:
+ dump_backtrace.part.0+0xbc/0xe4
+ show_stack+0x24/0x70
+ dump_stack_lvl+0x68/0x84
+ dump_stack+0x18/0x34
+ panic+0x14c/0x32c
+ nmi_panic+0x58/0x7c
+ arm64_serror_panic+0x78/0x84
+ do_serror+0x40/0x64
+ el1h_64_error_handler+0x30/0x48
+ el1h_64_error+0x68/0x6c
+ __cmpxchg_case_acq_32+0x14/0x2c
+ _raw_spin_lock_irqsave+0x38/0x4c
+ lock_timer_base+0x40/0x78
+ __mod_timer+0xf4/0x25c
+ schedule_timeout+0xd4/0xfc
+ __wait_for_common+0xac/0x140
+ wait_for_completion_timeout+0x2c/0x54
+ dp_ctrl_push_idle+0x40/0x88
+ dp_bridge_disable+0x24/0x30
+ drm_atomic_bridge_chain_disable+0x90/0xbc
+ drm_atomic_helper_commit_modeset_disables+0x198/0x444
+ msm_atomic_commit_tail+0x1d0/0x374
+ commit_tail+0x80/0x108
+ drm_atomic_helper_commit+0x118/0x11c
+ drm_atomic_commit+0xb4/0xe0
+ drm_client_modeset_commit_atomic+0x184/0x224
+ drm_client_modeset_commit_locked+0x58/0x160
+ drm_client_modeset_commit+0x3c/0x64
+ __drm_fb_helper_restore_fbdev_mode_unlocked+0x98/0xac
+ drm_fb_helper_set_par+0x74/0x80
+ drm_fb_helper_hotplug_event+0xdc/0xe0
+ __drm_fb_helper_restore_fbdev_mode_unlocked+0x7c/0xac
+ drm_fb_helper_restore_fbdev_mode_unlocked+0x20/0x2c
+ drm_fb_helper_lastclose+0x20/0x2c
+ drm_lastclose+0x44/0x6c
+ drm_release+0x88/0xd4
+ __fput+0x104/0x220
+ ____fput+0x1c/0x28
+ task_work_run+0x8c/0x100
+ do_exit+0x450/0x8d0
+ do_group_exit+0x40/0xac
+ __wake_up_parent+0x0/0x38
+ invoke_syscall+0x84/0x11c
+ el0_svc_common.constprop.0+0xb8/0xe4
+ do_el0_svc+0x8c/0xb8
+ el0_svc+0x2c/0x54
+ el0t_64_sync_handler+0x120/0x1c0
+ el0t_64_sync+0x190/0x194
+SMP: stopping secondary CPUs
+Kernel Offset: 0x128e800000 from 0xffffffc008000000
+PHYS_OFFSET: 0x80000000
+CPU features: 0x800,00c2a015,19801c82
+Memory Limit: none
+
+Changes in v2:
+-- add more commit text
+
+Changes in v3:
+-- add comments into dp_bridge_atomic_check()
+
+Changes in v4:
+-- rewording the comment into dp_bridge_atomic_check()
+
+Changes in v5:
+-- removed quote x at end of commit text
+
+Changes in v6:
+-- removed quote x at end of comment in dp_bridge_atomic_check()
+
+Fixes: 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display enable and disable")
+Reported-by: Leonard Lausen <leonard@lausen.nl>
+Suggested-by: Rob Clark <robdclark@gmail.com>
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/17
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c |  3 +++
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c  |  6 ++++++
- drivers/phy/qualcomm/phy-qcom-qmp-ufs.c   |  4 ++++
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c   |  3 +++
- drivers/phy/qualcomm/phy-qcom-qmp.h       | 14 --------------
- 5 files changed, 16 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_drm.c | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 7cc53765b300..924588c09a19 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -23,6 +23,9 @@
- #include <dt-bindings/phy/phy.h>
+diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+index 6df25f7..6db82f9 100644
+--- a/drivers/gpu/drm/msm/dp/dp_drm.c
++++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+@@ -31,6 +31,36 @@ static enum drm_connector_status dp_bridge_detect(struct drm_bridge *bridge)
+ 					connector_status_disconnected;
+ }
  
- #include "phy-qcom-qmp.h"
-+#include "phy-qcom-qmp-pcs-misc-v3.h"
-+#include "phy-qcom-qmp-pcs-usb-v4.h"
-+#include "phy-qcom-qmp-pcs-usb-v5.h"
++static int dp_bridge_atomic_check(struct drm_bridge *bridge,
++			    struct drm_bridge_state *bridge_state,
++			    struct drm_crtc_state *crtc_state,
++			    struct drm_connector_state *conn_state)
++{
++	struct msm_dp *dp;
++
++	dp = to_dp_bridge(bridge)->dp_display;
++
++	drm_dbg_dp(dp->drm_dev, "is_connected = %s\n",
++		(dp->is_connected) ? "true" : "false");
++
++	/*
++	 * There is no protection in the DRM framework to check if the display
++	 * pipeline has been already disabled before trying to disable it again.
++	 * Hence if the sink is unplugged, the pipeline gets disabled, but the
++	 * crtc->active is still true. Any attempt to set the mode or manually
++	 * disable this encoder will result in the crash.
++	 *
++	 * TODO: add support for telling the DRM subsystem that the pipeline is
++	 * disabled by the hardware and thus all access to it should be forbidden.
++	 * After that this piece of code can be removed.
++	 */
++	if (bridge->ops & DRM_BRIDGE_OP_HPD)
++		return (dp->is_connected) ? 0 : -ENOTCONN;
++
++	return 0;
++}
++
++
+ /**
+  * dp_bridge_get_modes - callback to add drm modes via drm_mode_probed_add()
+  * @bridge: Poiner to drm bridge
+@@ -61,6 +91,9 @@ static int dp_bridge_get_modes(struct drm_bridge *bridge, struct drm_connector *
+ }
  
- /* QPHY_SW_RESET bit */
- #define SW_RESET				BIT(0)
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 688d9eb78a82..73fd5af50c85 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -23,6 +23,12 @@
- #include <dt-bindings/phy/phy.h>
+ static const struct drm_bridge_funcs dp_bridge_ops = {
++	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
++	.atomic_destroy_state   = drm_atomic_helper_bridge_destroy_state,
++	.atomic_reset           = drm_atomic_helper_bridge_reset,
+ 	.enable       = dp_bridge_enable,
+ 	.disable      = dp_bridge_disable,
+ 	.post_disable = dp_bridge_post_disable,
+@@ -68,6 +101,7 @@ static const struct drm_bridge_funcs dp_bridge_ops = {
+ 	.mode_valid   = dp_bridge_mode_valid,
+ 	.get_modes    = dp_bridge_get_modes,
+ 	.detect       = dp_bridge_detect,
++	.atomic_check = dp_bridge_atomic_check,
+ };
  
- #include "phy-qcom-qmp.h"
-+#include "phy-qcom-qmp-pcs-misc-v3.h"
-+#include "phy-qcom-qmp-pcs-pcie-v4.h"
-+#include "phy-qcom-qmp-pcs-pcie-v4_20.h"
-+#include "phy-qcom-qmp-pcs-pcie-v5.h"
-+#include "phy-qcom-qmp-pcs-pcie-v5_20.h"
-+#include "phy-qcom-qmp-pcie-qhp.h"
- 
- /* QPHY_SW_RESET bit */
- #define SW_RESET				BIT(0)
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-index 593173167b8a..709b3e511bcb 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-@@ -23,6 +23,10 @@
- #include <dt-bindings/phy/phy.h>
- 
- #include "phy-qcom-qmp.h"
-+#include "phy-qcom-qmp-pcs-ufs-v2.h"
-+#include "phy-qcom-qmp-pcs-ufs-v3.h"
-+#include "phy-qcom-qmp-pcs-ufs-v4.h"
-+#include "phy-qcom-qmp-pcs-ufs-v5.h"
- 
- /* QPHY_SW_RESET bit */
- #define SW_RESET				BIT(0)
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index 1d1cfcfd7c52..e3273afe7920 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -23,6 +23,9 @@
- #include <dt-bindings/phy/phy.h>
- 
- #include "phy-qcom-qmp.h"
-+#include "phy-qcom-qmp-pcs-misc-v3.h"
-+#include "phy-qcom-qmp-pcs-usb-v4.h"
-+#include "phy-qcom-qmp-pcs-usb-v5.h"
- 
- /* QPHY_SW_RESET bit */
- #define SW_RESET				BIT(0)
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
-index e6f327acbf19..08a3eccaeadc 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-@@ -24,28 +24,14 @@
- #include "phy-qcom-qmp-qserdes-pll.h"
- 
- #include "phy-qcom-qmp-pcs-v2.h"
--#include "phy-qcom-qmp-pcs-ufs-v2.h"
- 
- #include "phy-qcom-qmp-pcs-v3.h"
--#include "phy-qcom-qmp-pcs-misc-v3.h"
--#include "phy-qcom-qmp-pcs-ufs-v3.h"
- 
- #include "phy-qcom-qmp-pcs-v4.h"
--#include "phy-qcom-qmp-pcs-pcie-v4.h"
--#include "phy-qcom-qmp-pcs-usb-v4.h"
--#include "phy-qcom-qmp-pcs-ufs-v4.h"
- 
- #include "phy-qcom-qmp-pcs-v4_20.h"
--#include "phy-qcom-qmp-pcs-pcie-v4_20.h"
- 
- #include "phy-qcom-qmp-pcs-v5.h"
--#include "phy-qcom-qmp-pcs-pcie-v5.h"
--#include "phy-qcom-qmp-pcs-usb-v5.h"
--#include "phy-qcom-qmp-pcs-ufs-v5.h"
--
--#include "phy-qcom-qmp-pcs-pcie-v5_20.h"
--
--#include "phy-qcom-qmp-pcie-qhp.h"
- 
- /* Only for QMP V3 & V4 PHY - DP COM registers */
- #define QPHY_V3_DP_COM_PHY_MODE_CTRL			0x00
+ struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
 -- 
-2.35.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
