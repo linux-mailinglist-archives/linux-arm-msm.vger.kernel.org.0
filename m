@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E02CD5EE253
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 18:54:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C54775EE26B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 19:00:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233848AbiI1Qye (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 12:54:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46918 "EHLO
+        id S231419AbiI1RAO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 13:00:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233724AbiI1Qyc (ORCPT
+        with ESMTP id S233049AbiI1RAN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 12:54:32 -0400
-Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CF63BDC;
-        Wed, 28 Sep 2022 09:54:31 -0700 (PDT)
-Date:   Wed, 28 Sep 2022 16:54:17 +0000
+        Wed, 28 Sep 2022 13:00:13 -0400
+Received: from mail-4324.protonmail.ch (mail-4324.protonmail.ch [185.70.43.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1414F78236;
+        Wed, 28 Sep 2022 10:00:11 -0700 (PDT)
+Date:   Wed, 28 Sep 2022 17:00:01 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1664384070; x=1664643270;
-        bh=bx6LkYA6tSEHnMC6YQRX0QPXJeIZTYibdxAR1z0B574=;
+        s=protonmail3; t=1664384410; x=1664643610;
+        bh=mo7AOkHDwtAowybZCz4gOmDpXU1TRunSY5GhLVmFCfk=;
         h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
          Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
          Message-ID;
-        b=FEI7Ps4IxloClhD6QzBL2QqFYBwXGTRsVnsnPiNErKx4MiaqbSGxxkGa047sqiuAT
-         5DpZhe6OjBjKOlngzNjR4eQ2yKBZfYXABJBXPAnAUBOAkTfs7olAyn05Mwev8O55p9
-         3nOnsRFDj0YeO9v6UukztWylriBBIGGEmjqX7u6ppMWNQBcwsnmK7EvPwlyHW2b1FA
-         ThY57qBXlSyCBcEzbLDEAEJAEUgrLq8IIsJN2RSLw2c6F8MKLC0R/0ABxwr41K2Qb0
-         WaIvipuE3Do1Ftf83gaATkdet1Yt+3SW94Nm7puKdZzGQGkuINFx9cXKRIqV/W+eyv
-         VFLsZ5m0Hkq8A==
+        b=t4biK5LkVbgF39OHwoxgpWZfZl6skEh4lO3+EbNUMm84TRj/jS1oWkh6otxZT+HH8
+         Sr02Iz4CDnHzaBvady+u+BZfDiZxewb/VlM4/MlmSDU8lRiTGl3fOBDDVNLMhvQoxz
+         5zyyLDxurXrDdFaKzCzck+869WUrlgVbuSoFl78fExodo4T2AMcBYtsHVckYbDpSlc
+         ULQU3U1PE5dHE8ZRQvT2VAcK/cPpv32ioYnzum/MMNYav4oAIi+iLA+laW76igefgV
+         gIJJrC5Cvixl1cPO0YKPWAyT3wE/Mmkb4AZKRN67Q//90Xhmwgg/00cpPobJvuaJnk
+         s8dT7+EuDAEWg==
 To:     devicetree@vger.kernel.org
 From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Julian Ribbeck <julian.ribbeck@gmx.de>,
-        Stephan Gerhold <stephan@gerhold.net>,
+Cc:     Stephan Gerhold <stephan@gerhold.net>,
         Nikita Travkin <nikita@trvn.ru>,
+        Julian Ribbeck <julian.ribbeck@gmx.de>,
         Josef W Menad <JosefWMenad@protonmail.ch>,
         Markuss Broks <markuss.broks@gmail.com>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: [PATCH v3 1/5] dt-bindings: qcom: Document bindings for new msm8916-samsung-j5 devices
-Message-ID: <20220928165118.179493-1-linmengbo0689@protonmail.com>
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Subject: [PATCH v3 2/5] arm64: dts: qcom: msm8916-samsung-j5: Drop from Makefile
+Message-ID: <20220928165909.181028-1-linmengbo0689@protonmail.com>
 In-Reply-To: <20220928164806.179314-1-linmengbo0689@protonmail.com>
 References: <20220928164806.179314-1-linmengbo0689@protonmail.com>
 Feedback-ID: 40467236:user:proton
@@ -52,38 +52,36 @@ Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        FREEMAIL_FROM,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the new samsung-j3/j5x device tree bindings used in their
-device trees.
+Before moving msm8916-samsung-j5.dts to msm8916-samsung-j5-common.dtsi,
+drop it from Makefile temporarily to avoid errors.
 
 Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/Makefile | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentatio=
-n/devicetree/bindings/arm/qcom.yaml
-index fb1d00bcc847..b1c69d4d9a9a 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -176,7 +176,9 @@ properties:
-               - longcheer,l8910
-               - samsung,a3u-eur
-               - samsung,a5u-eur
-+              - samsung,j3
-               - samsung,j5
-+              - samsung,j5x
-               - samsung,serranove
-               - wingtech,wt88047
-           - const: qcom,msm8916
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/M=
+akefile
+index 1d86a33de528..6db7d9d791d5 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -15,7 +15,6 @@ dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-longcheer-l8910.dt=
+b
+ dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-mtp.dtb
+ dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-samsung-a3u-eur.dtb
+ dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-samsung-a5u-eur.dtb
+-dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-samsung-j5.dtb
+ dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-samsung-serranove.dtb
+ dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-wingtech-wt88047.dtb
+ dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8992-lg-bullhead-rev-10.dtb
 --=20
 2.30.2
 
