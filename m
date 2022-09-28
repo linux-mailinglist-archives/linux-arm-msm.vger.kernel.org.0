@@ -2,102 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 331765EDC0A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 13:53:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 731AB5EDC68
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 14:19:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233332AbiI1Lxo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 07:53:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48216 "EHLO
+        id S229698AbiI1MTj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 08:19:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233582AbiI1Lxm (ORCPT
+        with ESMTP id S229885AbiI1MTi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 07:53:42 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 608435E563
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 04:53:41 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id fn7-20020a05600c688700b003b4fb113b86so887815wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 04:53:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=wE11MaJ8cg0KHW9nVTcRn0BoQa8iHeo1fl0r8rIekRI=;
-        b=PHV5ii1ZohZZbG2uNeBonVgqsdtRp0uSseMVBLuSBp4ECnqIL3EBP5w+ndiB7Kmq9F
-         X+ZY6acIOU841yHY0cl+wcRq/SXX7Nyqo0i2HSZMKvHC8CM9ReENOQNjzQeITmZXvNvK
-         wSN+NO9N7+abPQSXtfYKvXrV748pQwlazHHjxysE/jPared6CekC45hb3OxZKaehbXM3
-         c/Ecf0Xg20Weu7mCv/IEoJfBV8LSrYUpTjXV2qzQyhrhFMiHH/ZhEiCxdDpLcKqf97WJ
-         EZqBAc8TsM2TWZQZb+KnMv906WSgbVSmuKeIBEegUVF2hi/kaxqsyE97jHPDabpyxO6c
-         NaKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=wE11MaJ8cg0KHW9nVTcRn0BoQa8iHeo1fl0r8rIekRI=;
-        b=0OkuJhPnCiPQ6IiIsh9UvTmUOVtxQTrcraIlrBRXYvxC6ZGomAM9POfccna5vtQZvk
-         a35yWHlgkbAGPMHE+q8fiiFtRoAP32nqjZ6WNLYnh28Ozc41cAKyBjBRV8zHdC5k6xmQ
-         zlvAIcFB2WARDDTj84Izz32coED9fRmrYtw9o+sFvOLGIjFefAJLOoQJacM/yq3LSsmt
-         qJxN0Fv+/bLvLprzYChxhmELSfcqtGODjRw3yztR2XG0cxEHQrlUw9FoRKHtQS9w4Hc4
-         NPXlqLsdLsDIycJxFan6bRXShz0wVScAqqQwCnC2Fy4A6Z4TiBrHtpwgqDOo7NrLwFe9
-         wCJw==
-X-Gm-Message-State: ACrzQf1vs359A5w+kI4pemEGBHsjO0u8++hySfBiqO4GY9oLI1OVU3yX
-        mjqj5Jh5P0SssL1vGjttfquCQQ==
-X-Google-Smtp-Source: AMsMyM7xJx4xdbe3PCHgMLYt8giFrD0VhvJ45GmD1HJ3EN826hJg+uMZ5dwYq6cql31/zFWZic+pCg==
-X-Received: by 2002:a05:600c:4352:b0:3b4:84c0:2006 with SMTP id r18-20020a05600c435200b003b484c02006mr6550405wme.205.1664366019958;
-        Wed, 28 Sep 2022 04:53:39 -0700 (PDT)
-Received: from [192.168.0.159] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id z14-20020adff74e000000b002205a5de337sm1093423wrp.102.2022.09.28.04.53.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Sep 2022 04:53:39 -0700 (PDT)
-Message-ID: <033ff526-fa00-507f-75bc-75256801c079@linaro.org>
-Date:   Wed, 28 Sep 2022 12:53:38 +0100
+        Wed, 28 Sep 2022 08:19:38 -0400
+X-Greylist: delayed 4385 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 28 Sep 2022 05:19:32 PDT
+Received: from mail-40141.protonmail.ch (mail-40141.protonmail.ch [185.70.40.141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA19D1E6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 05:19:32 -0700 (PDT)
+Date:   Wed, 28 Sep 2022 12:19:20 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail3; t=1664367570; x=1664626770;
+        bh=s8C0TYHfhUf3KmBKMQrBy9S29tBacAy7W0VHIRyHmAs=;
+        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID;
+        b=gpNgeBec26jHCHT3zsF68kEchO0kRt1iOof2m1F4J47k2JrPWWb9L451cDyvsvRN0
+         m2KlejcCWUbN+dEqRDBoh/JcNjcn9ZweBfHCX8zNNd1CLhAiNeSbgjeoFUCb/63lEw
+         64dH5zvrTYxX06rMd9+FAeTSUF8MBiDQyjE78drYYx0QIWFeLNsXMFeBZeosJeEeVO
+         61KHLHScBcVfajitvTWhp+xFZATpryK1VPd/X3Y434EBwFBarS/x1i3eTK/+z6+yUH
+         5HJMPMpIJvSkzL9l2Zm53HeGVbIfxWZMFqVOhPLVhBT5OCPt8z10D3Wg0QuI5gGzWq
+         L/KZUX8ZsKtpQ==
+To:     devicetree@vger.kernel.org
+From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Julian Ribbeck <julian.ribbeck@gmx.de>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>,
+        Josef W Menad <JosefWMenad@protonmail.ch>,
+        Markuss Broks <markuss.broks@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH v2 0/4] arm64: dts: qcom: msm8916-samsung-j5: Use common device tree
+Message-ID: <20220928121717.102402-1-linmengbo0689@protonmail.com>
+In-Reply-To: <20220928110049.96047-1-linmengbo0689@protonmail.com>
+References: <20220928110049.96047-1-linmengbo0689@protonmail.com>
+Feedback-ID: 40467236:user:proton
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 4/4] media: camss: sm8250: Pipeline starting and stopping
- for multiple virtual channels
-Content-Language: en-US
-To:     "Milen Mitkov (Consultant)" <quic_mmitkov@quicinc.com>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        robert.foss@linaro.org, akapatra@quicinc.com, jzala@quicinc.com,
-        todor.too@gmail.com
-Cc:     agross@kernel.org, konrad.dybcio@somainline.org,
-        mchehab@kernel.org, andersson@kernel.org
-References: <20220926142505.1827-1-quic_mmitkov@quicinc.com>
- <20220926142505.1827-5-quic_mmitkov@quicinc.com>
- <ee5fa2f9-c3bc-b903-014f-ed5fea064f9f@linaro.org>
- <cf171830-a951-11e9-2b54-3b442bb04b2f@quicinc.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <cf171830-a951-11e9-2b54-3b442bb04b2f@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/09/2022 12:35, Milen Mitkov (Consultant) wrote:
-> Hi Bryan,
-> 
-> What is the error you're getting?
-> 
-> I am testing on the linux-stable-22-09-09-imx577-camss branch. I wanted 
-> to try on the newest one 
-> (linux-stable-22-09-14-qrb5165-rb5-vision-mezzanine) but the multistream 
-> pathes wouldn't apply cleanly there.
+v2: Reword and resend. Split common dtsi patch.
+Add missing suffix state in pinctrl.
 
-I tried linux-next as at last night but the compilation exploded, so I 
-went back just a little bit further in time to pick up a reasonable set 
-of linux-media stuff in linux-next and applied yours and my changes on top.
+The smartphones below are using the MSM8916 SoC,
+which are released in 2015-2016:
 
-To ssh://git.linaro.org/people/bryan.odonoghue/kernel.git
-  * [new branch]                HEAD -> linux-next+camss-changes-v4
+Samsung Galaxy J5 2015 (SM-J500*)
+Samsung Galaxy J5 2016 (SM-J510*)
+Samsung Galaxy J3 2016
+- SM-J3109/SM-J320Y/SM-J320YZ
+- SM-J320N0/SM-J320ZN
+- SM-J320P/SM-J320R4/SM-J320V/SM-S320VL
 
----
-bod
+Add a common device tree for with initial support for:
+
+- GPIO keys
+- SDHCI (internal and external storage)
+- USB Device Mode
+- UART (on USB connector via the SM5703 MUIC)
+- WCNSS (WiFi/BT)
+- Regulators
+
+The three devices (some varints of J3, all other variants of J5 released
+in 2015 and J5X released in 2016) are very similar, with some differences
+in display and GPIO pins. The common parts are shared in
+msm8916-samsung-j5-common.dtsi to reduce duplication.
+
