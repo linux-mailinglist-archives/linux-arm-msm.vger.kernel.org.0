@@ -2,42 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 63EB45EEEF1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 09:26:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95AA35EEF06
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 09:30:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234856AbiI2H0S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 03:26:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57164 "EHLO
+        id S235246AbiI2Had (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 03:30:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234760AbiI2HZ7 (ORCPT
+        with ESMTP id S235271AbiI2Ha0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 03:25:59 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A44C13D76;
-        Thu, 29 Sep 2022 00:25:53 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id DAD66B8233F;
-        Thu, 29 Sep 2022 07:25:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93AA7C433D7;
-        Thu, 29 Sep 2022 07:25:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664436350;
-        bh=JZDOgB1vIukfHv5av9y47wgB68bL740uiqdRbkiYGmg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KtKAJlztbKYrxvmZ6j0cNGroPxCeHi9j66jkxA55GIN0p0IXXYj0ksD+l8aTTSSuH
-         qgs7mWjUK/BzOdP7HVMDNjk7KqT89GwQNbmuv7I4BIDRTxIo0rjOxW6E0btmRqyq7v
-         ACLYmPF3QrctN5vUOvx4ilOoUeH27Dw5gm2fiiTqbhXMFOC9DiVzoUwnfM0wSko1U5
-         mJhwE7hg4h+GU8YyiVIdHvjReB6oJMoXe5AUWnwCMHtYhiHD869sxJjwJNvqjDjAsi
-         3FOalncqgUaOF3XBXxQLFkwYNcy9LIEUEPIQiLVc+zKsVtLEI+RiCMW2hi53IEib4E
-         GRM57lDC5g7Bw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1odnvg-0006Yb-PH; Thu, 29 Sep 2022 09:25:56 +0200
-Date:   Thu, 29 Sep 2022 09:25:56 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+        Thu, 29 Sep 2022 03:30:26 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F8EF18B1B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 00:30:23 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id j24so594155lja.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 00:30:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=OqkWyQYUuDRkm7zgyVEX1I32YrHW4vNoTuwMudpxXDQ=;
+        b=M/Of4/LnK1AKOSsdNO9WzfJyoy+sI5QdeIZBrmSLoV6q6cONr8NMF6++ud4b0nZG+0
+         1Wps92ejomNXmRTLhs/T6mzAVkiqDO8tICuzDTPYoll3Qi6Uk5RjkXNEZfiX8nTgsNWA
+         lNfH3p4+t/1H/1B9G6up7jplAXvEoZSyiQ/wvG7w7P1/U/auLaNBXrdb9qXnmO37+pub
+         pjRGwON+EuskIqrOrms7cdUFsQAAZVaYz0KWu54s1MMUgxBViPxLYzCP/cgg7u0NRzGE
+         cdFSX+O/d3fAhafn7JxYSvnBBLmvuYD3gM3ZbY0fhdpD26C1wUAoXw3yHU1ApJ70Y3nK
+         D9RQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=OqkWyQYUuDRkm7zgyVEX1I32YrHW4vNoTuwMudpxXDQ=;
+        b=gR1Pmdo+N5MRPLQTrXmVyRjlPYbCVpWdFsQ8m04PuKnNUxkifYqgHfyA+bLdWub6Fs
+         kCPWda3DWJ1trD9M2XJvNKjbJsWJuLKLB7OZhIwEqTFPsHUKTd/bg28to6953PBjBiAX
+         qqd8UnLXH4VXklWlYo93UmExI/XbI5Sn+ZDwQfuI50VvanP67RVO3pw8471YOfWuXo6H
+         3saVTlS3j+HYWotRBbj4N+lT8t57N7COH6L31U7pONqmj+ybdiISwEGSQwCq7UMLLKcf
+         b7IeRZXhVGqf+B3MtJCn/kC/8Nt/CV8JOCxAk6JGKrnDtPQbddmgakiPw8ILlK35kAqn
+         pJmQ==
+X-Gm-Message-State: ACrzQf2RLk59fdY5sbkIFHqV61pvVtvSOMM5eFDZmTDyVG2kOj8JmSoK
+        zvufTzYUM9pwOiafQNo3OUbm/Q==
+X-Google-Smtp-Source: AMsMyM4ILN/PXRDClqWGg7oAxUN4BU0A6IzD09RlvPlrnNNjJZ4iA+Hmfs/JXaRi7sEpTeApVP+N0Q==
+X-Received: by 2002:a2e:be0a:0:b0:26b:eb1d:9651 with SMTP id z10-20020a2ebe0a000000b0026beb1d9651mr641868ljq.196.1664436621484;
+        Thu, 29 Sep 2022 00:30:21 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id a5-20020a056512200500b0049301e29e41sm700855lfb.233.2022.09.29.00.30.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Sep 2022 00:30:21 -0700 (PDT)
+Message-ID: <7f577974-7433-107a-a43a-4a3a5f999018@linaro.org>
+Date:   Thu, 29 Sep 2022 10:30:20 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH 07/13] phy: qcom-qmp-pcie: clean up power-down handling
+Content-Language: en-GB
+To:     Johan Hovold <johan@kernel.org>
 Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -45,17 +65,16 @@ Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Kishon Vijay Abraham I <kishon@ti.com>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 07/13] phy: qcom-qmp-pcie: clean up power-down handling
-Message-ID: <YzVIhK5z3I6hjzLU@hovoldconsulting.com>
 References: <20220928152822.30687-1-johan+linaro@kernel.org>
  <20220928152822.30687-8-johan+linaro@kernel.org>
  <c3d39c4e-2099-b09a-8486-8abae7336611@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c3d39c4e-2099-b09a-8486-8abae7336611@linaro.org>
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+ <YzVIhK5z3I6hjzLU@hovoldconsulting.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <YzVIhK5z3I6hjzLU@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,46 +82,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 28, 2022 at 10:15:46PM +0300, Dmitry Baryshkov wrote:
-> On 28/09/2022 18:28, Johan Hovold wrote:
-> > Always define the POWER_DOWN_CONTROL register instead of falling back to
-> > the v2 offset during power on and power off.
-> > 
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > ---
-> >   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 20 ++++++--------------
-> >   1 file changed, 6 insertions(+), 14 deletions(-)
-> > 
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> > index eea66c24cf7e..47cdb9ed80cd 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> > @@ -90,12 +90,14 @@ static const unsigned int pciephy_regs_layout[QPHY_LAYOUT_SIZE] = {
-> >   	[QPHY_SW_RESET]			= 0x00,
-> >   	[QPHY_START_CTRL]		= 0x08,
-> >   	[QPHY_PCS_STATUS]		= 0x174,
-> > +	[QPHY_PCS_POWER_DOWN_CONTROL]	= 0x04,
-> >   };
+On 29/09/2022 10:25, Johan Hovold wrote:
+> On Wed, Sep 28, 2022 at 10:15:46PM +0300, Dmitry Baryshkov wrote:
+>> On 28/09/2022 18:28, Johan Hovold wrote:
+>>> Always define the POWER_DOWN_CONTROL register instead of falling back to
+>>> the v2 offset during power on and power off.
+>>>
+>>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>>> ---
+>>>    drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 20 ++++++--------------
+>>>    1 file changed, 6 insertions(+), 14 deletions(-)
+>>>
+>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>> index eea66c24cf7e..47cdb9ed80cd 100644
+>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>> @@ -90,12 +90,14 @@ static const unsigned int pciephy_regs_layout[QPHY_LAYOUT_SIZE] = {
+>>>    	[QPHY_SW_RESET]			= 0x00,
+>>>    	[QPHY_START_CTRL]		= 0x08,
+>>>    	[QPHY_PCS_STATUS]		= 0x174,
+>>> +	[QPHY_PCS_POWER_DOWN_CONTROL]	= 0x04,
+>>>    };
+>>
+>> Without symbolic names it's not obvious that 0x04 (and thus this
+>> regs_layout) can be used for v2 and v3, but not for v4.
 > 
-> Without symbolic names it's not obvious that 0x04 (and thus this 
-> regs_layout) can be used for v2 and v3, but not for v4.
+> It's no less obvious than it was when we were falling back to the v2
+> define when it wasn't in the table.
 
-It's no less obvious than it was when we were falling back to the v2
-define when it wasn't in the table.
+Yes, that's without doubts. Anyway, I've sent my view on the regs 
+layouts standing on top of your six patches from this series. Could you 
+please take a glance?
 
-> @@ -1872,13 +1874,8 @@ static int qmp_pcie_init(struct phy *phy)
->       if (ret)
->               goto err_assert_reset;
-> -     if (cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL])
-> -             qphy_setbits(pcs,
-> -                             cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
-> -                             cfg->pwrdn_ctrl);
-> -     else
-> -             qphy_setbits(pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL,
-> -                             cfg->pwrdn_ctrl);
-> +     qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
-> +                     cfg->pwrdn_ctrl);
+> 
+>> @@ -1872,13 +1874,8 @@ static int qmp_pcie_init(struct phy *phy)
+>>        if (ret)
+>>                goto err_assert_reset;
+>> -     if (cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL])
+>> -             qphy_setbits(pcs,
+>> -                             cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
+>> -                             cfg->pwrdn_ctrl);
+>> -     else
+>> -             qphy_setbits(pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL,
+>> -                             cfg->pwrdn_ctrl);
+>> +     qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
+>> +                     cfg->pwrdn_ctrl);
+> 
+> This is the cruft I'm getting rid of.
+> 
+> Johan
 
-This is the cruft I'm getting rid of.
+-- 
+With best wishes
+Dmitry
 
-Johan
