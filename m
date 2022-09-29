@@ -2,166 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4854D5EF810
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 16:57:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A43465EF847
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 17:05:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235709AbiI2O5Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 10:57:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49740 "EHLO
+        id S235538AbiI2PFW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 11:05:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235615AbiI2O5X (ORCPT
+        with ESMTP id S235255AbiI2PFT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 10:57:23 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D5E813EE87
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 07:57:21 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id r6so2610129wru.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 07:57:21 -0700 (PDT)
+        Thu, 29 Sep 2022 11:05:19 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54CB465574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 08:05:17 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id 65so1885175ybp.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 08:05:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=nMnoSaH++1jbxSRlI1i6ADibQaQmTqMy1EUBbqCTBb4=;
-        b=Vv38lf5pdCpNoqOoAP120tgQ2KJMA7ZXY3zRv5IFf/18Ka+QYWp8iVvfDHwGWrUURq
-         XMcDVzCN67NfLLBvXneNU5Hkez1866vy2rJVUYu1vKryg0jxvA42QIHMFr7FwGNaV9n6
-         +IocjwdpayeRbeM2/sZgvPjKG7ythoaKpeUuXczusJJEcfS9wVBWcjyCRFl0D/sVgICw
-         2J5a8U1veuMcYYFjAV1q0dwyuM/YnZan597rCZ3Ds+v2h0MHW6JxifLG9t4Ao/8M6lM7
-         dZ4dzrfOEAf3pCEuuCr6J1A5XSYwp2pNtFtcBkJ2x/vFTyXVLC2qrq4yFh7WpEiVWHAy
-         sp4w==
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=b9uxRyoaMis4M/Del53oQhe/OKhSA38Po18Or6YilLY=;
+        b=j/p76Gbz/6p+klZe5CzqnqgPqzGWALW2g91DrPRqYNms6dk5oGuWDhJHL1Tvx+U25E
+         nv9/Y0D9beecD9wyAD08rbImhYmv8NXz9nzQnidMa8IRhaLbrWuagphyW2wJHaXf6e3y
+         ORntlHyPdupf80tWY1phTwvXu6h2ci8lJbuNw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=nMnoSaH++1jbxSRlI1i6ADibQaQmTqMy1EUBbqCTBb4=;
-        b=QHS5xJvHch7rHzoCUcVSabrSGGeFthg5pplKbjvdjqMANsjsNVJQ9If1m1tzXUrrZc
-         0qOF3B2UR2Sj1meyQHIsp1TSeyIaulmvyy5u6lMUn/8kvF5GQhOL3lFLVRR1mOqHM4fC
-         E8oL7eQtwpRdhCfS0lXyZzLxwb+rQnrupDJl42IXsj/YgTXOFcy7f6SIjWErEYpOxx9l
-         nkh8hWrKcdyFkcOE6sJtmuM0WPNAWUQ2T1d7Sv5KR+mNWJsJIdDpCTrCiZ3hJUi3Ctii
-         cBrz0jmr+/5unmR32g5cS2q6h8TA2aL53mhyILpAqc9jgoJbdYGGrVVtWFWLkeoqqNw8
-         IcaA==
-X-Gm-Message-State: ACrzQf3J35Dye2LSMmkMC0J0CNQ9m4gnImTXwnrXPk+CTFaeM6cghoLO
-        jqKm5kYTkOcISKhomnABQQvrzg==
-X-Google-Smtp-Source: AMsMyM4axP40VuENGb1cdsZ/JJas2+un/fCosaf9j+YjtgOlism/1wYOdarXHCbv/7WEnKLKyS9PoQ==
-X-Received: by 2002:a05:6000:2a3:b0:226:dff3:b031 with SMTP id l3-20020a05600002a300b00226dff3b031mr2687409wry.495.1664463439654;
-        Thu, 29 Sep 2022 07:57:19 -0700 (PDT)
-Received: from ?IPV6:2a05:6e02:1041:c10:48a2:39eb:9d1b:8b8d? ([2a05:6e02:1041:c10:48a2:39eb:9d1b:8b8d])
-        by smtp.googlemail.com with ESMTPSA id t187-20020a1c46c4000000b003b4a699ce8esm4646084wma.6.2022.09.29.07.57.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Sep 2022 07:57:19 -0700 (PDT)
-Message-ID: <ae86fc5a-0521-3dde-c2ea-8679c0ec4831@linaro.org>
-Date:   Thu, 29 Sep 2022 16:57:16 +0200
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=b9uxRyoaMis4M/Del53oQhe/OKhSA38Po18Or6YilLY=;
+        b=RExGddhPe/VUpSPomDRcMAcAjQ17nsp3WHdVlzzzKLSylBBuwMeUG5S+s17m8LwDzl
+         lgBnvOiS4DL76h3ygefUwn47/6L2nUxV5QPdmeG0q6tJbw3sAlEV99eFb+PoLF+/98CI
+         YCIKA34TtczQdcxWNaY6kFtWW1WOQsR20kqDeFhNt75nln+3KeNPt7k3UL/JnBTKLmgi
+         GNiinCNeB/93rOGAdJkE6HZfNhTrQfvKoept7JoN63CabQhLIIuxD/sRGwl/u8vw4n+5
+         LXbEZ29+f1HRvhHdXWoB5G4hescoTJkqaZRiw6zdBD7wPNTWjsy3wNCI0TMdLiuQuHEw
+         6+nQ==
+X-Gm-Message-State: ACrzQf2xSJ6M7YfF5cHhBuhMLjR2KFce/tSSVvvW0rocwK5E9TZFnEw5
+        3egUly6DakDxVZ+Ldx0X4yaglghOHln9T8S4A/W2nA==
+X-Google-Smtp-Source: AMsMyM6mVFtECpxKgra3ZkQaG9b6seBNybgK+xW2wUNsy82MrfUpk07hV4+qwXFgEt9Ky8+H6uTmtZZfdLoFajaRwaU=
+X-Received: by 2002:a05:6902:284:b0:67b:fc57:9104 with SMTP id
+ v4-20020a056902028400b0067bfc579104mr3718530ybh.647.1664463915933; Thu, 29
+ Sep 2022 08:05:15 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v7 00/29] Rework the trip points creation
-Content-Language: en-US
-To:     "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        rui.zhang@intel.com, Raju Rangoju <rajur@chelsio.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Peter Kaestle <peter@piie.net>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Mark Gross <markgross@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Nicolas Saenz Julienne <nsaenz@kernel.org>,
-        Broadcom Kernel Team <bcm-kernel-feedback-list@broadcom.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Lukasz Luba <lukasz.luba@arm.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        =?UTF-8?Q?Niklas_S=c3=b6derlund?= <niklas.soderlund@ragnatech.se>,
-        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Keerthy <j-keerthy@ti.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Antoine Tenart <atenart@kernel.org>,
-        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-        Dmitry Osipenko <digetx@gmail.com>, netdev@vger.kernel.org,
-        platform-driver-x86@vger.kernel.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-omap@vger.kernel.org
-References: <20220928210059.891387-1-daniel.lezcano@linaro.org>
- <d0be3159-8094-aed1-d9b1-c4b16d88d67c@linaro.org>
- <CAJZ5v0hOFoe0KqEimFv9pgmiAOzuRoLjdqoScr53ErNFU4AAPA@mail.gmail.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <CAJZ5v0hOFoe0KqEimFv9pgmiAOzuRoLjdqoScr53ErNFU4AAPA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <20220928192605.247546-1-broonie@kernel.org> <68689c5b-327f-65df-0d34-a7e1a851f568@infradead.org>
+ <CAMuHMdWrQabb_LoCPfbdWo9D11+4kxSjQeBStpjvckvuXuBMNQ@mail.gmail.com>
+In-Reply-To: <CAMuHMdWrQabb_LoCPfbdWo9D11+4kxSjQeBStpjvckvuXuBMNQ@mail.gmail.com>
+From:   Rob Clark <robdclark@chromium.org>
+Date:   Thu, 29 Sep 2022 08:05:04 -0700
+Message-ID: <CAJs_Fx4NzHVRvN6xd-unrpmv=Nc_PXYbHvYujhz7UZ=YRkRZ7A@mail.gmail.com>
+Subject: Re: linux-next: Tree for Sep 28 (drivers/gpu/drm/msm/msm_gem_shrinker.c)
+To:     Geert Uytterhoeven <geert@linux-m68k.org>
+Cc:     Randy Dunlap <rdunlap@infradead.org>, broonie@kernel.org,
+        Linux Next Mailing List <linux-next@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2022 15:58, Rafael J. Wysocki wrote:
-> On Thu, Sep 29, 2022 at 2:26 PM Daniel Lezcano
-> <daniel.lezcano@linaro.org> wrote:
->>
->>
->> Hi Rafael,
->>
->> are you happy with the changes?
-> 
-> I'll have a look and let you know.
+On Thu, Sep 29, 2022 at 12:09 AM Geert Uytterhoeven
+<geert@linux-m68k.org> wrote:
+>
+> On Thu, Sep 29, 2022 at 8:10 AM Randy Dunlap <rdunlap@infradead.org> wrot=
+e:
+> > On 9/28/22 12:26, broonie@kernel.org wrote:
+> > > Changes since 20220927:
+> > >
+> >
+> > on x86_64:
+> >
+> > ../drivers/gpu/drm/msm/msm_gem_shrinker.c: In function =E2=80=98can_blo=
+ck=E2=80=99:
+> > ../drivers/gpu/drm/msm/msm_gem_shrinker.c:29:28: error: =E2=80=98__GFP_=
+ATOMIC=E2=80=99 undeclared (first use in this function); did you mean =E2=
+=80=98GFP_ATOMIC=E2=80=99?
+> >    29 |         if (sc->gfp_mask & __GFP_ATOMIC)
+> >       |                            ^~~~~~~~~~~~
+> >       |                            GFP_ATOMIC
+>
+> Also on m68k, as reported by noreply@ellerman.id.au
+>
+> I have bisected it to commit 1ccea29f90329e35 ("Merge branch
+> 'mm-everything' of
+> git://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm"), but I didn't
+> see immediately what caused it.
 
-Great, thanks
-> 
->> I would like to integrate those changes with the thermal pull request
-> 
-> Sure, but it looks like you've got only a few ACKs for these patches
-> from the driver people.
-> 
-> Wouldn't it be prudent to give them some more time to review the changes?
+I'll send a patch for this shortly
 
-Well I would say I received the ACKs from the drivers which are actively 
-maintained. Others are either not with a dedicated maintainer or not a 
-reactive one. The first iteration of the series is from August 5th. So 
-it has been 2 months.
+BR,
+-R
 
-I pinged for imx, armada and tegra two weeks ago.
 
-The st, hisilicon drivers fall under the thermal maintainers umbrella
-
-There are three series coming after this series to be posted. I would 
-like to go forward in the process of cleaning up the framework. IMO two 
-months is enough to let the maintainers pay attention to the changes, 
-especially if we do a gentle ping and there are seven versions.
-
-And after that comes the thermal_zone_device_register() parameters 
-simplification :)
-
-[ ... ]
-
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+> Gr{oetje,eeting}s,
+>
+>                         Geert
+>
+> --
+> Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m6=
+8k.org
+>
+> In personal conversations with technical people, I call myself a hacker. =
+But
+> when I'm talking to journalists I just say "programmer" or something like=
+ that.
+>                                 -- Linus Torvalds
