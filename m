@@ -2,93 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 628EB5EEF5D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 09:41:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ED7E5EEF8A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 09:47:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235444AbiI2Hl3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 03:41:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49144 "EHLO
+        id S234974AbiI2HrL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 03:47:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235381AbiI2Hk6 (ORCPT
+        with ESMTP id S235341AbiI2HrG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 03:40:58 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4D7C121116;
-        Thu, 29 Sep 2022 00:40:45 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B8F20B8220A;
-        Thu, 29 Sep 2022 07:40:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09CFCC433C1;
-        Thu, 29 Sep 2022 07:40:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664437242;
-        bh=C2emNc0NAZeHrems5nNVYRQ4SMC2epBUFyJLM2zmGmI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=W9BEhHgjvuv4D6muqvt5Pkw9paqZhAL7cFaBdyPd/SR4timbLw5eh25nw+lEa5O2e
-         vwz+GstAWGi5dtaKYnk+URjtXIpyKwwuRHxWIzq9rAKDjxMIiRR8E8Pk8QB/EK7IHS
-         FbKPLVW1Fbm34B3HbNLApoa2A9cWy1QrIiIHL9PfdXEmVqwOFbG1dWXHjzJS30PXeL
-         qaGHKpxoCkKXgCe8CD0XCRcZ10hknMDckSpsK6aX3zuraRPk37cvI74s1wUGGG87vG
-         kwSJ6KWxej+R0Iu/6f91rhuP/qB4xWW/DHJolj/XMBulcSC4IWr5UBkXbUvNyJ0QQO
-         5N7i3Ghm9ER6w==
-Date:   Thu, 29 Sep 2022 13:10:38 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Richard Acayan <mailingradian@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Thu, 29 Sep 2022 03:47:06 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E893139F67
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 00:47:05 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id o2so993309lfc.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 00:47:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=dnITc0xpMXEA7t4sgElLx+4qVX7nYEDyilpbd4CXC9k=;
+        b=uGcDNVPXkiKp0/IY8guVgHnvizB80zoouBV1zI+CcewxalPdMXFlJWZKjDLFmQe8Ew
+         8a5qUQegbDboAzpjvI3sllEEUmzijzphlGkf9tzBFw7rPk5N0XHAkhtsteKz4MtOrTp4
+         le0qhM/SdCBr1jBpyYtpJtlhGyUxyp9AjxBZn6+DSMHcZrOWmwaMFTZ00rpxU2OHaVIv
+         0yGJ6ByVRnvFZCyVMhhF2Yo+keJdb73RddGy8Ew5bqE38IEAkzeNckD8p2dK5JgF9ZPg
+         XDxlZWK5CXmuzsn5dxrPDGsVedmSNrRP0NgwyxeuXG7Xd0/v8no08f1Nbfg43NQqmx12
+         8Yqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=dnITc0xpMXEA7t4sgElLx+4qVX7nYEDyilpbd4CXC9k=;
+        b=mtxTJCKHd+R3wsteymeujRVWAPNfpWJKYs8FXy9wRZ+uMoSRjnZbv05+/xP69YrttI
+         YAoINSd87aqkgWgGDCjlKBB7ekmKjgmB9rw//kiRyjjBjgf8yZL9Rb7qg6xxuNMwQWaH
+         blF9pqhpwrv6kqowY9ynICSh1RylEa/V9UIckXNo+4zt7XQk+kymjzylPyxUgRccanEQ
+         MKT8JYquhjhWsc1tyfOO44ue0Gt4nNx9/PGXvnHjDx/N+3JQbpzSFg15aoa5mu5RGg+A
+         +p04TbHS/R6FfubFS/01l7U6DpT2TjpTvFjAVSeZIj2T5J5lVybz22qhAeHE143x5KNb
+         rtNw==
+X-Gm-Message-State: ACrzQf3BTPcIJD3SiMztWvxS8PkTTiaiWRIsiqsSVPwBMRyb20wmXU1e
+        nmacEgr6VO3NGG/1rKAQpZ/MkA==
+X-Google-Smtp-Source: AMsMyM4hj4TmCFv/FCH2LyFkLclQe3iKtiAqO9DG8bMvZXl/z5OzzjZ3a0sVROUTS4OrTteQNvmhnQ==
+X-Received: by 2002:a05:6512:535:b0:498:30c7:1e13 with SMTP id o21-20020a056512053500b0049830c71e13mr745638lfc.264.1664437623342;
+        Thu, 29 Sep 2022 00:47:03 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id 145-20020a2e0997000000b0026befa96249sm631817ljj.8.2022.09.29.00.47.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Sep 2022 00:47:02 -0700 (PDT)
+Message-ID: <96e091f5-c593-2868-4472-267f57695997@linaro.org>
+Date:   Thu, 29 Sep 2022 09:47:02 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH v2 1/4] dt-bindings: dma: qcom: gpi: add fallback
+ compatible
+Content-Language: en-US
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Richard Acayan <mailingradian@gmail.com>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         dmaengine@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 4/4] dmaengine: qcom: gpi: drop redundant of_device_id
- entries
-Message-ID: <YzVL9ngfwqfwhF8Q@matsya>
-References: <20220927014846.32892-1-mailingradian@gmail.com>
- <20220927014846.32892-5-mailingradian@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220927014846.32892-5-mailingradian@gmail.com>
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20220923210934.280034-1-mailingradian@gmail.com>
+ <20220923210934.280034-2-mailingradian@gmail.com>
+ <7b066e11-6e5c-c6d9-c8ed-9feccaec4c0c@linaro.org> <YzVLtvPk6YiDfBtb@matsya>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <YzVLtvPk6YiDfBtb@matsya>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26-09-22, 21:48, Richard Acayan wrote:
-> The drivers are transitioning from matching against lists of specific
-> compatible strings to matching against smaller lists of more generic
-> compatible strings. Continue the transition in the GPI DMA driver.
+On 29/09/2022 09:39, Vinod Koul wrote:
+> On 23-09-22, 23:26, Krzysztof Kozlowski wrote:
+>> On 23/09/2022 23:09, Richard Acayan wrote:
+>>> The drivers are transitioning from matching against lists of specific
+>>> compatible strings to matching against smaller lists of more generic
+>>> compatible strings. Add a fallback compatible string in the schema to
+>>> support this change.
+>>
+>> Thanks for the patch. I wished we discussed it a bit more. :)
+>> qcom,gpi-dma does not look like specific enough to be correct fallback,
+>> at least not for all of the devices. I propose either a IP block version
+>> (which is tricky without access to documentation) or just one of the SoC
 > 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->  drivers/dma/qcom/gpi.c | 2 --
->  1 file changed, 2 deletions(-)
+> You should have access :-)
+
+But Richard and many other community members do not...
+
 > 
-> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> index 89839864b4ec..e5f37d61f30a 100644
-> --- a/drivers/dma/qcom/gpi.c
-> +++ b/drivers/dma/qcom/gpi.c
-> @@ -2289,8 +2289,6 @@ static const struct of_device_id gpi_of_match[] = {
->  	{ .compatible = "qcom,sc7280-gpi-dma", .data = (void *)0x10000 },
->  	{ .compatible = "qcom,sdm845-gpi-dma", .data = (void *)0x0 },
->  	{ .compatible = "qcom,sm6350-gpi-dma", .data = (void *)0x10000 },
-> -	{ .compatible = "qcom,sm8150-gpi-dma", .data = (void *)0x0 },
-> -	{ .compatible = "qcom,sm8250-gpi-dma", .data = (void *)0x0 },
+>> IP blocks.
+> 
+> So knowing this IP we have two versions, one was initial sdm845 that
+> should be the base compatible. Then second should be sm8350 which was
+> the version we need ee_offset to be added, so these two can be the base
+> ones for future...
+> 
+> My 0.02
 
-We cant do this without breaking stuff...
+Or just use SoC versions, not IP block versions :)
 
-There are DTs which have this id!
+Best regards,
+Krzysztof
 
->  	{ .compatible = "qcom,sm8350-gpi-dma", .data = (void *)0x10000 },
->  	{ .compatible = "qcom,sm8450-gpi-dma", .data = (void *)0x10000 },
->  	{ },
-> -- 
-> 2.37.3
-
--- 
-~Vinod
