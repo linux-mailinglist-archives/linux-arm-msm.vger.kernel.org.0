@@ -2,269 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 790B65EEA38
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 01:37:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8A285EEACA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 03:16:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234536AbiI1Xhs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 19:37:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38942 "EHLO
+        id S229901AbiI2BQE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 21:16:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234166AbiI1Xh2 (ORCPT
+        with ESMTP id S229940AbiI2BQC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 19:37:28 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29887118DE2;
-        Wed, 28 Sep 2022 16:37:10 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28SNb17J009059;
-        Wed, 28 Sep 2022 23:37:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=Zd45c/hgZZuCLai6o7t3FSRC6D70oFwVVFawrcbyb50=;
- b=YpJDx3c9hPQxl+gvVz0AZU6xZhIw9PQ/+tey1otVnoDZuRjxAhGJwmNe1D2AYmajRxbd
- F/mdiBG3HDGPU1JcyJT2x1gufkuD9P8ZDxi6nbYB3uxHX5zY0kRnzN5oFh680lh3aG2e
- Hk/j80IBNXbwbB8dVPkgVy5RyR22OJIDiokN26RczoQqJkw4FUSQM00gtlu9cmcYzf7Q
- Iy+Lo5bs5eZNwEXxZ1MWEd62cOpVH55GOr+2Vo8EtFA3d41GYlcXGz31JSpVmEW6LYyU
- Nwn1AsQl9FspZ4tR4wqFGuwqHvvlGbs0wy9aGgZtf/hV9T4MhCjVQJO0j6iwxkj+WFwu KA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jvfp3tyq1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 28 Sep 2022 23:37:01 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28SNb0UM007855
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 28 Sep 2022 23:37:00 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Wed, 28 Sep 2022 16:37:00 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
-        <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_khsieh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v6] drm/msm/dp: add atomic_check to bridge ops
-Date:   Wed, 28 Sep 2022 16:36:51 -0700
-Message-ID: <1664408211-25314-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Wed, 28 Sep 2022 21:16:02 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 225BB1138E0;
+        Wed, 28 Sep 2022 18:16:02 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id v186so85612pfv.11;
+        Wed, 28 Sep 2022 18:16:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=BU+nDgTp4FzYVpuKCb0JHUgNuGWH3Om1JL3bunVELiE=;
+        b=A0x2qxxd7VgDTwVVmF44TCkowfDAT8LZM/ThFvomS1q6mGKiPpWLuHmLPozdAIQ6bk
+         8DGmPjWUuHqevrxLJRSxTeQz+ghGSlSFzb9V8IjihndL5lzA/gbT/jsLrSKbpIeAlxTM
+         iNvGazSV6E/BTLTq5+jUfMfh153cyZ24zEIaWdFp5eZOEd2HUF9It3wPdSjH4y5Bz7Ly
+         WL8HcE+xScGlqCiG89WS/xvsaTzmdMGBwHXSPtGLqaoQ3VXWo8Ru8wEfkAIOsexx7P0u
+         gn5Xsi7qHkrRcJOjofGsS6C8okv42dPYeXKuzuogvAmGAIkRBWK/JDVYBMJMBI4p93b3
+         ez1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=BU+nDgTp4FzYVpuKCb0JHUgNuGWH3Om1JL3bunVELiE=;
+        b=dYddea3TawRiIGoq617xL/st0pZoailueXuAx14EFbEeiHKgG5gYYrBgC1gaEInNIy
+         my/6Q+CJA8a9SJzggjwMISj8743P2M3YRN4D+YvRqOIVkHd1RJFS9Tag69fftl+42PWr
+         N7cuUcsLWsCWNEvhyKGoQb90ptnRZs5kYmgGOCqES+cddkxyrjyqXOp77ENxyOxVDpdS
+         puijlTpaw7SOP8Ea44vU80/FfWr1E758ytGf4r4/t0cjhVzqtUfm/O7YYv/7Cxs8ugdJ
+         dMSpxI7L8o1QWptqF11wNjLPedVTOedlYtM7DYU5mrRv99P8oveA367dVZDiTIVlbkEu
+         yUlw==
+X-Gm-Message-State: ACrzQf1WMU8gtjSkJmeg6d0+sR18sDPykCGIrUoWWuP/wyG88bfT8wyX
+        PrlB6Vo9WvTcD1RLBlPrwmM=
+X-Google-Smtp-Source: AMsMyM6hjulu0JTSOCybn1i/7qzxsqC/IdkN8d1HzIAGH28CBW+sxxckdBQvuc2a8V8BGBIRzXn/ow==
+X-Received: by 2002:a63:3348:0:b0:439:db24:8b02 with SMTP id z69-20020a633348000000b00439db248b02mr568358pgz.425.1664414161469;
+        Wed, 28 Sep 2022 18:16:01 -0700 (PDT)
+Received: from dtor-ws.mtv.corp.google.com ([2620:15c:9d:2:637c:7f23:f348:a9e6])
+        by smtp.gmail.com with ESMTPSA id y16-20020aa78f30000000b00540a3252191sm4737655pfr.28.2022.09.28.18.16.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Sep 2022 18:16:00 -0700 (PDT)
+From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Krzysztof Opasiak <k.opasiak@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/3] arm64: dts: exynos: fix polarity of "enable" line of NFC chip
+Date:   Wed, 28 Sep 2022 18:15:55 -0700
+Message-Id: <20220929011557.4165216-1-dmitry.torokhov@gmail.com>
+X-Mailer: git-send-email 2.38.0.rc1.362.ged0d419d3c-goog
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: IopRrCuWW5FYaS8Q40SyQtIbsBSj-xjF
-X-Proofpoint-GUID: IopRrCuWW5FYaS8Q40SyQtIbsBSj-xjF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-28_11,2022-09-28_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- malwarescore=0 lowpriorityscore=0 phishscore=0 mlxscore=0 bulkscore=0
- priorityscore=1501 suspectscore=0 mlxlogscore=999 adultscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209280139
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DRM commit_tails() will disable downstream crtc/encoder/bridge if
-both disable crtc is required and crtc->active is set before pushing
-a new frame downstream.
+According to s3fwrn5 driver code the "enable" GPIO line is driven "high"
+when chip is not in use (mode is S3FWRN5_MODE_COLD), and is driven "low"
+when chip is in use.
 
-There is a rare case that user space display manager issue an extra
-screen update immediately followed by close DRM device while down
-stream display interface is disabled. This extra screen update will
-timeout due to the downstream interface is disabled but will cause
-crtc->active be set. Hence the followed commit_tails() called by
-drm_release() will pass the disable downstream crtc/encoder/bridge
-conditions checking even downstream interface is disabled.
-This cause the crash to happen at dp_bridge_disable() due to it trying
-to access the main link register to push the idle pattern out while main
-link clocks is disabled.
+s3fwrn5_phy_power_ctrl():
 
-This patch adds atomic_check to prevent the extra frame will not
-be pushed down if display interface is down so that crtc->active
-will not be set neither. This will fail the conditions checking
-of disabling down stream crtc/encoder/bridge which prevent
-drm_release() from calling dp_bridge_disable() so that crash
-at dp_bridge_disable() prevented.
+	...
+	gpio_set_value(phy->gpio_en, 1);
+	...
+	if (mode != S3FWRN5_MODE_COLD) {
+		msleep(S3FWRN5_EN_WAIT_TIME);
+		gpio_set_value(phy->gpio_en, 0);
+		msleep(S3FWRN5_EN_WAIT_TIME);
+	}
 
-There is no protection in the DRM framework to check if the display
-pipeline has been already disabled before trying again. The only
-check is the crtc_state->active but this is controlled by usermode
-using UAPI. Hence if the usermode sets this and then crashes, the
-driver needs to protect against double disable.
+Therefore the line described by "en-gpios" property should be annotated
+as "active low".
 
-SError Interrupt on CPU7, code 0x00000000be000411 -- SError
-CPU: 7 PID: 3878 Comm: Xorg Not tainted 5.19.0-stb-cbq #19
-Hardware name: Google Lazor (rev3 - 8) (DT)
-pstate: a04000c9 (NzCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : __cmpxchg_case_acq_32+0x14/0x2c
-lr : do_raw_spin_lock+0xa4/0xdc
-sp : ffffffc01092b6a0
-x29: ffffffc01092b6a0 x28: 0000000000000028 x27: 0000000000000038
-x26: 0000000000000004 x25: ffffffd2973dce48 x24: 0000000000000000
-x23: 00000000ffffffff x22: 00000000ffffffff x21: ffffffd2978d0008
-x20: ffffffd2978d0008 x19: ffffff80ff759fc0 x18: 0000000000000000
-x17: 004800a501260460 x16: 0441043b04600438 x15: 04380000089807d0
-x14: 07b0089807800780 x13: 0000000000000000 x12: 0000000000000000
-x11: 0000000000000438 x10: 00000000000007d0 x9 : ffffffd2973e09e4
-x8 : ffffff8092d53300 x7 : ffffff808902e8b8 x6 : 0000000000000001
-x5 : ffffff808902e880 x4 : 0000000000000000 x3 : ffffff80ff759fc0
-x2 : 0000000000000001 x1 : 0000000000000000 x0 : ffffff80ff759fc0
-Kernel panic - not syncing: Asynchronous SError Interrupt
-CPU: 7 PID: 3878 Comm: Xorg Not tainted 5.19.0-stb-cbq #19
-Hardware name: Google Lazor (rev3 - 8) (DT)
-Call trace:
- dump_backtrace.part.0+0xbc/0xe4
- show_stack+0x24/0x70
- dump_stack_lvl+0x68/0x84
- dump_stack+0x18/0x34
- panic+0x14c/0x32c
- nmi_panic+0x58/0x7c
- arm64_serror_panic+0x78/0x84
- do_serror+0x40/0x64
- el1h_64_error_handler+0x30/0x48
- el1h_64_error+0x68/0x6c
- __cmpxchg_case_acq_32+0x14/0x2c
- _raw_spin_lock_irqsave+0x38/0x4c
- lock_timer_base+0x40/0x78
- __mod_timer+0xf4/0x25c
- schedule_timeout+0xd4/0xfc
- __wait_for_common+0xac/0x140
- wait_for_completion_timeout+0x2c/0x54
- dp_ctrl_push_idle+0x40/0x88
- dp_bridge_disable+0x24/0x30
- drm_atomic_bridge_chain_disable+0x90/0xbc
- drm_atomic_helper_commit_modeset_disables+0x198/0x444
- msm_atomic_commit_tail+0x1d0/0x374
- commit_tail+0x80/0x108
- drm_atomic_helper_commit+0x118/0x11c
- drm_atomic_commit+0xb4/0xe0
- drm_client_modeset_commit_atomic+0x184/0x224
- drm_client_modeset_commit_locked+0x58/0x160
- drm_client_modeset_commit+0x3c/0x64
- __drm_fb_helper_restore_fbdev_mode_unlocked+0x98/0xac
- drm_fb_helper_set_par+0x74/0x80
- drm_fb_helper_hotplug_event+0xdc/0xe0
- __drm_fb_helper_restore_fbdev_mode_unlocked+0x7c/0xac
- drm_fb_helper_restore_fbdev_mode_unlocked+0x20/0x2c
- drm_fb_helper_lastclose+0x20/0x2c
- drm_lastclose+0x44/0x6c
- drm_release+0x88/0xd4
- __fput+0x104/0x220
- ____fput+0x1c/0x28
- task_work_run+0x8c/0x100
- do_exit+0x450/0x8d0
- do_group_exit+0x40/0xac
- __wake_up_parent+0x0/0x38
- invoke_syscall+0x84/0x11c
- el0_svc_common.constprop.0+0xb8/0xe4
- do_el0_svc+0x8c/0xb8
- el0_svc+0x2c/0x54
- el0t_64_sync_handler+0x120/0x1c0
- el0t_64_sync+0x190/0x194
-SMP: stopping secondary CPUs
-Kernel Offset: 0x128e800000 from 0xffffffc008000000
-PHYS_OFFSET: 0x80000000
-CPU features: 0x800,00c2a015,19801c82
-Memory Limit: none
+The wakeup gpio appears to have correct polarity (active high).
 
-Changes in v2:
--- add more commit text
-
-Changes in v3:
--- add comments into dp_bridge_atomic_check()
-
-Changes in v4:
--- rewording the comment into dp_bridge_atomic_check()
-
-Changes in v5:
--- removed quote x at end of commit text
-
-Changes in v6:
--- removed quote x at end of comment in dp_bridge_atomic_check()
-
-Fixes: 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display enable and disable")
-Reported-by: Leonard Lausen <leonard@lausen.nl>
-Suggested-by: Rob Clark <robdclark@gmail.com>
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/17
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 ---
- drivers/gpu/drm/msm/dp/dp_drm.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-index 6df25f7..6db82f9 100644
---- a/drivers/gpu/drm/msm/dp/dp_drm.c
-+++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-@@ -31,6 +31,36 @@ static enum drm_connector_status dp_bridge_detect(struct drm_bridge *bridge)
- 					connector_status_disconnected;
- }
- 
-+static int dp_bridge_atomic_check(struct drm_bridge *bridge,
-+			    struct drm_bridge_state *bridge_state,
-+			    struct drm_crtc_state *crtc_state,
-+			    struct drm_connector_state *conn_state)
-+{
-+	struct msm_dp *dp;
-+
-+	dp = to_dp_bridge(bridge)->dp_display;
-+
-+	drm_dbg_dp(dp->drm_dev, "is_connected = %s\n",
-+		(dp->is_connected) ? "true" : "false");
-+
-+	/*
-+	 * There is no protection in the DRM framework to check if the display
-+	 * pipeline has been already disabled before trying to disable it again.
-+	 * Hence if the sink is unplugged, the pipeline gets disabled, but the
-+	 * crtc->active is still true. Any attempt to set the mode or manually
-+	 * disable this encoder will result in the crash.
-+	 *
-+	 * TODO: add support for telling the DRM subsystem that the pipeline is
-+	 * disabled by the hardware and thus all access to it should be forbidden.
-+	 * After that this piece of code can be removed.
-+	 */
-+	if (bridge->ops & DRM_BRIDGE_OP_HPD)
-+		return (dp->is_connected) ? 0 : -ENOTCONN;
-+
-+	return 0;
-+}
-+
-+
- /**
-  * dp_bridge_get_modes - callback to add drm modes via drm_mode_probed_add()
-  * @bridge: Poiner to drm bridge
-@@ -61,6 +91,9 @@ static int dp_bridge_get_modes(struct drm_bridge *bridge, struct drm_connector *
- }
- 
- static const struct drm_bridge_funcs dp_bridge_ops = {
-+	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
-+	.atomic_destroy_state   = drm_atomic_helper_bridge_destroy_state,
-+	.atomic_reset           = drm_atomic_helper_bridge_reset,
- 	.enable       = dp_bridge_enable,
- 	.disable      = dp_bridge_disable,
- 	.post_disable = dp_bridge_post_disable,
-@@ -68,6 +101,7 @@ static const struct drm_bridge_funcs dp_bridge_ops = {
- 	.mode_valid   = dp_bridge_mode_valid,
- 	.get_modes    = dp_bridge_get_modes,
- 	.detect       = dp_bridge_detect,
-+	.atomic_check = dp_bridge_atomic_check,
+diff --git a/arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi b/arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi
+index 91c9bd1b47dd..bde6a6bb8dfc 100644
+--- a/arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi
++++ b/arch/arm64/boot/dts/exynos/exynos5433-tm2-common.dtsi
+@@ -795,7 +795,7 @@ s3fwrn5: nfc@27 {
+ 		reg = <0x27>;
+ 		interrupt-parent = <&gpa1>;
+ 		interrupts = <3 IRQ_TYPE_EDGE_RISING>;
+-		en-gpios = <&gpf1 4 GPIO_ACTIVE_HIGH>;
++		en-gpios = <&gpf1 4 GPIO_ACTIVE_LOW>;
+ 		wake-gpios = <&gpj0 2 GPIO_ACTIVE_HIGH>;
+ 	};
  };
- 
- struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.38.0.rc1.362.ged0d419d3c-goog
 
