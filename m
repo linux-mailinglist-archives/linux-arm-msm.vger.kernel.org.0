@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D7165EF34B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 12:19:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F7DC5EF34F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 12:19:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232959AbiI2KTN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 06:19:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41204 "EHLO
+        id S235052AbiI2KTi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 06:19:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235145AbiI2KSv (ORCPT
+        with ESMTP id S235223AbiI2KTD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 06:18:51 -0400
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B79D814D32F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 03:18:16 -0700 (PDT)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-3511e80f908so9781957b3.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 03:18:16 -0700 (PDT)
+        Thu, 29 Sep 2022 06:19:03 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BB3414A7B3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 03:18:41 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-354c7abf786so9984337b3.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 03:18:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date;
-        bh=NhXvH9AQ64CDT9deNwc0z/+QutsFRT1qPR0raiobye4=;
-        b=IxPs1daKz3m8okjBPeKXX3OHtzBJtFTUqLw/wqWawIx5H9bHEnQ3rZ5KjnXnOARpo+
-         R0hImaZHia1Y/Auu+ntHIpT3FW3eThRWEmyMFjBdH4yax56YnlsRZj7VWkjH0ge/hEA3
-         jbDxaXBB75ZdC+0bMEB5yHp8Y6rKsffRr9lCGCKJrWSbByg0DKTrw+9emMS3YhioHvA0
-         BnuWSvfDcaS9z7tC1tCZnEfWzcwIdiEM3xYHbZwibQITZLEqGEZLSUPEuivHevbaUY1V
-         wIsUc6eBVGap7dSSVR997rauiMrOzTLfxxPNrRbU+vR/JGO6c23pLbwScLL7w4YDjD4X
-         Xmog==
+        bh=xIBSn4ztR5ROz6GRB0axkNF5Yod6vvG1hBCcQxzJkTU=;
+        b=vXZ4OhLwR3SENX+ujRusbFRUJC74NHXWWc/G0gw3IeNRB1EkqtQeFK5NHY6GWb56hQ
+         Bt4ca1I3PDbVMJrwAqgEtCdKphsSI1X1JDiis5T4gtY4mZNJyQOskwk9RXIwdPQNij25
+         9ulJ+ol0TRNBkwj4wbBez1iZFr+mdEagN/RrE/Gl2m14/zUZO+BA5rFu1CXf6jDgU4CW
+         OWKqXNdzHoaOpplyU1OKsJLPMCMl97EbUE9iaNtBU/9sh1KVV3Yhq5bT74cMish+z0hU
+         cg8xFUteACql9ntv68Yk+3DGstRuZYmSygwDvj9paAPSM3+mBlzxGEWqMj5Q4Uv+1G1D
+         kCfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=NhXvH9AQ64CDT9deNwc0z/+QutsFRT1qPR0raiobye4=;
-        b=32yzsm07fYOgqrU9GaJQyiY9RChnxM6TJIxNjQawioXBoS+69K/wQdrG/GUu3EzkGT
-         f167yGWefBe5Ow2ZCLqdgwdkwnftj4dyYSmlJTzeupt9fudvGCdaoOBm8T5EtCeqXGr1
-         NrXSQrfpNR4+25hkdOqY7jlm5pOT0czZJkrujblN10eshsXcMjd0ycYmR2R5UyzZD/7G
-         +O80JiIDFoQDSDQCvlMUFJhsbAhhQ3F+/A51cqf3SKx6uz7qgicD71Cx8P8uYddPv/Pa
-         His9n1askN1CHcTzySkuROOpdhqxDvD9+H3sq8qW/8E9VfKTd1VUv48KiCN3b8C4Etl4
-         Q93A==
-X-Gm-Message-State: ACrzQf3WfCsrjh3/kZIEdvjec+ZSq5Pq9JgrIS/oTndheW73qwf1Q+K8
-        bw2RPYCXUpPm7bUMby6FMXi79wSNXibPIHDZSY+MxQ==
-X-Google-Smtp-Source: AMsMyM7S8sVj2wFYLLHBC/KRMOrj63E3Md2RN0DSzsQX8JVHNTP5i4USmqzOII3+6brbfhfabn+BW25xgyUXYLKSKPQ=
-X-Received: by 2002:a81:b40f:0:b0:352:477a:659e with SMTP id
- h15-20020a81b40f000000b00352477a659emr2398042ywi.127.1664446695941; Thu, 29
- Sep 2022 03:18:15 -0700 (PDT)
+        bh=xIBSn4ztR5ROz6GRB0axkNF5Yod6vvG1hBCcQxzJkTU=;
+        b=uUJLHdKkWmN25PFYDRzy7e87vOqpTy9d7ZXI6KyTfPQ/rGYUjU9tGL1IP73wlUol1t
+         GWc7ge3ZvjZq1fvWDyhbcfM+dxYq/7kP7rXoLFmgJw44l0eeX3YS7dpwG81flUb91S/A
+         EZtk5pXsaKSrBBOhPdrx6SQ+J+2Z3KuYJ2N8dL30dCCFciioW1PV3THO+4MJi3nHzMj/
+         16VQYKbN0oQkoDVU2TFzwrU4OnOlN+2KJV+mn4v+NOzgHTQh7AsvrSprvV40GIx9tfDG
+         /pFDgaIbnqDOzjNUPtkoLMiXAc3W49hcXkIp7eqyY+o6Kl0IDQojWNFBeGLGH05jLg6Q
+         Z3+w==
+X-Gm-Message-State: ACrzQf3glWmUAl27wEiUmtnGFNR3MoFaa3XKDLQ17sljqM8G7hxy4iku
+        /TC/IyJ/HEepAoK/PUU9OglSqLdhQ4w1so+vpGCNkw==
+X-Google-Smtp-Source: AMsMyM7nAd9fHTaBaOo32n0H5li8V6GN8ddJbCs/NfzNeuXPCQzg5zRe4XG4V3AvJYADKgSf9Y5X3hxf+ELXjuj8PGY=
+X-Received: by 2002:a0d:d68a:0:b0:350:a7f0:7b69 with SMTP id
+ y132-20020a0dd68a000000b00350a7f07b69mr2458883ywd.132.1664446720102; Thu, 29
+ Sep 2022 03:18:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220929092916.23068-1-johan+linaro@kernel.org> <20220929092916.23068-12-johan+linaro@kernel.org>
-In-Reply-To: <20220929092916.23068-12-johan+linaro@kernel.org>
+References: <20220929092916.23068-1-johan+linaro@kernel.org> <20220929092916.23068-9-johan+linaro@kernel.org>
+In-Reply-To: <20220929092916.23068-9-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 29 Sep 2022 13:18:05 +0300
-Message-ID: <CAA8EJpp+j1fx46V3zNgiYxsMbQ5UmB4+7o5dojS2FLjwUL=hRg@mail.gmail.com>
-Subject: Re: [PATCH v2 11/11] phy: qcom-qmp-pcie: drop bogus register update
+Date:   Thu, 29 Sep 2022 13:18:28 +0300
+Message-ID: <CAA8EJprGB8+6=zJAsWhmqsoBEczmJ5A5FWbsB3RtNxeXtUQmYA@mail.gmail.com>
+Subject: Re: [PATCH v2 08/11] phy: qcom-qmp-ufs: clean up power-down handling
 To:     Johan Hovold <johan+linaro@kernel.org>
 Cc:     Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -63,8 +63,7 @@ Cc:     Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -73,57 +72,15 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Thu, 29 Sept 2022 at 12:29, Johan Hovold <johan+linaro@kernel.org> wrote:
 >
-> Since commit 0d58280cf1e6 ("phy: Update PHY power control sequence") the
-> PHY is powered on before configuring the registers and only the MSM8996
-> PCIe PHY, which includes the POWER_DOWN_CONTROL register in its PCS
-> initialisation table, may possibly require a second update afterwards.
+> Always define the POWER_DOWN_CONTROL register instead of falling back to
+> the v2 (and v4) offset during power on and power off.
 >
-> To make things worse, the POWER_DOWN_CONTROL register lies at a
-> different offset on more recent SoCs so that the second update, which
-> still used a hard-coded offset, would write to an unrelated register
-> (e.g. a revision-id register on SC8280XP).
->
-> As the MSM8996 PCIe PHY is now handled by a separate driver, simply drop
-> the bogus register update.
->
-> Fixes: e4d8b05ad5f9 ("phy: qcom-qmp: Use proper PWRDOWN offset for sm8150 USB") added support
-
-Unless somebody confirms that this write is not needed on 8998 and
-sdm845, I'd prefer a two stage fix here:
-- changing this to write to proper register (and maybe moving to the
-top of patch series, as we'd want to backport this to the last few
-kernels)
-- dropping the write completely.
-
-Meanwhile I'll try testing this patchset on rb3 and checking whether
-it makes any difference or not.
-
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 6 ------
->  1 file changed, 6 deletions(-)
->
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index a0f62e9633d9..90bdbeee8372 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> @@ -1963,12 +1963,6 @@ static int qmp_pcie_power_on(struct phy *phy)
->         qmp_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl, cfg->pcs_misc_tbl_num);
->         qmp_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl_sec, cfg->pcs_misc_tbl_num_sec);
->
-> -       /*
-> -        * Pull out PHY from POWER DOWN state.
-> -        * This is active low enable signal to power-down PHY.
-> -        */
-> -       qphy_setbits(pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL, cfg->pwrdn_ctrl);
-> -
->         if (cfg->has_pwrdn_delay)
->                 usleep_range(cfg->pwrdn_delay_min, cfg->pwrdn_delay_max);
->
-> --
-> 2.35.1
->
+>  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 22 ++++++++--------------
+>  1 file changed, 8 insertions(+), 14 deletions(-)
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
