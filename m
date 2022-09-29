@@ -2,168 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DDB8D5EF59C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 14:40:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 951685EF5AE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 14:48:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235388AbiI2Mk2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 08:40:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36874 "EHLO
+        id S234687AbiI2Msp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 08:48:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235603AbiI2MkO (ORCPT
+        with ESMTP id S234934AbiI2Mso (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 08:40:14 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA1445EDD8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 05:40:09 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id j24so1394211lja.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 05:40:09 -0700 (PDT)
+        Thu, 29 Sep 2022 08:48:44 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C87F8160E51
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 05:48:42 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id o5so892287wms.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 05:48:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=dhh6nNTG3cQbu2+/UY4E9ECxQouXbUNsJMhUFHHFteY=;
-        b=kWS+mX1fzHpWgp4sKzzasMuSVtCPi3rvmO8sCBs5g2Y6chi47zlezfb2AVmU2U7U9k
-         0NpwCbbn904CxatBISjO55b5M90Yk8uaI2eW/Kk8G7iQI3GS0TCEWZGqf/Zwk2DD8D8j
-         xF0Xz9tIPS0I1th3mXRyJTRB1MS0RtK+ynTvlj0ictG8lkpVzXV9i8pij9ZlRvDGIv7X
-         J77Is8JmTttUmWu47FpWgnBtoLOrwvd2BLLzGuRfuc8YKQkupTlQihEEv0QAprebBud9
-         QKocE8xLpY8ZVurU60EDOo+wVWgytUElsVs7t1Nr8nuTT2FoxDG/WcOdJI227sChT+4K
-         HCug==
+        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
+         :references:cc:to:content-language:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date;
+        bh=RTh6Jh7foBvpZUwlr8i45KWrX5TaOjqxs0vxrakIbik=;
+        b=X4/Ix33GrpYpIdhmhwPVXrpN4zFL1fe8qw5LptmI7s57boWioFKy6Wio27lXYW58zD
+         2HQBFJ5y9jZxJPFBjnkYDbCdINOty9WDG1YZdbcjsjUzfMJF820nIBdRrslXmsT5exet
+         3RXyteA07EpdoVv5uRVJ31C8qfZNtJzl4TCPGxJX2u3XeO6Z2ZF4+wFJ276sIPbsxI2d
+         WM9vmtVhMcLLMdgxjdGW4lpwIrjXbrIotXldt4pf5N7oRs8ggMspsBALCBOgyfUCBDE+
+         dEycT80zkOZS/FWVOvDYWTEGOQGI+hrC8bSQUYaCFcOr70AtnhLMzIJUDdSERPub7CCJ
+         nHTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=dhh6nNTG3cQbu2+/UY4E9ECxQouXbUNsJMhUFHHFteY=;
-        b=PwL0LrLZpRAMek45j2aF42BO4v32VBeffWJbLR/xljsYISOC0gY/7jUbRbn7Ux51W7
-         MneawJ0i9863qe5LaZfrcFLTPbP1HkgYOdQuNK1TxFSR6jIVJQF+pC0v0p2ZPHrqKHYD
-         YN6OV4VB09yDLXOmXr4b6X+ipR2qTRofFquSi8XVnPHSUJ05eJl86qt9p/A3Dr7kNom0
-         XtnNDZtXK3TLd8DEHNNANeHWrOdtnj5EFK5+2wrkh7Z7o89y5UyBQuKPXyn2zJBdtmr4
-         ls+Fb53sw78d+OHiqZF0EwYQobb7lU92t2DJkr1w6wDpSkHsdEDa6LFcuFFs+UT3s4KW
-         i8Bw==
-X-Gm-Message-State: ACrzQf0aAjbttQk6DBMkW4gLmZO6gq3LNWMfC7ys/otgUIfBa6L3v3xw
-        MO7zzW2yugPFvBUKlGlThwHTPA==
-X-Google-Smtp-Source: AMsMyM6F+WpFg+vop57ZHvOS+i+7ShMPC3QW8oqdWbw+jDkUFuaaoSf9WA/vKypuhtRzTjzyUPW98g==
-X-Received: by 2002:a2e:a0cc:0:b0:26d:b6c8:ff8a with SMTP id f12-20020a2ea0cc000000b0026db6c8ff8amr1088268ljm.492.1664455207490;
-        Thu, 29 Sep 2022 05:40:07 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id o17-20020a056512051100b004a054535826sm777972lfb.24.2022.09.29.05.40.06
+        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
+         :references:cc:to:content-language:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date;
+        bh=RTh6Jh7foBvpZUwlr8i45KWrX5TaOjqxs0vxrakIbik=;
+        b=kSEL5By9h5f0BMxwl9if/lvhAOsarkVrTF0OP+qnxboqQF6bWsBUrhpdp9INQ9h4fL
+         BBgVklejAJO5FpGbUOAz9ItEIf/yBtoivLEAUxzEWjt6uMdewomn1AuKMwjH9riF8Ere
+         K/twfonjd43wCk6+nS2uq7deM2svtczQFQ2tyJ/5frg9ARz6nPrnyNpSwZ+lAh3XsG9G
+         iN8DVZ9tl0igO91E8YmVoCLinSeRy47BuskhjtTQGa7BuSaM9VbBipAiTvDrM4lDdLkq
+         Ma5ikqQI6KNq4B0UgKFNVx0ZIuHqijOLJZ87HiUZ7N2UCkC8Yrd/qG7tncuaJt6k88f6
+         i3rA==
+X-Gm-Message-State: ACrzQf0KPhrGdzAcrqjJ+un4md3Jip05Yig9Uw5Hacj4ooa/JdfGkauw
+        6pEB7cfERB4efNZkX6JhRyQqhg==
+X-Google-Smtp-Source: AMsMyM5QdlrG59bq5kgnMgzyzNnDabiZ0EU3o6UW21hHGi8mdF26IuOMR1PjjfrUGjrDYbDj7L/hZw==
+X-Received: by 2002:a7b:c447:0:b0:3b4:8977:4186 with SMTP id l7-20020a7bc447000000b003b489774186mr2226076wmi.74.1664455721407;
+        Thu, 29 Sep 2022 05:48:41 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:1f17:3ea3:4e46:dff? ([2a01:e0a:982:cbb0:1f17:3ea3:4e46:dff])
+        by smtp.gmail.com with ESMTPSA id l18-20020a05600c2cd200b003a63a3b55c3sm4686351wmc.14.2022.09.29.05.48.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Sep 2022 05:40:06 -0700 (PDT)
-Message-ID: <5445adda-80e6-41d0-9786-c26d253631c9@linaro.org>
-Date:   Thu, 29 Sep 2022 14:40:05 +0200
+        Thu, 29 Sep 2022 05:48:40 -0700 (PDT)
+Message-ID: <051ccc1c-ae56-932c-0be8-19abae562615@linaro.org>
+Date:   Thu, 29 Sep 2022 14:48:39 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH v2 2/2] dt-bindings: add bindings for QCOM flash LED
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v1 5/7] arm: dts: qcom: mdm9615: remove invalid pmic
+ subnodes compatibles
 Content-Language: en-US
-To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     collinsd@codeaurora.org, subbaram@codeaurora.org
-References: <20220929121544.1064279-1-quic_fenglinw@quicinc.com>
- <20220929121544.1064279-3-quic_fenglinw@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220929121544.1064279-3-quic_fenglinw@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20220928-mdm9615-dt-schema-fixes-v1-0-b6e63a7df1e8@linaro.org>
+ <20220928-mdm9615-dt-schema-fixes-v1-5-b6e63a7df1e8@linaro.org>
+ <0636d53f-508f-8a86-0973-2641c9020622@linaro.org>
+ <6ed642ea-424d-49ed-eb30-e09588720373@linaro.org>
+ <1a3c6766-9be5-1e55-95eb-bc9656e5c9a3@linaro.org>
+ <7f8572ab-ff97-54bd-a5f3-fe0e179ee48e@linaro.org>
+ <84cb8941-eb15-1bbf-59b7-bbcd6c15c30d@linaro.org>
+ <07405d0d-8534-6470-21d1-26b85dbd7de0@linaro.org>
+ <f54377f0-a152-9367-1b06-f49df7466282@linaro.org>
+ <3fa19362-118b-232e-0baf-ee365fa2f2e2@linaro.org>
+ <07c75827-b8e5-7c70-315b-48617b9818e0@linaro.org>
+ <9067ca94-cd5d-6883-d0e0-374ed7f599ad@linaro.org>
+ <65c5ee36-8651-8a42-b6b1-3b8041c7edb8@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <65c5ee36-8651-8a42-b6b1-3b8041c7edb8@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2022 14:15, Fenglin Wu wrote:
-> Add binding document for flash LED module inside Qualcomm Technologies,
-> Inc. PMICs.
+Hi,
+
+On 29/09/2022 14:27, Krzysztof Kozlowski wrote:
 > 
-> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> We are making circles and discussion takes too much. 
 
-Thank you for your patch. There is something to discuss/improve.
+I'm sorry this happens, but I really want solve this stuff which in suspend since 2015.
 
-> +  reg:
-> +    description: address offset of the flash LED controller
-> +    maxItems: 1
-> +
-> +patternProperties:
-> +  "^led[0-3]$":
+So let me recall the original issue:
 
-In such case: ^led-[0-9]$"
+DTBS check reports:
 
-> +    type: object
-> +    $ref: common.yaml#
-> +    unevaluatedProperties: false
-> +    description: |
-> +      Represents the physical LED components which are connected to the
-> +      flash LED channels' output.
-> +
-> +    properties:
-> +      led-sources:
-> +        description: |
-> +          The HW indices of the flash LED channels that connect to the
-> +          physical LED
-> +        allOf:
-> +          - minItems: 1
-> +            maxItems: 2
-> +            items:
-> +              enum: [1, 2, 3, 4]
-> +
-> +      led-max-microamp:
-> +        description: |
-> +          The maximum current value when LED is not operating in flash mode (i.e. torch mode)
-> +          Valid values when an LED is connected to one flash LED channel:
-> +            5000 - 500000, step by 5000
-> +          Valid values when an LED is connected to two flash LED channels:
-> +            10000 - 1000000, step by 10000
-> +        minimum: 5000
-> +        maximum: 1000000
-> +
-> +      flash-max-microamp:
-> +        description: |
-> +          The maximum current value when LED is operating in flash mode.
-> +          Valid values when an LED is connected to one flash LED channel:
-> +            12500 - 1500000, step by 12500
-> +          Valid values when an LED is connected to two flash LED channels:
-> +            25000 - 2000000, step by 12500
-> +        minimum: 12500
-> +        maximum: 2000000
-> +
-> +      flash-max-timeout-us:
-> +        description: |
-> +          The maximum timeout value when LED is operating in flash mode.
-> +          Valid values: 10000 - 1280000, step by 10000
-> +        minimum: 10000
-> +        maximum: 1280000
-> +
-> +    required:
-> +      - led-sources
-> +      - led-max-microamp
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/leds/common.h>
-> +    spmi_bus {
+arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb: pmic@0: compatible: ['qcom,pm8018', 'qcom,pm8921'] is too long
+         From schema: Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
 
-No underscores in node names, so just "bus"
+arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb: pmic@0: rtc@11d:compatible: ['qcom,pm8018-rtc', 'qcom,pm8921-rtc'] is too long
+         From schema: Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
 
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
+arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb:0:0: /soc/qcom,ssbi@500000/pmic@0/pwrkey@1c: failed to match any schema with compatible: ['qcom,pm8018-pwrkey', 'qcom,pm8921-pwrkey']
 
-Best regards,
-Krzysztof
+arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb:0:0: /soc/qcom,ssbi@500000/pmic@0/pwrkey@1c: failed to match any schema with compatible: ['qcom,pm8018-pwrkey', 'qcom,pm8921-pwrkey']
 
+arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb: rtc@11d: compatible: ['qcom,pm8018-rtc', 'qcom,pm8921-rtc'] is too long
+         From schema: Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
+
+So trying to solve those, and since the PMIC in the wp8548 module is a PM8018, and it happens to be (partially ?? potentially ??) compatible
+with the PM8921, and I had issues adding per-HW compatible for the pwrkey, the obvious solution would be to
+drop the PM8921 compatibility since it's only probable and nothing proves it's right.
+
+But what's sure: it's a PM8018 PMIC.
+
+But since the PM8018 PWRKEY interface is compatible with the PM8921 PWRKEY interface,
+it's perfectly ok to the the MP8921 compatible here.
+
+OK, so as you quoted multiple times:
+"How this should be fixed? First, drop bogus entries from drivers, then
+document proper compatibles."
+
+OK so there's no bogus entries to remove here, and the only compatible to
+potentially document is the pm8018-pwrkey but it seems to be wrong.
+
+I'll be happy to have an hint on how to handle that to I can go forward and
+stop the noise, there's still plenty of stuff to fix in the MDM9615 DT.
+
+> 
+> Best regards,
+> Krzysztof
+> 
+
+Thanks,
+Neil
