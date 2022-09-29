@@ -2,118 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6009F5EEF8E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 09:47:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72C8C5EEF4A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 09:39:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235372AbiI2Hqe convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 03:46:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39886 "EHLO
+        id S235311AbiI2Hjz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 03:39:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235310AbiI2HqX (ORCPT
+        with ESMTP id S235006AbiI2Hjn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 03:46:23 -0400
-X-Greylist: delayed 561 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 29 Sep 2022 00:46:22 PDT
-Received: from relay.hostedemail.com (smtprelay0013.hostedemail.com [216.40.44.13])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03C13EF090;
-        Thu, 29 Sep 2022 00:46:21 -0700 (PDT)
-Received: from omf07.hostedemail.com (a10.router.float.18 [10.200.18.1])
-        by unirelay01.hostedemail.com (Postfix) with ESMTP id E3A941C60E3;
-        Thu, 29 Sep 2022 07:36:57 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf07.hostedemail.com (Postfix) with ESMTPA id E57402002C;
-        Thu, 29 Sep 2022 07:36:44 +0000 (UTC)
-Message-ID: <3c02aad6d8bde70964b403a3cb8004de969becc6.camel@perches.com>
-Subject: Re: [PATCH v4 10/14] gunyah: sysfs: Add node to describe supported
- features
-From:   Joe Perches <joe@perches.com>
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
+        Thu, 29 Sep 2022 03:39:43 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FB2EDFBD;
+        Thu, 29 Sep 2022 00:39:42 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 31E56B8237F;
+        Thu, 29 Sep 2022 07:39:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A30EC433C1;
+        Thu, 29 Sep 2022 07:39:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1664437178;
+        bh=/n0Q5GrDswm33XQryPk2WZzaKOv8olLq/q5OJ+haq8U=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=NsW8RsuHm4QnUnWi2FkTGxNhOG8d32sArCS4R36OXrkt0D32MDXCs1dNvI3AvIqdc
+         0PJeJoAMDcH9y8nXUqG8Q+jdOIfchHgskqry8mLcc1J1i66DYMhKIFBU+Am7m65+o+
+         /as1AU+60kbmZ169h55koVVqt+91s3ltF/gAxSiA7Y56GjoTzkaaUfkcEsA4OJkV4T
+         YCsmmvC/gPBvfxKq4CJaRrPpY1y4y4VZ4LtUSDj5rzJJrjqZ2NFfqBWPwNcWHUANGP
+         N2IhLoFT99em2xOc3vPMRX8WmowmfHF7DqkR19sjXPJeccmfDmGviFLNg/RhKTQynS
+         G3ngm8ghjpp8A==
+Date:   Thu, 29 Sep 2022 13:09:34 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Richard Acayan <mailingradian@gmail.com>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Date:   Thu, 29 Sep 2022 00:36:50 -0700
-In-Reply-To: <20220928195633.2348848-11-quic_eberman@quicinc.com>
-References: <20220928195633.2348848-1-quic_eberman@quicinc.com>
-         <20220928195633.2348848-11-quic_eberman@quicinc.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 8BIT
-User-Agent: Evolution 3.44.4 (3.44.4-2.fc36) 
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] dt-bindings: dma: qcom: gpi: add fallback
+ compatible
+Message-ID: <YzVLtvPk6YiDfBtb@matsya>
+References: <20220923210934.280034-1-mailingradian@gmail.com>
+ <20220923210934.280034-2-mailingradian@gmail.com>
+ <7b066e11-6e5c-c6d9-c8ed-9feccaec4c0c@linaro.org>
 MIME-Version: 1.0
-X-Stat-Signature: yfqwchey9yq5eu51co5zpzk7inon4u6t
-X-Rspamd-Server: rspamout05
-X-Rspamd-Queue-Id: E57402002C
-X-Spam-Status: No, score=-0.9 required=5.0 tests=BAYES_00,FORGED_SPF_HELO,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,
-        SPF_NONE,UNPARSEABLE_RELAY autolearn=no autolearn_force=no
-        version=3.4.6
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Session-ID: U2FsdGVkX1/SbFmnkC0u2VswP4hwzbj5pLQd0DpRqLM=
-X-HE-Tag: 1664437004-361455
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7b066e11-6e5c-c6d9-c8ed-9feccaec4c0c@linaro.org>
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2022-09-28 at 12:56 -0700, Elliot Berman wrote:
-> Add a sysfs node to list the features that the Gunyah hypervisor and
-> Linux supports. For now, Linux support cspace (capability IDs) and
-> message queues, so only report those..
-[]
-> diff --git a/drivers/virt/gunyah/sysfs.c b/drivers/virt/gunyah/sysfs.c
-[]
-> @@ -25,9 +25,24 @@ static ssize_t variant_show(struct kobject *kobj, struct kobj_attribute *attr, c
->  }
->  static struct kobj_attribute variant_attr = __ATTR_RO(variant);
->  
-> +static ssize_t features_show(struct kobject *kobj, struct kobj_attribute *attr, char *buffer)
-> +{
-> +	int len = 0;
-> +
-> +	if (GH_IDENTIFY_PARTITION_CSPACE(gunyah_api.flags))
-> +		len += sysfs_emit_at(buffer, len, "cspace ");
-> +	if (GH_IDENTIFY_MSGQUEUE(gunyah_api.flags))
-> +		len += sysfs_emit_at(buffer, len, "message-queue ");
-> +
-> +	len += sysfs_emit_at(buffer, len, "\n");
-> +	return len;
-> +}
+On 23-09-22, 23:26, Krzysztof Kozlowski wrote:
+> On 23/09/2022 23:09, Richard Acayan wrote:
+> > The drivers are transitioning from matching against lists of specific
+> > compatible strings to matching against smaller lists of more generic
+> > compatible strings. Add a fallback compatible string in the schema to
+> > support this change.
+> 
+> Thanks for the patch. I wished we discussed it a bit more. :)
+> qcom,gpi-dma does not look like specific enough to be correct fallback,
+> at least not for all of the devices. I propose either a IP block version
+> (which is tricky without access to documentation) or just one of the SoC
 
-It's generally nicer to avoid unnecessary output spaces.
+You should have access :-)
 
-Perhaps:
+> IP blocks.
 
-{
-	int len = 0;
+So knowing this IP we have two versions, one was initial sdm845 that
+should be the base compatible. Then second should be sm8350 which was
+the version we need ee_offset to be added, so these two can be the base
+ones for future...
 
-	if (GH_IDENTIFY_PARTITION_CSPACE(gunyah_api.flags))
-		len += sysfs_emit_at(buffer, len, "cspace");
-	if (GH_IDENTIFY_MSGQUEUE(gunyah_api.flags)) {
-		if (len)
-			len += sysfs_emit_at(buffer, len, " ");
-		len += sysfs_emit_at(buffer, len, "message-queue");
-	}
+My 0.02
 
-	len += sysfs_emit_at(buffer, len, "\n");
-
-	return len;
-}
-
+Thanks
+-- 
+~Vinod
