@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A15C05EEEB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 09:17:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FBA15EEED6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 09:24:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235156AbiI2HRu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 03:17:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43100 "EHLO
+        id S235255AbiI2HXZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 03:23:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235189AbiI2HRl (ORCPT
+        with ESMTP id S235222AbiI2HW6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 03:17:41 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64FF1132D4E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 00:17:40 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id i26so897727lfp.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 00:17:40 -0700 (PDT)
+        Thu, 29 Sep 2022 03:22:58 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E758118B05
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 00:22:49 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id c7so553583ljm.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 00:22:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=iMtljgAkURUibrL7m23ot3SY+EybKTFQ6aJepQTb+CU=;
-        b=uPccaG5k+Z2ZxhUfRK2F9G0Rf+9KT93eRs2Lp6FSIfDQRAsG01sWCrdNAryOugKXUg
-         Z7IQJSe1PRd9Q2wYHXkZhzbE6Kh+lZsBJy1wDo6ZxZwVs4/ptx7qo2Z3aKH+LAh8avhV
-         i8D4VZc1IZEk173SeeJm5qpnfqs9dGaHY8ptmFx9ses5EYxoBetvxaC64+S1s67gS4gW
-         fNwdskJlVrFV4cXDgEe6wyW0JVcRJFnXRFDsizOx6+dYQsw1xM3PrMQ6n1tXcSFkIwGo
-         g56/bNUTidfkwmQAMjqLZoWUj1hENln+YKk28U+zoIKQ7kAA313nJkSI2AU1FHflONVp
-         Bf7g==
+        bh=MezbcwOoul10g9j1qktZYyuEnrjgCGFz14Jt2OIrWcU=;
+        b=RhniWHb7IPXZdipNBOkrg2N2RPwnujVy2ZHUcFjJqBAAyZ+M8xTFHYrzfpIMhTY3D7
+         vyACY7zKLtg0e0PQ7Jd36pZWSw6Y25tUHKDTZopGN5QzHEUNqJcR8bg7iuy/dg3m1YOe
+         9YZa+L+76BZZVi/r3qzlsQ2KyB3F1+aWNFbUqyvVFMmuzfq42OdMTB67FB/rTAu/61sq
+         xpAZyzBdHYFr+/mNGcXwLMqst/ykhLJUa89bvphSzgn3T5NkMYs41qhD0qRDfc6Om7Fl
+         7/myZVmBXsyGoTeCLw0E6gxNxUDc9qb3rHvWTQOhSD1wl9RlS/rATvrQ265OnTM/3+gv
+         b4OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=iMtljgAkURUibrL7m23ot3SY+EybKTFQ6aJepQTb+CU=;
-        b=oAa3S/mp96VIKvgi6kLlVSe/ihKcQjsu/lNYdU2NSkwGduojsyFVJVgB1glb60XuvI
-         6G69uBUdLG+oBHqjoNpS7jvOV1J3J4HKH6vs5G1viwdzZxOZzACXJS5w5uO+srwTug0z
-         192GBhqLH3BiDRF0JtD9KK5tzU87lysrTPjMXYzupgNQi9kg9nJM0HGBY2qb79jTMaqC
-         ynzh6BKptPfH08mGyowAy+MRBDQQoJ2xhVwz23BxtOipIcjkkQuVX5fNNSpx3/MMURWB
-         0FVphztNZ68KPv9BLX4fHat4zZilNa5EgK/Rc7O4ZUVuuzoWWVjQ7KnE6HAMmahliOvT
-         QnzA==
-X-Gm-Message-State: ACrzQf0Ec49VeXz/7X9wlmHR5uuaRkdzLDq9RgsdEifQcnWmJhumJ8R/
-        ixhao2sbPz7SZFmnNwf5p+Sv/g==
-X-Google-Smtp-Source: AMsMyM6MJD9Y3GWLRtTQA934uZ89vRwh26BG5/KYVHrohBvBK5qLH6hNNL5uheaD2Hk6dHDCTa7bKw==
-X-Received: by 2002:ac2:4c54:0:b0:49b:182c:2051 with SMTP id o20-20020ac24c54000000b0049b182c2051mr733599lfk.369.1664435858773;
-        Thu, 29 Sep 2022 00:17:38 -0700 (PDT)
+        bh=MezbcwOoul10g9j1qktZYyuEnrjgCGFz14Jt2OIrWcU=;
+        b=MH2ujTygz3XiI222SZ2xHIyVXzXLg+UcgxrlbFRBFJwxzNTI1FlBEGB1LKF/oUANw5
+         cIDWoh4Hm0E6AzJN2cOYxZAkUbjxAtwIJb0F/dGBfMQaab8ZFUujgS7fmLXSb6fRNj1q
+         Y1jcfnXmyHvaHudK2FjJSllM/FRpfiGmMuFcVpNNsPAqGMzSdlLnvS0kseBxTFQzb0j8
+         mH0AXDPppOGdklTHEirrXmO1XPANTqICxCEpcarWRzFjKGIbuyR/fWsFHQmWImlkUZVu
+         obeIkYNntFsrMXrMsKaDKaCjZi4v/AymD9O2tqtmiY+BHmRARQ7ZHk/8gG98vBsphEwE
+         SpPA==
+X-Gm-Message-State: ACrzQf21lMrhH2SnhH5gNmE4I61lDwTw1bJPfPrCKeFcFQ4PR1cCFqNs
+        WdxKSIv8HT8N+vqsKWm9cX5B+g==
+X-Google-Smtp-Source: AMsMyM6G2n0Z1F3luJ+lGSBmmYESgaPvryPRha5PxI/XaKOCaJdB1gaXz9Rb5f0m4SUJFlXrO/h+yw==
+X-Received: by 2002:a2e:98c2:0:b0:26c:5d10:63dd with SMTP id s2-20020a2e98c2000000b0026c5d1063ddmr663534ljj.326.1664436167326;
+        Thu, 29 Sep 2022 00:22:47 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id g19-20020ac25393000000b0048a9e899693sm703760lfh.16.2022.09.29.00.17.37
+        by smtp.gmail.com with ESMTPSA id z12-20020ac2418c000000b00494813c689dsm701400lfh.219.2022.09.29.00.22.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Sep 2022 00:17:38 -0700 (PDT)
-Message-ID: <b7c89788-0682-3be8-92d3-552bbf63dda5@linaro.org>
-Date:   Thu, 29 Sep 2022 09:17:37 +0200
+        Thu, 29 Sep 2022 00:22:46 -0700 (PDT)
+Message-ID: <4e896382-c666-55c6-f50b-5c442e428a2b@linaro.org>
+Date:   Thu, 29 Sep 2022 09:22:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Subject: Re: [PATCH v2 2/4] dt-bindings: net: snps,dwmac: Add Qualcomm
- Ethernet ETHQOS compatibles
+Subject: Re: [PATCH v2 3/4] dt-bindings: net: qcom,ethqos: Convert bindings to
+ yaml
 Content-Language: en-US
 To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
         devicetree@vger.kernel.org
@@ -67,14 +67,15 @@ Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
         Rob Herring <robh@kernel.org>, Vinod Koul <vkoul@kernel.org>,
         David Miller <davem@davemloft.net>
 References: <20220929060405.2445745-1-bhupesh.sharma@linaro.org>
- <20220929060405.2445745-3-bhupesh.sharma@linaro.org>
+ <20220929060405.2445745-4-bhupesh.sharma@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220929060405.2445745-3-bhupesh.sharma@linaro.org>
+In-Reply-To: <20220929060405.2445745-4-bhupesh.sharma@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,8 +83,13 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 29/09/2022 08:04, Bhupesh Sharma wrote:
-> Add Qualcomm Ethernet ETHQOS compatible checks
+> Convert Qualcomm ETHQOS Ethernet devicetree binding to YAML.
+> 
+> While at it, also add Qualcomm Ethernet ETHQOS compatible checks
 > in snps,dwmac YAML binding document.
+
+There are no checks added to snps,dwmac.
+
 > 
 > Cc: Bjorn Andersson <andersson@kernel.org>
 > Cc: Rob Herring <robh@kernel.org>
@@ -91,9 +97,200 @@ On 29/09/2022 08:04, Bhupesh Sharma wrote:
 > Cc: David Miller <davem@davemloft.net>
 > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > ---
+>  .../devicetree/bindings/net/qcom,ethqos.txt   |  66 --------
+>  .../devicetree/bindings/net/qcom,ethqos.yaml  | 145 ++++++++++++++++++
+>  2 files changed, 145 insertions(+), 66 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/net/qcom,ethqos.txt
+>  create mode 100644 Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.txt b/Documentation/devicetree/bindings/net/qcom,ethqos.txt
+> deleted file mode 100644
+> index 1f5746849a71..000000000000
+> --- a/Documentation/devicetree/bindings/net/qcom,ethqos.txt
+> +++ /dev/null
+> @@ -1,66 +0,0 @@
+> -Qualcomm Ethernet ETHQOS device
+> -
+> -This documents dwmmac based ethernet device which supports Gigabit
+> -ethernet for version v2.3.0 onwards.
+> -
+> -This device has following properties:
+> -
+> -Required properties:
+> -
+> -- compatible: Should be one of:
+> -		"qcom,qcs404-ethqos"
+> -		"qcom,sm8150-ethqos"
+> -
+> -- reg: Address and length of the register set for the device
+> -
+> -- reg-names: Should contain register names "stmmaceth", "rgmii"
+> -
+> -- clocks: Should contain phandle to clocks
+> -
+> -- clock-names: Should contain clock names "stmmaceth", "pclk",
+> -		"ptp_ref", "rgmii"
+> -
+> -- interrupts: Should contain phandle to interrupts
+> -
+> -- interrupt-names: Should contain interrupt names "macirq", "eth_lpi"
+> -
+> -Rest of the properties are defined in stmmac.txt file in same directory
+> -
+> -
+> -Example:
+> -
+> -ethernet: ethernet@7a80000 {
+> -	compatible = "qcom,qcs404-ethqos";
+> -	reg = <0x07a80000 0x10000>,
+> -		<0x07a96000 0x100>;
+> -	reg-names = "stmmaceth", "rgmii";
+> -	clock-names = "stmmaceth", "pclk", "ptp_ref", "rgmii";
+> -	clocks = <&gcc GCC_ETH_AXI_CLK>,
+> -		<&gcc GCC_ETH_SLAVE_AHB_CLK>,
+> -		<&gcc GCC_ETH_PTP_CLK>,
+> -		<&gcc GCC_ETH_RGMII_CLK>;
+> -	interrupts = <GIC_SPI 56 IRQ_TYPE_LEVEL_HIGH>,
+> -			<GIC_SPI 55 IRQ_TYPE_LEVEL_HIGH>;
+> -	interrupt-names = "macirq", "eth_lpi";
+> -	snps,reset-gpio = <&tlmm 60 GPIO_ACTIVE_LOW>;
+> -	snps,reset-active-low;
+> -
+> -	snps,txpbl = <8>;
+> -	snps,rxpbl = <2>;
+> -	snps,aal;
+> -	snps,tso;
+> -
+> -	phy-handle = <&phy1>;
+> -	phy-mode = "rgmii";
+> -
+> -	mdio {
+> -		#address-cells = <0x1>;
+> -		#size-cells = <0x0>;
+> -		compatible = "snps,dwmac-mdio";
+> -		phy1: phy@4 {
+> -			device_type = "ethernet-phy";
+> -			reg = <0x4>;
+> -		};
+> -	};
+> -
+> -};
+> diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+> new file mode 100644
+> index 000000000000..d3d8f6799d18
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+> @@ -0,0 +1,145 @@
+> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Ethernet ETHQOS device
+> +
+> +maintainers:
+> +  - Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> +
+> +description:
+> +  This binding describes the dwmmac based Qualcomm ethernet devices which
+> +  support Gigabit ethernet (version v2.3.0 onwards).
+> +
+> +  So, this file documents platform glue layer for dwmmac stmmac based Qualcomm
+> +  ethernet devices.
+> +
+> +allOf:
+> +  - $ref: snps,dwmac.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,qcs404-ethqos
+> +      - qcom,sm8150-ethqos
+> +
+> +  reg:
+> +    maxItems: 2
+> +
+> +  reg-names:
+> +    items:
+> +      - const: stmmaceth
+> +      - const: rgmii
+> +
+> +  interrupts:
+> +    items:
+> +      - description: Combined signal for various interrupt events
+> +      - description: The interrupt that occurs when Rx exits the LPI state
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: macirq
+> +      - const: eth_lpi
+> +
+> +  clocks:
+> +    maxItems: 4
+> +
+> +  clock-names:
+> +    items:
+> +      - const: stmmaceth
+> +      - const: pclk
+> +      - const: ptp_ref
+> +      - const: rgmii
+> +
+> +  iommus:
+> +    maxItems: 1
+> +
+> +  mdio:
+> +    $ref: mdio.yaml#
+> +    unevaluatedProperties: false
+> +
+> +    properties:
+> +      compatible:
+> +        const: snps,dwmac-mdio
+> +
+> +  phy-handle:
+> +    maxItems: 1
+> +
+> +  phy-mode:
+> +    maxItems: 1
+> +
+> +  snps,reset-gpio:
+> +    maxItems: 1
 
+Why is this one here? It's already in snps,dwmac.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Actually this applies to several other properties. You have
+unevaluatedProperties:false, so you do not have to duplicate snps,dwmac.
+You only need to constrain it, like we said about interrupts in your
+previous patch.
+
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  resets:
+> +    maxItems: 1
+> +
+> +  rx-fifo-depth:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +
+> +  tx-fifo-depth:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +
+> +  snps,tso:
+> +    type: boolean
+> +    description: Enables the TSO feature (otherwise managed by MAC HW capability register).
+
+You add here several new properties. Mention in commit msg changes from
+pure conversion with answer to "why".
+
+> +
+> +required:
+> +  - compatible
+> +  - clocks
+> +  - clock-names
+> +
+> +unevaluatedProperties: false
+> +
 
 Best regards,
 Krzysztof
