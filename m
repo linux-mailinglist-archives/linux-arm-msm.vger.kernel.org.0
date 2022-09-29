@@ -2,135 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F2585EEE8A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 09:12:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E158B5EEE99
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 09:14:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235004AbiI2HMB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 03:12:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60542 "EHLO
+        id S235145AbiI2HOT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 03:14:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234954AbiI2HMA (ORCPT
+        with ESMTP id S235163AbiI2HON (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 03:12:00 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74ECB1323EA;
-        Thu, 29 Sep 2022 00:11:58 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EDAF162059;
-        Thu, 29 Sep 2022 07:11:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51399C433C1;
-        Thu, 29 Sep 2022 07:11:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664435517;
-        bh=1bSwRpi6PmdpAopy29uDI4mnvtAn/D1FCSeWqhELdBw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=dfWU5BFgB2zJvaNObw2joLGrnaFo4LE8Di6r5uciswvHSQ/hoc6FFRug9joR4b3V3
-         gMC+MHv6RK5L6GgyFNmLAdNpugqjfnn4ZtyDiy0aonw3gm2CA/TaV6AhR8/d93eE9K
-         b6fPnXbuUF7R54c5YAhUN+7JgHwNZnqiGm4gey+c+JNQSLWS5jEZ+qWiob4+eKTJbl
-         4yrvDfgzPX8G1rePUtiL6tPSLZAvgxKXE+/wzp5DeOX46OgE7gABZtyp4Wr0juu4pg
-         fWzxYj0ja+9WJkmReY1ZfILDheQe//xtCk83zNXZ+PBTICtzr7iZvcDfbFSdMp10FB
-         wcktzp4l69erw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1odniE-0006Tc-TO; Thu, 29 Sep 2022 09:12:03 +0200
-Date:   Thu, 29 Sep 2022 09:12:02 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 06/13] phy: qcom-qmp-pcie: drop bogus register update
-Message-ID: <YzVFQikkJmTDlg4U@hovoldconsulting.com>
-References: <20220928152822.30687-1-johan+linaro@kernel.org>
- <20220928152822.30687-7-johan+linaro@kernel.org>
- <2bc50ea4-ec29-cacc-216b-1c21d2d2f0bc@linaro.org>
- <f9d0fb60-3e62-8f55-015e-88ca2e209323@linaro.org>
+        Thu, 29 Sep 2022 03:14:13 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40D3F132FCF;
+        Thu, 29 Sep 2022 00:14:05 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28T5I9ts008739;
+        Thu, 29 Sep 2022 07:13:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=LEG2Dy3CKJ9OxR193VFBeLxSkB0ek88zkaBViONOeew=;
+ b=DS/fudyg+fLRlfC/OEhtbZDpofp9joSaCT2fmQLch/Bg1p4QyIh6ylhk9WALuBumPnUY
+ /l0eTOAf0JNeGrxsXeXcNAo1OLWSy9+rH5z8zfDcSLSE7hdYuv8x8QvJE4FS8HJCbfsO
+ vrOY5URLt2O/abP9xo2Q7GwlQ0zhHCTXeQ7Quo9BuN64VqfwhFglAjgMjqM247oL3II8
+ XG482ipeie2E3wllQRyJCIYAJKKXbaOhatFWKNiQwmppk1LeatRMYicXq3lqYxi+zQm7
+ DVik2OlrrArZth54LXuO4/ZArngtCoapY5RGZXo/KxsnHKIjvuOlEUr2jHohcFUTNMnX XQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jw29u0saj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 29 Sep 2022 07:13:59 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28T7DwDx019423
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 29 Sep 2022 07:13:58 GMT
+Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Thu, 29 Sep 2022 00:13:55 -0700
+From:   Krishna Kurapati <quic_kriskura@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>
+Subject: [PATCH] arm64: dts: qcom: sc7280: Update SNPS Phy params for SC7280
+Date:   Thu, 29 Sep 2022 12:43:48 +0530
+Message-ID: <1664435628-4011-1-git-send-email-quic_kriskura@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f9d0fb60-3e62-8f55-015e-88ca2e209323@linaro.org>
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: b2ZwlycUoJ_da6xy9JqN6AFIFvKTuR2I
+X-Proofpoint-ORIG-GUID: b2ZwlycUoJ_da6xy9JqN6AFIFvKTuR2I
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-29_04,2022-09-29_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 impostorscore=0 adultscore=0 suspectscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 clxscore=1011 mlxlogscore=906
+ bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2209290042
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 28, 2022 at 10:48:40PM +0300, Dmitry Baryshkov wrote:
-> On 28/09/2022 22:10, Dmitry Baryshkov wrote:
-> > On 28/09/2022 18:28, Johan Hovold wrote:
-> >> Since commit 0d58280cf1e6 ("phy: Update PHY power control sequence") the
-> >> PHY is powered on before configuring the registers and only the MSM8996
-> >> PCIe PHY, which includes the POWER_DOWN_CONTROL register in its PCS
-> >> initialisation table, may possibly require a second update afterwards.
-> >>
-> >> To make things worse, the POWER_DOWN_CONTROL register lies at a
-> >> different offset on more recent SoCs so that the second update, which
-> >> still used a hard-coded offset, would write to an unrelated register
-> >> (e.g. a revision-id register on SC8280XP).
-> >>
-> >> As the MSM8996 PCIe PHY is now handled by a separate driver, simply drop
-> >> the bogus register update.
-> >>
-> >> Fixes: e4d8b05ad5f9 ("phy: qcom-qmp: Use proper PWRDOWN offset for 
-> >> sm8150 USB") added support
-> > 
-> > I'm not sure about the particular fixes tag. Backporting from the split 
-> > driver into old qmp driver would be a complete pain.
-> > 
-> >> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > 
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> After digging some more, I stumbled upon the commit 0d58280cf1e6 ("phy: 
-> Update PHY power control sequence"), which puts explicit register write 
-> here, telling that 'PCIe PHYs need an extra power control before 
-> deasserts reset state'.
+Override the SNPS Phy tuning parameters for SC7280 devices. These
+values are common for both trogdor and herobrine variants.
 
-That's the commit I'm referring to above.
+Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-> I can confirm this with the register tables from downstream dtsi. E.g. 
-> consider sdm845-pcie.dts, pcie0 table. The PCS_POWER_DOWN_CONTROL is the 
-> register 0x804.
-> 
-> The programmings starts with <0x804 0x1 0x0>, writing 1 to 
-> PCS_POWER_DOWN_CONTROL (which if I'm not mistaken we do not do at this 
-> moment). Then after writing all the serdes/tx/rx/pcs/pcs_misc tables 
-> comes the write <0x804 0x3 0x0> (which you are trying to remove here).
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 2125803..ae2c23e 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -3310,6 +3310,13 @@
+ 			clock-names = "ref";
+ 
+ 			resets = <&gcc GCC_QUSB2PHY_SEC_BCR>;
++
++			qcom,hs-rise-fall-time-bp = <0>;
++			qcom,squelch-detector-bp = <(-2090)>;
++			qcom,hs-disconnect-bp = <1743>;
++			qcom,hs-amplitude-bp = <1780>;
++			qcom,hs-crossover-voltage-microvolt = <(-31000)>;
++			qcom,hs-output-impedance-micro-ohms = <2600000>;
+ 		};
+ 
+ 		usb_1_qmpphy: phy-wrapper@88e9000 {
+-- 
+2.7.4
 
-The PHY would already have been powered on with the mainline driver, that
-write has already happened.
-
-Whether or not PCIe support for SDM845 has been broken since it was
-first mainlined almost three years ago is a separate issue. I assume
-Bjorn tested it before sending it upstream. 
-
-	421c9a0e9731 ("phy: qcom: qmp: Add SDM845 PCIe QMP PHY support")
-
-> Same sequence applies to the PCIe PHY on msm8998.
-> 
-> Most newer PHYs have the expected sequence (of writing 0x3 to 
-> PCS_POWER_DOWN_CONTROL) before writing all registers.
-> 
-> As a short summary: unless we get any additional information that 8998 
-> and sdm845 tables are incorrect, I'd suggest adding a conditional here 
-> (ugh) and using it here and in qmp_pcie_init() call.
-
-I see little point in doing that unless you dig out an SDM845, confirm
-that it has never worked with upstream, and update the init sequence
-first.
-
-> Vinod, Bjorn, do you have any additional info?
-
-An explanation of the split POWER_DOWN_CONTROL updates on MSM8996 would
-be good to have either way.
-
-Johan
