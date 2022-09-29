@@ -2,78 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BF685EFF59
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 23:40:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B3B45F0009
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 00:22:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229699AbiI2VkL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 17:40:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46720 "EHLO
+        id S229515AbiI2WWe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 18:22:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229781AbiI2VkJ (ORCPT
+        with ESMTP id S229489AbiI2WWd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 17:40:09 -0400
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BB9466128
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 14:40:07 -0700 (PDT)
-Received: by mail-qk1-x734.google.com with SMTP id i3so1730675qkl.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 14:40:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:sender:mime-version:from:to:cc
-         :subject:date;
-        bh=N/GSbPnALToZPDvWcwsyZl8roxv+rx6jEvhzi+rz9/I=;
-        b=CArZJeHjL+Ch7iCxYq1415Okk74i+n36MWQ5JBf+uym/2b9X8BwmXICBJIBypOnQv8
-         bFWLhnxQoIF7xdixf7sFQbxGT5RUPJTl/J5UZ0iZp3KU61IN+8YTuVmYINkniP/n5suI
-         jxQ86prFa9pxhcXJWRx/zXk57cS77mnfqFxWqvtrjVftFPJA0mrOrrRW2UOxSug4aLUW
-         v0CWRCwPwNMULhql7S/wVfLbUT8URVyJDkMHye3aRRNb3wrQThru1+r38sUGvFI/oPp+
-         mxkRJnPwYEDDxwxOGwbMxeuOJ7e1p5IZOOpANoBoEjEv1Bau3/D0XuiZkPt9QL+Z6+6a
-         5cMw==
+        Thu, 29 Sep 2022 18:22:33 -0400
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3728612BD90;
+        Thu, 29 Sep 2022 15:22:33 -0700 (PDT)
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-131f1494dc2so556533fac.7;
+        Thu, 29 Sep 2022 15:22:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:sender:mime-version
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=N/GSbPnALToZPDvWcwsyZl8roxv+rx6jEvhzi+rz9/I=;
-        b=YBEQTznKgtOjkz8F3xgnbMmyE5DmDmfmYVjGTX9FOsT6cIBKIHNKxSKnxYlD3AM04G
-         IOzhdQb+ctmEq/JEVHPaJL2/eIIqNUCRhzPHCY6Q+1jo1RgidHG8Sr/zI4S+ap4e3b0+
-         gl0TE+X6g1P7rHzPCFK0FhfkUR9EY+z5LFqLHMbGqicwQKE5EZKeLMxVhCMEP84Zlyvu
-         9wVrZNQl4m7/SoXBLd35nUYNKIVbPU3Q/iK1pZz1NQx5Q/4HVQq9yP/I2diZhKwDqCZt
-         SfiIAtU5Bp8U841K2/mXlPoV8OwpgkI/FAfcIIPvMXbxub7IB8giY8mWdwYGYrJTXnzp
-         Nr5g==
-X-Gm-Message-State: ACrzQf3Wp4IFQACe5kIMwZnOk3FpvHNzhJnaIx0wkNHAsh4AWsnRd7TX
-        Nyu0VJjF4mdAmTVmNe92HuiCs/QsA9oFw9xXyUw=
-X-Google-Smtp-Source: AMsMyM6G4G4GB4Q6+0kCxdWpxlOYd6EabfMWVAlYOoooHiklmZX9CLqrIKYBie5/Acyjp4thiIhGQbDG4DbO9TJMC98=
-X-Received: by 2002:a05:620a:6084:b0:6ce:342e:5c31 with SMTP id
- dx4-20020a05620a608400b006ce342e5c31mr3766609qkb.404.1664487606816; Thu, 29
- Sep 2022 14:40:06 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=ahVPXxQAVfA26dQ9CQePI8B2LqZP5xo7qpGwH3+hchE=;
+        b=rDoUEqBBrXkE6Qdf/oLP/EohR3nTI/uu4Ae9AsNxoSI7TVOmALqps4uiakvPFcfNIZ
+         53s/ulAzlDw/6jHIge+O5xjezQfhPK1WyNS/72FlncDwLHMiw5KQm/Y97qZQCGMzbJ99
+         nefJvcCi+UIlUWxjFTqZXSkL1CF5BGS4CwNXkmrc+mv3w1uetKPDmCWg39pwPUXwHwm8
+         HC65n9YngR8cyR4kRwChETxIHA+SYjfcTi4UjMnc1I4lt1rbEvMEhoEotVIWbwWiSkDL
+         EkLtpWYG9AV/oPhmLHnrlsJ3cxCWxBc6hKamo4ovvEjNHNfzbPJ3JpcxOa6nGtS7TCS1
+         hr9g==
+X-Gm-Message-State: ACrzQf3x9aDQglvKFEFRSo3hwpqvUKFehEevPHeFiWJhjb8fm4hyxKT8
+        IU3kNQ+1dSgniy3zR62IiQ==
+X-Google-Smtp-Source: AMsMyM7Tk757Ax+icdPGty0geMIIxcUYEzJsyLCvhhGeeDR8An5xEJGKEz0Qou16YLLsyyWqzFchSg==
+X-Received: by 2002:a05:6870:d6a6:b0:127:ef52:75db with SMTP id z38-20020a056870d6a600b00127ef5275dbmr10212704oap.232.1664490152456;
+        Thu, 29 Sep 2022 15:22:32 -0700 (PDT)
+Received: from macbook.herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id r16-20020a056870439000b00127ba61535fsm263979oah.15.2022.09.29.15.22.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Sep 2022 15:22:32 -0700 (PDT)
+Received: (nullmailer pid 2871452 invoked by uid 1000);
+        Thu, 29 Sep 2022 22:22:31 -0000
+Date:   Thu, 29 Sep 2022 17:22:31 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-clk@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Subject: Re: [PATCH v2 1/3] dt-bindings: clock: qcom,gcc-ipq8064: add pll4 to
+ used clocks
+Message-ID: <166449015068.2871387.15544318962714747375.robh@kernel.org>
+References: <20220927113826.246241-1-dmitry.baryshkov@linaro.org>
+ <20220927113826.246241-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Sender: ogunmasaadesola@gmail.com
-Received: by 2002:ad4:5baa:0:0:0:0:0 with HTTP; Thu, 29 Sep 2022 14:40:06
- -0700 (PDT)
-From:   "Mrs. Margaret Christopher" <mrsmargaretchristopher001@gmail.com>
-Date:   Thu, 29 Sep 2022 14:40:06 -0700
-X-Google-Sender-Auth: DJKN21Y6yQ8tWJQxFygchD8Buyg
-Message-ID: <CAEGnpV9tEyQuHcqN3_FCYsHW1kZycDcnq4+11ofZwwwWqOpKeQ@mail.gmail.com>
-Subject: Humanitarian Project For Less Privileged.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=1.3 required=5.0 tests=BAYES_60,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS
-        autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: *
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220927113826.246241-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
--- 
+On Tue, 27 Sep 2022 14:38:24 +0300, Dmitry Baryshkov wrote:
+> On IPQ8064 (and related platforms) the GCC uses PLL4 clock provided by
+> the LCC clock controller. Mention this in the bindings.
+> 
+> To remain compatible with older bindings, make it optional, as the
+> driver will fallback to getting the `pll4' clock from the system clocks
+> list.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../devicetree/bindings/clock/qcom,gcc-ipq8064.yaml      | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
+> 
 
-Hello Dear
-
-  Am a dying woman here in the hospital, i was diagnose as a
-Coronavirus patient over 2 months ago. I am A business woman who is
-dealing with Gold Exportation, I Am 59 year old from USA California i
-have a charitable and unfufilling  project that am about to handover
-to you, if you are interested to know more about this project please reply
-me.
+Acked-by: Rob Herring <robh@kernel.org>
