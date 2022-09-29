@@ -2,50 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 960CF5EF9A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 17:58:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A3405EF9E4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 18:12:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235013AbiI2P6b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 11:58:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40980 "EHLO
+        id S235972AbiI2QMN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 12:12:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230341AbiI2P6a (ORCPT
+        with ESMTP id S234934AbiI2QMD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 11:58:30 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7D10139423;
-        Thu, 29 Sep 2022 08:58:28 -0700 (PDT)
+        Thu, 29 Sep 2022 12:12:03 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A80DC1D66DB;
+        Thu, 29 Sep 2022 09:12:02 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 8D957B8250E;
-        Thu, 29 Sep 2022 15:58:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32561C433D6;
-        Thu, 29 Sep 2022 15:58:26 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 58625B824FA;
+        Thu, 29 Sep 2022 16:12:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2FFC433C1;
+        Thu, 29 Sep 2022 16:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664467106;
-        bh=1KeBrPMAdY0TAzdkP1uOhFXdbWsiCILN55Jv9DVWFgE=;
+        s=k20201202; t=1664467920;
+        bh=Qb6H1MTM1LXEg8sMPvRyCuIO5X98/kvPIu0bqQ8zjw4=;
         h=From:To:Cc:Subject:Date:From;
-        b=LGP6ZGb5EIX8fBHRBIPBWLEbKy2YHlAt2q86plNbIK6vXQstJb0+eCKFRThsbOQ5O
-         yLpQ+XS7Op8B8pDItQfn9Yo6SmzmuGlGZ/jhyWUfFshw/tMLn6NXxezoPepj/ebX9G
-         vAfxJgB+tZ3sghHvbeL60cf2NF0ceRQhFa8xrCzUqeFujOAER6DO6nXzX2Np+npThI
-         iXr9S076ZPk8lKGt5CZL4LGxVKCYyR6bYsoeJ/vc6riBRNvOVGYDfK6O63sxsIJUmx
-         ONnmVxEuY7zhahOBmH32P+QLxutpphrtJyIhWkjjrPVKTshHw23nJ/Iqacn0p/Eq7X
-         DAACENzoMg8Iw==
+        b=JavQV1Egnc8IhrvvsS8nMYbDTT6HGrmnOMmZ6td2f7mM36YZa9LCLFxwZc7UkJ/fF
+         NHXhlK+91sd2qpHiu4Ra7w9bH3ySS7wnP4XWFvseTyFyaB2M9i09H49539Nw7AuJgL
+         AvbfNZ8dIDewQY8otd3c4HHqHQGGqE4aH1Lx/C5tFpcRmhedBZLSdVAjQWtscWRd4E
+         5rhq8/D/iQTlcM2MKTrS+x9HTNlRyl6CPaptsYuZh1B77WzRw0R5B8T10HRQKluuax
+         egwBy3WT4d5PbEKuyAdsaH89ivb8NCFWLUu293nkaAjnpYKbLjJwLz+sf+J81XRxYF
+         MC/RKOOeaQ+uw==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan+linaro@kernel.org>)
-        id 1odvvk-0004XF-Rw; Thu, 29 Sep 2022 17:58:32 +0200
+        id 1odw8s-0004j3-2g; Thu, 29 Sep 2022 18:12:06 +0200
 From:   Johan Hovold <johan+linaro@kernel.org>
 To:     Bjorn Andersson <andersson@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
         Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH] clk: qcom: gdsc: add missing error handling
-Date:   Thu, 29 Sep 2022 17:58:16 +0200
-Message-Id: <20220929155816.17425-1-johan+linaro@kernel.org>
+Subject: [PATCH] clk: gcc-sc8280xp: use retention for USB power domains
+Date:   Thu, 29 Sep 2022 18:11:24 +0200
+Message-Id: <20220929161124.18138-1-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -58,79 +60,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since commit 7eb231c337e0 ("PM / Domains: Convert pm_genpd_init() to
-return an error code") pm_genpd_init() can return an error which the
-caller must handle.
+Since commit d399723950c4 ("clk: qcom: gdsc: Fix the handling of
+PWRSTS_RET support) retention mode can be used on sc8280xp to maintain
+state during suspend instead of leaving the domain always on.
 
-The current error handling was also incomplete as the runtime PM and
-regulator use counts were not balanced in all error paths.
-
-Add the missing error handling to the GDSC initialisation to avoid
-continuing as if nothing happened on errors.
+This is needed to eventually allow the parent CX domain to be powered
+down during suspend.
 
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- drivers/clk/qcom/gdsc.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/clk/qcom/gcc-sc8280xp.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index e1d6574d2797..0b67bd72e217 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -451,11 +451,8 @@ static int gdsc_init(struct gdsc *sc)
+While we're not yet able to fully test this (since we're not hitting CX
+power down) this can still go in as we'll need it in some form
+eventually.
+
+Note that the PCIe domains should remain always-on until we have driver
+support for suspend in place.
+
+Johan
+
+
+diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+index 7768e6901dcc..a18ed88f3b82 100644
+--- a/drivers/clk/qcom/gcc-sc8280xp.c
++++ b/drivers/clk/qcom/gcc-sc8280xp.c
+@@ -6843,17 +6843,12 @@ static struct gdsc ufs_phy_gdsc = {
+ 	.pwrsts = PWRSTS_OFF_ON,
+ };
  
- 		/* ...and the power-domain */
- 		ret = gdsc_pm_runtime_get(sc);
--		if (ret) {
--			if (sc->rsupply)
--				regulator_disable(sc->rsupply);
--			return ret;
--		}
-+		if (ret)
-+			goto err_disable_supply;
+-/*
+- * The Qualcomm DWC3 driver suspend implementation appears to be incomplete
+- * for sc8280xp so keep the USB power domains always-on for now.
+- */
+ static struct gdsc usb30_mp_gdsc = {
+ 	.gdscr = 0xab004,
+ 	.pd = {
+ 		.name = "usb30_mp_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = ALWAYS_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ };
  
- 		/*
- 		 * Votable GDSCs can be ON due to Vote from other masters.
-@@ -464,14 +461,14 @@ static int gdsc_init(struct gdsc *sc)
- 		if (sc->flags & VOTABLE) {
- 			ret = gdsc_update_collapse_bit(sc, false);
- 			if (ret)
--				return ret;
-+				goto err_put_rpm;
- 		}
+ static struct gdsc usb30_prim_gdsc = {
+@@ -6861,8 +6856,7 @@ static struct gdsc usb30_prim_gdsc = {
+ 	.pd = {
+ 		.name = "usb30_prim_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = ALWAYS_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ };
  
- 		/* Turn on HW trigger mode if supported */
- 		if (sc->flags & HW_CTRL) {
- 			ret = gdsc_hwctrl(sc, true);
- 			if (ret < 0)
--				return ret;
-+				goto err_put_rpm;
- 		}
+ static struct gdsc usb30_sec_gdsc = {
+@@ -6870,8 +6864,7 @@ static struct gdsc usb30_sec_gdsc = {
+ 	.pd = {
+ 		.name = "usb30_sec_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = ALWAYS_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ };
  
- 		/*
-@@ -498,9 +495,21 @@ static int gdsc_init(struct gdsc *sc)
- 		sc->pd.power_off = gdsc_disable;
- 	if (!sc->pd.power_on)
- 		sc->pd.power_on = gdsc_enable;
--	pm_genpd_init(&sc->pd, NULL, !on);
-+
-+	ret = pm_genpd_init(&sc->pd, NULL, !on);
-+	if (ret)
-+		goto err_put_rpm;
- 
- 	return 0;
-+
-+err_put_rpm:
-+	if (on)
-+		gdsc_pm_runtime_put(sc);
-+err_disable_supply:
-+	if (on && sc->rsupply)
-+		regulator_disable(sc->rsupply);
-+
-+	return ret;
- }
- 
- int gdsc_register(struct gdsc_desc *desc,
+ static struct clk_regmap *gcc_sc8280xp_clocks[] = {
 -- 
 2.35.1
 
