@@ -2,121 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 340A35F0091
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 00:36:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EAEEE5F0178
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 01:38:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229768AbiI2WgB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 18:36:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53534 "EHLO
+        id S229728AbiI2Xi3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 19:38:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230131AbiI2Wew (ORCPT
+        with ESMTP id S229720AbiI2Xi2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 18:34:52 -0400
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CFFC1D6249;
-        Thu, 29 Sep 2022 15:31:36 -0700 (PDT)
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-131f1494dc2so577049fac.7;
-        Thu, 29 Sep 2022 15:31:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=+ppqKUZekTxVrZE6//gc6FmK7Y2dgigVSPtRGAj8nKU=;
-        b=3AWZmD0qtPK/T/JPAaoRnEu0TCSsBo7sJnu1o2+RxJpTDhY4fF0RgRyfUbsCm/ygUx
-         +HY7Ecj0qdGtNM8r9vKYmBNF2G/wHej5Krkjdd7Pd+kRzTHeSyIyXXoPBlPmx4TXQ7E6
-         K4gPn+wXE5jWudfZ5QKniVffhLYy3+qlxwtfjbSf8kah7PEjbfLjLxxQFexWgQu2ZX6G
-         +MB1HuIbKIFLUz7LdUZRg4HGd0TkVhbbQvZzK0TkoIBylsYHMvR6mH8xdQbqNEaw4dhX
-         HDJUB7ISBln/OM4c7B949ap3nXb96CRAi+WEdSWa/DFpwxZ2HLgbEhCQFWl7rqdE0mIr
-         sFqA==
-X-Gm-Message-State: ACrzQf3eqW6vAQAFHSt8lQ7/xRGXSmgy4vBgVoIp5WUzHKn4L5GWfg6y
-        pDF0VEJLjv70zch+2GajIA==
-X-Google-Smtp-Source: AMsMyM6VPQStiQxDY3pOVC8hYCgC8vnsmw1bwW+gJ4KDrpxt0NpOa9gHUrAo8NDlWtbXSD65Hd6G9A==
-X-Received: by 2002:a05:6870:55a4:b0:130:c298:46e5 with SMTP id n36-20020a05687055a400b00130c29846e5mr9872616oao.216.1664490672775;
-        Thu, 29 Sep 2022 15:31:12 -0700 (PDT)
-Received: from macbook.herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id u36-20020a056870702400b0013125e6a60fsm229085oae.58.2022.09.29.15.31.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Sep 2022 15:31:12 -0700 (PDT)
-Received: (nullmailer pid 2882012 invoked by uid 1000);
-        Thu, 29 Sep 2022 22:31:11 -0000
-Date:   Thu, 29 Sep 2022 17:31:11 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Marek Vasut <marex@denx.de>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Yann Gautier <yann.gautier@foss.st.com>,
-        devicetree@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH 1/3] dt-bindings: mmc: arm,pl18x: Document
- interrupt-names is ignored
-Message-ID: <20220929223111.GA2880118-robh@kernel.org>
-References: <20220927191736.299702-1-marex@denx.de>
+        Thu, 29 Sep 2022 19:38:28 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B53CB14DAE1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 16:38:26 -0700 (PDT)
+Received: from [192.168.1.101] (95.49.29.188.neoplus.adsl.tpnet.pl [95.49.29.188])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id BC2EF1F5E1;
+        Fri, 30 Sep 2022 01:38:23 +0200 (CEST)
+Message-ID: <48af9193-452f-ffb8-39c7-0d17068af658@somainline.org>
+Date:   Fri, 30 Sep 2022 01:38:21 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220927191736.299702-1-marex@denx.de>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH] clk: gcc-sc8280xp: use retention for USB power domains
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220929161124.18138-1-johan+linaro@kernel.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20220929161124.18138-1-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 27, 2022 at 09:17:34PM +0200, Marek Vasut wrote:
-> Due to inconsistency of existing DTs regarding the content of this IP
-> interrupt-names DT property, document this such that interrupt-names
-> is not used by this IP bindings.
+
+
+On 29.09.2022 18:11, Johan Hovold wrote:
+> Since commit d399723950c4 ("clk: qcom: gdsc: Fix the handling of
+> PWRSTS_RET support) retention mode can be used on sc8280xp to maintain
+> state during suspend instead of leaving the domain always on.
 > 
-> Signed-off-by: Marek Vasut <marex@denx.de>
-> ---
-> Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> Cc: Yann Gautier <yann.gautier@foss.st.com>
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-mmc@vger.kernel.org
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-stm32@st-md-mailman.stormreply.com
-> To: linux-arm-kernel@lists.infradead.org
-> ---
->  Documentation/devicetree/bindings/mmc/arm,pl18x.yaml | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> This is needed to eventually allow the parent CX domain to be powered
+> down during suspend.
 > 
-> diff --git a/Documentation/devicetree/bindings/mmc/arm,pl18x.yaml b/Documentation/devicetree/bindings/mmc/arm,pl18x.yaml
-> index 1e69a5a42439b..a0ddf6495f85e 100644
-> --- a/Documentation/devicetree/bindings/mmc/arm,pl18x.yaml
-> +++ b/Documentation/devicetree/bindings/mmc/arm,pl18x.yaml
-> @@ -95,7 +95,8 @@ properties:
->        PIO (polled I/O) interrupt and occurs when the FIFO needs to be
->        emptied as part of a bulk read from the card. Some variants have these
->        two interrupts wired into the same line (logic OR) and in that case
-> -      only one interrupt may be provided.
-> +      only one interrupt may be provided. The interrupt-names property is
-> +      not used due to inconsistency of existing DTs regarding its content.
->      minItems: 1
->      maxItems: 2
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
-       deprecated: false
-
-
+Konrad
+>  drivers/clk/qcom/gcc-sc8280xp.c | 13 +++----------
+>  1 file changed, 3 insertions(+), 10 deletions(-)
+> 
+> While we're not yet able to fully test this (since we're not hitting CX
+> power down) this can still go in as we'll need it in some form
+> eventually.
+> 
+> Note that the PCIe domains should remain always-on until we have driver
+> support for suspend in place.
+> 
+> Johan
+> 
+> 
+> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+> index 7768e6901dcc..a18ed88f3b82 100644
+> --- a/drivers/clk/qcom/gcc-sc8280xp.c
+> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
+> @@ -6843,17 +6843,12 @@ static struct gdsc ufs_phy_gdsc = {
+>  	.pwrsts = PWRSTS_OFF_ON,
+>  };
 >  
-> -- 
-> 2.35.1
-> 
-> 
+> -/*
+> - * The Qualcomm DWC3 driver suspend implementation appears to be incomplete
+> - * for sc8280xp so keep the USB power domains always-on for now.
+> - */
+>  static struct gdsc usb30_mp_gdsc = {
+>  	.gdscr = 0xab004,
+>  	.pd = {
+>  		.name = "usb30_mp_gdsc",
+>  	},
+> -	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = ALWAYS_ON,
+> +	.pwrsts = PWRSTS_RET_ON,
+>  };
+>  
+>  static struct gdsc usb30_prim_gdsc = {
+> @@ -6861,8 +6856,7 @@ static struct gdsc usb30_prim_gdsc = {
+>  	.pd = {
+>  		.name = "usb30_prim_gdsc",
+>  	},
+> -	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = ALWAYS_ON,
+> +	.pwrsts = PWRSTS_RET_ON,
+>  };
+>  
+>  static struct gdsc usb30_sec_gdsc = {
+> @@ -6870,8 +6864,7 @@ static struct gdsc usb30_sec_gdsc = {
+>  	.pd = {
+>  		.name = "usb30_sec_gdsc",
+>  	},
+> -	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = ALWAYS_ON,
+> +	.pwrsts = PWRSTS_RET_ON,
+>  };
+>  
+>  static struct clk_regmap *gcc_sc8280xp_clocks[] = {
