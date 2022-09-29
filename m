@@ -2,77 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AA7B5EF407
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 13:12:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C91D25EF414
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 13:14:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234940AbiI2LMJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 07:12:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57852 "EHLO
+        id S234421AbiI2LOG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 07:14:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234880AbiI2LMI (ORCPT
+        with ESMTP id S234542AbiI2LOC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 07:12:08 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27B9DEBD6C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 04:12:04 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id a2so1716043lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 04:12:04 -0700 (PDT)
+        Thu, 29 Sep 2022 07:14:02 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E2FF1296AA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 04:14:01 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id g1so1700173lfu.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 04:14:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=ed9GW/QdKjJ735ISn6Av6rBi/urAjltD5XHbLc38vP0=;
-        b=uB0lNti/jRz77uYMld3wQvI/gsJwhbHDzMhTBJz3ZpO0hVy5mZRkcVhH0mbnJtB4Hh
-         s/tSyTd/qz7VUZPa+GNPBGovrwvf4ZzSB7vCqqMFWE50qh+uQqZeYNZ7tzGXjPg7kpUZ
-         5/+4Kj2LowcPyy/L6J/q8n/X1XtOUti37izkS7KzvkMIuw6DPWtAJzoIhCdSmd1Ud1dV
-         X7Si92/ZxX7wKJ4QwysnujSnEcy6NGoR2LY5tHcy3DMczMZmIi/rHdl4qQKPuMWZHpCv
-         687XAZ5AyVXhBpM5+BZbrlRPZCDkYFoTnCFkweV0jl3gMzGp0ps+k8UWgubBGGeVGnoa
-         6CoQ==
+        bh=JCh++P5qIzDBHCAdkyavsqkmhn8xd4gauTae0eHjI/s=;
+        b=asdXkChlFju1IPfKnT9Zzz6BqO2nzkgscO8FO1TEbmmzGObR03XAcp68Q31idxjF8b
+         +IWu1Mz5jExFv8XhVka2L2sp6GVtnewzz78xdUNgjd6RfnkVF3H1vFMeLx1QrMBC5MKU
+         oep7vR7UyH/T5/zYUinW1WizcVWnmUU82z1y37x0OWrZKbIh7zebtVBy7f5am7X/utUH
+         bgpQL2hPF9v6sc6aSMfNJhKg8RqDRbWyemuG3xqhO7ZDIieabIX9iZr+4TOhNur4GpcN
+         Cd8to3ntEON8IOE1YP0IxdrQ9Rh3rvSfJmLeLR1iHYJq9VnycbtbBusGVFL1XncctcJ+
+         ytGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=ed9GW/QdKjJ735ISn6Av6rBi/urAjltD5XHbLc38vP0=;
-        b=CBqz+J9oZk4Fy+0QU58uSvXUD3QRtBR+a8TLlw799iyBg17pEJGBAZDYUqp3F0Dnt6
-         c0NfN0OeLENcJYcoogqbg9H7W0h1Tpbw1f1dJbMkWUVjSaS8fOfjoeFbpCgDw37pLIS1
-         lB2Za/DQEoXoRwVfffwUKdnrAW8fDnjvhbz1RCk8cws6imwJgjX0yzVOSFOoHTHNju4e
-         uji84VUESbk88/fUFrxawhFBOt3d0cSW+4A3BzOGk3SnvbpoS2BZ5w/bOolRfVp5kiWH
-         o4seydJQNJflQCQfHDCJDvXYKBs0AuScC4K8lhcJke4XtBF1nIaQq6sqGhSZH4Wj7+g3
-         hmGA==
-X-Gm-Message-State: ACrzQf3K16cV9Vkc8lOq6+l9co/TjriUpY4cFc41AZ6Pf8SmEpYp625R
-        NWq3NqNVicRjnf+Sb6Hi6qIIfw==
-X-Google-Smtp-Source: AMsMyM7JKCOSWnywYCGPQ3kBYSHmwH9C2y3r3niYpDDVKlgS3tH8vXCRmdUhsqt6WlIiq+mNIKP4SA==
-X-Received: by 2002:ac2:58f8:0:b0:49e:da5c:1349 with SMTP id v24-20020ac258f8000000b0049eda5c1349mr1092132lfo.444.1664449922926;
-        Thu, 29 Sep 2022 04:12:02 -0700 (PDT)
+        bh=JCh++P5qIzDBHCAdkyavsqkmhn8xd4gauTae0eHjI/s=;
+        b=Bc3U+p35awePcIvXgV8dguJi6a93akteaAPS4PH/Vjimi9yC4GXcDWPhnOyM8MVQLx
+         mj3PikAK7J2yK4uSz4R8IDIDv7UTF6iruxbGZfKS0hixVrruuya76DTTFTaAvbzz5rWh
+         L8pHv35MtdFAXJnAOjLI0e5ueq5nt8acB/WNj2AV3TovTYjJ7nmkYRlyQdowPyd3tvit
+         Wps0SN7RuwjR2XZxgCpMpSIVCtivHQkunqWfgJWvHnEtW+YC2Rxx3Iodxm1GXYGd02xh
+         5HkoWPKZFapHnewnQx37X+Zpe1a6es1umRLPX/rjxSBoTPlcXT1fXCV8RDlrnsthbKgl
+         vfkw==
+X-Gm-Message-State: ACrzQf0cFnPoBdhWpqK4rPFQQ6tJkj89uunr7nKva4YKCcEu28ZolgCD
+        ji9+5hgFFG3yRwTWQtxj7fnz+A==
+X-Google-Smtp-Source: AMsMyM7bglyEuBmB9wRohtd/U31Y9OxzxlLBUyiz3f5gaY77GVWK03UTalRPBdrK2kpVNQprzV8gdQ==
+X-Received: by 2002:a05:6512:401c:b0:49f:4b2e:7153 with SMTP id br28-20020a056512401c00b0049f4b2e7153mr1115352lfb.443.1664450039671;
+        Thu, 29 Sep 2022 04:13:59 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id v10-20020ac2558a000000b00492f1b2ac0bsm758682lfg.101.2022.09.29.04.12.01
+        by smtp.gmail.com with ESMTPSA id u1-20020a056512128100b0049a5a59aa68sm757355lfs.10.2022.09.29.04.13.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Sep 2022 04:12:02 -0700 (PDT)
-Message-ID: <84cb8941-eb15-1bbf-59b7-bbcd6c15c30d@linaro.org>
-Date:   Thu, 29 Sep 2022 13:12:01 +0200
+        Thu, 29 Sep 2022 04:13:59 -0700 (PDT)
+Message-ID: <e5d8c7f3-3d06-f9e0-0d81-32ceb371f27f@linaro.org>
+Date:   Thu, 29 Sep 2022 13:13:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Subject: Re: [PATCH v1 5/7] arm: dts: qcom: mdm9615: remove invalid pmic
- subnodes compatibles
+Subject: Re: [PATCH v1 2/2] dt-bindings: add bindings for QCOM flash LED
 Content-Language: en-US
-To:     neil.armstrong@linaro.org, Andy Gross <agross@kernel.org>,
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20220928-mdm9615-dt-schema-fixes-v1-0-b6e63a7df1e8@linaro.org>
- <20220928-mdm9615-dt-schema-fixes-v1-5-b6e63a7df1e8@linaro.org>
- <0636d53f-508f-8a86-0973-2641c9020622@linaro.org>
- <6ed642ea-424d-49ed-eb30-e09588720373@linaro.org>
- <1a3c6766-9be5-1e55-95eb-bc9656e5c9a3@linaro.org>
- <7f8572ab-ff97-54bd-a5f3-fe0e179ee48e@linaro.org>
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     quic_collinsd@quicinc.com, quic_subbaram@quicinc.com
+References: <20220928024239.3843909-1-quic_fenglinw@quicinc.com>
+ <20220928024239.3843909-3-quic_fenglinw@quicinc.com>
+ <6c0e5083-baae-3ed3-5eed-e08bbb9e7576@linaro.org>
+ <2d6fac8d-0ac1-75bb-0b4c-c2c34583b09e@quicinc.com>
+ <d6dc534f-2dc4-979c-ddad-c2122db7923a@linaro.org>
+ <107dfb13-85fc-123d-d244-962ce6c1cdb7@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <7f8572ab-ff97-54bd-a5f3-fe0e179ee48e@linaro.org>
+In-Reply-To: <107dfb13-85fc-123d-d244-962ce6c1cdb7@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,77 +83,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2022 12:56, Neil Armstrong wrote:
-> On 29/09/2022 11:12, Krzysztof Kozlowski wrote:
->> On 29/09/2022 10:29, Neil Armstrong wrote:
->>> Hi,
->>>
->>> On 28/09/2022 20:03, Krzysztof Kozlowski wrote:
->>>> On 28/09/2022 11:14, Neil Armstrong wrote:
->>>>> The PMIC is an PM8018, but was compatible with the PM8921. Both compatibles
->>>>> was left but it makes no sense anymore the leave both.
->>>>
->>>> Why? It makes sense for backwards compatibility. If you think it does
->>>> not make sense, please say why.
->>>
->>> We had the same debate at submission 7y ago, some of the pm8018 new compatible
->>> were rejected in bindings & drivers so I left both...
->>>
->>> As of today only the pwrkey bindings is missing, so should I resubmit the pm8018-pwrkey bidings and
->>> drop the pm8921-pwrkey compatible ?
+On 29/09/2022 12:56, Fenglin Wu wrote:
+>> If driver binds to only one compatible, it is expected to be the
+>> fallback for all others. There might be exception for this rule but it
+>> does not look like here.
 >>
->> ~7 years ago here:
->> https://lore.kernel.org/all/20160624220748.GB11719@dtor-ws/
->> you proposed to add something entirely different than we have here now
->> and than we talk about.
+>>> But I was thinking to give out the PMIC names
+>>> here so anyone who is using the driver could easily identify if the
+>>> driver is suitable for the HW that he/she is using.
 >>
->> In that thread you correctly wrote:
->> "My point of view is that the devicetree describes the hardware and need
->> to have SoC specific compatible string since it describes the actual
->> silicon, and drivers must make sure to handle all the SoC or family
->> variants using the compatible string and the match data."
-> 
-> And I'm happy this is still the policy! And I'm tried my best to follow this
-> in all my DT & bindings submissions, while DT-Schema helped a lot here.
-> 
+>> I did not say to remove other compatibles, but to use one fallback for
+>> all of them.
 >>
->> but implemented it entirely different. Maybe you refer to different mail
->> thread, I don't know, but that one is indeed wrong.
+> Do you mean to update it similar to this?
 > 
-> In the meantime things got much better, but at that time pushing a SoC bringup
-> was a pain (I did 2 at the time, the other one is the OX810SE) and I even
-> mentioned it in a talk ([1] slides 27 to 30).
-> 
-> So I added both to be sure that at some point a driver would probe against
-> one of the compatible entries...
-> 
->>
->> The DTS looks correct unless you have some real argument that it is not.
->>
->> How this should be fixed? First, drop bogus entries from drivers, then
->> document proper compatibles.
-> 
-> What do you mean ? There's no point to keep the PM8921 compatibles, the gpio
+> compatible:
+>    items:
+>      - enum:
+>          - qcom,pm8150c-flash-led
+>          - qcom,pm8150l-flash-led
+>          - qcom,pm8350c-flash-led
+>      - const:
+>          - qcom,spmi-flash-led
 
-I asked at beginning - why? Why there is no point to keep them?
-
-> and PMIC bindings already enforces to only have the PM8018 compatible.
-
-That is just partial argument because binding does not match DTS. So
-something is not correct. Why do you assume bindings are correct?
-
-> 
-> The only issue is about the PM8018 pwrkey, where the solution would be
-> to actually re-submit [1] by documenting qcom,pm8018-pwrkey and adding the entry
-> in the drivers/input/misc/pmic8xxx-pwrkey.c driver.
-> 
-> Or maybe I missed something.
-> 
-> [1] https://www.slideshare.net/superna/elce-2016-neil-armstrong-no-its-never-too-late-to-upstream-your-legacy-linux-based-platform
-> [2] https://lore.kernel.org/all/1466759887-25394-3-git-send-email-narmstrong@baylibre.com/
-
-So let's repeat again: the patch [2] looks wrong. The qcom,pm8018-pwrkey
-and qcom,pm8921-pwrkey are compatible.
+Yes, just const is not a list, so "const: qcom,spmi-flash-led"
 
 Best regards,
 Krzysztof
