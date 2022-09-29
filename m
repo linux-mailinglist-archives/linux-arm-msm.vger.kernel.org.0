@@ -2,95 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AB565EEFB3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 09:51:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AA5F5EEFC0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 09:56:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234993AbiI2HvI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 03:51:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48514 "EHLO
+        id S232166AbiI2H4P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 03:56:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234957AbiI2Hu4 (ORCPT
+        with ESMTP id S232120AbiI2H4O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 03:50:56 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C89BAE3EC7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 00:50:54 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id k10so1033219lfm.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 00:50:54 -0700 (PDT)
+        Thu, 29 Sep 2022 03:56:14 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B921F128714
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 00:56:13 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id a2so1043374lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 00:56:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=YX0kQnHqLRgLj/fiiwZ+dmeDEJEDv1t27HAEZZLrNIU=;
-        b=ubf1m+Rzi5cAXDE2XxYIV+4rOeItCeCC0DjBy+XiZ400769lnYYIm6t4tSaZaYQT9n
-         0lF7zzyv4yD4g3/kC1vXVjHMOm0MDQrzGEtDdpLmb9jDQM3QUYOGvQPgWBbiMOD9vbVp
-         ZzHDWYuiBw/gKOkH3jXKzycahc+/n5+1nXdmg0Go3s0fTaNNUf3kgq/c3p+mQ2GX2nJ0
-         T+rcgGkEiPRP+Z1G1FDdAv8J2cMKmmkV7JPvVIziDkq2sW+oFs/iokosuNYdyJBpZ5ny
-         gA0YuU5A7XjhCxJSfpjr6UCrm2S8AYR5/T+yfXU2BvbRZvLg7sUs0eZIrtEQKmo43SJ9
-         7M5A==
+        bh=5I0KFer6CMq9bS+qb57rtF7Jxe3pkwXN2psBdqfUQXI=;
+        b=Ck6MPZt5fmCodIEyDLh6E41lYpwwhdGCmZyvW+lbk2zOEhdtQQncjNQxhIZmAQ0qjG
+         TeUEaPob21B1EMB28Uh742fObyVjUHI7G8/goo6JIe6jQFrLj493AJTbV6r8KQfjRpbw
+         q4/SpWuUHNMw/PNhjUIORx+/r1CG2oxz3d43fivIIhQLoEYwPpy3hOZTXvvhM2ebtG8P
+         j+GAvQBoQwLYtff6fXJdKrlX2JBFTOJ+CIugNaUl9z7KdAlX6gDFDgrZPWZmcSZJfTrq
+         N4LP+qotWxPz4A5iZeVZ0WrP7jo1nSQ9Fmh4/ATIzgnuixkHnRMeZ126/dDY/HBhfffQ
+         qG2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=YX0kQnHqLRgLj/fiiwZ+dmeDEJEDv1t27HAEZZLrNIU=;
-        b=1l23y2iwnSo7uoBoCb2nqicVWYrkoMM04psFD25uiI/ZvfDDWNUyLG8tXlpIUF2ENB
-         hUJFR811hmceqj/GHWFHaQfBJZPWk2PuO+10fpPAavr3B9J+JcbjXm+PDNVpljUqF6KW
-         7LaW1U5TLf3RHnekjOC0PCIR9gr2GZuRQruv4u4gWJTFzCNlApxQb8OKmW80dlwfCfuP
-         hIC0Jgd3NEDvqYxJ6SINjbg5eHYCcdADedIP329Jig7ICogAWTOhaehPYWvo6hZuAgfA
-         oGurr4Gzsr60k42A6mnhFKjUDhxnmkb/sUhnxVx/im05xJ3UcL7v5ceISKdc49ptRyFq
-         kTLg==
-X-Gm-Message-State: ACrzQf1DPr2L3nx6N61FQFrnBHblJ/doOtXN4WztziSSwxkAUjXzLZr8
-        dDmBhmSDMY09sQ6lR5SamVPp9g==
-X-Google-Smtp-Source: AMsMyM7BYOHtd7mxGcjnCOWk4cIBLCmGQV4bivGPxpKFkg+2q7CMfyM6h9uuG4zBCYsOpo5UIx/JBw==
-X-Received: by 2002:a05:6512:2212:b0:49a:3b51:e03c with SMTP id h18-20020a056512221200b0049a3b51e03cmr771411lfu.509.1664437853227;
-        Thu, 29 Sep 2022 00:50:53 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id e30-20020a2e501e000000b00261b175f9c4sm633775ljb.37.2022.09.29.00.50.52
+        bh=5I0KFer6CMq9bS+qb57rtF7Jxe3pkwXN2psBdqfUQXI=;
+        b=HA3cSeMcCmqSvT/vwp6+ykhvPD1jD0B7uOuhZXrAWXWCmoCrvXgxGD8+D5Yi3dlAnK
+         FlamyXdf8lgdTdkUCMX6a0alxhzG1sy7RG0Of+FzbRDO0V4pS601tyhaNxwM7d+bb0N0
+         tNQVQgzZdzypKd444KoRtXwP9E5AjyQKPYFirgk7XnXwKKw5Ipk4CVOyAeP3Ol3mhlXn
+         G7a6sZzquQxY+h1LuB0ytHhxVHCG/4gZi/QKpxAVO8onK2QaNrFyi5p3PfK2KX2XaRVC
+         WLo1KyA6i2jIUUG6s3VHbk8X/Cq7fQK4TBeVSbFqdne2s1Sph+4zDxQIZrMFZZVVs6st
+         6z7w==
+X-Gm-Message-State: ACrzQf16sKazCKqkkgQnT7ITlpn+s6jkcpDluLjgPgy0s7MJIWCRmdP4
+        vxjMMGuHbEZf4KvnzgMz7eTLVg==
+X-Google-Smtp-Source: AMsMyM4ESrsuCcFeLMKwFM4lzuOI4iKNeMYoJjszgvxbAOlpQrqJOj4oMRQ2+lGzJESEEKyHlT8fJQ==
+X-Received: by 2002:a05:6512:31cb:b0:49f:c2dc:9986 with SMTP id j11-20020a05651231cb00b0049fc2dc9986mr812354lfe.549.1664438172091;
+        Thu, 29 Sep 2022 00:56:12 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id cf33-20020a056512282100b00498fbec3f8asm707549lfb.129.2022.09.29.00.56.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Sep 2022 00:50:52 -0700 (PDT)
-Message-ID: <07a62d5a-1241-982b-74ca-04ebadfc9f38@linaro.org>
-Date:   Thu, 29 Sep 2022 09:50:51 +0200
+        Thu, 29 Sep 2022 00:56:11 -0700 (PDT)
+Message-ID: <e516bd2e-baf8-7ecd-cc59-9e7c2af64918@linaro.org>
+Date:   Thu, 29 Sep 2022 10:56:11 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Update SNPS Phy params for
- SC7280
-Content-Language: en-US
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+Subject: Re: [PATCH 06/13] phy: qcom-qmp-pcie: drop bogus register update
+Content-Language: en-GB
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
-References: <1664435628-4011-1-git-send-email-quic_kriskura@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1664435628-4011-1-git-send-email-quic_kriskura@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+References: <20220928152822.30687-1-johan+linaro@kernel.org>
+ <20220928152822.30687-7-johan+linaro@kernel.org>
+ <2bc50ea4-ec29-cacc-216b-1c21d2d2f0bc@linaro.org>
+ <f9d0fb60-3e62-8f55-015e-88ca2e209323@linaro.org>
+ <YzVFQikkJmTDlg4U@hovoldconsulting.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <YzVFQikkJmTDlg4U@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2022 09:13, Krishna Kurapati wrote:
-> Override the SNPS Phy tuning parameters for SC7280 devices. These
-> values are common for both trogdor and herobrine variants.
+On 29/09/2022 10:12, Johan Hovold wrote:
+> On Wed, Sep 28, 2022 at 10:48:40PM +0300, Dmitry Baryshkov wrote:
+>> On 28/09/2022 22:10, Dmitry Baryshkov wrote:
+>>> On 28/09/2022 18:28, Johan Hovold wrote:
+>>>> Since commit 0d58280cf1e6 ("phy: Update PHY power control sequence") the
+>>>> PHY is powered on before configuring the registers and only the MSM8996
+>>>> PCIe PHY, which includes the POWER_DOWN_CONTROL register in its PCS
+>>>> initialisation table, may possibly require a second update afterwards.
+>>>>
+>>>> To make things worse, the POWER_DOWN_CONTROL register lies at a
+>>>> different offset on more recent SoCs so that the second update, which
+>>>> still used a hard-coded offset, would write to an unrelated register
+>>>> (e.g. a revision-id register on SC8280XP).
+>>>>
+>>>> As the MSM8996 PCIe PHY is now handled by a separate driver, simply drop
+>>>> the bogus register update.
+>>>>
+>>>> Fixes: e4d8b05ad5f9 ("phy: qcom-qmp: Use proper PWRDOWN offset for
+>>>> sm8150 USB") added support
+>>>
+>>> I'm not sure about the particular fixes tag. Backporting from the split
+>>> driver into old qmp driver would be a complete pain.
+>>>
+>>>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>>>
+>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>
+>> After digging some more, I stumbled upon the commit 0d58280cf1e6 ("phy:
+>> Update PHY power control sequence"), which puts explicit register write
+>> here, telling that 'PCIe PHYs need an extra power control before
+>> deasserts reset state'.
 > 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
+> That's the commit I'm referring to above.
+> 
+>> I can confirm this with the register tables from downstream dtsi. E.g.
+>> consider sdm845-pcie.dts, pcie0 table. The PCS_POWER_DOWN_CONTROL is the
+>> register 0x804.
+>>
+>> The programmings starts with <0x804 0x1 0x0>, writing 1 to
+>> PCS_POWER_DOWN_CONTROL (which if I'm not mistaken we do not do at this
+>> moment). Then after writing all the serdes/tx/rx/pcs/pcs_misc tables
+>> comes the write <0x804 0x3 0x0> (which you are trying to remove here).
+> 
+> The PHY would already have been powered on with the mainline driver, that
+> write has already happened.
+> 
+> Whether or not PCIe support for SDM845 has been broken since it was
+> first mainlined almost three years ago is a separate issue. I assume
+> Bjorn tested it before sending it upstream.
+> 
+> 	421c9a0e9731 ("phy: qcom: qmp: Add SDM845 PCIe QMP PHY support")
 
+On SDM845 PCIe0 is used for the WiFi, e.g. on the RB3 (dragonboard845) 
+device. The PHY definitely works with the upstream kernels.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+>> Same sequence applies to the PCIe PHY on msm8998.
+>>
+>> Most newer PHYs have the expected sequence (of writing 0x3 to
+>> PCS_POWER_DOWN_CONTROL) before writing all registers.
+>>
+>> As a short summary: unless we get any additional information that 8998
+>> and sdm845 tables are incorrect, I'd suggest adding a conditional here
+>> (ugh) and using it here and in qmp_pcie_init() call.
+> 
+> I see little point in doing that unless you dig out an SDM845, confirm
+> that it has never worked with upstream, and update the init sequence
+> first.
 
-Best regards,
-Krzysztof
+Digging out an sdm845 is not a problem per se. It works, but it also has 
+an additional regwrite that this patch tries to remove. I will try 
+checking whether it works with this register write being removed or not.
+
+> 
+>> Vinod, Bjorn, do you have any additional info?
+> 
+> An explanation of the split POWER_DOWN_CONTROL updates on MSM8996 would
+> be good to have either way
+
+-- 
+With best wishes
+Dmitry
 
