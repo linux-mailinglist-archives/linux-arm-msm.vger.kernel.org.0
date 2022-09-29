@@ -2,86 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CEA75EF52C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 14:21:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E61CC5EF54F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 14:24:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235147AbiI2MVd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 08:21:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52684 "EHLO
+        id S235549AbiI2MX5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 08:23:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235112AbiI2MVa (ORCPT
+        with ESMTP id S235608AbiI2MXq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 08:21:30 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3A4D14979C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 05:21:25 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id bq9so1920921wrb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 05:21:25 -0700 (PDT)
+        Thu, 29 Sep 2022 08:23:46 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47491153EC3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 05:23:43 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id b6so1339256ljr.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 05:23:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:cc:to:content-language:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date;
-        bh=mg0kwtjeUT8KxpYKVt8lhu9JqZpRw9XPpU8hODhNwaE=;
-        b=zzmMStMj17pXCh1rT/efTlhj3hrMWne9LQziG13HD+hX3j1nCHa9p8okHX+TKaBlZe
-         +5hsNo8C2+LVz0MCkrq98TmP0w3peHYPLm+Zqi/RQXpq/Vj6QC+EIjtZTt3Ief9VeCOT
-         uF4ALa5hqIuR9G2vEUbk4Emjl2bLBU3KNPP2+8qoraDFREXvvjm7qBlDC9Ot1oa0Q8Ey
-         77Mou7Mgqg7YJm26mCh3XFoMaWDvRkDt9Sf7tuyFnWT9CLAvZl41PQCdX+iMVLcpkB77
-         i8S9531ivxUTqAlbkRP6WfTN0piOdW1AIQ39/IHS6jZ2OuSxHPZBONs3Zq905IpmQG0A
-         GBAQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=n/5/pYQpRGDy2mv9ns/n156cTdp3Mvzokxp6QAwl6m4=;
+        b=kp7iXbx6QGFrgrN1vA9EgOBqg/sUm837+39JYAcBsA5PMFphWdd/2v1l4ZSQgJ1wIO
+         ybxuN87nDkipKDHYXzucCcR52nKXQV0UwpRkk6MJBfNEDaDYqRCzAPsHqtIBywGyrGbv
+         jZZuGykqL2lpcnxgIMO5RrykpeNamk/c4wHvzYPgECM+eW93c2ozoEo1prY0DX6MH0EX
+         O5RnXYUrrH8TTZlBE9RcOZmvh7F+HCFPQPakdIBzihuW5mRqDFUfOU96UukkkvaxdyQh
+         +iCrYbcdEI8g4Az3x/bEVT6SjiFtnuUCGCvY9UTiVmYqSrrQwcnlJr38IYFP4Gfi771D
+         rOwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:cc:to:content-language:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=mg0kwtjeUT8KxpYKVt8lhu9JqZpRw9XPpU8hODhNwaE=;
-        b=B/twfdWtkstqXNAXs588p6cdRYhx+larOE52bqQqZqxO1xTdfZuqaUO/3vsbhd2+uj
-         2vBep2TUjPS56PUI1gw5X0IH1m4ZiYShiRXfW9gSdXQgc+DjmXQ1zqp8WX4QMHSpqOA6
-         iowxJZ6DEcGSKGyCQBZ58fJEbrw9De2GCa3b2MmoXvLkE38xm17PCGk/H4BHhJ+xPd8E
-         ya/gCjLjI4mLKpMiF+VsLF3+Ufy8r6xvqlJb6O+8TJPKOMucRRSpqUc104iQqn5/+Ile
-         nnOzXaNBoT6wh5F7ipQ2burPe6Kf1/9JFDeDYMXcOeBbZMEeuNXDr1Xitk5LmPHiv1pi
-         TV9Q==
-X-Gm-Message-State: ACrzQf3wHpjRqzpLQxG67Ur1zrLQBOOtcgqQyOi9ARWm0WY0Cq/3fz7y
-        8iFp79YdhfQDnC7MUV+1ol783w==
-X-Google-Smtp-Source: AMsMyM5UB/UB5Lben08ovN7AwC4mRwW8LIbZqwfAk3q/0DtJxl1KfhGnkZB2fpFxCfX+0Bw+3UPI2A==
-X-Received: by 2002:a05:6000:178e:b0:22b:451:9f63 with SMTP id e14-20020a056000178e00b0022b04519f63mr1968489wrg.521.1664454084257;
-        Thu, 29 Sep 2022 05:21:24 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:1f17:3ea3:4e46:dff? ([2a01:e0a:982:cbb0:1f17:3ea3:4e46:dff])
-        by smtp.gmail.com with ESMTPSA id 189-20020a1c19c6000000b003b5054c6f87sm4201017wmz.21.2022.09.29.05.21.23
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=n/5/pYQpRGDy2mv9ns/n156cTdp3Mvzokxp6QAwl6m4=;
+        b=knQA7uSUu0gFqktL2iYCHwZR/6h4YbGhdpjgTN5aAJA/dTOMtw+0M+WCjxcH1uWKQM
+         HWjmMfEmfia8NNAe8Ux1Eq+SB1/Cn54W8801tw9IvKf+TcQVtTemV/qh4Efuv/PFwqdz
+         rWJgDrtFlpH6ZribdBKnVXZ6v6kT5XAo18tRlwqT5kOSzEbUKp1t7i9r3ZTO5/53iiNb
+         EQ4mnjhqxyq8BIMuEy7LpkpwLEQ2xPSYSoQ3vvA621pq7AEnO0Mdhy5zfEV5DaTGvew/
+         Mv3TNvDwpPkrXXaOfyprbPHYiv0AnxZn1sJhiUTmyvsKTlQB33QOPmcyGsF+IYqKQyEn
+         tjTw==
+X-Gm-Message-State: ACrzQf0SGqgVe+Z1Lfhte7gVJlGEhCFgTm1JYR7Jjj9M9IH6cPRigJmR
+        dhJFRYJKHANSItvi6feqdSwPPQ==
+X-Google-Smtp-Source: AMsMyM68JPDf/S7zrLziS3/7lBhQxFHfddZz9Wtu8Qa4Mqk65aMutbBZ8LAzIbWyz+iRSI4JkjeHkQ==
+X-Received: by 2002:a05:651c:1508:b0:26c:622e:abe1 with SMTP id e8-20020a05651c150800b0026c622eabe1mr1061707ljf.228.1664454221567;
+        Thu, 29 Sep 2022 05:23:41 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id f15-20020a056512360f00b004a03e7e8019sm768712lfs.289.2022.09.29.05.23.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Sep 2022 05:21:23 -0700 (PDT)
-Message-ID: <9067ca94-cd5d-6883-d0e0-374ed7f599ad@linaro.org>
-Date:   Thu, 29 Sep 2022 14:21:22 +0200
+        Thu, 29 Sep 2022 05:23:40 -0700 (PDT)
+Message-ID: <5b326c52-90e4-6779-8b76-6137309c6f20@linaro.org>
+Date:   Thu, 29 Sep 2022 14:23:40 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v1 5/7] arm: dts: qcom: mdm9615: remove invalid pmic
- subnodes compatibles
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH v2 1/2] leds: flash: add driver to support flash LED
+ module in QCOM PMICs
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20220928-mdm9615-dt-schema-fixes-v1-0-b6e63a7df1e8@linaro.org>
- <20220928-mdm9615-dt-schema-fixes-v1-5-b6e63a7df1e8@linaro.org>
- <0636d53f-508f-8a86-0973-2641c9020622@linaro.org>
- <6ed642ea-424d-49ed-eb30-e09588720373@linaro.org>
- <1a3c6766-9be5-1e55-95eb-bc9656e5c9a3@linaro.org>
- <7f8572ab-ff97-54bd-a5f3-fe0e179ee48e@linaro.org>
- <84cb8941-eb15-1bbf-59b7-bbcd6c15c30d@linaro.org>
- <07405d0d-8534-6470-21d1-26b85dbd7de0@linaro.org>
- <f54377f0-a152-9367-1b06-f49df7466282@linaro.org>
- <3fa19362-118b-232e-0baf-ee365fa2f2e2@linaro.org>
- <07c75827-b8e5-7c70-315b-48617b9818e0@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <07c75827-b8e5-7c70-315b-48617b9818e0@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Pavel Machek <pavel@ucw.cz>, Gene Chen <gene_chen@richtek.com>,
+        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+        linux-leds@vger.kernel.org
+Cc:     collinsd@codeaurora.org, subbaram@codeaurora.org
+References: <20220929121544.1064279-1-quic_fenglinw@quicinc.com>
+ <20220929121544.1064279-2-quic_fenglinw@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220929121544.1064279-2-quic_fenglinw@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -93,28 +80,244 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2022 14:02, Krzysztof Kozlowski wrote:
-> On 29/09/2022 13:59, Neil Armstrong wrote:
->>> That's not really an answer... Bindings are correct because they are
->>> correct? What is exactly correct in the bindings? How they reflect the
->>> HW in a proper way, while DTS does not?
->>>
->>> Or let's focus on actual hardware - what are the properties of the
->>> hardware which indicate that DTS is wrong?
->>
->> The actual PMIC is an PM8018
+On 29/09/2022 14:15, Fenglin Wu wrote:
+> Add initial driver to support flash LED module found in Qualcomm
+> Technologies, Inc. PMICs. The flash module can have 3 or 4 channels
+> and each channel can be controlled indepedently and support full scale
+> current up to 1.5 A. It also supports connecting two channels together
+> to supply one LED component with full scale current up to 2 A. In that
+> case, the current will be split on each channel symmetrically and the
+> channels will be enabled and disabled at the same time.
 > 
-> And DTS is saying PMIC is PM8018, isn't it? I see clearly in DTS:
-> qcom,pm8018
-> qcom,pm8018-rtc
-> qcom,pm8018-pwrkey
-> qcom,pm8018-gpio
+> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> ---
+>  drivers/leds/flash/Kconfig           |  14 +
+>  drivers/leds/flash/Makefile          |   1 +
+>  drivers/leds/flash/leds-qcom-flash.c | 707 +++++++++++++++++++++++++++
+>  3 files changed, 722 insertions(+)
+>  create mode 100644 drivers/leds/flash/leds-qcom-flash.c
+> 
+> diff --git a/drivers/leds/flash/Kconfig b/drivers/leds/flash/Kconfig
+> index d3eb689b193c..92773fa872dc 100644
+> --- a/drivers/leds/flash/Kconfig
+> +++ b/drivers/leds/flash/Kconfig
+> @@ -61,6 +61,20 @@ config LEDS_MT6360
+>  	  Independent current sources supply for each flash LED support torch
+>  	  and strobe mode.
+>  
+> +config LEDS_QCOM_FLASH
+> +	tristate "LED support for flash module inside Qualcomm Technologies, Inc. PMIC"
+> +	depends on MFD_SPMI_PMIC
 
-And this is why I pushed the removal of qcom,pm8921* fallback compatibles,
-except for qcom,pm8018-pwrkey because I didn't managed to get it documented at the time.
+|| COMPILE_TEST
 
-> 
-> Best regards,
-> Krzysztof
-> 
+(and actually test it, e.g. you might need here "select REGMAP")
+
+> +	depends on LEDS_CLASS && OF
+> +	depends on V4L2_FLASH_LED_CLASS || !V4L2_FLASH_LED_CLASS
+> +	help
+> +	  This option enables support for the flash module found in Qualcomm
+> +	  Technologies, Inc. PMICs. The flash module can have 3 or 4 flash LED
+> +	  channels and each channel is programmable to support up to 1.5 A full
+> +	  scale current. It also supports connecting two channels' output together
+> +	  to supply one LED component to achieve current up to 2 A. In such case,
+> +	  the total LED current will be split symmetrically on each channel and
+> +	  they will be enabled/disabled at the same time.
+> +
+
+>  config LEDS_RT4505
+>  	tristate "LED support for RT4505 flashlight controller"
+>  	depends on I2C && OF
+> diff --git a/drivers/leds/flash/Makefile b/drivers/leds/flash/Makefile
+> index 0acbddc0b91b..8a60993f1a25 100644
+> --- a/drivers/leds/flash/Makefile
+> +++ b/drivers/leds/flash/Makefile
+> @@ -6,6 +6,7 @@ obj-$(CONFIG_LEDS_AS3645A)	+= leds-as3645a.o
+>  obj-$(CONFIG_LEDS_KTD2692)	+= leds-ktd2692.o
+>  obj-$(CONFIG_LEDS_LM3601X)	+= leds-lm3601x.o
+>  obj-$(CONFIG_LEDS_MAX77693)	+= leds-max77693.o
+> +obj-$(CONFIG_LEDS_QCOM_FLASH)	+= leds-qcom-flash.o
+>  obj-$(CONFIG_LEDS_RT4505)	+= leds-rt4505.o
+>  obj-$(CONFIG_LEDS_RT8515)	+= leds-rt8515.o
+>  obj-$(CONFIG_LEDS_SGM3140)	+= leds-sgm3140.o
+> diff --git a/drivers/leds/flash/leds-qcom-flash.c b/drivers/leds/flash/leds-qcom-flash.c
+> new file mode 100644
+> index 000000000000..7b941eb769fe
+> --- /dev/null
+> +++ b/drivers/leds/flash/leds-qcom-flash.c
+> @@ -0,0 +1,707 @@
+> +//SPDX-License-Identifier: GPL-2.0-only
+
+Missing space after //
+
+> +/*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/bitfield.h>
+> +#include <linux/bits.h>
+> +#include <linux/leds.h>
+> +#include <linux/led-class-flash.h>
+> +#include <linux/module.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/property.h>
+> +#include <linux/regmap.h>
+> +#include <media/v4l2-flash-led-class.h>
+> +
+> +/* registers definitions */
+> +#define FLASH_TYPE_REG			0x04
+> +#define FLASH_TYPE_VAL			0x18
+> +
+> +#define FLASH_SUBTYPE_REG		0x05
+> +#define FLASH_SUBTYPE_3CH_VAL		0x04
+> +#define FLASH_SUBTYPE_4CH_VAL		0x07
+> +
+> +#define FLASH_MODULE_EN_BIT		BIT(7)
+> +
+> +#define FLASH_TIMER_EN_BIT		BIT(7)
+> +#define FLASH_TIMER_VAL_MASK		GENMASK(6, 0)
+> +#define FLASH_TIMER_STEP_MS		10
+> +
+> +#define FLASH_ITARGET_CURRENT_MASK	GENMASK(6, 0)
+> +
+> +#define FLASH_STROBE_HW_SW_SEL_BIT	BIT(2)
+> +#define SW_STROBE_VAL			0
+> +#define HW_STROBE_VAL			1
+> +#define FLASH_HW_STROBE_TRIGGER_SEL_BIT	BIT(1)
+> +#define STROBE_LEVEL_TRIGGER_VAL	0
+> +#define STROBE_EDGE_TRIGGER_VAL		1
+> +#define FLASH_STROBE_POLARITY_BIT	BIT(0)
+> +#define STROBE_ACTIVE_HIGH_VAL		1
+> +
+> +#define FLASH_IRES_MASK_4CH		BIT(0)
+> +#define FLASH_IRES_MASK_3CH		GENMASK(1, 0)
+> +#define FLASH_IRES_12P5MA_VAL		0
+> +#define FLASH_IRES_5MA_VAL_4CH		1
+> +#define FLASH_IRES_5MA_VAL_3CH		3
+> +
+> +/* constants */
+> +#define FLASH_CURRENT_MAX_UA		1500000
+> +#define TORCH_CURRENT_MAX_UA		500000
+> +#define FLASH_TOTAL_CURRENT_MAX_UA	2000000
+> +#define FLASH_CURRENT_DEFAULT_UA	1000000
+> +#define TORCH_CURRENT_DEFAULT_UA	200000
+> +
+> +#define TORCH_IRES_UA			5000
+> +#define FLASH_IRES_UA			12500
+> +
+> +#define FLASH_TIMEOUT_MAX_US		1280000
+> +#define FLASH_TIMEOUT_STEP_US		10000
+> +
+> +enum hw_type {
+> +	QCOM_MVFLASH_3CH,
+> +	QCOM_MVFLASH_4CH,
+> +};
+> +
+> +enum led_mode {
+> +	FLASH_MODE,
+> +	TORCH_MODE,
+> +};
+> +
+> +enum led_strobe {
+> +	SW_STROBE,
+> +	HW_STROBE,
+> +};
+> +
+> +struct qcom_flash_reg {
+> +	u8 module_en;
+> +	u8 chan_timer;
+> +	u8 itarget;
+> +	u8 iresolution;
+> +	u8 chan_strobe;
+> +	u8 chan_en;
+> +	u8 status1;
+> +	u8 status2;
+> +	u8 status3;
+> +};
+> +
+> +struct qcom_flash_led {
+> +	struct qcom_flash_chip		*chip;
+> +	struct led_classdev_flash	flash;
+> +	struct v4l2_flash		*v4l2_flash;
+> +	u32				max_flash_current_ma;
+> +	u32				max_torch_current_ma;
+> +	u32				max_timeout_ms;
+> +	u32				flash_current_ma;
+> +	u32				flash_timeout_ms;
+> +	u8				*chan_id;
+> +	u8				chan_count;
+> +	bool				enabled;
+> +};
+> +
+> +struct qcom_flash_chip {
+> +	struct qcom_flash_led		*leds;
+> +	const struct qcom_flash_reg	*reg;
+> +	struct device			*dev;
+> +	struct regmap			*regmap;
+> +	struct mutex			lock;
+> +	enum hw_type			hw_type;
+> +	u32				reg_base;
+> +	u8				leds_count;
+> +	u8				max_channels;
+> +	u8				chan_en_bits;
+> +};
+> +
+> +static const struct qcom_flash_reg mvflash_3ch_reg = {
+> +	.chan_timer	= 0x40,
+> +	.itarget	= 0x43,
+> +	.module_en	= 0x46,
+> +	.iresolution	= 0x47,
+> +	.chan_strobe	= 0x49,
+> +	.chan_en	= 0x4c,
+> +	.status1	= 0x08,
+> +	.status2	= 0x09,
+> +	.status3	= 0x0a,
+> +};
+> +
+> +static const struct qcom_flash_reg mvflash_4ch_reg = {
+> +	.chan_timer	= 0x3e,
+> +	.itarget	= 0x42,
+> +	.module_en	= 0x46,
+> +	.iresolution	= 0x49,
+> +	.chan_strobe	= 0x4a,
+> +	.chan_en	= 0x4e,
+> +	.status1	= 0x06,
+> +	.status2	= 0x07,
+> +	.status3	= 0x09,
+
+Don't reinvent the wheel. Use regmap fields.
+
+> +};
+> +
+> +static int __set_flash_module_en(struct qcom_flash_led *led, bool en)
+
+Drop __ prefix here and in other functions.
+
+(...)
+
+> +
+> +static int qcom_flash_led_remove(struct platform_device *pdev)
+> +{
+> +	struct qcom_flash_chip *chip = platform_get_drvdata(pdev);
+> +
+> +	while (chip->leds_count--)
+> +		v4l2_flash_release(chip->leds[chip->leds_count].v4l2_flash);
+> +
+> +	mutex_destroy(&chip->lock);
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id qcom_flash_led_match_table[] = {
+> +	{ .compatible = "qcom,spmi-flash-led" },
+
+Only this one is needed. Remove the rest:
+
+> +	{ .compatible = "qcom,pm8150c-flash-led" },
+> +	{ .compatible = "qcom,pm8150l-flash-led" },
+> +	{ .compatible = "qcom,pm8350c-flash-led" },
+
+
+
+Best regards,
+Krzysztof
 
