@@ -2,129 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A3405EF9E4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 18:12:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09DDE5EF9F0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 18:13:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235972AbiI2QMN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 12:12:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45414 "EHLO
+        id S235684AbiI2QNt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 12:13:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234934AbiI2QMD (ORCPT
+        with ESMTP id S236091AbiI2QNm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 12:12:03 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A80DC1D66DB;
-        Thu, 29 Sep 2022 09:12:02 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 58625B824FA;
-        Thu, 29 Sep 2022 16:12:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2FFC433C1;
-        Thu, 29 Sep 2022 16:12:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664467920;
-        bh=Qb6H1MTM1LXEg8sMPvRyCuIO5X98/kvPIu0bqQ8zjw4=;
-        h=From:To:Cc:Subject:Date:From;
-        b=JavQV1Egnc8IhrvvsS8nMYbDTT6HGrmnOMmZ6td2f7mM36YZa9LCLFxwZc7UkJ/fF
-         NHXhlK+91sd2qpHiu4Ra7w9bH3ySS7wnP4XWFvseTyFyaB2M9i09H49539Nw7AuJgL
-         AvbfNZ8dIDewQY8otd3c4HHqHQGGqE4aH1Lx/C5tFpcRmhedBZLSdVAjQWtscWRd4E
-         5rhq8/D/iQTlcM2MKTrS+x9HTNlRyl6CPaptsYuZh1B77WzRw0R5B8T10HRQKluuax
-         egwBy3WT4d5PbEKuyAdsaH89ivb8NCFWLUu293nkaAjnpYKbLjJwLz+sf+J81XRxYF
-         MC/RKOOeaQ+uw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1odw8s-0004j3-2g; Thu, 29 Sep 2022 18:12:06 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH] clk: gcc-sc8280xp: use retention for USB power domains
-Date:   Thu, 29 Sep 2022 18:11:24 +0200
-Message-Id: <20220929161124.18138-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.35.1
+        Thu, 29 Sep 2022 12:13:42 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ABD51D6D06
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 09:13:40 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id a41so2643693edf.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 09:13:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=V7QLJZSIzhY9dr2OFvy6n8FCoALGEpJ2vGDHHoAqT/I=;
+        b=U5nWZ+zCnE6ObM1a1HTcsz5fUlLj7t9tsv+E5+LhXtnz9e4+xVV3xDQOTnsLxYF47t
+         2ZD30c3FM7IESBJDjIyKdNG1CIQ3oPQsfMBa45Rch5e+Fgg7012WK4guAP0mWiXKAOHg
+         TK5WpXxFwsqpDoq6d1yO9pR9vCsxPFGrv9CUo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=V7QLJZSIzhY9dr2OFvy6n8FCoALGEpJ2vGDHHoAqT/I=;
+        b=a5ubYlmOH2KuFCQgB9pLd93bm0GSJGnZit2WWV1GkxB0ZMnDYJrR2r9/73C/NHmhRx
+         4elMJra2Y6I24+t9PdjXrSz2VcO9W1AnkyLlAhx5jmp3RP6iH6sBDqEkmk/V9vcLbLro
+         UNTtEwVdw5xtLsxWt4AOpE3oD+94fzhk55WThV/6mk9/Bolxnm2SmdtpOEE7wjT49T59
+         PPhIPIOYSrLmp+tfcqENyK/aphMfL1cmYT+CQTigaBP3VPoJI5Fi+/6oy89l69jYKQey
+         H45fOkHZT4h2i0nPzMx7f8Z7FTe3iHuBFpDbrxtC9QmEcRNSqYpg0MAxI2UnCp/uo1vE
+         SIog==
+X-Gm-Message-State: ACrzQf264gJud0YfhpNYZFE0noDS/ZINTYFl9nOq6GBFJXTZJmUwYdvr
+        ETkZzUwXajiNYl8cyi1nxbFWiA9WrD92/xHz
+X-Google-Smtp-Source: AMsMyM74HDXRCTOisqJ8Vm8j38a3CmCoeH/GRwATEZ7wHr8d6EH5nv8/CRz5tBdXXxvHcvBiPK6XkA==
+X-Received: by 2002:a05:6402:f0f:b0:451:1ecd:a61f with SMTP id i15-20020a0564020f0f00b004511ecda61fmr4020831eda.125.1664468018958;
+        Thu, 29 Sep 2022 09:13:38 -0700 (PDT)
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com. [209.85.221.54])
+        by smtp.gmail.com with ESMTPSA id v2-20020a170906292200b007402796f065sm4193756ejd.132.2022.09.29.09.13.38
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Sep 2022 09:13:38 -0700 (PDT)
+Received: by mail-wr1-f54.google.com with SMTP id bk15so2928999wrb.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 09:13:38 -0700 (PDT)
+X-Received: by 2002:a05:6000:168c:b0:226:f4c2:d6db with SMTP id
+ y12-20020a056000168c00b00226f4c2d6dbmr2895434wrd.659.1664468017868; Thu, 29
+ Sep 2022 09:13:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <1663157784-22232-1-git-send-email-quic_kalyant@quicinc.com>
+In-Reply-To: <1663157784-22232-1-git-send-email-quic_kalyant@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 29 Sep 2022 09:13:20 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UT-GmAOYrCBRU0bhGeXU=pOGDbk=Jq7JEk40tyEH0zLA@mail.gmail.com>
+Message-ID: <CAD=FV=UT-GmAOYrCBRU0bhGeXU=pOGDbk=Jq7JEk40tyEH0zLA@mail.gmail.com>
+Subject: Re: [v5] drm/msm/disp/dpu1: add support for dspp sub block flush in sc7280
+To:     Kalyan Thota <quic_kalyant@quicinc.com>
+Cc:     y@qualcomm.com, dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since commit d399723950c4 ("clk: qcom: gdsc: Fix the handling of
-PWRSTS_RET support) retention mode can be used on sc8280xp to maintain
-state during suspend instead of leaving the domain always on.
+Hi,
 
-This is needed to eventually allow the parent CX domain to be powered
-down during suspend.
+On Wed, Sep 14, 2022 at 5:16 AM Kalyan Thota <quic_kalyant@quicinc.com> wrote:
+>
+> Flush mechanism for DSPP blocks has changed in sc7280 family, it
+> allows individual sub blocks to be flushed in coordination with
+> master flush control.
+>
+> Representation: master_flush && (PCC_flush | IGC_flush .. etc )
+>
+> This change adds necessary support for the above design.
+>
+> Changes in v1:
+> - Few nits (Doug, Dmitry)
+> - Restrict sub-block flush programming to dpu_hw_ctl file (Dmitry)
+>
+> Changes in v2:
+> - Move the address offset to flush macro (Dmitry)
+> - Seperate ops for the sub block flush (Dmitry)
+>
+> Changes in v3:
+> - Reuse the DPU_DSPP_xx enum instead of a new one (Dmitry)
+>
+> Changes in v4:
+> - Use shorter version for unsigned int (Stephen)
+>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c       |  2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  5 +++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  4 +++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c     | 35 ++++++++++++++++++++++++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h     | 10 ++++++--
+>  5 files changed, 50 insertions(+), 6 deletions(-)
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/clk/qcom/gcc-sc8280xp.c | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+Breadcrumbs: though this is tagged in the subject as v5 I think the
+newest version is actually "resend v4" [1] which just fixes the
+Signed-off-by.
 
-While we're not yet able to fully test this (since we're not hitting CX
-power down) this can still go in as we'll need it in some form
-eventually.
-
-Note that the PCIe domains should remain always-on until we have driver
-support for suspend in place.
-
-Johan
-
-
-diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-index 7768e6901dcc..a18ed88f3b82 100644
---- a/drivers/clk/qcom/gcc-sc8280xp.c
-+++ b/drivers/clk/qcom/gcc-sc8280xp.c
-@@ -6843,17 +6843,12 @@ static struct gdsc ufs_phy_gdsc = {
- 	.pwrsts = PWRSTS_OFF_ON,
- };
- 
--/*
-- * The Qualcomm DWC3 driver suspend implementation appears to be incomplete
-- * for sc8280xp so keep the USB power domains always-on for now.
-- */
- static struct gdsc usb30_mp_gdsc = {
- 	.gdscr = 0xab004,
- 	.pd = {
- 		.name = "usb30_mp_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
--	.flags = ALWAYS_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- };
- 
- static struct gdsc usb30_prim_gdsc = {
-@@ -6861,8 +6856,7 @@ static struct gdsc usb30_prim_gdsc = {
- 	.pd = {
- 		.name = "usb30_prim_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
--	.flags = ALWAYS_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- };
- 
- static struct gdsc usb30_sec_gdsc = {
-@@ -6870,8 +6864,7 @@ static struct gdsc usb30_sec_gdsc = {
- 	.pd = {
- 		.name = "usb30_sec_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
--	.flags = ALWAYS_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- };
- 
- static struct clk_regmap *gcc_sc8280xp_clocks[] = {
--- 
-2.35.1
-
+[1] https://lore.kernel.org/r/1663825463-6715-1-git-send-email-quic_kalyant@quicinc.com
