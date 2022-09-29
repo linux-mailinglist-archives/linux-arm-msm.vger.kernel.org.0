@@ -2,138 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB1EE5EF148
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 11:07:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA4E85EF194
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 11:14:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235308AbiI2JHM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 05:07:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50520 "EHLO
+        id S235853AbiI2JNB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 05:13:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235226AbiI2JHL (ORCPT
+        with ESMTP id S235440AbiI2JMg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 05:07:11 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28A9213FB55
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 02:07:10 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id b6so822702ljr.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 02:07:10 -0700 (PDT)
+        Thu, 29 Sep 2022 05:12:36 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EA4915708
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 02:12:22 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id p5so820612ljc.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 02:12:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=BgfSaXaz1zXc5P9tbbwdP68iTN9st+1bzf5UzrFtKn0=;
-        b=nHkoa1A8iH9uJHyJ4dbRA5NP2CALm3oT4F15UkFvprXThuucEVU2v7jne36IUoxzml
-         c1JwecdrA47q74SJ1zWo92K85uJTuItZKrJhTX2YR52x33hyT2eFD0DvrdrOzKzBkOfb
-         AAG5SDX6HWQhS5eM/JfjOZyyDdoS8G88OFbM44c6PpVb6LiMDFOe4IlrVU3L8msbFFUU
-         yv7U4VxRPAGiCWhB87m9U43l7iEZIBxzhCnsHMQL90R7sTawOCGoIRMByr1BGOVpsJWX
-         jczQZTGC9RLGCFWfKAxjS6UXbe1mORaIh0OHuaQ4tg2wJwUvee6xeAz3Z08RKAV+xOwi
-         YrqA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=If8WOilQ9PzmMBmCqzzeUtE56VOBe3wtjVI48jlzs/U=;
+        b=nWVITn6MkSynkIPZNerlsTMujNQYa8/JraQutVhVjiY8LzbTFTSD8NfyrFH75yMqhk
+         ThIRmlZTnsUxTUqcdrvsj1VPw9p0bK/82X5zchEr0Mms264hC/326I5d64nuPm/e5Ros
+         EDKngR5zzdhtZwPo2kqzvLf+gsoe8AQuVoJkOR6ackTyRD+ONS1qS0uTKzxKqHqRvBtU
+         kN2gYH8IVsiFBtgJfWaZpfwY4xBHtFDSScMTDD3RSeBV43rxmMHBfSgODAIkvTVC8evu
+         at7noYgsclEqzh6JXqMD5m07swrmI5VkegpACxkmlJe5pLo0FJJoSZyYygTMtf9xfuZb
+         udpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=BgfSaXaz1zXc5P9tbbwdP68iTN9st+1bzf5UzrFtKn0=;
-        b=QxlJ/QqYtlSNcUVR4TXZ+iuzUaky9vGg+SY5gkaYVCtpngP/nxSYVhbjikh5dsCS/5
-         Nj8+u9SE8gn2JB4739m1LBcVF6PKaAgGEjmHr25xdA3DALLhLFRnP3DGVxZeW/NyfUf+
-         s4POARJxup2/Ipw3EuX5S0xCHkQbzwHIvHiJJy9XEAVCR21oZKOtd6dbSz8P739ghPDF
-         QUaDdYGKpPJU8O+WDf4WVgmKAey28boFUxLz98DNGZ4jLrHBCSWfR+pXTZzc0c180aU9
-         rSzEE7nhWP2S5m/2QM9Rom7vi/IiWVWCVqq8DRFELRKjCF5SEyo00FVAvVWjerrkRfRN
-         GpGQ==
-X-Gm-Message-State: ACrzQf2Ho9ADcq3nUEf+lLOIrx98aN8SJTxRBr36k/DGEJ3frwSULCyL
-        HE3gZDLtP/Tp/Zi+TihPeiHaRA==
-X-Google-Smtp-Source: AMsMyM5t2Wq64cR0qdS2uRMZIEG/WamoxgBuWgMAQoKhLKt0VRuwaAA+wA1qvEmY4WqX2DIkQZRQYQ==
-X-Received: by 2002:a05:651c:a05:b0:26c:5010:39ce with SMTP id k5-20020a05651c0a0500b0026c501039cemr747965ljq.53.1664442428289;
-        Thu, 29 Sep 2022 02:07:08 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id bj39-20020a2eaaa7000000b0026ab0087ff3sm656057ljb.54.2022.09.29.02.07.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Sep 2022 02:07:07 -0700 (PDT)
-Message-ID: <153ada3a-f24e-fef5-6343-dcc584fc0079@linaro.org>
-Date:   Thu, 29 Sep 2022 12:07:07 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH 07/13] phy: qcom-qmp-pcie: clean up power-down handling
-Content-Language: en-GB
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=If8WOilQ9PzmMBmCqzzeUtE56VOBe3wtjVI48jlzs/U=;
+        b=5i3gcSlMPvab4wteIbeljFHDNvyqHp6twsDljEq76jys+0BHINIBVckqdo36sEu+gm
+         Ez86v+El1CS+VkL3IY2nPue9iADSvxcuVTV42en9q6M8YIO4vKnMbw/MnwxrgcJQM68f
+         v2mnSCHw188LEOJCzhH/qWCuDpJOrJLMXjXoKJ8Vs71URNB8RUyA6Ni49ryzmQisuix6
+         bZa6D0OppBaqhi3UoUfpNk2SC0V8Vckz+gNxNLz8ObNCkZZ9/iKV/mBg2/Nl8OhF7NbI
+         MvQjIxi905HluXXReMgXC1f/EDTEIWQ7VL0DQlisFMlIzxudV1MXZFavAurSocWB6vga
+         prgw==
+X-Gm-Message-State: ACrzQf0oCuitzDpXn1DlpUnS3X/hFChAD49MM8wc3o17u61h93hf0J6u
+        dPvU1J7mcYAHmhGI/gO406xKtA==
+X-Google-Smtp-Source: AMsMyM5T8mjrHe0bl5/PGa1YKRjs5ZRA7sfUC3ddKYz2Wz1+BysRQoX8eim+Qe9RjdABamkS62DdBg==
+X-Received: by 2002:a2e:a601:0:b0:26c:4149:251a with SMTP id v1-20020a2ea601000000b0026c4149251amr749232ljp.348.1664442737761;
+        Thu, 29 Sep 2022 02:12:17 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id k4-20020a05651239c400b0048b143c09c2sm725091lfu.259.2022.09.29.02.12.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Sep 2022 02:12:17 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-References: <20220928152822.30687-1-johan+linaro@kernel.org>
- <20220928152822.30687-8-johan+linaro@kernel.org>
- <c3d39c4e-2099-b09a-8486-8abae7336611@linaro.org>
- <YzVIhK5z3I6hjzLU@hovoldconsulting.com>
- <7f577974-7433-107a-a43a-4a3a5f999018@linaro.org>
- <YzVflom04uK0gojn@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <YzVflom04uK0gojn@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2] dt-bindings: clock: split qcom,gcc-sdm660 to the separate file
+Date:   Thu, 29 Sep 2022 12:12:16 +0300
+Message-Id: <20220929091216.471136-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2022 12:04, Johan Hovold wrote:
-> On Thu, Sep 29, 2022 at 10:30:20AM +0300, Dmitry Baryshkov wrote:
->> On 29/09/2022 10:25, Johan Hovold wrote:
->>> On Wed, Sep 28, 2022 at 10:15:46PM +0300, Dmitry Baryshkov wrote:
->>>> On 28/09/2022 18:28, Johan Hovold wrote:
->>>>> Always define the POWER_DOWN_CONTROL register instead of falling back to
->>>>> the v2 offset during power on and power off.
->>>>>
->>>>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
->>>>> ---
->>>>>     drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 20 ++++++--------------
->>>>>     1 file changed, 6 insertions(+), 14 deletions(-)
->>>>>
->>>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->>>>> index eea66c24cf7e..47cdb9ed80cd 100644
->>>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->>>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->>>>> @@ -90,12 +90,14 @@ static const unsigned int pciephy_regs_layout[QPHY_LAYOUT_SIZE] = {
->>>>>     	[QPHY_SW_RESET]			= 0x00,
->>>>>     	[QPHY_START_CTRL]		= 0x08,
->>>>>     	[QPHY_PCS_STATUS]		= 0x174,
->>>>> +	[QPHY_PCS_POWER_DOWN_CONTROL]	= 0x04,
->>>>>     };
->>>>
->>>> Without symbolic names it's not obvious that 0x04 (and thus this
->>>> regs_layout) can be used for v2 and v3, but not for v4.
->>>
->>> It's no less obvious than it was when we were falling back to the v2
->>> define when it wasn't in the table.
->>
->> Yes, that's without doubts. Anyway, I've sent my view on the regs
->> layouts standing on top of your six patches from this series. Could you
->> please take a glance?
-> 
-> Sure, but I don't think doing that separate change should be a blocker
-> for this series. Especially since you run into issues like it not
-> always being clear which version of the IP is being used (IPQ).
-> 
-> I'd rather respin this series and drop the two patches that merged the
-> two redundant layout structs.
+Move schema for the GCC on SDM630/SDM636/SDM660 to a separate file to be
+able to define device-specific clock properties.
 
-I'm fine either way.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Changes since v1:
+- Change license to GPL-2.0 & BSD-2-Clause
+- Fix Taniya's email
+- Reword the bindings title as suggested by Krzysztof
+---
+ .../bindings/clock/qcom,gcc-other.yaml        |  3 -
+ .../bindings/clock/qcom,gcc-sdm660.yaml       | 61 +++++++++++++++++++
+ 2 files changed, 61 insertions(+), 3 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sdm660.yaml
 
-> 
-> Then you can work on further clean ups on top for 6.2 since that's going
-> to require some more careful review and thought.
-> 
-> Johan
-
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+index 76988e04c7db..35fc22a19000 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+@@ -24,7 +24,6 @@ description: |
+   - dt-bindings/clock/qcom,gcc-mdm9607.h
+   - dt-bindings/clock/qcom,gcc-mdm9615.h
+   - dt-bindings/reset/qcom,gcc-mdm9615.h
+-  - dt-bindings/clock/qcom,gcc-sdm660.h  (qcom,gcc-sdm630 and qcom,gcc-sdm660)
+ 
+ allOf:
+   - $ref: "qcom,gcc.yaml#"
+@@ -41,8 +40,6 @@ properties:
+       - qcom,gcc-msm8974pro
+       - qcom,gcc-msm8974pro-ac
+       - qcom,gcc-mdm9615
+-      - qcom,gcc-sdm630
+-      - qcom,gcc-sdm660
+ 
+ required:
+   - compatible
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sdm660.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sdm660.yaml
+new file mode 100644
+index 000000000000..68f47174b1b7
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sdm660.yaml
+@@ -0,0 +1,61 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,gcc-sdm660.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm SDM660/SDM630/SDM636 Global Clock & Reset Controller
++
++maintainers:
++  - Stephen Boyd <sboyd@kernel.org>
++  - Taniya Das <quic_tdas@quicinc.com>
++
++description: |
++  Qualcomm global clock control module which supports the clocks, resets and
++  power domains on SDM630, SDM636 and SDM660
++
++  See also:
++  - dt-bindings/clock/qcom,gcc-sdm660.h  (qcom,gcc-sdm630 and qcom,gcc-sdm660)
++
++$ref: qcom,gcc.yaml#
++
++properties:
++  compatible:
++    enum:
++      - qcom,gcc-sdm630
++      - qcom,gcc-sdm660
++
++  clocks:
++    items:
++      - description: XO source
++      - description: Sleep clock source
++
++  clock-names:
++    items:
++      - const: xo
++      - const: sleep_clk
++
++  power-domains:
++    maxItems: 1
++
++required:
++  - compatible
++
++unevaluatedProperties: false
++
++examples:
++  # Example for GCC for SDM660:
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    clock-controller@100000 {
++        compatible = "qcom,gcc-sdm660";
++        reg = <0x00100000 0x94000>;
++        #clock-cells = <1>;
++        #reset-cells = <1>;
++        #power-domain-cells = <1>;
++
++        clock-names = "xo", "sleep_clk";
++        clocks = <&xo_board>,
++                 <&sleep_clk>;
++    };
++...
 -- 
-With best wishes
-Dmitry
+2.35.1
 
