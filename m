@@ -2,135 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 59A4E5EFD94
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 21:05:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A1F55EFE03
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 21:36:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229932AbiI2TFZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 15:05:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44688 "EHLO
+        id S229997AbiI2TgC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 15:36:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230036AbiI2TFY (ORCPT
+        with ESMTP id S229805AbiI2TgB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 15:05:24 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7251FA7237
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 12:05:23 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id g1so3613112lfu.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 12:05:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=wi7DKofjueA16E8e073uzmvDRDUJqZe/ZGoID7ylCHY=;
-        b=gdS1Hv80h456Tz8KssxXjJqBn/GIYD0ZTanE39MjltmnmvHogFZJZdDnch/7G7tpJO
-         jYVSX/xR7xiDfgSFCgvKMfuIZKGSiZPKLQ4vaA6AWS1/HkrG0jAk/EQYPjNFxWzIuVk3
-         ztyr/siX+On5Mj1jieGwNyfWQNbuRkKwX9/UT/DR5m8PgtFr3u6JtHjIj2suGcJk8HNT
-         HsQHUiRpQWmpMLGl72z40MSWMLoOF1e8HTvf3xVbSCCh9aCV8Zc/dkE7sSPL3QupH9CR
-         2DDYAGCB7eWlsgHAYBdKc7ruDJwe+v4LKIgaxgUUgqkQyj8KgdClk0Kuw8puieSw3r/Q
-         FMGg==
+        Thu, 29 Sep 2022 15:36:01 -0400
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD2D75F9A6;
+        Thu, 29 Sep 2022 12:35:59 -0700 (PDT)
+Received: by mail-qk1-f177.google.com with SMTP id k12so1517246qkj.8;
+        Thu, 29 Sep 2022 12:35:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=wi7DKofjueA16E8e073uzmvDRDUJqZe/ZGoID7ylCHY=;
-        b=MMZRyX61vqMg2N6zd+kDgFXkQPOHX658OqTINWtRF0o5n1NxlaBs6NX0b9yGFPgxdh
-         kjxkRN6e7d9XkZE6IKMkvO7CFZQdTH/nbLRE+BzOJkce6UwSe49E4lfPW6uhPgLbyaXx
-         mbSO7EJMhLxNOy29HR3z8vyQM3BTo3Chog7wEmywjCrPCle+qjxSteckDIgzkdwG30CE
-         L7jaxPlVLKpbXfwdc6y0UDFu3a6FpedhjNSZO+kGeAQs5gbzKpURAAs4UhFjEsXCeEPd
-         BcTXkAjFkLkXkhWP8X4JpY7B/keZCiTfmniC+H0eNGMgFtayR+DII60THeMZPsZsd5TO
-         e5zw==
-X-Gm-Message-State: ACrzQf1TDMiIV1qb4pSyK6XjHoerVuP5mStdpISjfd6p+lyamq8Z8ge6
-        Y75ruvAGHd/4Pl/wi7P+RN1/aA==
-X-Google-Smtp-Source: AMsMyM722J1TLcGst0IOdDfyiDEnlFJw4RZaKJUjf0jo/VODR83r0rkj8uF+voj/tSB3DxVPpGoVPA==
-X-Received: by 2002:ac2:464b:0:b0:49e:b29c:2b04 with SMTP id s11-20020ac2464b000000b0049eb29c2b04mr1924631lfo.127.1664478321707;
-        Thu, 29 Sep 2022 12:05:21 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id n5-20020a0565120ac500b0048af3c090f8sm34684lfu.13.2022.09.29.12.05.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Sep 2022 12:05:21 -0700 (PDT)
-Message-ID: <f57feedb-01ce-4c15-1344-860bff602b10@linaro.org>
-Date:   Thu, 29 Sep 2022 22:05:20 +0300
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=mTAlcKpePLUmoa2PPlLgnnpbbR37vsLCkLJsK3FMOMM=;
+        b=zonwpLQcKQG+p2EU8QstcgW8hyoj+hCye+Gp+61vVgzBiB56Aubi5H1NSfomPzhVsA
+         Zxro0mDXhF9BDRkdtR1Pjgrbo4vANCoeGbndss/IRw3qq7TuNlMTkIFbLBpswp13mvtt
+         kK0gYEwokxJPlqpr8FAG+t1LaEBKxdxmrIyVkxLdwrUP37mG2ZwwFbmHMKt+pBFXdOst
+         8MzsJniTYqeFtIxm7e3sVgZANp37M5v4hSQ53mh56YUzN+IIh/nWd4TVba9h0mi2KyoV
+         Dz77r5JHBkMVnjEMWaVVfOGIzHc+UKx8evxnRkHK6tmgi9gMZiA/TWPpPMQhq4MrvDdV
+         BGHQ==
+X-Gm-Message-State: ACrzQf11s1ZFzyh6D7Auax7/3wMtv0laiaSaLNiEljkKcUcGwuUC/8YT
+        jThOBetiYo28V+NwTDT0xA0kKbSCujtI9zLOQkA=
+X-Google-Smtp-Source: AMsMyM6nwPbbMnzN+TFVkeFoMqPTRrzMun/9SaGI62vQ28n3j95zFU2xk6dTQ3pv+9rh/XRcMovC6IXcuteR1RYwINI=
+X-Received: by 2002:a05:620a:290d:b0:6b6:1a92:d88a with SMTP id
+ m13-20020a05620a290d00b006b61a92d88amr3634308qkp.58.1664480158981; Thu, 29
+ Sep 2022 12:35:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH v2 05/11] phy: qcom-qmp-pcie: move power-down update
-Content-Language: en-GB
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-References: <20220929092916.23068-1-johan+linaro@kernel.org>
- <20220929092916.23068-6-johan+linaro@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220929092916.23068-6-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <20220928210059.891387-1-daniel.lezcano@linaro.org>
+ <d0be3159-8094-aed1-d9b1-c4b16d88d67c@linaro.org> <CAJZ5v0hOFoe0KqEimFv9pgmiAOzuRoLjdqoScr53ErNFU4AAPA@mail.gmail.com>
+ <ae86fc5a-0521-3dde-c2ea-8679c0ec4831@linaro.org>
+In-Reply-To: <ae86fc5a-0521-3dde-c2ea-8679c0ec4831@linaro.org>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Thu, 29 Sep 2022 21:35:48 +0200
+Message-ID: <CAJZ5v0jrWamTTXcHabSk=6cmm4pEx0_ebiECKZRfrX_vS85YYg@mail.gmail.com>
+Subject: Re: [PATCH v7 00/29] Rework the trip points creation
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        "Zhang, Rui" <rui.zhang@intel.com>,
+        Raju Rangoju <rajur@chelsio.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Peter Kaestle <peter@piie.net>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Mark Gross <markgross@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Broadcom Kernel Team <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Keerthy <j-keerthy@ti.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Antoine Tenart <atenart@kernel.org>,
+        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        netdev <netdev@vger.kernel.org>,
+        Platform Driver <platform-driver-x86@vger.kernel.org>,
+        linux-rpi-kernel@lists.infradead.org,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        Linux Samsung SoC <linux-samsung-soc@vger.kernel.org>,
+        linux-tegra <linux-tegra@vger.kernel.org>,
+        Linux OMAP Mailing List <linux-omap@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2022 12:29, Johan Hovold wrote:
-> Move the power-down-control register update that powers on the PHY to
-> the power-on handler so that it matches the power-off handler.
-> 
-> Note that the power-on handler is currently always called directly
-> after init.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+On Thu, Sep 29, 2022 at 4:57 PM Daniel Lezcano
+<daniel.lezcano@linaro.org> wrote:
+>
+> On 29/09/2022 15:58, Rafael J. Wysocki wrote:
+> > On Thu, Sep 29, 2022 at 2:26 PM Daniel Lezcano
+> > <daniel.lezcano@linaro.org> wrote:
+> >>
+> >>
+> >> Hi Rafael,
+> >>
+> >> are you happy with the changes?
+> >
+> > I'll have a look and let you know.
+>
+> Great, thanks
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Well, because you have not added the history of changes to the
+patches, that will take more time than it would otherwise.
 
-> ---
->   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 7 +++----
->   1 file changed, 3 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index efffb77e8f45..db78d2d76c03 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> @@ -1862,7 +1862,6 @@ static int qmp_pcie_init(struct phy *phy)
->   	struct qmp_phy *qphy = phy_get_drvdata(phy);
->   	struct qcom_qmp *qmp = qphy->qmp;
->   	const struct qmp_phy_cfg *cfg = qphy->cfg;
-> -	void __iomem *pcs = qphy->pcs;
->   	int ret;
->   
->   	/* turn on regulator supplies */
-> @@ -1888,9 +1887,6 @@ static int qmp_pcie_init(struct phy *phy)
->   	if (ret)
->   		goto err_assert_reset;
->   
-> -	qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
-> -			cfg->pwrdn_ctrl);
-> -
->   	return 0;
->   
->   err_assert_reset:
-> @@ -1929,6 +1925,9 @@ static int qmp_pcie_power_on(struct phy *phy)
->   	unsigned int mask, val, ready;
->   	int ret;
->   
-> +	qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
-> +			cfg->pwrdn_ctrl);
-> +
->   	qmp_pcie_serdes_init(qphy);
->   
->   	ret = clk_prepare_enable(qphy->pipe_clk);
+Generally, please always add information on what has changed in the
+patch between different versions of it.
 
--- 
-With best wishes
-Dmitry
+> >> I would like to integrate those changes with the thermal pull request
+> >
+> > Sure, but it looks like you've got only a few ACKs for these patches
+> > from the driver people.
+> >
+> > Wouldn't it be prudent to give them some more time to review the changes?
+>
+> Well I would say I received the ACKs from the drivers which are actively
+> maintained. Others are either not with a dedicated maintainer or not a
+> reactive one. The first iteration of the series is from August 5th. So
+> it has been 2 months.
+>
+> I pinged for imx, armada and tegra two weeks ago.
 
+OK
+
+> The st, hisilicon drivers fall under the thermal maintainers umbrella
+>
+> There are three series coming after this series to be posted. I would
+> like to go forward in the process of cleaning up the framework. IMO two
+> months is enough to let the maintainers pay attention to the changes,
+> especially if we do a gentle ping and there are seven versions.
+>
+> And after that comes the thermal_zone_device_register() parameters
+> simplification :)
+
+Well, that's all fine, but I don't want people to get surprised by
+significant changes they haven't expected and I want to avoid missing
+anything subtle.
