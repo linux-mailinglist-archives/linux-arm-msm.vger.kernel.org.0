@@ -2,150 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9E825EFEDF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 22:48:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BF685EFF59
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 23:40:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229737AbiI2UsB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 16:48:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34774 "EHLO
+        id S229699AbiI2VkL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 17:40:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229794AbiI2Urq (ORCPT
+        with ESMTP id S229781AbiI2VkJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 16:47:46 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFAE9154448;
-        Thu, 29 Sep 2022 13:47:44 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28TKLhLT012441;
-        Thu, 29 Sep 2022 20:47:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=v3QdPnmE4RlmkvjK5A58vnndVAEt7ike09Z9ly3kO3A=;
- b=QUYlY/WuDqKdMmJJsa0clkiujv5dbv9GBH0pw3MSF37J/bl92pSfeuTvEapwsp80RxIh
- zx3EncAMfRToo7704g+jQdmQLHyFQyJsPGzKoG2uq4jxX9VGdCq/+syVGLJWB4qPL9bQ
- 7IMR7d9rqeTJcMbTySWYgsS4pGhkW/02e8rGMFA4nzbBjAlVvfekk4zrvE7rKs4eWo76
- fujXzCLp6cgQl/O2NHTQvyIpQflnzFiuOGqyRc4TP8LPz+SM39xN+AvQihk2mYcCA9wa
- lwKQGhEm0ZICVda0VZQ7MmCuBIgmxateKL864s/rG74NVH9wKa3IMAW5yB0zyYlyPahs ww== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jvv1sva88-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 29 Sep 2022 20:47:19 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28TKlJvI016492
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 29 Sep 2022 20:47:19 GMT
-Received: from [10.110.116.67] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 29 Sep
- 2022 13:47:18 -0700
-Message-ID: <c6aa1435-d46f-1186-c029-26e6a4d2fe38@quicinc.com>
-Date:   Thu, 29 Sep 2022 13:47:17 -0700
+        Thu, 29 Sep 2022 17:40:09 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BB9466128
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 14:40:07 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id i3so1730675qkl.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 14:40:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:sender:mime-version:from:to:cc
+         :subject:date;
+        bh=N/GSbPnALToZPDvWcwsyZl8roxv+rx6jEvhzi+rz9/I=;
+        b=CArZJeHjL+Ch7iCxYq1415Okk74i+n36MWQ5JBf+uym/2b9X8BwmXICBJIBypOnQv8
+         bFWLhnxQoIF7xdixf7sFQbxGT5RUPJTl/J5UZ0iZp3KU61IN+8YTuVmYINkniP/n5suI
+         jxQ86prFa9pxhcXJWRx/zXk57cS77mnfqFxWqvtrjVftFPJA0mrOrrRW2UOxSug4aLUW
+         v0CWRCwPwNMULhql7S/wVfLbUT8URVyJDkMHye3aRRNb3wrQThru1+r38sUGvFI/oPp+
+         mxkRJnPwYEDDxwxOGwbMxeuOJ7e1p5IZOOpANoBoEjEv1Bau3/D0XuiZkPt9QL+Z6+6a
+         5cMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:sender:mime-version
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=N/GSbPnALToZPDvWcwsyZl8roxv+rx6jEvhzi+rz9/I=;
+        b=YBEQTznKgtOjkz8F3xgnbMmyE5DmDmfmYVjGTX9FOsT6cIBKIHNKxSKnxYlD3AM04G
+         IOzhdQb+ctmEq/JEVHPaJL2/eIIqNUCRhzPHCY6Q+1jo1RgidHG8Sr/zI4S+ap4e3b0+
+         gl0TE+X6g1P7rHzPCFK0FhfkUR9EY+z5LFqLHMbGqicwQKE5EZKeLMxVhCMEP84Zlyvu
+         9wVrZNQl4m7/SoXBLd35nUYNKIVbPU3Q/iK1pZz1NQx5Q/4HVQq9yP/I2diZhKwDqCZt
+         SfiIAtU5Bp8U841K2/mXlPoV8OwpgkI/FAfcIIPvMXbxub7IB8giY8mWdwYGYrJTXnzp
+         Nr5g==
+X-Gm-Message-State: ACrzQf3Wp4IFQACe5kIMwZnOk3FpvHNzhJnaIx0wkNHAsh4AWsnRd7TX
+        Nyu0VJjF4mdAmTVmNe92HuiCs/QsA9oFw9xXyUw=
+X-Google-Smtp-Source: AMsMyM6G4G4GB4Q6+0kCxdWpxlOYd6EabfMWVAlYOoooHiklmZX9CLqrIKYBie5/Acyjp4thiIhGQbDG4DbO9TJMC98=
+X-Received: by 2002:a05:620a:6084:b0:6ce:342e:5c31 with SMTP id
+ dx4-20020a05620a608400b006ce342e5c31mr3766609qkb.404.1664487606816; Thu, 29
+ Sep 2022 14:40:06 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v4 10/14] gunyah: sysfs: Add node to describe supported
- features
-Content-Language: en-US
-To:     Joe Perches <joe@perches.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        "Mark Rutland" <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        "Marc Zyngier" <maz@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <devicetree@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20220928195633.2348848-1-quic_eberman@quicinc.com>
- <20220928195633.2348848-11-quic_eberman@quicinc.com>
- <3c02aad6d8bde70964b403a3cb8004de969becc6.camel@perches.com>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <3c02aad6d8bde70964b403a3cb8004de969becc6.camel@perches.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: IX8EWR5gJVC_0_9Jkdww99eiPQw32QHV
-X-Proofpoint-ORIG-GUID: IX8EWR5gJVC_0_9Jkdww99eiPQw32QHV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-29_11,2022-09-29_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 mlxlogscore=999 malwarescore=0 adultscore=0
- phishscore=0 bulkscore=0 spamscore=0 suspectscore=0 impostorscore=0
- clxscore=1011 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209290129
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Sender: ogunmasaadesola@gmail.com
+Received: by 2002:ad4:5baa:0:0:0:0:0 with HTTP; Thu, 29 Sep 2022 14:40:06
+ -0700 (PDT)
+From:   "Mrs. Margaret Christopher" <mrsmargaretchristopher001@gmail.com>
+Date:   Thu, 29 Sep 2022 14:40:06 -0700
+X-Google-Sender-Auth: DJKN21Y6yQ8tWJQxFygchD8Buyg
+Message-ID: <CAEGnpV9tEyQuHcqN3_FCYsHW1kZycDcnq4+11ofZwwwWqOpKeQ@mail.gmail.com>
+Subject: Humanitarian Project For Less Privileged.
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=1.3 required=5.0 tests=BAYES_60,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+-- 
 
+Hello Dear
 
-On 9/29/2022 12:36 AM, Joe Perches wrote:
-> On Wed, 2022-09-28 at 12:56 -0700, Elliot Berman wrote:
->> Add a sysfs node to list the features that the Gunyah hypervisor and
->> Linux supports. For now, Linux support cspace (capability IDs) and
->> message queues, so only report those..
-> []
->> diff --git a/drivers/virt/gunyah/sysfs.c b/drivers/virt/gunyah/sysfs.c
-> []
->> @@ -25,9 +25,24 @@ static ssize_t variant_show(struct kobject *kobj, struct kobj_attribute *attr, c
->>   }
->>   static struct kobj_attribute variant_attr = __ATTR_RO(variant);
->>   
->> +static ssize_t features_show(struct kobject *kobj, struct kobj_attribute *attr, char *buffer)
->> +{
->> +	int len = 0;
->> +
->> +	if (GH_IDENTIFY_PARTITION_CSPACE(gunyah_api.flags))
->> +		len += sysfs_emit_at(buffer, len, "cspace ");
->> +	if (GH_IDENTIFY_MSGQUEUE(gunyah_api.flags))
->> +		len += sysfs_emit_at(buffer, len, "message-queue ");
->> +
->> +	len += sysfs_emit_at(buffer, len, "\n");
->> +	return len;
->> +}
-> 
-> It's generally nicer to avoid unnecessary output spaces.
-> 
-> Perhaps:
-> 
-> {
-> 	int len = 0;
-> 
-> 	if (GH_IDENTIFY_PARTITION_CSPACE(gunyah_api.flags))
-> 		len += sysfs_emit_at(buffer, len, "cspace");
-> 	if (GH_IDENTIFY_MSGQUEUE(gunyah_api.flags)) {
-> 		if (len)
-> 			len += sysfs_emit_at(buffer, len, " ");
-> 		len += sysfs_emit_at(buffer, len, "message-queue");
-> 	}
-> 
-> 	len += sysfs_emit_at(buffer, len, "\n");
-> 
-> 	return len;
-> }
-> 
-
-Thanks! Applied for the next version.
+  Am a dying woman here in the hospital, i was diagnose as a
+Coronavirus patient over 2 months ago. I am A business woman who is
+dealing with Gold Exportation, I Am 59 year old from USA California i
+have a charitable and unfufilling  project that am about to handover
+to you, if you are interested to know more about this project please reply
+me.
