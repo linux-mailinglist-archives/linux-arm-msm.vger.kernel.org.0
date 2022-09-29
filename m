@@ -2,106 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00BBC5EF595
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 14:39:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDB8D5EF59C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 14:40:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235585AbiI2Mjs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 08:39:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35406 "EHLO
+        id S235388AbiI2Mk2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 08:40:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233904AbiI2Mjj (ORCPT
+        with ESMTP id S235603AbiI2MkO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 08:39:39 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 469FE293;
-        Thu, 29 Sep 2022 05:39:31 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2303C61123;
-        Thu, 29 Sep 2022 12:39:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE56C433D6;
-        Thu, 29 Sep 2022 12:39:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664455170;
-        bh=Xbo6C8uJ+Wh+za/BkKJp6mMR9ogN2jY7z+sJnjU0PgM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bzx80oPfJql87o6EHAA9npUDDwJhJ863ZQr8E36bBqmPPmm39mhbI+1S5XxkuhCR6
-         LkaxEMbNsnn94pbfExnwTkmdkRRj4VCWpV8C/9DoAhmB0CIlfkhCCe9BFmnQfnrD3V
-         q7OTpGY3PUTbwG64RyfzUpTZ0CQqo4cXLd+7LpHZx7zV/8iQ1bTCCVItNBSsR+eFQ9
-         EZoHBt+Erp2mBMRkStGoVnEsVDPB2TDvbCHKy+OykxDVypur0w0pm0oKS6avphzcql
-         X+mVgFpkSONdGGW29ACzHv9bXkDSuMSuygCzoPomsqX+rOROXcccYU2ECNGEu1+Lra
-         yij/GxUcz+/Fg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1odspE-0003J2-FX; Thu, 29 Sep 2022 14:39:37 +0200
-Date:   Thu, 29 Sep 2022 14:39:36 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 11/11] phy: qcom-qmp-pcie: drop bogus register update
-Message-ID: <YzWSCI7uGnWVxKPp@hovoldconsulting.com>
-References: <20220929092916.23068-1-johan+linaro@kernel.org>
- <20220929092916.23068-12-johan+linaro@kernel.org>
- <CAA8EJpp+j1fx46V3zNgiYxsMbQ5UmB4+7o5dojS2FLjwUL=hRg@mail.gmail.com>
+        Thu, 29 Sep 2022 08:40:14 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA1445EDD8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 05:40:09 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id j24so1394211lja.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 05:40:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=dhh6nNTG3cQbu2+/UY4E9ECxQouXbUNsJMhUFHHFteY=;
+        b=kWS+mX1fzHpWgp4sKzzasMuSVtCPi3rvmO8sCBs5g2Y6chi47zlezfb2AVmU2U7U9k
+         0NpwCbbn904CxatBISjO55b5M90Yk8uaI2eW/Kk8G7iQI3GS0TCEWZGqf/Zwk2DD8D8j
+         xF0Xz9tIPS0I1th3mXRyJTRB1MS0RtK+ynTvlj0ictG8lkpVzXV9i8pij9ZlRvDGIv7X
+         J77Is8JmTttUmWu47FpWgnBtoLOrwvd2BLLzGuRfuc8YKQkupTlQihEEv0QAprebBud9
+         QKocE8xLpY8ZVurU60EDOo+wVWgytUElsVs7t1Nr8nuTT2FoxDG/WcOdJI227sChT+4K
+         HCug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=dhh6nNTG3cQbu2+/UY4E9ECxQouXbUNsJMhUFHHFteY=;
+        b=PwL0LrLZpRAMek45j2aF42BO4v32VBeffWJbLR/xljsYISOC0gY/7jUbRbn7Ux51W7
+         MneawJ0i9863qe5LaZfrcFLTPbP1HkgYOdQuNK1TxFSR6jIVJQF+pC0v0p2ZPHrqKHYD
+         YN6OV4VB09yDLXOmXr4b6X+ipR2qTRofFquSi8XVnPHSUJ05eJl86qt9p/A3Dr7kNom0
+         XtnNDZtXK3TLd8DEHNNANeHWrOdtnj5EFK5+2wrkh7Z7o89y5UyBQuKPXyn2zJBdtmr4
+         ls+Fb53sw78d+OHiqZF0EwYQobb7lU92t2DJkr1w6wDpSkHsdEDa6LFcuFFs+UT3s4KW
+         i8Bw==
+X-Gm-Message-State: ACrzQf0aAjbttQk6DBMkW4gLmZO6gq3LNWMfC7ys/otgUIfBa6L3v3xw
+        MO7zzW2yugPFvBUKlGlThwHTPA==
+X-Google-Smtp-Source: AMsMyM6F+WpFg+vop57ZHvOS+i+7ShMPC3QW8oqdWbw+jDkUFuaaoSf9WA/vKypuhtRzTjzyUPW98g==
+X-Received: by 2002:a2e:a0cc:0:b0:26d:b6c8:ff8a with SMTP id f12-20020a2ea0cc000000b0026db6c8ff8amr1088268ljm.492.1664455207490;
+        Thu, 29 Sep 2022 05:40:07 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id o17-20020a056512051100b004a054535826sm777972lfb.24.2022.09.29.05.40.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Sep 2022 05:40:06 -0700 (PDT)
+Message-ID: <5445adda-80e6-41d0-9786-c26d253631c9@linaro.org>
+Date:   Thu, 29 Sep 2022 14:40:05 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpp+j1fx46V3zNgiYxsMbQ5UmB4+7o5dojS2FLjwUL=hRg@mail.gmail.com>
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH v2 2/2] dt-bindings: add bindings for QCOM flash LED
+Content-Language: en-US
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     collinsd@codeaurora.org, subbaram@codeaurora.org
+References: <20220929121544.1064279-1-quic_fenglinw@quicinc.com>
+ <20220929121544.1064279-3-quic_fenglinw@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220929121544.1064279-3-quic_fenglinw@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 29, 2022 at 01:18:05PM +0300, Dmitry Baryshkov wrote:
-> On Thu, 29 Sept 2022 at 12:29, Johan Hovold <johan+linaro@kernel.org> wrote:
-> >
-> > Since commit 0d58280cf1e6 ("phy: Update PHY power control sequence") the
-> > PHY is powered on before configuring the registers and only the MSM8996
-> > PCIe PHY, which includes the POWER_DOWN_CONTROL register in its PCS
-> > initialisation table, may possibly require a second update afterwards.
-> >
-> > To make things worse, the POWER_DOWN_CONTROL register lies at a
-> > different offset on more recent SoCs so that the second update, which
-> > still used a hard-coded offset, would write to an unrelated register
-> > (e.g. a revision-id register on SC8280XP).
-> >
-> > As the MSM8996 PCIe PHY is now handled by a separate driver, simply drop
-> > the bogus register update.
-> >
-> > Fixes: e4d8b05ad5f9 ("phy: qcom-qmp: Use proper PWRDOWN offset for sm8150 USB") added support
+On 29/09/2022 14:15, Fenglin Wu wrote:
+> Add binding document for flash LED module inside Qualcomm Technologies,
+> Inc. PMICs.
 > 
-> Unless somebody confirms that this write is not needed on 8998 and
-> sdm845, I'd prefer a two stage fix here:
-> - changing this to write to proper register (and maybe moving to the
-> top of patch series, as we'd want to backport this to the last few
-> kernels)
+> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
 
-It already is the "proper" register for the v2 platforms that may
-conceivably need it it. For the rest it is clearly just broken.
+Thank you for your patch. There is something to discuss/improve.
 
-And I don't think this needs to block the rest of the series. That's
-why I moved it last. If we decide to backport this we have other context
-changes in -next to handle anyway.
+> +  reg:
+> +    description: address offset of the flash LED controller
+> +    maxItems: 1
+> +
+> +patternProperties:
+> +  "^led[0-3]$":
 
-> - dropping the write completely.
+In such case: ^led-[0-9]$"
 
-But sure, doing it in two steps is a possibility.
+> +    type: object
+> +    $ref: common.yaml#
+> +    unevaluatedProperties: false
+> +    description: |
+> +      Represents the physical LED components which are connected to the
+> +      flash LED channels' output.
+> +
+> +    properties:
+> +      led-sources:
+> +        description: |
+> +          The HW indices of the flash LED channels that connect to the
+> +          physical LED
+> +        allOf:
+> +          - minItems: 1
+> +            maxItems: 2
+> +            items:
+> +              enum: [1, 2, 3, 4]
+> +
+> +      led-max-microamp:
+> +        description: |
+> +          The maximum current value when LED is not operating in flash mode (i.e. torch mode)
+> +          Valid values when an LED is connected to one flash LED channel:
+> +            5000 - 500000, step by 5000
+> +          Valid values when an LED is connected to two flash LED channels:
+> +            10000 - 1000000, step by 10000
+> +        minimum: 5000
+> +        maximum: 1000000
+> +
+> +      flash-max-microamp:
+> +        description: |
+> +          The maximum current value when LED is operating in flash mode.
+> +          Valid values when an LED is connected to one flash LED channel:
+> +            12500 - 1500000, step by 12500
+> +          Valid values when an LED is connected to two flash LED channels:
+> +            25000 - 2000000, step by 12500
+> +        minimum: 12500
+> +        maximum: 2000000
+> +
+> +      flash-max-timeout-us:
+> +        description: |
+> +          The maximum timeout value when LED is operating in flash mode.
+> +          Valid values: 10000 - 1280000, step by 10000
+> +        minimum: 10000
+> +        maximum: 1280000
+> +
+> +    required:
+> +      - led-sources
+> +      - led-max-microamp
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/leds/common.h>
+> +    spmi_bus {
 
-> Meanwhile I'll try testing this patchset on rb3 and checking whether
-> it makes any difference or not.
+No underscores in node names, so just "bus"
 
-Thanks for doing that.
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
 
-Johan
+Best regards,
+Krzysztof
+
