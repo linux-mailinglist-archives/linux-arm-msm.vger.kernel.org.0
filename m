@@ -2,99 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B60FB5EF23B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 11:37:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9588C5EF24C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 11:40:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235189AbiI2JhX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 05:37:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46346 "EHLO
+        id S234956AbiI2JkJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 05:40:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235524AbiI2JhE (ORCPT
+        with ESMTP id S232298AbiI2JkI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 05:37:04 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BB6B145C9D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 02:36:42 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id j16so1404661lfg.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 02:36:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=YboU7EJWX9s/eCKMNyU4MN70itKOnGmUbie/p84rbqI=;
-        b=JuHnP7zGLpDgnUtkUD1REAPRC0Y2S44WRa2xDgQH2rm7j8wRYSFLZgJD18dkNRHEe6
-         kHPbUGFIMs3vn1q6J84rOm0DiQadRN/iRnx0FMnMM+8174ypbIfpcMYrCM9jaTQcD0T6
-         pHWnpEu2UsTb7pYGv31+X6MPH33bABPYKRDD4BMGON3A7zUO/tiKlzM73XqhhLkCUpJR
-         SKeF0NPzxoR+iWSMYMEEg2h41UiKL8/zV/L//wmk9IrOcmUnO3RV2t1TZ/xOlrkL4cy9
-         E/oLC18xRQZEwJE9+JCtA4gdNNtTLD+poq/GfzcdpvZIBPbCBbQuW91Zfc9roedF1MCZ
-         3Igg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=YboU7EJWX9s/eCKMNyU4MN70itKOnGmUbie/p84rbqI=;
-        b=zepN7q4L9YuGuNFA26m533V4vVZ/4oFryAj4ib84l7sSz5IZfFyoNhwFusI9UPNmP5
-         qfOg8wjiIbIgx8Adpqt2JjBNXiQ17ghxYlJrTXoOj7GcmFmAkVQwDMKmCW9m6SoGPVV6
-         a3E73A+o6EsNPpxuH+QFiyrvnnjZSpwy/EK1fMIMx/3RZ81lx+288Lme/1MJwm9Cs6/M
-         lCN8YVTOwPznI96yd2sedq0WG6eUCGKE/oXV975ftMEvVNE+Pn9BMgTUw0qrimWiD7Ve
-         IKrGAtILndncP+YveN45yl8agiozM/dLUBIFGCoqczJ1mK/zkk1nKirwheo78lvwrUrq
-         gLrQ==
-X-Gm-Message-State: ACrzQf2ZQDJT0zJu0/9a2rAP05qtMW+PXt9ppUZ0h3msLMvQ0IPTxakb
-        ci8mLmj4Vp7cLTOloPYm0GF2uw==
-X-Google-Smtp-Source: AMsMyM4cbUx3bEAc/nOwmW2NfB+K9ZpERD1j5UJsF0wbx7S/BgpUDvdacDKkJe+a3ToJ2swNATd+ag==
-X-Received: by 2002:a05:6512:3b9b:b0:499:b2b7:c3c1 with SMTP id g27-20020a0565123b9b00b00499b2b7c3c1mr972536lfv.54.1664444200826;
-        Thu, 29 Sep 2022 02:36:40 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id p13-20020ac24ecd000000b00499cf3e3ebesm732365lfr.121.2022.09.29.02.36.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Sep 2022 02:36:40 -0700 (PDT)
-Message-ID: <30009f48-4f31-b6b4-f444-85bc91836d14@linaro.org>
-Date:   Thu, 29 Sep 2022 11:36:39 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: msm8996: change HDMI PHY node name
- to generic one
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Thu, 29 Sep 2022 05:40:08 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFCFA201B0;
+        Thu, 29 Sep 2022 02:40:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1664444390;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=4r6d7TA8bBCazYvCoKpiujWyeKoJPnxgRZEoTRwhV6c=;
+    b=i1uMyc33d6XMTy/xPTtjVpcd3BUw1qzUV8bAZw3KTnjduGNTx3okENol9sPRHrMPCh
+    WTs4nB8mqmztwBDGZ+IDnqMS0LAV7N2wLm0xmlZyN6MK2U0wAgkfDP+zOi4HTc69g/kP
+    hJSzeoZ8D1IWupgjQ+YvOYiQQ+k2TpsAB9BEB9myh53CmGrpXD3hDZfMFd8GmV35abas
+    cAC1m2azJdLO3D/MB34U//9Gq4ODJi+yo6yZ8pSUM0uiZ/RJdp+xHxw2861xJTpGALv4
+    zVnu/qyREFV1r2iPjb5WLnp5cfLXUpz5EYHNeb1De+RsOaaIuVeuPS/ItirQ2Y7gZFUL
+    /cnQ==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrK8+86Y="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 48.1.3 AUTH)
+    with ESMTPSA id 06b848y8T9dn2t9
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 29 Sep 2022 11:39:49 +0200 (CEST)
+Date:   Thu, 29 Sep 2022 11:39:41 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Sireesh Kodali <sireeshkodali1@gmail.com>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-kernel@vger.kernel.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20220924094347.178666-1-dmitry.baryshkov@linaro.org>
- <20220924094347.178666-3-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220924094347.178666-3-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: Re: [PATCH v5 1/5] remoteproc: qcom: qcom_wcnss: Add support for
+ pronto-v3
+Message-ID: <YzVn3Q81bCo4l/aQ@gerhold.net>
+References: <20220929050209.1464526-1-sireeshkodali1@gmail.com>
+ <20220929050209.1464526-2-sireeshkodali1@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220929050209.1464526-2-sireeshkodali1@gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/09/2022 11:43, Dmitry Baryshkov wrote:
-> Change HDMI PHY node name from custom 'hdmi-phy' to the generic 'phy'.
+On Thu, Sep 29, 2022 at 10:32:05AM +0530, Sireesh Kodali wrote:
+> From: Vladimir Lypak <vladimir.lypak@gmail.com>
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Pronto-v3 is similar to pronto-v2. It requires two power domains, and it
+> requires the xo clock. It is used on the MSM8953 platform.
+> 
+> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+> ---
+>  drivers/remoteproc/qcom_wcnss.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+> index 68f37296b151..ff18bfae5eb6 100644
+> --- a/drivers/remoteproc/qcom_wcnss.c
+> +++ b/drivers/remoteproc/qcom_wcnss.c
+> @@ -141,6 +141,18 @@ static const struct wcnss_data pronto_v2_data = {
+>  	.num_vregs = 1,
+>  };
+>  
+> +static const struct wcnss_data pronto_v3_data = {
+> +	.pmu_offset = 0x1004,
+> +	.spare_offset = 0x1088,
+> +
+> +	.pd_names = { "mx", "cx" },
+> +	.vregs = (struct wcnss_vreg_info[]) {
+> +		{ "vddpx", 1800000, 1800000, 0 },
+> +	},
+> +	.num_pd_vregs = 2,
 
+Can you try dropping this line? num_pd_vregs = 2 means:
+"If power domains are specified in the device tree, skip the first two
+ entries in 'vregs'." For pronto-v1/v2 it would skip the "vddmx" and
+"vddcx" entry, since those are already covered by the power domains.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+However, since pronto-v3 should always have power domains in DT and
+"vregs" has just a single entry this means that it would always access
+the array out of bounds at runtime and request some garbage regulator.
+I'm confused why this does not crash more spectacularly...
 
-Best regards,
-Krzysztof
+Thanks,
+Stephan
 
+> +	.num_vregs = 1,
+> +};
+> +
+>  static int wcnss_load(struct rproc *rproc, const struct firmware *fw)
+>  {
+>  	struct qcom_wcnss *wcnss = (struct qcom_wcnss *)rproc->priv;
+> @@ -675,6 +687,7 @@ static const struct of_device_id wcnss_of_match[] = {
+>  	{ .compatible = "qcom,riva-pil", &riva_data },
+>  	{ .compatible = "qcom,pronto-v1-pil", &pronto_v1_data },
+>  	{ .compatible = "qcom,pronto-v2-pil", &pronto_v2_data },
+> +	{ .compatible = "qcom,pronto-v3-pil", &pronto_v3_data },
+>  	{ },
+>  };
+>  MODULE_DEVICE_TABLE(of, wcnss_of_match);
+> -- 
+> 2.37.3
+> 
