@@ -2,175 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 982295EEE6A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 09:07:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA4015EEE82
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 09:09:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235130AbiI2HHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 03:07:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35582 "EHLO
+        id S235062AbiI2HJv convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 03:09:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235138AbiI2HGm (ORCPT
+        with ESMTP id S235095AbiI2HJr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 03:06:42 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC8B71114D4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 00:06:17 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 10so892346lfy.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 00:06:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=kaeNPsRWMl3Iqw+3/K7c46xI8ltqOrZ2hG4WVH/9Q3A=;
-        b=hKjEhVTZ5ga7vMXjhWjmzmPc2W/eEybKJTIDj0b1rj5ot00VMfjY22pdn4d13ksPmR
-         HOSTpTI2cDxlceOUTXsaH0KZHpVhbsdxz1Tabcr7ms8U+zHBxoa4d3SV+jcXdPQuaTAW
-         0PBw1kYnI4ofsntMqgUX2SMDyZFUOximqeqlyOnL3VMnCi7wzwhzMzc99nMvCf03tlzf
-         7PlRAIGMRNxJkqpWUTEwI0V0C80aozNi40abRUGwd0BMmPJsXv45p92TZf8Q+cYE+DtZ
-         F5CWEz6IXvgQT2tXNtrTY9gtDVvl1iDpKXePbfqKPZ96RyJCadlLZZuTnd03AxZu8TrC
-         PZ8Q==
+        Thu, 29 Sep 2022 03:09:47 -0400
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB03830545;
+        Thu, 29 Sep 2022 00:09:43 -0700 (PDT)
+Received: by mail-qt1-f177.google.com with SMTP id a20so271612qtw.10;
+        Thu, 29 Sep 2022 00:09:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=kaeNPsRWMl3Iqw+3/K7c46xI8ltqOrZ2hG4WVH/9Q3A=;
-        b=uDtFqZ/duKusZyA6VITeJPsA85QK7TxM8Gbivlb8BIBJfWHXlplFVZrteAToUeSSmv
-         KZWTRZK20SKsHJ4h2MZ3W/WFwod6d1myVPGPjR5pxhCOdAxTVVEmsDZj6C0yjTj69zu+
-         or02lS5lJF1lH6ybV5n11t2xitHNgfPS1MWjvPrC9piTL8qvBxxbE+z5Yktf79qndtNb
-         LjIi9iBm6qG4I428SLPCsT+jA6MoOpXV7iWFxsi1LgWbisI0y1L5PvcA99q+CHcluDsh
-         faKazF4rcCeTTfGpHnNypudVhpJQyNaoiFamOJPEzI8PSr0t65R5dLOGez9x6TY6NH2L
-         pNdA==
-X-Gm-Message-State: ACrzQf1uj3mOmdKYmydkG3pZeKmk6PXQ2fSJrMkhLexYF1lS24yU5mdZ
-        dcm17c9vM6L332jFKwaCyYn69A==
-X-Google-Smtp-Source: AMsMyM5RSglTdnGHG03FMHcm8GTzJEO/zRHOg8h1SuPzp+9oy5QGv/Vx90N6IrsvwZoYzYLf2dZHVQ==
-X-Received: by 2002:a05:6512:3409:b0:499:faa6:edb0 with SMTP id i9-20020a056512340900b00499faa6edb0mr716949lfr.682.1664435176026;
-        Thu, 29 Sep 2022 00:06:16 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id p19-20020ac24ed3000000b004a03d5c2140sm695157lfr.136.2022.09.29.00.06.15
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=+onjZYpK5e42V87Cg6u2hPN7v8i5Lvm6t/wPM+ZKj08=;
+        b=29vxYleK6PCwc3BklBoJWeqbod6zqfnv1ceN5pB2UKMBs5zrt1sp3cPWjlHaI00NX0
+         bn0CgfU932OpR5uNwGOzAv9Qk54wCVUCrLDgGjUAlnPDOGFWQUdhNWJRCCJbb9Q9oQOH
+         GJ9h/pwhMLnK2W9kQkp8mB1ENmmlh7TYUtIxpOZzeDIfQI27fFStAa3jnz1Qvl2dNh68
+         lDqamynLPt8CWkNSedYT2lDW2bmXaQnnUtoPdtPv9U8zyjPK4naY3g081u4J+AdyQZ7S
+         Fo6ZPePeB3Df5FbdRw9PumkK8FD29Kukltkl9Lfj81BpgMI4/flU7eTamZS2r9MOyAv4
+         jU4A==
+X-Gm-Message-State: ACrzQf32GTcV/nWT4jd9n73UVPW2ZxuakfY6IbqlRR35AH+w4H1zralN
+        5wEU5uvY9B8zJAdXlQ7vE3wU//ditvIo2A==
+X-Google-Smtp-Source: AMsMyM7svHStwq8HLhuGnY2Vkz3ATGwqqh4aj8xY/vHtPbhS7p4fGhZqvaV4OCmTYHKnMjdBn0XrYw==
+X-Received: by 2002:a05:622a:1051:b0:35c:eb36:d61 with SMTP id f17-20020a05622a105100b0035ceb360d61mr1219214qte.582.1664435382549;
+        Thu, 29 Sep 2022 00:09:42 -0700 (PDT)
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com. [209.85.128.177])
+        by smtp.gmail.com with ESMTPSA id f8-20020a05620a280800b006b929a56a2bsm5132148qkp.3.2022.09.29.00.09.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Sep 2022 00:06:15 -0700 (PDT)
-Message-ID: <d6dc534f-2dc4-979c-ddad-c2122db7923a@linaro.org>
-Date:   Thu, 29 Sep 2022 09:06:14 +0200
+        Thu, 29 Sep 2022 00:09:42 -0700 (PDT)
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-352ffac3941so5699407b3.6;
+        Thu, 29 Sep 2022 00:09:41 -0700 (PDT)
+X-Received: by 2002:a81:9c49:0:b0:34a:de:97b8 with SMTP id n9-20020a819c49000000b0034a00de97b8mr1733022ywa.384.1664435381696;
+ Thu, 29 Sep 2022 00:09:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH v1 2/2] dt-bindings: add bindings for QCOM flash LED
-Content-Language: en-US
-To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     quic_collinsd@quicinc.com, quic_subbaram@quicinc.com
-References: <20220928024239.3843909-1-quic_fenglinw@quicinc.com>
- <20220928024239.3843909-3-quic_fenglinw@quicinc.com>
- <6c0e5083-baae-3ed3-5eed-e08bbb9e7576@linaro.org>
- <2d6fac8d-0ac1-75bb-0b4c-c2c34583b09e@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <2d6fac8d-0ac1-75bb-0b4c-c2c34583b09e@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <20220928192605.247546-1-broonie@kernel.org> <68689c5b-327f-65df-0d34-a7e1a851f568@infradead.org>
+In-Reply-To: <68689c5b-327f-65df-0d34-a7e1a851f568@infradead.org>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Thu, 29 Sep 2022 09:09:28 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdWrQabb_LoCPfbdWo9D11+4kxSjQeBStpjvckvuXuBMNQ@mail.gmail.com>
+Message-ID: <CAMuHMdWrQabb_LoCPfbdWo9D11+4kxSjQeBStpjvckvuXuBMNQ@mail.gmail.com>
+Subject: Re: linux-next: Tree for Sep 28 (drivers/gpu/drm/msm/msm_gem_shrinker.c)
+To:     Randy Dunlap <rdunlap@infradead.org>
+Cc:     broonie@kernel.org,
+        Linux Next Mailing List <linux-next@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2022 04:20, Fenglin Wu wrote:
-> 
-> 
-> On 2022/9/28 16:21, Krzysztof Kozlowski wrote:
->> On 28/09/2022 04:42, Fenglin Wu wrote:
->>> Add binding document for flash LED module inside Qualcomm Technologies,
->>> Inc. PMICs.
->>>
->>> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
->>
->> You did not Cc me on first patch, so difficult to say how much it
->> matches the driver... There is also no DTS.
-> Thanks for reviewing the binding change, I sent the driver changes in 
-> the same series and you can check it here:
-> https://lore.kernel.org/linux-leds/6c0e5083-baae-3ed3-5eed-e08bbb9e7576@linaro.org/T/#m97f71ce3f291f62d65f8107352d8ab9507093ab2
-> 
-> I will add you in email to list when sending next patchset.
+On Thu, Sep 29, 2022 at 8:10 AM Randy Dunlap <rdunlap@infradead.org> wrote:
+> On 9/28/22 12:26, broonie@kernel.org wrote:
+> > Changes since 20220927:
+> >
+>
+> on x86_64:
+>
+> ../drivers/gpu/drm/msm/msm_gem_shrinker.c: In function ‘can_block’:
+> ../drivers/gpu/drm/msm/msm_gem_shrinker.c:29:28: error: ‘__GFP_ATOMIC’ undeclared (first use in this function); did you mean ‘GFP_ATOMIC’?
+>    29 |         if (sc->gfp_mask & __GFP_ATOMIC)
+>       |                            ^~~~~~~~~~~~
+>       |                            GFP_ATOMIC
 
-Don't add just mine. Use instead scripts/get_maintainers.pl. For small
-patchsets recipients should get everything. For big patchsets it is
-usually split, where everyone receive only cover letter. It's not the
-case here...
+Also on m68k, as reported by noreply@ellerman.id.au
 
->>
->>> ---
->>>   .../bindings/leds/leds-qcom-flash.yaml        | 108 ++++++++++++++++++
->>>   1 file changed, 108 insertions(+)
->>>   create mode 100644 Documentation/devicetree/bindings/leds/leds-qcom-flash.yaml
->>>
->>> diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-flash.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-flash.yaml
->>> new file mode 100644
->>> index 000000000000..52a99182961b
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/leds/leds-qcom-flash.yaml
->>
->>
->> Filename matching compatible if there is one fallback (e.g.
->> qcom,spmi-flash-led.yaml).
->>
-> Sure, I will update the file name to match with the fallback compatible 
-> string.
->>> @@ -0,0 +1,108 @@
->>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/leds/leds-qcom-flash.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Flash LED device inside Qualcomm Technologies, Inc. PMICs
->>> +
->>> +maintainers:
->>> +  - Fenglin Wu <quic_fenglinw@quicinc.com>
->>> +
->>> +description: |
->>> +  Flash LED controller is present inside some Qualcomm Technologies, Inc. PMICs.
->>> +  The flash LED module can have different number of LED channels supported
->>> +  e.g. 3 or 4. There are some different registers between them but they can
->>> +  both support maximum current up to 1.5 A per channel and they can also support
->>> +  ganging 2 channels together to supply maximum current up to 2 A. The current
->>> +  will be split symmetrically on each channel and they will be enabled and
->>> +  disabled at the same time.
->>> +
->>> +properties:
->>> +  compatible:
->>> +    items:
->>> +      - enum:
->>> +          - qcom,spmi-flash-led
->>> +          - qcom,pm8150c-flash-led
->>> +          - qcom,pm8150l-flash-led
->>> +          - qcom,pm8350c-flash-led
->>
->> I doubt these are all different. You should use fallback, which also
->> will make use of the "items" you used...
-> pm8150c and pm8150l are different PMIC variants which have same flash 
-> LED module with 3 flash LED channels, while pm8350c has a different 
-> flash LED module with 4 flash LED channels. They can all use 
-> "qcom,spmi-flash-led" as the fallback because the driver has code logic 
-> to detect HW sub-types. 
+I have bisected it to commit 1ccea29f90329e35 ("Merge branch
+'mm-everything' of
+git://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm"), but I didn't
+see immediately what caused it.
 
-If driver binds to only one compatible, it is expected to be the
-fallback for all others. There might be exception for this rule but it
-does not look like here.
+Gr{oetje,eeting}s,
 
-> But I was thinking to give out the PMIC names 
-> here so anyone who is using the driver could easily identify if the 
-> driver is suitable for the HW that he/she is using.
+                        Geert
 
-I did not say to remove other compatibles, but to use one fallback for
-all of them.
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
-Best regards,
-Krzysztof
-
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
