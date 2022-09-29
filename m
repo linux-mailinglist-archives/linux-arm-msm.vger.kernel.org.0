@@ -2,75 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25ED95EF7EB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 16:44:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4854D5EF810
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 16:57:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235191AbiI2OoU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 10:44:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46820 "EHLO
+        id S235709AbiI2O5Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 10:57:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234988AbiI2OoS (ORCPT
+        with ESMTP id S235615AbiI2O5X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 10:44:18 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C48ED7A766
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 07:44:15 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id g1so2563842lfu.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 07:44:15 -0700 (PDT)
+        Thu, 29 Sep 2022 10:57:23 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D5E813EE87
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 07:57:21 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id r6so2610129wru.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 07:57:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=LkSm2C56o8tzD3kdFz9Q2YFb7DwLBiu4clfDJbl3WmE=;
-        b=t9DQlHsq4peMX5nFQVuP+vxQAPp4QbqlqnbBY0+/JvHu3ewoOoATFKVpR2AMYRLjTV
-         BozrgV9yNKY8V8vXDs35S3zJD1S8KBd8hCSVSw5EEN1tI7yIx5OmQGrPk23fIVgZftD8
-         md3CruqOqBUGUXEbopgNI/rho7z9DsI8k402PXgHxAd26opMxTiWgStbnT3rCcxtSPg1
-         0Qq3L6NCZS04fbF4Xi4zkfScfCCKX5MFg59lYUuK3LdcmjQ/aazupohVqJs4iI/g6zZx
-         sSnSxyA8F3wh+mAmuIDvHit+qNn4SezBrvQ49dPRwW9Bry2Ahg/anhe3CeHm3fp+UbPR
-         TMgw==
+        bh=nMnoSaH++1jbxSRlI1i6ADibQaQmTqMy1EUBbqCTBb4=;
+        b=Vv38lf5pdCpNoqOoAP120tgQ2KJMA7ZXY3zRv5IFf/18Ka+QYWp8iVvfDHwGWrUURq
+         XMcDVzCN67NfLLBvXneNU5Hkez1866vy2rJVUYu1vKryg0jxvA42QIHMFr7FwGNaV9n6
+         +IocjwdpayeRbeM2/sZgvPjKG7ythoaKpeUuXczusJJEcfS9wVBWcjyCRFl0D/sVgICw
+         2J5a8U1veuMcYYFjAV1q0dwyuM/YnZan597rCZ3Ds+v2h0MHW6JxifLG9t4Ao/8M6lM7
+         dZ4dzrfOEAf3pCEuuCr6J1A5XSYwp2pNtFtcBkJ2x/vFTyXVLC2qrq4yFh7WpEiVWHAy
+         sp4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=LkSm2C56o8tzD3kdFz9Q2YFb7DwLBiu4clfDJbl3WmE=;
-        b=3rf+jmhpZKL2y2OrQSKSeXpewHy6IYiilBRneGL+MASp71jKMvNU/yuBfuVswI44a8
-         t5W1cVKETjCC4Ib1fTHRyD17DWbZP9nFeYSYceDuGp+8ryNxjD3KmlKdqJUav+vZdCQA
-         47TC/zIxIaZA8DYzZd8d3titkspuzpOHkHoYj6j30IApH5k5c089WqD0r9tK+ArySYR0
-         4qKipDWU4lGS8GXl4ZTH8uqqH1QxSqqedBStvuPGnFKcnRfTUA/zeAAq9+gnBSGy6HWr
-         Lv4gRwOZEvEY9Zq5kqsnht6GGRz5tp7Ny7JzAgcD4DQcAOSxGwiJCJ2FKOaKuDv2h2Rd
-         S/+w==
-X-Gm-Message-State: ACrzQf3jGY120HjUQegWBw7pnmbQqpkY5mGOErIO1KzPJ80X0YCeJlkp
-        7UoHw0hXQQSdYvTABxOeZnobgQ==
-X-Google-Smtp-Source: AMsMyM4A2Ji8bAd/eqHnyAOt7Yu02yXyV2POMDi/Exr3ksTpf9Rg8m5p0TiCMGNCeWUVS/EEqglGSA==
-X-Received: by 2002:a05:6512:688:b0:498:fe57:b5f with SMTP id t8-20020a056512068800b00498fe570b5fmr1571633lfe.209.1664462654201;
-        Thu, 29 Sep 2022 07:44:14 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id m4-20020ac24ac4000000b0049313f77755sm525234lfp.213.2022.09.29.07.44.13
+        bh=nMnoSaH++1jbxSRlI1i6ADibQaQmTqMy1EUBbqCTBb4=;
+        b=QHS5xJvHch7rHzoCUcVSabrSGGeFthg5pplKbjvdjqMANsjsNVJQ9If1m1tzXUrrZc
+         0qOF3B2UR2Sj1meyQHIsp1TSeyIaulmvyy5u6lMUn/8kvF5GQhOL3lFLVRR1mOqHM4fC
+         E8oL7eQtwpRdhCfS0lXyZzLxwb+rQnrupDJl42IXsj/YgTXOFcy7f6SIjWErEYpOxx9l
+         nkh8hWrKcdyFkcOE6sJtmuM0WPNAWUQ2T1d7Sv5KR+mNWJsJIdDpCTrCiZ3hJUi3Ctii
+         cBrz0jmr+/5unmR32g5cS2q6h8TA2aL53mhyILpAqc9jgoJbdYGGrVVtWFWLkeoqqNw8
+         IcaA==
+X-Gm-Message-State: ACrzQf3J35Dye2LSMmkMC0J0CNQ9m4gnImTXwnrXPk+CTFaeM6cghoLO
+        jqKm5kYTkOcISKhomnABQQvrzg==
+X-Google-Smtp-Source: AMsMyM4axP40VuENGb1cdsZ/JJas2+un/fCosaf9j+YjtgOlism/1wYOdarXHCbv/7WEnKLKyS9PoQ==
+X-Received: by 2002:a05:6000:2a3:b0:226:dff3:b031 with SMTP id l3-20020a05600002a300b00226dff3b031mr2687409wry.495.1664463439654;
+        Thu, 29 Sep 2022 07:57:19 -0700 (PDT)
+Received: from ?IPV6:2a05:6e02:1041:c10:48a2:39eb:9d1b:8b8d? ([2a05:6e02:1041:c10:48a2:39eb:9d1b:8b8d])
+        by smtp.googlemail.com with ESMTPSA id t187-20020a1c46c4000000b003b4a699ce8esm4646084wma.6.2022.09.29.07.57.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Sep 2022 07:44:13 -0700 (PDT)
-Message-ID: <c49ac105-f96f-fdc4-a629-fe34c85f557a@linaro.org>
-Date:   Thu, 29 Sep 2022 16:44:12 +0200
+        Thu, 29 Sep 2022 07:57:19 -0700 (PDT)
+Message-ID: <ae86fc5a-0521-3dde-c2ea-8679c0ec4831@linaro.org>
+Date:   Thu, 29 Sep 2022 16:57:16 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Update SNPS Phy params for
- SC7280
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v7 00/29] Rework the trip points creation
 Content-Language: en-US
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        rui.zhang@intel.com, Raju Rangoju <rajur@chelsio.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Peter Kaestle <peter@piie.net>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Mark Gross <markgross@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Broadcom Kernel Team <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1664462290-29869-1-git-send-email-quic_kriskura@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1664462290-29869-1-git-send-email-quic_kriskura@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        =?UTF-8?Q?Niklas_S=c3=b6derlund?= <niklas.soderlund@ragnatech.se>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Keerthy <j-keerthy@ti.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Antoine Tenart <atenart@kernel.org>,
+        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+        Dmitry Osipenko <digetx@gmail.com>, netdev@vger.kernel.org,
+        platform-driver-x86@vger.kernel.org,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-omap@vger.kernel.org
+References: <20220928210059.891387-1-daniel.lezcano@linaro.org>
+ <d0be3159-8094-aed1-d9b1-c4b16d88d67c@linaro.org>
+ <CAJZ5v0hOFoe0KqEimFv9pgmiAOzuRoLjdqoScr53ErNFU4AAPA@mail.gmail.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <CAJZ5v0hOFoe0KqEimFv9pgmiAOzuRoLjdqoScr53ErNFU4AAPA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -81,16 +120,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2022 16:38, Krishna Kurapati wrote:
-> Add SNPS HS Phy tuning parameters for herobrine variant of
-> SC7280 devices.
+On 29/09/2022 15:58, Rafael J. Wysocki wrote:
+> On Thu, Sep 29, 2022 at 2:26 PM Daniel Lezcano
+> <daniel.lezcano@linaro.org> wrote:
+>>
+>>
+>> Hi Rafael,
+>>
+>> are you happy with the changes?
 > 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
+> I'll have a look and let you know.
 
+Great, thanks
+> 
+>> I would like to integrate those changes with the thermal pull request
+> 
+> Sure, but it looks like you've got only a few ACKs for these patches
+> from the driver people.
+> 
+> Wouldn't it be prudent to give them some more time to review the changes?
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Well I would say I received the ACKs from the drivers which are actively 
+maintained. Others are either not with a dedicated maintainer or not a 
+reactive one. The first iteration of the series is from August 5th. So 
+it has been 2 months.
 
-Best regards,
-Krzysztof
+I pinged for imx, armada and tegra two weeks ago.
 
+The st, hisilicon drivers fall under the thermal maintainers umbrella
+
+There are three series coming after this series to be posted. I would 
+like to go forward in the process of cleaning up the framework. IMO two 
+months is enough to let the maintainers pay attention to the changes, 
+especially if we do a gentle ping and there are seven versions.
+
+And after that comes the thermal_zone_device_register() parameters 
+simplification :)
+
+[ ... ]
+
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
