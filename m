@@ -2,87 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 951685EF5AE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 14:48:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D1E85EF69E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 15:32:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234687AbiI2Msp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 08:48:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55192 "EHLO
+        id S235489AbiI2Nbq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 09:31:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234934AbiI2Mso (ORCPT
+        with ESMTP id S235018AbiI2Nbn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 08:48:44 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C87F8160E51
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 05:48:42 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id o5so892287wms.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 05:48:42 -0700 (PDT)
+        Thu, 29 Sep 2022 09:31:43 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E3C0137472
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 06:31:40 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id s10so1558351ljp.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 06:31:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:cc:to:content-language:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date;
-        bh=RTh6Jh7foBvpZUwlr8i45KWrX5TaOjqxs0vxrakIbik=;
-        b=X4/Ix33GrpYpIdhmhwPVXrpN4zFL1fe8qw5LptmI7s57boWioFKy6Wio27lXYW58zD
-         2HQBFJ5y9jZxJPFBjnkYDbCdINOty9WDG1YZdbcjsjUzfMJF820nIBdRrslXmsT5exet
-         3RXyteA07EpdoVv5uRVJ31C8qfZNtJzl4TCPGxJX2u3XeO6Z2ZF4+wFJ276sIPbsxI2d
-         WM9vmtVhMcLLMdgxjdGW4lpwIrjXbrIotXldt4pf5N7oRs8ggMspsBALCBOgyfUCBDE+
-         dEycT80zkOZS/FWVOvDYWTEGOQGI+hrC8bSQUYaCFcOr70AtnhLMzIJUDdSERPub7CCJ
-         nHTg==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=X48j3G+qVEopzjYTA1H5u2rml5Mx/9RCCV/6TZYhcIQ=;
+        b=hrmIdsn5g/FpEqFeKHHnTpfCSNW5C5r4gCEHVeHwVR80GVFbZg97nDgi41R/Xf3Ymu
+         seJNwwjKnFyrmAgj3MKNLgRmGhEByKoLErdEa5A+ZqKkC9tAUD1c3Php845WLUOWrAjq
+         5ZlItbbiBVyAvLexJw8/YeEBPs4UYnQxHvSSzeGt5jWbcLDFTtLYDxbNNHFoiFOFzm9y
+         fp90/6MsNSvPK1y4kRGgbD0CjwGmTg2k+wqdhLQ/Uzby8fhWkNdV/rsq4WzbE1W2z4lu
+         8CC0AQf8cN0S6yZfRX9sm4vpUZbxuBgOKFxY+20QItfwWPCSJrb/2AhcvtR8BBiHcv1M
+         gavQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:cc:to:content-language:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=RTh6Jh7foBvpZUwlr8i45KWrX5TaOjqxs0vxrakIbik=;
-        b=kSEL5By9h5f0BMxwl9if/lvhAOsarkVrTF0OP+qnxboqQF6bWsBUrhpdp9INQ9h4fL
-         BBgVklejAJO5FpGbUOAz9ItEIf/yBtoivLEAUxzEWjt6uMdewomn1AuKMwjH9riF8Ere
-         K/twfonjd43wCk6+nS2uq7deM2svtczQFQ2tyJ/5frg9ARz6nPrnyNpSwZ+lAh3XsG9G
-         iN8DVZ9tl0igO91E8YmVoCLinSeRy47BuskhjtTQGa7BuSaM9VbBipAiTvDrM4lDdLkq
-         Ma5ikqQI6KNq4B0UgKFNVx0ZIuHqijOLJZ87HiUZ7N2UCkC8Yrd/qG7tncuaJt6k88f6
-         i3rA==
-X-Gm-Message-State: ACrzQf0KPhrGdzAcrqjJ+un4md3Jip05Yig9Uw5Hacj4ooa/JdfGkauw
-        6pEB7cfERB4efNZkX6JhRyQqhg==
-X-Google-Smtp-Source: AMsMyM5QdlrG59bq5kgnMgzyzNnDabiZ0EU3o6UW21hHGi8mdF26IuOMR1PjjfrUGjrDYbDj7L/hZw==
-X-Received: by 2002:a7b:c447:0:b0:3b4:8977:4186 with SMTP id l7-20020a7bc447000000b003b489774186mr2226076wmi.74.1664455721407;
-        Thu, 29 Sep 2022 05:48:41 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:1f17:3ea3:4e46:dff? ([2a01:e0a:982:cbb0:1f17:3ea3:4e46:dff])
-        by smtp.gmail.com with ESMTPSA id l18-20020a05600c2cd200b003a63a3b55c3sm4686351wmc.14.2022.09.29.05.48.40
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=X48j3G+qVEopzjYTA1H5u2rml5Mx/9RCCV/6TZYhcIQ=;
+        b=X5Mq0E8ToSpc6Sq5KBUmV1HZU+Jovn0h46odp8kmS2QwcFYlqmuWOC5SDmDmn+z7f2
+         mExG8lN+ebsi+j6nRnlPA0EjdXVHZ/H3anZ/aalHtKjCVKZZ5UXgRJoWIoCw71aQ8RoC
+         J7efRIXown35mC2HhY3XTbmTvFDbkxz93oer8wSYWWiHH+kvNq56KR2rdsi/HBAsURoG
+         5iPe48EQD/posXLU8HWQ77DdBKJgdHau1CTHJbc0OuxJ8DsECIWhG6oOrz2jq2R0o6ei
+         wYEE1DApILgPOdNtHFo4FfFrkM1H0lS3jG/LhP8Hib8C7wZUzAxBx/IIFTuClQpLdSR2
+         udTg==
+X-Gm-Message-State: ACrzQf2g1FIQgMQ2W+YNkLh4Jk7Nw7lNv0TkVGuXi0vPZwPpwUPf6PRL
+        WRwOjYgOJOczQX8q+PVMtWq53w==
+X-Google-Smtp-Source: AMsMyM7JjhES7J8Rt6+czIznrc9iO1brCXpNmHy+QfoVtGLJY9kCDF+GU2VyflNmIbaVrNY4L7jUPw==
+X-Received: by 2002:a2e:84ca:0:b0:25d:77e0:2566 with SMTP id q10-20020a2e84ca000000b0025d77e02566mr1274760ljh.78.1664458298639;
+        Thu, 29 Sep 2022 06:31:38 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id u5-20020ac258c5000000b004a0232613desm784574lfo.205.2022.09.29.06.31.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Sep 2022 05:48:40 -0700 (PDT)
-Message-ID: <051ccc1c-ae56-932c-0be8-19abae562615@linaro.org>
-Date:   Thu, 29 Sep 2022 14:48:39 +0200
+        Thu, 29 Sep 2022 06:31:38 -0700 (PDT)
+Message-ID: <803d6c60-2e10-d831-bbdf-e1aaf9f8800f@linaro.org>
+Date:   Thu, 29 Sep 2022 16:31:37 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v1 5/7] arm: dts: qcom: mdm9615: remove invalid pmic
- subnodes compatibles
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH v7 13/29] thermal/drivers/qcom: Use generic
+ thermal_zone_get_trip() function
+Content-Language: en-GB
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>, rafael@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        rui.zhang@intel.com, Raju Rangoju <rajur@chelsio.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Peter Kaestle <peter@piie.net>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Mark Gross <markgross@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Broadcom Kernel Team <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20220928-mdm9615-dt-schema-fixes-v1-0-b6e63a7df1e8@linaro.org>
- <20220928-mdm9615-dt-schema-fixes-v1-5-b6e63a7df1e8@linaro.org>
- <0636d53f-508f-8a86-0973-2641c9020622@linaro.org>
- <6ed642ea-424d-49ed-eb30-e09588720373@linaro.org>
- <1a3c6766-9be5-1e55-95eb-bc9656e5c9a3@linaro.org>
- <7f8572ab-ff97-54bd-a5f3-fe0e179ee48e@linaro.org>
- <84cb8941-eb15-1bbf-59b7-bbcd6c15c30d@linaro.org>
- <07405d0d-8534-6470-21d1-26b85dbd7de0@linaro.org>
- <f54377f0-a152-9367-1b06-f49df7466282@linaro.org>
- <3fa19362-118b-232e-0baf-ee365fa2f2e2@linaro.org>
- <07c75827-b8e5-7c70-315b-48617b9818e0@linaro.org>
- <9067ca94-cd5d-6883-d0e0-374ed7f599ad@linaro.org>
- <65c5ee36-8651-8a42-b6b1-3b8041c7edb8@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <65c5ee36-8651-8a42-b6b1-3b8041c7edb8@linaro.org>
+        =?UTF-8?Q?Niklas_S=c3=b6derlund?= <niklas.soderlund@ragnatech.se>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Keerthy <j-keerthy@ti.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Antoine Tenart <atenart@kernel.org>,
+        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+        Dmitry Osipenko <digetx@gmail.com>, netdev@vger.kernel.org,
+        platform-driver-x86@vger.kernel.org,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-omap@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>
+References: <20220928210059.891387-1-daniel.lezcano@linaro.org>
+ <20220928210059.891387-14-daniel.lezcano@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220928210059.891387-14-daniel.lezcano@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -94,54 +121,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 29/09/2022 14:27, Krzysztof Kozlowski wrote:
+On 29/09/2022 00:00, Daniel Lezcano wrote:
+> The thermal framework gives the possibility to register the trip
+> points with the thermal zone. When that is done, no get_trip_* ops are
+> needed and they can be removed.
 > 
-> We are making circles and discussion takes too much. 
-
-I'm sorry this happens, but I really want solve this stuff which in suspend since 2015.
-
-So let me recall the original issue:
-
-DTBS check reports:
-
-arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb: pmic@0: compatible: ['qcom,pm8018', 'qcom,pm8921'] is too long
-         From schema: Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
-
-arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb: pmic@0: rtc@11d:compatible: ['qcom,pm8018-rtc', 'qcom,pm8921-rtc'] is too long
-         From schema: Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
-
-arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb:0:0: /soc/qcom,ssbi@500000/pmic@0/pwrkey@1c: failed to match any schema with compatible: ['qcom,pm8018-pwrkey', 'qcom,pm8921-pwrkey']
-
-arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb:0:0: /soc/qcom,ssbi@500000/pmic@0/pwrkey@1c: failed to match any schema with compatible: ['qcom,pm8018-pwrkey', 'qcom,pm8921-pwrkey']
-
-arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb: rtc@11d: compatible: ['qcom,pm8018-rtc', 'qcom,pm8921-rtc'] is too long
-         From schema: Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-
-So trying to solve those, and since the PMIC in the wp8548 module is a PM8018, and it happens to be (partially ?? potentially ??) compatible
-with the PM8921, and I had issues adding per-HW compatible for the pwrkey, the obvious solution would be to
-drop the PM8921 compatibility since it's only probable and nothing proves it's right.
-
-But what's sure: it's a PM8018 PMIC.
-
-But since the PM8018 PWRKEY interface is compatible with the PM8921 PWRKEY interface,
-it's perfectly ok to the the MP8921 compatible here.
-
-OK, so as you quoted multiple times:
-"How this should be fixed? First, drop bogus entries from drivers, then
-document proper compatibles."
-
-OK so there's no bogus entries to remove here, and the only compatible to
-potentially document is the pm8018-pwrkey but it seems to be wrong.
-
-I'll be happy to have an hint on how to handle that to I can go forward and
-stop the noise, there's still plenty of stuff to fix in the MDM9615 DT.
-
+> Convert ops content logic into generic trip points and register them with the
+> thermal zone.
 > 
-> Best regards,
-> Krzysztof
+> Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+> Acked-by: Amit Kucheria <amitk@kernel.org>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> ---
+>   drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 39 +++++++++------------
+>   1 file changed, 17 insertions(+), 22 deletions(-)
 > 
 
-Thanks,
-Neil
+-- 
+With best wishes
+Dmitry
+
