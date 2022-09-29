@@ -2,112 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD2BE5EECF8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 07:03:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A37A15EED17
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Sep 2022 07:11:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234909AbiI2FDZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 01:03:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44074 "EHLO
+        id S234566AbiI2FL2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 01:11:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234847AbiI2FDC (ORCPT
+        with ESMTP id S229940AbiI2FL0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 01:03:02 -0400
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7406D1284A6;
-        Wed, 28 Sep 2022 22:03:00 -0700 (PDT)
-Received: by mail-pg1-x52a.google.com with SMTP id bh13so469876pgb.4;
-        Wed, 28 Sep 2022 22:03:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=MAxX3HwZPoIUthNG89lC4GJ6X33ElvjGpgppMP4s59I=;
-        b=ninWtnFr+PZBgoMjKfPm2KhI7Eek3iq7i0ShTtqXXCTWq/ViTXoEomk1Ns+cN/67U9
-         cguqetWzOJB4M+fcUqekaxXbCr8WuQPPm82o47td59ScllerSWC2nTFDJ608sJKHTNEr
-         CTItMegI7UhtkYpnDBzIZ17KHOlA+I9UNBdtsED2waoN0dk22givZAygMYMBDPYIacKl
-         Hi5Yww4qWtVKKAqAq6yaLBbVK2HhtZkUrLH80nES2BDVJR80aEczepZ3iC8/GFteWnzo
-         GUtikUpn1CKjOvAgc4AIrpII0GeZe83drnnXM1/07mkhY7J4uuxo5PLUx47PhSz2Dxaa
-         I0cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=MAxX3HwZPoIUthNG89lC4GJ6X33ElvjGpgppMP4s59I=;
-        b=C+JNNMbNgcm7KomLrZa5NmygkaZJCRg+b5TOiceSv2rE6xD+7bPjsg11nXLCy7vRQ3
-         kbs8RI/dgUdSN9KDbMpxynPWtflCBnXzbEmzEgea+cBldGZ+qdsKQHTfG0Y/OM6qFEsS
-         foV/1H1G0A3qIDlLa7svdfZFQj94TK/tRpN6v6AodwyfH+X3nnGzfzyg1ocv0Z1CoT/P
-         qcHMtrXiVk65WA5G+Qy1qzH439zU66bWkPOz/iF/TPqK+DBfKcn9rlkBsbHDTlpQHCSp
-         cx8iz/E5Ib2+BMrdroikjTNwUe94g+69AZCp3qrkHlu6kVUTfbVUBypeVTeKcq4D7rHW
-         pFkA==
-X-Gm-Message-State: ACrzQf2APssLR3PlDaKBSFUAqHp9dT5KM5jRkN97eB0oqIW/ZYWYERUK
-        QOu4XKpcZ/9/V002lfm/wAfBRwl6Fy8SOm0I
-X-Google-Smtp-Source: AMsMyM4bry2WOb170Y/tBalWnaBobFDexndbojNbGL6Z3HYWbWbeCb131hsk8dxYRwIrCrPjOVi/Gg==
-X-Received: by 2002:a05:6a00:14d5:b0:542:9c32:ab27 with SMTP id w21-20020a056a0014d500b005429c32ab27mr1682903pfu.64.1664427779439;
-        Wed, 28 Sep 2022 22:02:59 -0700 (PDT)
-Received: from skynet-linux.local ([2a09:bac0:579::681d:4237])
-        by smtp.googlemail.com with ESMTPSA id rm13-20020a17090b3ecd00b0020263b7177csm1895962pjb.3.2022.09.28.22.02.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 22:02:58 -0700 (PDT)
-From:   Sireesh Kodali <sireeshkodali1@gmail.com>
-To:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, linux-kernel@vger.kernel.org
-Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 29 Sep 2022 01:11:26 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 324A4C842D;
+        Wed, 28 Sep 2022 22:11:25 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28T4PHgl002837;
+        Thu, 29 Sep 2022 05:11:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=dU/SEjbxtKnvNwS9YPhhLnRPIVmG98hXeidNmM+5oUE=;
+ b=TpR8GCxaqs2I8MrVlxbN5T2ynyTfxuvACv8yLtXHVX5S/J8p6A7k0hv/S40jvt8MF8Zj
+ vaI5G3IdJL590+rVfCBNEinuy3n9Y1GrjH5gl/3hd+CbzqysvxYJJZE4HWGm+ZMXOOUD
+ F/uOPfhQSVpIceYOpT5nEHrg+9IVfhChqtlW/C2CZgR0sAKQnQ5NjX9daicIrtpnV0ZB
+ qqkxk/9N82mkVz5D5Bct1vco6ulsMnkOVDa/6qV5cseNNSJi/WKRQ3rherzOl1omexhz
+ 2OtCUHb2Qp9i+CZQJDnSa2McgsZ6re/j/mQtZJaBuOayP3T9w4FUnugRPKzWKh3D5yaT /A== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jva6qvp9x-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 29 Sep 2022 05:11:18 +0000
+Received: from pps.filterd (NALASPPMTA04.qualcomm.com [127.0.0.1])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 28T5BH4m028392;
+        Thu, 29 Sep 2022 05:11:17 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by NALASPPMTA04.qualcomm.com (PPS) with ESMTPS id 3jvm5sk7rw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 29 Sep 2022 05:11:17 +0000
+Received: from NALASPPMTA04.qualcomm.com (NALASPPMTA04.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 28T56XWq023360;
+        Thu, 29 Sep 2022 05:11:17 GMT
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (PPS) with ESMTPS id 28T5BHax028385
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 29 Sep 2022 05:11:17 +0000
+Received: from hu-ppareek-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Wed, 28 Sep 2022 22:11:13 -0700
+Date:   Thu, 29 Sep 2022 10:41:10 +0530
+From:   Parikshit Pareek <quic_ppareek@quicinc.com>
+To:     Johan Hovold <johan@kernel.org>
+CC:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: [PATCH v5 5/5] dt-bindings: remoteproc: wcnss-pil: Make supplies optionally required
-Date:   Thu, 29 Sep 2022 10:32:09 +0530
-Message-Id: <20220929050209.1464526-6-sireeshkodali1@gmail.com>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20220929050209.1464526-1-sireeshkodali1@gmail.com>
-References: <20220929050209.1464526-1-sireeshkodali1@gmail.com>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        Shazad Hussain <quic_shazhuss@quicinc.com>
+Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: introduce sa8540p-ride dts
+Message-ID: <20220929051110.GA1397@hu-ppareek-blr.qualcomm.com>
+References: <20220920120802.14321-1-quic_ppareek@quicinc.com>
+ <20220920120802.14321-4-quic_ppareek@quicinc.com>
+ <Yyq0dFvCI54QMqAl@hovoldconsulting.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <Yyq0dFvCI54QMqAl@hovoldconsulting.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 8WecGTwbsWO7HLwSDrr4k4OuZcANW9Vq
+X-Proofpoint-ORIG-GUID: 8WecGTwbsWO7HLwSDrr4k4OuZcANW9Vq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-29_02,2022-09-29_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 adultscore=0 phishscore=0 mlxlogscore=842 bulkscore=0
+ clxscore=1011 impostorscore=0 mlxscore=0 spamscore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2209290028
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On MSM8974, power domains are not yet supported. The platform uses
-regulators. This patch marks either the power-domains or *-supply as
-required (instead of always requiring the power domains).
-
-Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
----
- .../devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-index 2ba2b6cf11fb..45eb42bd3c2c 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-@@ -196,9 +196,13 @@ allOf:
-           deprecated: true
-           description: Deprecated for qcom,pronto-v1/2-pil
- 
--      required:
--        - power-domains
--        - power-domain-names
-+      oneOf:
-+        - required:
-+            - power-domains
-+            - power-domain-names
-+        - required:
-+            - vddmx-supply
-+            - vddcx-supply
- 
-   - if:
-       properties:
--- 
-2.37.3
-
+On Wed, Sep 21, 2022 at 08:51:32AM +0200, Johan Hovold wrote:
+> On Tue, Sep 20, 2022 at 05:38:02PM +0530, Parikshit Pareek wrote:
+> > Create new dts file specific for Qdrive board based on sa8540p chipset.
+> > Introduce common dtsi file sa8295p-adp.dtsi, to be included for adp and
+> > Qdrive board.
+> > 
+> > This is quite similar to sa8295 ADP development board. Main differences
+> > are related to connectors, and interface cards, like USB external ports,
+> > ethernet-switch, and PCIe switch etc.
+> > 
+> > Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+> > Reported-by: Shazad Hussain <quic_shazhuss@quicinc.com>
+> > ---
+> 
+> > diff --git a/arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts
+> > new file mode 100644
+> > index 000000000000..bd79866b80e1
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts
+> > @@ -0,0 +1,31 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +/*
+> > + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> > + * Copyright (c) 2022, Linaro Limited
+> > + * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
+> > + */
+> > +
+> > +/dts-v1/;
+> > +
+> > +#include "sa8540p-adp.dtsi"
+> > +
+> > +/ {
+> > +	model = "Qualcomm SA8540 ADP";
+> > +	compatible = "qcom,sa8540p-adp-ride", "qcom,sa8540p";
+> > +};
+> > +
+> > +&ufs_card_hc {
+> > +	status = "disabled";
+> > +};
+> 
+> What about the UFS phy, etc?
+Really missed that. Will add phy nodes too.
+> 
+> This opt-out scheme seems quite fragile.
+> 
+> > +&usb_1 {
+> > +	status = "disabled";
+> > +};
+> > +
+> > +&usb_1_hsphy {
+> > +	status = "disabled";
+> > +};
+> > +
+> > +&usb_1_qmpphy {
+> > +	status = "disabled";
+> > +};
+> 
+> Johan
+Regards,
+Parikshit Pareek
