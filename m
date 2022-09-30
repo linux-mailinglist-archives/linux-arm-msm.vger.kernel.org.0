@@ -2,103 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 648295F13D0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 22:41:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2532A5F14AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 23:21:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231258AbiI3Uli (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 16:41:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53180 "EHLO
+        id S231487AbiI3VU7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 17:20:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbiI3Ulh (ORCPT
+        with ESMTP id S231515AbiI3VU5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 16:41:37 -0400
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF728165134;
-        Fri, 30 Sep 2022 13:41:35 -0700 (PDT)
-Received: by mail-pf1-f178.google.com with SMTP id d82so5203333pfd.10;
-        Fri, 30 Sep 2022 13:41:35 -0700 (PDT)
+        Fri, 30 Sep 2022 17:20:57 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9853515D876
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 14:20:55 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id a10so6108303ljq.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 14:20:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=lhaby7j3gERoVvr8BXESs3foezuex+PKOYwtRxR26u8=;
+        b=Ta4Ew9QmLExdVhpudSWIjNC/U1PChC+pYFw0LVmKXnPWrkXgnLwkxdkXENsiY0dA5K
+         y7dth3+Tu5xWxr2X4F7M3BtxyBMY4Aogt7UIjqgq+K3yYXCLnkQy8LjxsxTXLrrtJfyU
+         O2MAhVFkYW0DgXzALQWjAjyCzycWgv/PKixT/kYIXUDZPbHIavo8HUBY0tYiXdxhaN8e
+         XeFdIl/7Gdfxe5t/Y0ZoiFyl//lPaqQYLlkkK6AYW8q5C0t9tCo3yXwhiJXqlDtkY8If
+         GKEdndf6m6LKu+BDhIgmhKwaOYh9KIs0ZwhKc+rrZ5Mt51Ioz23qBY1liEkyUFxblBXj
+         +ZbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=60CrGrB0e6fs1uT+/qZjiXxM9X8SBAH3xk7kv3P7tIA=;
-        b=IG8kEJ3GXaTVd+LZmlr3M5/MLvgOPMNxwRBfOJZA7lDN3A7K0FOFxPdXKTK+POnll7
-         7Z9JTDgT4eohyZytrhJ1oDgFN7BYv9wFRGc/Ia42uRHNPNtJsr4m0uT1rwClgBLQxACG
-         lc6sdgkD0oE7e3X6Nlc0ELVPNkImaY+XNmHchZQWJDn/AB96m4ffQpiEcheJ5Mkn+sbh
-         hIQTwBsxZf7z8FmSj5V2mSAm+q+tQdGVb/4dtoUXnxu9ykHdLF312/7xNWQa8XdwMXyP
-         7NdfdMrbXfQ+ZPyPzutCCsmtkgWYZFufaerhDdpUVtVQ6Oj5r39zcQPMpGnfLlVJqAOP
-         t5Yg==
-X-Gm-Message-State: ACrzQf3AYIhBrZh61QHGDCZmBwspNxx61Z4rvSVbF5FF1GQu+OvPd4N2
-        BheyOvEz6ya1o6wYsf2+De0=
-X-Google-Smtp-Source: AMsMyM5MYGchnh/5092UUxijYEqfRZb1CYA1EwF+TiolECUJn54DGNFvapBS5cLz3NzmwnxfgIr/cg==
-X-Received: by 2002:a65:4303:0:b0:439:f026:ccee with SMTP id j3-20020a654303000000b00439f026cceemr9087282pgq.322.1664570495276;
-        Fri, 30 Sep 2022 13:41:35 -0700 (PDT)
-Received: from ?IPV6:2620:15c:211:201:9b89:d9c:f74c:7711? ([2620:15c:211:201:9b89:d9c:f74c:7711])
-        by smtp.gmail.com with ESMTPSA id m5-20020a170902db0500b0016d6c939332sm2283577plx.279.2022.09.30.13.41.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Sep 2022 13:41:34 -0700 (PDT)
-Message-ID: <d0ce6b32-04ac-e3bc-d999-6a9c3d757645@acm.org>
-Date:   Fri, 30 Sep 2022 13:41:31 -0700
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=lhaby7j3gERoVvr8BXESs3foezuex+PKOYwtRxR26u8=;
+        b=oQre3P6wkMOjjhw+dcQWW5D7/2/LlJ6i2Ktj9OOXgPr68v24XrVONUzXc1pnRJWcPv
+         Jfc3HSw8DW2E5Ed1eHkUXOVKelMpGstJKPrDSW1O3l2bMb1qsPUa9WGQ5pNIJwPgd44V
+         3iJeRslsOWS4ildY4CHioLb7wzEhHnsmNrsgIgg5bGZAWfyQMe/Q+65dwGQHikYgaWw3
+         Vn+YIMELzm84AFK17RvslwUNnT2uPo6IXmz5P6ER6J4omsn0dXSipCmjryGVsuYKeHgj
+         GLKeQ8KXqCMa8XLq92gk0S7CSGTr1c006f2URgf9aRTUxT+JjYk5K8z/IWk9WayNCNcR
+         hEng==
+X-Gm-Message-State: ACrzQf0r78w4l9qxFuaheRIp4fhWGJSpDWrivxmwfxjJMuvsp7Reqnjw
+        DAxHpol9owNBS9Zs8knoLdde9w==
+X-Google-Smtp-Source: AMsMyM6FZkLuMhoJIGt8dawyL0w9IjpBg/Rx39NHvGI7cCWBTqb8zjudGOGMSpfe8i16QP43mmZnDA==
+X-Received: by 2002:a2e:921a:0:b0:26c:1166:6666 with SMTP id k26-20020a2e921a000000b0026c11666666mr3424180ljg.128.1664572853857;
+        Fri, 30 Sep 2022 14:20:53 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id b18-20020a056512305200b00492dba3c85asm431397lfb.220.2022.09.30.14.20.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Sep 2022 14:20:53 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH 1/2] dt-bindings: soc: qcom: YAML-ify SSBI bindings
+Date:   Sat,  1 Oct 2022 00:20:51 +0300
+Message-Id: <20220930212052.894834-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v1 13/16] ufs: mcq: Add completion support of a cqe
-Content-Language: en-US
-To:     Asutosh Das <quic_asutoshd@quicinc.com>, mani@kernel.org,
-        quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
-        quic_cang@quicinc.com, quic_nitirawa@quicinc.com,
-        quic_rampraka@quicinc.com, quic_richardp@quicinc.com,
-        stanley.chu@mediatek.com, adrian.hunter@intel.com,
-        avri.altman@wdc.com, beanhuo@micron.com, martin.petersen@oracle.com
-Cc:     linux-scsi@vger.kernel.org, Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>
-References: <cover.1663894792.git.quic_asutoshd@quicinc.com>
- <80b24ce43aadac3bf561a60a65303f36ae8c0c21.1663894792.git.quic_asutoshd@quicinc.com>
-From:   Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <80b24ce43aadac3bf561a60a65303f36ae8c0c21.1663894792.git.quic_asutoshd@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/22/22 18:05, Asutosh Das wrote:
-> +static int ufshcd_mcq_get_tag(struct ufs_hba *hba,
-> +				     struct ufs_hw_queue *hwq,
-> +				     struct cq_entry *cqe)
-> +{
-> +	dma_addr_t dma_addr;
-> +
-> +	/* Bits 63:7 UCD base address, 6:5 are reserved, 4:0 is SQ ID */
-> +	dma_addr = le64_to_cpu(cqe->command_desc_base_addr) & CQE_UCD_BA;
-> +
-> +	return (dma_addr - hba->ucdl_dma_addr) /
-> +		sizeof(struct utp_transfer_cmd_desc);
-> +}
+Convert arm/msm/ssbi.txt yo YAML, moving it to the directory with SoC
+bindings (soc/qcom/).
 
-Since the above code only works correctly if the size of struct 
-utp_transfer_cmd_desc is a multiple of 1 << 7, please add a 
-BUILD_BUG_ON() statement that verifies that the size of 
-utp_transfer_cmd_desc is a multiple of 128.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ .../devicetree/bindings/arm/msm/ssbi.txt      | 18 ------
+ .../bindings/soc/qcom/qcom,ssbi.yaml          | 63 +++++++++++++++++++
+ 2 files changed, 63 insertions(+), 18 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/arm/msm/ssbi.txt
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,ssbi.yaml
 
-Thanks,
+diff --git a/Documentation/devicetree/bindings/arm/msm/ssbi.txt b/Documentation/devicetree/bindings/arm/msm/ssbi.txt
+deleted file mode 100644
+index 54fd5ced3401..000000000000
+--- a/Documentation/devicetree/bindings/arm/msm/ssbi.txt
++++ /dev/null
+@@ -1,18 +0,0 @@
+-* Qualcomm SSBI
+-
+-Some Qualcomm MSM devices contain a point-to-point serial bus used to
+-communicate with a limited range of devices (mostly power management
+-chips).
+-
+-These require the following properties:
+-
+-- compatible: "qcom,ssbi"
+-
+-- qcom,controller-type
+-  indicates the SSBI bus variant the controller should use to talk
+-  with the slave device.  This should be one of "ssbi", "ssbi2", or
+-  "pmic-arbiter".  The type chosen is determined by the attached
+-  slave.
+-
+-The slave device should be the single child node of the ssbi device
+-with a compatible field.
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,ssbi.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,ssbi.yaml
+new file mode 100644
+index 000000000000..6154f7222899
+--- /dev/null
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,ssbi.yaml
+@@ -0,0 +1,63 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: "http://devicetree.org/schemas/soc/qcom/qcom,ssbi.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++
++title: Qualcomm Single-wire Serial Bus Interface (SSBI)
++
++description:
++  Some Qualcomm MSM devices contain a point-to-point serial bus used to
++  communicate with a limited range of devices (mostly power management
++  chips).
++
++maintainers:
++  - Andy Gross <agross@kernel.org>
++  - Bjorn Andersson <andersson@kernel.org>
++
++properties:
++  compatible:
++    const: qcom,ssbi
++
++  reg:
++    maxItems: 1
++
++  qcom,controller-type:
++    description:
++      Indicates the SSBI bus variant the controller should use to talk
++      with the slave device. The type chosen is determined by the attached
++      slave.
++    enum:
++      - ssbi
++      - ssbi2
++      - pmic-arbiter
++
++  pmic:
++    type: object
++
++required:
++  - compatible
++  - reg
++  - qcom,controller-type
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/irq.h>
++    ssbi@c00000 {
++        compatible = "qcom,ssbi";
++        reg = <0x00c00000 0x1000>;
++        qcom,controller-type = "pmic-arbiter";
++
++        pmic {
++            compatible = "qcom,pm8821";
++            interrupt-parent = <&msmgpio>;
++            interrupts = <76 IRQ_TYPE_LEVEL_LOW>;
++            #interrupt-cells = <2>;
++            interrupt-controller;
++            #address-cells = <1>;
++            #size-cells = <0>;
++        };
++    };
++...
+-- 
+2.35.1
 
-Bart.
