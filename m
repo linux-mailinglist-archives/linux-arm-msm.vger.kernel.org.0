@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 044845F1286
+	by mail.lfdr.de (Postfix) with ESMTP id B170C5F1288
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 21:30:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232156AbiI3TaY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S231898AbiI3TaY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 30 Sep 2022 15:30:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42718 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231902AbiI3TaU (ORCPT
+        with ESMTP id S231909AbiI3TaU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 30 Sep 2022 15:30:20 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 620492ED61
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 12:30:06 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id x29so5820846ljq.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 12:30:06 -0700 (PDT)
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C5ED2F03B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 12:30:07 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id x29so5820891ljq.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 12:30:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=1+tNRNTlMKDtrm8kNyG1z3UONnnvb9QDoC8vEjCWfXA=;
-        b=ziX2cDg/+56emJPn3ne2OaAE7ELJINd7gRNkn7Bsp94M4+uBAiYpAygQhy2d6XRIqR
-         kFxihyuAHCi6++EqobihsEPe87AdgcvCelXEVq80gOvKkf4jiL5uuxLXiTb+5QEvsHQo
-         6JQTorQF9j0PFLVrCuCJlPOe0rk85L2LeUvXYdjMXWsh2IZuww3qG16iSJM+aE41G0Rc
-         JkeX17qsYqWlckDpQtkAInwc3nRARCIiLntk1lGgPHqCc9+o9Cb4QImQqLOnQhOoqsyl
-         gdh1kgWL6RDxzJyluqyhEvdRGB5+yh1E+UnSUlJkb48a4MT+h5wbEs3Mvrpw6iI2o80X
-         TuYA==
+        bh=QXCX/bvx+GMITxwd1sJyJkSs746MTV1B+EirXA61vBw=;
+        b=kRF5S9r9tn9jPgt4Fxvlqu66cm9Fx8vkdJ/R8/JfXwvhrp9QiV7ym7Rogf0hsycQYS
+         wR02glAPABCRilB8yXF2nPXM34iKfVDr6VzGGiw+94X9aIsmxDLS81Gc/dY7Jjks8jT/
+         fiFtonH/yr+pDiZxPZcJdNVOiPcQHDfF9QRBDHyrFbO6LRC6MVM+aApPoBt6VCx7lJxV
+         6wka2Bq285FRUPA/OSmb0TN2uaeqNalAVAUfHlVorZxdoJUaiWflsuGOYzXRgwsXX5o2
+         OvsxHr2XCJ3y4pdb2zK9s6r4BQlbnddE0hrl0kpxLvNQOYSYglkblpjK6oMGW+JnjweO
+         Fs7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=1+tNRNTlMKDtrm8kNyG1z3UONnnvb9QDoC8vEjCWfXA=;
-        b=Sqd0M4ZQEQMCE/92QKFlqd+OcbZDjyUF4o8dpDDLwqVooISyvkG0Mgey+ZBdgenQcl
-         7FnxGYm/bAw4X0tRiHQ8QwhV3pxBh35cR6exbrfvfKQFkOi//zSBkvbHnbMEhRlzrFhv
-         3begmrSwtqBKAbaapviA3fPtkupy2Zi9KAI5ubXrjPFrwMv3QJpHYuxqBNDktz++bdq3
-         JSI/m0udcHLp94l6pSXR+vlpK3taUaVbS4tLCrCBuIzckTftAxF3D26i+S4c2k/oYmp9
-         ZkDCbpleZRdlEHMKD2uTFRa/FV2k+K2P3zOWYYgRR9WnYeH5bPchjeJ5eHQAAPCtEgk/
-         OuhA==
-X-Gm-Message-State: ACrzQf28k6zI3k1f2ecGL6I5xJ5P+TOi894ECUDC8ErKh0mofoxq9V0r
-        9wRfpETKaT4aINrB4IG1+66kqA==
-X-Google-Smtp-Source: AMsMyM5NKxJXIb8pfG8S+e30eY19GJLzCXfrqdI8ooMq/SCtmtqeLvPi4c6Hd5F4DWxwcMmmBzcN/Q==
-X-Received: by 2002:a05:651c:a08:b0:26c:539d:440a with SMTP id k8-20020a05651c0a0800b0026c539d440amr3144603ljq.264.1664566204648;
-        Fri, 30 Sep 2022 12:30:04 -0700 (PDT)
+        bh=QXCX/bvx+GMITxwd1sJyJkSs746MTV1B+EirXA61vBw=;
+        b=OWzlkO2s+IYgTtWzSCgHyL/3lrekBUnR0LU2w6JTH+DhGmvLgzbpypYmVz5id90c88
+         Ahoa/N+SarSVEOh8jSA064wwt08UfuOORQ8Zf11b6Lt3T1AmUrBgryMOWw+CWG0HMdlx
+         +SD8yarnHKxNKVcqHUqHRZqtIUD/ADDftHhkqrZ/qMnz7hRGT3kHtUDwZIsOEunxowMe
+         J5gn/RNU+cP/GIks3Qrl9CKtNDrB2y/XUQ5ymKPi/iapfWZS5DlJz8zyN2P2v9xuqRNZ
+         7bPhCgHjwj3svXiS0+80TLFmE3yC6t21+kiaNJ90+DXghyWYQP1c1srO2CiJEJgGud3Y
+         ytPA==
+X-Gm-Message-State: ACrzQf3NnhcSfdFgfIsLxPU+M3k21oIg29IGwZzTQmCUKC6Gh0YDU/CN
+        2lDVi7vuqpljubRaYl8aexYwRw==
+X-Google-Smtp-Source: AMsMyM7MlpgCLTGnNr8o5iJXWBowZ/BlEn1prfau5KLOMBOmzLQlzOf8s3TQ8JadSU+Fky1mmQaYFg==
+X-Received: by 2002:a2e:a0cc:0:b0:26b:e763:27d2 with SMTP id f12-20020a2ea0cc000000b0026be76327d2mr3164724ljm.62.1664566205749;
+        Fri, 30 Sep 2022 12:30:05 -0700 (PDT)
 Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id br32-20020a056512402000b0049f9799d349sm393603lfb.187.2022.09.30.12.30.03
+        by smtp.gmail.com with ESMTPSA id br32-20020a056512402000b0049f9799d349sm393603lfb.187.2022.09.30.12.30.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 12:30:04 -0700 (PDT)
+        Fri, 30 Sep 2022 12:30:05 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -59,9 +59,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 07/16] arm64: dts: qcom: msm8953: align TLMM pin configuration with DT schema
-Date:   Fri, 30 Sep 2022 21:29:45 +0200
-Message-Id: <20220930192954.242546-8-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 08/16] arm64: dts: qcom: sdm845: align TLMM pin configuration with DT schema
+Date:   Fri, 30 Sep 2022 21:29:46 +0200
+Message-Id: <20220930192954.242546-9-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220930192954.242546-1-krzysztof.kozlowski@linaro.org>
 References: <20220930192954.242546-1-krzysztof.kozlowski@linaro.org>
@@ -69,7 +69,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -79,284 +80,27 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 DT schema expects TLMM pin configuration nodes to be named with
 '-state' suffix and their optional children with '-pins' suffix.
 
-  qcom/sdm632-fairphone-fp3.dtb: pinctrl@1000000: 'cd-off-pins', 'cd-on-pins', 'gpio-key-default-pins', ....
-    do not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
+  qcom/sdm845-lg-judyln.dtb: gpios@c000: 'vol-up-active-pins' does not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8953.dtsi | 70 +++++++++++++--------------
- 1 file changed, 35 insertions(+), 35 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-index 6b992a6d56c1..db94e6fd18f5 100644
---- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-@@ -460,229 +460,229 @@ tlmm: pinctrl@1000000 {
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+index 20f275f8694d..1eb423e4be24 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+@@ -604,7 +604,7 @@ pinconf {
+ };
  
--			uart_console_active: uart-console-active-pins {
-+			uart_console_active: uart-console-active-state {
- 				pins = "gpio4", "gpio5";
- 				function = "blsp_uart2";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			uart_console_sleep: uart-console-sleep-pins {
-+			uart_console_sleep: uart-console-sleep-state {
- 				pins = "gpio4", "gpio5";
- 				function = "blsp_uart2";
- 				drive-strength = <2>;
- 				bias-pull-down;
- 			};
- 
--			sdc1_clk_on: sdc1-clk-on-pins {
-+			sdc1_clk_on: sdc1-clk-on-state {
- 				pins = "sdc1_clk";
- 				bias-disable;
- 				drive-strength = <16>;
- 			};
- 
--			sdc1_clk_off: sdc1-clk-off-pins {
-+			sdc1_clk_off: sdc1-clk-off-state {
- 				pins = "sdc1_clk";
- 				bias-disable;
- 				drive-strength = <2>;
- 			};
- 
--			sdc1_cmd_on: sdc1-cmd-on-pins {
-+			sdc1_cmd_on: sdc1-cmd-on-state {
- 				pins = "sdc1_cmd";
- 				bias-disable;
- 				drive-strength = <10>;
- 			};
- 
--			sdc1_cmd_off: sdc1-cmd-off-pins {
-+			sdc1_cmd_off: sdc1-cmd-off-state {
- 				pins = "sdc1_cmd";
- 				bias-disable;
- 				drive-strength = <2>;
- 			};
- 
--			sdc1_data_on: sdc1-data-on-pins {
-+			sdc1_data_on: sdc1-data-on-state {
- 				pins = "sdc1_data";
- 				bias-pull-up;
- 				drive-strength = <10>;
- 			};
- 
--			sdc1_data_off: sdc1-data-off-pins {
-+			sdc1_data_off: sdc1-data-off-state {
- 				pins = "sdc1_data";
- 				bias-pull-up;
- 				drive-strength = <2>;
- 			};
- 
--			sdc1_rclk_on: sdc1-rclk-on-pins {
-+			sdc1_rclk_on: sdc1-rclk-on-state {
- 				pins = "sdc1_rclk";
- 				bias-pull-down;
- 			};
- 
--			sdc1_rclk_off: sdc1-rclk-off-pins {
-+			sdc1_rclk_off: sdc1-rclk-off-state {
- 				pins = "sdc1_rclk";
- 				bias-pull-down;
- 			};
- 
--			sdc2_clk_on: sdc2-clk-on-pins {
-+			sdc2_clk_on: sdc2-clk-on-state {
- 				pins = "sdc2_clk";
- 				drive-strength = <16>;
- 				bias-disable;
- 			};
- 
--			sdc2_clk_off: sdc2-clk-off-pins {
-+			sdc2_clk_off: sdc2-clk-off-state {
- 				pins = "sdc2_clk";
- 				bias-disable;
- 				drive-strength = <2>;
- 			};
- 
--			sdc2_cmd_on: sdc2-cmd-on-pins {
-+			sdc2_cmd_on: sdc2-cmd-on-state {
- 				pins = "sdc2_cmd";
- 				bias-pull-up;
- 				drive-strength = <10>;
- 			};
- 
--			sdc2_cmd_off: sdc2-cmd-off-pins {
-+			sdc2_cmd_off: sdc2-cmd-off-state {
- 				pins = "sdc2_cmd";
- 				bias-pull-up;
- 				drive-strength = <2>;
- 			};
- 
--			sdc2_data_on: sdc2-data-on-pins {
-+			sdc2_data_on: sdc2-data-on-state {
- 				pins = "sdc2_data";
- 				bias-pull-up;
- 				drive-strength = <10>;
- 			};
- 
--			sdc2_data_off: sdc2-data-off-pins {
-+			sdc2_data_off: sdc2-data-off-state {
- 				pins = "sdc2_data";
- 				bias-pull-up;
- 				drive-strength = <2>;
- 			};
- 
--			sdc2_cd_on: cd-on-pins {
-+			sdc2_cd_on: cd-on-state {
- 				pins = "gpio133";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-pull-up;
- 			};
- 
--			sdc2_cd_off: cd-off-pins {
-+			sdc2_cd_off: cd-off-state {
- 				pins = "gpio133";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			gpio_key_default: gpio-key-default-pins {
-+			gpio_key_default: gpio-key-default-state {
- 				pins = "gpio85";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-pull-up;
- 			};
- 
--			i2c_1_default: i2c-1-default-pins {
-+			i2c_1_default: i2c-1-default-state {
- 				pins = "gpio2", "gpio3";
- 				function = "blsp_i2c1";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			i2c_1_sleep: i2c-1-sleep-pins {
-+			i2c_1_sleep: i2c-1-sleep-state {
- 				pins = "gpio2", "gpio3";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			i2c_2_default: i2c-2-default-pins {
-+			i2c_2_default: i2c-2-default-state {
- 				pins = "gpio6", "gpio7";
- 				function = "blsp_i2c2";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			i2c_2_sleep: i2c-2-sleep-pins {
-+			i2c_2_sleep: i2c-2-sleep-state {
- 				pins = "gpio6", "gpio7";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			i2c_3_default: i2c-3-default-pins {
-+			i2c_3_default: i2c-3-default-state {
- 				pins = "gpio10", "gpio11";
- 				function = "blsp_i2c3";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			i2c_3_sleep: i2c-3-sleep-pins {
-+			i2c_3_sleep: i2c-3-sleep-state {
- 				pins = "gpio10", "gpio11";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			i2c_4_default: i2c-4-default-pins {
-+			i2c_4_default: i2c-4-default-state {
- 				pins = "gpio14", "gpio15";
- 				function = "blsp_i2c4";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			i2c_4_sleep: i2c-4-sleep-pins {
-+			i2c_4_sleep: i2c-4-sleep-state {
- 				pins = "gpio14", "gpio15";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			i2c_5_default: i2c-5-default-pins {
-+			i2c_5_default: i2c-5-default-state {
- 				pins = "gpio18", "gpio19";
- 				function = "blsp_i2c5";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			i2c_5_sleep: i2c-5-sleep-pins {
-+			i2c_5_sleep: i2c-5-sleep-state {
- 				pins = "gpio18", "gpio19";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			i2c_6_default: i2c-6-default-pins {
-+			i2c_6_default: i2c-6-default-state {
- 				pins = "gpio22", "gpio23";
- 				function = "blsp_i2c6";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			i2c_6_sleep: i2c-6-sleep-pins {
-+			i2c_6_sleep: i2c-6-sleep-state {
- 				pins = "gpio22", "gpio23";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			i2c_7_default: i2c-7-default-pins {
-+			i2c_7_default: i2c-7-default-state {
- 				pins = "gpio135", "gpio136";
- 				function = "blsp_i2c7";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			i2c_7_sleep: i2c-7-sleep-pins {
-+			i2c_7_sleep: i2c-7-sleep-state {
- 				pins = "gpio135", "gpio136";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			i2c_8_default: i2c-8-default-pins {
-+			i2c_8_default: i2c-8-default-state {
- 				pins = "gpio98", "gpio99";
- 				function = "blsp_i2c8";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			i2c_8_sleep: i2c-8-sleep-pins {
-+			i2c_8_sleep: i2c-8-sleep-state {
- 				pins = "gpio98", "gpio99";
- 				function = "gpio";
- 				drive-strength = <2>;
+ &pm8998_gpio {
+-	vol_up_pin_a: vol-up-active-pins {
++	vol_up_pin_a: vol-up-active-state {
+ 		pins = "gpio6";
+ 		function = "normal";
+ 		input-enable;
 -- 
 2.34.1
 
