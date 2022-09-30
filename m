@@ -2,72 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9DC05F0823
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 12:00:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 087965F0961
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 12:58:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231600AbiI3KAn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 06:00:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46598 "EHLO
+        id S232270AbiI3K6U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 06:58:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231560AbiI3KA1 (ORCPT
+        with ESMTP id S232353AbiI3K57 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 06:00:27 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E86DF684C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 03:00:19 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id g1so6096015lfu.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 03:00:19 -0700 (PDT)
+        Fri, 30 Sep 2022 06:57:59 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D4D84D4D4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 03:36:01 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id t16so4353273ljh.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 03:36:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=9KpEUUalWoRI8TdGgOpsCg4Iu1p4euYEEJL3jAX6IA8=;
-        b=voc8TJMGolTORHdohzjvuHAb4UaOqMJCdsBpDglcWWDasx3Bh/t4bB1zHsBgXyB/XH
-         gvMWUPtHlADr2zsn56C3/uwUm51/k9+SybvXdpWO2dvuE8rZMFV41uj1L0MFso4CHhjZ
-         R30v7heDZtcRI7nUwugKeNDVji1gkKjbvTy6nMAANQwgYRbWmSdRjZayLqTXkLPM6DCv
-         CWjp/sJZMawQ5yZ+nfePEF+kuPODV9K0dwrvncOqW3ubk4ExxC+h44618XHTeZ8GMujZ
-         el1qaFBGZnKf/m7mp1i1RXcPFh4M4qJhygCH051dou0CqHJpsAxXF9u1xIiIEqeBQiPN
-         gX3g==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=DcsCImqzPTtzDW+tcf53orV9UGxO9/x924I5Tz5lCW0=;
+        b=DOBegeC3Tt/LD6Tc9/ludEXVJJkVcz3y+SfHVxnl0ptEwm4PI+2nPrOBrXdMm8QVFd
+         pICuieo3rxj5ujEO3EdSjl8QIIBduUUj2S2SXewt0KEQqmFICZA+yiEDy1gBL2cRBaMi
+         w+Lx2ZJ83Id/0aQ9MUUi46pyGWmNKXxCGmPt5MEt2/wdo7r26mNhIltCc6PGdnEi5LOm
+         SdC5J69g1+3uNzK0iylzlMkX5e2NLutOXzBQHDo8PcjtOcwj0SJP1rZKoZgTB1HJzzYH
+         VwXHPci5W2EmUoVi8TC6259gf/DqPb0gbiJUbZK3QOWCwtsgUhyekEOCfzmQAIKyUHbg
+         snqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=9KpEUUalWoRI8TdGgOpsCg4Iu1p4euYEEJL3jAX6IA8=;
-        b=8FgPljkK2BBUi2CKKFQNoEVZZQZfRSW3Zl3eXaiGO0lz6oq+QO1B4AKR38jhHlCi+H
-         7X7fkUJUJahOmDFOHBbITvmzV6US2mDZL78sH+h6tDKNnTHN6qqGcCxuzEQpPa2LoJYn
-         M7Zr4ZmRKRiTZOdQVWCQ9hA+/Y1BqSJ2zH+lAIZ5k+H9rFh+L+CePkx0WAMwvzh4Bzmt
-         ujxSMyAE0OJWIkYHG3Tt77Spp1FtwnLqe4PuxU+wYAZv93MnFCFTbu4GCHJYPu1N6jvE
-         3mll77BI/sc54Kcpaj11EpzpquNRsNr3Fjet/l5nvCv+uvPkdiqzUBCTA4yDqMpRzRbe
-         k/mA==
-X-Gm-Message-State: ACrzQf2zjgzV/joTZOAkKO+9tyYnMpry2pp3fVp29VO5tmBylY2/XI7Y
-        AVq2z+phX69sU78+dCnJ1dPbKQ==
-X-Google-Smtp-Source: AMsMyM5HvS85QSAxGq4Faz53kk6h8+znPOxxIkcAMRbZnP3Zfwji5og6cRVKRepMrNrIc8z33OvEow==
-X-Received: by 2002:a05:6512:304d:b0:498:9d7b:43f with SMTP id b13-20020a056512304d00b004989d7b043fmr2984022lfb.48.1664532017997;
-        Fri, 30 Sep 2022 03:00:17 -0700 (PDT)
-Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id q65-20020a2e2a44000000b0026c3e350682sm113521ljq.14.2022.09.30.03.00.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 03:00:17 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Prudhvi Yarlagadda <pyarlaga@codeaurora.org>
-Subject: [PATCH v2 2/2] slimbus: qcom-ngd-ctrl: add support for 44.1 Khz frequency
-Date:   Fri, 30 Sep 2022 12:00:15 +0200
-Message-Id: <20220930100015.259106-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220930100015.259106-1-krzysztof.kozlowski@linaro.org>
-References: <20220930100015.259106-1-krzysztof.kozlowski@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=DcsCImqzPTtzDW+tcf53orV9UGxO9/x924I5Tz5lCW0=;
+        b=pYFGtKmplx5AHRYSe3VRWycocGWTNlSdyIwkuT1xuSDKjvySb/6XZlkR0A6bFYrKwI
+         deBe7eKgPlXkRezUjSEt7UVP7N9wb/5ZhrdRkTi5O/SuSXG2osA6Vo93qKDEEieCmTw7
+         GkaGb8EwDOxUd6XN1WtreA49wGdraw+NwAAA2BqDZSuoeFYM88Dc1h1wsUif9Pxqoul1
+         VI1i/n1XBHX8GA1bRwAkI4FXkoWmIqQ8pINlerA/od6nfaHn4aQQWpd1ZGZg1AF+vtE6
+         RYNo3LMden9BXreBtEsRC5X+QBaCVIWrIpG00X1v72YlqIVSYgJWET7h2jfQ0Wj/baAn
+         1jDQ==
+X-Gm-Message-State: ACrzQf0EzZ26jD8PTCVWqBzQNUfc8mK5K7HZHWdwuMzdIhPrKmrsaCeb
+        87tNkkmpcRqPm5i7jkOIf6x68vYe59M8Ww==
+X-Google-Smtp-Source: AMsMyM7LPvp0NeJoE5RQplQmz7PBBSJnZe0CoB01Qld704XlCb2Nvam4kDeGgajbxjzMgF1x9G0ZWg==
+X-Received: by 2002:a2e:908a:0:b0:26b:fd3:1870 with SMTP id l10-20020a2e908a000000b0026b0fd31870mr2628888ljg.120.1664533573044;
+        Fri, 30 Sep 2022 03:26:13 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id d15-20020ac25ecf000000b004979e231fafsm253439lfq.38.2022.09.30.03.26.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 30 Sep 2022 03:26:12 -0700 (PDT)
+Message-ID: <9999a1a3-cda0-2759-f6f4-9bc7414f9ee4@linaro.org>
+Date:   Fri, 30 Sep 2022 12:26:11 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH v2 3/4] dt-bindings: net: qcom,ethqos: Convert bindings to
+ yaml
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        devicetree@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, netdev@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        David Miller <davem@davemloft.net>
+References: <20220929060405.2445745-1-bhupesh.sharma@linaro.org>
+ <20220929060405.2445745-4-bhupesh.sharma@linaro.org>
+ <4e896382-c666-55c6-f50b-5c442e428a2b@linaro.org>
+ <1163e862-d36a-9b5e-2019-c69be41cc220@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1163e862-d36a-9b5e-2019-c69be41cc220@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,108 +83,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for 44.1Khz frequency by dynamically calculating the slimbus
-parameters instead of statically defining them.
+On 30/09/2022 10:12, Bhupesh Sharma wrote:
+>>> +  snps,reset-gpio:
+>>> +    maxItems: 1
+>>
+>> Why is this one here? It's already in snps,dwmac.
+>>
+>> Actually this applies to several other properties. You have
+>> unevaluatedProperties:false, so you do not have to duplicate snps,dwmac.
+>> You only need to constrain it, like we said about interrupts in your
+>> previous patch.
+> 
+> I was actually getting errors like the following without the same:
+> 
+> arm64/boot/dts/qcom/qcs404-evb-1000.dtb: ethernet@7a80000: Unevaluated 
+> properties are not allowed ('snps,tso' was unexpected)
+> 	From schema: Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+> 
+> So, its not clear to me that even though 'snps,dwmac.yaml' is referenced 
+> here, the property appears as unevaluated.
 
-Co-developed-by: Prudhvi Yarlagadda <pyarlaga@codeaurora.org>
-Signed-off-by: Prudhvi Yarlagadda <pyarlaga@codeaurora.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Because snps,tso is not allowed, but the rest is.
 
----
+> 
+>>> +
+>>> +  power-domains:
+>>> +    maxItems: 1
+>>> +
+>>> +  resets:
+>>> +    maxItems: 1
+>>> +
+>>> +  rx-fifo-depth:
+>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>>> +
+>>> +  tx-fifo-depth:
+>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>>> +
+>>> +  snps,tso:
+>>> +    type: boolean
+>>> +    description: Enables the TSO feature (otherwise managed by MAC HW capability register).
+>>
+>> You add here several new properties. Mention in commit msg changes from
+>> pure conversion with answer to "why".
+> 
+> Right, most of them are to avoid the make dtbs_check errors / warnings 
+> like the one mentioned above.
 
-Changes since v1:
-1. Rebase (drop development pieces in the context).
----
- drivers/slimbus/qcom-ngd-ctrl.c | 64 ++++++++++++++++++++++++++++++---
- 1 file changed, 59 insertions(+), 5 deletions(-)
+All of them should not be here.
 
-diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-index ac84fdc2822f..051ac5cba207 100644
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -944,6 +944,54 @@ static int qcom_slim_ngd_xfer_msg_sync(struct slim_controller *ctrl,
- 	return ret;
- }
- 
-+static int qcom_slim_calc_coef(struct slim_stream_runtime *rt, int *exp)
-+{
-+	struct slim_controller *ctrl = rt->dev->ctrl;
-+	int coef;
-+
-+	if (rt->ratem * ctrl->a_framer->superfreq < rt->rate)
-+		rt->ratem++;
-+
-+	coef = rt->ratem;
-+	*exp = 0;
-+
-+	/*
-+	 * CRM = Cx(2^E) is the formula we are using.
-+	 * Here C is the coffecient and E is the exponent.
-+	 * CRM is the Channel Rate Multiplier.
-+	 * Coefficeint should be either 1 or 3 and exponenet
-+	 * should be an integer between 0 to 9, inclusive.
-+	 */
-+	while (1) {
-+		while ((coef & 0x1) != 0x1) {
-+			coef >>= 1;
-+			*exp = *exp + 1;
-+		}
-+
-+		if (coef <= 3)
-+			break;
-+
-+		coef++;
-+	}
-+
-+	/*
-+	 * we rely on the coef value (1 or 3) to set a bit
-+	 * in the slimbus message packet. This bit is
-+	 * BIT(5) which is the segment rate coefficient.
-+	 */
-+	if (coef == 1) {
-+		if (*exp > 9)
-+			return -EIO;
-+		coef = 0;
-+	} else {
-+		if (*exp > 8)
-+			return -EIO;
-+		coef = 1;
-+	}
-+
-+	return coef;
-+}
-+
- static int qcom_slim_ngd_enable_stream(struct slim_stream_runtime *rt)
- {
- 	struct slim_device *sdev = rt->dev;
-@@ -967,16 +1015,22 @@ static int qcom_slim_ngd_enable_stream(struct slim_stream_runtime *rt)
- 		struct slim_port *port = &rt->ports[i];
- 
- 		if (txn.msg->num_bytes == 0) {
--			int seg_interval = SLIM_SLOTS_PER_SUPERFRAME/rt->ratem;
--			int exp;
-+			int exp = 0, coef = 0;
- 
- 			wbuf[txn.msg->num_bytes++] = sdev->laddr;
- 			wbuf[txn.msg->num_bytes] = rt->bps >> 2 |
- 						   (port->ch.aux_fmt << 6);
- 
--			/* Data channel segment interval not multiple of 3 */
--			exp = seg_interval % 3;
--			if (exp)
-+			/* calculate coef dynamically */
-+			coef = qcom_slim_calc_coef(rt, &exp);
-+			if (coef < 0) {
-+				dev_err(&sdev->dev,
-+				"%s: error calculating coef %d\n", __func__,
-+									coef);
-+				return -EIO;
-+			}
-+
-+			if (coef)
- 				wbuf[txn.msg->num_bytes] |= BIT(5);
- 
- 			txn.msg->num_bytes++;
--- 
-2.34.1
+Best regards,
+Krzysztof
 
