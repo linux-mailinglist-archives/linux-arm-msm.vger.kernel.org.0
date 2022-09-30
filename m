@@ -2,71 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0FDF5F0AB7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 13:39:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA43D5F0B2C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 13:57:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231788AbiI3Lid (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 07:38:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37246 "EHLO
+        id S231280AbiI3L5z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 07:57:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231637AbiI3Lh4 (ORCPT
+        with ESMTP id S229870AbiI3L5y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 07:37:56 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D45FD286C5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 04:29:38 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id b6so4463858ljr.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 04:29:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=xzp1n+xXMR0oqgZ0eki3yQt/UeyORWIWI7FE7XVObuk=;
-        b=unFiefTZF8EyuLh50hARNTELze3wWqOL0aelmZMEzJEDQLjwMey7RO4IOi/BJeUT+S
-         /IwpbqtWujYeDC8HpL8DUpdOJxKkzo86nl17KYEZmwmr9kyhnAQ1HYnbB+ViWulhxD/0
-         ncCesPE9nGwuE2ewztzCUGkS1wlyu1cI07XnBnFlPTDPKx/IvjZvgDBOtpYKQU+0dCo1
-         k+ZgWqWt4QDohk9FQhrxHSTdTduOiuYMmvssiIWSRBmNkN4Ax7jnw8aHUVDgb7gGCQ7k
-         zuFagEDRIj1SxYZs0hQHxxET+chc/C9f1iKuCt3scxgbBJMVtLJuX7ckF7sAJHTKGN9t
-         Xirg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=xzp1n+xXMR0oqgZ0eki3yQt/UeyORWIWI7FE7XVObuk=;
-        b=patl4Qvxzss+AkoKb8sfSeEpPtMgGcZWLLkErQGaZlC8lABo5u2wx9gqZBRlyAwqzD
-         IwGOKSTELbSZOSnX4ZD6K/X9VOH1GV3i0WvKCSb+fvjUJFAp+kphqhomM3vWzYs2Ymo2
-         mld107h998Q/ellW7vKx2h4qCpttGvN/B+TAS6S0YFw+ztpXfdRhx6unn9fXJOvuzXFc
-         gd33Yn+tCPaSCfZ7aMgErbTjbMPXYm7TAaDP+lfibI72Eso8yUR89b41pi4OdgYFFR5V
-         bAMtv9Kr+HVVBAaHRmkEa4l7JMGxG1nnuLZEfm8rdQy1OSKMhFdYoHTHOoV5Vml3aIox
-         /oUw==
-X-Gm-Message-State: ACrzQf1VAdMB8wQkYQIGtoue/66PvZQoS1K5A0G/Qk/yjcEF8k2aBLm6
-        vrSnbzrihL3zAhcyeSukReaknw==
-X-Google-Smtp-Source: AMsMyM49+iQJ0gqA9WGzZo6uAWGfSefawXObvTNZdHdC2UHVrLAqUuv+BtbQGFqM7lQeFRhUfMxXTg==
-X-Received: by 2002:a2e:b5d7:0:b0:26d:98c2:6ad2 with SMTP id g23-20020a2eb5d7000000b0026d98c26ad2mr2833581ljn.215.1664537376992;
-        Fri, 30 Sep 2022 04:29:36 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v18-20020a197412000000b0049493c14b17sm264672lfe.181.2022.09.30.04.29.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 04:29:36 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH v2 12/12] phy: qcom-qmp: move type-specific headers to particular driver
-Date:   Fri, 30 Sep 2022 14:29:26 +0300
-Message-Id: <20220930112926.638543-13-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220930112926.638543-1-dmitry.baryshkov@linaro.org>
-References: <20220930112926.638543-1-dmitry.baryshkov@linaro.org>
+        Fri, 30 Sep 2022 07:57:54 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A884163B67;
+        Fri, 30 Sep 2022 04:57:51 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28UAcTxO004250;
+        Fri, 30 Sep 2022 11:57:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=6r3IHl38uTfFy9rn6v0/eEMi3/2iLaVdrH1J1BCBHN8=;
+ b=E1tthoWDAL8+R5uP/rXiLykkT/WDtID69h/mhV2cpx9Lswf0qdu0Grig4A5ha4kvkKvE
+ 33EwQSJSAw8pTC4pL19u4VcDSoxEMQ6EAjMW/zxLObBihEx3Oqf6LnUfP2l2joBmW3p6
+ RHKLgYtysUE0uzriSq1ql+GwSBnVRXjLenMvZgGqstAaKD7MkAjsh/fBPvuyiaLCQsqA
+ FXIKsALLXJLVDS/UP2UNcBk60B7NHsrY/uvla6OkBhKjytsC8P/98YDoiQXdyVw9xLVZ
+ M4BumJn/GLFTyGExfCrknMKkvzIyl+gYiC5abrPzg85vErhI2Dn1cBrvol5sQMnNjxzR Kg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jwr49hh08-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 30 Sep 2022 11:57:43 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28UBvhmJ006966
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 30 Sep 2022 11:57:43 GMT
+Received: from [10.216.29.114] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Fri, 30 Sep
+ 2022 04:57:39 -0700
+Message-ID: <30c95220-f3fd-3105-18a7-a9588af69b7d@quicinc.com>
+Date:   Fri, 30 Sep 2022 17:27:28 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH] clk: gcc-sc8280xp: use retention for USB power domains
+Content-Language: en-US
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20220929161124.18138-1-johan+linaro@kernel.org>
+From:   Rajendra Nayak <quic_rjendra@quicinc.com>
+In-Reply-To: <20220929161124.18138-1-johan+linaro@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: L6xfAgwQ05Xoyj1MyaDsMay5mYL3DJgS
+X-Proofpoint-ORIG-GUID: L6xfAgwQ05Xoyj1MyaDsMay5mYL3DJgS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-30_04,2022-09-29_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
+ malwarescore=0 spamscore=0 suspectscore=0 phishscore=0 adultscore=0
+ mlxlogscore=999 lowpriorityscore=0 impostorscore=0 clxscore=1015
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2209300075
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,112 +83,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove QMP PHY type-specific headers inclusion from the common header
-and move them to the specific PHY drivers to cleanup the namespaces used
-by different drivers.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c |  3 +++
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c  |  6 ++++++
- drivers/phy/qualcomm/phy-qcom-qmp-ufs.c   |  4 ++++
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c   |  3 +++
- drivers/phy/qualcomm/phy-qcom-qmp.h       | 14 --------------
- 5 files changed, 16 insertions(+), 14 deletions(-)
+On 9/29/2022 9:41 PM, Johan Hovold wrote:
+> Since commit d399723950c4 ("clk: qcom: gdsc: Fix the handling of
+> PWRSTS_RET support) retention mode can be used on sc8280xp to maintain
+> state during suspend instead of leaving the domain always on.
+> 
+> This is needed to eventually allow the parent CX domain to be powered
+> down during suspend.
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>   drivers/clk/qcom/gcc-sc8280xp.c | 13 +++----------
+>   1 file changed, 3 insertions(+), 10 deletions(-)
+> 
+> While we're not yet able to fully test this (since we're not hitting CX
+> power down) this can still go in as we'll need it in some form
+> eventually.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 0561df216fb1..3ae02a2287fc 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -23,6 +23,9 @@
- #include <dt-bindings/phy/phy.h>
- 
- #include "phy-qcom-qmp.h"
-+#include "phy-qcom-qmp-pcs-misc-v3.h"
-+#include "phy-qcom-qmp-pcs-usb-v4.h"
-+#include "phy-qcom-qmp-pcs-usb-v5.h"
- 
- /* QPHY_SW_RESET bit */
- #define SW_RESET				BIT(0)
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 48b49719b7a5..e73442174997 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -23,6 +23,12 @@
- #include <dt-bindings/phy/phy.h>
- 
- #include "phy-qcom-qmp.h"
-+#include "phy-qcom-qmp-pcs-misc-v3.h"
-+#include "phy-qcom-qmp-pcs-pcie-v4.h"
-+#include "phy-qcom-qmp-pcs-pcie-v4_20.h"
-+#include "phy-qcom-qmp-pcs-pcie-v5.h"
-+#include "phy-qcom-qmp-pcs-pcie-v5_20.h"
-+#include "phy-qcom-qmp-pcie-qhp.h"
- 
- /* QPHY_SW_RESET bit */
- #define SW_RESET				BIT(0)
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-index 064435c1b78d..9bfd5b473bfd 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-@@ -23,6 +23,10 @@
- #include <dt-bindings/phy/phy.h>
- 
- #include "phy-qcom-qmp.h"
-+#include "phy-qcom-qmp-pcs-ufs-v2.h"
-+#include "phy-qcom-qmp-pcs-ufs-v3.h"
-+#include "phy-qcom-qmp-pcs-ufs-v4.h"
-+#include "phy-qcom-qmp-pcs-ufs-v5.h"
- 
- /* QPHY_SW_RESET bit */
- #define SW_RESET				BIT(0)
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index 2e3ccf3da0e4..fa955c11a10f 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -23,6 +23,9 @@
- #include <dt-bindings/phy/phy.h>
- 
- #include "phy-qcom-qmp.h"
-+#include "phy-qcom-qmp-pcs-misc-v3.h"
-+#include "phy-qcom-qmp-pcs-usb-v4.h"
-+#include "phy-qcom-qmp-pcs-usb-v5.h"
- 
- /* QPHY_SW_RESET bit */
- #define SW_RESET				BIT(0)
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
-index e6f327acbf19..08a3eccaeadc 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-@@ -24,28 +24,14 @@
- #include "phy-qcom-qmp-qserdes-pll.h"
- 
- #include "phy-qcom-qmp-pcs-v2.h"
--#include "phy-qcom-qmp-pcs-ufs-v2.h"
- 
- #include "phy-qcom-qmp-pcs-v3.h"
--#include "phy-qcom-qmp-pcs-misc-v3.h"
--#include "phy-qcom-qmp-pcs-ufs-v3.h"
- 
- #include "phy-qcom-qmp-pcs-v4.h"
--#include "phy-qcom-qmp-pcs-pcie-v4.h"
--#include "phy-qcom-qmp-pcs-usb-v4.h"
--#include "phy-qcom-qmp-pcs-ufs-v4.h"
- 
- #include "phy-qcom-qmp-pcs-v4_20.h"
--#include "phy-qcom-qmp-pcs-pcie-v4_20.h"
- 
- #include "phy-qcom-qmp-pcs-v5.h"
--#include "phy-qcom-qmp-pcs-pcie-v5.h"
--#include "phy-qcom-qmp-pcs-usb-v5.h"
--#include "phy-qcom-qmp-pcs-ufs-v5.h"
--
--#include "phy-qcom-qmp-pcs-pcie-v5_20.h"
--
--#include "phy-qcom-qmp-pcie-qhp.h"
- 
- /* Only for QMP V3 & V4 PHY - DP COM registers */
- #define QPHY_V3_DP_COM_PHY_MODE_CTRL			0x00
--- 
-2.35.1
+If sc8280xp supports CX power down, it would be good to also put in the
+cxcs offsets so USB RET still works even when you do hit CX power down some
+time in the future.
 
+> 
+> Note that the PCIe domains should remain always-on until we have driver
+> support for suspend in place.
+> 
+> Johan
+> 
+> 
+> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+> index 7768e6901dcc..a18ed88f3b82 100644
+> --- a/drivers/clk/qcom/gcc-sc8280xp.c
+> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
+> @@ -6843,17 +6843,12 @@ static struct gdsc ufs_phy_gdsc = {
+>   	.pwrsts = PWRSTS_OFF_ON,
+>   };
+>   
+> -/*
+> - * The Qualcomm DWC3 driver suspend implementation appears to be incomplete
+> - * for sc8280xp so keep the USB power domains always-on for now.
+> - */
+>   static struct gdsc usb30_mp_gdsc = {
+>   	.gdscr = 0xab004,
+>   	.pd = {
+>   		.name = "usb30_mp_gdsc",
+>   	},
+> -	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = ALWAYS_ON,
+> +	.pwrsts = PWRSTS_RET_ON,
+>   };
+>   
+>   static struct gdsc usb30_prim_gdsc = {
+> @@ -6861,8 +6856,7 @@ static struct gdsc usb30_prim_gdsc = {
+>   	.pd = {
+>   		.name = "usb30_prim_gdsc",
+>   	},
+> -	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = ALWAYS_ON,
+> +	.pwrsts = PWRSTS_RET_ON,
+>   };
+>   
+>   static struct gdsc usb30_sec_gdsc = {
+> @@ -6870,8 +6864,7 @@ static struct gdsc usb30_sec_gdsc = {
+>   	.pd = {
+>   		.name = "usb30_sec_gdsc",
+>   	},
+> -	.pwrsts = PWRSTS_OFF_ON,
+> -	.flags = ALWAYS_ON,
+> +	.pwrsts = PWRSTS_RET_ON,
+>   };
+>   
+>   static struct clk_regmap *gcc_sc8280xp_clocks[] = {
