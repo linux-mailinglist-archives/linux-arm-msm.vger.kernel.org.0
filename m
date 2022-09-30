@@ -2,79 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C10095F132B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 22:06:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A36835F1347
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 22:10:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232286AbiI3UGA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 16:06:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35900 "EHLO
+        id S232532AbiI3UK4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 16:10:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232302AbiI3UF4 (ORCPT
+        with ESMTP id S232461AbiI3UKP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 16:05:56 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C4F3163B63
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 13:05:49 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id sd10so11283308ejc.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 13:05:49 -0700 (PDT)
+        Fri, 30 Sep 2022 16:10:15 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2AF698373
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 13:10:08 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id z4so8480229lft.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 13:10:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=FSnWEFqvu0sKIXdGnUiQR7VfRWkAet9cenDbxULwh2w=;
-        b=Ul5ze0+/2m4BXfb95pG+apPjLW7jTgNgFl7FFgLeM9QESeTVv3x521/Dujq22sTS8p
-         br6ks7PSUfFdwzc07cRO5UMPNGuzaWe7CWDOE/YE1+22sI58Y5wyGnDngS8SOBNK/lI/
-         fakh9nc3+22GwofHyn9IXl4zXFhHsJw3yKq3E=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=hE8hq9/oLZg/ugxnoeYHfAR8kWWIKnShL8VjClO7B7I=;
+        b=DuMu+EWxt+qrp1kO50KmiVaZQMD9bUbDEsSzHHIZ4XfHkzDPh4MpbgnYLclNsoDlXM
+         qsvCENlGRug7bN4oJJ/Rd0V3L5njIGmXcDnTe95tcK2n9hvv30yRL4lwSkC8gxPgzdK5
+         bHYhYCod5Wr8XUezmzTOdIuB20kiHvE07z4S9waabgBKRqqCPed0v1/hsFOkO5oYj2Lh
+         GxkXz0aPr4OwUWwEVckjQ1gGs/rJOtB+Nh+TqsiOSqd4PbCfxDULwFa/MWmpKql2bHyk
+         yebNk9/vI0NDIAPowHBvJUaGPjHhaJGmAUjA8r9CqTEiSJKfOMCqHTMr4vxabH86A1Fu
+         ohJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=FSnWEFqvu0sKIXdGnUiQR7VfRWkAet9cenDbxULwh2w=;
-        b=1sXujMLyjsZI/BJILBRlvQC+3IE6Xpoltx97EtFDi/ECx2J2Yo6IEP1YfIeQ/tnyb4
-         fFAGoqG/7dCmqQC6V9C89AuqHsN2eTysfSHKYWuqxbAdxvcTFtPbApeHcK13mUjTEfoO
-         zYuwtefbJwt57W98aXsOkmdMVvruEJIxMtTIcddmOSnLLr2COw0pKOC4+kPdeKDI7Lwm
-         H9xPE3IIZeyw8yHCNVIIVFIucSfCmdaDOX2uFqXVaYXXaNbBjYXN75BwFEyur3aITpLu
-         NRZJKxxAU4U9m3+P9bdo0OJAnLX5RUrG3HeA3DkbUWvJi2eMhLfoo+gl5/6TCkiIDXpg
-         /wbw==
-X-Gm-Message-State: ACrzQf1n8PXYzPNB3qvGgZ5JqczQZ8lPHDvGS/rPH/hhSM9M5tIsDzCL
-        znFeRm1xuDKSOifhq/U/UgIwnwBYMo6PUzEg
-X-Google-Smtp-Source: AMsMyM4xMePVEhh/b4qO4uc2qHS4uLUe/GQL7CKR1zN+Uc9w2nNy1djOb5q5P8AqSmh+4gVI0HImNQ==
-X-Received: by 2002:a17:907:8a15:b0:782:e6da:f13d with SMTP id sc21-20020a1709078a1500b00782e6daf13dmr7733788ejc.152.1664568347259;
-        Fri, 30 Sep 2022 13:05:47 -0700 (PDT)
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com. [209.85.221.41])
-        by smtp.gmail.com with ESMTPSA id bm15-20020a170906c04f00b0073c80d008d5sm1604341ejb.122.2022.09.30.13.05.45
-        for <linux-arm-msm@vger.kernel.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=hE8hq9/oLZg/ugxnoeYHfAR8kWWIKnShL8VjClO7B7I=;
+        b=qOBsAAbwDfFijOLcvRWBfzttaXP/Hh30i8Tlpp/1XnehcE8/evAlY6mq2dNeM7hxTv
+         3TSL+k8kwUXLSHjpQweI/R2gpf3OXJi2DlJGAHw/9aEc/lSAKE/MMOLcbPutkgSLrhA2
+         OjH0dQzOUaMtwZ1smBWmYuWL6P6LqP93YH4SzB4QTb04MrDcqQfwe645+sNagxTHVBoo
+         OoVfNVLeFtdCS/lTiRmURS6kpU0eXl4DiYAAQdEVcZi35j88dlC2lJjBQJHLMUDbzVOo
+         ZzKLX2DlwfY0bdUspIvr3WdesyhVHoxCsphft/hQYmqnon7qefBZ5GZzm6IGWi7/OA8N
+         /J8g==
+X-Gm-Message-State: ACrzQf2/tOqDubc7r8dTgXCJW3BHiy9j//akF32JZ2zys7SJTTIj6sH6
+        UkuBZXpMOgGnvJj06bCZxItM1w==
+X-Google-Smtp-Source: AMsMyM5YYdLv0LT1uNUtMJjvydPi69ku740a5F2lsvIJWjlm2LdThGqv1mknp35IVYVQERXV1zNuFQ==
+X-Received: by 2002:a05:6512:e9e:b0:4a2:1503:c2e7 with SMTP id bi30-20020a0565120e9e00b004a21503c2e7mr1440195lfb.476.1664568606633;
+        Fri, 30 Sep 2022 13:10:06 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id q3-20020a0565123a8300b004a03d5c2140sm408295lfu.136.2022.09.30.13.10.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Sep 2022 13:05:45 -0700 (PDT)
-Received: by mail-wr1-f41.google.com with SMTP id n10so8378999wrw.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 13:05:45 -0700 (PDT)
-X-Received: by 2002:a5d:6488:0:b0:22b:3b0b:5e72 with SMTP id
- o8-20020a5d6488000000b0022b3b0b5e72mr7002267wri.138.1664568344847; Fri, 30
- Sep 2022 13:05:44 -0700 (PDT)
+        Fri, 30 Sep 2022 13:10:06 -0700 (PDT)
+Message-ID: <2c1c5d8a-fb7f-bc98-ed6b-021eb00f990f@linaro.org>
+Date:   Fri, 30 Sep 2022 22:10:05 +0200
 MIME-Version: 1.0
-References: <20220930182212.209804-1-krzysztof.kozlowski@linaro.org> <20220930182212.209804-3-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220930182212.209804-3-krzysztof.kozlowski@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 30 Sep 2022 13:05:33 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UZBL7SbLkkjYs0dSAxjLPnVW3dd_UfoPB8L_Hf0MhvLw@mail.gmail.com>
-Message-ID: <CAD=FV=UZBL7SbLkkjYs0dSAxjLPnVW3dd_UfoPB8L_Hf0MhvLw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sdm845-cheza: fix AP suspend pin bias
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH 1/8] arm64: dts: qcom: sdm845-tama: Add display nodes
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        "# 4.0+" <stable@vger.kernel.org>,
-        Fritz Koenig <frkoenig@google.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220930191049.123256-1-konrad.dybcio@somainline.org>
+ <20220930191049.123256-2-konrad.dybcio@somainline.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220930191049.123256-2-konrad.dybcio@somainline.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,23 +84,91 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Fri, Sep 30, 2022 at 11:22 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> There is no "bias-no-pull" property.  Assume intentions were disabling
-> bias.
->
-> Fixes: 79e7739f7b87 ("arm64: dts: qcom: sdm845-cheza: add initial cheza dt")
-> Cc: <stable@vger.kernel.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->
+On 30/09/2022 21:10, Konrad Dybcio wrote:
+> Add required nodes to support display on XZ2/XZ2c. XZ3 has a
+> different power rail setup and needs to be handled separately.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > ---
->
-> Not tested on hardware.
-> ---
->  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  .../qcom/sdm845-sony-xperia-tama-akari.dts    |  4 +
+>  .../qcom/sdm845-sony-xperia-tama-akatsuki.dts | 44 ++++++++-
+>  .../qcom/sdm845-sony-xperia-tama-apollo.dts   |  6 ++
+>  .../dts/qcom/sdm845-sony-xperia-tama.dtsi     | 96 +++++++++++++++++++
+>  4 files changed, 149 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dts b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dts
+> index 34f84f1f1eb4..d97b7f1e7140 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dts
+> @@ -11,3 +11,7 @@ / {
+>  	model = "Sony Xperia XZ2";
+>  	compatible = "sony,akari-row", "qcom,sdm845";
+>  };
+> +
+> +&panel {
+> +	compatible = "sony,td4353-jdi-tama";
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+git grep suggests it is not documented. Is it coming via different patchset?
+
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
+> index 2f5e12deaada..2a16305ac5da 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
+> @@ -10,9 +10,51 @@
+>  / {
+>  	model = "Sony Xperia XZ3";
+>  	compatible = "sony,akatsuki-row", "qcom,sdm845";
+> +
+> +	/* Fixed DCDC for the OLED panel */
+> +	ts_vddio_supply: ts-vddio-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "ts_vddio";
+> +
+> +		regulator-min-microvolt = <1840000>;
+> +		regulator-max-microvolt = <1840000>;
+> +
+> +		gpio = <&tlmm 133 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +		regulator-boot-on;
+> +	};
+> +};
+> +
+> +&ibb {
+> +	status = "disabled";
+> +};
+> +
+> +&lab {
+> +	status = "disabled";
+> +};
+> +
+> +&panel {
+> +	/* Akatsuki uses an OLED panel. */
+> +	/delete-property/ backlight;
+> +	/delete-property/ vsp-supply;
+> +	/delete-property/ vsn-supply;
+> +	/delete-property/ treset-gpios;
+> +};
+> +
+> +&pmi8998_wled {
+> +	status = "disabled";
+> +};
+> +
+> +&tlmm {
+> +	ts_vddio_en: ts-vddio-en {
+
+ts-vddio-en-state
+
+DT schema is coming:
+https://lore.kernel.org/linux-devicetree/20220930200529.331223-1-krzysztof.kozlowski@linaro.org/T/#t
+
+> +		pins = "gpio133";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +		output-high;
+> +	};
+
+Best regards,
+Krzysztof
+
