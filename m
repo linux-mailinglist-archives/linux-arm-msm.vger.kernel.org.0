@@ -2,122 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EAEEE5F0178
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 01:38:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D67B15F01FE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 02:56:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229728AbiI2Xi3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Sep 2022 19:38:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47364 "EHLO
+        id S229723AbiI3A4Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Sep 2022 20:56:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229720AbiI2Xi2 (ORCPT
+        with ESMTP id S229502AbiI3A4P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Sep 2022 19:38:28 -0400
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B53CB14DAE1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Sep 2022 16:38:26 -0700 (PDT)
-Received: from [192.168.1.101] (95.49.29.188.neoplus.adsl.tpnet.pl [95.49.29.188])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Thu, 29 Sep 2022 20:56:15 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D354115A0D;
+        Thu, 29 Sep 2022 17:56:11 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id BC2EF1F5E1;
-        Fri, 30 Sep 2022 01:38:23 +0200 (CEST)
-Message-ID: <48af9193-452f-ffb8-39c7-0d17068af658@somainline.org>
-Date:   Fri, 30 Sep 2022 01:38:21 +0200
+        by ams.source.kernel.org (Postfix) with ESMTPS id 7B6A2B80D8B;
+        Fri, 30 Sep 2022 00:56:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D79FC433D6;
+        Fri, 30 Sep 2022 00:56:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1664499369;
+        bh=g6rkz3RIaOilCZhlixcS0haE9FoSoSH5hsZdpPW9BtA=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=UwDUxTkV48fQXo1vQUjHDqLiAnJrhd6r9C/cSa8kjn5BmMru0mBnPqB6wXqPxY59/
+         ZbestpUFZnk1baSsb+44XHRyF6M4YMVT/Ob49rLhn9PK4VBh1i4UJX6f5Au2Q9hXRP
+         3idej2kyfyQuM2/60QhB3Im8GRQmHiY0w67Ay3aAOP6n29YoI/rTbRZRdDy9rh0WBH
+         1FYwi9dOSXxKyNpAGopCV4FlYeVZaRs4eK5iaMnzL0wb2o7O8fSCNhCZAPX5Qw76po
+         6+IMwg14TPFcwtnZyw5ppgyIF2jBloZr1Dtfai/1vGjvDt80L6wR1DrwRhNX2qp4fj
+         QnvAAS3um+4vg==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH] clk: gcc-sc8280xp: use retention for USB power domains
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20220916061740.87167-2-dmitry.baryshkov@linaro.org>
+References: <20220916061740.87167-1-dmitry.baryshkov@linaro.org> <20220916061740.87167-2-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v4 1/3] clk: asm9260: use parent index to link the reference clock
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220929161124.18138-1-johan+linaro@kernel.org>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220929161124.18138-1-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-phy@lists.infradead.org
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>
+Date:   Thu, 29 Sep 2022 17:56:07 -0700
+User-Agent: alot/0.10
+Message-Id: <20220930005609.1D79FC433D6@smtp.kernel.org>
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 29.09.2022 18:11, Johan Hovold wrote:
-> Since commit d399723950c4 ("clk: qcom: gdsc: Fix the handling of
-> PWRSTS_RET support) retention mode can be used on sc8280xp to maintain
-> state during suspend instead of leaving the domain always on.
-> 
-> This is needed to eventually allow the parent CX domain to be powered
-> down during suspend.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Quoting Dmitry Baryshkov (2022-09-15 23:17:38)
+> Rewrite clk-asm9260 to use parent index to use the reference clock.
+> During this rework two helpers are added:
+>=20
+> - clk_hw_register_mux_table_parent_data() to supplement
+>   clk_hw_register_mux_table() but using parent_data instead of
+>   parent_names
+>=20
+> - clk_hw_register_fixed_rate_parent_accuracy() to be used instead of
+>   directly calling __clk_hw_register_fixed_rate(). The later function is
+>   an internal API, which is better not to be called directly.
+>=20
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
-Konrad
->  drivers/clk/qcom/gcc-sc8280xp.c | 13 +++----------
->  1 file changed, 3 insertions(+), 10 deletions(-)
-> 
-> While we're not yet able to fully test this (since we're not hitting CX
-> power down) this can still go in as we'll need it in some form
-> eventually.
-> 
-> Note that the PCIe domains should remain always-on until we have driver
-> support for suspend in place.
-> 
-> Johan
-> 
-> 
-> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-> index 7768e6901dcc..a18ed88f3b82 100644
-> --- a/drivers/clk/qcom/gcc-sc8280xp.c
-> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
-> @@ -6843,17 +6843,12 @@ static struct gdsc ufs_phy_gdsc = {
->  	.pwrsts = PWRSTS_OFF_ON,
->  };
->  
-> -/*
-> - * The Qualcomm DWC3 driver suspend implementation appears to be incomplete
-> - * for sc8280xp so keep the USB power domains always-on for now.
-> - */
->  static struct gdsc usb30_mp_gdsc = {
->  	.gdscr = 0xab004,
->  	.pd = {
->  		.name = "usb30_mp_gdsc",
->  	},
-> -	.pwrsts = PWRSTS_OFF_ON,
-> -	.flags = ALWAYS_ON,
-> +	.pwrsts = PWRSTS_RET_ON,
->  };
->  
->  static struct gdsc usb30_prim_gdsc = {
-> @@ -6861,8 +6856,7 @@ static struct gdsc usb30_prim_gdsc = {
->  	.pd = {
->  		.name = "usb30_prim_gdsc",
->  	},
-> -	.pwrsts = PWRSTS_OFF_ON,
-> -	.flags = ALWAYS_ON,
-> +	.pwrsts = PWRSTS_RET_ON,
->  };
->  
->  static struct gdsc usb30_sec_gdsc = {
-> @@ -6870,8 +6864,7 @@ static struct gdsc usb30_sec_gdsc = {
->  	.pd = {
->  		.name = "usb30_sec_gdsc",
->  	},
-> -	.pwrsts = PWRSTS_OFF_ON,
-> -	.flags = ALWAYS_ON,
-> +	.pwrsts = PWRSTS_RET_ON,
->  };
->  
->  static struct clk_regmap *gcc_sc8280xp_clocks[] = {
+Applied to clk-next
