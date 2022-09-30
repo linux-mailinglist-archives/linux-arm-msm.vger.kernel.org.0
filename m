@@ -2,52 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5B4F5F11D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 20:52:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 985BB5F11D8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 20:52:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232238AbiI3Swm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 14:52:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38330 "EHLO
+        id S232314AbiI3Swn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 14:52:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231237AbiI3Swl (ORCPT
+        with ESMTP id S232233AbiI3Swm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 14:52:41 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FD4716513D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 11:52:39 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id g1so8183789lfu.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 11:52:39 -0700 (PDT)
+        Fri, 30 Sep 2022 14:52:42 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2069C166489
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 11:52:40 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id a2so8202782lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 11:52:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=9LLU1snLDBFrkDtX73UL2zieslxs0+ytoPrFegmV88I=;
-        b=aE09uo+l+I4lVZzbN2Ui+AJstpHhAwqTErfY4Mwx1Tlul4KqtPnGTaPToxM0MIn8Tp
-         aGHDdPLQSR9DEGDLgx4xqWVEdiyOHcG2q/cNfdf0Jm8uuCng0TCNuVMAvXt7UEorG1E1
-         FbNRz93axhjDII1CTuv7je0O3bVVnF845YZeDZ7he//Z1qt2SvQsghLWBoLyQvZi/b4t
-         0iE+66obHUMaFcV8133JyzVYkglxN+bazjPKcR5p8y38sStdHqQqfkUGngj+Yvz7BCmL
-         ikBwnoZKrbdBr8Ie69eSVEWSu2ve7Mim2ZsEsnED00V4E2/sP+Yb4t+XiT6cRQvpoB2W
-         2uaA==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=nhmJW38bStR53koI2qHog4MXKMn+LAf/+Mw7HuF008A=;
+        b=nhPRWT3U2hCJqZnt8iDi66CM+zTrZO7+6ZO9ltsYr7uwhaWJrKBf0rxtKLCUj3F7HF
+         EK2/1wn16Y9B80BFp36+l83la5RG5c8kKcfH05wsv0PJQxVjiL2jfwrimPdgnPY+iWyT
+         biBAqGJ3XQN87luOVF8eAW8zoa9088VgzS4kqD4WvyhKvuyQuG1t4wfsWC+gvFnWVYEb
+         ZKjLMe7EiWSUJ30lKhkMDcOFC+O4aYzao1SCWr9/MxPA6psKEekBWWOxKqkcKfnrBBr2
+         wGPG5d3SmZizMqQrqCjWU0ux3WMRgoVz/n+sQBqo0yHNBhTtAZVusd3Re6IX6WWMnPeH
+         g4Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=9LLU1snLDBFrkDtX73UL2zieslxs0+ytoPrFegmV88I=;
-        b=LMdmq6X2uRSaVuoX5HlKSiV2BpixDAmFWikpXhiDNqEVxbn6fl7yZILFd5GHAqlsW0
-         MR4Jx4169co1qehuku6UCOf44Jcxx6anED+jLJuhngie57iSibMuUSOiDxm9NJipQ38O
-         hMzGfwB79v4z5gR/2ULAz1G/z+yo7kkp3kQAtgtvE3uJlCEAkDwvRECmvOQpUPYWuelF
-         cCjg51ZTmNQhDlz7J4LPm+klVl6Xc3nZFFmLOg/win5SeHIXdgWiwPlfy1dicDx8Q2F5
-         ln5Duy9xqDbE6VjHms8HBDdDgB1yKXLur6JBjSK2+a0a7Oy+hamabnD90CgwYmMpXt7o
-         EZ6w==
-X-Gm-Message-State: ACrzQf0+mh2B6xZpgmny6qtskXJR2POSWtvUL6F/vx+aIVk0i9jTZfjz
-        duLH8DAXF8yAc9R8EWbTQ1H3Xw==
-X-Google-Smtp-Source: AMsMyM6/SB4MUWMhNw/o5Mj+ShTGADsUyWi/52HZJXcRKJvGSqHH25pGKR7RvXHZsQGnixIQUbqd1A==
-X-Received: by 2002:a05:6512:3d8c:b0:49a:4872:858 with SMTP id k12-20020a0565123d8c00b0049a48720858mr3568681lfv.145.1664563957816;
-        Fri, 30 Sep 2022 11:52:37 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=nhmJW38bStR53koI2qHog4MXKMn+LAf/+Mw7HuF008A=;
+        b=QzYBz1/36DYKt1f12YwI5IR2NSjZdq3Aze4JHSirpfkjEE7zPvZ18u3o/hiZOMECd0
+         FICjq+LOHOijV/ilwHsWwnBUHX23XuoJdMBKqeTRZNXaWinaQmmUwQwT7dz3Ut8O87NT
+         IKSYWwjZkDUlAL/iSWFaxQDhfKWYkdoQ25X8EZSjm9fEcU00XH1zfsRI2lUeajdoOttn
+         iqpU2PP/TuoND9BdOppLYToZYnaLYqebZyHFPyx1KgOehB/45qQe0GJf1mrvbKLJCYCn
+         nNZPUR8TOzTbO84aWrRJcVTiOtRVAFgZjZ82zKvyUZIHRLv+HePj0s309SX+k7yKwSKe
+         JcUw==
+X-Gm-Message-State: ACrzQf3eNGkmPIKzQ6iruzpNu3FNbYAPRDAiCHzibQFbz8JZnScUwu/u
+        KfjJKpxeH/wM6k03gAmBvRnMrQ==
+X-Google-Smtp-Source: AMsMyM4hNGiFz8NLrXE3eAcZxoQme1ibK7AjKcLR/X2MzA6dcit2EGQuLRY7OOjAHcaeXkbJoV3syA==
+X-Received: by 2002:a05:6512:b1c:b0:4a1:baad:1e6a with SMTP id w28-20020a0565120b1c00b004a1baad1e6amr3578020lfu.466.1664563958475;
+        Fri, 30 Sep 2022 11:52:38 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
         by smtp.gmail.com with ESMTPSA id i8-20020a056512006800b00492cfecf1c0sm374703lfo.245.2022.09.30.11.52.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 11:52:37 -0700 (PDT)
+        Fri, 30 Sep 2022 11:52:38 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -55,63 +56,55 @@ To:     Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH 00/23] ARM: dts: qcom: rework DT for apq8064, msm8960 and msm8660
-Date:   Fri, 30 Sep 2022 21:52:13 +0300
-Message-Id: <20220930185236.867655-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 01/23] ARM: dts: qcom: apq8064: disable HDMI nodes by default
+Date:   Fri, 30 Sep 2022 21:52:14 +0300
+Message-Id: <20220930185236.867655-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220930185236.867655-1-dmitry.baryshkov@linaro.org>
+References: <20220930185236.867655-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rework DT files for older 32-bit MSM Snapdragon platforms. Use links
-rather than replicating the whole DT structure, cleanup several DT
-issues (like erroneous node names).
+Disable HDMI nodes. Individual board can enable them if required. The
+only APQ8064 board that has working HDMI output is IFC6410, which
+enables these devices explicitly.
 
-Dmitry Baryshkov (23):
-  ARM: dts: qcom: apq8064: disable HDMI nodes by default
-  ARM: dts: qcom: apq8064-ifc6410: use labels to patch device tree
-  ARM: dts: qcom: apq8064-ifc6410: pull ext-3p3v regulator from soc node
-  ARM: dts: qcom: apq8064-ifc6410: fix user1 LED node name
-  ARM: dts: qcom: apq8064-ifc6410: pull SDCC pwrseq node up one level
-  ARM: dts: qcom: apq8064-flo: use labels to patch device tree
-  ARM: dts: qcom: apq8064-nexus7-flo: fix node name for ext 3p3v
-    regulator
-  ARM: dts: qcom: apq8064-cm-qs600: use labels to patch device tree
-  ARM: dts: qcom: apq8064-cm-qs600: pull 3p3v regulator from soc node
-  ARM: dts: qcom: apq8064-cm-qs600: pull SDCC pwrseq node up one level
-  ARM: dts: qcom: apq8064-sony-xperia-lagan-yuga: use labels to patch
-    device tree
-  ARM: dts: qcom: apq8064: drop amba device node
-  ARM: dts: qcom: apq8064: drop unit ids from PMIC nodes
-  ARM: dts: qcom: apq8064: drop qcom, prefix from SSBI node name
-  ARM: dts: qcom: apq8064: fix the riva-pil node id
-  ARM: dts: qcom: msm8960: drop unit ids from PMIC nodes
-  ARM: dts: qcom: msm8960: drop qcom, prefix from SSBI node name
-  ARM: dts: qcom: msm8960-cdp: drop unit ids from regulator node
-  ARM: dts: qcom: msm8960: drop amba device node
-  ARM: dts: qcom: msm8660: move pm8058 LED devices to the main DT file
-  ARM: dts: qcom: apq8060-dragonboard: use labels to patch device tree
-  ARM: dts: qcom: msm8660: drop unit ids from PMIC nodes
-  ARM: dts: qcom: msm8660: drop qcom, prefix from SSBI node name
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ arch/arm/boot/dts/qcom-apq8064.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
- .../arm/boot/dts/qcom-apq8060-dragonboard.dts | 1778 ++++++++---------
- .../boot/dts/qcom-apq8064-asus-nexus7-flo.dts |  523 +++--
- arch/arm/boot/dts/qcom-apq8064-cm-qs600.dts   |  390 ++--
- arch/arm/boot/dts/qcom-apq8064-ifc6410.dts    |  561 +++---
- .../qcom-apq8064-sony-xperia-lagan-yuga.dts   |  649 +++---
- arch/arm/boot/dts/qcom-apq8064.dtsi           |  145 +-
- arch/arm/boot/dts/qcom-msm8660.dtsi           |   33 +-
- arch/arm/boot/dts/qcom-msm8960-cdp.dts        |    2 +-
- arch/arm/boot/dts/qcom-msm8960.dtsi           |   72 +-
- 9 files changed, 2049 insertions(+), 2104 deletions(-)
-
+diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
+index 942aa2278355..829e197579b9 100644
+--- a/arch/arm/boot/dts/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
+@@ -1470,6 +1470,8 @@ hdmi: hdmi-tx@4a00000 {
+ 
+ 			phys = <&hdmi_phy>;
+ 
++			status = "disabled";
++
+ 			ports {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+@@ -1498,6 +1500,8 @@ hdmi_phy: hdmi-phy@4a00400 {
+ 			clocks = <&mmcc HDMI_S_AHB_CLK>;
+ 			clock-names = "slave_iface";
+ 			#phy-cells = <0>;
++
++			status = "disabled";
+ 		};
+ 
+ 		mdp: mdp@5100000 {
 -- 
 2.35.1
 
