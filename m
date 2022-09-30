@@ -2,153 +2,274 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 073C05F0392
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 06:28:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B2A15F0450
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 07:52:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229955AbiI3E2s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 00:28:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60952 "EHLO
+        id S229952AbiI3FwR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 01:52:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229574AbiI3E2q (ORCPT
+        with ESMTP id S229479AbiI3FwQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 00:28:46 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DA983F1D4;
-        Thu, 29 Sep 2022 21:28:45 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id v10-20020a17090a634a00b00205e48cf845so7850991pjs.4;
-        Thu, 29 Sep 2022 21:28:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date;
-        bh=cifIfLO4EdVKW63K9YetCP67akD4Fy7QshBaWPMRel4=;
-        b=Q+iY2xKACsdQFn4a5l6oBgeEUjWwyLXucCgEhoXbQWxkLGMxt1hYZutX0VVoixwJXf
-         TwVRDhDqYM+MFMgV2HktgLpn5Rv8dW0FgYNZyMpLX9XgHjAzeZgpLmH+zFa0WZBEafx7
-         FvVrKVCaDz25E4PDtcTdJ5UhDJD6g1mvIiDD5gKDvd47/os30FQaPAKwWOKLL3phiN/S
-         lBHENHFr4lN7DBB4YzrDH6XMwOf55G8SN8f91OC26mb2KhXcWmzyI/GWuyxUMMu8GUIG
-         2qHxOe6VqEEHxvbaHy/mm5g4b4bUC/VpXiQdwb37Zj3M+T5TP55nz/xs0xI6Dqbs/na9
-         /hUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date;
-        bh=cifIfLO4EdVKW63K9YetCP67akD4Fy7QshBaWPMRel4=;
-        b=6QkEGkhrtGYxGEQgBL5nmsMobiotDtCjGOwhOb3umyBvLJij3aaqs8OTWqMgBLDMOW
-         o276cc1YroEjzmyfwEShUJzAREWH3Q7Dspm5HZlcDWhKaJ1b3UhXHbw9aF6moCx8ZOoY
-         ms6A2z64eJO1IUleATfY2DWIUwfhax43ug5zyImQyG6xuqZ1DedcxvXzCToq+LWxolgc
-         ry+QoXCsMZ77nhlDho3pOyt9zvEpY4fiZDKDmV61hsWW15CLYO6JehWWyzi1UQNBdnCI
-         bI6vmzPedgCrufQneit8jK34n5HbV6L+yq++F7wj5RA8ey10yIRvU3rILtDQ91QvRwZ0
-         I0GA==
-X-Gm-Message-State: ACrzQf21jhFHvmQMMWKw3awQ5dWz9gHFN/EhwWEgMxhx4cfkBpePoQCD
-        WlTcHicFXU7CwxZf24snnqlal+uoBKkeAobD
-X-Google-Smtp-Source: AMsMyM6C/PAa+EOJnltX2UfPGfD8gHe7jpYUGYj5I580lKg8IdAaEo5Ji4kKZ6NtpWkAoXLN3oYesA==
-X-Received: by 2002:a17:90b:38c6:b0:203:3dfd:6fcc with SMTP id nn6-20020a17090b38c600b002033dfd6fccmr7330393pjb.96.1664512124536;
-        Thu, 29 Sep 2022 21:28:44 -0700 (PDT)
-Received: from localhost ([104.28.220.174])
-        by smtp.gmail.com with ESMTPSA id i16-20020aa796f0000000b0053ab9c18d3csm595042pfq.14.2022.09.29.21.28.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Sep 2022 21:28:43 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 30 Sep 2022 09:58:36 +0530
-Message-Id: <CN9GAU5VE065.3P5LN5Y0FZOKE@skynet-linux>
-Cc:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <linux-kernel@vger.kernel.org>, <andersson@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        "Vladimir Lypak" <vladimir.lypak@gmail.com>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
-        "Mathieu Poirier" <mathieu.poirier@linaro.org>
-Subject: Re: [PATCH v5 1/5] remoteproc: qcom: qcom_wcnss: Add support for
- pronto-v3
-From:   "Sireesh Kodali" <sireeshkodali1@gmail.com>
-To:     "Stephan Gerhold" <stephan@gerhold.net>
-X-Mailer: aerc 0.12.0
-References: <20220929050209.1464526-1-sireeshkodali1@gmail.com>
- <20220929050209.1464526-2-sireeshkodali1@gmail.com>
- <YzVn3Q81bCo4l/aQ@gerhold.net>
-In-Reply-To: <YzVn3Q81bCo4l/aQ@gerhold.net>
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Fri, 30 Sep 2022 01:52:16 -0400
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AEAC1FBCB3;
+        Thu, 29 Sep 2022 22:52:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1664517134; x=1696053134;
+  h=date:from:to:cc:subject:message-id:mime-version:
+   content-transfer-encoding;
+  bh=3KPEcgR85ZOMW5q/JgOUeEEbfoaGIM6iNZckmuOtgYs=;
+  b=OfkmDMIQEryd0AhYOQeI11qEfUKsnPUZKJY3w9rQkb8hQOi/lksP3JOY
+   +w3xzsPNx5+5Z+TH5WK9nHwDQJIhL/rRC3eBKhLgHP3jsLjAkyJfwsmvL
+   CGxgphEp3z26faMAqS9Sg0GKzW0wqezL4OmjDmQqXsJ04GahaX+vT2mi1
+   rEAeU9SNmYuqDiPZXtPMpGRi+FxtcIRa8oka9wmVAiwiET/pDiXWFDOl9
+   TdLIJJ66jykWkYlABgxdRLlfEREnSLKGW2IAjqYmXM/G0M8KI6PM1xxi/
+   81seGbSeiGY1Nzj6XigRMjfM7mcgl+9iNHDfcg97HEw/JR7ZkwehycGlW
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10485"; a="366161189"
+X-IronPort-AV: E=Sophos;i="5.93,357,1654585200"; 
+   d="scan'208";a="366161189"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Sep 2022 22:52:13 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10485"; a="748117448"
+X-IronPort-AV: E=Sophos;i="5.93,357,1654585200"; 
+   d="scan'208";a="748117448"
+Received: from lkp-server01.sh.intel.com (HELO 14cc182da2d0) ([10.239.97.150])
+  by orsmga004.jf.intel.com with ESMTP; 29 Sep 2022 22:52:10 -0700
+Received: from kbuild by 14cc182da2d0 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1oe8wT-0000Zf-2Q;
+        Fri, 30 Sep 2022 05:52:09 +0000
+Date:   Fri, 30 Sep 2022 13:51:49 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Andrew Morton <akpm@linux-foundation.org>
+Cc:     Mark Brown <broonie@kernel.org>,
+        linux-mediatek@lists.infradead.org, linux-gpio@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        Linux Memory Management List <linux-mm@kvack.org>
+Subject: [linux-next:master] BUILD REGRESSION
+ 1c6c4f42b3de4f18ea96d62950d0e266ca35a055
+Message-ID: <633683f5.q63D6Na3AYhI/Rp2%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu Sep 29, 2022 at 3:09 PM IST, Stephan Gerhold wrote:
-> On Thu, Sep 29, 2022 at 10:32:05AM +0530, Sireesh Kodali wrote:
-> > From: Vladimir Lypak <vladimir.lypak@gmail.com>
-> >=20
-> > Pronto-v3 is similar to pronto-v2. It requires two power domains, and i=
-t
-> > requires the xo clock. It is used on the MSM8953 platform.
-> >=20
-> > Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-> > Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
-> > ---
-> >  drivers/remoteproc/qcom_wcnss.c | 13 +++++++++++++
-> >  1 file changed, 13 insertions(+)
-> >=20
-> > diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_=
-wcnss.c
-> > index 68f37296b151..ff18bfae5eb6 100644
-> > --- a/drivers/remoteproc/qcom_wcnss.c
-> > +++ b/drivers/remoteproc/qcom_wcnss.c
-> > @@ -141,6 +141,18 @@ static const struct wcnss_data pronto_v2_data =3D =
-{
-> >  	.num_vregs =3D 1,
-> >  };
-> > =20
-> > +static const struct wcnss_data pronto_v3_data =3D {
-> > +	.pmu_offset =3D 0x1004,
-> > +	.spare_offset =3D 0x1088,
-> > +
-> > +	.pd_names =3D { "mx", "cx" },
-> > +	.vregs =3D (struct wcnss_vreg_info[]) {
-> > +		{ "vddpx", 1800000, 1800000, 0 },
-> > +	},
-> > +	.num_pd_vregs =3D 2,
->
-> Can you try dropping this line? num_pd_vregs =3D 2 means:
-> "If power domains are specified in the device tree, skip the first two
->  entries in 'vregs'." For pronto-v1/v2 it would skip the "vddmx" and
-> "vddcx" entry, since those are already covered by the power domains.
->
-> However, since pronto-v3 should always have power domains in DT and
-> "vregs" has just a single entry this means that it would always access
-> the array out of bounds at runtime and request some garbage regulator.
-> I'm confused why this does not crash more spectacularly...
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+branch HEAD: 1c6c4f42b3de4f18ea96d62950d0e266ca35a055  Add linux-next specific files for 20220929
 
-Indeed it should have crashed, thanks for catching this. Will be fixed
-in v6
->
-> Thanks,
-> Stephan
->
-> > +	.num_vregs =3D 1,
-> > +};
-> > +
-> >  static int wcnss_load(struct rproc *rproc, const struct firmware *fw)
-> >  {
-> >  	struct qcom_wcnss *wcnss =3D (struct qcom_wcnss *)rproc->priv;
-> > @@ -675,6 +687,7 @@ static const struct of_device_id wcnss_of_match[] =
-=3D {
-> >  	{ .compatible =3D "qcom,riva-pil", &riva_data },
-> >  	{ .compatible =3D "qcom,pronto-v1-pil", &pronto_v1_data },
-> >  	{ .compatible =3D "qcom,pronto-v2-pil", &pronto_v2_data },
-> > +	{ .compatible =3D "qcom,pronto-v3-pil", &pronto_v3_data },
-> >  	{ },
-> >  };
-> >  MODULE_DEVICE_TABLE(of, wcnss_of_match);
-> > --=20
-> > 2.37.3
-> >=20
+Error/Warning reports:
 
+https://lore.kernel.org/linux-mm/202209150141.WgbAKqmX-lkp@intel.com
+https://lore.kernel.org/llvm/202209300609.14WJ5tgf-lkp@intel.com
+https://lore.kernel.org/llvm/202209300825.jcUh1OUm-lkp@intel.com
+
+Error/Warning: (recently discovered and may have been fixed)
+
+/kbuild/src/minority/drivers/gpu/drm/msm/msm_gem_shrinker.c:29:28: error: '__GFP_ATOMIC' undeclared (first use in this function); did you mean 'GFP_ATOMIC'?
+ERROR: modpost: "devm_iio_channel_get_all" [drivers/power/supply/mt6370-charger.ko] undefined!
+ERROR: modpost: "devm_ioremap_resource" [drivers/dma/fsl-edma.ko] undefined!
+ERROR: modpost: "devm_ioremap_resource" [drivers/dma/idma64.ko] undefined!
+ERROR: modpost: "devm_ioremap_resource" [drivers/dma/qcom/hdma.ko] undefined!
+ERROR: modpost: "devm_memremap" [drivers/misc/open-dice.ko] undefined!
+ERROR: modpost: "devm_memunmap" [drivers/misc/open-dice.ko] undefined!
+ERROR: modpost: "devm_platform_ioremap_resource" [drivers/char/xillybus/xillybus_of.ko] undefined!
+ERROR: modpost: "devm_platform_ioremap_resource" [drivers/clk/xilinx/clk-xlnx-clock-wizard.ko] undefined!
+ERROR: modpost: "iio_read_channel_processed" [drivers/power/supply/mt6370-charger.ko] undefined!
+ERROR: modpost: "ioremap" [drivers/tty/ipwireless/ipwireless.ko] undefined!
+ERROR: modpost: "iounmap" [drivers/net/ethernet/8390/pcnet_cs.ko] undefined!
+ERROR: modpost: "iounmap" [drivers/tty/ipwireless/ipwireless.ko] undefined!
+arch/arm64/kernel/alternative.c:199:6: warning: no previous prototype for 'apply_alternatives_vdso' [-Wmissing-prototypes]
+arch/arm64/kernel/alternative.c:295:14: warning: no previous prototype for 'alt_cb_patch_nops' [-Wmissing-prototypes]
+depmod: ERROR: Cycle detected: nf_conntrack -> nf_nat -> nf_conntrack
+depmod: ERROR: Found 2 modules in dependency cycles!
+drivers/gpu/drm/msm/msm_gem_shrinker.c:29:28: error: '__GFP_ATOMIC' undeclared (first use in this function); did you mean 'GFP_ATOMIC'?
+drivers/pinctrl/pinctrl-amd.c:288 amd_gpio_dbg_show() warn: format string contains non-ascii character '\x9a'
+drivers/pinctrl/pinctrl-amd.c:288 amd_gpio_dbg_show() warn: format string contains non-ascii character '\xa1'
+drivers/pinctrl/pinctrl-amd.c:370 amd_gpio_dbg_show() warn: format string contains non-ascii character '\x95'
+grep: smatch_trinity_*: No such file or directory
+
+Error/Warning ids grouped by kconfigs:
+
+gcc_recent_errors
+|-- alpha-allyesconfig
+|   `-- drivers-gpu-drm-msm-msm_gem_shrinker.c:error:__GFP_ATOMIC-undeclared-(first-use-in-this-function)
+|-- arc-allyesconfig
+|   `-- drivers-gpu-drm-msm-msm_gem_shrinker.c:error:__GFP_ATOMIC-undeclared-(first-use-in-this-function)
+|-- arm-allyesconfig
+|   `-- drivers-gpu-drm-msm-msm_gem_shrinker.c:error:__GFP_ATOMIC-undeclared-(first-use-in-this-function)
+|-- arm-defconfig
+|   `-- drivers-gpu-drm-msm-msm_gem_shrinker.c:error:__GFP_ATOMIC-undeclared-(first-use-in-this-function)
+|-- arm64-allyesconfig
+|   |-- arch-arm64-kernel-alternative.c:warning:no-previous-prototype-for-alt_cb_patch_nops
+|   |-- arch-arm64-kernel-alternative.c:warning:no-previous-prototype-for-apply_alternatives_vdso
+|   `-- drivers-gpu-drm-msm-msm_gem_shrinker.c:error:__GFP_ATOMIC-undeclared-(first-use-in-this-function)
+|-- arm64-buildonly-randconfig-r001-20220926
+|   |-- arch-arm64-kernel-alternative.c:warning:no-previous-prototype-for-alt_cb_patch_nops
+|   `-- arch-arm64-kernel-alternative.c:warning:no-previous-prototype-for-apply_alternatives_vdso
+|-- arm64-buildonly-randconfig-r002-20220926
+|   |-- arch-arm64-kernel-alternative.c:warning:no-previous-prototype-for-alt_cb_patch_nops
+|   `-- arch-arm64-kernel-alternative.c:warning:no-previous-prototype-for-apply_alternatives_vdso
+|-- arm64-randconfig-r002-20220926
+|   |-- arch-arm64-kernel-alternative.c:warning:no-previous-prototype-for-alt_cb_patch_nops
+|   `-- arch-arm64-kernel-alternative.c:warning:no-previous-prototype-for-apply_alternatives_vdso
+|-- arm64-randconfig-r033-20220926
+|   |-- arch-arm64-kernel-alternative.c:warning:no-previous-prototype-for-alt_cb_patch_nops
+|   |-- arch-arm64-kernel-alternative.c:warning:no-previous-prototype-for-apply_alternatives_vdso
+|   `-- drivers-gpu-drm-msm-msm_gem_shrinker.c:error:__GFP_ATOMIC-undeclared-(first-use-in-this-function)
+|-- ia64-allmodconfig
+|   `-- drivers-gpu-drm-msm-msm_gem_shrinker.c:error:__GFP_ATOMIC-undeclared-(first-use-in-this-function)
+|-- m68k-allmodconfig
+|   `-- drivers-gpu-drm-msm-msm_gem_shrinker.c:error:__GFP_ATOMIC-undeclared-(first-use-in-this-function)
+|-- m68k-allyesconfig
+|   `-- drivers-gpu-drm-msm-msm_gem_shrinker.c:error:__GFP_ATOMIC-undeclared-(first-use-in-this-function)
+|-- microblaze-randconfig-m041-20220925
+|   |-- drivers-gpu-drm-display-drm_dp_helper.c-drm_dp_phy_name()-warn:unsigned-dp_phy-is-never-less-than-zero.
+|   |-- drivers-gpu-drm-msm-msm_gem_shrinker.c:error:__GFP_ATOMIC-undeclared-(first-use-in-this-function)
+|   |-- drivers-pinctrl-pinctrl-amd.c-amd_gpio_dbg_show()-warn:format-string-contains-non-ascii-character-x95
+|   |-- drivers-pinctrl-pinctrl-amd.c-amd_gpio_dbg_show()-warn:format-string-contains-non-ascii-character-x9a
+|   |-- drivers-pinctrl-pinctrl-amd.c-amd_gpio_dbg_show()-warn:format-string-contains-non-ascii-character-xa1
+|   `-- grep:smatch_trinity_:No-such-file-or-directory
+|-- mips-allyesconfig
+|   `-- drivers-gpu-drm-msm-msm_gem_shrinker.c:error:__GFP_ATOMIC-undeclared-(first-use-in-this-function)
+|-- nios2-buildonly-randconfig-r004-20220928
+|   `-- drivers-gpu-drm-msm-msm_gem_shrinker.c:error:__GFP_ATOMIC-undeclared-(first-use-in-this-function)
+|-- openrisc-randconfig-r015-20220925
+|   |-- ERROR:devm_iio_channel_get_all-drivers-power-supply-mt6370-charger.ko-undefined
+|   `-- ERROR:iio_read_channel_processed-drivers-power-supply-mt6370-charger.ko-undefined
+|-- powerpc-allmodconfig
+|   `-- drivers-gpu-drm-msm-msm_gem_shrinker.c:error:__GFP_ATOMIC-undeclared-(first-use-in-this-function)
+|-- s390-allmodconfig
+|   |-- ERROR:devm_ioremap_resource-drivers-dma-fsl-edma.ko-undefined
+|   |-- ERROR:devm_ioremap_resource-drivers-dma-idma64.ko-undefined
+clang_recent_errors
+|-- arm-randconfig-r001-20220928
+|   |-- drivers-phy-mediatek-phy-mtk-hdmi-mt2701.c:warning:result-of-comparison-of-constant-with-expression-of-type-typeof-(_Generic((mask_)-char:(unsigned-char)-unsigned-char:(unsigned-char)-signed-char:(uns
+|   |-- drivers-phy-mediatek-phy-mtk-hdmi-mt8173.c:warning:result-of-comparison-of-constant-with-expression-of-type-typeof-(_Generic((mask_)-char:(unsigned-char)-unsigned-char:(unsigned-char)-signed-char:(uns
+|   |-- drivers-phy-mediatek-phy-mtk-mipi-dsi-mt8173.c:warning:result-of-comparison-of-constant-with-expression-of-type-typeof-(_Generic((mask_)-char:(unsigned-char)-unsigned-char:(unsigned-char)-signed-char:
+|   |-- drivers-phy-mediatek-phy-mtk-mipi-dsi-mt8183.c:warning:result-of-comparison-of-constant-with-expression-of-type-typeof-(_Generic((mask_)-char:(unsigned-char)-unsigned-char:(unsigned-char)-signed-char:
+|   `-- drivers-phy-mediatek-phy-mtk-tphy.c:warning:result-of-comparison-of-constant-with-expression-of-type-typeof-(_Generic((mask_)-char:(unsigned-char)-unsigned-char:(unsigned-char)-signed-char:(unsigned-c
+|-- hexagon-allmodconfig
+|   `-- drivers-gpu-drm-msm-msm_gem_shrinker.c:error:use-of-undeclared-identifier-__GFP_ATOMIC
+|-- powerpc-buildonly-randconfig-r002-20220928
+|   |-- drivers-gpu-drm-msm-msm_gem_shrinker.c:error:use-of-undeclared-identifier-__GFP_ATOMIC
+|   |-- drivers-phy-mediatek-phy-mtk-hdmi-mt2701.c:warning:result-of-comparison-of-constant-with-expression-of-type-typeof-(_Generic((mask_)-char:(unsigned-char)-unsigned-char:(unsigned-char)-signed-char:(uns
+|   |-- drivers-phy-mediatek-phy-mtk-hdmi-mt8173.c:warning:result-of-comparison-of-constant-with-expression-of-type-typeof-(_Generic((mask_)-char:(unsigned-char)-unsigned-char:(unsigned-char)-signed-char:(uns
+|   |-- drivers-phy-mediatek-phy-mtk-mipi-dsi-mt8173.c:warning:result-of-comparison-of-constant-with-expression-of-type-typeof-(_Generic((mask_)-char:(unsigned-char)-unsigned-char:(unsigned-char)-signed-char:
+|   |-- drivers-phy-mediatek-phy-mtk-mipi-dsi-mt8183.c:warning:result-of-comparison-of-constant-with-expression-of-type-typeof-(_Generic((mask_)-char:(unsigned-char)-unsigned-char:(unsigned-char)-signed-char:
+|   `-- drivers-phy-mediatek-phy-mtk-tphy.c:warning:result-of-comparison-of-constant-with-expression-of-type-typeof-(_Generic((mask_)-char:(unsigned-char)-unsigned-char:(unsigned-char)-signed-char:(unsigned-c
+|-- s390-randconfig-r044-20220928
+|   |-- apparmorfs.c:(.text):undefined-reference-to-zstd_max_clevel
+|   |-- apparmorfs.c:(.text):undefined-reference-to-zstd_min_clevel
+|   |-- lsm.c:(.text):undefined-reference-to-zstd_min_clevel
+|   `-- s39-linux-ld:lsm.c:(.text):undefined-reference-to-zstd_max_clevel
+`-- x86_64-rhel-8.3-rust
+    |-- ld.lld:error:undefined-symbol:__rust_alloc
+    |-- ld.lld:error:undefined-symbol:__rust_dealloc
+    |-- ld.lld:error:undefined-symbol:__rust_realloc
+    |-- ld.lld:error:undefined-symbol:bool-as-core::fmt::Display::fmt
+    |-- ld.lld:error:undefined-symbol:core::fmt::Formatter::debug_list
+    |-- ld.lld:error:undefined-symbol:core::fmt::Formatter::debug_lower_hex
+    |-- ld.lld:error:undefined-symbol:core::fmt::Formatter::debug_upper_hex
+    |-- ld.lld:error:undefined-symbol:core::fmt::builders::DebugList::entry
+    |-- ld.lld:error:undefined-symbol:core::fmt::builders::DebugList::finish
+    |-- ld.lld:error:undefined-symbol:core::panicking::panic
+    |-- ld.lld:error:undefined-symbol:i32-as-core::fmt::Display::fmt
+    |-- ld.lld:error:undefined-symbol:i32-as-core::fmt::LowerHex::fmt
+    |-- ld.lld:error:undefined-symbol:i32-as-core::fmt::UpperHex::fmt
+    |-- ld.lld:error:undefined-symbol:kernel::error::Error-as-core::convert::From-alloc::collections::TryReserveError::from
+    |-- ld.lld:error:undefined-symbol:kernel::error::Error::to_kernel_errno
+    |-- ld.lld:error:undefined-symbol:kernel::print::call_printk
+    |-- ld.lld:error:undefined-symbol:kernel::print::format_strings::INFO
+    `-- ld.lld:error:undefined-symbol:rust_fmt_argument
+
+elapsed time: 735m
+
+configs tested: 65
+configs skipped: 2
+
+gcc tested configs:
+um                             i386_defconfig
+um                           x86_64_defconfig
+powerpc                           allnoconfig
+arc                                 defconfig
+i386                                defconfig
+x86_64                              defconfig
+alpha                               defconfig
+x86_64                               rhel-8.3
+x86_64                          rhel-8.3-func
+x86_64                    rhel-8.3-kselftests
+i386                 randconfig-a001-20220926
+i386                 randconfig-a004-20220926
+i386                 randconfig-a002-20220926
+x86_64                           rhel-8.3-syz
+x86_64                         rhel-8.3-kunit
+s390                             allmodconfig
+i386                 randconfig-a003-20220926
+s390                                defconfig
+x86_64               randconfig-a002-20220926
+i386                 randconfig-a006-20220926
+x86_64                           rhel-8.3-kvm
+i386                 randconfig-a005-20220926
+x86_64               randconfig-a004-20220926
+arm                                 defconfig
+s390                             allyesconfig
+arc                  randconfig-r043-20220928
+x86_64                           allyesconfig
+i386                             allyesconfig
+sh                               allmodconfig
+x86_64               randconfig-a001-20220926
+m68k                             allmodconfig
+arm                              allyesconfig
+mips                             allyesconfig
+x86_64               randconfig-a003-20220926
+arm64                            allyesconfig
+x86_64               randconfig-a005-20220926
+x86_64               randconfig-a006-20220926
+arc                              allyesconfig
+powerpc                          allmodconfig
+alpha                            allyesconfig
+m68k                             allyesconfig
+ia64                             allmodconfig
+i386                          randconfig-a001
+i386                          randconfig-a003
+i386                          randconfig-a005
+
+clang tested configs:
+i386                 randconfig-a011-20220926
+i386                 randconfig-a015-20220926
+i386                 randconfig-a014-20220926
+i386                 randconfig-a013-20220926
+i386                 randconfig-a016-20220926
+x86_64               randconfig-a014-20220926
+hexagon              randconfig-r041-20220928
+x86_64               randconfig-a016-20220926
+i386                 randconfig-a012-20220926
+x86_64               randconfig-a013-20220926
+riscv                randconfig-r042-20220928
+hexagon              randconfig-r045-20220928
+s390                 randconfig-r044-20220928
+x86_64               randconfig-a011-20220926
+x86_64                          rhel-8.3-rust
+x86_64               randconfig-a015-20220926
+x86_64               randconfig-a012-20220926
+i386                          randconfig-a002
+i386                          randconfig-a004
+i386                          randconfig-a006
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
