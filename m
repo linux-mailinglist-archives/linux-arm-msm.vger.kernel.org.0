@@ -2,61 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13BEF5F1156
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 20:06:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5101B5F1176
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 20:20:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231156AbiI3SG1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 14:06:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59016 "EHLO
+        id S232141AbiI3SUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 14:20:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230152AbiI3SG0 (ORCPT
+        with ESMTP id S232179AbiI3SUr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 14:06:26 -0400
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 241FD33373;
-        Fri, 30 Sep 2022 11:06:23 -0700 (PDT)
-Received: by mail-pg1-f169.google.com with SMTP id bh13so4798857pgb.4;
-        Fri, 30 Sep 2022 11:06:22 -0700 (PDT)
+        Fri, 30 Sep 2022 14:20:47 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AE1FB07CB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 11:20:45 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id r18so10718848eja.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 11:20:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=NjV6JEfhHgDYfkPbHulbQigSi/rTRxz40ubXfPpUaX0=;
+        b=jzGpsEEEQ5dG8pjjpuCsPWf7SrU/Vfs9DpaZdd5znvXL0pnXSYKdc8r+n8GZgLHinI
+         DHTO4jMa7eDYjiWYWVEm2fqycUD/GGadj9zwiJO9cjDWiBE870dyme66tAyqswGcq7KS
+         /9A38Vt/eNysPDRv+mS28Vs9NUbpYgaEHfaxk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=YT7X5vhmL1EhBoIh6HU+YtvZMdxEyGw7gDpCuuYCbXI=;
-        b=XCfDyVVSIwLmKCwfWHV/w63ihrTP54+BqqVwsvYky0f3QZoXpupKIsuHOmcYugED5o
-         KGW4CM7RJ4dUAE1lQAKxDjhmmTvfgqPp8hWPqQfZSZdJF581eosQzps42ibsq5K2hw17
-         FYps4LB/5agcghEvcxmTeIK/9ZwjSQxx25WhqVIBQ5+AarTJRJEQLszrZ7/zOxSrOKOk
-         S0P01yU6QZR39iNYBznOdJiJHiAdvE1YAEneZ4JOUUFkWreTE69kdmYXrsGwgE69B4Z4
-         6q7ehBlAjz/H6Y1nfstZX1eLH8WM8acPzChAavJst6LMjQzyrLMfYPwF0LTbiBhbOF24
-         iKGg==
-X-Gm-Message-State: ACrzQf0vVeWM1YBLfcjKOdzRr0yuVYEy3Vc35Osf/hMCvMBPw9t1cHuz
-        Jn3Kehfg6xyVafaV+mZOdHw=
-X-Google-Smtp-Source: AMsMyM56KaNN/+17HC2W0l9EdhWsSnly4xIWql7BBz5mTxA+4i5xBGxuqb0u7cg9kIwySyJZbVOYFQ==
-X-Received: by 2002:a63:2c8b:0:b0:41c:5f9e:a1d6 with SMTP id s133-20020a632c8b000000b0041c5f9ea1d6mr8443936pgs.601.1664561181752;
-        Fri, 30 Sep 2022 11:06:21 -0700 (PDT)
-Received: from ?IPV6:2620:15c:211:201:56f2:482f:20c2:1d35? ([2620:15c:211:201:56f2:482f:20c2:1d35])
-        by smtp.gmail.com with ESMTPSA id l18-20020a170903121200b0017a8aed0a5asm2217982plh.136.2022.09.30.11.06.20
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=NjV6JEfhHgDYfkPbHulbQigSi/rTRxz40ubXfPpUaX0=;
+        b=cm3eQDPRaggkT2AB/7NaNmA6b3ywhhMLKLn0Rk5fgjXdXJFX9uqnbkPrkREC9mpwJZ
+         KIawoiUa0HMmncFa8h1L6JdN5lIRJnOx9JAtHPzN0k6sMKuWz/JsxVxRsMGGpMT09m21
+         yaYMc5ogcC3z90b0hZs9tTXvCGVITxcWHFzET0C4G+PcYKSvHPa7yXDnLoOMAFB6oYBy
+         PzU5xj4wLwcNXbXfZxGR3diSu2aPPErxi88RoFuMMzHwhOFBRLBYS5Bi+kOz4OM63gxz
+         nKmmkGASN4wvpBOn7aJrODIqjcG4F0kc7Nbpeco+t07Q8EUDRVWP08A+pmJU1zOR5Ksk
+         tRRw==
+X-Gm-Message-State: ACrzQf2Zqn9wrfeB4pD/9Sp57p6QHcTbV3TXw3s8fSZmyZRb08qVc+Rb
+        6pNGOgX1hqjKR9mEdKcA3xvMx1mpg+EPw14g
+X-Google-Smtp-Source: AMsMyM5cWfSbMZBGzfWDNTAROHpFz73JVRhwnFRajLPt5fbn6xCredW7jWo6JUQZ/wSQkqg+YCX6Cg==
+X-Received: by 2002:a17:906:5a4d:b0:76f:bb35:48f4 with SMTP id my13-20020a1709065a4d00b0076fbb3548f4mr7120968ejc.686.1664562043786;
+        Fri, 30 Sep 2022 11:20:43 -0700 (PDT)
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com. [209.85.221.41])
+        by smtp.gmail.com with ESMTPSA id v1-20020a056402174100b004589ac5d0c9sm640476edx.45.2022.09.30.11.20.43
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Sep 2022 11:06:21 -0700 (PDT)
-Message-ID: <5eb0ced2-be3f-93be-3b0c-4271495e53bc@acm.org>
-Date:   Fri, 30 Sep 2022 11:06:18 -0700
+        Fri, 30 Sep 2022 11:20:43 -0700 (PDT)
+Received: by mail-wr1-f41.google.com with SMTP id c11so8035533wrp.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 11:20:43 -0700 (PDT)
+X-Received: by 2002:a5d:522f:0:b0:228:dc7f:b9a8 with SMTP id
+ i15-20020a5d522f000000b00228dc7fb9a8mr6808655wra.617.1664562042954; Fri, 30
+ Sep 2022 11:20:42 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH -next] scsi: ufs: Remove redundant dev_err call
-Content-Language: en-US
-To:     Shang XiaoJing <shangxiaojing@huawei.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@somainline.org,
-        jejb@linux.ibm.com, martin.petersen@oracle.com,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org
-References: <20220923101217.18345-1-shangxiaojing@huawei.com>
-From:   Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20220923101217.18345-1-shangxiaojing@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+References: <20220930153643.2018907-1-judyhsiao@chromium.org>
+In-Reply-To: <20220930153643.2018907-1-judyhsiao@chromium.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 30 Sep 2022 11:20:30 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Vz_tijVmqf=J5ytH_5Pafr1s80zzxJV73ffRVObLMDbQ@mail.gmail.com>
+Message-ID: <CAD=FV=Vz_tijVmqf=J5ytH_5Pafr1s80zzxJV73ffRVObLMDbQ@mail.gmail.com>
+Subject: Re: [PATCH v5 0/3] Add dtsi for sc7280 boards that using rt5682
+To:     Judy Hsiao <judyhsiao@chromium.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Jimmy Cheng-Yi Chiang <cychiang@google.com>,
+        Judy Hsiao <judyhsiao@google.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,8 +82,94 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/23/22 03:12, Shang XiaoJing wrote:
-> devm_ioremap_resource() prints error message in itself. Remove the
-> dev_err call to avoid redundant error message.
+Judy,
 
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+On Fri, Sep 30, 2022 at 8:36 AM Judy Hsiao <judyhsiao@chromium.org> wrote:
+>
+> Put sound node and lpass_cpu node settings for boards that use rt5682
+> codec in the sc7280-herobrine-audio-rt5682.dtsi as there are different
+> choices of headset codec for herobrine projects. Common audio setting
+> for the internal speaker is in sc7280-herobrine.dtsi.
+>
+> Change Since V4
+> - Rebase and include sc7280-herobrine-villager-r0.dts change.
+>
+> Changes Since V3:
+> - Remove Change-Id in the commit message.
+> - Add dependency in cover letter.
+>
+> Changes Since V2:
+> - Fix sc7280-herobrine-audio-rt5682.dtsi syntax.
+>
+> Changes Since V1:
+> - Not to include the herobrine-villager-r0.dts changes in this patch
+>   series to avoid conflict.
+>
+> Judy Hsiao (3):
+>   arm64: dts: qcom: sc7280: herobrine: Add pinconf settings for mi2s1
+>   arm64: dts: qcom: sc7280: Add sc7280-herobrine-audio-rt5682.dtsi
+>   arm64: dts: qcom: sc7280: Include sc7280-herobrine-audio-rt5682.dtsi
+>     in herobrine-r1 and villager-r0
+>
+>  .../qcom/sc7280-herobrine-audio-rt5682.dtsi   | 122 ++++++++++++++++++
+>  .../qcom/sc7280-herobrine-herobrine-r1.dts    |   1 +
+>  .../dts/qcom/sc7280-herobrine-villager-r0.dts |   1 +
+>  .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  30 +++++
+>  4 files changed, 154 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
+
+Your two posts today were a bit confusing. You really need something
+in the explaining what's going on. Specifically:
+
+1. You posted a "v5" upstream a week ago [1].
+
+2. Then you posted another "v5" [2] today.
+
+3. Finally, you posted this "v5" [3] today.
+
+They are all marked "v5" and there's nothing to explain why there are
+3 versions of v5.
+
+--
+
+Better would have been:
+
+a) Use some type of "prefix" in the subject line to help people
+understand that the contents are the same as the previous "v5" patch
+and this is just a new posting. Usually people will use "REPOST" or
+"RESEND". So, for instance, the subject line for your cover letter
+could have been "[RESEND PATCH v5 0/3] Add dtsi for sc7280 boards that
+using rt5682". All of the individual patches would have also had the
+"RESEND" in their subject.
+
+b) You should explain somewhere _why_ you're re-sending the patches.
+If you've got a cover letter (like you do), the cover letter is the
+perfect place to explain why you're resending the patch. If you didn't
+have a cover letter, you can explain "after the cut".
+
+Brian's patch [4] is a great example of this. He has both the hint in
+the subject line and an explanation: "Resending, because I missed the
+mailing lists on the first version."
+
+--
+
+In your case, I assume you were trying to get Bjorn's email address
+correct as I requested a week ago. Thus, I would have expected your
+first patch from today [2] to say something like "I'm resending patch
+v5 to get Bjorn's email address correct. Other than that this is
+exactly the same as the previous v5". Then, I would have expected your
+second patch from today [3] to say something like "Oops, I still
+didn't get Bjorn's email address right in the earlier patch today.
+Trying yet again. Contents of all of the v5 patches are identical"
+
+--
+
+In any case, I'm not expecting you to send yet-another v5, but hopefully:
+* This explains to Bjorn what's going on this time.
+* You'll know better for next time.
+
+
+[1] https://lore.kernel.org/r/20220923140918.2825043-1-judyhsiao@chromium.org
+[2] https://lore.kernel.org/r/20220930152613.2018360-1-judyhsiao@chromium.org
+[3] https://lore.kernel.org/r/20220930153643.2018907-1-judyhsiao@chromium.org
+[4] https://lore.kernel.org/r/20210907094628.RESEND.1.If29cd838efbcee4450a62b8d84a99b23c86e0a3f@changeid/
