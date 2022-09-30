@@ -2,171 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B7A05F1BAE
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 12:02:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE62C5F1C59
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 15:36:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229773AbiJAKCK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Oct 2022 06:02:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47630 "EHLO
+        id S229524AbiJANgE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Oct 2022 09:36:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229764AbiJAKCD (ORCPT
+        with ESMTP id S229441AbiJANgD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Oct 2022 06:02:03 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 088CD106F73
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Oct 2022 03:01:58 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 25so15430lft.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Oct 2022 03:01:58 -0700 (PDT)
+        Sat, 1 Oct 2022 09:36:03 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9241C6745F
+        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Oct 2022 06:35:59 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id q17so7468211lji.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Oct 2022 06:35:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=isfPLY9jR+ZoVFd10vcMUlsBh00yNt/v6qsBgWfkVWc=;
-        b=hxNu9GOBZ6OIkmPu2dYmNAKLY1tyR/nJ1sTFR9UeuKhUBoOgnCGxi8SyBg74NCLWp8
-         asr+EAkSain2o5Hfv4mxJlgY1q9DK/lbFRUevmba9mwnKUsCCy/4mhVxHswclCRbEGQY
-         vFQ0BHJE+ruWr6x/SUodam6kiRDcr9f76jrXhNA4oDXk/pWwvguXsf8N3HGoHk0bRcuO
-         y5ylnycQY1xmgsBCrNLAaCL3AbCIsA5K/M2op7LO93dXVPG9nKqedUxoUaWCGFa6JiSo
-         wM9rIbx3A0EruJb7XuDxLZsKygLcdhiPBw7zme2vEd+YOcwaOuX448UkMyapJ+Ye0X3R
-         NGzw==
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date;
+        bh=CG8R/L4pPWym3ANx8yZmnov0YG/TUNdQM5EA24rS0E4=;
+        b=AiqSXPtKbR4lSYpT8z/2+mby/RDCrwNw4LeuUaGBfhWKs4/FVypZkt/KC+/dlceUD1
+         xdbaKkYeFJ/KVJwYMcSO5rWs4sLoD2IrrBMk4Hl+lte7fIRf9ciLCyrKe0Is4Em3bxeq
+         i1kzXY6Fe30DJgrU4FhZNY91hyMJEOCwf6rw4NcbAuTZoHxNxmTnlv9/DsmjWkSe9PIC
+         gDCbeNaWtazlOjim66oEyqQJD4bLpVU4sgYFTU4cdWMAcJ4ZW6yidoM3o6t5pEWs9k+v
+         6iN85ji8JQe40GK4dG2oaZRsZNZY/RhJOkD41YaAHDaj7FH3bgg1PFRk1jEsTRMWom5r
+         Y5Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=isfPLY9jR+ZoVFd10vcMUlsBh00yNt/v6qsBgWfkVWc=;
-        b=q6Q/eFvoJ53RQk7KK7UTeGYDGvxzCGzvSkiHRYv8vTxNsc45BAGGhSXOHI7kMMHiaa
-         Qj70gxTUa3i1BbacuIH9cIVZt0YwA29oHhm012ynod7mm4l7mAqFi8CZVWndKOvxSX7P
-         HgtpH3784+fBGlYGFiICSLqG2G85cymDWa+L0cbtJzH1Rm6YNXE6kWVM2dyiizSXjsRk
-         qYV26/HssV08/qZnhzGHeCL4MP5mIv4faRo3A6TT+hBFxA2l6DMjWGou314LK/W3hb/0
-         8aaKyOTP0NVid9yDPshLXISr67dgserX8naXt7N5s5VoZGdAuIVvnpXFC7Dw18wDETtM
-         khlA==
-X-Gm-Message-State: ACrzQf3+X0U2+8WKO3kC+7J5INOFhysONoO+7Hef7vsjono/Ni4Ay4h5
-        TV/amHEp8Cf26hSfvmq/a/ovzg==
-X-Google-Smtp-Source: AMsMyM7AETj/ipTqs1kEJZXmUiYV4pkMkE02jy6ZWJlax6twD1+N3FeRcIW9pV+jANPCJDNRYyzenQ==
-X-Received: by 2002:a05:6512:3b97:b0:497:ab81:dcb1 with SMTP id g23-20020a0565123b9700b00497ab81dcb1mr4629226lfv.496.1664618516936;
-        Sat, 01 Oct 2022 03:01:56 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id b37-20020a05651c0b2500b0026dcac60624sm219926ljr.108.2022.10.01.03.01.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Oct 2022 03:01:56 -0700 (PDT)
-Message-ID: <11a99a84-47ec-ca3e-5781-0f17ed33dbf9@linaro.org>
-Date:   Sat, 1 Oct 2022 12:01:55 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sdm845-db845c: correct SPI2 pins
- drive strength
-Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=CG8R/L4pPWym3ANx8yZmnov0YG/TUNdQM5EA24rS0E4=;
+        b=v7KNQOq/8pjdBRpMuSJlO3/MyOG15ENzn7DVjHh2x3UlNOuRFGCnozT23kSOCGJmCq
+         upgKsxf1DEK6E3fI5Qtr4/6F94buWeQ/uFp5dcoBcsJbY2codclahTGRAE8XAxU5223T
+         gW1DP/xmC3LL4cxe4/7uaYHfda0vdN/lwZJsD70CCOqYT9zFjrn+n8oau4x7y3lv7pwz
+         uFB7tlncFFXJEy6nFOaD5XpIdwV8hbZXMfBa8ITjRGh9zxt6oTOa27mKrwPiBQ5Vr8OU
+         frpMqTR+InSzDhWqvd539k0J2TqD3OdDjYVCvvn4m9IJcJm5FPiKo3cD8d3LCkYyi4A8
+         viBg==
+X-Gm-Message-State: ACrzQf3J1B1UOAYevkeuG5T3Umv0aTOuJz0ARsRuZCMcNz1+3IA+cYQa
+        MQIzn7SxBM3ZauV8aw3W43z2Og==
+X-Google-Smtp-Source: AMsMyM6UkHvBbcIhpUjgV6+jAN/oKUp5wj4L3+JZ4/qDnhRKerjqCD22VB4X7hYo6GNQ4bXmGscdYA==
+X-Received: by 2002:a2e:a9a9:0:b0:26c:6ec5:290 with SMTP id x41-20020a2ea9a9000000b0026c6ec50290mr3891735ljq.186.1664631357680;
+        Sat, 01 Oct 2022 06:35:57 -0700 (PDT)
+Received: from [127.0.0.1] ([188.162.64.124])
+        by smtp.gmail.com with ESMTPSA id h4-20020a056512220400b0049473593f2csm762095lfu.182.2022.10.01.06.35.57
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 01 Oct 2022 06:35:57 -0700 (PDT)
+Date:   Fri, 30 Sep 2022 11:29:03 +0300
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Doug Anderson <dianders@chromium.org>,
+        Kalyan Thota <quic_kalyant@quicinc.com>
+CC:     y@qualcomm.com, dri-devel <dri-devel@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
         <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        "# 4.0+" <stable@vger.kernel.org>
-References: <20220930182212.209804-1-krzysztof.kozlowski@linaro.org>
- <20220930182212.209804-2-krzysztof.kozlowski@linaro.org>
- <CAD=FV=WSbpV4aqyHgSX6rwanQmZYG1hdNourjP5DEmsfdq6aDA@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=WSbpV4aqyHgSX6rwanQmZYG1hdNourjP5DEmsfdq6aDA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Rob Clark <robdclark@gmail.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>
+Subject: =?US-ASCII?Q?Re=3A_=5Bv5=5D_drm/msm/disp/dpu1=3A_add_suppo?= =?US-ASCII?Q?rt_for_dspp_sub_block_flush_in_sc7280?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <CAD=FV=UT-GmAOYrCBRU0bhGeXU=pOGDbk=Jq7JEk40tyEH0zLA@mail.gmail.com>
+References: <1663157784-22232-1-git-send-email-quic_kalyant@quicinc.com> <CAD=FV=UT-GmAOYrCBRU0bhGeXU=pOGDbk=Jq7JEk40tyEH0zLA@mail.gmail.com>
+Message-ID: <A446B5C0-1EAA-4A24-8E7B-3C0EB2024026@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.8 required=5.0 tests=BAYES_00,DATE_IN_PAST_24_48,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/09/2022 22:12, Doug Anderson wrote:
-> Hi,
-> 
-> On Fri, Sep 30, 2022 at 11:22 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
+
+
+On 29 September 2022 19:13:20 GMT+03:00, Doug Anderson <dianders@chromium=
+=2Eorg> wrote:
+>Hi,
+>
+>On Wed, Sep 14, 2022 at 5:16 AM Kalyan Thota <quic_kalyant@quicinc=2Ecom>=
+ wrote:
 >>
->> The pin configuration (done with generic pin controller helpers and
->> as expressed by bindings) requires children nodes with either:
->> 1. "pins" property and the actual configuration,
->> 2. another set of nodes with above point.
+>> Flush mechanism for DSPP blocks has changed in sc7280 family, it
+>> allows individual sub blocks to be flushed in coordination with
+>> master flush control=2E
 >>
->> The qup_spi2_default pin configuration used second method - with a
->> "pinmux" child.
+>> Representation: master_flush && (PCC_flush | IGC_flush =2E=2E etc )
 >>
->> Fixes: 8d23a0040475 ("arm64: dts: qcom: db845c: add Low speed expansion i2c and spi nodes")
->> Cc: <stable@vger.kernel.org>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> This change adds necessary support for the above design=2E
 >>
+>> Changes in v1:
+>> - Few nits (Doug, Dmitry)
+>> - Restrict sub-block flush programming to dpu_hw_ctl file (Dmitry)
+>>
+>> Changes in v2:
+>> - Move the address offset to flush macro (Dmitry)
+>> - Seperate ops for the sub block flush (Dmitry)
+>>
+>> Changes in v3:
+>> - Reuse the DPU_DSPP_xx enum instead of a new one (Dmitry)
+>>
+>> Changes in v4:
+>> - Use shorter version for unsigned int (Stephen)
+>>
+>> Reviewed-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
 >> ---
->>
->> Not tested on hardware.
->> ---
->>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 4 +++-
->>  1 file changed, 3 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
->> index 132417e2d11e..a157eab66dee 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
->> @@ -1123,7 +1123,9 @@ &wifi {
->>
->>  /* PINCTRL - additions to nodes defined in sdm845.dtsi */
->>  &qup_spi2_default {
->> -       drive-strength = <16>;
->> +       pinmux {
->> +               drive-strength = <16>;
->> +       };
-> 
-> The convention on Qualcomm boards of this era is that muxing (setting
-> the function) is done under a "pinmux" node and, unless some of the
-> pins need to be treated differently like for the UARTs, configuration
-> (bias, drive strength, etc) is done under a "pinconf" subnode.
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc=2Ec       |  2 +-
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog=2Ec |  5 +++-
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog=2Eh |  4 +++
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl=2Ec     | 35 ++++++++++++++++=
+++++++++--
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl=2Eh     | 10 ++++++--
+>>  5 files changed, 50 insertions(+), 6 deletions(-)
+>
+>Breadcrumbs: though this is tagged in the subject as v5 I think the
+>newest version is actually "resend v4" [1] which just fixes the
+>Signed-off-by=2E
 
-Yes, although this was not expressed in bindings.
+Not to mention that v5 misses the S-o-B tag=2E
 
-> I
-> believe that the "pinconf" subnode also needs to replicate the list of
-> pins, or at least that's what we did everywhere else on sdm845 /
-> sc7180.
+>
+>[1] https://lore=2Ekernel=2Eorg/r/1663825463-6715-1-git-send-email-quic_k=
+alyant@quicinc=2Ecom
 
-Yes.
-
-> 
-> Thus to match conventions, I assume you'd do:
-> 
-> &qup_spi2_default {
->   pinconf {
-
-No, because I want a convention of all pinctrl bindings and drivers, not
-convention of old pinctrl ones. The new ones are already moved or being
-moved to "-state" and "-pins". In the same time I am also unifying the
-requirement of "function" property - enforcing it in each node, thus
-"pinconf" will not be valid anymore.
-
->     pins = "gpio27", "gpio28", "gpio29", "gpio30";
->     drive-strength = <16>;
->   };
-> };
-> 
-> We've since moved away from this to a less cumbersome approach, but
-> for "older" boards like db845c we should probably match the existing
-> convention, or have a flag day and change all sdm845 boards over to
-> the new convention.
-
-That's what my next patchset from yesterday was doing. Unifying the
-bindings with modern bindings and converting DTS to match them.
-
-https://lore.kernel.org/linux-devicetree/20220930200529.331223-1-krzysztof.kozlowski@linaro.org/T/#t
-
-
-Best regards,
-Krzysztof
-
+--=20
+With best wishes
+Dmitry
