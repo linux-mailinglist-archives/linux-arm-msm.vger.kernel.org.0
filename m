@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E84F05F0AB4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 13:38:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E8215F0ABD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 13:39:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231686AbiI3Lic (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 07:38:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59440 "EHLO
+        id S230510AbiI3LjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 07:39:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231649AbiI3Lhw (ORCPT
+        with ESMTP id S231707AbiI3LiJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 07:37:52 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D995D54
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 04:29:33 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id u18so6413951lfo.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 04:29:33 -0700 (PDT)
+        Fri, 30 Sep 2022 07:38:09 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A95D72645
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 04:29:34 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id b24so4474593ljk.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 04:29:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=Fl+OB3BJ1OwGKf7ra0TcmmEsiQmoxQ9BqCowZjl/PYg=;
-        b=ENNf/e3nnALxx9LQLuvRBKuZ5NmRMJ5Rd15Z4X2TY//zJqeCuaqG0qFLZtV7wc/X5A
-         nY8+A4gihHLaRmAhoiv+X3PNck52QwPIljk2u8V3sS/LS6SfQqdErVvNpB+cOqOIjjLR
-         G3eZw82x/1hujKAjhSe5yn6Gn1HU4MU5zm6M95W3fJ1xeSr8g425MgRi1oS/CV5xMvta
-         RHXEv2iFYotdDc+uWPGyWtaNgYLYTCl3PmxnwoiKgYjouRcPUwI//Jq4GkYZidG/gn12
-         +c9chh8YIVzrxQPWLJAn+YA6WRmvWtN/c8Sipkibux6kCfGqj0bL4QbRozIV0kDTVg91
-         A9NA==
+        bh=kBJ/AhVm8NyzJ5+h26lm5F36R+jqwuRJqvXoFWsRPvg=;
+        b=oB87pGB2PFzV5Gf3EtpMTgLZMT1tE9r0YwZHyLHPpbofeY2CmnGNk/U5Ohzyz8v6J9
+         nvT/GTxgj2h6YeI3G6ATt6yv8IKrzG1uEl4k2sCaMiPjrMpXnbOi+VfM37G0t7z6YK7N
+         X4tfPuvM/VSdGZqEgBXSBPogSZuU+hco/523yqtyUZC18WJPcFoybnwmtDph3j9iurF1
+         sIyWxwoEMRZDpbjV/Qkf7T52HMRTGq0h8rn2uSlUT8qqH+QSF613SMd1WLsQ/lS/K1Tq
+         AfR+YRqCDWz/CH0YsUSamfbG+2K6SoQHFluBfKvFCmJlCX+ZKFU4SeJkaipXLfUExaFX
+         ug7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=Fl+OB3BJ1OwGKf7ra0TcmmEsiQmoxQ9BqCowZjl/PYg=;
-        b=xiM4yPPt00GNnF3AM8YIwX73QdyeDJsR+qTrscVWbnOix5Qswomzf3lpB5ZP2qlqHo
-         Zh6Nz28ufJIROykYonyLHD7dnEhcq6MHdjBi+TP0Tfdj6yW5TqGq2V3vxutnpso4dRjE
-         lvRQm54Mn7DK0IrWXTgRiCPJ3dipFmLNPRFm/b6lUOg2P9VvClOcYG7p4K7L+T0vCuy0
-         nLg45q0+fY+Wgg/dgSUMwdd0eGNlqektWhlf34pLGTxwgmJr+MGu6ff3OQJOBCqlfEop
-         LeuC+3pjI7BepatdILWBGqGqagdCSiHBFtoMu6wXD5HaBRO2+QQ8Zbsj45mF31HXaIK7
-         cTeA==
-X-Gm-Message-State: ACrzQf3oBo6fjnPNIab1zQXTjXfwuciHzrWvAhtzIHD09yl7c3O7q0CP
-        OjCVC+Okn7niJhBva4cq3GQBhA==
-X-Google-Smtp-Source: AMsMyM4uW4BONFD2uZksSOlAqAfKP2Eto9HIh14TXbQj6aePSX5X9mLsW53uwQDkBg+3MSB+7vHL6A==
-X-Received: by 2002:a05:6512:ac2:b0:49a:2fec:aa4a with SMTP id n2-20020a0565120ac200b0049a2fecaa4amr3092156lfu.348.1664537371810;
-        Fri, 30 Sep 2022 04:29:31 -0700 (PDT)
+        bh=kBJ/AhVm8NyzJ5+h26lm5F36R+jqwuRJqvXoFWsRPvg=;
+        b=HhG95NLeME1k/gkqQ53pypqixzfIb8//iaAukGLovQeYpaP6kM03Jr4fsM/GxQoJUP
+         FypkAjH8fCnUL8+9xx8+GE+cuqdP/iSQ6QnifOSEIrh0sYmrLJ7ertutHB4eYbDu6xsY
+         cFQ6suS32wIfXzT9s2aIY2Aau6GlX8plymD67ZrIcz06E9c8Rdlwr0/YNA1qxHJ3yYQj
+         txxeQCMP4qAubTTCgWh9zz72kDE86CDjXHttA94YCffySu0kltoDB/JMgs4hgn0AP58V
+         83vdeWD0//ib72iXnhXqkI1xH39o1ElNlZgd6At9rS9oZGAF4LPquMpVT6EOoZsULmvC
+         FJOA==
+X-Gm-Message-State: ACrzQf2GiGHfk+GtQFPpSEInwMBeeE3B4E1u8HBM/nz9EFxFMGFYFFUc
+        O31N+hlE91di/wNGeALdJuUxyA==
+X-Google-Smtp-Source: AMsMyM5gpu+E8tj81H4d5LKV7UvkbDlV8eZONF5PXgVawbYc9Y9hd0X0zi4JkkeWfHymsHYzwZ8kAA==
+X-Received: by 2002:a2e:a9a7:0:b0:26c:4ec7:fbf8 with SMTP id x39-20020a2ea9a7000000b0026c4ec7fbf8mr2614599ljq.413.1664537372512;
+        Fri, 30 Sep 2022 04:29:32 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
         by smtp.gmail.com with ESMTPSA id v18-20020a197412000000b0049493c14b17sm264672lfe.181.2022.09.30.04.29.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 04:29:31 -0700 (PDT)
+        Fri, 30 Sep 2022 04:29:32 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -57,9 +57,9 @@ To:     Andy Gross <agross@kernel.org>,
         Kishon Vijay Abraham I <kishon@ti.com>
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH v2 05/12] phy: qcom-qmp-ufs: rework regs layout arrays
-Date:   Fri, 30 Sep 2022 14:29:19 +0300
-Message-Id: <20220930112926.638543-6-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 06/12] phy: qcom-qmp-ufs: rename regs layout arrays
+Date:   Fri, 30 Sep 2022 14:29:20 +0300
+Message-Id: <20220930112926.638543-7-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220930112926.638543-1-dmitry.baryshkov@linaro.org>
 References: <20220930112926.638543-1-dmitry.baryshkov@linaro.org>
@@ -74,93 +74,136 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use symbolic names for the values inside reg layout arrays. New register
-names are added following the PCS register layout that is used by the
-particular PHY.
+Rename regs layouts to follow the QMP PHY version.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v2.h |  5 +++++
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v3.h |  3 +++
- drivers/phy/qualcomm/phy-qcom-qmp-ufs.c        | 18 +++++++++---------
- 3 files changed, 17 insertions(+), 9 deletions(-)
+ .../phy/qualcomm/phy-qcom-qmp-pcs-ufs-v5.h    |  4 +++
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       | 31 ++++++++++---------
+ 2 files changed, 20 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v2.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v2.h
-index af870669a904..a0803a8783d2 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v2.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v2.h
-@@ -6,6 +6,9 @@
- #ifndef QCOM_PHY_QMP_PCS_UFS_V2_H_
- #define QCOM_PHY_QMP_PCS_UFS_V2_H_
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v5.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v5.h
+index bcca23493b7e..43255e8bf038 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v5.h
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v5.h
+@@ -8,6 +8,9 @@
+ #define QCOM_PHY_QMP_PCS_UFS_V5_H_
  
-+#define QPHY_V2_PCS_UFS_PHY_START			0x000
-+#define QPHY_V2_PCS_UFS_POWER_DOWN_CONTROL		0x004
-+
- #define QPHY_V2_PCS_UFS_TX_LARGE_AMP_DRV_LVL		0x034
- #define QPHY_V2_PCS_UFS_TX_LARGE_AMP_POST_EMP_LVL	0x038
- #define QPHY_V2_PCS_UFS_TX_SMALL_AMP_DRV_LVL		0x03c
-@@ -17,4 +20,6 @@
- #define QPHY_V2_PCS_UFS_RX_SIGDET_CTRL2			0x148
- #define QPHY_V2_PCS_UFS_RX_PWM_GEAR_BAND			0x154
- 
-+#define QPHY_V2_PCS_UFS_READY_STATUS			0x168
-+
- #endif
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v3.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v3.h
-index ba1ea29d2884..adea13c3a9e6 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v3.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v3.h
-@@ -6,12 +6,15 @@
- #ifndef QCOM_PHY_QMP_PCS_UFS_V3_H_
- #define QCOM_PHY_QMP_PCS_UFS_V3_H_
- 
-+#define QPHY_V3_PCS_UFS_PHY_START			0x000
-+#define QPHY_V3_PCS_UFS_POWER_DOWN_CONTROL		0x004
- #define QPHY_V3_PCS_UFS_TX_LARGE_AMP_DRV_LVL		0x02c
- #define QPHY_V3_PCS_UFS_TX_SMALL_AMP_DRV_LVL		0x034
- #define QPHY_V3_PCS_UFS_RX_SYM_RESYNC_CTRL		0x134
- #define QPHY_V3_PCS_UFS_RX_MIN_HIBERN8_TIME		0x138
- #define QPHY_V3_PCS_UFS_RX_SIGDET_CTRL1			0x13c
- #define QPHY_V3_PCS_UFS_RX_SIGDET_CTRL2			0x140
-+#define QPHY_V3_PCS_UFS_READY_STATUS			0x160
- #define QPHY_V3_PCS_UFS_TX_MID_TERM_CTRL1		0x1bc
- #define QPHY_V3_PCS_UFS_MULTI_LANE_CTRL1		0x1c4
+ /* Only for QMP V5 PHY - UFS PCS registers */
++#define QPHY_V5_PCS_UFS_PHY_START			0x000
++#define QPHY_V5_PCS_UFS_POWER_DOWN_CONTROL		0x004
++#define QPHY_V5_PCS_UFS_SW_RESET			0x008
+ #define QPHY_V5_PCS_UFS_TIMER_20US_CORECLK_STEPS_MSB	0x00c
+ #define QPHY_V5_PCS_UFS_TIMER_20US_CORECLK_STEPS_LSB	0x010
+ #define QPHY_V5_PCS_UFS_PLL_CNTL			0x02c
+@@ -21,6 +24,7 @@
+ #define QPHY_V5_PCS_UFS_RX_SIGDET_CTRL2			0x158
+ #define QPHY_V5_PCS_UFS_TX_PWM_GEAR_BAND		0x160
+ #define QPHY_V5_PCS_UFS_TX_HS_GEAR_BAND			0x168
++#define QPHY_V5_PCS_UFS_READY_STATUS			0x180
+ #define QPHY_V5_PCS_UFS_TX_MID_TERM_CTRL1		0x1d8
+ #define QPHY_V5_PCS_UFS_MULTI_LANE_CTRL1		0x1e0
  
 diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-index d447d68ea817..c4d0bc9e6e83 100644
+index c4d0bc9e6e83..064435c1b78d 100644
 --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
 +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-@@ -87,21 +87,21 @@ enum qphy_reg_layout {
+@@ -86,31 +86,32 @@ enum qphy_reg_layout {
+ 	QPHY_LAYOUT_SIZE
  };
  
- static const unsigned int msm8996_ufsphy_regs_layout[QPHY_LAYOUT_SIZE] = {
--	[QPHY_START_CTRL]		= 0x00,
--	[QPHY_PCS_READY_STATUS]		= 0x168,
--	[QPHY_PCS_POWER_DOWN_CONTROL]	= 0x04,
-+	[QPHY_START_CTRL]		= QPHY_V2_PCS_UFS_PHY_START,
-+	[QPHY_PCS_READY_STATUS]		= QPHY_V2_PCS_UFS_READY_STATUS,
-+	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V2_PCS_UFS_POWER_DOWN_CONTROL,
+-static const unsigned int msm8996_ufsphy_regs_layout[QPHY_LAYOUT_SIZE] = {
++static const unsigned int ufsphy_v2_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_START_CTRL]		= QPHY_V2_PCS_UFS_PHY_START,
+ 	[QPHY_PCS_READY_STATUS]		= QPHY_V2_PCS_UFS_READY_STATUS,
+ 	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V2_PCS_UFS_POWER_DOWN_CONTROL,
  };
  
- static const unsigned int sdm845_ufsphy_regs_layout[QPHY_LAYOUT_SIZE] = {
--	[QPHY_START_CTRL]		= 0x00,
--	[QPHY_PCS_READY_STATUS]		= 0x160,
--	[QPHY_PCS_POWER_DOWN_CONTROL]	= 0x04,
-+	[QPHY_START_CTRL]		= QPHY_V3_PCS_UFS_PHY_START,
-+	[QPHY_PCS_READY_STATUS]		= QPHY_V3_PCS_UFS_READY_STATUS,
-+	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V3_PCS_UFS_POWER_DOWN_CONTROL,
+-static const unsigned int sdm845_ufsphy_regs_layout[QPHY_LAYOUT_SIZE] = {
++static const unsigned int ufsphy_v3_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_START_CTRL]		= QPHY_V3_PCS_UFS_PHY_START,
+ 	[QPHY_PCS_READY_STATUS]		= QPHY_V3_PCS_UFS_READY_STATUS,
+ 	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V3_PCS_UFS_POWER_DOWN_CONTROL,
  };
  
- static const unsigned int sm6115_ufsphy_regs_layout[QPHY_LAYOUT_SIZE] = {
--	[QPHY_START_CTRL]		= 0x00,
--	[QPHY_PCS_READY_STATUS]		= 0x168,
--	[QPHY_PCS_POWER_DOWN_CONTROL]	= 0x04,
-+	[QPHY_START_CTRL]		= QPHY_V2_PCS_UFS_PHY_START,
-+	[QPHY_PCS_READY_STATUS]		= QPHY_V2_PCS_UFS_READY_STATUS,
-+	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V2_PCS_UFS_POWER_DOWN_CONTROL,
+-static const unsigned int sm6115_ufsphy_regs_layout[QPHY_LAYOUT_SIZE] = {
+-	[QPHY_START_CTRL]		= QPHY_V2_PCS_UFS_PHY_START,
+-	[QPHY_PCS_READY_STATUS]		= QPHY_V2_PCS_UFS_READY_STATUS,
+-	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V2_PCS_UFS_POWER_DOWN_CONTROL,
+-};
+-
+-static const unsigned int sm8150_ufsphy_regs_layout[QPHY_LAYOUT_SIZE] = {
++static const unsigned int ufsphy_v4_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_START_CTRL]		= QPHY_V4_PCS_UFS_PHY_START,
+ 	[QPHY_PCS_READY_STATUS]		= QPHY_V4_PCS_UFS_READY_STATUS,
+ 	[QPHY_SW_RESET]			= QPHY_V4_PCS_UFS_SW_RESET,
+ 	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V4_PCS_UFS_POWER_DOWN_CONTROL,
  };
  
- static const unsigned int sm8150_ufsphy_regs_layout[QPHY_LAYOUT_SIZE] = {
++static const unsigned int ufsphy_v5_regs_layout[QPHY_LAYOUT_SIZE] = {
++	[QPHY_START_CTRL]		= QPHY_V5_PCS_UFS_PHY_START,
++	[QPHY_PCS_READY_STATUS]		= QPHY_V5_PCS_UFS_READY_STATUS,
++	[QPHY_SW_RESET]			= QPHY_V5_PCS_UFS_SW_RESET,
++	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V5_PCS_UFS_POWER_DOWN_CONTROL,
++};
++
+ static const struct qmp_phy_init_tbl msm8996_ufs_serdes_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_COM_CMN_CONFIG, 0x0e),
+ 	QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0xd7),
+@@ -677,7 +678,7 @@ static const struct qmp_phy_cfg msm8996_ufs_cfg = {
+ 	.vreg_list		= qmp_phy_vreg_l,
+ 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+ 
+-	.regs			= msm8996_ufsphy_regs_layout,
++	.regs			= ufsphy_v2_regs_layout,
+ 
+ 	.start_ctrl		= SERDES_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+@@ -701,7 +702,7 @@ static const struct qmp_phy_cfg sdm845_ufsphy_cfg = {
+ 	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+ 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+-	.regs			= sdm845_ufsphy_regs_layout,
++	.regs			= ufsphy_v3_regs_layout,
+ 
+ 	.start_ctrl		= SERDES_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+@@ -725,7 +726,7 @@ static const struct qmp_phy_cfg sm6115_ufsphy_cfg = {
+ 	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+ 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+-	.regs			= sm6115_ufsphy_regs_layout,
++	.regs			= ufsphy_v2_regs_layout,
+ 
+ 	.start_ctrl		= SERDES_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+@@ -748,7 +749,7 @@ static const struct qmp_phy_cfg sm8150_ufsphy_cfg = {
+ 	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+ 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+-	.regs			= sm8150_ufsphy_regs_layout,
++	.regs			= ufsphy_v4_regs_layout,
+ 
+ 	.start_ctrl		= SERDES_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+@@ -770,7 +771,7 @@ static const struct qmp_phy_cfg sm8350_ufsphy_cfg = {
+ 	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+ 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+-	.regs			= sm8150_ufsphy_regs_layout,
++	.regs			= ufsphy_v5_regs_layout,
+ 
+ 	.start_ctrl		= SERDES_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+@@ -792,7 +793,7 @@ static const struct qmp_phy_cfg sm8450_ufsphy_cfg = {
+ 	.num_clks		= ARRAY_SIZE(sm8450_ufs_phy_clk_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+ 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+-	.regs			= sm8150_ufsphy_regs_layout,
++	.regs			= ufsphy_v5_regs_layout,
+ 
+ 	.start_ctrl		= SERDES_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
 -- 
 2.35.1
 
