@@ -2,106 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2320F5F1251
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 21:20:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD50A5F127B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 21:30:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231817AbiI3TUt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 15:20:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50748 "EHLO
+        id S231646AbiI3TaD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 15:30:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231590AbiI3TUr (ORCPT
+        with ESMTP id S231465AbiI3TaB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 15:20:47 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F76818C038
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 12:20:46 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id a2so8304420lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 12:20:46 -0700 (PDT)
+        Fri, 30 Sep 2022 15:30:01 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 040922BE0A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 12:29:59 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id a2so8337270lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 12:29:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=GY7Hsx1ipZGKpNWuYzGc1DU3a5zj/xsfWCrKNswDv9Q=;
-        b=Fs7SY430gwqczh0i8JbOPJlFRodFt5PGc6gjJnelr9DFohGllXNIDA3LGqWAdgk5Ng
-         zmcMg4wWFVuWRRGD3PgtVfXVR7VDgP2OnGY4vNK2+ufADQU107cycuqvZZh7spxomcW/
-         2epN40BuN14YTihahW2DD1ZdkueROTSpMyrap2+f4NH5mKyppQXtyLTCe11k2oBpzeAG
-         NR3mzqbuiVFlAh55zJhMiEwfji9Kn05a41Jk9ukNPbS5dsi+jyudLR7J8tVWu+SpH9tL
-         jIG154jYDMe1mDRLgXPL1UJB1opcORMqjnlhTMYa+CRaJgxchS2ylXmwiOfiBK/m2UPs
-         PhgQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=c6dBz51PeAfFzfu1dvrW09Y82wCfJytVz4BgKjYBGXM=;
+        b=XE5dj86zMuEJqxUQ2W75AzzSTm6hVvsRhZXK56mi7t2Gjmyr7TL9swJK1q8cOb3ycT
+         fU6NrckzoSAMoBmThWa0ZNvOytLNGbq5tLcht9JbXXO1L0BppVb31RL6HQ7FtWMVyraW
+         paDNw1hr59L8Zh9Rf9nd3sgeVMxDPWWUy7nFBZlqpBaiT/OJtCWYKwE1p6PAQ8N9MiM0
+         A4BCV84SQwUhyqFtZmcsCXjoPqiU8YoCsq6F2u8QuSLPIBA2ToL//nIeu2oEl1XW96PI
+         2lIYDhDakheP5VIgqYmid9FnplrwSqlq6W/52hfzS5FAyPGsi1Rvc0rq3WrPhkg/FZ5p
+         loBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=GY7Hsx1ipZGKpNWuYzGc1DU3a5zj/xsfWCrKNswDv9Q=;
-        b=bvSkQAkC2zaHp+qtvfRCEui+hyRUrLgvMDbm8rC5wXGGps1rzfpFRYO33aaL1tmx1M
-         daE5tSyW1idcqxxRrFYLt+ZfRZARn94denPtidn/BL3ho1HPDghQ4dDlPZRhM2kK7YVk
-         gYzXrPmJ2ersaSgDAZH35OFSCvsuv501TxEFgcKmGSstjZlt4BAvFYD6dt6EqItIKSd1
-         PC1GxQdiANzBlSwjZGz6eT1X3V5RehBGTgk9QMCFayyQ0JNXJTqQz/kgnxcE3Mc0eOxR
-         fKFZUrxK8LLyXaPLnU/aUCfA9XnSUX8rHwauDPwmo9+E4j7mQRLBK3eRJyfRgTgGEv3F
-         e+wA==
-X-Gm-Message-State: ACrzQf0emihg/yZXj8OuaL+KtF6MfrE4WpKXqQRhZ1tIiYvDDydz3977
-        gSY/XUW/TE+hlYiqJGUNt9h8iQ==
-X-Google-Smtp-Source: AMsMyM6OkTHeHw6daX1EP3Z4RRKCc+lf4llf2NFJYpAx3YKMTOfWl59ocTEXrDPjyq+ulMoeFmcg4g==
-X-Received: by 2002:a05:6512:1151:b0:4a0:50f2:9509 with SMTP id m17-20020a056512115100b004a050f29509mr4216903lfg.297.1664565644881;
-        Fri, 30 Sep 2022 12:20:44 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=c6dBz51PeAfFzfu1dvrW09Y82wCfJytVz4BgKjYBGXM=;
+        b=p01+5WKxSnsDMWJ5L+KkfuiWXnym1yQSgWGBlg6yjD494fjkktRiivF1Uu5M8mFZba
+         b97RbhdrQRiy4ZyFGY9IPl6c/sZtm8hHzEOl0oUENxWpMKwa3MXerxvdHHhU47y3zqWa
+         i6nS7zQwpRkLQOVMMY08mPZFyEFGhVBdhc7Q9D+HQVLgegoH/un0jncmW0KeyqWQLICI
+         KepKrvs2HOfEJOkI0i2sn1PkfnL8W2lIvlm4k/0CrE+CkUigfHEPq0uKr7o9BQk4JZ9o
+         mpRsOaPEA1liCNfXBRxeVFxluRJIJ0bfiD8l9IRSp/3XZdHvc0/+WYGYOopPiIm6wwXH
+         f4+A==
+X-Gm-Message-State: ACrzQf0rtyEUJ2PDvyOcYCPPUB2QYf3/h4c8gBUPgIn0X3UNAoi2xXpa
+        xgOEhqxalsDds3tqOIn3POP+Ex/IUQl8bw==
+X-Google-Smtp-Source: AMsMyM7xeIeYcumct5MiBRor7ByAVu27zUMdanAGXLjSv31cgyDNJu5U2phpoU5uy1L/wXwN2oASnA==
+X-Received: by 2002:a05:6512:3e1e:b0:499:34:e8a7 with SMTP id i30-20020a0565123e1e00b004990034e8a7mr3638751lfv.655.1664566197348;
+        Fri, 30 Sep 2022 12:29:57 -0700 (PDT)
 Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id c17-20020a056512105100b0049fff3f645esm390115lfb.70.2022.09.30.12.20.44
+        by smtp.gmail.com with ESMTPSA id br32-20020a056512402000b0049f9799d349sm393603lfb.187.2022.09.30.12.29.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 12:20:44 -0700 (PDT)
+        Fri, 30 Sep 2022 12:29:56 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>, Vinod Koul <vkoul@kernel.org>,
-        Xilin Wu <wuxilin123@gmail.com>,
-        Molly Sophia <mollysophia379@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: sdm845-xiaomi-polaris: fix codec pin conf name
-Date:   Fri, 30 Sep 2022 21:20:39 +0200
-Message-Id: <20220930192039.240486-3-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 00/16] pinctrl/arm64: qcom: 4th set of Qualcomm TLMM pinctrl schema warnings
+Date:   Fri, 30 Sep 2022 21:29:38 +0200
+Message-Id: <20220930192954.242546-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220930192039.240486-1-krzysztof.kozlowski@linaro.org>
-References: <20220930192039.240486-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix typo in the codec's pin name to be configured.  Mismatched name
-caused the pin configuration to be ignored.
+Hi,
 
-Fixes: be497abe19bf ("arm64: dts: qcom: Add support for Xiaomi Mi Mix2s")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Changes since v1
+================
+1. Check for function on non-GPIO pins was moved to common TLMM schema, thus
+   new patch #12: dt-bindings: pinctrl: qcom,sm8250: drop checks used in common
+   TLMM
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-index afc17e4d403f..f98259489679 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-@@ -628,7 +628,7 @@ sde_dsi_suspend: sde-dsi-suspend {
- 	};
- 
- 	wcd_intr_default: wcd-intr-default {
--		pins = "goui54";
-+		pins = "gpio54";
- 		function = "gpio";
- 		input-enable;
- 		bias-pull-down;
+2. Above also makes minor context changes in patch #13 "dt-bindings: pinctrl:
+   qcom,sm8250: fix matching pin config"
+
+3. Add tags (I am using `b4 trailers` so they might appear in odd order).
+
+Overview
+========
+This is the *fourth* patchset around Qualcomm pinctrl in recent days:
+1. First round of TLMM fixes: merged
+2. LPASS fixes:
+   https://lore.kernel.org/linux-devicetree/20220927153429.55365-1-krzysztof.kozlowski@linaro.org/T/#t
+3. ARMv7 TLMM fixes:
+   https://lore.kernel.org/linux-devicetree/20220927173702.5200-1-krzysztof.kozlowski@linaro.org/T/#t
+4. ARMv8 remaining TLMM fixes: *THIS PATCHSET*
+
+Dependencies
+============
+1. Almost no dependencies - logically the bindings patch "dt-bindings: pinctrl:
+   qcom,sm8250: drop checks used in common TLMM" depends on patchset #3 above.
+   This is not a hard-dependency, everything will compile nicely, no warnings.
+
+2. dt-bindings are independent of DTS patches.
+
+Best regards,
+Krzysztof
+
+Krzysztof Kozlowski (16):
+  arm64: dts: qcom: sm8250: align TLMM pin configuration with DT schema
+  arm64: dts: qcom: sm8250-sony-xperia-edo: fix touchscreen bias-disable
+  arm64: dts: qcom: sc8280xp: align TLMM pin configuration with DT
+    schema
+  arm64: dts: qcom: sc7280: align TLMM pin configuration with DT schema
+    (really)
+  arm64: dts: qcom: sc7280-herobrine: correct number of gpio-line-names
+  arm64: dts: qcom: sc7280-idp-ec-h1: add missing QUP GPIO functions
+  arm64: dts: qcom: msm8953: align TLMM pin configuration with DT schema
+  arm64: dts: qcom: sdm845: align TLMM pin configuration with DT schema
+  arm64: dts: qcom: sm6125-sony-xperia: add missing SD CD GPIO functions
+  arm64: dts: qcom: sm6125: align TLMM pin configuration with DT schema
+  dt-bindings: pinctrl: qcom,sm8250: add gpio-reserved-ranges and
+    gpio-line-names
+  dt-bindings: pinctrl: qcom,sm8250: drop checks used in common TLMM
+  dt-bindings: pinctrl: qcom,sm8250: fix matching pin config
+  dt-bindings: pinctrl: qcom,sm8250: add input-enable
+  dt-bindings: pinctrl: qcom,sc7280: add bias-bus-hold and input-enable
+  dt-bindings: pinctrl: qcom,sc7280: correct number of GPIOs
+
+ .../bindings/pinctrl/qcom,sc7280-pinctrl.yaml |  12 +-
+ .../bindings/pinctrl/qcom,sm8250-pinctrl.yaml | 145 ++---
+ arch/arm64/boot/dts/qcom/msm8953.dtsi         |  70 +--
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts      |  12 +-
+ arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts    |   8 +-
+ .../boot/dts/qcom/sc7280-herobrine-crd.dts    |   1 +
+ .../dts/qcom/sc7280-herobrine-evoker-r0.dts   |   1 -
+ .../qcom/sc7280-herobrine-herobrine-r1.dts    |   1 -
+ .../dts/qcom/sc7280-herobrine-villager.dtsi   |   1 -
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  44 +-
+ .../arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi |  10 +-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      |  26 +-
+ arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi    |  20 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          | 316 +++++-----
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     |  12 +-
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  12 +-
+ .../arm64/boot/dts/qcom/sdm845-lg-common.dtsi |   2 +-
+ .../qcom/sm6125-sony-xperia-seine-pdx201.dts  |   2 +
+ arch/arm64/boot/dts/qcom/sm6125.dtsi          |   4 +-
+ arch/arm64/boot/dts/qcom/sm8250-mtp.dts       |  38 +-
+ .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi |  18 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          | 556 +++++++-----------
+ 22 files changed, 586 insertions(+), 725 deletions(-)
+
 -- 
 2.34.1
 
