@@ -2,64 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 114C25F164A
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 00:46:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA9485F168A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 01:14:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232769AbiI3WqC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 18:46:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47464 "EHLO
+        id S231740AbiI3XOV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 19:14:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232772AbiI3Wp4 (ORCPT
+        with ESMTP id S231473AbiI3XOU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 18:45:56 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 962461C9341
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 15:45:53 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id y189so2530176iof.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 15:45:53 -0700 (PDT)
+        Fri, 30 Sep 2022 19:14:20 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A367C18F40B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 16:14:19 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id u26so382869lfk.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 16:14:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date;
-        bh=Ffl2rBL/CAul7r1Sahb9q5pSjjryBRAHq+nIonW6JE0=;
-        b=QBMgy2RLBsmD58YotXztPMiKQ78qdclN7Wl30qtjRO36Y7fbuA2BR/T63742Clqn3+
-         CnRJueCtHoM2OkyNaJxgliWPet6XXOmiqNHUrbiTfPzbddwtDaIO7q8WEd1mH8kyPcwc
-         XYuRWWc0+fwOJrs2V1Ivg7Tm6WSZYPlpdHeQmUeR85YoPQzwqRVwRo3E3Rj4ERjnm2eg
-         eILtxgyz3+LJtG4XVvMj3hg58pFcbZ5W1BmXG9O/bFou+GMHEv4N8HVGt2pvHLlAEZoK
-         eQS/mGSJer8K5JgjSYgK9pt754J5qjcghhZUEF+gNsAiFPombIbfwJQSvwJ1+fRNy1iZ
-         7Jxw==
+        bh=mDn1ZRVl5DD0yFM7lDUNpZLc1WYibNTj/87n0f3vqCk=;
+        b=GeH2L0oiU04kbCIpcWo1GVRIdZLoKbB9QS+RRLxrZ/pPtFnOrrManGGHQ9osmR9iHV
+         hlZCEiBCIV/jJBJdyqksSecWKsGbuLC9o081DEuSzMZbO/iafIFwNf7k4gBzDHAqJrS/
+         t0q8LuukHG9O+QpK1cwEXD1PeTt03mr1NdAV8Hu0RSShi+vHw/ip+Cfa9o3RPcRXnmHQ
+         ffsG1x3SS8PVfcokC323W32Byc65lFKGi4LOGy+wi8HUyAkMdfspGIjOXseH0TfkTXGR
+         YAGs/C+mWGtNmLLlWBG5stzXCoCdib5qboo+8hIP5bVOexJptYguK6AhHeVn3ylMfmhX
+         1Spw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=Ffl2rBL/CAul7r1Sahb9q5pSjjryBRAHq+nIonW6JE0=;
-        b=qzwzrxRj+2OKrh7dMq+C9yuph3K0g7GL7+1UoNYv44bQB0gu7LO0/1MjA9esMnTas6
-         I6it/R88o/KYDFAV/b0uyXn3/zBfIg0OCdK+GK54WDSa2kyTKxEWw0b4LaQgzpPWni/O
-         z6LR9F3Fnm1HychyeaSNhhpo8/Gh2oUqMclvC1wMqcQoA6VqrurIJxmqnXYAwD5H9xF3
-         IZsqxC9YkBNDcft3RXx1riK/KZZ0Q6o94lCXKM+ZjLbm+DZ1fHdhVkpmttaNo+6TJu3s
-         WuLCPnRyyF5ee0235NmRSQYLmg1MQvWSg2KzvTII7JgtogBT/3OM8orPGBe3TcnxBRE0
-         Sqqg==
-X-Gm-Message-State: ACrzQf2gFl3bG7QLM7kw5Kak2WcLkDilqJ/uQCrvty+LBx26zkobxuhN
-        ImRD6l4UcJ6Bl7zOplFWFx9uGg==
-X-Google-Smtp-Source: AMsMyM71Jm/PG1htrvas7razpRUPAjrQ8sUkpcuXvLA1kM/Vyb8MovuyXPrMrtKH9gv8JfUhnz7Ozg==
-X-Received: by 2002:a05:6602:491:b0:672:18ce:8189 with SMTP id y17-20020a056602049100b0067218ce8189mr4931392iov.170.1664577952677;
-        Fri, 30 Sep 2022 15:45:52 -0700 (PDT)
-Received: from localhost.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id z5-20020a05663822a500b0035a723e5b23sm1382383jas.7.2022.09.30.15.45.51
+        bh=mDn1ZRVl5DD0yFM7lDUNpZLc1WYibNTj/87n0f3vqCk=;
+        b=oy7TkIhRDXmf2d51EwoaTATmFqHRv517Lh2z8r3fkkprWx/5XYZNYo1S+o57FyJuX5
+         ck8cuodXqjcJGxZplAbew4xKnZCMLkGcEVFqsyvqAINtd9BpfiSMNXXiPGVnaPl1Mts8
+         dvLdI5wIlObk8RF/nYfb0py2D//nxhGMB3Iaq5LXas37hdhXWIHturdubG3Xu5hkXKnm
+         85bQyLhayorhU9isrkewwnODwQ25q9x7x7l+dnxVMu1HZ3hQ26CIDTiv0km+R0nvQaaN
+         8fY1KJ/FjJWHii0MwfZQIf19yY6AyTVIG46z9cuKlwexml+GSShkmZ1k+uLvXXAOsuIp
+         Ui3w==
+X-Gm-Message-State: ACrzQf2hUxKdyiCFJAXOjLbkrjJHLeHNKkoroMEFVQ444jyL6wxhFg+R
+        GstSTOj8tr/EUmb/V1i1kkOVsL+TaaD9kw==
+X-Google-Smtp-Source: AMsMyM6WMSAXxxEllJAp3kvMd29rgDdR3Tq/RhwY+KGy/Qu12mcXZuzMLbEctS9YL/MlZGAlW9LlEA==
+X-Received: by 2002:a05:6512:3d28:b0:49f:4b31:909b with SMTP id d40-20020a0565123d2800b0049f4b31909bmr3821703lfv.669.1664579657998;
+        Fri, 30 Sep 2022 16:14:17 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id s6-20020a05651c048600b0026c0f6be5dasm261666ljc.116.2022.09.30.16.14.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 15:45:52 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next] net: ipa: update copyrights
-Date:   Fri, 30 Sep 2022 17:45:49 -0500
-Message-Id: <20220930224549.3503434-1-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Fri, 30 Sep 2022 16:14:17 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH] dt-bindings: soc: qcom: qcom,spm: support regulator SAW2 devics
+Date:   Sat,  1 Oct 2022 02:14:16 +0300
+Message-Id: <20220930231416.925132-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -71,517 +70,143 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some source files state copyright dates that are earlier than the
-last modification of the file.  Change the copyright year to 2022 in
-all such cases.
+Merge qcom,saw2.txt bindings to existing qcom,spm.yaml. This fixes
+compatibility of qcom,spm schema with regulator SAW2 devices.
 
-Signed-off-by: Alex Elder <elder@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/net/ipa/gsi.c           | 2 +-
- drivers/net/ipa/gsi.h           | 2 +-
- drivers/net/ipa/gsi_private.h   | 2 +-
- drivers/net/ipa/gsi_reg.h       | 2 +-
- drivers/net/ipa/gsi_trans.c     | 2 +-
- drivers/net/ipa/gsi_trans.h     | 2 +-
- drivers/net/ipa/ipa.h           | 2 +-
- drivers/net/ipa/ipa_cmd.c       | 2 +-
- drivers/net/ipa/ipa_cmd.h       | 2 +-
- drivers/net/ipa/ipa_data.h      | 2 +-
- drivers/net/ipa/ipa_endpoint.c  | 2 +-
- drivers/net/ipa/ipa_endpoint.h  | 2 +-
- drivers/net/ipa/ipa_interrupt.c | 2 +-
- drivers/net/ipa/ipa_interrupt.h | 2 +-
- drivers/net/ipa/ipa_main.c      | 2 +-
- drivers/net/ipa/ipa_mem.c       | 2 +-
- drivers/net/ipa/ipa_modem.c     | 2 +-
- drivers/net/ipa/ipa_modem.h     | 2 +-
- drivers/net/ipa/ipa_power.c     | 2 +-
- drivers/net/ipa/ipa_power.h     | 2 +-
- drivers/net/ipa/ipa_qmi.c       | 2 +-
- drivers/net/ipa/ipa_qmi.h       | 2 +-
- drivers/net/ipa/ipa_qmi_msg.c   | 2 +-
- drivers/net/ipa/ipa_qmi_msg.h   | 2 +-
- drivers/net/ipa/ipa_reg.c       | 2 +-
- drivers/net/ipa/ipa_reg.h       | 2 +-
- drivers/net/ipa/ipa_resource.c  | 2 +-
- drivers/net/ipa/ipa_smp2p.c     | 2 +-
- drivers/net/ipa/ipa_smp2p.h     | 2 +-
- drivers/net/ipa/ipa_sysfs.c     | 2 +-
- drivers/net/ipa/ipa_sysfs.h     | 2 +-
- drivers/net/ipa/ipa_table.c     | 2 +-
- drivers/net/ipa/ipa_table.h     | 2 +-
- drivers/net/ipa/ipa_uc.c        | 2 +-
- drivers/net/ipa/ipa_uc.h        | 2 +-
- drivers/net/ipa/ipa_version.h   | 2 +-
- 36 files changed, 36 insertions(+), 36 deletions(-)
+ .../devicetree/bindings/arm/msm/qcom,saw2.txt | 58 -------------------
+ .../bindings/soc/qcom/qcom,spm.yaml           | 44 +++++++++-----
+ 2 files changed, 30 insertions(+), 72 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,saw2.txt
 
-diff --git a/drivers/net/ipa/gsi.c b/drivers/net/ipa/gsi.c
-index f8036ee78647f..96b7c08d4a45e 100644
---- a/drivers/net/ipa/gsi.c
-+++ b/drivers/net/ipa/gsi.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
+diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,saw2.txt b/Documentation/devicetree/bindings/arm/msm/qcom,saw2.txt
+deleted file mode 100644
+index c0e3c3a42bea..000000000000
+--- a/Documentation/devicetree/bindings/arm/msm/qcom,saw2.txt
++++ /dev/null
+@@ -1,58 +0,0 @@
+-SPM AVS Wrapper 2 (SAW2)
+-
+-The SAW2 is a wrapper around the Subsystem Power Manager (SPM) and the
+-Adaptive Voltage Scaling (AVS) hardware. The SPM is a programmable
+-power-controller that transitions a piece of hardware (like a processor or
+-subsystem) into and out of low power modes via a direct connection to
+-the PMIC. It can also be wired up to interact with other processors in the
+-system, notifying them when a low power state is entered or exited.
+-
+-Multiple revisions of the SAW hardware are supported using these Device Nodes.
+-SAW2 revisions differ in the register offset and configuration data. Also, the
+-same revision of the SAW in different SoCs may have different configuration
+-data due the differences in hardware capabilities. Hence the SoC name, the
+-version of the SAW hardware in that SoC and the distinction between cpu (big
+-or Little) or cache, may be needed to uniquely identify the SAW register
+-configuration and initialization data. The compatible string is used to
+-indicate this parameter.
+-
+-PROPERTIES
+-
+-- compatible:
+-	Usage: required
+-	Value type: <string>
+-	Definition: Must have
+-			"qcom,saw2"
+-		    A more specific value could be one of:
+-			"qcom,apq8064-saw2-v1.1-cpu"
+-			"qcom,msm8226-saw2-v2.1-cpu"
+-			"qcom,msm8974-saw2-v2.1-cpu"
+-			"qcom,apq8084-saw2-v2.1-cpu"
+-
+-- reg:
+-	Usage: required
+-	Value type: <prop-encoded-array>
+-	Definition: the first element specifies the base address and size of
+-		    the register region. An optional second element specifies
+-		    the base address and size of the alias register region.
+-
+-- regulator:
+-	Usage: optional
+-	Value type: boolean
+-	Definition: Indicates that this SPM device acts as a regulator device
+-			device for the core (CPU or Cache) the SPM is attached
+-			to.
+-
+-Example 1:
+-
+-	power-controller@2099000 {
+-		compatible = "qcom,saw2";
+-		reg = <0x02099000 0x1000>, <0x02009000 0x1000>;
+-		regulator;
+-	};
+-
+-Example 2:
+-	saw0: power-controller@f9089000 {
+-		compatible = "qcom,apq8084-saw2-v2.1-cpu", "qcom,saw2";
+-		reg = <0xf9089000 0x1000>, <0xf9009000 0x1000>;
+-	};
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
+index f433e6e0a19f..8fe35fde70b8 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
+@@ -16,23 +16,33 @@ description: |
  
- /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2021 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
+ properties:
+   compatible:
+-    items:
+-      - enum:
+-          - qcom,sdm660-gold-saw2-v4.1-l2
+-          - qcom,sdm660-silver-saw2-v4.1-l2
+-          - qcom,msm8998-gold-saw2-v4.1-l2
+-          - qcom,msm8998-silver-saw2-v4.1-l2
+-          - qcom,msm8909-saw2-v3.0-cpu
+-          - qcom,msm8916-saw2-v3.0-cpu
+-          - qcom,msm8226-saw2-v2.1-cpu
+-          - qcom,msm8974-saw2-v2.1-cpu
+-          - qcom,apq8084-saw2-v2.1-cpu
+-          - qcom,apq8064-saw2-v1.1-cpu
++    oneOf:
+       - const: qcom,saw2
++      - items:
++          - enum:
++              - qcom,sdm660-gold-saw2-v4.1-l2
++              - qcom,sdm660-silver-saw2-v4.1-l2
++              - qcom,msm8998-gold-saw2-v4.1-l2
++              - qcom,msm8998-silver-saw2-v4.1-l2
++              - qcom,msm8909-saw2-v3.0-cpu
++              - qcom,msm8916-saw2-v3.0-cpu
++              - qcom,msm8226-saw2-v2.1-cpu
++              - qcom,msm8974-saw2-v2.1-cpu
++              - qcom,apq8084-saw2-v2.1-cpu
++              - qcom,apq8064-saw2-v1.1-cpu
++          - const: qcom,saw2
  
- #include <linux/types.h>
-diff --git a/drivers/net/ipa/gsi.h b/drivers/net/ipa/gsi.h
-index 0fc25a6ae006c..49dcadba4e0b9 100644
---- a/drivers/net/ipa/gsi.h
-+++ b/drivers/net/ipa/gsi.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
+   reg:
+-    description: Base address and size of the SPM register region
+-    maxItems: 1
++    description: Base address and size of the SPM register region. An optional
++      second element specifies the base address and size of the alias register
++      region.
++    minItems: 1
++    maxItems: 2
++
++  regulator:
++    type: boolean
++    description: Indicates that this SPM device acts as a regulator device
++      device for the core (CPU or Cache) the SPM is attached to.
  
- /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2021 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- #ifndef _GSI_H_
- #define _GSI_H_
-diff --git a/drivers/net/ipa/gsi_private.h b/drivers/net/ipa/gsi_private.h
-index af4cc13864e21..ccfcbe73f80f8 100644
---- a/drivers/net/ipa/gsi_private.h
-+++ b/drivers/net/ipa/gsi_private.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
+ required:
+   - compatible
+@@ -79,4 +89,10 @@ examples:
+         reg = <0x17912000 0x1000>;
+     };
  
- /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2020 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- #ifndef _GSI_PRIVATE_H_
- #define _GSI_PRIVATE_H_
-diff --git a/drivers/net/ipa/gsi_reg.h b/drivers/net/ipa/gsi_reg.h
-index b36fd10a57d69..3763359f208f7 100644
---- a/drivers/net/ipa/gsi_reg.h
-+++ b/drivers/net/ipa/gsi_reg.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2021 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- #ifndef _GSI_REG_H_
- #define _GSI_REG_H_
-diff --git a/drivers/net/ipa/gsi_trans.c b/drivers/net/ipa/gsi_trans.c
-index 03e54fc4376a6..dff08e00daf50 100644
---- a/drivers/net/ipa/gsi_trans.c
-+++ b/drivers/net/ipa/gsi_trans.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2020 Linaro Ltd.
-+ * Copyright (C) 2019-2022 Linaro Ltd.
-  */
- 
- #include <linux/types.h>
-diff --git a/drivers/net/ipa/gsi_trans.h b/drivers/net/ipa/gsi_trans.h
-index af8c4c6719d11..52f0ec59b64a9 100644
---- a/drivers/net/ipa/gsi_trans.h
-+++ b/drivers/net/ipa/gsi_trans.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2020 Linaro Ltd.
-+ * Copyright (C) 2019-2022 Linaro Ltd.
-  */
- #ifndef _GSI_TRANS_H_
- #define _GSI_TRANS_H_
-diff --git a/drivers/net/ipa/ipa.h b/drivers/net/ipa/ipa.h
-index 349643cf2b442..09ead433ec38e 100644
---- a/drivers/net/ipa/ipa.h
-+++ b/drivers/net/ipa/ipa.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2020 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- #ifndef _IPA_H_
- #define _IPA_H_
-diff --git a/drivers/net/ipa/ipa_cmd.c b/drivers/net/ipa/ipa_cmd.c
-index f762d7d5f31fa..9eed45f1035de 100644
---- a/drivers/net/ipa/ipa_cmd.c
-+++ b/drivers/net/ipa/ipa_cmd.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2021 Linaro Ltd.
-+ * Copyright (C) 2019-2022 Linaro Ltd.
-  */
- 
- #include <linux/types.h>
-diff --git a/drivers/net/ipa/ipa_cmd.h b/drivers/net/ipa/ipa_cmd.h
-index 9215ddad10107..8e4243c1f0bbe 100644
---- a/drivers/net/ipa/ipa_cmd.h
-+++ b/drivers/net/ipa/ipa_cmd.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2020 Linaro Ltd.
-+ * Copyright (C) 2019-2022 Linaro Ltd.
-  */
- #ifndef _IPA_CMD_H_
- #define _IPA_CMD_H_
-diff --git a/drivers/net/ipa/ipa_data.h b/drivers/net/ipa/ipa_data.h
-index e15eb3cd3e333..664a568a1382e 100644
---- a/drivers/net/ipa/ipa_data.h
-+++ b/drivers/net/ipa/ipa_data.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2021 Linaro Ltd.
-+ * Copyright (C) 2019-2022 Linaro Ltd.
-  */
- #ifndef _IPA_DATA_H_
- #define _IPA_DATA_H_
-diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.c
-index 0da02d8d238d1..7e76643d64f23 100644
---- a/drivers/net/ipa/ipa_endpoint.c
-+++ b/drivers/net/ipa/ipa_endpoint.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2021 Linaro Ltd.
-+ * Copyright (C) 2019-2022 Linaro Ltd.
-  */
- 
- #include <linux/types.h>
-diff --git a/drivers/net/ipa/ipa_endpoint.h b/drivers/net/ipa/ipa_endpoint.h
-index 28e0a7386fd72..d8dfa24f52140 100644
---- a/drivers/net/ipa/ipa_endpoint.h
-+++ b/drivers/net/ipa/ipa_endpoint.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2020 Linaro Ltd.
-+ * Copyright (C) 2019-2022 Linaro Ltd.
-  */
- #ifndef _IPA_ENDPOINT_H_
- #define _IPA_ENDPOINT_H_
-diff --git a/drivers/net/ipa/ipa_interrupt.c b/drivers/net/ipa/ipa_interrupt.c
-index d0142b17a2757..c269432f9c2ee 100644
---- a/drivers/net/ipa/ipa_interrupt.c
-+++ b/drivers/net/ipa/ipa_interrupt.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- /* Copyright (c) 2014-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2020 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- 
- /* DOC: IPA Interrupts
-diff --git a/drivers/net/ipa/ipa_interrupt.h b/drivers/net/ipa/ipa_interrupt.h
-index 231390cea52a2..f31fd9965fdc6 100644
---- a/drivers/net/ipa/ipa_interrupt.h
-+++ b/drivers/net/ipa/ipa_interrupt.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2020 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- #ifndef _IPA_INTERRUPT_H_
- #define _IPA_INTERRUPT_H_
-diff --git a/drivers/net/ipa/ipa_main.c b/drivers/net/ipa/ipa_main.c
-index a0f6212aa3c35..3461ad3029ab8 100644
---- a/drivers/net/ipa/ipa_main.c
-+++ b/drivers/net/ipa/ipa_main.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2021 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- 
- #include <linux/types.h>
-diff --git a/drivers/net/ipa/ipa_mem.c b/drivers/net/ipa/ipa_mem.c
-index 9abf473be1dd0..f84c6830495a4 100644
---- a/drivers/net/ipa/ipa_mem.c
-+++ b/drivers/net/ipa/ipa_mem.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2021 Linaro Ltd.
-+ * Copyright (C) 2019-2022 Linaro Ltd.
-  */
- 
- #include <linux/types.h>
-diff --git a/drivers/net/ipa/ipa_modem.c b/drivers/net/ipa/ipa_modem.c
-index c8b1c4d9c5073..423422a2a445f 100644
---- a/drivers/net/ipa/ipa_modem.c
-+++ b/drivers/net/ipa/ipa_modem.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- /* Copyright (c) 2014-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2021 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- 
- #include <linux/errno.h>
-diff --git a/drivers/net/ipa/ipa_modem.h b/drivers/net/ipa/ipa_modem.h
-index e64ccc2402e9d..d85718db9a575 100644
---- a/drivers/net/ipa/ipa_modem.h
-+++ b/drivers/net/ipa/ipa_modem.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2020 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- #ifndef _IPA_MODEM_H_
- #define _IPA_MODEM_H_
-diff --git a/drivers/net/ipa/ipa_power.c b/drivers/net/ipa/ipa_power.c
-index db5ac7552286e..8420f93128a26 100644
---- a/drivers/net/ipa/ipa_power.c
-+++ b/drivers/net/ipa/ipa_power.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2021 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- 
- #include <linux/clk.h>
-diff --git a/drivers/net/ipa/ipa_power.h b/drivers/net/ipa/ipa_power.h
-index 6f84f057a2095..896f052e51a1c 100644
---- a/drivers/net/ipa/ipa_power.h
-+++ b/drivers/net/ipa/ipa_power.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2020 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- #ifndef _IPA_POWER_H_
- #define _IPA_POWER_H_
-diff --git a/drivers/net/ipa/ipa_qmi.c b/drivers/net/ipa/ipa_qmi.c
-index 6f874f99b910c..8295fd4b70d16 100644
---- a/drivers/net/ipa/ipa_qmi.c
-+++ b/drivers/net/ipa/ipa_qmi.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- /* Copyright (c) 2013-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2020 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- 
- #include <linux/types.h>
-diff --git a/drivers/net/ipa/ipa_qmi.h b/drivers/net/ipa/ipa_qmi.h
-index 856ef629ccc8d..1c236826c17ab 100644
---- a/drivers/net/ipa/ipa_qmi.h
-+++ b/drivers/net/ipa/ipa_qmi.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2020 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- #ifndef _IPA_QMI_H_
- #define _IPA_QMI_H_
-diff --git a/drivers/net/ipa/ipa_qmi_msg.c b/drivers/net/ipa/ipa_qmi_msg.c
-index 75d3fc0092e92..97c0befe8d86f 100644
---- a/drivers/net/ipa/ipa_qmi_msg.c
-+++ b/drivers/net/ipa/ipa_qmi_msg.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- /* Copyright (c) 2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2020 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- #include <linux/stddef.h>
- #include <linux/soc/qcom/qmi.h>
-diff --git a/drivers/net/ipa/ipa_qmi_msg.h b/drivers/net/ipa/ipa_qmi_msg.h
-index 9651aa59b5968..e29663965f434 100644
---- a/drivers/net/ipa/ipa_qmi_msg.h
-+++ b/drivers/net/ipa/ipa_qmi_msg.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2020 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- #ifndef _IPA_QMI_MSG_H_
- #define _IPA_QMI_MSG_H_
-diff --git a/drivers/net/ipa/ipa_reg.c b/drivers/net/ipa/ipa_reg.c
-index fb4663bcf14bd..22f067741d9b2 100644
---- a/drivers/net/ipa/ipa_reg.c
-+++ b/drivers/net/ipa/ipa_reg.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2020 Linaro Ltd.
-+ * Copyright (C) 2019-2022 Linaro Ltd.
-  */
- 
- #include <linux/io.h>
-diff --git a/drivers/net/ipa/ipa_reg.h b/drivers/net/ipa/ipa_reg.h
-index f81381891a2e4..bd28e2aee59b4 100644
---- a/drivers/net/ipa/ipa_reg.h
-+++ b/drivers/net/ipa/ipa_reg.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2021 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- #ifndef _IPA_REG_H_
- #define _IPA_REG_H_
-diff --git a/drivers/net/ipa/ipa_resource.c b/drivers/net/ipa/ipa_resource.c
-index 5376b71f45984..a257f0e5e3618 100644
---- a/drivers/net/ipa/ipa_resource.c
-+++ b/drivers/net/ipa/ipa_resource.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2021 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- 
- #include <linux/types.h>
-diff --git a/drivers/net/ipa/ipa_smp2p.c b/drivers/net/ipa/ipa_smp2p.c
-index 2112336120391..5620dc271fac3 100644
---- a/drivers/net/ipa/ipa_smp2p.c
-+++ b/drivers/net/ipa/ipa_smp2p.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2020 Linaro Ltd.
-+ * Copyright (C) 2019-2022 Linaro Ltd.
-  */
- 
- #include <linux/types.h>
-diff --git a/drivers/net/ipa/ipa_smp2p.h b/drivers/net/ipa/ipa_smp2p.h
-index 59cee31a73836..9b969b03d1a4b 100644
---- a/drivers/net/ipa/ipa_smp2p.h
-+++ b/drivers/net/ipa/ipa_smp2p.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2020 Linaro Ltd.
-+ * Copyright (C) 2019-2022 Linaro Ltd.
-  */
- #ifndef _IPA_SMP2P_H_
- #define _IPA_SMP2P_H_
-diff --git a/drivers/net/ipa/ipa_sysfs.c b/drivers/net/ipa/ipa_sysfs.c
-index c0c8641cdd14a..5cbc15a971f9d 100644
---- a/drivers/net/ipa/ipa_sysfs.c
-+++ b/drivers/net/ipa/ipa_sysfs.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- 
--/* Copyright (C) 2021 Linaro Ltd. */
-+/* Copyright (C) 2021-2022 Linaro Ltd. */
- 
- #include <linux/kernel.h>
- #include <linux/types.h>
-diff --git a/drivers/net/ipa/ipa_sysfs.h b/drivers/net/ipa/ipa_sysfs.h
-index 4a3ffd1e4e3fb..58ba22810bab4 100644
---- a/drivers/net/ipa/ipa_sysfs.h
-+++ b/drivers/net/ipa/ipa_sysfs.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2021 Linaro Ltd.
-+ * Copyright (C) 2019-2022 Linaro Ltd.
-  */
- #ifndef _IPA_SYSFS_H_
- #define _IPA_SYSFS_H_
-diff --git a/drivers/net/ipa/ipa_table.c b/drivers/net/ipa/ipa_table.c
-index 02cab1b59f21a..510ff2dc8999a 100644
---- a/drivers/net/ipa/ipa_table.c
-+++ b/drivers/net/ipa/ipa_table.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2021 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- 
- #include <linux/types.h>
-diff --git a/drivers/net/ipa/ipa_table.h b/drivers/net/ipa/ipa_table.h
-index 1538e2e1732fe..395189f75d784 100644
---- a/drivers/net/ipa/ipa_table.h
-+++ b/drivers/net/ipa/ipa_table.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2021 Linaro Ltd.
-+ * Copyright (C) 2019-2022 Linaro Ltd.
-  */
- #ifndef _IPA_TABLE_H_
- #define _IPA_TABLE_H_
-diff --git a/drivers/net/ipa/ipa_uc.c b/drivers/net/ipa/ipa_uc.c
-index cf21f1a87a880..f0ee472810153 100644
---- a/drivers/net/ipa/ipa_uc.c
-+++ b/drivers/net/ipa/ipa_uc.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2018-2020 Linaro Ltd.
-+ * Copyright (C) 2018-2022 Linaro Ltd.
-  */
- 
- #include <linux/types.h>
-diff --git a/drivers/net/ipa/ipa_uc.h b/drivers/net/ipa/ipa_uc.h
-index 23847f934d64e..8514096e6f36f 100644
---- a/drivers/net/ipa/ipa_uc.h
-+++ b/drivers/net/ipa/ipa_uc.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2020 Linaro Ltd.
-+ * Copyright (C) 2019-2022 Linaro Ltd.
-  */
- #ifndef _IPA_UC_H_
- #define _IPA_UC_H_
-diff --git a/drivers/net/ipa/ipa_version.h b/drivers/net/ipa/ipa_version.h
-index 58f7b43b4db3b..7870e0cc3d7c9 100644
---- a/drivers/net/ipa/ipa_version.h
-+++ b/drivers/net/ipa/ipa_version.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- 
- /* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
-- * Copyright (C) 2019-2020 Linaro Ltd.
-+ * Copyright (C) 2019-2022 Linaro Ltd.
-  */
- #ifndef _IPA_VERSION_H_
- #define _IPA_VERSION_H_
++  - |
++    power-controller@2099000 {
++        compatible = "qcom,saw2";
++        reg = <0x02099000 0x1000>, <0x02009000 0x1000>;
++        regulator;
++    };
+ ...
 -- 
-2.34.1
+2.35.1
 
