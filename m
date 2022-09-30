@@ -2,137 +2,304 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46A815F05D7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 09:38:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD2B25F0643
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 10:12:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231219AbiI3Hi1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 03:38:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53040 "EHLO
+        id S230236AbiI3IMY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 04:12:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231178AbiI3HiV (ORCPT
+        with ESMTP id S229975AbiI3IMX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 03:38:21 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A26871FBC82
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 00:38:13 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id v1so3283078plo.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 00:38:13 -0700 (PDT)
+        Fri, 30 Sep 2022 04:12:23 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5C7D3B731
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 01:12:21 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id i6so3627751pfb.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 01:12:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=quanta-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=zWEvlra4GjNL5eCGG7TXBBCm7IbK8/TQSlxVjMYvHcE=;
-        b=MrqqEkHjYffZJPu5KTLjApA/BfrcUAlXTUqdI2o2BoduWleD89du9S7cEDKVNYeGvi
-         msZbuTHzYT6jNWo7BxZRMSNEX+zIoAQ1BFSCIagja5iRkH4C3irqqfd/+NFtByRyY2Zk
-         A1C6zb9+L1JmXlr1GUMqnmc8v/niOzv81nv45jmlezc2eXJQf3+ePESlHDBxpJmTL5M0
-         ea3Jnd8APPjbjLh7Z4SrXQgbfuSucTOYEHxJtse9pgkJXwk7DX5Q18wVGDSSp3b8tE2H
-         5FW1BjZFvwvKpgV8uxhXUFnFZhpOdj1jopzzK5zcGqmR7fLLiRbG1lf1ZQqydukoVP2P
-         PazA==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=6NyeoJovWo80SRvIahWrHZTL8FRKaUcjv7Xwm9qDiaQ=;
+        b=vcBKdm9KUPdo9pN8hASTyPznOaBv2Q56BzQn8lTRbaHyRUKrxKuFtzNdMnFOwR4NNe
+         6dH+DPdKQb7VZJkkOIaLfFjAgZP2EtT2e1gcUe54jtjpkUHWlJx79di7bD22MLuawEIU
+         FH1PBYO/cyraJPAVqh10PxcPMF0KQBgJlWlDVeNwC1NevKzhK/1fu58hkzc0cLEPzATI
+         kvkSysaqnl1vl/UEy8qmRi1OeDXd1DqsGlwSCfNT7rMHZbmmDRp9UweVT+i7T7f4YSbX
+         yEhwCuSs5KN8a9jWLsFBBJq5sbKRqF+dJCm7CJbk5mU7DeFPmq8iIHB57E9wyQ8qrOk0
+         O5HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=zWEvlra4GjNL5eCGG7TXBBCm7IbK8/TQSlxVjMYvHcE=;
-        b=CAI0l6UZWVgcyPfq9ENVlRY9mSKvNYk3HBM4Dz6c9myS+pbi0ti4qSJp6nKMQ4yAmZ
-         AoQjPMT5kbTwPDp6mh1Iig8BpZN2t9PaLZtSKDjLGC8N1Ky9UbNGFFIzZBLsGkoYWR7F
-         1bg+0QETXQJ8zAba9lszb/0ZfpzbcSsMagTiL0jWfxc+zSjuJjt0Kmz0Qcscot1Uu+Zf
-         uRrhLLOXQ8kTjoAluwb6tYnWQWlCg7i8WLjEVDmDVymjNq22j7wYALcjaMubK8sBWBy0
-         nrYu4wAZsGBAWabs5i88+7AzJ2aXs2yFxI2cvoutlS+0dGGgkbuT9TD+cLsgT0uBeZ3/
-         o+cw==
-X-Gm-Message-State: ACrzQf0cKtAWHsu6Gf92zE86UFIJl/LmDMBc51EFhf6I50ne6ksx5UZ5
-        UmniE0KC20MgRVyXu6BZgA+QTQ==
-X-Google-Smtp-Source: AMsMyM7BMtKM9UrI9uh0L7T2sOUR1TImyRjbwdevY2h9dTMppxLBBMHUpFHBRqhvdENil/tT3mcanw==
-X-Received: by 2002:a17:902:bc42:b0:17c:e3db:e6ca with SMTP id t2-20020a170902bc4200b0017ce3dbe6camr7386plz.10.1664523492521;
-        Fri, 30 Sep 2022 00:38:12 -0700 (PDT)
-Received: from liang-Predator-PH517-52.. (60-250-232-247.hinet-ip.hinet.net. [60.250.232.247])
-        by smtp.gmail.com with ESMTPSA id e8-20020a170902ef4800b0017ba371b0a9sm1166132plx.167.2022.09.30.00.38.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 00:38:12 -0700 (PDT)
-From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     dianders@chromium.org,
-        Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v5 3/3] arm64: dts: qcom: Add touchscreen and touchpad support for evoker
-Date:   Fri, 30 Sep 2022 15:37:54 +0800
-Message-Id: <20220930153538.v5.3.I50d04dcbe735dda69995cf1078824d671501869e@changeid>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220930073754.1391044-1-sheng-liang.pan@quanta.corp-partner.google.com>
-References: <20220930073754.1391044-1-sheng-liang.pan@quanta.corp-partner.google.com>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=6NyeoJovWo80SRvIahWrHZTL8FRKaUcjv7Xwm9qDiaQ=;
+        b=XnGvWzVLD8Q5mfIQ0ETy8aWcI4ojzY6tSXXT//gCtkv+x3+GAZbQXWnfGHPtGmmoKQ
+         AQV4TToy82h2MYDfm7ANiCDjLQoFepRvmdlRYyq71yboA+T0sNjG2w7h+yh0uTfZfiy6
+         toYyCheTE3RgBNw2bP+65ki/pw57REBKrdVPK8nCmnZK+n1gie5J6VFkHoawX8MuO3l9
+         TlGKfTX7usWURGdHgFMbda2FFHNtvJmnrv4jYYk8sJn/+aFtD17Amd9inK7RhygY7jgC
+         bIsN2mznv9mW2+G9aMHMXJi73bY+3LSsuf3hYRXSSK4S3imPsC+v5VTITupWkamnbFJq
+         IdZw==
+X-Gm-Message-State: ACrzQf0yf692AkqBdAXHrsMiPAAFoECJyVsVPhRtihqqwSRFk/WLozoA
+        2FcwrrRnbHm0AY6PCUDap8gf6Q==
+X-Google-Smtp-Source: AMsMyM4ozhIXKnEWVfoK7a0PhBcFVtTjLUsOsqboI7LX0DY1IUZCNi4soYe4F0biSh/x/k2zyGlsbA==
+X-Received: by 2002:a63:80c8:0:b0:43c:c89d:a944 with SMTP id j191-20020a6380c8000000b0043cc89da944mr6722666pgd.117.1664525541286;
+        Fri, 30 Sep 2022 01:12:21 -0700 (PDT)
+Received: from ?IPV6:2401:4900:1f3b:3adb:24f8:ac24:2282:1dc7? ([2401:4900:1f3b:3adb:24f8:ac24:2282:1dc7])
+        by smtp.gmail.com with ESMTPSA id k17-20020a170902c41100b0016c0b0fe1c6sm1268168plk.73.2022.09.30.01.12.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 30 Sep 2022 01:12:20 -0700 (PDT)
+Message-ID: <1163e862-d36a-9b5e-2019-c69be41cc220@linaro.org>
+Date:   Fri, 30 Sep 2022 13:42:14 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v2 3/4] dt-bindings: net: qcom,ethqos: Convert bindings to
+ yaml
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, netdev@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        David Miller <davem@davemloft.net>
+References: <20220929060405.2445745-1-bhupesh.sharma@linaro.org>
+ <20220929060405.2445745-4-bhupesh.sharma@linaro.org>
+ <4e896382-c666-55c6-f50b-5c442e428a2b@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+In-Reply-To: <4e896382-c666-55c6-f50b-5c442e428a2b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Change touchpad and touchscreen node for evoker
-Touchpad: SA461D-1011
-Touchscreen: GT7986U
 
-Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
----
+On 9/29/22 12:52 PM, Krzysztof Kozlowski wrote:
+> On 29/09/2022 08:04, Bhupesh Sharma wrote:
+>> Convert Qualcomm ETHQOS Ethernet devicetree binding to YAML.
+>>
+>> While at it, also add Qualcomm Ethernet ETHQOS compatible checks
+>> in snps,dwmac YAML binding document.
+> 
+> There are no checks added to snps,dwmac.
 
-(no changes since v1)
+Ack.
 
- .../boot/dts/qcom/sc7280-herobrine-evoker.dtsi  | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+>>
+>> Cc: Bjorn Andersson <andersson@kernel.org>
+>> Cc: Rob Herring <robh@kernel.org>
+>> Cc: Vinod Koul <vkoul@kernel.org>
+>> Cc: David Miller <davem@davemloft.net>
+>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>> ---
+>>   .../devicetree/bindings/net/qcom,ethqos.txt   |  66 --------
+>>   .../devicetree/bindings/net/qcom,ethqos.yaml  | 145 ++++++++++++++++++
+>>   2 files changed, 145 insertions(+), 66 deletions(-)
+>>   delete mode 100644 Documentation/devicetree/bindings/net/qcom,ethqos.txt
+>>   create mode 100644 Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.txt b/Documentation/devicetree/bindings/net/qcom,ethqos.txt
+>> deleted file mode 100644
+>> index 1f5746849a71..000000000000
+>> --- a/Documentation/devicetree/bindings/net/qcom,ethqos.txt
+>> +++ /dev/null
+>> @@ -1,66 +0,0 @@
+>> -Qualcomm Ethernet ETHQOS device
+>> -
+>> -This documents dwmmac based ethernet device which supports Gigabit
+>> -ethernet for version v2.3.0 onwards.
+>> -
+>> -This device has following properties:
+>> -
+>> -Required properties:
+>> -
+>> -- compatible: Should be one of:
+>> -		"qcom,qcs404-ethqos"
+>> -		"qcom,sm8150-ethqos"
+>> -
+>> -- reg: Address and length of the register set for the device
+>> -
+>> -- reg-names: Should contain register names "stmmaceth", "rgmii"
+>> -
+>> -- clocks: Should contain phandle to clocks
+>> -
+>> -- clock-names: Should contain clock names "stmmaceth", "pclk",
+>> -		"ptp_ref", "rgmii"
+>> -
+>> -- interrupts: Should contain phandle to interrupts
+>> -
+>> -- interrupt-names: Should contain interrupt names "macirq", "eth_lpi"
+>> -
+>> -Rest of the properties are defined in stmmac.txt file in same directory
+>> -
+>> -
+>> -Example:
+>> -
+>> -ethernet: ethernet@7a80000 {
+>> -	compatible = "qcom,qcs404-ethqos";
+>> -	reg = <0x07a80000 0x10000>,
+>> -		<0x07a96000 0x100>;
+>> -	reg-names = "stmmaceth", "rgmii";
+>> -	clock-names = "stmmaceth", "pclk", "ptp_ref", "rgmii";
+>> -	clocks = <&gcc GCC_ETH_AXI_CLK>,
+>> -		<&gcc GCC_ETH_SLAVE_AHB_CLK>,
+>> -		<&gcc GCC_ETH_PTP_CLK>,
+>> -		<&gcc GCC_ETH_RGMII_CLK>;
+>> -	interrupts = <GIC_SPI 56 IRQ_TYPE_LEVEL_HIGH>,
+>> -			<GIC_SPI 55 IRQ_TYPE_LEVEL_HIGH>;
+>> -	interrupt-names = "macirq", "eth_lpi";
+>> -	snps,reset-gpio = <&tlmm 60 GPIO_ACTIVE_LOW>;
+>> -	snps,reset-active-low;
+>> -
+>> -	snps,txpbl = <8>;
+>> -	snps,rxpbl = <2>;
+>> -	snps,aal;
+>> -	snps,tso;
+>> -
+>> -	phy-handle = <&phy1>;
+>> -	phy-mode = "rgmii";
+>> -
+>> -	mdio {
+>> -		#address-cells = <0x1>;
+>> -		#size-cells = <0x0>;
+>> -		compatible = "snps,dwmac-mdio";
+>> -		phy1: phy@4 {
+>> -			device_type = "ethernet-phy";
+>> -			reg = <0x4>;
+>> -		};
+>> -	};
+>> -
+>> -};
+>> diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+>> new file mode 100644
+>> index 000000000000..d3d8f6799d18
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+>> @@ -0,0 +1,145 @@
+>> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Ethernet ETHQOS device
+>> +
+>> +maintainers:
+>> +  - Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>> +
+>> +description:
+>> +  This binding describes the dwmmac based Qualcomm ethernet devices which
+>> +  support Gigabit ethernet (version v2.3.0 onwards).
+>> +
+>> +  So, this file documents platform glue layer for dwmmac stmmac based Qualcomm
+>> +  ethernet devices.
+>> +
+>> +allOf:
+>> +  - $ref: snps,dwmac.yaml#
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,qcs404-ethqos
+>> +      - qcom,sm8150-ethqos
+>> +
+>> +  reg:
+>> +    maxItems: 2
+>> +
+>> +  reg-names:
+>> +    items:
+>> +      - const: stmmaceth
+>> +      - const: rgmii
+>> +
+>> +  interrupts:
+>> +    items:
+>> +      - description: Combined signal for various interrupt events
+>> +      - description: The interrupt that occurs when Rx exits the LPI state
+>> +
+>> +  interrupt-names:
+>> +    items:
+>> +      - const: macirq
+>> +      - const: eth_lpi
+>> +
+>> +  clocks:
+>> +    maxItems: 4
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: stmmaceth
+>> +      - const: pclk
+>> +      - const: ptp_ref
+>> +      - const: rgmii
+>> +
+>> +  iommus:
+>> +    maxItems: 1
+>> +
+>> +  mdio:
+>> +    $ref: mdio.yaml#
+>> +    unevaluatedProperties: false
+>> +
+>> +    properties:
+>> +      compatible:
+>> +        const: snps,dwmac-mdio
+>> +
+>> +  phy-handle:
+>> +    maxItems: 1
+>> +
+>> +  phy-mode:
+>> +    maxItems: 1
+>> +
+>> +  snps,reset-gpio:
+>> +    maxItems: 1
+> 
+> Why is this one here? It's already in snps,dwmac.
+> 
+> Actually this applies to several other properties. You have
+> unevaluatedProperties:false, so you do not have to duplicate snps,dwmac.
+> You only need to constrain it, like we said about interrupts in your
+> previous patch.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-index e78072159d54b..c26f19371c8bc 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-@@ -23,16 +23,15 @@ ap_tp_i2c: &i2c0 {
- 	status = "okay";
- 	clock-frequency = <400000>;
- 
--	trackpad: trackpad@2c {
--		compatible = "hid-over-i2c";
--		reg = <0x2c>;
-+	trackpad: trackpad@15 {
-+		compatible = "elan,ekth3000";
-+		reg = <0x15>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&tp_int_odl>;
- 
- 		interrupt-parent = <&tlmm>;
- 		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
- 
--		hid-descr-addr = <0x20>;
- 		vcc-supply = <&pp3300_z1>;
- 
- 		wakeup-source;
-@@ -43,18 +42,16 @@ ts_i2c: &i2c13 {
- 	status = "okay";
- 	clock-frequency = <400000>;
- 
--	ap_ts: touchscreen@10 {
--		compatible = "elan,ekth6915";
--		reg = <0x10>;
--		pinctrl-names = "default";
--		pinctrl-0 = <&ts_int_conn>, <&ts_rst_conn>;
-+	touchscreen: touchscreen@5d {
-+		compatible = "goodix,gt7375p";
-+		reg = <0x5d>;
- 
- 		interrupt-parent = <&tlmm>;
- 		interrupts = <55 IRQ_TYPE_LEVEL_LOW>;
- 
- 		reset-gpios = <&tlmm 54 GPIO_ACTIVE_LOW>;
- 
--		vcc33-supply = <&ts_avdd>;
-+		vdd-supply = <&ts_avdd>;
- 	};
- };
- 
--- 
-2.34.1
+I was actually getting errors like the following without the same:
 
+arm64/boot/dts/qcom/qcs404-evb-1000.dtb: ethernet@7a80000: Unevaluated 
+properties are not allowed ('snps,tso' was unexpected)
+	From schema: Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+
+So, its not clear to me that even though 'snps,dwmac.yaml' is referenced 
+here, the property appears as unevaluated.
+
+>> +
+>> +  power-domains:
+>> +    maxItems: 1
+>> +
+>> +  resets:
+>> +    maxItems: 1
+>> +
+>> +  rx-fifo-depth:
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>> +
+>> +  tx-fifo-depth:
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>> +
+>> +  snps,tso:
+>> +    type: boolean
+>> +    description: Enables the TSO feature (otherwise managed by MAC HW capability register).
+> 
+> You add here several new properties. Mention in commit msg changes from
+> pure conversion with answer to "why".
+
+Right, most of them are to avoid the make dtbs_check errors / warnings 
+like the one mentioned above.
+
+I will add a comment in the commit log regarding the same.
+
+Thanks,
+Bhupesh
