@@ -2,96 +2,265 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DF7D5F1202
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 20:53:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED3CC5F1221
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 21:11:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232353AbiI3SxD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 14:53:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38636 "EHLO
+        id S231477AbiI3TLE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 15:11:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232338AbiI3Sw5 (ORCPT
+        with ESMTP id S230481AbiI3TLC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 14:52:57 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B005716DDE7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 11:52:55 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id a8so8153566lff.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 11:52:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=e+txumJrTg3NbIgJt42pEv48jMVT9OfpHxOP8nlI4eI=;
-        b=nOd2/Lv5zvyJjCozAncCLSIU9wKzp9s2Q7TT6PjF/+/xMwKcmWuNPO3CBuoUdGfWGM
-         JyMhFgsPtNjjprg90Ye+ts9Uhr99BL+JaHrbo1A5vxSActHjKZRME8RAvaii/zeGHLxQ
-         WmDB76b33IqkYw2zYnPZkRzK2iIwYWjkr3h4WyzIieNENrDHStfWKbBbelIW6hAbA4kD
-         bMpsn8QfBte18PbGQpx33YKSDJKhxDoTo0CSBsVgZKEgTelV5N4Gv6XyMC5DaqJWiJ7/
-         cCmEXmKpUPcATNZMt6YGEBqi1eaK6MfJ03k+V9guYP2uoAfqPG0MUuRo0nbid+gAXHiz
-         2epQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=e+txumJrTg3NbIgJt42pEv48jMVT9OfpHxOP8nlI4eI=;
-        b=GeSNf/aTgsMYC1QPte5bepDECCjtnYvXtuF8rA2LEvS5LwznRZTpLO9WLXYDy62qXs
-         tgacZjxAwL03TjBBKUyjXr2s+8ZA6GiC7Zh1nxeCpcyElNHRsdMoy++ztVk68p3mh+EQ
-         gOaGwySw0cBuMToE2L5w5nWFZvpHHf518dnnMJKoIynDcDfPehUXGZnGhgojJz94gBlE
-         gNQZoPtvgjs6HbASaDVmTGSw1YokZh12Rpm1Y1UFNKsdM3Rm5gx3JiQxIvKRV+DXnWHU
-         HnYz6xQwto01JiNfBH3BqYRAwBiCJ9mtm45pdsy0XDEbQiYL1RQlZtJkwt+1p5oz4jxx
-         We7w==
-X-Gm-Message-State: ACrzQf20r4to+eRBFMqNKP14FWPpsDG2gmn9eNReYky7c81bXIcx/0HC
-        ZeaREWETY0oPVIrr9/kfVvs1or7fNzfqng==
-X-Google-Smtp-Source: AMsMyM5ErMjCI46XODlbU8m/rNJcueoVSZW1inTjXDRY0MRTmTLS5eFvc8bwvZ2ZmQsKMgq4Z2uKTw==
-X-Received: by 2002:a05:6512:3502:b0:496:272:6258 with SMTP id h2-20020a056512350200b0049602726258mr3495629lfs.429.1664563973979;
-        Fri, 30 Sep 2022 11:52:53 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id i8-20020a056512006800b00492cfecf1c0sm374703lfo.245.2022.09.30.11.52.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 11:52:53 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Fri, 30 Sep 2022 15:11:02 -0400
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7C9E115BFC;
+        Fri, 30 Sep 2022 12:10:58 -0700 (PDT)
+Received: from localhost.localdomain (95.49.31.201.neoplus.adsl.tpnet.pl [95.49.31.201])
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id DC0C42016F;
+        Fri, 30 Sep 2022 21:10:55 +0200 (CEST)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH 23/23] ARM: dts: qcom: msm8660: drop qcom, prefix from SSBI node name
-Date:   Fri, 30 Sep 2022 21:52:36 +0300
-Message-Id: <20220930185236.867655-24-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220930185236.867655-1-dmitry.baryshkov@linaro.org>
-References: <20220930185236.867655-1-dmitry.baryshkov@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/8] arm64: dts: qcom: sdm845-tama: Add display nodes
+Date:   Fri, 30 Sep 2022 21:10:42 +0200
+Message-Id: <20220930191049.123256-2-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.37.3
+In-Reply-To: <20220930191049.123256-1-konrad.dybcio@somainline.org>
+References: <20220930191049.123256-1-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm/boot/dts/qcom-msm8660.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Add required nodes to support display on XZ2/XZ2c. XZ3 has a
+different power rail setup and needs to be handled separately.
 
-diff --git a/arch/arm/boot/dts/qcom-msm8660.dtsi b/arch/arm/boot/dts/qcom-msm8660.dtsi
-index 60edb4bd5bbb..a5e02301178f 100644
---- a/arch/arm/boot/dts/qcom-msm8660.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8660.dtsi
-@@ -333,7 +333,7 @@ ebi2: external-bus@1a100000 {
- 			status = "disabled";
- 		};
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+ .../qcom/sdm845-sony-xperia-tama-akari.dts    |  4 +
+ .../qcom/sdm845-sony-xperia-tama-akatsuki.dts | 44 ++++++++-
+ .../qcom/sdm845-sony-xperia-tama-apollo.dts   |  6 ++
+ .../dts/qcom/sdm845-sony-xperia-tama.dtsi     | 96 +++++++++++++++++++
+ 4 files changed, 149 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dts b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dts
+index 34f84f1f1eb4..d97b7f1e7140 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dts
+@@ -11,3 +11,7 @@ / {
+ 	model = "Sony Xperia XZ2";
+ 	compatible = "sony,akari-row", "qcom,sdm845";
+ };
++
++&panel {
++	compatible = "sony,td4353-jdi-tama";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
+index 2f5e12deaada..2a16305ac5da 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
+@@ -10,9 +10,51 @@
+ / {
+ 	model = "Sony Xperia XZ3";
+ 	compatible = "sony,akatsuki-row", "qcom,sdm845";
++
++	/* Fixed DCDC for the OLED panel */
++	ts_vddio_supply: ts-vddio-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "ts_vddio";
++
++		regulator-min-microvolt = <1840000>;
++		regulator-max-microvolt = <1840000>;
++
++		gpio = <&tlmm 133 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++		regulator-boot-on;
++	};
++};
++
++&ibb {
++	status = "disabled";
++};
++
++&lab {
++	status = "disabled";
++};
++
++&panel {
++	/* Akatsuki uses an OLED panel. */
++	/delete-property/ backlight;
++	/delete-property/ vsp-supply;
++	/delete-property/ vsn-supply;
++	/delete-property/ treset-gpios;
++};
++
++&pmi8998_wled {
++	status = "disabled";
++};
++
++&tlmm {
++	ts_vddio_en: ts-vddio-en {
++		pins = "gpio133";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++		output-high;
++	};
+ };
  
--		qcom,ssbi@500000 {
-+		ssbi@500000 {
- 			compatible = "qcom,ssbi";
- 			reg = <0x500000 0x1000>;
- 			qcom,controller-type = "pmic-arbiter";
+-/* For the future: WLED + LAB/IBB/OLEDB are not used on Akatsuki */
+ &vreg_l14a_1p8 {
+ 	regulator-min-microvolt = <1840000>;
+ 	regulator-max-microvolt = <1840000>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-apollo.dts b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-apollo.dts
+index c9e62c72f60e..cd056f78070f 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-apollo.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-apollo.dts
+@@ -11,3 +11,9 @@ / {
+ 	model = "Sony Xperia XZ2 Compact";
+ 	compatible = "sony,apollo-row", "qcom,sdm845";
+ };
++
++&panel {
++	compatible = "sony,td4353-jdi-tama";
++	height-mm = <112>;
++	width-mm = <56>;
++};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+index 51ee42e3c995..ac8eb59ed010 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+@@ -326,6 +326,46 @@ vreg_s3c_0p6: smps3 {
+ 	};
+ };
+ 
++&dsi0 {
++	vdda-supply = <&vreg_l26a_1p2>;
++	status = "okay";
++
++	panel: panel@0 {
++		/* The compatible is assigned in device DTs. */
++		reg = <0>;
++
++		backlight = <&pmi8998_wled>;
++		vddio-supply = <&vreg_l14a_1p8>;
++		vsp-supply = <&lab>;
++		vsn-supply = <&ibb>;
++		panel-reset-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
++		touch-reset-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-names = "default", "sleep";
++		pinctrl-0 = <&sde_dsi_active &sde_te_active_sleep>;
++		pinctrl-1 = <&sde_dsi_sleep &sde_te_active_sleep>;
++
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		port {
++			panel_in: endpoint {
++				remote-endpoint = <&dsi0_out>;
++			};
++		};
++	};
++};
++
++&dsi0_out {
++	remote-endpoint = <&panel_in>;
++	data-lanes = <0 1 2 3>;
++};
++
++&dsi0_phy {
++	vdds-supply = <&vreg_l1a_0p9>;
++	status = "okay";
++};
++
+ &gcc {
+ 	protected-clocks = <GCC_QSPI_CORE_CLK>,
+ 			<GCC_QSPI_CORE_CLK_SRC>,
+@@ -358,6 +398,41 @@ &i2c14 {
+ 	/* AMS TCS3490 RGB+IR color sensor @ 72 */
+ };
+ 
++&ibb {
++	qcom,discharge-resistor-kohms = <300>;
++	regulator-min-microvolt = <5500000>;
++	regulator-max-microvolt = <5700000>;
++	regulator-min-microamp = <0>;
++	regulator-max-microamp = <800000>;
++	regulator-over-current-protection;
++	regulator-soft-start;
++	regulator-pull-down;
++};
++
++&lab {
++	regulator-min-microvolt = <5500000>;
++	regulator-max-microvolt = <5700000>;
++	regulator-min-microamp = <200000>;
++	regulator-max-microamp = <200000>;
++	regulator-over-current-protection;
++	regulator-soft-start;
++	regulator-pull-down;
++};
++
++&mdss {
++	status = "okay";
++};
++
++&pmi8998_wled {
++	default-brightness = <800>;
++	qcom,switching-freq = <800>;
++	qcom,ovp-millivolt = <29600>;
++	qcom,current-boost-limit = <970>;
++	qcom,current-limit-microamp = <20000>;
++	qcom,enabled-strings = <0 1 2 3>;
++	status = "okay";
++};
++
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
+@@ -401,6 +476,27 @@ data {
+ 			bias-pull-up;
+ 		};
+ 	};
++
++	sde_dsi_active: sde-dsi-active-state {
++		pins = "gpio6", "gpio52";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-disable;
++	};
++
++	sde_dsi_sleep: sde-dsi-sleep-state {
++		pins = "gpio6", "gpio52";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-pull-down;
++	};
++
++	sde_te_active_sleep: sde-te-active-sleep-state {
++		pins = "gpio10";
++		function = "mdp_vsync";
++		drive-strength = <2>;
++		bias-pull-down;
++	};
+ };
+ 
+ &uart6 {
 -- 
-2.35.1
+2.37.3
 
