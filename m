@@ -2,156 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 937525F05BD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 09:33:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B294F5F05D0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 09:38:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230211AbiI3HdH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 03:33:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40940 "EHLO
+        id S230481AbiI3HiC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 03:38:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230285AbiI3HdF (ORCPT
+        with ESMTP id S230028AbiI3HiB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 03:33:05 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 056BF166499
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 00:33:04 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id j24so3907611lja.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 00:33:03 -0700 (PDT)
+        Fri, 30 Sep 2022 03:38:01 -0400
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 908961ED6D3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 00:38:00 -0700 (PDT)
+Received: by mail-pg1-x52e.google.com with SMTP id e129so3473535pgc.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 00:38:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=3EhDX5sconM/DulJaLK1YKrSaQKMRvhUiKJtm5HcYSQ=;
-        b=TGZYiZlSuRWs7pX1o5GgZ/73e9A062m1pYjrw0BJjXs+VKeGY4HAeBLYe5eVfR1E4X
-         8OL57rnJJjLIStSn203PikstHzaeRyHpyMtSF8DxXRnfEyKW6q+D9H1BxwKUx0sB6F7l
-         JBFYlmN1/RMBpJwkCu0jiCzhB39JlJLDlMD+FTw6JKtUdoFR/4o9wudV52JRb7L+CzeR
-         IB4u/VpWSLFp3sUc4W325BFW7prInK3Ly/qhh5qAn8ibO4UbOxUNcoqTF5ha0OX4CTaY
-         FY5KlIBN0ZgsZwwBd5FuVuDWCE1Xc1qOFaEF+c0AeBHSsJLQPzkidEbcjqJg+2j0QxFM
-         kv/w==
+        d=quanta-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=c8cSDxaoc+Bwbc6lxhsGSESz1SuPfGrG+FUcw6yQ/oM=;
+        b=aQNGJGokDXmOp/q10VSxiouxd37Pc19eHXcMvvbKpeJojCPi/3Xn4AqsdE80ed8iZy
+         tyugOLljSxGiIeLiGML3y5ocQxo/2/OnPd09GtYeSvTafh655iM/O+mIg7FDp6XiYdhQ
+         NHhrrwZYrC/GXtp+Gqs1svqRQf8k2gUP7gZYPD4B2zKQTTVoCWEecMogHyzwTrhpJYCM
+         CxeCGBeJuIRj3131zpeAS0dEWWt0oq9e3Wgiw2OXmK2qkNa3m4Fp1lhA6EEhG7v8+GKP
+         mpoNWQyDjL7sPMA1lNL21YmYDW/sCGv1q2TJbpP4rWTOzQTkJHNU6tMaTlz4w6vlgptl
+         7u4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=3EhDX5sconM/DulJaLK1YKrSaQKMRvhUiKJtm5HcYSQ=;
-        b=p8JbJKkCaScoJvKk8UOm7SzuY+Y2I/t564oIYMgvQ+zqa76ZZwIYQgDZg5lw7Cdnao
-         Rsgh8q6fdDGhBabnrJhQ4ltyB7bAv5WeOuZnLC/qcNlMIM4VPjxHLUAxMLYqSHR2uNNV
-         jynocWPvMpJr3GkS3Gs4AQlzT0xXr3QP1B+saNtA3sGgpDPAxHty/Iv4oGw0dmiJz/4v
-         mQkb5D3oE9ogdjT9WxjFven1Idc9YAisM2w98Z7JHF7F9ssezEjTjEQi8pRN6CUXaD7D
-         oa5kFNORpqjYEeCrSigUn+9MgDwsiCdsCJrYTdBUxqLOlGcCtIidVu74KReIAGF+8cat
-         gA6w==
-X-Gm-Message-State: ACrzQf0nQDsyWRjegWZvVPjWJWFiLBYm+yWF3d+fEddKeWRkME7+uUe6
-        pLv6N7rxN82aC4ZK357hkZ7tkA==
-X-Google-Smtp-Source: AMsMyM5fyQcKNPw91bATxo6xJ0dTsxhzxYTCiUU1lYuqP699+UmonKTl7CZmVAKQaOJsLMkHaSQtow==
-X-Received: by 2002:a2e:9b91:0:b0:26a:ce59:c517 with SMTP id z17-20020a2e9b91000000b0026ace59c517mr2362039lji.181.1664523182233;
-        Fri, 30 Sep 2022 00:33:02 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id b18-20020a056512305200b00492ea54beeasm200350lfb.306.2022.09.30.00.33.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Sep 2022 00:33:01 -0700 (PDT)
-Message-ID: <05827736-c3af-b67b-4343-717545db530c@linaro.org>
-Date:   Fri, 30 Sep 2022 09:33:01 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH v1 5/7] arm: dts: qcom: mdm9615: remove invalid pmic
- subnodes compatibles
-Content-Language: en-US
-To:     neil.armstrong@linaro.org, Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=c8cSDxaoc+Bwbc6lxhsGSESz1SuPfGrG+FUcw6yQ/oM=;
+        b=m2hEjoANYD1IKpWE9bIbxw/D9hOWjxy7RMQeQ4ijyPHptAj51vL45v2PXgt051jmpa
+         EoIvulFmBYP0J+F5xmPCzwaIPgSWuFzTz/exFga9QD5Xuw+kbjCKm4ymSZMuXhDWFRZD
+         XtG33dJkqXIxCiRyCLIYREVjwCN35lgVbWFXvX7Scp11HPXDCApUdsVsNwzuUmgGd+ui
+         sFxS/dVnWOHo1W+ToVuiq93/g/Yf+/UgNFuJoRRKB4SCPuZWrAxHIYLDbrcR+m1h9eSz
+         M77YPci8OVJQbgWL8UGa3t6VeX9CgKp06J+WPvMKehyLBwW1ZDGV1KqPXmwTXzG2WI99
+         3IRQ==
+X-Gm-Message-State: ACrzQf10KARqT4P1Yns8k8keyBPdRRXLmY6lRgScFLlKvIuO95KCH9TA
+        aeUz0O1G/K2bY1zlyguMiMnrMg==
+X-Google-Smtp-Source: AMsMyM5lennRdw+b8Ndqaqu5CYeSBrEn2mbncHCY3LWvEZM9dVDcmSN1NEIUnVlXMEd2greTNpmrBQ==
+X-Received: by 2002:a63:b545:0:b0:43c:2ad9:b00 with SMTP id u5-20020a63b545000000b0043c2ad90b00mr6366407pgo.535.1664523479991;
+        Fri, 30 Sep 2022 00:37:59 -0700 (PDT)
+Received: from liang-Predator-PH517-52.. (60-250-232-247.hinet-ip.hinet.net. [60.250.232.247])
+        by smtp.gmail.com with ESMTPSA id e8-20020a170902ef4800b0017ba371b0a9sm1166132plx.167.2022.09.30.00.37.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Sep 2022 00:37:59 -0700 (PDT)
+From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     dianders@chromium.org,
+        Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20220928-mdm9615-dt-schema-fixes-v1-0-b6e63a7df1e8@linaro.org>
- <20220928-mdm9615-dt-schema-fixes-v1-5-b6e63a7df1e8@linaro.org>
- <0636d53f-508f-8a86-0973-2641c9020622@linaro.org>
- <6ed642ea-424d-49ed-eb30-e09588720373@linaro.org>
- <1a3c6766-9be5-1e55-95eb-bc9656e5c9a3@linaro.org>
- <7f8572ab-ff97-54bd-a5f3-fe0e179ee48e@linaro.org>
- <84cb8941-eb15-1bbf-59b7-bbcd6c15c30d@linaro.org>
- <07405d0d-8534-6470-21d1-26b85dbd7de0@linaro.org>
- <f54377f0-a152-9367-1b06-f49df7466282@linaro.org>
- <3fa19362-118b-232e-0baf-ee365fa2f2e2@linaro.org>
- <07c75827-b8e5-7c70-315b-48617b9818e0@linaro.org>
- <9067ca94-cd5d-6883-d0e0-374ed7f599ad@linaro.org>
- <65c5ee36-8651-8a42-b6b1-3b8041c7edb8@linaro.org>
- <051ccc1c-ae56-932c-0be8-19abae562615@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <051ccc1c-ae56-932c-0be8-19abae562615@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Stephen Boyd <sboyd@codeaurora.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v5 0/3] Add LTE SKU for sc7280-evoker family
+Date:   Fri, 30 Sep 2022 15:37:51 +0800
+Message-Id: <20220930073754.1391044-1-sheng-liang.pan@quanta.corp-partner.google.com>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2022 14:48, Neil Armstrong wrote:
-> Hi,
-> 
-> On 29/09/2022 14:27, Krzysztof Kozlowski wrote:
->>
->> We are making circles and discussion takes too much. 
-> 
-> I'm sorry this happens, but I really want solve this stuff which in suspend since 2015.
-> 
-> So let me recall the original issue:
-> 
-> DTBS check reports:
-> 
-> arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb: pmic@0: compatible: ['qcom,pm8018', 'qcom,pm8921'] is too long
->          From schema: Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
-> 
-> arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb: pmic@0: rtc@11d:compatible: ['qcom,pm8018-rtc', 'qcom,pm8921-rtc'] is too long
->          From schema: Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
-> 
-> arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb:0:0: /soc/qcom,ssbi@500000/pmic@0/pwrkey@1c: failed to match any schema with compatible: ['qcom,pm8018-pwrkey', 'qcom,pm8921-pwrkey']
-> 
-> arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb:0:0: /soc/qcom,ssbi@500000/pmic@0/pwrkey@1c: failed to match any schema with compatible: ['qcom,pm8018-pwrkey', 'qcom,pm8921-pwrkey']
-> 
-> arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb: rtc@11d: compatible: ['qcom,pm8018-rtc', 'qcom,pm8921-rtc'] is too long
->          From schema: Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-> 
-> So trying to solve those, and since the PMIC in the wp8548 module is a PM8018, and it happens to be (partially ?? potentially ??) compatible
-> with the PM8921, and I had issues adding per-HW compatible for the pwrkey, the obvious solution would be to
-> drop the PM8921 compatibility since it's only probable and nothing proves it's right.
+This patch add common dtsi and WIFI/LTE dts for evoker.
 
-Although it is obvious solution it is also affecting all out-of-tree
-users of DTS.
+Changes in v5:
+- new patch add touchpad and touchscreen for evoker
+- remove unnecessary whitespace
 
-> 
-> But what's sure: it's a PM8018 PMIC.
+Changes in v4:
+- fix typo in tittle and commit
+- remove change for trackpad and touchscreen
 
-I could not find the spec for both of these, but similar numbers have
-for example exactly the same RTC. I guess other blocks are also the same.
+Changes in v3:
+- none
 
-> 
-> But since the PM8018 PWRKEY interface is compatible with the PM8921 PWRKEY interface,
-> it's perfectly ok to the the MP8921 compatible here.
-> 
-> OK, so as you quoted multiple times:
-> "How this should be fixed? First, drop bogus entries from drivers, then
-> document proper compatibles."
-> 
-> OK so there's no bogus entries to remove here, and the only compatible to
-> potentially document is the pm8018-pwrkey but it seems to be wrong.
+Changes in v2:
+- none
 
-All the entries in drivers which are duplicating the fallback are not
-needed. I called them bogus because adding them brought no meaning.
+Sheng-Liang Pan (3):
+  dt-bindings: arm: qcom: Separate LTE/WIFI SKU for sc7280-evoker
+  arm64: dts: qcom: Add LTE SKU for sc7280-evoker family
+  arm64: dts: qcom: Add touchscreen and touchpad support for evoker
 
-> I'll be happy to have an hint on how to handle that to I can go forward and
-> stop the noise, there's still plenty of stuff to fix in the MDM9615 DT.
+ .../devicetree/bindings/arm/qcom.yaml         |  5 ++++
+ arch/arm64/boot/dts/qcom/Makefile             |  3 ++-
+ .../dts/qcom/sc7280-herobrine-evoker-lte.dts  | 14 +++++++++++
+ .../boot/dts/qcom/sc7280-herobrine-evoker.dts | 15 ++++++++++++
+ ...er-r0.dts => sc7280-herobrine-evoker.dtsi} | 24 ++++++-------------
+ 5 files changed, 43 insertions(+), 18 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
+ rename arch/arm64/boot/dts/qcom/{sc7280-herobrine-evoker-r0.dts => sc7280-herobrine-evoker.dtsi} (93%)
 
-Drop the unneeded entries from the driver, document (properly) the
-compatible how it is used in DTS (so not in some other way than DTS
-expresses it).
-
-Best regards,
-Krzysztof
+-- 
+2.34.1
 
