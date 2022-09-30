@@ -2,32 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 268975F12DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 21:41:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E90D5F12E0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 21:41:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231473AbiI3TlY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 15:41:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53856 "EHLO
+        id S231760AbiI3Tlz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 15:41:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230512AbiI3TlW (ORCPT
+        with ESMTP id S231186AbiI3Tlz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 15:41:22 -0400
+        Fri, 30 Sep 2022 15:41:55 -0400
 Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2770102A74;
-        Fri, 30 Sep 2022 12:41:20 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30444126B6C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 12:41:54 -0700 (PDT)
 Received: from [192.168.1.101] (95.49.31.201.neoplus.adsl.tpnet.pl [95.49.31.201])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 8C7AD20135;
-        Fri, 30 Sep 2022 21:41:11 +0200 (CEST)
-Message-ID: <f9f1b554-0b9b-099b-e5d1-45d18aa4bed3@somainline.org>
-Date:   Fri, 30 Sep 2022 21:41:10 +0200
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id BAD52201B5;
+        Fri, 30 Sep 2022 21:41:49 +0200 (CEST)
+Message-ID: <880e62cc-a12c-33b2-2509-f0e05a0871af@somainline.org>
+Date:   Fri, 30 Sep 2022 21:41:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sdm845-xiaomi-polaris: fix codec
- pin conf name
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sdm850-samsung-w737: correct I2C12
+ pins drive strength
+Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -40,11 +41,11 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Molly Sophia <mollysophia379@gmail.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
+Cc:     stable@vger.kernel.org
 References: <20220930192039.240486-1-krzysztof.kozlowski@linaro.org>
- <20220930192039.240486-3-krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
+ <20220930192039.240486-2-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220930192039.240486-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220930192039.240486-2-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,NICE_REPLY_A,
@@ -59,28 +60,38 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 30.09.2022 21:20, Krzysztof Kozlowski wrote:
-> Fix typo in the codec's pin name to be configured.  Mismatched name
-> caused the pin configuration to be ignored.
+> The pin configuration (done with generic pin controller helpers and
+> as expressed by bindings) requires children nodes with either:
+> 1. "pins" property and the actual configuration,
+> 2. another set of nodes with above point.
 > 
-> Fixes: be497abe19bf ("arm64: dts: qcom: Add support for Xiaomi Mi Mix2s")
+> The qup_i2c12_default pin configuration used second method - with a
+> "pinmux" child.
+> 
+> Fixes: d4b341269efb ("arm64: dts: qcom: Add support for Samsung Galaxy Book2")
+> Cc: <stable@vger.kernel.org>
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
 Konrad
->  arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-> index afc17e4d403f..f98259489679 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-> @@ -628,7 +628,7 @@ sde_dsi_suspend: sde-dsi-suspend {
->  	};
+> diff --git a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+> index f954fe5cb61a..d028a7eb364a 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+> @@ -415,8 +415,10 @@ pinconf {
+>  };
 >  
->  	wcd_intr_default: wcd-intr-default {
-> -		pins = "goui54";
-> +		pins = "gpio54";
->  		function = "gpio";
->  		input-enable;
->  		bias-pull-down;
+>  &qup_i2c12_default {
+> -	drive-strength = <2>;
+> -	bias-disable;
+> +	pinmux {
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+>  };
+>  
+>  &qup_uart6_default {
