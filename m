@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6126E5F12AD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 21:31:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A840D5F12B3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 21:31:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232338AbiI3TbG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 15:31:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43536 "EHLO
+        id S232168AbiI3TbP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 15:31:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232153AbiI3TaY (ORCPT
+        with ESMTP id S232177AbiI3TaZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 15:30:24 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B5454E864
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 12:30:12 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id o7so1067304lfk.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 12:30:12 -0700 (PDT)
+        Fri, 30 Sep 2022 15:30:25 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2BDF50515
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 12:30:13 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id x29so5821149ljq.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 12:30:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=GJ8jipC4Qtr73OxvWkLL0z7JLAO3XeJVdGRbttk7Bns=;
-        b=G4BUUDRW+DSCw6H3Wn4oPeCUI0IBwg2gOwF4G3pf7fa7wWlajEXipyqEfB9FDzrkQO
-         jlOQUZcFTeyY2cp9FX8ecxsTVv9/VBcDy58YVi8xfULWls+tEau3jUGxm1FmoZg7y/fN
-         The6u3iJKU+89Vdeo1UusPT2Lz87Vv1C0CktDVm/xXRmiYOIaNW2vW1VOcszM+NcnZTF
-         eT6P8qxUd4MJAFDwy9vKRbBPxAnwuuHiaYhZmFu9TnvyP/359YxEEmKbv0RbIESIqRio
-         JXmZqSAEP7UAJEY99D8ANlvVQI2JNc+ff3U8GSjNivFnsjYkBX/5eAsuvN78zrz7l86/
-         36EQ==
+        bh=D4UikLTplWsHhZaUVls61V0/b6sUXu3Z8bQRTT/fioM=;
+        b=DlDOTLmE/3K9A1fyyNvzhl65kiZ3T7Ie6Bil8zmwXlww+YoeawtfDqe4h1+lsSqJj0
+         FEvBVI5MQc0XGN480GaRmhbhBRMmX2O7WLGCSSKtct/PUc7DVIU+T7e69jFGKWG7IUB5
+         PfiPd919QmwqSTLoIq+fuHzINwZv+D1KEavJLUpsaqzrcAz0N+ETYyjB5wP8zjzYaYZq
+         g9asxPEiXppHKFRp0uobCF5IhS8EV4qOA11XN/OGb2cKZd/OL4Bx8ToWbdWbrJtuC8OV
+         hAovSOkPfp5WsOy1mM399GcELKeABSAGEzWijn0Jwc6MCkSSRWYM5vl85JXApmMSpYzw
+         tRmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=GJ8jipC4Qtr73OxvWkLL0z7JLAO3XeJVdGRbttk7Bns=;
-        b=uIvUzrh1HnLGxNvNDIAnczyCy9KrhwBJROzX8vl7v2bYCXeWKNnisJYScsoQi6JIJR
-         4DKzTfJo1rgm1rfHYMUDytAQeNyovCfCMQ1YfU/QAtgdxesZsi/6jaJn3M8lO3BKrktC
-         2mSVjf5+psVUa7+IC65wer6WObHr5nOEzS4yy9U2/eyEgfWtvT4tSgT/2gcrCti1egXI
-         9AgjeBUT4D26Fy9bmk0c4xJny9ZqVGpiWk2lcSPCMSY86wo2LZDr7G+P+EtGPXyEOQgd
-         2YjJY29Ta1Mb86dbWDNBvss6+n8LxOfQf1BrdEyRLkzudmMqTiF5NHJ/kwt5LqUR14Em
-         DC0g==
-X-Gm-Message-State: ACrzQf01SjPVI9aCB9nV1Id07hXZ/LRp2jJjZFUcBPhzAlccnwQpnQ5m
-        M+8wb2fDbLjt4/gP77E1eKa0NA==
-X-Google-Smtp-Source: AMsMyM4R7zOCDF9Xyc9OFoEtSBu4ycGu636OKlKczAfxwUVAxT3xW89MZCOiTtzc9DgYRkhv6eaC4w==
-X-Received: by 2002:a05:6512:3d94:b0:49d:144c:9667 with SMTP id k20-20020a0565123d9400b0049d144c9667mr3839392lfv.50.1664566212429;
-        Fri, 30 Sep 2022 12:30:12 -0700 (PDT)
+        bh=D4UikLTplWsHhZaUVls61V0/b6sUXu3Z8bQRTT/fioM=;
+        b=fl4dv9gebfaWqXvw9ws9bVm2UC73Rqai+8Vs1Xo+HJcc/yCgb0O4UCP0CElFv1Yt3z
+         pu5gKw31XauLaaKGoBjUBUSgn46W/7npkSyLTUhLIgjHnJcsSWbjc3K8pfWclwrlC05R
+         DXAANq7dYDCOBVsOgLNFz8nqVQY/OyKWlfO/hm6IKzp7g/Uj2ypPVsS6e/hCd5SjdVds
+         BJX9nc0XhoqZxyH3zbWBVIW0XmuwpwSTm6PC3pjQMs6Bx5MO3pPZq/EeMDJsonTPxo9e
+         ZDdrCrUenEzLvnwl8QcdMxNZGhHK4LTZrQtKkIgtzUSmSp7SvDeMlvWzoX/B4c4L/55y
+         uTaw==
+X-Gm-Message-State: ACrzQf3WQasvJ1WP3To+MVu9G3qVticlPAr+7ZP3OB80Xt0r0kNbN9Ib
+        07WkyrvNagBRrIrxpsJAN+33FA==
+X-Google-Smtp-Source: AMsMyM57Ib5akcpmzoy0N5pqvXa9scToASPNmSaFb5mBPkLhQOljFXK5PJPbJIyANZcTWwPDHeLq5Q==
+X-Received: by 2002:a2e:8e8d:0:b0:26c:5d95:b31b with SMTP id z13-20020a2e8e8d000000b0026c5d95b31bmr3158920ljk.465.1664566213340;
+        Fri, 30 Sep 2022 12:30:13 -0700 (PDT)
 Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id br32-20020a056512402000b0049f9799d349sm393603lfb.187.2022.09.30.12.30.11
+        by smtp.gmail.com with ESMTPSA id br32-20020a056512402000b0049f9799d349sm393603lfb.187.2022.09.30.12.30.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 12:30:12 -0700 (PDT)
+        Fri, 30 Sep 2022 12:30:13 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -60,9 +60,9 @@ To:     Andy Gross <agross@kernel.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Rob Herring <robh@kernel.org>
-Subject: [PATCH v2 15/16] dt-bindings: pinctrl: qcom,sc7280: add bias-bus-hold and input-enable
-Date:   Fri, 30 Sep 2022 21:29:53 +0200
-Message-Id: <20220930192954.242546-16-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 16/16] dt-bindings: pinctrl: qcom,sc7280: correct number of GPIOs
+Date:   Fri, 30 Sep 2022 21:29:54 +0200
+Message-Id: <20220930192954.242546-17-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220930192954.242546-1-krzysztof.kozlowski@linaro.org>
 References: <20220930192954.242546-1-krzysztof.kozlowski@linaro.org>
@@ -78,35 +78,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SC7280 pinctrl driver supports bias-bus-hold and input-enable, and
-DTS already use it (sc7280-idp).
+SC7280 has 175 GPIOs (gpio0-174), so correct size of gpio-line-names and
+narrow the pattern for matching pin names.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Acked-by: Rob Herring <robh@kernel.org>
 ---
- .../devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml    | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ .../devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml    | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml
-index 4606ca980dc4..1db05c43d58c 100644
+index 1db05c43d58c..2a6b5a719d18 100644
 --- a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml
 +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml
-@@ -117,13 +117,11 @@ $defs:
-           Selects the drive strength for the specified pins, in mA.
+@@ -43,7 +43,7 @@ properties:
+     maxItems: 1
  
-       bias-pull-down: true
--
-       bias-pull-up: true
--
-+      bias-bus-hold: true
-       bias-disable: true
--
-+      input-enable: true
-       output-high: true
--
-       output-low: true
+   gpio-line-names:
+-    maxItems: 174
++    maxItems: 175
  
-     required:
+   wakeup-parent: true
+ 
+@@ -70,7 +70,7 @@ $defs:
+           subnode.
+         items:
+           oneOf:
+-            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-7][0-9]|18[0-2])$"
++            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-6][0-9]|17[0-4])$"
+             - enum: [ sdc1_rclk, sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk,
+                       sdc2_cmd, sdc2_data, ufs_reset ]
+         minItems: 1
+@@ -132,7 +132,7 @@ $defs:
+       - if:
+           properties:
+             pins:
+-              pattern: "^gpio([0-9]|[1-9][0-9]|1[0-7][0-9]|18[0-2])$"
++              pattern: "^gpio([0-9]|[1-9][0-9]|1[0-6][0-9]|17[0-4])$"
+         then:
+           required:
+             - function
 -- 
 2.34.1
 
