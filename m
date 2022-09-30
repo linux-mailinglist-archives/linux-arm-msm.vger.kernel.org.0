@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBD7B5F11F0
+	by mail.lfdr.de (Postfix) with ESMTP id 446255F11EE
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 20:52:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232358AbiI3Swy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 14:52:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38516 "EHLO
+        id S232305AbiI3Swx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 14:52:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232356AbiI3Swt (ORCPT
+        with ESMTP id S232358AbiI3Swt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 30 Sep 2022 14:52:49 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD7CB166F18
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 11:52:47 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id q14so1464166lfo.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 11:52:47 -0700 (PDT)
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36906166F19
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 11:52:48 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id j16so8215800lfg.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Sep 2022 11:52:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=FQVzaeMwN6wP4Wlkxa61/6fblhe6jcZzQEWjuJXlgJM=;
-        b=bx/KMZIUKU7tC4b1vPuZ47B5TOtA+Sp3YlDGEbNY5HujcVwALWnrkC4TZ1EehHJVBe
-         PPKwZ0EwgxuzEzd9A3fINi8XNKg4KMpy0aiDsG+2WVTdcE/uMZoX7X86U8FACYpqy988
-         jEPipE0ixDxs4mDTnRHnSAVkulilJSP9z2OuvZR5xKiNRzzm4pj7OCKhtuOXgLnq3JeR
-         4ckSqDBdtj5gO6xg87zhTepcx2rMwEBTF2SHFEndPFhW7Cnj+HdyBFfCNLgs4zg4m/Mq
-         pxLan+eqIj7yGTCocZLeQg44PDZXIIVbIaX50hmkqwDOd0VROJ1d9pdJ4Oot0NVpYyXg
-         Kdbw==
+        bh=ghtPiKNdpbeN+uE2Jr0al/CVda2ZhhQu7LAAvSpvKX8=;
+        b=PdLMNnYwWA3NjR81e6usaGsbSPqGmF6hwN8LPg9Gb5pRJPlL1GNPHKc51rQ3VCSci3
+         FkK8Sb2SFRUDqQiLgpWtsNkMNAtkfxbmCucD+7EtIwswFMzLMR3OPG0Au9Kdl5cZaREA
+         9ulsRADAllkchygfTjX248ygPGW+dwfl4NR+Gj2MHQ//VBE/OPOuXbC6FCgQkzNDtmIK
+         oFGWw2EEt5wwPfzv0W2dVIjjydQOAh+TGGB10Q8/Rj3UZp1NsgTsjO4v2u4DtWbzc9Td
+         Ox/ENb95PqMRUFAzPSvJ90wSXw+GAp1QL32D6bVBL32Qhw9A7JlUScgHMZHM8xOTeoKu
+         ZrOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=FQVzaeMwN6wP4Wlkxa61/6fblhe6jcZzQEWjuJXlgJM=;
-        b=Bx813HSkNybCen/JxnDuiq7EHsBwkU4jO71YGt3zbouv0iXi3offarGkW0e+KvZQQM
-         JXijey6TOqgM/zYlm+kQJM3VxddQQIqjLZmk27ktF3yinjYI/8TkYNiGqCsILD6XQ+Yv
-         Ab+bldsmUjx2f6hqtiU3A8+kjGkobuAJe0RNY/aGN0bZdj8BSM5RykuhPYsGdtZKBrhF
-         edFb1FQaUrEbClU7TrG+4pXjAFmDm5RlT2iw+TOBT3Vz76dKapPtZGP5FJfqr38LKHto
-         MqYQN1tzP4n3L2OXbD5089td9oxIQGtXfDNMbwAS2hiUA91PG1BUZg9g83MtDt/1s7dZ
-         OgQA==
-X-Gm-Message-State: ACrzQf1VRJIVSjlb2ZQLNynlFJ3BnhUYpJQY5OkGK+pzJy58588BDltF
-        cyNPkzlecFBSRYV3O6G141Z+Jw==
-X-Google-Smtp-Source: AMsMyM7/ei3mIFgWzqCfv6TooYhiIxXLFhPECoHqk25TTRruIRXV4EYDUO5AdVHDHtt+W4PRvttqPw==
-X-Received: by 2002:a19:5f4b:0:b0:499:b439:30cd with SMTP id a11-20020a195f4b000000b00499b43930cdmr3487272lfj.252.1664563965666;
-        Fri, 30 Sep 2022 11:52:45 -0700 (PDT)
+        bh=ghtPiKNdpbeN+uE2Jr0al/CVda2ZhhQu7LAAvSpvKX8=;
+        b=RUSfjPigQcE40TOPpFF1ENfjCtqx1q6cn1g8t0VNc1YYakzmKlkFSxH9iwksA+WsA8
+         3Z4z/0XLvEriE7M4EThx/lKQXf26ZLtluvIP7hs8WL0mSCQfl3M/wIqBSbsRYw9ysRcE
+         x0dUYki4II1QoHtkmW93qqWbeBFYpDMGF22AgB7euSscSA2GNIc1fTLokSR65iJ9bCLZ
+         UVw4TPdBNg5wN386Wx4G6j4E5CDm52urXL+YRxLET2rMGy4MKz/MO3J7v0QQK1eyb+Gw
+         VrAna0pFY4ldaz47kSssKScS+KQYh+5lvmSWdoWZlAHgkNKkLEyccGFeiZ1Yd+ftnydX
+         BGPA==
+X-Gm-Message-State: ACrzQf3XkuSYxO7c1BVI6O1AhO531BJsk39W48BZmwRWmE7dwIT2UIKF
+        rUJUXmYc6+hHUh1tjtln+9TkVYGfASr8Gw==
+X-Google-Smtp-Source: AMsMyM7W4FwqAkFOPXFzmksqr0n1FQRqKAWKhYRdX7UHzAQrhA6faVsKMrPcdAfVe0WtVk7EpFNzfA==
+X-Received: by 2002:a05:6512:2254:b0:498:f454:ec9a with SMTP id i20-20020a056512225400b00498f454ec9amr3835807lfu.58.1664563966480;
+        Fri, 30 Sep 2022 11:52:46 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
         by smtp.gmail.com with ESMTPSA id i8-20020a056512006800b00492cfecf1c0sm374703lfo.245.2022.09.30.11.52.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -56,9 +56,9 @@ To:     Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH 11/23] ARM: dts: qcom: apq8064-sony-xperia-lagan-yuga: use labels to patch device tree
-Date:   Fri, 30 Sep 2022 21:52:24 +0300
-Message-Id: <20220930185236.867655-12-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 12/23] ARM: dts: qcom: apq8064: drop amba device node
+Date:   Fri, 30 Sep 2022 21:52:25 +0300
+Message-Id: <20220930185236.867655-13-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220930185236.867655-1-dmitry.baryshkov@linaro.org>
 References: <20220930185236.867655-1-dmitry.baryshkov@linaro.org>
@@ -74,688 +74,173 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use labels to add device-specific properties to DT nodes rather than
-duplicating SoC DT structure in the device DT.
+The separate amba device node doesn't add anything significant to the
+DT. The OF parsing code already creates ambda_device or platform_device
+depending on the compatibility lists. Drop the amba node and reorder
+sdcc and sdcc bam nodes according to node addresses.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../qcom-apq8064-sony-xperia-lagan-yuga.dts   | 649 +++++++++---------
- 1 file changed, 318 insertions(+), 331 deletions(-)
+ arch/arm/boot/dts/qcom-apq8064.dtsi | 131 +++++++++++++---------------
+ 1 file changed, 62 insertions(+), 69 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dts b/arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dts
-index c07c5474750d..796f47e5b610 100644
---- a/arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dts
-+++ b/arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dts
-@@ -51,351 +51,338 @@ key-volume-up {
- 			linux,code = <KEY_VOLUMEUP>;
- 		};
- 	};
-+};
-+
-+&gsbi5 {
-+	qcom,mode = <GSBI_PROT_I2C_UART>;
-+	status = "okay";
-+};
-+
-+&gsbi5_serial {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gsbi5_uart_pin_a>;
-+	status = "okay";
-+};
-+
-+&pm8921_gpio {
-+	gpio_keys_pin_a: gpio-keys-active-state {
-+		pins = "gpio3", "gpio4", "gpio29", "gpio35";
-+		function = "normal";
-+
-+		bias-pull-up;
-+		drive-push-pull;
-+		input-enable;
-+		power-source = <2>;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
-+		qcom,pull-up-strength = <0>;
-+	};
-+};
-+
-+&riva {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&riva_wlan_pin_a>, <&riva_bt_pin_a>, <&riva_fm_pin_a>;
-+	status = "okay";
-+};
-+
-+&rpm {
-+	regulators {
-+		vin_l1_l2_l12_l18-supply = <&pm8921_s4>;
-+		vin_lvs_1_3_6-supply = <&pm8921_s4>;
-+		vin_lvs_4_5_7-supply = <&pm8921_s4>;
-+		vin_ncp-supply = <&pm8921_l6>;
-+		vin_lvs2-supply = <&pm8921_s4>;
-+		vin_l24-supply = <&pm8921_s1>;
-+		vin_l25-supply = <&pm8921_s1>;
-+		vin_l27-supply = <&pm8921_s7>;
-+		vin_l28-supply = <&pm8921_s7>;
-+
-+		/* Buck SMPS */
-+		s1 {
-+			regulator-always-on;
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+			qcom,switch-mode-frequency = <3200000>;
-+			bias-pull-down;
-+		};
-+
-+		s2 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1300000>;
-+			qcom,switch-mode-frequency = <1600000>;
-+			bias-pull-down;
-+		};
-+
-+		s3 {
-+			regulator-min-microvolt = <500000>;
-+			regulator-max-microvolt = <1150000>;
-+			qcom,switch-mode-frequency = <4800000>;
-+			bias-pull-down;
-+		};
-+
-+		s4 {
-+			regulator-always-on;
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			qcom,switch-mode-frequency = <1600000>;
-+			bias-pull-down;
-+			qcom,force-mode = <QCOM_RPM_FORCE_MODE_AUTO>;
-+		};
-+
-+		s7 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1300000>;
-+			qcom,switch-mode-frequency = <3200000>;
-+		};
-+
-+		s8 {
-+			regulator-min-microvolt = <2200000>;
-+			regulator-max-microvolt = <2200000>;
-+			qcom,switch-mode-frequency = <1600000>;
-+		};
-+
-+		/* PMOS LDO */
-+		l1 {
-+			regulator-always-on;
-+			regulator-min-microvolt = <1100000>;
-+			regulator-max-microvolt = <1100000>;
-+			bias-pull-down;
-+		};
- 
--	soc {
--		pinctrl@800000 {
--			gsbi5_uart_pin_a: gsbi5-uart-pin-active {
--				rx {
--					pins = "gpio52";
--					function = "gsbi5";
--					drive-strength = <2>;
--					bias-pull-up;
--				};
--
--				tx {
--					pins = "gpio51";
--					function = "gsbi5";
--					drive-strength = <4>;
--					bias-disable;
--				};
--			};
--
--
--			sdcc3_cd_pin_a: sdcc3-cd-pin-active {
--				pins = "gpio26";
--				function = "gpio";
--
--				drive-strength = <2>;
--				bias-disable;
--			};
--		};
--
--
--		rpm@108000 {
--			regulators {
--				vin_l1_l2_l12_l18-supply = <&pm8921_s4>;
--				vin_lvs_1_3_6-supply = <&pm8921_s4>;
--				vin_lvs_4_5_7-supply = <&pm8921_s4>;
--				vin_ncp-supply = <&pm8921_l6>;
--				vin_lvs2-supply = <&pm8921_s4>;
--				vin_l24-supply = <&pm8921_s1>;
--				vin_l25-supply = <&pm8921_s1>;
--				vin_l27-supply = <&pm8921_s7>;
--				vin_l28-supply = <&pm8921_s7>;
--
--				/* Buck SMPS */
--				s1 {
--					regulator-always-on;
--					regulator-min-microvolt = <1225000>;
--					regulator-max-microvolt = <1225000>;
--					qcom,switch-mode-frequency = <3200000>;
--					bias-pull-down;
--				};
--
--				s2 {
--					regulator-min-microvolt = <1300000>;
--					regulator-max-microvolt = <1300000>;
--					qcom,switch-mode-frequency = <1600000>;
--					bias-pull-down;
--				};
--
--				s3 {
--					regulator-min-microvolt = <500000>;
--					regulator-max-microvolt = <1150000>;
--					qcom,switch-mode-frequency = <4800000>;
--					bias-pull-down;
--				};
--
--				s4 {
--					regulator-always-on;
--					regulator-min-microvolt = <1800000>;
--					regulator-max-microvolt = <1800000>;
--					qcom,switch-mode-frequency = <1600000>;
--					bias-pull-down;
--					qcom,force-mode = <QCOM_RPM_FORCE_MODE_AUTO>;
--				};
--
--				s7 {
--					regulator-min-microvolt = <1300000>;
--					regulator-max-microvolt = <1300000>;
--					qcom,switch-mode-frequency = <3200000>;
--				};
--
--				s8 {
--					regulator-min-microvolt = <2200000>;
--					regulator-max-microvolt = <2200000>;
--					qcom,switch-mode-frequency = <1600000>;
--				};
--
--				/* PMOS LDO */
--				l1 {
--					regulator-always-on;
--					regulator-min-microvolt = <1100000>;
--					regulator-max-microvolt = <1100000>;
--					bias-pull-down;
--				};
--
--				l2 {
--					regulator-min-microvolt = <1200000>;
--					regulator-max-microvolt = <1200000>;
--					bias-pull-down;
--				};
--
--				l3 {
--					regulator-min-microvolt = <3075000>;
--					regulator-max-microvolt = <3075000>;
--					bias-pull-down;
--				};
--
--				l4 {
--					regulator-always-on;
--					regulator-min-microvolt = <1800000>;
--					regulator-max-microvolt = <1800000>;
--					bias-pull-down;
--				};
--
--				l5 {
--					regulator-min-microvolt = <2950000>;
--					regulator-max-microvolt = <2950000>;
--					bias-pull-down;
--				};
--
--				l6 {
--					regulator-min-microvolt = <2950000>;
--					regulator-max-microvolt = <2950000>;
--					bias-pull-down;
--				};
--
--				l7 {
--					regulator-min-microvolt = <1850000>;
--					regulator-max-microvolt = <2950000>;
--					bias-pull-down;
--				};
--
--				l8 {
--					regulator-min-microvolt = <2800000>;
--					regulator-max-microvolt = <2800000>;
--					bias-pull-down;
--				};
--
--				l9 {
--					regulator-min-microvolt = <3000000>;
--					regulator-max-microvolt = <3000000>;
--					bias-pull-down;
--				};
--
--				l10 {
--					regulator-min-microvolt = <2900000>;
--					regulator-max-microvolt = <2900000>;
--					bias-pull-down;
--				};
--
--				l11 {
--					regulator-min-microvolt = <3000000>;
--					regulator-max-microvolt = <3000000>;
--					bias-pull-down;
--				};
--
--				l12 {
--					regulator-min-microvolt = <1200000>;
--					regulator-max-microvolt = <1200000>;
--					bias-pull-down;
--				};
--
--				l14 {
--					regulator-min-microvolt = <1800000>;
--					regulator-max-microvolt = <1800000>;
--					bias-pull-down;
--				};
--
--				l15 {
--					regulator-min-microvolt = <1800000>;
--					regulator-max-microvolt = <2950000>;
--					bias-pull-down;
--				};
--
--				l16 {
--					regulator-min-microvolt = <2800000>;
--					regulator-max-microvolt = <2800000>;
--					bias-pull-down;
--				};
--
--				l17 {
--					regulator-min-microvolt = <2000000>;
--					regulator-max-microvolt = <2000000>;
--					bias-pull-down;
--				};
--
--				l18 {
--					regulator-min-microvolt = <1200000>;
--					regulator-max-microvolt = <1200000>;
--					bias-pull-down;
--				};
--
--				l21 {
--					regulator-min-microvolt = <1050000>;
--					regulator-max-microvolt = <1050000>;
--					bias-pull-down;
--				};
--
--				l22 {
--					regulator-min-microvolt = <2600000>;
--					regulator-max-microvolt = <2600000>;
--					bias-pull-down;
--				};
--
--				l23 {
--					regulator-min-microvolt = <1800000>;
--					regulator-max-microvolt = <1800000>;
--					bias-pull-down;
--				};
--
--				l24 {
--					regulator-min-microvolt = <750000>;
--					regulator-max-microvolt = <1150000>;
--					bias-pull-down;
--				};
--
--				l25 {
--					regulator-always-on;
--					regulator-min-microvolt = <1250000>;
--					regulator-max-microvolt = <1250000>;
--					bias-pull-down;
--				};
--
--				l27 {
--					regulator-min-microvolt = <1100000>;
--					regulator-max-microvolt = <1100000>;
--				};
--
--				l28 {
--					regulator-min-microvolt = <1050000>;
--					regulator-max-microvolt = <1050000>;
--					bias-pull-down;
--				};
--
--				l29 {
--					regulator-min-microvolt = <2000000>;
--					regulator-max-microvolt = <2000000>;
--					bias-pull-down;
--				};
--
--				/* Low Voltage Switch */
--				lvs1 {
--					bias-pull-down;
--				};
--
--				lvs2 {
--					bias-pull-down;
--				};
--
--				lvs3 {
--					bias-pull-down;
--				};
--
--				lvs4 {
--					bias-pull-down;
--				};
--
--				lvs5 {
--					bias-pull-down;
--				};
--
--				lvs6 {
--					bias-pull-down;
--				};
--
--				lvs7 {
--					bias-pull-down;
--				};
--
--				usb-switch {};
--
--				hdmi-switch {};
--
--				ncp {
--					regulator-min-microvolt = <1800000>;
--					regulator-max-microvolt = <1800000>;
--					qcom,switch-mode-frequency = <1600000>;
--				};
--			};
--		};
--
--		qcom,ssbi@500000 {
--			pmic@0 {
--				gpio@150 {
--					gpio_keys_pin_a: gpio-keys-active-state {
--						pins = "gpio3", "gpio4", "gpio29", "gpio35";
--						function = "normal";
--
--						bias-pull-up;
--						drive-push-pull;
--						input-enable;
--						power-source = <2>;
--						qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
--						qcom,pull-up-strength = <0>;
--					};
--				};
--			};
--		};
--
--		usb@12500000 {
--			status = "okay";
--			dr_mode = "otg";
--			ulpi {
--				phy {
--					v3p3-supply = <&pm8921_l3>;
--					v1p8-supply = <&pm8921_l4>;
--				};
--			};
-+		l2 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			bias-pull-down;
+diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
+index b6f1ef50fb1e..34d3fce17351 100644
+--- a/arch/arm/boot/dts/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
+@@ -1085,15 +1085,22 @@ sata0: sata@29000000 {
+ 			ports-implemented = <0x1>;
  		};
  
--		gsbi@1a200000 {
--			status = "okay";
--			qcom,mode = <GSBI_PROT_I2C_UART>;
-+		l3 {
-+			regulator-min-microvolt = <3075000>;
-+			regulator-max-microvolt = <3075000>;
-+			bias-pull-down;
-+		};
-+
-+		l4 {
-+			regulator-always-on;
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			bias-pull-down;
-+		};
-+
-+		l5 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			bias-pull-down;
-+		};
-+
-+		l6 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			bias-pull-down;
-+		};
-+
-+		l7 {
-+			regulator-min-microvolt = <1850000>;
-+			regulator-max-microvolt = <2950000>;
-+			bias-pull-down;
-+		};
-+
-+		l8 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			bias-pull-down;
-+		};
-+
-+		l9 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3000000>;
-+			bias-pull-down;
-+		};
-+
-+		l10 {
-+			regulator-min-microvolt = <2900000>;
-+			regulator-max-microvolt = <2900000>;
-+			bias-pull-down;
-+		};
+-		/* Temporary fixed regulator */
+-		sdcc1bam: dma-controller@12402000{
+-			compatible = "qcom,bam-v1.3.0";
+-			reg = <0x12402000 0x8000>;
+-			interrupts = <0 98 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks = <&gcc SDC1_H_CLK>;
+-			clock-names = "bam_clk";
+-			#dma-cells = <1>;
+-			qcom,ee = <0>;
++		sdcc3: mmc@12180000 {
++			compatible = "arm,pl18x", "arm,primecell";
++			arm,primecell-periphid = <0x00051180>;
++			status = "disabled";
++			reg = <0x12180000 0x2000>;
++			interrupts = <GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "cmd_irq";
++			clocks = <&gcc SDC3_CLK>, <&gcc SDC3_H_CLK>;
++			clock-names = "mclk", "apb_pclk";
++			bus-width = <4>;
++			cap-sd-highspeed;
++			cap-mmc-highspeed;
++			max-frequency = <192000000>;
++			no-1-8-v;
++			dmas = <&sdcc3bam 2>, <&sdcc3bam 1>;
++			dma-names = "tx", "rx";
+ 		};
  
--			serial@1a240000 {
--				status = "okay";
-+		l11 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3000000>;
-+			bias-pull-down;
+ 		sdcc3bam: dma-controller@12182000{
+@@ -1106,6 +1113,25 @@ sdcc3bam: dma-controller@12182000{
+ 			qcom,ee = <0>;
+ 		};
+ 
++		sdcc4: mmc@121c0000 {
++			compatible = "arm,pl18x", "arm,primecell";
++			arm,primecell-periphid = <0x00051180>;
++			status = "disabled";
++			reg = <0x121c0000 0x2000>;
++			interrupts = <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "cmd_irq";
++			clocks = <&gcc SDC4_CLK>, <&gcc SDC4_H_CLK>;
++			clock-names = "mclk", "apb_pclk";
++			bus-width = <4>;
++			cap-sd-highspeed;
++			cap-mmc-highspeed;
++			max-frequency = <48000000>;
++			dmas = <&sdcc4bam 2>, <&sdcc4bam 1>;
++			dma-names = "tx", "rx";
++			pinctrl-names = "default";
++			pinctrl-0 = <&sdc4_gpios>;
 +		};
 +
-+		l12 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			bias-pull-down;
-+		};
- 
--				pinctrl-names = "default";
--				pinctrl-0 = <&gsbi5_uart_pin_a>;
--			};
-+		l14 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			bias-pull-down;
+ 		sdcc4bam: dma-controller@121c2000{
+ 			compatible = "qcom,bam-v1.3.0";
+ 			reg = <0x121c2000 0x8000>;
+@@ -1116,67 +1142,34 @@ sdcc4bam: dma-controller@121c2000{
+ 			qcom,ee = <0>;
  		};
  
 -		amba {
+-			compatible = "simple-bus";
+-			#address-cells = <1>;
+-			#size-cells = <1>;
+-			ranges;
 -			sdcc1: mmc@12400000 {
--				status = "okay";
-+		l15 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+			bias-pull-down;
-+		};
- 
--				vmmc-supply = <&pm8921_l5>;
--				vqmmc-supply = <&pm8921_s4>;
--			};
-+		l16 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			bias-pull-down;
-+		};
- 
--			sdcc3: mmc@12180000 {
--				status = "okay";
-+		l17 {
-+			regulator-min-microvolt = <2000000>;
-+			regulator-max-microvolt = <2000000>;
-+			bias-pull-down;
-+		};
- 
--				vmmc-supply = <&pm8921_l6>;
--				cd-gpios = <&tlmm_pinmux 26 GPIO_ACTIVE_LOW>;
-+		l18 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			bias-pull-down;
-+		};
- 
+-				status = "disabled";
+-				compatible = "arm,pl18x", "arm,primecell";
 -				pinctrl-names = "default";
--				pinctrl-0 = <&sdcc3_pins>, <&sdcc3_cd_pin_a>;
+-				pinctrl-0 = <&sdcc1_pins>;
+-				arm,primecell-periphid = <0x00051180>;
+-				reg = <0x12400000 0x2000>;
+-				interrupts = <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>;
+-				interrupt-names = "cmd_irq";
+-				clocks = <&gcc SDC1_CLK>, <&gcc SDC1_H_CLK>;
+-				clock-names = "mclk", "apb_pclk";
+-				bus-width = <8>;
+-				max-frequency = <96000000>;
+-				non-removable;
+-				cap-sd-highspeed;
+-				cap-mmc-highspeed;
+-				dmas = <&sdcc1bam 2>, <&sdcc1bam 1>;
+-				dma-names = "tx", "rx";
 -			};
-+		l21 {
-+			regulator-min-microvolt = <1050000>;
-+			regulator-max-microvolt = <1050000>;
-+			bias-pull-down;
- 		};
- 
--		riva-pil@3204000 {
--			status = "okay";
-+		l22 {
-+			regulator-min-microvolt = <2600000>;
-+			regulator-max-microvolt = <2600000>;
-+			bias-pull-down;
+-
+-			sdcc3: mmc@12180000 {
+-				compatible = "arm,pl18x", "arm,primecell";
+-				arm,primecell-periphid = <0x00051180>;
+-				status = "disabled";
+-				reg = <0x12180000 0x2000>;
+-				interrupts = <GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>;
+-				interrupt-names = "cmd_irq";
+-				clocks = <&gcc SDC3_CLK>, <&gcc SDC3_H_CLK>;
+-				clock-names = "mclk", "apb_pclk";
+-				bus-width = <4>;
+-				cap-sd-highspeed;
+-				cap-mmc-highspeed;
+-				max-frequency = <192000000>;
+-				no-1-8-v;
+-				dmas = <&sdcc3bam 2>, <&sdcc3bam 1>;
+-				dma-names = "tx", "rx";
+-			};
++		sdcc1: mmc@12400000 {
++			status = "disabled";
++			compatible = "arm,pl18x", "arm,primecell";
++			pinctrl-names = "default";
++			pinctrl-0 = <&sdcc1_pins>;
++			arm,primecell-periphid = <0x00051180>;
++			reg = <0x12400000 0x2000>;
++			interrupts = <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "cmd_irq";
++			clocks = <&gcc SDC1_CLK>, <&gcc SDC1_H_CLK>;
++			clock-names = "mclk", "apb_pclk";
++			bus-width = <8>;
++			max-frequency = <96000000>;
++			non-removable;
++			cap-sd-highspeed;
++			cap-mmc-highspeed;
++			dmas = <&sdcc1bam 2>, <&sdcc1bam 1>;
++			dma-names = "tx", "rx";
 +		};
  
--			pinctrl-names = "default";
--			pinctrl-0 = <&riva_wlan_pin_a>, <&riva_bt_pin_a>, <&riva_fm_pin_a>;
-+		l23 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			bias-pull-down;
-+		};
-+
-+		l24 {
-+			regulator-min-microvolt = <750000>;
-+			regulator-max-microvolt = <1150000>;
-+			bias-pull-down;
-+		};
-+
-+		l25 {
-+			regulator-always-on;
-+			regulator-min-microvolt = <1250000>;
-+			regulator-max-microvolt = <1250000>;
-+			bias-pull-down;
-+		};
-+
-+		l27 {
-+			regulator-min-microvolt = <1100000>;
-+			regulator-max-microvolt = <1100000>;
-+		};
-+
-+		l28 {
-+			regulator-min-microvolt = <1050000>;
-+			regulator-max-microvolt = <1050000>;
-+			bias-pull-down;
-+		};
-+
-+		l29 {
-+			regulator-min-microvolt = <2000000>;
-+			regulator-max-microvolt = <2000000>;
-+			bias-pull-down;
-+		};
-+
-+		/* Low Voltage Switch */
-+		lvs1 {
-+			bias-pull-down;
-+		};
-+
-+		lvs2 {
-+			bias-pull-down;
-+		};
-+
-+		lvs3 {
-+			bias-pull-down;
-+		};
-+
-+		lvs4 {
-+			bias-pull-down;
-+		};
-+
-+		lvs5 {
-+			bias-pull-down;
-+		};
-+
-+		lvs6 {
-+			bias-pull-down;
-+		};
-+
-+		lvs7 {
-+			bias-pull-down;
-+		};
-+
-+		usb-switch {};
-+
-+		hdmi-switch {};
-+
-+		ncp {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			qcom,switch-mode-frequency = <1600000>;
+-			sdcc4: mmc@121c0000 {
+-				compatible = "arm,pl18x", "arm,primecell";
+-				arm,primecell-periphid = <0x00051180>;
+-				status = "disabled";
+-				reg = <0x121c0000 0x2000>;
+-				interrupts = <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>;
+-				interrupt-names = "cmd_irq";
+-				clocks = <&gcc SDC4_CLK>, <&gcc SDC4_H_CLK>;
+-				clock-names = "mclk", "apb_pclk";
+-				bus-width = <4>;
+-				cap-sd-highspeed;
+-				cap-mmc-highspeed;
+-				max-frequency = <48000000>;
+-				dmas = <&sdcc4bam 2>, <&sdcc4bam 1>;
+-				dma-names = "tx", "rx";
+-				pinctrl-names = "default";
+-				pinctrl-0 = <&sdc4_gpios>;
+-			};
++		sdcc1bam: dma-controller@12402000{
++			compatible = "qcom,bam-v1.3.0";
++			reg = <0x12402000 0x8000>;
++			interrupts = <0 98 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc SDC1_H_CLK>;
++			clock-names = "bam_clk";
++			#dma-cells = <1>;
++			qcom,ee = <0>;
  		};
- 	};
- };
-+
-+&sdcc1 {
-+	vmmc-supply = <&pm8921_l5>;
-+	vqmmc-supply = <&pm8921_s4>;
-+	status = "okay";
-+};
-+
-+&sdcc3 {
-+	vmmc-supply = <&pm8921_l6>;
-+	cd-gpios = <&tlmm_pinmux 26 GPIO_ACTIVE_LOW>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&sdcc3_pins>, <&sdcc3_cd_pin_a>;
-+
-+	status = "okay";
-+};
-+
-+&tlmm_pinmux {
-+	gsbi5_uart_pin_a: gsbi5-uart-pin-active {
-+		rx {
-+			pins = "gpio52";
-+			function = "gsbi5";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		tx {
-+			pins = "gpio51";
-+			function = "gsbi5";
-+			drive-strength = <4>;
-+			bias-disable;
-+		};
-+	};
-+
-+
-+	sdcc3_cd_pin_a: sdcc3-cd-pin-active {
-+		pins = "gpio26";
-+		function = "gpio";
-+
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+};
-+
-+&usb_hs1_phy {
-+	v3p3-supply = <&pm8921_l3>;
-+	v1p8-supply = <&pm8921_l4>;
-+};
-+
-+&usb1 {
-+	dr_mode = "otg";
-+	status = "okay";
-+};
+ 
+ 		tcsr: syscon@1a400000 {
 -- 
 2.35.1
 
