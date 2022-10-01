@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 920595F1BA0
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 11:58:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B7A05F1BAE
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 12:02:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229731AbiJAJ6G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Oct 2022 05:58:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34170 "EHLO
+        id S229773AbiJAKCK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Oct 2022 06:02:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbiJAJ6F (ORCPT
+        with ESMTP id S229764AbiJAKCD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Oct 2022 05:58:05 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7BD7193DF
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Oct 2022 02:58:03 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id c7so7110952ljm.12
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Oct 2022 02:58:03 -0700 (PDT)
+        Sat, 1 Oct 2022 06:02:03 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 088CD106F73
+        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Oct 2022 03:01:58 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 25so15430lft.9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Oct 2022 03:01:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=Lg74YdrNQ3T6av29vUZXf6jb0Fvwg0IUmRSwVmSXrvQ=;
-        b=WWcl3zeNaFEKSQvjYL3BGfMNIzSduNPL7gEZy3456dhW6s04O63yPwKg8lVl/V7J66
-         jx5cG2FWSiuEWP5dc4pMHEe0Bu/he4Z2oGyG0XSKPEdd8Ru3AR/PqB3P3p2r19lJAO5X
-         02Msc6luM5pi4UvKmq4gMouGN538NOkbM63VE4RwPu8Yww6pjTxZdb4IxhHFoRYM3iu3
-         jelDj7aLzXOsZzFFSPdN30/ROHtr48m2QHFTyMJn2Mgg00mk+qgUzkklSvdzpdL4ffM+
-         eTWKPk3jZgd3i8I4wniSBiNWyHZ9jWSuiYBhvipLHjGZdp1c4itzCOggDgBbZ2llKP+L
-         nXxg==
+        bh=isfPLY9jR+ZoVFd10vcMUlsBh00yNt/v6qsBgWfkVWc=;
+        b=hxNu9GOBZ6OIkmPu2dYmNAKLY1tyR/nJ1sTFR9UeuKhUBoOgnCGxi8SyBg74NCLWp8
+         asr+EAkSain2o5Hfv4mxJlgY1q9DK/lbFRUevmba9mwnKUsCCy/4mhVxHswclCRbEGQY
+         vFQ0BHJE+ruWr6x/SUodam6kiRDcr9f76jrXhNA4oDXk/pWwvguXsf8N3HGoHk0bRcuO
+         y5ylnycQY1xmgsBCrNLAaCL3AbCIsA5K/M2op7LO93dXVPG9nKqedUxoUaWCGFa6JiSo
+         wM9rIbx3A0EruJb7XuDxLZsKygLcdhiPBw7zme2vEd+YOcwaOuX448UkMyapJ+Ye0X3R
+         NGzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=Lg74YdrNQ3T6av29vUZXf6jb0Fvwg0IUmRSwVmSXrvQ=;
-        b=zZ+Ln89Kq2RypSgEfSNytQ8pvRQCzUDZ2cmsTefp3t9NDeFiRwpC7stvshaJowr8lR
-         Vc3KDhvaAzG3XtieeBTBlDYuIah5ILz3rSKTYuXPSOD99EKmXsEpM8Z6W2Ki1vXLv4iz
-         ztc6bzIJPjKdwJQcIpUBmZFp3rwRXVIsgsaKipF6HLT2D0FA2DyQsQvwG2LSiYu8hQJx
-         cOpFYV/LoiyFiCgv0ntUwqz98tCC6kDYkXv0mi78CWXjdnuvyQO1SqSMUVlEagDc+518
-         dmK5RxS+QLnVWTsoeJ6KtJP9GR4Nf8ecDyBzlF4+bxvHfiPdeEobFldOzWA5k4MLdnak
-         qsVg==
-X-Gm-Message-State: ACrzQf1usD7wLYsV+opxRw6VVygRApZ7kQxzDXGkBakj+n5acx+AQbzL
-        tLuW/4FbIui/BvifPvYUwvLAoA==
-X-Google-Smtp-Source: AMsMyM44bd0wOVQGkOK1HTRrf1lPB4hqKLYjtFXHuqO7b/Lq1+31ewi/V4PVrd9aXjD0xaFjokKuyQ==
-X-Received: by 2002:a2e:5344:0:b0:26c:417b:aa78 with SMTP id t4-20020a2e5344000000b0026c417baa78mr3957120ljd.298.1664618282125;
-        Sat, 01 Oct 2022 02:58:02 -0700 (PDT)
+        bh=isfPLY9jR+ZoVFd10vcMUlsBh00yNt/v6qsBgWfkVWc=;
+        b=q6Q/eFvoJ53RQk7KK7UTeGYDGvxzCGzvSkiHRYv8vTxNsc45BAGGhSXOHI7kMMHiaa
+         Qj70gxTUa3i1BbacuIH9cIVZt0YwA29oHhm012ynod7mm4l7mAqFi8CZVWndKOvxSX7P
+         HgtpH3784+fBGlYGFiICSLqG2G85cymDWa+L0cbtJzH1Rm6YNXE6kWVM2dyiizSXjsRk
+         qYV26/HssV08/qZnhzGHeCL4MP5mIv4faRo3A6TT+hBFxA2l6DMjWGou314LK/W3hb/0
+         8aaKyOTP0NVid9yDPshLXISr67dgserX8naXt7N5s5VoZGdAuIVvnpXFC7Dw18wDETtM
+         khlA==
+X-Gm-Message-State: ACrzQf3+X0U2+8WKO3kC+7J5INOFhysONoO+7Hef7vsjono/Ni4Ay4h5
+        TV/amHEp8Cf26hSfvmq/a/ovzg==
+X-Google-Smtp-Source: AMsMyM7AETj/ipTqs1kEJZXmUiYV4pkMkE02jy6ZWJlax6twD1+N3FeRcIW9pV+jANPCJDNRYyzenQ==
+X-Received: by 2002:a05:6512:3b97:b0:497:ab81:dcb1 with SMTP id g23-20020a0565123b9700b00497ab81dcb1mr4629226lfv.496.1664618516936;
+        Sat, 01 Oct 2022 03:01:56 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id b8-20020a2eb908000000b00268335eaa8asm394308ljb.51.2022.10.01.02.58.01
+        by smtp.gmail.com with ESMTPSA id b37-20020a05651c0b2500b0026dcac60624sm219926ljr.108.2022.10.01.03.01.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Oct 2022 02:58:01 -0700 (PDT)
-Message-ID: <76b3269a-1e04-1e93-c06e-ec0f28536cc5@linaro.org>
-Date:   Sat, 1 Oct 2022 11:57:55 +0200
+        Sat, 01 Oct 2022 03:01:56 -0700 (PDT)
+Message-ID: <11a99a84-47ec-ca3e-5781-0f17ed33dbf9@linaro.org>
+Date:   Sat, 1 Oct 2022 12:01:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sdm630: fix UART1 pin bias
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sdm845-db845c: correct SPI2 pins
+ drive strength
 Content-Language: en-US
 To:     Doug Anderson <dianders@chromium.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -70,30 +71,37 @@ Cc:     Andy Gross <agross@kernel.org>,
         <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
         "# 4.0+" <stable@vger.kernel.org>
 References: <20220930182212.209804-1-krzysztof.kozlowski@linaro.org>
- <CAD=FV=WHmGi0yxFNbdQ=BXjypDWkW9iS3jBnr2gUhTa5qch90Q@mail.gmail.com>
+ <20220930182212.209804-2-krzysztof.kozlowski@linaro.org>
+ <CAD=FV=WSbpV4aqyHgSX6rwanQmZYG1hdNourjP5DEmsfdq6aDA@mail.gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=WHmGi0yxFNbdQ=BXjypDWkW9iS3jBnr2gUhTa5qch90Q@mail.gmail.com>
+In-Reply-To: <CAD=FV=WSbpV4aqyHgSX6rwanQmZYG1hdNourjP5DEmsfdq6aDA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/09/2022 22:19, Doug Anderson wrote:
+On 30/09/2022 22:12, Doug Anderson wrote:
 > Hi,
 > 
 > On Fri, Sep 30, 2022 at 11:22 AM Krzysztof Kozlowski
 > <krzysztof.kozlowski@linaro.org> wrote:
 >>
->> There is no "bias-no-pull" property.  Assume intentions were disabling
->> bias.
+>> The pin configuration (done with generic pin controller helpers and
+>> as expressed by bindings) requires children nodes with either:
+>> 1. "pins" property and the actual configuration,
+>> 2. another set of nodes with above point.
 >>
->> Fixes: b190fb010664 ("arm64: dts: qcom: sdm630: Add sdm630 dts file")
+>> The qup_spi2_default pin configuration used second method - with a
+>> "pinmux" child.
+>>
+>> Fixes: 8d23a0040475 ("arm64: dts: qcom: db845c: add Low speed expansion i2c and spi nodes")
 >> Cc: <stable@vger.kernel.org>
 >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 >>
@@ -101,38 +109,63 @@ On 30/09/2022 22:19, Doug Anderson wrote:
 >>
 >> Not tested on hardware.
 >> ---
->>  arch/arm64/boot/dts/qcom/sdm630.dtsi | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 4 +++-
+>>  1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+>> index 132417e2d11e..a157eab66dee 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+>> @@ -1123,7 +1123,9 @@ &wifi {
+>>
+>>  /* PINCTRL - additions to nodes defined in sdm845.dtsi */
+>>  &qup_spi2_default {
+>> -       drive-strength = <16>;
+>> +       pinmux {
+>> +               drive-strength = <16>;
+>> +       };
 > 
-> This does change behavior and has the potential to break someone.
-> Thus, without a bug report or someone to give a tested-by I'm at least
-> moderately worried about this going to stable@
+> The convention on Qualcomm boards of this era is that muxing (setting
+> the function) is done under a "pinmux" node and, unless some of the
+> pins need to be treated differently like for the UARTs, configuration
+> (bias, drive strength, etc) is done under a "pinconf" subnode.
 
-Indeed. I can drop Cc-stable, but AUTOSEL can still pick it up because
-of Fixes tag. Fixes tag is here important to indicate we are having a
-bug before.
+Yes, although this was not expressed in bindings.
 
-> 
-> I would also note that convention on Qualcomm SoCs that I've worked on
-> was that bias shouldn't be specified in the SoC dtsi file and should
-> be left to board files. This is talked a bit about in a previous email
-> thread [1].
+> I
+> believe that the "pinconf" subnode also needs to replicate the list of
+> pins, or at least that's what we did everywhere else on sdm845 /
+> sc7180.
 
-Uh, that makes a lot of sense. It is almost always a property of a board.
+Yes.
 
 > 
-> That being said, it does look like this was the intention of the
-> original commit, so thus:
+> Thus to match conventions, I assume you'd do:
 > 
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> &qup_spi2_default {
+>   pinconf {
 
-Thanks.
+No, because I want a convention of all pinctrl bindings and drivers, not
+convention of old pinctrl ones. The new ones are already moved or being
+moved to "-state" and "-pins". In the same time I am also unifying the
+requirement of "function" property - enforcing it in each node, thus
+"pinconf" will not be valid anymore.
 
-I can also drop the property entirely to match existing behavior (not
-the intention).
-
+>     pins = "gpio27", "gpio28", "gpio29", "gpio30";
+>     drive-strength = <16>;
+>   };
+> };
 > 
-> [1] https://lore.kernel.org/lkml/CAD=FV=VUL4GmjaibAMhKNdpEso_Hg_R=XeMaqah1LSj_9-Ce4Q@mail.gmail.com/
+> We've since moved away from this to a less cumbersome approach, but
+> for "older" boards like db845c we should probably match the existing
+> convention, or have a flag day and change all sdm845 boards over to
+> the new convention.
+
+That's what my next patchset from yesterday was doing. Unifying the
+bindings with modern bindings and converting DTS to match them.
+
+https://lore.kernel.org/linux-devicetree/20220930200529.331223-1-krzysztof.kozlowski@linaro.org/T/#t
+
 
 Best regards,
 Krzysztof
