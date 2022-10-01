@@ -2,74 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 381325F1AF2
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 10:52:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5AAE5F1AF4
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 10:54:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229451AbiJAIwI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Oct 2022 04:52:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36482 "EHLO
+        id S229461AbiJAIyG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Oct 2022 04:54:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229562AbiJAIwD (ORCPT
+        with ESMTP id S229559AbiJAIyF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Oct 2022 04:52:03 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C03371231F9
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Oct 2022 01:52:01 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id x29so7056612ljq.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Oct 2022 01:52:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=I1mD3KhZ97/pcxxbeRPMN8rmXWsQFsIGEPXFVCg+paA=;
-        b=cjxN68w6xaquilwgvT3r6LMYpq73k5/7nVcVR7behxHtZZxWcW/zqv4gJe5wGAtnj+
-         dOQ3CNXikhPfUzlMIZTTWCnd4SD2G0Ul1nBECxUgJWDeFRPn4HuGyCVsg7LNxClKegBH
-         Cs2rRXE+7F+MNeRP8JVd6og/94zsMW8XJLyj5sgjbhaEMKxvOSy175iuyypqS5kL4HFl
-         aqDfLklgTMvLBSedj03GyVKDT/g2Dw9qDVWTLImJ582r+y8NvxaeQ4PT41fUt8QKe4ht
-         7G4HudNp2Zz8tKidNV3HNF88DE1pdnFbZ2bPDGLQmYskzVKJRcxqYC5PT79hKlPuHyas
-         IqkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=I1mD3KhZ97/pcxxbeRPMN8rmXWsQFsIGEPXFVCg+paA=;
-        b=KWYql4gBVQ/ueuud7pxfR/SpkPXHseTFrJuGUmWnqZ+A4ZPtBUQ3/dBvbzYddBVI5u
-         S70j81xcxFdGCTE1w6URsFH0SAqZe+DwK7Dk+BR1etaQMa2f65K/lIVzQYe0/6G54aL/
-         oB+M3jOpAVm97EBO0WGCGZBNit/JlIZhryaeRUdSaL3Q6cZbt1rPIjh4c0NQRVZYWmMB
-         ne7Pk320lxvod+q9lSibvq0rEMZtDf56PoX6jrrl57O2sc8C4FT7J56Is4R4w6TL3ib4
-         3fKMKvJyIHQR/alw6Ct+9nZmJ67g1GN6RGEesI2o8BKw/mBWSVthyPZ3zcej+Ajp3A+W
-         7ypA==
-X-Gm-Message-State: ACrzQf1ytQKzNwpQE0lauQPgwJAxAqyg0oXVfNUFBgunhgWNk8qFzdvE
-        DL7stw3F5LTvYuN8fKQdwy/C3g==
-X-Google-Smtp-Source: AMsMyM41o3/d0KC5vTj9rJ15t1zx7AJU0dSJ/zjhXOWcl1cuF12b/kr6NMpWPFG6Po6Fr5boHNf3xQ==
-X-Received: by 2002:a05:651c:1795:b0:261:af46:9d12 with SMTP id bn21-20020a05651c179500b00261af469d12mr3892218ljb.122.1664614319987;
-        Sat, 01 Oct 2022 01:51:59 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id b6-20020a05651c032600b0026dcf6a5827sm8686ljp.119.2022.10.01.01.51.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Oct 2022 01:51:59 -0700 (PDT)
-Message-ID: <9acde2c8-ebd2-f603-c6df-98af9ba1c80d@linaro.org>
-Date:   Sat, 1 Oct 2022 10:51:58 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: msm8992-lg-bullhead-rev-101 resets in initramfs
-To:     Petr Vorel <petr.vorel@gmail.com>, linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
+        Sat, 1 Oct 2022 04:54:05 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F14AB12205C
+        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Oct 2022 01:54:02 -0700 (PDT)
+Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 370E83F265;
+        Sat,  1 Oct 2022 10:54:00 +0200 (CEST)
+Date:   Sat, 1 Oct 2022 10:53:58 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        jamipkettunen@somainline.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Ilya <ilya.manyugin@gmail.com>
-References: <CAB1t1CzwhBL3qu6GQZPwXBQG2YwFn9B+Aqi=81xgfA_2BCm=4A@mail.gmail.com>
- <CAB1t1CxNcKBQ8wFGQmSupA1ix0C9hOUYPN6Sa-ACFcG_b9mY3w@mail.gmail.com>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAB1t1CxNcKBQ8wFGQmSupA1ix0C9hOUYPN6Sa-ACFcG_b9mY3w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 8/8] arm64: dts: qcom: sdm845-akatsuki: Configure
+ maXTouch touchscreen
+Message-ID: <20221001085358.6f4qmzlb4gfuxhbw@SoMainline.org>
+References: <20220930191049.123256-1-konrad.dybcio@somainline.org>
+ <20220930191049.123256-9-konrad.dybcio@somainline.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220930191049.123256-9-konrad.dybcio@somainline.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,28 +49,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/09/2022 23:39, Petr Vorel wrote:
-> I'm sorry, forget to add links.
-> Petr
+On 2022-09-30 21:10:49, Konrad Dybcio wrote:
+> From: Marijn Suijten <marijn.suijten@somainline.org>
 > 
-> [1] https://gitlab.com/-/snippets/2420133
-> [2] https://gitlab.com/postmarketOS/pmaports/-/blob/master/main/postmarketos-mkinitfs/init_functions.sh#L514-523
-> [3] https://gitlab.com/postmarketOS/pmaports/-/blob/master/main/postmarketos-mkinitfs-hook-debug-shell/20-debug-shell.sh
-> [4] https://gitlab.com/-/snippets/2420128
+> Configure the maXTouch touchscreen found on Xperia XZ3 devices.
 > 
-> On Fri, 30 Sept 2022 at 23:30, Petr Vorel <petr.vorel@gmail.com> wrote:
->>
->> Hi all,
->>
->> [ sorry for sending mail twice, now as plain text. I should move away
->> from gmail.com to something which allows to use mutt... ]
->>
->> Some releases after 5.17 bullhead rev 1.01 started to reset.
->> I'm not sure which kernel version it started, because it might be
->> caused by kernel config or dts changes.
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> [Konrad: clean up unused props, use generic node name]
 
-I propose to try to bisect it to specific commit in Linux kernel.
+We should make a note though to check if our touch controller supports
+any of the possible values for atmel,wakeup-method, which is why this
+patch wasn't sent yet.
 
-Best regards,
-Krzysztof
+- Marijn
 
+> ---
+>  .../qcom/sdm845-sony-xperia-tama-akatsuki.dts | 23 +++++++++++++++++++
+>  1 file changed, 23 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
+> index 5c5949a51184..1668ae99dd47 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
+> @@ -25,6 +25,29 @@ ts_vddio_supply: ts-vddio-regulator {
+>  		gpio = <&tlmm 133 GPIO_ACTIVE_HIGH>;
+>  		enable-active-high;
+>  		regulator-boot-on;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&ts_vddio_en>;
+> +	};
+> +};
+> +
+> +&i2c5 {
+> +	status = "okay";
+> +
+> +	touchscreen: touchscreen@4a {
+> +		compatible = "atmel,maxtouch";
+> +		reg = <0x4a>;
+> +
+> +		interrupt-parent = <&tlmm>;
+> +		interrupts = <125 IRQ_TYPE_LEVEL_LOW>;
+> +
+> +		reset-gpios = <&tlmm 99 GPIO_ACTIVE_LOW>;
+> +		vdda-supply = <&vreg_l28a_2p8>;
+> +		vdd-supply = <&ts_vddio_supply>;
+> +
+> +		pinctrl-names = "default", "sleep";
+> +		pinctrl-0 = <&ts_default>;
+> +		pinctrl-1 = <&ts_sleep>;
+>  	};
+>  };
+>  
+> -- 
+> 2.37.3
+> 
