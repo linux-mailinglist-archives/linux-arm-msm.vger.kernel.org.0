@@ -2,106 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5AAE5F1AF4
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 10:54:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27D0D5F1B00
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 11:09:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229461AbiJAIyG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Oct 2022 04:54:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36944 "EHLO
+        id S229482AbiJAJJF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Oct 2022 05:09:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229559AbiJAIyF (ORCPT
+        with ESMTP id S229545AbiJAJJE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Oct 2022 04:54:05 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F14AB12205C
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Oct 2022 01:54:02 -0700 (PDT)
-Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 370E83F265;
-        Sat,  1 Oct 2022 10:54:00 +0200 (CEST)
-Date:   Sat, 1 Oct 2022 10:53:58 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        jamipkettunen@somainline.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 8/8] arm64: dts: qcom: sdm845-akatsuki: Configure
- maXTouch touchscreen
-Message-ID: <20221001085358.6f4qmzlb4gfuxhbw@SoMainline.org>
-References: <20220930191049.123256-1-konrad.dybcio@somainline.org>
- <20220930191049.123256-9-konrad.dybcio@somainline.org>
+        Sat, 1 Oct 2022 05:09:04 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E93B4150764
+        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Oct 2022 02:09:01 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id k10so10170636lfm.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Oct 2022 02:09:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=Mi4lVfw+IHcwJ5lVPsJSIkTGyr1PyheHdIcmyKlZe1Y=;
+        b=KeDG5TKrOzZ7tm7yp3J+b7W+BW81w/IMLQpDEbBU9eqEupeDKtk2ppnVRKnqXJl/Vc
+         LUOjmJx9Xf1VkZRbixMXPa4FqLnXCSmKCV2Udva/3mFlKojaSi5R1bFcYkEivGawXaP5
+         WFL0CDeGyJ74O/N8rtkDonrJ/HvopFX+wxUc2TWdHj2Sy0MKMqJZwhYI1/9rUR7F1HD2
+         kH+yG4Pgm8Tq1i4B/IQou2o+YNg5Tx+Fsp/8SpFVI8+fA8YIIdO8/52dLwOXbuTJg8QA
+         /ALOLx3v8iETZqaC5YCgjtegJlrMYFI+as7pOC6as+XxOUlVjNGWwXFSTknkUNkgxpTK
+         ZyWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=Mi4lVfw+IHcwJ5lVPsJSIkTGyr1PyheHdIcmyKlZe1Y=;
+        b=qEBCMpr53Q7Fk81nIn7ksAQZPfeLcBbJHQvCgUcSI12iw0Fw7OOle87anfFoehiSUX
+         TPjb/5d2ZqztPccI/T6NVtGQ8vCZNjaEBwas1UiMpaY6m5VCExYuVwiFHSMxDcOQL50y
+         3n68BfcF9Ng180gJdhkSyooMT9lJuSGbrul7AdoD3G6YC/AxhGxwE2PO9Ds21NBkVjdz
+         XJkVFf8o+FyBXAOXLRSDVJ6nfik4XvfB/ALOV9tNXuNZHas87xdvM5d3ogP25oMkzqC1
+         H2xH9V665g6yGH1ICQUzherKM8ijwNhKKCx+Q2jHjwRGQ7npuNSMmnRKT//Fodg8Zbaa
+         WDzA==
+X-Gm-Message-State: ACrzQf1UFxhxfSiZk9tjobRGm7PwowFjauU7t+repWABJadgXaLEtlDd
+        F7GVInajYiGkm4arsOD6q59Qpw==
+X-Google-Smtp-Source: AMsMyM5r/bKFV4pBSeOFKESQI4LJ0/kAs64NBjyrtwkObyRf5Hz1x/bTiCXe0CrOl8IWvejrqi18wg==
+X-Received: by 2002:a05:6512:462:b0:4a2:22ff:e628 with SMTP id x2-20020a056512046200b004a222ffe628mr783765lfd.4.1664615340174;
+        Sat, 01 Oct 2022 02:09:00 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id q7-20020a0565123a8700b0048aef1abb08sm685433lfu.297.2022.10.01.02.08.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 01 Oct 2022 02:08:59 -0700 (PDT)
+Message-ID: <0af4b02d-094a-ae12-1365-c5df3f472fe4@linaro.org>
+Date:   Sat, 1 Oct 2022 11:08:58 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220930191049.123256-9-konrad.dybcio@somainline.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH 2/2] dt-bindings: pinctrl: qcom,sdm845: convert to
+ dtschema
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
+References: <20220930200529.331223-1-krzysztof.kozlowski@linaro.org>
+ <20220930200529.331223-3-krzysztof.kozlowski@linaro.org>
+ <166457528911.1113207.5679249386040323169.robh@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <166457528911.1113207.5679249386040323169.robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-09-30 21:10:49, Konrad Dybcio wrote:
-> From: Marijn Suijten <marijn.suijten@somainline.org>
-> 
-> Configure the maXTouch touchscreen found on Xperia XZ3 devices.
-> 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> [Konrad: clean up unused props, use generic node name]
+On 01/10/2022 00:05, Rob Herring wrote:
+> On Fri, 30 Sep 2022 22:05:29 +0200, Krzysztof Kozlowski wrote:
+>> Convert Qualcomm SDM845 pin controller bindings to DT schema.  Keep
+>> the parsing of pin configuration subnodes consistent with other Qualco=
+mm
+>> schemas (children named with '-state' suffix, their children with
+>> '-pins').
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  .../bindings/pinctrl/qcom,sdm845-pinctrl.txt  | 176 -----------------=
+-
+>>  .../bindings/pinctrl/qcom,sdm845-pinctrl.yaml | 158 ++++++++++++++++
+>>  2 files changed, 158 insertions(+), 176 deletions(-)
+>>  delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm=
+845-pinctrl.txt
+>>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm=
+845-pinctrl.yaml
+>>
+>=20
+> Running 'make dtbs_check' with the schema in this patch gives the
+> following warnings. Consider if they are expected or the schema is
+> incorrect. These may not be new warnings.
+>=20
+> Note that it is not yet a requirement to have 0 warnings for dtbs_check=
+=2E
+> This will change in the future.
+>=20
+> Full log is available here: https://patchwork.ozlabs.org/patch/
+>=20
+>=20
+> pinctrl@3400000: 'ap-edp-bklten', 'ap-suspend-l-hog', 'ap_suspend_l_ass=
+ert', 'ap_suspend_l_deassert', 'bios-flash-wp-r-l', 'cci0-default', 'cci0=
+-sleep', 'cci1-default', 'cci1-sleep', 'ec-ap-int-l', 'edp-brij-en', 'edp=
+-brij-irq', 'en-pp3300-dx-edp', 'h1-ap-int-odl', 'pen-eject-odl', 'pen-ir=
+q-l', 'pen-pdct-l', 'pen-rst-l', 'qspi-clk', 'qspi-cs0', 'qspi-cs1', 'qsp=
+i-data01', 'qspi-data12', 'quat_mi2s_active', 'quat_mi2s_sd0_active', 'qu=
+at_mi2s_sd0_sleep', 'quat_mi2s_sd1_active', 'quat_mi2s_sd1_sleep', 'quat_=
+mi2s_sd2_active', 'quat_mi2s_sd2_sleep', 'quat_mi2s_sd3_active', 'quat_mi=
+2s_sd3_sleep', 'quat_mi2s_sleep', 'qup-i2c0-default', 'qup-i2c1-default',=
+ 'qup-i2c10-default', 'qup-i2c11-default', 'qup-i2c12-default', 'qup-i2c1=
+3-default', 'qup-i2c14-default', 'qup-i2c15-default', 'qup-i2c2-default',=
+ 'qup-i2c3-default', 'qup-i2c4-default', 'qup-i2c5-default', 'qup-i2c6-de=
+fault', 'qup-i2c7-default', 'qup-i2c8-default', 'qup-i2c9-default', 'qup-=
+spi0-default', 'qup-spi1-default', 'qup-spi10-default', 'qup-spi11-defaul=
+t', 'qup-spi12-default', 'qup-spi13-default', 'qup-spi14-default', 'qup-s=
+pi15-default', 'qup-spi2-default', 'qup-spi3-default', 'qup-spi4-default'=
+, 'qup-spi5-default', 'qup-spi6-default', 'qup-spi7-default', 'qup-spi8-d=
+efault', 'qup-spi9-default', 'qup-uart0-default', 'qup-uart1-default', 'q=
+up-uart10-default', 'qup-uart11-default', 'qup-uart12-default', 'qup-uart=
+13-default', 'qup-uart14-default', 'qup-uart15-default', 'qup-uart2-defau=
+lt', 'qup-uart3-default', 'qup-uart4-default', 'qup-uart5-default', 'qup-=
+uart6-default', 'qup-uart7-default', 'qup-uart8-default', 'qup-uart9-defa=
+ult', 'sd-cd-odl', 'sdc2-clk', 'sdc2-cmd', 'sdc2-data', 'ts-int-l', 'ts-r=
+eset-l' do not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
+> 	arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dtb
+> 	arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dtb
+> 	arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dtb
 
-We should make a note though to check if our touch controller supports
-any of the possible values for atmel,wakeup-method, which is why this
-patch wasn't sent yet.
+This is fixed in patch #1 in this set, however for some reason DT
+patchwork did not get it (maybe size too big?).
 
-- Marijn
+For reference, the patch is available in Qualcomm patchwork:
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20220930200529.3=
+31223-2-krzysztof.kozlowski@linaro.org/
 
-> ---
->  .../qcom/sdm845-sony-xperia-tama-akatsuki.dts | 23 +++++++++++++++++++
->  1 file changed, 23 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
-> index 5c5949a51184..1668ae99dd47 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
-> @@ -25,6 +25,29 @@ ts_vddio_supply: ts-vddio-regulator {
->  		gpio = <&tlmm 133 GPIO_ACTIVE_HIGH>;
->  		enable-active-high;
->  		regulator-boot-on;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&ts_vddio_en>;
-> +	};
-> +};
-> +
-> +&i2c5 {
-> +	status = "okay";
-> +
-> +	touchscreen: touchscreen@4a {
-> +		compatible = "atmel,maxtouch";
-> +		reg = <0x4a>;
-> +
-> +		interrupt-parent = <&tlmm>;
-> +		interrupts = <125 IRQ_TYPE_LEVEL_LOW>;
-> +
-> +		reset-gpios = <&tlmm 99 GPIO_ACTIVE_LOW>;
-> +		vdda-supply = <&vreg_l28a_2p8>;
-> +		vdd-supply = <&ts_vddio_supply>;
-> +
-> +		pinctrl-names = "default", "sleep";
-> +		pinctrl-0 = <&ts_default>;
-> +		pinctrl-1 = <&ts_sleep>;
->  	};
->  };
->  
-> -- 
-> 2.37.3
-> 
+Best regards,
+Krzysztof
+
