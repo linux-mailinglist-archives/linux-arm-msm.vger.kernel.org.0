@@ -2,175 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D51775F1CF9
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 16:55:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EEE95F1D61
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 17:55:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229458AbiJAOzI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Oct 2022 10:55:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40788 "EHLO
+        id S229566AbiJAPzL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Oct 2022 11:55:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbiJAOzI (ORCPT
+        with ESMTP id S229534AbiJAPzK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Oct 2022 10:55:08 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E51993057B
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Oct 2022 07:55:02 -0700 (PDT)
-Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 29A3C3F4CB;
-        Sat,  1 Oct 2022 16:54:59 +0200 (CEST)
-Date:   Sat, 1 Oct 2022 16:54:57 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        jamipkettunen@somainline.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/8] arm64: dts: qcom: sdm845-tama: Add display nodes
-Message-ID: <20221001145457.yvy5swfqmzothhy7@SoMainline.org>
-References: <20220930191049.123256-1-konrad.dybcio@somainline.org>
- <20220930191049.123256-2-konrad.dybcio@somainline.org>
+        Sat, 1 Oct 2022 11:55:10 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17F2E4B989;
+        Sat,  1 Oct 2022 08:55:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1664639687;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=wKZBd6Gka4D6vhdEJ/JXPv7waVGDQl1vHcwD3kgP+VU=;
+    b=Ub5dgY8VXnRkVbPddPrqjwDftCUgGZLZ6r9Jku5a5binaFKK4DYCLYCvZyIiBBj6Pv
+    tqO2lg2dE8cOo7XWIR/I0Cedygnkel0a9YF0L4LX+0NnDzEvIONNCAex9gPlyedC4A0o
+    ZBBY49cXoQyPIoOVbcS6OfU01yDACJmQ2ue21u6FlRxJVLr2jWPJcco894/hCrkgmXGh
+    nBaLsdigYuagKMzrxn+ATYKF00OfcbUk3y9bz9wP2YAkm95QK6i9FJ+rGSryGB1ykTT7
+    5NLiKcZ3Kt/hfeMQsLsoz8vB1VbALpEr6V4O1m+m01WWOQpWBvtIhd5nGjtFQLhPgYKt
+    SyrQ==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrKw7/aY="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 48.1.3 AUTH)
+    with ESMTPSA id 06b848y91FslATX
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Sat, 1 Oct 2022 17:54:47 +0200 (CEST)
+Date:   Sat, 1 Oct 2022 17:54:41 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Sireesh Kodali <sireeshkodali1@gmail.com>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-kernel@vger.kernel.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: Re: [PATCH v6 1/5] remoteproc: qcom: qcom_wcnss: Add support for
+ pronto-v3
+Message-ID: <YzhiwXPTf6IQcOvb@gerhold.net>
+References: <20221001031345.31293-1-sireeshkodali1@gmail.com>
+ <20221001031345.31293-2-sireeshkodali1@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220930191049.123256-2-konrad.dybcio@somainline.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20221001031345.31293-2-sireeshkodali1@gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-09-30 21:10:42, Konrad Dybcio wrote:
-> Add required nodes to support display on XZ2/XZ2c. XZ3 has a
-> different power rail setup and needs to be handled separately.
+On Sat, Oct 01, 2022 at 08:43:40AM +0530, Sireesh Kodali wrote:
+> From: Vladimir Lypak <vladimir.lypak@gmail.com>
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Pronto-v3 is similar to pronto-v2. It requires two power domains, one
+> regulator, and it requires the xo clock. It is used on the MSM8953
+> platform.
+> 
+> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+
+Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
+
 > ---
->  .../qcom/sdm845-sony-xperia-tama-akari.dts    |  4 +
->  .../qcom/sdm845-sony-xperia-tama-akatsuki.dts | 44 ++++++++-
->  .../qcom/sdm845-sony-xperia-tama-apollo.dts   |  6 ++
->  .../dts/qcom/sdm845-sony-xperia-tama.dtsi     | 96 +++++++++++++++++++
->  4 files changed, 149 insertions(+), 1 deletion(-)
+>  drivers/remoteproc/qcom_wcnss.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dts b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dts
-> index 34f84f1f1eb4..d97b7f1e7140 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dts
-> @@ -11,3 +11,7 @@ / {
->  	model = "Sony Xperia XZ2";
->  	compatible = "sony,akari-row", "qcom,sdm845";
->  };
-> +
-> +&panel {
-> +	compatible = "sony,td4353-jdi-tama";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
-> index 2f5e12deaada..2a16305ac5da 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
-> @@ -10,9 +10,51 @@
->  / {
->  	model = "Sony Xperia XZ3";
->  	compatible = "sony,akatsuki-row", "qcom,sdm845";
-> +
-> +	/* Fixed DCDC for the OLED panel */
-> +	ts_vddio_supply: ts-vddio-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "ts_vddio";
-> +
-> +		regulator-min-microvolt = <1840000>;
-> +		regulator-max-microvolt = <1840000>;
-> +
-> +		gpio = <&tlmm 133 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +		regulator-boot-on;
-> +	};
-> +};
-> +
-> +&ibb {
-> +	status = "disabled";
-> +};
-> +
-> +&lab {
-> +	status = "disabled";
-> +};
-> +
-> +&panel {
-> +	/* Akatsuki uses an OLED panel. */
-> +	/delete-property/ backlight;
-> +	/delete-property/ vsp-supply;
-> +	/delete-property/ vsn-supply;
-> +	/delete-property/ treset-gpios;
-
-This looks to have been a last-minute rename to
-
-    touch-reset-gpios
-
-> +};
-> +
-> +&pmi8998_wled {
-> +	status = "disabled";
-> +};
-> +
-> +&tlmm {
-> +	ts_vddio_en: ts-vddio-en {
-> +		pins = "gpio133";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +		output-high;
-> +	};
+> diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+> index 68f37296b151..f599d5d5719d 100644
+> --- a/drivers/remoteproc/qcom_wcnss.c
+> +++ b/drivers/remoteproc/qcom_wcnss.c
+> @@ -141,6 +141,17 @@ static const struct wcnss_data pronto_v2_data = {
+>  	.num_vregs = 1,
 >  };
 >  
-> -/* For the future: WLED + LAB/IBB/OLEDB are not used on Akatsuki */
->  &vreg_l14a_1p8 {
->  	regulator-min-microvolt = <1840000>;
->  	regulator-max-microvolt = <1840000>;
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-apollo.dts b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-apollo.dts
-> index c9e62c72f60e..cd056f78070f 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-apollo.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-apollo.dts
-> @@ -11,3 +11,9 @@ / {
->  	model = "Sony Xperia XZ2 Compact";
->  	compatible = "sony,apollo-row", "qcom,sdm845";
->  };
+> +static const struct wcnss_data pronto_v3_data = {
+> +	.pmu_offset = 0x1004,
+> +	.spare_offset = 0x1088,
 > +
-> +&panel {
-> +	compatible = "sony,td4353-jdi-tama";
-> +	height-mm = <112>;
-> +	width-mm = <56>;
+> +	.pd_names = { "mx", "cx" },
+> +	.vregs = (struct wcnss_vreg_info[]) {
+> +		{ "vddpx", 1800000, 1800000, 0 },
+> +	},
+> +	.num_vregs = 1,
 > +};
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-> index 51ee42e3c995..ac8eb59ed010 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-> @@ -326,6 +326,46 @@ vreg_s3c_0p6: smps3 {
->  	};
+> +
+>  static int wcnss_load(struct rproc *rproc, const struct firmware *fw)
+>  {
+>  	struct qcom_wcnss *wcnss = (struct qcom_wcnss *)rproc->priv;
+> @@ -675,6 +686,7 @@ static const struct of_device_id wcnss_of_match[] = {
+>  	{ .compatible = "qcom,riva-pil", &riva_data },
+>  	{ .compatible = "qcom,pronto-v1-pil", &pronto_v1_data },
+>  	{ .compatible = "qcom,pronto-v2-pil", &pronto_v2_data },
+> +	{ .compatible = "qcom,pronto-v3-pil", &pronto_v3_data },
+>  	{ },
 >  };
->  
-> +&dsi0 {
-> +	vdda-supply = <&vreg_l26a_1p2>;
-> +	status = "okay";
-> +
-> +	panel: panel@0 {
-> +		/* The compatible is assigned in device DTs. */
-> +		reg = <0>;
-> +
-> +		backlight = <&pmi8998_wled>;
-> +		vddio-supply = <&vreg_l14a_1p8>;
-> +		vsp-supply = <&lab>;
-> +		vsn-supply = <&ibb>;
-> +		panel-reset-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
-> +		touch-reset-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
-
-Here.
-
-- Marijn
+>  MODULE_DEVICE_TABLE(of, wcnss_of_match);
+> -- 
+> 2.37.3
+> 
