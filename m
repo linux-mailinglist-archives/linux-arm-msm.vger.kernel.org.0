@@ -2,100 +2,517 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B41725F1A8A
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 09:14:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D9595F1A90
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 09:22:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229581AbiJAHO2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Oct 2022 03:14:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40800 "EHLO
+        id S229477AbiJAHWs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Oct 2022 03:22:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229567AbiJAHO1 (ORCPT
+        with ESMTP id S229472AbiJAHWr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Oct 2022 03:14:27 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F5F8C80F3
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Oct 2022 00:14:26 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id l76so4765525ybl.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Oct 2022 00:14:26 -0700 (PDT)
+        Sat, 1 Oct 2022 03:22:47 -0400
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECE0D178A37
+        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Oct 2022 00:22:45 -0700 (PDT)
+Received: by mail-yb1-xb2f.google.com with SMTP id y144so656483yby.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Oct 2022 00:22:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date;
-        bh=PgzZ0PoJnAJz0dQXkSQKaL7dHuT1cZSXRrd9261Dnqk=;
-        b=mlQfF7N1lrHCE7kzVtI6RSbT96oqYXRvPkt9eX6xq+qfm4PQfTjJVQlxNDnrIqSiK7
-         fYF0Md3sB5LhiyQOzellOrJf+UQq0Usqk7TkNrf3IEMewO5PdRPyuNMDKMOMoqpm/YdL
-         U76rKfnEfbppYSWsDQENGMquaxWiWBPv8nXQnH8I5RP+s+IkOaMuiYfqg01Cfsc3aGfI
-         PJLIQnsuxZAuyMfxGnywGcU0cWYVhzR1J7o61gpcW518YfAIrTs330qNfLWP6fX9oiEY
-         7xSObKxr6BQM5qFim7Ez/TfVjduQ0VT4rjTXCutA4b+am1i6GQSiu5mipBtOS7rfyAc6
-         FF3w==
+        bh=M3pa7w2+pQXsZl//LcHGojMnAxSn2I8TPPe8p3Hd9Xs=;
+        b=twdp/m6NzhMRkxEl/6gllIKq5ssIs0Lo3i1C71o+YOSjxOynSO8VFWYQ2l5eTUE8e4
+         LpW01QfGC1v8nkCh7br5HMtwMC/qX5sXTOnQgjhGT5IquvldVS6Nc1Bwm6gItSUVPAtz
+         P+R3T7WuVCExAMXb2UZrRIoCqlBm/wK6jHkbufAC0/mQUZiysJVCHF57KOY/jnE6d6eO
+         8v4xI5PcQATkssHRsXVAGWWKkMUZpwbDIKdD3AwLBonpgMyq51J7T+7lInm1k9GFdwYu
+         OMAyikvFjluTYV6U63vEQ7+u1WG8gP8zWGuYJlXW45BlsHmh5ue0Gt3WLJ2AL1fpkz9C
+         Dubw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=PgzZ0PoJnAJz0dQXkSQKaL7dHuT1cZSXRrd9261Dnqk=;
-        b=miJtZ/nepcJR9aVZRq3ooDbvbZG5IxwyFuIk875xy+OkTlfsSKHqJ6Sb2tyKsLZSpK
-         Ndjln+oar++EzpD7wyBc7LU6D8/q+Qen/1wsyUem5dd3qRe22bKkzaN1QP21zH+puiHD
-         l7UvKBwIOv7vDV1i3TSV9JswaQm0Pj9DymhMOjw/A8ILegZcj4zGntoY6ett+xA8PoDv
-         5kf3apqzKkUtA3UxrU3Ii9DhSyzI3apXqQB318pOHMH23GrsjVYZFb4NODwXKeP0PH6N
-         3U+KDGXg+HQY3NrA1F4AV5HyuFVTU+cezbEOp8VZSZxRge7y3fsaQNyJkErJWBC1XCdM
-         VUCw==
-X-Gm-Message-State: ACrzQf2P2oLuNa3VlO3ZJLTLWq85qPDn+n8To0Ksirwgq+YmIqg6/3hn
-        gjq/XXPB39a7gXtW6I6vtizGUpdwa5/fCC32InZYkXaWSWc=
-X-Google-Smtp-Source: AMsMyM6u9BV0jp1phJUaaaJ8xA763ZxFTU2uofLHSHfSHU9LH6ozAYvYoscycfEMeh5n7Po4WdRQDl22O+CU0dKPQTY=
-X-Received: by 2002:a05:6902:102f:b0:6b4:7cba:b77a with SMTP id
- x15-20020a056902102f00b006b47cbab77amr11680432ybt.516.1664608465947; Sat, 01
- Oct 2022 00:14:25 -0700 (PDT)
+        bh=M3pa7w2+pQXsZl//LcHGojMnAxSn2I8TPPe8p3Hd9Xs=;
+        b=ibnptLnTiUvQT/OhwzxHLW5lVybf99XwD62YhKZTU4RsNJbouo20Vo30bWMLafRVIo
+         k41R7Gw0hVCIvD7WDl0m0CMYMOEinUUsFob+5Sz4CafvgQfA63Q6q4oM+QQqwRcoOHZd
+         PdjeYLSSZz9to18ji8RkruQ3CmJLhF3YoHYhn0PcgK77xrUboDs11/q0ZraGF3hx0cib
+         N71EOFAGEeLtxxvVeS6pTk8ycSJzJNrXXofhlFYhUU/8FmEaCDI2QikucnIO4nlx7I5t
+         r/4mefj25IU4XGNXXps1/n0yMuVAdLjx/lt3CUIKPe5SwNNddD8Esa9C8Jl5FU3goJty
+         oPAA==
+X-Gm-Message-State: ACrzQf3BMTyQ9Q/6Y5+8NpkHITRKVH0HdXODIQYmbliooHdCblyoSH6w
+        tsoKXBa48RbnsU78ZEuL4CnuWRAW07eUU+ZgGbO7Pg==
+X-Google-Smtp-Source: AMsMyM5/BugAWy6fqAjbuPHg1/IeRl4PTghVdQFoW39IVf7oh+iIR6hDbWyjbTz5k22hzQ+QgIXobmMgXReoPaJo7po=
+X-Received: by 2002:a25:af13:0:b0:6ae:3166:1aee with SMTP id
+ a19-20020a25af13000000b006ae31661aeemr11329603ybh.288.1664608965119; Sat, 01
+ Oct 2022 00:22:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <20221001030627.29147-1-quic_molvera@quicinc.com> <20221001030627.29147-3-quic_molvera@quicinc.com>
-In-Reply-To: <20221001030627.29147-3-quic_molvera@quicinc.com>
+References: <20221001030656.29365-1-quic_molvera@quicinc.com> <20221001030656.29365-2-quic_molvera@quicinc.com>
+In-Reply-To: <20221001030656.29365-2-quic_molvera@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 1 Oct 2022 10:14:15 +0300
-Message-ID: <CAA8EJppLd6dti=gbR0hbEAQyj5PHA7xWR3w+DESx1qcKcyf3YA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] dmaengine: qcom: gpi: Add compatible for QDU1000 and QRU1000
+Date:   Sat, 1 Oct 2022 10:22:34 +0300
+Message-ID: <CAA8EJppWEQzvpTHWqFzSmiZnFRkJB5LBqWfzPjoGygkVr7bEyA@mail.gmail.com>
+Subject: Re: [PATCH 01/19] arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
 To:     Melody Olvera <quic_molvera@quicinc.com>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 1 Oct 2022 at 06:08, Melody Olvera <quic_molvera@quicinc.com> wrote:
+On Sat, 1 Oct 2022 at 06:09, Melody Olvera <quic_molvera@quicinc.com> wrote:
 >
-> Add compatible fields for the Qualcomm QDU1000 and QRU1000 SoCs.
+> Add the base DTSI files for QDU1000 and QRU1000 SoCs, including base
+> descriptions of CPUs, GCC, RPMHCC, UART, and interrupt-controller to
+> boot to shell with console on these SoCs.
 >
 > Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 > ---
->  drivers/dma/qcom/gpi.c | 2 ++
->  1 file changed, 2 insertions(+)
+>  arch/arm64/boot/dts/qcom/qdru1000.dtsi | 370 +++++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/qdu1000.dtsi  |  10 +
+>  arch/arm64/boot/dts/qcom/qru1000.dtsi  |  10 +
+>  3 files changed, 390 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/qdru1000.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/qru1000.dtsi
 >
-> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> index 8f0c9c4e2efd..94f92317979c 100644
-> --- a/drivers/dma/qcom/gpi.c
-> +++ b/drivers/dma/qcom/gpi.c
-> @@ -2292,6 +2292,8 @@ static const struct of_device_id gpi_of_match[] = {
->         { .compatible = "qcom,sm8250-gpi-dma", .data = (void *)0x0 },
->         { .compatible = "qcom,sm8350-gpi-dma", .data = (void *)0x10000 },
->         { .compatible = "qcom,sm8450-gpi-dma", .data = (void *)0x10000 },
-> +       { .compatible = "qcom,qdu1000-gpi-dma", .data = (void *)0x10000 },
-> +       { .compatible = "qcom,qru1000-gpi-dma", .data = (void *)0x10000 },
+> diff --git a/arch/arm64/boot/dts/qcom/qdru1000.dtsi b/arch/arm64/boot/dts/qcom/qdru1000.dtsi
+> new file mode 100644
+> index 000000000000..3610f94bef35
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qdru1000.dtsi
+> @@ -0,0 +1,370 @@
+> +// SPDX-License-Identifier: BSD-3-Clause-Clear
+> +/*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/clock/qcom,gcc-qdru1000.h>
+> +#include <dt-bindings/clock/qcom,rpmh.h>
+> +#include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> +
+> +/ {
+> +       interrupt-parent = <&intc>;
+> +
+> +       #address-cells = <2>;
+> +       #size-cells = <2>;
+> +
+> +       chosen: chosen { };
+> +
+> +
+> +       clocks {
+> +               xo_board: xo_board {
 
-As usual
+No underscores in node names. Use dash instead. Nobody should be
+binding these clocks via the system name, so it should not matter.
 
->         { },
->  };
->  MODULE_DEVICE_TABLE(of, gpi_of_match);
+> +                       compatible = "fixed-clock";
+> +                       clock-frequency = <19200000>;
+> +                       clock-output-names = "xo_board";
+> +                       #clock-cells = <0>;
+> +               };
+> +
+> +               sleep_clk: sleep_clk {
+> +                       compatible = "fixed-clock";
+> +                       clock-frequency = <32000>;
+> +                       #clock-cells = <0>;
+> +               };
+> +       };
+> +
+> +       cpus {
+> +               #address-cells = <2>;
+> +               #size-cells = <0>;
+> +
+> +               CPU0: cpu@0 {
+> +                       device_type = "cpu";
+> +                       compatible = "arm,cortex-a55";
+> +                       reg = <0x0 0x0>;
+> +                       enable-method = "psci";
+> +                       power-domain-names = "psci";
+> +                       power-domains = <&CPU_PD0>;
+> +                       next-level-cache = <&L2_0>;
+> +                       L2_0: l2-cache {
+> +                             compatible = "cache";
+> +                             next-level-cache = <&L3_0>;
+> +                               L3_0: l3-cache {
+> +                                       compatible = "cache";
+> +                               };
+> +                       };
+> +               };
+> +
+> +               CPU1: cpu@100 {
+> +                       device_type = "cpu";
+> +                       compatible = "arm,cortex-a55";
+> +                       reg = <0x0 0x100>;
+> +                       enable-method = "psci";
+> +                       power-domains = <&CPU_PD1>;
+> +                       power-domain-names = "psci";
+> +                       next-level-cache = <&L2_100>;
+> +                       L2_100: l2-cache {
+> +                             compatible = "cache";
+> +                             next-level-cache = <&L3_0>;
+> +                       };
+> +
+> +               };
+> +
+> +               CPU2: cpu@200 {
+> +                       device_type = "cpu";
+> +                       compatible = "arm,cortex-a55";
+> +                       reg = <0x0 0x200>;
+> +                       enable-method = "psci";
+> +                       power-domains = <&CPU_PD2>;
+> +                       power-domain-names = "psci";
+> +                       next-level-cache = <&L2_200>;
+> +                       L2_200: l2-cache {
+> +                             compatible = "cache";
+> +                             next-level-cache = <&L3_0>;
+> +                       };
+> +               };
+> +
+> +               CPU3: cpu@300 {
+> +                       device_type = "cpu";
+> +                       compatible = "arm,cortex-a55";
+> +                       reg = <0x0 0x300>;
+> +                       enable-method = "psci";
+> +                       power-domains = <&CPU_PD3>;
+> +                       power-domain-names = "psci";
+> +                       next-level-cache = <&L2_300>;
+> +                       L2_300: l2-cache {
+> +                             compatible = "cache";
+> +                             next-level-cache = <&L3_0>;
+> +                       };
+> +
+> +               };
+> +
+> +               cpu-map {
+> +                       cluster0 {
+> +                               core0 {
+> +                                       cpu = <&CPU0>;
+> +                               };
+> +
+> +                               core1 {
+> +                                       cpu = <&CPU1>;
+> +                               };
+> +
+> +                               core2 {
+> +                                       cpu = <&CPU2>;
+> +                               };
+> +
+> +                               core3 {
+> +                                       cpu = <&CPU3>;
+> +                               };
+> +                       };
+> +               };
+> +       };
+> +
+> +       idle-states {
+> +               entry-method = "psci";
+> +
+> +               SILVER_OFF: silver-c4 {  /* C4 */
+
+If this is silver, where is gold?
+With the lack of gold/silver distinction, it might be better to just
+use CPU/cpu here instead of silver.
+
+> +                       compatible = "arm,idle-state";
+> +                       idle-state-name = "rail-pc";
+> +                       entry-latency-us = <274>;
+> +                       exit-latency-us = <480>;
+> +                       min-residency-us = <3934>;
+> +                       arm,psci-suspend-param = <0x40000004>;
+> +                       local-timer-stop;
+> +               };
+> +
+> +               CLUSTER_PWR_DN: cluster-d4 { /* D4 */
+
+domain idle states go to separate domain-idle-states node.
+
+> +                       compatible = "domain-idle-state";
+> +                       idle-state-name = "l3-off";
+> +                       entry-latency-us = <584>;
+> +                       exit-latency-us = <2332>;
+> +                       min-residency-us = <6118>;
+> +                       arm,psci-suspend-param = <0x41000044>;
+> +               };
+> +
+> +               APSS_OFF: cluster-e3 { /* E3 */
+> +                       compatible = "domain-idle-state";
+> +                       idle-state-name = "llcc-off";
+> +                       entry-latency-us = <2893>;
+> +                       exit-latency-us = <4023>;
+> +                       min-residency-us = <9987>;
+> +                       arm,psci-suspend-param = <0x41003344>;
+> +               };
+> +       };
+> +
+> +       firmware {
+> +               qcom_scm {
+> +                       compatible = "qcom,scm-qdu100", "qcom.scm-qru1000", "qcom,scm";
+> +                       #reset-cells = <1>;
+> +               };
+> +       };
+> +
+> +       memory@80000000 {
+> +               device_type = "memory";
+> +               /* We expect the bootloader to fill in the size */
+> +               reg = <0x0 0x80000000 0x0 0x0>;
+> +       };
+> +
+> +       pmu {
+> +               compatible = "arm,armv8-pmuv3";
+> +               interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_HIGH>;
+> +       };
+> +
+> +       psci {
+> +               compatible = "arm,psci-1.0";
+> +               method = "smc";
+> +
+> +               CPU_PD0: cpu-pd0 {
+> +                       #power-domain-cells = <0>;
+> +                       power-domains = <&CLUSTER_PD>;
+> +                       domain-idle-states = <&SILVER_OFF>;
+> +               };
+> +
+> +               CPU_PD1: cpu-pd1 {
+> +                       #power-domain-cells = <0>;
+> +                       power-domains = <&CLUSTER_PD>;
+> +                       domain-idle-states = <&SILVER_OFF>;
+> +               };
+> +
+> +               CPU_PD2: cpu-pd2 {
+> +                       #power-domain-cells = <0>;
+> +                       power-domains = <&CLUSTER_PD>;
+> +                       domain-idle-states = <&SILVER_OFF>;
+> +               };
+> +
+> +               CPU_PD3: cpu-pd3 {
+> +                       #power-domain-cells = <0>;
+> +                       power-domains = <&CLUSTER_PD>;
+> +                       domain-idle-states = <&SILVER_OFF>;
+> +               };
+> +
+> +               CLUSTER_PD: cluster-pd {
+> +                       #power-domain-cells = <0>;
+> +                       domain-idle-states = <&CLUSTER_PWR_DN &APSS_OFF>;
+> +               };
+> +       };
+> +
+> +       soc: soc@0 {
+> +               #address-cells = <2>;
+> +               #size-cells = <2>;
+> +               ranges = <0 0 0 0 0x10 0>;
+> +               dma-ranges = <0 0 0 0 0x10 0>;
+> +               compatible = "simple-bus";
+> +
+> +               gcc: clock-controller@80000 {
+> +                       compatible = "qcom,gcc-qdu1000", "qcom,gcc-qru1000", "syscon";
+> +                       reg = <0x0 0x80000 0x0 0x1f4200>;
+> +                       #clock-cells = <1>;
+> +                       #reset-cells = <1>;
+> +                       #power-domain-cells = <1>;
+> +                       clocks = <&rpmhcc RPMH_CXO_CLK>, <&sleep_clk>;
+> +                       clock-names = "bi_tcxo", "sleep_clk";
+> +               };
+> +
+> +               qupv3_id_0: geniqup@9c0000 {
+> +                       compatible = "qcom,geni-se-qup";
+> +                       reg = <0x0 0x9c0000 0x0 0x2000>;
+> +                       clock-names = "m-ahb", "s-ahb";
+> +                       clocks = <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
+> +                               <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
+> +                       #address-cells = <2>;
+> +                       #size-cells = <2>;
+> +                       ranges;
+> +                       status = "disabled";
+> +
+> +                       uart7: serial@99c000 {
+> +                               compatible = "qcom,geni-debug-uart";
+> +                               reg = <0x0 0x99c000 0x0 0x4000>;
+> +                               clock-names = "se";
+> +                               clocks = <&gcc GCC_QUPV3_WRAP0_S7_CLK>;
+> +                               interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
+> +                               #address-cells = <1>;
+> +                               #size-cells = <0>;
+> +                               status = "disabled";
+> +                       };
+> +               };
+> +
+> +               tcsr_mutex: hwlock@1f40000 {
+> +                       compatible = "qcom,tcsr-mutex";
+> +                       reg = <0x0 0x1f40000 0x0 0x20000>;
+> +                       #hwlock-cells = <1>;
+> +               };
+> +
+> +               pdc: interrupt-controller@b220000 {
+> +                       compatible = "qcom,pdc";
+> +                       reg = <0x0 0xb220000 0x0 0x30000>, <0x0 0x174000f0 0x0 0x64>;
+> +                       reg-names = "pdc-interrupt-base", "apss-shared-spi-cfg";
+> +                       qcom,pdc-ranges = <0 480 12>, <14 494 24>, <40 520 54>,
+> +                                         <94 609 31>, <125 63 1>;
+> +                       #interrupt-cells = <2>;
+> +                       interrupt-parent = <&intc>;
+> +                       interrupt-controller;
+> +               };
+
+Sort the devices according to the address please.
+
+> +
+> +               intc: interrupt-controller@17200000 {
+> +                       compatible = "arm,gic-v3";
+> +                       #interrupt-cells = <3>;
+> +                       interrupt-controller;
+> +                       #redistributor-regions = <1>;
+> +                       redistributor-stride = <0x0 0x20000>;
+> +                       reg = <0x0 0x17200000 0x0 0x10000>,     /* GICD */
+> +                             <0x0 0x17260000 0x0 0x80000>;     /* GICR * 4 */
+> +                       interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_LOW>;
+> +               };
+> +
+> +               timer@17420000 {
+> +                       compatible = "arm,armv7-timer-mem";
+> +                       #address-cells = <2>;
+> +                       #size-cells = <2>;
+> +                       ranges;
+> +                       reg = <0x0 0x17420000 0x0 0x1000>;
+> +                       clock-frequency = <19200000>;
+> +
+> +                       frame@17421000 {
+> +                               frame-number = <0>;
+> +                               interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
+> +                                            <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
+> +                               reg = <0x0 0x17421000 0x0 0x1000>,
+> +                                     <0x0 0x17422000 0x0 0x1000>;
+> +                       };
+> +
+> +                       frame@17423000 {
+> +                               frame-number = <1>;
+> +                               interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
+> +                               reg = <0x0 0x17423000 0x0 0x1000>;
+> +                               status = "disabled";
+> +                       };
+> +
+> +                       frame@17425000 {
+> +                               frame-number = <2>;
+> +                               interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
+> +                               reg = <0x0 0x17425000 0x0 0x1000>,
+> +                                     <0x0 0x17426000 0x0 0x1000>;
+> +                               status = "disabled";
+> +                       };
+> +
+> +                       frame@17427000 {
+> +                               frame-number = <3>;
+> +                               interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
+> +                               reg = <0x0 0x17427000 0x0 0x1000>;
+> +                               status = "disabled";
+> +                       };
+> +
+> +                       frame@17429000 {
+> +                               frame-number = <4>;
+> +                               interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
+> +                               reg = <0x0 0x17429000 0x0 0x1000>;
+> +                               status = "disabled";
+> +                       };
+> +
+> +                       frame@1742b000 {
+> +                               frame-number = <5>;
+> +                               interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
+> +                               reg = <0x0 0x1742b000 0x0 0x1000>;
+> +                               status = "disabled";
+> +                       };
+> +
+> +                       frame@1742d000 {
+> +                               frame-number = <6>;
+> +                               interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
+> +                               reg = <0x0 0x1742d000 0x0 0x1000>;
+> +                               status = "disabled";
+> +                       };
+> +               };
+> +
+> +               apps_rsc: rsc@17a00000 {
+> +                       label = "apps_rsc";
+> +                       compatible = "qcom,rpmh-rsc";
+> +                       reg = <0x0 0x17a00000 0x0 0x10000>,
+> +                             <0x0 0x17a10000 0x0 0x10000>,
+> +                             <0x0 0x17a20000 0x0 0x10000>;
+> +                       reg-names = "drv-0", "drv-1", "drv-2";
+> +                       interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>;
+> +                       qcom,tcs-offset = <0xd00>;
+> +                       qcom,drv-id = <2>;
+> +                       qcom,tcs-config = <ACTIVE_TCS    2>, <SLEEP_TCS     3>,
+> +                                         <WAKE_TCS      3>, <CONTROL_TCS   0>;
+> +
+> +                       apps_bcm_voter: bcm_voter {
+> +                               compatible = "qcom,bcm-voter";
+> +                       };
+> +
+> +                       rpmhcc: clock-controller {
+> +                               compatible = "qcom,qdu1000-rpmh-clk", "qcom,qru1000-rpmh-clk";
+> +                               #clock-cells = <1>;
+> +                               clock-names = "xo";
+> +                               clocks = <&xo_board>;
+> +                       };
+> +               };
+> +
+> +               arch_timer: timer {
+> +                       compatible = "arm,armv8-timer";
+> +                       interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +                                    <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +                                    <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +                                    <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +                                    <GIC_PPI 12 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
+> +                       clock-frequency = <19200000>;
+> +               };
+> +       };
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> new file mode 100644
+> index 000000000000..ba195e7ffc38
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> @@ -0,0 +1,10 @@
+> +// SPDX-License-Identifier: BSD-3-Clause-Clear
+> +/*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include "qdru1000.dtsi"
+> +
+> +/ {
+> +       qcom,msm-id = <545 0x10000>, <587 0x10000>;
+
+Ugh. If this is the only difference between chips, I'd suggest merging
+qdru1000 in one of the includes and then overriding msm-id in the
+second one.
+
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/qru1000.dtsi b/arch/arm64/boot/dts/qcom/qru1000.dtsi
+> new file mode 100644
+> index 000000000000..1639a4b3c1fb
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qru1000.dtsi
+> @@ -0,0 +1,10 @@
+> +// SPDX-License-Identifier: BSD-3-Clause-Clear
+> +/*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include "qdru1000.dtsi"
+> +
+> +/ {
+> +       qcom,msm-id = <539 0x10000>, <588 0x10000>, <589 0x10000>, <590 0x10000>;
+> +};
 > --
 > 2.37.3
 >
