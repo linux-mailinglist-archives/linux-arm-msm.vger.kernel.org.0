@@ -2,169 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F8435F1DDF
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 18:51:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 704625F1E32
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 19:10:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229815AbiJAQvn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Oct 2022 12:51:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43560 "EHLO
+        id S229544AbiJARK3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Oct 2022 13:10:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbiJAQvU (ORCPT
+        with ESMTP id S229562AbiJARKZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Oct 2022 12:51:20 -0400
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A85252F014
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Oct 2022 09:50:48 -0700 (PDT)
-Received: by mail-yb1-xb30.google.com with SMTP id k3so6860930ybk.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Oct 2022 09:50:48 -0700 (PDT)
+        Sat, 1 Oct 2022 13:10:25 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFCE9578B0
+        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Oct 2022 10:10:24 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id y136so6829391pfb.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Oct 2022 10:10:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date;
-        bh=g3lxI1rEb012jkHLPicQe05FcKANs5i//52fZg/FCRk=;
-        b=luBhQJRCZ1/tzrdGyXpFnNJtdRZZfNZytLW/jVLHu4qzuikBh8atujFKR8HBcWbRAd
-         s4rtnWo9N5G8xpkkt0kMIa29qEV5qfiy6+MYlMFzd0mo2KZENnIWsryce1i2sJr0BvUb
-         sPlWATQIaoZmEpjvHxx2uFGqaJQjTtBoPSmpDlfByko7rK3IbydeaBf/F9S+f41D0Bxw
-         MD/+vPbD5v+HKzuLcTNI1H0LjzbBaMiAdNlu5f4l4W24RG6FPe0J7BMLUtIGHOhYie4x
-         1ayGA+WoZEcyPdmHQRdqGoaKFSCGHhGRnl8dAj48kPLZyP5BiOH/JEOTXDbEU3op7vjB
-         TbCg==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=ms+LR5v93QdHAkRtGMRe/J+ZkmSovxcRrEECZoKa8OI=;
+        b=Oni0qlEVqFFXQXaB66fFL1WyTxNMBnxYONH1tsIeryO3TuSjBbpv8nkV21wsAIqpyB
+         naZ7qMAyEmFv1e7mSqa0LSc2CrQmRuhBDtrbqZBhJiI7B4IL5uK+Myn+ysEAS6JkMNzW
+         NRmul8Mwtts7Ssz+qr0QYI+2zLvabJQFMgRGLYX2Y+SJ6s1rRGj2mKKyiPA3Ef8NLzmW
+         0/rd3eyvyawdrt/rIRr/++yh0ijdlJIU6o0zWi2PagqtLZFqnzupjpPm+0yqG/Engol+
+         QxNGLGnxBn7rJQhe/PVTq4Sgtznn/v3Zyw8cJ6dtaeRykNBD1zDzptmVPFok/PMqXNhb
+         gkaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=g3lxI1rEb012jkHLPicQe05FcKANs5i//52fZg/FCRk=;
-        b=hnaBY35hSg4/bqzgThY+pWOPX8qr/65XRhBKKlZBU/BqK5J4YvJaBk94S3CxcfhI+t
-         71kK2diWHLKDMqc73VJ0P9APWNDk+yjrOSg3m4koyfKsTdnGraWmQqKRuVVS8IkQ+AHm
-         +ojdyJoLjFsAT1G/QFuIZhcFyFAeRbP29qmmwoaa820Q3xqGh2C2ULs5ZnGcqwSR1kow
-         tlPUx9kIS4URCuL8GAcHDnBB8nLnQ5Gv1mkAToWmewjJ4Bm80cuNclUPdoq4vcFTCcm0
-         eOkbtg8IR197mBfwFpqwH4r2qq02UPG1Vcs58ZOPfo3mIGacfClzMhKRSGENPcOKVJb8
-         bIsQ==
-X-Gm-Message-State: ACrzQf1a6czKZJ1eDiWcNNAYT6osaoNoyw9/ZCh94dL3T23/EMHhAv2l
-        D/TqqIScxsZfL44rwHV0klNOj1iZy7kaj7k3ZLmZ60LFP69vQw==
-X-Google-Smtp-Source: AMsMyM5JaLBAZqMMzMpT3rZcygWPPiyF48NGvdL4SMEhpQ3AIcyxe9hHN8bHRjNaV5HDQiykqUH4lBdYlxIZy2oZwOs=
-X-Received: by 2002:a25:af13:0:b0:6ae:3166:1aee with SMTP id
- a19-20020a25af13000000b006ae31661aeemr13068673ybh.288.1664643047860; Sat, 01
- Oct 2022 09:50:47 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=ms+LR5v93QdHAkRtGMRe/J+ZkmSovxcRrEECZoKa8OI=;
+        b=n7pu3yhnQz2JrZ+59aRhVZds03lqsvvw6VcZfDuLPge8VGSmfIChbN1btN9A7mviFi
+         Y6WZeehMmh5EdtGW27nvK4JEd9FqrPOdDTUg0wYLtOTOlsltxFpl9cpdSB/wzX/JC919
+         YMlaYwdLaFmvJ0voz/8WdYLounDiZ/ushciBEwbLHnO0Hs+/8R6hjNOV5NXWnBVrEcns
+         /Lndd2JAblKUNvD8yKg6ZKT6GCGGF+Z0bMMFI8eZGaZYV1ZNnwJ2k0rejsx9dSADByUX
+         W3tAVP2JDNJUuzHOM0lq/UnCfhRPu6akGQdgsMmXhA7r9rKSjzC6C80v/jY3TRVhee1s
+         a+ww==
+X-Gm-Message-State: ACrzQf1hhcYJyNIZIAsw1UIU44oTOpWpFj0N7LdCKq2wo/1CHo97At+s
+        c8jTzfGkdsn2U03a3AFEgC7Skc6xQiGgcEBN9MM=
+X-Google-Smtp-Source: AMsMyM4/beWB1WKbe90HCMIB6lgDjA7GyrKX+n6BnYcFlpm6I/QqU4X10jMMe0LV9MffcWOxSQaFjOp8I8Xpn3tQJK0=
+X-Received: by 2002:aa7:9083:0:b0:55f:9827:42e7 with SMTP id
+ i3-20020aa79083000000b0055f982742e7mr3289032pfa.15.1664644224208; Sat, 01 Oct
+ 2022 10:10:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <1663157784-22232-1-git-send-email-quic_kalyant@quicinc.com>
- <CAD=FV=UT-GmAOYrCBRU0bhGeXU=pOGDbk=Jq7JEk40tyEH0zLA@mail.gmail.com>
- <A446B5C0-1EAA-4A24-8E7B-3C0EB2024026@linaro.org> <BN0PR02MB8142577BE680E27952F912A296599@BN0PR02MB8142.namprd02.prod.outlook.com>
-In-Reply-To: <BN0PR02MB8142577BE680E27952F912A296599@BN0PR02MB8142.namprd02.prod.outlook.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 1 Oct 2022 19:50:36 +0300
-Message-ID: <CAA8EJpobnK67OV7v_ze7X7PhWr0M32-=dthbV3ms3qdQ4mDCqA@mail.gmail.com>
-Subject: Re: [v5] drm/msm/disp/dpu1: add support for dspp sub block flush in sc7280
-To:     Kalyan Thota <kalyant@qti.qualcomm.com>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
-        "y@qualcomm.com" <y@qualcomm.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>
+References: <CAB1t1CzwhBL3qu6GQZPwXBQG2YwFn9B+Aqi=81xgfA_2BCm=4A@mail.gmail.com>
+ <CAB1t1CxNcKBQ8wFGQmSupA1ix0C9hOUYPN6Sa-ACFcG_b9mY3w@mail.gmail.com> <9acde2c8-ebd2-f603-c6df-98af9ba1c80d@linaro.org>
+In-Reply-To: <9acde2c8-ebd2-f603-c6df-98af9ba1c80d@linaro.org>
+From:   Petr Vorel <petr.vorel@gmail.com>
+Date:   Sat, 1 Oct 2022 19:10:13 +0200
+Message-ID: <CAB1t1CwXh3t4xEL6DvRBVs1q8OX_dOwN2-bR_CWjMQhozSPC0Q@mail.gmail.com>
+Subject: Re: msm8992-lg-bullhead-rev-101 resets in initramfs
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Ilya <ilya.manyugin@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 1 Oct 2022 at 17:25, Kalyan Thota <kalyant@qti.qualcomm.com> wrote:
+On Sat, 1 Oct 2022 at 10:52, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
+> On 30/09/2022 23:39, Petr Vorel wrote:
+> > I'm sorry, forget to add links.
+> > Petr
+> >
+> > [1] https://gitlab.com/-/snippets/2420133
+> > [2] https://gitlab.com/postmarketOS/pmaports/-/blob/master/main/postmarketos-mkinitfs/init_functions.sh#L514-523
+> > [3] https://gitlab.com/postmarketOS/pmaports/-/blob/master/main/postmarketos-mkinitfs-hook-debug-shell/20-debug-shell.sh
+> > [4] https://gitlab.com/-/snippets/2420128
+> >
+> > On Fri, 30 Sept 2022 at 23:30, Petr Vorel <petr.vorel@gmail.com> wrote:
+> >>
+> >> Hi all,
+> >>
+> >> [ sorry for sending mail twice, now as plain text. I should move away
+> >> from gmail.com to something which allows to use mutt... ]
+> >>
+> >> Some releases after 5.17 bullhead rev 1.01 started to reset.
+> >> I'm not sure which kernel version it started, because it might be
+> >> caused by kernel config or dts changes.
 >
-> >-----Original Message-----
-> >From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >Sent: Friday, September 30, 2022 1:59 PM
-> >To: Doug Anderson <dianders@chromium.org>; Kalyan Thota (QUIC)
-> ><quic_kalyant@quicinc.com>
-> >Cc: y@qualcomm.com; dri-devel <dri-devel@lists.freedesktop.org>; linux-a=
-rm-
-> >msm <linux-arm-msm@vger.kernel.org>; freedreno
-> ><freedreno@lists.freedesktop.org>; open list:OPEN FIRMWARE AND FLATTENED
-> >DEVICE TREE BINDINGS <devicetree@vger.kernel.org>; LKML <linux-
-> >kernel@vger.kernel.org>; Rob Clark <robdclark@gmail.com>; Stephen Boyd
-> ><swboyd@chromium.org>; Vinod Polimera (QUIC)
-> ><quic_vpolimer@quicinc.com>; Abhinav Kumar (QUIC)
-> ><quic_abhinavk@quicinc.com>
-> >Subject: Re: [v5] drm/msm/disp/dpu1: add support for dspp sub block flus=
-h in
-> >sc7280
-> >
-> >WARNING: This email originated from outside of Qualcomm. Please be wary =
-of
-> >any links or attachments, and do not enable macros.
-> >
-> >On 29 September 2022 19:13:20 GMT+03:00, Doug Anderson
-> ><dianders@chromium.org> wrote:
-> >>Hi,
-> >>
-> >>On Wed, Sep 14, 2022 at 5:16 AM Kalyan Thota <quic_kalyant@quicinc.com>
-> >wrote:
-> >>>
-> >>> Flush mechanism for DSPP blocks has changed in sc7280 family, it
-> >>> allows individual sub blocks to be flushed in coordination with
-> >>> master flush control.
-> >>>
-> >>> Representation: master_flush && (PCC_flush | IGC_flush .. etc )
-> >>>
-> >>> This change adds necessary support for the above design.
-> >>>
-> >>> Changes in v1:
-> >>> - Few nits (Doug, Dmitry)
-> >>> - Restrict sub-block flush programming to dpu_hw_ctl file (Dmitry)
-> >>>
-> >>> Changes in v2:
-> >>> - Move the address offset to flush macro (Dmitry)
-> >>> - Seperate ops for the sub block flush (Dmitry)
-> >>>
-> >>> Changes in v3:
-> >>> - Reuse the DPU_DSPP_xx enum instead of a new one (Dmitry)
-> >>>
-> >>> Changes in v4:
-> >>> - Use shorter version for unsigned int (Stephen)
-> >>>
-> >>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>> ---
-> >>>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c       |  2 +-
-> >>>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  5 +++-
-> >>> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  4 +++
-> >>>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c     | 35
-> >++++++++++++++++++++++++--
-> >>>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h     | 10 ++++++--
-> >>>  5 files changed, 50 insertions(+), 6 deletions(-)
-> >>
-> >>Breadcrumbs: though this is tagged in the subject as v5 I think the
-> >>newest version is actually "resend v4" [1] which just fixes the
-> >>Signed-off-by.
-> >
-> >Not to mention that v5 misses the S-o-B tag.
-> >
-> >>
-> >>[1]
-> >>https://lore.kernel.org/r/1663825463-6715-1-git-send-email-quic_kalyant
-> >>@quicinc.com
-> >
-> Latest one is https://lore.kernel.org/r/1663825463-6715-1-git-send-email-=
-quic_kalyant@quicinc.com that I last posted.
-> Don=E2=80=99t recollect on why tag was marked as v5. To avoid confusion, =
-shall I resend it again ?
+> I propose to try to bisect it to specific commit in Linux kernel.
+Hi Krzysztof,
 
-Currently I see v5 and after that comes a resend of v4.
+thanks for a suggestion, that's what I do for a non-embedded kernel (e.g.
+x86_64, ppc64le, or even aarch64 used on server), because these works on
+defconfig. But on qcom bullhead and angler devices, last few months I've come
+across to few broken boots, although some of them were regressions others
+depends a lot on particular config.  And since last 2 or 3 kernel releases it
+does not even boot on defconfig. It's quite frustrating to bisect with cross
+compilation (takes time) to realize that it boots with custom config. Last time
+it took a week and I tried to find what actually caused phone reset,
+unsuccessfully. That's why I'm asking before wasting more time.
 
-So, please send v6 with all the tags being present, no y@ in the
-msg-id/in-reply-to/etc.
+Of course with no suggestion I there is no other option than to do
+bisecting again.
 
 
---=20
-With best wishes
-Dmitry
+Kind regards,
+Petr
+
+> Best regards,
+> Krzysztof
+>
