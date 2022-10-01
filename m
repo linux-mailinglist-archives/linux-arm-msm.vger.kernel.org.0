@@ -2,100 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FB455F1EEA
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 21:08:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9564A5F1F15
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 22:02:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229664AbiJATIr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Oct 2022 15:08:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33576 "EHLO
+        id S229547AbiJAUCu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Oct 2022 16:02:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229702AbiJATIg (ORCPT
+        with ESMTP id S229511AbiJAUCs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Oct 2022 15:08:36 -0400
+        Sat, 1 Oct 2022 16:02:48 -0400
 Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 407B83A4BA;
-        Sat,  1 Oct 2022 12:08:33 -0700 (PDT)
-Received: from localhost.localdomain (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1CCA286C4;
+        Sat,  1 Oct 2022 13:02:47 -0700 (PDT)
+Received: from [192.168.1.101] (95.49.31.201.neoplus.adsl.tpnet.pl [95.49.31.201])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id A30C02037E;
-        Sat,  1 Oct 2022 21:08:31 +0200 (CEST)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Javier Martinez Canillas <javierm@redhat.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 5/5] drm/dsc: Prevent negative BPG offsets from shadowing adjacent bitfields
-Date:   Sat,  1 Oct 2022 21:08:07 +0200
-Message-Id: <20221001190807.358691-6-marijn.suijten@somainline.org>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20221001190807.358691-1-marijn.suijten@somainline.org>
-References: <20221001190807.358691-1-marijn.suijten@somainline.org>
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 857BD200C1;
+        Sat,  1 Oct 2022 22:02:45 +0200 (CEST)
+Message-ID: <ce228356-67ee-01cc-3ea7-cea16a548d52@somainline.org>
+Date:   Sat, 1 Oct 2022 22:02:44 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH 1/8] arm64: dts: qcom: sdm845-tama: Add display nodes
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        jamipkettunen@somainline.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220930191049.123256-1-konrad.dybcio@somainline.org>
+ <20220930191049.123256-2-konrad.dybcio@somainline.org>
+ <20221001145457.yvy5swfqmzothhy7@SoMainline.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20221001145457.yvy5swfqmzothhy7@SoMainline.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-msm's dsi_host specifies negative BPG offsets which fill the full 8 bits
-of a char thanks to two's complement: this however results in those bits
-bleeding into the next parameter when the field is only expected to
-contain 6-bit wide values.
-As a consequence random slices appear corrupted on-screen (tested on a
-Sony Tama Akatsuki device with sdm845).
 
-Use AND operators to limit all values that constitute the RC Range
-parameter fields to their expected size.
 
-Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
----
- drivers/gpu/drm/display/drm_dsc_helper.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+On 1.10.2022 16:54, Marijn Suijten wrote:
+> On 2022-09-30 21:10:42, Konrad Dybcio wrote:
+>> Add required nodes to support display on XZ2/XZ2c. XZ3 has a
+>> different power rail setup and needs to be handled separately.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+>> ---
+>>  .../qcom/sdm845-sony-xperia-tama-akari.dts    |  4 +
+>>  .../qcom/sdm845-sony-xperia-tama-akatsuki.dts | 44 ++++++++-
+>>  .../qcom/sdm845-sony-xperia-tama-apollo.dts   |  6 ++
+>>  .../dts/qcom/sdm845-sony-xperia-tama.dtsi     | 96 +++++++++++++++++++
+>>  4 files changed, 149 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dts b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dts
+>> index 34f84f1f1eb4..d97b7f1e7140 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dts
+>> @@ -11,3 +11,7 @@ / {
+>>  	model = "Sony Xperia XZ2";
+>>  	compatible = "sony,akari-row", "qcom,sdm845";
+>>  };
+>> +
+>> +&panel {
+>> +	compatible = "sony,td4353-jdi-tama";
+>> +};
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
+>> index 2f5e12deaada..2a16305ac5da 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts
+>> @@ -10,9 +10,51 @@
+>>  / {
+>>  	model = "Sony Xperia XZ3";
+>>  	compatible = "sony,akatsuki-row", "qcom,sdm845";
+>> +
+>> +	/* Fixed DCDC for the OLED panel */
+>> +	ts_vddio_supply: ts-vddio-regulator {
+>> +		compatible = "regulator-fixed";
+>> +		regulator-name = "ts_vddio";
+>> +
+>> +		regulator-min-microvolt = <1840000>;
+>> +		regulator-max-microvolt = <1840000>;
+>> +
+>> +		gpio = <&tlmm 133 GPIO_ACTIVE_HIGH>;
+>> +		enable-active-high;
+>> +		regulator-boot-on;
+>> +	};
+>> +};
+>> +
+>> +&ibb {
+>> +	status = "disabled";
+>> +};
+>> +
+>> +&lab {
+>> +	status = "disabled";
+>> +};
+>> +
+>> +&panel {
+>> +	/* Akatsuki uses an OLED panel. */
+>> +	/delete-property/ backlight;
+>> +	/delete-property/ vsp-supply;
+>> +	/delete-property/ vsn-supply;
+>> +	/delete-property/ treset-gpios;
+> 
+> This looks to have been a last-minute rename to
+> 
+>     touch-reset-gpios
+Yep!
 
-diff --git a/drivers/gpu/drm/display/drm_dsc_helper.c b/drivers/gpu/drm/display/drm_dsc_helper.c
-index c869c6e51e2b..2e7ef242685d 100644
---- a/drivers/gpu/drm/display/drm_dsc_helper.c
-+++ b/drivers/gpu/drm/display/drm_dsc_helper.c
-@@ -243,11 +243,11 @@ void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_payload,
- 	 */
- 	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
- 		pps_payload->rc_range_parameters[i] =
--			cpu_to_be16((dsc_cfg->rc_range_params[i].range_min_qp <<
-+			cpu_to_be16(((dsc_cfg->rc_range_params[i].range_min_qp & 0x1f) <<
- 				     DSC_PPS_RC_RANGE_MINQP_SHIFT) |
--				    (dsc_cfg->rc_range_params[i].range_max_qp <<
-+				    ((dsc_cfg->rc_range_params[i].range_max_qp & 0x1f) <<
- 				     DSC_PPS_RC_RANGE_MAXQP_SHIFT) |
--				    (dsc_cfg->rc_range_params[i].range_bpg_offset));
-+				    (dsc_cfg->rc_range_params[i].range_bpg_offset & 0x3f));
- 	}
- 
- 	/* PPS 88 */
--- 
-2.37.3
-
+Konrad
+> 
+>> +};
+>> +
+>> +&pmi8998_wled {
+>> +	status = "disabled";
+>> +};
+>> +
+>> +&tlmm {
+>> +	ts_vddio_en: ts-vddio-en {
+>> +		pins = "gpio133";
+>> +		function = "gpio";
+>> +		drive-strength = <2>;
+>> +		bias-disable;
+>> +		output-high;
+>> +	};
+>>  };
+>>  
+>> -/* For the future: WLED + LAB/IBB/OLEDB are not used on Akatsuki */
+>>  &vreg_l14a_1p8 {
+>>  	regulator-min-microvolt = <1840000>;
+>>  	regulator-max-microvolt = <1840000>;
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-apollo.dts b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-apollo.dts
+>> index c9e62c72f60e..cd056f78070f 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-apollo.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-apollo.dts
+>> @@ -11,3 +11,9 @@ / {
+>>  	model = "Sony Xperia XZ2 Compact";
+>>  	compatible = "sony,apollo-row", "qcom,sdm845";
+>>  };
+>> +
+>> +&panel {
+>> +	compatible = "sony,td4353-jdi-tama";
+>> +	height-mm = <112>;
+>> +	width-mm = <56>;
+>> +};
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+>> index 51ee42e3c995..ac8eb59ed010 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+>> @@ -326,6 +326,46 @@ vreg_s3c_0p6: smps3 {
+>>  	};
+>>  };
+>>  
+>> +&dsi0 {
+>> +	vdda-supply = <&vreg_l26a_1p2>;
+>> +	status = "okay";
+>> +
+>> +	panel: panel@0 {
+>> +		/* The compatible is assigned in device DTs. */
+>> +		reg = <0>;
+>> +
+>> +		backlight = <&pmi8998_wled>;
+>> +		vddio-supply = <&vreg_l14a_1p8>;
+>> +		vsp-supply = <&lab>;
+>> +		vsn-supply = <&ibb>;
+>> +		panel-reset-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
+>> +		touch-reset-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
+> 
+> Here.
+> 
+> - Marijn
