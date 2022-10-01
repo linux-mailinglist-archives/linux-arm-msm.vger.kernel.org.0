@@ -2,164 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 562535F193B
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 05:09:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F3AA5F1979
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 05:23:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233008AbiJADJg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 23:09:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45304 "EHLO
+        id S233279AbiJADXb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 23:23:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232633AbiJADHy (ORCPT
+        with ESMTP id S233067AbiJADWo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 23:07:54 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 177A1E0075;
-        Fri, 30 Sep 2022 20:07:24 -0700 (PDT)
+        Fri, 30 Sep 2022 23:22:44 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80959BC908;
+        Fri, 30 Sep 2022 20:15:22 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id b23so5752074pfp.9;
+        Fri, 30 Sep 2022 20:15:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1664593644; x=1696129644;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=rlXZnS5UWrx9Pr783moEQVaT/CqHgzz8m0/A+8Fj5AA=;
-  b=hkExF6XdVrLq5VtMZmw2JBpehlAEdbj4IB/cCfRcoBZ4fq38/9FE/6GQ
-   TrveBZWRYZBAP52+JN0GyovY8u1t1iijtuFFPQPE/24d7qr39AIjLRSHD
-   90IfjTUL72SG6uIzaxw9+0XN8gKhlVk2P0/VxKOGLu07HsYbpDKhL9aCI
-   0=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 30 Sep 2022 20:07:18 -0700
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Sep 2022 20:07:18 -0700
-Received: from hu-molvera-sd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Fri, 30 Sep 2022 20:07:17 -0700
-From:   Melody Olvera <quic_molvera@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Melody Olvera <quic_molvera@quicinc.com>
-Subject: [PATCH 19/19] arm64: dts: qcom: qdru1000: Add additional UART instances
-Date:   Fri, 30 Sep 2022 20:06:56 -0700
-Message-ID: <20221001030656.29365-20-quic_molvera@quicinc.com>
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=s85Rt60Mfq98bn/SHpgXXXzD93J670OfD27PDsE2EQE=;
+        b=OczrCJnpw4f612BkkHjpb6nxbr5u2LjcvKagDHPpjFvXhIITEU0Iey8bxPAtG+jY2V
+         loHbLeoYhjftRmMvO8BeYfdSXjgjKXZNQwOT13SaNP4SLrtoIrTMQF+jGZUQ7y7vNB+4
+         ixrM81Hq13Yk0oJiv53HhrIw4ECmP38j4gQshlwxSCyyDw6ZSNI3cXTVwhZo+neEPuSP
+         rlMFMuGuw4C9QGf1K+IYtmAKZ0lUFtwYIeJ8iPRrvrKj2NfrGnSE0Llgdnfgx5V1h+tZ
+         bmE2AmvFaGVqWgQBWWq289DvKDd1nqQW6Q5sxpmQ0L1ZpuuBLVzhBEt+Ac0wDy6bBAm8
+         dvmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=s85Rt60Mfq98bn/SHpgXXXzD93J670OfD27PDsE2EQE=;
+        b=ObsBUKhUGxi9h2VePk3E60mde3fjed4nUaPZ00m0tAbL1C+e701NZvRJuthdZu7ntk
+         DG4Q8isXHjjFSGWz+G9W92xRB9/1E/o5ItBmXj8hed7oYfpc7uccfuovE43s+i+H6SxL
+         l3IYPweDxe+dbjrzPKPBFbDUJBcEg0Ta/ya4N736Iai4dlsGB+hB0czCz/KWy9ZEoIfE
+         YkHRT/QwAjZNyUzURHA7XLwkmjvSUmD4wNa5Op9bZhiO8wOKQezMRx/0BYIYosRyM3Iu
+         8+bJyCoVI0ArrH5giehxJWMeXKI2q+EFmNhX/G6ifNcuXvJzT5pnnUiff5ja5yKtt1NA
+         104w==
+X-Gm-Message-State: ACrzQf0WgC2xjHhrRBuY/IkubmQ5637aHzshCQKbEhFnaj+x91JacVoe
+        aLrxNBpmK1GjQBIN8AjBaoCbRge/5/UPhrN2
+X-Google-Smtp-Source: AMsMyM6I0UsX6fFsD60St3/A+1+4GzgAAD/xDqa7v5cxn8QZrs4ASfUvHi/1vDy2A3nOVqE8EGS1yg==
+X-Received: by 2002:a63:2a02:0:b0:42b:2711:d534 with SMTP id q2-20020a632a02000000b0042b2711d534mr10078932pgq.176.1664594036934;
+        Fri, 30 Sep 2022 20:13:56 -0700 (PDT)
+Received: from skynet-linux.local ([2406:7400:61:5d7c:3fe4:8f6d:b1b6:f2bf])
+        by smtp.googlemail.com with ESMTPSA id cp1-20020a170902e78100b00172a567d910sm2627371plb.289.2022.09.30.20.13.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Sep 2022 20:13:56 -0700 (PDT)
+From:   Sireesh Kodali <sireeshkodali1@gmail.com>
+To:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, linux-kernel@vger.kernel.org
+Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        Sireesh Kodali <sireeshkodali1@gmail.com>
+Subject: [PATCH v6 0/5] remoteproc: qcom: Add support for pronto-v3
+Date:   Sat,  1 Oct 2022 08:43:39 +0530
+Message-Id: <20221001031345.31293-1-sireeshkodali1@gmail.com>
 X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20221001030656.29365-1-quic_molvera@quicinc.com>
-References: <20221001030656.29365-1-quic_molvera@quicinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add remaining UART instances to the QUP nodes for the QDU1000
-and QRU1000 SoCs.
+This patch series adds support for the pronto-v3 remoteproc found on the
+MSM8953 platform. It also converts the documentation for wcnss to YAML.
 
-Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qdru1000.dtsi | 57 +++++++++++++++++++++++++-
- 1 file changed, 56 insertions(+), 1 deletion(-)
+Changes since v5:
+ * Fixed memory corruption in driver patch
+ * Slightly improved driver patch's commit message
 
-diff --git a/arch/arm64/boot/dts/qcom/qdru1000.dtsi b/arch/arm64/boot/dts/qcom/qdru1000.dtsi
-index 930bb8c8ba5b..21938e3a613e 100644
---- a/arch/arm64/boot/dts/qcom/qdru1000.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qdru1000.dtsi
-@@ -290,6 +290,19 @@ qupv3_id_0: geniqup@9c0000 {
- 			ranges;
- 			status = "disabled";
- 
-+			uart0: serial@980000 {
-+				compatible = "qcom,geni-uart";
-+				reg = <0x0 0x980000 0x0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_uart0_default>;
-+				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			uart7: serial@99c000 {
- 				compatible = "qcom,geni-debug-uart";
- 				reg = <0x0 0x99c000 0x0 0x4000>;
-@@ -569,6 +582,33 @@ qupv3_id_1: geniqup@ac0000 {
- 			ranges;
- 			status = "disabled";
- 
-+			uart8: serial@a80000 {
-+				compatible = "qcom,geni-uart";
-+				reg = <0x0 0xa80000 0x0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S0_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_uart8_default>;
-+				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
-+			uart13: serial@a94000 {
-+				compatible = "qcom,geni-uart";
-+				reg = <0x0 0xa94000 0x0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_uart13_default>;
-+				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
-+
- 			i2c9: i2c@a84000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0x0 0xa84000 0x0 0x4000>;
-@@ -912,7 +952,12 @@ tlmm: pinctrl@f000000 {
- 			gpio-ranges = <&tlmm 0 0 151>;
- 			wakeup-parent = <&pdc>;
- 
--			qup_uart7_default: qup-uart7-default {
-+			qup_uart0_default: qup-uart0-default {
-+				pins = "gpio6", "gpio7", "gpio8", "gpio9";
-+				function = "qup0_se0_l0";
-+			};
-+
-+			qup_uart7_default: qup-uart3-default {
- 				tx {
- 					pins = "gpio134";
- 					function = "qup0_se7_l2";
-@@ -928,6 +973,16 @@ rx {
- 				};
- 			};
- 
-+			qup_uart8_default: qup-uart8-default {
-+				pins = "gpio18", "gpio19", "gpio20", "gpio21";
-+				function = "qup1_se0_l0";
-+			};
-+
-+			qup_uart13_default: qup-uart13-default {
-+				pins = "gpio30", "gpio31", "gpio32", "gpio33";
-+				function = "qup1_se5_l0";
-+			};
-+
- 			qup_i2c1_data_clk: qup-i2c1-data-clk {
- 				pins = "gpio10", "gpio11";
- 				function = "qup0_se1_l0";
+Link to v5: https://lkml.org/lkml/2022/9/29/19
+
+Sireesh Kodali (4):
+  dt-bindings: remoteproc: qcom: Convert wcnss documentation to YAML
+  dt-bindings: remoteproc: qcom: wcnss: Add qcom,pronto compatible
+  dt-bindings: remoteproc: qcom: wcnss: Add compatible for pronto v3
+  dt-bindings: remoteproc: wcnss-pil: Make supplies optionally required
+
+Vladimir Lypak (1):
+  remoteproc: qcom: qcom_wcnss: Add support for pronto-v3
+
+ .../bindings/remoteproc/qcom,wcnss-pil.txt    | 177 -----------
+ .../bindings/remoteproc/qcom,wcnss-pil.yaml   | 294 ++++++++++++++++++
+ drivers/remoteproc/qcom_wcnss.c               |  12 +
+ 3 files changed, 306 insertions(+), 177 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
+ create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
+
 -- 
 2.37.3
 
