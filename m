@@ -2,106 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97F3B5F16E8
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 02:05:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7281F5F18C6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 05:05:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231825AbiJAAF3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 20:05:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43888 "EHLO
+        id S232321AbiJADFS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 23:05:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231843AbiJAAF1 (ORCPT
+        with ESMTP id S231955AbiJADFM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 20:05:27 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3339B20BD6;
-        Fri, 30 Sep 2022 17:05:26 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id t16so6361028ljh.3;
-        Fri, 30 Sep 2022 17:05:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=K8ClR6wuWMGu2q19G/42rzSQpT6MwqxM3bOaaClXmSo=;
-        b=HEbCLKvFVeKu5CMnEwqMkqOzuvxQNiPCNut86l3UDbp7XZLk3GqlDm0cg9QG9tjk0n
-         xXjsVGcRfxzr8sDBeegxoJbddwfGahcI2CkZh1SA01EfaAn3izbC3ORzTf9gYBQWxi2F
-         aN0Jb2N84awx04gDuS6YXtTTO6q0h5C3Orf60ipbV6THEtC8jo55NOqhGLqpaBdN4MFv
-         5KqOGTSDrddNjf8OdiblraV1zUs2sJtRiAB68C5cNdRW3WD02r4eAnZ2BDAR7vhLCdo7
-         zE6eE42cNAw5mIjVwgUDHeOM8bNOP0pE7COT9L5cTvVa42D14gwj8e0lhkIAs1zcfwPE
-         N/ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=K8ClR6wuWMGu2q19G/42rzSQpT6MwqxM3bOaaClXmSo=;
-        b=m+tESQNZqOoK3MQDV6qi2QShc/BU3RmtI+hFfFnx/iSdKf8W1jATT/jpbklNGtKLgB
-         uHozmF7n50VZda3FFt6YAgUo3ypPtGYd2MLOx0k6yDzKQ2iVE0kC0ddZSzYj+905EbJl
-         spz2N/8TdXgsqe5Z+mL4+gHHZn+t04LW06Xc09yeEbJXXWYjReOR+nCrDUhJEPvt/Rum
-         mHEMz9tU/teRNTjy8DfxXDCORYXS/g4bZ+1Q3zXcZlTfIlre2OkBRKE3DfAqQ7as7Vb6
-         1d6jabxTM4lRGTU6MZoHv9WuabiK/sztPJtx56rQzeQRqCa+yCd1zjDw40Dpbh4KAQ2r
-         DAjg==
-X-Gm-Message-State: ACrzQf3OXOBy2X/AgmJhfyHzk2XHokbOjXdhxEUtNRF5Qy2raKJB4mxg
-        qlHw6gZOYT418UD4cEH047YrmEpEN7tbgaGfWJc=
-X-Google-Smtp-Source: AMsMyM5o5ymhFKVExBFI/Oa/fsktjvy/S8Csm27p4UBP94WMGV8nOHJ127p2bk/1M9WXDMNxqChgCcbKnh2VC7by4ZM=
-X-Received: by 2002:a05:651c:88a:b0:26c:81e1:57dc with SMTP id
- d10-20020a05651c088a00b0026c81e157dcmr3869687ljq.236.1664582724307; Fri, 30
- Sep 2022 17:05:24 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220930192039.240486-1-krzysztof.kozlowski@linaro.org> <20220930192039.240486-3-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220930192039.240486-3-krzysztof.kozlowski@linaro.org>
-From:   Molly Sophia <mollysophia379@gmail.com>
-Date:   Sat, 1 Oct 2022 08:05:11 +0800
-Message-ID: <CAK0UmJCMcva6WowBosEvdqNfBnF-372n=nhsFNZDwUYzBMXsWQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sdm845-xiaomi-polaris: fix codec
- pin conf name
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Fri, 30 Sep 2022 23:05:12 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BF533844A;
+        Fri, 30 Sep 2022 20:04:54 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2912oaNN003721;
+        Sat, 1 Oct 2022 03:04:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=igv6niMS2DbBmnf0TO0/yZyVq6ba24oDDUVUV0BoS0o=;
+ b=DScxxCg3U0hDSS8q3E7dpQxTWia1w/n/G0SJI5yhdtewD6mug2CVgc5LgBFugQd/C31s
+ YvJUWfBfBymvwTpFXmVfeGZcxaBV118zJrl4jk1HDMsf1wUNtICkqanAOGYCzOk1SLta
+ jIDwWJhLNRssNomviwEunpWYvDBnGKZ7lCkj/BsN9Adv2Btk/XzQo8cA+JtPUjzIhmjS
+ Eqiqeqr+AyavkSubRL/BhC4dBOTtS39ylqsCdXNM7bFx2C18iWUB+FyEDAOe5vCugsYD
+ DgZe1HgGUVFQGuu7vhDOxeFazie9IKlJXyre3ubHoq7IIDDtnMt0uFE2BEkueU6N04um rA== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jx70grpfe-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 01 Oct 2022 03:04:33 +0000
+Received: from nasanex01b.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29134W2W029604
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 1 Oct 2022 03:04:32 GMT
+Received: from hu-molvera-sd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Fri, 30 Sep 2022 20:04:32 -0700
+From:   Melody Olvera <quic_molvera@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>, Vinod Koul <vkoul@kernel.org>,
-        Xilin Wu <wuxilin123@gmail.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Melody Olvera <quic_molvera@quicinc.com>
+Subject: [PATCH 0/5] clk: qcom: Add clocks for the QDU1000 and QRU1000 SoCs
+Date:   Fri, 30 Sep 2022 20:03:58 -0700
+Message-ID: <20221001030403.27659-1-quic_molvera@quicinc.com>
+X-Mailer: git-send-email 2.37.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: hMmyXbbYZiuXI_tEk7tPidP7-7iks5rJ
+X-Proofpoint-ORIG-GUID: hMmyXbbYZiuXI_tEk7tPidP7-7iks5rJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-10-01_02,2022-09-29_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1011 malwarescore=0 mlxlogscore=873 adultscore=0 impostorscore=0
+ bulkscore=0 phishscore=0 spamscore=0 suspectscore=0 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210010016
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Tested-by: Molly Sophia <mollysophia379@gmail.com>
+This series adds the GCC, RPMh, and PDC clock support required for the
+QDU1000 and QRU1000 SoCs along with the devicetree bindings for them.
 
-On Sat, Oct 1, 2022 at 3:20 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> Fix typo in the codec's pin name to be configured.  Mismatched name
-> caused the pin configuration to be ignored.
->
-> Fixes: be497abe19bf ("arm64: dts: qcom: Add support for Xiaomi Mi Mix2s")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-> index afc17e4d403f..f98259489679 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-> @@ -628,7 +628,7 @@ sde_dsi_suspend: sde-dsi-suspend {
->         };
->
->         wcd_intr_default: wcd-intr-default {
-> -               pins = "goui54";
-> +               pins = "gpio54";
->                 function = "gpio";
->                 input-enable;
->                 bias-pull-down;
-> --
-> 2.34.1
->
+The Qualcomm Technologies, Inc. Distributed Unit 1000 and Radio Unit
+1000 are new SoCs meant for enabling Open RAN solutions. See more at
+https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/documents/qualcomm_5g_ran_platforms_product_brief.pdf
+
+This patchset is based on the YAML conversion patch [1] submitted already.
+
+[1] https://lore.kernel.org/r/20220103074348.6039-1-luca.weiss@fairphone.com
+
+Melody Olvera (4):
+  dt-bindings: clock: Add QDU1000 and QRU1000 GCC clock bindings
+  dt-bindings: clock: Add RPMHCC bindings for QDU1000 and QRU1000
+  clk: qcom: Add support for QDU1000 and QRU1000 RPMh clocks
+  dt-bindings: clock: Introduce pdc bindings for QDU1000 and QRU1000
+
+Taniya Das (1):
+  clk: qcom: Add QDU1000 and QRU1000 GCC support
+
+ .../bindings/clock/qcom,gcc-qdru1000.yaml     |   74 +
+ .../bindings/clock/qcom,rpmhcc.yaml           |    2 +
+ .../interrupt-controller/qcom,pdc.yaml        |    2 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-branch.c                 |    5 +
+ drivers/clk/qcom/clk-branch.h                 |    2 +
+ drivers/clk/qcom/clk-rpmh.c                   |   14 +
+ drivers/clk/qcom/gcc-qdru1000.c               | 2649 +++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-qdru1000.h |  170 ++
+ 10 files changed, 2927 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-qdru1000.yaml
+ create mode 100644 drivers/clk/qcom/gcc-qdru1000.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-qdru1000.h
+
+
+base-commit: 987a926c1d8a40e4256953b04771fbdb63bc7938
+prerequisite-patch-id: d3a56569439f223ee220dee951400e18983fee3e
+-- 
+2.37.3
+
