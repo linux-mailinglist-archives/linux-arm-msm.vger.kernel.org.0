@@ -2,74 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 479FB5F1B5D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 11:34:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AC985F1B7C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 11:40:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229544AbiJAJeT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Oct 2022 05:34:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52948 "EHLO
+        id S229608AbiJAJko (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Oct 2022 05:40:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229538AbiJAJeR (ORCPT
+        with ESMTP id S229615AbiJAJkl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Oct 2022 05:34:17 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A70576113D
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Oct 2022 02:34:15 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id z4so10230973lft.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Oct 2022 02:34:15 -0700 (PDT)
+        Sat, 1 Oct 2022 05:40:41 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3728D4457F
+        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Oct 2022 02:40:34 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id q17so7105655lji.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Oct 2022 02:40:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=P7Jq51tyMHoeZHrZDGPWEeNBcJqEDxElbAOOSKcyPOM=;
-        b=T42LMASoIsUMext9gElFhOnDWe1SP63HoZqV2Wp8sZsAGHiwShbJlCELgEt3h0qonJ
-         GnBJEvXzb4NZwcRlQiZc9JYufsBCCD6Km86P9keyYHcIEoIt8Dx/jYOXTZJ60gmLa0AZ
-         7nhT1CtyP+UejXCYWM0ubN1E8ynbSx2QADzpQevnHLX+KfpYB/GMySuDqFyxOZj+BUyG
-         mjUZIlbiAWUdNmjjRvJeUXmDHT1mQfael/Mi3kg21O8fVRDnXgl4pyki+W9Z5R8wtlsF
-         E6lEppVmZSKCASRLtm1LEb1CfCUsznexkuqnrmJ8kl7z0CJpIl/Ohq0jYKDyEvI8UJit
-         D4qg==
+        bh=NebNzeTAVEp7CE6tFGPFunqG+0G/HzUEgf53nY4lSIE=;
+        b=vSkY4K5Xfe6Oij89OPIvlgxqqQJzUR06AundST6WuAPp5lAZAHTDP5aJHrDsZ1Lx1G
+         UyOJ7A3d1W7Cyl645Ao41H2Rbsx0sdRJA5UckhqQ1R5S9RVr+KXShJyFo6yV5f178p5w
+         RL/820eF3JNLta0mg6aTVq+sC575+7TDy9FVB8tel+eLBT1JKbV902jVy24S0Y/N+3/D
+         Klh47gW4zUC0F3Ud9ORdJRxYCqVyKpVX/hQhwZCQI0/KDHNm58JztO4xpUxGBcrlK75y
+         A1lzAvmB9mEIn+9ICBpiq9jb4e3ghjucMuksmVhtwaNcthJvjRi2reUDicxZMRUuFwrd
+         9nHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=P7Jq51tyMHoeZHrZDGPWEeNBcJqEDxElbAOOSKcyPOM=;
-        b=7qz9t9cP0R+v1ZAqvbnIgyf0hzijudAaXboG2dK2q4Aleuwn/k6OYklXQVwZlxGhki
-         g30ol7eY4zqm0JTo6JO16Wr4KZKB22WJaPmBl9whlaUy/bJFXOIAIO+FI0kzYZftMKFy
-         HzR71mzKZRexBSJTspt0wxIF/M3oD+OMkSdWe5WNLo5U+y/cqalHU95xab7NYg8Q1GQs
-         lq6KSa/SlEKi8HZbUgoAJUnB/+8bEEWoyMil3+9guT0GRKecTDolOQO7t5Skhh1Wc9O6
-         F9C/UI5fMPJqa7LbTNfmnROmI/Z+gJogJz2WFqfcFcR9KIxiQYEgg3nFaIDZjCmIwyu+
-         n5WA==
-X-Gm-Message-State: ACrzQf22jXOU9jhFXdC+eBNFAcuj0wXrZbm3pF9RRSTpHV2Im6re7cW0
-        futp+/hZWzHC+UfQPAHmuaUjVA==
-X-Google-Smtp-Source: AMsMyM5CTnn56Q/hGDGaxBj6XigCif4H2Aa5nvxOQrL6400LmJ5o9jklu/Dp+noLYDYBQw4mPy4X3A==
-X-Received: by 2002:ac2:442d:0:b0:4a2:23e2:cf59 with SMTP id w13-20020ac2442d000000b004a223e2cf59mr687844lfl.650.1664616853741;
-        Sat, 01 Oct 2022 02:34:13 -0700 (PDT)
+        bh=NebNzeTAVEp7CE6tFGPFunqG+0G/HzUEgf53nY4lSIE=;
+        b=C204KYXwWLtQSf3V4JMK1U82CrH2WSzWVM3c7NupwB/MbKLrkR3QYRtAuhbypAu1Pz
+         aGpMVQjJRzcDg/5YbJeLCebILDkzGERM0O0pLk7aFD9JONu+ym7kGG9cT6z5snc5IvLH
+         ctEr+0n5BYAswDUkRBihLCOSZaJS8f2bXshy70HzSsrAm3BOPivzixsZKSKtzjw3kjNR
+         QnR5yAzRJ05YZ5+i8sb+lMntUVnJ0LRdSR9RFqcNgPru5ONOg35cTjsACbIXyh7vHqXJ
+         XrHF6qijboYabqoCfw/VuJkXBTcRK2hJBtu3KV9mNeDK/hgv20EsnGlPeKJm3amfY9/J
+         YHEw==
+X-Gm-Message-State: ACrzQf0udZk1zR+4Bk/SYPwRE4QHErpNkSH6PDooaAHZcdK/6CTbL44x
+        c41DNWKMZ6+Avejn1IMV+Qr9kg==
+X-Google-Smtp-Source: AMsMyM53ZwQ4w5c04teeXRq1TuZIiYrQFnkVu1piGvNVGGxXU/MmaQy98iKvPoKL3mz772Xnc/hMTA==
+X-Received: by 2002:a05:651c:510:b0:26d:ca05:c4ee with SMTP id o16-20020a05651c051000b0026dca05c4eemr973746ljp.93.1664617232913;
+        Sat, 01 Oct 2022 02:40:32 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id g22-20020a19e056000000b004a0232613desm702729lfj.205.2022.10.01.02.34.12
+        by smtp.gmail.com with ESMTPSA id n5-20020a0565120ac500b00492d7a7b4e3sm711730lfu.4.2022.10.01.02.40.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Oct 2022 02:34:13 -0700 (PDT)
-Message-ID: <084e6f2f-0976-85c8-e27c-b5ed7722d396@linaro.org>
-Date:   Sat, 1 Oct 2022 11:34:12 +0200
+        Sat, 01 Oct 2022 02:40:32 -0700 (PDT)
+Message-ID: <b3b2dc79-30cc-a768-e7bb-d5e8ff3f6ba0@linaro.org>
+Date:   Sat, 1 Oct 2022 11:40:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Subject: Re: [PATCH 0/5] Add misc support for QDU1000/QRU1000 SoCs
+Subject: Re: [PATCH 2/2] ARM: dts: qcom: mdm9615: drop unit ids from PMIC
+ nodes
 Content-Language: en-US
-To:     Melody Olvera <quic_molvera@quicinc.com>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221001030641.29354-1-quic_molvera@quicinc.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220930212052.894834-1-dmitry.baryshkov@linaro.org>
+ <20220930212052.894834-2-dmitry.baryshkov@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221001030641.29354-1-quic_molvera@quicinc.com>
+In-Reply-To: <20220930212052.894834-2-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,18 +81,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/10/2022 05:06, Melody Olvera wrote:
-> This series firmware, SoC, rpmpd, tz-log, and mmc bindings as well as
-> pmic, rpmpd, and socinfo support for QDU1000 and QRU1000 SoCs.
+On 30/09/2022 23:20, Dmitry Baryshkov wrote:
+> On MDM9615 the PMICs are connected using SSBI devices, which do not have
+> any addressing scheme. Drop the unused unit ids from PMIC device nodes.
 > 
-> This patchset is based off of [1] and [2] YAML conversion patches.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  arch/arm/boot/dts/qcom-mdm9615.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom-mdm9615.dtsi
+> index b47c86412de2..bb17a57a2b90 100644
+> --- a/arch/arm/boot/dts/qcom-mdm9615.dtsi
+> +++ b/arch/arm/boot/dts/qcom-mdm9615.dtsi
+> @@ -283,7 +283,7 @@ qcom,ssbi@500000 {
+>  			reg = <0x500000 0x1000>;
+>  			qcom,controller-type = "pmic-arbiter";
+>  
+> -			pmicintc: pmic@0 {
+> +			pmicintc: pmic {
 
-All of your patchsets were sent to wrong Bjorn's address. This means
-either you based on mainline (which is reasonable but for some reason
-address was not fixed in mainline...) or on some older linux-next.
-
-I propose to rebase on recent linux-next, so you will get proper Bjorn's
-email.
+I think several other platforms, also with PMIC over SSBI, have the same
+problem. If that's correct, can you fix them in the same patchset?
 
 Best regards,
 Krzysztof
