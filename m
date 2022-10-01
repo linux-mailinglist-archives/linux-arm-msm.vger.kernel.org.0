@@ -2,227 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58D415F1F6E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 22:37:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D2565F1F9E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Oct 2022 23:07:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229610AbiJAUhW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Oct 2022 16:37:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55588 "EHLO
+        id S229624AbiJAVHe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Oct 2022 17:07:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbiJAUhV (ORCPT
+        with ESMTP id S229495AbiJAVHd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Oct 2022 16:37:21 -0400
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 879D21C92A;
-        Sat,  1 Oct 2022 13:37:20 -0700 (PDT)
-Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 52146200D5;
-        Sat,  1 Oct 2022 22:37:18 +0200 (CEST)
-Date:   Sat, 1 Oct 2022 22:37:17 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
+        Sat, 1 Oct 2022 17:07:33 -0400
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8EA460F8;
+        Sat,  1 Oct 2022 14:07:30 -0700 (PDT)
+Received: by mail-il1-x133.google.com with SMTP id h18so3767175ilh.3;
+        Sat, 01 Oct 2022 14:07:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=uUNFDcaL8MebU4GzPEEc+siVKONQVYVPRFWvQj9K+LQ=;
+        b=AV432ZPUJCVbB+dMQHMsJuJzzx1dVrD+0/AroUEfsyP21ZAS+GzRnTrQctuVK2aYez
+         aP6LMsElY/rKRQiH6i2sW2vrRKysMgO0yUP/Ds7sJZZICEm21Ts6JlCh84EZowZ1snQ5
+         M//lmKXQRGEPNTygX5pFFK23DWbV4SRCA4FfhplrkYe+EhDkaJn9GqK0a1+zUl5rxkTU
+         iA4oI+QXtUtiZB+vhR6UpDE2UApadaoUEQgqveFsGRhTbr5ctXspi9zkMNcuyzU6FrBe
+         aINJx6e+fqv8eqhMvbEBDtCODm733l+ZqMUknWTVG7mWFQOi2Mn17JsmJurAWuPLev8M
+         /mNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=uUNFDcaL8MebU4GzPEEc+siVKONQVYVPRFWvQj9K+LQ=;
+        b=e9VzB6jLxUOaFyYtAhV92prpYEd6Pp4jyqh/nqIyiOu29J/6sUSHqHxLbzVTI2EP7I
+         pLsser+BQs4fXTcVWrLuqB8OsqqdvI3PXzHW4dp7k+ZFlTs+1YpWxfjr7+pZZtUmFptb
+         BHFxSSUUFy6NaLFQQ/Es1uvaxBbjUqNKsnxiPVnUBEhifB7F2nlJ0VMuFnkG1g65mIwN
+         z5HjzHpuGXlh5qQWnYJlrkfZq1lZ5fAqKBCrzRcbxuL8QLXgwL1EYhlclgB155jRnjdM
+         gsPoHyleP4Bnsi8QV9k2wk3NpeiTsM+8Nhz2SJRJHUyFrQN5QT+KXWlWoru6SpF8ET5X
+         LyVQ==
+X-Gm-Message-State: ACrzQf1Bdix5YDpGhMx50cbOxOhZtCucAh21pZqPEtx1iQD9m7MgEB7f
+        ebkrefsrLFCW9oLrvFAQlDjYgAwPaTRmcw==
+X-Google-Smtp-Source: AMsMyM6qMcngEsSewBtYPhXB8P7xqcCr0x/7HnyxqKHnIOmhKaQqLEujxBGsNBg9aDhXd3Er4Mx83g==
+X-Received: by 2002:a05:6e02:1706:b0:2f1:c2ee:7fea with SMTP id u6-20020a056e02170600b002f1c2ee7feamr6927174ill.40.1664658450024;
+        Sat, 01 Oct 2022 14:07:30 -0700 (PDT)
+Received: from localhost ([2607:fea8:a2e2:2d00::1eda])
+        by smtp.gmail.com with UTF8SMTPSA id l31-20020a026a1f000000b0034a58483060sm2369377jac.56.2022.10.01.14.07.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 01 Oct 2022 14:07:29 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Javier Martinez Canillas <javierm@redhat.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Marek Vasut <marex@denx.de>
-Subject: Re: [PATCH 3/5] drm/msm/dsi: Account for DSC's bits_per_pixel having
- 4 fractional bits
-Message-ID: <20221001203717.3cgzlh3xeadk45ia@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Javier Martinez Canillas <javierm@redhat.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Marek Vasut <marex@denx.de>
-References: <20221001190807.358691-1-marijn.suijten@somainline.org>
- <20221001190807.358691-4-marijn.suijten@somainline.org>
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Richard Acayan <mailingradian@gmail.com>,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH v6 0/3] SDM670 Pin Control Driver
+Date:   Sat,  1 Oct 2022 17:07:22 -0400
+Message-Id: <20221001210725.60967-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221001190807.358691-4-marijn.suijten@somainline.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Doing some self-review as these patches accrued some bit-rot while
-waiting to be sent.
+Changes since v5:
+ - remove function requirement in schema
+ - change "-state$" regex to double quotes in schema
+ - drop quotes from qcom-tlmm-state ref in dt schema
 
-On 2022-10-01 21:08:05, Marijn Suijten wrote:
-> drm_dsc_config's bits_per_pixel field holds a fractional value with 4
-> bits, which all panel drivers should adhere to for
-> drm_dsc_pps_payload_pack() to generate a valid payload.  All code in the
-> DSI driver here seems to assume that this field doesn't contain any
-> fractional bits, hence resulting in the wrong values being computed.
-> Since none of the calculations leave any room for fractional bits or
-> seem to indicate any possible area of support, disallow such values
-> altogether.
-> 
-> Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 34 +++++++++++++++++++++++-------
->  1 file changed, 26 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index cb6f2fa11f58..42a5c9776f52 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -847,6 +847,11 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
->  	u32 pkt_per_line;
->  	u32 bytes_in_slice;
->  	u32 eol_byte_num;
-> +	int bpp = dsc->bits_per_pixel >> 4;
+Changes since v4:
+ - accumulate review tag
+ - use --cover-letter
+ - this is effectively a resend
 
-This should have been u16 instead of int.
+Changes since v3:
+ - constrain gpio-reserved-ranges to 1-75 items
+ - proper indentation in dt-bindings example (actually tagged this time
+   instead of an outdated commit)
+ - remove unnecessary commit reference
+ - rename complement_fw_reserved_gpios -> complement_fw_gpio_ranges
 
-> +
-> +	if (dsc->bits_per_pixel & 0xf)
+Changes since v2:
+ - remove quotes from pinctrl.yaml# in dt-bindings
+ - constrain gpio-reserved-ranges to 1-76 items (includes ufs_reset)
+ - indentation in dt-bindings example
+ - cite downstream kernel source
+ - remove MODULE_AUTHOR (most imported pinctrl drivers don't have this)
 
-Should there be a define for this mask?
+Changes since v1:
+ - add a field in msm_pinctrl_soc_data to accomodate the needs of the
+   driver and device dts
+ - apply changes made to existing tlmm dt documentation
+ - add reserved gpios array
+ - rename device tree compat string to qcom,sdm670-tlmm
+ - remove dependency on ACPI
+ - move MODULE_DEVICE_TABLE macro call up
+ - add missing pins (fixes most of the debugfs problems)
+ - move qup0_pins down
+ - add whitespace between UFS_RESET macro and pins array
 
-> +		/* dsi_populate_dsc_params() already caught this case */
-> +		pr_err("DSI does not support fractional bits_per_pixel\n");
+This patch series adds the driver for the Qualcomm Snapdragon 670 TLMM
+(Top-Level Mode Multiplexer) and introduces a new field so that SDM670-
+related device trees can reserve their own gpios.
 
-This file mostly uses pr_err(), but it's probably cleaner to use
-DRM_DEV_ERROR(&msm_host->pdev->dev, ...) even though it's not prevalent
-yet?
+Richard Acayan (3):
+  dt-bindings: pinctrl: qcom: add sdm670 pinctrl
+  pinctrl: qcom: add support for complementary reserved gpios
+  pinctrl: qcom: add sdm670 pinctrl
 
->  
->  	/* first calculate dsc parameters and then program
->  	 * compress mode registers
-> @@ -860,7 +865,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
->  	if (slice_per_intf > dsc->slice_count)
->  		dsc->slice_count = 1;
->  
-> -	bytes_in_slice = DIV_ROUND_UP(dsc->slice_width * dsc->bits_per_pixel, 8);
-> +	bytes_in_slice = DIV_ROUND_UP(dsc->slice_width * bpp, 8);
->  
->  	dsc->slice_chunk_size = bytes_in_slice;
->  
-> @@ -913,6 +918,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->  	u32 va_end = va_start + mode->vdisplay;
->  	u32 hdisplay = mode->hdisplay;
->  	u32 wc;
-> +	int ret;
->  
->  	DBG("");
->  
-> @@ -948,7 +954,9 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->  		/* we do the calculations for dsc parameters here so that
->  		 * panel can use these parameters
->  		 */
-> -		dsi_populate_dsc_params(dsc);
-> +		ret = dsi_populate_dsc_params(dsc);
-> +		if (ret)
-> +			return;
->  
->  		/* Divide the display by 3 but keep back/font porch and
->  		 * pulse width same
-> @@ -1229,6 +1237,10 @@ static int dsi_cmd_dma_add(struct msm_dsi_host *msm_host,
->  	if (packet.size < len)
->  		memset(data + packet.size, 0xff, len - packet.size);
->  
-> +	if (msg->type == MIPI_DSI_PICTURE_PARAMETER_SET)
-> +		print_hex_dump(KERN_DEBUG, "ALL:", DUMP_PREFIX_NONE,
-> +				16, 1, data, len, false);
-> +
->  	if (cfg_hnd->ops->tx_buf_put)
->  		cfg_hnd->ops->tx_buf_put(msm_host);
->  
-> @@ -1786,6 +1798,12 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
->  	int data;
->  	int final_value, final_scale;
->  	int i;
-> +	int bpp = dsc->bits_per_pixel >> 4;
+ .../bindings/pinctrl/qcom,sdm670-tlmm.yaml    |  129 ++
+ drivers/pinctrl/qcom/Kconfig                  |    9 +
+ drivers/pinctrl/qcom/Makefile                 |    1 +
+ drivers/pinctrl/qcom/pinctrl-msm.c            |    5 +-
+ drivers/pinctrl/qcom/pinctrl-msm.h            |    4 +
+ drivers/pinctrl/qcom/pinctrl-sdm670.c         | 1373 +++++++++++++++++
+ 6 files changed, 1519 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sdm670.c
 
-Same u16 here.
+-- 
+2.37.3
 
-- Marijn
-
-> +
-> +	if (dsc->bits_per_pixel & 0xf) {
-> +		pr_err("DSI does not support fractional bits_per_pixel\n");
-> +		return -EINVAL;
-> +	}
->  
->  	dsc->rc_model_size = 8192;
->  	dsc->first_line_bpg_offset = 12;
-> @@ -1807,7 +1825,7 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
->  	}
->  
->  	dsc->initial_offset = 6144; /* Not bpp 12 */
-> -	if (dsc->bits_per_pixel != 8)
-> +	if (bpp != 8)
->  		dsc->initial_offset = 2048;	/* bpp = 12 */
->  
->  	mux_words_size = 48;		/* bpc == 8/10 */
-> @@ -1830,16 +1848,16 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
->  	 * params are calculated
->  	 */
->  	groups_per_line = DIV_ROUND_UP(dsc->slice_width, 3);
-> -	dsc->slice_chunk_size = dsc->slice_width * dsc->bits_per_pixel / 8;
-> -	if ((dsc->slice_width * dsc->bits_per_pixel) % 8)
-> +	dsc->slice_chunk_size = dsc->slice_width * bpp / 8;
-> +	if ((dsc->slice_width * bpp) % 8)
->  		dsc->slice_chunk_size++;
->  
->  	/* rbs-min */
->  	min_rate_buffer_size =  dsc->rc_model_size - dsc->initial_offset +
-> -				dsc->initial_xmit_delay * dsc->bits_per_pixel +
-> +				dsc->initial_xmit_delay * bpp +
->  				groups_per_line * dsc->first_line_bpg_offset;
->  
-> -	hrd_delay = DIV_ROUND_UP(min_rate_buffer_size, dsc->bits_per_pixel);
-> +	hrd_delay = DIV_ROUND_UP(min_rate_buffer_size, bpp);
->  
->  	dsc->initial_dec_delay = hrd_delay - dsc->initial_xmit_delay;
->  
-> @@ -1862,7 +1880,7 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
->  	data = 2048 * (dsc->rc_model_size - dsc->initial_offset + num_extra_mux_bits);
->  	dsc->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
->  
-> -	target_bpp_x16 = dsc->bits_per_pixel * 16;
-> +	target_bpp_x16 = bpp * 16;
->  
->  	data = (dsc->initial_xmit_delay * target_bpp_x16) / 16;
->  	final_value =  dsc->rc_model_size - data + num_extra_mux_bits;
-> -- 
-> 2.37.3
-> 
