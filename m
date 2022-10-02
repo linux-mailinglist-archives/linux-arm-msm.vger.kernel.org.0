@@ -2,208 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C79755F236D
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Oct 2022 15:47:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99FE95F2736
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 01:31:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229672AbiJBNrE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Oct 2022 09:47:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47218 "EHLO
+        id S229895AbiJBXbI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Oct 2022 19:31:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229874AbiJBNrD (ORCPT
+        with ESMTP id S229628AbiJBXbH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Oct 2022 09:47:03 -0400
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 894202C640
-        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Oct 2022 06:47:02 -0700 (PDT)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-358bf076f1fso15828837b3.9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Oct 2022 06:47:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=vMq1GLlUF20kEgsMYV1tAQ/MEwS5+GaRhNeS6W1gqtc=;
-        b=rZifux+aDRURitEFx6UMA91HolG3SuermFTvd7daQQNqUrjIAf1dViD5uaag7cWkxJ
-         quvYpkg4F0LbmosvwUnNHRhExTnfJiIXWBRYUmS4HHILRhRK28fKNrjVYRjgQ3Vs9/Dw
-         J8JttMr6vJYw0RA+kOvvuY5F6Vm9FuwyvY9oYcDTxH9mfQEuzSjH42boCldN5sRT8Kke
-         ccDmbxQP7P2N6B8wzkltaAGJAuV8Ej2kkCnCrPy5etmGimu8uyrj/ch5u+yNjCvyY9uc
-         InS28fgCQBhEm1vbVphaaJE7jjqxvJ/MbIGyu+C8mBroUcRU7mJtlQeU+u/bjyvWmrX8
-         dcmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=vMq1GLlUF20kEgsMYV1tAQ/MEwS5+GaRhNeS6W1gqtc=;
-        b=5JIZC3PLHZ+XcHuWxayFyQ2zMcgKSEs8dSDX96a0u0YGcRnuAhFQDJwuMjxuGpkESB
-         gVSPEkWHfg4NctNhzMyYNe/vIFDOW+kgj9RZGGCCC3mt6IU+zW0csKOuPUCQ/Q6EanjQ
-         vcUomgwiKALR6Zcj1k//9KJ6mtnlB3m8OgM8Axc7VyAOU0cToBzoK998DRl20kL9prZx
-         YNj0YvVVXW/I02WUHdrXa2LKN1o6+hYe3q7cztfHVbh2q1KxzOyTArw69Yu551NXl+Uk
-         TEAc0g+th67mRunkC8+ORv9StcSKIWeN1Qeysb5Hng8v/Y6xROQJN2UM7LAo5RjAsOco
-         Z/YQ==
-X-Gm-Message-State: ACrzQf01/pPf2roI08jMMbPmSKW3Z5ZUBNd7CNRhmagkzZPytoq1L/pr
-        SN/NbOMn5XgIQyTTycBUXKZMLDfyfQzIhS7FtRKYHA==
-X-Google-Smtp-Source: AMsMyM6Tn85hamj4pv2OxnewpHPKst2tlq8hdSk1TlSr4/p9L3z1a+N9qpuVZodypx+3uCeYyumwBTWgNMEHzCmxnB4=
-X-Received: by 2002:a0d:d68a:0:b0:350:a7f0:7b69 with SMTP id
- y132-20020a0dd68a000000b00350a7f07b69mr16544941ywd.132.1664718420530; Sun, 02
- Oct 2022 06:47:00 -0700 (PDT)
+        Sun, 2 Oct 2022 19:31:07 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66B2A2AE0E;
+        Sun,  2 Oct 2022 16:31:01 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 292NPqoC009416;
+        Sun, 2 Oct 2022 23:30:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=OZzBMFoUgJ5NblhfxO/d/8AT214Y8rmmcdR/ZXi9TKw=;
+ b=Jq/od7vWUFihDbeeAo20GDoXsta2AJkFi18uF1vEzVUb+5z8gqeAiJmvNfSC0hiBeds4
+ tB+6yz5ssZ/kTUnjE50mlc2DSPdvGqvMCP0w9q8WsoSjCX8KApUf2cGjRsX4tiZVLSQA
+ mw1wQvb0PznX7sTvcEa89lhbSq22jAoUiNWSR2VaCP2qfQMqBbvm+tOZXQvSZ9bsswFD
+ KW8jsI5/r+2mluuSRI7rT0l4OamWGtqjrsmBLKb3KTAAi8prQwLszrpv2fDZL5Kzf1fK
+ LLZ8hxZ9A31ONhitHJDsjhisKZbAQzW9LiKjmII6jmEeUdbi8+/cyoYgpYZnQpHBZjB2 Rg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jxb8navvs-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 02 Oct 2022 23:30:34 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 292NUX79002687
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 2 Oct 2022 23:30:33 GMT
+Received: from [10.110.51.118] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Sun, 2 Oct 2022
+ 16:30:31 -0700
+Message-ID: <1f599b97-9242-3844-4372-1610948f4baf@quicinc.com>
+Date:   Sun, 2 Oct 2022 16:30:30 -0700
 MIME-Version: 1.0
-References: <20220930212052.894834-1-dmitry.baryshkov@linaro.org> <d1a26c97-75db-5d09-4c4f-77ed4fed1683@linaro.org>
-In-Reply-To: <d1a26c97-75db-5d09-4c4f-77ed4fed1683@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sun, 2 Oct 2022 16:46:49 +0300
-Message-ID: <CAA8EJpoUtfWFR315jiC8PzPQydM9kT3kQYeqyOav-P9=qZKO2w@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: soc: qcom: YAML-ify SSBI bindings
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH v4 10/14] gunyah: sysfs: Add node to describe supported
+ features
+Content-Language: en-US
+To:     Joe Perches <joe@perches.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        "Mark Rutland" <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        "Marc Zyngier" <maz@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <devicetree@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20220928195633.2348848-1-quic_eberman@quicinc.com>
+ <20220928195633.2348848-11-quic_eberman@quicinc.com>
+ <3c02aad6d8bde70964b403a3cb8004de969becc6.camel@perches.com>
+From:   Jeff Johnson <quic_jjohnson@quicinc.com>
+In-Reply-To: <3c02aad6d8bde70964b403a3cb8004de969becc6.camel@perches.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: y-SxWOGjvOMLTZ5hHoe76VMIDI4OrmOO
+X-Proofpoint-GUID: y-SxWOGjvOMLTZ5hHoe76VMIDI4OrmOO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-10-02_04,2022-09-29_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 spamscore=0 phishscore=0 clxscore=1011 malwarescore=0
+ bulkscore=0 suspectscore=0 impostorscore=0 mlxlogscore=999 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210020155
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 1 Oct 2022 at 12:43, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 30/09/2022 23:20, Dmitry Baryshkov wrote:
-> > Convert arm/msm/ssbi.txt yo YAML, moving it to the directory with SoC
-> > bindings (soc/qcom/).
->
-> I think this should go to "bus" instead. Actually we could put there as
-> well GSBI and few others...
+On 9/29/2022 12:36 AM, Joe Perches wrote:
+> On Wed, 2022-09-28 at 12:56 -0700, Elliot Berman wrote:
+>> Add a sysfs node to list the features that the Gunyah hypervisor and
+>> Linux supports. For now, Linux support cspace (capability IDs) and
+>> message queues, so only report those..
+> []
+>> diff --git a/drivers/virt/gunyah/sysfs.c b/drivers/virt/gunyah/sysfs.c
+> []
+>> @@ -25,9 +25,24 @@ static ssize_t variant_show(struct kobject *kobj, struct kobj_attribute *attr, c
+>>   }
+>>   static struct kobj_attribute variant_attr = __ATTR_RO(variant);
+>>   
+>> +static ssize_t features_show(struct kobject *kobj, struct kobj_attribute *attr, char *buffer)
+>> +{
+>> +	int len = 0;
+>> +
+>> +	if (GH_IDENTIFY_PARTITION_CSPACE(gunyah_api.flags))
+>> +		len += sysfs_emit_at(buffer, len, "cspace ");
+>> +	if (GH_IDENTIFY_MSGQUEUE(gunyah_api.flags))
+>> +		len += sysfs_emit_at(buffer, len, "message-queue ");
+>> +
+>> +	len += sysfs_emit_at(buffer, len, "\n");
+>> +	return len;
+>> +}
+> 
+> It's generally nicer to avoid unnecessary output spaces.
+> 
+> Perhaps:
+> 
+> {
+> 	int len = 0;
+> 
+> 	if (GH_IDENTIFY_PARTITION_CSPACE(gunyah_api.flags))
+> 		len += sysfs_emit_at(buffer, len, "cspace");
+> 	if (GH_IDENTIFY_MSGQUEUE(gunyah_api.flags)) {
+> 		if (len)
+> 			len += sysfs_emit_at(buffer, len, " ");
+> 		len += sysfs_emit_at(buffer, len, "message-queue");
+> 	}
+> 
+> 	len += sysfs_emit_at(buffer, len, "\n");
+> 
+> 	return len;
+> }
+> 
 
-ack
+that approach seems ok for 2 features, but imo doesn't scale for more.
+I like the original code with one exception:
 
->
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  .../devicetree/bindings/arm/msm/ssbi.txt      | 18 ------
-> >  .../bindings/soc/qcom/qcom,ssbi.yaml          | 63 +++++++++++++++++++
-> >  2 files changed, 63 insertions(+), 18 deletions(-)
-> >  delete mode 100644 Documentation/devicetree/bindings/arm/msm/ssbi.txt
-> >  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,ssbi.yaml
-> >
-> > diff --git a/Documentation/devicetree/bindings/arm/msm/ssbi.txt b/Documentation/devicetree/bindings/arm/msm/ssbi.txt
-> > deleted file mode 100644
-> > index 54fd5ced3401..000000000000
-> > --- a/Documentation/devicetree/bindings/arm/msm/ssbi.txt
-> > +++ /dev/null
-> > @@ -1,18 +0,0 @@
-> > -* Qualcomm SSBI
-> > -
-> > -Some Qualcomm MSM devices contain a point-to-point serial bus used to
-> > -communicate with a limited range of devices (mostly power management
-> > -chips).
-> > -
-> > -These require the following properties:
-> > -
-> > -- compatible: "qcom,ssbi"
-> > -
-> > -- qcom,controller-type
-> > -  indicates the SSBI bus variant the controller should use to talk
-> > -  with the slave device.  This should be one of "ssbi", "ssbi2", or
-> > -  "pmic-arbiter".  The type chosen is determined by the attached
-> > -  slave.
-> > -
-> > -The slave device should be the single child node of the ssbi device
-> > -with a compatible field.
-> > diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,ssbi.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,ssbi.yaml
-> > new file mode 100644
-> > index 000000000000..6154f7222899
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,ssbi.yaml
-> > @@ -0,0 +1,63 @@
-> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: "http://devicetree.org/schemas/soc/qcom/qcom,ssbi.yaml#"
-> > +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
->
-> Drop quotes from both above.
+	if (GH_IDENTIFY_PARTITION_CSPACE(gunyah_api.flags))
+		len += sysfs_emit_at(buffer, len, "cspace ");
+	if (GH_IDENTIFY_MSGQUEUE(gunyah_api.flags))
+		len += sysfs_emit_at(buffer, len, "message-queue ");
 
-ack
+	/* overwrite last trailing space */
+	if (len)
+		len--;
 
->
-> > +
-> > +title: Qualcomm Single-wire Serial Bus Interface (SSBI)
-> > +
-> > +description:
-> > +  Some Qualcomm MSM devices contain a point-to-point serial bus used to
-> > +  communicate with a limited range of devices (mostly power management
-> > +  chips).
-> > +
-> > +maintainers:
-> > +  - Andy Gross <agross@kernel.org>
-> > +  - Bjorn Andersson <andersson@kernel.org>
-> > +
-> > +properties:
-> > +  compatible:
-> > +    const: qcom,ssbi
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  qcom,controller-type:
-> > +    description:
-> > +      Indicates the SSBI bus variant the controller should use to talk
-> > +      with the slave device. The type chosen is determined by the attached
-> > +      slave.
-> > +    enum:
-> > +      - ssbi
-> > +      - ssbi2
-> > +      - pmic-arbiter
-> > +
-> > +  pmic:
-> > +    type: object
->
-> This is quite unspecific... Can we make it a ref to some PMICs schemas?
+	len += sysfs_emit_at(buffer, len, "\n");
+	return len;
 
-Yes, I thought about listing all compats, but probably a $ref:
-../mfd/qcom-pm8xxx.yaml# makes more sense.
-
->
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - qcom,controller-type
-> > +
-> > +additionalProperties: false
-> > +
-> > +examples:
-> > +  - |
-> > +    #include <dt-bindings/interrupt-controller/irq.h>
-> > +    ssbi@c00000 {
-> > +        compatible = "qcom,ssbi";
-> > +        reg = <0x00c00000 0x1000>;
-> > +        qcom,controller-type = "pmic-arbiter";
-> > +
-> > +        pmic {
-> > +            compatible = "qcom,pm8821";
-> > +            interrupt-parent = <&msmgpio>;
-> > +            interrupts = <76 IRQ_TYPE_LEVEL_LOW>;
-> > +            #interrupt-cells = <2>;
-> > +            interrupt-controller;
-> > +            #address-cells = <1>;
-> > +            #size-cells = <0>;
-> > +        };
-> > +    };
-> > +...
->
-> Best regards,
-> Krzysztof
->
-
-
--- 
-With best wishes
-Dmitry
