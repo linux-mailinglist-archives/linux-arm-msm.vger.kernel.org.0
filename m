@@ -2,105 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 573635F234E
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Oct 2022 15:19:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7214E5F2352
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Oct 2022 15:21:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229795AbiJBNT1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Oct 2022 09:19:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57210 "EHLO
+        id S229640AbiJBNVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Oct 2022 09:21:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229549AbiJBNTZ (ORCPT
+        with ESMTP id S229734AbiJBNVH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Oct 2022 09:19:25 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4713C459B6
-        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Oct 2022 06:19:22 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id lc7so17479126ejb.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Oct 2022 06:19:22 -0700 (PDT)
+        Sun, 2 Oct 2022 09:21:07 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2BF145F6E
+        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Oct 2022 06:21:05 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id f189so10307313yba.12
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Oct 2022 06:21:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date;
-        bh=j5VIVRriTeMDEX6uw2Y4xbQwFPhK4bKzLdrKvFJvgWY=;
-        b=eD/dIrkrEXHvc6HN3YLNoYEkOWq089SFWTiGMpQW+NmuNbxs8b0sWgmUdIpFvqLBPo
-         4RhQPeYXGWkqL1N4TDA2cYcj3cRwX3euqIMvKVb17pn2rZBNFezeAtTJV4GnFQeDFaR8
-         LO5IiLsc4XuDQn7jL7c+FIOGOO7fNGBKZtEKrLOpjqyWi3/obHGDjr+skM3tDOdCgA3b
-         /bGmYcOJY1VqunFv9y3Q3Re+j5Y1e3nyZ6PVy3MvQ9Jm6UIVo5miBkOQn0GAIRPv+9cX
-         qasPpzvU6HiOXbzeWfWikuRG6ZNOB26FymdDuZw/NewlyX3YibeMWJmKN+TvwW5vUUAl
-         HHqg==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=ZZwkz7k64dFZYuHYdeZSaefwEw4J/HEc2WRaMih5KK8=;
+        b=vIyrw7Qxg38O2nP1y82PwWWH0YFbhdwSKa8xuw8fA/+HtQ+x6WhYqYzWM19ebeypqp
+         4wZH8LaX+Sxi5/jOAO0ovbhngHiFTMi5DArryf4CRorUGV1syXcE3cFFnHKGaTXHXvNp
+         0brsvdqi3KU59R5k4tAFE8TixZuKd8xLLlorTvuPA+Ac4am4i3s2ltiee0PaFtect6WB
+         n1bok3hW+amHnwLHQCxhA2XAD1UU9R7iISuxcnxNq78fx8bP4PWDlkVWcq0wYxk8VdmM
+         +Ts96tJNia3e7IWwqUFmv7l3lxbKBHCVFE7OfhgKZR/FvBOaA74ghcdqc6GsGqzlUb/6
+         E0mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=j5VIVRriTeMDEX6uw2Y4xbQwFPhK4bKzLdrKvFJvgWY=;
-        b=LS90iCTl2ajsMc/iajRT4QZBPnoJkau3lLIUCaKrWlHUvtyY4/1SVFZmR2cpMrrlDd
-         ax3XaoFDVn156/BUCbNv0UDd+SbZklwAn7s2JzcRssY1Wii+mGCEsrom/cCtwdKZl/Rm
-         DTNGBL8IZawlHL0iTLgcJR2Yx/S5dpHAGH74O4TvkWLNWEQqo3UoTL+5iqnwWX+V8iLa
-         xoHn8eWmDeLHbarsIvIqqzpIOYVKGgRx4gjPJhLG6mgI0T6PTZrTD2WeDvOg+x2IoJ5n
-         ZuXt3fYm/6J8eHU5LAPyHSPPaZ3+233Rg6yhylfQJmhK2qDw05NSiCCBSywGKWyIv52p
-         a6kQ==
-X-Gm-Message-State: ACrzQf2tEfnt6rb1sRm0FCRcRLRxwzb/wv9OZhpD90rcW2cZK3k/xfTu
-        fl1QvAxKXbxI4wMVbZRt+YAIfK1VkUqEbSU/GMWmfg==
-X-Google-Smtp-Source: AMsMyM6iABEfAOs5DtiWbQTwYgEPjrgjh3sVpQ1UOTEoRS7Z3axNDaneB55QeVHNVhkv9tJs8L5HL/ahTxM5gVH2O38=
-X-Received: by 2002:a17:907:843:b0:73a:5b0e:8352 with SMTP id
- ww3-20020a170907084300b0073a5b0e8352mr12396036ejb.438.1664716760535; Sun, 02
- Oct 2022 06:19:20 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=ZZwkz7k64dFZYuHYdeZSaefwEw4J/HEc2WRaMih5KK8=;
+        b=QAAtPUkDY9oFNhkjxHX8bTB6Qv1AzDQS7y2GX9PW3qpGTcJ7rJukvTAICRNus85moK
+         BswEDjB6g9bofE10/63IR6VStHscLNMTLrIo0XcwdlJePjqv+26/r9inC8VHqFMR5dDl
+         htoQmIotD+HzLbNfPaH8bRsVj03DcUHRPvcf6wHa+/aG5isGnobZXTG6mluzgb3GbC3M
+         pBBpYcttjFKmvjay5hm4l5KU/UZ7lVVeWdxZVy5y6RUsLWGsbZw+d+reWMjy6lF3rrEn
+         jchCHJT+Won7jt0OgZWGIT5NlIV2m0pWZBAXCRrmGWo8IIEno4ZDZ83VPst1ms6f+j4U
+         Afvg==
+X-Gm-Message-State: ACrzQf3wUH/SUtgnmj3FMFbT0yeDUF/NjWVXykVjGXkgJpdyM8ZSZs/z
+        GqdifktfX4skJJhaY7kFb10FNgOh0TB3qfbKm+wwhA==
+X-Google-Smtp-Source: AMsMyM70ZqbctjIZ4G6bhXtRRj3qjyUL7l1g26d48Fz39OwONNJzHjFmKvVoZRtnYSYRMGoXSaHzrBdfjhBsB+bUTj0=
+X-Received: by 2002:a05:6902:102e:b0:6bd:bdd2:ac32 with SMTP id
+ x14-20020a056902102e00b006bdbdd2ac32mr344177ybt.516.1664716865195; Sun, 02
+ Oct 2022 06:21:05 -0700 (PDT)
 MIME-Version: 1.0
-References: <20221002122859.75525-1-matti.lehtimaki@gmail.com> <20221002122859.75525-5-matti.lehtimaki@gmail.com>
-In-Reply-To: <20221002122859.75525-5-matti.lehtimaki@gmail.com>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Sun, 2 Oct 2022 15:18:44 +0200
-Message-ID: <CAMZdPi99qiCagqehoTyCuE19CeP-WvvePgHaSqGku-qBHg0xvQ@mail.gmail.com>
-Subject: Re: [PATCH v1 4/6] i2c: qcom-cci: Add MSM8226 compatible
-To:     =?UTF-8?Q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Rayyan Ansari <rayyan@ansari.sh>,
-        Robert Foss <robert.foss@linaro.org>,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220930212052.894834-1-dmitry.baryshkov@linaro.org>
+ <20220930212052.894834-2-dmitry.baryshkov@linaro.org> <b3b2dc79-30cc-a768-e7bb-d5e8ff3f6ba0@linaro.org>
+In-Reply-To: <b3b2dc79-30cc-a768-e7bb-d5e8ff3f6ba0@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sun, 2 Oct 2022 16:20:54 +0300
+Message-ID: <CAA8EJpqA5uO+Nfo571qAbQ5KxatsVcp4Mkyxn0h5NR5dEot1eA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] ARM: dts: qcom: mdm9615: drop unit ids from PMIC nodes
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 2 Oct 2022 at 14:29, Matti Lehtim=C3=A4ki <matti.lehtimaki@gmail.co=
-m> wrote:
+On Sat, 1 Oct 2022 at 12:40, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
-> From: Rayyan Ansari <rayyan@ansari.sh>
+> On 30/09/2022 23:20, Dmitry Baryshkov wrote:
+> > On MDM9615 the PMICs are connected using SSBI devices, which do not have
+> > any addressing scheme. Drop the unused unit ids from PMIC device nodes.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  arch/arm/boot/dts/qcom-mdm9615.dtsi | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/arch/arm/boot/dts/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom-mdm9615.dtsi
+> > index b47c86412de2..bb17a57a2b90 100644
+> > --- a/arch/arm/boot/dts/qcom-mdm9615.dtsi
+> > +++ b/arch/arm/boot/dts/qcom-mdm9615.dtsi
+> > @@ -283,7 +283,7 @@ qcom,ssbi@500000 {
+> >                       reg = <0x500000 0x1000>;
+> >                       qcom,controller-type = "pmic-arbiter";
+> >
+> > -                     pmicintc: pmic@0 {
+> > +                     pmicintc: pmic {
 >
-> Add a compatible for MSM8226's Camera Control Interface, which is
-> similar to the one used on MSM8916.
->
-> Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
-> Signed-off-by: Matti Lehtim=C3=A4ki <matti.lehtimaki@gmail.com>
+> I think several other platforms, also with PMIC over SSBI, have the same
+> problem. If that's correct, can you fix them in the same patchset?
 
-Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+It was a part of my previous patchset, but yeah. Let's get it done in this one.
 
-> ---
->  drivers/i2c/busses/i2c-qcom-cci.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-q=
-com-cci.c
-> index ea48e6a9cfca..87739fb4388b 100644
-> --- a/drivers/i2c/busses/i2c-qcom-cci.c
-> +++ b/drivers/i2c/busses/i2c-qcom-cci.c
-> @@ -807,6 +807,7 @@ static const struct cci_data cci_v2_data =3D {
->  };
->
->  static const struct of_device_id cci_dt_match[] =3D {
-> +       { .compatible =3D "qcom,msm8226-cci", .data =3D &cci_v1_data},
->         { .compatible =3D "qcom,msm8916-cci", .data =3D &cci_v1_data},
->         { .compatible =3D "qcom,msm8974-cci", .data =3D &cci_v1_5_data},
->         { .compatible =3D "qcom,msm8996-cci", .data =3D &cci_v2_data},
-> --
-> 2.34.1
->
+
+
+-- 
+With best wishes
+Dmitry
