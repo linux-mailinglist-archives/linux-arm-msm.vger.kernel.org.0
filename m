@@ -2,104 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7214E5F2352
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Oct 2022 15:21:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 494C35F2365
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Oct 2022 15:39:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229640AbiJBNVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Oct 2022 09:21:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35938 "EHLO
+        id S229864AbiJBNiy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Oct 2022 09:38:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbiJBNVH (ORCPT
+        with ESMTP id S229540AbiJBNix (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Oct 2022 09:21:07 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2BF145F6E
-        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Oct 2022 06:21:05 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id f189so10307313yba.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Oct 2022 06:21:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=ZZwkz7k64dFZYuHYdeZSaefwEw4J/HEc2WRaMih5KK8=;
-        b=vIyrw7Qxg38O2nP1y82PwWWH0YFbhdwSKa8xuw8fA/+HtQ+x6WhYqYzWM19ebeypqp
-         4wZH8LaX+Sxi5/jOAO0ovbhngHiFTMi5DArryf4CRorUGV1syXcE3cFFnHKGaTXHXvNp
-         0brsvdqi3KU59R5k4tAFE8TixZuKd8xLLlorTvuPA+Ac4am4i3s2ltiee0PaFtect6WB
-         n1bok3hW+amHnwLHQCxhA2XAD1UU9R7iISuxcnxNq78fx8bP4PWDlkVWcq0wYxk8VdmM
-         +Ts96tJNia3e7IWwqUFmv7l3lxbKBHCVFE7OfhgKZR/FvBOaA74ghcdqc6GsGqzlUb/6
-         E0mA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=ZZwkz7k64dFZYuHYdeZSaefwEw4J/HEc2WRaMih5KK8=;
-        b=QAAtPUkDY9oFNhkjxHX8bTB6Qv1AzDQS7y2GX9PW3qpGTcJ7rJukvTAICRNus85moK
-         BswEDjB6g9bofE10/63IR6VStHscLNMTLrIo0XcwdlJePjqv+26/r9inC8VHqFMR5dDl
-         htoQmIotD+HzLbNfPaH8bRsVj03DcUHRPvcf6wHa+/aG5isGnobZXTG6mluzgb3GbC3M
-         pBBpYcttjFKmvjay5hm4l5KU/UZ7lVVeWdxZVy5y6RUsLWGsbZw+d+reWMjy6lF3rrEn
-         jchCHJT+Won7jt0OgZWGIT5NlIV2m0pWZBAXCRrmGWo8IIEno4ZDZ83VPst1ms6f+j4U
-         Afvg==
-X-Gm-Message-State: ACrzQf3wUH/SUtgnmj3FMFbT0yeDUF/NjWVXykVjGXkgJpdyM8ZSZs/z
-        GqdifktfX4skJJhaY7kFb10FNgOh0TB3qfbKm+wwhA==
-X-Google-Smtp-Source: AMsMyM70ZqbctjIZ4G6bhXtRRj3qjyUL7l1g26d48Fz39OwONNJzHjFmKvVoZRtnYSYRMGoXSaHzrBdfjhBsB+bUTj0=
-X-Received: by 2002:a05:6902:102e:b0:6bd:bdd2:ac32 with SMTP id
- x14-20020a056902102e00b006bdbdd2ac32mr344177ybt.516.1664716865195; Sun, 02
- Oct 2022 06:21:05 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220930212052.894834-1-dmitry.baryshkov@linaro.org>
- <20220930212052.894834-2-dmitry.baryshkov@linaro.org> <b3b2dc79-30cc-a768-e7bb-d5e8ff3f6ba0@linaro.org>
-In-Reply-To: <b3b2dc79-30cc-a768-e7bb-d5e8ff3f6ba0@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sun, 2 Oct 2022 16:20:54 +0300
-Message-ID: <CAA8EJpqA5uO+Nfo571qAbQ5KxatsVcp4Mkyxn0h5NR5dEot1eA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] ARM: dts: qcom: mdm9615: drop unit ids from PMIC nodes
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Sun, 2 Oct 2022 09:38:53 -0400
+Received: from premium237-5.web-hosting.com (premium237-5.web-hosting.com [66.29.146.205])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D35427156;
+        Sun,  2 Oct 2022 06:38:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sladewatkins.net; s=default; h=To:References:Message-Id:
+        Content-Transfer-Encoding:Cc:Date:In-Reply-To:From:Subject:Mime-Version:
+        Content-Type:Sender:Reply-To:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=VPfLIxTyDxs11YmrlrvCyBbBU0ckJgv+7bpPq3+FUSA=; b=GU0NHmCwBS0axqF/wGvZ41F+zP
+        MD3WB5iBKDxxmvggCMjKQsAB2dcCzwQ3BM6x38gEay9e8OS4Ed8FxBsbnEv2c8N3ZOc97q2LICCiy
+        LD1XHF24Ujj0Zl3o4cstsb55Dll+Kxy+mSTdfZE0lqt9f5bqh/D+KNCG9I6lDc1W2Os5Ndm8P5oAV
+        JPQzoQyfEfYTIyggcCIXzsabenLN6QZUItWVYh1ITbxIjTlx3y6q/e4imHqwEiDBxKmUgmgx7AXWH
+        zmeAcgHUNPDh21+c/7PWyQa8QI3FtPLna0yyXUoDklZJsNHVSxHiDW+fcm1KvygWXB8Ypx1ySRqQ8
+        9AEG7pZQ==;
+Received: from pool-108-4-135-94.albyny.fios.verizon.net ([108.4.135.94]:56422 helo=smtpclient.apple)
+        by premium237.web-hosting.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.95)
+        (envelope-from <srw@sladewatkins.net>)
+        id 1oezBD-002vfu-Eo;
+        Sun, 02 Oct 2022 09:38:51 -0400
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
+Subject: Re: [PATCH 1/1] arm64: dts: qcom: sm6125: Use qcom,arm-v2 for MMU
+From:   Slade Watkins <srw@sladewatkins.net>
+In-Reply-To: <20221001185750.495874-1-martin.botka@somainline.org>
+Date:   Sun, 2 Oct 2022 09:38:47 -0400
+Cc:     martin.botka1@gmail.com, ~postmarketos/upstreaming@lists.sr.ht,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Jami Kettunen <jamipkettunen@somainline.org>,
+        Paul Bouchara <paul.bouchara@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <9C0BFFC6-74C1-49B8-AD7B-5BE8D32D3660@sladewatkins.net>
+References: <20221001185750.495874-1-martin.botka@somainline.org>
+To:     Martin Botka <martin.botka@somainline.org>
+X-Mailer: Apple Mail (2.3696.120.41.1.1)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - premium237.web-hosting.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - sladewatkins.net
+X-Get-Message-Sender-Via: premium237.web-hosting.com: authenticated_id: srw@sladewatkins.net
+X-Authenticated-Sender: premium237.web-hosting.com: srw@sladewatkins.net
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-From-Rewrite: unmodified, already matched
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 1 Oct 2022 at 12:40, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 30/09/2022 23:20, Dmitry Baryshkov wrote:
-> > On MDM9615 the PMICs are connected using SSBI devices, which do not have
-> > any addressing scheme. Drop the unused unit ids from PMIC device nodes.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  arch/arm/boot/dts/qcom-mdm9615.dtsi | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/arch/arm/boot/dts/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom-mdm9615.dtsi
-> > index b47c86412de2..bb17a57a2b90 100644
-> > --- a/arch/arm/boot/dts/qcom-mdm9615.dtsi
-> > +++ b/arch/arm/boot/dts/qcom-mdm9615.dtsi
-> > @@ -283,7 +283,7 @@ qcom,ssbi@500000 {
-> >                       reg = <0x500000 0x1000>;
-> >                       qcom,controller-type = "pmic-arbiter";
-> >
-> > -                     pmicintc: pmic@0 {
-> > +                     pmicintc: pmic {
->
-> I think several other platforms, also with PMIC over SSBI, have the same
-> problem. If that's correct, can you fix them in the same patchset?
+Hi,
 
-It was a part of my previous patchset, but yeah. Let's get it done in this one.
+> On Oct 1, 2022, at 2:57 PM, Martin Botka <martin.botka@somainline.org> =
+wrote:
+>=20
+> Signed-off-by: Martin Botka <martin.botka@somainline.org>
+> ---
 
+What does this patch address? There=E2=80=99s no commit message here.
 
+-srw
 
--- 
-With best wishes
-Dmitry
