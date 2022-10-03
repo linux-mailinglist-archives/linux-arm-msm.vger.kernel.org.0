@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 966465F3365
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 18:23:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 392B95F3375
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 18:24:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229782AbiJCQXE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Oct 2022 12:23:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44586 "EHLO
+        id S229908AbiJCQYj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Oct 2022 12:24:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229633AbiJCQXC (ORCPT
+        with ESMTP id S229874AbiJCQYY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Oct 2022 12:23:02 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 481E71E716
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 09:23:00 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id a3so5247600wrt.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 09:23:00 -0700 (PDT)
+        Mon, 3 Oct 2022 12:24:24 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50EBB356F8
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 09:24:23 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id i203-20020a1c3bd4000000b003b3df9a5ecbso9366856wma.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 09:24:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:organization:from:reply-to
          :references:cc:to:content-language:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date;
-        bh=4anMk2zFWJH7QLU4xBORDN6i1gytZOwCsCqwYhS9aIU=;
-        b=u0B4lFbGoQ49aUIUkyxsm25arvh2BefYm9en6LtuydivCVNkCs06c6a4OWm9461BoI
-         jMRMQ5CRdGAcrZ66mezdXqOC6PVqKqZl24UMoPHXPtrXJGCZ0Al7HlSzwPTxupHnPqda
-         SfsbrxHdIpybg+3R7OHcDvGYNoqkqtb9vJmaBRCIhXpnEHmsTaAeXJ+M09xE1F47zTdh
-         j9SUgGzrWtiFrDFmeat9Nh2NugYzkBOIFoDj/FVQyb0+79igbrH95z+KokRyH/xxlJSV
-         qwnOA3ZxY2kQbXB+/Kq+b3wcBg/06idFQn3OK10zGGWjMaPDuApDr7TwyWbaZ6f9gwIA
-         fhpQ==
+        bh=07OPIF9p/0dyGR77WhVTYHBUfhX2GRpcCkHlEnGMyI0=;
+        b=nYazcJMwn+dgWLdKSQAYRF09/D5m4zVxIGGe6Y2xD2iRcHoHRTgxXOU29ScW+56sUP
+         KjJ+4U1soSXWJKDYo0Lf2Alxlnz3dzQ6MZGnbxNECGGXYh8QTFesC4E2d0NvuZu9u7uf
+         iEgbDmJOOsCduVh1OFYbEGChFMZCZrYbdiApxNL02CU1jUn34ro2W2PlIEm0AYuiy+qd
+         0p9LB96kG32mfg4BAes5567UXgP3vv73ijJ1EJ68Lbaey09dO2iZnUKmY3o7UzvOpwyA
+         usRHQzk12gKPkx1/xlihK9ZMgV/km2jvAE3fBSEKZfl+wfX/rta3uPyG+CNLIjVT/SpI
+         lgzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:organization:from:reply-to
          :references:cc:to:content-language:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=4anMk2zFWJH7QLU4xBORDN6i1gytZOwCsCqwYhS9aIU=;
-        b=mghjhrmid4p0XIrtxvDHjB2xOCL0gfVclmYirIQc9ycjlETFdUMpi6n7oBJdt5fYay
-         FmVdtBEp7CnExlONx0hWWGcPvO25eYuiHiM1namG0qRDHW4btT0jaWBe+C/nL/qJOMBW
-         3MfWtJ7uh1XgRzzgTbBEj5zY/Hf6ADqAsADNlkRlSbZvKMsDq9+Pd94kmMj0gIKZnVK/
-         nbX0BMpVuau6/4Tu+ifimy3c8f0UDWkh93CELbJH/O2VMerd3GY1uonyOccjMFN6wqQt
-         DMkPwk60pdGkRWY2K/YUrkdGQqk7IQWgHRUxGfVxTcT3nHCPcROCJNQ7z0Drcwcoj44I
-         Jo1A==
-X-Gm-Message-State: ACrzQf0Z9T+ZQ1OSUQ6PH5z2VCBgtrf/phleB3XjfYncifht3z8J4YS7
-        76wtIKYzT39Tai/5db3KATnYkA==
-X-Google-Smtp-Source: AMsMyM4K1alY0fXspBPTinpuO3hlcEn2Y+YlJqp51yzjHKOjY7CqUcDCYI9ZKr7CZggOuqwgWe/4Ww==
-X-Received: by 2002:adf:e608:0:b0:22e:42ff:2fe with SMTP id p8-20020adfe608000000b0022e42ff02femr2214686wrm.161.1664814178827;
-        Mon, 03 Oct 2022 09:22:58 -0700 (PDT)
+        bh=07OPIF9p/0dyGR77WhVTYHBUfhX2GRpcCkHlEnGMyI0=;
+        b=GM8D4+sbD2hUqgULDUey8bvlcxZmKxwOpQOyg3JgCx8FSvYUEVAO/p57pXEE/dvOyc
+         WPSaMA+NB3sfujgazpT/B3bdI/DfwxNbW2XupaWMbqTZeXMpU6ACpHLQin1zIZiN5uhH
+         fD78Mafew1iGx0AbrGKs3oiiN6JnUsFY0H318KPEeT2rVNtjS/F8FtBaExdZNlG3N3Pe
+         UzwAwGZmdRX0Lxx2oSNIOEVPyd7cjuKS6Fjmxjlznfq8Cvpc0FZ3T+nbZjrfbYSGlLha
+         GTqX7DpTgCyNZ485E7nUtqXDeyGrQneKmBeUbJTCXPDUidKkQ/YrBP2oeoNb1PWMZdfe
+         vn+w==
+X-Gm-Message-State: ACrzQf0kGT9O6U9z7w1juKZWbWMLhilVvE/dF7XE3aLH9WepyJfmiO4x
+        5ru1FbcaJE2QMZO20/5NC0ru7g==
+X-Google-Smtp-Source: AMsMyM4TrrrLhqF9RQPaC/KmMa0COV1ldeyIspCZUczkTKf2hFU61OWp3OZC5EbMtBtKzo0XW2iGMg==
+X-Received: by 2002:a05:600c:4a9a:b0:3b4:78ab:bae5 with SMTP id b26-20020a05600c4a9a00b003b478abbae5mr7710742wmp.114.1664814261498;
+        Mon, 03 Oct 2022 09:24:21 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:9da7:1217:d35f:d7cf? ([2a01:e0a:982:cbb0:9da7:1217:d35f:d7cf])
-        by smtp.gmail.com with ESMTPSA id j6-20020a05600c190600b003a5f3f5883dsm18736572wmq.17.2022.10.03.09.22.58
+        by smtp.gmail.com with ESMTPSA id l6-20020a5d5606000000b00228d52b935asm10550792wrv.71.2022.10.03.09.24.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Oct 2022 09:22:58 -0700 (PDT)
-Message-ID: <0755cbfb-8c2e-94d7-93fe-1bcb8df79969@linaro.org>
-Date:   Mon, 3 Oct 2022 18:22:57 +0200
+        Mon, 03 Oct 2022 09:24:21 -0700 (PDT)
+Message-ID: <d6a09c3d-b78f-a626-f9fe-d255a89fc83c@linaro.org>
+Date:   Mon, 3 Oct 2022 18:24:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 13/23] ARM: dts: qcom: apq8064: drop unit ids from PMIC
- nodes
+Subject: Re: [PATCH 14/23] ARM: dts: qcom: apq8064: drop qcom, prefix from
+ SSBI node name
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -66,11 +66,11 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
 References: <20220930185236.867655-1-dmitry.baryshkov@linaro.org>
- <20220930185236.867655-14-dmitry.baryshkov@linaro.org>
+ <20220930185236.867655-15-dmitry.baryshkov@linaro.org>
 Reply-To: neil.armstrong@linaro.org
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Organization: Linaro Developer Services
-In-Reply-To: <20220930185236.867655-14-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220930185236.867655-15-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,35 +83,23 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 30/09/2022 20:52, Dmitry Baryshkov wrote:
-> On APQ8064 the PMICs are connected using SSBI devices, which do not have
-> any addressing scheme. Drop the unused unit ids from PMIC device nodes.
-> 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   arch/arm/boot/dts/qcom-apq8064.dtsi | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   arch/arm/boot/dts/qcom-apq8064.dtsi | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-> index 34d3fce17351..6a8f3fd0fcc3 100644
+> index 6a8f3fd0fcc3..be4c82945c53 100644
 > --- a/arch/arm/boot/dts/qcom-apq8064.dtsi
 > +++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-> @@ -672,7 +672,7 @@ ssbi@c00000 {
->   			reg = <0x00c00000 0x1000>;
->   			qcom,controller-type = "pmic-arbiter";
+> @@ -693,7 +693,7 @@ pm8821_mpps: mpps@50 {
+>   			};
+>   		};
 >   
-> -			pm8821: pmic@1 {
-> +			pm8821: pmic {
->   				compatible = "qcom,pm8821";
->   				interrupt-parent = <&tlmm_pinmux>;
->   				interrupts = <76 IRQ_TYPE_LEVEL_LOW>;
-> @@ -698,7 +698,7 @@ qcom,ssbi@500000 {
+> -		qcom,ssbi@500000 {
+> +		ssbi@500000 {
+>   			compatible = "qcom,ssbi";
 >   			reg = <0x00500000 0x1000>;
 >   			qcom,controller-type = "pmic-arbiter";
->   
-> -			pmicintc: pmic@0 {
-> +			pmicintc: pmic {
->   				compatible = "qcom,pm8921";
->   				interrupt-parent = <&tlmm_pinmux>;
->   				interrupts = <74 8>;
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
