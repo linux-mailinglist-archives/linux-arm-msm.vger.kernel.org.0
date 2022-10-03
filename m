@@ -2,108 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E8EB5F28A6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 08:46:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 757A45F28E9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 09:01:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229635AbiJCGqt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Oct 2022 02:46:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57746 "EHLO
+        id S229540AbiJCHBP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Oct 2022 03:01:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbiJCGqs (ORCPT
+        with ESMTP id S229747AbiJCHBA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Oct 2022 02:46:48 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48DE832077
-        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Oct 2022 23:46:47 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id c4so202067ljj.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Oct 2022 23:46:47 -0700 (PDT)
+        Mon, 3 Oct 2022 03:01:00 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D37118B16
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 00:00:58 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id c68so3100645pfc.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 00:00:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=2tVQpUJpmbKtrPXhPjqRTAdA3Rm2oiD9OFSaFi8ZE8k=;
-        b=yI0wJVVP2N4DAVOagSsdSod29/ujUc/oCeH4LACWmRAV8mVc7XCy0jXeWvLmRBG7Vq
-         62Nixd2opVvJctw+VTchTAtTNiTtPYq7r8rjraoQNx2EDHBGJp6Prv0uwObZpYao9wP1
-         7832PipahvSdz+YRJH7/u3f6KqlF9Qj2rTwONY1LawYm4vAMMVY92+X+1pQaJ9aVw/xo
-         TzjAE3Md0NdTGh8FCganuyz6fkw26JDrEnzKF0qK9Fv/ZLlNXuqhyCrjiv28qpT5jjjR
-         lP+U19j8hQaQjSDCMfo5LIlUNf8ibkTRlqYvu+fHijqrsF2ky1oNZUXoMhxwbtSr55gi
-         dB9A==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date;
+        bh=3JNVltYWwjZxKJs51FeQFQjWXu1lm2Nc87fWc2zPpew=;
+        b=VGlrW7YJTylUobeHMTQIyhFRYrKpT0uRzag6QvClmPUvl8glSvsazg+/U5aFOBZxb9
+         k0kNF4Zr1zLLCCtznvKNxwSytMgdoF+pjaQwOIQb4ymXRrOxEot8s74+y7pYB+2Z8mDe
+         97yqEw/+HuU/57XtwagvivZ4XA1OxrF+w4P2zYT9VzuscllNnp1sNGlw1CgxGnetyvmy
+         Em4d406BOzw8+vHPvg5f0yKKVbJUlrr4V0Z4EES1E7bNIEweDEWNYUQQLgaGhljojwNW
+         bGclTnWN65aGO7zLF5itNC+NT6u0UnSk+2GkWcKzmLS807qhjtxuUiYMwgHO8MrH6JKb
+         tknA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=2tVQpUJpmbKtrPXhPjqRTAdA3Rm2oiD9OFSaFi8ZE8k=;
-        b=GUfTbWT7p8MvAauNnBNPKeeMstUdhqD9X6Xk4DYTWLd2ECKgGGo3aUYknicj1PCco7
-         pHMwf8hL8p1gzHInVQgDyKd5B0c9zvRngIJyzo1FHxpkht6ca5jrnOwXyGvyCTS49tpE
-         GtERVtWSaOPj0bb6mqT7JU677PbJUYqf3QJv2oQ7TYRbnLS7bPO6kMslv1ToU6s8Lgp2
-         LfVo9fB4Qw1Ka7tvOkgBrX4kXw7Nr8JrxYR+us6ZeWXTU6sZNiaEckV1KhticbF7jHjp
-         pu/fx6ARvy8YVPCAoCqImmyWYRLi9upomVjK5PjbVZ0D78IwUGC1ytn9QsZnlohyFgdF
-         7yAg==
-X-Gm-Message-State: ACrzQf0eqXteMGWQ2gh5cO2EqZmNDJhTg0kgmU7PgT3M2fOpCucTRWw0
-        2epel3UcCSyn8xSwPxaDuVtVl7iGNcw0ag==
-X-Google-Smtp-Source: AMsMyM4R1MavA8WjpnVwp2tQuKzHKLFv4BqmC4HdeD3hQNoBXaIeudIfy0A7B0UzG08eFIJfTvT0NQ==
-X-Received: by 2002:a2e:a791:0:b0:26c:4fad:957 with SMTP id c17-20020a2ea791000000b0026c4fad0957mr5783992ljf.263.1664779605571;
-        Sun, 02 Oct 2022 23:46:45 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id 2-20020ac24842000000b0048b3926351bsm1339977lfy.56.2022.10.02.23.46.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 02 Oct 2022 23:46:45 -0700 (PDT)
-Message-ID: <c391981d-8c7e-ab86-11cb-adde44d568e4@linaro.org>
-Date:   Mon, 3 Oct 2022 08:46:44 +0200
+        bh=3JNVltYWwjZxKJs51FeQFQjWXu1lm2Nc87fWc2zPpew=;
+        b=BlWyq0xyo5R3pV003KKFrAfoRJIvlJTxSRAGLd+ahfY4rIk123U6HYwTkdfA3a/J1/
+         7TnxyrHdFQB4Bn/ZxJvS+YAh4NXSLoG58Wp3B1No7rYBA/4LUOQDFNdfXRwGjsQi2EnW
+         K+acfsfwkkHpeXe3X3iIcr54aiSEgY4jUMreJmLr3G1LxzL3suTVkLvlAvwqNIYEvQLC
+         JPE0gvvNtwjHESBRbdQOvS65AhyI2Q1xdddXQSW9V+hNukcJyURcOHG3Hr8aFtEEffRa
+         3jYkAHthdlW/3RAruTR552GlJdkZhHoEUEo8ig0IZxrrBn7k1deqem9cQZGcQyzdVrqI
+         vrCA==
+X-Gm-Message-State: ACrzQf3ySRe/dKsWubg8fkJYF9s8ScHwv1koXXpa6oj7wbNx5IhaL2yf
+        FzYQ474EfCrMbDY62RPkyV59
+X-Google-Smtp-Source: AMsMyM7MxcKIDSEoTF2S8oIVL845jStXPwgBzdsGKcHZEAA+SriQpSK/NKCWMRyWqhqZbYPmlrfbsw==
+X-Received: by 2002:a63:5b58:0:b0:452:2ba4:f86b with SMTP id l24-20020a635b58000000b004522ba4f86bmr504129pgm.223.1664780457768;
+        Mon, 03 Oct 2022 00:00:57 -0700 (PDT)
+Received: from thinkpad ([220.158.159.17])
+        by smtp.gmail.com with ESMTPSA id a10-20020a65654a000000b0042988a04bfdsm5962601pgw.9.2022.10.03.00.00.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Oct 2022 00:00:57 -0700 (PDT)
+Date:   Mon, 3 Oct 2022 12:30:51 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     lpieralisi@kernel.org, robh@kernel.org, andersson@kernel.org
+Cc:     kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
+        dmitry.baryshkov@linaro.org
+Subject: Re: [PATCH v4 00/12] Improvements to the Qcom PCIe Endpoint driver
+Message-ID: <20221003070051.GB5398@thinkpad>
+References: <20220914075350.7992-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH 2/2] ARM: dts: qcom: mdm9615: drop unit ids from PMIC
- nodes
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220930212052.894834-1-dmitry.baryshkov@linaro.org>
- <20220930212052.894834-2-dmitry.baryshkov@linaro.org>
- <b3b2dc79-30cc-a768-e7bb-d5e8ff3f6ba0@linaro.org>
- <CAA8EJpqA5uO+Nfo571qAbQ5KxatsVcp4Mkyxn0h5NR5dEot1eA@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAA8EJpqA5uO+Nfo571qAbQ5KxatsVcp4Mkyxn0h5NR5dEot1eA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220914075350.7992-1-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/10/2022 15:20, Dmitry Baryshkov wrote:
->>> diff --git a/arch/arm/boot/dts/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom-mdm9615.dtsi
->>> index b47c86412de2..bb17a57a2b90 100644
->>> --- a/arch/arm/boot/dts/qcom-mdm9615.dtsi
->>> +++ b/arch/arm/boot/dts/qcom-mdm9615.dtsi
->>> @@ -283,7 +283,7 @@ qcom,ssbi@500000 {
->>>                       reg = <0x500000 0x1000>;
->>>                       qcom,controller-type = "pmic-arbiter";
->>>
->>> -                     pmicintc: pmic@0 {
->>> +                     pmicintc: pmic {
->>
->> I think several other platforms, also with PMIC over SSBI, have the same
->> problem. If that's correct, can you fix them in the same patchset?
+On Wed, Sep 14, 2022 at 01:23:38PM +0530, Manivannan Sadhasivam wrote:
+> Hello,
 > 
-> It was a part of my previous patchset, but yeah. Let's get it done in this one.
+> This series contains improvements to the Qualcomm PCIe Endpoint controller
+> driver. The major improvements are the addition of SM8450 SoC support and
+> debugfs interface for exposing link transition counts.
+> 
+> This series has been tested on SM8450 based dev board.
+> 
+> NOTE: Since the bindings are ACKed, the whole series could be merged to the
+> PCI tree.
 > 
 
-Ah, if you fix them in separate patchset, it's also ok.
+Lorenzo, can this series make it for 6.1?
 
+Thanks,
+Mani
 
+> Thanks,
+> Mani
+> 
+> Changes in v4:
+> 
+> * Collected tags for bindings patches
+> * Reworded the subject of patch 2/12
+> 
+> Changes in v3:
+> 
+> * Removed the maxItems property from "items" list
+> * Reworded the debugfs patch
+> * Dropped the eDMA patch since that depends on ongoing eDMA series from Sergey
+> * Added two new patches that helps in saving power during idle and low power
+>   state
+> 
+> Changes in v2:
+> 
+> * Fixed the comments on bindings patches
+> * Added Ack from Krzysztof
+> 
+> Manivannan Sadhasivam (12):
+>   PCI: qcom-ep: Add kernel-doc for qcom_pcie_ep structure
+>   PCI: qcom-ep: Rely on the clocks supplied by devicetree
+>   PCI: qcom-ep: Make use of the cached dev pointer
+>   PCI: qcom-ep: Disable IRQs during driver remove
+>   PCI: qcom-ep: Expose link transition counts via debugfs
+>   PCI: qcom-ep: Gate Master AXI clock to MHI bus during L1SS
+>   PCI: qcom-ep: Disable Master AXI Clock when there is no PCIe traffic
+>   dt-bindings: PCI: qcom-ep: Make PERST separation optional
+>   PCI: qcom-ep: Make PERST separation optional
+>   dt-bindings: PCI: qcom-ep: Define clocks per platform
+>   dt-bindings: PCI: qcom-ep: Add support for SM8450 SoC
+>   PCI: qcom-ep: Add support for SM8450 SoC
+> 
+>  .../devicetree/bindings/pci/qcom,pcie-ep.yaml |  86 +++++++---
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c     | 154 ++++++++++++++----
+>  2 files changed, 188 insertions(+), 52 deletions(-)
+> 
+> -- 
+> 2.25.1
+> 
 
-Best regards,
-Krzysztof
-
+-- 
+மணிவண்ணன் சதாசிவம்
