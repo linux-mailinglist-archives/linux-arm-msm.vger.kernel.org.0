@@ -2,354 +2,499 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 525835F3949
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 00:46:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 409DF5F3975
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 00:59:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229872AbiJCWqM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Oct 2022 18:46:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47886 "EHLO
+        id S229532AbiJCW72 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Oct 2022 18:59:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229964AbiJCWqG (ORCPT
+        with ESMTP id S229680AbiJCW71 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Oct 2022 18:46:06 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9932F5A3DB;
-        Mon,  3 Oct 2022 15:46:04 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E476E61209;
-        Mon,  3 Oct 2022 22:46:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B90C433D6;
-        Mon,  3 Oct 2022 22:46:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664837163;
-        bh=peSrmHpf2GXRWRl5yVxhsQJ/OYfXzFXrMIsBwtA+O/g=;
-        h=From:To:Cc:Subject:Date:From;
-        b=lqSuQfLj92la/rl5AsYz7FOUs53UQbuRjAEaZLydPxLYyaWkCOpRQj0k8XFBinKlH
-         BVxaJoj5TOHSH/fuIa2VVCYNOQyL45V2XwdMvm57OWUiCrR4EHnm6ZY963DiAFDB+s
-         7B6H6UkoPq5ZaAbWlbKbHfrqP3F2dlVxLUowt4OwyqOFR1ijKrO65Pdsi6jWP34usG
-         Z+k2/wRXL20U4FwnZThZ7Ju7REsssvsjfEtTmfJxGNud3hF1SoDafX+x+rvcOu6u/B
-         EW44Ed9qWPzezFO9vQOas6Bssz3ShQiHB8dLjsCkUtjmWRchb57EqF/39dwwFW6kzg
-         E55Pb6Acx15Vg==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Richard Acayan <mailingradian@gmail.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Adam Skladowski <a39.skl@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Iskren Chernev <iskren.chernev@gmail.com>,
-        Adam Skladowski <a_skl39@protonmail.com>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        Dang Huynh <danct12@riseup.net>,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Li Zhengyu <lizhengyu3@huawei.com>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>
-Subject: [GIT PULL] Qualcomm clock updates for v6.1
-Date:   Mon,  3 Oct 2022 17:46:00 -0500
-Message-Id: <20221003224600.2327879-1-andersson@kernel.org>
-X-Mailer: git-send-email 2.37.1
+        Mon, 3 Oct 2022 18:59:27 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E12594B486
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 15:59:25 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id s30so12876936eds.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 15:59:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=17zljRZyrHJPZEaO8SoIB3R5UuxYCo2oLIqLhEH5Yqk=;
+        b=QBiI5PxZsX4XKrpah5IF0/PnyPRkgSEGFwgpDdhnR2vmlxytOKx1fCHpDBoeJjOMWH
+         1QA+ODpKnm6W7bngZIwVmknteIjrgkGSnY3WMEEalrEAMBPumSOzlmLL6TM/VNAZ4YIH
+         yPrx7ht7l6GPGbn1KOsVHmErr7VlMBHR+9qcc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=17zljRZyrHJPZEaO8SoIB3R5UuxYCo2oLIqLhEH5Yqk=;
+        b=ZkU3lDVBlJK6psaLfgUhhve1CaMuGJ9ZUkbRVdUK6sRnoPHD+h/jD33yQIc8py9bYx
+         nBXq6swtYh6D9+lrlQLUlyMgqqkPUwRE19SipWOmwFNFo5vq2nwtm4CIW89B83eViUnE
+         NpWvycy+nxHJMTKtA5BgvbOWPhU8l4CTMrROQe5NP+ihaucyY13fxYuOSv2V0/W6vJaK
+         z3XokC9KBSCUlXeOy2Daui3oLcXFtN/ZAQAiv1QWN7vFrNVQ1KicAFbOd3YlRfUphd6C
+         pT3eD4lOA03RBaR+pKGujUVZhU4RRUw419C8i7GbKjjUoW2F9jR7VHVPQ3xgpptIKunR
+         Ex6w==
+X-Gm-Message-State: ACrzQf0cVzPypSAZWeKWUWtOtJyXs41DZgW3l66ToTeaAK5//inObMIr
+        scLaf8Ce1a8Bhq2oEbiFYXz2T0OEEj5JnOyg
+X-Google-Smtp-Source: AMsMyM4s/aNgDIRVeEJSO7gWxGpbbQoOKugyXty03IWIYDI4ob29a5gngDk3hAcRgQDaUK3Nllz7UQ==
+X-Received: by 2002:a05:6402:1f89:b0:453:8093:c4e5 with SMTP id c9-20020a0564021f8900b004538093c4e5mr21251111edc.182.1664837964137;
+        Mon, 03 Oct 2022 15:59:24 -0700 (PDT)
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com. [209.85.221.43])
+        by smtp.gmail.com with ESMTPSA id mf4-20020a170906cb8400b00782e3cf7277sm6009477ejb.120.2022.10.03.15.59.22
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Oct 2022 15:59:23 -0700 (PDT)
+Received: by mail-wr1-f43.google.com with SMTP id r6so18771148wru.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 15:59:22 -0700 (PDT)
+X-Received: by 2002:adf:f90d:0:b0:20c:de32:4d35 with SMTP id
+ b13-20020adff90d000000b0020cde324d35mr14320673wrr.583.1664837962280; Mon, 03
+ Oct 2022 15:59:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20220930200529.331223-1-krzysztof.kozlowski@linaro.org>
+ <20220930200529.331223-2-krzysztof.kozlowski@linaro.org> <CAD=FV=UaSAvppTqqsZzNh7x_VZ5pVPROLP4AinK2NEWMUPnoQw@mail.gmail.com>
+ <985e3982-e9c6-53d0-1aa8-7c8f7726926a@linaro.org>
+In-Reply-To: <985e3982-e9c6-53d0-1aa8-7c8f7726926a@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 3 Oct 2022 15:59:10 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WgZLztJUxxs0B-kTnT4cN=kKc24if+P0h7whW54S57aQ@mail.gmail.com>
+Message-ID: <CAD=FV=WgZLztJUxxs0B-kTnT4cN=kKc24if+P0h7whW54S57aQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sdm845: align TLMM pin
+ configuration with DT schema
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit 568035b01cfb107af8d2e4bd2fb9aea22cf5b868:
+Hi,
 
-  Linux 6.0-rc1 (2022-08-14 15:50:18 -0700)
+On Mon, Oct 3, 2022 at 10:45 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 03/10/2022 18:14, Doug Anderson wrote:
+> > Hi,
+> >
+> > On Fri, Sep 30, 2022 at 1:06 PM Krzysztof Kozlowski
+> > <krzysztof.kozlowski@linaro.org> wrote:
+> >>
+> >> DT schema expects TLMM pin configuration nodes to be named with
+> >> '-state' suffix and their optional children with '-pins' suffix.
+> >>
+> >> The sdm854.dtsi file defined several pin configuration nodes which are
+> >> customized by the boards.  Therefore keep a additional "default-pins"
+> >> node inside so the boards can add more of configuration nodes.  Such
+> >> additional configuration nodes always need 'function' property now
+> >> (required by DT schema).
+> >>
+> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >> ---
+> >>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi    | 344 +++++++-----------
+> >>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |  76 ++--
+> >>  .../arm64/boot/dts/qcom/sdm845-lg-common.dtsi |  60 ++-
+> >>  arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts |   2 +-
+> >>  arch/arm64/boot/dts/qcom/sdm845-mtp.dts       |  60 ++-
+> >>  .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |  88 ++---
+> >>  .../boot/dts/qcom/sdm845-shift-axolotl.dts    | 138 +++----
+> >>  .../dts/qcom/sdm845-sony-xperia-tama.dtsi     |   6 +-
+> >>  .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts |  26 +-
+> >>  .../boot/dts/qcom/sdm845-xiaomi-polaris.dts   |  30 +-
+> >>  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 305 +++++++---------
+> >>  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts |  33 +-
+> >>  .../boot/dts/qcom/sdm850-samsung-w737.dts     |  96 ++---
+> >>  13 files changed, 513 insertions(+), 751 deletions(-)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> >> index b5f11fbcc300..3403cdcdd49c 100644
+> >> --- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> >> +++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> >> @@ -993,21 +993,21 @@ &wifi {
+> >>  /* PINCTRL - additions to nodes defined in sdm845.dtsi */
+> >>
+> >>  &qspi_cs0 {
+> >> -       pinconf {
+> >> +       default-pins {
+> >>                 pins = "gpio90";
+> >>                 bias-disable;
+> >>         };
+> >>  };
+> >>
+> >>  &qspi_clk {
+> >> -       pinconf {
+> >> +       default-pins {
+> >>                 pins = "gpio95";
+> >>                 bias-disable;
+> >>         };
+> >>  };
+> >>
+> >>  &qspi_data01 {
+> >> -       pinconf {
+> >> +       default-pins {
+> >>                 pins = "gpio91", "gpio92";
+> >
+> > I haven't been fully involved in all the discussion here, but the
+> > above doesn't look like it matches the way that Bjorn wanted to go
+> > [1].  I would sorta expect it to look like this:
+> >
+> >   /* QSPI always needs a clock and IO pins */
+> >   qspi_basic: {
+> >     qspi_clk: {
+> >       pins = "gpio95";
+> >       function = "qspi_clk";
+> >     };
+> >     qspi_data01: {
+> >       pins = "gpio95";
+> >       function = "qspi_clk";
+> >     };
+> >   }
+> >
+> >   /* QSPI will need one or both chip selects */
+> >   qspi_cs0: qspi-cs0-state {
+> >     pins = "gpio90";
+> >     function = "qspi_cs";
+> >   };
+> >
+> >   qspi_cs1: qspi-cs1-state {
+> >     pins = "gpio89";
+> >     function = "qspi_cs";
+> >   };
+> >
+> >   /* If using all 4 data lines we need these */
+> >   qspi_data12: qspi-data12-state {
+> >     pins = "gpio93", "gpio94";
+> >     function = "qspi_data";
+> >   };
+> >
+> > Basically grouping things together in a two-level node when it makes
+> > sense and then using 1-level nodes for "mixin" pins. Then you'd end up
+> > doing one of these things:
+> >
+> > pinctrl-0 = <&qspi_basic &qspi_cs0>;
+> > pinctrl-0 = <&qspi_basic &qspi_cs1>;
+> > pinctrl-0 = <&qspi_basic &qspi_cs0 &qspi_data12>;
+>
+>
+> I don't get how my patch changes the existing approach? Such pattern was
+> already there.
 
-are available in the Git repository at:
+Before your patch things were split in two nodes, the muxing and the
+configuration. AKA when you combined the soc.dtsi and the board.dts
+you'd have:
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-clk-for-6.1
+qspi_cs0: qspi-cs0-state {
+  pinmux {
+    pins = "...";
+    ... muxing properties ...
+  };
+  pinconf {
+    pins = "...";
+    ... config properties ...
+  };
+};
 
-for you to fetch changes up to 994c77ed371e464ae4c1bfc316f7aff7309b2d59:
+Your patch combines the "pinmux" and "pinconf" nodes into one. So when
+you combine the soc.dtsi and the board.dts after your patch you now
+have:
 
-  clk: qcom: gcc-msm8939: use ARRAY_SIZE instead of specifying num_parents (2022-09-29 11:42:12 -0500)
+qspi_cs0: qspi-cs0-state {
+  default-pins {
+    pins = "...";
+    ... muxing properties ...
+    ... config properties ...
+  };
+};
 
-----------------------------------------------------------------
-Qualcomm clock updates for v6.1
 
-This introduces display clock controllers are introduces for SM6115 and
-SM8450, and SC8280XP gains a GPU clock controller.  MSM8909 and SM6375
-gains global and SMD RPM clock controller drivers.
+That's fine and is functionally correct. ...but IMO it sets a bad
+example for people to follow (though, of course, it's really up to
+Bjorn). The "default-pins" subnode serves no purpose. If you're
+touching all this stuff anyway you might as well not end up with
+something that's a bad example for people to follow.
 
-The handling of GDSCs with PWRSTS_RET was fixed, to keep the GDSC on
-while powering down the parent supply. This solved retention issues
-during suspend of USB on sc7180/7280 and SC8280XP.
 
-SM6115 and QCM2260 are moved to reuse PLL configuration. SDM660 SDCC1
-was moved to floor ops.
 
-Support for the APCS PLLs for IPQ8064, IPQ8074 and IPQ6018 was
-added/fixed. The MSM8996 CPU clocks was updated, with support for ACD
-clocks added.
+> Again - you end up or you ended up? We discuss here what this patch did.
+> So are you sure that this patch did something like that (and it wasn't
+> already there)?
+>
+> >
+> > Note that the extra tags of "qspi_clk" and "qspi_data01" are important
+> > since it lets the individual boards easily set pulls / drive strengths
+> > without needing to replicate the hierarchy of the SoC. So if a board
+> > wanted to set the pull of the cs0 line, just:
+> >
+> > &qspi_cs0 {
+> >   bias-disable;
+> > };
+> >
+> > [1] https://lore.kernel.org/lkml/CAD=FV=VUL4GmjaibAMhKNdpEso_Hg_R=XeMaqah1LSj_9-Ce4Q@mail.gmail.com/
+> >
+> >
+> >> @@ -1016,7 +1016,7 @@ pinconf {
+> >>  };
+> >>
+> >>  &qup_i2c3_default {
+> >> -       pinconf {
+> >> +       default-pins {
+> >>                 pins = "gpio41", "gpio42";
+> >>                 drive-strength = <2>;
+> >
+> > I don't see any benefit to two-levels above. Why not just get rid of
+> > the "default-pins" and put the stuff directly under qup_i2c3_default?
+>
+> For the same reason I told Konrad?
 
-Support for SDM670 was added to the SDM845 Glbal clock controller and
-the RPMh clock controller driver.
+OK. I looked at what you end up with for "qup_uart9" after your
+patches and it's definitely not my favorite place to end up at. If
+nothing else you are double-specifying "function" in both
+"default-pins" and "tx-pins"/"rx-pins". If those disagree then what
+happens?
 
-Transition to parent_data, parent_hws and use of ARRAY_SIZE() for
-num_parents was done for MSM8660, MSM8916, MSM8939, MSM8960 global clock
-controllers, IPQ8064 LPASS clock controller and MSM8960 multimedia clock
-controller.
+In general also we end up specifying that extra level of
+"default-pins" in many cases for no purpose. We also end up
+replicating hierarchy in the board dts files (the dts files are
+replicating the "default-pins" nodes from the parent).
 
-Support for per-reset defined delay of was introduced.
 
-----------------------------------------------------------------
-Adam Skladowski (3):
-      dt-bindings: clock: add QCOM SM6115 display clock bindings
-      clk: qcom: Add display clock controller driver for SM6115
-      clk: qcom: gcc-sm6115: Override default Alpha PLL regs
+> >>  /* PINCTRL - additions to nodes defined in sdm845.dtsi */
+> >>  &qup_spi2_default {
+> >> -       pinmux {
+> >> +       default-pins {
+> >>                 drive-strength = <16>;
+> >>         };
+> >>  };
+> >>
+> >>  &qup_uart3_default{
+> >> -       pinmux {
+> >> +       default-pins {
+> >>                 pins = "gpio41", "gpio42", "gpio43", "gpio44";
+> >>                 function = "qup3";
+> >>         };
+> >>  };
+> >>
+> >>  &qup_i2c10_default {
+> >> -       pinconf {
+> >> +       default-pins {
+> >>                 pins = "gpio55", "gpio56";
+> >>                 drive-strength = <2>;
+> >>                 bias-disable;
+> >> @@ -1144,37 +1144,37 @@ pinconf {
+> >>  };
+> >>
+> >>  &qup_uart6_default {
+> >> -       pinmux {
+> >> -               pins = "gpio45", "gpio46", "gpio47", "gpio48";
+> >> -               function = "qup6";
+> >> -       };
+> >> -
+> >> -       cts {
+> >> +       cts-pins {
+> >>                 pins = "gpio45";
+> >> +               function = "qup6";
+> >>                 bias-disable;
+> >>         };
+> >>
+> >> -       rts-tx {
+> >> +       rts-tx-pins {
+> >>                 pins = "gpio46", "gpio47";
+> >> +               function = "qup6";
+> >>                 drive-strength = <2>;
+> >>                 bias-disable;
+> >>         };
+> >>
+> >> -       rx {
+> >> +       rx-pins {
+> >>                 pins = "gpio48";
+> >> +               function = "qup6";
+> >>                 bias-pull-up;
+> >>         };
+> >>  };
+> >
+> > I didn't check everything about this patch, but skimming through I
+> > believe that the uart6 handling here is wrong. You'll end up with:>
+> >   qup_uart6_default: qup-uart6-default-state {
+> >     default-pins {
+> >       pins = "gpio47", "gpio48";
+> >       function = "qup6";
+>
+> This piece was removed.
 
-Andrew Halaney (1):
-      dt-bindings: clocks: qcom,gcc-sc8280xp: Fix typos
+It was? How/where? I tried applying your patch and I still see "qup6"
+under the default-pins node in sdm845.dtsi.
 
-Bjorn Andersson (3):
-      Merge branch '1662005846-4838-1-git-send-email-quic_c_skakit@quicinc.com' into clk-for-6.1
-      dt-bindings: clock: Add Qualcomm SC8280XP GPU binding
-      clk: qcom: Add SC8280XP GPU clock controller
 
-Christian Marangi (5):
-      dt-bindings: clock: add pcm reset for ipq806x lcc
-      clk: qcom: lcc-ipq806x: add reset definition
-      clk: qcom: lcc-ipq806x: convert to parent data
-      clk: qcom: lcc-ipq806x: use ARRAY_SIZE for num_parents
-      clk: qcom: clk-rcg2: add rcg2 mux ops
+> >     };
+> >
+> >     cts-pins {
+> >       pins = "gpio45";
+> >       function = "qup6";
+> >       bias-disable;
+> >     };
+> >
+> >     rts-tx-pins {
+> >       pins = "gpio46", "gpio47";
+> >       function = "qup6";
+> >       drive-strength = <2>;
+> >       bias-disable;
+> >     };
+> >
+> >     rx-pins {
+> >       pins = "gpio48";
+> >       function = "qup6";
+> >       bias-pull-up;
+> >     };
+> >   };
+> >
+> > So pins 47 and 48 are each referenced in two nodes. That doesn't seem
+> > correct to me. IMO, better would have been:
+>
+> Even though that particular piece was removed, so there is no double
+> reference, it would still be correct. Or rather - what is there
+> incorrect? Mentioning pin twice? This is ok, although not necessarily
+> the most readable.
 
-Dang Huynh (1):
-      clk: qcom: sm6115: Select QCOM_GDSC
+I guess this gets into the corners of pinctrl that I haven't poked at
+lots. I guess it should be OK unless the SoC.dtsi and the board.dts
+disagree about the "function". In such a case I guess it would be a
+problem. So I guess what you end up will be OK but I don't like that
+"function" is specified for the same pin in two different sub-nodes.
 
-Dmitry Baryshkov (32):
-      dt-bindings: clk: qcom,gcc-*: use qcom,gcc.yaml
-      dt-bindings: clock: separate bindings for MSM8916 GCC device
-      clk: qcom: gcc-msm8916: use ARRAY_SIZE instead of specifying num_parents
-      clk: qcom: gcc-msm8916: move GPLL definitions up
-      clk: qcom: gcc-msm8916: move gcc_mss_q6_bimc_axi_clk down
-      clk: qcom: gcc-msm8916: use parent_hws/_data instead of parent_names
-      dt-bindings: clock: qcom,mmcc: fix clocks/clock-names definitions
-      dt-bindings: clock: qcom,mmcc: define clocks/clock-names for MSM8996
-      dt-bindings: clock: qcom,gcc-msm8660: separate GCC bindings for MSM8660
-      clk: qcom: gcc-msm8660: use ARRAY_SIZE instead of specifying num_parents
-      clk: qcom: gcc-msm8660: use parent_hws/_data instead of parent_names
-      clk: qcom: a53-pll: convert to use parent_data rather than parent_names
-      dt-bindings: clocks: qcom,gcc-apq8064: define clocks/-names properties
-      dt-bindings: clocks: qcom,mmcc: define clocks/clock-names for MSM8960
-      clk: qcom: gcc-msm8960: use ARRAY_SIZE instead of specifying num_parents
-      clk: qcom: gcc-msm8960: use parent_hws/_data instead of parent_names
-      clk: qcom: lcc-msm8960: use macros to implement mi2s clocks
-      clk: qcom: lcc-msm8960: use parent_hws/_data instead of parent_names
-      clk: qcom: mmcc-msm8960: use ARRAY_SIZE instead of specifying num_parents
-      clk: qcom: mmcc-msm8960: move clock parent tables down
-      clk: qcom: mmcc-msm8960: use parent_hws/_data instead of parent_names
-      clk: qcom: cpu-8996: switch to devm_clk_notifier_register
-      clk: qcom: cpu-8996: declare ACD clocks
-      clk: qcom: cpu-8996: move ACD logic to clk_cpu_8996_pmux_determine_rate
-      clk: qcom: cpu-8996: don't store parents in clk_cpu_8996_pmux
-      clk: qcom: cpu-8996: use constant mask for pmux
-      dt-bindings: clock: qcom: add bindings for dispcc on SM8450
-      clk: qcom: alpha-pll: add support for power off mode for lucid evo PLL
-      clk: qcom: Add support for Display Clock Controller on SM8450
-      dt-bindings: clock: move qcom,gcc-msm8939 to qcom,gcc-msm8916.yaml
-      clk: qcom: gcc-msm8939: use parent_hws where possible
-      clk: qcom: gcc-msm8939: use ARRAY_SIZE instead of specifying num_parents
 
-Iskren Chernev (2):
-      clk: qcom: gcc-sm6115: Move alpha pll bramo overrides
-      clk: qcom: Merge alt alpha plls for qcm2260, sm6115
+> > In Soc.dtsi:
+> >
+> >   qup_uart6_txrx: qup-uart6-txrx-state {
+> >     qup_uart6_tx {
+> >       pins = "gpio47";
+> >       function = "qup6";
+> >     };
+> >     qup_uart6_rx {
+> >       pins = "gpio48";
+> >       function = "qup6";
+> >     };
+> >   };
+> >   qup_uart6_cts: qup-uart6-cts-state {
+> >     pins = "gpio45";
+> >     function = "qup6";
+> >   };
+> >   qup_uart6_rts: qup-uart6-rts-state {
+> >     pins = "gpio46";
+> >     function = "qup6";
+> >   };
+> >
+> > In board.dts:
+> >
+> >   &qup_uart6_cts {
+> >     bias-disable;
+> >   };
+> >   &qup_uart6_rts {
+> >     drive-strength = <2>;
+> >     bias-disable;
+> >   };
+> >   &qup_uart6_rx {
+> >     bias-pull-up;
+> >   };
+> >   &qup_uart6_tx {
+> >     drive-strength = <2>;
+> >     bias-disable;
+>
+> It's not related to this patchset, but sounds good, please change the
+> DTS to match it. I can rebase my patch on top of it.
 
-Johan Hovold (4):
-      clk: gcc-sc8280xp: keep PCIe power-domains always-on
-      clk: gcc-sc8280xp: keep USB power-domains always-on
-      clk: qcom: gdsc: add missing error handling
-      clk: qcom: gcc-sc8280xp: use retention for USB power domains
+I guess it's related in that the patchset is touching everything and
+one would assume that something touched so recently would represent
+the current best practices. Maybe that's a weak argument, but if I saw
+a patch that was about trying to clean up all the pinctrl across all
+the older SoCs that I would assume that the pinctrl would be clean
+after that patch and would be a good example to follow as best
+practice. Thus it's relevant to talk about whether this patch is
+ending us up at best practice or not.
 
-Konrad Dybcio (6):
-      dt-bindings: clock: qcom,rpmcc: Add compatible for SM6375
-      dt-bindings: clock: qcom: rpmcc: Add BIMC_FREQ_LOG
-      clk: qcom: smd: Add SM6375 clocks
-      clk: qcom: alpha: Add support for programming the PLL_FSM_LEGACY_MODE bit
-      dt-bindings: clock: add SM6375 QCOM global clock bindings
-      clk: qcom: Add global clock controller driver for SM6375
 
-Krishna chaitanya chundru (1):
-      clk: qcom: gcc-sc7280: Update the .pwrsts for PCIe GDSC
+> >   };
+> >
+> > Also, as per latest agreement with Bjorn, we should be moving the
+> > default drive strength to the SoC.dtsi file, so going further:
+>
+> How is it related to this patch? Sure, feel free to move drive strength
+> anywhere. We can discuss it. But it is not part of this patch.
 
-Krzysztof Kozlowski (1):
-      dt-bindings: clock: qcom,a53pll: replace maintainer
+Moving the drive strength can certainly be discussed / done in a later patch.
 
-Li Zhengyu (1):
-      clk: qcom: clk-rpmh: Remove redundant if statement
 
-Luca Weiss (1):
-      clk: qcom: gcc-sm6350: Update the .pwrsts for usb gdscs
+> > In Soc.dtsi:
+> >
+> >   qup_uart6_txrx: qup-uart6-txrx-state {
+> >     qup_uart6_tx {
+> >       pins = "gpio47";
+> >       function = "qup6";
+> >       drive-strength = <2>;
+> >     };
+> >     qup_uart6_rx {
+> >       pins = "gpio48";
+> >       function = "qup6";
+> >     };
+> >   };
+> >   qup_uart6_cts: qup-uart6-cts-state {
+> >     pins = "gpio45";
+> >     function = "qup6";
+> >   };
+> >   qup_uart6_rts: qup-uart6-rts-state {
+> >     pins = "gpio46";
+> >     function = "qup6";
+> >     drive-strength = <2>;
+>
+> These are not part of DTSI. They exist in DTS, not in DTSI. You now
+> introduce a change entirely different than this patchset is doing. It
+> makes sense on its own, but it is not related to this patchset.
 
-Marijn Suijten (1):
-      clk: qcom: gcc-sdm660: Use floor ops for SDCC1 clock
+It is relevant to discuss because it would be the correct way to solve
+the same issue with "uart9" that you used to justify why you needed an
+extra "uart9-default" subnode.
 
-Rajendra Nayak (3):
-      clk: qcom: gdsc: Fix the handling of PWRSTS_RET support
-      clk: qcom: gcc-sc7180: Update the .pwrsts for usb gdsc
-      clk: qcom: gcc-sc7280: Update the .pwrsts for usb gdscs
 
-Richard Acayan (5):
-      dt-bindings: clock: gcc-sdm845: add sdm670 global clocks
-      clk: qcom: gcc-sdm845: use device tree match data
-      clk: qcom: gcc-sdm845: add sdm670 global clock data
-      dt-bindings: clock: add rpmhcc bindings for sdm670
-      clk: qcom: rpmhcc: add sdm670 clocks
-
-Robert Marko (6):
-      clk: qcom: apss-ipq6018: fix apcs_alias0_clk_src
-      clk: qcom: apss-ipq6018: mark apcs_alias0_core_clk as critical
-      dt-bindings: clock: qcom,a53pll: add IPQ8074 compatible
-      clk: qcom: apss-ipq-pll: use OF match data for Alpha PLL config
-      clk: qcom: apss-ipq-pll: update IPQ6018 Alpha PLL config
-      clk: qcom: apss-ipq-pll: add support for IPQ8074
-
-Satya Priya (1):
-      clk: qcom: lpass: Fix lpass audiocc probe
-
-Stephan Gerhold (6):
-      dt-bindings: clock: Add schema for MSM8909 GCC
-      clk: qcom: Add driver for MSM8909 GCC
-      clk: qcom: reset: Allow specifying custom reset delay
-      clk: qcom: gcc-msm8909: Increase delay for USB PHY reset
-      dt-bindings: clock: qcom,rpmcc: Add MSM8909
-      clk: qcom: smd-rpm: Add clocks for MSM8909
-
-Taniya Das (5):
-      dt-bindings: clock: Add "qcom,adsp-pil-mode" property
-      dt-bindings: clock: Add resets for LPASS audio clock controller for SC7280
-      dt-bindings: clock: Add support for external MCLKs for LPASS on SC7280
-      clk: qcom: lpass: Handle the regmap overlap of lpasscc and lpass_aon
-      clk: qcom: lpass: Add support for resets & external mclk for SC7280
-
-Yassine Oudjana (6):
-      clk: qcom: msm8996-cpu: Rename DIV_2_INDEX to SMUX_INDEX
-      clk: qcom: msm8996-cpu: Statically define PLL dividers
-      clk: qcom: msm8996-cpu: Unify cluster order
-      clk: qcom: msm8996-cpu: Convert secondary muxes to clk_regmap_mux
-      dt-bindings: clock: qcom,msm8996-apcc: Fix clocks
-      clk: qcom: msm8996-cpu: Use parent_data/_hws for all clocks
-
- .../devicetree/bindings/clock/qcom,a53pll.yaml     |    3 +-
- .../bindings/clock/qcom,gcc-apq8064.yaml           |    9 +
- .../bindings/clock/qcom,gcc-msm8660.yaml           |   54 +
- .../bindings/clock/qcom,gcc-msm8909.yaml           |   58 +
- .../bindings/clock/qcom,gcc-msm8916.yaml           |   66 +
- .../bindings/clock/qcom,gcc-msm8976.yaml           |   21 +-
- .../bindings/clock/qcom,gcc-msm8994.yaml           |   21 +-
- .../bindings/clock/qcom,gcc-msm8996.yaml           |   25 +-
- .../bindings/clock/qcom,gcc-msm8998.yaml           |   25 +-
- .../devicetree/bindings/clock/qcom,gcc-other.yaml  |    7 -
- .../bindings/clock/qcom,gcc-qcm2290.yaml           |   25 +-
- .../devicetree/bindings/clock/qcom,gcc-sc7180.yaml |   25 +-
- .../devicetree/bindings/clock/qcom,gcc-sc7280.yaml |   21 +-
- .../bindings/clock/qcom,gcc-sc8180x.yaml           |   25 +-
- .../bindings/clock/qcom,gcc-sc8280xp.yaml          |   25 +-
- .../devicetree/bindings/clock/qcom,gcc-sdm845.yaml |   84 +-
- .../devicetree/bindings/clock/qcom,gcc-sdx55.yaml  |   21 +-
- .../devicetree/bindings/clock/qcom,gcc-sdx65.yaml  |   21 +-
- .../devicetree/bindings/clock/qcom,gcc-sm6115.yaml |   25 +-
- .../devicetree/bindings/clock/qcom,gcc-sm6125.yaml |   25 +-
- .../devicetree/bindings/clock/qcom,gcc-sm6350.yaml |   25 +-
- .../devicetree/bindings/clock/qcom,gcc-sm8150.yaml |   25 +-
- .../devicetree/bindings/clock/qcom,gcc-sm8250.yaml |   25 +-
- .../devicetree/bindings/clock/qcom,gcc-sm8350.yaml |   21 +-
- .../devicetree/bindings/clock/qcom,gcc-sm8450.yaml |   21 +-
- .../devicetree/bindings/clock/qcom,gpucc.yaml      |    2 +
- .../devicetree/bindings/clock/qcom,mmcc.yaml       |  209 +-
- .../bindings/clock/qcom,msm8996-apcc.yaml          |   15 +-
- .../devicetree/bindings/clock/qcom,rpmcc.yaml      |    2 +
- .../devicetree/bindings/clock/qcom,rpmhcc.yaml     |    1 +
- .../bindings/clock/qcom,sc7280-lpasscc.yaml        |    6 +-
- .../bindings/clock/qcom,sc7280-lpasscorecc.yaml    |   26 +-
- .../bindings/clock/qcom,sm6115-dispcc.yaml         |   70 +
- .../devicetree/bindings/clock/qcom,sm6375-gcc.yaml |   52 +
- .../bindings/clock/qcom,sm8450-dispcc.yaml         |   98 +
- drivers/clk/qcom/Kconfig                           |   47 +-
- drivers/clk/qcom/Makefile                          |    5 +
- drivers/clk/qcom/a53-pll.c                         |    4 +-
- drivers/clk/qcom/apss-ipq-pll.c                    |   33 +-
- drivers/clk/qcom/apss-ipq6018.c                    |   15 +-
- drivers/clk/qcom/clk-alpha-pll.c                   |   66 +-
- drivers/clk/qcom/clk-alpha-pll.h                   |    8 +-
- drivers/clk/qcom/clk-cpu-8996.c                    |  329 +-
- drivers/clk/qcom/clk-rcg.h                         |    1 +
- drivers/clk/qcom/clk-rcg2.c                        |    7 +
- drivers/clk/qcom/clk-rpmh.c                        |   25 +-
- drivers/clk/qcom/clk-smd-rpm.c                     |   83 +-
- drivers/clk/qcom/dispcc-sm6115.c                   |  608 +++
- drivers/clk/qcom/dispcc-sm8450.c                   | 1829 +++++++++
- drivers/clk/qcom/gcc-msm8660.c                     |  330 +-
- drivers/clk/qcom/gcc-msm8909.c                     | 2731 ++++++++++++++
- drivers/clk/qcom/gcc-msm8916.c                     | 1020 ++---
- drivers/clk/qcom/gcc-msm8939.c                     |  552 +--
- drivers/clk/qcom/gcc-msm8960.c                     |  436 ++-
- drivers/clk/qcom/gcc-qcm2290.c                     |   56 +-
- drivers/clk/qcom/gcc-sc7180.c                      |    2 +-
- drivers/clk/qcom/gcc-sc7280.c                      |    6 +-
- drivers/clk/qcom/gcc-sc8280xp.c                    |   20 +-
- drivers/clk/qcom/gcc-sdm660.c                      |    2 +-
- drivers/clk/qcom/gcc-sdm845.c                      |  400 +-
- drivers/clk/qcom/gcc-sm6115.c                      |   48 +-
- drivers/clk/qcom/gcc-sm6350.c                      |    2 +-
- drivers/clk/qcom/gcc-sm6375.c                      | 3931 ++++++++++++++++++++
- drivers/clk/qcom/gdsc.c                            |   35 +-
- drivers/clk/qcom/gdsc.h                            |    5 +
- drivers/clk/qcom/gpucc-sc8280xp.c                  |  461 +++
- drivers/clk/qcom/lcc-ipq806x.c                     |   84 +-
- drivers/clk/qcom/lcc-msm8960.c                     |  211 +-
- drivers/clk/qcom/lpassaudiocc-sc7280.c             |   66 +-
- drivers/clk/qcom/lpasscc-sc7280.c                  |   44 -
- drivers/clk/qcom/lpasscorecc-sc7280.c              |   33 +
- drivers/clk/qcom/mmcc-msm8960.c                    |  454 ++-
- drivers/clk/qcom/reset.c                           |    4 +-
- drivers/clk/qcom/reset.h                           |    1 +
- include/dt-bindings/clock/qcom,gcc-msm8909.h       |  218 ++
- include/dt-bindings/clock/qcom,gcc-sdm845.h        |    1 +
- include/dt-bindings/clock/qcom,gpucc-sc8280xp.h    |   35 +
- include/dt-bindings/clock/qcom,lcc-ipq806x.h       |    2 +
- .../dt-bindings/clock/qcom,lpassaudiocc-sc7280.h   |    5 +
- .../dt-bindings/clock/qcom,lpasscorecc-sc7280.h    |    2 +
- include/dt-bindings/clock/qcom,rpmcc.h             |    1 +
- include/dt-bindings/clock/qcom,sm6115-dispcc.h     |   36 +
- include/dt-bindings/clock/qcom,sm6375-gcc.h        |  234 ++
- include/dt-bindings/clock/qcom,sm8450-dispcc.h     |  103 +
- include/linux/soc/qcom/smd-rpm.h                   |    1 +
- 85 files changed, 13613 insertions(+), 2203 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8660.yaml
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8909.yaml
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8916.yaml
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm6375-gcc.yaml
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8450-dispcc.yaml
- create mode 100644 drivers/clk/qcom/dispcc-sm6115.c
- create mode 100644 drivers/clk/qcom/dispcc-sm8450.c
- create mode 100644 drivers/clk/qcom/gcc-msm8909.c
- create mode 100644 drivers/clk/qcom/gcc-sm6375.c
- create mode 100644 drivers/clk/qcom/gpucc-sc8280xp.c
- create mode 100644 include/dt-bindings/clock/qcom,gcc-msm8909.h
- create mode 100644 include/dt-bindings/clock/qcom,gpucc-sc8280xp.h
- create mode 100644 include/dt-bindings/clock/qcom,sm6115-dispcc.h
- create mode 100644 include/dt-bindings/clock/qcom,sm6375-gcc.h
- create mode 100644 include/dt-bindings/clock/qcom,sm8450-dispcc.h
+> >   };
+> >
+> > In board.dts:
+> >
+> >   &qup_uart6_cts {
+> >     bias-disable;
+> >   };
+> >   &qup_uart6_rts {
+> >     bias-disable;
+> >   };
+> >   &qup_uart6_rx {
+> >     bias-pull-up;
+> >   };
+> >   &qup_uart6_tx {
+> >     bias-disable;
+> >   };
+> >
+> > In the SoC.dtsi file we could default to just a tx/rx config:
+> >
+> > pinctrl-0 = <&qup_uart6_txrx>;
+> >
+> > ...if a board had the flow control lines hooked up, it could do:
+> >
+> > pinctrl-0 = <&qup_uart6_txrx &qup_uart6_cts &qup_uart6_rts>;
+>
+>
+> Best regards,
+> Krzysztof
+>
