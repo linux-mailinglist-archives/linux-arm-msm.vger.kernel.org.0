@@ -2,106 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9605D5F2BE2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 10:33:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2D515F2C57
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 10:49:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232018AbiJCIdw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Oct 2022 04:33:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45730 "EHLO
+        id S230094AbiJCItN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Oct 2022 04:49:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229559AbiJCIdN (ORCPT
+        with ESMTP id S231797AbiJCIs4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Oct 2022 04:33:13 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B1CE6919C
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 01:05:19 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id bk15so15454880wrb.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 01:05:19 -0700 (PDT)
+        Mon, 3 Oct 2022 04:48:56 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73FE36160
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 01:29:42 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 10so15540089lfy.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 01:29:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:to:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date;
-        bh=gN6eBgvZPJathSAOh+PX4u7sh5/2KXHV1ko+bwpxMT8=;
-        b=daAjyaeHDs+wFTCOOcJk66EZw8ezYF0CSa6PsjVPPib+6zuPHB+40FhfzlQMyKSosS
-         A2Ui2tP5nKdbbZN06ihokVPHgYVVyO0PBwJtTwaSouPIHJMKGrppVGmAnfG6oj5VaEDG
-         7fEUpzZShk0YsGz4oWexxhMeDh3j4U9nuJA8VrJhUj+9yE6xx6kvOetmFjv8ob2g2iSp
-         PqNdmnlR6oYNiFtuDoYnSUjtKspQJrGhwlwSjdv7rAXfgZ4LwvVIgPkqJ+dBSrnPz/8b
-         7nO3JPwNRs8P235E5hZyDBu/9EsFgpdk0SKBn4hzRNa9Qc1ZdwLSnMc+Bbi7ntGHP/UB
-         vEKA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=XZiDx2g7aXKR9agqFK0ZQyqnnudlz/UN1Lm6FTwoFUM=;
+        b=VYiut/UPgayYZjKj8w/2DI6z8StJj58gr/3IeYSdNO9Ps0c3+W39pR1Ja1BCqabJ3b
+         M6VdDhBF/HV93RlytNRCOY5bF/WKpRxx+WWqYkhTjx5+VLiI7kgGxpKYbRUFtvWo8eqJ
+         qxKrqeSKJd681hNva1vZP2Ku2i8wjOhFZkcD1rD2Tzu0ISK3+oLWEunyqgTJejlKfjie
+         uX0RAnJmBE50NLywWwpfMZUCe0SO1tJu11pZ1vyOzdhvEpajYCNlkIj7Hqg5mn23Pkys
+         8YLtXKvNlTFQn6bQDja8Ur0wKZSMGeLjyTgq2g4OI7jVc2wR0Yzktmptxs6bbLTe4oO1
+         +QHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:to:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=gN6eBgvZPJathSAOh+PX4u7sh5/2KXHV1ko+bwpxMT8=;
-        b=YFxkckINeXJtMShYvHIJYhslDzi+Q26bkz2x961eU3XI+znUg1qxVdMCUnFRweGpQc
-         MRwGmFE8cWGvaH88WVXBuN3DqHzok0rsG87Pi3s9rkWfq4qbZbJGZd+ETJvq27oIsZ0H
-         ZJ3DTHtwkFyXNQDui30Y9+1IWy/Cok9lTVaL72UFQpOmMskglfS/5CV22QGoS3vCc3ik
-         v6qWzQYHfL8rWC1mC+KoQBQdbbQWdYWPSKUrZ52JAOqKbcjqo7QeuVWPLL7gTi6y2qEn
-         Euad+imqZLksmuYc166CSSIPPBDMuQPxP9cQThhpMSSpi8vecRsoJ6CqNwsE/CWZaiyu
-         teQQ==
-X-Gm-Message-State: ACrzQf3ALDMdBoI2xIAWK3JfmgSOAPONuYbqin70SomRdtjvQ+GQshmF
-        UUjWD6Lkd3gLIZXlDLKVmcchWQ==
-X-Google-Smtp-Source: AMsMyM7cr1Q33tw0w8IVRJOFhOmnhA7B5mLfA+CAXuFkJJdmEjsdZKsieHf+AxViF7gRTxn2RTFFXQ==
-X-Received: by 2002:a5d:5d87:0:b0:22a:bbc5:5afe with SMTP id ci7-20020a5d5d87000000b0022abbc55afemr12120699wrb.235.1664784310035;
-        Mon, 03 Oct 2022 01:05:10 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:9da7:1217:d35f:d7cf? ([2a01:e0a:982:cbb0:9da7:1217:d35f:d7cf])
-        by smtp.gmail.com with ESMTPSA id x6-20020adfdcc6000000b0022add371ed2sm9082357wrm.55.2022.10.03.01.05.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Oct 2022 01:05:09 -0700 (PDT)
-Message-ID: <1062190d-ce1f-c7da-25bf-47af483e67a5@linaro.org>
-Date:   Mon, 3 Oct 2022 10:05:08 +0200
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=XZiDx2g7aXKR9agqFK0ZQyqnnudlz/UN1Lm6FTwoFUM=;
+        b=wiF5TYRqVoAqBn7Zk1VuRHdrOBSLpoibIbNIBKpupAt1QiYk1OITK0rUpi9zo9oplF
+         yiAKrsWcbi/Rhb+InFPLQWAu6hghHSE3CMUFF0pBMTnxAhK70rtRUZBldCsigJWdtaN+
+         cmEm7CF55Jk59+6umyZ6LCG/SjB3gJq97mxodkAm+F6cmoHZAgOQc9IHPIz0vHWTfuAh
+         LapI2kqySOw8pI+o2nExAoLcVgin7se6OLuYI/8x9SkZkouLpVbwKqcFr4kKj9N60oxE
+         WRxbbBWHA1AO306v5n7u/T9BG8clY9gElnVxaxK94AHjLjAaubItn7W7ApIIarVmDRkt
+         oHww==
+X-Gm-Message-State: ACrzQf2WVBIW4HFWSYiOcpx5nUYSwm0+ZDtDpXegP/w/NKWx7jPssuLd
+        4rUQHhCgh75q8DvgM+rBiJ+dD7ptlNmMV44ZA9jO5Q==
+X-Google-Smtp-Source: AMsMyM5k/Q4Z91/nCdcKkyrlnQEl0gr7xh2MgZ9rvBDyonQOIHzOSOTMJZH5KtWahDt6uNZcyJq/FCmzp13hgyK7JgM=
+X-Received: by 2002:ac2:47f7:0:b0:4a2:2a58:3cc0 with SMTP id
+ b23-20020ac247f7000000b004a22a583cc0mr2723764lfp.150.1664785780685; Mon, 03
+ Oct 2022 01:29:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH] ARM: dts: qcom: correct indentation
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221002092000.68844-1-krzysztof.kozlowski@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <20221002092000.68844-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <20220929060405.2445745-1-bhupesh.sharma@linaro.org>
+ <20220929060405.2445745-4-bhupesh.sharma@linaro.org> <4e896382-c666-55c6-f50b-5c442e428a2b@linaro.org>
+ <1163e862-d36a-9b5e-2019-c69be41cc220@linaro.org> <9999a1a3-cda0-2759-f6f4-9bc7414f9ee4@linaro.org>
+ <0aeb2c5e-9a5e-90c6-a974-f2a0b866d64f@linaro.org> <ca62fc03-8acc-73fc-3b15-bd95fe8e05a4@linaro.org>
+In-Reply-To: <ca62fc03-8acc-73fc-3b15-bd95fe8e05a4@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Mon, 3 Oct 2022 13:59:27 +0530
+Message-ID: <CAH=2Nty1BfaTWbE-PZQPiRtAco=5xhvJT3QbpqYsABxZxBzF3w@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] dt-bindings: net: qcom,ethqos: Convert bindings to yaml
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        netdev@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        David Miller <davem@davemloft.net>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/10/2022 11:20, Krzysztof Kozlowski wrote:
-> Do not use spaces for indentation.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->   arch/arm/boot/dts/qcom-ipq4019.dtsi | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-> index b23591110bd2..acb08dcf9442 100644
-> --- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
-> +++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-> @@ -348,7 +348,7 @@ acc3: clock-controller@b0b8000 {
->   		saw0: regulator@b089000 {
->   			compatible = "qcom,saw2";
->   			reg = <0x0b089000 0x1000>, <0x0b009000 0x1000>;
-> -                        regulator;
-> +			regulator;
->   		};
->   
->   		saw1: regulator@b099000 {
+On Sun, 2 Oct 2022 at 13:24, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 01/10/2022 14:51, Bhupesh Sharma wrote:
+> >>> Right, most of them are to avoid the make dtbs_check errors / warnings
+> >>> like the one mentioned above.
+> >>
+> >> All of them should not be here.
+> >
+> > I guess only 'snps,reset-gpio' need not be replicated here, as for
+> > others I still see 'dtbs_check' error, if they are not replicated here:
+> >
+> >
+> > arch/arm64/boot/dts/qcom/sm8150-hdk.dtb: ethernet@20000: Unevaluated
+> > properties are not allowed ('power-domains', 'resets', 'rx-fifo-depth',
+> > 'tx-fifo-depth' were unexpected)
+> >       From schema: /Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+> >
+> > Am I missing something here?
+>
+> Probably the snps,dwmac schema failed. It is then considered
+> unevaluated, so such properties are unknown for qcom,ethqos schema. Run
+> check with snps,dwmac and fix all errors first.
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Running dt_binding_check DT_SCHEMA_FILES=net/snps,dwmac.yaml
+reports no error currently.
+
+Thanks.
