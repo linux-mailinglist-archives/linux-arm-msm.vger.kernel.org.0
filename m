@@ -2,160 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 570FA5F3513
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 19:59:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64E3A5F35CB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 20:47:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230017AbiJCR7X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Oct 2022 13:59:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56738 "EHLO
+        id S229708AbiJCSrY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Oct 2022 14:47:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230093AbiJCR6f (ORCPT
+        with ESMTP id S229637AbiJCSrX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Oct 2022 13:58:35 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD0172D773
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 10:57:47 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id t16so12680419ljh.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 10:57:47 -0700 (PDT)
+        Mon, 3 Oct 2022 14:47:23 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 275643A154
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 11:47:22 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 10so17913603lfy.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 11:47:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=ZPof+jI/R1dfmUkJy1EKqNxrIvq4pry+XXXXmem36f4=;
-        b=y7ZFz/7zxfuHoIJfOY92zSTEkeSvPP+wBDhQDqvUs5aTnzb+4QOtA24ye/649cB7en
-         W5xAu+jR3rvNXDoJR7XoxjDctDA/oHdq4HQNeSP07edi7cmthudvaW79/HSW5Cljtz7C
-         H5gbKMGNZplstjbXjf8VgKfSBNQMMQULEz+uWeWH7OZUAKPtcTChITXB7eKsD7oB4An7
-         4NLSpsdX0rpLDHJW1dNrN4K+g9bo/++GkP3NzqlOKrkoYdFGfd56THhISUcuwn7YA2Mq
-         l/orygnQt4lliHozTZmynuwqEM78fTqYMf7WY6k31H0REpgzaQ0G9QxhCR9XnmwRpu8H
-         qYqg==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date;
+        bh=sNHqaLvh9j7PQaVZTiLvLFSUg+LSJYbTo2qeLVIoD3Y=;
+        b=deotAUsUURWwRjphlZdfLNEaHjwUp+MLHRyXZw6CM0D9vc1Gp7uh/G3Yx//Zp1hr0n
+         yJAUSt8ogxQkJUcjJcSd3qvdQz+UK0behCYUSt8UTQFCS+rbRd9n9M0BN+AoaVPd2rFL
+         N6sq+GD5SjED8LzF6f3J+8kU6mIVhjZdY9rWI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=ZPof+jI/R1dfmUkJy1EKqNxrIvq4pry+XXXXmem36f4=;
-        b=3zqo48NbNxK77L85jjVag4RRm39atQHpF6TlMr43J6MrgWTkl+m765YOwsQoS2cc6P
-         mchGifTOCP7DvslZu+9Tsipv0X2vuw2seK7UEUM9fEbCf/V8X+7FaNEHQNVHyvF5INgF
-         QAaGLTjP7ymKzLbZgVV3JM1lmLJZuSph8hduGes6CrPlVtrwwQsuf/ccRpYfOXUo9Uej
-         P4/IUCQOdnFmxu3Dhy+zI3dL0g/bu4YJl2iTlGl4h850YvXQrQI/OdbdATclOBUJUYsj
-         a/oG44gHrV4bDncVHc9IY3BRIJdO/nFh2/P/Mlol+Uf+GQcF/+jRpp7TGbDhikKOs2F3
-         58Ng==
-X-Gm-Message-State: ACrzQf082pmWfeI2soJ3PT3xYVuJbOQAtWO1T6kFmMk4XPoByTgX6lMR
-        RaKfG394wKQ7qeYwEXM3MxI+og==
-X-Google-Smtp-Source: AMsMyM4zxlNrMG71JyuCr0C3hCUHzKzy3LAX/vjNbM8E1pmke49EjFhDiQMzyViR5K5PZeetOMKjlw==
-X-Received: by 2002:a2e:b4b9:0:b0:26d:d08c:1b88 with SMTP id q25-20020a2eb4b9000000b0026dd08c1b88mr2558306ljm.269.1664819866139;
-        Mon, 03 Oct 2022 10:57:46 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id o20-20020a056512231400b00492d064e8f8sm1543640lfu.263.2022.10.03.10.57.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Oct 2022 10:57:45 -0700 (PDT)
-Message-ID: <c0bf359a-1ee9-04e2-2c58-9e7e8f3e12f7@linaro.org>
-Date:   Mon, 3 Oct 2022 19:57:44 +0200
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=sNHqaLvh9j7PQaVZTiLvLFSUg+LSJYbTo2qeLVIoD3Y=;
+        b=7Q99Zj3x7RCYu+l1iVVL12ltKHQJnvjVRL3Y/ZeAaZ7mRzDhLRbYN4L0pJFccBRnYi
+         GoSWJ3u3JYF0gzXy/ZsT0ioKTO68sHuEVhFX39cfcS7XS6oJOhupbzEedKlqJSHFxL2B
+         7P7n8hAbqF1D7FL1okP14nKKaVoWOH19qbolPvF0Qq6XvXogzIce+Lb4hR9QAO16gUeB
+         /lcs2MEwBY2m70y3PkwvymTSWfB6BcGiGyusZQgNo31mhf/rQz3rS2jFU2H5T/ijWZT2
+         Xbzfdm1UfY/4lYvCpe9vWOgTdS84JwvxPVWMzBRUh9WeQJq+RLOy9/F4kxMUWZteC1pR
+         2O+Q==
+X-Gm-Message-State: ACrzQf29Sl4ig0Th+JfYWfAcU4tO/uWxbUTs3wAmSX7mTZqVgL+GNvhm
+        GIGFcu+JT3d2bjrFc7WCDjv6/lLShUq7XdI/rHogxw==
+X-Google-Smtp-Source: AMsMyM4Egg8t2NfbF9XrWUC3S5gmlEK1LZAho5qwWLHUfSisoykyIi/tyV7UdyDv/HxJkTxuD+6qZ3eCOHOx+TYUOOA=
+X-Received: by 2002:a19:7518:0:b0:4a2:4593:6e14 with SMTP id
+ y24-20020a197518000000b004a245936e14mr1461955lfe.82.1664822822563; Mon, 03
+ Oct 2022 11:47:02 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 3 Oct 2022 11:47:01 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sdm845-db845c: correct SPI2 pins
- drive strength
-Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+In-Reply-To: <YzXdhVN/Zp7DDIzB@google.com>
+References: <YsLhxx+L3+GJDRyO@google.com> <Ys1tYAO39LKzEAOE@google.com>
+ <dc737abb-041b-491a-14f1-a584f9e64a3d@quicinc.com> <CAE-0n528QaTtZFp=WAaHShegFRpKVN_67jQfUJTtsRPr6s--zA@mail.gmail.com>
+ <52039cd1-4390-7abb-d296-0eb7ac0c3b15@quicinc.com> <Yuz2O+lZ5W7RviuA@google.com>
+ <CAE-0n507SLeYB7XVzGFk=RO6YjOPoGpux+_N2AyrmL354mQJ-g@mail.gmail.com>
+ <YzQf7hf15vvLeGse@google.com> <CAE-0n50cX5ky3By976RTecKkpeMoAjoBA4tYuWSZ150JfS9wiQ@mail.gmail.com>
+ <YzXdhVN/Zp7DDIzB@google.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Mon, 3 Oct 2022 11:47:01 -0700
+Message-ID: <CAE-0n53q-8u16_7KGZ0jbm9ES=dsSJL7rbGdz6hzLWf3xvm=bQ@mail.gmail.com>
+Subject: Re: [PATCH V15 6/9] mfd: pm8008: Use i2c_new_dummy_device() API
+To:     Lee Jones <lee@kernel.org>
+Cc:     Lee Jones <lee.jones@linaro.org>,
+        Satya Priya Kakitapalli <quic_c_skakit@quicinc.com>,
+        Mark Brown <broonie@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        "# 4.0+" <stable@vger.kernel.org>
-References: <20220930182212.209804-1-krzysztof.kozlowski@linaro.org>
- <20220930182212.209804-2-krzysztof.kozlowski@linaro.org>
- <CAD=FV=WSbpV4aqyHgSX6rwanQmZYG1hdNourjP5DEmsfdq6aDA@mail.gmail.com>
- <11a99a84-47ec-ca3e-5781-0f17ed33dbf9@linaro.org>
- <CAD=FV=URMX9umJfqYOhnnnjsr09As-6mKAHs0YNZFK8n2K337g@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=URMX9umJfqYOhnnnjsr09As-6mKAHs0YNZFK8n2K337g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com,
+        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/10/2022 17:40, Doug Anderson wrote:
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
->>>> index 132417e2d11e..a157eab66dee 100644
->>>> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
->>>> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
->>>> @@ -1123,7 +1123,9 @@ &wifi {
->>>>
->>>>  /* PINCTRL - additions to nodes defined in sdm845.dtsi */
->>>>  &qup_spi2_default {
->>>> -       drive-strength = <16>;
->>>> +       pinmux {
->>>> +               drive-strength = <16>;
->>>> +       };
->>>
->>> The convention on Qualcomm boards of this era is that muxing (setting
->>> the function) is done under a "pinmux" node and, unless some of the
->>> pins need to be treated differently like for the UARTs, configuration
->>> (bias, drive strength, etc) is done under a "pinconf" subnode.
->>
->> Yes, although this was not expressed in bindings.
->>
->>> I
->>> believe that the "pinconf" subnode also needs to replicate the list of
->>> pins, or at least that's what we did everywhere else on sdm845 /
->>> sc7180.
->>
->> Yes.
->>
->>>
->>> Thus to match conventions, I assume you'd do:
->>>
->>> &qup_spi2_default {
->>>   pinconf {
->>
->> No, because I want a convention of all pinctrl bindings and drivers, not
->> convention of old pinctrl ones. The new ones are already moved or being
->> moved to "-state" and "-pins". In the same time I am also unifying the
->> requirement of "function" property - enforcing it in each node, thus
->> "pinconf" will not be valid anymore.
-> 
-> Regardless of where we want to end up, it feels like as of ${SUBJECT}
-> patch this should match existing conventions in this file. If a later
-> patch wants to change the conventions in this file then it can, but
-> having just this one patch leaving things in an inconsistent state
-> isn't great IMO...
-> 
-> If this really has to be one-off then the subnode shouldn't be called
-> "pinmux". A subnode called "pinmux" implies that it just has muxing
-> information in it. After your patch this is called "pinmux" but has
-> _configuration_ in it.
-> 
+Quoting Lee Jones (2022-09-29 11:01:41)
+> On Wed, 28 Sep 2022, Stephen Boyd wrote:
+>
+> > Quoting Lee Jones (2022-09-28 03:20:30)
+> > > Wouldn't it make more sense to simply separate the instantiation of
+> > > the 2 I2C devices?  Similar to what you suggested [0] in v9.  That way
+> > > they can handle their own resources and we can avoid all of the I2C
+> > > dummy / shared Regmap passing faff.
+> > >
+> > > [0] https://lore.kernel.org/all/CAE-0n53G-atsuwqcgNvi3nvWyiO3P=pSj5zDUMYj0ELVYJE54Q@mail.gmail.com/
+> > >
+> >
+> > You can continue reading the thread[1]. My understanding is it's one
+> > chip that responds on two i2c addresses, thus we don't describe that as
+> > two i2c device nodes in DT. Instead we describe one node and use the
+> > dummy API to make the second i2c device.
+> >
+> > [1] https://lore.kernel.org/all/Yk3NkNK3e+fgj4eG@sirena.org.uk/
+>
+> As Mark says, it's probably 2 separate dies that have been encased in
+> the same IC and are otherwise unconnected.  Not sure I understand the
+> comment about not requiring another 'struct device'.  It will still
+> require that whether it's a platform device or an I2C device, right?
+>
 
-It is a poor argument to keep some convention which is both
-undocumented, not kept in this file and known only to some folks
-(although that's effect of lack of documentation). Even the bindings do
-not say it should be "pinconf" but they mention "config" in example. The
-existing sdm845.dts uses config - so why now there should be "pinconf"?
-By this "convention" we have both "pinmux" and "mux", perfect. Several
-other pins do not have pinmux/mux/config at all.
+Yes a 'struct device' will be required for each i2c address no matter
+what happens.
 
-This convention was never implemented, so there is nothing to keep/match.
+It is also useful to describe the hardware as one device node in case
+there is a shared reset signal or power supply. That allows us to have
+one driver probe the DT node and deassert the reset/power the chip on. I
+think this device has one reset signal, so we really need to do this and
+not treat them as completely independent i2c devices (the 0x8 and 0x9
+addresses).
 
-Changing it to "config" (because this is the most used "convention" in
-the file and bindings) would also mean to add useless "pins" which will
-be in next patch removed.
-
-Best regards,
-Krzysztof
-
+Can we move forward with my plan to have another i2c device made for
+'pm8008-regulators' and have that driver be an i2c driver that probes an
+i2c device manually created in the pm8008 driver? I think that would
+handle the reset ordering problem because the pm8008 driver can deassert
+the reset and also handle the regmap passing stuff by letting the i2c
+device at 0x9 make its own regmap.
