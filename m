@@ -2,92 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87EAF5F3889
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 00:02:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BB085F3890
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 00:02:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229938AbiJCWCG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Oct 2022 18:02:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60864 "EHLO
+        id S229548AbiJCWC4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Oct 2022 18:02:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229936AbiJCWCF (ORCPT
+        with ESMTP id S229996AbiJCWCy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Oct 2022 18:02:05 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E164F32042
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 15:02:01 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a26so25056950ejc.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 15:02:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=HV8KUZ4GPFpWtPFVlTgVXPYpTAfZV/oMcB7Ni0y1cJo=;
-        b=RGdIZ/Z08zcTidBpIfZ0fUtwIMOXTxw+d9f8ATQtx5bqfwijqOxlO3TmILLjGojEI2
-         0/C5o5myNt1Z+AoGNzL0GIChH3w8BxEM7gjOO7emlAUCGpXQRh9i0w9hwJ7T+VyNVHxA
-         zom+NkFhWHw2lZYpCC0XaUpZ4OM8cvk5uBToPmMKKfqm/+d+WaBKU+5XnTXoDE86DL6k
-         /6ZO0lICunGPOsrQiBGGlXMpj364fioMKCSrUHFaHPYQzlC01cczqHltiEGI2X/tTZ8V
-         bjQzktzxjHpcn0+BEoYXCVjcxVlqrCQaL+d1wg6/pNMxX8nsi5O6ZzQ05V50eTC6I1B5
-         Y+Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=HV8KUZ4GPFpWtPFVlTgVXPYpTAfZV/oMcB7Ni0y1cJo=;
-        b=xA4OFjjgr8cmmOZFN+AQQVn/E9FF1lBnmJG5amT3h8oGrfkAwBMgnQkUd91avWKNCV
-         wIWV4U82GIKErbtKbKQdiosbJMV2II5wWvo4KMk4RmYBBj7u4O9roKpxN6+TZQmf2FyN
-         lXQQk0BxK+bzmy1fCAemSugInUVBbj8j0VDyBUCA6FIaBiGGS9hKhlnfbcYNPzOuRSqQ
-         +KbKDKpQDEmHpkYjT7zJTIhfpWqvHVOXotn/NIDVaJpqfqcnTriidFlk4571ZgY0BOZC
-         vxI1PoT4HRnxq+txWnpxzW+3vUy4YPCfxxFdH0fWS1M0rI+q86BdYapGXhVoWZKrSTXp
-         B22w==
-X-Gm-Message-State: ACrzQf2qQhjnDPcikU8lY41/atGkLR7nyBgk+BwAcW496vgKUZYI22f4
-        TO2JlivhYEEvav8j1+6mY1lajVjMQx+uyVnQqoNNwD85K3I=
-X-Google-Smtp-Source: AMsMyM72H+D6z11aPXLsbrptZmRmrhUBp1HI9zRSIGSONqexAiHHRxKlnMat4VIWoHNajB1Qjvswtq1P9D6cs4Gf/nY=
-X-Received: by 2002:a17:906:5d04:b0:77f:ca9f:33d1 with SMTP id
- g4-20020a1709065d0400b0077fca9f33d1mr17295191ejt.526.1664834520528; Mon, 03
- Oct 2022 15:02:00 -0700 (PDT)
+        Mon, 3 Oct 2022 18:02:54 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F78032A99;
+        Mon,  3 Oct 2022 15:02:53 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 293Lv2xn014045;
+        Mon, 3 Oct 2022 22:02:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=OMqNkcG9ZaRiNChGBBlLw1sJiArlggdg3FlLu/AI33Q=;
+ b=eKBCYIAOyaZ7g2QpINfTb6W0Vv6VclwQ2XPMTRzKBVhsOKF66HUDBLLk/uVt7oH1irai
+ GtlUTZz3lCjbeAo5wuZ5kmvZzmM9Wz4q8PF2EFwjjDWMmbFj1kZOViYY3JQoHvEJYnmR
+ OkDQmufrRL7/bQhfUuYFy6oDhxEFKWjLspWXOlpxpoypBeq+VR9PJyylqXUxCY1sOju3
+ 4Uo9zLbMP6ni7A+1300s5UIIGoxiJK9Sxkn0QWxa/60iAcPUniFL4IgkCsCb7qE3cAyu
+ cwfeOoKEhoUWRLfXzcrHMoGMW5vK4kXZsbP55Isw5WxL6JH3fgDnMF5Isr/ICT6b8U11 9Q== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jxcvtvpq0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 03 Oct 2022 22:02:49 +0000
+Received: from nasanex01b.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 293M2lJE007996
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 3 Oct 2022 22:02:47 GMT
+Received: from [10.110.64.123] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 3 Oct 2022
+ 15:02:46 -0700
+Message-ID: <e9c44e3b-b29f-0f47-b822-da0f4f2264cc@quicinc.com>
+Date:   Mon, 3 Oct 2022 17:02:45 -0500
 MIME-Version: 1.0
-References: <20220924080459.13084-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220924080459.13084-1-krzysztof.kozlowski@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 4 Oct 2022 00:01:49 +0200
-Message-ID: <CACRpkdZpCshxrLtHfnYOD2=Ua8Te1X1MEfJuaoH4QFLayYxoUA@mail.gmail.com>
-Subject: Re: [PATCH 00/32] pinctrl/arm64: qcom: continued - fix Qualcomm TLMM
- pinctrl schema warnings
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH 1/5] dt-bindings: firmware: scm: Add QDU1000/QRU1000
+ compatibles
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sricharan R <sricharan@codeaurora.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        krishna Lanka <quic_vamslank@quicinc.com>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+        Ulf Hansson <ulf.hansson@linaro.org>
+CC:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20221001030641.29354-1-quic_molvera@quicinc.com>
+ <20221001030641.29354-2-quic_molvera@quicinc.com>
+ <09f5d364-320e-9ecc-2c2b-68066c61f802@linaro.org>
+From:   Melody Olvera <quic_molvera@quicinc.com>
+In-Reply-To: <09f5d364-320e-9ecc-2c2b-68066c61f802@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 2yuz2fqXTv3QFX148nWuZqZDmRpm-Fw8
+X-Proofpoint-ORIG-GUID: 2yuz2fqXTv3QFX148nWuZqZDmRpm-Fw8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-10-03_02,2022-09-29_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ impostorscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1015
+ spamscore=0 mlxlogscore=999 adultscore=0 priorityscore=1501 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210030130
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 24, 2022 at 10:05 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
 
-> This is the third patchset around Qualcomm pinctrl in recent days:
-> 1. First round of TLMM fixes: merged
-> 2. LPASS fixes: https://lore.kernel.org/linux-devicetree/20220922195651.345369-1-krzysztof.kozlowski@linaro.org/T/#t
-> 3. Second round of TLMM fixes: THIS PATCHSET
+On 10/1/2022 4:25 AM, Krzysztof Kozlowski wrote:
+> On 01/10/2022 05:06, Melody Olvera wrote:
+>> Add compatibles for scm driver for QDU1000 and QRU1000 platforms.
+>>
+>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>> ---
+>>  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 2 ++
+>>  1 file changed, 2 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+>> index c5b76c9f7ad0..b47a5dda3c3e 100644
+>> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+>> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+>> @@ -51,6 +51,8 @@ properties:
+>>            - qcom,scm-sm8250
+>>            - qcom,scm-sm8350
+>>            - qcom,scm-sm8450
+>> +          - qcom,scm-qdu1000
+>> +          - qcom,scm-qru1000
+> Items should be ordered alphabetically.
+Will fix.
+>
+>>            - qcom,scm-qcs404
+>>        - const: qcom,scm
+> Patch is incomplete. Missing changes for allOf.
+Will add.
+>
+>>  
+> Best regards,
+> Krzysztof
 
-Same thing with TLMM as LPASS! Stack up the bindings, send me pull
-requests, because I trust you.
+Thanks,
 
-Yours,
-Linus Walleij
+Melody
+
