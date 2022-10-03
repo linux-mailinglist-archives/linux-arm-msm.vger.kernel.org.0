@@ -2,32 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1BCA5F274D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 01:59:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06C545F2789
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 03:46:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229459AbiJBX7M convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Sun, 2 Oct 2022 19:59:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55398 "EHLO
+        id S229451AbiJCBqo convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Sun, 2 Oct 2022 21:46:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbiJBX7L (ORCPT
+        with ESMTP id S229458AbiJCBqn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Oct 2022 19:59:11 -0400
-Received: from relay.hostedemail.com (smtprelay0015.hostedemail.com [216.40.44.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF1BC1CB39;
-        Sun,  2 Oct 2022 16:59:10 -0700 (PDT)
-Received: from omf05.hostedemail.com (a10.router.float.18 [10.200.18.1])
-        by unirelay01.hostedemail.com (Postfix) with ESMTP id 0CDBB1C5CFB;
-        Sun,  2 Oct 2022 23:59:08 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf05.hostedemail.com (Postfix) with ESMTPA id B1DD92000E;
-        Sun,  2 Oct 2022 23:58:43 +0000 (UTC)
-Message-ID: <c9cc8511a4aa409407dce23719418140b66cdf47.camel@perches.com>
-Subject: Re: [PATCH v4 10/14] gunyah: sysfs: Add node to describe supported
- features
+        Sun, 2 Oct 2022 21:46:43 -0400
+Received: from relay.hostedemail.com (smtprelay0016.hostedemail.com [216.40.44.16])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DBA127CC4;
+        Sun,  2 Oct 2022 18:46:41 -0700 (PDT)
+Received: from omf02.hostedemail.com (a10.router.float.18 [10.200.18.1])
+        by unirelay10.hostedemail.com (Postfix) with ESMTP id 71710C0802;
+        Mon,  3 Oct 2022 01:46:38 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf02.hostedemail.com (Postfix) with ESMTPA id A5C348000E;
+        Mon,  3 Oct 2022 01:46:31 +0000 (UTC)
+Message-ID: <c7e45416cc911290efb5ad669f4a45bdc5678f69.camel@perches.com>
+Subject: new checkpatch flexible array test ?  (was Re: [PATCH v4 12/14]
+ gunyah: rsc_mgr: Add RPC for console services)
 From:   Joe Perches <joe@perches.com>
-To:     Jeff Johnson <quic_jjohnson@quicinc.com>,
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Elliot Berman <quic_eberman@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Andrew Morton <akpm@linux-foundation.org>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
         Trilok Soni <quic_tsoni@quicinc.com>,
         Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
         Carl van Schaik <quic_cvanscha@quicinc.com>,
@@ -44,101 +45,73 @@ Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
         Jonathan Corbet <corbet@lwn.net>,
         Will Deacon <will@kernel.org>,
         Catalin Marinas <catalin.marinas@arm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Date:   Sun, 02 Oct 2022 16:58:59 -0700
-In-Reply-To: <1f599b97-9242-3844-4372-1610948f4baf@quicinc.com>
+        Arnd Bergmann <arnd@arndb.de>, devicetree@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Date:   Sun, 02 Oct 2022 18:46:30 -0700
+In-Reply-To: <YzbfaCj9jvSUDfUg@kroah.com>
 References: <20220928195633.2348848-1-quic_eberman@quicinc.com>
-         <20220928195633.2348848-11-quic_eberman@quicinc.com>
-         <3c02aad6d8bde70964b403a3cb8004de969becc6.camel@perches.com>
-         <1f599b97-9242-3844-4372-1610948f4baf@quicinc.com>
+         <20220928195633.2348848-13-quic_eberman@quicinc.com>
+         <YzbfaCj9jvSUDfUg@kroah.com>
 Content-Type: text/plain; charset="ISO-8859-1"
 Content-Transfer-Encoding: 8BIT
 User-Agent: Evolution 3.44.4 (3.44.4-2.fc36) 
 MIME-Version: 1.0
-X-Rspamd-Queue-Id: B1DD92000E
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,FORGED_SPF_HELO,
-        KHOP_HELO_FCRDNS,SPF_HELO_PASS,SPF_NONE,UNPARSEABLE_RELAY autolearn=no
-        autolearn_force=no version=3.4.6
-X-Stat-Signature: bxo4uofuiuh44az86fsxqtaeyj75n91x
-X-Rspamd-Server: rspamout07
+X-Stat-Signature: s8bxywehf4i6ap8qz4d4zh7cgy8f5nng
+X-Rspamd-Server: rspamout05
+X-Rspamd-Queue-Id: A5C348000E
+X-Spam-Status: No, score=-1.5 required=5.0 tests=BAYES_00,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_NONE,UNPARSEABLE_RELAY
+        autolearn=no autolearn_force=no version=3.4.6
 X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Session-ID: U2FsdGVkX1/LAwYOxWYuUHOFlw80rjQndZ2p3aMK5A8=
-X-HE-Tag: 1664755123-277924
+X-Session-ID: U2FsdGVkX1+OfeghBDJYxV12c+mletSZVAMPeQeBrtw=
+X-HE-Tag: 1664761591-583478
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 2022-10-02 at 16:30 -0700, Jeff Johnson wrote:
-> On 9/29/2022 12:36 AM, Joe Perches wrote:
-> > On Wed, 2022-09-28 at 12:56 -0700, Elliot Berman wrote:
-> > > Add a sysfs node to list the features that the Gunyah hypervisor and
-> > > Linux supports. For now, Linux support cspace (capability IDs) and
-> > > message queues, so only report those..
-> > []
-> > > diff --git a/drivers/virt/gunyah/sysfs.c b/drivers/virt/gunyah/sysfs.c
-> > []
-> > > @@ -25,9 +25,24 @@ static ssize_t variant_show(struct kobject *kobj, struct kobj_attribute *attr, c
-> > >   }
-> > >   static struct kobj_attribute variant_attr = __ATTR_RO(variant);
-> > >   
-> > > +static ssize_t features_show(struct kobject *kobj, struct kobj_attribute *attr, char *buffer)
-> > > +{
-> > > +	int len = 0;
-> > > +
-> > > +	if (GH_IDENTIFY_PARTITION_CSPACE(gunyah_api.flags))
-> > > +		len += sysfs_emit_at(buffer, len, "cspace ");
-> > > +	if (GH_IDENTIFY_MSGQUEUE(gunyah_api.flags))
-> > > +		len += sysfs_emit_at(buffer, len, "message-queue ");
-> > > +
-> > > +	len += sysfs_emit_at(buffer, len, "\n");
-> > > +	return len;
-> > > +}
-> > 
-> > It's generally nicer to avoid unnecessary output spaces.
-> > 
-> > Perhaps:
-> > 
-> > {
-> > 	int len = 0;
-> > 
-> > 	if (GH_IDENTIFY_PARTITION_CSPACE(gunyah_api.flags))
-> > 		len += sysfs_emit_at(buffer, len, "cspace");
-> > 	if (GH_IDENTIFY_MSGQUEUE(gunyah_api.flags)) {
-> > 		if (len)
-> > 			len += sysfs_emit_at(buffer, len, " ");
-> > 		len += sysfs_emit_at(buffer, len, "message-queue");
-> > 	}
-> > 
-> > 	len += sysfs_emit_at(buffer, len, "\n");
-> > 
-> > 	return len;
-> > }
-> > 
+On Fri, 2022-09-30 at 14:22 +0200, Greg Kroah-Hartman wrote:
+> On Wed, Sep 28, 2022 at 12:56:31PM -0700, Elliot Berman wrote:
+> > Gunyah resource manager defines a simple API for virtual machine log
+> > sharing with the console service.
+[]
+> > diff --git a/include/linux/gunyah_rsc_mgr.h b/include/linux/gunyah_rsc_mgr.h
+[]
+> > +struct gh_rm_notif_vm_console_chars {
+> > +	u16 vmid;
+> > +	u16 num_bytes;
+> > +	u8 bytes[0];
 > 
-> that approach seems ok for 2 features, but imo doesn't scale for more.
-> I like the original code with one exception:
-> 
-> 	if (GH_IDENTIFY_PARTITION_CSPACE(gunyah_api.flags))
-> 		len += sysfs_emit_at(buffer, len, "cspace ");
-> 	if (GH_IDENTIFY_MSGQUEUE(gunyah_api.flags))
-> 		len += sysfs_emit_at(buffer, len, "message-queue ");
-> 
-> 	/* overwrite last trailing space */
-> 	if (len)
-> 		len--;
-> 
-> 	len += sysfs_emit_at(buffer, len, "\n");
-> 	return len;
-> 
+> Please do not use [0] for new structures, otherwise we will just have to
+> fix them up again as we are trying to get rid of all of these from the
+> kernel. Just use "bytes[];" instead.
 
-That's fine as long as every formatted output uses a trailing space.
+Maybe a checkpatch addition like:
+---
+ scripts/checkpatch.pl | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-A trivial negative would be that the linker would generally not be
-able to deduplicate these output strings with trailing spaces across
-the entire codebase.
-
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 2737e4ced5745..187ed84c1f80a 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -3948,6 +3948,17 @@ sub process {
+ 			}
+ 		}
+ 
++# check for zero length array declarations in likely structs
++		if ($line =~ /^\+\t($Declare\s*$Ident)\s*\[\s*0\s*\]\s*;\s*$/ &&
++		    defined $lines[$linenr] &&
++		    $lines[$linenr] =~ /^[\+ ]\}\s*(?:__\w+\s*(?:$balanced_parens)?)\s*;\s*$/) {
++			if (WARN("FLEXIBLE_ARRAY_ZERO",
++				 "Prefer flexible length array declarations with [] over [0]\n" . $herecurr) &&
++			    $fix) {
++				$fixed[$fixlinenr] =~ s/\[\s*0\s*\]/[]/;
++			}
++		}
++
+ # check for multiple consecutive blank lines
+ 		if ($prevline =~ /^[\+ ]\s*$/ &&
+ 		    $line =~ /^\+\s*$/ &&
