@@ -2,216 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36E975F35D0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 20:47:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B0675F35EE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 20:55:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229836AbiJCSr3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Oct 2022 14:47:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59718 "EHLO
+        id S229749AbiJCSzV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Oct 2022 14:55:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbiJCSr2 (ORCPT
+        with ESMTP id S229696AbiJCSzT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Oct 2022 14:47:28 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 410D2422D4;
-        Mon,  3 Oct 2022 11:47:25 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 293F1DXZ013162;
-        Mon, 3 Oct 2022 18:47:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=gektquLvudXA4maK2/RJ1dwQS3uDgfOeQx425Jb1f5s=;
- b=aUmfIlP/q/F8p5iJwEBNwtcHt5wg8bXyE8UUW7TRUX4LROjBCYb99eXEu8WM2NixggfU
- IwYrb6DbIw0MHvgaBycTdJF9a0qfnFVzT8a4YSuBR5/EpYBKnDAJjECoQ5q9rVCfhJb+
- qYX1DolNGQSoX41b6eTG5x8kuEgnOGGxxHF3VaITenbn/4WHswoNmfXePKU1TkNQXJuD
- 9KTb8L+SXGkcP9FOidSGSkUdRbAL6M9PbFKgbQqATeusljaJkfCPrD4AlTlvk50tlGYk
- y4Mn1Sr7brmD32EthVZY7Zz8a6u7OHnfsU4YmaG8zTy6BRPWQRA8Ta0S4Vr+sXoJ27AT WQ== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jxawu4j67-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 03 Oct 2022 18:47:08 +0000
-Received: from nasanex01b.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 293Il7hW031283
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 3 Oct 2022 18:47:07 GMT
-Received: from [10.110.93.213] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 3 Oct 2022
- 11:47:05 -0700
-Message-ID: <bb241d46-6f90-8604-e79d-30a1f3527ce4@quicinc.com>
-Date:   Mon, 3 Oct 2022 13:47:05 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH 1/5] dt-bindings: clock: Add QDU1000 and QRU1000 GCC clock
- bindings
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Mon, 3 Oct 2022 14:55:19 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E0B1FAC6;
+        Mon,  3 Oct 2022 11:55:17 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id a13so15904483edj.0;
+        Mon, 03 Oct 2022 11:55:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=nFbiDq33o+/1OOLfenDeUoeiwYc5KoMc/vKWkTFD+pM=;
+        b=EBVMCk6QJiVuUWIK07baLhbBg164s5OYHgjAlV4ZyiX5Z8q4xJfkB1vmQ4BnNJGGMw
+         80JF5SPb+oExVo8sbV7gunLszBbw13Qz+mllUb05DxxkfrLHQy/X+N4nQeWJXz9JAYu+
+         Y11se9XDcajB0kU7UcPirEboWiOPjZensLcupydK7Hsf7YXYmXkF+ynfH8wu+C4VS4Uq
+         lktu3wgObRdiqgsV/cVZ5JAC61zhIkaqwLTT67ZkFwv3xIgHp9t+IBeRsksnMG17v7jX
+         BuFPTJBlbbOOV79pTp6IY33CW6A3UXSKiHJHXfVn0Pv8fy1x7NwnpJKDoTQ+vVJr4X2D
+         R2kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=nFbiDq33o+/1OOLfenDeUoeiwYc5KoMc/vKWkTFD+pM=;
+        b=TIFh8PV8wkYU33wANCpZ3YzPUcLfrW7yVG0kiZaj8J7Goyw5sdBFAyZ7qY/PisroJk
+         TnWeVrtR4hLP259/UNOQKIBsLZkFQzRw1CKWhPh5MFvvvE/g+OZMjNdewyRs9NiuJlZC
+         iC+85uDowqz+LxI6ZTI7i6v4SEa2KIn48XRl1eZLy2CUAWouhasNXznQgJX+SyYu2tmm
+         lOSreVYZ1AePDjKZqlAK98rLW0LKpvCWtuMscte+PCaeM4dJYwazh0mC8pHNCIybqNuR
+         tFIvJu1g0C8mBijrPEvlYXY3J36hCJFcWTzddT5DQJVVW08BBcbtJ/NCzR/kY5RMBQHL
+         f1Xg==
+X-Gm-Message-State: ACrzQf0mwXIBsd8FWwzCzOo1Wv9ziZMSDmF0X9lTMoqBYDEgYiM7VDZ0
+        uKr1BztL/wVg+ygFuIOHqI+oizAxotM=
+X-Google-Smtp-Source: AMsMyM6yfe+yOQg0xbDbaIc3a6P789u+jAudGWkZ63arqNET9id/pLaDtOkNKTLnbp2fG1CPB7r61A==
+X-Received: by 2002:a05:6402:524d:b0:459:3619:9cfa with SMTP id t13-20020a056402524d00b0045936199cfamr2096577edd.227.1664823315840;
+        Mon, 03 Oct 2022 11:55:15 -0700 (PDT)
+Received: from localhost.localdomain ([46.216.9.29])
+        by smtp.googlemail.com with ESMTPSA id a11-20020a05640213cb00b00459091c44b3sm144559edx.3.2022.10.03.11.55.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Oct 2022 11:55:15 -0700 (PDT)
+From:   Dzmitry Sankouski <dsankouski@gmail.com>
+To:     linux-kernel@vger.kernel.org
+Cc:     Dzmitry Sankouski <dsankouski@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20221001030403.27659-1-quic_molvera@quicinc.com>
- <20221001030403.27659-2-quic_molvera@quicinc.com>
- <37926f0f-e176-929e-939a-cd43a031e224@linaro.org>
-From:   Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <37926f0f-e176-929e-939a-cd43a031e224@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: xfMCvX5q60oCKiMGzugQKRSsdKD40Brv
-X-Proofpoint-ORIG-GUID: xfMCvX5q60oCKiMGzugQKRSsdKD40Brv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-10-03_02,2022-09-29_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 phishscore=0
- clxscore=1011 malwarescore=0 spamscore=0 suspectscore=0 lowpriorityscore=0
- adultscore=0 impostorscore=0 priorityscore=1501 mlxscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
- definitions=main-2210030112
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
+        DEVICE TREE BINDINGS)
+Subject: [PATCH v3 0/2] add device Xiaomi Mi 6 (codename sagit) and board binding
+Date:   Mon,  3 Oct 2022 21:54:58 +0300
+Message-Id: <20221003185500.928608-1-dsankouski@gmail.com>
+X-Mailer: git-send-email 2.30.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add initial support for Xiaomi Mi 6 phone (codename sagit)
 
-On 10/1/2022 4:24 AM, Krzysztof Kozlowski wrote:
-> On 01/10/2022 05:03, Melody Olvera wrote:
->> Add device tree bindings for global clock controller on QDU1000 and
->> QRU1000 SoCs.
->>
->> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
->> ---
->>  .../bindings/clock/qcom,gcc-qdru1000.yaml     |  74 ++++++++
->>  include/dt-bindings/clock/qcom,gcc-qdru1000.h | 170 ++++++++++++++++++
->>  2 files changed, 244 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-qdru1000.yaml
->>  create mode 100644 include/dt-bindings/clock/qcom,gcc-qdru1000.h
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-qdru1000.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-qdru1000.yaml
->> new file mode 100644
->> index 000000000000..d92f558d547c
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-qdru1000.yaml
->> @@ -0,0 +1,74 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/clock/qcom,gcc-qdru.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Global Clock & Reset Controller Binding for QDU1000 and QRU1000
-> Drop "Binding"
+Dzmitry Sankouski (2):
+  arm64: dts: qcom: sagit: add initial device tree for sagit
+  dt-bindings: arm: add xiaomi,sagit board based on msm8998 chip
 
-Will do in v2.
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/msm8998-xiaomi-sagit.dts    | 689 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/pm8998.dtsi          |   6 +
+ 4 files changed, 697 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts
 
->
->> +
->> +maintainers:
->> +  - Melody Olvera <quic_molvera@quicinc.com>
->> +
->> +description: |
->> +  Qualcomm global clock control module which supports the clocks, resets and
->> +  power domains on QDU1000 and QRU1000
->> +
->> +  See also:
->> +  - dt-bindings/clock/qcom,gcc-qdru1000.h
-> Full path
-Understood.
->
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,gcc-qdu1000
->> +      - qcom,gcc-qru1000
->> +
->> +  clocks:
->> +    items:
->> +      - description: Board XO source
->> +      - description: Sleep clock source
->> +      - description: PCIE 0 Pipe clock source (Optional clock)
-> Skip "Optional clock"
->
->> +      - description: PCIE 0 Phy Auxiliary clock source (Optional clock)
->> +      - description: USB3 Phy wrapper pipe clock source (Optional clock)
->> +    minItems: 2
->> +
->> +  clock-names:
->> +    items:
->> +      - const: bi_tcxo
->> +      - const: sleep_clk
->> +      - const: pcie_0_pipe_clk # Optional clock
-> Skip "Optional clock"
-
-Will remove all optional clock instances.
-
->
->> +      - const: pcie_0_phy_aux_clk # Optional clock
->> +      - const: usb3_phy_wrapper_gcc_usb30_pipe_clk # Optional clock
->> +    minItems: 2
->> +
->> +  '#clock-cells':
->> +    const: 1
->> +
->> +  '#reset-cells':
->> +    const: 1
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - clocks
->> +  - clock-names
->> +  - '#clock-cells'
->> +  - '#reset-cells'
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/clock/qcom,rpmh.h>
->> +    clock-controller@100000 {
->> +      compatible = "qcom,gcc-qdu1000";
->> +      reg = <0x00100000 0x001f4200>;
->> +      clocks = <&rpmhcc RPMH_CXO_CLK>, <&sleep_clk>;
->> +      clock-names = "bi_tcxo", "sleep_clk";
->> +      #clock-cells = <1>;
->> +      #reset-cells = <1>;
->> +    };
->> +
->> +...
->> diff --git a/include/dt-bindings/clock/qcom,gcc-qdru1000.h b/include/dt-bindings/clock/qcom,gcc-qdru1000.h
->> new file mode 100644
->> index 000000000000..cdc5d1a6a007
->> --- /dev/null
->> +++ b/include/dt-bindings/clock/qcom,gcc-qdru1000.h
->> @@ -0,0 +1,170 @@
->> +/* SPDX-License-Identifier: GPL-2.0-only */
-> Dual license.
-Good catch; will remove.
->
->
-> Best regards,
-> Krzysztof
-
-Thanks,
-
-Melody
+-- 
+2.30.2
 
