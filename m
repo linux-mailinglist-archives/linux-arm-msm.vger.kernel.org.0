@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1BF15F3811
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 23:48:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C932D5F3817
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 23:49:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230028AbiJCVsd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Oct 2022 17:48:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58518 "EHLO
+        id S229562AbiJCVtJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Oct 2022 17:49:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229733AbiJCVsB (ORCPT
+        with ESMTP id S229659AbiJCVsd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Oct 2022 17:48:01 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EB532873C
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 14:46:58 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id z97so16375538ede.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 14:46:58 -0700 (PDT)
+        Mon, 3 Oct 2022 17:48:33 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F06B2AE19
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 14:47:16 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id 13so24997552ejn.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 14:47:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date;
         bh=zAYgLaSnCGfa8SU+NH6gwotTtGoSsucybfqj2dUgdAM=;
-        b=RVCHdxanJVyFUUSS93q51N8+I1tKBI9oAEVRe7ilmYWZ9MVp144gXBv1kYTZdfHXIo
-         9lc93g5a6zAwnxi+IvV2eQNDN8yVYIRsARw/tGeVX/FTGHISN76GQUHSB3tL9GTLt00u
-         eaJXvON2TmHWt2QX/iHVvDkb5d9bfrmez1YjXEUlbBiEdj27TfLdfIFFL5y6gpQ+HB9g
-         6Kokd8mvIrOqXQULEHmMy46RbGcqbunOiWoiW2Wx86hYFaA4BXH7JGY8TsdecRAaO+fZ
-         zdlQsot4zbqHoFw4uG+RwUovIZPv27RaBx1HSDOxt7kpH+qPCULMl4xg+lh8TgQkDJci
-         hOqw==
+        b=YlWmmsM7lTJJGalVIwZ9dwi8cj/06pB914EX3vdbkQ3SAmGQFMmvAyIvLc21049fjQ
+         Fq4dKUjUbDjZniZlY+L9WcljP/jjGnSu+cSYmxose2/WpSOLsoawP4Xcl7VZ6ORwWEoF
+         C3Bm+q2lDDpi+O+luWwuJNztaWEEKEUIqvOTlR2FGWc+GjaEqy8Tf+PD1fH2Bksm1u1N
+         kNOMMRVretuRpg00tiGhLEiW9PJpMer6GqP1jMFj7UytD2kTeRekHkkcIZziOMcQqgpK
+         /cL+BT1r1aDm9dKSjGNFD7mE3FO/0nSJLXHCOmup6GEsWJoWrrZ6zmx0lM1ACD0HX4uP
+         iPgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date;
         bh=zAYgLaSnCGfa8SU+NH6gwotTtGoSsucybfqj2dUgdAM=;
-        b=ZyFLIqRkt3VADfYODUZNV0zb0Gl2GNnXY5duAYxvNZjaC1udBuYRiVh0YhIaXQOYLc
-         eRR/JOOudftEd9pOZQKAQHu9KVhDT2tNqY/UQDm26BO8HysBcm8fWyJHkST6oupK2X9H
-         alfXgn+48v47fuzHXO8WSP63FODS3W7FnZbvvBbyk1kRge7vKOM/ANqrsQIi4FOz3fdN
-         U0rLA8T7PXJHvJXl5+1Rlmq7cyggf/i+n42BPP41XqnB3kDoTH2tG1sjd88kaf/93hNz
-         CGIdmZcDjvze9+DXwfHRjCH7vP1F+K/3Q4Iv3EVAGD/8Jx1yxnwVW5KmGHerrlLuEOVs
-         3PeA==
-X-Gm-Message-State: ACrzQf2bNUpFfDcck8jX5qU3gcvr+ptdqG2+0udSuPz3MxjSm0k/QFnL
-        agCKwmbG+7ICnO7BxVLzXjnI39gSj0OdkreDSeDPZQ==
-X-Google-Smtp-Source: AMsMyM5UrjbvOzcq6FmvgXykvlePJByBD7ZIVQlTnIbpQrim0/itLwb6Rh67og69RE+wWbcGISW74QVzBjgoCyQJcgw=
-X-Received: by 2002:a05:6402:2690:b0:452:3a85:8b28 with SMTP id
- w16-20020a056402269000b004523a858b28mr20040077edd.158.1664833616720; Mon, 03
- Oct 2022 14:46:56 -0700 (PDT)
+        b=AE5NxRDDAa5U0ypaa5MMPNaTSiZr3I+zILaeCGtVGRrWBuswYDBpsbNpIZe0U3h5fn
+         A7NHlPaXESgsHyUd4Pxp/aXSXARpshcNF2BAUOpzdcFbRiJES5BY1Hq/kfLutYlE2kx+
+         tocDhgOZdISPIL7BdPqmR/gGc0JY6DJE6tS7QUTU7hvIE1+EwFyo6RKUoHNvjVkj2GBC
+         CusS8XtRw+qe7+LDQPxYHNWCfo2DGSiuZz81oZfU/nhG6kucAefNxGMfKcqI0dNzogHy
+         YGgbfskyeQAm2+ZHhLm+DpCQ3FfMM/gx0om0Pp8pTvLsXnnwAFr1kW6B5yZRUPFozqt5
+         VfWg==
+X-Gm-Message-State: ACrzQf0+cNtSUmTMjzcxPV44NLEiw4fMaSgqupN5DxQGNyCATTq/3ATY
+        VP/rzajEVFIZ5d1oyKzhG4a4eUzp2jlBzvMfsU6fhw==
+X-Google-Smtp-Source: AMsMyM6hJR0vYBEC7jTZoz6vd6S+i+o5RvWHLL1I4lSo6pa/Vl3uXej9EsG3CXyFZAW/4PjitKY0liOJGmvl0h0VKM0=
+X-Received: by 2002:a17:906:8a46:b0:781:71fc:d23f with SMTP id
+ gx6-20020a1709068a4600b0078171fcd23fmr16909585ejc.500.1664833634721; Mon, 03
+ Oct 2022 14:47:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220927191736.299702-1-marex@denx.de> <20220927191736.299702-2-marex@denx.de>
-In-Reply-To: <20220927191736.299702-2-marex@denx.de>
+References: <20220927191736.299702-1-marex@denx.de> <20220927191736.299702-3-marex@denx.de>
+In-Reply-To: <20220927191736.299702-3-marex@denx.de>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 3 Oct 2022 23:46:45 +0200
-Message-ID: <CACRpkdZRq0oOXfn0-SHG5Rv0=f_Lb=-+Yy0ST_tY9+JPqxwV6Q@mail.gmail.com>
-Subject: Re: [PATCH 2/3] ARM: dts: qcom: Drop MMCI interrupt-names
+Date:   Mon, 3 Oct 2022 23:47:03 +0200
+Message-ID: <CACRpkdZwaHJUd4DEOiKXQ96x3UJfQSCz0oxr5d0QpBCnvEydYA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] ARM: dts: stm32: Drop MMCI interrupt-names
 To:     Marek Vasut <marex@denx.de>
 Cc:     linux-arm-kernel@lists.infradead.org,
         Alexandre Torgue <alexandre.torgue@foss.st.com>,
