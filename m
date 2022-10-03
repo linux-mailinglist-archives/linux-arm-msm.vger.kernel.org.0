@@ -2,101 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 807A15F2C89
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 10:56:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E54B05F2CD4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 11:08:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230195AbiJCI4W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Oct 2022 04:56:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49108 "EHLO
+        id S229569AbiJCJIq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Oct 2022 05:08:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229619AbiJCI4F (ORCPT
+        with ESMTP id S229547AbiJCJIV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Oct 2022 04:56:05 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9796A5C9D3;
-        Mon,  3 Oct 2022 01:40:47 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A0A2760FC0;
-        Mon,  3 Oct 2022 08:40:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09C1C433C1;
-        Mon,  3 Oct 2022 08:40:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664786441;
-        bh=/72HYQ4Xpa9TtMOw5Y3/gFdD6e6O+zWTVjPUxsv/VDU=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=cSBCBJV0kXy7Eybc6K+Somp7rSCqtIwWajAA1Gk58OqOZs4O2Lu05azHglbkMkkH2
-         cg9mnVOfX5BKdJIK5s/BKTfJ5Vaj3VI9phnOreC62iLOylPjLQNYOT04ycl4ZkzMGC
-         y3Gx712/ErjIoLXQeNDISliyS9Ke9cVwcANhDoGpWSGKIUQMZSiKwD+7Ugg83CRArs
-         O371WfEoc9DRyY85yOMVG8VZGaAy6hRf47PXlj6UblX4wMO4crcCJMf90wKwqUYa5J
-         UvUyjuj1YN6uGB8lpPHT8Sk/pcICrg++zAOFksP1VwtVZMJblJzA2lGqtS9yCgJWWr
-         WwEpRhv28kBww==
-From:   Lorenzo Pieralisi <lpieralisi@kernel.org>
-To:     robh@kernel.org, andersson@kernel.org,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        devicetree@vger.kernel.org, dmitry.baryshkov@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        bhelgaas@google.com, linux-kernel@vger.kernel.org, kw@linux.com,
-        linux-pci@vger.kernel.org, konrad.dybcio@somainline.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 00/12] Improvements to the Qcom PCIe Endpoint driver
-Date:   Mon,  3 Oct 2022 10:40:33 +0200
-Message-Id: <166478640812.604066.7033054100784388835.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220914075350.7992-1-manivannan.sadhasivam@linaro.org>
-References: <20220914075350.7992-1-manivannan.sadhasivam@linaro.org>
+        Mon, 3 Oct 2022 05:08:21 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7BBF28B;
+        Mon,  3 Oct 2022 02:05:17 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2938Rd4E015026;
+        Mon, 3 Oct 2022 09:05:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=pWyXb9/R5EahRteZsIJ76HEH5IDP2PUWr5GJVf5YI/g=;
+ b=nVksX1O338+Fpnu5tVjrEwGdS6FBCtbckKa6wB3WwzkG7UlXkLtKNvtoxvRpZzyF2Alo
+ OdXcmuCC6qrErEPshniQqh1YLq8ly1hhRur+OoT5iKsn/ZKVPtshW4+gDo21anxyg95O
+ knF4qMeQDUSVx5ieIkfJ5OoOGeRphnYbXish8dVZ6xeWwLYMck2UKHdhzXxzVOGprXE2
+ rVW+4WsRaPvHj5J3snOr7jJqWFZYwGGK+qAIO08JsgmnGalCbl+MMn5oPLGEVquz6Fq1
+ 8oJYHU4LKikoT8PdyK/ZgAbP+0oPvW/60G2fHqYWC/dOcbteFQ4wQNyfTBYKnMZ4J3me iA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jxdn1u937-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 03 Oct 2022 09:05:05 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2939539m024546
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 3 Oct 2022 09:05:03 GMT
+Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Mon, 3 Oct 2022 02:04:59 -0700
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Alex Elder <elder@ieee.org>
+CC:     <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, <vkoul@kernel.org>,
+        "Souradeep Chowdhury" <quic_schowdhu@quicinc.com>
+Subject: [PATCH V15 0/7] soc: qcom: dcc: Add driver support for Data Capture and Compare unit(DCC)
+Date:   Mon, 3 Oct 2022 14:34:06 +0530
+Message-ID: <cover.1664557657.git.quic_schowdhu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: DnzwiI6vu0V-60pDjYrjBvfpYH2-Pu3d
+X-Proofpoint-GUID: DnzwiI6vu0V-60pDjYrjBvfpYH2-Pu3d
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-10-03_02,2022-09-29_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 clxscore=1011 spamscore=0 priorityscore=1501 phishscore=0
+ mlxlogscore=999 bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210030054
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 14 Sep 2022 13:23:38 +0530, Manivannan Sadhasivam wrote:
-> This series contains improvements to the Qualcomm PCIe Endpoint controller
-> driver. The major improvements are the addition of SM8450 SoC support and
-> debugfs interface for exposing link transition counts.
-> 
-> This series has been tested on SM8450 based dev board.
-> 
-> NOTE: Since the bindings are ACKed, the whole series could be merged to the
-> PCI tree.
-> 
-> [...]
+DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.
+In case of a system crash or manual software triggers by the user the DCC hardware
+stores the value at the register addresses which can be used for debugging purposes.
+The DCC driver provides the user with debugfs interface to configure the register
+addresses. The options that the DCC hardware provides include reading from registers,
+writing to registers, first reading and then writing to registers and looping
+through the values of the same register.
 
-Applied to pci/qcom, thanks!
+In certain cases a register write needs to be executed for accessing the rest of the
+registers, also the user might want to record the changing values of a register with
+time for which he has the option to use the loop feature.
 
-[01/12] PCI: qcom-ep: Add kernel-doc for qcom_pcie_ep structure
-        https://git.kernel.org/lpieralisi/pci/c/f1bfbd000f3b
-[02/12] PCI: qcom-ep: Rely on the clocks supplied by devicetree
-        https://git.kernel.org/lpieralisi/pci/c/e2efd31465b1
-[03/12] PCI: qcom-ep: Make use of the cached dev pointer
-        https://git.kernel.org/lpieralisi/pci/c/9cf4843e1acf
-[04/12] PCI: qcom-ep: Disable IRQs during driver remove
-        https://git.kernel.org/lpieralisi/pci/c/cf0adac4baee
-[05/12] PCI: qcom-ep: Expose link transition counts via debugfs
-        https://git.kernel.org/lpieralisi/pci/c/d48d1bd912a2
-[06/12] PCI: qcom-ep: Gate Master AXI clock to MHI bus during L1SS
-        https://git.kernel.org/lpieralisi/pci/c/0d47c6b2c9ea
-[07/12] PCI: qcom-ep: Disable Master AXI Clock when there is no PCIe traffic
-        https://git.kernel.org/lpieralisi/pci/c/928decbb22c4
-[08/12] dt-bindings: PCI: qcom-ep: Make PERST separation optional
-        https://git.kernel.org/lpieralisi/pci/c/f5b366f4d1f2
-[09/12] PCI: qcom-ep: Make PERST separation optional
-        https://git.kernel.org/lpieralisi/pci/c/1085b53e3bad
-[10/12] dt-bindings: PCI: qcom-ep: Define clocks per platform
-        https://git.kernel.org/lpieralisi/pci/c/2c744cd7e7e5
-[11/12] dt-bindings: PCI: qcom-ep: Add support for SM8450 SoC
-        https://git.kernel.org/lpieralisi/pci/c/0b0c3ff8de93
-[12/12] PCI: qcom-ep: Add support for SM8450 SoC
-        https://git.kernel.org/lpieralisi/pci/c/e5107be15bef
+The options mentioned above are exposed to the user by debugfs files once the driver
+is probed. The details and usage of this debugfs files are documented in
+Documentation/ABI/testing/debugfs-driver-dcc.
 
-Thanks,
-Lorenzo
+As an example let us consider a couple of debug scenarios where DCC has been proved to be
+effective for debugging purposes:-
+
+i)TimeStamp Related Issue
+
+On SC7180, there was a coresight timestamp issue where it would occasionally be all 0
+instead of proper timestamp values.
+
+Proper timestamp:
+Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
+
+Zero timestamp:
+Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
+
+Now this is a non-fatal issue and doesn't need a system reset, but still needs
+to be rootcaused and fixed for those who do care about coresight etm traces.
+Since this is a timestamp issue, we would be looking for any timestamp related
+clocks and such.
+
+We get all the clk register details from IP documentation and configure it
+via DCC config_read debugfs node. Before that we set the current linked list.
+
+/* Program the linked list with the addresses */
+echo R 0x10c004 > /sys/kernel/debug/dcc/../3/config
+echo R 0x10c008 > /sys/kernel/debug/dcc/../3/config
+echo R 0x10c00c > /sys/kernel/debug/dcc/../3/config
+echo R 0x10c010 > /sys/kernel/debug/dcc/../3/config
+..... and so on for other timestamp related clk registers
+
+/* Other way of specifying is in "addr len" pair, in below case it
+specifies to capture 4 words starting 0x10C004 */
+
+echo R 0x10C004 4 > /sys/kernel/debug/dcc/../3/config_read
+
+/* Enable DCC */
+echo 1 > /sys/kernel/debug/dcc/../3/enable
+
+/* Run the timestamp test for working case */
+
+/* Send SW trigger */
+echo 1 > /sys/kernel/debug/dcc/../trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram1.bin
+
+/* Run the timestamp test for non-working case */
+
+/* Send SW trigger */
+echo 1 > /sys/kernel/debug/dcc/../trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram2.bin
+
+Get the parser from [1] and checkout the latest branch.
+
+/* Parse the SRAM bin */
+python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
+python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
+
+Sample parsed output of dcc_sram1.bin:
+
+<hwioDump version="1">
+        <timestamp>03/14/21</timestamp>
+            <generator>Linux DCC Parser</generator>
+                <chip name="None" version="None">
+                <register address="0x0010c004" value="0x80000000" />
+                <register address="0x0010c008" value="0x00000008" />
+                <register address="0x0010c00c" value="0x80004220" />
+                <register address="0x0010c010" value="0x80000000" />
+            </chip>
+    <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
+</hwioDump>
+
+ii)NOC register errors
+
+A particular class of registers called NOC which are functional registers was reporting
+errors while logging the values.To trace these errors the DCC has been used effectively.
+The steps followed were similar to the ones mentioned above.
+In addition to NOC registers a few other dependent registers were configured in DCC to
+monitor it's values during a crash. A look at the dependent register values revealed that
+the crash was happening due to a secured access to one of these dependent registers.
+All these debugging activity and finding the root cause was achieved using DCC.
+
+DCC parser is available at the following open source location
+
+https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
+
+Changes in V15
+
+*Implemented all the comments in the V14 of the patch
+
+Souradeep Chowdhury (7):
+  dt-bindings: Added the yaml bindings for DCC
+  soc: qcom: dcc: Add driver support for Data Capture and Compare
+    unit(DCC)
+  MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
+    support
+  arm64: dts: qcom: sm8150: Add Data Capture and Compare(DCC) support
+    node
+  arm64: dts: qcom: sc7280: Add Data Capture and Compare(DCC) support
+    node
+  arm64: dts: qcom: sc7180: Add Data Capture and Compare(DCC) support
+    node
+  arm64: dts: qcom: sdm845: Add Data Capture and Compare(DCC) support
+    node
+
+ Documentation/ABI/testing/debugfs-driver-dcc       |   98 ++
+ .../devicetree/bindings/soc/qcom/qcom,dcc.yaml     |   44 +
+ MAINTAINERS                                        |    8 +
+ arch/arm64/boot/dts/qcom/sc7180.dtsi               |    6 +
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |    6 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |    6 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |    6 +
+ drivers/soc/qcom/Kconfig                           |    8 +
+ drivers/soc/qcom/Makefile                          |    1 +
+ drivers/soc/qcom/dcc.c                             | 1355 ++++++++++++++++++++
+ 10 files changed, 1538 insertions(+)
+ create mode 100644 Documentation/ABI/testing/debugfs-driver-dcc
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml
+ create mode 100644 drivers/soc/qcom/dcc.c
+
+-- 
+2.7.4
+
