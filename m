@@ -2,84 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D87155F3798
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 23:21:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A18625F37A8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 23:26:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229647AbiJCVVw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Oct 2022 17:21:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37980 "EHLO
+        id S229675AbiJCV0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Oct 2022 17:26:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229663AbiJCVTu (ORCPT
+        with ESMTP id S229684AbiJCVZk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Oct 2022 17:19:50 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6EF857553
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 14:12:36 -0700 (PDT)
-Received: from [IPV6:2a00:f41:18f3:7ee6:a401:45d0:c41f:c16e] (unknown [IPv6:2a00:f41:18f3:7ee6:a401:45d0:c41f:c16e])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        Mon, 3 Oct 2022 17:25:40 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D80B13E12;
+        Mon,  3 Oct 2022 14:14:47 -0700 (PDT)
+Received: from localhost.localdomain (unknown [IPv6:2a00:f41:18f3:7ee6:a401:45d0:c41f:c16e])
+        (using TLSv1.3 with cipher TLS_CHACHA20_POLY1305_SHA256 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA512)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id CFAC83EEAA;
-        Mon,  3 Oct 2022 23:12:34 +0200 (CEST)
-Message-ID: <73726dc3-f6d2-144e-680a-5ee9e2b2edc9@somainline.org>
-Date:   Mon, 3 Oct 2022 23:12:34 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.3.1
-Subject: Re: [PATCH v3 2/2] dt-bindings: arm: add xiaomi,sagit board based on
- msm8998 chip
-To:     Dzmitry Sankouski <dsankouski@gmail.com>,
-        linux-kernel@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-References: <20221003185500.928608-1-dsankouski@gmail.com>
- <20221003185500.928608-3-dsankouski@gmail.com>
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E59AE3F218;
+        Mon,  3 Oct 2022 23:14:44 +0200 (CEST)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20221003185500.928608-3-dsankouski@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] clk: qcom: gcc-sm6375: Remove unused variables
+Date:   Mon,  3 Oct 2022 23:14:38 +0200
+Message-Id: <20221003211438.25691-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.32.0 (Apple Git-132)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+gcc_parent_data_15 and gcc_parent_map_15 are not used in this driver.
+Remove them.
 
-On 03/10/2022 20:55, Dzmitry Sankouski wrote:
-> add xiaomi,sagit board (Xiaomi Mi 6) binding
->
-> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-> ---
+No Fixes tag, as the commit introducing it is still in -next.
 
-Binding changes should generally go before the actual patch, so that
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+ drivers/clk/qcom/gcc-sm6375.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-there's no commit where there's an undocumented compatible.
+diff --git a/drivers/clk/qcom/gcc-sm6375.c b/drivers/clk/qcom/gcc-sm6375.c
+index 6f39a85da85b..a3188c462a8b 100644
+--- a/drivers/clk/qcom/gcc-sm6375.c
++++ b/drivers/clk/qcom/gcc-sm6375.c
+@@ -688,18 +688,6 @@ static const struct clk_parent_data gcc_parent_data_14[] = {
+ 	{ .hw = &gpll11.clkr.hw },
+ };
+ 
+-static const struct parent_map gcc_parent_map_15[] = {
+-	{ P_BI_TCXO, 0 },
+-	{ P_GPLL0_OUT_MAIN, 1 },
+-	{ P_GPLL6_OUT_EVEN, 4 },
+-};
+-
+-static const struct clk_parent_data gcc_parent_data_15[] = {
+-	{ .index = DT_BI_TCXO },
+-	{ .hw = &gpll0.clkr.hw },
+-	{ .hw = &gpll6_out_even.clkr.hw },
+-};
+-
+ static const struct freq_tbl ftbl_gcc_camss_axi_clk_src[] = {
+ 	F(19200000, P_BI_TCXO, 1, 0, 0),
+ 	F(150000000, P_GPLL0_OUT_EVEN, 2, 0, 0),
+-- 
+2.30.2
 
-Konrad
-
-> Changes for v3:
-> - remove unused 'sagit' compatible line
->
->   Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->   1 file changed, 1 insertion(+)
->
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index fb1d00bcc847..294075bafb97 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -239,6 +239,7 @@ properties:
->                 - sony,xperia-lilac
->                 - sony,xperia-maple
->                 - sony,xperia-poplar
-> +              - xiaomi,sagit
->             - const: qcom,msm8998
->   
->         - items:
