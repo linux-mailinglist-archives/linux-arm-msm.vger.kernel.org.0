@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98A305F3359
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 18:21:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56EFB5F3362
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 18:22:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229806AbiJCQU7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Oct 2022 12:20:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42198 "EHLO
+        id S229829AbiJCQWn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Oct 2022 12:22:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229679AbiJCQU6 (ORCPT
+        with ESMTP id S229494AbiJCQWl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Oct 2022 12:20:58 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24C0116581
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 09:20:57 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id r3-20020a05600c35c300b003b4b5f6c6bdso6116507wmq.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 09:20:57 -0700 (PDT)
+        Mon, 3 Oct 2022 12:22:41 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A4F61E3F3
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 09:22:40 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id u10so17393381wrq.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 09:22:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:organization:from:reply-to
          :references:cc:to:content-language:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date;
-        bh=kqY6OOfgOUM95ZCJP+o85wHk1MxmbH51heuqF3gddv8=;
-        b=R352KpR/LTOEulaCgRUUqaVteUSBk1DFCKTYVy5y71yCzjD7eQ8e9wruHlODhLs+dC
-         ucHE+xZiozgap4gVoAwpf8JvyG0qZ65T1Qxc+ND4kAC9Ht8CVQZjQyPeknS2WnUIWjfP
-         BTv8bUhSVc1D/eMXQ5IKKM9WsALp33T2bEbweS51cB/LdhMklV4Va6OlatWKdQqtCAjd
-         HOoGbRoTujxvdYDgBmztt9ZkXI8nWrrBOGwiXDEG4lizr87RNu/0d1MsPZVXi4sbh/XA
-         nLyNvDsOiSvs5Ut3J7nRd4srnFQea0DnNTBRhyYeuYgKxZJav0JRnGNBjJpJIaiw6l0g
-         K11w==
+        bh=D5pXQsMMi7moC3mXvNU29sA3D/rodNgy/MSdInrFFLM=;
+        b=Z2TY18qYuQhda2jTGLjJWoxYyFIyR1INnP2UHyNlnyVgjHWlR+znbw93Y6aga3gKQH
+         ETy9H/e9kylF285cJTGDTpoHUncFZ5O/c4xoDWQ+8QmZSBO0HuONcl+Z71vkRMkT+yuv
+         2h7CPvJVMiv2NAkQ3hWo3hs3XTREKfln9Fv9C9roX7yL0sMbuLpH5TF9kcHgrWTJhNz0
+         FQU4N/VDqs1cCrr0q/sO1XzSFLGzDhGoJVTzhuQJHD2Vv+byCuADonVomuDQy9l+VcbQ
+         wa4EMvmHMblMErVwyJDFVU6+URHBgG9NYWazUvIa6gyPcVMCorOGr5L99Qu+07JfI9av
+         qUMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:organization:from:reply-to
          :references:cc:to:content-language:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=kqY6OOfgOUM95ZCJP+o85wHk1MxmbH51heuqF3gddv8=;
-        b=hQXlH+qqNQMW62xUxtqcQpHZRI60aigu6fvNWG5WhR/OnUgUhaGDgSgqKYUqYEpZjK
-         ePcXREk46WR+zATNtsvrSdYIhTi3Z1xpNuQrdhdutISUj1j3GQQtFiU11xQVgKBqqGoO
-         qc5kjpoVlMsTCwBnkvPFY1bhrLSv/SdHhCHYNyJ8tokyYlTnSZT7laGD7NeVNfNt/hAy
-         rtWSH0brctziC8tDix9freu3ztuSJuUedTvWQ0koc2TiUgkDK2pWP2GByNgiXu9vb6Gm
-         IHnD7RqHR5A0f3hpaj3SFwfjRZThPl1tGT+pjXkBLs+htxaipizWVwXktu0dvuyy2Sxa
-         4RhA==
-X-Gm-Message-State: ACrzQf3U/iWcYVAp3Ny0W/xpG+1EEBMYlYZeQtysuDQeclk9IKldTl5y
-        2k6oPfgSQgl/GA8zE4/OBvavrA==
-X-Google-Smtp-Source: AMsMyM5KNG4FRtDeDkU6pm6aVrs3IyuTz2D20TctkP7HUk6KMJW+MERxFt2aB0+RlvxtqNFaWr1+EA==
-X-Received: by 2002:a05:600c:6d2:b0:3b4:8361:6154 with SMTP id b18-20020a05600c06d200b003b483616154mr7713625wmn.89.1664814055648;
-        Mon, 03 Oct 2022 09:20:55 -0700 (PDT)
+        bh=D5pXQsMMi7moC3mXvNU29sA3D/rodNgy/MSdInrFFLM=;
+        b=WX//375MtEipRoc/0DF1wXp2d1PQYjDnh3jkx0eZxIywByujV2xEg27AYX1du6wfRg
+         eB5utLxzQweSbcJKFHihVnglwukcqxnBSY6yqsV1NElXfU0tkvELQrSuyIX5XdhOX2qC
+         wkrpruYC87Wsyypft9YiJuWp6VnZBdEWuTNEFg+z6JzhnJRG7wAyFmjpL6nl8gRq7/xf
+         Go7NsResl0I05YTA5G6kkAxC9rKK1AQ/2C+rv8n1vaRXlZrjGvxu1VtVjeVTL3oCRUW4
+         Yn2LAvCYLu45Ulby7+W6e653JfKl65Lrh0AReIQbAGIxSn0jiri/mqf43d9Nko8ivb9f
+         NJDQ==
+X-Gm-Message-State: ACrzQf3VWBycs5uUY5Ox7cHJvX811ez39oRkUR+FbPs7OL/+g5S1/Xnd
+        A1i85cA/aX4iS8UgRNUPv4dlQQ==
+X-Google-Smtp-Source: AMsMyM690xN/kwBSq+gs9AOSZvBkI47hHVXhOQtXJOowPtH3oWUYJrLTaoHGN5PCMkMFkkZt2/PHBA==
+X-Received: by 2002:adf:ee8b:0:b0:22d:e736:c2f1 with SMTP id b11-20020adfee8b000000b0022de736c2f1mr9232228wro.89.1664814158811;
+        Mon, 03 Oct 2022 09:22:38 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:9da7:1217:d35f:d7cf? ([2a01:e0a:982:cbb0:9da7:1217:d35f:d7cf])
-        by smtp.gmail.com with ESMTPSA id h18-20020a05600c2cb200b003b51a4c61aasm17489992wmc.40.2022.10.03.09.20.54
+        by smtp.gmail.com with ESMTPSA id x24-20020a05600c189800b003b4727d199asm11350321wmp.15.2022.10.03.09.22.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Oct 2022 09:20:55 -0700 (PDT)
-Message-ID: <4c0edc64-85cb-8f61-68e3-d86be2b25940@linaro.org>
-Date:   Mon, 3 Oct 2022 18:20:54 +0200
+        Mon, 03 Oct 2022 09:22:38 -0700 (PDT)
+Message-ID: <5c8af71a-6e03-0849-2a97-75ec673879d4@linaro.org>
+Date:   Mon, 3 Oct 2022 18:22:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 10/23] ARM: dts: qcom: apq8064-cm-qs600: pull SDCC pwrseq
- node up one level
+Subject: Re: [PATCH 12/23] ARM: dts: qcom: apq8064: drop amba device node
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -66,16 +65,17 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
 References: <20220930185236.867655-1-dmitry.baryshkov@linaro.org>
- <20220930185236.867655-11-dmitry.baryshkov@linaro.org>
+ <20220930185236.867655-13-dmitry.baryshkov@linaro.org>
 Reply-To: neil.armstrong@linaro.org
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Organization: Linaro Developer Services
-In-Reply-To: <20220930185236.867655-11-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220930185236.867655-13-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -83,42 +83,21 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 30/09/2022 20:52, Dmitry Baryshkov wrote:
-> There are no need to add additional simple-bus nodes just to populate
-> a single pwrseq device. Pull it up one level into /. While we are at it
-> also fix node name replacing underscore with dash.
+> The separate amba device node doesn't add anything significant to the
+> DT. The OF parsing code already creates ambda_device or platform_device
+------------------------------------------/\ s/ambda/amba/
+
+> depending on the compatibility lists. Drop the amba node and reorder
+> sdcc and sdcc bam nodes according to node addresses.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   arch/arm/boot/dts/qcom-apq8064-cm-qs600.dts | 17 +++++------------
->   1 file changed, 5 insertions(+), 12 deletions(-)
+>   arch/arm/boot/dts/qcom-apq8064.dtsi | 131 +++++++++++++---------------
+>   1 file changed, 62 insertions(+), 69 deletions(-)
 > 
-> diff --git a/arch/arm/boot/dts/qcom-apq8064-cm-qs600.dts b/arch/arm/boot/dts/qcom-apq8064-cm-qs600.dts
-> index 5ff0d9a275cc..d6ecfd8addb7 100644
-> --- a/arch/arm/boot/dts/qcom-apq8064-cm-qs600.dts
-> +++ b/arch/arm/boot/dts/qcom-apq8064-cm-qs600.dts
-> @@ -15,18 +15,11 @@ chosen {
->   		stdout-path = "serial0:115200n8";
->   	};
->   
-> -	pwrseq {
-> -		#address-cells = <1>;
-> -		#size-cells = <1>;
-> -		ranges;
-> -		compatible = "simple-bus";
-> -
-> -		sdcc4_pwrseq: sdcc4_pwrseq {
-> -			pinctrl-names = "default";
-> -			pinctrl-0 = <&wlan_default_gpios>;
-> -			compatible = "mmc-pwrseq-simple";
-> -			reset-gpios = <&pm8921_gpio 43 GPIO_ACTIVE_LOW>;
-> -		};
-> +	sdcc4_pwrseq: pwrseq-sdcc4 {
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&wlan_default_gpios>;
-> +		compatible = "mmc-pwrseq-simple";
-> +		reset-gpios = <&pm8921_gpio 43 GPIO_ACTIVE_LOW>;
->   	};
->   
->   	/* on board fixed 3.3v supply */
+
+<snip>
+
+With typo fixed:
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
