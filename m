@@ -2,135 +2,325 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 44DBB5F3659
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 21:33:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 14D365F366A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Oct 2022 21:37:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229704AbiJCTds (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Oct 2022 15:33:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42768 "EHLO
+        id S229610AbiJCThf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Oct 2022 15:37:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229771AbiJCTdq (ORCPT
+        with ESMTP id S229459AbiJCThe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Oct 2022 15:33:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FF68474F7
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 12:33:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1664825624;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=jRfHN3rWNPCHe1Xf3QN944kFsnl3YOd/zDvG5DtfTt8=;
-        b=etoFVZtAReiZzyEWOnGK7FJC6zBAH+USSeAQXjHspJFjBrog/vMOzMZ9gDz2wwXbfModFL
-        s/9jG8KoHQWMVVTyaC34VhTnZI02cwq01ZUI8uXS/ZcLR7mnjWrlY2KeFnGLRbDEiAPtz3
-        jDovfsWitiecapmvaYlvCduf3OtZ+Yw=
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-370-RrdoE_y3O66_SXCSkflfNg-1; Mon, 03 Oct 2022 15:33:43 -0400
-X-MC-Unique: RrdoE_y3O66_SXCSkflfNg-1
-Received: by mail-oi1-f199.google.com with SMTP id q11-20020a0568080a8b00b0034fbbc585f3so4197853oij.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 12:33:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=jRfHN3rWNPCHe1Xf3QN944kFsnl3YOd/zDvG5DtfTt8=;
-        b=7+lSNGdk0YJolS4PKFduXnZOFo4Wa/FVNHfIrSni+qpnEzkVSRXI12ZRCznjECz42S
-         rFvt+efymwbxrlthC1Urqo7FxeN9lcaVJY8rLeS8UbmEuyC+cLzg9QR8AKoaGR2JWy1i
-         cQeCn2be6qAviuA5/FpdmktB7ntmzpnispsKHblQFlRvXM9213q3jZwjuEeWk390aSPH
-         6av/zVaNswoA/pDrSSkLWy/jOiG/jPawvFMeAWBfqPwBXjUYRApzKCZE2JsDpsZR3oAk
-         u3VMzS6gjyQzDEFQ46BqTbFvbFjIGc2J8r948nsMDVMeQUpaooqG1etW54EI6cd/KSv7
-         13fw==
-X-Gm-Message-State: ACrzQf3Ef8Kd8uI4F/0STSNHH5NfCbQ8wXnzm6VG6n7Wss6n5N+3wLuA
-        LFQ2bgERgqzSH5eZ4LCso5gbPrwbQkHPQUkNXX1qULLTTtgRlkltVPQNFEIn98kIyCrVo0I7Iqp
-        dwBku6lM33oPLBNQD/LpnmejuXA==
-X-Received: by 2002:a05:6830:25d5:b0:65b:cd82:9398 with SMTP id d21-20020a05683025d500b0065bcd829398mr8241949otu.254.1664825622768;
-        Mon, 03 Oct 2022 12:33:42 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM7gqtjaleuRh6+i4IGn1be3E3F+8SNurkp293ywx/AoOQ/dV8xj0H9T4mcYuwIQ50loYmHtHw==
-X-Received: by 2002:a05:6830:25d5:b0:65b:cd82:9398 with SMTP id d21-20020a05683025d500b0065bcd829398mr8241946otu.254.1664825622578;
-        Mon, 03 Oct 2022 12:33:42 -0700 (PDT)
-Received: from halaney-x13s ([2600:1700:1ff0:d0e0::21])
-        by smtp.gmail.com with ESMTPSA id l132-20020acabb8a000000b003504e119b10sm2621378oif.44.2022.10.03.12.33.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Oct 2022 12:33:42 -0700 (PDT)
-Date:   Mon, 3 Oct 2022 14:33:38 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Brian Masney <bmasney@redhat.com>
-Cc:     Parikshit Pareek <quic_ppareek@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Shazad Hussain <quic_shazhuss@quicinc.com>,
-        Johan Hovold <johan@kernel.org>
-Subject: Re: [PATCH v5 0/3] arm64: dts: qcom: add dts for sa8540p-ride board
-Message-ID: <20221003193338.airh43yxranmwehf@halaney-x13s>
-References: <20221003125444.12975-1-quic_ppareek@quicinc.com>
- <YzsciFeYpvv/92CG@x1>
+        Mon, 3 Oct 2022 15:37:34 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7FF61A80F;
+        Mon,  3 Oct 2022 12:37:33 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 293GlDS9002390;
+        Mon, 3 Oct 2022 19:37:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=+Nm2hX1lZ5ZOeNqG0MAvkk+wusv1idV4fDHsgvoj1TA=;
+ b=Hnxfg/eXLstdgvxgOiCD0sr8zm8xMW1TW8k6FcSSeiARXUBsq86Ypb+lMvnZ9chel2u1
+ tpHFiYVXHuvsaONxRSe3QPRrIoNc1OFvF/kNw2uQeNYQ0CBhljsLeLhhutIxkfPDNWzs
+ s9+NuD3xc0NsuPf46Dwx4pD+SgtBmAkxktToAZtiUqMIgH9ZrDs5IcyL/bAkV/z0VBDI
+ gNlA6RqR/bbarlYErgZPJlhbQjhnQo6Upbs8RDRPvDB7N4J30/If6WTzX47F0RWcaNAx
+ LLDc/l2Usw5bL/AtWh3td0zoAPl1Ji1TyWguXYFKu8oS92ossMyLVAqGhJb3rwJ9IGAU KA== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jxeugmxb6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 03 Oct 2022 19:37:18 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 293JbHgO029516
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 3 Oct 2022 19:37:17 GMT
+Received: from [10.110.93.213] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 3 Oct 2022
+ 12:37:16 -0700
+Message-ID: <cf4fbfed-a0cf-0ffd-5482-09c68b463d7c@quicinc.com>
+Date:   Mon, 3 Oct 2022 14:37:15 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YzsciFeYpvv/92CG@x1>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH 3/5] clk: qcom: Add QDU1000 and QRU1000 GCC support
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>
+References: <20221001030403.27659-1-quic_molvera@quicinc.com>
+ <20221001030403.27659-4-quic_molvera@quicinc.com>
+ <CAA8EJpqh83jB-32f8QCSjDtCrxtVtoFf7JVQgQ3s60cz=WT2Jg@mail.gmail.com>
+From:   Melody Olvera <quic_molvera@quicinc.com>
+In-Reply-To: <CAA8EJpqh83jB-32f8QCSjDtCrxtVtoFf7JVQgQ3s60cz=WT2Jg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YwCFJehhgJTn1jKyXOiCFIPs8hdudMG7
+X-Proofpoint-ORIG-GUID: YwCFJehhgJTn1jKyXOiCFIPs8hdudMG7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-10-03_02,2022-09-29_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
+ mlxscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 adultscore=0 suspectscore=0 clxscore=1015
+ malwarescore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2209130000 definitions=main-2210030118
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 03, 2022 at 01:31:52PM -0400, Brian Masney wrote:
-> On Mon, Oct 03, 2022 at 06:24:40PM +0530, Parikshit Pareek wrote:
-> > Parikshit Pareek (3):
-> >   dt-bindings: arm: qcom: Document additional sa8540p device
-> >   arm64: dts: qcom: sa8295p: move common nodes to dtsi
-> >   arm64: dts: qcom: introduce sa8540p-ride dts
-> 
-> For the series:
-> 
-> Reviewed-by: Brian Masney <bmasney@redhat.com>
-> Tested-by: Brian Masney <bmasney@redhat.com>
 
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # QDrive3/sa8540p-adp-ride
-> 
-> 
-> Just for documentation purposes, to get linux-next-20220930 booting on
-> the QDrive3 with the upstream arm64 defconfig I had to apply the
-> following patches:
-> 
-> - arm64: dts: qcom: sc8280xp: fix UFS PHY serdes size
->   https://lore.kernel.org/linux-arm-msm/20220915141601.18435-1-johan+linaro@kernel.org/
-> 
->   Without this, the phy fails to probe due to the following error:
-> 
->     qcom-qmp-ufs-phy 1d87000.phy: can't request region for resource [mem 0x01d87400-0x01d87507]
->     qcom-qmp-ufs-phy 1d87000.phy: failed to create lane0 phy, -16
->     qcom-qmp-ufs-phy: probe of 1d87000.phy failed with error -16
-> 
-> - This hack patch is still needed:
->   disable has_address_auth_metacap and has_generic_auth
->   https://github.com/andersson/kernel/commit/d46a4d05d5a17ff4447af08471edd78e194d48e5
-> 
->   Without this, the boot hangs at:
-> 
->     rcu: srcu_init: Setting srcu_struct sizes based on contention.
->     arch_timer: cp15 and mmio timer(s) running at 19.20MHz (virt/virt).
->     clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
->     sched_clock: 56 bits at 19MHz, resolution 52ns, wraps every 4398046511078ns
-> 
-> - My UFS clock patch is still needed:
->   arm64: dts: qcom: sc8280xp: correct ref_aux clock for ufs_mem_phy
->   https://lore.kernel.org/lkml/20220830180120.2082734-1-bmasney@redhat.com/T/#u
-> 
-> - I didn't use an initrd for testing so I had to change the options
->   CONFIG_SCSI_UFS_QCOM and CONFIG_PHY_QCOM_QMP from =m to =y.
-> 
-> Brian
-> 
+On 10/1/2022 2:10 AM, Dmitry Baryshkov wrote:
+> On Sat, 1 Oct 2022 at 06:05, Melody Olvera <quic_molvera@quicinc.com> wrote:
+>> From: Taniya Das <quic_tdas@quicinc.com>
+>>
+>> Add Global Clock Controller (GCC) support for QDU1000 and QRU1000 SoCs.
+>>
+>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>> ---
+>>  drivers/clk/qcom/Kconfig        |    8 +
+>>  drivers/clk/qcom/Makefile       |    1 +
+>>  drivers/clk/qcom/clk-branch.c   |    5 +
+>>  drivers/clk/qcom/clk-branch.h   |    2 +
+>>  drivers/clk/qcom/gcc-qdru1000.c | 2649 +++++++++++++++++++++++++++++++
+>>  5 files changed, 2665 insertions(+)
+>>  create mode 100644 drivers/clk/qcom/gcc-qdru1000.c
+>>
+>> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+>> index 1cf1ef70e347..195c018c6f87 100644
+>> --- a/drivers/clk/qcom/Kconfig
+>> +++ b/drivers/clk/qcom/Kconfig
+>> @@ -696,6 +696,14 @@ config SM_GCC_8450
+>>           Say Y if you want to use peripheral devices such as UART,
+>>           SPI, I2C, USB, SD/UFS, PCIe etc.
+>>
+>> +config QDRU_GCC_1000
+>> +       tristate "QDU1000/QRU1000 Global Clock Controller"
+>> +       select QCOM_GDSC
+>> +       help
+>> +         Support for the global clock controller on QDU1000 and
+>> +         QRU1000 devices. Say Y if you want to use peripheral
+>> +         devices such as UART, SPI, I2C, USB, SD, PCIe, etc.
+>> +
+>>  config SM_GPUCC_6350
+>>         tristate "SM6350 Graphics Clock Controller"
+>>         select SM_GCC_6350
+>> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+>> index fbcf04073f07..080253a338e7 100644
+>> --- a/drivers/clk/qcom/Makefile
+>> +++ b/drivers/clk/qcom/Makefile
+>> @@ -100,6 +100,7 @@ obj-$(CONFIG_SM_GCC_8150) += gcc-sm8150.o
+>>  obj-$(CONFIG_SM_GCC_8250) += gcc-sm8250.o
+>>  obj-$(CONFIG_SM_GCC_8350) += gcc-sm8350.o
+>>  obj-$(CONFIG_SM_GCC_8450) += gcc-sm8450.o
+>> +obj-$(CONFIG_QDRU_GCC_1000) += gcc-qdru1000.o
+>>  obj-$(CONFIG_SM_GPUCC_6350) += gpucc-sm6350.o
+>>  obj-$(CONFIG_SM_GPUCC_8150) += gpucc-sm8150.o
+>>  obj-$(CONFIG_SM_GPUCC_8250) += gpucc-sm8250.o
+>> diff --git a/drivers/clk/qcom/clk-branch.c b/drivers/clk/qcom/clk-branch.c
+>> index f869fc6aaed6..b5dc1f4ef277 100644
+>> --- a/drivers/clk/qcom/clk-branch.c
+>> +++ b/drivers/clk/qcom/clk-branch.c
+>> @@ -1,6 +1,7 @@
+>>  // SPDX-License-Identifier: GPL-2.0
+>>  /*
+>>   * Copyright (c) 2013, The Linux Foundation. All rights reserved.
+>> + * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
+>>   */
+>>
+>>  #include <linux/kernel.h>
+>> @@ -56,6 +57,10 @@ static bool clk_branch2_check_halt(const struct clk_branch *br, bool enabling)
+>>
+>>         if (enabling) {
+>>                 val &= mask;
+>> +
+>> +               if (br->halt_check == BRANCH_HALT_INVERT)
+>> +                       return (val & BRANCH_CLK_OFF) == BRANCH_CLK_OFF;
+>> +
+>>                 return (val & BRANCH_CLK_OFF) == 0 ||
+>>                         val == BRANCH_NOC_FSM_STATUS_ON;
+>>         } else {
+>> diff --git a/drivers/clk/qcom/clk-branch.h b/drivers/clk/qcom/clk-branch.h
+>> index 17a58119165e..4ac1debeb91e 100644
+>> --- a/drivers/clk/qcom/clk-branch.h
+>> +++ b/drivers/clk/qcom/clk-branch.h
+>> @@ -1,5 +1,6 @@
+>>  /* SPDX-License-Identifier: GPL-2.0 */
+>>  /* Copyright (c) 2013, The Linux Foundation. All rights reserved. */
+>> +/* Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved. */
+>>
+>>  #ifndef __QCOM_CLK_BRANCH_H__
+>>  #define __QCOM_CLK_BRANCH_H__
+>> @@ -33,6 +34,7 @@ struct clk_branch {
+>>  #define BRANCH_HALT_ENABLE_VOTED       (BRANCH_HALT_ENABLE | BRANCH_VOTED)
+>>  #define BRANCH_HALT_DELAY              2 /* No bit to check; just delay */
+>>  #define BRANCH_HALT_SKIP               3 /* Don't check halt bit */
+>> +#define BRANCH_HALT_INVERT             4 /* Invert logic for halt bit */
+>>
+>>         struct clk_regmap clkr;
+>>  };
+> I'm tempted to ask to move these two chunks to a separate commit.
+That makes sense to me; will separate these into their own commit.
+>
+>> diff --git a/drivers/clk/qcom/gcc-qdru1000.c b/drivers/clk/qcom/gcc-qdru1000.c
+>> new file mode 100644
+>> index 000000000000..4bc54f7b43a0
+>> --- /dev/null
+>> +++ b/drivers/clk/qcom/gcc-qdru1000.c
+>> @@ -0,0 +1,2649 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#include <linux/clk-provider.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of_device.h>
+>> +#include <linux/regmap.h>
+>> +
+>> +#include <dt-bindings/clock/qcom,gcc-qdru1000.h>
+>> +
+>> +#include "clk-alpha-pll.h"
+>> +#include "clk-branch.h"
+>> +#include "clk-rcg.h"
+>> +#include "clk-regmap.h"
+>> +#include "clk-regmap-divider.h"
+>> +#include "clk-regmap-mux.h"
+>> +#include "clk-regmap-phy-mux.h"
+>> +#include "reset.h"
+>> +
+>> +enum {
+>> +       P_BI_TCXO,
+>> +       P_GCC_GPLL0_OUT_EVEN,
+>> +       P_GCC_GPLL0_OUT_MAIN,
+>> +       P_GCC_GPLL1_OUT_MAIN,
+>> +       P_GCC_GPLL2_OUT_MAIN,
+>> +       P_GCC_GPLL3_OUT_MAIN,
+>> +       P_GCC_GPLL4_OUT_MAIN,
+>> +       P_GCC_GPLL5_OUT_MAIN,
+>> +       P_GCC_GPLL6_OUT_MAIN,
+>> +       P_GCC_GPLL7_OUT_MAIN,
+>> +       P_GCC_GPLL8_OUT_MAIN,
+>> +       P_PCIE_0_PHY_AUX_CLK,
+>> +       P_PCIE_0_PIPE_CLK,
+>> +       P_SLEEP_CLK,
+>> +       P_USB3_PHY_WRAPPER_GCC_USB30_PIPE_CLK,
+>> +};
+>> +
+>> +static struct clk_alpha_pll gcc_gpll0 = {
+>> +       .offset = 0x0,
+>> +       .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
+>> +       .clkr = {
+>> +               .enable_reg = 0x62018,
+>> +               .enable_mask = BIT(0),
+>> +               .hw.init = &(const struct clk_init_data){
+>> +                       .name = "gcc_gpll0",
+>> +                       .parent_data = &(const struct clk_parent_data){
+>> +                               .fw_name = "bi_tcxo",
+> New drivers are requested to use .index rather than .fw_name.
+Got it; will fix.
+>
+>> +                       },
+>> +                       .num_parents = 1,
+>> +                       .ops = &clk_alpha_pll_fixed_lucid_evo_ops,
+>> +               },
+>> +       },
+>> +};
+>> +
+>> +static const struct clk_div_table post_div_table_gcc_gpll0_out_even[] = {
+>> +       { 0x1, 2 },
+>> +       { }
+> No need for a sentinel here
+Understood.
+>
+>> +};
+>> +
+> [skipped]
+>
+>
+>> +
+>> +static int gcc_qdru1000_probe(struct platform_device *pdev)
+>> +{
+>> +       struct regmap *regmap;
+>> +       int ret;
+>> +
+>> +       regmap = qcom_cc_map(pdev, &gcc_qdru1000_desc);
+>> +       if (IS_ERR(regmap))
+>> +               return PTR_ERR(regmap);
+>> +
+>> +       /* Update FORCE_MEM_CORE_ON for gcc_pcie_0_mstr_axi_clk */
+>> +       regmap_update_bits(regmap, 0x9d024, BIT(14), BIT(14));
+>> +
+>> +       ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
+>> +                                      ARRAY_SIZE(gcc_dfs_clocks));
+>> +       if (ret)
+>> +               return ret;
+>> +
+>> +       ret = qcom_cc_really_probe(pdev, &gcc_qdru1000_desc, regmap);
+>> +       if (ret) {
+>> +               dev_err(&pdev->dev, "Failed to register GCC clocks\n");
+>> +               return ret;
+>> +       }
+> if (ret)
+>     return dev_err_probe(....);
+Got it.
+>
+>> +
+>> +       dev_info(&pdev->dev, "Registered GCC clocks\n");
+>
+> No need to spam here.
+Will remove.
+>
+>> +
+>> +       return ret;
+>> +}
+>> +
+>> +static struct platform_driver gcc_qdru1000_driver = {
+>> +       .probe = gcc_qdru1000_probe,
+>> +       .driver = {
+>> +               .name = "gcc-qdru1000",
+>> +               .of_match_table = gcc_qdru1000_match_table,
+>> +       },
+>> +};
+>> +
+>> +static int __init gcc_qdru1000_init(void)
+>> +{
+>> +       return platform_driver_register(&gcc_qdru1000_driver);
+>> +}
+>> +subsys_initcall(gcc_qdru1000_init);
+>> +
+>> +static void __exit gcc_qdru1000_exit(void)
+>> +{
+>> +       platform_driver_unregister(&gcc_qdru1000_driver);
+>> +}
+>> +module_exit(gcc_qdru1000_exit);
+>> +
+>> +MODULE_DESCRIPTION("QTI GCC QDRU1000 Driver");
+>> +MODULE_LICENSE("GPL");
+>> --
+>> 2.37.3
+>>
+Thanks,
+
+Melody
 
