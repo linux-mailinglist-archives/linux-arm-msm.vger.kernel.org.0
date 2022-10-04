@@ -2,82 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5160E5F45FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 16:55:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5609A5F4657
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 17:16:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229602AbiJDOzm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Oct 2022 10:55:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40726 "EHLO
+        id S230006AbiJDPQH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Oct 2022 11:16:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbiJDOzk (ORCPT
+        with ESMTP id S230005AbiJDPQC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Oct 2022 10:55:40 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CFDE5BC16
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 07:55:28 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id s30so15494532eds.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 07:55:28 -0700 (PDT)
+        Tue, 4 Oct 2022 11:16:02 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC4175E338
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 08:15:57 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id x1-20020a17090ab00100b001fda21bbc90so18900532pjq.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 08:15:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=sllxcjZJDpLnHPCaf6ObC6W/uORodwFVD/CnsDhixck=;
-        b=B7/qQ3K6Weu1ofGqjv58LhKlxCJMHYdX2+p57SXeD/zaSe9/nWIDTkXWEbelwTqCp7
-         FbpzGKcr35y+5m+PpBFxLTlzi7lvRGnq2gwFjTzPqKRL5GZHfBe5UscqZ+prOX53O29N
-         vMn6LP3mta+Dd27oWfPv5Z0KwWm4fHEnRiPSM=
+         :mime-version:from:to:cc:subject:date;
+        bh=J2ppHC6gj92crGPpSrELKUpyhixWpF3W0/4C0ZdDtPI=;
+        b=UiXw6aHZigxzPRMUFzDILsNVsAdyFtr3B9KxKEI8m7E01CsajejevTYV7BdP2wsOm/
+         HvcPZBMM+TkW28eTt3F1DhxxBtezuv0XTDjtGYW8B2mbElhkTInGpM6vTu+4Ez1+Z4Zl
+         CSSAi6wcg4/gLFK0z0F/WRWRc047jLnY5XkW7fk/hHejtLeNbcKkU7CbDUwW9lkytUXr
+         cd/OQHjN7wB6eRDMRvJyzU3msr1RCb52XcEzMB0ZW808FTM1QI6i/jSUk70317I5p+kD
+         nFmZIjIA0zvgwBAFP/4LpKCKrT0ZRrqcJXuKYGFTLZWpkF7eqaysYMEZs2++diGTMeSz
+         qF/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sllxcjZJDpLnHPCaf6ObC6W/uORodwFVD/CnsDhixck=;
-        b=4O2tuXUvLfpMRw7M82r7eGWvFJeclpvsJUt9BxDgVyvzkhZYN58596qQyUUyYbMGHB
-         z1L7xmIPm9bMR1akmOm8I86sksNJHEkwUPh4e9M01vTcbnPYVUo1kIa2nhp8oJXjvor1
-         31e0Dr/9G4HvpvdD11g8GuybMe8g4+60A+9e67sL4NGTqgJqG0Ir2ZqSt50S2h0fZ3eQ
-         nAaseqhfHp/+ZrS4ENBOpnXE/MmElOioYFypayNdQZ8Q9gsxo9stWpKGcRBGd43LJKDb
-         TtigZvUfPoz2TuIfEMYCr5S9W+AP5sDK/+gvY3BgsHGoib3fYIol8UhlEdMxQ8dLdumr
-         ahXA==
-X-Gm-Message-State: ACrzQf1ZGUcWXPsvcY0KsUSsTXJ+RDOfAkofn6ZZ7AhvCrJlYnYTFBMW
-        qBYCTJduuNvDiW9B75MAkJuMRB8h7dsdR7CQ
-X-Google-Smtp-Source: AMsMyM5Uv761qXpn5Ch00WDdS2Gn+AVYAX9v1GV/WSkyUx4wU2v3YnVE0v5xSOZALPBW8kyIjXopDA==
-X-Received: by 2002:a05:6402:280a:b0:458:ee63:a98b with SMTP id h10-20020a056402280a00b00458ee63a98bmr11135783ede.307.1664895326832;
-        Tue, 04 Oct 2022 07:55:26 -0700 (PDT)
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com. [209.85.221.51])
-        by smtp.gmail.com with ESMTPSA id n9-20020a509349000000b004580862ffdbsm1852291eda.59.2022.10.04.07.55.24
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Oct 2022 07:55:25 -0700 (PDT)
-Received: by mail-wr1-f51.google.com with SMTP id b7so14100999wrq.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 07:55:24 -0700 (PDT)
-X-Received: by 2002:adf:dd0c:0:b0:22e:4bf6:6c08 with SMTP id
- a12-20020adfdd0c000000b0022e4bf66c08mr2793446wrm.617.1664895324390; Tue, 04
- Oct 2022 07:55:24 -0700 (PDT)
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=J2ppHC6gj92crGPpSrELKUpyhixWpF3W0/4C0ZdDtPI=;
+        b=m7K6dVzlU0rJoaYIhVuEqi0qmVq3OwS2BLxXj+USuvclGWCfn+TMGfS2vB4/kplPP0
+         IWvq09ik4Zwp3D23eEHiVAcwiQkIN662fnQ7g6s6+pXrX3rzf4V+ABLnrqTnwsUOwC5o
+         pvYyYQVMcqkWVkmG+8lGfDaFqrw9reSVH8zN2VFKV0xU7YbZLsjVOfEhcw7xBXvDMZyb
+         7ICv3glpBT+hLcx/yD8JlyU3hITVoqj7NGcBVP9L5FbID6SaYlkK+6YDKAaB4HyUjNV8
+         RDM8DGnR05ot6gWtlkP/72bvwb8IchlqCkClm9YZaesTE759H2wmUORw6os//0cTAjLZ
+         SKQw==
+X-Gm-Message-State: ACrzQf0moLtWl2Dbhd7tXFF2E731JW1kDUGA8A5/Y3wKRWLXNQob5ghg
+        xcdI5pIF9QWgMrjgKY46DC1hV9wKTJ07v6Bp0viVfg==
+X-Google-Smtp-Source: AMsMyM7n+Vc130we6EQHET/igQcvZPTbfdglKFSS5m9j3dBgMdP/YI1FG0U2Mdd0MJ/1Rl84IgnhjST9lkox2h0baYs=
+X-Received: by 2002:a17:90b:1b06:b0:202:cce0:2148 with SMTP id
+ nu6-20020a17090b1b0600b00202cce02148mr262733pjb.84.1664896556863; Tue, 04 Oct
+ 2022 08:15:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220930200529.331223-1-krzysztof.kozlowski@linaro.org>
- <20220930200529.331223-2-krzysztof.kozlowski@linaro.org> <CAD=FV=UaSAvppTqqsZzNh7x_VZ5pVPROLP4AinK2NEWMUPnoQw@mail.gmail.com>
- <985e3982-e9c6-53d0-1aa8-7c8f7726926a@linaro.org> <CAD=FV=WgZLztJUxxs0B-kTnT4cN=kKc24if+P0h7whW54S57aQ@mail.gmail.com>
- <6c20f710-e02e-1702-3985-4e995f8a7e7a@linaro.org>
-In-Reply-To: <6c20f710-e02e-1702-3985-4e995f8a7e7a@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 4 Oct 2022 07:55:11 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Ushwp0AUrdwKrkKLxvsoCZsbSh-tAtXRQzcTavAEk8uA@mail.gmail.com>
-Message-ID: <CAD=FV=Ushwp0AUrdwKrkKLxvsoCZsbSh-tAtXRQzcTavAEk8uA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sdm845: align TLMM pin
- configuration with DT schema
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+References: <20220919095939.761690562@infradead.org>
+In-Reply-To: <20220919095939.761690562@infradead.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 4 Oct 2022 17:15:20 +0200
+Message-ID: <CAPDyKFqwV27k5r8Pqo0bOqKQ2WKfcMdQoua665nA953U36+rXg@mail.gmail.com>
+Subject: Re: [PATCH v2 00/44] cpuidle,rcu: Clean up the mess
+To:     Peter Zijlstra <peterz@infradead.org>
+Cc:     juri.lelli@redhat.com, rafael@kernel.org, catalin.marinas@arm.com,
+        linus.walleij@linaro.org, bsegall@google.com, guoren@kernel.org,
+        pavel@ucw.cz, agordeev@linux.ibm.com, linux-arch@vger.kernel.org,
+        vincent.guittot@linaro.org, mpe@ellerman.id.au,
+        chenhuacai@kernel.org, christophe.leroy@csgroup.eu,
+        linux-acpi@vger.kernel.org, agross@kernel.org,
+        geert@linux-m68k.org, linux-imx@nxp.com, vgupta@kernel.org,
+        mattst88@gmail.com, mturquette@baylibre.com, sammy@sammy.net,
+        pmladek@suse.com, linux-pm@vger.kernel.org,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        linux-um@lists.infradead.org, npiggin@gmail.com,
+        tglx@linutronix.de, linux-omap@vger.kernel.org,
+        dietmar.eggemann@arm.com, andreyknvl@gmail.com,
+        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
+        linux-perf-users@vger.kernel.org, senozhatsky@chromium.org,
+        svens@linux.ibm.com, jolsa@kernel.org, tj@kernel.org,
+        Andrew Morton <akpm@linux-foundation.org>,
+        mark.rutland@arm.com, linux-ia64@vger.kernel.org,
+        dave.hansen@linux.intel.com,
+        virtualization@lists.linux-foundation.org,
+        James.Bottomley@hansenpartnership.com, jcmvbkbc@gmail.com,
+        thierry.reding@gmail.com, kernel@xen0n.name, cl@linux.com,
+        linux-s390@vger.kernel.org, vschneid@redhat.com,
+        john.ogness@linutronix.de, ysato@users.sourceforge.jp,
+        linux-sh@vger.kernel.org, festevam@gmail.com, deller@gmx.de,
+        daniel.lezcano@linaro.org, jonathanh@nvidia.com, dennis@kernel.org,
+        lenb@kernel.org, linux-xtensa@linux-xtensa.org,
+        kernel@pengutronix.de, gor@linux.ibm.com,
+        linux-arm-msm@vger.kernel.org, linux-alpha@vger.kernel.org,
+        linux-m68k@lists.linux-m68k.org, loongarch@lists.linux.dev,
+        shorne@gmail.com, chris@zankel.net, sboyd@kernel.org,
+        dinguyen@kernel.org, bristot@redhat.com,
+        alexander.shishkin@linux.intel.com, fweisbec@gmail.com,
+        lpieralisi@kernel.org, atishp@atishpatra.org,
+        linux@rasmusvillemoes.dk, kasan-dev@googlegroups.com,
+        will@kernel.org, boris.ostrovsky@oracle.com, khilman@kernel.org,
+        linux-csky@vger.kernel.org, pv-drivers@vmware.com,
+        linux-snps-arc@lists.infradead.org, mgorman@suse.de,
+        jacob.jun.pan@linux.intel.com, Arnd Bergmann <arnd@arndb.de>,
+        ulli.kroll@googlemail.com, linux-clk@vger.kernel.org,
+        rostedt@goodmis.org, ink@jurassic.park.msu.ru, bcain@quicinc.com,
+        tsbogend@alpha.franken.de, linux-parisc@vger.kernel.org,
+        ryabinin.a.a@gmail.com, sudeep.holla@arm.com, shawnguo@kernel.org,
+        davem@davemloft.net, dalias@libc.org, tony@atomide.com,
+        amakhalov@vmware.com, konrad.dybcio@somainline.org,
+        bjorn.andersson@linaro.org, glider@google.com, hpa@zytor.com,
+        sparclinux@vger.kernel.org, linux-hexagon@vger.kernel.org,
+        linux-riscv@lists.infradead.org, vincenzo.frascino@arm.com,
+        anton.ivanov@cambridgegreys.com, jonas@southpole.se,
+        yury.norov@gmail.com, richard@nod.at, x86@kernel.org,
+        linux@armlinux.org.uk, mingo@redhat.com, aou@eecs.berkeley.edu,
+        hca@linux.ibm.com, richard.henderson@linaro.org,
+        stefan.kristiansson@saunalahti.fi, openrisc@lists.librecores.org,
+        acme@kernel.org, paul.walmsley@sifive.com,
+        linux-tegra@vger.kernel.org, namhyung@kernel.org,
+        andriy.shevchenko@linux.intel.com, jpoimboe@kernel.org,
+        dvyukov@google.com, jgross@suse.com, monstr@monstr.eu,
+        linux-mips@vger.kernel.org, palmer@dabbelt.com,
+        anup@brainfault.org, bp@alien8.de, johannes@sipsolutions.net,
+        linuxppc-dev@lists.ozlabs.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,510 +124,178 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Tue, Oct 4, 2022 at 1:40 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+On Mon, 19 Sept 2022 at 12:18, Peter Zijlstra <peterz@infradead.org> wrote:
 >
-> On 04/10/2022 00:59, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Mon, Oct 3, 2022 at 10:45 AM Krzysztof Kozlowski
-> > <krzysztof.kozlowski@linaro.org> wrote:
-> >>
-> >> On 03/10/2022 18:14, Doug Anderson wrote:
-> >>> Hi,
-> >>>
-> >>> On Fri, Sep 30, 2022 at 1:06 PM Krzysztof Kozlowski
-> >>> <krzysztof.kozlowski@linaro.org> wrote:
-> >>>>
-> >>>> DT schema expects TLMM pin configuration nodes to be named with
-> >>>> '-state' suffix and their optional children with '-pins' suffix.
-> >>>>
-> >>>> The sdm854.dtsi file defined several pin configuration nodes which are
-> >>>> customized by the boards.  Therefore keep a additional "default-pins"
-> >>>> node inside so the boards can add more of configuration nodes.  Such
-> >>>> additional configuration nodes always need 'function' property now
-> >>>> (required by DT schema).
-> >>>>
-> >>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >>>> ---
-> >>>>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi    | 344 +++++++-----------
-> >>>>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |  76 ++--
-> >>>>  .../arm64/boot/dts/qcom/sdm845-lg-common.dtsi |  60 ++-
-> >>>>  arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts |   2 +-
-> >>>>  arch/arm64/boot/dts/qcom/sdm845-mtp.dts       |  60 ++-
-> >>>>  .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |  88 ++---
-> >>>>  .../boot/dts/qcom/sdm845-shift-axolotl.dts    | 138 +++----
-> >>>>  .../dts/qcom/sdm845-sony-xperia-tama.dtsi     |   6 +-
-> >>>>  .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts |  26 +-
-> >>>>  .../boot/dts/qcom/sdm845-xiaomi-polaris.dts   |  30 +-
-> >>>>  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 305 +++++++---------
-> >>>>  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts |  33 +-
-> >>>>  .../boot/dts/qcom/sdm850-samsung-w737.dts     |  96 ++---
-> >>>>  13 files changed, 513 insertions(+), 751 deletions(-)
-> >>>>
-> >>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-> >>>> index b5f11fbcc300..3403cdcdd49c 100644
-> >>>> --- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-> >>>> +++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-> >>>> @@ -993,21 +993,21 @@ &wifi {
-> >>>>  /* PINCTRL - additions to nodes defined in sdm845.dtsi */
-> >>>>
-> >>>>  &qspi_cs0 {
-> >>>> -       pinconf {
-> >>>> +       default-pins {
-> >>>>                 pins = "gpio90";
-> >>>>                 bias-disable;
-> >>>>         };
-> >>>>  };
-> >>>>
-> >>>>  &qspi_clk {
-> >>>> -       pinconf {
-> >>>> +       default-pins {
-> >>>>                 pins = "gpio95";
-> >>>>                 bias-disable;
-> >>>>         };
-> >>>>  };
-> >>>>
-> >>>>  &qspi_data01 {
-> >>>> -       pinconf {
-> >>>> +       default-pins {
-> >>>>                 pins = "gpio91", "gpio92";
-> >>>
-> >>> I haven't been fully involved in all the discussion here, but the
-> >>> above doesn't look like it matches the way that Bjorn wanted to go
-> >>> [1].  I would sorta expect it to look like this:
-> >>>
-> >>>   /* QSPI always needs a clock and IO pins */
-> >>>   qspi_basic: {
-> >>>     qspi_clk: {
-> >>>       pins = "gpio95";
-> >>>       function = "qspi_clk";
-> >>>     };
-> >>>     qspi_data01: {
-> >>>       pins = "gpio95";
-> >>>       function = "qspi_clk";
-> >>>     };
-> >>>   }
-> >>>
-> >>>   /* QSPI will need one or both chip selects */
-> >>>   qspi_cs0: qspi-cs0-state {
-> >>>     pins = "gpio90";
-> >>>     function = "qspi_cs";
-> >>>   };
-> >>>
-> >>>   qspi_cs1: qspi-cs1-state {
-> >>>     pins = "gpio89";
-> >>>     function = "qspi_cs";
-> >>>   };
-> >>>
-> >>>   /* If using all 4 data lines we need these */
-> >>>   qspi_data12: qspi-data12-state {
-> >>>     pins = "gpio93", "gpio94";
-> >>>     function = "qspi_data";
-> >>>   };
-> >>>
-> >>> Basically grouping things together in a two-level node when it makes
-> >>> sense and then using 1-level nodes for "mixin" pins. Then you'd end up
-> >>> doing one of these things:
-> >>>
-> >>> pinctrl-0 = <&qspi_basic &qspi_cs0>;
-> >>> pinctrl-0 = <&qspi_basic &qspi_cs1>;
-> >>> pinctrl-0 = <&qspi_basic &qspi_cs0 &qspi_data12>;
-> >>
-> >>
-> >> I don't get how my patch changes the existing approach? Such pattern was
-> >> already there.
-> >
-> > Before your patch things were split in two nodes, the muxing and the
-> > configuration. AKA when you combined the soc.dtsi and the board.dts
-> > you'd have:
-> >
-> > qspi_cs0: qspi-cs0-state {
-> >   pinmux {
-> >     pins = "...";
-> >     ... muxing properties ...
-> >   };
-> >   pinconf {
-> >     pins = "...";
-> >     ... config properties ...
-> >   };
-> > };
+> Hi All!
 >
-> Which was also not good pattern. Muxing and configuring is basically the
-> same function of pin controller. Splitting them makes no sense at all.
-
-Agreed, it was not a good pattern.
-
-
-> > Your patch combines the "pinmux" and "pinconf" nodes into one. So when
-> > you combine the soc.dtsi and the board.dts after your patch you now
-> > have:
-> >
-> > qspi_cs0: qspi-cs0-state {
-> >   default-pins {
-> >     pins = "...";
-> >     ... muxing properties ...
-> >     ... config properties ...
-> >   };
-> > };
-> >
-> >
-> > That's fine and is functionally correct. ...but IMO it sets a bad
-> > example for people to follow (though, of course, it's really up to
-> > Bjorn). The "default-pins" subnode serves no purpose. If you're
-> > touching all this stuff anyway you might as well not end up with
-> > something that's a bad example for people to follow.
+> At long last, a respin of the cpuidle vs rcu cleanup patches.
 >
-> I understand, you're right. I wanted to keep minimal amount of changes
-> to the DTS layout but since I am touching almost everything, I can
-> rework it.
+> v1: https://lkml.kernel.org/r/20220608142723.103523089@infradead.org
+>
+> These here patches clean up the mess that is cpuidle vs rcuidle.
+>
+> At the end of the ride there's only on RCU_NONIDLE user left:
+>
+>   arch/arm64/kernel/suspend.c:            RCU_NONIDLE(__cpu_suspend_exit());
+>
+> and 'one' trace_*_rcuidle() user:
+>
+>   kernel/trace/trace_preemptirq.c:                        trace_irq_enable_rcuidle(CALLER_ADDR0, CALLER_ADDR1);
+>   kernel/trace/trace_preemptirq.c:                        trace_irq_disable_rcuidle(CALLER_ADDR0, CALLER_ADDR1);
+>   kernel/trace/trace_preemptirq.c:                        trace_irq_enable_rcuidle(CALLER_ADDR0, caller_addr);
+>   kernel/trace/trace_preemptirq.c:                        trace_irq_disable_rcuidle(CALLER_ADDR0, caller_addr);
+>   kernel/trace/trace_preemptirq.c:                trace_preempt_enable_rcuidle(a0, a1);
+>   kernel/trace/trace_preemptirq.c:                trace_preempt_disable_rcuidle(a0, a1);
+>
+> However this last is all in deprecated code that should be unused for GENERIC_ENTRY.
+>
+> I've touched a lot of code that I can't test and I might've broken something by
+> accident. In particular the whole ARM cpuidle stuff was quite involved.
+>
+> Please all; have a look where you haven't already.
 >
 >
-> >> Again - you end up or you ended up? We discuss here what this patch did.
-> >> So are you sure that this patch did something like that (and it wasn't
-> >> already there)?
-> >>
-> >>>
-> >>> Note that the extra tags of "qspi_clk" and "qspi_data01" are important
-> >>> since it lets the individual boards easily set pulls / drive strengths
-> >>> without needing to replicate the hierarchy of the SoC. So if a board
-> >>> wanted to set the pull of the cs0 line, just:
-> >>>
-> >>> &qspi_cs0 {
-> >>>   bias-disable;
-> >>> };
-> >>>
-> >>> [1] https://lore.kernel.org/lkml/CAD=FV=VUL4GmjaibAMhKNdpEso_Hg_R=XeMaqah1LSj_9-Ce4Q@mail.gmail.com/
-> >>>
-> >>>
-> >>>> @@ -1016,7 +1016,7 @@ pinconf {
-> >>>>  };
-> >>>>
-> >>>>  &qup_i2c3_default {
-> >>>> -       pinconf {
-> >>>> +       default-pins {
-> >>>>                 pins = "gpio41", "gpio42";
-> >>>>                 drive-strength = <2>;
-> >>>
-> >>> I don't see any benefit to two-levels above. Why not just get rid of
-> >>> the "default-pins" and put the stuff directly under qup_i2c3_default?
-> >>
-> >> For the same reason I told Konrad?
-> >
-> > OK. I looked at what you end up with for "qup_uart9" after your
-> > patches and it's definitely not my favorite place to end up at. If
-> > nothing else you are double-specifying "function" in both
-> > "default-pins" and "tx-pins"/"rx-pins". If those disagree then what
-> > happens?
+> New since v1:
 >
-> The same happens and happened before. My patch does nothing related to
-> allowing or disallowing wrong muxing/config nodes. In the past you could
-> have conflicting setups. Now it's exactly the same.
-
-Right that you could have had conflicting setups before, too. However,
-in the past we always avoided specifying the function for a given pin
-in more than one node.
-
-The old way was super verbose and had a lot of repetition for sure,
-but it sorta made sense if you thought of it in words. AKA the old way
-said this after combining the soc.dtsi and the board.dts
-
-* For pins 45, 46, 47, 48: set the function to "qup6"
-* For pin 45: set a pulldown
-* For pins 46 and 47: set the drive strength to 2 and disable pulls
-* For pin 48: set a pullup
-
-So it repeated the "for pins" part and that was most definitely non
-ideal. However, with your new setup you are sometimes doing:
-
-* For pins 47 and 48: set the function to "qup6"
-* For pin 45: set the function to "qup6" and set a pulldown
-* For pins 46 and 47: set the function to "qup6" and the drive
-strength to 2 and disable pulls
-* For pin 48: set the function to "qup6" and set a pullup
-
-That repeats the 'set the function to "qup6"' more than I'd like.
-
-
-> The double-specifying of "function" is not a result of '-state'/'-pins'
-> reorganization but aligning with common TLMM schema *which requires
-> function* for every node.
-
-I guess now that we've talked through it, I'd say that if we have to
-specify a function for every node then we should strive for each pin
-to be in exactly one node in any given active configuration. That
-makes the schema happy and also avoids double-specifying the function.
-
-I think in all of the examples I've given that this is true.
-
-
-> > In general also we end up specifying that extra level of
-> > "default-pins" in many cases for no purpose. We also end up
-> > replicating hierarchy in the board dts files (the dts files are
-> > replicating the "default-pins" nodes from the parent).
+>  - rebase on top of Frederic's rcu-context-tracking rename fest
+>  - more omap goodness as per the last discusion (thanks Tony!)
+>  - removed one more RCU_NONIDLE() from arm64/risc-v perf code
+>  - ubsan/kasan fixes
+>  - intel_idle module-param for testing
+>  - a bunch of extra __always_inline, because compilers are silly.
 >
-> OK, let's fix this. That will need either:
-> 1. /delete-node with copying of most of properties from default-pins
-> 2. or move the CTS/TX/RX config pins to the DTSI.
+> ---
+>  arch/alpha/kernel/process.c               |  1 -
+>  arch/alpha/kernel/vmlinux.lds.S           |  1 -
+>  arch/arc/kernel/process.c                 |  3 ++
+>  arch/arc/kernel/vmlinux.lds.S             |  1 -
+>  arch/arm/include/asm/vmlinux.lds.h        |  1 -
+>  arch/arm/kernel/process.c                 |  1 -
+>  arch/arm/kernel/smp.c                     |  6 +--
+>  arch/arm/mach-gemini/board-dt.c           |  3 +-
+>  arch/arm/mach-imx/cpuidle-imx6q.c         |  4 +-
+>  arch/arm/mach-imx/cpuidle-imx6sx.c        |  5 ++-
+>  arch/arm/mach-omap2/common.h              |  6 ++-
+>  arch/arm/mach-omap2/cpuidle34xx.c         | 16 +++++++-
+>  arch/arm/mach-omap2/cpuidle44xx.c         | 29 +++++++-------
+>  arch/arm/mach-omap2/omap-mpuss-lowpower.c | 12 +++++-
+>  arch/arm/mach-omap2/pm.h                  |  2 +-
+>  arch/arm/mach-omap2/pm24xx.c              | 51 +-----------------------
+>  arch/arm/mach-omap2/pm34xx.c              | 14 +++++--
+>  arch/arm/mach-omap2/pm44xx.c              |  2 +-
+>  arch/arm/mach-omap2/powerdomain.c         | 10 ++---
+>  arch/arm64/kernel/idle.c                  |  1 -
+>  arch/arm64/kernel/smp.c                   |  4 +-
+>  arch/arm64/kernel/vmlinux.lds.S           |  1 -
+>  arch/csky/kernel/process.c                |  1 -
+>  arch/csky/kernel/smp.c                    |  2 +-
+>  arch/csky/kernel/vmlinux.lds.S            |  1 -
+>  arch/hexagon/kernel/process.c             |  1 -
+>  arch/hexagon/kernel/vmlinux.lds.S         |  1 -
+>  arch/ia64/kernel/process.c                |  1 +
+>  arch/ia64/kernel/vmlinux.lds.S            |  1 -
+>  arch/loongarch/kernel/idle.c              |  1 +
+>  arch/loongarch/kernel/vmlinux.lds.S       |  1 -
+>  arch/m68k/kernel/vmlinux-nommu.lds        |  1 -
+>  arch/m68k/kernel/vmlinux-std.lds          |  1 -
+>  arch/m68k/kernel/vmlinux-sun3.lds         |  1 -
+>  arch/microblaze/kernel/process.c          |  1 -
+>  arch/microblaze/kernel/vmlinux.lds.S      |  1 -
+>  arch/mips/kernel/idle.c                   |  8 ++--
+>  arch/mips/kernel/vmlinux.lds.S            |  1 -
+>  arch/nios2/kernel/process.c               |  1 -
+>  arch/nios2/kernel/vmlinux.lds.S           |  1 -
+>  arch/openrisc/kernel/process.c            |  1 +
+>  arch/openrisc/kernel/vmlinux.lds.S        |  1 -
+>  arch/parisc/kernel/process.c              |  2 -
+>  arch/parisc/kernel/vmlinux.lds.S          |  1 -
+>  arch/powerpc/kernel/idle.c                |  5 +--
+>  arch/powerpc/kernel/vmlinux.lds.S         |  1 -
+>  arch/riscv/kernel/process.c               |  1 -
+>  arch/riscv/kernel/vmlinux-xip.lds.S       |  1 -
+>  arch/riscv/kernel/vmlinux.lds.S           |  1 -
+>  arch/s390/kernel/idle.c                   |  1 -
+>  arch/s390/kernel/vmlinux.lds.S            |  1 -
+>  arch/sh/kernel/idle.c                     |  1 +
+>  arch/sh/kernel/vmlinux.lds.S              |  1 -
+>  arch/sparc/kernel/leon_pmc.c              |  4 ++
+>  arch/sparc/kernel/process_32.c            |  1 -
+>  arch/sparc/kernel/process_64.c            |  3 +-
+>  arch/sparc/kernel/vmlinux.lds.S           |  1 -
+>  arch/um/kernel/dyn.lds.S                  |  1 -
+>  arch/um/kernel/process.c                  |  1 -
+>  arch/um/kernel/uml.lds.S                  |  1 -
+>  arch/x86/boot/compressed/vmlinux.lds.S    |  1 +
+>  arch/x86/coco/tdx/tdcall.S                | 15 +------
+>  arch/x86/coco/tdx/tdx.c                   | 25 ++++--------
+>  arch/x86/events/amd/brs.c                 | 13 +++----
+>  arch/x86/include/asm/fpu/xcr.h            |  4 +-
+>  arch/x86/include/asm/irqflags.h           | 11 ++----
+>  arch/x86/include/asm/mwait.h              | 14 +++----
+>  arch/x86/include/asm/nospec-branch.h      |  2 +-
+>  arch/x86/include/asm/paravirt.h           |  6 ++-
+>  arch/x86/include/asm/perf_event.h         |  2 +-
+>  arch/x86/include/asm/shared/io.h          |  4 +-
+>  arch/x86/include/asm/shared/tdx.h         |  1 -
+>  arch/x86/include/asm/special_insns.h      |  8 ++--
+>  arch/x86/include/asm/xen/hypercall.h      |  2 +-
+>  arch/x86/kernel/cpu/bugs.c                |  2 +-
+>  arch/x86/kernel/fpu/core.c                |  4 +-
+>  arch/x86/kernel/paravirt.c                | 14 ++++++-
+>  arch/x86/kernel/process.c                 | 65 +++++++++++++++----------------
+>  arch/x86/kernel/vmlinux.lds.S             |  1 -
+>  arch/x86/lib/memcpy_64.S                  |  5 +--
+>  arch/x86/lib/memmove_64.S                 |  4 +-
+>  arch/x86/lib/memset_64.S                  |  4 +-
+>  arch/x86/xen/enlighten_pv.c               |  2 +-
+>  arch/x86/xen/irq.c                        |  2 +-
+>  arch/xtensa/kernel/process.c              |  1 +
+>  arch/xtensa/kernel/vmlinux.lds.S          |  1 -
+>  drivers/acpi/processor_idle.c             | 36 ++++++++++-------
+>  drivers/base/power/runtime.c              | 24 ++++++------
+>  drivers/clk/clk.c                         |  8 ++--
+>  drivers/cpuidle/cpuidle-arm.c             |  1 +
+>  drivers/cpuidle/cpuidle-big_little.c      |  8 +++-
+>  drivers/cpuidle/cpuidle-mvebu-v7.c        |  7 ++++
+>  drivers/cpuidle/cpuidle-psci.c            | 10 +++--
+>  drivers/cpuidle/cpuidle-qcom-spm.c        |  1 +
+>  drivers/cpuidle/cpuidle-riscv-sbi.c       | 10 +++--
+>  drivers/cpuidle/cpuidle-tegra.c           | 21 +++++++---
+>  drivers/cpuidle/cpuidle.c                 | 21 +++++-----
+>  drivers/cpuidle/dt_idle_states.c          |  2 +-
+>  drivers/cpuidle/poll_state.c              | 10 ++++-
+>  drivers/idle/intel_idle.c                 | 19 +++++----
+>  drivers/perf/arm_pmu.c                    | 11 +-----
+>  drivers/perf/riscv_pmu_sbi.c              |  8 +---
+>  include/asm-generic/vmlinux.lds.h         |  9 ++---
+>  include/linux/compiler_types.h            |  8 +++-
+>  include/linux/cpu.h                       |  3 --
+>  include/linux/cpuidle.h                   | 34 ++++++++++++++++
+>  include/linux/cpumask.h                   |  4 +-
+>  include/linux/percpu-defs.h               |  2 +-
+>  include/linux/sched/idle.h                | 40 ++++++++++++++-----
+>  include/linux/thread_info.h               | 18 ++++++++-
+>  include/linux/tracepoint.h                | 13 ++++++-
+>  kernel/cpu_pm.c                           |  9 -----
+>  kernel/printk/printk.c                    |  2 +-
+>  kernel/sched/idle.c                       | 47 +++++++---------------
+>  kernel/time/tick-broadcast-hrtimer.c      | 29 ++++++--------
+>  kernel/time/tick-broadcast.c              |  6 ++-
+>  kernel/trace/trace.c                      |  3 ++
+>  lib/ubsan.c                               |  5 ++-
+>  mm/kasan/kasan.h                          |  4 ++
+>  mm/kasan/shadow.c                         | 38 ++++++++++++++++++
+>  tools/objtool/check.c                     | 17 ++++++++
+>  121 files changed, 511 insertions(+), 420 deletions(-)
 
-I think in my proposal the CTS/TX/RX stuff moved to the dtsi which solved it.
+Thanks for cleaning up the situation!
 
+I have applied this on a plain v6.0 (only one patch had a minor
+conflict) and tested this on an ARM64 Dragonboard 410c, which uses
+cpuidle-psci and the cpuidle-psci-domain. I didn't observe any
+problems, so feel free to add:
 
-> >>>>  /* PINCTRL - additions to nodes defined in sdm845.dtsi */
-> >>>>  &qup_spi2_default {
-> >>>> -       pinmux {
-> >>>> +       default-pins {
-> >>>>                 drive-strength = <16>;
-> >>>>         };
-> >>>>  };
-> >>>>
-> >>>>  &qup_uart3_default{
-> >>>> -       pinmux {
-> >>>> +       default-pins {
-> >>>>                 pins = "gpio41", "gpio42", "gpio43", "gpio44";
-> >>>>                 function = "qup3";
-> >>>>         };
-> >>>>  };
-> >>>>
-> >>>>  &qup_i2c10_default {
-> >>>> -       pinconf {
-> >>>> +       default-pins {
-> >>>>                 pins = "gpio55", "gpio56";
-> >>>>                 drive-strength = <2>;
-> >>>>                 bias-disable;
-> >>>> @@ -1144,37 +1144,37 @@ pinconf {
-> >>>>  };
-> >>>>
-> >>>>  &qup_uart6_default {
-> >>>> -       pinmux {
-> >>>> -               pins = "gpio45", "gpio46", "gpio47", "gpio48";
-> >>>> -               function = "qup6";
-> >>>> -       };
-> >>>> -
-> >>>> -       cts {
-> >>>> +       cts-pins {
-> >>>>                 pins = "gpio45";
-> >>>> +               function = "qup6";
-> >>>>                 bias-disable;
-> >>>>         };
-> >>>>
-> >>>> -       rts-tx {
-> >>>> +       rts-tx-pins {
-> >>>>                 pins = "gpio46", "gpio47";
-> >>>> +               function = "qup6";
-> >>>>                 drive-strength = <2>;
-> >>>>                 bias-disable;
-> >>>>         };
-> >>>>
-> >>>> -       rx {
-> >>>> +       rx-pins {
-> >>>>                 pins = "gpio48";
-> >>>> +               function = "qup6";
-> >>>>                 bias-pull-up;
-> >>>>         };
-> >>>>  };
-> >>>
-> >>> I didn't check everything about this patch, but skimming through I
-> >>> believe that the uart6 handling here is wrong. You'll end up with:>
-> >>>   qup_uart6_default: qup-uart6-default-state {
-> >>>     default-pins {
-> >>>       pins = "gpio47", "gpio48";
-> >>>       function = "qup6";
-> >>
-> >> This piece was removed.
-> >
-> > It was? How/where? I tried applying your patch and I still see "qup6"
-> > under the default-pins node in sdm845.dtsi.
-> >
->
-> Ah, you're right. The default-pins are coming from DTSI.
->
-> So delete-node?
+Tested-by: Ulf Hansson <ulf.hansson@linaro.org>
 
-I would prefer the solution I proposed. Re-pasting here:
-
-In Soc.dtsi:
-
-  qup_uart6_txrx: qup-uart6-txrx-state {
-    qup_uart6_tx {
-      pins = "gpio47";
-      function = "qup6";
-    };
-    qup_uart6_rx {
-      pins = "gpio48";
-      function = "qup6";
-    };
-  };
-  qup_uart6_cts: qup-uart6-cts-state {
-    pins = "gpio45";
-    function = "qup6";
-  };
-  qup_uart6_rts: qup-uart6-rts-state {
-    pins = "gpio46";
-    function = "qup6";
-  };
-
-In board.dts:
-
-  &qup_uart6_cts {
-    bias-disable;
-  };
-  &qup_uart6_rts {
-    drive-strength = <2>;
-    bias-disable;
-  };
-  &qup_uart6_rx {
-    bias-pull-up;
-  };
-  &qup_uart6_tx {
-    drive-strength = <2>;
-    bias-disable;
-  };
-
-
-> >>>     };
-> >>>
-> >>>     cts-pins {
-> >>>       pins = "gpio45";
-> >>>       function = "qup6";
-> >>>       bias-disable;
-> >>>     };
-> >>>
-> >>>     rts-tx-pins {
-> >>>       pins = "gpio46", "gpio47";
-> >>>       function = "qup6";
-> >>>       drive-strength = <2>;
-> >>>       bias-disable;
-> >>>     };
-> >>>
-> >>>     rx-pins {
-> >>>       pins = "gpio48";
-> >>>       function = "qup6";
-> >>>       bias-pull-up;
-> >>>     };
-> >>>   };
-> >>>
-> >>> So pins 47 and 48 are each referenced in two nodes. That doesn't seem
-> >>> correct to me. IMO, better would have been:
-> >>
-> >> Even though that particular piece was removed, so there is no double
-> >> reference, it would still be correct. Or rather - what is there
-> >> incorrect? Mentioning pin twice? This is ok, although not necessarily
-> >> the most readable.
-> >
-> > I guess this gets into the corners of pinctrl that I haven't poked at
-> > lots. I guess it should be OK unless the SoC.dtsi and the board.dts
-> > disagree about the "function". In such a case I guess it would be a
-> > problem. So I guess what you end up will be OK but I don't like that
-> > "function" is specified for the same pin in two different sub-nodes.
->
-> OK.
->
-> >
-> >
-> >>> In Soc.dtsi:
-> >>>
-> >>>   qup_uart6_txrx: qup-uart6-txrx-state {
-> >>>     qup_uart6_tx {
-> >>>       pins = "gpio47";
-> >>>       function = "qup6";
-> >>>     };
-> >>>     qup_uart6_rx {
-> >>>       pins = "gpio48";
-> >>>       function = "qup6";
-> >>>     };
-> >>>   };
-> >>>   qup_uart6_cts: qup-uart6-cts-state {
-> >>>     pins = "gpio45";
-> >>>     function = "qup6";
-> >>>   };
-> >>>   qup_uart6_rts: qup-uart6-rts-state {
-> >>>     pins = "gpio46";
-> >>>     function = "qup6";
-> >>>   };
-> >>>
-> >>> In board.dts:
-> >>>
-> >>>   &qup_uart6_cts {
-> >>>     bias-disable;
-> >>>   };
-> >>>   &qup_uart6_rts {
-> >>>     drive-strength = <2>;
-> >>>     bias-disable;
-> >>>   };
-> >>>   &qup_uart6_rx {
-> >>>     bias-pull-up;
-> >>>   };
-> >>>   &qup_uart6_tx {
-> >>>     drive-strength = <2>;
-> >>>     bias-disable;
-> >>
-> >> It's not related to this patchset, but sounds good, please change the
-> >> DTS to match it. I can rebase my patch on top of it.
-> >
-> > I guess it's related in that the patchset is touching everything and
-> > one would assume that something touched so recently would represent
-> > the current best practices. Maybe that's a weak argument, but if I saw
-> > a patch that was about trying to clean up all the pinctrl across all
-> > the older SoCs that I would assume that the pinctrl would be clean
-> > after that patch and would be a good example to follow as best
-> > practice. Thus it's relevant to talk about whether this patch is
-> > ending us up at best practice or not.
-> >
-> >
-> >>>   };
-> >>>
-> >>> Also, as per latest agreement with Bjorn, we should be moving the
-> >>> default drive strength to the SoC.dtsi file, so going further:
-> >>
-> >> How is it related to this patch? Sure, feel free to move drive strength
-> >> anywhere. We can discuss it. But it is not part of this patch.
-> >
-> > Moving the drive strength can certainly be discussed / done in a later patch.
-> >
-> >
-> >>> In Soc.dtsi:
-> >>>
-> >>>   qup_uart6_txrx: qup-uart6-txrx-state {
-> >>>     qup_uart6_tx {
-> >>>       pins = "gpio47";
-> >>>       function = "qup6";
-> >>>       drive-strength = <2>;
-> >>>     };
-> >>>     qup_uart6_rx {
-> >>>       pins = "gpio48";
-> >>>       function = "qup6";
-> >>>     };
-> >>>   };
-> >>>   qup_uart6_cts: qup-uart6-cts-state {
-> >>>     pins = "gpio45";
-> >>>     function = "qup6";
-> >>>   };
-> >>>   qup_uart6_rts: qup-uart6-rts-state {
-> >>>     pins = "gpio46";
-> >>>     function = "qup6";
-> >>>     drive-strength = <2>;
-> >>
-> >> These are not part of DTSI. They exist in DTS, not in DTSI. You now
-> >> introduce a change entirely different than this patchset is doing. It
-> >> makes sense on its own, but it is not related to this patchset.
-> >
-> > It is relevant to discuss because it would be the correct way to solve
-> > the same issue with "uart9" that you used to justify why you needed an
-> > extra "uart9-default" subnode.
->
-> The goal of this patchset is to solve dtbs_check. It's goal is not
-> "generic guidance how Qualcomm pin configuration nodes should be
-> written", because whatever you and I agree, it does not much matter. The
-> maintainers decision matter.
->
-> If there is a consensus/preferred way to organize it, sure, document it
-> somewhere, store it in email/lore in concise way, and I can fix up the
-> patch to match it. It is just not my goal now, so I am not pushing
-> towards any such direction.
->
-> Best regards,
-> Krzysztof
->
+Kind regards
+Uffe
