@@ -2,78 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6B835F478E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 18:28:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9498E5F47BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 18:37:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230044AbiJDQ2P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Oct 2022 12:28:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42284 "EHLO
+        id S229571AbiJDQhd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Oct 2022 12:37:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230025AbiJDQ2O (ORCPT
+        with ESMTP id S229574AbiJDQhb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Oct 2022 12:28:14 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 365B027FD8;
-        Tue,  4 Oct 2022 09:28:13 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 294F89UI001775;
-        Tue, 4 Oct 2022 16:28:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=er6WiFdir6EGtOJNKUaGEwi0MCH4cdt6wj/WNtIk28c=;
- b=gM63uEQl+NrPYdjvUp/K0JfGmBB8R9fV4mGkjS6iO+P8OXxTseH65+suTSsftmz4DbfV
- WIepsMJaW8FDJB6bIUmJJD/vL6tP22+T7hcRih5f7LRPLcviDXN5P2hC6w18IaY1VHrv
- room6h05PjpgeS4oodWOo8h4RdgC9ScG0p6fPKPPYJfGBrz+tddmp2nQ0LrcTCokPZ1S
- QDmrXMD0hVIT+WtHK9OYC/NdJ4TnZHOiRsZD1eUD0BSmdJS5OtEbc3SYgTOI6xJd7VO9
- o14mcYWBgCldXol9tqacWmkzBNw83UTveI8psPsaXARej0hulAPtTRwqjA8OEvJda806 Ww== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k0escs8r9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 04 Oct 2022 16:28:01 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 294GS1qm032218
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 4 Oct 2022 16:28:01 GMT
-Received: from [10.111.163.178] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 4 Oct 2022 12:37:31 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B3755F209;
+        Tue,  4 Oct 2022 09:37:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1664901451; x=1696437451;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=4xKFHhMa5zfB4wwpijtIZoLRV7h1tsBYmsv6+FgEBBc=;
+  b=Fb/rbB4Ow/dwwqDqDnDPz+8p+I3x1qN2RVJMKHgv/pdi7MI5RJ/5L5ME
+   tRklxQZ6bx0doF7PSfDGEEQZfCOPYgMtz1BylCxbDFQm/XcJounr73rQL
+   vahxQzLPm2TTR0gloqp7HKhHRsUtJqXZ6YmJJpApqOtPnca1C39o2MAmP
+   o=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 04 Oct 2022 09:37:30 -0700
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Oct 2022 09:37:30 -0700
+Received: from [10.110.81.239] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 4 Oct 2022
- 09:27:58 -0700
-Message-ID: <fa74e1c0-53bb-4e73-4df5-c69cd455dd11@quicinc.com>
-Date:   Tue, 4 Oct 2022 09:27:56 -0700
+ 09:37:29 -0700
+Message-ID: <943ec4f3-e6a4-7614-fb6f-1adce1487857@quicinc.com>
+Date:   Tue, 4 Oct 2022 09:37:29 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH -next] drm/msm: Remove unused variables 'top'
+ Thunderbird/91.13.0
+Subject: Re: Qualcomm DT bindings and DTS cleanups - tracking community wide
 Content-Language: en-US
-To:     Chen Zhongjin <chenzhongjin@huawei.com>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-CC:     <dianders@chromium.org>, <sean@poorly.run>, <andersson@kernel.org>,
-        <swboyd@chromium.org>, <dmitry.baryshkov@linaro.org>
-References: <20221010024010.2873633-1-chenzhongjin@huawei.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20221010024010.2873633-1-chenzhongjin@huawei.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Alex Elder <elder@linaro.org>,
+        Nicolas Dechesne <nicolas.dechesne@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Vinod Koul <vinod.koul@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Caleb Connolly <kc@postmarketos.org>
+References: <62e95ea6-6b72-a159-56ab-8bb11a5800c8@linaro.org>
+ <faa4e821-00e0-4ee0-0c62-b5eb6f75abf7@linaro.org>
+From:   Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <faa4e821-00e0-4ee0-0c62-b5eb6f75abf7@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: eTWAbwP9wnza17SGp2NVwyKAzZq0dcIZ
-X-Proofpoint-GUID: eTWAbwP9wnza17SGp2NVwyKAzZq0dcIZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-10-04_07,2022-09-29_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 adultscore=0 clxscore=1011 suspectscore=0 mlxscore=0
- mlxlogscore=999 impostorscore=0 spamscore=0 bulkscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210040106
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-6.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,42 +79,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/9/2022 7:40 PM, Chen Zhongjin wrote:
-> 'commit 1e5df24b996c ("drm/msm/dpu: drop length from struct dpu_hw_blk_reg_map")'
-> 'commit 9403f9a42c88 ("drm/msm/dpu: merge base_off with blk_off in struct dpu_hw_blk_reg_map")'
-> These commits had merged hw.blk_off and hw.blk_off to mdp.
-> So we don't need to get dpu_hw_mdp in dpu_kms_mdp_snapshot() now.
+On 10/4/2022 7:50 AM, Krzysztof Kozlowski wrote:
+> On 22/09/2022 16:32, Krzysztof Kozlowski wrote:
+>> Hi everyone,
+>>
+>> Quite a lot of people are working on Qualcomm DT bindings conversion
+>> (TXT->YAML) and fixups to Qualcomm DTS. We track a bit of this effort
+>> internally in Linaro, but that has many shortcomings and we would like
+>> to track it rather community-wide with the support and contributions
+>> from the community.
+>>
+>> What to track:
+>> 1. Which bindings to convert to YAML,
+>> 2. Missing compatibles (either entirely or because of missing conversion),
+>> 3. `dt_binding_check` warnings (usually connected with 1-2),
+>> 4. `dtbs_check` warnings.
+>>
+>> Rob's bot gives us daily output for 1-4, but how can we track current
+>> efforts to avoid duplication of work? Also it would allow people to find
+>> tasks for them to get contributions to Linux kernel :). Is anyone in
+>> community interested in tracking it together, in a public way?
+>>
+>> If so, where?
+>> A. elinux.org (needs some formatting when pasting the output from tools)
+>> B. gitlab pages/wiki (maybe scripts could parse tools and create the page?)
+>> C. gitlab dedicated repo - some text file
+>> D. Linux kernel TODO file (might be difficult to keep updated)
+>> E. kernel.org wiki (requires LF accounts, AFAIK, a bit pain to edit; I
+>> have it for Exynos but I don't find it usable -
+>> https://exynos.wiki.kernel.org/todo_tasks)
 > 
-> Since there is no code using 'top' in this function. Remove it.
 > 
-> Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-
-This has already been fixed with:
-
-https://gitlab.freedesktop.org/drm/msm/-/commit/4bca876458caf7c105ab2ae9d80ff2cc9c60388d
-
-
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 4 ----
->   1 file changed, 4 deletions(-)
+> Hi All,
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 008e1420e6e5..79e81f1443be 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -902,13 +902,9 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
->   	int i;
->   	struct dpu_kms *dpu_kms;
->   	const struct dpu_mdss_cfg *cat;
-> -	struct dpu_hw_mdp *top;
->   
->   	dpu_kms = to_dpu_kms(kms);
-> -
->   	cat = dpu_kms->catalog;
-> -	top = dpu_kms->hw_mdp;
-> -
->   	pm_runtime_get_sync(&dpu_kms->pdev->dev);
->   
->   	/* dump CTL sub-blocks HW regs info */
+> Any thoughts on this? So far I did not receive any responses, so
+> probably this could mean that there is little interest in this?
+
+My preference for tracking is gitlab. B or C. Everyone will have login 
+and understands the workflow.
+
+---Trilok Soni
