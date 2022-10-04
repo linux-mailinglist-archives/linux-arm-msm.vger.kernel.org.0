@@ -2,145 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA7AF5F3FFF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 11:41:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C6EF5F4005
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 11:42:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231375AbiJDJlr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Oct 2022 05:41:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32874 "EHLO
+        id S231305AbiJDJmK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Oct 2022 05:42:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229938AbiJDJl0 (ORCPT
+        with ESMTP id S231167AbiJDJlk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Oct 2022 05:41:26 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C3C95A3E3
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 02:38:07 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id f11so17774759wrm.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 02:38:07 -0700 (PDT)
+        Tue, 4 Oct 2022 05:41:40 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 098771E1
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 02:38:58 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id 13so27634143ejn.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 02:38:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:cc:to:content-language:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date;
-        bh=w/jnvOzh6Nm6auASOsenLdYqfQP4eJIKrsHZXL+ia8g=;
-        b=S6emkqURkc/CNrKv84/nWjP68IeGyMkcV7Se8543+Fte+ZAcYubSZCZkDrUWaDiOu3
-         lFXqoZt15o3SbSlo5Ef+9A+zM9xr6nsd+Jfwh3bFJD+8JbxQ/9ReIGHRFoAtmgb7DQ2j
-         qAjnL7vlZJK81G3DSe0oBVo+fOkaRRZV7URlGhEsxXyyxOkUr0+m07kojl8sIWO262ma
-         EXCheUOmyh5TptAsgKWfho1/xjElcQoXOUqE9a7e797XmmqnqyZsz0/57xgVsE4GL7MH
-         dqt+bV6P1FccWWq2UpwITH5n4r6QuTmxjIoVHbcMY1wb3KdVG9gUUbDik1lkTOM3YWyS
-         ECVQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=5FR97fGXAiBrkHln5FkqT1so2VCUAamMm/I118F13JM=;
+        b=rkkrgNhiAhlCkXI2RbPyKeiU/1wtJ+Oa0nmRbxr35R4DZ9rmMAES562+P3EY9QMXQ1
+         u9/GeSi4N6XMRKbXab9zAbZ2ocLQIxjmfIOZV2V+iEm6PkuB+NB42gau413HoU3v88ob
+         jWQ8eGRW/708nZcWPJmxoNhOwycgDQhVZkFzfQoevYAJc5+cT+GdeoMQArP9DwfDaKA2
+         6aXv20EtmU/+cyYI7zlZmVtO2O+Z6GO1KLS8oQpXZtL/h+3npVqMpCh2vBfdHv2AA1Oz
+         1k1KLfCT0+vmYy4mls/IHxax4QjL+xlE8NHaNDf6LsZwqMGrQpWzsf3ZNQcECvJLFcxO
+         Bebw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:cc:to:content-language:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=w/jnvOzh6Nm6auASOsenLdYqfQP4eJIKrsHZXL+ia8g=;
-        b=yktlKHuX1B6CmuM1Dc+7OMCv810caUeHnTBxvZztwZMkv/BWk+hSfSLRDGYZuoBOzx
-         L0tK9+3p+s9hA7QWgJ7348X4UNguQSujMGXuLai79RHUNB/t9SsYRw83AWWznOTt33vo
-         hsYHlWVvSmTs4PuclXcbUDbv/fWTfn9UmLujaNQhgm76gkbT9DOIm2BHGwJZasR4ltkI
-         vvZhaymgJHuzrUdeRFgLM0RP26PPplKw0gedK8ZbUxayYzEy3SOZchgDytcZYmxr9W11
-         Mi+BmkwSIAnFDowd5K096RxYgMgzQ3ek62KYTrs+d4tMfKuZMsd4zfu6Up/uxHXC73US
-         85gQ==
-X-Gm-Message-State: ACrzQf07vIYL5vlhY5Z7shi8pA4V07nHFeeZchNoARua6BAa5p9Irusp
-        8iy/vdLxKrNxIGtZQe5LNQ6S5w==
-X-Google-Smtp-Source: AMsMyM7tCWkt9va9vIziyAHCYuNBZhfPVE9Wbo7e5DX7PX9AQbLIXFEu4qFKjcu5KE+6uQRLXJYyJw==
-X-Received: by 2002:a05:6000:1786:b0:22e:3955:13a1 with SMTP id e6-20020a056000178600b0022e395513a1mr6356512wrg.624.1664876286047;
-        Tue, 04 Oct 2022 02:38:06 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:58f1:548b:1390:4070? ([2a01:e0a:982:cbb0:58f1:548b:1390:4070])
-        by smtp.gmail.com with ESMTPSA id a14-20020adfed0e000000b002258235bda3sm11871248wro.61.2022.10.04.02.38.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Oct 2022 02:38:05 -0700 (PDT)
-Message-ID: <9937c13b-f10c-32a5-49d9-1c9c16fa58e1@linaro.org>
-Date:   Tue, 4 Oct 2022 11:38:04 +0200
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=5FR97fGXAiBrkHln5FkqT1so2VCUAamMm/I118F13JM=;
+        b=3AtbT/6VzRc0fbWrv25RdB1lD9/bD8NYNK3J/j1YrV1WK//U42dH6JR+DPf3g1d/m4
+         Lp9PLzhP1kv6r6c6WfBznYBTY6Gc+lISmh+SX1fiWf2LIcb+yrC4srt+WcsNklrpDyGg
+         0SyQEtXQxsdJLibv5SHar28vf3JgdxOQCOyzd4qZVralqHIIWyEho2038jh3Be5TGN9a
+         R7f+j2nkEbCCR98fJ52vvV8xcjf81j/HOpZq77P1MaaSS0bZed3/PAUDFUmIH1booD/g
+         8etSRwMDfKLyBOwP9O+1fDer2mA/3CAKOZB0vN7sYE4iMdE3f67aMeyIvDjWK6978Ay4
+         yXiw==
+X-Gm-Message-State: ACrzQf30cXfAiKyE0oMwxoPNBu+GhxCXF7CQQQbpF1KFtvpCdzITp9Wk
+        dAeWxISjgVvmOmcE3QOcTI+RS1hCYFmhAQxoWRXjrw==
+X-Google-Smtp-Source: AMsMyM7iiGoFwiBFBNuqHjdguNPFuBilacPpHl9+3DSxbB7PaLx7ZEhr9HzGEHq3z2tdFTFq5YPHUVNmEKdTfrj8ZvE=
+X-Received: by 2002:a17:907:743:b0:740:ef93:2ffc with SMTP id
+ xc3-20020a170907074300b00740ef932ffcmr18845688ejb.514.1664876336611; Tue, 04
+ Oct 2022 02:38:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 05/11] dt-bindings: mfd: qcom-pm8xxx: document
- qcom,pm8921 as fallback of qcom,pm8018
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Lee Jones <lee@kernel.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Alessandro Zummo <a.zummo@towertech.it>
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-rtc@vger.kernel.org
-References: <20220928-mdm9615-dt-schema-fixes-v2-0-87fbeb4ae053@linaro.org>
- <20220928-mdm9615-dt-schema-fixes-v2-5-87fbeb4ae053@linaro.org>
- <ebace2d4-9fcf-f50e-fee5-18199b63d90b@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <ebace2d4-9fcf-f50e-fee5-18199b63d90b@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <20220926142505.1827-1-quic_mmitkov@quicinc.com> <20220926142505.1827-3-quic_mmitkov@quicinc.com>
+In-Reply-To: <20220926142505.1827-3-quic_mmitkov@quicinc.com>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Tue, 4 Oct 2022 11:38:45 +0200
+Message-ID: <CAG3jFyu8tDagGqoi1896Ge=OLVJdN_SziD22KfdKPe6oS--1HA@mail.gmail.com>
+Subject: Re: [PATCH 2/4] media: camss: vfe: Reserve VFE lines on stream start
+ and link to CSID
+To:     quic_mmitkov@quicinc.com
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        akapatra@quicinc.com, jzala@quicinc.com, todor.too@gmail.com,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, mchehab@kernel.org,
+        bryan.odonoghue@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/10/2022 10:55, Krzysztof Kozlowski wrote:
-> On 04/10/2022 10:08, Neil Armstrong wrote:
->> The PM8018 is used as compatible with PM8921 on the MDM9615, document this situation,
->> and an example section to validate this change.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>
+On Mon, 26 Sept 2022 at 16:25, <quic_mmitkov@quicinc.com> wrote:
+>
+> From: Milen Mitkov <quic_mmitkov@quicinc.com>
+>
+> For multiple virtual channels support, each VFE line can be in either
+> ON, RESERVED or OFF states. This allows the starting and stopping
+> of a VFE line independently of other active VFE lines.
+>
+> Also, link the CSID entity's source ports to corresponding VFE lines.
+>
+> Signed-off-by: Milen Mitkov <quic_mmitkov@quicinc.com>
+> ---
+>  drivers/media/platform/qcom/camss/camss-vfe.c | 7 +++++++
+>  drivers/media/platform/qcom/camss/camss.c     | 2 +-
+>  2 files changed, 8 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+> index a26e4a5d87b6..cd8ac0478cf1 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> @@ -738,8 +738,10 @@ static int vfe_set_stream(struct v4l2_subdev *sd, int enable)
+>         struct vfe_line *line = v4l2_get_subdevdata(sd);
+>         struct vfe_device *vfe = to_vfe(line);
+>         int ret;
+> +       int i;
+>
+>         if (enable) {
+> +               line->output.state = VFE_OUTPUT_RESERVED;
+>                 ret = vfe->ops->vfe_enable(line);
+>                 if (ret < 0)
+>                         dev_err(vfe->camss->dev,
+> @@ -749,6 +751,11 @@ static int vfe_set_stream(struct v4l2_subdev *sd, int enable)
+>                 if (ret < 0)
+>                         dev_err(vfe->camss->dev,
+>                                 "Failed to disable vfe outputs\n");
+> +
+> +               /* At least one VFE line remains, return -EBUSY to avoid premature pipeline stop */
+> +               for (i = 0; i < vfe->line_num; i++)
+> +                       if (vfe->line[i].output.state != VFE_OUTPUT_OFF)
+> +                               return -EBUSY;
+>         }
+>
+>         return ret;
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index 1118c40886d5..63653ac3e056 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -1320,7 +1320,7 @@ static int camss_register_entities(struct camss *camss)
+>                                         struct v4l2_subdev *vfe = &camss->vfe[k].line[j].subdev;
+>
+>                                         ret = media_create_pad_link(&csid->entity,
+> -                                                                   MSM_CSID_PAD_SRC,
+> +                                                                   MSM_CSID_PAD_FIRST_SRC + j,
+>                                                                     &vfe->entity,
+>                                                                     MSM_VFE_PAD_SINK,
+>                                                                     0);
+> --
+> 2.37.3
+>
 
-<snip>
-
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/interrupt-controller/irq.h>
->> +    ssbi {
->> +      #address-cells = <1>;
->> +      #size-cells = <0>;
->> +      pmic@0 {
->> +        compatible = "qcom,pm8921";
->> +        reg = <0>;
->> +        #address-cells = <1>;
->> +        #size-cells = <0>;
->> +        interrupt-controller;
->> +        #interrupt-cells = <2>;
->> +
->> +        interrupt-parent = <&tlmm>;
->> +        interrupts = <32 IRQ_TYPE_EDGE_RISING>;
->> +      };
->> +
->> +      pmic@1 {
->> +        compatible = "qcom,pm8018", "qcom,pm8921";
->> +        reg = <1>;
->> +        #address-cells = <1>;
->> +        #size-cells = <0>;
->> +        interrupt-controller;
->> +        #interrupt-cells = <2>;
->> +
->> +        interrupt-parent = <&tlmm>;
->> +        interrupts = <33 IRQ_TYPE_EDGE_RISING>;
->> +      };
-> 
-> These two pmics are exactly the same (except compatible), so just keep
-> one example... unless both are coming from the same, real DTS?
-
-It was mainly to exercise the fallback, but it's useless as-is so I'll remove in v3.
-
-> 
-> Best regards,
-> Krzysztof
-> 
-
-Thanks,
-Neil
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
