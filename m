@@ -2,225 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 694535F401E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 11:44:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B896F5F4026
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 11:45:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230414AbiJDJo3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Oct 2022 05:44:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60164 "EHLO
+        id S229805AbiJDJpM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Oct 2022 05:45:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231417AbiJDJnb (ORCPT
+        with ESMTP id S230186AbiJDJoX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Oct 2022 05:43:31 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D1DE5809B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 02:41:04 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id u10so20320105wrq.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 02:41:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:cc:to:content-language:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date;
-        bh=jzoc8wW8XTFhrV/IZ7QAB+mjMgHP5TfH+9jpihMeYPE=;
-        b=ZOtMwZ6g1s7UM7wXvZ9BlbxpYf9EeU+2yYMvhaIZB3bikVcjCh6eTiusAKZ3XLdkKG
-         GR1K9zSCTyNziogb2jhkBkSWgCP09GD9pDr9q2ZcrubyAIyhIwu1lrAsnjRtvm8HuSi7
-         mx6rsa/3cxPggjFGWPN4z6e3psD0jMFH4DWKxlPa4c9KmbNrN1vZlhvV1uPcSY7d4boS
-         YkiZh4PqN576hTsrHik9gYe1ZZRXPGT4a6PMg0D7hsMFXdaBdAgmjrdC+8lv+9Bt3JZe
-         VMsUbfTzP5kfP18E+lMxaEUR5fWqtj++0usV9+2bV/6EzRWoAsZ056/Pa5rEJNmMW0vh
-         JdJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:cc:to:content-language:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=jzoc8wW8XTFhrV/IZ7QAB+mjMgHP5TfH+9jpihMeYPE=;
-        b=KYAFHhBEP2S5YrlhZLrH9ihjvZGv+6VZpt633VCkxzdmNs5kRV3M66apcJ5rdQUB+9
-         2jwOJx0wx1nndC1jM9bcsOJCtNyUS8j9L6Y+lLWscpX/HTC4IDRASRpdWCrwH2tZsnXw
-         A4wGFHfBs+tRtLON11bPFNm+6psamgbsdj6JijdaSpwi82LTZlEQ/iPXd0FAwF2un2ZA
-         e9HMz3RLnZJ7sPpsfTVRiH7O3JL+brwLcEyWaPTctryVv62GPvNiy7wmf/HiAI2ynRm8
-         H6Au+CRpntRGMhTuSObXI11aNL4tLgMAxKmmxl9rq86lOLcW5VUGHZhkgmnoWTDvSfaX
-         VD4w==
-X-Gm-Message-State: ACrzQf3SRGCWhN3L/LDQemuttyKl4eWwF03bQnrL1NI+HvVHvKbvWnDA
-        +10lSkBA5Td4Nf1HfBoad+lM6Q==
-X-Google-Smtp-Source: AMsMyM7vylXcYmjvJdGkRJXBVofcAC43DX1ZM9R/bfcZybTrm4yczJX3SZmTEgclfoplWAgrtsmwSA==
-X-Received: by 2002:a5d:64cf:0:b0:22a:b61d:875e with SMTP id f15-20020a5d64cf000000b0022ab61d875emr14907337wri.100.1664876462728;
-        Tue, 04 Oct 2022 02:41:02 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:58f1:548b:1390:4070? ([2a01:e0a:982:cbb0:58f1:548b:1390:4070])
-        by smtp.gmail.com with ESMTPSA id x16-20020adfec10000000b0022a2dbc80fdsm12064363wrn.10.2022.10.04.02.41.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Oct 2022 02:41:02 -0700 (PDT)
-Message-ID: <e21f49b7-4a44-c016-0e52-3ab018978f31@linaro.org>
-Date:   Tue, 4 Oct 2022 11:41:00 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 06/11] dt-bindings: input: qcom,pm8921-pwrkey: convert
- to dt-schema
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Tue, 4 Oct 2022 05:44:23 -0400
+Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 023E8E5E;
+        Tue,  4 Oct 2022 02:41:53 -0700 (PDT)
+Date:   Tue, 4 Oct 2022 11:41:50 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020; t=1664876511;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=bu0+vYYTyXokrfZ6CX46FlXV91bID4Pr3VTGgw2ncOU=;
+        b=eeBfzN5wPkNF7fYV7yfojFjwTRJXiqbJXt5wa9PmP4ZKWTbPF69hOvat/50/5KlAudUzw5
+        cBw2bKkc+vGAUfYkl8w+SP7YQ3qda07mRlruYWs05jtrvCOACbMCoHmzkU/cjLJ/+XZwWB
+        V8mXR36VUi9emHozshCqEqwj/2kP5EWcNEjwO0FrjUTSR2EcfSv5qKxdlz4MwpsjuCvs42
+        ZeMxXJNO72Vgj0dROE+lDMRwuskwE/ioEQ8dOqymfVZu1I7352Jf+1YPrzHbmjLIeBL7iO
+        MnN5IwU6oKli7yslnip3jNx2dbR+4Y4fY16CGFZh2bRDlp/qNGIIOnGZo4QZbw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020e; t=1664876511;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=bu0+vYYTyXokrfZ6CX46FlXV91bID4Pr3VTGgw2ncOU=;
+        b=oE91omfEhqEXdzO2EQ+S8R07PFmvCcgX0YdttCjfqPep2mgb4iFv5sp0VcBsLBtdTGZkVT
+        KsnLxfClu8G+11BQ==
+From:   Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+To:     Eric Chanudet <echanude@redhat.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Lee Jones <lee@kernel.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Alessandro Zummo <a.zummo@towertech.it>
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-rtc@vger.kernel.org
-References: <20220928-mdm9615-dt-schema-fixes-v2-0-87fbeb4ae053@linaro.org>
- <20220928-mdm9615-dt-schema-fixes-v2-6-87fbeb4ae053@linaro.org>
- <91630a1c-c4bf-357f-20f3-8176bd91bdf6@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <91630a1c-c4bf-357f-20f3-8176bd91bdf6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-rt-users@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mailbox: qcom-ipcc: flag IRQ NO_THREAD
+Message-ID: <Yzv/3vsIMtgu7noY@linutronix.de>
+References: <20221003170849.383005-1-echanude@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20221003170849.383005-1-echanude@redhat.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 2022-10-03 13:08:49 [-0400], Eric Chanudet wrote:
+> PREEMPT_RT forces qcom-ipcc's handler to be threaded with interrupts
+> enabled, which triggers a warning in __handle_irq_event_percpu():
+>     irq 173 handler irq_default_primary_handler+0x0/0x10 enabled interrupts
+>     WARNING: CPU: 0 PID: 77 at kernel/irq/handle.c:161 __handle_irq_event_percpu+0x4c4/0x4d0
+> 
+> Mark it IRQF_NO_THREAD to avoid running the handler in a threaded
+> context with threadirqs or PREEMPT_RT enabled.
 
-On 04/10/2022 10:59, Krzysztof Kozlowski wrote:
-> On 04/10/2022 10:08, Neil Armstrong wrote:
->> Convert input/qcom,pm8xxx-pwrkey.txt to YAML, and take in account that
->> the PM8921 pwrkey compatible is used as fallback for the PM8018 pwrkey.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>
-> 
-> You miss diffstat... but I guess it's result of b4?
+The important bit of information is that this is a IRQ-multiplexer and
+such it must not be threaded. Otherwise its child-interrupts would be
+invoked from the thread handler which is not desired.
+This is noticed by PREEMPT_RT but also on a non-PREEMPT_RT kernel where
+`threadirqs' has been used.
 
-Yep, I'll update with last release to get it back.
+Side note: Using request_irq() has the side effect that this interrupt
+pops-up in /proc/interrupts and the "child-interrupt", too. So you
+account two interrupts while "one" on the HW side occurred. 
+Maybe irq_set_chained_handler_and_data() would be better use.
+Either way, this addresses the problem,
 
-> 
->> diff --git a/Documentation/devicetree/bindings/input/qcom,pm8921-pwrkey.yaml b/Documentation/devicetree/bindings/input/qcom,pm8921-pwrkey.yaml
->> new file mode 100644
->> index 000000000000..ae38c4ef4932
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/input/qcom,pm8921-pwrkey.yaml
->> @@ -0,0 +1,77 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/input/qcom,pm8921-pwrkey.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm PM8921 PMIC Power Key
->> +
->> +maintainers:
->> +  - Andy Gross <agross@kernel.org>
->> +  - Bjorn Andersson <andersson@kernel.org>
-> 
-> Keep only Bjorn. Andy did not review much for some time.
+Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-Ack
+> Signed-off-by: Eric Chanudet <echanude@redhat.com>
 
-> 
->> +
->> +allOf:
->> +  - $ref: input.yaml#
->> +
->> +properties:
->> +  compatible:
->> +    oneOf:
->> +      - enum:
->> +          - qcom,pm8921-pwrkey
->> +          - qcom,pm8058-pwrkey
->> +      - items:
->> +          - enum:
->> +              - qcom,pm8018-pwrkey
->> +          - const: qcom,pm8921-pwrkey
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  interrupts:
->> +    maxItems: 2
->> +    description: |
->> +          The first interrupt specifies the key release interrupt
->> +          and the second interrupt specifies the key press interrupt.
-> 
-> In such case better to drop maxItems and description and write it:
-> 
-> items:
->    - description: key release interrupt
->    - description: key press interrupt
-> 
-> (maybe even the "interrupt" word could be skipped...)
-
-Ack, will do that without the interrupt word
-
-> 
->> +
->> +  debounce:
->> +    description: |
->> +          Time in microseconds that key must be pressed or
->> +          released for state change interrupt to trigger.
->> +    $ref: /schemas/types.yaml#/definitions/uint32
->> +
->> +  pull-up:
->> +    description: |
->> +           Presence of this property indicates that the KPDPWR_N
->> +           pin should be configured for pull up.
->> +    $ref: /schemas/types.yaml#/definitions/flag
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - interrupts
->> +
->> +unevaluatedProperties: false
->> +
->> +examples:
->> +  - |
->> +   #include <dt-bindings/interrupt-controller/irq.h>
->> +   ssbi {
->> +   #address-cells = <1>;
->> +   #size-cells = <0>;
-> 
-> Messed indentation.
->> +
->> +     pmic@0 {
->> +       reg = <0x0>;
->> +       #address-cells = <1>;
->> +       #size-cells = <0>;
->> +
->> +       pwrkey@1c {
->> +          compatible = "qcom,pm8921-pwrkey";
-> 
-> Messed up indentation. For entire DTS example keep 2 or 4 spaces.
-> 
->> +          reg = <0x1c>;
->> +          interrupt-parent = <&pmicint>;
->> +          interrupts = <50 1>, <51 1>;
-> 
-> Use defines for interrupt flags.
-> 
->> +          debounce = <15625>;
->> +          pull-up;
->> +       };
->> +     };
->> +   };
-
-Will fix the example,
-
-> 
-> Best regards,
-> Krzysztof
-> 
-
-Thanks,
-Neil
+Sebastian
