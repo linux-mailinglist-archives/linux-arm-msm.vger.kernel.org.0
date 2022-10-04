@@ -2,168 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 540335F4A3E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 22:22:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C47605F4AA8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 23:05:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229605AbiJDUWr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Oct 2022 16:22:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34138 "EHLO
+        id S229468AbiJDVF0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Oct 2022 17:05:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229618AbiJDUWp (ORCPT
+        with ESMTP id S229569AbiJDVFY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Oct 2022 16:22:45 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39ACB6BCCB;
-        Tue,  4 Oct 2022 13:22:44 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 294JDs3e026295;
-        Tue, 4 Oct 2022 20:22:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=b8vNXd50c8xgukprq4t2IdrQDqWKgWlp+GJSkE3pmCA=;
- b=WxQuXA+Mrpkb3yCsKr/P+Am02fx8vo7a3oF73uscKjKlT8h1ufDL4c/zcoTJCNkwCibk
- zgKqT8koz0xroeLAgp0HXo8LFT8xH1JQ0tQVg/dS6ol+VeGPGJnvfacHJL2lqWKJNxCv
- ze5+sC/69sfDbWAeHjmE+TbVzjc+o2t2v3Nq2j2EceFhJ/l/iQXghS4eFnI5W8ce4zd9
- YJuUkvJkKAAQczsQe2+baA3Ff0hvJhbfz2e0RnHKJI8Sr2pZ/PjckoOeZV9yyUwul9G3
- YJeD6taAf2DwgNJhAIv4ziyf2jyLIyQbdf1jAcA41AZf0RPQg66Lf1a3QjTv8WUej+Ft 1w== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k0rf40chu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 04 Oct 2022 20:22:31 +0000
-Received: from pps.filterd (NALASPPMTA05.qualcomm.com [127.0.0.1])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 294KMUeI022666;
-        Tue, 4 Oct 2022 20:22:30 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 3jxemkva8m-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 04 Oct 2022 20:22:30 +0000
-Received: from NALASPPMTA05.qualcomm.com (NALASPPMTA05.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 294KMUTJ022661;
-        Tue, 4 Oct 2022 20:22:30 GMT
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 294KMUrJ022660
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 04 Oct 2022 20:22:30 +0000
-Received: from [10.38.243.69] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 4 Oct 2022
- 13:22:26 -0700
-Message-ID: <55d7e20b-79cd-ece6-b643-8b542beb7474@quicinc.com>
-Date:   Tue, 4 Oct 2022 13:22:25 -0700
+        Tue, 4 Oct 2022 17:05:24 -0400
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C44C67CBF
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 14:05:19 -0700 (PDT)
+Received: by mail-yb1-xb2f.google.com with SMTP id y205so3942397yby.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 14:05:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=LFbusFL82p6QahGy3NX4jAVtz3A0XmveDtr6G/KTqd0=;
+        b=JkVbrqS1fCmbwyPOifxNkAE37DIVc3BHc6D8OO2GbfkFc6K+QHevzWx6hGWZlLrlFw
+         /zCBm9AN0c45J6hpY43I+OBZhbnsgFzEiY7tV5QxdbGR2hBns3KAwSXsA6TbgOLdfV/p
+         BpuWH4j2b2gTHtlvEnczc7jLw1AOWcOco9Dd1l6lYYPQG7wr0EPDAw16sXSMosZSYEEC
+         XvYi7kR5wOIjPAs2B5QW4HIz/H0LCm/JgPesS7vL2iZjhy4AjrselOar60FngjA/NWbt
+         SIer4n8n0sZbfoW89u0aZw35IkSGAUa2ebLFMJmTadWF28keloCVaWKnDZy4UxOoCLsA
+         QoQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=LFbusFL82p6QahGy3NX4jAVtz3A0XmveDtr6G/KTqd0=;
+        b=d7WgsNVwjR/iTPKrA1ZoMcFrbedAyBqZ90rLOrQbpItyqrc3f+H+55Pl4DExhAfLJ4
+         S/OYu4Ja3VVKsCaisSjeWGktxA+zL1fF6HxFB7DwWkkvBgvjoGfaX7/tslyLIrNR4LrQ
+         5psHGqstXwUYjzkQdYHNgEk6z+kLkxdVoKX9bQ1TFcIOIkGvR0bpf89q5yvMEQH2Y7CR
+         CBnE04+fKaQVTOuSktVB3DvxhSRxC0AwuDUJD4johQj5FqKnQYdAaEG27/1yWCxHZQin
+         hmuE8JJWIRl+9GpcC4uFJpkSkzIGKIZjWp9MqSRpijeuLixFB+R4xq79nZ6EvHkfqwJp
+         qxIA==
+X-Gm-Message-State: ACrzQf3z7QYPPbp0ty5reZZ6JEIucAB2gmawqAXOMU+t034c/uruRQUJ
+        mlLLq3GN94+OMDPVD3ElmYyMPKPyp9id7kXbYM3Yqw==
+X-Google-Smtp-Source: AMsMyM7RnNbgz4d0o/g87+paVdolLxaOczBPWCjWjD0Yxo3BRMWskfkg+Ndq7Hy7pTl3puLN7LW63NWnAv1bZ+WjW8o=
+X-Received: by 2002:a5b:c:0:b0:6bd:f84c:b63e with SMTP id a12-20020a5b000c000000b006bdf84cb63emr8989664ybp.275.1664917518783;
+ Tue, 04 Oct 2022 14:05:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 5/5] drm/dsc: Prevent negative BPG offsets from shadowing
- adjacent bitfields
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        <phone-devel@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-CC:     <~postmarketos/upstreaming@lists.sr.ht>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Javier Martinez Canillas <javierm@redhat.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        Lyude Paul <lyude@redhat.com>
-References: <20221001190807.358691-1-marijn.suijten@somainline.org>
- <20221001190807.358691-6-marijn.suijten@somainline.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20221001190807.358691-6-marijn.suijten@somainline.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZFqJ0ez-j4AJ1SMO18aXAa17j3tqjVeD
-X-Proofpoint-ORIG-GUID: ZFqJ0ez-j4AJ1SMO18aXAa17j3tqjVeD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-10-04_09,2022-09-29_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- priorityscore=1501 bulkscore=0 phishscore=0 mlxlogscore=999 suspectscore=0
- spamscore=0 mlxscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210040132
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20221001030641.29354-1-quic_molvera@quicinc.com>
+ <20221001030641.29354-2-quic_molvera@quicinc.com> <09f5d364-320e-9ecc-2c2b-68066c61f802@linaro.org>
+ <e9c44e3b-b29f-0f47-b822-da0f4f2264cc@quicinc.com> <CAA8EJprE-mOOH8VF3m8TRb+0q=3_8NpvzdEAugabDaDbq6FMVQ@mail.gmail.com>
+ <9664a623-3c58-49e8-1b9a-69335d844448@linaro.org> <CAA8EJprQoCQzr2x0JA9_b3MDE=oOTODyHD23debEL1MCE1mWBA@mail.gmail.com>
+ <095742cb-61cc-af5d-848c-48b2ea5528ea@quicinc.com>
+In-Reply-To: <095742cb-61cc-af5d-848c-48b2ea5528ea@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 5 Oct 2022 00:05:07 +0300
+Message-ID: <CAA8EJpoqKCj4tyX-617YJH5zqkR_C=1LVMeLXcCxZFgOPjRZ=g@mail.gmail.com>
+Subject: Re: [PATCH 1/5] dt-bindings: firmware: scm: Add QDU1000/QRU1000 compatibles
+To:     Melody Olvera <quic_molvera@quicinc.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, 4 Oct 2022 at 18:52, Melody Olvera <quic_molvera@quicinc.com> wrote=
+:
+>
+>
+> On 10/4/2022 2:36 AM, Dmitry Baryshkov wrote:
+> > On Tue, 4 Oct 2022 at 09:53, Krzysztof Kozlowski
+> > <krzysztof.kozlowski@linaro.org> wrote:
+> >> On 04/10/2022 00:14, Dmitry Baryshkov wrote:
+> >>> On Tue, 4 Oct 2022 at 01:02, Melody Olvera <quic_molvera@quicinc.com>=
+ wrote:
+> >>>>
+> >>>> On 10/1/2022 4:25 AM, Krzysztof Kozlowski wrote:
+> >>>>> On 01/10/2022 05:06, Melody Olvera wrote:
+> >>>>>> Add compatibles for scm driver for QDU1000 and QRU1000 platforms.
+> >>>>>>
+> >>>>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> >>>>>> ---
+> >>>>>>  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 2 ++
+> >>>>>>  1 file changed, 2 insertions(+)
+> >>>>>>
+> >>>>>> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.y=
+aml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> >>>>>> index c5b76c9f7ad0..b47a5dda3c3e 100644
+> >>>>>> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> >>>>>> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> >>>>>> @@ -51,6 +51,8 @@ properties:
+> >>>>>>            - qcom,scm-sm8250
+> >>>>>>            - qcom,scm-sm8350
+> >>>>>>            - qcom,scm-sm8450
+> >>>>>> +          - qcom,scm-qdu1000
+> >>>>>> +          - qcom,scm-qru1000
+> >>> I think after seeing all the patchsets it's time to ask the following
+> >>> question. Do we really need a duplicate compatibility families:
+> >>> qdu1000 vs qru1000? I'd suggest using a single set of compatibile
+> >>> strings in most of the cases.
+> >>> Settle down onto a single name (qdu,qru, qdru, whatever) and define
+> >>> distinct compat strings only when there is an actual difference?
+> >>>
+> >>> E.g .we don't have separate compatible strings for all the sda660,
+> >>> apq8096, etc. unless this is required by the corresponding hardware
+> >>> block not being compatible with corresponding sdm or msm counterpart.
+> >>>
+> >> I am not that fluent in Qualcomm naming, so let me ask - what are the
+> >> differences between QDU and QRU?
+> >>
+> >> For compatible (and/or similar) devices the general recommendation is =
+to
+> >> have specific compatibles followed by fallback. Even if devices are
+> >> very, very, very similar, usually the recommendation still stays.
+> > Well, true. But in some cases we handle this by using a single set of
+> > compatibles. Consider e.g. sa8155 vs sm8150 (sa8155 overrides just few
+> > compats that differ). Or qrb5165 vs sm8250 (there is no separate
+> > qrb5165.dtsi). APQ8096 (#include "msm8996.dtsi"). Etc.
+> >
+> > I'd say this really depends on the actual difference between qru and qd=
+u.
+>
+> To add some clarification, there's pretty little functional difference be=
+tween the QDU (Distributed Unit) and the QRU (Radio Unit); they're largely =
+the same SoC from the kernel's standpoint. I wasn't sure if it made more se=
+nse to separate the compat strings or mash them together (using qdru to spe=
+cify that it applies to both), so I kept separate compat strings in case th=
+ere was a separate RU/DU use case down the line and also to avoid some conf=
+usion (I guess that didn't work though). It makes the most sense in my mind=
+ to just use the qdru compat string for the things that apply to both SoCs =
+(which is most of what's submitted currently) and then we can do qdu/qru sp=
+ecific override strings for more specific drivers.
 
+Unless Krzysztof or Bjorn have other opinion, I'd suggest adding a
+single compat string, It might be qcom,qdru1000-foo or just
+qcom,qdu1000-foo (with having a separate qcom,qru1000-foo where
+applicable). But the final decision is from Rob, Krzysztof and Bjorn.
 
-On 10/1/2022 12:08 PM, Marijn Suijten wrote:
-> msm's dsi_host specifies negative BPG offsets which fill the full 8 bits
-> of a char thanks to two's complement: this however results in those bits
-> bleeding into the next parameter when the field is only expected to
-> contain 6-bit wide values.
-> As a consequence random slices appear corrupted on-screen (tested on a
-> Sony Tama Akatsuki device with sdm845).
-> 
-> Use AND operators to limit all values that constitute the RC Range
-> parameter fields to their expected size.
-> 
-> Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
->   drivers/gpu/drm/display/drm_dsc_helper.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/display/drm_dsc_helper.c b/drivers/gpu/drm/display/drm_dsc_helper.c
-> index c869c6e51e2b..2e7ef242685d 100644
-> --- a/drivers/gpu/drm/display/drm_dsc_helper.c
-> +++ b/drivers/gpu/drm/display/drm_dsc_helper.c
-> @@ -243,11 +243,11 @@ void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_payload,
->   	 */
->   	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
->   		pps_payload->rc_range_parameters[i] =
-> -			cpu_to_be16((dsc_cfg->rc_range_params[i].range_min_qp <<
-> +			cpu_to_be16(((dsc_cfg->rc_range_params[i].range_min_qp & 0x1f) <<
->   				     DSC_PPS_RC_RANGE_MINQP_SHIFT) |
-> -				    (dsc_cfg->rc_range_params[i].range_max_qp <<
-> +				    ((dsc_cfg->rc_range_params[i].range_max_qp & 0x1f) <<
->   				     DSC_PPS_RC_RANGE_MAXQP_SHIFT) |
-> -				    (dsc_cfg->rc_range_params[i].range_bpg_offset));
-> +				    (dsc_cfg->rc_range_params[i].range_bpg_offset & 0x3f));
->   	}
->   
-
-Looking at some examples of this for other vendors, they have managed to 
-limit the value to 6 bits in their drivers:
-
-https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/i915/display/intel_vdsc.c#L532
-
-https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/amd/display/dc/dsc/rc_calc_dpi.c#L87
-
-Perhaps, msm should do the same thing instead of the helper change.
-
-If you want to move to helper, other drivers need to be changed too to 
-remove duplicate & 0x3f.
-
-FWIW, this too has already been fixed in the latest downstream driver too.
-
-
-Thanks
-
-Abhinav
-
->   	/* PPS 88 */
+--=20
+With best wishes
+Dmitry
