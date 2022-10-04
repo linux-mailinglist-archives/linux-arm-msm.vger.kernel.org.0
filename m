@@ -1,61 +1,63 @@
 Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 609255F3CDE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 08:47:03 +0200 (CEST)
+Received: from out1.vger.email (unknown [IPv6:2620:137:e000::1:20])
+	by mail.lfdr.de (Postfix) with ESMTP id 8AAF15F3CEB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 08:51:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229594AbiJDGrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Oct 2022 02:47:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52004 "EHLO
+        id S229574AbiJDGvn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Oct 2022 02:51:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229547AbiJDGq7 (ORCPT
+        with ESMTP id S229592AbiJDGvl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Oct 2022 02:46:59 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42F262CE27
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 23:46:58 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id d18so6700400lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 23:46:58 -0700 (PDT)
+        Tue, 4 Oct 2022 02:51:41 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39C662EF0B
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 23:51:25 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id a10so14303172ljq.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 23:51:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=tH7+t2HqGTTLAn5U15AmEC7Y23/7rS4kVyazgbWS48k=;
-        b=Z+dG+aszAmppo5XSVUGmNR26l3xE/M5MR0WHpls1gy4foJW7nCl4Mm9ekNUVXRoaH0
-         QXt8m1Fahx0q8u2fRxu3R9xpsYEb3M19hXjQlwjaOXW+g8948QUcQhIZDwnUpyPUnaea
-         XnaYIbPhkdtJLKIPW3ubMjP39K/rb4sD27REiGS4H66/OHKFWXA6d404O9QpWdqa7uwi
-         yjapYxRCKsKpf5sIRbiDxTiejfL/P2cqr8C9NbHKHGJefolqRuaIa7k7KDG+ZoCuZe9B
-         j607D3QcVBtTz6rtmcryvKPod2n9LNw0Hz7Qu6dQYm+XAhLzh8rK7PrBuPyYon7JLtae
-         xpTQ==
+        bh=g+2kBKCFqg27fMdvA7YfCO4+hmBpxqYEDzgwYKdhvKg=;
+        b=eRwN/H2mREJisZVjpmVJV5JEGZAry/ktEVZaYtUIpo2gLkdPbLGOOoOrFuMXGm+224
+         8dTXDwNqG7rZ5Xdv8W24ypL4xMnfQi5fXXvZ7nygb7aGdrbN/fKy4OFY0NktjXB1JBLR
+         ma7ezR7oDofG2yTcL9EHmWdsVBbuRZSr2oxPWQIIhr2CsVtyQ22BNLuQeQ2/B8FYKhzo
+         yth6j4epISgBljGZnQkWSSanZafoBgDDenkPnPtQmRcLtMkFXKEAulCtM5jPBd4//Zcw
+         AjrpLzVCrTLCuD97aYDGrDVvjjoTbkWknFwoTMTLm8rdPuctho0LlHw2+XhbWHSOsNTA
+         aFkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=tH7+t2HqGTTLAn5U15AmEC7Y23/7rS4kVyazgbWS48k=;
-        b=K6NGWx3gZ5kOMwiCJHaz+N5XKeTRJA3DSAvluWCP7j/ghLf78ncaZg50zzKq9lJfqX
-         jA9zvcs/ScACF37Cy47lO2ScHig0K6qwL2zWrfj6hcxgpCLhRGm+wyBKtxNHkGbsJITB
-         xmNVvg3QwyefdiG+NHpR6bj26wIuoqwFw0QHXmSYGiLKoXmUsjd2lziLhENVJIVoc/fg
-         aqFbSxgZqj7bKul+aUoKsVwFIHzFW6VZwIEFDVBWccNvcpiki4OLxYrNAmJYCPgykoCh
-         blE1xXw7P4+e/hYZVrk4oNuv4shvK2tzeafiwWgYejFugV4Pa62lez/SpBFN+8KxUsmZ
-         zvvA==
-X-Gm-Message-State: ACrzQf0+eIC1nyZH4QwM2+nYfVtLEw/ggcIhluqu/TCf3dTiGTm0LdBz
-        w4w5/+PAWllGDlr9Wu1rBFx8TKfEHNqHMQ==
-X-Google-Smtp-Source: AMsMyM6xcFMYAmJwdvVQO7f4C23opw1Pd52bbpVCkk0rpyH9p8JeRuwLoj2xmeSfWLKP2YQosWgrwQ==
-X-Received: by 2002:ac2:482b:0:b0:4a2:27b7:41d2 with SMTP id 11-20020ac2482b000000b004a227b741d2mr4626048lft.472.1664866016635;
-        Mon, 03 Oct 2022 23:46:56 -0700 (PDT)
+        bh=g+2kBKCFqg27fMdvA7YfCO4+hmBpxqYEDzgwYKdhvKg=;
+        b=7XzYGILZFXy7iynE86V8VaclSZIq6ipSzjSBSxvEpmC15gA6YGEGftCqFTMzjvN6et
+         /JCBpBmTJd9SOQ3N1pieLV/M+k/o0J1eJRqBE+sc1E9vVgHrfiGJ4Oj8mGbThiyQmYVU
+         ZZGmsiehRT55QhZFTqcY2dQt4nm+EjkVeoZP9hWfFmi2oc5IHqIg4QcHyfybedDZBHvQ
+         JTIOThM+dAQZUycqtj6hIINYBuY2JUZ6CAQVNcQ/aMf7ze+IRWBSxEIw8MF3WgA54pIN
+         5XJdSP/RfS3JgpieYTBModlq513TcIXM0UuDBoTL1eWTNlfWunHEcAkiBCodEFZwjeDm
+         vYhw==
+X-Gm-Message-State: ACrzQf27nL1aDJgLPA+Cl1RfUunmcRnxZmEWY8kzRJ28Za/aF8aD7vui
+        emSFBDgwPyGekTjQP/uthVGVnw==
+X-Google-Smtp-Source: AMsMyM7QVUE1ju3kFrqWCNbg0f/6jKhJcOftXpheLrGr9bnXzOrPVa2fNCUhZbOLTT+S7Jaa66GLvg==
+X-Received: by 2002:a2e:bc28:0:b0:26b:d979:fc72 with SMTP id b40-20020a2ebc28000000b0026bd979fc72mr7907465ljf.292.1664866283592;
+        Mon, 03 Oct 2022 23:51:23 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id cf40-20020a056512282800b0049110ba325asm1777595lfb.158.2022.10.03.23.46.55
+        by smtp.gmail.com with ESMTPSA id e16-20020a05651c111000b0026dde66326dsm527458ljo.109.2022.10.03.23.51.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Oct 2022 23:46:55 -0700 (PDT)
-Message-ID: <950f3844-ed7e-4f18-9a27-f06c7947af02@linaro.org>
-Date:   Tue, 4 Oct 2022 08:46:55 +0200
+        Mon, 03 Oct 2022 23:51:23 -0700 (PDT)
+Message-ID: <92bd8960-7b50-46c2-3374-9d0e0237c985@linaro.org>
+Date:   Tue, 4 Oct 2022 08:51:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sdm630: fix UART1 pin bias
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sdm845-db845c: correct SPI2 pins
+ drive strength
+Content-Language: en-US
 To:     Doug Anderson <dianders@chromium.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -69,12 +71,14 @@ Cc:     Andy Gross <agross@kernel.org>,
         <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
         "# 4.0+" <stable@vger.kernel.org>
 References: <20220930182212.209804-1-krzysztof.kozlowski@linaro.org>
- <CAD=FV=WHmGi0yxFNbdQ=BXjypDWkW9iS3jBnr2gUhTa5qch90Q@mail.gmail.com>
- <76b3269a-1e04-1e93-c06e-ec0f28536cc5@linaro.org>
- <CAD=FV=WPrLNhJHhcutykGsE5rDCvxxPGcgqboWP6Oqs+Kw+M5Q@mail.gmail.com>
-Content-Language: en-US
+ <20220930182212.209804-2-krzysztof.kozlowski@linaro.org>
+ <CAD=FV=WSbpV4aqyHgSX6rwanQmZYG1hdNourjP5DEmsfdq6aDA@mail.gmail.com>
+ <11a99a84-47ec-ca3e-5781-0f17ed33dbf9@linaro.org>
+ <CAD=FV=URMX9umJfqYOhnnnjsr09As-6mKAHs0YNZFK8n2K337g@mail.gmail.com>
+ <c0bf359a-1ee9-04e2-2c58-9e7e8f3e12f7@linaro.org>
+ <CAD=FV=WmXbBvnC_phmTNRfYa68TObOYVRQWe-X4kv4aQPD5rFg@mail.gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=WPrLNhJHhcutykGsE5rDCvxxPGcgqboWP6Oqs+Kw+M5Q@mail.gmail.com>
+In-Reply-To: <CAD=FV=WmXbBvnC_phmTNRfYa68TObOYVRQWe-X4kv4aQPD5rFg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,39 +91,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/10/2022 17:29, Doug Anderson wrote:
-> Hi,
-> 
-> On Sat, Oct 1, 2022 at 2:58 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
+On 04/10/2022 01:03, Doug Anderson wrote:
+>>> If this really has to be one-off then the subnode shouldn't be called
+>>> "pinmux". A subnode called "pinmux" implies that it just has muxing
+>>> information in it. After your patch this is called "pinmux" but has
+>>> _configuration_ in it.
+>>>
 >>
->>> I would also note that convention on Qualcomm SoCs that I've worked on
->>> was that bias shouldn't be specified in the SoC dtsi file and should
->>> be left to board files. This is talked a bit about in a previous email
->>> thread [1].
+>> It is a poor argument to keep some convention which is both
+>> undocumented, not kept in this file and known only to some folks
+>> (although that's effect of lack of documentation). Even the bindings do
+>> not say it should be "pinconf" but they mention "config" in example. The
+>> existing sdm845.dts uses config - so why now there should be "pinconf"?
+>> By this "convention" we have both "pinmux" and "mux", perfect. Several
+>> other pins do not have pinmux/mux/config at all.
 >>
->> Uh, that makes a lot of sense. It is almost always a property of a board.
+>> This convention was never implemented, so there is nothing to keep/match.
+>>
+>> Changing it to "config" (because this is the most used "convention" in
+>> the file and bindings) would also mean to add useless "pins" which will
+>> be in next patch removed.
 > 
-> Right, though it can make sense to have a "default" in the SoC
-> sometimes. 
+> I certainly won't make the argument that the old convention was great
+> or even that consistently followed. That's why it changed. ...but to
+> me it's more that a patch should stand on its own and not only make
+> sense in the context of future patches. After applying ${SUBJECT}
+> patch you end up with a node called "pinmux" that has more than just
+> muxing information in it. That seems less than ideal.
 
-If the default is safe, then could be. But it is still causing a risk of
-developer just forgetting to configure the configs for his board.
-Bringup of DTS should be a conscious decision, not just "copy and hope
-it works", therefore recommendation is to configure per-board properties
-in board. Even if it means duplication. The same was for board-provided
-clocks or aliases.
-
-> For instance, for i2c you almost always want external
-> pullups so you can tune them to the speed/trace lengths. Thus having a
-> default in the SoC file to disable i2c pullups would make a lot of
-> sense. The problem is the ugly / non-obvious "delete-property" we need
-> to put in the board.dts file if we ever need to override the SoC's
-> pull. :(
-
-Which might not help in reducing amount of code...
-
-
+OK, let me make it part of "config" then to match other nodes from DTSI.
 
 Best regards,
 Krzysztof
