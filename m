@@ -2,86 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A00805F4029
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 11:45:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 607CE5F4042
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 11:49:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230486AbiJDJpX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Oct 2022 05:45:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60730 "EHLO
+        id S229445AbiJDJtG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Oct 2022 05:49:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229895AbiJDJoj (ORCPT
+        with ESMTP id S229891AbiJDJsW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Oct 2022 05:44:39 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2C7A25FD
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 02:42:04 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id e10-20020a05600c4e4a00b003b4eff4ab2cso10493936wmq.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 02:42:04 -0700 (PDT)
+        Tue, 4 Oct 2022 05:48:22 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 789F6FD19
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 02:45:56 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id y100so17561356ede.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 02:45:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:cc:to:content-language:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date;
-        bh=bQ8VTDq8eb4pIbfx/V0Mkp12Y3OVg6EUxMWx5PJKwp0=;
-        b=bfwcPl76SAXbwQlZ2K/QH+TCzC2MNU0bgvRo8DBLsfE/gmuwyMYQgPXABwPJ8wXP0Q
-         FGO/1CoVHsfzdp+FNvcC1rMQHhiQ4ChNQ3QFB00IxspxHHqvuE0wudI84Svj8LvFR6RJ
-         604rkOwcbMPr5BTCVZ1xGuLiYSz7o6RpNBbuIaNxlkQmc7dwNMbDPf3TJnu5KDgDDhLt
-         6jJ/BZw40noEFwEv8EHjlOcgJaWZmSWchsQCoGIPQuiivDcTOwf7jVm2WTZgpd67C7OG
-         wVaaE2aFWD797mBiRDdvZf+8RirnqdHZl3foNOwUVMksTQliqyru2zrDRaTjwSbat3j3
-         22IA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=j42zsrLpglIyk6hhWvWfHg+b8IPm4LPenAg4v6G9/CE=;
+        b=nGh1OTXQqLWRtOqqf3mSHyjelBHcOlSbYfYNq64nAyiasWl/2tiWqAxtREAtpgzv8O
+         oCYbFHGX6483De7qM/14ZRjuMp8MhGeCxGm9Zn5v+JYqpmvWAtU8xuf+xGFwb1tLRuvD
+         O4dJjbHv3YsQKOBQrL48/aYYR+DKQ7IfJ9EE6Z/VUZJ7Y5dPREZqSJA+07jGsYZuk8KK
+         UZZDIsZ+xn3BD6H//w6s/37IAWGlV9w1VZnlNRRlbVC5tb+o6sid0xTKXsmkyG2NeXXQ
+         dVfr7KurKEMvCEEg6J0huEMdgGd0UCjlRky4b8vSQ/8jzsBduI7AN1qjFSdpSKZVem/K
+         wbZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:cc:to:content-language:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=bQ8VTDq8eb4pIbfx/V0Mkp12Y3OVg6EUxMWx5PJKwp0=;
-        b=658xIGQO+sUUaC/MCUD2zOnmPRw2XsfP1XhALt1HF0niE9PPFojyy7qKqKVSI925VU
-         dvm+5tFl2Ek4sdUhmMED38I+qtROmUvIRVMHS19abXkZcJdcW7ujsEl35wWYbFjjYRnq
-         IY5JK98LOsqoH+655+7QwCmVEU2W2CbnGefPvy1kNYrkIbM295HhR/N1Ka9pl1FyGZqr
-         a+VlB6618OgvceN7a00vLFdCA38TU89Tp5gRFHeDMXh7ZAbHPwKsR5giEX4Nosgq0dmG
-         DaICq8fc+EfeOlUgjx+VI6xX55ncz0M9GnZDOdMFMpwNvkJ8p9T33hbn2wSchRTMn8ry
-         i7Zg==
-X-Gm-Message-State: ACrzQf2AmcTncNp1Dl6p31fLIoQiO0mvlSvDwYLFQmqiVom5I1nyABYM
-        G8/T5Z7zz16/eHz+YGWP8Mv9cA==
-X-Google-Smtp-Source: AMsMyM5CKOGttNNwEf/4oXMY7HJpybGxQH7bLeUC2IPBWxC8dLDvmsEGnjj5SFTncNY8tGBkkW8kVQ==
-X-Received: by 2002:a7b:cb91:0:b0:3b4:75b9:5a4b with SMTP id m17-20020a7bcb91000000b003b475b95a4bmr9303932wmi.33.1664876523143;
-        Tue, 04 Oct 2022 02:42:03 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:58f1:548b:1390:4070? ([2a01:e0a:982:cbb0:58f1:548b:1390:4070])
-        by smtp.gmail.com with ESMTPSA id m38-20020a05600c3b2600b003b4ff30e566sm3118344wms.3.2022.10.04.02.42.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Oct 2022 02:42:02 -0700 (PDT)
-Message-ID: <fccda8a1-5a40-d840-bd3f-ec44b87bb575@linaro.org>
-Date:   Tue, 4 Oct 2022 11:42:01 +0200
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=j42zsrLpglIyk6hhWvWfHg+b8IPm4LPenAg4v6G9/CE=;
+        b=vcBZRiUUnlq262Jt8tllIepwv+xqpG+ognHKOXRaAbZ1zRjJy0ZkePy2Un+/UZpfxu
+         xIuaGoQR9HfAqQQLv/1pn21JxapM9lFtjJN/SYvinxe2QGLnmmpfPhGSiyjcWpe+J/MF
+         F5NNbmpQdncFGj6Ba3sIO+DA1DubQ9wj1SmtO07Pbe7HUsUrMFWsQYJI4i5MaoRXuQrv
+         12HXc8gasbdfAGgo16epoZeIb8KVWtjiHfNtIyRancuPoIP7W2MQ6EQzux62J3g46UZe
+         OIO0svMuJ7aH3kxIYwZX+R6SgoUE0sG5d6fqNuA7wOw+MDiUFEyaVsiJIw+13zaCUCb8
+         54HA==
+X-Gm-Message-State: ACrzQf1uFps/y6K2QRDv2ngTM0dHmFTk9sO33yXJecJrp3DiZ1efC15W
+        L4dG1o1U6+TlVDx4UgvtlUyCrRSNnMOLzn+8QJvN+Q==
+X-Google-Smtp-Source: AMsMyM4a+OBVeJnPOhidcL6L8XfKfS37mTdniqshkSrYC2ikdDNYKF+zPoQsi8nAT5u/mzV7rsJk+kZvIfCDapIPdKs=
+X-Received: by 2002:aa7:c792:0:b0:453:98b7:213c with SMTP id
+ n18-20020aa7c792000000b0045398b7213cmr22553964eds.159.1664876722426; Tue, 04
+ Oct 2022 02:45:22 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 08/11] mfd: qcom-pm8xxx: drop unused PM8018 compatible
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Lee Jones <lee@kernel.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Alessandro Zummo <a.zummo@towertech.it>
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-rtc@vger.kernel.org
-References: <20220928-mdm9615-dt-schema-fixes-v2-0-87fbeb4ae053@linaro.org>
- <20220928-mdm9615-dt-schema-fixes-v2-8-87fbeb4ae053@linaro.org>
- <48fba67d-20f3-7e53-8b5f-01f07452b4c7@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <48fba67d-20f3-7e53-8b5f-01f07452b4c7@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20220926142505.1827-1-quic_mmitkov@quicinc.com> <20220926142505.1827-4-quic_mmitkov@quicinc.com>
+In-Reply-To: <20220926142505.1827-4-quic_mmitkov@quicinc.com>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Tue, 4 Oct 2022 11:45:11 +0200
+Message-ID: <CAG3jFysF6_b67-HGUhNCzfBu7Zmh+41nZRdt6hffn8Txy-RU7g@mail.gmail.com>
+Subject: Re: [PATCH 3/4] media: camss: vfe-480: Multiple outputs support for SM8250
+To:     quic_mmitkov@quicinc.com
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        akapatra@quicinc.com, jzala@quicinc.com, todor.too@gmail.com,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, mchehab@kernel.org,
+        bryan.odonoghue@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,30 +68,164 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/10/2022 11:02, Krzysztof Kozlowski wrote:
-> On 04/10/2022 10:08, Neil Armstrong wrote:
->> The PM8921 compatible is used as fallback when PM8018 is available,
->> then remove PM8018 compatible.
-> 
-> s/then/so/
-> 
-> But it's a bit confusing because PM8018 is not "available". It is
-> "present" or "is" instead, so rather:
-> "The PM8018 compatible is always used with PM8921 fallback, so PM8018
-> compatible can be safely removed from device ID table".
+On Mon, 26 Sept 2022 at 16:25, <quic_mmitkov@quicinc.com> wrote:
+>
+> From: Milen Mitkov <quic_mmitkov@quicinc.com>
+>
+> On SM8250 each VFE supports at least 3 RDI channels, or 4
+> in case of VFE-Lite, so add appropriate IRQ setup and handling.
+>
+> Signed-off-by: Milen Mitkov <quic_mmitkov@quicinc.com>
+> ---
+>  .../media/platform/qcom/camss/camss-vfe-480.c | 61 ++++++++++++-------
+>  1 file changed, 40 insertions(+), 21 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-480.c b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+> index 129585110393..537dede334be 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-480.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+> @@ -94,6 +94,8 @@ static inline int bus_irq_mask_0_comp_done(struct vfe_device *vfe, int n)
+>  #define RDI_WM(n)                      ((IS_LITE ? 0 : 23) + (n))
+>  #define RDI_COMP_GROUP(n)              ((IS_LITE ? 0 : 11) + (n))
+>
+> +#define MAX_VFE_OUTPUT_LINES   4
+> +
+>  static u32 vfe_hw_version(struct vfe_device *vfe)
+>  {
+>         u32 hw_version = readl_relaxed(vfe->base + VFE_HW_VERSION);
+> @@ -171,12 +173,26 @@ static inline void vfe_reg_update_clear(struct vfe_device *vfe,
+>
+>  static void vfe_enable_irq_common(struct vfe_device *vfe)
+>  {
+> -       /* enable only the IRQs used: rup and comp_done irqs for RDI0 */
+> +       /* enable reset ack IRQ and top BUS status IRQ */
+>         writel_relaxed(IRQ_MASK_0_RESET_ACK | IRQ_MASK_0_BUS_TOP_IRQ,
+>                        vfe->base + VFE_IRQ_MASK(0));
+> -       writel_relaxed(BUS_IRQ_MASK_0_RDI_RUP(vfe, 0) |
+> -                      BUS_IRQ_MASK_0_COMP_DONE(vfe, RDI_COMP_GROUP(0)),
+> -                      vfe->base + VFE_BUS_IRQ_MASK(0));
+> +}
+> +
+> +static void vfe_enable_lines_irq(struct vfe_device *vfe)
+> +{
+> +       u32 bus_irq_mask;
+> +       int i;
+> +
+> +       for (i = 0; i < MAX_VFE_OUTPUT_LINES; i++) {
+> +               /* Enable IRQ for newly added lines, but also keep already running lines's IRQ */
+> +               if (vfe->line[i].output.state == VFE_OUTPUT_RESERVED ||
+> +                   vfe->line[i].output.state == VFE_OUTPUT_ON) {
+> +                       bus_irq_mask |= BUS_IRQ_MASK_0_RDI_RUP(vfe, i)
+> +                                       | BUS_IRQ_MASK_0_COMP_DONE(vfe, RDI_COMP_GROUP(i));
+> +                       }
+> +       }
+> +
+> +       writel_relaxed(bus_irq_mask, vfe->base + VFE_BUS_IRQ_MASK(0));
+>  }
+>
+>  static void vfe_isr_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id);
+> @@ -193,6 +209,7 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+>  {
+>         struct vfe_device *vfe = dev;
+>         u32 status;
+> +       int i;
+>
+>         status = readl_relaxed(vfe->base + VFE_IRQ_STATUS(0));
+>         writel_relaxed(status, vfe->base + VFE_IRQ_CLEAR(0));
+> @@ -207,11 +224,14 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+>                 writel_relaxed(status, vfe->base + VFE_BUS_IRQ_CLEAR(0));
+>                 writel_relaxed(1, vfe->base + VFE_BUS_IRQ_CLEAR_GLOBAL);
+>
+> -               if (status & BUS_IRQ_MASK_0_RDI_RUP(vfe, 0))
+> -                       vfe_isr_reg_update(vfe, 0);
+> +               /* Loop through all WMs IRQs */
+> +               for (i = 0; i < MSM_VFE_IMAGE_MASTERS_NUM; i++) {
+> +                       if (status & BUS_IRQ_MASK_0_RDI_RUP(vfe, i))
+> +                               vfe_isr_reg_update(vfe, i);
+>
+> -               if (status & BUS_IRQ_MASK_0_COMP_DONE(vfe, RDI_COMP_GROUP(0)))
+> -                       vfe_isr_wm_done(vfe, 0);
+> +                       if (status & BUS_IRQ_MASK_0_COMP_DONE(vfe, RDI_COMP_GROUP(i)))
+> +                               vfe_isr_wm_done(vfe, i);
+> +               }
+>         }
+>
+>         return IRQ_HANDLED;
+> @@ -234,24 +254,23 @@ static int vfe_get_output(struct vfe_line *line)
+>         struct vfe_device *vfe = to_vfe(line);
+>         struct vfe_output *output;
+>         unsigned long flags;
+> -       int wm_idx;
+>
+>         spin_lock_irqsave(&vfe->output_lock, flags);
+>
+>         output = &line->output;
+> -       if (output->state != VFE_OUTPUT_OFF) {
+> +       if (output->state > VFE_OUTPUT_RESERVED) {
+>                 dev_err(vfe->camss->dev, "Output is running\n");
+>                 goto error;
+>         }
+>
+>         output->wm_num = 1;
+>
+> -       wm_idx = vfe_reserve_wm(vfe, line->id);
+> -       if (wm_idx < 0) {
+> -               dev_err(vfe->camss->dev, "Can not reserve wm\n");
+> -               goto error_get_wm;
+> -       }
+> -       output->wm_idx[0] = wm_idx;
+> +       /* Correspondence between VFE line number and WM number.
+> +        * line 0 -> RDI 0, line 1 -> RDI1, line 2 -> RDI2, line 3 -> PIX/RDI3
+> +        * Note this 1:1 mapping will not work for PIX streams.
+> +        */
+> +       output->wm_idx[0] = line->id;
+> +       vfe->wm_output_map[line->id] = line->id;
+>
+>         output->drop_update_idx = 0;
+>
+> @@ -259,11 +278,9 @@ static int vfe_get_output(struct vfe_line *line)
+>
+>         return 0;
+>
+> -error_get_wm:
+> -       vfe_release_wm(vfe, output->wm_idx[0]);
+> -       output->state = VFE_OUTPUT_OFF;
+>  error:
+>         spin_unlock_irqrestore(&vfe->output_lock, flags);
+> +       output->state = VFE_OUTPUT_OFF;
+>
+>         return -EINVAL;
+>  }
+> @@ -279,7 +296,7 @@ static int vfe_enable_output(struct vfe_line *line)
+>
+>         vfe_reg_update_clear(vfe, line->id);
+>
+> -       if (output->state != VFE_OUTPUT_OFF) {
+> +       if (output->state > VFE_OUTPUT_RESERVED) {
+>                 dev_err(vfe->camss->dev, "Output is not in reserved state %d\n",
+>                         output->state);
+>                 spin_unlock_irqrestore(&vfe->output_lock, flags);
+> @@ -360,6 +377,8 @@ static int vfe_enable(struct vfe_line *line)
+>
+>         vfe->stream_count++;
+>
+> +       vfe_enable_lines_irq(vfe);
+> +
+>         mutex_unlock(&vfe->stream_lock);
+>
+>         ret = vfe_get_output(line);
+> @@ -548,7 +567,7 @@ static const struct camss_video_ops vfe_video_ops_480 = {
+>  static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
+>  {
+>         vfe->video_ops = vfe_video_ops_480;
+> -       vfe->line_num = 1;
+> +       vfe->line_num = MAX_VFE_OUTPUT_LINES;
+>  }
+>
+>  const struct vfe_hw_ops vfe_ops_480 = {
+> --
+> 2.37.3
+>
 
-Thx for the suggestion, will use this wording, same in patch 9.
 
-> 
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> Best regards,
-> Krzysztof
-> 
-
-Thanks,
-Neil
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
