@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 247415F3DB5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 10:08:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4A7C5F3DBC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 10:08:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229684AbiJDIIm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Oct 2022 04:08:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47128 "EHLO
+        id S229913AbiJDIIn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Oct 2022 04:08:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229909AbiJDIIc (ORCPT
+        with ESMTP id S229920AbiJDIId (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Oct 2022 04:08:32 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC7FA2F3BB
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 01:08:29 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id c11so20079453wrp.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 01:08:29 -0700 (PDT)
+        Tue, 4 Oct 2022 04:08:33 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1688633E0C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 01:08:31 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id j7so14713037wrr.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 01:08:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date;
-        bh=SDeP7eqQdNzc3Gc3v7xkWYwjB0Tw3W04qBb8bNWEu9M=;
-        b=FsUyMwAiibb6YkuXA9FWYJB132KAYY34BaUkTram90h6YqgEZHElJUJ5l8TL9PdjAL
-         O7ioqrZd1p8cBGAlqo7dDML6+0K5Yto2NUbPACXisqeFdcW/tzsM28YsijefA1HBzJ4t
-         Rl9g/drFO+hla8LH0iCzdJQJOFvpxTtaJigZVMkK3NStooyw1ZDRS61mhS4jJcBDOMmB
-         vOMXQ1Bkb0PpnPoRwmUXYcSEW8HD6Z/U/sbgRR9s/tzqwjc+0zvWtsVRPy5S8RJsMtCE
-         O5FNgwJarzvTuxmDG72i3ZIfpYCyoqm8KVBx9CEPPGsJvUS6gCO0MYvsEMqblGBwi7cy
-         pp6g==
+        bh=TcuoQ5ktJcYo5F9N8q9LPRH5UGZVfAhMsLe4JEH78bo=;
+        b=uSiT4PAloi7jX8+OTdwLZ5lN/jpJPvhIJ1zoe8j/Zp6raBfLGf9VEjr5jvrd58SeJV
+         3cVrQ4sw4lkisaOMIe6oz2UOfNOrsQ1SVfzaMsvH8e3P+iyMhM0oy2aJXPgqUA3k2zER
+         diTxwpx8fnnNGsD9/e0LavO9C/VSoKXGMQqPDHZLgEngANSYWKfh/j/UIyxLQY8tXCc0
+         E7i+hczB3jUyPSAEq/5OsEdfduXRy7OiNvCZNLppkaU2kMtTqnCOQvKWplS7p1e7WWnI
+         0nNxOr5o2AGswziKNP07J+e2+G0gbRsy6i1gzNEesVtlqMwnK2/t/NS0zzfTJcVD9dft
+         +1YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=SDeP7eqQdNzc3Gc3v7xkWYwjB0Tw3W04qBb8bNWEu9M=;
-        b=sVXm6F29Y/KLllrQ/40LXhr9B+TCHN39VOPdA6RQlnCOP0SsezDUsm9RSTTCMLUx0n
-         X+9jM7g54gtZP1gd6jQyDnOlRXOrs6SsCZ72BIxPkImXUqAmVh0SeOephI5nqq/quc3y
-         klufYFVcnUTGbn9gV6GgdyaUSnAGblaUGawnFlddNMU5FEHrYDA0wh/gmUCEhaWu5H2o
-         dJ5YrQfwdB49aR81fkqylegB9v7iXYNm8VDvDLdxYN6KgywQiCDEUxjVIgdpsQTDw3S0
-         I10unHNvzhekt/TjE36PRTh2aKCaBkkksDw2RHyXmBgDx86ogNBBnuMVQHyGwIb+XSbh
-         1A0g==
-X-Gm-Message-State: ACrzQf1q3cTAapp99WaSeOiIMs2yDRnY/Hlx8F+qDR2uMUdxE3XMg+J9
-        JyFXOjQ9XZ+meeT80AYrqlFPuA==
-X-Google-Smtp-Source: AMsMyM66GLvCAxvCSCYkja17vzGP/C7XGU+HwN5Sj3ivIRxZE4ZpyaWz23jyzXJeRF6uXtir6qkceg==
-X-Received: by 2002:adf:9dcd:0:b0:22e:37cc:421d with SMTP id q13-20020adf9dcd000000b0022e37cc421dmr6558023wre.710.1664870908126;
-        Tue, 04 Oct 2022 01:08:28 -0700 (PDT)
+        bh=TcuoQ5ktJcYo5F9N8q9LPRH5UGZVfAhMsLe4JEH78bo=;
+        b=BENFg1cLblL6anmYeRlUUkjf1nqnCChq3K2Pja1b4UQSIVPe29ynMB2hhMNTKRKOyv
+         41iljmNUHeNI1W26rfgV7wdcAklzE6T06RjQnS+wiiszykescGurLJ6enKNdB7YkUcs4
+         CWGn69IRaRIRGIWE+lF9G1gENxohBhL16Kvc9XpXcoBbN3uWfmy0lnWDZTAeG3a0I06z
+         L9pCfqc8S4i0FTwWWhcErqSbUVEeeTzZMQb2r0iVpFgHLP3GCh1U+sBeccALmv06sg7V
+         q8dmFqy9ArrXHh9F4trLECjDK8drWMBPNKa01YrW0ET3gYKJNkPuftAQBDg07aBq1mnw
+         Gw0Q==
+X-Gm-Message-State: ACrzQf0lx8XrAiq5AyzQ9AXeAaPqyUEZm7X18/cvruAttxP/VgnSC4wn
+        TXDzRCWfRFNKVSgUTHm7CkwVHA==
+X-Google-Smtp-Source: AMsMyM4sYj+uy8z8eudjBw8BBWnpIphj/kOgOecKP1QXmoTnAjcB89PA8+Q2KVvGr3us4HgXfLsoTw==
+X-Received: by 2002:adf:f982:0:b0:22e:343f:8daf with SMTP id f2-20020adff982000000b0022e343f8dafmr7319516wrr.475.1664870909366;
+        Tue, 04 Oct 2022 01:08:29 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id l2-20020a1c7902000000b003b33943ce5esm20228866wme.32.2022.10.04.01.08.27
+        by smtp.gmail.com with ESMTPSA id l2-20020a1c7902000000b003b33943ce5esm20228866wme.32.2022.10.04.01.08.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Oct 2022 01:08:27 -0700 (PDT)
+        Tue, 04 Oct 2022 01:08:28 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Tue, 04 Oct 2022 08:08:20 +0000
-Subject: [PATCH v2 04/11] arm: dts: qcom: mdm9615: remove invalid spi-max-frequency
- gsbi3_spi node
+Date:   Tue, 04 Oct 2022 08:08:21 +0000
+Subject: [PATCH v2 05/11] dt-bindings: mfd: qcom-pm8xxx: document qcom,pm8921 as
+ fallback of qcom,pm8018
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20220928-mdm9615-dt-schema-fixes-v2-4-87fbeb4ae053@linaro.org>
+Message-Id: <20220928-mdm9615-dt-schema-fixes-v2-5-87fbeb4ae053@linaro.org>
 References: <20220928-mdm9615-dt-schema-fixes-v2-0-87fbeb4ae053@linaro.org>
 In-Reply-To: <20220928-mdm9615-dt-schema-fixes-v2-0-87fbeb4ae053@linaro.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -85,24 +85,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The spi-max-frequency property has nothing to do in the controller's node,
-remove it and fix the 'spi-max-frequency' was unexpected dtbs check error.
+The PM8018 is used as compatible with PM8921 on the MDM9615, document this situation,
+and an example section to validate this change.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-diff --git a/arch/arm/boot/dts/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom-mdm9615.dtsi
-index eaa3236f62db..366241dee522 100644
---- a/arch/arm/boot/dts/qcom-mdm9615.dtsi
-+++ b/arch/arm/boot/dts/qcom-mdm9615.dtsi
-@@ -170,7 +170,6 @@ gsbi3_spi: spi@16280000 {
- 				#size-cells = <0>;
- 				reg = <0x16280000 0x1000>;
- 				interrupts = <GIC_SPI 151 IRQ_TYPE_LEVEL_HIGH>;
--				spi-max-frequency = <24000000>;
+diff --git a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+index 61bd0b3ce02f..24d71918ff8a 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml
+@@ -15,11 +15,15 @@ description: |
  
- 				clocks = <&gcc GSBI3_QUP_CLK>, <&gcc GSBI3_H_CLK>;
- 				clock-names = "core", "iface";
+ properties:
+   compatible:
+-    enum:
+-      - qcom,pm8018
+-      - qcom,pm8058
+-      - qcom,pm8821
+-      - qcom,pm8921
++    oneOf:
++      - enum:
++          - qcom,pm8058
++          - qcom,pm8821
++          - qcom,pm8921
++      - items:
++          - enum:
++              - qcom,pm8018
++          - const: qcom,pm8921
+ 
+   reg:
+     maxItems: 1
+@@ -52,4 +56,35 @@ required:
+   - interrupt-controller
+ 
+ additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/irq.h>
++    ssbi {
++      #address-cells = <1>;
++      #size-cells = <0>;
++      pmic@0 {
++        compatible = "qcom,pm8921";
++        reg = <0>;
++        #address-cells = <1>;
++        #size-cells = <0>;
++        interrupt-controller;
++        #interrupt-cells = <2>;
++
++        interrupt-parent = <&tlmm>;
++        interrupts = <32 IRQ_TYPE_EDGE_RISING>;
++      };
++
++      pmic@1 {
++        compatible = "qcom,pm8018", "qcom,pm8921";
++        reg = <1>;
++        #address-cells = <1>;
++        #size-cells = <0>;
++        interrupt-controller;
++        #interrupt-cells = <2>;
++
++        interrupt-parent = <&tlmm>;
++        interrupts = <33 IRQ_TYPE_EDGE_RISING>;
++      };
++    };
+ ...
 
 -- 
 b4 0.10.0
