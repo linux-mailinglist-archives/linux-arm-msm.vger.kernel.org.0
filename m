@@ -2,185 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49ADD5F3DD7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 10:08:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BD6C5F3E21
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 10:20:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229895AbiJDII4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Oct 2022 04:08:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47382 "EHLO
+        id S229904AbiJDIUQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Oct 2022 04:20:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229982AbiJDIIk (ORCPT
+        with ESMTP id S230155AbiJDIUI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Oct 2022 04:08:40 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98F9F2F3B5
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 01:08:38 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id y23-20020a1c4b17000000b003bd336914f9so331777wma.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 01:08:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date;
-        bh=qZ19bsx/kaW5RSDlaveR/Z1oAoKv9fyzJ240tQu1a9s=;
-        b=wpyNA+Q3dmNDSH54NYgAELyzeib0IEOVsF6nbjCLXTfb9wBTET57L2josQcJXuqA0E
-         K6nJxHko8cIkjsnUD8tiJe8mTZsKy+SO6TpkN5UR3uuPSRAgDuW0TV4KtUGMJjTw8fLg
-         ZUZEB0vB7+dM+5X2lZNOK72DLwCzt5gRN0nrqknMUAZHKzJxxA9fGXTBGOsJo7f5DC5j
-         nehhYtTyeFFl8lQV1MEyAvkg6CkMddVJsuLuwtvX5t+Jdr72b7sFw8wCEnBhDwsgy8fD
-         6qBgaoOa6hvnS0YHuAcK6JqmziXF3VLhtTbtNADZKHv4zDJvRvrus1A2YemhXurs/2nr
-         Ry/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=qZ19bsx/kaW5RSDlaveR/Z1oAoKv9fyzJ240tQu1a9s=;
-        b=oLXgZ29vLKxpYGbqXfrzP6+cXUnpg7xZN07nhulwZl5FygMZssGwAWdu5uoeyDMWZ8
-         l7S2w5FexM9tLWv+2qaUz0BA1ZaJX5Tq7moQCemJVewBOmNyNX7L0G+avVtmHnPUBqAr
-         3ujbSn/FKxd/wWgCQxKGiTDnIDKxp/uterdizKTz8dS1wh4X7OQFvTQx39rsJkKe4hBR
-         m+6uDxFJMP5WDMEwq8j/bypn5oBLBu8msFi3JbjD6neAenApK+XKnK2yIvaklywljYzx
-         FbISL0VwLOEb3lEL8pbLPMr+UAyCgAnjmtBMKdkImxssOYDaAnqA/+1gy2vtHuZLdCT5
-         9CUg==
-X-Gm-Message-State: ACrzQf1Ov6+KQ7tFG8odIr6dcMO+nA2VNPcH9EwGJjbc8sQ2mdgj4S1W
-        SxzcZNRvsL7+0dHs45e0esFQUQ==
-X-Google-Smtp-Source: AMsMyM5JBji6og2zUI0F155nozCgsevHcka5zAZ8mXvn02oWmuomNow9V4CUQM/TC/MALKgVWwIVeA==
-X-Received: by 2002:a05:600c:4f82:b0:3b4:a6fc:89d2 with SMTP id n2-20020a05600c4f8200b003b4a6fc89d2mr9245861wmq.53.1664870916439;
-        Tue, 04 Oct 2022 01:08:36 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id l2-20020a1c7902000000b003b33943ce5esm20228866wme.32.2022.10.04.01.08.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Oct 2022 01:08:35 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Tue, 04 Oct 2022 08:08:27 +0000
-Subject: [PATCH v2 11/11] arm: dts: qcom: mdm9615: remove useless amba subnode
+        Tue, 4 Oct 2022 04:20:08 -0400
+Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F31913CD3;
+        Tue,  4 Oct 2022 01:20:02 -0700 (PDT)
+Received: from pps.filterd (m0241204.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 294851E5012977;
+        Tue, 4 Oct 2022 10:19:39 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=selector1;
+ bh=RGlnY99SKoqR8Oi3HpFzr664x5CihlKiyQmU/IL6+O8=;
+ b=PnPSN3lvDAbiU1wm/wT2tdWxmayC6ooDic/xbppcGaIb4Z8V5waWcIQHtAQrST7q8OkI
+ T1gBjWbdPj7/D/Wmla7fcIe0ufpGuXiiZhnU1IrLirO7aPexazmAlWODDvWlkTPJFVH7
+ BqNBchWGkNcw9/rlJUyoHa50HHNhIZdAX+1VKJo1miiqNe4kPu+stvjhxQJCelrkYcb7
+ P4dXwtua2/UpooMmPNMDfNw75f4b89TOSBoejsJqBzXIUdcoqUPcT/g5R6YiOupfwP7U
+ 5Uf+VsRmQysCkgMP9V+FhUtYz462v0tRSUKY9ggRatUKulDYW1Z9RG1ggoUnx1v4VnAy vw== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3jxcw1xgpe-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 04 Oct 2022 10:19:39 +0200
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 3FC0D10002A;
+        Tue,  4 Oct 2022 10:19:34 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 3445F2171EA;
+        Tue,  4 Oct 2022 10:19:34 +0200 (CEST)
+Received: from [10.201.20.201] (10.75.127.46) by SHFDAG1NODE2.st.com
+ (10.75.129.70) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2375.31; Tue, 4 Oct
+ 2022 10:19:30 +0200
+Message-ID: <ba9af49a-b5a3-230c-5313-3940ae9f1703@foss.st.com>
+Date:   Tue, 4 Oct 2022 10:19:30 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20220928-mdm9615-dt-schema-fixes-v2-11-87fbeb4ae053@linaro.org>
-References: <20220928-mdm9615-dt-schema-fixes-v2-0-87fbeb4ae053@linaro.org>
-In-Reply-To: <20220928-mdm9615-dt-schema-fixes-v2-0-87fbeb4ae053@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 3/3] ARM: dts: stm32: Drop MMCI interrupt-names
+Content-Language: en-US
+To:     Marek Vasut <marex@denx.de>, <linux-arm-kernel@lists.infradead.org>
+CC:     Alexandre Torgue <alexandre.torgue@foss.st.com>,
         Andy Gross <agross@kernel.org>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Lee Jones <lee@kernel.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Alessandro Zummo <a.zummo@towertech.it>
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-input@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org
-X-Mailer: b4 0.10.0
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        <devicetree@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>
+References: <20220927191736.299702-1-marex@denx.de>
+ <20220927191736.299702-3-marex@denx.de>
+From:   Yann Gautier <yann.gautier@foss.st.com>
+In-Reply-To: <20220927191736.299702-3-marex@denx.de>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.75.127.46]
+X-ClientProxiedBy: SFHDAG2NODE3.st.com (10.75.127.6) To SHFDAG1NODE2.st.com
+ (10.75.129.70)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-10-04_02,2022-09-29_03,2022-06-22_01
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The separate amba device node doesn't add anything significant to the
-DT. The OF parsing code already creates amba_device or platform_device
-depending on the compatibility lists.
+On 9/27/22 21:17, Marek Vasut wrote:
+> The pl18x MMCI driver does not use the interrupt-names property,
+> the binding document has been updated to recommend this property
+> be unused, remove it.
+> 
+> Signed-off-by: Marek Vasut <marex@denx.de>
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Yann Gautier <yann.gautier@foss.st.com>
 
-diff --git a/arch/arm/boot/dts/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom-mdm9615.dtsi
-index 9d950f96280d..482fd246321c 100644
---- a/arch/arm/boot/dts/qcom-mdm9615.dtsi
-+++ b/arch/arm/boot/dts/qcom-mdm9615.dtsi
-@@ -314,49 +314,43 @@ sdcc2bam: dma-controller@12142000{
- 			qcom,ee = <0>;
- 		};
- 
--		amba {
--			compatible = "simple-bus";
--			#address-cells = <1>;
--			#size-cells = <1>;
--			ranges;
--			sdcc1: mmc@12180000 {
--				status = "disabled";
--				compatible = "arm,pl18x", "arm,primecell";
--				arm,primecell-periphid = <0x00051180>;
--				reg = <0x12180000 0x2000>;
--				interrupts = <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>;
--				clocks = <&gcc SDC1_CLK>, <&gcc SDC1_H_CLK>;
--				clock-names = "mclk", "apb_pclk";
--				bus-width = <8>;
--				max-frequency = <48000000>;
--				cap-sd-highspeed;
--				cap-mmc-highspeed;
--				vmmc-supply = <&vsdcc_fixed>;
--				dmas = <&sdcc1bam 2>, <&sdcc1bam 1>;
--				dma-names = "tx", "rx";
--				assigned-clocks = <&gcc SDC1_CLK>;
--				assigned-clock-rates = <400000>;
--			};
-+		sdcc1: mmc@12180000 {
-+			status = "disabled";
-+			compatible = "arm,pl18x", "arm,primecell";
-+			arm,primecell-periphid = <0x00051180>;
-+			reg = <0x12180000 0x2000>;
-+			interrupts = <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc SDC1_CLK>, <&gcc SDC1_H_CLK>;
-+			clock-names = "mclk", "apb_pclk";
-+			bus-width = <8>;
-+			max-frequency = <48000000>;
-+			cap-sd-highspeed;
-+			cap-mmc-highspeed;
-+			vmmc-supply = <&vsdcc_fixed>;
-+			dmas = <&sdcc1bam 2>, <&sdcc1bam 1>;
-+			dma-names = "tx", "rx";
-+			assigned-clocks = <&gcc SDC1_CLK>;
-+			assigned-clock-rates = <400000>;
-+		};
- 
--			sdcc2: mmc@12140000 {
--				compatible = "arm,pl18x", "arm,primecell";
--				arm,primecell-periphid = <0x00051180>;
--				status = "disabled";
--				reg = <0x12140000 0x2000>;
--				interrupts = <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>;
--				clocks = <&gcc SDC2_CLK>, <&gcc SDC2_H_CLK>;
--				clock-names = "mclk", "apb_pclk";
--				bus-width = <4>;
--				cap-sd-highspeed;
--				cap-mmc-highspeed;
--				max-frequency = <48000000>;
--				no-1-8-v;
--				vmmc-supply = <&vsdcc_fixed>;
--				dmas = <&sdcc2bam 2>, <&sdcc2bam 1>;
--				dma-names = "tx", "rx";
--				assigned-clocks = <&gcc SDC2_CLK>;
--				assigned-clock-rates = <400000>;
--			};
-+		sdcc2: mmc@12140000 {
-+			compatible = "arm,pl18x", "arm,primecell";
-+			arm,primecell-periphid = <0x00051180>;
-+			status = "disabled";
-+			reg = <0x12140000 0x2000>;
-+			interrupts = <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc SDC2_CLK>, <&gcc SDC2_H_CLK>;
-+			clock-names = "mclk", "apb_pclk";
-+			bus-width = <4>;
-+			cap-sd-highspeed;
-+			cap-mmc-highspeed;
-+			max-frequency = <48000000>;
-+			no-1-8-v;
-+			vmmc-supply = <&vsdcc_fixed>;
-+			dmas = <&sdcc2bam 2>, <&sdcc2bam 1>;
-+			dma-names = "tx", "rx";
-+			assigned-clocks = <&gcc SDC2_CLK>;
-+			assigned-clock-rates = <400000>;
- 		};
- 
- 		tcsr: syscon@1a400000 {
 
--- 
-b4 0.10.0
+Best regards,
+Yann
