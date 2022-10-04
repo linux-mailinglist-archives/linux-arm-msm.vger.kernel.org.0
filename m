@@ -2,31 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E26B5F4BAC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Oct 2022 00:12:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACA035F4BC5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Oct 2022 00:23:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230105AbiJDWMK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Oct 2022 18:12:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41112 "EHLO
+        id S230261AbiJDWXY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Oct 2022 18:23:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230260AbiJDWLo (ORCPT
+        with ESMTP id S229581AbiJDWXX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Oct 2022 18:11:44 -0400
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [5.144.164.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 651696C10A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 15:11:37 -0700 (PDT)
+        Tue, 4 Oct 2022 18:23:23 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EE6A6566D;
+        Tue,  4 Oct 2022 15:23:21 -0700 (PDT)
 Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 5CD8A20088;
-        Wed,  5 Oct 2022 00:11:35 +0200 (CEST)
-Date:   Wed, 5 Oct 2022 00:11:34 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id B67C43F21A;
+        Wed,  5 Oct 2022 00:23:18 +0200 (CEST)
+Date:   Wed, 5 Oct 2022 00:23:17 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
 Cc:     phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, freedreno@lists.freedesktop.org,
+        Vinod Koul <vkoul@kernel.org>, Marek Vasut <marex@denx.de>,
+        freedreno@lists.freedesktop.org,
         Douglas Anderson <dianders@chromium.org>,
         Thomas Zimmermann <tzimmermann@suse.de>,
         Jami Kettunen <jami.kettunen@somainline.org>,
@@ -38,18 +39,20 @@ Cc:     phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
         David Airlie <airlied@linux.ie>,
         Martin Botka <martin.botka@somainline.org>,
         ~postmarketos/upstreaming@lists.sr.ht,
+        Daniel Vetter <daniel@ffwll.ch>,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
         Alex Deucher <alexander.deucher@amd.com>,
         Sean Paul <sean@poorly.run>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/5] drm/msm/dpu1: Account for DSC's bits_per_pixel
- having 4 fractional bits
-Message-ID: <20221004221134.roino4u2waawgh6u@SoMainline.org>
+Subject: Re: [Freedreno] [PATCH 1/5] drm/msm/dsi: Remove useless math in DSC
+ calculation
+Message-ID: <20221004222317.6or3w6vwgyd3yy6z@SoMainline.org>
 Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, freedreno@lists.freedesktop.org,
+        Vinod Koul <vkoul@kernel.org>, Marek Vasut <marex@denx.de>,
+        freedreno@lists.freedesktop.org,
         Douglas Anderson <dianders@chromium.org>,
         Thomas Zimmermann <tzimmermann@suse.de>,
         Jami Kettunen <jami.kettunen@somainline.org>,
@@ -61,71 +64,80 @@ Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@linux.ie>,
         Martin Botka <martin.botka@somainline.org>,
         ~postmarketos/upstreaming@lists.sr.ht,
+        Daniel Vetter <daniel@ffwll.ch>,
         AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
         Alex Deucher <alexander.deucher@amd.com>,
         Sean Paul <sean@poorly.run>, linux-kernel@vger.kernel.org
 References: <20221001190807.358691-1-marijn.suijten@somainline.org>
- <20221001190807.358691-5-marijn.suijten@somainline.org>
- <7f7a5d78-e50f-b6af-bb3e-bbfbc7fa5f75@quicinc.com>
+ <20221001190807.358691-2-marijn.suijten@somainline.org>
+ <7ded0eb3-ef99-1979-ffb6-c639288bd863@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7f7a5d78-e50f-b6af-bb3e-bbfbc7fa5f75@quicinc.com>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <7ded0eb3-ef99-1979-ffb6-c639288bd863@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-10-04 10:03:07, Abhinav Kumar wrote:
+On 2022-10-04 07:33:49, Abhinav Kumar wrote:
 > 
 > 
 > On 10/1/2022 12:08 PM, Marijn Suijten wrote:
-> > According to the comment this DPU register contains the bits per pixel
-> > as a 6.4 fractional value, conveniently matching the contents of
-> > bits_per_pixel in struct drm_dsc_config which also uses 4 fractional
-> > bits.  However, the downstream source this implementation was
-> > copy-pasted from has its bpp field stored _without_ fractional part.
+> > Multiplying a value by 2 and adding 1 to it always results in a value
+> > that is uneven, and that 1 gets truncated immediately when performing
+> > integer division by 2 again.  There is no "rounding" possible here.
 > > 
-> > This makes the entire convoluted math obsolete as it is impossible to
-> > pull those 4 fractional bits out of thin air, by somehow trying to reuse
-> > the lowest 2 bits of a non-fractional bpp (lsb = bpp % 4??).
-> > 
-> > The rest of the code merely attempts to keep the integer part a multiple
-> > of 4, which is rendered useless thanks to data |= dsc->bits_per_pixel <<
-> > 12; already filling up those bits anyway (but not on downstream).
-> > 
-> > Fixes: c110cfd1753e ("drm/msm/disp/dpu1: Add support for DSC")
+> > Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
 > > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > ---
+> >   drivers/gpu/drm/msm/dsi/dsi_host.c | 7 +------
+> >   1 file changed, 1 insertion(+), 6 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > index 8e4bc586c262..e05bae647431 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > @@ -1864,12 +1864,7 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
+> >   	data = 2048 * (dsc->rc_model_size - dsc->initial_offset + num_extra_mux_bits);
+> >   	dsc->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
+> >   
+> > -	/* bpp * 16 + 0.5 */
+> > -	data = dsc->bits_per_pixel * 16;
+> > -	data *= 2;
+> > -	data++;
+> > -	data /= 2;
+> > -	target_bpp_x16 = data;
+> > +	target_bpp_x16 = dsc->bits_per_pixel * 16;
+> >   
+> Since this patch is titled, "remove useless math", even the 
+> target_bpp_x16 math looks redundant to me,
 > 
-> Many of this bugs are because the downstream code from which this 
-> implementation was derived wasnt the latest perhaps?
+> first we do
+> 
+> target_bpp_x16 = dsc->bits_per_pixel * 16;
+> 
+> then in the next line we do
+> 
+> data = (dsc->initial_xmit_delay * target_bpp_x16) / 16;
+> 
+> the *16 and /16 will cancel out here.
+> 
+> Instead we can just do
+> 
+> data = (dsc->initial_xmit_delay * dsc->drm->bits_per_pixel) ?
 
-Perhaps, this code is "identical" to what I'm looking at in some
-downstream 4.14 / 4.19, where the upstream struct for DSC either wasn't
-there or wasn't used.  We have to find and address these bugs one by one
-to make our panels work, and this series gets one platform (sdm845) down
-but has more work pending for others (sm8250 has my current focus).
+Thanks, good catch!  I might have been so focused on explaining the
+effect of this patch and uselessness of the proposed `+ 0.5` rounding
+here that I missed this intermediate variable now becoming redundant as
+well.
 
-Or are you suggesting to "redo" the DSC integration work based on a
-(much) newer display techpack (SDE driver)?
-
-> Earlier, downstream had its own DSC struct maybe leading to this 
-> redundant math but now we have migrated over to use the upstream struct 
-> drm_dsc_config.
-
-Found the 3-year-old `disp: msm: use upstream dsc config data` commit
-that makes this change.  It carries a similar comment:
-
-    /* integer bpp support only */
-
-The superfluous math was howerver removed earlier, in:
-
-    disp: msm: fix dsc parameters related to 10 bpc 10 bpp
+Corrected for v2!
 
 - Marijn
 
-> That being said, this patch LGTM
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> >   	data = (dsc->initial_xmit_delay * target_bpp_x16) / 16;
+> >   	final_value =  dsc->rc_model_size - data + num_extra_mux_bits;
