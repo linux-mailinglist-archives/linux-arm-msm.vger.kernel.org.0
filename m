@@ -2,80 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B40B15F41B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 13:13:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11E245F421D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 13:41:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229889AbiJDLNW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Oct 2022 07:13:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38314 "EHLO
+        id S229774AbiJDLlZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Oct 2022 07:41:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229794AbiJDLNV (ORCPT
+        with ESMTP id S229605AbiJDLlY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Oct 2022 07:13:21 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E95DCBF60
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 04:13:16 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id bp15so7146754lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 04:13:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=U48nHCuwfJVKxy+M03otnlg23lh/DEkiCgmArzYp2fc=;
-        b=Iou5/+KSq3wDyHeUO7rKVZr/BUGu0gtPiDNO7PYMOaOxx/GyXFhUsDWCVVcluwL7FE
-         47gc9L1mpEAsexFIC56rrWGEPHb/9OB7hqjz/9gu4dWaSR+CgTUBB6qTrjhPMTbuh+qN
-         iMPGD7a3yW0wkD6Iulj+jb5u0wID/0ZJj3Aegn1o0QmiHmKTfmP2NMi9HOOOxDRd2FlH
-         Fb7/U62xsCvsZqbnaWONbsPd/NDm96VLwsHrJtDVu8X+dyjtdG5pM/Dnjs6UuDSzabfj
-         xAxczrNrrTcBPBm30BMduDkzfeU0XU1yeIoPRIDm5trLTIBdN6vhPmViu6lhTA7QHZkX
-         IBrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=U48nHCuwfJVKxy+M03otnlg23lh/DEkiCgmArzYp2fc=;
-        b=kYa95jOYB0SihVSc8mRywkdo2gZeay4XSRhjUuYg++G71AyKpuQCUMPBoG4+Mu2guM
-         W0TTwk0FPu9VPhIGw7F1HTybsJiiyvj5EnSVRQ+jrpQUSLObLYqi4VMQutF+r1Fy6Gc1
-         cFXhAoc4wmtDf2WNQwjSQHyri/KfqUvn2ra7+HL06pEi8CRbpNT0M5CdbSulu1lR5GsJ
-         brx+W41/Sf+h4SQD8qobE6sd56OZuUpUipiyWRJJo08WKGTAB6gGPqqi096bIya8Exav
-         YKKiA7+GbZrKI5qtHyfsQsB1bZrVFgdUojpDXg6B2lbc41CRMwki19OvvtwnUkt1Khm+
-         Mk7w==
-X-Gm-Message-State: ACrzQf0Zk9moVh5R5FtUS9sqyw7CWon9V5gRDq86sBtNX4mrmSRYOsV3
-        NQXITDBJxUJ5dBohmfqV46eqqw==
-X-Google-Smtp-Source: AMsMyM6gHLkVh3BFnvREOQi+Gw9qlmbmEUsbKuY/7jb/V0P9+aSplnsb5abw1FojWDXV1drMbuH3hw==
-X-Received: by 2002:a05:6512:3986:b0:49f:480f:c9d5 with SMTP id j6-20020a056512398600b0049f480fc9d5mr8303333lfu.445.1664881995156;
-        Tue, 04 Oct 2022 04:13:15 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id s7-20020a2eb8c7000000b0026ddf39da47sm619146ljp.81.2022.10.04.04.13.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Oct 2022 04:13:14 -0700 (PDT)
-Message-ID: <942cb83c-a483-df4b-9b08-9bdbc7fc3601@linaro.org>
-Date:   Tue, 4 Oct 2022 13:13:14 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH v5 2/2] dt-bindings: arm: add xiaomi,sagit board based on
- msm8998 chip
-Content-Language: en-US
-To:     Dzmitry Sankouski <dsankouski@gmail.com>,
-        linux-kernel@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Tue, 4 Oct 2022 07:41:24 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B8624DB71;
+        Tue,  4 Oct 2022 04:41:23 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id C66C8B81A0F;
+        Tue,  4 Oct 2022 11:41:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2014C433D6;
+        Tue,  4 Oct 2022 11:41:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1664883680;
+        bh=BHUnSAdIZ4XNBoipAEkQYLni7TzHVBXgscOTnj86v5M=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=C046NSAyTFEKa4UhRxN5fjYVH5kpQi0qziS6kPAHf5yeiZy3BAe+CnUFHsu85kwqr
+         ukXaDY9I9+V+xnC1gqt36Hy4IWv+MS5vRsyYjrZHFR6p3DEC2vhCsHE98ENaYE7Gqd
+         xItkAUqc35pJWY28ac8fG4h4wvDdrdHfyzPV/egqD2T+zTKlKXRQnkg0Kn7K8RglWl
+         YVqOFKCN/lPq7GiJ9rfCUwO85kqBPkpc5w/6MMB8PRgBJ1Xi/GpVpqYYAYmdPs5Jgx
+         519m71GhqEIpCQ7nuqOsCmf8V481JzYuNIydeGnlo8xWBgJ6z3WjWztnBK+4DRcQWC
+         XPf/UtbipovBg==
+Date:   Tue, 4 Oct 2022 12:41:13 +0100
+From:   Lee Jones <lee@kernel.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Lee Jones <lee.jones@linaro.org>,
+        Satya Priya Kakitapalli <quic_c_skakit@quicinc.com>,
+        Mark Brown <broonie@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-References: <20221003194315.943903-1-dsankouski@gmail.com>
- <20221003194315.943903-3-dsankouski@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221003194315.943903-3-dsankouski@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com,
+        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com
+Subject: Re: [PATCH V15 6/9] mfd: pm8008: Use i2c_new_dummy_device() API
+Message-ID: <Yzwb2e0/CK9QbV0n@google.com>
+References: <Ys1tYAO39LKzEAOE@google.com>
+ <dc737abb-041b-491a-14f1-a584f9e64a3d@quicinc.com>
+ <CAE-0n528QaTtZFp=WAaHShegFRpKVN_67jQfUJTtsRPr6s--zA@mail.gmail.com>
+ <52039cd1-4390-7abb-d296-0eb7ac0c3b15@quicinc.com>
+ <Yuz2O+lZ5W7RviuA@google.com>
+ <CAE-0n507SLeYB7XVzGFk=RO6YjOPoGpux+_N2AyrmL354mQJ-g@mail.gmail.com>
+ <YzQf7hf15vvLeGse@google.com>
+ <CAE-0n50cX5ky3By976RTecKkpeMoAjoBA4tYuWSZ150JfS9wiQ@mail.gmail.com>
+ <YzXdhVN/Zp7DDIzB@google.com>
+ <CAE-0n53q-8u16_7KGZ0jbm9ES=dsSJL7rbGdz6hzLWf3xvm=bQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAE-0n53q-8u16_7KGZ0jbm9ES=dsSJL7rbGdz6hzLWf3xvm=bQ@mail.gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,13 +70,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/10/2022 21:43, Dzmitry Sankouski wrote:
+On Mon, 03 Oct 2022, Stephen Boyd wrote:
+
+> Quoting Lee Jones (2022-09-29 11:01:41)
+> > On Wed, 28 Sep 2022, Stephen Boyd wrote:
+> >
+> > > Quoting Lee Jones (2022-09-28 03:20:30)
+> > > > Wouldn't it make more sense to simply separate the instantiation of
+> > > > the 2 I2C devices?  Similar to what you suggested [0] in v9.  That way
+> > > > they can handle their own resources and we can avoid all of the I2C
+> > > > dummy / shared Regmap passing faff.
+> > > >
+> > > > [0] https://lore.kernel.org/all/CAE-0n53G-atsuwqcgNvi3nvWyiO3P=pSj5zDUMYj0ELVYJE54Q@mail.gmail.com/
+> > > >
+> > >
+> > > You can continue reading the thread[1]. My understanding is it's one
+> > > chip that responds on two i2c addresses, thus we don't describe that as
+> > > two i2c device nodes in DT. Instead we describe one node and use the
+> > > dummy API to make the second i2c device.
+> > >
+> > > [1] https://lore.kernel.org/all/Yk3NkNK3e+fgj4eG@sirena.org.uk/
+> >
+> > As Mark says, it's probably 2 separate dies that have been encased in
+> > the same IC and are otherwise unconnected.  Not sure I understand the
+> > comment about not requiring another 'struct device'.  It will still
+> > require that whether it's a platform device or an I2C device, right?
+> >
 > 
-> add xiaomi,sagit board (Xiaomi Mi 6) binding
+> Yes a 'struct device' will be required for each i2c address no matter
+> what happens.
+> 
+> It is also useful to describe the hardware as one device node in case
+> there is a shared reset signal or power supply. That allows us to have
+> one driver probe the DT node and deassert the reset/power the chip on. I
+> think this device has one reset signal, so we really need to do this and
+> not treat them as completely independent i2c devices (the 0x8 and 0x9
+> addresses).
+> 
+> Can we move forward with my plan to have another i2c device made for
+> 'pm8008-regulators' and have that driver be an i2c driver that probes an
+> i2c device manually created in the pm8008 driver? I think that would
+> handle the reset ordering problem because the pm8008 driver can deassert
+> the reset and also handle the regmap passing stuff by letting the i2c
+> device at 0x9 make its own regmap.
 
-NAK, still wrong. Apply comments from v3 and do not send more than one
-version per day.
+Sure, why not.  I'm pretty done talking about this now. :)
 
-Best regards,
-Krzysztof
+Please work with Satya to cobble something together.
 
+-- 
+Lee Jones [李琼斯]
