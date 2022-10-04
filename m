@@ -2,65 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A9ED5F3D60
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 09:38:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4F1E5F3DAB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 10:08:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229574AbiJDHiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Oct 2022 03:38:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34702 "EHLO
+        id S229829AbiJDII3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Oct 2022 04:08:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbiJDHiM (ORCPT
+        with ESMTP id S229610AbiJDII1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Oct 2022 03:38:12 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 619A24D248
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 00:38:11 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-333a4a5d495so127682937b3.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 00:38:11 -0700 (PDT)
+        Tue, 4 Oct 2022 04:08:27 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 095251A22C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 01:08:25 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id n12so482360wrp.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 01:08:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=OSMuFVsbci918WMEsC7sFXDY5UEKrP97lF7jwpn3ZKY=;
-        b=YUpCQLVh/ZbPEIM6MRSoBRL5dBKPIbED6Jc5x3rLs3i0ZeY74CIthfaKS89OvtzUbJ
-         evJX0WkzNNEHZKx3NZthh7TCtRjKGZfSCXYj572FYJmnWLCNNPeQeE7e7OMHfDMBQgMH
-         iFueADEecwzMszu4qHBUBbfJwnohw3RLekyz+y05PGT8cwVRuNJ9RE/n6ESVgncDkj34
-         DQO7u+mzUTZEUzIypv9gUmKkzpMj+idrKkuLP9Z9/oo7YL2mVu2y1liXo7JWBPzSYBmb
-         gV9oF+WusRD8KAjKLq5izmywBwapiXXrtq5jWYdQlfQRWuaGUB7LLR2d9yAN1L9IEckJ
-         AeJA==
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:from:to:cc:subject:date;
+        bh=/dCo2x1GJGO6lcsdYgfVE3C0ko4+taeASe5EAnmSl7Y=;
+        b=xNwadZ2h2MHBiX/y6D1x01Qwk/JxsJbGmTP7PcfsSaiQk6yS/g7Q/A2hGgAwuRnKVh
+         4KLY/UyTOx7Ce7gi1HFy5j9u7o77h4Ijb7O2f2cQwWDmThsX/mNDLh0/2OZDEdeCTej4
+         T+jKQoBglw2x1pQsC4BwLDWSq2a82KE8KQmnXxstr4Q7KNYnE32ZqPbX+DAadVCaS2Ws
+         dMEITYYAfswMHJj5wJVyR0RJDfVvIS2ue7cjQjhG+3S0IpuvphReBkMzzB/12hvWHVXn
+         TVLuvHsCQo+mFgHrhibGEOQMemQeoNr16mWqg70nRTrRH9QoFpYnZuKLBy5sWafTdsjY
+         rrkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=OSMuFVsbci918WMEsC7sFXDY5UEKrP97lF7jwpn3ZKY=;
-        b=RM4BFgTa1zOHx5lILhn3FOYVlaZLBediysi+TEb972XGtNAcLM2WaL4rQGGHRMflm5
-         9gQVyDP0g62DRbWqSFbcIhT27W+axF0KIB/OL3Y74JNjCqRC+pH8xUmWCpzWvQl2txRi
-         cPh6NSvcIbJfjnOvrOhCHo/3zCBRXSdUXBJIMUuIEtjEc2nP3M/6Q/AH6MMdVsAAZH58
-         uoKjNu28FNJg0+7KUdfsa8c0VEyq5zsxfyc4FmsSLHLa7E+fKHPnsH1E57DTMa00LA50
-         7t3eoqp3gjTL3nGJDZ4e/HFjP2s30FJrKXdAja2ENAbnG/QihWiQxr3fUI/jDM2wx7Mt
-         a85A==
-X-Gm-Message-State: ACrzQf3mBJBR3IWgjSoXaNQoUDRLjCBIronfGvR9AEbX1TwMYGki26c2
-        GA7fC5bKq852CrHqW1/wdofbzskdxQQk+ZSIt3cC7A==
-X-Google-Smtp-Source: AMsMyM5j+XEoX2xOKukGTbIUyxbRXejrMOAtr1bbMRrNN55E8u5O5TLP8bVa8lmMZpIgATy9l002URxzu/ufb7quNyI=
-X-Received: by 2002:a0d:f685:0:b0:343:bd3d:80b2 with SMTP id
- g127-20020a0df685000000b00343bd3d80b2mr23377204ywf.485.1664869090657; Tue, 04
- Oct 2022 00:38:10 -0700 (PDT)
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:x-gm-message-state:from:to:cc:subject:date;
+        bh=/dCo2x1GJGO6lcsdYgfVE3C0ko4+taeASe5EAnmSl7Y=;
+        b=GUtIVRTgnuse2h+LjMbwtfKyc9L4Z95dM21NlDffJJZqx4EXFm3RjadTQ0tX6e7spn
+         5jyqIkw1Y6vBTI3TyDudcjZyW1WWP9aPxJN5D/r/eg6p8dlRDtrcjU4H511I2vhi2qJK
+         dWcM9IxyGA7sPFfr+Je8iynj2QgRRDO9WVpTzJIYy1PL5JqUvSqq5hMG9WqMV8H8hpQ9
+         MEbL5zhJX6cdiVTMB4hGkeBKJiHfpL06YC7DjC+nRrqFJqPW2RCvevw5ALfPM9kPd7Fn
+         WkWxZqCiKVshv+I6gSRfnHHbMLzNXCTFwmFO6hyfTl5rT1OGxuA3+hS6zWIrSYBVvAYy
+         9KlA==
+X-Gm-Message-State: ACrzQf01v+1vhwAwBOQdel0mTWRxIncH0sMdSNNkjlea/6fdvN23FMkh
+        3D2NsiSIrl3frwBg6Bea4u+1Rw==
+X-Google-Smtp-Source: AMsMyM6Es/yTNo8XrErc7/e8f2DPBMVbSm6jt+YT4UcPFryEALZku1sLyh+siU2xAEWTOoHGqnWL3g==
+X-Received: by 2002:adf:ecc9:0:b0:22e:2e94:bdef with SMTP id s9-20020adfecc9000000b0022e2e94bdefmr8469844wro.689.1664870903597;
+        Tue, 04 Oct 2022 01:08:23 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id l2-20020a1c7902000000b003b33943ce5esm20228866wme.32.2022.10.04.01.08.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Oct 2022 01:08:23 -0700 (PDT)
+Subject: [PATCH v2 00/11] arm: qcom: mdm9615: first round of bindings and DT fixes
 MIME-Version: 1.0
-References: <20220925112103.148836-1-krzysztof.kozlowski@linaro.org>
- <08E290AD-C842-4BF2-9C57-2CE59A4C5D88@linaro.org> <441153f6-26ee-cbb2-fe42-101de91952c5@linaro.org>
-In-Reply-To: <441153f6-26ee-cbb2-fe42-101de91952c5@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 4 Oct 2022 10:37:59 +0300
-Message-ID: <CAA8EJpouyuCn5Kz-3RgRJPd+K1sWwtidz1L_mXY_U2AFQq8oOg@mail.gmail.com>
-Subject: Re: [PATCH v2] pinctrl: qcom: restrict drivers per ARM/ARM64
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-b4-tracking: H4sIAPDpO2MC/4WNWwrCMBREt1Lut1eSqOnjy32IH3ncNoE2gdxalNK9G9yAX8MZODM7MJVIDEOzQ6
+ Etcsypgjo14IJJE2H0lUEJpUSvOlz80mt5Q78iu0CLwTG+iVFrf/XCOdu6FqptDRPaYpIL1U+vea5l
+ iLzm8vm9bbLG4//wJlGg1aQvpvWjpO4+x2RKPucywfM4ji/Xd/HXxAAAAA==
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Tue, 04 Oct 2022 08:08:16 +0000
+Message-Id: <20220928-mdm9615-dt-schema-fixes-v2-0-87fbeb4ae053@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Lee Jones <lee@kernel.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Alessandro Zummo <a.zummo@towertech.it>
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-input@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org
+X-Mailer: b4 0.10.0
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -71,30 +85,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 25 Sept 2022 at 14:54, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 25/09/2022 13:43, Dmitry Baryshkov wrote:
-> >
-> >
-> > On 25 September 2022 14:21:03 GMT+03:00, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote:
-> >> There is no point to allow selecting pin-controller drivers for Qualcomm
-> >> ARMv7 SoCs when building ARM64 kernel, and vice versa.  This makes
-> >> kernel configuration more difficult as many do not remember the Qualcomm
-> >> SoCs.  There won't be a single image for ARMv7 and ARMv8/9 SoCs, so no
-> >> features/options are lost.
-> >>
-> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >
-> > I haven't checked which restrictions apply to msm8916 at this moment, but it might be worth adding 'depends on ARM || ARM64 || COMPILE_TEST'
->
-> This is limited by ARCH_QCOM (top-level if in the file), so I am not
-> sure what would be benefits.
+This is a first round of trivial bindings & DT fixes for the MDM9615 platform.
 
-I thought that it might be added to represent the fact that this is
-not an omission, but a special case which can be used by both 32-bit
-and 64-bit archs.
+This first round focuses on trivial changes, the remaining work will
+mainly be .txt to .yaml transition of old qcom pmic & co device bindings.
 
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <bjorn.andersson@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@somainline.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Lee Jones <lee@kernel.org>
+To: Satya Priya <quic_c_skakit@quicinc.com>
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Alessandro Zummo <a.zummo@towertech.it>
+To: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: linux-input@vger.kernel.org
+Cc: linux-rtc@vger.kernel.org
+Dependencies: None
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v2:
+- patch 1: switch to move from swir.txt to qcom.yaml
+- patch 2: use MIT licence instead of X11 licence
+- patch 3: move reg after compatible
+- patch 4: added Krzysztof's review
+- patch 5: split into 5 changes:
+  - document qcom,pm8921 as fallback of qcom,pm8018
+  - convert qcom,pm8921-pwrkey to dt-schema
+  - document qcom,pm8921-rtc as fallback of qcom,pm8018-rtc
+  - drop unused PM8018 compatible
+  - drop unused pm8018 RTC compatible
+- patch 6: None
+- patch 7: Reworded commit log based on Dmitry's wording on similar patches
+- Link to v1: https://lore.kernel.org/r/20220928-mdm9615-dt-schema-fixes-v1-0-b6e63a7df1e8@linaro.org
+
+---
+Neil Armstrong (11):
+      dt-bindings: arm: qcom: move swir,mangoh-green-wp8548 board documentation to qcom.yaml
+      arm: dts: qcom: mdm9615*: add SPDX-License-Identifier
+      arm: dts: qcom: mdm9615: add missing reg in cpu@0 node
+      arm: dts: qcom: mdm9615: remove invalid spi-max-frequency gsbi3_spi node
+      dt-bindings: mfd: qcom-pm8xxx: document qcom,pm8921 as fallback of qcom,pm8018
+      dt-bindings: input: qcom,pm8921-pwrkey: convert to dt-schema
+      dt-bindings: rtc: qcom-pm8xxx: document qcom,pm8921-rtc as fallback of qcom,pm8018-rtc
+      mfd: qcom-pm8xxx: drop unused PM8018 compatible
+      rtc: pm8xxx: drop unused pm8018 compatible
+      arm: dts: qcom: mdm9615: remove invalid interrupt-names from pl18x mmc nodes
+      arm: dts: qcom: mdm9615: remove useless amba subnode
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   6 +
+ Documentation/devicetree/bindings/arm/swir.txt     |  12 --
+ .../bindings/input/qcom,pm8921-pwrkey.yaml         |  77 +++++++++++++
+ .../bindings/input/qcom,pm8xxx-pwrkey.txt          |  46 --------
+ .../devicetree/bindings/mfd/qcom-pm8xxx.yaml       |  45 +++++++-
+ .../devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml   |  16 ++-
+ .../boot/dts/qcom-mdm9615-wp8548-mangoh-green.dts  |  39 +------
+ arch/arm/boot/dts/qcom-mdm9615-wp8548.dtsi         |  39 +------
+ arch/arm/boot/dts/qcom-mdm9615.dtsi                | 121 +++++++--------------
+ drivers/mfd/qcom-pm8xxx.c                          |   1 -
+ drivers/rtc/rtc-pm8xxx.c                           |   1 -
+ 11 files changed, 173 insertions(+), 230 deletions(-)
+---
+base-commit: f76349cf41451c5c42a99f18a9163377e4b364ff
+change-id: 20220928-mdm9615-dt-schema-fixes-66d4d0ccb7c7
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Neil Armstrong <neil.armstrong@linaro.org>
