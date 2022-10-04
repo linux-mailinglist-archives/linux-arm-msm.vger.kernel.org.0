@@ -2,70 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96D415F3D54
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 09:36:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A9ED5F3D60
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 09:38:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229832AbiJDHgS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Oct 2022 03:36:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33170 "EHLO
+        id S229574AbiJDHiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Oct 2022 03:38:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229720AbiJDHgP (ORCPT
+        with ESMTP id S229637AbiJDHiM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Oct 2022 03:36:15 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7265A26122
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 00:36:13 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id 207so12562826ybn.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 00:36:13 -0700 (PDT)
+        Tue, 4 Oct 2022 03:38:12 -0400
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 619A24D248
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 00:38:11 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-333a4a5d495so127682937b3.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 00:38:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date;
-        bh=epQv7F2qJ84iAW4L5349YGXrHzlAKAVIa/bBXFB0Ad4=;
-        b=P8ChbWpT0YG30J3zUr9FXH2IBiHLJImXbnh3Bp6QCr7ycn4os8DwkN4zVxe9jwYCqh
-         iIt4Vw+qQeooAwfOIFjtcyhWbY60qsSvde1i9B1qlQycypAtDrAE9i1GayX9ihwQ6Iup
-         xtPOOj2tH08HkIZX0cWdUb1kAHdMa962GNiccPwqpfScp3TLt8e6enqb+fFbr3Z8yk/W
-         JIDHS9gPyiytvYZmDh5rvQbfx8FmrC3lEQtaJwMFyLzpjXqGRkKUPbJCmKF3j7jR50zr
-         hwX2sodAOGDV29UG4gtx/51/9Ak51BAhacwwBK+R++g6UDs+C4wIosMpsOF6AMTOkWHX
-         3puQ==
+        bh=OSMuFVsbci918WMEsC7sFXDY5UEKrP97lF7jwpn3ZKY=;
+        b=YUpCQLVh/ZbPEIM6MRSoBRL5dBKPIbED6Jc5x3rLs3i0ZeY74CIthfaKS89OvtzUbJ
+         evJX0WkzNNEHZKx3NZthh7TCtRjKGZfSCXYj572FYJmnWLCNNPeQeE7e7OMHfDMBQgMH
+         iFueADEecwzMszu4qHBUBbfJwnohw3RLekyz+y05PGT8cwVRuNJ9RE/n6ESVgncDkj34
+         DQO7u+mzUTZEUzIypv9gUmKkzpMj+idrKkuLP9Z9/oo7YL2mVu2y1liXo7JWBPzSYBmb
+         gV9oF+WusRD8KAjKLq5izmywBwapiXXrtq5jWYdQlfQRWuaGUB7LLR2d9yAN1L9IEckJ
+         AeJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=epQv7F2qJ84iAW4L5349YGXrHzlAKAVIa/bBXFB0Ad4=;
-        b=tT3gW8NpPsbplCsfme0J5nBGaIwYV/oCycJxzzGXw6zwu68LlxFVj6pzGBVfxEswLp
-         0L0XoZGTxgVLPF1BXmfUwzOg+OqY0YSmWnesWJqt3WtIXYTmsFPlKI0VNmQ37diEoMB+
-         NgPmdySkyrFueq3qSpOTae0FnQQ44UBBgMLsA9esdTHveKIWO+VzaHYzYKS/MFOsUWRp
-         zJSSIUAXSzoPJZ92CCPsChIJL/prwhmfnVpvMMhvqDOCVF4nwXV8pTW+Onz51mJzjoEg
-         bY1zZcaLJ16eWf7IZpYJ92ppzvXv0eSNwzUI1j8wQbfx23VrVxiDmFBKKATKfV86ATGh
-         ypZA==
-X-Gm-Message-State: ACrzQf3lj20sKEXkBvCt9OfN8eYWBVNDS1bcMfu2Km/nU1vckdmJ2Mcg
-        RCJ9+r6EEojIkje76HNrlTl4j+frFmRKtn/zU0zc/xf/Gzg=
-X-Google-Smtp-Source: AMsMyM6+w9SWD7hb7k99VJI3GyDPbYFNuQ+U244465sm48x/yJocpc335gm0ixgO8BVhLnpDafAZBq+Iq06T0RuuEUE=
-X-Received: by 2002:a05:6902:102e:b0:6bd:bdd2:ac32 with SMTP id
- x14-20020a056902102e00b006bdbdd2ac32mr8599365ybt.516.1664868972999; Tue, 04
- Oct 2022 00:36:12 -0700 (PDT)
+        bh=OSMuFVsbci918WMEsC7sFXDY5UEKrP97lF7jwpn3ZKY=;
+        b=RM4BFgTa1zOHx5lILhn3FOYVlaZLBediysi+TEb972XGtNAcLM2WaL4rQGGHRMflm5
+         9gQVyDP0g62DRbWqSFbcIhT27W+axF0KIB/OL3Y74JNjCqRC+pH8xUmWCpzWvQl2txRi
+         cPh6NSvcIbJfjnOvrOhCHo/3zCBRXSdUXBJIMUuIEtjEc2nP3M/6Q/AH6MMdVsAAZH58
+         uoKjNu28FNJg0+7KUdfsa8c0VEyq5zsxfyc4FmsSLHLa7E+fKHPnsH1E57DTMa00LA50
+         7t3eoqp3gjTL3nGJDZ4e/HFjP2s30FJrKXdAja2ENAbnG/QihWiQxr3fUI/jDM2wx7Mt
+         a85A==
+X-Gm-Message-State: ACrzQf3mBJBR3IWgjSoXaNQoUDRLjCBIronfGvR9AEbX1TwMYGki26c2
+        GA7fC5bKq852CrHqW1/wdofbzskdxQQk+ZSIt3cC7A==
+X-Google-Smtp-Source: AMsMyM5j+XEoX2xOKukGTbIUyxbRXejrMOAtr1bbMRrNN55E8u5O5TLP8bVa8lmMZpIgATy9l002URxzu/ufb7quNyI=
+X-Received: by 2002:a0d:f685:0:b0:343:bd3d:80b2 with SMTP id
+ g127-20020a0df685000000b00343bd3d80b2mr23377204ywf.485.1664869090657; Tue, 04
+ Oct 2022 00:38:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20221001030641.29354-1-quic_molvera@quicinc.com>
- <20221001030641.29354-2-quic_molvera@quicinc.com> <09f5d364-320e-9ecc-2c2b-68066c61f802@linaro.org>
- <e9c44e3b-b29f-0f47-b822-da0f4f2264cc@quicinc.com> <CAA8EJprE-mOOH8VF3m8TRb+0q=3_8NpvzdEAugabDaDbq6FMVQ@mail.gmail.com>
- <9664a623-3c58-49e8-1b9a-69335d844448@linaro.org>
-In-Reply-To: <9664a623-3c58-49e8-1b9a-69335d844448@linaro.org>
+References: <20220925112103.148836-1-krzysztof.kozlowski@linaro.org>
+ <08E290AD-C842-4BF2-9C57-2CE59A4C5D88@linaro.org> <441153f6-26ee-cbb2-fe42-101de91952c5@linaro.org>
+In-Reply-To: <441153f6-26ee-cbb2-fe42-101de91952c5@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 4 Oct 2022 10:36:02 +0300
-Message-ID: <CAA8EJprQoCQzr2x0JA9_b3MDE=oOTODyHD23debEL1MCE1mWBA@mail.gmail.com>
-Subject: Re: [PATCH 1/5] dt-bindings: firmware: scm: Add QDU1000/QRU1000 compatibles
+Date:   Tue, 4 Oct 2022 10:37:59 +0300
+Message-ID: <CAA8EJpouyuCn5Kz-3RgRJPd+K1sWwtidz1L_mXY_U2AFQq8oOg@mail.gmail.com>
+Subject: Re: [PATCH v2] pinctrl: qcom: restrict drivers per ARM/ARM64
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Melody Olvera <quic_molvera@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -77,58 +71,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 4 Oct 2022 at 09:53, Krzysztof Kozlowski
+On Sun, 25 Sept 2022 at 14:54, Krzysztof Kozlowski
 <krzysztof.kozlowski@linaro.org> wrote:
 >
-> On 04/10/2022 00:14, Dmitry Baryshkov wrote:
-> > On Tue, 4 Oct 2022 at 01:02, Melody Olvera <quic_molvera@quicinc.com> wrote:
+> On 25/09/2022 13:43, Dmitry Baryshkov wrote:
+> >
+> >
+> > On 25 September 2022 14:21:03 GMT+03:00, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote:
+> >> There is no point to allow selecting pin-controller drivers for Qualcomm
+> >> ARMv7 SoCs when building ARM64 kernel, and vice versa.  This makes
+> >> kernel configuration more difficult as many do not remember the Qualcomm
+> >> SoCs.  There won't be a single image for ARMv7 and ARMv8/9 SoCs, so no
+> >> features/options are lost.
 > >>
-> >>
-> >> On 10/1/2022 4:25 AM, Krzysztof Kozlowski wrote:
-> >>> On 01/10/2022 05:06, Melody Olvera wrote:
-> >>>> Add compatibles for scm driver for QDU1000 and QRU1000 platforms.
-> >>>>
-> >>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> >>>> ---
-> >>>>  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 2 ++
-> >>>>  1 file changed, 2 insertions(+)
-> >>>>
-> >>>> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> >>>> index c5b76c9f7ad0..b47a5dda3c3e 100644
-> >>>> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> >>>> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> >>>> @@ -51,6 +51,8 @@ properties:
-> >>>>            - qcom,scm-sm8250
-> >>>>            - qcom,scm-sm8350
-> >>>>            - qcom,scm-sm8450
-> >>>> +          - qcom,scm-qdu1000
-> >>>> +          - qcom,scm-qru1000
+> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > >
-> > I think after seeing all the patchsets it's time to ask the following
-> > question. Do we really need a duplicate compatibility families:
-> > qdu1000 vs qru1000? I'd suggest using a single set of compatibile
-> > strings in most of the cases.
-> > Settle down onto a single name (qdu,qru, qdru, whatever) and define
-> > distinct compat strings only when there is an actual difference?
-> >
-> > E.g .we don't have separate compatible strings for all the sda660,
-> > apq8096, etc. unless this is required by the corresponding hardware
-> > block not being compatible with corresponding sdm or msm counterpart.
-> >
+> > I haven't checked which restrictions apply to msm8916 at this moment, but it might be worth adding 'depends on ARM || ARM64 || COMPILE_TEST'
 >
-> I am not that fluent in Qualcomm naming, so let me ask - what are the
-> differences between QDU and QRU?
->
-> For compatible (and/or similar) devices the general recommendation is to
-> have specific compatibles followed by fallback. Even if devices are
-> very, very, very similar, usually the recommendation still stays.
+> This is limited by ARCH_QCOM (top-level if in the file), so I am not
+> sure what would be benefits.
 
-Well, true. But in some cases we handle this by using a single set of
-compatibles. Consider e.g. sa8155 vs sm8150 (sa8155 overrides just few
-compats that differ). Or qrb5165 vs sm8250 (there is no separate
-qrb5165.dtsi). APQ8096 (#include "msm8996.dtsi"). Etc.
-
-I'd say this really depends on the actual difference between qru and qdu.
+I thought that it might be added to represent the fact that this is
+not an omission, but a special case which can be used by both 32-bit
+and 64-bit archs.
 
 -- 
 With best wishes
