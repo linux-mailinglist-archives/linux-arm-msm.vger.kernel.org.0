@@ -2,96 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6E3A5F3C2F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 06:43:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 609255F3CDE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 08:47:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229483AbiJDEnH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Oct 2022 00:43:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51150 "EHLO
+        id S229594AbiJDGrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Oct 2022 02:47:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbiJDEnH (ORCPT
+        with ESMTP id S229547AbiJDGq7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Oct 2022 00:43:07 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D8FD39B93;
-        Mon,  3 Oct 2022 21:43:06 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C5697B818F6;
-        Tue,  4 Oct 2022 04:43:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AECE7C433C1;
-        Tue,  4 Oct 2022 04:43:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664858583;
-        bh=eYy7EY3wMGZQPeArL+2hroT5fu2zAsiPf6zlIP9+Gm0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LwErs2ts4afxfSLyft8B10Lg3CRv3yfwGdn0RW2OozMWrmg6HpA9ebRxLny+aKKNl
-         ojMXD2JpInZesbJ5C5dH6v8X5akzAA/PjKH29ojszQdp4omrh4g9jD8HIkv6lVIx6o
-         htDoicY1k3fY3qPJ8ieSkRUnT0gitArCGM71VhiHUHHTn1cJB9DQ30yxOM9LhMPvXu
-         uAOTAWNlYUfxhGG3pg+o94/mxZBf2EBaVpfPMmIb9k6XY0egzYdYhqZPDxd0S8YLEs
-         fdlv5dGGUhf24B0/I15ZuweoCf4kZifJzlhds7tyC65N6caF0T1wCIcK82HzKarQbK
-         fIEzbrfEwVgOw==
-Date:   Tue, 4 Oct 2022 10:12:58 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Javier Martinez Canillas <javierm@redhat.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 0/5] drm: Fix math issues in MSM DSC implementation
-Message-ID: <Yzu50ly1AxZwmyvi@matsya>
-References: <20221001190807.358691-1-marijn.suijten@somainline.org>
+        Tue, 4 Oct 2022 02:46:59 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42F262CE27
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Oct 2022 23:46:58 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id d18so6700400lfb.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Oct 2022 23:46:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=tH7+t2HqGTTLAn5U15AmEC7Y23/7rS4kVyazgbWS48k=;
+        b=Z+dG+aszAmppo5XSVUGmNR26l3xE/M5MR0WHpls1gy4foJW7nCl4Mm9ekNUVXRoaH0
+         QXt8m1Fahx0q8u2fRxu3R9xpsYEb3M19hXjQlwjaOXW+g8948QUcQhIZDwnUpyPUnaea
+         XnaYIbPhkdtJLKIPW3ubMjP39K/rb4sD27REiGS4H66/OHKFWXA6d404O9QpWdqa7uwi
+         yjapYxRCKsKpf5sIRbiDxTiejfL/P2cqr8C9NbHKHGJefolqRuaIa7k7KDG+ZoCuZe9B
+         j607D3QcVBtTz6rtmcryvKPod2n9LNw0Hz7Qu6dQYm+XAhLzh8rK7PrBuPyYon7JLtae
+         xpTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=tH7+t2HqGTTLAn5U15AmEC7Y23/7rS4kVyazgbWS48k=;
+        b=K6NGWx3gZ5kOMwiCJHaz+N5XKeTRJA3DSAvluWCP7j/ghLf78ncaZg50zzKq9lJfqX
+         jA9zvcs/ScACF37Cy47lO2ScHig0K6qwL2zWrfj6hcxgpCLhRGm+wyBKtxNHkGbsJITB
+         xmNVvg3QwyefdiG+NHpR6bj26wIuoqwFw0QHXmSYGiLKoXmUsjd2lziLhENVJIVoc/fg
+         aqFbSxgZqj7bKul+aUoKsVwFIHzFW6VZwIEFDVBWccNvcpiki4OLxYrNAmJYCPgykoCh
+         blE1xXw7P4+e/hYZVrk4oNuv4shvK2tzeafiwWgYejFugV4Pa62lez/SpBFN+8KxUsmZ
+         zvvA==
+X-Gm-Message-State: ACrzQf0+eIC1nyZH4QwM2+nYfVtLEw/ggcIhluqu/TCf3dTiGTm0LdBz
+        w4w5/+PAWllGDlr9Wu1rBFx8TKfEHNqHMQ==
+X-Google-Smtp-Source: AMsMyM6xcFMYAmJwdvVQO7f4C23opw1Pd52bbpVCkk0rpyH9p8JeRuwLoj2xmeSfWLKP2YQosWgrwQ==
+X-Received: by 2002:ac2:482b:0:b0:4a2:27b7:41d2 with SMTP id 11-20020ac2482b000000b004a227b741d2mr4626048lft.472.1664866016635;
+        Mon, 03 Oct 2022 23:46:56 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id cf40-20020a056512282800b0049110ba325asm1777595lfb.158.2022.10.03.23.46.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Oct 2022 23:46:55 -0700 (PDT)
+Message-ID: <950f3844-ed7e-4f18-9a27-f06c7947af02@linaro.org>
+Date:   Tue, 4 Oct 2022 08:46:55 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221001190807.358691-1-marijn.suijten@somainline.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: sdm630: fix UART1 pin bias
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        "# 4.0+" <stable@vger.kernel.org>
+References: <20220930182212.209804-1-krzysztof.kozlowski@linaro.org>
+ <CAD=FV=WHmGi0yxFNbdQ=BXjypDWkW9iS3jBnr2gUhTa5qch90Q@mail.gmail.com>
+ <76b3269a-1e04-1e93-c06e-ec0f28536cc5@linaro.org>
+ <CAD=FV=WPrLNhJHhcutykGsE5rDCvxxPGcgqboWP6Oqs+Kw+M5Q@mail.gmail.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAD=FV=WPrLNhJHhcutykGsE5rDCvxxPGcgqboWP6Oqs+Kw+M5Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01-10-22, 21:08, Marijn Suijten wrote:
-> Various removals of complex yet unnecessary math, fixing all uses of
-> drm_dsc_config::bits_per_pixel to deal with the fact that this field
-> includes four fractional bits, and finally an approach for dealing with
-> dsi_host setting negative values in range_bpg_offset, resulting in
-> overflow inside drm_dsc_pps_payload_pack().
+On 03/10/2022 17:29, Doug Anderson wrote:
+> Hi,
 > 
-> Note that updating the static bpg_offset array to limit the size of
-> these negative values to 6 bits changes what would be written to the DPU
-> hardware at register(s) DSC_RANGE_BPG_OFFSET, hence the choice has been
-> made to cover up for this while packing the value into a smaller field
-> instead.
+> On Sat, Oct 1, 2022 at 2:58 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>>> I would also note that convention on Qualcomm SoCs that I've worked on
+>>> was that bias shouldn't be specified in the SoC dtsi file and should
+>>> be left to board files. This is talked a bit about in a previous email
+>>> thread [1].
+>>
+>> Uh, that makes a lot of sense. It is almost always a property of a board.
+> 
+> Right, though it can make sense to have a "default" in the SoC
+> sometimes. 
 
-Thanks for fixing these. I dont have my pixel3 availble but changes lgtm
+If the default is safe, then could be. But it is still causing a risk of
+developer just forgetting to configure the configs for his board.
+Bringup of DTS should be a conscious decision, not just "copy and hope
+it works", therefore recommendation is to configure per-board properties
+in board. Even if it means duplication. The same was for board-provided
+clocks or aliases.
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+> For instance, for i2c you almost always want external
+> pullups so you can tune them to the speed/trace lengths. Thus having a
+> default in the SoC file to disable i2c pullups would make a lot of
+> sense. The problem is the ugly / non-obvious "delete-property" we need
+> to put in the board.dts file if we ever need to override the SoC's
+> pull. :(
 
-> Altogether this series is responsible for solving _all_ Display Stream
-> Compression issues and artifacts on the Sony Tama (sdm845) Akatsuki
-> smartphone (2880x1440p).
+Which might not help in reducing amount of code...
 
-Does it need two dsi lanes?
 
--- 
-~Vinod
+
+Best regards,
+Krzysztof
+
