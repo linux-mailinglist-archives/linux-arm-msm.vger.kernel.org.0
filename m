@@ -2,124 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 961805F405B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 11:52:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB0645F4088
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Oct 2022 12:03:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230039AbiJDJws (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Oct 2022 05:52:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59242 "EHLO
+        id S229848AbiJDKDl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Oct 2022 06:03:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229722AbiJDJwS (ORCPT
+        with ESMTP id S230118AbiJDKDg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Oct 2022 05:52:18 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6C55C26;
-        Tue,  4 Oct 2022 02:51:19 -0700 (PDT)
-Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 4972C3F2EB;
-        Tue,  4 Oct 2022 11:51:16 +0200 (CEST)
-Date:   Tue, 4 Oct 2022 11:51:14 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Javier Martinez Canillas <javierm@redhat.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 0/5] drm: Fix math issues in MSM DSC implementation
-Message-ID: <20221004095114.tr2gk76epbycflfa@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>, phone-devel@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Javier Martinez Canillas <javierm@redhat.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20221001190807.358691-1-marijn.suijten@somainline.org>
- <Yzu50ly1AxZwmyvi@matsya>
+        Tue, 4 Oct 2022 06:03:36 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26AF424083
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Oct 2022 03:03:33 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id d6so6266832lfs.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Oct 2022 03:03:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=9SELAMyKC4dIu8Fc+EwbXLigKQFbrk8zZOdav0g9OjA=;
+        b=QP5bSue6jebiSbdCiOT8Fr9V0YLZoFm3HCA98bU3fSdLjZJLKDesxS+sCI08phzRwQ
+         GKzmmNnwwz0BLRyn7fiHPhXdMz1tY1Gfcw3ipZs3hBPnuQVDhdmj3mwLPtjHVapJce5H
+         stVrMg7G+Le2qYNYc5jypYs3x8Ldya4b6aog0lV10ObVq7ruTOtNBu98ukIzfSXjahGi
+         cxNKkYz9tCG7mpi9SmmyeB52nQB+x+lN9Tc1tZ9OC7A80RuXBprXxTMn3EZ5ICZYprMT
+         61xV7BDHfkh4FIAmpx2zTokXf+S/lwQ6YroTSxl1iqW9FM/VoM7B24gvjMD8dhvfGrlQ
+         HuzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=9SELAMyKC4dIu8Fc+EwbXLigKQFbrk8zZOdav0g9OjA=;
+        b=IZg58nkLkPANyFr7IgHIrTbMQRPaxHb3HvmSI+rC7/UDv9pMGvYn5P5f56Bl1z6jKU
+         abNUHJ0kkBEf0iMjbct6OOeof068DQlf8xRzkPLr1IvB2YllF3CdjQ0mB8buEvsRBgEk
+         YRXYS70MnkQE4K+m3/Y6Ja9/KfnQBQaKd5KTXeOejtU8mLJSAGIxdx1Ix/OHk7f/aEx+
+         7AnMS9pUx6Pw49pcRHyN75YBuRoBwgwq3rVbP+Gy+7oCEipj2ONvQsOfGFmm0XNH1rPD
+         8KnvD/PC3ylzQfuTrIfH5bBU7EAR1jDYEanjHy3tDrAKtln7hnTiGfD4DdjIl88s/eWv
+         Tpnw==
+X-Gm-Message-State: ACrzQf3xfukr8//Y9OOyIiEFXSMd8t6zGrNHRUfe1R5sENn+BEAjqwmw
+        5TGFswv6gy/Ez+Co7Jjh4dYTdg==
+X-Google-Smtp-Source: AMsMyM7/Y5FRX1kaf7XUsdyciEKQROP+grXcIwj7bLFhn5Sl5Jqs5Xvatl2ZOFKnSxgZ3qMkLCXtXg==
+X-Received: by 2002:a05:6512:4011:b0:4a2:5148:9e48 with SMTP id br17-20020a056512401100b004a251489e48mr1014180lfb.337.1664877811320;
+        Tue, 04 Oct 2022 03:03:31 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id z13-20020a056512308d00b00499b57032c1sm1845798lfd.144.2022.10.04.03.03.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Oct 2022 03:03:30 -0700 (PDT)
+Message-ID: <cf1d4963-a8bc-76bc-ee4e-532c6430b643@linaro.org>
+Date:   Tue, 4 Oct 2022 12:03:29 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yzu50ly1AxZwmyvi@matsya>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH v2 05/11] dt-bindings: mfd: qcom-pm8xxx: document
+ qcom,pm8921 as fallback of qcom,pm8018
+Content-Language: en-US
+To:     neil.armstrong@linaro.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Lee Jones <lee@kernel.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Alessandro Zummo <a.zummo@towertech.it>
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-rtc@vger.kernel.org
+References: <20220928-mdm9615-dt-schema-fixes-v2-0-87fbeb4ae053@linaro.org>
+ <20220928-mdm9615-dt-schema-fixes-v2-5-87fbeb4ae053@linaro.org>
+ <ebace2d4-9fcf-f50e-fee5-18199b63d90b@linaro.org>
+ <9937c13b-f10c-32a5-49d9-1c9c16fa58e1@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <9937c13b-f10c-32a5-49d9-1c9c16fa58e1@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-10-04 10:12:58, Vinod Koul wrote:
-> On 01-10-22, 21:08, Marijn Suijten wrote:
-> > Various removals of complex yet unnecessary math, fixing all uses of
-> > drm_dsc_config::bits_per_pixel to deal with the fact that this field
-> > includes four fractional bits, and finally an approach for dealing with
-> > dsi_host setting negative values in range_bpg_offset, resulting in
-> > overflow inside drm_dsc_pps_payload_pack().
-> > 
-> > Note that updating the static bpg_offset array to limit the size of
-> > these negative values to 6 bits changes what would be written to the DPU
-> > hardware at register(s) DSC_RANGE_BPG_OFFSET, hence the choice has been
-> > made to cover up for this while packing the value into a smaller field
-> > instead.
+On 04/10/2022 11:38, Neil Armstrong wrote:
+>>> +        compatible = "qcom,pm8018", "qcom,pm8921";
+>>> +        reg = <1>;
+>>> +        #address-cells = <1>;
+>>> +        #size-cells = <0>;
+>>> +        interrupt-controller;
+>>> +        #interrupt-cells = <2>;
+>>> +
+>>> +        interrupt-parent = <&tlmm>;
+>>> +        interrupts = <33 IRQ_TYPE_EDGE_RISING>;
+>>> +      };
+>>
+>> These two pmics are exactly the same (except compatible), so just keep
+>> one example... unless both are coming from the same, real DTS?
 > 
-> Thanks for fixing these. I dont have my pixel3 availble but changes lgtm
-> 
-> Reviewed-by: Vinod Koul <vkoul@kernel.org>
+> It was mainly to exercise the fallback, but it's useless as-is so I'll remove in v3.
 
-Thanks; any comment on the self-review I sent in for patch 3 and 5?
+No need to test different compatibles.
 
-> > Altogether this series is responsible for solving _all_ Display Stream
-> > Compression issues and artifacts on the Sony Tama (sdm845) Akatsuki
-> > smartphone (2880x1440p).
-> 
-> Does it need two dsi lanes?
+Best regards,
+Krzysztof
 
-This panel has the default of four dsi data lanes enabled:
-
-https://github.com/sonyxperiadev/kernel/blob/f956fbd9a234033bd18234d456a2c32c126b38f3/arch/arm64/boot/dts/qcom/dsi-panel-somc-akatsuki.dtsi#L74-L77
-
-Unless you are referring to dual-dsi (ctrl/phy); this panel doesn't have
-a dual connection, but I do have devices on sm8350/sm8450 with a
-"4k"@120Hz display that have this, in case you want it to be tested?
-
-However, for the time being I'm focussing on a similar panel (4 data
-lanes, single DSI ctrl/phy) on sm8250 which keeps showing corrupted /
-garbled data and resulting in ping-pong timeouts.  I haven't yet
-confirmed if this is due to the "integration" of the pingpong block with
-the intf (since relevant registers and interrupts still seem to be
-accessible), a mismatching resource topology, or a misconfiguration
-elswhere.  Relevant panel dts if you're interested:
-
-https://github.com/sonyxperiadev/kernel/blob/e70161ec43b147b0b02578d05ab64552fd2df2cd/arch/arm64/boot/dts/somc/dsi-panel-sofef03_m-fhd_plus.dtsi
-
-- Marijn
