@@ -2,115 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 827605F5C68
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 00:08:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F5E05F5CA3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 00:24:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229881AbiJEWIy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Oct 2022 18:08:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60372 "EHLO
+        id S229677AbiJEWYC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Oct 2022 18:24:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229627AbiJEWIu (ORCPT
+        with ESMTP id S229566AbiJEWYB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Oct 2022 18:08:50 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB00982D08;
-        Wed,  5 Oct 2022 15:08:49 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 40A20B81F6B;
-        Wed,  5 Oct 2022 22:08:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74CC1C433C1;
-        Wed,  5 Oct 2022 22:08:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1665007726;
-        bh=gKOVo4rUV9LgPwc755tdGNCMqjAmEyTDy12BI9mdJXg=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=KJDFnz6vlfEd1fwDXYA/yBOB/hH4FpuL8bV55dTUZqTb/qL4OqfQOcKd/uSALm1GS
-         7q8u7gYql5IkId3wXpD06IzD3X8zkEHTLvFRWliHopytXGh+kZ7dYnnBm2mpelAo3r
-         oN2GbX1wNcldGi/LVSfp69PzACaYqzn6LzBSulqKnyDXxmFxOLjzBRmhw1M30K+4bE
-         9UVTBH1TUcWsblFVHA1LFct46LuS4NVCkBS5jMgWtZqiWDSD3BiuCGnNDW/bCEahBX
-         jkxZTaiPwKZacVmGmJVAN6R72Nn3xwBOGVeVaUbYpk75D7YJjKb3dIxXYs05SGjE/2
-         QPsc7zCc2jXIg==
-Date:   Wed, 5 Oct 2022 17:08:38 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     lpieralisi@kernel.org, robh@kernel.org, andersson@kernel.org,
-        kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
-        dmitry.baryshkov@linaro.org,
-        Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-Subject: Re: [PATCH v4 06/12] PCI: qcom-ep: Gate Master AXI clock to MHI bus
- during L1SS
-Message-ID: <20221005220838.GA2400326@bhelgaas>
+        Wed, 5 Oct 2022 18:24:01 -0400
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 439B23FD50;
+        Wed,  5 Oct 2022 15:24:00 -0700 (PDT)
+Received: by mail-io1-xd2d.google.com with SMTP id d196so3449729iof.11;
+        Wed, 05 Oct 2022 15:24:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=PBQAdfl2FcAetVP79a7BmHKTI8rOne6a7XU+buA6PoY=;
+        b=EfQPNvrc7V4w8OaySbDv7YpELz+xohw9/TTNwDYU3HP3P9xxjHQKPAqHpLbZX7RyAM
+         wF0KaspbxNfMgpvjTiIUjsz44otXYrQqNS5ZtKEcR4JJQmPWZuogTB+MojMg8MyyD5GW
+         IxOM+aTdqagyOjpaApZH/KxPYAoCrRPA9e2NF/aFSal8eBbG4oS2rqai/94ulPnNpY8t
+         h6745mj2Dr6Hyg0y+cd3ZPHAbwdLIEoHM4WIIgRboHZilPaT/GVln7PxphtF+UwL6jZz
+         Sr+Cl98lMbjPtkrfVATIYzwNz8nJHulA6EqPKa6jnXZcnFhpCCiJW08GSgsJHMnXqy1U
+         gnYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=PBQAdfl2FcAetVP79a7BmHKTI8rOne6a7XU+buA6PoY=;
+        b=Iu1GTfe0TdAL7zQddFpBbc19s3u+ZM5O+gv8YYv31lbILlzwpD6G1ac44kjGaWUNPM
+         7OKl4OGHkW6bfFkcWOPG7Upcp+iVayW6DL4/mFGyQPOrOumzH9ax86jQV9UZ7tiWaG08
+         yTzDWCAHyV4Tyns/i5VIiiDBBYqaqAO17vQbPSN/2EYIFj/601mFyehtKuPL27V1XvxZ
+         5xVeOtq8Irr3koRNqDXv4q+33bS5l4KsOwOt7HuUEWD3UgMag5+yR6Cu4VCuyhCu8k9O
+         FyddoZ7wyw6cpnFQwL1s4/NJarnPplhBUEAkX4+l7r79HdmPLnIca5pOQztlbEjHcky+
+         prWg==
+X-Gm-Message-State: ACrzQf26vxjnS2zZjTe9x14RIQe5Aq5jOl7573cQQvWmDvO6dD5+hRQ1
+        9gu9qx/cU01ROluc4/bZpZA=
+X-Google-Smtp-Source: AMsMyM7FIvBR83b1QCpIUMkydqEgN/EL2pCkEn7iksPhOacYbTA6KLg0RuDK+9b5o9pO4lBlHVgEiQ==
+X-Received: by 2002:a02:6d04:0:b0:363:39b7:faa3 with SMTP id m4-20020a026d04000000b0036339b7faa3mr885328jac.156.1665008639719;
+        Wed, 05 Oct 2022 15:23:59 -0700 (PDT)
+Received: from localhost ([2607:fea8:a2e2:2d00::cb3])
+        by smtp.gmail.com with UTF8SMTPSA id q18-20020a0566380ed200b0036241880dc0sm4926104jas.148.2022.10.05.15.23.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Oct 2022 15:23:59 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Richard Acayan <mailingradian@gmail.com>,
+        Lee Jones <lee@kernel.org>, linux-gpio@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v7 3/3] pinctrl: qcom: add sdm670 pinctrl
+Date:   Wed,  5 Oct 2022 18:23:50 -0400
+Message-Id: <20221005222350.47420-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.38.0
+In-Reply-To: <1ed91afd-74d2-1ab0-0d15-1b6e0dfba13b@linaro.org>
+References: <20221004215814.11694-1-mailingradian@gmail.com> <20221004215814.11694-4-mailingradian@gmail.com> <1ed91afd-74d2-1ab0-0d15-1b6e0dfba13b@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220914075350.7992-7-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[+cc Krishna]
-
-On Wed, Sep 14, 2022 at 01:23:44PM +0530, Manivannan Sadhasivam wrote:
-> During L1SS, gate the Master clock supplied to the MHI bus to save power.
+> On 04/10/2022 23:58, Richard Acayan wrote:
+> > The Snapdragon 670 has a Top-Level Mode Multiplexer (TLMM) for various
+> > features. Add a driver to support it.
 > 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom-ep.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
+> (...)
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> index 2dc6d4e44aff..526e98ea23f6 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> @@ -27,6 +27,7 @@
->  #define PARF_SYS_CTRL				0x00
->  #define PARF_DB_CTRL				0x10
->  #define PARF_PM_CTRL				0x20
-> +#define PARF_MHI_CLOCK_RESET_CTRL		0x174
->  #define PARF_MHI_BASE_ADDR_LOWER		0x178
->  #define PARF_MHI_BASE_ADDR_UPPER		0x17c
->  #define PARF_DEBUG_INT_EN			0x190
-> @@ -89,6 +90,9 @@
->  #define PARF_PM_CTRL_READY_ENTR_L23		BIT(2)
->  #define PARF_PM_CTRL_REQ_NOT_ENTR_L1		BIT(5)
->  
-> +/* PARF_MHI_CLOCK_RESET_CTRL fields */
-> +#define PARF_MSTR_AXI_CLK_EN			BIT(1)
-> +
->  /* PARF_AXI_MSTR_RD_HALT_NO_WRITES register fields */
->  #define PARF_AXI_MSTR_RD_HALT_NO_WRITE_EN	BIT(0)
->  
-> @@ -394,6 +398,11 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
->  		       pcie_ep->parf + PARF_MHI_BASE_ADDR_LOWER);
->  	writel_relaxed(0, pcie_ep->parf + PARF_MHI_BASE_ADDR_UPPER);
->  
-> +	/* Gate Master AXI clock to MHI bus during L1SS */
-> +	val = readl_relaxed(pcie_ep->parf + PARF_MHI_CLOCK_RESET_CTRL);
-> +	val &= ~PARF_MSTR_AXI_CLK_EN;
-> +	val = readl_relaxed(pcie_ep->parf + PARF_MHI_CLOCK_RESET_CTRL);
-
-Is this code executed when the link actually transitions to L1.x, or
-is this just configuring things so that when the link does transition
-to L1.x sometime later, hardware will gate the Master AXI clock?
-
-Just curious because this looks more like *configuration*, i.e., the
-latter, but there's the ongoing conversation about qcom system
-suspend/resume, where IIUC, software is involved at least in some
-L1.2 exits.
-
->  	dw_pcie_ep_init_notify(&pcie_ep->pci.ep);
->  
->  	/* Enable LTSSM */
-> -- 
-> 2.25.1
+> > +
+> > +const int sdm670_reserved_gpios[] = {
+> > +	58, 59, 60, 61, 62, 63, 64, 69, 70, 71, 72, 73, 74, 104, -1
+> > +};
+> > +
+> > +static const struct msm_pinctrl_soc_data sdm670_pinctrl = {
+> > +	.pins = sdm670_pins,
+> > +	.npins = ARRAY_SIZE(sdm670_pins),
+> > +	.functions = sdm670_functions,
+> > +	.nfunctions = ARRAY_SIZE(sdm670_functions),
+> > +	.groups = sdm670_groups,
+> > +	.ngroups = ARRAY_SIZE(sdm670_groups),
+> > +	.ngpios = 151,
+> > +	.reserved_gpios = sdm670_reserved_gpios,
+> > +	.complement_fw_gpio_ranges = true,
 > 
+> This still fails to build... v6 was not compilable, v7 is still.
+
+Sorry, I only see the problem with complement_fw_gpio_ranges being removed from
+the struct and not being removed here (in v7). Is there another issue that
+affected v6?
+
+> 
+> Best regards,
+> Krzysztof
