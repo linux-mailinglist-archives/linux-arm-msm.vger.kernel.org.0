@@ -2,212 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99F8F5F5AA0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Oct 2022 21:32:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC4C75F5B40
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Oct 2022 22:55:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231350AbiJETcB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Oct 2022 15:32:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56570 "EHLO
+        id S231176AbiJEUz0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Oct 2022 16:55:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231328AbiJETcA (ORCPT
+        with ESMTP id S229797AbiJEUzY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Oct 2022 15:32:00 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30C2878223
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Oct 2022 12:31:55 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id y205so7215959yby.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Oct 2022 12:31:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=pNtNncR0wpG+RZXZr5KeeJhXaAoqohkUyg5Z94mN40s=;
-        b=eze16KyzdJ5hwJ2phuh1n3FB+XyFgZfEOKeoxcX86f8I4EsycFU0JzP6v64Z9I7hwM
-         luAR1jmz4nZ0lYx6P+TN4JE4xM5GA1jl4RhGpNZQMa29n9eOmAcWnmzmfRDDQdNwHiiP
-         O8C2MeRIDJm27WzWNXQSciNu0lXJPOik22kTXE/+VW/jbhw5SGoAjOPau9aGDSfZWL2g
-         yZ63Pe9JvG8zgT0tmhdhBvMXGjOK2fcjiaxmp4N7GwFnY1+M67rO4c8BLep86Rs7DV/h
-         GBLefRqpEmw/W5Emf7k2pBk4r0jjg68jqBKGoa6ji/QfheMWW5hyr73hB9AkDGuJlnxJ
-         ImLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=pNtNncR0wpG+RZXZr5KeeJhXaAoqohkUyg5Z94mN40s=;
-        b=GqRE+BggVi6bA0HSSvG663jgDRABo4gE40cdjkjNCWb63hwk2ec2rxjSb67PPgWewo
-         ufI5ORi0E18wfFrMOVFJEVnAZZUHAjVZPnjdxq2seUWWBUOJsbz+D6tebmwCabbED75+
-         sO3A7mZY5WXZMzpSN0BNxBxUuFlNTbqAmV3eWydXRK5JFeqJ7q8lZBf+T79LLEydbY3H
-         f8D7AlxhJTCzzB8cbqScAdNpBnCSf3NbWNUnvxFw1EvHNNmY3U9t15FLzEkDHVzcPyUY
-         0IJ1/JCV0Ndo6pXXUMrzjSDaQVFnw0u/GcAL3mqr4h5lwTI+hxxcSQ0Hi0EqPICr07pX
-         eWzw==
-X-Gm-Message-State: ACrzQf0Tuwuwp4LkVPSwyviPohcPM8a9uA5R26Udzew1psPvyfrLNO8k
-        6HzHw/gXxYtCTxx+eexcok+UlS9zE9seUVmFmGp0yQ==
-X-Google-Smtp-Source: AMsMyM7CcJKKTb5CQJ62Px6sdKcviE/zaAzyLJdaB+lxId5akeMpt+XTMLRld1K+DLepysr5m0r1h7WGBGRvkIxIwtg=
-X-Received: by 2002:a5b:c:0:b0:6bd:f84c:b63e with SMTP id a12-20020a5b000c000000b006bdf84cb63emr1449786ybp.275.1664998314594;
- Wed, 05 Oct 2022 12:31:54 -0700 (PDT)
+        Wed, 5 Oct 2022 16:55:24 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F2CA6919E;
+        Wed,  5 Oct 2022 13:55:23 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 295Kfu9L017131;
+        Wed, 5 Oct 2022 20:55:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding : content-type; s=qcppdkim1;
+ bh=NUQzIl1koD2p/5aypamO918G/LiJKNVmP1A+WyBBvQA=;
+ b=ZynAvrYPGKwoqUp6OSc9AcPVSBEWzyuo6yGm6DM/gp2SdBgLLeInKQk4SC4nz19btMfz
+ oeZobgc3hwUD4lFaAoRMr3k2gSJc7CRdQd1AWvA1DGD7fJ00uWzDmZKogo/sbR9c/MWf
+ LHaRlwt+xE1sm5h7+A2YA3ZrnkkXgpPsXO9KFqbIeyJz6xolEBHaExhnis+NglFkWGTb
+ /JCeVMATrJQTsC0gwGUUYIG/bPtD8+0w7PEsuVGSHjZR47os9gEY4vDOehxyls55AZGI
+ A6NmNfQAv2XBxL53YN/pXhSlJQO2GQPXTSHwg9TjcB8PSixp01OHJiLnBOzRjuZZX5zX 9g== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k06sjn66b-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 05 Oct 2022 20:55:15 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 295KtF0l006104
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 5 Oct 2022 20:55:15 GMT
+Received: from quicinc.com (10.49.16.6) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 5 Oct 2022
+ 13:55:14 -0700
+From:   Jeff Johnson <quic_jjohnson@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Jeff Johnson" <quic_jjohnson@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        "Sibi Sankar" <quic_sibis@quicinc.com>
+Subject: [RESEND] soc: qcom: pdr: Make QMI message rules const
+Date:   Wed, 5 Oct 2022 13:54:58 -0700
+Message-ID: <20221005205458.31437-1-quic_jjohnson@quicinc.com>
+X-Mailer: git-send-email 2.37.3
+In-Reply-To: <20220914234705.28405-5-quic_jjohnson@quicinc.com>
+References: <20220914234705.28405-5-quic_jjohnson@quicinc.com>
 MIME-Version: 1.0
-References: <20221005181657.784375-1-marijn.suijten@somainline.org> <20221005181657.784375-6-marijn.suijten@somainline.org>
-In-Reply-To: <20221005181657.784375-6-marijn.suijten@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 5 Oct 2022 22:31:43 +0300
-Message-ID: <CAA8EJpr=0w0KReqNW2jP8DzvXLgo_o6bKmwMOed2sXb6d8HKhg@mail.gmail.com>
-Subject: Re: [PATCH v2 5/7] drm/msm/dsi: Account for DSC's bits_per_pixel
- having 4 fractional bits
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Javier Martinez Canillas <javierm@redhat.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        David Airlie <airlied@linux.ie>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 7ciNLxjORYeyBsRCeJr1dVQf_FHvDMG8
+X-Proofpoint-GUID: 7ciNLxjORYeyBsRCeJr1dVQf_FHvDMG8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-10-05_05,2022-10-05_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ mlxlogscore=999 impostorscore=0 suspectscore=0 bulkscore=0
+ lowpriorityscore=0 priorityscore=1501 malwarescore=0 phishscore=0
+ adultscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210050129
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 5 Oct 2022 at 21:17, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
->
-> drm_dsc_config's bits_per_pixel field holds a fractional value with 4
-> bits, which all panel drivers should adhere to for
-> drm_dsc_pps_payload_pack() to generate a valid payload.  All code in the
-> DSI driver here seems to assume that this field doesn't contain any
-> fractional bits, hence resulting in the wrong values being computed.
-> Since none of the calculations leave any room for fractional bits or
-> seem to indicate any possible area of support, disallow such values
-> altogether.
->
-> Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 25 +++++++++++++++++--------
->  1 file changed, 17 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index f42794cdd4c1..4717d49d76be 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -33,7 +33,7 @@
->
->  #define DSI_RESET_TOGGLE_DELAY_MS 20
->
-> -static int dsi_populate_dsc_params(struct drm_dsc_config *dsc);
-> +static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc_config *dsc);
->
->  static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
->  {
-> @@ -908,6 +908,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->         u32 va_end = va_start + mode->vdisplay;
->         u32 hdisplay = mode->hdisplay;
->         u32 wc;
-> +       int ret;
->
->         DBG("");
->
-> @@ -943,7 +944,9 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->                 /* we do the calculations for dsc parameters here so that
->                  * panel can use these parameters
->                  */
-> -               dsi_populate_dsc_params(dsc);
-> +               ret = dsi_populate_dsc_params(msm_host, dsc);
-> +               if (ret)
-> +                       return;
->
->                 /* Divide the display by 3 but keep back/font porch and
->                  * pulse width same
-> @@ -1769,7 +1772,7 @@ static char bpg_offset[DSC_NUM_BUF_RANGES] = {
->         2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -12, -12, -12
->  };
->
-> -static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
-> +static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc_config *dsc)
->  {
->         int mux_words_size;
->         int groups_per_line, groups_total;
-> @@ -1780,6 +1783,12 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
->         int data;
->         int final_value, final_scale;
->         int i;
-> +       u16 bpp = dsc->bits_per_pixel >> 4;
-> +
-> +       if (dsc->bits_per_pixel & 0xf) {
-> +               DRM_DEV_ERROR(&msm_host->pdev->dev, "DSI does not support fractional bits_per_pixel\n");
-> +               return -EINVAL;
-> +       }
->
->         dsc->rc_model_size = 8192;
->         dsc->first_line_bpg_offset = 12;
-> @@ -1801,7 +1810,7 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
->         }
->
->         dsc->initial_offset = 6144; /* Not bpp 12 */
-> -       if (dsc->bits_per_pixel != 8)
-> +       if (bpp != 8)
->                 dsc->initial_offset = 2048;     /* bpp = 12 */
->
->         mux_words_size = 48;            /* bpc == 8/10 */
-> @@ -1824,14 +1833,14 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
->          * params are calculated
->          */
->         groups_per_line = DIV_ROUND_UP(dsc->slice_width, 3);
-> -       dsc->slice_chunk_size = DIV_ROUND_UP(dsc->slice_width * dsc->bits_per_pixel, 8);
-> +       dsc->slice_chunk_size = DIV_ROUND_UP(dsc->slice_width * bpp, 8);
+Commit ff6d365898d4 ("soc: qcom: qmi: use const for struct
+qmi_elem_info") allows QMI message encoding/decoding rules to be
+const, so do that for QCOM PDR.
 
-I'd still prefer if we can get closer to drm_dsc_compute_rc_parameters().
-The mentioned function has the following code:
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Reviewed-by: Alex Elder <elder@linaro.org>
+Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
+---
+This patch was last sent as part of the series:
+[PATCH v2 0/4] Make QMI message rules const
+https://lore.kernel.org/linux-arm-msm/20220914234705.28405-1-quic_jjohnson@quicinc.com/
 
-vdsc_cfg->slice_chunk_size = DIV_ROUND_UP(vdsc_cfg->slice_width *
+As
 
-vdsc_cfg->bits_per_pixel,
-                                                          (8 * 16));
+[PATCH v2 4/4] soc: qcom: pdr: Make QMI message rules const
+https://lore.kernel.org/linux-arm-msm/20220914234705.28405-5-quic_jjohnson@quicinc.com/
 
-In fact, could you please take a look if we can switch to using this
-function and drop our code?
+Since the individual patches in the series will land in separate
+trees, and since there are no dependencies between them, they are
+being resent separately when the following dependent change has landed
+in the destination tree:
 
->
->         /* rbs-min */
->         min_rate_buffer_size =  dsc->rc_model_size - dsc->initial_offset +
-> -                               dsc->initial_xmit_delay * dsc->bits_per_pixel +
-> +                               dsc->initial_xmit_delay * bpp +
->                                 groups_per_line * dsc->first_line_bpg_offset;
->
-> -       hrd_delay = DIV_ROUND_UP(min_rate_buffer_size, dsc->bits_per_pixel);
-> +       hrd_delay = DIV_ROUND_UP(min_rate_buffer_size, bpp);
->
->         dsc->initial_dec_delay = hrd_delay - dsc->initial_xmit_delay;
->
-> @@ -1854,7 +1863,7 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
->         data = 2048 * (dsc->rc_model_size - dsc->initial_offset + num_extra_mux_bits);
->         dsc->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
->
-> -       data = dsc->initial_xmit_delay * dsc->bits_per_pixel;
-> +       data = dsc->initial_xmit_delay * bpp;
->         final_value =  dsc->rc_model_size - data + num_extra_mux_bits;
->         dsc->final_offset = final_value;
->
-> --
-> 2.38.0
->
+ff6d365898d4 ("soc: qcom: qmi: use const for struct qmi_elem_info")
 
+ drivers/soc/qcom/pdr_internal.h | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
+diff --git a/drivers/soc/qcom/pdr_internal.h b/drivers/soc/qcom/pdr_internal.h
+index a30422214943..03c282b7f17e 100644
+--- a/drivers/soc/qcom/pdr_internal.h
++++ b/drivers/soc/qcom/pdr_internal.h
+@@ -28,7 +28,7 @@ struct servreg_location_entry {
+ 	u32 instance;
+ };
+ 
+-static struct qmi_elem_info servreg_location_entry_ei[] = {
++static const struct qmi_elem_info servreg_location_entry_ei[] = {
+ 	{
+ 		.data_type      = QMI_STRING,
+ 		.elem_len       = SERVREG_NAME_LENGTH + 1,
+@@ -74,7 +74,7 @@ struct servreg_get_domain_list_req {
+ 	u32 domain_offset;
+ };
+ 
+-static struct qmi_elem_info servreg_get_domain_list_req_ei[] = {
++static const struct qmi_elem_info servreg_get_domain_list_req_ei[] = {
+ 	{
+ 		.data_type      = QMI_STRING,
+ 		.elem_len       = SERVREG_NAME_LENGTH + 1,
+@@ -116,7 +116,7 @@ struct servreg_get_domain_list_resp {
+ 	struct servreg_location_entry domain_list[SERVREG_DOMAIN_LIST_LENGTH];
+ };
+ 
+-static struct qmi_elem_info servreg_get_domain_list_resp_ei[] = {
++static const struct qmi_elem_info servreg_get_domain_list_resp_ei[] = {
+ 	{
+ 		.data_type      = QMI_STRUCT,
+ 		.elem_len       = 1,
+@@ -199,7 +199,7 @@ struct servreg_register_listener_req {
+ 	char service_path[SERVREG_NAME_LENGTH + 1];
+ };
+ 
+-static struct qmi_elem_info servreg_register_listener_req_ei[] = {
++static const struct qmi_elem_info servreg_register_listener_req_ei[] = {
+ 	{
+ 		.data_type      = QMI_UNSIGNED_1_BYTE,
+ 		.elem_len       = 1,
+@@ -227,7 +227,7 @@ struct servreg_register_listener_resp {
+ 	enum servreg_service_state curr_state;
+ };
+ 
+-static struct qmi_elem_info servreg_register_listener_resp_ei[] = {
++static const struct qmi_elem_info servreg_register_listener_resp_ei[] = {
+ 	{
+ 		.data_type      = QMI_STRUCT,
+ 		.elem_len       = 1,
+@@ -263,7 +263,7 @@ struct servreg_restart_pd_req {
+ 	char service_path[SERVREG_NAME_LENGTH + 1];
+ };
+ 
+-static struct qmi_elem_info servreg_restart_pd_req_ei[] = {
++static const struct qmi_elem_info servreg_restart_pd_req_ei[] = {
+ 	{
+ 		.data_type      = QMI_STRING,
+ 		.elem_len       = SERVREG_NAME_LENGTH + 1,
+@@ -280,7 +280,7 @@ struct servreg_restart_pd_resp {
+ 	struct qmi_response_type_v01 resp;
+ };
+ 
+-static struct qmi_elem_info servreg_restart_pd_resp_ei[] = {
++static const struct qmi_elem_info servreg_restart_pd_resp_ei[] = {
+ 	{
+ 		.data_type      = QMI_STRUCT,
+ 		.elem_len       = 1,
+@@ -300,7 +300,7 @@ struct servreg_state_updated_ind {
+ 	u16 transaction_id;
+ };
+ 
+-static struct qmi_elem_info servreg_state_updated_ind_ei[] = {
++static const struct qmi_elem_info servreg_state_updated_ind_ei[] = {
+ 	{
+ 		.data_type      = QMI_SIGNED_4_BYTE_ENUM,
+ 		.elem_len       = 1,
+@@ -336,7 +336,7 @@ struct servreg_set_ack_req {
+ 	u16 transaction_id;
+ };
+ 
+-static struct qmi_elem_info servreg_set_ack_req_ei[] = {
++static const struct qmi_elem_info servreg_set_ack_req_ei[] = {
+ 	{
+ 		.data_type      = QMI_STRING,
+ 		.elem_len       = SERVREG_NAME_LENGTH + 1,
+@@ -362,7 +362,7 @@ struct servreg_set_ack_resp {
+ 	struct qmi_response_type_v01 resp;
+ };
+ 
+-static struct qmi_elem_info servreg_set_ack_resp_ei[] = {
++static const struct qmi_elem_info servreg_set_ack_resp_ei[] = {
+ 	{
+ 		.data_type      = QMI_STRUCT,
+ 		.elem_len       = 1,
 -- 
-With best wishes
-Dmitry
+2.37.3
+
