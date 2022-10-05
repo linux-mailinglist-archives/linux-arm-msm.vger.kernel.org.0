@@ -2,468 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F10965F50B9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Oct 2022 10:18:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB8EF5F50C4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Oct 2022 10:27:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229607AbiJEISf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Oct 2022 04:18:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43900 "EHLO
+        id S229635AbiJEI1O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Oct 2022 04:27:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229697AbiJEISa (ORCPT
+        with ESMTP id S229781AbiJEI1M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Oct 2022 04:18:30 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9493072B7F
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Oct 2022 01:18:27 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id by36so169247ljb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Oct 2022 01:18:27 -0700 (PDT)
+        Wed, 5 Oct 2022 04:27:12 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51F3C5C36C
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Oct 2022 01:27:11 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id d6so10396875lfs.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Oct 2022 01:27:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=SbfqhVaIK7dhG2nqTGKH2SOF25RlgbBG6Jy+za8h81k=;
-        b=oOZQFOg2JZnIpkohTM3yAtNDUCxzd7+Wq+98lQIVvRvG2Wa3nGwQG04Kkd7nH3EQf+
-         KFMH4KCci/dqgdpWtAUQ4H+aIfsDQ4eItnAT7RzPxF+9tfuc7XsEPxjpZbNZIbgUzoZP
-         TIM7OFHd52RqETkT0r8Bh15apNSWwF3zNXLXPezpNfP6Lh42F6lE2zGAk0Dy5xEhjALt
-         bcsMCEenpXBuias2VdccOX1wXrVV93fu3nY6qY2f6P4IF/v4k4mXGWT2gkdXvuAAfaQv
-         2uH/kIWGBYpyWhUSgrAA9qIh7VfBVt/TaXkzVOybo3zTx9Od4aDBmuK1KD0pVar56ErX
-         YDbw==
+        bh=IROOtMiWph57gn0ct7I+JCQbFPdP6AiF2nUfr9wx6CM=;
+        b=xMeC7HAQIwVutCD8b29xg26dmrwmfBnH7K19j2zP1DxlVwHeSRZ500++1U+oUwQlzl
+         2bxIYYv/vZf1emS3iA/KnhCeU1xv7d1mGLuGbthucClF0MAFschFq9EfazAE/tKtntqV
+         WPxechXG0HuM/nfDKqDFrgWZtRfk9PyBLKkrDUSXzOqHqZLejASlG14ut6YUF7agc0J2
+         R+r9pvJaktCXChWj9aCeZYFmjx7BAwnAZl5ITMcNqVdt4T9U5noCfYuh6tkeplWkATYl
+         UI9RPvvrO8m0sq8ZLAxB4U3a9uV2/GRcm1Ym2GVOt4Rqt3DpgbYqYSUiTS5cQP/ayqnR
+         azQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=SbfqhVaIK7dhG2nqTGKH2SOF25RlgbBG6Jy+za8h81k=;
-        b=mNyIwsYXTyymwPqlBRSn49ryaJ8x0jvo4Vbg1EJOtMAy5tBSYAaiySWDgmcUwxlaqm
-         FHDVO3MpOwsmV171MqKsFLMo3qtq/fqF9CCMo3+72xoxhuFrUEhC/Ivat//irJX3mB/5
-         I7zeezBi5xmBCwy0eYGJIg0S/R0cJ5/Z8T1QHhGsXl7kRq9ysHD3WEk1JajBwd5s/Oqv
-         WGgKTtXKBqXda4ckIRk6gmRpZIqmv6kcV9exQubFOSY8pHovzxV+IqsBoMiadN2lBbND
-         6l68dlg3eyXBO7h2wwh1Y2m1rpgnTDnpO5pNd6e0JJ764BfAyuGAZ54rdT0gcsp6pNoC
-         Ee9w==
-X-Gm-Message-State: ACrzQf1Umw5qLT05c4+eSpTo/X412UJCIe6DHwrk6D57HY0Pp8FZcV4F
-        4PHQhs4cbGjn0DWLD5uT8xBgag==
-X-Google-Smtp-Source: AMsMyM47EWHHplSbceSEE9OZaz5AgPfAsfk5aHV9d3zLuI8nTuMPi5RpIlJQ0y7avVzfSMNgv2VOhw==
-X-Received: by 2002:a2e:ba15:0:b0:26c:1798:b178 with SMTP id p21-20020a2eba15000000b0026c1798b178mr8844465lja.19.1664957905704;
-        Wed, 05 Oct 2022 01:18:25 -0700 (PDT)
+        bh=IROOtMiWph57gn0ct7I+JCQbFPdP6AiF2nUfr9wx6CM=;
+        b=5U9P6WkE9+CjktP9cpu61sZ9hAHARYNW/A2S0TUSpgfPZEwamhNwY8D5BARPbV2n2u
+         Y+6zDxttb9fpoznmmY+UkgJJVY3+QQzHoiG/Flq2w13llLz5Cb2xLjpgeSg9HA+dy0RR
+         UeEm6zhtF8EV9kVF+90hc9jxGf+mDAGF0OPSe6JfGV1WNDASDUnc9mAGr6T1C+1xknN5
+         qfOKH/Hmf2ws27zwVPfunNq1zK099dMAk0qDcEatKTa59uLAXTJiWsAOyunWzZUH0FDC
+         3o4ta5fwQenokawu6G2SzJDS+o0Qj8HfDBkIY4DBO025HtWR1Ng2uvRZgn3Hy1s6CsyX
+         pk7g==
+X-Gm-Message-State: ACrzQf0d/LihzIdAs/h1u/aAczcV3E7/gfVIEzKmJ2pka2zoByWXkANX
+        /aF1hWesllUyLSuE9m6TiMC/yQ==
+X-Google-Smtp-Source: AMsMyM5xFylqIBoGW+dzSnXtcZZ0m8qZQ3FQzzBLiN/8TGcYOHdRM/g0vtrYWXJpxtwIHJjxYN0olg==
+X-Received: by 2002:a05:6512:467:b0:4a2:3f6d:324a with SMTP id x7-20020a056512046700b004a23f6d324amr4610234lfd.487.1664958429677;
+        Wed, 05 Oct 2022 01:27:09 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id h13-20020a056512220d00b0049301e29e41sm2257878lfu.233.2022.10.05.01.18.24
+        by smtp.gmail.com with ESMTPSA id j2-20020a056512398200b0049486c66140sm2268073lfu.119.2022.10.05.01.27.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Oct 2022 01:18:25 -0700 (PDT)
-Message-ID: <1b9dcca8-1abd-99a3-da12-a8763bf77f12@linaro.org>
-Date:   Wed, 5 Oct 2022 10:18:24 +0200
+        Wed, 05 Oct 2022 01:27:09 -0700 (PDT)
+Message-ID: <14872934-93f1-baab-7f1a-cfc55ffd0531@linaro.org>
+Date:   Wed, 5 Oct 2022 10:27:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sdm845: align TLMM pin
- configuration with DT schema
+Subject: Re: [PATCH 1/5] dt-bindings: firmware: scm: Add QDU1000/QRU1000
+ compatibles
 Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Melody Olvera <quic_molvera@quicinc.com>
 Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-References: <20220930200529.331223-1-krzysztof.kozlowski@linaro.org>
- <20220930200529.331223-2-krzysztof.kozlowski@linaro.org>
- <CAD=FV=UaSAvppTqqsZzNh7x_VZ5pVPROLP4AinK2NEWMUPnoQw@mail.gmail.com>
- <985e3982-e9c6-53d0-1aa8-7c8f7726926a@linaro.org>
- <CAD=FV=WgZLztJUxxs0B-kTnT4cN=kKc24if+P0h7whW54S57aQ@mail.gmail.com>
- <6c20f710-e02e-1702-3985-4e995f8a7e7a@linaro.org>
- <CAD=FV=Ushwp0AUrdwKrkKLxvsoCZsbSh-tAtXRQzcTavAEk8uA@mail.gmail.com>
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221001030641.29354-1-quic_molvera@quicinc.com>
+ <20221001030641.29354-2-quic_molvera@quicinc.com>
+ <09f5d364-320e-9ecc-2c2b-68066c61f802@linaro.org>
+ <e9c44e3b-b29f-0f47-b822-da0f4f2264cc@quicinc.com>
+ <CAA8EJprE-mOOH8VF3m8TRb+0q=3_8NpvzdEAugabDaDbq6FMVQ@mail.gmail.com>
+ <9664a623-3c58-49e8-1b9a-69335d844448@linaro.org>
+ <CAA8EJprQoCQzr2x0JA9_b3MDE=oOTODyHD23debEL1MCE1mWBA@mail.gmail.com>
+ <095742cb-61cc-af5d-848c-48b2ea5528ea@quicinc.com>
+ <CAA8EJpoqKCj4tyX-617YJH5zqkR_C=1LVMeLXcCxZFgOPjRZ=g@mail.gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=Ushwp0AUrdwKrkKLxvsoCZsbSh-tAtXRQzcTavAEk8uA@mail.gmail.com>
+In-Reply-To: <CAA8EJpoqKCj4tyX-617YJH5zqkR_C=1LVMeLXcCxZFgOPjRZ=g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/10/2022 16:55, Doug Anderson wrote:
-> Hi,
-> 
-> On Tue, Oct 4, 2022 at 1:40 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
+On 04/10/2022 23:05, Dmitry Baryshkov wrote:
+> On Tue, 4 Oct 2022 at 18:52, Melody Olvera <quic_molvera@quicinc.com> wrote:
 >>
->> On 04/10/2022 00:59, Doug Anderson wrote:
->>> Hi,
->>>
->>> On Mon, Oct 3, 2022 at 10:45 AM Krzysztof Kozlowski
+>>
+>> On 10/4/2022 2:36 AM, Dmitry Baryshkov wrote:
+>>> On Tue, 4 Oct 2022 at 09:53, Krzysztof Kozlowski
 >>> <krzysztof.kozlowski@linaro.org> wrote:
+>>>> On 04/10/2022 00:14, Dmitry Baryshkov wrote:
+>>>>> On Tue, 4 Oct 2022 at 01:02, Melody Olvera <quic_molvera@quicinc.com> wrote:
+>>>>>>
+>>>>>> On 10/1/2022 4:25 AM, Krzysztof Kozlowski wrote:
+>>>>>>> On 01/10/2022 05:06, Melody Olvera wrote:
+>>>>>>>> Add compatibles for scm driver for QDU1000 and QRU1000 platforms.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>>>>>>>> ---
+>>>>>>>>  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 2 ++
+>>>>>>>>  1 file changed, 2 insertions(+)
+>>>>>>>>
+>>>>>>>> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+>>>>>>>> index c5b76c9f7ad0..b47a5dda3c3e 100644
+>>>>>>>> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+>>>>>>>> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+>>>>>>>> @@ -51,6 +51,8 @@ properties:
+>>>>>>>>            - qcom,scm-sm8250
+>>>>>>>>            - qcom,scm-sm8350
+>>>>>>>>            - qcom,scm-sm8450
+>>>>>>>> +          - qcom,scm-qdu1000
+>>>>>>>> +          - qcom,scm-qru1000
+>>>>> I think after seeing all the patchsets it's time to ask the following
+>>>>> question. Do we really need a duplicate compatibility families:
+>>>>> qdu1000 vs qru1000? I'd suggest using a single set of compatibile
+>>>>> strings in most of the cases.
+>>>>> Settle down onto a single name (qdu,qru, qdru, whatever) and define
+>>>>> distinct compat strings only when there is an actual difference?
+>>>>>
+>>>>> E.g .we don't have separate compatible strings for all the sda660,
+>>>>> apq8096, etc. unless this is required by the corresponding hardware
+>>>>> block not being compatible with corresponding sdm or msm counterpart.
+>>>>>
+>>>> I am not that fluent in Qualcomm naming, so let me ask - what are the
+>>>> differences between QDU and QRU?
 >>>>
->>>> On 03/10/2022 18:14, Doug Anderson wrote:
->>>>> Hi,
->>>>>
->>>>> On Fri, Sep 30, 2022 at 1:06 PM Krzysztof Kozlowski
->>>>> <krzysztof.kozlowski@linaro.org> wrote:
->>>>>>
->>>>>> DT schema expects TLMM pin configuration nodes to be named with
->>>>>> '-state' suffix and their optional children with '-pins' suffix.
->>>>>>
->>>>>> The sdm854.dtsi file defined several pin configuration nodes which are
->>>>>> customized by the boards.  Therefore keep a additional "default-pins"
->>>>>> node inside so the boards can add more of configuration nodes.  Such
->>>>>> additional configuration nodes always need 'function' property now
->>>>>> (required by DT schema).
->>>>>>
->>>>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>>>> ---
->>>>>>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi    | 344 +++++++-----------
->>>>>>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |  76 ++--
->>>>>>  .../arm64/boot/dts/qcom/sdm845-lg-common.dtsi |  60 ++-
->>>>>>  arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts |   2 +-
->>>>>>  arch/arm64/boot/dts/qcom/sdm845-mtp.dts       |  60 ++-
->>>>>>  .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |  88 ++---
->>>>>>  .../boot/dts/qcom/sdm845-shift-axolotl.dts    | 138 +++----
->>>>>>  .../dts/qcom/sdm845-sony-xperia-tama.dtsi     |   6 +-
->>>>>>  .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts |  26 +-
->>>>>>  .../boot/dts/qcom/sdm845-xiaomi-polaris.dts   |  30 +-
->>>>>>  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 305 +++++++---------
->>>>>>  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts |  33 +-
->>>>>>  .../boot/dts/qcom/sdm850-samsung-w737.dts     |  96 ++---
->>>>>>  13 files changed, 513 insertions(+), 751 deletions(-)
->>>>>>
->>>>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
->>>>>> index b5f11fbcc300..3403cdcdd49c 100644
->>>>>> --- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
->>>>>> +++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
->>>>>> @@ -993,21 +993,21 @@ &wifi {
->>>>>>  /* PINCTRL - additions to nodes defined in sdm845.dtsi */
->>>>>>
->>>>>>  &qspi_cs0 {
->>>>>> -       pinconf {
->>>>>> +       default-pins {
->>>>>>                 pins = "gpio90";
->>>>>>                 bias-disable;
->>>>>>         };
->>>>>>  };
->>>>>>
->>>>>>  &qspi_clk {
->>>>>> -       pinconf {
->>>>>> +       default-pins {
->>>>>>                 pins = "gpio95";
->>>>>>                 bias-disable;
->>>>>>         };
->>>>>>  };
->>>>>>
->>>>>>  &qspi_data01 {
->>>>>> -       pinconf {
->>>>>> +       default-pins {
->>>>>>                 pins = "gpio91", "gpio92";
->>>>>
->>>>> I haven't been fully involved in all the discussion here, but the
->>>>> above doesn't look like it matches the way that Bjorn wanted to go
->>>>> [1].  I would sorta expect it to look like this:
->>>>>
->>>>>   /* QSPI always needs a clock and IO pins */
->>>>>   qspi_basic: {
->>>>>     qspi_clk: {
->>>>>       pins = "gpio95";
->>>>>       function = "qspi_clk";
->>>>>     };
->>>>>     qspi_data01: {
->>>>>       pins = "gpio95";
->>>>>       function = "qspi_clk";
->>>>>     };
->>>>>   }
->>>>>
->>>>>   /* QSPI will need one or both chip selects */
->>>>>   qspi_cs0: qspi-cs0-state {
->>>>>     pins = "gpio90";
->>>>>     function = "qspi_cs";
->>>>>   };
->>>>>
->>>>>   qspi_cs1: qspi-cs1-state {
->>>>>     pins = "gpio89";
->>>>>     function = "qspi_cs";
->>>>>   };
->>>>>
->>>>>   /* If using all 4 data lines we need these */
->>>>>   qspi_data12: qspi-data12-state {
->>>>>     pins = "gpio93", "gpio94";
->>>>>     function = "qspi_data";
->>>>>   };
->>>>>
->>>>> Basically grouping things together in a two-level node when it makes
->>>>> sense and then using 1-level nodes for "mixin" pins. Then you'd end up
->>>>> doing one of these things:
->>>>>
->>>>> pinctrl-0 = <&qspi_basic &qspi_cs0>;
->>>>> pinctrl-0 = <&qspi_basic &qspi_cs1>;
->>>>> pinctrl-0 = <&qspi_basic &qspi_cs0 &qspi_data12>;
->>>>
->>>>
->>>> I don't get how my patch changes the existing approach? Such pattern was
->>>> already there.
+>>>> For compatible (and/or similar) devices the general recommendation is to
+>>>> have specific compatibles followed by fallback. Even if devices are
+>>>> very, very, very similar, usually the recommendation still stays.
+>>> Well, true. But in some cases we handle this by using a single set of
+>>> compatibles. Consider e.g. sa8155 vs sm8150 (sa8155 overrides just few
+>>> compats that differ). Or qrb5165 vs sm8250 (there is no separate
+>>> qrb5165.dtsi). APQ8096 (#include "msm8996.dtsi"). Etc.
 >>>
->>> Before your patch things were split in two nodes, the muxing and the
->>> configuration. AKA when you combined the soc.dtsi and the board.dts
->>> you'd have:
->>>
->>> qspi_cs0: qspi-cs0-state {
->>>   pinmux {
->>>     pins = "...";
->>>     ... muxing properties ...
->>>   };
->>>   pinconf {
->>>     pins = "...";
->>>     ... config properties ...
->>>   };
->>> };
+>>> I'd say this really depends on the actual difference between qru and qdu.
 >>
->> Which was also not good pattern. Muxing and configuring is basically the
->> same function of pin controller. Splitting them makes no sense at all.
+>> To add some clarification, there's pretty little functional difference between the QDU (Distributed Unit) and the QRU (Radio Unit); they're largely the same SoC from the kernel's standpoint. I wasn't sure if it made more sense to separate the compat strings or mash them together (using qdru to specify that it applies to both), so I kept separate compat strings in case there was a separate RU/DU use case down the line and also to avoid some confusion (I guess that didn't work though). It makes the most sense in my mind to just use the qdru compat string for the things that apply to both SoCs (which is most of what's submitted currently) and then we can do qdu/qru specific override strings for more specific drivers.
 > 
-> Agreed, it was not a good pattern.
-> 
-> 
->>> Your patch combines the "pinmux" and "pinconf" nodes into one. So when
->>> you combine the soc.dtsi and the board.dts after your patch you now
->>> have:
->>>
->>> qspi_cs0: qspi-cs0-state {
->>>   default-pins {
->>>     pins = "...";
->>>     ... muxing properties ...
->>>     ... config properties ...
->>>   };
->>> };
->>>
->>>
->>> That's fine and is functionally correct. ...but IMO it sets a bad
->>> example for people to follow (though, of course, it's really up to
->>> Bjorn). The "default-pins" subnode serves no purpose. If you're
->>> touching all this stuff anyway you might as well not end up with
->>> something that's a bad example for people to follow.
->>
->> I understand, you're right. I wanted to keep minimal amount of changes
->> to the DTS layout but since I am touching almost everything, I can
->> rework it.
->>
->>
->>>> Again - you end up or you ended up? We discuss here what this patch did.
->>>> So are you sure that this patch did something like that (and it wasn't
->>>> already there)?
->>>>
->>>>>
->>>>> Note that the extra tags of "qspi_clk" and "qspi_data01" are important
->>>>> since it lets the individual boards easily set pulls / drive strengths
->>>>> without needing to replicate the hierarchy of the SoC. So if a board
->>>>> wanted to set the pull of the cs0 line, just:
->>>>>
->>>>> &qspi_cs0 {
->>>>>   bias-disable;
->>>>> };
->>>>>
->>>>> [1] https://lore.kernel.org/lkml/CAD=FV=VUL4GmjaibAMhKNdpEso_Hg_R=XeMaqah1LSj_9-Ce4Q@mail.gmail.com/
->>>>>
->>>>>
->>>>>> @@ -1016,7 +1016,7 @@ pinconf {
->>>>>>  };
->>>>>>
->>>>>>  &qup_i2c3_default {
->>>>>> -       pinconf {
->>>>>> +       default-pins {
->>>>>>                 pins = "gpio41", "gpio42";
->>>>>>                 drive-strength = <2>;
->>>>>
->>>>> I don't see any benefit to two-levels above. Why not just get rid of
->>>>> the "default-pins" and put the stuff directly under qup_i2c3_default?
->>>>
->>>> For the same reason I told Konrad?
->>>
->>> OK. I looked at what you end up with for "qup_uart9" after your
->>> patches and it's definitely not my favorite place to end up at. If
->>> nothing else you are double-specifying "function" in both
->>> "default-pins" and "tx-pins"/"rx-pins". If those disagree then what
->>> happens?
->>
->> The same happens and happened before. My patch does nothing related to
->> allowing or disallowing wrong muxing/config nodes. In the past you could
->> have conflicting setups. Now it's exactly the same.
-> 
-> Right that you could have had conflicting setups before, too. However,
-> in the past we always avoided specifying the function for a given pin
-> in more than one node.
-> 
-> The old way was super verbose and had a lot of repetition for sure,
-> but it sorta made sense if you thought of it in words. AKA the old way
-> said this after combining the soc.dtsi and the board.dts
-> 
-> * For pins 45, 46, 47, 48: set the function to "qup6"
-> * For pin 45: set a pulldown
-> * For pins 46 and 47: set the drive strength to 2 and disable pulls
-> * For pin 48: set a pullup
-> 
-> So it repeated the "for pins" part and that was most definitely non
-> ideal. However, with your new setup you are sometimes doing:
-> 
-> * For pins 47 and 48: set the function to "qup6"
-> * For pin 45: set the function to "qup6" and set a pulldown
-> * For pins 46 and 47: set the function to "qup6" and the drive
-> strength to 2 and disable pulls
-> * For pin 48: set the function to "qup6" and set a pullup
-> 
-> That repeats the 'set the function to "qup6"' more than I'd like.
+> Unless Krzysztof or Bjorn have other opinion, I'd suggest adding a
+> single compat string, It might be qcom,qdru1000-foo or just
+> qcom,qdu1000-foo (with having a separate qcom,qru1000-foo where
+> applicable). But the final decision is from Rob, Krzysztof and Bjorn.
 
-Indeed, it got more duplicated/error-prone.
-
-> 
-> 
->> The double-specifying of "function" is not a result of '-state'/'-pins'
->> reorganization but aligning with common TLMM schema *which requires
->> function* for every node.
-> 
-> I guess now that we've talked through it, I'd say that if we have to
-> specify a function for every node then we should strive for each pin
-> to be in exactly one node in any given active configuration. That
-> makes the schema happy and also avoids double-specifying the function.
-> 
-> I think in all of the examples I've given that this is true.
-
-OK, we can rework entire DTS to follow this approach.
-
-> 
-> 
->>> In general also we end up specifying that extra level of
->>> "default-pins" in many cases for no purpose. We also end up
->>> replicating hierarchy in the board dts files (the dts files are
->>> replicating the "default-pins" nodes from the parent).
->>
->> OK, let's fix this. That will need either:
->> 1. /delete-node with copying of most of properties from default-pins
->> 2. or move the CTS/TX/RX config pins to the DTSI.
-> 
-> I think in my proposal the CTS/TX/RX stuff moved to the dtsi which solved it.
-
-OK
-
-> 
-> 
->>>>>>  /* PINCTRL - additions to nodes defined in sdm845.dtsi */
->>>>>>  &qup_spi2_default {
->>>>>> -       pinmux {
->>>>>> +       default-pins {
->>>>>>                 drive-strength = <16>;
->>>>>>         };
->>>>>>  };
->>>>>>
->>>>>>  &qup_uart3_default{
->>>>>> -       pinmux {
->>>>>> +       default-pins {
->>>>>>                 pins = "gpio41", "gpio42", "gpio43", "gpio44";
->>>>>>                 function = "qup3";
->>>>>>         };
->>>>>>  };
->>>>>>
->>>>>>  &qup_i2c10_default {
->>>>>> -       pinconf {
->>>>>> +       default-pins {
->>>>>>                 pins = "gpio55", "gpio56";
->>>>>>                 drive-strength = <2>;
->>>>>>                 bias-disable;
->>>>>> @@ -1144,37 +1144,37 @@ pinconf {
->>>>>>  };
->>>>>>
->>>>>>  &qup_uart6_default {
->>>>>> -       pinmux {
->>>>>> -               pins = "gpio45", "gpio46", "gpio47", "gpio48";
->>>>>> -               function = "qup6";
->>>>>> -       };
->>>>>> -
->>>>>> -       cts {
->>>>>> +       cts-pins {
->>>>>>                 pins = "gpio45";
->>>>>> +               function = "qup6";
->>>>>>                 bias-disable;
->>>>>>         };
->>>>>>
->>>>>> -       rts-tx {
->>>>>> +       rts-tx-pins {
->>>>>>                 pins = "gpio46", "gpio47";
->>>>>> +               function = "qup6";
->>>>>>                 drive-strength = <2>;
->>>>>>                 bias-disable;
->>>>>>         };
->>>>>>
->>>>>> -       rx {
->>>>>> +       rx-pins {
->>>>>>                 pins = "gpio48";
->>>>>> +               function = "qup6";
->>>>>>                 bias-pull-up;
->>>>>>         };
->>>>>>  };
->>>>>
->>>>> I didn't check everything about this patch, but skimming through I
->>>>> believe that the uart6 handling here is wrong. You'll end up with:>
->>>>>   qup_uart6_default: qup-uart6-default-state {
->>>>>     default-pins {
->>>>>       pins = "gpio47", "gpio48";
->>>>>       function = "qup6";
->>>>
->>>> This piece was removed.
->>>
->>> It was? How/where? I tried applying your patch and I still see "qup6"
->>> under the default-pins node in sdm845.dtsi.
->>>
->>
->> Ah, you're right. The default-pins are coming from DTSI.
->>
->> So delete-node?
-> 
-> I would prefer the solution I proposed. Re-pasting here:
-> 
-> In Soc.dtsi:
-> 
->   qup_uart6_txrx: qup-uart6-txrx-state {
->     qup_uart6_tx {
->       pins = "gpio47";
->       function = "qup6";
->     };
->     qup_uart6_rx {
->       pins = "gpio48";
->       function = "qup6";
->     };
->   };
->   qup_uart6_cts: qup-uart6-cts-state {
->     pins = "gpio45";
->     function = "qup6";
->   };
->   qup_uart6_rts: qup-uart6-rts-state {
->     pins = "gpio46";
->     function = "qup6";
->   };
-> 
-> In board.dts:
-> 
->   &qup_uart6_cts {
->     bias-disable;
->   };
->   &qup_uart6_rts {
->     drive-strength = <2>;
->     bias-disable;
->   };
->   &qup_uart6_rx {
->     bias-pull-up;
->   };
->   &qup_uart6_tx {
->     drive-strength = <2>;
->     bias-disable;
->   };
-> 
-
-OK
+If qdru1000 is a real SoC name, then it is fine. But it seems it is
+rather a wildcard, which in general is discouraged. Go with qdu1000 and
+optionally prepended with qru1000.
 
 Best regards,
 Krzysztof
