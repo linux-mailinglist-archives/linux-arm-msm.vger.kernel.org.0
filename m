@@ -2,218 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 986D65F57A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Oct 2022 17:34:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9B345F5883
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Oct 2022 18:44:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230188AbiJEPeC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Oct 2022 11:34:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49616 "EHLO
+        id S230190AbiJEQoN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Oct 2022 12:44:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230360AbiJEPeA (ORCPT
+        with ESMTP id S230158AbiJEQoL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Oct 2022 11:34:00 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4ADC77E94;
-        Wed,  5 Oct 2022 08:33:53 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 295FJqlL024692;
-        Wed, 5 Oct 2022 15:33:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=pPShslKtDcKhs1DoTYJVYGFbNVdIcHpNSP0dfUz/3A8=;
- b=mXc4KJbAIO9TtcijhW8xIamKhychlbpTMNu1hYKl/31zzfzWSEuGDvAL9qCy2IjNGwkE
- BGluuU7NGFoaKzn0neGMWjAreWbGEAhxG0++gZdMxrBOf8PVJsFIxqxAq4aEYaBHSaxT
- +r4x0cbEhhQGiCkmnyBoZ8z7uygdwIDmKe7s1zCmeL9wkQW9M5IpesQ3XIUI0TqlFQGr
- eZ1HVZ32sO8YKdN076eAn555E+e1GHqIPBPn/+ZrpgvdoU57NREd85y8co9f4jbuNXcc
- yNUZtbZ1MwYg7ybtvL4WpNXvTaI6b0ZYNeGAysaSZJKseI//B5VBTZ8L2HRg7wcHQqII 3Q== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k0escug7f-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 05 Oct 2022 15:33:30 +0000
-Received: from pps.filterd (NALASPPMTA01.qualcomm.com [127.0.0.1])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 295FUnTr024827;
-        Wed, 5 Oct 2022 15:33:29 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 3jxemkprsq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 05 Oct 2022 15:33:29 +0000
-Received: from NALASPPMTA01.qualcomm.com (NALASPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 295FXTYv026781;
-        Wed, 5 Oct 2022 15:33:29 GMT
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 295FXSI3026779
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 05 Oct 2022 15:33:29 +0000
-Received: from [10.38.242.178] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 5 Oct 2022
- 08:33:24 -0700
-Message-ID: <57732804-9eb1-2f92-f2cd-0ae66f3e28cd@quicinc.com>
-Date:   Wed, 5 Oct 2022 08:33:23 -0700
+        Wed, 5 Oct 2022 12:44:11 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CFE757899
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Oct 2022 09:44:08 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id kg6so21367120ejc.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Oct 2022 09:44:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=m45nq82Lfg1q6SNEw+KpGC7tj62Q9fUk4yU+5lXbo+o=;
+        b=BDVZ2OiPMtg3p8vNbCwNKMoZwzFiI8iqqHYTG/Ma3vjDZNKqDlL6WyURzS7u3yFW0d
+         JXjp3AskuTWetb7SNYos+u/fRVWDAT1H6e0bOm+xiCDoWVpifr4i/sQSxJSkh7V/XsCl
+         9tKYmGNsotYqjf+XgrdIzHLwKZNs7XE3V9ZWg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=m45nq82Lfg1q6SNEw+KpGC7tj62Q9fUk4yU+5lXbo+o=;
+        b=beQIgkms/bqoBEnzpUSR5gdXf7hlT/89gY2qravZKkL+1HTwAofDgtEqsXrLwNnFC3
+         z+y7MSjvjpGmCh0vwyRsBhbiOCyFRudkB2lj6sRSDdanlZnj/QDUg8CJJXHPO03Ac0wu
+         p1KC3SlYp0hfPdLwpTX6aQvROsmCWhvUK+npjcDnyicrGby57vwWCTPVlVmpr9O15JcJ
+         xZ+5pEOyG1SmqncFj7ZnoaxSV+Sd2a/8K8RewBrg0WfTvgM2QPdZi04/ufkXDrRPVUqr
+         0rOqyq3CnHS1loPkwpzlV7i57QMD21IF9NTCuNaaD+lCtyyGA0Fu4Uwadqxm4CJtRwip
+         mPRA==
+X-Gm-Message-State: ACrzQf3kOyTP4TiG3s4JwlZVcaTizZZNJu+oO3juW84J39geTXAVB1Z4
+        gxMWbQ4TwurPep4qnz3D9ytlIiSK79jAyyNw
+X-Google-Smtp-Source: AMsMyM5KS/NY/G1i9PexKTiIuXa387QP0x5pU2ITzKn6BaQibZ+NRA9VuxC2w3B6iIZNgSmdgQu2BA==
+X-Received: by 2002:a17:907:a076:b0:78d:23f4:421c with SMTP id ia22-20020a170907a07600b0078d23f4421cmr346453ejc.697.1664988246651;
+        Wed, 05 Oct 2022 09:44:06 -0700 (PDT)
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com. [209.85.128.41])
+        by smtp.gmail.com with ESMTPSA id k11-20020a17090632cb00b007030c97ae62sm8929876ejk.191.2022.10.05.09.44.05
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Oct 2022 09:44:05 -0700 (PDT)
+Received: by mail-wm1-f41.google.com with SMTP id t4so11123962wmj.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Oct 2022 09:44:05 -0700 (PDT)
+X-Received: by 2002:a05:600c:500d:b0:3b5:234:d7e9 with SMTP id
+ n13-20020a05600c500d00b003b50234d7e9mr295066wmr.57.1664988245013; Wed, 05 Oct
+ 2022 09:44:05 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 5/5] drm/dsc: Prevent negative BPG offsets from shadowing
- adjacent bitfields
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        <phone-devel@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Javier Martinez Canillas <javierm@redhat.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        Lyude Paul <lyude@redhat.com>
-References: <20221001190807.358691-1-marijn.suijten@somainline.org>
- <20221001190807.358691-6-marijn.suijten@somainline.org>
- <55d7e20b-79cd-ece6-b643-8b542beb7474@quicinc.com>
- <20221004215745.zdfvulqx4exlujgk@SoMainline.org>
- <1a5ed43e-914e-079d-96bf-c9e3912a9473@quicinc.com>
- <20221004223940.stfsyvubx7ecd3a3@SoMainline.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20221004223940.stfsyvubx7ecd3a3@SoMainline.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WzHDpl8xPPlxpi_KbQxVYE88nZlVV2UB
-X-Proofpoint-ORIG-GUID: WzHDpl8xPPlxpi_KbQxVYE88nZlVV2UB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-10-05_03,2022-10-05_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 mlxlogscore=999
- phishscore=0 bulkscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210050097
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20221003102735.39028-1-sheng-liang.pan@quanta.corp-partner.google.com>
+ <20221003182637.v6.1.Ide53082044aac56877c4ff5725777769e377476a@changeid>
+In-Reply-To: <20221003182637.v6.1.Ide53082044aac56877c4ff5725777769e377476a@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 5 Oct 2022 09:43:53 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Vs5qjOkNS8zjqdJr+8o_h4nArA7s3XwoofrPaOsF6n4g@mail.gmail.com>
+Message-ID: <CAD=FV=Vs5qjOkNS8zjqdJr+8o_h4nArA7s3XwoofrPaOsF6n4g@mail.gmail.com>
+Subject: Re: [PATCH v6 1/3] dt-bindings: arm: qcom: Separate LTE/WIFI SKU for sc7280-evoker
+To:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
+On Mon, Oct 3, 2022 at 3:28 AM Sheng-Liang Pan
+<sheng-liang.pan@quanta.corp-partner.google.com> wrote:
+>
+> evoker will have WIFI/LTE SKU, separate it for each different setting.
+>
+> Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+> (no changes since v5)
+>
+> Changes in v5:
+> - new patch add touchpad and touchscreen for evoker
+> - remove unnecessary whitespace
+>
+> Changes in v4:
+> - fix typo in tittle and commit
+> - remove change for trackpad and touchscreen
 
-On 10/4/2022 3:39 PM, Marijn Suijten wrote:
-> On 2022-10-04 15:31:10, Abhinav Kumar wrote:
->>
->>
->> On 10/4/2022 2:57 PM, Marijn Suijten wrote:
->>> [..]
->>> Alas, as explained in the cover letter I opted to perform the masking in
->>> the PPS packing code as the DSC block code also reads these values, and
->>> would suddenly write 6-bit intead of 8-bit values to the
->>> DSC_RANGE_BPG_OFFSET registers.  Quick testing on the mentioned sdm845
->>> platform shows no regressions, but I'm not sure if that's safe to rely
->>> on?
->>
->> I looked up the MDP_DSC_0_RANGE_BPG_OFFSET_* registers.
->> They take only a 6-bit value according to the SW documentation ( bits 5:0 )
->>
->> It was always expecting only a 6-bit value and not 8.
->>
->> So this change is safe.
-> 
-> Ack, I think that implies I should make this change and move the masks
-> to the DSI driver?
+No need to spin for this purpose, but your version history is a bit
+confusing here. You should be putting the version history in the patch
+that changed. In this case the bindings patch (patch #1) didn't change
+in v5 and the trackpad/touchscreen didn't change in v4. Those changes
+were in patches #2 and #3.
 
-hmm .... downstream seems to have the & just before the reg write
-
-https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/DISPLAY.LA.2.0.r1-08000-WAIPIO.0/msm/sde/sde_hw_dsc_1_2.c#L310
-
-But yes, we can move this to the dsi calculation to match what others 
-are doing. I am fine with that.
-
-> 
->>>> If you want to move to helper, other drivers need to be changed too to
->>>> remove duplicate & 0x3f.
->>>
->>> Sure, we only have to confirm whether those drivers also read back the
->>> value(s) in rc_range_params, and expect / allow this to be 8 instead of
->>> 6 bits.
->>>
->>>> FWIW, this too has already been fixed in the latest downstream driver too.
->>>
->>> What is this supposed to mean?  Is there a downstream DPU project that
->>> has pending patches needing to be upstreamed?  Or is the downstream SDE,
->>> techpack/display, or whatever it is called nowadays, slowly using more
->>> DRM structs like drm_dsc_config and this drm_dsc_pps_payload_pack()
->>> helper function as pointed out in an earlier mail?
->>>
->>
->> No, what I meant was, the version of downstream driver based on which
->> the upstream DSC was made seems to be an older version. Downstream
->> drivers keep getting updated and we always keep trying to align with
->> upstream structs.
->>
->> This is true not just for DSC but even other blocks.
->>
->> So as part of that effort, we started using struct drm_dsc_config . That
->> change was made on newer chipsets. But the downstream SW on sdm845 based
->> on which the DSC was upstreamed seems like didnt have that. Hence all
->> this redundant math happened.
->>
->> So this comment was more of a explanation about why this issue happened
->> even though latest downstream didnt have this issue.
-> 
-> Thanks, I understood most of that but wasn't aware these exact "issues"
-> were also addressed downstream (by i.e. also using the upstream
-> structs).
-> 
-
-Even I wasnt. When I was reviewing this series, it seemed like a valid 
-change so I checked the latest downstream code like i always do to see 
-whether and how this is handled and found that these issues were 
-addressed there so thought i would update that here.
-
->>> Offtopic: are SDE and DPU growing closer together, hopefully achieving
->>> feature parity allowing the SDE project to be dropped in favour of a
->>> fully upstreamed DPU driver for day-one out-of-the-box mainline support
->>> for new SoCs (as long as work is published and on its way upstream)?
->>>
->>
->> There is still a lot of gap between SDE and DPU drivers at this point.
->> We keep trying to upstream as many features as possible to minimize the
->> gap but there is still a lot of work to do.
-> 
-> Glad to hear, but that sounds like a very hard to close gap unless
-> downstream "just works on DPU" instead of having parallel development on
-> two "competing" drivers for the exact same hardware.
-> 
-Its not really parallel development OR competing drivers.
-The design of these features downstream (not just DSC but many others) 
-is quite different because some of the downstream designs wont get 
-accepted upstream as its tightly coupled with our 
-compositor/device-tree. Thats where we are slowly trying to implement 
-these in an upstream compatible way.
-
-BTW, that being said. Its not always the case that every issue seen 
-upstream has already been fixed downstream. In fact, on some occasions 
-we found something fixed in upstream in a better way and ported them 
-downstream too.
-
-Thanks
-
-Abhinav
-> - Marijn
+-Doug
