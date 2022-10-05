@@ -2,131 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D49E5F54F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Oct 2022 15:05:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BF0F5F55D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Oct 2022 15:50:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229570AbiJENFw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Oct 2022 09:05:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49374 "EHLO
+        id S229779AbiJENuq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Oct 2022 09:50:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229783AbiJENFv (ORCPT
+        with ESMTP id S229782AbiJENup (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Oct 2022 09:05:51 -0400
-Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E84A921E33
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Oct 2022 06:05:47 -0700 (PDT)
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20221005130543euoutp0220da51c90a7e6ae2f4c9be5a3a6cabe4~bLhJSuX3Y0524205242euoutp02U
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Oct 2022 13:05:43 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20221005130543euoutp0220da51c90a7e6ae2f4c9be5a3a6cabe4~bLhJSuX3Y0524205242euoutp02U
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1664975143;
-        bh=cShw/3LGlylN+4jJotpQbuNoLk30Zznf4m8prglpDWE=;
-        h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-        b=S/UHF0e2phRkGiCF0XGwtynhMSI6OuPOWGnyUO31/4azPx9Fd/P482Gl+oVJELhmQ
-         4jSqwCm04jceqZqXx7ZIDlc124H3kU9UGzGKbKQ0r9kZHRmSgCpFwDeWXGZJSZtX8T
-         i62BfLpu0Uya4Uk6HTG2BvfShkSGvcgkGRaYS9oA=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20221005130543eucas1p1aed6763fdecb50ca11125c7eec2cbbf0~bLhI6xuMy3238032380eucas1p14;
-        Wed,  5 Oct 2022 13:05:43 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id 1B.A2.29727.6218D336; Wed,  5
-        Oct 2022 14:05:42 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20221005130542eucas1p1a50cb2c3ee56c7c6b3b78f9d4b191abf~bLhIInLdI3061230612eucas1p19;
-        Wed,  5 Oct 2022 13:05:42 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20221005130542eusmtrp2fa51b0c29199130127621c85d53fce3c~bLhIHmN630188401884eusmtrp2Y;
-        Wed,  5 Oct 2022 13:05:42 +0000 (GMT)
-X-AuditID: cbfec7f2-205ff7000001741f-4f-633d81261c13
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id BA.2D.10862.6218D336; Wed,  5
-        Oct 2022 14:05:42 +0100 (BST)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20221005130541eusmtip25243c5df6e3b8a7331bd5ea6df42850f~bLhHDpACD0498804988eusmtip2d;
-        Wed,  5 Oct 2022 13:05:41 +0000 (GMT)
-Message-ID: <207c1979-0da2-b05d-fead-6880ad956b90@samsung.com>
-Date:   Wed, 5 Oct 2022 15:05:41 +0200
+        Wed, 5 Oct 2022 09:50:45 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEF6B5C35A;
+        Wed,  5 Oct 2022 06:50:43 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a26so35601380ejc.4;
+        Wed, 05 Oct 2022 06:50:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=7Jw/7QS61Dgc9YXSBwRgFOA/+i4BPGb1Saz418bmlzk=;
+        b=H7Kf1btKe4ecZNI/GjNP0vyymgt+TmbwNrTCkPe+zJi5MJ+D72BAXdt8hGrgVpAmMJ
+         WZZKKQfWvd7yuISWTwQUQNqPmneR3dRmy1Stg4ehYMPZiBztbJFTEJK4v8qOb9AZ7NzS
+         6Lq3IDnD1HxhG6v1MsR1KAE4d+n1OC9/vflD2yjk9cL8PiH6Qlkp7IHd2wRrWRStDPZz
+         1qNoN8SG2c7muZH2+PGIggMqelenm2ObfWc5hNlJDjeX1neVe2K+9ewOSqU1/b7blsV9
+         /daXNzS5X9NhQIOtReq8DVREiah71IGV08JH4BDhG8hW42MI9f+rBRTJL27PoImVp2Fn
+         sugw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=7Jw/7QS61Dgc9YXSBwRgFOA/+i4BPGb1Saz418bmlzk=;
+        b=lfJ2n/fiFt41H09DnwWwmRcCrnJoXn+qOSirjFbHacMadLD9QymPKQKBNmZbHXD6JP
+         ITVAUYzCm5h5czv7mQln58Yb5xMGcIdWq5MRCfCkRHO5r8rPnhE8mnIw4bEIXXYSScUv
+         z3Fcws3LuwG/EXElnBQYioAjSXmPGXMgBCjGi4i/L2uqAi5UD01bULD9ud0EnQBYqFPC
+         IIzUvetxx/PJrb54eVBhxvNrHCcuj616pwU9wq+9PFYyFzrmH9iZWQaEE1ZrJPifdYSK
+         3k+CHEezGIiS44sgSeQr+2rZPxV8LKIuVb7G+372Ay2UZbnkpjvt9pSllY5/P4h5Lu3r
+         yUAg==
+X-Gm-Message-State: ACrzQf2+tw2pRzU95/umSMzwh7r2a2Lh2fgN7ge/z/SiFXbMkdxTYlgr
+        XmqwJ2sidqjSpWMWDQ7KSsg=
+X-Google-Smtp-Source: AMsMyM4T4bU7sZhH/PUQgMbynLZXdHeUrDW8h1NU8HKYK6VqmVnw5331cBv9QuqTd0ic2E0KvnLRqw==
+X-Received: by 2002:a17:907:728e:b0:782:8e91:64c8 with SMTP id dt14-20020a170907728e00b007828e9164c8mr24473496ejc.36.1664977839520;
+        Wed, 05 Oct 2022 06:50:39 -0700 (PDT)
+Received: from [192.168.3.32] (dh207-97-74.xnet.hr. [88.207.97.74])
+        by smtp.gmail.com with ESMTPSA id l9-20020a1709063d2900b0077086d2db8esm8789136ejf.140.2022.10.05.06.50.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Oct 2022 06:50:38 -0700 (PDT)
+Message-ID: <4bc9033c-624e-bafb-a6f7-3915a1b27664@gmail.com>
+Date:   Wed, 5 Oct 2022 15:50:37 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0)
-        Gecko/20100101 Thunderbird/91.13.1
-Subject: Re: [PATCH v8 00/29] Rework the trip points creation
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.1
+Subject: Re: [PATCH] dt-bindings: soc: qcom: qcom,spm: support regulator SAW2
+ devics
 Content-Language: en-US
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        rui.zhang@intel.com,
-        Broadcom Kernel Team <bcm-kernel-feedback-list@broadcom.com>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
-        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>, netdev@vger.kernel.org,
-        platform-driver-x86@vger.kernel.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-omap@vger.kernel.org, rafael@kernel.org
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <851008bf-145d-224c-87a8-cb6ec1e9addb@linaro.org>
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpkk+LIzCtJLcpLzFFi42LZduznOV21Rttkg9/XrS3OPf7NYvFg3jY2
-        i7W9R1ksvm+5zmQx77OsxaqpO1ks9r7eym6x6fE1VouJ+8+yW3T9WslscXnXHDaL2Uv6WSw+
-        9x5htNj68h2TxcTbG9gtZpzfx2TR+WUWm8WxBWIWq/e8YLaY+2Uqs8WTh31sFntbLzI7iHnM
-        un+WzWPFJ32PnbPusnss3vOSyWPTqk42jzvX9rB5bF5S77Hx3Q4mj/6/Bh59W1YxenzeJBfA
-        HcVlk5Kak1mWWqRvl8CVsXLTSraCv/wVFze/YmpgbOPtYuTgkBAwkXg+T7SLkYtDSGAFo8Tz
-        f59ZIZwvjBK7H75lh3A+M0rM2PSBsYuRE6zj4qNHLBCJ5YwSP859Z4ZwPjJKXF6yiR2kilfA
-        TuLn2sdgNouAisSi582MEHFBiZMzn7CA2KICyRI/uw6wgdjCArYS7390gtUzC4hL3HoynwnE
-        FhHQk2h838YEsoBZYAqbxOEVe1lBEmwChhJdb7vAmjmBlh3ZsAiqWV5i+9s5zBCnvuKUODHR
-        FsJ2kZg/6S4ThC0s8er4FnYIW0bi/875YAskBNoZJRb8vg/lTGCUaHh+C+ppa4k7536xgYKM
-        WUBTYv0ufUjoOUrc/+cPYfJJ3HgrCHECn8SkbdOZIcK8Eh1tQhAz1CRmHV8Ht/XghUvMExiV
-        ZiGFyiwk389C8swshLULGFlWMYqnlhbnpqcWG+allusVJ+YWl+al6yXn525iBKbS0/+Of9rB
-        OPfVR71DjEwcjIcYJTiYlUR4eU/aJAvxpiRWVqUW5ccXleakFh9ilOZgURLnZZuhlSwkkJ5Y
-        kpqdmlqQWgSTZeLglGpgas1MywlXW6yRvWzhuUS/oxOTTppaP9/kmKzPFxEUopizT8O0wNm2
-        aX9r6JKILwqnVqyUKhD7WbFlS/i74w+ubdT7fr/52CfZJ5mnd2wwYNVk7GH0/ZY3a8KfW3OU
-        M9uvrT0nzXXI2Mjk7fxDiqLy5TGuC2JO9Zlf/nNecva3A2v9OZPmvLK5cHTdRvF93tXS4uEp
-        fTmngzQ+p/AE6UysU/FdZVpdmm8xOyd1X36Pi8vDSUWR/gblZufs2EVN9Y93hU80fXYyKv+I
-        YVPJ7v7+rcuTiqR2Lj+7Osbr7r6vaa0LS382yZ6Jeu6z5orKgje9XK95hftf1J0oVr5/5kWY
-        NeuH+Km5FlqZKpWvjqxQYinOSDTUYi4qTgQA70iftBQEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprMKsWRmVeSWpSXmKPExsVy+t/xe7pqjbbJBttb2SzOPf7NYvFg3jY2
-        i7W9R1ksvm+5zmQx77OsxaqpO1ks9r7eym6x6fE1VouJ+8+yW3T9WslscXnXHDaL2Uv6WSw+
-        9x5htNj68h2TxcTbG9gtZpzfx2TR+WUWm8WxBWIWq/e8YLaY+2Uqs8WTh31sFntbLzI7iHnM
-        un+WzWPFJ32PnbPusnss3vOSyWPTqk42jzvX9rB5bF5S77Hx3Q4mj/6/Bh59W1YxenzeJBfA
-        HaVnU5RfWpKqkJFfXGKrFG1oYaRnaGmhZ2RiqWdobB5rZWSqpG9nk5Kak1mWWqRvl6CXsXLT
-        SraCv/wVFze/YmpgbOPtYuTkkBAwkbj46BFLFyMXh5DAUkaJlytb2CESMhInpzWwQtjCEn+u
-        dbGB2EIC7xklZu8OA7F5Bewkfq59DFbPIqAiseh5MyNEXFDi5MwnLCC2qECyxMs/E8FqhAVs
-        Jd7/6ASzmQXEJW49mc8EYosI6Ek0vm9jgohPY5P4/DkeYtdGJon3W+pBbDYBQ4mutxA3cALt
-        PbJhEdQcM4murV2MELa8xPa3c5gnMArNQnLGLCTrZiFpmYWkZQEjyypGkdTS4tz03GIjveLE
-        3OLSvHS95PzcTYzA1LHt2M8tOxhXvvqod4iRiYPxEKMEB7OSCC/vSZtkId6UxMqq1KL8+KLS
-        nNTiQ4ymwLCYyCwlmpwPTF55JfGGZgamhiZmlgamlmbGSuK8ngUdiUIC6YklqdmpqQWpRTB9
-        TBycUg1M1fHK5u17e/xmPNAx/RH0+cWjBb8WrNXuNq34YHCgtn/5TlP7D3sKTu25XGdRv+Bo
-        oMPkE2zaJ5cdPzpr9inpX/6XOaK26YtPvS8ygaf5seqXe+0nVrnrNpe0+Z9e/SOpau82KdeZ
-        J2Vkru5/EVpp7Cj1wkzmg0iIo6HeXPkwqU0PC9Iap8yJesKwfzqXW6GYzvcLrEL2N40WJrjP
-        3szWtf2Uada+eyXyJi2z9Phn7N6RvLljdZqM9uFwg+K7eW41zayWv3UMdkV+n7np305rbdGb
-        t7tCMuctC7JT2X7EV3mP2PRd+xP61F8/NJB9vf1I0+KwwILXh3j22pbOLnhya8YOsRa7yJzF
-        cj45z6adV2Ipzkg01GIuKk4EAIdUMlKmAwAA
-X-CMS-MailID: 20221005130542eucas1p1a50cb2c3ee56c7c6b3b78f9d4b191abf
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20221003092704eucas1p2875c1f996dfd60a58f06cf986e02e8eb
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20221003092704eucas1p2875c1f996dfd60a58f06cf986e02e8eb
-References: <CGME20221003092704eucas1p2875c1f996dfd60a58f06cf986e02e8eb@eucas1p2.samsung.com>
-        <20221003092602.1323944-1-daniel.lezcano@linaro.org>
-        <8cdd1927-da38-c23e-fa75-384694724b1c@samsung.com>
-        <c3258cb2-9a56-d048-5738-1132331a157d@linaro.org>
-        <851008bf-145d-224c-87a8-cb6ec1e9addb@linaro.org>
-X-Spam-Status: No, score=-8.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+        Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220930231416.925132-1-dmitry.baryshkov@linaro.org>
+ <a743d50f-fc59-161e-c98f-f10b26e2afe5@linaro.org>
+ <CAA8EJpo9kSs_h28SneAwQ0FLHJ0PipmbQRm791hb-vHtGwXwDQ@mail.gmail.com>
+From:   Robert Marko <robimarko@gmail.com>
+In-Reply-To: <CAA8EJpo9kSs_h28SneAwQ0FLHJ0PipmbQRm791hb-vHtGwXwDQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -134,62 +85,124 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 05.10.2022 14:37, Daniel Lezcano wrote:
+On 02. 10. 2022. 14:20, Dmitry Baryshkov wrote:
+> On Sun, 2 Oct 2022 at 11:49, Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>> On 01/10/2022 01:14, Dmitry Baryshkov wrote:
+>>> Merge qcom,saw2.txt bindings to existing qcom,spm.yaml. This fixes
+>>> compatibility of qcom,spm schema with regulator SAW2 devices.
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>   .../devicetree/bindings/arm/msm/qcom,saw2.txt | 58 -------------------
+>>>   .../bindings/soc/qcom/qcom,spm.yaml           | 44 +++++++++-----
+>> You need to update reference in
+>> Documentation/devicetree/bindings/arm/cpus.yaml
+> ack
 >
-> Hi Marek,
+>>>   2 files changed, 30 insertions(+), 72 deletions(-)
+>>>   delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,saw2.txt
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,saw2.txt b/Documentation/devicetree/bindings/arm/msm/qcom,saw2.txt
+>>> deleted file mode 100644
+>>> index c0e3c3a42bea..000000000000
+>>> --- a/Documentation/devicetree/bindings/arm/msm/qcom,saw2.txt
+> [skipped]
 >
-> On 03/10/2022 23:18, Daniel Lezcano wrote:
->
-> [ ... ]
->
->>> I've tested this v8 patchset after fixing the issue with Exynos TMU 
->>> with
->>> https://lore.kernel.org/all/20221003132943.1383065-1-daniel.lezcano@linaro.org/ 
+>>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
+>>> index f433e6e0a19f..8fe35fde70b8 100644
+>>> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
+>>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
+>>> @@ -16,23 +16,33 @@ description: |
 >>>
->>> patch and I got the following lockdep warning on all Exynos-based 
->>> boards:
->>>
->>>
->>> ======================================================
->>> WARNING: possible circular locking dependency detected
->>> 6.0.0-rc1-00083-ge5c9d117223e #12945 Not tainted
->>> ------------------------------------------------------
->>> swapper/0/1 is trying to acquire lock:
->>> c1ce66b0 (&data->lock#2){+.+.}-{3:3}, at: exynos_get_temp+0x3c/0xc8
->>>
->>> but task is already holding lock:
->>> c2979b94 (&tz->lock){+.+.}-{3:3}, at:
->>> thermal_zone_device_update.part.0+0x3c/0x528
->>>
->>> which lock already depends on the new lock.
+>>>   properties:
+>>>     compatible:
+>>> -    items:
+>>> -      - enum:
+>>> -          - qcom,sdm660-gold-saw2-v4.1-l2
+>>> -          - qcom,sdm660-silver-saw2-v4.1-l2
+>>> -          - qcom,msm8998-gold-saw2-v4.1-l2
+>>> -          - qcom,msm8998-silver-saw2-v4.1-l2
+>>> -          - qcom,msm8909-saw2-v3.0-cpu
+>>> -          - qcom,msm8916-saw2-v3.0-cpu
+>>> -          - qcom,msm8226-saw2-v2.1-cpu
+>>> -          - qcom,msm8974-saw2-v2.1-cpu
+>>> -          - qcom,apq8084-saw2-v2.1-cpu
+>>> -          - qcom,apq8064-saw2-v1.1-cpu
+>>> +    oneOf:
+>>>         - const: qcom,saw2
+>> I understand old bindings had it, but I don't think we really want to
+>> support the generic compatible on its own. Even old bindings indicated
+>> that there are several differences between SAWs.
 >>
->> I'm wondering if the problem is not already there and related to 
->> data->lock ...
+>> Especially confusing is that once qcom,saw2 can be alone and in other
+>> cases must be preceded by specific compatible. IOW, you allow for
+>> apq8064 two cases:
 >>
->> Doesn't the thermal zone lock already prevent racy access to the data 
->> structure?
+>> 1. qcom,apq8064-saw2-v1.1-cpu, qcom,saw2
+>> 2. qcom,saw2
 >>
->> Another question: if the sensor clock is disabled after reading it, 
->> how does the hardware update the temperature and detect the programed 
->> threshold is crossed?
+>> I think we should instead add everywhere specific compatibles.
+> I see your point. Yes, it's probably worth doing that.
 >
-> just a gentle ping, as the fix will depend on your answer ;)
+> Robert, Christian, can you possibly check the version of the SAW2 used
+> on ipq4019 and ipq8064? It can be read from the SPM block at the
+> register offset 0xfd0.
+
+Hi, I completely missed this so far, sorry about that.
+
+I checked from U-boot on multiple SAW blocks on IPQ4019 and it looks to 
+be v3.0:
+(IPQ40xx) # md.l 0xB0B9FD0 1
+0b0b9fd0: 30000000    ...0
+(IPQ40xx) # md.l 0xB089FD0 1
+0b089fd0: 30000000    ...0
+(IPQ40xx) # md.l 0xB099FD0 1
+0b099fd0: 30000000    ...0
+(IPQ40xx) # md.l 0xB0A9FD0 1
+0b0a9fd0: 30000000    ...0
+
+IPQ8064 is a bit weird, both SAW-s from DTS show all zeros:
+(IPQ) # md.l 0x2089FD0 1
+02089fd0: 00000000    ....
+(IPQ) # md.l 0x2099FD0 1
+02099fd0: 00000000    ....
+
+However some old datasheet says: 0x02011FD0 APCS_VERSION
+
+(IPQ) # md.l 0x02011FD0 1
+02011fd0: 10010000    ....
+
+But It also says that minor and step are both bits 15:0 which makes no 
+sense.
+
+Hope this helps,
+Robert
+
 >
-Sorry, I've been busy with other stuff. I thought I will fix this once I 
-find a bit of spare time.
-
-IMHO the clock management is a bit over-engineered, as there is little 
-(if any) benefit from such fine grade clock management. That clock is 
-needed only for the AHB related part of the TMU (reading/writing the 
-registers). The IRQ generation and temperature measurement is clocked 
-from so called 'sclk' (special clock).
-
-I also briefly looked at the code and the internal lock doesn't look to 
-be really necessary assuming that the thermal core already serializes 
-all the calls.
-
-Best regards
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
-
+>>> +      - items:
+>>> +          - enum:
+>>> +              - qcom,sdm660-gold-saw2-v4.1-l2
+>>> +              - qcom,sdm660-silver-saw2-v4.1-l2
+>>> +              - qcom,msm8998-gold-saw2-v4.1-l2
+>>> +              - qcom,msm8998-silver-saw2-v4.1-l2
+>>> +              - qcom,msm8909-saw2-v3.0-cpu
+>>> +              - qcom,msm8916-saw2-v3.0-cpu
+>>> +              - qcom,msm8226-saw2-v2.1-cpu
+>>> +              - qcom,msm8974-saw2-v2.1-cpu
+>>> +              - qcom,apq8084-saw2-v2.1-cpu
+>>> +              - qcom,apq8064-saw2-v1.1-cpu
+>>> +          - const: qcom,saw2
+>>>
+>>>     reg:
+>>> -    description: Base address and size of the SPM register region
+>>> -    maxItems: 1
+>>> +    description: Base address and size of the SPM register region. An optional
+>>> +      second element specifies the base address and size of the alias register
+>>> +      region.
+>>> +    minItems: 1
+>>> +    maxItems: 2
+>> And it seems second region is not present on some variants?
+> The second region is a bit of a puzzle for me as it doesn't seem to be
+> used at all.
+>
