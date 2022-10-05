@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B1B95F50FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Oct 2022 10:38:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E310D5F50FE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Oct 2022 10:38:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229914AbiJEIiB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Oct 2022 04:38:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39748 "EHLO
+        id S230085AbiJEIiC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Oct 2022 04:38:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230011AbiJEIh7 (ORCPT
+        with ESMTP id S230058AbiJEIiA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Oct 2022 04:37:59 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0162733F3
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Oct 2022 01:37:58 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id b4so17891232wrs.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Oct 2022 01:37:58 -0700 (PDT)
+        Wed, 5 Oct 2022 04:38:00 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 991BE733D8
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Oct 2022 01:37:59 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id a10so12500737wrm.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Oct 2022 01:37:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=q9iQElDOirbdVJ/B2wLi7+yO3Wyao1noVf51AiDgJFo=;
-        b=OlZtr53AiAqaCEsScp6R2DjaV8/Fb58pybt1lgbnH1EgriiP6LztWPIzooExFSAD76
-         Z8j6s0Ka7MEt0NlNVNhmVGUxKgK386YUGGF8uTLnV4/TU6kklTCpZakSoMJ6xZGc7Jvl
-         DiDAsgfgSZcKMovt4bsYV/+0fIPNy0UJjhFZ1kJFz+IhxB8mGC0iI97bCC7qZZ+Vodx8
-         3+TCboQO0Cty3kxXJA4GkLspQVRi8+fw/Gw1xWf42w/W92nYWuTVvvJ50BPwKl/0dxXD
-         BIr6W8R2U1z0BXDEllV+CUVSoBPXzBBcxb1VJfV1Zr9r9OYjEm9InX5qKdpNZId3ncRo
-         GP6w==
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Yu39gQJp1k9p/w40T6pLSbtngQhYyXde8HjMY4LOfK0=;
+        b=qEKt61Bke3+xQbNG1E187MayG/wBQjR4qOaY9k5l4hyXa6E0Q+u4VMmOlxth7VdEH+
+         PBD07mVqinGn7kJBdBIcK3PrsPkMcnK/Ef135fh/KgioWDGArbeUvt0bw9ZaZQpa8nGY
+         6+fV9en+9JbqPohuRKClB5yArccZhSTw+b4PyNhw+MCHr+jQdCaw8/IEAeqWRT7ANXDK
+         cTkcEazbs/3fX/xmoIrGK31prxTO/qYYxuGk82OMQT4YVteAmfl3rlxjxf8I7lra3yRz
+         +0TpImK1k2MGo5+PAwji5VcBVvlec36+AmJ2z9RM7MRZs/PrzOUxWKY4CgGERhV2ApFJ
+         7g6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=q9iQElDOirbdVJ/B2wLi7+yO3Wyao1noVf51AiDgJFo=;
-        b=5xB2hZtL3BSKeedIbSa3Fzm43x1vhXyK0+/IgsZFmcO9p9WYBLlDOOgoTrmpfeL/l2
-         qRNvlnNkj3sunlM8rdwnkERNDwPFnWUBvdfTtK9R6K66As+8Tzk15ic59XY/27I8pTB1
-         LJP66rOBJlJTKkrUmOGLzluNw4qGjEDMNq2mcMjfusGPW3w5IsBK72tSTHwhRbUccThS
-         BSRJU+OT36Eh7HcTvwu8zFXMbAT/1OM2mBMFXI9UXh0DLglBH1mVGZJShcmpj1ctVbrt
-         VZk/U69kr65k8zicoug8tfidqDB7YtYkpktfi8/c71demq7BIMzKkmFMpsbZkxfhnGQ/
-         H8Xg==
-X-Gm-Message-State: ACrzQf1yiRcDCG6kidCh4EahWMnaMIb+Cteysc1fCy2ig3mFLaVTaIVY
-        Z/y9jhrV+lz183hZIHGfsi7F/A==
-X-Google-Smtp-Source: AMsMyM67V0zhQ5v9XoNEOaJtjEfK70k66EnzjM1HriUB1ZeCiVO06hT9kkF9RIZKg2KyVjhY5zxbMw==
-X-Received: by 2002:a05:6000:1acf:b0:22b:36ad:28e with SMTP id i15-20020a0560001acf00b0022b36ad028emr18582345wry.314.1664959077080;
-        Wed, 05 Oct 2022 01:37:57 -0700 (PDT)
+         :subject:date:message-id:reply-to;
+        bh=Yu39gQJp1k9p/w40T6pLSbtngQhYyXde8HjMY4LOfK0=;
+        b=zo7lRzFTteI+wdnhAPpaWpxbK9UcrswZQZi0yn8Q0mtTNLlYj00ZqDub2MXuz1IKYn
+         SoUvTI+YkJhkOSxqAt1KbB5FnvENn3mx6KLvJeOy5K6a3SFE20/bqh+LLzBAFDP6pAqp
+         A5Ej0CSCTNE3Cr87qMhqQMkSBT7wdsjweca/K1CFH0F0e4qpXohOdnqMBx26v+pc4962
+         7sYBtjwR7qXdzsXGLxgmro+GYDTH39RDDSeltSF5zztoewpGRhJ0KZahPsUFUCyznQgi
+         C1Vg7+5hG4M/XHn30fw5lcuu6uy3Xqzi5U+Iy5rYvkIgQn+zzGpDzFBmlLc07c8hdyvE
+         n8Ng==
+X-Gm-Message-State: ACrzQf0UNivJuwdstfKTruGSMMIoQKSW8C6uYIj57ALIBziiptETU4J4
+        rFqULu1qvwcAaODoM8tATBqcC+GxSBdCoA==
+X-Google-Smtp-Source: AMsMyM7bNw76EJwbBZTKLxZ9P0hHEG9rg8kcZtgbyMG2YuuMWFvu+NAhqM0/fCThCSJczwBJ2r+YvQ==
+X-Received: by 2002:a5d:4882:0:b0:22e:3c67:75ef with SMTP id g2-20020a5d4882000000b0022e3c6775efmr9327565wrq.6.1664959078181;
+        Wed, 05 Oct 2022 01:37:58 -0700 (PDT)
 Received: from localhost.localdomain (hst-221-6.medicom.bg. [84.238.221.6])
-        by smtp.gmail.com with ESMTPSA id g6-20020a05600c310600b003b47e75b401sm1318171wmo.37.2022.10.05.01.37.56
+        by smtp.gmail.com with ESMTPSA id g6-20020a05600c310600b003b47e75b401sm1318171wmo.37.2022.10.05.01.37.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Oct 2022 01:37:56 -0700 (PDT)
+        Wed, 05 Oct 2022 01:37:57 -0700 (PDT)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
 To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
 Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH 1/3] venus: firmware: Correct reset bit
-Date:   Wed,  5 Oct 2022 11:37:28 +0300
-Message-Id: <20221005083730.963322-2-stanimir.varbanov@linaro.org>
+Subject: [PATCH 2/3] venus: firmware: Correct non-pix start and end addresses
+Date:   Wed,  5 Oct 2022 11:37:29 +0300
+Message-Id: <20221005083730.963322-3-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221005083730.963322-1-stanimir.varbanov@linaro.org>
 References: <20221005083730.963322-1-stanimir.varbanov@linaro.org>
@@ -71,32 +72,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The reset bit for A9SS reset register is BIT(4) and for XTSS_SW_RESET
-it is BIT(0). Use the defines for those reset bits.
+The default values for those registers are zero.
 
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 ---
- drivers/media/platform/qcom/venus/firmware.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/venus/firmware.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
-index 14b6f1d05991..3851cedc3329 100644
+index 3851cedc3329..71e43611d1cf 100644
 --- a/drivers/media/platform/qcom/venus/firmware.c
 +++ b/drivers/media/platform/qcom/venus/firmware.c
-@@ -68,9 +68,11 @@ int venus_set_hw_state(struct venus_core *core, bool resume)
- 		venus_reset_cpu(core);
- 	} else {
- 		if (IS_V6(core))
--			writel(1, core->wrapper_tz_base + WRAPPER_TZ_XTSS_SW_RESET);
-+			writel(WRAPPER_XTSS_SW_RESET_BIT,
-+			       core->wrapper_tz_base + WRAPPER_TZ_XTSS_SW_RESET);
- 		else
--			writel(1, core->wrapper_base + WRAPPER_A9SS_SW_RESET);
-+			writel(WRAPPER_A9SS_SW_RESET_BIT,
-+			       core->wrapper_base + WRAPPER_A9SS_SW_RESET);
- 	}
+@@ -38,8 +38,8 @@ static void venus_reset_cpu(struct venus_core *core)
+ 	writel(fw_size, wrapper_base + WRAPPER_FW_END_ADDR);
+ 	writel(0, wrapper_base + WRAPPER_CPA_START_ADDR);
+ 	writel(fw_size, wrapper_base + WRAPPER_CPA_END_ADDR);
+-	writel(fw_size, wrapper_base + WRAPPER_NONPIX_START_ADDR);
+-	writel(fw_size, wrapper_base + WRAPPER_NONPIX_END_ADDR);
++	writel(0, wrapper_base + WRAPPER_NONPIX_START_ADDR);
++	writel(0, wrapper_base + WRAPPER_NONPIX_END_ADDR);
  
- 	return 0;
+ 	if (IS_V6(core)) {
+ 		/* Bring XTSS out of reset */
 -- 
 2.25.1
 
