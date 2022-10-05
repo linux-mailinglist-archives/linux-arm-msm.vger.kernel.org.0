@@ -2,80 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E68C5F5680
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Oct 2022 16:35:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 986D65F57A3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Oct 2022 17:34:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230050AbiJEOfN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Oct 2022 10:35:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43864 "EHLO
+        id S230188AbiJEPeC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Oct 2022 11:34:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229721AbiJEOfM (ORCPT
+        with ESMTP id S230360AbiJEPeA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Oct 2022 10:35:12 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2DAC26AF6
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Oct 2022 07:35:10 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id by36so1224194ljb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Oct 2022 07:35:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=y1S8cIL/t+i/w+7ajcigJYXJl22/AGlTl26fkGAzMo0=;
-        b=oCQhdCAgcuRM+QLekY2rE1uRXOutGsEz/oDwQkeMtLoLObAHWo3xYvt16/RK8/IocL
-         6nuHfBvqOrs1ylZQxoe0X2ZBGzGq+wiV++XK3Q7/TdvDTDz2ysCjjBPYxo9jCKXzb4zp
-         u+LfMS9Iv4h35ojbTwtj4G2XAg8w3F0RhFNodHvtXAGgAsCSshxnxefMrQBLPdF7Rzsk
-         6mZICFjUq/pNhGT1guTu1dQdQIkPiyz1JH3HAiLBgwK9nrmI+s+wRdp1yKJxNnt+lA4k
-         z0c8M1d+np202c8k/H5NRvLdMKmGXM/nY4waCe5xgOPBQAYPe0YqRKG5SjfJQOLViSqa
-         UG3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=y1S8cIL/t+i/w+7ajcigJYXJl22/AGlTl26fkGAzMo0=;
-        b=qbavtErfNVjozlek5AFVCk6gydoB4hDKt2X+9s3ARn/hrhgON+k1rzPfqZS9cHxxyS
-         YrKW1kg7AeI06cvFj7nq63lHAGsxU/EWRd2AUMR+tpyY1dDf/ETlfu4wcqCME2fckGV7
-         ul0rlXJIJrZmYhnbFK9ioCESgBuOnAD7/pClr9jsn/5N/NquMpBsXEgKylOWcvmWHbJn
-         0nSYvk9pzlwUBo+nnYSqUzK7mM2PM6djHDT+fxvBdqTPUAfuKVjkMaFKVTTLo2un1L3Z
-         bQi4uOEPI7OsHeGJiQ9DJIqbxnFgjCaHTC7rLJ4robz8e5cqbphOFqZbJpjMSd6NIVqh
-         HlLQ==
-X-Gm-Message-State: ACrzQf2TgKHO/DkdT7bnkFfNF/wQordPGEKgLcqmJEdWBFwTsFknObaR
-        l68qEqMWQIcsiDcKwQaAZfagNg==
-X-Google-Smtp-Source: AMsMyM5gYiTiPoFAcBIpGobzjv7RJqB4+ZzrpkW4wb0m+ybo3NYut8ulT8IwY1CdLtBif4rtJ5l+VQ==
-X-Received: by 2002:a2e:81c7:0:b0:26d:d0a3:138c with SMTP id s7-20020a2e81c7000000b0026dd0a3138cmr5712799ljg.259.1664980509053;
-        Wed, 05 Oct 2022 07:35:09 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id m22-20020a056512115600b0048ae518364dsm2359728lfg.148.2022.10.05.07.35.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Oct 2022 07:35:08 -0700 (PDT)
-Message-ID: <1ed91afd-74d2-1ab0-0d15-1b6e0dfba13b@linaro.org>
-Date:   Wed, 5 Oct 2022 16:35:07 +0200
+        Wed, 5 Oct 2022 11:34:00 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4ADC77E94;
+        Wed,  5 Oct 2022 08:33:53 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 295FJqlL024692;
+        Wed, 5 Oct 2022 15:33:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=pPShslKtDcKhs1DoTYJVYGFbNVdIcHpNSP0dfUz/3A8=;
+ b=mXc4KJbAIO9TtcijhW8xIamKhychlbpTMNu1hYKl/31zzfzWSEuGDvAL9qCy2IjNGwkE
+ BGluuU7NGFoaKzn0neGMWjAreWbGEAhxG0++gZdMxrBOf8PVJsFIxqxAq4aEYaBHSaxT
+ +r4x0cbEhhQGiCkmnyBoZ8z7uygdwIDmKe7s1zCmeL9wkQW9M5IpesQ3XIUI0TqlFQGr
+ eZ1HVZ32sO8YKdN076eAn555E+e1GHqIPBPn/+ZrpgvdoU57NREd85y8co9f4jbuNXcc
+ yNUZtbZ1MwYg7ybtvL4WpNXvTaI6b0ZYNeGAysaSZJKseI//B5VBTZ8L2HRg7wcHQqII 3Q== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k0escug7f-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 05 Oct 2022 15:33:30 +0000
+Received: from pps.filterd (NALASPPMTA01.qualcomm.com [127.0.0.1])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 295FUnTr024827;
+        Wed, 5 Oct 2022 15:33:29 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 3jxemkprsq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 05 Oct 2022 15:33:29 +0000
+Received: from NALASPPMTA01.qualcomm.com (NALASPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 295FXTYv026781;
+        Wed, 5 Oct 2022 15:33:29 GMT
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 295FXSI3026779
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 05 Oct 2022 15:33:29 +0000
+Received: from [10.38.242.178] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 5 Oct 2022
+ 08:33:24 -0700
+Message-ID: <57732804-9eb1-2f92-f2cd-0ae66f3e28cd@quicinc.com>
+Date:   Wed, 5 Oct 2022 08:33:23 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH v7 3/3] pinctrl: qcom: add sdm670 pinctrl
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 5/5] drm/dsc: Prevent negative BPG offsets from shadowing
+ adjacent bitfields
 Content-Language: en-US
-To:     Richard Acayan <mailingradian@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        <phone-devel@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lee Jones <lee@kernel.org>, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20221004215814.11694-1-mailingradian@gmail.com>
- <20221004215814.11694-4-mailingradian@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221004215814.11694-4-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Javier Martinez Canillas <javierm@redhat.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+        Lyude Paul <lyude@redhat.com>
+References: <20221001190807.358691-1-marijn.suijten@somainline.org>
+ <20221001190807.358691-6-marijn.suijten@somainline.org>
+ <55d7e20b-79cd-ece6-b643-8b542beb7474@quicinc.com>
+ <20221004215745.zdfvulqx4exlujgk@SoMainline.org>
+ <1a5ed43e-914e-079d-96bf-c9e3912a9473@quicinc.com>
+ <20221004223940.stfsyvubx7ecd3a3@SoMainline.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20221004223940.stfsyvubx7ecd3a3@SoMainline.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: WzHDpl8xPPlxpi_KbQxVYE88nZlVV2UB
+X-Proofpoint-ORIG-GUID: WzHDpl8xPPlxpi_KbQxVYE88nZlVV2UB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-10-05_03,2022-10-05_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 mlxlogscore=999
+ phishscore=0 bulkscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210050097
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,30 +113,107 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/10/2022 23:58, Richard Acayan wrote:
-> The Snapdragon 670 has a Top-Level Mode Multiplexer (TLMM) for various
-> features. Add a driver to support it.
 
-(...)
 
-> +
-> +const int sdm670_reserved_gpios[] = {
-> +	58, 59, 60, 61, 62, 63, 64, 69, 70, 71, 72, 73, 74, 104, -1
-> +};
-> +
-> +static const struct msm_pinctrl_soc_data sdm670_pinctrl = {
-> +	.pins = sdm670_pins,
-> +	.npins = ARRAY_SIZE(sdm670_pins),
-> +	.functions = sdm670_functions,
-> +	.nfunctions = ARRAY_SIZE(sdm670_functions),
-> +	.groups = sdm670_groups,
-> +	.ngroups = ARRAY_SIZE(sdm670_groups),
-> +	.ngpios = 151,
-> +	.reserved_gpios = sdm670_reserved_gpios,
-> +	.complement_fw_gpio_ranges = true,
+On 10/4/2022 3:39 PM, Marijn Suijten wrote:
+> On 2022-10-04 15:31:10, Abhinav Kumar wrote:
+>>
+>>
+>> On 10/4/2022 2:57 PM, Marijn Suijten wrote:
+>>> [..]
+>>> Alas, as explained in the cover letter I opted to perform the masking in
+>>> the PPS packing code as the DSC block code also reads these values, and
+>>> would suddenly write 6-bit intead of 8-bit values to the
+>>> DSC_RANGE_BPG_OFFSET registers.  Quick testing on the mentioned sdm845
+>>> platform shows no regressions, but I'm not sure if that's safe to rely
+>>> on?
+>>
+>> I looked up the MDP_DSC_0_RANGE_BPG_OFFSET_* registers.
+>> They take only a 6-bit value according to the SW documentation ( bits 5:0 )
+>>
+>> It was always expecting only a 6-bit value and not 8.
+>>
+>> So this change is safe.
+> 
+> Ack, I think that implies I should make this change and move the masks
+> to the DSI driver?
 
-This still fails to build... v6 was not compilable, v7 is still.
+hmm .... downstream seems to have the & just before the reg write
 
-Best regards,
-Krzysztof
+https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/DISPLAY.LA.2.0.r1-08000-WAIPIO.0/msm/sde/sde_hw_dsc_1_2.c#L310
 
+But yes, we can move this to the dsi calculation to match what others 
+are doing. I am fine with that.
+
+> 
+>>>> If you want to move to helper, other drivers need to be changed too to
+>>>> remove duplicate & 0x3f.
+>>>
+>>> Sure, we only have to confirm whether those drivers also read back the
+>>> value(s) in rc_range_params, and expect / allow this to be 8 instead of
+>>> 6 bits.
+>>>
+>>>> FWIW, this too has already been fixed in the latest downstream driver too.
+>>>
+>>> What is this supposed to mean?  Is there a downstream DPU project that
+>>> has pending patches needing to be upstreamed?  Or is the downstream SDE,
+>>> techpack/display, or whatever it is called nowadays, slowly using more
+>>> DRM structs like drm_dsc_config and this drm_dsc_pps_payload_pack()
+>>> helper function as pointed out in an earlier mail?
+>>>
+>>
+>> No, what I meant was, the version of downstream driver based on which
+>> the upstream DSC was made seems to be an older version. Downstream
+>> drivers keep getting updated and we always keep trying to align with
+>> upstream structs.
+>>
+>> This is true not just for DSC but even other blocks.
+>>
+>> So as part of that effort, we started using struct drm_dsc_config . That
+>> change was made on newer chipsets. But the downstream SW on sdm845 based
+>> on which the DSC was upstreamed seems like didnt have that. Hence all
+>> this redundant math happened.
+>>
+>> So this comment was more of a explanation about why this issue happened
+>> even though latest downstream didnt have this issue.
+> 
+> Thanks, I understood most of that but wasn't aware these exact "issues"
+> were also addressed downstream (by i.e. also using the upstream
+> structs).
+> 
+
+Even I wasnt. When I was reviewing this series, it seemed like a valid 
+change so I checked the latest downstream code like i always do to see 
+whether and how this is handled and found that these issues were 
+addressed there so thought i would update that here.
+
+>>> Offtopic: are SDE and DPU growing closer together, hopefully achieving
+>>> feature parity allowing the SDE project to be dropped in favour of a
+>>> fully upstreamed DPU driver for day-one out-of-the-box mainline support
+>>> for new SoCs (as long as work is published and on its way upstream)?
+>>>
+>>
+>> There is still a lot of gap between SDE and DPU drivers at this point.
+>> We keep trying to upstream as many features as possible to minimize the
+>> gap but there is still a lot of work to do.
+> 
+> Glad to hear, but that sounds like a very hard to close gap unless
+> downstream "just works on DPU" instead of having parallel development on
+> two "competing" drivers for the exact same hardware.
+> 
+Its not really parallel development OR competing drivers.
+The design of these features downstream (not just DSC but many others) 
+is quite different because some of the downstream designs wont get 
+accepted upstream as its tightly coupled with our 
+compositor/device-tree. Thats where we are slowly trying to implement 
+these in an upstream compatible way.
+
+BTW, that being said. Its not always the case that every issue seen 
+upstream has already been fixed downstream. In fact, on some occasions 
+we found something fixed in upstream in a better way and ported them 
+downstream too.
+
+Thanks
+
+Abhinav
+> - Marijn
