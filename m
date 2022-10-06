@@ -2,160 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 656DC5F5F3A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 04:56:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 839835F5FC5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 05:50:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230062AbiJFC4n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Oct 2022 22:56:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39034 "EHLO
+        id S230017AbiJFDuq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Oct 2022 23:50:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230063AbiJFC4U (ORCPT
+        with ESMTP id S229956AbiJFDuo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Oct 2022 22:56:20 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DBEA7FFAB;
-        Wed,  5 Oct 2022 19:54:56 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2962f2pB017580;
-        Thu, 6 Oct 2022 02:54:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=22YcYq+W1feRc4HBuCzwqSEcjToWsa3pJjCRJMDKwOE=;
- b=G/650jOgfd3+wyx4fOLpTBsBSC/14eGB1u//NUP2Jhjh7j4lmluJDJ03GATl124QxUj/
- hqYPcgOJ14rw3cTouERXRiPl++V6qCj9FWzdGjrnwY4hGqhueQGsDHCOV+FgwhoTC04+
- AjgcgogSR0q0kxjAn0hIS4rsW2weBO+5Z18tr2QCx59sNuusCoTeVQCG8IWt723A4BBq
- cDybgfsBOCnZSV4lg0mqdFiRNvBc1dzmXOkHwWZ+XsmDIPbuH8URe7j0m5NSMLSJ+Ck3
- rLdMWNXNwR5cabewv7yr+hHYXRMKSFvYny6HCK+85qxWXw/zeAME74bJS4WOE9tC9Kn6 pw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k0escvw01-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 06 Oct 2022 02:54:50 +0000
-Received: from pps.filterd (NALASPPMTA01.qualcomm.com [127.0.0.1])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2962sn4O020936;
-        Thu, 6 Oct 2022 02:54:49 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 3jxemkrcn2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 06 Oct 2022 02:54:49 +0000
-Received: from NALASPPMTA01.qualcomm.com (NALASPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2962snrJ020929;
-        Thu, 6 Oct 2022 02:54:49 GMT
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 2962snga020928
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 06 Oct 2022 02:54:49 +0000
-Received: from hu-ppareek-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Wed, 5 Oct 2022 19:54:45 -0700
-Date:   Thu, 6 Oct 2022 08:24:41 +0530
-From:   Parikshit Pareek <quic_ppareek@quicinc.com>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        "Shazad Hussain" <quic_shazhuss@quicinc.com>,
-        Brian Masney <bmasney@redhat.com>,
-        "Johan Hovold" <johan@kernel.org>
-Subject: Re: [PATCH v5 0/3] arm64: dts: qcom: add dts for sa8540p-ride board
-Message-ID: <20221006025441.GA31711@hu-ppareek-blr.qualcomm.com>
-References: <20221003125444.12975-1-quic_ppareek@quicinc.com>
- <02365772-de32-56ab-65a2-0a2fbccb5e2e@somainline.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <02365772-de32-56ab-65a2-0a2fbccb5e2e@somainline.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: YzRmov9snVSBKpE-BcNYVsx8tBVMPKhJ
-X-Proofpoint-GUID: YzRmov9snVSBKpE-BcNYVsx8tBVMPKhJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-10-05_05,2022-10-05_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 adultscore=0 clxscore=1015 suspectscore=0 mlxscore=0
- mlxlogscore=726 impostorscore=0 spamscore=0 bulkscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210060016
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 5 Oct 2022 23:50:44 -0400
+Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A887D5AA06
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Oct 2022 20:50:41 -0700 (PDT)
+Received: from epcas2p1.samsung.com (unknown [182.195.41.53])
+        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20221006035038epoutp04a779c18c79a1c719b278e3d8ac0d4117~bXlx-kjB81953419534epoutp04X
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 03:50:38 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20221006035038epoutp04a779c18c79a1c719b278e3d8ac0d4117~bXlx-kjB81953419534epoutp04X
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1665028238;
+        bh=LzQDMp/vgcthjbAiSfM0vqm/Rw8HxYTxiy78W5X/IwM=;
+        h=Subject:Reply-To:From:To:CC:In-Reply-To:Date:References:From;
+        b=qSXgycsEYnHEXkftofV7BREyr7YIJ2foz/+ebuP4yy4BPCaZ0qcvUU5D979X7Qo0a
+         UilbuFo2n3n/JFcc2q+TvdH/FdL2ge1aYY8RNDLucmAC5KT9kWN8sAX8Ybmpyqbz4d
+         G+B7G3SP8PHX8yRSfcmict2ZeXskYDDcrrF+2S5g=
+Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
+        epcas2p3.samsung.com (KnoxPortal) with ESMTP id
+        20221006035038epcas2p3dae69a1be35c30c65f01e86135fd757f~bXlxe1Bpq1288812888epcas2p3m;
+        Thu,  6 Oct 2022 03:50:38 +0000 (GMT)
+Received: from epsmges2p4.samsung.com (unknown [182.195.36.99]) by
+        epsnrtp4.localdomain (Postfix) with ESMTP id 4Mjcsn4rbPz4x9Q7; Thu,  6 Oct
+        2022 03:50:37 +0000 (GMT)
+X-AuditID: b6c32a48-1cffb7000000186f-a3-633e508db6b3
+Received: from epcas2p3.samsung.com ( [182.195.41.55]) by
+        epsmges2p4.samsung.com (Symantec Messaging Gateway) with SMTP id
+        60.7C.06255.D805E336; Thu,  6 Oct 2022 12:50:37 +0900 (KST)
+Mime-Version: 1.0
+Subject: RE: [PATCH v2 01/17] ufs: core: Probe for ext_iid support
+Reply-To: daejun7.park@samsung.com
+Sender: Daejun Park <daejun7.park@samsung.com>
+From:   Daejun Park <daejun7.park@samsung.com>
+To:     Asutosh Das <quic_asutoshd@quicinc.com>,
+        "quic_cang@quicinc.com" <quic_cang@quicinc.com>,
+        "quic_nitirawa@quicinc.com" <quic_nitirawa@quicinc.com>,
+        "quic_rampraka@quicinc.com" <quic_rampraka@quicinc.com>,
+        "quic_bhaskarv@quicinc.com" <quic_bhaskarv@quicinc.com>,
+        "quic_richardp@quicinc.com" <quic_richardp@quicinc.com>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+        Daejun Park <daejun7.park@samsung.com>,
+        cpgsproxy3 <cpgsproxy3@samsung.com>
+CC:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "quic_nguyenb@quicinc.com" <quic_nguyenb@quicinc.com>,
+        "quic_xiaosenh@quicinc.com" <quic_xiaosenh@quicinc.com>,
+        "bvanassche@acm.org" <bvanassche@acm.org>,
+        "avri.altman@wdc.com" <avri.altman@wdc.com>,
+        "mani@kernel.org" <mani@kernel.org>,
+        "beanhuo@micron.com" <beanhuo@micron.com>
+X-Priority: 3
+X-Content-Kind-Code: NORMAL
+In-Reply-To: <1d21e634e86f26e3a22be3c380a85bd4dd17f1ae.1665017636.git.quic_asutoshd@quicinc.com>
+X-CPGS-Detection: blocking_info_exchange
+X-Drm-Type: N,general
+X-Msg-Generator: Mail
+X-Msg-Type: PERSONAL
+X-Reply-Demand: N
+Message-ID: <20221006035037epcms2p3053f17ec4b42f48657803b98345d843a@epcms2p3>
+Date:   Thu, 06 Oct 2022 12:50:37 +0900
+X-CMS-MailID: 20221006035037epcms2p3053f17ec4b42f48657803b98345d843a
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+X-CPGSPASS: Y
+X-CPGSPASS: Y
+CMS-TYPE: 102P
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrBJsWRmVeSWpSXmKPExsWy7bCmuW5vgF2ywYG5KhYvf15lszj4sJPF
+        YtqHn8wWLw9pWjy6/YzRYtWDcIuJ+8+yW3Rf38FmceDDKkaLhR1zWSyOPH7PbDHp2gY2i6kv
+        jrNb7Ljfzmhx6lCoxfcJ29ktri6+yu4g6HH5irfHplWdbB7f13eweUzcU+fRt2UVo8fnTXIe
+        7Qe6mQLYo7JtMlITU1KLFFLzkvNTMvPSbZW8g+Od403NDAx1DS0tzJUU8hJzU22VXHwCdN0y
+        c4CuV1IoS8wpBQoFJBYXK+nb2RTll5akKmTkF5fYKqUWpOQUmBfoFSfmFpfmpevlpZZYGRoY
+        GJkCFSZkZ5y7m1ZwkK3i3tG0BsZVbF2MnBwSAiYSnbt/snYxcnEICexglLhy8DBjFyMHB6+A
+        oMTfHcIgNcICThIPNz8AqxcSUJJYf3EWO0RcT+LWwzWMIDabgI7E9BP32UHmiAhcY5bY9+sc
+        WBGzwFMmiX1NsRDLeCVmtD9lgbClJbYv3wq2i1MgQeLnGlmIsIbEj2W9zBC2qMTN1W/ZYez3
+        x+YzQtgiEq33zkLVCEo8+LkbKi4pcXvuJqj6fIn/V5ZD2TUS2w7Mg7L1Ja51bGSBeNFXoul1
+        GYjJIqAqsXtRHkSFi8Te1h3MEMdrSyxb+JoZpIRZQFNi/S59EFNCQFniyC0WmJcaNv5mR2cz
+        C/BJdBz+CxffMe8JE4StJrHu53qmCYzKsxChPAvJrlkIuxYwMq9iFEstKM5NTy02KjCBR2ty
+        fu4mRnAS1vLYwTj77Qe9Q4xMHIyHGCU4mJVEeLtm2yYL8aYkVlalFuXHF5XmpBYfYjQFenIi
+        s5Rocj4wD+SVxBuaWBqYmJkZmhuZGpgrifN2zdBKFhJITyxJzU5NLUgtgulj4uCUamAy9q87
+        NmF54QVup6M1vydXyqk0FSfZPbmTwS3cddFgu8Nzw0eWPytvz7q8wk9ibcovrnM7jZ9lvoq4
+        c/vYxRZNNbedxjefmjS17eZ+F5yyzaKnddKD811MTlNNzR4ETp9Uk3+w0umW/PaNVzcJq4S4
+        aErPZ1d2v8H4TypAuCp1V1X4muz9a1nCNI55vgq7E3Run+Har08lQ5vSCkIOz37W/jdTZ/+y
+        B2rl7cW/Jthv1KqZ/Ww3y0lvfr0Ff43UixzvS/z8q8sQc/Ijz3a3ZYXvayLzwsWTOg+8kVl6
+        Xi7z1c3VtjUVGZvmfJg1+cGaIxxZaUwGi67L75pmx+6yYYX+OkWHvifdGXabNe4JmHYqsRRn
+        JBpqMRcVJwIAoFXxZ0sEAAA=
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20221006010736epcas2p20777225a537d4f2124e9a7264b2fffcf
+References: <1d21e634e86f26e3a22be3c380a85bd4dd17f1ae.1665017636.git.quic_asutoshd@quicinc.com>
+        <cover.1665017636.git.quic_asutoshd@quicinc.com>
+        <CGME20221006010736epcas2p20777225a537d4f2124e9a7264b2fffcf@epcms2p3>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 03, 2022 at 11:05:11PM +0200, Konrad Dybcio wrote:
-> 
-> On 03/10/2022 14:54, Parikshit Pareek wrote:
-> > Change in v5:
-> > - Moved the usb and ufs nodes from sa8540p-adp.dtsi file to respective
-> >    board specific dts files: sa8295p-adp.dts and sa8540p-adp-ride.dts.
-> 
-> Is there any benefit in this? USB0/2 and UFS (not UFS card) nodes are
-> identical
-> 
-> in the 2 files.
-Similar boards might come in future, anticipated to be differing mainly
-with respect to usb/ufs. Hence thought it better to put ufs/usb nodes in
-board specific dts.
-
-Regards,
-Parikshit Pareek
-> 
-> 
-> Konrad
-> 
-> >    Took inputs from Shazad Hussain in this regard(John)
-> > - Added more description of the board differences(John)
-> > - Not including Reviewed-by for Krzysztof, because of the new changes to
-> >    be reviewed.
-> > - Removed Reported-by tag(John).
-> > 
-> > Changes in v4:
-> >   - Removed the ufs_card_hc node, as it is not mounted on Qdrive-3 board.
-> >   - Removed usb_1 relared nodes, as usb1 doesn't have any port connected on
-> >     Qdrive3 board.
-> >   - Added Reported-by tag for Shazad(for ufs and usb_1 node removals)
-> > 
-> > Changes in v3:
-> >   - Added Acked-by tag (Krzysztof)
-> >   - Renamed dtsi to sa8540p-adp.dtsi (John)
-> >   - Removed copyright from sa8295-adp.dts and sa8295-adp.dtsi(John)
-> >   - Added cover letter
-> > 
-> > change in v2:
-> > - Make dt-binding patch as the first one in the patch set
-> > - Add , after year 2022, in the license header
-> > 
-> > Initial version:
-> > - Move the common nodes to sa8540p-adp.dtsi, and create qrive-3 board
-> >    specific file sa8540p-adp-ride.dts.
-> > 
-> > 
-> > Parikshit Pareek (3):
-> >    dt-bindings: arm: qcom: Document additional sa8540p device
-> >    arm64: dts: qcom: sa8295p: move common nodes to dtsi
-> >    arm64: dts: qcom: introduce sa8540p-ride dts
-> > 
-> >   .../devicetree/bindings/arm/qcom.yaml         |   1 +
-> >   arch/arm64/boot/dts/qcom/Makefile             |   1 +
-> >   arch/arm64/boot/dts/qcom/sa8295p-adp.dts      | 528 +++++-------------
-> >   arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts |  71 +++
-> >   .../{sa8295p-adp.dts => sa8540p-adp.dtsi}     | 133 -----
-> >   5 files changed, 219 insertions(+), 515 deletions(-)
-> >   rewrite arch/arm64/boot/dts/qcom/sa8295p-adp.dts (70%)
-> >   create mode 100644 arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts
-> >   copy arch/arm64/boot/dts/qcom/{sa8295p-adp.dts => sa8540p-adp.dtsi} (72%)
-> > 
+Hi Asutosh=C2=A0Das,=0D=0A=0D=0A>diff=C2=A0--git=C2=A0a/include/ufs/ufshcd.=
+h=C2=A0b/include/ufs/ufshcd.h=0D=0A>index=C2=A07fe1a92..da1eb8a=C2=A0100644=
+=0D=0A>---=C2=A0a/include/ufs/ufshcd.h=0D=0A>+++=C2=A0b/include/ufs/ufshcd.=
+h=0D=0A>=40=40=C2=A0-737,6=C2=A0+737,7=C2=A0=40=40=C2=A0struct=C2=A0ufs_hba=
+_monitor=C2=A0=7B=0D=0A>=C2=A0=C2=A0*=C2=A0=40outstanding_lock:=C2=A0Protec=
+ts=C2=A0=40outstanding_reqs.=0D=0A>=C2=A0=C2=A0*=C2=A0=40outstanding_reqs:=
+=C2=A0Bits=C2=A0representing=C2=A0outstanding=C2=A0transfer=C2=A0requests=
+=0D=0A>=C2=A0=C2=A0*=C2=A0=40capabilities:=C2=A0UFS=C2=A0Controller=C2=A0Ca=
+pabilities=0D=0A>+=C2=A0*=C2=A0=40mcq_capabilities:=C2=A0UFS=C2=A0Multi=C2=
+=A0Command=C2=A0Queue=C2=A0capabilities=0D=0A=0D=0AMaybe=20UFS=C2=A0Multi=
+=20Circular=20Queue?=0D=0A=0D=0AThanks,=0D=0ADaejun=0D=0A
