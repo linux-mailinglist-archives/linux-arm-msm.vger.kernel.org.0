@@ -2,474 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F35355F69EF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 16:45:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBFF45F6A15
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 16:56:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231308AbiJFOpm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 10:45:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49654 "EHLO
+        id S230089AbiJFO4T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 10:56:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231481AbiJFOp0 (ORCPT
+        with ESMTP id S231219AbiJFO4Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 10:45:26 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C49388DDF
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 07:45:23 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id j23so2375237lji.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 07:45:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=ODUVF+ADFuONk9DIm7oWnZ1pFGRmMG3IeZkVdbzs4HA=;
-        b=YRKkCkJFSWOD3hBDDQbE0FirU5osZRNy7JE4ucYE80q56YkgB5Ep7VaJJd/ubf6EC4
-         7kOFCGROSzcVQKaQWq/UWOdShvwLThWGzsMZiMeqogG6QmtTUOZi79+W3eVjzx2pQRQ2
-         baVkGXZV4rZCTe7Y0EmPI4z4tNstOdw9K2biZzyTbKhPB7fGO4hmTVNrA0gHuafahJVf
-         92HM1gdKKHovUtFKspGfwQEbu9FOCriQ2tb4iShx0vn1n7XqiEJPkag2AaIPBTky3apv
-         /gN60QHZkBAsSxsyr9plp4sfyIRD0MPlu8MUKWIkyXYUk8u5+id71Um+oW8kerbX5O35
-         EFLw==
+        Thu, 6 Oct 2022 10:56:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D1C29AFE0
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 07:56:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1665068174;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=hvu927jcP5VOBqnit88bPG8K5LsmKJyGG9EvVu5KyBM=;
+        b=aCEBDeflMlDv7GxLn7Fu2A0xtCaMDDSK4xYOJMQb2zSFr/YTx/QVs+XslVU3d+P+dgJZYZ
+        9/bjm9Go0AUoHNiwv+CqqBxNVvfaz3s+2ZGUgFql4EmpV+u4JFgLQWsY+vKpXTPDXo/KB/
+        q+WnxBxYIXE13M91fdpFCm7EKljoM2Y=
+Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
+ [209.85.166.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-86-VpuFv-J3MUia3KyCSxE_CQ-1; Thu, 06 Oct 2022 10:56:07 -0400
+X-MC-Unique: VpuFv-J3MUia3KyCSxE_CQ-1
+Received: by mail-il1-f199.google.com with SMTP id j29-20020a056e02219d00b002f9b13c40c5so1702805ila.21
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 07:55:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=ODUVF+ADFuONk9DIm7oWnZ1pFGRmMG3IeZkVdbzs4HA=;
-        b=ME0ss4Gk9oksgv45LN2xfZ6gaXgOHWRnjDVxvInhyUW2wxIaKzL71KOkfBRWh9gkXj
-         W+5MTEotwrsC5S1wxnFnAZMAhg4Xjirvbwr6lxEaFTdHvpJ0uUwacgKlsUNHsMTCeAyg
-         XoyZABRVVGSEO1YKMrmsmDAias27DJC64p/ddLTsC1Y4jmhJ1rDZkp9YFS7gNEjyhELF
-         7QAGcujGFiedkWd3O3+Xb4UvPlitOCEqHoacrw41AXQVDiZ1veTgRARjYbgewE8yXZDA
-         tzW55cnZ8CD/KH5B8IAH+pzaKmyxyQxHMxuxXyccg1QhJUMaTXV9L4C01E2GjX+6cHt2
-         g56g==
-X-Gm-Message-State: ACrzQf0h9WRyxE+4Ye+dvpxkaYAQJT4SGCfWob/cR6T0K4tSJOpaJnu2
-        l4GnZ8q4CMUVGOh2CfCUWlD7m1mUshT6Pw==
-X-Google-Smtp-Source: AMsMyM43VEr0tsnBgf4n9H+qE4F9QNXlzVoPQNOEC6VKOmlQH3obZpgzgZiIZwAoUkbxIwwB1lVr8w==
-X-Received: by 2002:a05:651c:8d:b0:26c:4ef4:e4d8 with SMTP id 13-20020a05651c008d00b0026c4ef4e4d8mr15229ljq.74.1665067521302;
-        Thu, 06 Oct 2022 07:45:21 -0700 (PDT)
-Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id q3-20020a0565123a8300b00494a1e875a9sm2709756lfu.191.2022.10.06.07.45.20
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hvu927jcP5VOBqnit88bPG8K5LsmKJyGG9EvVu5KyBM=;
+        b=dNLdxbehy5LLb2YiAoqW5cfSxRRzB+mhGD5CxxrbmDeEoww4LV1/uR6Ukc7WP10TyK
+         3hXEc3wBoeeIroAIt6Y5FeugGbRPOvx0Pih/Qmcv27oGOhnXyCCyT6OTGKAJvUPbKkom
+         /HqWONc2CN/XW2qhLBjN/hvF2U3DzVhKbmesc99+e+L7VDjP/gJy8Dw3dxU0h0uS4cdn
+         +7O4iaDSxNXoh9/STW6wK5e+oB2PBz1sAXcQIGVPtU+hDnI4xFFcQVvev4q5o5E6T4iU
+         LX5epxca+bYifx4YvY+hf4FUK/WoDY63I7V3wr2jGw+VDwW2B6LJ/Jzqa2jra72LwBa5
+         YNsg==
+X-Gm-Message-State: ACrzQf20shDKcPTZLtTp0oikVPbfOS/4J+iawAzaKVJPn26i4d8zZnwa
+        jPDayYCokQL5Vg4O2Z6p5CkI3gb5OCmeov2OK0LvViiYRh9MDuNEaTcgTWo/Z5cHCG/1vz/51c0
+        E6WzqXAZg6GZqHU1eRDJ4gqq1bQ==
+X-Received: by 2002:a05:6638:248f:b0:363:73fc:cc17 with SMTP id x15-20020a056638248f00b0036373fccc17mr40632jat.257.1665068143918;
+        Thu, 06 Oct 2022 07:55:43 -0700 (PDT)
+X-Google-Smtp-Source: AMsMyM6lCbCh+MPmTjfqYkLRJfeMy/CGiv6Cjxm/4a1eaZr5AusJ2YLiO8ihXN7k4fKIotEsuCwJjw==
+X-Received: by 2002:a05:6638:248f:b0:363:73fc:cc17 with SMTP id x15-20020a056638248f00b0036373fccc17mr40624jat.257.1665068143639;
+        Thu, 06 Oct 2022 07:55:43 -0700 (PDT)
+Received: from x1.. (c-98-239-145-235.hsd1.wv.comcast.net. [98.239.145.235])
+        by smtp.gmail.com with ESMTPSA id z2-20020a05660229c200b006884b050a0asm7848669ioq.18.2022.10.06.07.55.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 07:45:20 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] dt-bindings: pinctrl: qcom,sm8150: convert to dtschema
-Date:   Thu,  6 Oct 2022 16:45:18 +0200
-Message-Id: <20221006144518.256956-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221006144518.256956-1-krzysztof.kozlowski@linaro.org>
-References: <20221006144518.256956-1-krzysztof.kozlowski@linaro.org>
+        Thu, 06 Oct 2022 07:55:43 -0700 (PDT)
+From:   Brian Masney <bmasney@redhat.com>
+To:     andersson@kernel.org
+Cc:     agross@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ahalaney@redhat.com,
+        echanude@redhat.com, johan+linaro@kernel.org
+Subject: [PATCH v4] arm64: dts: qcom: sc8280xp: correct ref clock for ufs_mem_phy
+Date:   Thu,  6 Oct 2022 10:55:29 -0400
+Message-Id: <20221006145529.755521-1-bmasney@redhat.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert Qualcomm SM8150 pin controller bindings to DT schema.  Keep the
-parsing of pin configuration subnodes consistent with other Qualcomm
-schemas (children named with '-state' suffix, their children with
-'-pins').
+The first UFS host controller fails to start on the SA8540P automotive
+board (QDrive3) due to the following errors:
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+    ufshcd-qcom 1d84000.ufs: ufshcd_query_flag: Sending flag query for idn 18 failed, err = 253
+    ufshcd-qcom 1d84000.ufs: ufshcd_query_flag: Sending flag query for idn 18 failed, err = 253
+    ufshcd-qcom 1d84000.ufs: ufshcd_query_flag: Sending flag query for idn 18 failed, err = 253
+    ufshcd-qcom 1d84000.ufs: ufshcd_query_flag_retry: query attribute, opcode 5, idn 18, failed
+        with error 253 after 3 retries
+
+The system eventually fails to boot with the warning:
+
+    gcc_ufs_phy_axi_clk status stuck at 'off'
+
+This issue can be worked around by adding clk_ignore_unused to the
+kernel command line since the system firmware sets up this clock for us.
+
+Let's fix this issue by updating the ref clock on ufs_mem_phy. Note
+that the downstream MSM 5.4 sources list this as ref_clk_parent. With
+this patch, the SA8540P is able to be booted without clk_ignore_unused.
+
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- .../bindings/pinctrl/qcom,sm8150-pinctrl.txt  | 190 ------------------
- .../bindings/pinctrl/qcom,sm8150-pinctrl.yaml | 178 ++++++++++++++++
- 2 files changed, 178 insertions(+), 190 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.txt
- create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.yaml
+Changes since v3:
+- Renamed ref_aux to ref in patch subject. Added Johan's R-b and T-b.
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.txt
-deleted file mode 100644
-index fa37733e5102..000000000000
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.txt
-+++ /dev/null
-@@ -1,190 +0,0 @@
--Qualcomm SM8150 TLMM block
--
--This binding describes the Top Level Mode Multiplexer block found in the
--QCS404 platform.
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: must be "qcom,sm8150-pinctrl"
--
--- reg:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: the base address and size of the north, south, west
--		    and east TLMM tiles.
--
--- reg-names:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Defintiion: names for the cells of reg, must contain "north", "south"
--		    "west" and "east".
--
--- interrupts:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: should specify the TLMM summary IRQ.
--
--- interrupt-controller:
--	Usage: required
--	Value type: <none>
--	Definition: identifies this node as an interrupt controller
--
--- #interrupt-cells:
--	Usage: required
--	Value type: <u32>
--	Definition: must be 2. Specifying the pin number and flags, as defined
--		    in <dt-bindings/interrupt-controller/irq.h>
--
--- gpio-controller:
--	Usage: required
--	Value type: <none>
--	Definition: identifies this node as a gpio controller
--
--- #gpio-cells:
--	Usage: required
--	Value type: <u32>
--	Definition: must be 2. Specifying the pin number and flags, as defined
--		    in <dt-bindings/gpio/gpio.h>
--
--- gpio-ranges:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition:  see ../gpio/gpio.txt
--
--- gpio-reserved-ranges:
--	Usage: optional
--	Value type: <prop-encoded-array>
--	Definition: see ../gpio/gpio.txt
--
--Please refer to ../gpio/gpio.txt and ../interrupt-controller/interrupts.txt for
--a general description of GPIO and interrupt bindings.
--
--Please refer to pinctrl-bindings.txt in this directory for details of the
--common pinctrl bindings used by client devices, including the meaning of the
--phrase "pin configuration node".
--
--The pin configuration nodes act as a container for an arbitrary number of
--subnodes. Each of these subnodes represents some desired configuration for a
--pin, a group, or a list of pins or groups. This configuration can include the
--mux function to select on those pin(s)/group(s), and various pin configuration
--parameters, such as pull-up, drive strength, etc.
--
--
--PIN CONFIGURATION NODES:
--
--The name of each subnode is not important; all subnodes should be enumerated
--and processed purely based on their content.
--
--Each subnode only affects those parameters that are explicitly listed. In
--other words, a subnode that lists a mux function but no pin configuration
--parameters implies no information about any pin configuration parameters.
--Similarly, a pin subnode that describes a pullup parameter implies no
--information about e.g. the mux function.
--
--
--The following generic properties as defined in pinctrl-bindings.txt are valid
--to specify in a pin configuration subnode:
--
--- pins:
--	Usage: required
--	Value type: <string-array>
--	Definition: List of gpio pins affected by the properties specified in
--		    this subnode.
--
--		    Valid pins are:
--		      gpio0-gpio149
--		        Supports mux, bias and drive-strength
--
--		      sdc1_clk, sdc1_cmd, sdc1_data sdc2_clk, sdc2_cmd,
--		      sdc2_data sdc1_rclk
--		        Supports bias and drive-strength
--
--		      ufs_reset
--		        Supports bias and drive-strength
--
--- function:
--	Usage: required
--	Value type: <string>
--	Definition: Specify the alternative function to be configured for the
--		    specified pins. Functions are only valid for gpio pins.
--		    Valid values are:
--
--		    adsp_ext, agera_pll, aoss_cti, ddr_pxi2, atest_char,
--		    atest_char0, atest_char1, atest_char2, atest_char3,
--		    audio_ref, atest_usb1, atest_usb2, atest_usb10,
--		    atest_usb11, atest_usb12, atest_usb13, atest_usb20,
--		    atest_usb21, atest_usb22, atest_usb2, atest_usb23,
--		    btfm_slimbus, cam_mclk, cci_async, cci_i2c, cci_timer0,
--		    cci_timer1, cci_timer2, cci_timer3, cci_timer4,
--		    cri_trng, cri_trng0, cri_trng1, dbg_out, ddr_bist,
--		    ddr_pxi0, ddr_pxi1, ddr_pxi3, edp_hot, edp_lcd,
--		    emac_phy, emac_pps, gcc_gp1, gcc_gp2, gcc_gp3, gpio,
--		    hs1_mi2s, hs2_mi2s, hs3_mi2s, jitter_bist,
--		    lpass_slimbus, mdp_vsync, mdp_vsync0, mdp_vsync1,
--		    mdp_vsync2, mdp_vsync3, mss_lte, m_voc, nav_pps,
--		    pa_indicator, pci_e0, phase_flag, pll_bypassnl,
--		    pll_bist, pci_e1, pll_reset, pri_mi2s, pri_mi2s_ws,
--		    prng_rosc, qdss, qdss_cti, qlink_request, qlink_enable,
--		    qspi0, qspi1, qspi2, qspi3, qspi_clk, qspi_cs, qua_mi2s,
--		    qup0, qup1, qup2, qup3, qup4, qup5, qup6, qup7, qup8,
--		    qup9, qup10, qup11, qup12, qup13, qup14, qup15, qup16,
--		    qup17, qup18, qup19, qup_l4, qup_l5, qup_l6, rgmii,
--		    sdc4, sd_write, sec_mi2s, spkr_i2s, sp_cmu, ter_mi2s,
--		    tgu_ch0, tgu_ch1, tgu_ch2, tgu_ch3, tsense_pwm1,
--		    tsense_pwm2, tsif1, tsif2, uim1, uim2, uim_batt,
--		    usb2phy_ac, usb_phy, vfr_1, vsense_trigger, wlan1_adc0,
--		    wlan1_adc1, wlan2_adc0, wlan2_adc1, wmss_reset
--
--- bias-disable:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configued as no pull.
--
--- bias-pull-down:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configued as pull down.
--
--- bias-pull-up:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configued as pull up.
--
--- output-high:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are configured in output mode, driven
--		    high.
--		    Not valid for sdc pins.
--
--- output-low:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are configured in output mode, driven
--		    low.
--		    Not valid for sdc pins.
--
--- drive-strength:
--	Usage: optional
--	Value type: <u32>
--	Definition: Selects the drive strength for the specified pins, in mA.
--		    Valid values are: 2, 4, 6, 8, 10, 12, 14 and 16
--
--Example:
--
--	tlmm: pinctrl@3000000 {
--		compatible = "qcom,sm8150-pinctrl";
--		reg = <0x03100000 0x300000>,
--		      <0x03500000 0x300000>,
--		      <0x03900000 0x300000>,
--		      <0x03D00000 0x300000>;
--		reg-names = "west", "east", "north", "south";
--		interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
--		gpio-controller;
--		#gpio-cells = <2>;
--		gpio-ranges = <&tlmm 0 0 175>;
--		gpio-reserved-ranges = <0 4>, <126 4>;
--		interrupt-controller;
--		#interrupt-cells = <2>;
--	};
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.yaml
-new file mode 100644
-index 000000000000..41066d88dc57
---- /dev/null
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.yaml
-@@ -0,0 +1,178 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/pinctrl/qcom,sm8150-pinctrl.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SM8150 TLMM pin controller
-+
-+maintainers:
-+  - Bjorn Andersson <andersson@kernel.org>
-+  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-+
-+description:
-+  Top Level Mode Multiplexer pin controller in Qualcomm SM8150 SoC.
-+
-+properties:
-+  compatible:
-+    const: qcom,sm8150-pinctrl
-+
-+  reg:
-+    maxItems: 4
-+
-+  reg-names:
-+    items:
-+      - const: west
-+      - const: east
-+      - const: north
-+      - const: south
-+
-+  interrupts: true
-+  interrupt-controller: true
-+  "#interrupt-cells": true
-+  gpio-controller: true
-+  "#gpio-cells": true
-+  gpio-ranges: true
-+  wakeup-parent: true
-+
-+  gpio-reserved-ranges:
-+    minItems: 1
-+    maxItems: 88
-+
-+  gpio-line-names:
-+    maxItems: 175
-+
-+patternProperties:
-+  "-state$":
-+    oneOf:
-+      - $ref: "#/$defs/qcom-sm8150-tlmm-state"
-+      - patternProperties:
-+          "-pins$":
-+            $ref: "#/$defs/qcom-sm8150-tlmm-state"
-+        additionalProperties: false
-+
-+$defs:
-+  qcom-sm8150-tlmm-state:
-+    type: object
-+    description:
-+      Pinctrl node's client devices use subnodes for desired pin configuration.
-+      Client device subnodes use below standard properties.
-+    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
-+
-+    properties:
-+      pins:
-+        description:
-+          List of gpio pins affected by the properties specified in this
-+          subnode.
-+        items:
-+          oneOf:
-+            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-6][0-9]|17[0-4])$"
-+            - enum: [ sdc2_clk, sdc2_cmd, sdc2_data, ufs_reset ]
-+        minItems: 1
-+        maxItems: 36
-+
-+      function:
-+        description:
-+          Specify the alternative function to be configured for the specified
-+          pins.
-+
-+        enum: [ adsp_ext, agera_pll, aoss_cti, ddr_pxi2, atest_char,
-+                atest_char0, atest_char1, atest_char2, atest_char3, audio_ref,
-+                atest_usb1, atest_usb2, atest_usb10, atest_usb11, atest_usb12,
-+                atest_usb13, atest_usb20, atest_usb21, atest_usb22, atest_usb2,
-+                atest_usb23, btfm_slimbus, cam_mclk, cci_async, cci_i2c,
-+                cci_timer0, cci_timer1, cci_timer2, cci_timer3, cci_timer4,
-+                cri_trng, cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0,
-+                ddr_pxi1, ddr_pxi3, edp_hot, edp_lcd, emac_phy, emac_pps,
-+                gcc_gp1, gcc_gp2, gcc_gp3, gpio, hs1_mi2s, hs2_mi2s, hs3_mi2s,
-+                jitter_bist, lpass_slimbus, mdp_vsync, mdp_vsync0, mdp_vsync1,
-+                mdp_vsync2, mdp_vsync3, mss_lte, m_voc, nav_pps, pa_indicator,
-+                pci_e0, phase_flag, pll_bypassnl, pll_bist, pci_e1, pll_reset,
-+                pri_mi2s, pri_mi2s_ws, prng_rosc, qdss, qdss_cti,
-+                qlink_request, qlink_enable, qspi0, qspi1, qspi2, qspi3,
-+                qspi_clk, qspi_cs, qua_mi2s, qup0, qup1, qup2, qup3, qup4,
-+                qup5, qup6, qup7, qup8, qup9, qup10, qup11, qup12, qup13,
-+                qup14, qup15, qup16, qup17, qup18, qup19, qup_l4, qup_l5,
-+                qup_l6, rgmii, sdc4, sd_write, sec_mi2s, spkr_i2s, sp_cmu,
-+                ter_mi2s, tgu_ch0, tgu_ch1, tgu_ch2, tgu_ch3, tsense_pwm1,
-+                tsense_pwm2, tsif1, tsif2, uim1, uim2, uim_batt, usb2phy_ac,
-+                usb_phy, vfr_1, vsense_trigger, wlan1_adc0, wlan1_adc1,
-+                wlan2_adc0, wlan2_adc1, wmss_reset ]
-+
-+      drive-strength:
-+        enum: [2, 4, 6, 8, 10, 12, 14, 16]
-+        default: 2
-+        description:
-+          Selects the drive strength for the specified pins, in mA.
-+
-+      bias-pull-down: true
-+      bias-pull-up: true
-+      bias-disable: true
-+      input-enable: true
-+      output-high: true
-+      output-low: true
-+
-+    required:
-+      - pins
-+
-+    additionalProperties: false
-+
-+allOf:
-+  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
-+
-+required:
-+  - compatible
-+  - reg
-+  - reg-names
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+    tlmm: pinctrl@3100000 {
-+        compatible = "qcom,sm8150-pinctrl";
-+        reg = <0x03100000 0x300000>,
-+              <0x03500000 0x300000>,
-+              <0x03900000 0x300000>,
-+              <0x03d00000 0x300000>;
-+        reg-names = "west", "east", "north", "south";
-+        interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-+        gpio-ranges = <&tlmm 0 0 176>;
-+        gpio-controller;
-+        #gpio-cells = <2>;
-+        interrupt-controller;
-+        #interrupt-cells = <2>;
-+        wakeup-parent = <&pdc>;
-+
-+        qup-spi0-default-state {
-+            pins = "gpio0", "gpio1", "gpio2", "gpio3";
-+            function = "qup0";
-+            drive-strength = <6>;
-+            bias-disable;
-+        };
-+
-+        pcie1-default-state {
-+            perst-pins {
-+                pins = "gpio102";
-+                function = "gpio";
-+                drive-strength = <2>;
-+                bias-pull-down;
-+            };
-+
-+            clkreq-pins {
-+                pins = "gpio103";
-+                function = "pci_e1";
-+                drive-strength = <2>;
-+                bias-pull-up;
-+            };
-+
-+            wake-pins {
-+                pins = "gpio104";
-+                function = "gpio";
-+                drive-strength = <2>;
-+                bias-pull-up;
-+            };
-+        };
-+    };
+v3 of this patch can be found at
+https://lore.kernel.org/lkml/20220830180120.2082734-1-bmasney@redhat.com/
+
+v2 of this patch can be found at
+https://lore.kernel.org/lkml/20220825163755.683843-1-bmasney@redhat.com/T/#u
+
+v1 of this patch can be found at
+https://lore.kernel.org/lkml/20220623142837.3140680-1-bmasney@redhat.com/T/#u
+
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index c32bcded2aef..006b9a13bc2f 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -891,7 +891,7 @@ ufs_mem_phy: phy@1d87000 {
+ 			ranges;
+ 			clock-names = "ref",
+ 				      "ref_aux";
+-			clocks = <&rpmhcc RPMH_CXO_CLK>,
++			clocks = <&gcc GCC_UFS_REF_CLKREF_CLK>,
+ 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
+ 
+ 			resets = <&ufs_mem_hc 0>;
 -- 
-2.34.1
+2.37.3
 
