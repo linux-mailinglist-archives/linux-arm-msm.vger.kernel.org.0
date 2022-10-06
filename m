@@ -2,174 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B8C85F63C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 11:44:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB6195F63F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 11:58:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231221AbiJFJoX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 05:44:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52848 "EHLO
+        id S231556AbiJFJ6L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 05:58:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230469AbiJFJoW (ORCPT
+        with ESMTP id S231524AbiJFJ6I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 05:44:22 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCEF88E0DC
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 02:44:21 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id c9so1589908ybf.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 02:44:21 -0700 (PDT)
+        Thu, 6 Oct 2022 05:58:08 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B3B6868A7
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 02:58:02 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id ay36so705380wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 02:58:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7BWHpYbPBZcnPFvYe589pBj9X79YNxD/NcOHx4kv/CM=;
-        b=Febm/wWbExJdGGqNRevOwHUbMJEHOmIOkiZi0p1XaczbTI+iMBgT8HDzbEMgDYA1Fo
-         zSZNhg7nI7iUSot4leNXZAy/KtsaoNOFtKiREXQmQnQONNxP7H49nP1o4Em5Nla3XBWO
-         l9KWTMSmf+hirrJ8VqdT+uzyXoom0aZHnPIJoNBCuXjS+omkYFayvrAp1fDOpXtpCIGP
-         iAh3ng2NIZ2Hx+htf6G0Xwz+fHe0a6ujAYXlfzjW24kJcv88V86PEyZsFoQEYc8SjJbl
-         dysLpUJH/K7D/wY2nCv+0lZmJ5hveKNGbZiOAFR2h+01xf3oR7ygyFzYXfnnRtM6V0ch
-         bQ6A==
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:from:to:cc:subject:date;
+        bh=ohfqXxwdII5oYNW9uS3cdMbKm4KECEvs5UYtpA0fFOM=;
+        b=aybONs5ATWDT+Iv6LK+39sOkIqu5w+GfQ+2dL+OJkAj10LMmsNmuNptCtjD7+vubI+
+         fpCQkDztC+5eXA8+uznIjhNGwlzOVHsEbzLBu1xDHRhO2G3iXu4025n/woTGB7ji62Eu
+         Wszde/Q/YDb4+cKrabgXovWpgaivS5T8J8jVGiKvP/kLZeno/wSRlN064JfS+h5lw5FJ
+         D3i18Yw6YsS0qQppq8Mqn4hIKNC298nZUF/3Gc2UE4fA8BvHHtCEuzDe8+RMH7j4hSAB
+         pi37GTyssFwevbLySKxlOC1BXR5px/czpC0A6JNEbaZnOij5aXAQ32XVL6Y1CDmaESlM
+         F4Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7BWHpYbPBZcnPFvYe589pBj9X79YNxD/NcOHx4kv/CM=;
-        b=kb4mOquGVvLpyXT8Y6Oyu/R/Vr1uH4CYzOPFXPXOX9A1lCSgOHmQaZ+9vsJbPxU4+r
-         bM3Tcmt5LAPlKgumeFbbpykt7mFuhWD2fD+lJ3vLr/Rq5depmhSeyoLM+7gk9OtIhIUi
-         jXw9ch1h1JR5adbuJ3vg72jGEB0KaIFktYb/aTgOTDr5qRH4WscwhtM6qcZya/uWMx4t
-         nL7zjDLhypaFK3K/6LGTArPICOGsqmCobvnGFp4OmTidK0mWUeQ+3gvJjO4oaT6sVmGJ
-         SE+OzrHW641wmmHYAvAoHPNFlT8gebly4naNwO2WqsTp4vwZVSv5BaOxzkkko6G8xVaf
-         k5/A==
-X-Gm-Message-State: ACrzQf3Ic0mISefs4CNtHe6jQHcw0Vf8fXbGODYpSobWyxPSXywDdqEn
-        fXdUUqTZpBAVzun5BLFNxb36UXEp5VXBbEfn6xv0aQ==
-X-Google-Smtp-Source: AMsMyM4XAM6T1VkzgchnRzF+y7euTnGNArNyFZnxnrdgYHkjkA7PISBPP+l3YJkllhMEg4Rgw87TKRw1lJC1hsnUVEg=
-X-Received: by 2002:a25:3443:0:b0:6be:e1ef:4f73 with SMTP id
- b64-20020a253443000000b006bee1ef4f73mr273872yba.516.1665049460997; Thu, 06
- Oct 2022 02:44:20 -0700 (PDT)
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:x-gm-message-state:from:to:cc:subject:date;
+        bh=ohfqXxwdII5oYNW9uS3cdMbKm4KECEvs5UYtpA0fFOM=;
+        b=TMXrY5KhgApGMEGvtL9u4h53Ypg0Els3YldRRJJc0qp8fta2JNoOxxIRC08Nx8Q0Vk
+         UrPhyaQHd23A+3oHYSuqU0fIEGvgh1qgaqzBIe7ZjkAa7XW0bGokiE4BjixUyucAg/3l
+         JZUun+RL2Mk0Z/0vkeYnMSNenN+R/C8Vs+/j1uUoh+gTYosAKR07+2dcsNWL9XdTvA3z
+         jTXG4E0vKAuTgG3Zsbl1YL5yT6Iq/+qMvKmol4u0znR6LwNpx9CNbRZYdpyZ+DXcv5pj
+         QYvkWfv0VqyDOP/9K3frz1JkQ+8S45WXoyRfOczscZRjNOiNTC2AJ85+pTeFsDStcD23
+         45Nw==
+X-Gm-Message-State: ACrzQf05mTnTyB254jN75qHdXfJCf0O3Bs07vHc++L4IbNbpuizBws5P
+        Y8L3/Q1fK9sBrViOWh4s4i+e9Q==
+X-Google-Smtp-Source: AMsMyM4+0vw2/ppY/9h4E6G+F/tcBtIRG3FbNjUyCk5ivL/nJSCuMCx8aSS5qUAT6J9eUgomkYrcag==
+X-Received: by 2002:a05:600c:35c3:b0:3b4:a686:45c6 with SMTP id r3-20020a05600c35c300b003b4a68645c6mr6431706wmq.86.1665050280451;
+        Thu, 06 Oct 2022 02:58:00 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id q11-20020adf9dcb000000b0022ac672654dsm17935603wre.58.2022.10.06.02.57.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Oct 2022 02:57:59 -0700 (PDT)
+Subject: [PATCH 0/6] arm: qcom: mdm9615: second round of bindings and DT fixes
 MIME-Version: 1.0
-References: <62e95ea6-6b72-a159-56ab-8bb11a5800c8@linaro.org> <Yz6P8wOPdRd9sjX2@hovoldconsulting.com>
-In-Reply-To: <Yz6P8wOPdRd9sjX2@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 6 Oct 2022 12:44:09 +0300
-Message-ID: <CAA8EJpqY41KSPp9-X0_+x+SnoWqvKxfV_tzgnu7HiA80Lbd5HQ@mail.gmail.com>
-Subject: Re: Qualcomm DT bindings and DTS cleanups - tracking community wide
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-b4-tracking: H4sIAKWmPmMC/w3LUQqDMAwA0KtIvhdo6iput4ltNgNtNtopiHj39fN9vBOaVJUGz+GEKrs2/VgH3Q
+ aIK9tbUFM3eOc9ORewpPKYKOBXLf5qxoNLRhpfIdLM9zQy9LpwE1wqW1x7ti3n6/oDxEh5TGsAAAA=
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Thu, 06 Oct 2022 09:57:57 +0000
+Message-Id: <20221005-mdm9615-pinctrl-yaml-v1-0-0cbc006e2a30@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>, Lee Jones <lee@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        Alex Elder <elder@linaro.org>,
-        Nicolas Dechesne <nicolas.dechesne@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Vinod Koul <vinod.koul@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Caleb Connolly <kc@postmarketos.org>
-Content-Type: text/plain; charset="UTF-8"
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>
+Cc:     linux-gpio@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+X-Mailer: b4 0.10.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+This is a second round of bindings & DT fixes for the MDM9615 platform.
 
-On Thu, 6 Oct 2022 at 11:21, Johan Hovold <johan@kernel.org> wrote:
->
-> On Thu, Sep 22, 2022 at 04:32:00PM +0200, Krzysztof Kozlowski wrote:
-> > Hi everyone,
-> >
-> > Quite a lot of people are working on Qualcomm DT bindings conversion
-> > (TXT->YAML) and fixups to Qualcomm DTS. We track a bit of this effort
-> > internally in Linaro, but that has many shortcomings and we would like
-> > to track it rather community-wide with the support and contributions
-> > from the community.
-> >
-> > What to track:
-> > 1. Which bindings to convert to YAML,
-> > 2. Missing compatibles (either entirely or because of missing conversion),
-> > 3. `dt_binding_check` warnings (usually connected with 1-2),
-> > 4. `dtbs_check` warnings.
-> >
-> > Rob's bot gives us daily output for 1-4, but how can we track current
-> > efforts to avoid duplication of work? Also it would allow people to find
-> > tasks for them to get contributions to Linux kernel :). Is anyone in
-> > community interested in tracking it together, in a public way?
->
-> Is this a real problem that needs fixing? I mean how often does it
-> happen that people submit the same YAML conversion for example? Since it
-> doesn't take that long to do a conversion, I'm not sure what tracking
-> this on some webpage buys us. It's better to just search lore before
-> starting a new conversion. Or search the linux-next tree to see what's
-> still pending.
+This second round focuses on less trivial changes like pinctrl & regulators bindings,
+the remaining work will mainly be fixing the qcom,kpss-timer/qcom,msm-timer situation and
+add bindings for qcom,lcc-mdm9615, qcom,kpss-gcc & swir,mangoh-iotport-spi.
 
-As Krzysztof wrote, fixing a warning/adding a new platform is usually
-not a big deal. However converting old txt bindings usually results in
-a significant amount of work. Fixing YAML and dtsi at the same time
-can take a long time, especially for obscure cases like apq8084 or old
-ipq boards.
+Dependencies:
+- patch 1-2, 4-6: None
+- patch 3: bindings dependency on 20221005-mdm9615-sx1509q-yaml-v1-0-0c26649b637c@linaro.org
 
->
-> Similarly for the other points above, as it doesn't take very long to
-> add a missing compatible or fix a warning it seems a bit excessive to
-> try to track this manually.
->
-> Perhaps a list of pending conversions or missing compatibles could be
-> useful for someone who's short on work, but it's bound to get outdated
-> pretty quickly.
+To: Bjorn Andersson <andersson@kernel.org>
+To: Andy Gross <agross@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@somainline.org>
+To: Linus Walleij <linus.walleij@linaro.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Lee Jones <lee@kernel.org>
+To: Liam Girdwood <lgirdwood@gmail.com>
+To: Mark Brown <broonie@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-gpio@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-I'd suggest having a list of `qcom-legacy' tasks: outdated DT bindings
-(both txt and yaml), drivers using system clock list (rather than DT
-bindings). DT files pending conversion to labels. msm8974 interconnect
-driver. hsuart aliases. You name it. This can be as simple as several
-gitlab issues, one per each topic.
-At the very least this would allow us to assess legacy bits and pieces.
+---
+Neil Armstrong (6):
+      dt-bindings: pinctrl: convert qcom,mdm9615-pinctrl.txt to dt-schema
+      arm: dts: qcom: mdm9615: fix pinctrl subnodes
+      arm: dts: qcom: mdm9615: wp8548-mangoh-green: fix sx150xq node names and probe-reset property
+      dt-bindings: soc: qcom: convert non-smd RPM bindings to dt-schema
+      dt-bindings: regulators: convert non-smd RPM Regulators bindings to dt-schema
+      dt-bindings: soc: qcom: ipc-rpm: refer to qcom,ipc-rpm-regulator.yaml
 
-Note: for me this is close to another topic that was discussed several
-times, but for which we never reached a conclusion. A matrix of
-supported per-SoC features.
+ Documentation/devicetree/bindings/mfd/qcom-rpm.txt | 283 ---------------------
+ .../bindings/pinctrl/qcom,mdm9615-pinctrl.txt      | 161 ------------
+ .../bindings/pinctrl/qcom,mdm9615-pinctrl.yaml     | 101 ++++++++
+ .../bindings/regulator/qcom,ipc-rpm-regulator.yaml | 127 +++++++++
+ .../devicetree/bindings/soc/qcom/qcom,ipc-rpm.yaml |  73 ++++++
+ .../boot/dts/qcom-mdm9615-wp8548-mangoh-green.dts  |  20 +-
+ arch/arm/boot/dts/qcom-mdm9615-wp8548.dtsi         |  22 +-
+ 7 files changed, 322 insertions(+), 465 deletions(-)
+---
+base-commit: 6b8b72b0cdd146fe66c6009d86a1784eb24ec798
+change-id: 20221005-mdm9615-pinctrl-yaml-13f5c18a4d3a
 
->
-> > If so, where?
-> > A. elinux.org (needs some formatting when pasting the output from tools)
-> > B. gitlab pages/wiki (maybe scripts could parse tools and create the page?)
-> > C. gitlab dedicated repo - some text file
-> > D. Linux kernel TODO file (might be difficult to keep updated)
-> > E. kernel.org wiki (requires LF accounts, AFAIK, a bit pain to edit; I
-> > have it for Exynos but I don't find it usable -
-> > https://exynos.wiki.kernel.org/todo_tasks)
-> >
-> > I am leaning towards Gitlab pages because they could be quite automated
-> > - with CI or with scripts.
-> >
-> > The point would be to list all of tasks (1-4 from the first list), keep
-> > it updated with new results, pick/assign tasks and mark as done.
->
-> I don't really see the need for more process here, sorry.
->
-> If I'm working on support for a new platform and the DT checker warnings
-> gets too noisy I may pick some of the low hanging fruit. In the odd
-> chance that someone beats me to it, it's not the end of the world.
-
-I hope that we can finally land patches to support per-file check.
-Then fixing warnings for a new platform would be very easy. Even today
-you can run `make something.dtb CHECK_DTBS=y` and get all your
-warnings (if the processed schema is up to date). However Krzysztof's
-point is about old platforms, rather than new ones.
-
-
+Best regards,
 -- 
-With best wishes
-Dmitry
+Neil Armstrong <neil.armstrong@linaro.org>
