@@ -2,135 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DBFF45F6A15
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 16:56:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA80A5F6A43
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 17:07:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230089AbiJFO4T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 10:56:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43140 "EHLO
+        id S231840AbiJFPHl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 11:07:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231219AbiJFO4Q (ORCPT
+        with ESMTP id S231860AbiJFPHc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 10:56:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D1C29AFE0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 07:56:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1665068174;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=hvu927jcP5VOBqnit88bPG8K5LsmKJyGG9EvVu5KyBM=;
-        b=aCEBDeflMlDv7GxLn7Fu2A0xtCaMDDSK4xYOJMQb2zSFr/YTx/QVs+XslVU3d+P+dgJZYZ
-        9/bjm9Go0AUoHNiwv+CqqBxNVvfaz3s+2ZGUgFql4EmpV+u4JFgLQWsY+vKpXTPDXo/KB/
-        q+WnxBxYIXE13M91fdpFCm7EKljoM2Y=
-Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
- [209.85.166.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-86-VpuFv-J3MUia3KyCSxE_CQ-1; Thu, 06 Oct 2022 10:56:07 -0400
-X-MC-Unique: VpuFv-J3MUia3KyCSxE_CQ-1
-Received: by mail-il1-f199.google.com with SMTP id j29-20020a056e02219d00b002f9b13c40c5so1702805ila.21
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 07:55:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hvu927jcP5VOBqnit88bPG8K5LsmKJyGG9EvVu5KyBM=;
-        b=dNLdxbehy5LLb2YiAoqW5cfSxRRzB+mhGD5CxxrbmDeEoww4LV1/uR6Ukc7WP10TyK
-         3hXEc3wBoeeIroAIt6Y5FeugGbRPOvx0Pih/Qmcv27oGOhnXyCCyT6OTGKAJvUPbKkom
-         /HqWONc2CN/XW2qhLBjN/hvF2U3DzVhKbmesc99+e+L7VDjP/gJy8Dw3dxU0h0uS4cdn
-         +7O4iaDSxNXoh9/STW6wK5e+oB2PBz1sAXcQIGVPtU+hDnI4xFFcQVvev4q5o5E6T4iU
-         LX5epxca+bYifx4YvY+hf4FUK/WoDY63I7V3wr2jGw+VDwW2B6LJ/Jzqa2jra72LwBa5
-         YNsg==
-X-Gm-Message-State: ACrzQf20shDKcPTZLtTp0oikVPbfOS/4J+iawAzaKVJPn26i4d8zZnwa
-        jPDayYCokQL5Vg4O2Z6p5CkI3gb5OCmeov2OK0LvViiYRh9MDuNEaTcgTWo/Z5cHCG/1vz/51c0
-        E6WzqXAZg6GZqHU1eRDJ4gqq1bQ==
-X-Received: by 2002:a05:6638:248f:b0:363:73fc:cc17 with SMTP id x15-20020a056638248f00b0036373fccc17mr40632jat.257.1665068143918;
-        Thu, 06 Oct 2022 07:55:43 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM6lCbCh+MPmTjfqYkLRJfeMy/CGiv6Cjxm/4a1eaZr5AusJ2YLiO8ihXN7k4fKIotEsuCwJjw==
-X-Received: by 2002:a05:6638:248f:b0:363:73fc:cc17 with SMTP id x15-20020a056638248f00b0036373fccc17mr40624jat.257.1665068143639;
-        Thu, 06 Oct 2022 07:55:43 -0700 (PDT)
-Received: from x1.. (c-98-239-145-235.hsd1.wv.comcast.net. [98.239.145.235])
-        by smtp.gmail.com with ESMTPSA id z2-20020a05660229c200b006884b050a0asm7848669ioq.18.2022.10.06.07.55.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 07:55:43 -0700 (PDT)
-From:   Brian Masney <bmasney@redhat.com>
-To:     andersson@kernel.org
-Cc:     agross@kernel.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ahalaney@redhat.com,
-        echanude@redhat.com, johan+linaro@kernel.org
-Subject: [PATCH v4] arm64: dts: qcom: sc8280xp: correct ref clock for ufs_mem_phy
-Date:   Thu,  6 Oct 2022 10:55:29 -0400
-Message-Id: <20221006145529.755521-1-bmasney@redhat.com>
-X-Mailer: git-send-email 2.37.3
+        Thu, 6 Oct 2022 11:07:32 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D43C8FD7A;
+        Thu,  6 Oct 2022 08:07:30 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D3C15619EE;
+        Thu,  6 Oct 2022 15:07:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7C9C433B5;
+        Thu,  6 Oct 2022 15:07:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1665068849;
+        bh=aA7z4WmE7WeKFIA62daxrPvgcAETGLOKt+bLT9KeHbs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=cjyb6JWFFZgyc1ok4lHC+QS2Kp03BNka/7FnseRZcMQYbSpjvUd6tvJyOEDiCeDVm
+         Aeaq8WkItdHpC9j39AohRxlhUmKUGEtP/Z0nUQ2+RZRwkc1RK4iba1Ya9OUUSezp8e
+         rBoQ9ww/m5jQKLluh7kBmw1a603UGsSx6ffEj0V0XZkr9TAiHePpsn2fun7L6AqcH9
+         n7/MiwfZKMnu4WPO3jW5wGKtO5qqn/R1SrNV2xLqHT+4OIpfTymRuM0fg9bByf9/Fe
+         ZF5UbwVGQYudEZSj1vun/6z0HHoStCFK/d6C9boDfCZ0h/0yagcPkmjuLYAHAJf8jL
+         59gHXiZiwxg8Q==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1ogST1-00083i-9i; Thu, 06 Oct 2022 17:07:20 +0200
+Date:   Thu, 6 Oct 2022 17:07:19 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Alex Elder <elder@linaro.org>,
+        Nicolas Dechesne <nicolas.dechesne@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Vinod Koul <vinod.koul@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Caleb Connolly <kc@postmarketos.org>
+Subject: Re: Qualcomm DT bindings and DTS cleanups - tracking community wide
+Message-ID: <Yz7vJ9LMm16eaXaR@hovoldconsulting.com>
+References: <62e95ea6-6b72-a159-56ab-8bb11a5800c8@linaro.org>
+ <Yz6P8wOPdRd9sjX2@hovoldconsulting.com>
+ <a7e57332-f0c8-ceb0-e279-4e9a114d0cc8@linaro.org>
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a7e57332-f0c8-ceb0-e279-4e9a114d0cc8@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The first UFS host controller fails to start on the SA8540P automotive
-board (QDrive3) due to the following errors:
+On Thu, Oct 06, 2022 at 10:39:22AM +0200, Krzysztof Kozlowski wrote:
+> On 06/10/2022 10:21, Johan Hovold wrote:
+> >> What to track:
+> >> 1. Which bindings to convert to YAML,
+> >> 2. Missing compatibles (either entirely or because of missing conversion),
+> >> 3. `dt_binding_check` warnings (usually connected with 1-2),
+> >> 4. `dtbs_check` warnings.
+> >>
+> >> Rob's bot gives us daily output for 1-4, but how can we track current
+> >> efforts to avoid duplication of work? Also it would allow people to find
+> >> tasks for them to get contributions to Linux kernel :). Is anyone in
+> >> community interested in tracking it together, in a public way?
+> > 
+> > Is this a real problem that needs fixing? I mean how often does it
+> > happen that people submit the same YAML conversion for example? Since it
+> > doesn't take that long to do a conversion, I'm not sure what tracking
+> > this on some webpage buys us. It's better to just search lore before
+> > starting a new conversion. Or search the linux-next tree to see what's
+> > still pending.
+> 
+> In terms of DT bindings conversion to DT schema:
+> If I were not checking for ongoing work, I would duplicate effort like
+> ~10 times. Few other folks hit it few times, at least. Several bindings
+> are being converted for ~1 year!
 
-    ufshcd-qcom 1d84000.ufs: ufshcd_query_flag: Sending flag query for idn 18 failed, err = 253
-    ufshcd-qcom 1d84000.ufs: ufshcd_query_flag: Sending flag query for idn 18 failed, err = 253
-    ufshcd-qcom 1d84000.ufs: ufshcd_query_flag: Sending flag query for idn 18 failed, err = 253
-    ufshcd-qcom 1d84000.ufs: ufshcd_query_flag_retry: query attribute, opcode 5, idn 18, failed
-        with error 253 after 3 retries
+Ok, but the conversion itself doesn't take that long even if getting it
+merged and fixing up new warnings may take some time.
 
-The system eventually fails to boot with the warning:
+And after the initial posting, a quick lore search allows you to find
+any on-going conversion efforts.
 
-    gcc_ufs_phy_axi_clk status stuck at 'off'
+Perhaps that can just be mentioned in a wiki-page of sorts that lists
+remaining conversions with some suggestions for how best to go about
+things.
 
-This issue can be worked around by adding clk_ignore_unused to the
-kernel command line since the system firmware sets up this clock for us.
+> In terms of DTS warnings - it's difficult even to check/search. For what
+> do you search? Warnings? Pretty often they are not part of commit msg.
+> By file? Then you might have many, many unrelated search results.
 
-Let's fix this issue by updating the ref clock on ufs_mem_phy. Note
-that the downstream MSM 5.4 sources list this as ref_clk_parent. With
-this patch, the SA8540P is able to be booted without clk_ignore_unused.
+I wasn't suggesting to use lore for warnings, but searching the lists
+for changes to a particular dts before embarking on a clean up doesn't
+seem unreasonable.
 
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
----
-Changes since v3:
-- Renamed ref_aux to ref in patch subject. Added Johan's R-b and T-b.
+> > Similarly for the other points above, as it doesn't take very long to
+> > add a missing compatible or fix a warning it seems a bit excessive to
+> > try to track this manually.
+> 
+> True, some are trivial. Some however need fixing the binding which takes
+> time.
 
-v3 of this patch can be found at
-https://lore.kernel.org/lkml/20220830180120.2082734-1-bmasney@redhat.com/
+Right.
 
-v2 of this patch can be found at
-https://lore.kernel.org/lkml/20220825163755.683843-1-bmasney@redhat.com/T/#u
+> > Perhaps a list of pending conversions or missing compatibles could be
+> > useful for someone who's short on work, but it's bound to get outdated
+> > pretty quickly.
+> 
+> Another point is to have the visibility on the amount of work to be
+> done. But I understand that's maybe topic just for few, e.g. me, so I
+> can just track stuff for myself.
 
-v1 of this patch can be found at
-https://lore.kernel.org/lkml/20220623142837.3140680-1-bmasney@redhat.com/T/#u
+Yeah, I don't think that any such extra process should be needed outside
+a small group that may potentially be working on cleaning up bindings
+and dts in bulk.
 
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+If you were to maintain such a list of pending and on-going conversions
+for yourself, perhaps making that public is all that's needed here?
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index c32bcded2aef..006b9a13bc2f 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -891,7 +891,7 @@ ufs_mem_phy: phy@1d87000 {
- 			ranges;
- 			clock-names = "ref",
- 				      "ref_aux";
--			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+			clocks = <&gcc GCC_UFS_REF_CLKREF_CLK>,
- 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
- 
- 			resets = <&ufs_mem_hc 0>;
--- 
-2.37.3
-
+Johan
