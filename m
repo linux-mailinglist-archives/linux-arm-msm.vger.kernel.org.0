@@ -2,117 +2,239 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD4A55F6B7C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 18:21:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F0655F6BA9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 18:26:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230499AbiJFQVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 12:21:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50416 "EHLO
+        id S231765AbiJFQ0C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 12:26:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229815AbiJFQVg (ORCPT
+        with ESMTP id S231858AbiJFQZp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 12:21:36 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A54EC9D50E
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 09:21:31 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id bu30so3473125wrb.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 09:21:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:cc:to:content-language:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date;
-        bh=8hn6BGyHUmeb4KAEVPwfOsR7X9Gui7csgFKX8kSAEHQ=;
-        b=CnGYBTJGNtnXD0mf7cUrLgozd29i7Y0+6T8yVG74ZCPdNVVkMlJln3q91ZRsu6bH9x
-         WtzEpkuMdwY2BtidyKMU8HgvIqdekXr9CP8ojL/37mwJG/pFwzzquY0lp4myhSRpv/X/
-         BmdHku6EdnSPCUJ36a0YbFzeFzFFM4kaeH534BlCHPGwR6pVX8wKd+TfD7T1Q89pQ5Lg
-         8b952B1M+Rdqg4OsUkgJUNjbzZ6n0D3Ya3nlPKgYosAN0gGxIy+R90xtUb24/bFkbz9W
-         S0az+GGja2Ptp+QVHIGITR7fwJq1b6OlJ2n5ITQEirS1rZHb9EUDeto4+tHJb6inWDa8
-         7aEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:cc:to:content-language:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=8hn6BGyHUmeb4KAEVPwfOsR7X9Gui7csgFKX8kSAEHQ=;
-        b=DlUUZR3USsrf5NCWAUNyNC+8Vt+uIBsxWbS0dokx6mT21Pig3kknIkb2xySd4a2LyI
-         9W/VlHU5Sr7V4QY/II3kBt7DoEjRssyy2wxdI3kW3j98fGMUQBbusgnz2UDEp4waQLGy
-         8Xj+KmeObOCoRtRxn7Cx5kgSDF6Qdi4cppV3Lvwp9dIjcMabIg7hREq3pQjTNvjxD+9D
-         L6yibhgzQAWrFtre9f1PWYS1HTl/scSGpEUm/QfXiWRydw8zDaiOjo6/oZRToc4uIjK/
-         Ve3ZVIWgqTdrfP9s7Pv7Eq5a0NQLUX8NGZB7UdoWsI5F7A1b89FtuCef1/f++DoWDQdM
-         4itw==
-X-Gm-Message-State: ACrzQf1EuaIxG/DijQ1IOrQ9a3qDZH+BbRIqtQS0KkPndYfGpyac6naz
-        xGh9d4PPvg+3hLR1Hib7z79hkw==
-X-Google-Smtp-Source: AMsMyM5J0JfJI+5HBoymkusb8RQsgdMulCc/sufzcEBOh2ubeBcesSEQ7gFaMIY9bcOTblmnwLNGQQ==
-X-Received: by 2002:a5d:47aa:0:b0:22e:3ed6:77a8 with SMTP id 10-20020a5d47aa000000b0022e3ed677a8mr518638wrb.648.1665073290203;
-        Thu, 06 Oct 2022 09:21:30 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:e032:72ae:542:774? ([2a01:e0a:982:cbb0:e032:72ae:542:774])
-        by smtp.gmail.com with ESMTPSA id h1-20020a5d4fc1000000b0022e66749437sm3339362wrw.93.2022.10.06.09.21.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Oct 2022 09:21:29 -0700 (PDT)
-Message-ID: <85c9c9ee-37c3-733c-2c67-ac22734844f8@linaro.org>
-Date:   Thu, 6 Oct 2022 18:21:28 +0200
+        Thu, 6 Oct 2022 12:25:45 -0400
+Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 841A9CE9B9
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 09:25:40 -0700 (PDT)
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20221006162537euoutp0208e8bca367be1dfae5aa4daf10e1a35c~bh498ItxT1656716567euoutp02W
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 16:25:37 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20221006162537euoutp0208e8bca367be1dfae5aa4daf10e1a35c~bh498ItxT1656716567euoutp02W
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1665073537;
+        bh=ImkWCxrft+8A0CCbLgq7IX5h2Sh9xPmozUhnHMtY+jk=;
+        h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
+        b=FJsUUFJT964geyLNAQ2P0Px4X557LDNHc8WhBU1/+CLRMIKX/Zt5DzAEq804L/xdO
+         ehDtoI2obNoZY2zBrU3tjgGQej1nyKA44zv/rxflcecWv6qBxDvcpslWo365SKC0KU
+         b0U9NvmIdQ764FGqwPWYGjaNbR4Sps3tRmqRocds=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20221006162537eucas1p2234855e46d24d17733a2167b8fe40ed3~bh49oF1Rw3151231512eucas1p2w;
+        Thu,  6 Oct 2022 16:25:37 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id D2.29.07817.1810F336; Thu,  6
+        Oct 2022 17:25:37 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20221006162536eucas1p24cebd1ee749c5d96d5d48ab9ede40380~bh49QG9pB1597115971eucas1p2q;
+        Thu,  6 Oct 2022 16:25:36 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20221006162536eusmtrp1c203c28b20c277cc7ea5ea0a685cbe03~bh49PEL3b0054400544eusmtrp1j;
+        Thu,  6 Oct 2022 16:25:36 +0000 (GMT)
+X-AuditID: cbfec7f4-893ff70000011e89-48-633f01811286
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id DD.C5.07473.0810F336; Thu,  6
+        Oct 2022 17:25:36 +0100 (BST)
+Received: from [106.210.134.192] (unknown [106.210.134.192]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20221006162535eusmtip2e34d1a19e873ba728dcbb60ee3e998b8~bh48QHMJs0707807078eusmtip2i;
+        Thu,  6 Oct 2022 16:25:35 +0000 (GMT)
+Message-ID: <c7772dd5-f081-426a-5443-5ebf32b7c7c0@samsung.com>
+Date:   Thu, 6 Oct 2022 18:25:35 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH 1/6] dt-bindings: pinctrl: convert
- qcom,mdm9615-pinctrl.txt to dt-schema
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     Lee Jones <lee@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0)
+        Gecko/20100101 Thunderbird/102.3.1
+Subject: Re: [PATCH v8 00/29] Rework the trip points creation
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        rui.zhang@intel.com,
+        Broadcom Kernel Team <bcm-kernel-feedback-list@broadcom.com>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-gpio@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
-        devicetree@vger.kernel.org, Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-References: <20221005-mdm9615-pinctrl-yaml-v1-0-0cbc006e2a30@linaro.org>
- <20221005-mdm9615-pinctrl-yaml-v1-1-0cbc006e2a30@linaro.org>
- <166505882828.1602503.18185089088624527425.robh@kernel.org>
-Reply-To: neil.armstrong@linaro.org
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <166505882828.1602503.18185089088624527425.robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>, netdev@vger.kernel.org,
+        platform-driver-x86@vger.kernel.org,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-omap@vger.kernel.org, rafael@kernel.org
+Content-Language: en-US
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+In-Reply-To: <97201878-3bb8-eac5-7fac-a690322ac43a@linaro.org>
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA01Sf1CTdRi/7/u+fPduNXyZCN9D7Mf0yrD4ddl9LxXxynov86jgouu6co0X
+        9BqgG4TVXYALguEUEYQmwg6ljS0F1iA2mdhSCIw1tCMEPOikFBIWbJcEiLm9/eC/z+d5Ps/z
+        eZ7nHpqUHIIR9L6sHE6ZJVNIoYhq7/7L9Uwh2C6P1bmF2HVzkcLjde0Qn9VepvBd688ErvOu
+        w6YqG4Udv7cJsOXmYBA+1tUvwJqFJhJfs9dCfPLMUQp7tZcAbpucIfCxkRYBrvnxAoFLfTqI
+        u/Vh2Nx5m8SnfFUknvjlCMSOogEyMYzVjfVD1jgXw9p0NwTs6c5JgrWYSiE7OtgJ2a/P5LOt
+        Mx0Ee/ReLHvEagKs1/LIaw+9Ldqaxin2fcgpYxL2iPbeP68m989EHhwvOwwLgCNcA2gaMc+i
+        6dZNGiCiJYwRoBumOsATH0BDLccpnngBGnDZBRogDFScvugO4hMGgLxz5wmezAJkHW+g/Cox
+        k4A+05oJP6aYDaivdUTAx0NQ7xcTAc0aJg31ehYDeDWzDXnmSwOaUCYaFXqKA01JphKi74yO
+        IH+CZMLR8ER9oClk4pBmWgP9WPjArPn6AMVrHkXqtpOkvxgxU0JUfnuO4ud+ERXpByCPV6Op
+        Hus/+0SiK8cPU3zB5wDpF8cInpQDVHBrGPCqLWjUtQD9NyOZp1CzPYY/3w40tpzEw2A0NB3C
+        zxCMKtqrST4sRiXFEr7HE0jXc+4/12/dV8lyINWtOItuxZa6Fdvo/rfVA8oEwrlcVWYGp4rP
+        4vKiVbJMVW5WRrQ8O9MCHrzpleUeXwcwTM1GOwFBAydANCkNFdtsCXKJOE320cecMvs9Za6C
+        UznBWpqShothTZRcwmTIcrgPOG4/p/w3S9DCiAJi7bC8ceQn90v2N6qTrSfEqelrfisqK3Gu
+        esua7v5q6f20ZkVx2LZ4l6u2OiTfLB5UGw7VXo0xpypOLGyuMXhi6N1Nqet3dPcx2vFsUYqk
+        Cti3JNbl/mDcWFHWC2/5ltR5Q1ZjnzyuvrL2XUh9medoSG8ZaegQf39d8efTm7oqypPhRmqp
+        8Vf4apDi3LX8gy+f3dm1cyG22NU/z6x6/Y8Dl3Ief/OVie2z+hlt2eI3ScbH5h3a59kXdjcG
+        e96xRM6uT3TdiYrfrNmV9KmzUG+LSLnYX+k23FmXvlX/8GBvxbJ6qn2PY/JuU+gnIl9KzYUn
+        6+3PjSanyEwl95rMB+5fbjDsklKqvbK4KFKpkv0Njl+bNRUEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprKKsWRmVeSWpSXmKPExsVy+t/xe7oNjPbJBrdv6lqce/ybxeLBvG1s
+        Fmt7j7JYfN9yncli3mdZi1VTd7JY7H29ld1i0+NrrBYT959lt+j6tZLZ4vKuOWwWs5f0s1h8
+        7j3CaLH15Tsmi4m3N7BbzDi/j8mi88ssNotjC8QsVu95wWwx98tUZosnD/vYLPa2XmR2EPOY
+        df8sm8eKT/oeO2fdZfdYvOclk8emVZ1sHneu7WHz2Lyk3mPjux1MHv1/DTz6tqxi9Pi8SS6A
+        O0rPpii/tCRVISO/uMRWKdrQwkjP0NJCz8jEUs/Q2DzWyshUSd/OJiU1J7MstUjfLkEv4//u
+        ZuaCdzIVD7p72BoY94p3MXJySAiYSCw+cIG1i5GLQ0hgKaPEmv6DTBAJGYmT0xpYIWxhiT/X
+        utggit4zStw5Mw+siFfATqKldzWYzSKgInFq4212iLigxMmZT1hAbFGBFIl3E++ygdjCArYS
+        7390gtWICOhJNL5vA+tlFpjGJvH5czzEglnMEg2td1kgEuISt57MBytiEzCU6HrbBTaIE2jx
+        +psXoWrMJLq2djFC2PISzVtnM09gFJqF5I5ZSEbNQtIyC0nLAkaWVYwiqaXFuem5xYZ6xYm5
+        xaV56XrJ+bmbGIHpY9uxn5t3MM579VHvECMTB+MhRgkOZiUR3p077ZKFeFMSK6tSi/Lji0pz
+        UosPMZoCA2Mis5Rocj4wgeWVxBuaGZgamphZGphamhkrifN6FnQkCgmkJ5akZqemFqQWwfQx
+        cXBKNTDNl9No7PN+ePPoZh7r+2q9b3WUzFn/BWvr5tnqv+5g+GR6pYstLqvz9d7sEve3Ahvn
+        PFpsJ/gkTObzwzWJutcvJacIld1jDyxieM148+lhuXU+EzdeyFh+7PTF2zamComfVQp7Tqf2
+        LtgscuP1nkkPeaXFGpx7jrR4rfW+Krncdk5jkvP2U5fOrgtK/j/zYdWyGt+Axvn6b/pEjrHG
+        vLFk7LPUKTVZ45naXK/btmGHxfRNolVNEoHzHpuIdXy4bs3PaTZxW7A006b7H6S+nnlx5/9Z
+        kQclkW6zri6OvaFmF3TmpvLnxrQ7h99O/ThzapbzSsN7nPWue2fcLvc49/38yV0JLcJ/F1tZ
+        fv4vNOGfEktxRqKhFnNRcSIAo1FZ2agDAAA=
+X-CMS-MailID: 20221006162536eucas1p24cebd1ee749c5d96d5d48ab9ede40380
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20221003092704eucas1p2875c1f996dfd60a58f06cf986e02e8eb
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20221003092704eucas1p2875c1f996dfd60a58f06cf986e02e8eb
+References: <CGME20221003092704eucas1p2875c1f996dfd60a58f06cf986e02e8eb@eucas1p2.samsung.com>
+        <20221003092602.1323944-1-daniel.lezcano@linaro.org>
+        <8cdd1927-da38-c23e-fa75-384694724b1c@samsung.com>
+        <c3258cb2-9a56-d048-5738-1132331a157d@linaro.org>
+        <851008bf-145d-224c-87a8-cb6ec1e9addb@linaro.org>
+        <207c1979-0da2-b05d-fead-6880ad956b90@samsung.com>
+        <97201878-3bb8-eac5-7fac-a690322ac43a@linaro.org>
+X-Spam-Status: No, score=-8.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/10/2022 14:27, Rob Herring wrote:
-> On Thu, 06 Oct 2022 09:57:58 +0000, Neil Armstrong wrote:
->> Convert the MDM9515 pinctrl bindings to dt-schema.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   .../bindings/pinctrl/qcom,mdm9615-pinctrl.txt      | 161 ---------------------
->>   .../bindings/pinctrl/qcom,mdm9615-pinctrl.yaml     | 101 +++++++++++++
->>   2 files changed, 101 insertions(+), 161 deletions(-)
->>
-> 
-> Running 'make dtbs_check' with the schema in this patch gives the
-> following warnings. Consider if they are expected or the schema is
-> incorrect. These may not be new warnings.
-> 
-> Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-> This will change in the future.
-> 
-> Full log is available here: https://patchwork.ozlabs.org/patch/
-> 
-> 
-> pinctrl@800000: 'gpioext1_pins', 'gsbi3_pins', 'gsbi4_pins', 'gsbi5_i2c_pins', 'gsbi5_uart_pins', 'reset_out_pins', 'sdc_cd_pins' do not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
-> 	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb
-> 
+Hi Daniel,
 
-Yes it's fixed in the next patch, should I move the fix before the bindings conversion ?
+On 06.10.2022 08:55, Daniel Lezcano wrote:
+>
+> On 05/10/2022 15:05, Marek Szyprowski wrote:
+>>
+>> On 05.10.2022 14:37, Daniel Lezcano wrote:
+>>>
+>>> On 03/10/2022 23:18, Daniel Lezcano wrote:
+>>>
+>>> [ ... ]
+>>>
+>>>>> I've tested this v8 patchset after fixing the issue with Exynos TMU
+>>>>> with
+>>>>> https://lore.kernel.org/all/20221003132943.1383065-1-daniel.lezcano@linaro.org/ 
+>>>>>
+>>>>>
+>>>>> patch and I got the following lockdep warning on all Exynos-based
+>>>>> boards:
+>>>>>
+>>>>>
+>>>>> ======================================================
+>>>>> WARNING: possible circular locking dependency detected
+>>>>> 6.0.0-rc1-00083-ge5c9d117223e #12945 Not tainted
+>>>>> ------------------------------------------------------
+>>>>> swapper/0/1 is trying to acquire lock:
+>>>>> c1ce66b0 (&data->lock#2){+.+.}-{3:3}, at: exynos_get_temp+0x3c/0xc8
+>>>>>
+>>>>> but task is already holding lock:
+>>>>> c2979b94 (&tz->lock){+.+.}-{3:3}, at:
+>>>>> thermal_zone_device_update.part.0+0x3c/0x528
+>>>>>
+>>>>> which lock already depends on the new lock.
+>>>>
+>>>> I'm wondering if the problem is not already there and related to
+>>>> data->lock ...
+>>>>
+>>>> Doesn't the thermal zone lock already prevent racy access to the data
+>>>> structure?
+>>>>
+>>>> Another question: if the sensor clock is disabled after reading it,
+>>>> how does the hardware update the temperature and detect the programed
+>>>> threshold is crossed?
+>>>
+>>> just a gentle ping, as the fix will depend on your answer ;)
+>>>
+>> Sorry, I've been busy with other stuff. I thought I will fix this once I
+>> find a bit of spare time.
+>
+> Ok, that is great if you can find time to fix it up because I've other 
+> drivers to convert to the generic thermal trips.
+>
+>
+>> IMHO the clock management is a bit over-engineered, as there is little
+>> (if any) benefit from such fine grade clock management. That clock is
+>> needed only for the AHB related part of the TMU (reading/writing the
+>> registers). The IRQ generation and temperature measurement is clocked
+>> from so called 'sclk' (special clock).
+>>
+>> I also briefly looked at the code and the internal lock doesn't look to
+>> be really necessary assuming that the thermal core already serializes
+>> all the calls.
+>
+> I looked at the code and I think the driver can be simplified (fixed?) 
+> even more.
+>
+> IIUC, the sensor has multiple trip point interrupts, so if the device 
+> tree is describing more trip points than the sensor supports, there is 
+> a warning and the number of trip point is capped.
+>
+> IMO that can be simplified by using two trip point interrupt because 
+> the thermal_zone_device_update() will call the set_trips callback with 
+> the new boundaries. IOW, the thermal framework sets a new trip point 
+> interrupt when one is crossed.
+>
+> That should result in the simplification of the tmu_control as well as 
+> the tmu_probe function. As well as removing the limitation of the 
+> number of trip points.
+>
+> In order to have that correctly working, the 'set_trips' ops must be 
+> used to call the tmu_control callback instead of calling it in tmu_probe.
+>
+> The intialization workflow should be:
+>
+> probe->...
+>  ->thermal_zone_device_register()
+>   ->thermal_zone_device_update()
+>    ->update_trip_points()
+>     ->ops->set_trips()
+>       ->tmu_control()
+>
+> Also, replace the workqueue by a threaded interrupt.
+>
+> Does it make sense?
 
-Neil
+Yes, definitely. Frankly speaking I've never looked into that code, so I 
+was not aware that it needs some cleanup.
+
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
+
