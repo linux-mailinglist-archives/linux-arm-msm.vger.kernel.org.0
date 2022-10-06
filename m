@@ -2,102 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E7C15F5E49
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 03:07:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76FD15F5E7C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 03:51:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229979AbiJFBHg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Oct 2022 21:07:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55552 "EHLO
+        id S229764AbiJFBu5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Oct 2022 21:50:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229969AbiJFBHa (ORCPT
+        with ESMTP id S229468AbiJFBuz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Oct 2022 21:07:30 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB56E72FCD;
-        Wed,  5 Oct 2022 18:07:10 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2960UJlX028739;
-        Thu, 6 Oct 2022 01:06:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=aayNG3H1C+iIeSaIKuwV8OaEYw5fWM3xjdAI9tCEGR4=;
- b=CR4EHi3yvLHzt9dTkIDFXLihvCE+CW+/fC1YJnbOrzbyTIvLQnqPka7d7u/6NLVXaWxM
- X5AOREsLvmUf4X/99dP+sY+1Aur4gztHJf9SOzGTbDlFmQvxc1m9f1tb7yPD2IotiWXj
- jd9q4qsXaE+TVcwai+D/njIr6Q/NVn4uy3xm5tbOxGOLQOM9f3wWvJgzD/x3q5aJkXFS
- PmO/hsPMeFYRiBMO+vdiYObXF/NUilzxG0quzDFmOlxSJWnDgj7o76ueTr63l2IYLA9i
- O7oI/2+rkAfTecIxhLtY/60Py825iWyAyRg6oT17BuNKPkp97Yoji93BCyaVC7hvTxWb Bw== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k0jtdm8uf-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 06 Oct 2022 01:06:55 +0000
-Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29616tfG021696
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 6 Oct 2022 01:06:55 GMT
-Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Wed, 5 Oct 2022 18:06:54 -0700
-From:   Asutosh Das <quic_asutoshd@quicinc.com>
-To:     <quic_cang@quicinc.com>, <quic_nitirawa@quicinc.com>,
-        <quic_rampraka@quicinc.com>, <quic_bhaskarv@quicinc.com>,
-        <quic_richardp@quicinc.com>, <linux-scsi@vger.kernel.org>
-CC:     Asutosh Das <quic_asutoshd@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <quic_nguyenb@quicinc.com>,
-        <quic_xiaosenh@quicinc.com>, <bvanassche@acm.org>,
-        <avri.altman@wdc.com>, <mani@kernel.org>, <beanhuo@micron.com>
-Subject: [PATCH v2 17/17] ufs: qcom-host: Enable multi circular queue capability
-Date:   Wed, 5 Oct 2022 18:06:16 -0700
-Message-ID: <e38071ed7cd54fc6e21f1e3ce3cd97d514d2cf99.1665017636.git.quic_asutoshd@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1665017636.git.quic_asutoshd@quicinc.com>
-References: <cover.1665017636.git.quic_asutoshd@quicinc.com>
+        Wed, 5 Oct 2022 21:50:55 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 241032C67C;
+        Wed,  5 Oct 2022 18:50:53 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 62096B81F7E;
+        Thu,  6 Oct 2022 01:50:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45094C433C1;
+        Thu,  6 Oct 2022 01:50:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1665021051;
+        bh=QcwagBeSbuvRCsWJIUdcRzilPwxU7LcEOFNF7wVbWwo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Spjou0Ke2vUCPkkiik+9LyrmcFtV2qX+eyjNqeSQc5B3afnB7a1l+Ef8K8XKMBxXA
+         dF1LCcWmpnBr5piKgGuIeq38stk/+3Bzl1jx9ixZm52goyH88eYzJZl5ac01+vkMUo
+         EMNRThZHgEfO1M0QQkoxTK4NmnlPNXGPkZ5cUa+mwSDulhi6VhCaJHzxDvuCEf31Bi
+         ScPxxm4vuABATmr0ZRYL+CbY1jkQLaJEhT+p97jYSDNC3T9gPZgPGz1YbjxC7YDTN4
+         e7zRydw0Ym1Z0fktYN7zr9Ykn61a8HCcnirWEz2NKI8omimuLDqG++h0lyT838uc8d
+         rBYQNqFYxz8Tw==
+Date:   Wed, 5 Oct 2022 20:50:47 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Melody Olvera <quic_molvera@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] pinctrl: qcom: Add QDU1000/QRU1000 pinctrl driver
+Message-ID: <20221006015047.4ten7sjsth7sw6s7@baldur>
+References: <20221001030546.28220-1-quic_molvera@quicinc.com>
+ <20221001030546.28220-3-quic_molvera@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: bBkE36-ga9fQ8TNe62MHJpIJd4fLlvG5
-X-Proofpoint-ORIG-GUID: bBkE36-ga9fQ8TNe62MHJpIJd4fLlvG5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-10-05_05,2022-10-05_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- bulkscore=0 malwarescore=0 mlxlogscore=999 priorityscore=1501
- clxscore=1015 suspectscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210060005
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221001030546.28220-3-quic_molvera@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable MCQ for Qualcomm UFS controllers
+On Fri, Sep 30, 2022 at 08:05:46PM -0700, Melody Olvera wrote:
+[..]
+> diff --git a/drivers/pinctrl/qcom/pinctrl-qdru1000.c b/drivers/pinctrl/qcom/pinctrl-qdru1000.c
+> new file mode 100644
+> index 000000000000..8b931ff80bb4
+> --- /dev/null
+> +++ b/drivers/pinctrl/qcom/pinctrl-qdru1000.c
+> @@ -0,0 +1,59 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/pinctrl/pinctrl.h>
+> +
+> +#include "pinctrl-msm.h"
+> +#include "pinctrl-qdru1000.h"
+> +
+> +static const struct msm_pinctrl_soc_data qdru1000_tlmm = {
+> +	.pins = qdru1000_pins,
+> +	.npins = ARRAY_SIZE(qdru1000_pins),
+> +	.functions = qdru1000_functions,
+> +	.nfunctions = ARRAY_SIZE(qdru1000_functions),
+> +	.groups = qdru1000_groups,
+> +	.ngroups = ARRAY_SIZE(qdru1000_groups),
+> +	.ngpios = 151,
+> +};
+> +
+> +static int qdru1000_tlmm_probe(struct platform_device *pdev)
+> +{
+> +	return msm_pinctrl_probe(pdev, &qdru1000_tlmm);
+> +}
+> +
+> +static const struct of_device_id qdru1000_tlmm_of_match[] = {
+> +	{ .compatible = "qcom,qdu1000-tlmm", },
+> +	{ .compatible = "qcom,qru1000-tlmm", },
+> +	{ },
+> +};
+> +
+> +static struct platform_driver qdru1000_tlmm_driver = {
+> +	.driver = {
+> +		.name = "qdru1000-tlmm",
+> +		.of_match_table = qdru1000_tlmm_of_match,
+> +	},
+> +	.probe = qdru1000_tlmm_probe,
+> +	.remove = msm_pinctrl_remove,
+> +};
+> +
+> +static int __init qdru1000_tlmm_init(void)
+> +{
+> +	return platform_driver_register(&qdru1000_tlmm_driver);
+> +}
+> +arch_initcall(qdru1000_tlmm_init);
+> +
+> +static void __exit qdru1000_tlmm_exit(void)
+> +{
+> +	platform_driver_unregister(&qdru1000_tlmm_driver);
+> +}
+> +module_exit(qdru1000_tlmm_exit);
+> +
+> +MODULE_DESCRIPTION("QTI QDRU1000 TLMM driver");
+> +MODULE_LICENSE("GPL v2");
 
-Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+"GPL" only please.
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 36c40210..b740299 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -853,6 +853,7 @@ static void ufs_qcom_set_caps(struct ufs_hba *hba)
- 	hba->caps |= UFSHCD_CAP_CRYPTO;
- 	hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
- 	hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
-+	hba->caps |= UFSHCD_CAP_MCQ_EN;
- 
- 	if (host->hw_ver.major >= 0x2) {
- 		host->caps = UFS_QCOM_CAP_QUNIPRO |
--- 
-2.7.4
+> +MODULE_DEVICE_TABLE(of, qdru1000_tlmm_of_match);
 
+Please add this next to qdru1000_tlmm_of_match.
+
+> diff --git a/drivers/pinctrl/qcom/pinctrl-qdru1000.h b/drivers/pinctrl/qcom/pinctrl-qdru1000.h
+
+I'm not able to see why this is in a header file and the commit message
+doesn't give a clue. Please align with the customary form, or motivate
+your choice.
+
+[..]
+> +
+> +enum qdru1000_functions {
+> +	msm_mux_gpio,
+> +	msm_mux_CMO_PRI,
+> +	msm_mux_SI5518_INT,
+> +	msm_mux_atest_char_start,
+> +	msm_mux_atest_char_status0,
+> +	msm_mux_atest_char_status1,
+> +	msm_mux_atest_char_status2,
+> +	msm_mux_atest_char_status3,
+
+For anything that denotes different pins in one function, please drop
+the suffix and make this a list of functions.
+
+[..]
+> +	msm_mux_qspi_data_0,
+> +	msm_mux_qspi_data_1,
+> +	msm_mux_qspi_data_2,
+> +	msm_mux_qspi_data_3,
+> +	msm_mux_qup0_se0_l0,
+
+E.g. msm_mux_qup0_se0 is enough, giving each pin its own function means
+that we need to define each pin separate in DT.
+
+Regards,
+Bjorn
