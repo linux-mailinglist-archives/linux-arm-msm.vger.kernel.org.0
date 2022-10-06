@@ -2,105 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EE255F623E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 10:05:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 434945F6279
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 10:21:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230138AbiJFIFW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 04:05:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51472 "EHLO
+        id S230405AbiJFIVQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 04:21:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230150AbiJFIFU (ORCPT
+        with ESMTP id S230508AbiJFIVP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 04:05:20 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0933C37FBD
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 01:05:18 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id a12so1308861ljr.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 01:05:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=aQgLDXbifM0rqp5u4DrjFvn4pd5ZSxqJ7lQA2KzRsRM=;
-        b=nl346wPBz2+HsobbRx3iQ6LR29S6myMXMumDS5sYHXz9p43T+o9hd5fQu+RaAgYz0i
-         1aBUgoNG5LAXoJxu8SX3e1qJAO/F0SOLDRSKaJaZIVCGkmzGTnXXWOOWshx47n9N/wrl
-         QtJOCmq4XYN3DuKZhtamBUTztnozPdrshNvSGbXIGnckVO0Z8mct52GLxUqXoxmua84E
-         5ZpqwnJ5XwnQD64InAYCSnYB06bN1UCqOn0VJacJRPatbYBWugEqOMa+Av11wocj+OsX
-         h/KmS28HXbXOIipksROVro2kjIDNv8cspihYiLg/y2ge+LMo1M2PNhB6JOpcciV2RQGZ
-         DdCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=aQgLDXbifM0rqp5u4DrjFvn4pd5ZSxqJ7lQA2KzRsRM=;
-        b=7zZdt876/8rgiEMQ39nK0zX4Yz19Z+pK2oOPTv7++rHcZOC4RLAgeUXa1btf8NLvSl
-         kVeAqGHm4jFK2kSCwcoXa2j+XduEKwecyu4IrgtGz6P7a9xO3720t0dpJ2JbpKua7mwo
-         +mBKJxS9zbPeXn+4OdddTAEqN0QBCHY4F6VDNO7dAEHPJgJakgEagQFPGCMaHrB4ts9K
-         kDM+MbjfEtCE66DraCGBlIjPt3AQ2i2n5lfdd/L4QwaBpmL0ujT+tadmAn3veLdPdiR6
-         Xsf0diynzAXoLlbiefzU1X8kKE+Nn+ig0IUuKMi3dizjYQGUESvrAhws3mlBbMp0kucR
-         YbeA==
-X-Gm-Message-State: ACrzQf0BKWpvOPO0gttW8pj62BajHjZfQ4PVDqhmBtC1HQ5k5Eeep7c+
-        M3hTK77f9rBgVMfS9x4i4bIPqw==
-X-Google-Smtp-Source: AMsMyM66BFjYxr3ivdx8GpkEc0toNMv635YO4cwYw2Vl8QNCfDoonAVvuantTB0QAWaMkiNDHKmZtw==
-X-Received: by 2002:a2e:b046:0:b0:26e:2a8:df8 with SMTP id d6-20020a2eb046000000b0026e02a80df8mr661441ljl.241.1665043516344;
-        Thu, 06 Oct 2022 01:05:16 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id y13-20020a19750d000000b00497a1f92a72sm2614650lfe.221.2022.10.06.01.05.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Oct 2022 01:05:15 -0700 (PDT)
-Message-ID: <ba4a2a81-b3fd-d000-48f4-ec2270e2810d@linaro.org>
-Date:   Thu, 6 Oct 2022 10:05:15 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH v7 1/2] dt-bindings: arm: add xiaomi,sagit board based on
- msm8998 chip
-Content-Language: en-US
-To:     Dzmitry Sankouski <dsankouski@gmail.com>,
-        linux-kernel@vger.kernel.org
+        Thu, 6 Oct 2022 04:21:15 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 757382B268;
+        Thu,  6 Oct 2022 01:21:14 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id BD2D0B82035;
+        Thu,  6 Oct 2022 08:21:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C19C433D6;
+        Thu,  6 Oct 2022 08:21:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1665044471;
+        bh=44BmLy7CEd3jx1EOlVr8WQ8bwFyx1o6U9/3Eep9O8UY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Qsqkt02BhrmNBeBMGmJYniAXyWhYpDPph10h0ApEJF9+7Sz3e7ExWsgGqslY7/570
+         6LyO9KgmNec+KhdeH6vztGmxv0MYU4ez0I7zZMCWUQozeJTYIG0da8S3Dpn/YLdzeY
+         5tsr5o04bOsFE3ZvkUBQnPF3ry7l3JYXVOF56JIye9ymEmwW0976jkeA1JlzA4PYao
+         pg1Txl00srIOv+FkDJWrWEbDypoNXjnYdWeFrOW5mWxsbRySn7fsM1dZ6m9HXojVuZ
+         mZbr0lhwa/W3FGzxMgAv6+vJhimeCKZCx/n9Eg/70XVMIKquxs0AS2Sw5HSVFt2lzm
+         egDhzIlRVLhOg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1ogM7v-0003hg-7j; Thu, 06 Oct 2022 10:21:07 +0200
+Date:   Thu, 6 Oct 2022 10:21:07 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-References: <20221006075125.1056605-1-dsankouski@gmail.com>
- <20221006075125.1056605-2-dsankouski@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221006075125.1056605-2-dsankouski@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Alex Elder <elder@linaro.org>,
+        Nicolas Dechesne <nicolas.dechesne@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Vinod Koul <vinod.koul@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Caleb Connolly <kc@postmarketos.org>
+Subject: Re: Qualcomm DT bindings and DTS cleanups - tracking community wide
+Message-ID: <Yz6P8wOPdRd9sjX2@hovoldconsulting.com>
+References: <62e95ea6-6b72-a159-56ab-8bb11a5800c8@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <62e95ea6-6b72-a159-56ab-8bb11a5800c8@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/10/2022 09:51, Dzmitry Sankouski wrote:
-> Add xiaomi,sagit board (Xiaomi Mi 6) binding.
+On Thu, Sep 22, 2022 at 04:32:00PM +0200, Krzysztof Kozlowski wrote:
+> Hi everyone,
 > 
-> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+> Quite a lot of people are working on Qualcomm DT bindings conversion
+> (TXT->YAML) and fixups to Qualcomm DTS. We track a bit of this effort
+> internally in Linaro, but that has many shortcomings and we would like
+> to track it rather community-wide with the support and contributions
+> from the community.
+> 
+> What to track:
+> 1. Which bindings to convert to YAML,
+> 2. Missing compatibles (either entirely or because of missing conversion),
+> 3. `dt_binding_check` warnings (usually connected with 1-2),
+> 4. `dtbs_check` warnings.
+> 
+> Rob's bot gives us daily output for 1-4, but how can we track current
+> efforts to avoid duplication of work? Also it would allow people to find
+> tasks for them to get contributions to Linux kernel :). Is anyone in
+> community interested in tracking it together, in a public way?
 
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions. However,
-there's no need to repost patches *only* to add the tags. The upstream
-maintainer will do that for acks received on the version they apply.
+Is this a real problem that needs fixing? I mean how often does it
+happen that people submit the same YAML conversion for example? Since it
+doesn't take that long to do a conversion, I'm not sure what tracking
+this on some webpage buys us. It's better to just search lore before
+starting a new conversion. Or search the linux-next tree to see what's
+still pending.
 
-https://elixir.bootlin.com/linux/v5.17/source/Documentation/process/submitting-patches.rst#L540
+Similarly for the other points above, as it doesn't take very long to
+add a missing compatible or fix a warning it seems a bit excessive to
+try to track this manually.
 
-If a tag was not added on purpose, please state why and what changed.
+Perhaps a list of pending conversions or missing compatibles could be
+useful for someone who's short on work, but it's bound to get outdated
+pretty quickly.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> If so, where?
+> A. elinux.org (needs some formatting when pasting the output from tools)
+> B. gitlab pages/wiki (maybe scripts could parse tools and create the page?)
+> C. gitlab dedicated repo - some text file
+> D. Linux kernel TODO file (might be difficult to keep updated)
+> E. kernel.org wiki (requires LF accounts, AFAIK, a bit pain to edit; I
+> have it for Exynos but I don't find it usable -
+> https://exynos.wiki.kernel.org/todo_tasks)
+> 
+> I am leaning towards Gitlab pages because they could be quite automated
+> - with CI or with scripts.
+> 
+> The point would be to list all of tasks (1-4 from the first list), keep
+> it updated with new results, pick/assign tasks and mark as done.
 
+I don't really see the need for more process here, sorry.
 
-Best regards,
-Krzysztof
+If I'm working on support for a new platform and the DT checker warnings
+gets too noisy I may pick some of the low hanging fruit. In the odd
+chance that someone beats me to it, it's not the end of the world.
 
+Johan
