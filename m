@@ -2,146 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CF22F5F6B04
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 17:49:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 652175F6B3B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 18:07:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231675AbiJFPtn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 11:49:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51804 "EHLO
+        id S231334AbiJFQHr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 12:07:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230410AbiJFPtm (ORCPT
+        with ESMTP id S230039AbiJFQHp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 11:49:42 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.84])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7CEBE30;
-        Thu,  6 Oct 2022 08:49:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1665071374;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=j7eZp38BjlfdBQLJ5AigHo4JPaCzVu//8rXSvPqwO+Q=;
-    b=DufJXJo8+Fxml6ZIVTresxo4wvbz5GkuHUz19/pI3PuBzFHpccCnZ/y54ymtijn9dB
-    J1Zir4ad/BnyeKwrswqBDo1l+tv98p/OxHWq34YZ91eqINGhiyqIzFPZ5cZsbaRPOoZ3
-    BlQP1CPUqKJUvgQLmTMmSmu51l5InPhbEAjbig2hN13meAsmkzh1wAXmV9grNt+79k2n
-    6l0ACOVOzLndxEmgGTMibVM1bRP4IDIEt791t14glyFswNBAIq3Wjj0Z4QQCPzywtrNh
-    L1onGadREaCQq6MuI8zyOEmrL4m2g/NteKnVUDpNH8V9be58OTpSgJtzDOFgdtA7LjLf
-    fD3A==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJAhdlWwvWmtQ=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 48.1.3 DYNA|AUTH)
-    with ESMTPSA id 06b848y96FnXQ22
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 6 Oct 2022 17:49:33 +0200 (CEST)
-Date:   Thu, 6 Oct 2022 17:49:32 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        krishna Lanka <quic_vamslank@quicinc.com>,
-        Iskren Chernev <iskren.chernev@gmail.com>,
-        Martin Botka <martin.botka@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 00/34] pinctrl/arm64: qcom: continued - fix Qualcomm TLMM
- pinctrl schema warnings (5th set)
-Message-ID: <Yz75DAmjI1GbwQpI@gerhold.net>
-References: <20221006140637.246665-1-krzysztof.kozlowski@linaro.org>
+        Thu, 6 Oct 2022 12:07:45 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BA005FAEC;
+        Thu,  6 Oct 2022 09:07:45 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id DAD2CB8060E;
+        Thu,  6 Oct 2022 16:07:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E13C433C1;
+        Thu,  6 Oct 2022 16:07:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1665072462;
+        bh=UgBb/TSUw7my6TY7l4G4qUWrT35p6b5DxWO5v2EXFUw=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=bYRc9gY+RnaW3M+UVdNEDmoLAugBYy8K2qX0kpXPGQkv9N5tbL79ptUNR2mMT7szw
+         QoVJUwxd885mPZ0VCF0KSbvDiSAs6BvjXT6jz9eyJSCygFvb7QlYVplbUs8/Q+Cjyr
+         NuzuGZQN4iAn767Bn1IgR2AWGtPIq3PotbEN6AgX90ns466dTjErLVIxPjZVirBNU4
+         l8WwEykmpRY0G9lwblaUww19ZUdVoLT4wvn+SUhVhm/JGRBFkhZJUD0EcllR5cgYJ7
+         7edK6mnfNSGxnnhFSpD3c+6yc3NiePbLikMhys4hB+n7EE8T5j4lG7yK0ErHWO3I/X
+         702ZHcrx8fTRQ==
+Date:   Thu, 6 Oct 2022 11:07:41 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
+        robh@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH] PCI: qcom-ep: Fix disabling global_irq in error path
+Message-ID: <20221006160741.GA2470032@bhelgaas>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221006140637.246665-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <Yz53NnxEkS7hg8Vc@lpieralisi>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
-
-On Thu, Oct 06, 2022 at 04:06:03PM +0200, Krzysztof Kozlowski wrote:
-> [...]
-> Krzysztof Kozlowski (34):
->   dt-bindings: pinctrl: qcom,mdm9607: drop ref to pinctrl.yaml
->   dt-bindings: pinctrl: qcom,sc7280: drop checks used in common TLMM
->   dt-bindings: pinctrl: qcom,sc8180x: drop ref to pinctrl.yaml
->   dt-bindings: pinctrl: qcom,sc8180x: drop checks used in common TLMM
->   dt-bindings: pinctrl: qcom,sc8280xp: drop checks used in common TLMM
->   dt-bindings: pinctrl: qcom,sm6115: use common TLMM schema
->   dt-bindings: pinctrl: qcom,sm6125: drop checks used in common TLMM
->   dt-bindings: pinctrl: qcom,sm6125: drop ref to pinctrl.yaml
->   dt-bindings: pinctrl: qcom,sm6350: drop ref to pinctrl.yaml
->   dt-bindings: pinctrl: qcom,sm6350: drop checks used in common TLMM
->   dt-bindings: pinctrl: qcom,sm6375-tlmm: drop ref to pinctrl.yaml
->   dt-bindings: pinctrl: qcom,sm6375-tlmm: drop checks used in common
->     TLMM
->   dt-bindings: pinctrl: qcom,sm8250: use common TLMM schema
->   dt-bindings: pinctrl: qcom,sm8350: drop ref to pinctrl.yaml
->   dt-bindings: pinctrl: qcom,sm8350: drop checks used in common TLMM
->   dt-bindings: pinctrl: qcom,sm8450: drop checks used in common TLMM
->   dt-bindings: pinctrl: qcom,mdm9607: minor style cleanups
->   dt-bindings: pinctrl: qcom,msm8909-tlmm: minor style cleanups
->   dt-bindings: pinctrl: qcom,qcm2290: minor style cleanups
->   dt-bindings: pinctrl: qcom,sdx65: minor style cleanups
->   dt-bindings: pinctrl: qcom,sc8180x: minor style cleanups
->   dt-bindings: pinctrl: qcom,sc8280xp: minor style cleanups
->   dt-bindings: pinctrl: qcom,sm6115: minor style cleanups
->   dt-bindings: pinctrl: qcom,sm6125: minor style cleanups
->   dt-bindings: pinctrl: qcom,sm6350: minor style cleanups
->   dt-bindings: pinctrl: qcom,sm6375: minor style cleanups
->   dt-bindings: pinctrl: qcom,sm8250: minor style cleanups
->   dt-bindings: pinctrl: qcom,sm8350: minor style cleanups
->   dt-bindings: pinctrl: qcom,sm8450: minor style cleanups
->   dt-bindings: pinctrl: qcom,sc7280-lpass-lpi: minor style cleanups
->   dt-bindings: pinctrl: qcom,sm8250-lpass-lpi: minor style cleanups
->   dt-bindings: pinctrl: qcom,sc8280xp-lpass-lpi: minor style cleanups
->   dt-bindings: pinctrl: qcom,sm8450-lpass-lpi: minor style cleanups
->   dt-bindings: pinctrl: qcom: adjust description
+On Thu, Oct 06, 2022 at 08:35:34AM +0200, Lorenzo Pieralisi wrote:
+> On Wed, Oct 05, 2022 at 12:35:29PM -0500, Bjorn Helgaas wrote:
+> > On Wed, Oct 05, 2022 at 07:28:52PM +0530, Manivannan Sadhasivam wrote:
+> > > After commit 6a534df3da88 ("PCI: qcom-ep: Disable IRQs during driver
+> > > remove"), the global irq is stored in the "global_irq" member of pcie_ep
+> > > structure. This eliminates the need of local "irq" variable but that
+> > > commit didn't remove the "irq" variable usage completely and it is still
+> > > used for disable_irq() in error path which is wrong since the variable is
+> > > uninitialized.
+> > > 
+> > > Fix this by removing the local "irq" variable and using
+> > > "pcie_ep->global_irq" for disable_irq() in error path.
+> > > 
+> > > Reported-by: kernel test robot <lkp@intel.com>
+> > > Fixes: 6a534df3da88 ("PCI: qcom-ep: Disable IRQs during driver remove")
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > 
+> > For today's "next" branch, I dropped 6a534df3da88 and the subsequent
+> > patches.  Hopefully Lorenzo can squash this fix into 6a534df3da88.
 > 
->  .../pinctrl/qcom,ipq6018-pinctrl.yaml         |  5 +-
->  .../pinctrl/qcom,mdm9607-pinctrl.yaml         | 16 ++---
->  .../pinctrl/qcom,msm8226-pinctrl.yaml         |  5 +-
->  .../bindings/pinctrl/qcom,msm8909-tlmm.yaml   | 11 ++-
->  .../pinctrl/qcom,msm8953-pinctrl.yaml         |  5 +-
->  .../pinctrl/qcom,qcm2290-pinctrl.yaml         | 10 ++-
->  .../qcom,sc7280-lpass-lpi-pinctrl.yaml        | 13 ++--
->  .../bindings/pinctrl/qcom,sc7280-pinctrl.yaml | 16 +----
->  .../pinctrl/qcom,sc8180x-pinctrl.yaml         | 27 +++----
->  .../qcom,sc8280xp-lpass-lpi-pinctrl.yaml      | 13 ++--
->  .../pinctrl/qcom,sc8280xp-pinctrl.yaml        | 22 ++----
->  .../bindings/pinctrl/qcom,sdx55-pinctrl.yaml  |  5 +-
->  .../bindings/pinctrl/qcom,sdx65-pinctrl.yaml  | 10 ++-
->  .../bindings/pinctrl/qcom,sm6115-pinctrl.yaml | 53 +++-----------
->  .../bindings/pinctrl/qcom,sm6125-pinctrl.yaml | 30 +++-----
->  .../bindings/pinctrl/qcom,sm6350-pinctrl.yaml | 23 ++----
->  .../bindings/pinctrl/qcom,sm6375-tlmm.yaml    | 23 ++----
->  .../qcom,sm8250-lpass-lpi-pinctrl.yaml        | 16 ++---
->  .../bindings/pinctrl/qcom,sm8250-pinctrl.yaml | 70 ++++++-------------
->  .../bindings/pinctrl/qcom,sm8350-pinctrl.yaml | 23 ++----
->  .../qcom,sm8450-lpass-lpi-pinctrl.yaml        | 13 ++--
->  .../bindings/pinctrl/qcom,sm8450-pinctrl.yaml | 22 ++----
+> Done - the pci/qcom branch successfully passed kbot's tests as well.
 
-Just a random thought since you are already doing minor style cleanups
-here: Some of these files are named incorrectly, e.g. qcom,sm8450-pinctrl.yaml
-actually documents "qcom,sm8450-tlmm". I noticed this while adding
-qcom,msm8909-tlmm but I have to admit that it did not bother me enough
-to actually prepare a patch for this (and now it would just conflict
-with all your patches). :)
+Thanks, picked this up yesterday :)
 
-No need to change anything here, just thought I'd mention it.
-
-Thanks!
-Stephan
+Bjorn
