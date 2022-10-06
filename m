@@ -2,88 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 361135F613F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 08:55:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFE195F6153
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 09:03:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229659AbiJFGzT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 02:55:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56898 "EHLO
+        id S229988AbiJFHDb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 03:03:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229666AbiJFGzR (ORCPT
+        with ESMTP id S229800AbiJFHDa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 02:55:17 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E82F2F67E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Oct 2022 23:55:14 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id w18so1145666wro.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Oct 2022 23:55:14 -0700 (PDT)
+        Thu, 6 Oct 2022 03:03:30 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8597D8C45A
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 00:03:28 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 25so1338045lft.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 00:03:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mpnbl0sOHmjZXpRaPHZuxhEh+P6N/msQTLYNVhfBBe8=;
-        b=MiPZCFMrd8ZJnITo2QNV97U1PS/R+5ZaOpCPg1dg0ozuIl6v8QxOhznFxmMRbJFt61
-         +KQ26aFgOClHddDkzpBN5Ti5bjTzZazFn9IOccCqYNGZm83luL0MAi2ZIMoiLBhbdpI9
-         ErI4nhBYVAiDsh8U0oXUCxVcV8bop7IuJT7Ik70JSybZ18r2+2UEeGXI8zLnhalxuyPK
-         D72/xbL0hdoGvzz5uUDTnekoAkjXs/FrL4Ugud+EDDTaZGiQrY2Xuz1ety4QCzOavUyl
-         +n3MfQtsIn5LI92EpTTgt2DO7DNNtKRNghaJz8p+7n59IVXb/QZmDJ0puWLNYB+9gbop
-         agyQ==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=+uNNkKCc1cA6lGPoCWdLeqxWyZqnae8fKZ+HC/9/58o=;
+        b=KuPuh6uzXJX4Fb6Qqz2U6S5jjcm4ihCJWMqj9PHZcRzfQp/w8xQ0BJAx+TAwsLTGyN
+         knBe1uYpvcr8bev2nllDF8AcmCucVjrXWZY4g7i6X4CroYlT2476fsRK2hbKm1GmpoJI
+         NyC1UnjQ/evFNS4+LKSiNdWvNh1JO6naGmTm3TTGdJ0S0dXkd7xn/SPHk/mmhnPljqre
+         L5VG9xjhznVsD7oHYBtvCSPxMSfEGAd1bBcQp9CPla5VYAvnSwvC8CJeEp5BDU5CbPv+
+         o3FebFMEOw0S/peLr4w+11f5fKNGFHQ4qdZuivUQ37Ui9sZZxImraTZ2QTX2gHdDEOvl
+         3AKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mpnbl0sOHmjZXpRaPHZuxhEh+P6N/msQTLYNVhfBBe8=;
-        b=ToJA+j+z5PSoYFD9xWkRJLN4h4/rOxgDglH+RXvUJeY76zhGodSOZDu4Z11sxK1UAN
-         UZVSeGzN2+UCylW1PFg05fi2MGsss1wdjArXNndvryKiMxDC6pXFPcSlxwRPWtQCmA18
-         Ppk3JN7t3f65XyA8XEsmRqaqQKqSuik3KbXTBPv2KwxeegUBFlyGFOrlg/1VX6s44dPQ
-         ZRxFxcQQu5IkdSKQnteGl25CCwKMKcrRU01Fxpwy7LUDtKba5l+OOqoWUF/CmZNE8hc6
-         5+l53kLcCiRSX4UBiKDdiYreIxs8QEt/fwfMzBMR9agLnxkKqBBD7Qk5XI1FO+ectflu
-         Xjag==
-X-Gm-Message-State: ACrzQf2HaugMx5mlC0ELc2CiUVlxnd1Y01tmv6JZWLDhespK9Cf3OPSM
-        400DVkko8BzUwOSLEcRQVmVFWw==
-X-Google-Smtp-Source: AMsMyM4tUv+yoGLPcmLIx0TCLkILd2ZuyZqPgL+k6wTXzf/o8aVrTs7qe5sYTzmE/qACZEBJdXpwZw==
-X-Received: by 2002:a05:6000:806:b0:22a:36df:2663 with SMTP id bt6-20020a056000080600b0022a36df2663mr1873670wrb.423.1665039312765;
-        Wed, 05 Oct 2022 23:55:12 -0700 (PDT)
-Received: from ?IPV6:2a05:6e02:1041:c10:86cc:fff3:d44b:9793? ([2a05:6e02:1041:c10:86cc:fff3:d44b:9793])
-        by smtp.googlemail.com with ESMTPSA id a5-20020adfeec5000000b0022e2c38f8basm14459474wrp.14.2022.10.05.23.55.11
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=+uNNkKCc1cA6lGPoCWdLeqxWyZqnae8fKZ+HC/9/58o=;
+        b=e2IPU4zwn4TqR6yEymICmq0IK4o8O0Dk7TSQ2sdq77Hq0uk6TVJSnMgjjmXW7M+xXR
+         +UIX9vx5GCfPdAfUa2su8Cyvq+RI+PQGNgV0jdwI6DOIxQ94rv5+CXmJapdz32hBXuoD
+         WQfFq32J8KHdW1cv4xt+bqfolMd39elvCcoF/hMvBOkh5oC6SfMpYt+IrqOGVNg28T/q
+         +BP4pgvmnj7z6jy9ubBGoHu1HoX8jKlUES6JvHh03YSLsSEHwoAnicLrJC5IQuF67Wpd
+         6ctvF0HLPR1O+33Gzn3wUpGIdfbdiSZO/jyFfdlxUR+FNXrJptDfPQMrnXISZn6auabm
+         gE6Q==
+X-Gm-Message-State: ACrzQf238otGrTvkGma3oG6G/Y7swXkOxKNfPGqFUVZL6bqWpSSqZ9s6
+        dxIOkNCL8sNYX+W4bCzAYpL/Wg==
+X-Google-Smtp-Source: AMsMyM5o/YOGP9nvJjrUfFpncClzKnj1ZsPZ/c/mmCMgtjVjq00XyQcD6SPIx6//fVTrqHZb16mIFQ==
+X-Received: by 2002:ac2:5462:0:b0:49d:101:e1ce with SMTP id e2-20020ac25462000000b0049d0101e1cemr1163000lfn.289.1665039806866;
+        Thu, 06 Oct 2022 00:03:26 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id br16-20020a056512401000b00498fd423cc3sm2579796lfb.295.2022.10.06.00.03.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Oct 2022 23:55:12 -0700 (PDT)
-Message-ID: <97201878-3bb8-eac5-7fac-a690322ac43a@linaro.org>
-Date:   Thu, 6 Oct 2022 08:55:10 +0200
+        Thu, 06 Oct 2022 00:03:26 -0700 (PDT)
+Message-ID: <20e30206-3c82-b905-eae7-3638aa87ff29@linaro.org>
+Date:   Thu, 6 Oct 2022 09:03:25 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v8 00/29] Rework the trip points creation
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH v6 1/2] dt-bindings: arm: add xiaomi,sagit board based on
+ msm8998 chip
+To:     Dzmitry Sankouski <dsankouski@gmail.com>,
+        linux-kernel@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+References: <20221005181528.1038629-1-dsankouski@gmail.com>
+ <20221005181528.1038629-2-dsankouski@gmail.com>
 Content-Language: en-US
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        rui.zhang@intel.com,
-        Broadcom Kernel Team <bcm-kernel-feedback-list@broadcom.com>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
-        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>, netdev@vger.kernel.org,
-        platform-driver-x86@vger.kernel.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-omap@vger.kernel.org, rafael@kernel.org
-References: <CGME20221003092704eucas1p2875c1f996dfd60a58f06cf986e02e8eb@eucas1p2.samsung.com>
- <20221003092602.1323944-1-daniel.lezcano@linaro.org>
- <8cdd1927-da38-c23e-fa75-384694724b1c@samsung.com>
- <c3258cb2-9a56-d048-5738-1132331a157d@linaro.org>
- <851008bf-145d-224c-87a8-cb6ec1e9addb@linaro.org>
- <207c1979-0da2-b05d-fead-6880ad956b90@samsung.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <207c1979-0da2-b05d-fead-6880ad956b90@samsung.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221005181528.1038629-2-dsankouski@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -94,104 +84,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-Hi Marek,
-
-On 05/10/2022 15:05, Marek Szyprowski wrote:
+On 05/10/2022 20:15, Dzmitry Sankouski wrote:
+> Add xiaomi,sagit board (Xiaomi Mi 6) binding.
 > 
-> On 05.10.2022 14:37, Daniel Lezcano wrote:
->>
->> Hi Marek,
->>
->> On 03/10/2022 23:18, Daniel Lezcano wrote:
->>
->> [ ... ]
->>
->>>> I've tested this v8 patchset after fixing the issue with Exynos TMU
->>>> with
->>>> https://lore.kernel.org/all/20221003132943.1383065-1-daniel.lezcano@linaro.org/
->>>>
->>>> patch and I got the following lockdep warning on all Exynos-based
->>>> boards:
->>>>
->>>>
->>>> ======================================================
->>>> WARNING: possible circular locking dependency detected
->>>> 6.0.0-rc1-00083-ge5c9d117223e #12945 Not tainted
->>>> ------------------------------------------------------
->>>> swapper/0/1 is trying to acquire lock:
->>>> c1ce66b0 (&data->lock#2){+.+.}-{3:3}, at: exynos_get_temp+0x3c/0xc8
->>>>
->>>> but task is already holding lock:
->>>> c2979b94 (&tz->lock){+.+.}-{3:3}, at:
->>>> thermal_zone_device_update.part.0+0x3c/0x528
->>>>
->>>> which lock already depends on the new lock.
->>>
->>> I'm wondering if the problem is not already there and related to
->>> data->lock ...
->>>
->>> Doesn't the thermal zone lock already prevent racy access to the data
->>> structure?
->>>
->>> Another question: if the sensor clock is disabled after reading it,
->>> how does the hardware update the temperature and detect the programed
->>> threshold is crossed?
->>
->> just a gentle ping, as the fix will depend on your answer ;)
->>
-> Sorry, I've been busy with other stuff. I thought I will fix this once I
-> find a bit of spare time.
-
-Ok, that is great if you can find time to fix it up because I've other 
-drivers to convert to the generic thermal trips.
+> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+> ---
 
 
-> IMHO the clock management is a bit over-engineered, as there is little
-> (if any) benefit from such fine grade clock management. That clock is
-> needed only for the AHB related part of the TMU (reading/writing the
-> registers). The IRQ generation and temperature measurement is clocked
-> from so called 'sclk' (special clock).
-> 
-> I also briefly looked at the code and the internal lock doesn't look to
-> be really necessary assuming that the thermal core already serializes
-> all the calls.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-I looked at the code and I think the driver can be simplified (fixed?) 
-even more.
+Best regards,
+Krzysztof
 
-IIUC, the sensor has multiple trip point interrupts, so if the device 
-tree is describing more trip points than the sensor supports, there is a 
-warning and the number of trip point is capped.
-
-IMO that can be simplified by using two trip point interrupt because the 
-thermal_zone_device_update() will call the set_trips callback with the 
-new boundaries. IOW, the thermal framework sets a new trip point 
-interrupt when one is crossed.
-
-That should result in the simplification of the tmu_control as well as 
-the tmu_probe function. As well as removing the limitation of the number 
-of trip points.
-
-In order to have that correctly working, the 'set_trips' ops must be 
-used to call the tmu_control callback instead of calling it in tmu_probe.
-
-The intialization workflow should be:
-
-probe->...
-  ->thermal_zone_device_register()
-   ->thermal_zone_device_update()
-    ->update_trip_points()
-     ->ops->set_trips()
-       ->tmu_control()
-
-Also, replace the workqueue by a threaded interrupt.
-
-Does it make sense?
-
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
