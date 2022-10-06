@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A2FE5F6678
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 14:47:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B2F55F667E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 14:47:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231503AbiJFMrh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 08:47:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60466 "EHLO
+        id S231307AbiJFMrq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 08:47:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231246AbiJFMrc (ORCPT
+        with ESMTP id S230495AbiJFMrd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 08:47:32 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F72EA287B
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 05:47:14 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id g1so2502127lfu.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 05:47:14 -0700 (PDT)
+        Thu, 6 Oct 2022 08:47:33 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1233A2860
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 05:47:15 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id s20so2506369lfi.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 05:47:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=s5gqgC6F8H12j/3mwOFaxBkWJqMnqVFVlaFtZkq3pf0=;
-        b=Lwpe0mq0h/arV/xbQkB3ZRK3XmTt1o6/eZ4hBjZLx348P58TebbXDewigdSIyPhuD9
-         MN154PnAVyjOIYjnmhSefMTd8RkRULMKCsIwXUQdYm9Nj/TodMaUr1bSSjX0CncfoYe+
-         J2xkTCyXjPECHf2QGiR3bCi+1CfWndPN/bGjKc2+6tf+0cHGnh4OFCkgxDHUy84PbyUb
-         ZvHcmJ0jKzQI9KAeU8fSt07/P5Gi4IKH6OvIlayyI1Kj8+DkBgfUIwEA0pdGM4AtKG9C
-         qT4Qyogy8PP6DOlHY1nDey9FWjD94A1+4CwVt2ApOLFPuQhAg4195lPuj/AhTleu3ACv
-         2v/g==
+        bh=GtCTGlGKy966v/cPNs/91xDY9Oz5Cj3W8mgOw/S68pg=;
+        b=ySfefdkyf7Sd2nA5w03oYTAy62V0MdtX/HOQzJFKQN7Vi6YFspFiEYRwZapx1QuvFp
+         mWZyE1hmGcsFfExZdH98hUij1W39yrm0Yh3dQApe7BsX3I9hirJNolU3T7gTnZCEDO+A
+         y83yVXBED9j2gBTYFIkNfmnkeDAYXx+Uib/EheF+vRwr6LrE3a+ZjA/BEx+ZAzbwkaXA
+         RPU+4Mr9b6BqucdjR+D3vWQhXKmWQZJAeQzm+UGZE1kHSLZvzh/Prb/jmVA0kDQkNDAS
+         Pd+D9aR2BJFerwT6QbQTLu0uo6e5rMrT2QuL/EUzbvM2UHi77SNytehCCJCutFHw+mmR
+         tf2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=s5gqgC6F8H12j/3mwOFaxBkWJqMnqVFVlaFtZkq3pf0=;
-        b=JpaPU4dcUjxIoT6mDoma1xXvS75BEVAvicICFC6SuXfqr2PqAYin108vMe1lF9Y+1e
-         T28byyxlQLQHWD0yg/7xcY17Jodt9w3TMEPPqn5NyFPpDasFJ8/3YNEcGErMtT4Hqshh
-         ZDQnfR0bhl93CCXS8USanoHOfLHUrhIIpz3xP8zYc/COhy7no2LPEtyPP7mOBYDOu5c8
-         TTl8IpjKyacpJhoTGLLpwK6KGJ8FBfzoOqxnWiIJ3PdK/62ssts0behbRjn+nnvvTT72
-         RXfGupyCA8v7Qaq+pchhpNS+2Ro3pASz9rEyph/Ce34hX1Yi2rDzKJ1oh9Wyie2hVabZ
-         RYLA==
-X-Gm-Message-State: ACrzQf0W8KE/j9kkRuMPu2GOqmPBiaYUXMC3OKL/z6ZKwrJgxESMoYPp
-        LmFGAR0VEuLfe0xcv1CajZvzfw==
-X-Google-Smtp-Source: AMsMyM4YEjNrnR7YCnLMuTw/uAtiFNA/YNA65F0PON8RftEs68BdD043RPvwZB3GH+ZEVOa1raUm1Q==
-X-Received: by 2002:a05:6512:32c7:b0:4a2:4544:120d with SMTP id f7-20020a05651232c700b004a24544120dmr1968542lfg.598.1665060432279;
-        Thu, 06 Oct 2022 05:47:12 -0700 (PDT)
+        bh=GtCTGlGKy966v/cPNs/91xDY9Oz5Cj3W8mgOw/S68pg=;
+        b=oVRumBrFYftNMkS3FR/Wpad+maAI6+OJj7AzhCCSjM6UHnvSbpYlQxF6SRdayXmI7p
+         97DH5d62fxKLgIunHU6HfRG4O3dc5+ANodAzYW6GJtxTizxmdq8hAA1XgzQA8RFo2z9a
+         R0cPNyrNQ6cRS4GKaKK34agmQltmcmWLmqKengXLL92aryzXRdaeT+RI06GaRuCq9kgJ
+         81kx3t8A0XCG9NA0YDXfsW+wZtSplbMuwlNVbry4NKguthb273REuzDgzpeKUrwM6z6V
+         XAydk3HlV6ITjoyKN7LxcfDJSPZVLpmCxttaap0iSOkbidGlpZT5Hr7w9PzFukJBcRcH
+         5t2A==
+X-Gm-Message-State: ACrzQf0arXUHcLMgrjn4eFb0ChvSwwoQmp4Q/klUZh91aBwe+pg4cikX
+        00CD2n7lePlaoZCdPmWGZQnkew==
+X-Google-Smtp-Source: AMsMyM4ub2GjPnUStej5e3LPCtC/FHXytcbNYmmEctKo9I6j+5vxBTigkTYqtqfdGBm7/FpVkUbodA==
+X-Received: by 2002:a19:5503:0:b0:4a2:329d:bc74 with SMTP id n3-20020a195503000000b004a2329dbc74mr1974845lfe.77.1665060433418;
+        Thu, 06 Oct 2022 05:47:13 -0700 (PDT)
 Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id br32-20020a056512402000b00497a3e2a191sm2687659lfb.112.2022.10.06.05.47.11
+        by smtp.gmail.com with ESMTPSA id br32-20020a056512402000b00497a3e2a191sm2687659lfb.112.2022.10.06.05.47.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 05:47:12 -0700 (PDT)
+        Thu, 06 Oct 2022 05:47:13 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -65,9 +65,9 @@ To:     Andy Gross <agross@kernel.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Rob Herring <robh@kernel.org>
-Subject: [PATCH v4 09/34] dt-bindings: pinctrl: qcom,ipq6018: correct BLSP6->BLSP0 functions
-Date:   Thu,  6 Oct 2022 14:46:34 +0200
-Message-Id: <20221006124659.217540-10-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v4 10/34] dt-bindings: pinctrl: qcom,ipq6018: increase number of pins in pinmux
+Date:   Thu,  6 Oct 2022 14:46:35 +0200
+Message-Id: <20221006124659.217540-11-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221006124659.217540-1-krzysztof.kozlowski@linaro.org>
 References: <20221006124659.217540-1-krzysztof.kozlowski@linaro.org>
@@ -83,42 +83,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The pin controller driver has BLSP functions from 0 to 5, not 1 to 6.
-Add missing blsp0_i2c, blsp0_spi (already used in ipq6018-cp01-c1) and
-blsp0_uart.  Drop blsp6_i2c and blsp6_spi.
+One pinxmux node can have more than 4 pins to configure:
 
-This fixes dtbs_check warning:
-
-  ipq6018-cp01-c1.dtb: pinctrl@1000000: spi-0-state: 'oneOf' conditional failed, one must be fixed:
-    'bias-pull-down', 'drive-strength', 'function', 'pins' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
-    'blsp0_spi' is not one of ['adsp_ext', 'alsp_int', .....
+  ['gpio1', 'gpio3', 'gpio4', 'gpio5', 'gpio6', 'gpio7', 'gpio8', 'gpio10', 'gpio11', 'gpio12', 'gpio13', 'gpio14', 'gpio15', 'gpio17'] is too long
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 Reviewed-by: Rob Herring <robh@kernel.org>
 ---
- .../devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml   | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .../devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml       | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
-index 0bd1aded132d..76698cd97e8c 100644
+index 76698cd97e8c..7202e2af200b 100644
 --- a/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
 +++ b/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
-@@ -72,12 +72,12 @@ patternProperties:
-         enum: [ adsp_ext, alsp_int, atest_bbrx0, atest_bbrx1, atest_char,
-                 atest_char0, atest_char1, atest_char2, atest_char3, atest_combodac,
-                 atest_gpsadc0, atest_gpsadc1, atest_tsens, atest_wlan0,
--                atest_wlan1, backlight_en, bimc_dte0, bimc_dte1, blsp1_i2c,
--                blsp2_i2c, blsp3_i2c, blsp4_i2c, blsp5_i2c, blsp6_i2c, blsp1_spi,
-+                atest_wlan1, backlight_en, bimc_dte0, bimc_dte1, blsp0_i2c, blsp1_i2c,
-+                blsp2_i2c, blsp3_i2c, blsp4_i2c, blsp5_i2c, blsp0_spi, blsp1_spi,
-                 blsp1_spi_cs1, blsp1_spi_cs2, blsp1_spi_cs3, blsp2_spi,
-                 blsp2_spi_cs1, blsp2_spi_cs2, blsp2_spi_cs3, blsp3_spi,
-                 blsp3_spi_cs1, blsp3_spi_cs2, blsp3_spi_cs3, blsp4_spi, blsp5_spi,
--                blsp6_spi, blsp1_uart, blsp2_uart, blsp1_uim, blsp2_uim, cam1_rst,
-+                blsp0_uart, blsp1_uart, blsp2_uart, blsp1_uim, blsp2_uim, cam1_rst,
-                 cam1_standby, cam_mclk0, cam_mclk1, cci_async, cci_i2c, cci_timer0,
-                 cci_timer1, cci_timer2, cdc_pdm0, codec_mad, dbg_out, display_5v,
-                 dmic0_clk, dmic0_data, dsi_rst, ebi0_wrcdc, euro_us, ext_lpass,
+@@ -63,7 +63,7 @@ patternProperties:
+                       sdc2_data, qdsd_cmd, qdsd_data0, qdsd_data1, qdsd_data2,
+                       qdsd_data3 ]
+         minItems: 1
+-        maxItems: 4
++        maxItems: 16
+ 
+       function:
+         description:
 -- 
 2.34.1
 
