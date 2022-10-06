@@ -2,104 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 76F805F6E65
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 21:48:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EB0C5F6E71
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 21:53:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232075AbiJFTsa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 15:48:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48676 "EHLO
+        id S232053AbiJFTxq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 15:53:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232026AbiJFTs3 (ORCPT
+        with ESMTP id S232089AbiJFTxp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 15:48:29 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D12C01144FE
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 12:48:27 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id bj12so6809842ejb.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 12:48:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura.hr; s=sartura;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=SubjIuBws5LPaK2F6fl7djEE32KNShOpGo87GmZ3kbY=;
-        b=FHa/vDtdebdXMgW7KVsFf9ZcK5KpzB4y2fu+78ZJO/jInIegCXwPsLxu3ycGwwfrFx
-         cvrB5c4DYtfygHY9cu8xOJGrI+J9hEGm0smqMLT3nhOnAtldgM7whWdYBfF43NBvsDKY
-         OpaKP9PTtdqFTyIT4gkP1KTx/cVrOkNyEoS/Y40beWiJvipJFh0gwZgJVo1docdObzNe
-         EMlR9KdacoLqDzGcUOYmo/Sf2CLKcIOADj3YBQFVzkxY/Xk6cagRy+NzBImEBKlN0VOk
-         WtwhKkeDM5TYdKVvbzSvFXgFwti7sKUVJD/OZGHTq7hGO7vZHYplzoPDQCQGsGBhmTt/
-         DiOA==
+        Thu, 6 Oct 2022 15:53:45 -0400
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4909A4858;
+        Thu,  6 Oct 2022 12:53:44 -0700 (PDT)
+Received: by mail-oo1-f50.google.com with SMTP id c17-20020a4aa4d1000000b0047653e7c5f3so2155548oom.1;
+        Thu, 06 Oct 2022 12:53:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=SubjIuBws5LPaK2F6fl7djEE32KNShOpGo87GmZ3kbY=;
-        b=SRNOpHIQvJepyFTR0x43VqNuWFo7Wy/azetSzVKPOxSPp9xMr5ZVgeYo/HAhs7nuMX
-         //mVmWU6kaJN7QjHjeVeHZfS0t0uF52GZujSq0fSkVurPpxkSkE/jUYNaAHlv4Acjhed
-         uj4Dgn0YPOh5WudtYXwI12m5GD2B/8DLxHUOS2CXI6a4kDX+7htcwkg4SgxJdtp9FAs2
-         cuz6MlRtrwKUrrzKw2ow0n643DPmSt95IWgHn3z5QizSmhE63t0j9ESf7Z0IpFpwaQAl
-         VFSlXv6or/q2/WmHot8Qd4GxpkzGgxysohvNiJ+w6AgoC5Gi0QeuSqHdw7rCFOknLgli
-         tYtA==
-X-Gm-Message-State: ACrzQf2mslH98vThUJurbRA1edIDboAoGMM058TGqTEXlQXbhkD37Pl/
-        o+TIgelFRWAbVFBtzRUfHwecWg==
-X-Google-Smtp-Source: AMsMyM7lGUO5s/XfctQB/DIPjA1h+5Xa7NpwAFS4jTATaxNFrWml5ah0CQthp5237VTD/JeaAGN5EQ==
-X-Received: by 2002:a17:907:d90:b0:78d:48b1:496d with SMTP id go16-20020a1709070d9000b0078d48b1496dmr1207704ejc.665.1665085706326;
-        Thu, 06 Oct 2022 12:48:26 -0700 (PDT)
-Received: from fedora.. (dh207-96-33.xnet.hr. [88.207.96.33])
-        by smtp.googlemail.com with ESMTPSA id l26-20020a170906415a00b0078116c361d9sm174229ejk.10.2022.10.06.12.48.24
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YR64ZoS03S6Cf4OMN2xctJ5fNp97n//E/duTDF0cLns=;
+        b=ZaPLcQGEWsGbVisjC7CUlnoppJ/N6CJLEMRM5PzP7lVEbmknHbOIqK70ozxYHSP9bm
+         zo4EckunD5TwBMFFKW6FMsQJ8MdDJM6LJxe2gtLAxuJ/fCtt8DMO6OrMSsfadzg7B7Z9
+         ORMEdd1LrJkXKAfBgjwO+z8CtNTjG+2gXv5q1njswqWn9s+Efm4SxlMglNT/spnEyK0Q
+         bFP7Ep2/V+TBch7KcULWpd+uQwkJFBLqH6KQrtDv1Jifqgys/AQ21M67iNlKJX6kI6vk
+         9FaZjVLtAi9TJoE8PuUs8gAlDDh0Bn0mc8/5tsJZYB/03BTEC2CSB0/6fTk6ofdZhGgM
+         E88Q==
+X-Gm-Message-State: ACrzQf10MVDR6lm4qYaKQePrDZBAdeq6W6cAgyFwAbMwGDaM/SFqeW9Q
+        aJtJFl4LqGBqubTd6OtFsw==
+X-Google-Smtp-Source: AMsMyM45uLSlRXQZ2e8/VVkH5FOyJd9ra0oO8PlThWD5+ed024nCjv6jn0yO4T+hqAz+i1uCj25J0A==
+X-Received: by 2002:a4a:e54e:0:b0:44a:fb57:7022 with SMTP id s14-20020a4ae54e000000b0044afb577022mr501192oot.91.1665086024072;
+        Thu, 06 Oct 2022 12:53:44 -0700 (PDT)
+Received: from robh_at_kernel.org ([2607:fb90:8a65:c536:245:842:a3a4:9017])
+        by smtp.gmail.com with ESMTPSA id z9-20020a056870460900b001326b043f37sm283272oao.36.2022.10.06.12.53.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 12:48:25 -0700 (PDT)
-From:   Robert Marko <robert.marko@sartura.hr>
-To:     agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, broonie@kernel.org,
-        linus.walleij@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robert.marko@sartura.hr>, luka.perkov@sartura.hr
-Subject: [PATCH] spi: qup: support using GPIO as chip select line
-Date:   Thu,  6 Oct 2022 21:48:19 +0200
-Message-Id: <20221006194819.1536932-1-robert.marko@sartura.hr>
-X-Mailer: git-send-email 2.37.3
+        Thu, 06 Oct 2022 12:53:43 -0700 (PDT)
+Received: (nullmailer pid 77842 invoked by uid 1000);
+        Thu, 06 Oct 2022 19:53:37 -0000
+Date:   Thu, 6 Oct 2022 14:53:37 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>, Lee Jones <lee@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 4/6] dt-bindings: soc: qcom: convert non-smd RPM bindings
+ to dt-schema
+Message-ID: <20221006195337.GA69592-robh@kernel.org>
+References: <20221005-mdm9615-pinctrl-yaml-v1-0-0cbc006e2a30@linaro.org>
+ <20221005-mdm9615-pinctrl-yaml-v1-4-0cbc006e2a30@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221005-mdm9615-pinctrl-yaml-v1-4-0cbc006e2a30@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Most of the device with QUP SPI adapter are actually using GPIO-s for
-chip select.
+On Thu, Oct 06, 2022 at 09:58:01AM +0000, Neil Armstrong wrote:
+> Convert the non-SMD RPM node bindings to dt-schema, the regulators subnode
+> refers to regulators,yaml until we have the proper bindings.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/mfd/qcom-rpm.txt | 39 +-----------
+>  .../devicetree/bindings/soc/qcom/qcom,ipc-rpm.yaml | 73 ++++++++++++++++++++++
+>  2 files changed, 74 insertions(+), 38 deletions(-)
 
-However, this stopped working after ("spi: Retire legacy GPIO handling")
-as it introduced a check on ->use_gpio_descriptors flag and since spi-qup
-driver does not set the flag it meant that all of boards using GPIO-s and
-with QUP adapter SPI devices stopped working.
 
-So, to enable using GPIO-s again set ->use_gpio_descriptors to true and
-populate ->max_native_cs.
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,ipc-rpm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,ipc-rpm.yaml
+> new file mode 100644
+> index 000000000000..d416950189d1
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,ipc-rpm.yaml
+> @@ -0,0 +1,73 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,ipc-rpm.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm Resource Power Manager (RPM) over IPC
+> +
+> +description: |
+> +  This driver is used to interface with the Resource Power Manager (RPM) found
+> +  in various Qualcomm platforms. The RPM allows each component in the system
+> +  to vote for state of the system resources, such as clocks, regulators and bus
+> +  frequencies.
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,rpm-apq8064
+> +      - qcom,rpm-msm8660
+> +      - qcom,rpm-msm8960
+> +      - qcom,rpm-ipq8064
+> +      - qcom,rpm-mdm9615
+> +
+> +  reg: true
+> +
+> +  interrupts:
+> +    minItems: 3
 
-Fixes: f48dc6b96649 ("spi: Retire legacy GPIO handling")
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-Cc: luka.perkov@sartura.hr
----
- drivers/spi/spi-qup.c | 2 ++
- 1 file changed, 2 insertions(+)
+maxItems: 3
 
-diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
-index 00d6084306b4..81c2e00532cf 100644
---- a/drivers/spi/spi-qup.c
-+++ b/drivers/spi/spi-qup.c
-@@ -1057,6 +1057,8 @@ static int spi_qup_probe(struct platform_device *pdev)
- 	else
- 		master->num_chipselect = num_cs;
- 
-+	master->use_gpio_descriptors = true;
-+	master->max_native_cs = SPI_NUM_CHIPSELECTS;
- 	master->bus_num = pdev->id;
- 	master->mode_bits = SPI_CPOL | SPI_CPHA | SPI_CS_HIGH | SPI_LOOP;
- 	master->bits_per_word_mask = SPI_BPW_RANGE_MASK(4, 32);
--- 
-2.37.3
+(Instead)
 
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: ack
+> +      - const: err
+> +      - const: wakeup
+> +
+> +  qcom,ipc:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    items:
+> +      - items:
+> +          - description: phandle to a syscon node representing the APCS registers
+> +          - description: u32 representing offset to the register within the syscon
+> +          - description: u32 representing the ipc bit within the register
+> +    description:
+> +      Three entries specifying the outgoing ipc bit used for signaling the RPM.
+> +
+> +  regulators:
+> +    type: object
+> +    $ref: /schemas/regulator/regulator.yaml#
+
+regulator.yaml applies to a single regulator, but 'regulators' sounds 
+like a container node with multiple regulators.
+
+Would be good if the example showed...
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - interrupt-names
+> +  - qcom,ipc
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +
+> +    rpm@108000 {
+> +      compatible = "qcom,rpm-msm8960";
+> +      reg = <0x108000 0x1000>;
+> +      qcom,ipc = <&apcs 0x8 2>;
+> +
+> +      interrupts = <GIC_SPI 19 IRQ_TYPE_NONE>, <GIC_SPI 21 IRQ_TYPE_NONE>, <GIC_SPI 22 IRQ_TYPE_NONE>;
+> +      interrupt-names = "ack", "err", "wakeup";
+> +    };
+> 
+> -- 
+> b4 0.10.1
+> 
