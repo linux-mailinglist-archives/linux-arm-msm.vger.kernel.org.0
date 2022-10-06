@@ -2,122 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01B795F6E3B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 21:29:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B41D5F6E57
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 21:42:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229936AbiJFT3b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 15:29:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43062 "EHLO
+        id S231940AbiJFTmn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 15:42:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230056AbiJFT3a (ORCPT
+        with ESMTP id S231931AbiJFTmm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 15:29:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4303839B9E
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 12:29:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1665084568;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=08jbpfBTd1YQoRYfrXDErR4SgE4lO6QGJjAUK4zNVW0=;
-        b=DS2u/KkT5YrCuts732eOqNjcoB3zOeiSygkjcTB+mElD6RfeLfxQR99i3iy5kXgEM45T4s
-        ALbv8cvpz1LQxMKurmDQKvurA5YHxU4AEDX2chdaYfZaOk6Mse4LAHLbYSa13dyQzwgFvS
-        hioD3XadYh/74R5V4JGo/GGAbOGJeXE=
-Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
- [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-489-KYi4CZr2OiaLMZyzPWhqHg-1; Thu, 06 Oct 2022 15:29:27 -0400
-X-MC-Unique: KYi4CZr2OiaLMZyzPWhqHg-1
-Received: by mail-oi1-f200.google.com with SMTP id o12-20020a056808124c00b00353f308fb4bso1505154oiv.22
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 12:29:27 -0700 (PDT)
+        Thu, 6 Oct 2022 15:42:42 -0400
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1410ABD78;
+        Thu,  6 Oct 2022 12:42:40 -0700 (PDT)
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-132af5e5543so3370677fac.8;
+        Thu, 06 Oct 2022 12:42:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=08jbpfBTd1YQoRYfrXDErR4SgE4lO6QGJjAUK4zNVW0=;
-        b=3qIFfGY+UyO7kt9ZzmAu4sFksI5RYF0+JYRYksSykdc1jtJ8Lh3AIQXopLRsTxgXsN
-         2fSgGAe2XGRHEG3NNkST7k4F4rLM+SHlcsWhv0HRe5/lh+1S3gMYXC/Cs80LSRGpY4eE
-         ynDoS8F0wq6gUoDO6j/2LsyF7ePh5cgWjBbOSWyqsH1pUwfGP7WXdxNgmyRrmLzxj/dl
-         sk7y5DKr9IKEt9OMBN3rIqUsQ6QNTzIHxz91vhErMYbSd4aQ4hRj14RuW/FJpkYqM+/P
-         qrR4O/VF9XCxQlACWnzVLhlkJwbk7urmI3m6oLtHKgGQR6tcuQr4P2xuGeI1nTjOhbv8
-         uGgQ==
-X-Gm-Message-State: ACrzQf0+KuzsfDgOq0QFvLO8NOumdjJXEaXNdy+jARjfSP9Z1dLG1zQ9
-        QoOZxgLseTVeMEQgfXinp+r3zAi0w8p0EjLC1ZR74rrjnjKgKjYtVP0lt888GNvi4rZgQaPxCz0
-        gW125ykPP+51EjQIX9SwHpby/GQ==
-X-Received: by 2002:a05:6808:e90:b0:345:6ee0:9a68 with SMTP id k16-20020a0568080e9000b003456ee09a68mr633816oil.173.1665084566571;
-        Thu, 06 Oct 2022 12:29:26 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM4Tft7TyzQPnpWaWyWuOlVkW+RxIUVgBIRxRwmiIs7DA8kbsZ6Pfmd2dIYuXYjbu29i+hBWDg==
-X-Received: by 2002:a05:6808:e90:b0:345:6ee0:9a68 with SMTP id k16-20020a0568080e9000b003456ee09a68mr633803oil.173.1665084566347;
-        Thu, 06 Oct 2022 12:29:26 -0700 (PDT)
-Received: from localhost (pool-100-0-210-47.bstnma.fios.verizon.net. [100.0.210.47])
-        by smtp.gmail.com with ESMTPSA id w107-20020a9d3674000000b00638ef9bb847sm170071otb.79.2022.10.06.12.29.25
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TsFWLs3oj8F4sWg6UBmyv5DMTDH4cKYoE2SmcAjVX4s=;
+        b=KFrulq+pHE6dUzpBsGxB+bSwYuuNo42A/urwCBAwF7p9V2FJnAxdwQZLdUu6hiFX3W
+         izJoksktACxPVOW//0YMpRztc+C/wQA3DQUEX3sDw5qW4sM3nCiFjyxJP7ZYq5djWwJM
+         9xQWkgSJI7oIF7ZUED6NLcaCNu75SpW4q2RutX8gVTZcOkKYzSgkxVlBh+UnQO23VWBh
+         UiwfhN2dbF++YFahve7n1iQtvgxdMuYyxyAcqG9FfcQn2PwJW2R03BMUE21mVr4VrhWS
+         MB3MOz5K1KZ1iVq0ow1OE3PuJ1Fa+GwYjnDFaaAa7t3nZ8J2I3pByd7oDAk/5lzzDUZ4
+         cUbw==
+X-Gm-Message-State: ACrzQf0iWCHPF7B/P0/C6g6emCzKOvmXU9ZKrHF5K/dm5SPCfrMJau6W
+        hlPNH4Zd5CULhKmk9Mz+RXdHm8ZN8g==
+X-Google-Smtp-Source: AMsMyM42oi6zLhFx0obOpqCDseqKBUGSLCnnYF467OVUN2yvjv/jBJeXV6+C15FmARRL0/8JLVPdzg==
+X-Received: by 2002:a05:6870:15c8:b0:133:16e6:5af8 with SMTP id k8-20020a05687015c800b0013316e65af8mr2299873oad.80.1665085360263;
+        Thu, 06 Oct 2022 12:42:40 -0700 (PDT)
+Received: from robh_at_kernel.org ([2607:fb90:8a65:c536:245:842:a3a4:9017])
+        by smtp.gmail.com with ESMTPSA id j11-20020acab90b000000b003504f8f6ac5sm16962oif.38.2022.10.06.12.42.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 12:29:25 -0700 (PDT)
-From:   Eric Chanudet <echanude@redhat.com>
-To:     Andy Gross <agross@kernel.org>,
+        Thu, 06 Oct 2022 12:42:39 -0700 (PDT)
+Received: (nullmailer pid 69132 invoked by uid 1000);
+        Thu, 06 Oct 2022 19:42:37 -0000
+Date:   Thu, 6 Oct 2022 14:42:37 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Lee Jones <lee@kernel.org>, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
+        linux-kernel@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc:     linux-arm-msm@vger.kernel.org, linux-rt-users@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Eric Chanudet <echanude@redhat.com>
-Subject: [PATCH v2] mailbox: qcom-ipcc: flag IRQ NO_THREAD
-Date:   Thu,  6 Oct 2022 15:28:56 -0400
-Message-Id: <20221006192856.2546702-1-echanude@redhat.com>
-X-Mailer: git-send-email 2.37.3
+        linux-gpio@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+        devicetree@vger.kernel.org, Mark Brown <broonie@kernel.org>
+Subject: Re: [PATCH 1/6] dt-bindings: pinctrl: convert
+ qcom,mdm9615-pinctrl.txt to dt-schema
+Message-ID: <20221006194237.GA66144-robh@kernel.org>
+References: <20221005-mdm9615-pinctrl-yaml-v1-0-0cbc006e2a30@linaro.org>
+ <20221005-mdm9615-pinctrl-yaml-v1-1-0cbc006e2a30@linaro.org>
+ <166505882828.1602503.18185089088624527425.robh@kernel.org>
+ <85c9c9ee-37c3-733c-2c67-ac22734844f8@linaro.org>
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <85c9c9ee-37c3-733c-2c67-ac22734844f8@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-PREEMPT_RT forces qcom-ipcc's handler to be threaded with interrupts
-enabled, which triggers a warning in __handle_irq_event_percpu():
-    irq 173 handler irq_default_primary_handler+0x0/0x10 enabled interrupts
-    WARNING: CPU: 0 PID: 77 at kernel/irq/handle.c:161 __handle_irq_event_percpu+0x4c4/0x4d0
+On Thu, Oct 06, 2022 at 06:21:28PM +0200, Neil Armstrong wrote:
+> On 06/10/2022 14:27, Rob Herring wrote:
+> > On Thu, 06 Oct 2022 09:57:58 +0000, Neil Armstrong wrote:
+> > > Convert the MDM9515 pinctrl bindings to dt-schema.
+> > > 
+> > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > > ---
+> > >   .../bindings/pinctrl/qcom,mdm9615-pinctrl.txt      | 161 ---------------------
+> > >   .../bindings/pinctrl/qcom,mdm9615-pinctrl.yaml     | 101 +++++++++++++
+> > >   2 files changed, 101 insertions(+), 161 deletions(-)
+> > > 
+> > 
+> > Running 'make dtbs_check' with the schema in this patch gives the
+> > following warnings. Consider if they are expected or the schema is
+> > incorrect. These may not be new warnings.
+> > 
+> > Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+> > This will change in the future.
+> > 
+> > Full log is available here: https://patchwork.ozlabs.org/patch/
+> > 
+> > 
+> > pinctrl@800000: 'gpioext1_pins', 'gsbi3_pins', 'gsbi4_pins', 'gsbi5_i2c_pins', 'gsbi5_uart_pins', 'reset_out_pins', 'sdc_cd_pins' do not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
+> > 	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb
+> > 
+> 
+> Yes it's fixed in the next patch, should I move the fix before the bindings conversion ?
 
-Mark it IRQF_NO_THREAD. This is an IRQ-multiplexer and as such it should
-not be threaded, otherwise its child-interrupts would be invoked from
-the thread handler which is not desired.
+No, because I don't apply the dts patches. It's just informational and 
+ignore if you already took care of it.
 
-This is noticed by PREEMPT_RT, but also on a non-PREEMPT_RT kernel where
-`threadirqs' has been used.
-
-Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Eric Chanudet <echanude@redhat.com>
----
-Changes since v1:
-- Reformulate the patch description using Sebastian's response.
-
-v1 can be found at
-https://lore.kernel.org/linux-arm-msm/20221003170849.383005-1-echanude@redhat.com/
-
- drivers/mailbox/qcom-ipcc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-index 31d58b7d55fe..7e27acf6c0cc 100644
---- a/drivers/mailbox/qcom-ipcc.c
-+++ b/drivers/mailbox/qcom-ipcc.c
-@@ -308,7 +308,8 @@ static int qcom_ipcc_probe(struct platform_device *pdev)
- 		goto err_mbox;
- 
- 	ret = devm_request_irq(&pdev->dev, ipcc->irq, qcom_ipcc_irq_fn,
--			       IRQF_TRIGGER_HIGH | IRQF_NO_SUSPEND, name, ipcc);
-+			       IRQF_TRIGGER_HIGH | IRQF_NO_SUSPEND |
-+			       IRQF_NO_THREAD, name, ipcc);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "Failed to register the irq: %d\n", ret);
- 		goto err_req_irq;
--- 
-2.37.3
-
+Rob
