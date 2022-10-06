@@ -2,87 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FE515F6FCE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 22:55:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23C4E5F71A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Oct 2022 01:22:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232276AbiJFUzb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 16:55:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39262 "EHLO
+        id S231800AbiJFXW3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 19:22:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232290AbiJFUz3 (ORCPT
+        with ESMTP id S229912AbiJFXW1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 16:55:29 -0400
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 250665A2FD;
-        Thu,  6 Oct 2022 13:55:28 -0700 (PDT)
-Received: by mail-oi1-f173.google.com with SMTP id m81so3435455oia.1;
-        Thu, 06 Oct 2022 13:55:28 -0700 (PDT)
+        Thu, 6 Oct 2022 19:22:27 -0400
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9295CD5EC;
+        Thu,  6 Oct 2022 16:22:26 -0700 (PDT)
+Received: by mail-il1-x129.google.com with SMTP id g13so1789740ile.0;
+        Thu, 06 Oct 2022 16:22:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=+TEoWgEKTvbiJtOYsEhCaZpzROl8ImC9jVpcIpr9rdA=;
+        b=LEsNljBht9CfS9iP7WzSiemiu4S4Ct90L/IXFPTsG4ClZiwQXJ/ciE77IUb9WwHnuy
+         cK33AT6sQ/tdrC2P2Ho4kmtNjz1wg59WoVdUKLz6ifwvt7tmHmyUFE74w874P8zaUoI2
+         Agg6Yrmtx++jD2bHy+A8jbYJz83rYOo5cBR3kCFwpwQhdncBDFhhRsaCKLl7+IrpZkqG
+         fykMxH4NCIfT1sb8TFnF1e5e2w8kdM1LsZ5XguU23xmROGVVujwKFAvV6S9rO8HX47KZ
+         ylEj57zmvpCLUTGuMFp8x8JJBxRqGTIBYz5xOwdXolQkyZCwbaJPfhjMCqSCA64RIle7
+         ATJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=87EsXsPO3i29vRZ8NZXoBCisaDJZa8eRu9AijNvsIQ4=;
-        b=H+ppr7PfYC3xZdh+bIzh/xlE31ksGTNEgJXZEfCKohMoHctX2wu4+5nwvDLkhnDDA/
-         Ugt9EuYjTneOes758r8vEflqt6+PTLYLmpuqn+FIqcVy0IqQg9XdL07yJoYyKZEl8o7r
-         NloSKMt0RT2+1kmvFW7cEMtAZv3ocLeaIFe1BASpGmJPDY7W++G9yXoNGaSMRDXWD7Wo
-         NpHHXp0WUdgVSrV9YkWmz5As6Qyb2UJdd5j3xNWkDsWnv4IdZOhw8kq7D92ngg/v9WuR
-         vNuzn3mZAreL1AKXX37/pXHCUQ63DGGM4Pc+hGWINSn+xZR5E2RAkEp6fbK6dMESD5PK
-         oXZQ==
-X-Gm-Message-State: ACrzQf2kmXvA/igxHJujRBrzPjx8zihdFUSaEgSaHWl/nUJlfIw3B37B
-        f4VdOBQXJK6WNLQdf+fOog==
-X-Google-Smtp-Source: AMsMyM6I8daphx2LbYRtfkfVn1FrxA9Uouc3358E1SlooJgU8Y2aeIhyV21Kn7xA7YRa8yxAcaweIQ==
-X-Received: by 2002:a05:6808:11c7:b0:347:cab3:9e5d with SMTP id p7-20020a05680811c700b00347cab39e5dmr5792922oiv.217.1665089727418;
-        Thu, 06 Oct 2022 13:55:27 -0700 (PDT)
-Received: from robh_at_kernel.org ([2607:fb90:8a65:c536:245:842:a3a4:9017])
-        by smtp.gmail.com with ESMTPSA id a25-20020a056870a19900b0012c52bd4369sm372435oaf.19.2022.10.06.13.55.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 13:55:27 -0700 (PDT)
-Received: (nullmailer pid 131758 invoked by uid 1000);
-        Thu, 06 Oct 2022 20:55:21 -0000
-Date:   Thu, 6 Oct 2022 15:55:21 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=+TEoWgEKTvbiJtOYsEhCaZpzROl8ImC9jVpcIpr9rdA=;
+        b=AeMW6HFFAPhrfz3Dnu+HtLAZad4ERcyEIXvFjKzXAmqP1mVfykZCNSqF9X+2wKhEvU
+         k5lFB8HhZE37w3vhU4rjKSkqSv1Hs0Q6r0V4jP/vDlIROqmgLs6/3AYf69osJAO88KSK
+         v+wJ6BVeoszY7Ee1S8pLJJEcyEFPZKUo5e7OXdSQ40BWew62T8XRGg5kt9iHV+zdG+9D
+         6Hj0zAKTYrk+U7eb193WTuiC+I/wTAy/1FYY3TCFVZvHk8ezR/AY6QYJqS1wQQcs1ehk
+         YISagq0Gr9U9DdZ2xZxWcgeiR5B4+3NOj8cplbceuRCy7uAIDQuz6aI4jwXyZWjfkYVv
+         I2KQ==
+X-Gm-Message-State: ACrzQf38AYFQkM+nV3+MZDxa16nfAA2XPd7ZyRCBHc6s6wZ/EjXxqiIg
+        VdySaDqL77JPg7sPFLtpXPZV6DUuwxbDsg==
+X-Google-Smtp-Source: AMsMyM6AWsot4DhUoPLqLnJu+BQTwKSnXw48oIotZLDAu/blMk9OHITtBJMVXWE9n9kR37uL2drMHQ==
+X-Received: by 2002:a05:6e02:164d:b0:2f9:46bb:6ffb with SMTP id v13-20020a056e02164d00b002f946bb6ffbmr945606ilu.320.1665098546112;
+        Thu, 06 Oct 2022 16:22:26 -0700 (PDT)
+Received: from localhost ([2607:fea8:a2e2:2d00::d5cc])
+        by smtp.gmail.com with UTF8SMTPSA id x94-20020a0294e7000000b00363455b779csm264890jah.159.2022.10.06.16.22.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Oct 2022 16:22:25 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH 2/2] dt-bindings: pinctrl: qcom,sm8150: convert to
- dtschema
-Message-ID: <166508972028.131709.427904989393799429.robh@kernel.org>
-References: <20221006144518.256956-1-krzysztof.kozlowski@linaro.org>
- <20221006144518.256956-2-krzysztof.kozlowski@linaro.org>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Richard Acayan <mailingradian@gmail.com>,
+        Lee Jones <lee@kernel.org>, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH v8 0/3] SDM670 Pin Control Driver
+Date:   Thu,  6 Oct 2022 19:22:16 -0400
+Message-Id: <20221006232219.37505-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.38.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221006144518.256956-2-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 06 Oct 2022 16:45:18 +0200, Krzysztof Kozlowski wrote:
-> Convert Qualcomm SM8150 pin controller bindings to DT schema.  Keep the
-> parsing of pin configuration subnodes consistent with other Qualcomm
-> schemas (children named with '-state' suffix, their children with
-> '-pins').
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../bindings/pinctrl/qcom,sm8150-pinctrl.txt  | 190 ------------------
->  .../bindings/pinctrl/qcom,sm8150-pinctrl.yaml | 178 ++++++++++++++++
->  2 files changed, 178 insertions(+), 190 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.txt
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.yaml
-> 
+Changes since v7:
+ - remove complement_fw_reserved_gpios from patch 3
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Changes since v6:
+ - remove bitmap_fill() call completely (original commit was 4c0efbfb2669
+   ("pinctrl: msm: Add ability for drivers to supply a reserved GPIO list"),
+   original author CC'd)
+ - group some entries in pingroup arrays for less lines
+ - accumulate review tags
+
+Changes since v5:
+ - remove function requirement in schema
+ - change "-state$" regex to double quotes in schema
+ - drop quotes from qcom-tlmm-state ref in dt schema
+
+Changes since v4:
+ - accumulate review tag
+ - use --cover-letter
+ - this is effectively a resend
+
+Changes since v3:
+ - constrain gpio-reserved-ranges to 1-75 items
+ - proper indentation in dt-bindings example (actually tagged this time
+   instead of an outdated commit)
+ - remove unnecessary commit reference
+ - rename complement_fw_reserved_gpios -> complement_fw_gpio_ranges
+
+Changes since v2:
+ - remove quotes from pinctrl.yaml# in dt-bindings
+ - constrain gpio-reserved-ranges to 1-76 items (includes ufs_reset)
+ - indentation in dt-bindings example
+ - cite downstream kernel source
+ - remove MODULE_AUTHOR (most imported pinctrl drivers don't have this)
+
+Changes since v1:
+ - add a field in msm_pinctrl_soc_data to accomodate the needs of the
+   driver and device dts
+ - apply changes made to existing tlmm dt documentation
+ - add reserved gpios array
+ - rename device tree compat string to qcom,sdm670-tlmm
+ - remove dependency on ACPI
+ - move MODULE_DEVICE_TABLE macro call up
+ - add missing pins (fixes most of the debugfs problems)
+ - move qup0_pins down
+ - add whitespace between UFS_RESET macro and pins array
+
+This patch series adds the driver for the Qualcomm Snapdragon 670 TLMM
+(Top-Level Mode Multiplexer) and introduces a new field so that SDM670-
+related device trees can reserve their own gpios.
+
+Richard Acayan (3):
+  dt-bindings: pinctrl: qcom: add sdm670 pinctrl
+  pinctrl: qcom: do not reinitialize gpio valid mask
+  pinctrl: qcom: add sdm670 pinctrl
+
+ .../bindings/pinctrl/qcom,sdm670-tlmm.yaml    |  129 ++
+ drivers/pinctrl/qcom/Kconfig                  |    9 +
+ drivers/pinctrl/qcom/Makefile                 |    1 +
+ drivers/pinctrl/qcom/pinctrl-msm.c            |    3 +-
+ drivers/pinctrl/qcom/pinctrl-sdm670.c         | 1345 +++++++++++++++++
+ 5 files changed, 1485 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sdm670.c
+
+-- 
+2.38.0
+
