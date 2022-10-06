@@ -2,486 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EAECB5F6470
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 12:41:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31D6A5F64A0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 12:58:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230319AbiJFKlR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 06:41:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50388 "EHLO
+        id S231370AbiJFK6c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 06:58:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231261AbiJFKlQ (ORCPT
+        with ESMTP id S229673AbiJFK6b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 06:41:16 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BE5695AD2
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 03:41:14 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id b2so2074463lfp.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 03:41:14 -0700 (PDT)
+        Thu, 6 Oct 2022 06:58:31 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 485E698CAF
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 03:58:30 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id bh13so1571600pgb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 03:58:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=83k5JZ/X4KlDsxEl7RSSXfEDOzc2Wi0Ts3Xh70GQyqI=;
-        b=tHIzFFqvVxCrJyYTGV9KpmOY0dOkR8C9pDgYKyP5LLgJnxX3PIm+N5/LBdU5UDZyCu
-         wAtt4tQMTiUlcE3sOZ/nPeNluxGTomz7WBqvkvMKnCl6i2xDVmSZ33FG+fkcpGTP2Jb7
-         pYxiOIOi8h7qy4CfYVlAJQa3ij/+dLIv536SjrnxxJooOXaw31MiVkkZavab9dI+pk1C
-         rVr3/542CQiBMktr2+RuXnBFMTSNO3t9ljR0lIho9gLuD62ZGn1GEJAzZJrmZXVmFkjy
-         OcFi8/BexywZDO18nBFDPWREtu7ejPSQbnHvoEeA/ATJAXF5HbmpaiJ01EnezvkmhrMz
-         +d9g==
+        d=quanta-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KeNs8fCcYpKg86qDxmbz50KjfKjeNMX/qMMheV0wNlw=;
+        b=281al9VDSNgdN7ef3vBBlnIgy39k7iLqKKXnwelxmBYoagcPeuftgOmBf31vh1Canz
+         ddInGdx1+cNcMN5moQdAY5PHKBQc/3jWeq1SDBbhf3867YQ2uYAzY+DtYBfBc/z9hhWD
+         bX/P6k4xYTeU6LoRfdtdPPqaY3tJ5qg6sHQNjzYsI9fAStJtbQgvW7hoSG5dRY5NV7R+
+         kspi2ZrpdkUaJ9E0JvCOp6Ld+nO15T2f4owJEfaKQ88LIpteSLKeAyy0hqBWdM90g66B
+         zxjv03JAH6AFaZSS4NMZ8SJG9Fq2BZFBZLXwo6XpUIu2IiDumbcSg2Nrzit6to52vADB
+         B8vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=83k5JZ/X4KlDsxEl7RSSXfEDOzc2Wi0Ts3Xh70GQyqI=;
-        b=Txg6iP6RykAFhc15vRjT9QThBINNcLCA2cx8m3vyZPoC3uerJcpRHsuyyc2m/deEIo
-         raPHEBJHnEKGsmPydxD+K845K4IC5wWA9MPyZhhwwjZkpFpXCDPJ+RAcX1pxzgZGPwZ9
-         X9jtworYzRb+aA6PnpFP1j5opYpqar5YJTDWBGhCfJ2UQW2rCpCL2rz8h/AftLUeCKpz
-         qbfcMtiw4lppYKHNnTZtl4+px6gmhZZxkt4/bjsIAjnR7+/Nmu+jx15VP5y+H9Huqcyo
-         GuWLbdoArJAqLBNWJYBsanXneiPofsPz7EucPOufwoXatgTXkp2Lm1B6PL3O1w+LMUjb
-         NzLA==
-X-Gm-Message-State: ACrzQf0mNT2j+Er+LTSJe9fPKA7iORcocDja7qfxPHKy8kiLHPFEPhe2
-        cHyO/mLicuqqwVyGfBBlIF6MUw==
-X-Google-Smtp-Source: AMsMyM7Jm1Sa4Q3BbJzA4l65LJriQdZkFXGMyYj3od6G0FKi3wPg4I9FPR5Dav29KHO6zWcuQVTpkw==
-X-Received: by 2002:a05:6512:1281:b0:4a2:5c10:c38b with SMTP id u1-20020a056512128100b004a25c10c38bmr1712647lfs.2.1665052871515;
-        Thu, 06 Oct 2022 03:41:11 -0700 (PDT)
-Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id q3-20020a0565123a8300b00492aefd73a5sm2648293lfu.132.2022.10.06.03.41.10
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KeNs8fCcYpKg86qDxmbz50KjfKjeNMX/qMMheV0wNlw=;
+        b=Rf/0qTqi2hny/mgg4bNITu7SRkl1LjGnHVLIcneIE0eMdyAShY84PRdtfAJ9/Zho6T
+         yRRx/Jp9tAAe0QVBZNtEM7Nx484V0B5+q64+560W/yr+1UyaLdX8rIXX89KYiv9XnzUX
+         Fp0xrK9d1Tw6omVR8nCfxx5RNGBJ+1sb1g74vGUHFRldHouhRM6Y5/kJnJ3oWe3rbABE
+         Pq6cqNhfiwWGB3Cdpl3k/RQmk1dTmarIp0nuqODl2FuELxLjaRvNr3srVXCyxI4sNgFv
+         Rv+wiv/x0vmpS7s4tytm2Qh44nUPD36xpi23YLwLiYJXGAcIDKAI2wTQMEIRL+r7CjJw
+         XWOQ==
+X-Gm-Message-State: ACrzQf2fDXsimrY7TRu3NwopFye3wruB5wdJAUt0V4KSc6CiBvUTgv8Z
+        tBqNkilXicS0xayH27pSNYBnIw==
+X-Google-Smtp-Source: AMsMyM7husJwz2VnhdB4tWxqDegCHdd9betvS5Rm6WKWUXd20PvFktQcN2B2JK0Ky8cjMEgc6DWigg==
+X-Received: by 2002:a05:6a00:1743:b0:562:781f:ec92 with SMTP id j3-20020a056a00174300b00562781fec92mr2646776pfc.68.1665053909737;
+        Thu, 06 Oct 2022 03:58:29 -0700 (PDT)
+Received: from liang-Predator-PH517-52.. (60-250-232-247.hinet-ip.hinet.net. [60.250.232.247])
+        by smtp.gmail.com with ESMTPSA id c13-20020a170903234d00b0017d12d86901sm10504297plh.187.2022.10.06.03.58.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 03:41:11 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Thu, 06 Oct 2022 03:58:29 -0700 (PDT)
+From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     dianders@chromium.org,
+        Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 4/4] dt-bindings: pinctrl: qcom,sdm630: convert to dtschema
-Date:   Thu,  6 Oct 2022 12:41:04 +0200
-Message-Id: <20221006104104.171368-4-krzysztof.kozlowski@linaro.org>
+        Stephen Boyd <sboyd@codeaurora.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-input@vger.kernel.org
+Subject: [PATCH v7 0/4] Add LTE SKU for sc7280-evoker family
+Date:   Thu,  6 Oct 2022 18:58:19 +0800
+Message-Id: <20221006105823.532336-1-sheng-liang.pan@quanta.corp-partner.google.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221006104104.171368-1-krzysztof.kozlowski@linaro.org>
-References: <20221006104104.171368-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert Qualcomm SDM630 and SDM660 pin controller bindings to DT schema.
-Keep the parsing of pin configuration subnodes consistent with other
-Qualcomm schemas (children named with '-state' suffix, their children
-with '-pins').
+This patch add common dtsi and WIFI/LTE dts for evoker
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../bindings/pinctrl/qcom,sdm630-pinctrl.yaml | 189 +++++++++++++++++
- .../bindings/pinctrl/qcom,sdm660-pinctrl.txt  | 191 ------------------
- 2 files changed, 189 insertions(+), 191 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm630-pinctrl.yaml
- delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm660-pinctrl.txt
+Changes in v7:
+- goodix gt7986 dt bindings added in v7
+- add compiatable for gt7986
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm630-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdm630-pinctrl.yaml
-new file mode 100644
-index 000000000000..057801652d1a
---- /dev/null
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdm630-pinctrl.yaml
-@@ -0,0 +1,189 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/pinctrl/qcom,sdm630-pinctrl.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SDM630 and SDM660 TLMM pin controller
-+
-+maintainers:
-+  - Bjorn Andersson <andersson@kernel.org>
-+  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-+
-+description:
-+  Top Level Mode Multiplexer pin controller node in Qualcomm SDM630 and SDM660
-+  SoC.
-+
-+allOf:
-+  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,sdm630-pinctrl
-+      - qcom,sdm660-pinctrl
-+
-+  reg:
-+    maxItems: 3
-+
-+  reg-names:
-+    items:
-+      - const: south
-+      - const: center
-+      - const: north
-+
-+  interrupts: true
-+  interrupt-controller: true
-+  "#interrupt-cells": true
-+  gpio-controller: true
-+
-+  gpio-reserved-ranges:
-+    minItems: 1
-+    maxItems: 57
-+
-+  gpio-line-names:
-+    maxItems: 114
-+
-+  "#gpio-cells": true
-+  gpio-ranges: true
-+  wakeup-parent: true
-+
-+patternProperties:
-+  "-state$":
-+    oneOf:
-+      - $ref: "#/$defs/qcom-sdm630-tlmm-state"
-+      - patternProperties:
-+          "-pins$":
-+            $ref: "#/$defs/qcom-sdm630-tlmm-state"
-+        additionalProperties: false
-+
-+$defs:
-+  qcom-sdm630-tlmm-state:
-+    type: object
-+    description:
-+      Pinctrl node's client devices use subnodes for desired pin configuration.
-+      Client device subnodes use below standard properties.
-+    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
-+
-+    properties:
-+      pins:
-+        description:
-+          List of gpio pins affected by the properties specified in this
-+          subnode.
-+        items:
-+          oneOf:
-+            - pattern: "^gpio([0-9]|[1-9][0-9]|10[0-9]|11[0-3])$"
-+            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc1_rclk, sdc2_clk,
-+                      sdc2_cmd, sdc2_data ]
-+        minItems: 1
-+        maxItems: 36
-+
-+      function:
-+        description:
-+          Specify the alternative function to be configured for the specified
-+          pins.
-+        enum: [ adsp_ext, agera_pll, atest_char, atest_char0, atest_char1,
-+                atest_char2, atest_char3, atest_gpsadc0, atest_gpsadc1,
-+                atest_tsens, atest_tsens2, atest_usb1, atest_usb10,
-+                atest_usb11, atest_usb12, atest_usb13, atest_usb2, atest_usb20,
-+                atest_usb21, atest_usb22, atest_usb23, audio_ref, bimc_dte0,
-+                bimc_dte1, blsp_i2c1, blsp_i2c2, blsp_i2c3, blsp_i2c4,
-+                blsp_i2c5, blsp_i2c6, blsp_i2c7, blsp_i2c8_a, blsp_i2c8_b,
-+                blsp_spi1, blsp_spi2, blsp_spi3, blsp_spi3_cs1, blsp_spi3_cs2,
-+                blsp_spi4, blsp_spi5, blsp_spi6, blsp_spi7, blsp_spi8_a,
-+                blsp_spi8_b, blsp_spi8_cs1, blsp_spi8_cs2, blsp_uart1,
-+                blsp_uart2, blsp_uart5, blsp_uart6_a, blsp_uart6_b, blsp_uim1,
-+                blsp_uim2, blsp_uim5, blsp_uim6, cam_mclk, cci_async, cci_i2c,
-+                cri_trng, cri_trng0, cri_trng1, dbg_out, ddr_bist, gcc_gp1,
-+                gcc_gp2, gcc_gp3, gpio, gps_tx_a, gps_tx_b, gps_tx_c,
-+                isense_dbg, jitter_bist, ldo_en, ldo_update, m_voc, mdp_vsync,
-+                mdss_vsync0, mdss_vsync1, mdss_vsync2, mdss_vsync3, mss_lte,
-+                nav_pps_a, nav_pps_b, nav_pps_c, pa_indicator, phase_flag0,
-+                phase_flag1, phase_flag10, phase_flag11, phase_flag12,
-+                phase_flag13, phase_flag14, phase_flag15, phase_flag16,
-+                phase_flag17, phase_flag18, phase_flag19, phase_flag2,
-+                phase_flag20, phase_flag21, phase_flag22, phase_flag23,
-+                phase_flag24, phase_flag25, phase_flag26, phase_flag27,
-+                phase_flag28, phase_flag29, phase_flag3, phase_flag30,
-+                phase_flag31, phase_flag4, phase_flag5, phase_flag6,
-+                phase_flag7, phase_flag8, phase_flag9, pll_bypassnl, pll_reset,
-+                pri_mi2s, pri_mi2s_ws, prng_rosc, pwr_crypto, pwr_modem,
-+                pwr_nav, qdss_cti0_a, qdss_cti0_b, qdss_cti1_a, qdss_cti1_b,
-+                qdss_gpio, qdss_gpio0, qdss_gpio1, qdss_gpio10, qdss_gpio11,
-+                qdss_gpio12, qdss_gpio13, qdss_gpio14, qdss_gpio15, qdss_gpio2,
-+                qdss_gpio3, qdss_gpio4, qdss_gpio5, qdss_gpio6, qdss_gpio7,
-+                qdss_gpio8, qdss_gpio9, qlink_enable, qlink_request, qspi_clk,
-+                qspi_cs, qspi_data0, qspi_data1, qspi_data2, qspi_data3,
-+                qspi_resetn, sec_mi2s, sndwire_clk, sndwire_data, sp_cmu,
-+                ssc_irq, tgu_ch0, tgu_ch1, tsense_pwm1, tsense_pwm2, uim1_clk,
-+                uim1_data, uim1_present, uim1_reset, uim2_clk, uim2_data,
-+                uim2_present, uim2_reset, uim_batt, vfr_1, vsense_clkout,
-+                vsense_data0, vsense_data1, vsense_mode, wlan1_adc0,
-+                wlan1_adc1, wlan2_adc0, wlan2_adc1 ]
-+
-+      bias-disable: true
-+      bias-pull-down: true
-+      bias-pull-up: true
-+      drive-strength: true
-+      input-enable: true
-+      output-high: true
-+      output-low: true
-+
-+    required:
-+      - pins
-+
-+    additionalProperties: false
-+
-+required:
-+  - compatible
-+  - reg
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+    pinctrl@3100000 {
-+        compatible = "qcom,sdm630-pinctrl";
-+        reg = <0x03100000 0x400000>,
-+              <0x03500000 0x400000>,
-+              <0x03900000 0x400000>;
-+        reg-names = "south", "center", "north";
-+        interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-+        gpio-controller;
-+        gpio-ranges = <&tlmm 0 0 114>;
-+        #gpio-cells = <2>;
-+        interrupt-controller;
-+        #interrupt-cells = <2>;
-+
-+        blsp1-uart1-default-state {
-+            pins = "gpio0", "gpio1", "gpio2", "gpio3";
-+            function = "gpio";
-+            drive-strength = <2>;
-+            bias-disable;
-+        };
-+
-+        blsp2_uart1_default: blsp2-uart1-active-state {
-+            tx-rts-pins {
-+                pins = "gpio16", "gpio19";
-+                function = "blsp_uart5";
-+                drive-strength = <2>;
-+                bias-disable;
-+            };
-+
-+            rx-pins {
-+                pins = "gpio17";
-+                function = "blsp_uart5";
-+                drive-strength = <2>;
-+                bias-pull-up;
-+            };
-+
-+            cts-pins {
-+                pins = "gpio18";
-+                function = "blsp_uart5";
-+                drive-strength = <2>;
-+                bias-pull-down;
-+            };
-+        };
-+    };
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm660-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,sdm660-pinctrl.txt
-deleted file mode 100644
-index be034d329e10..000000000000
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sdm660-pinctrl.txt
-+++ /dev/null
-@@ -1,191 +0,0 @@
--Qualcomm Technologies, Inc. SDM660 TLMM block
--
--This binding describes the Top Level Mode Multiplexer block found in the
--SDM660 platform.
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: must be "qcom,sdm660-pinctrl" or
--		    "qcom,sdm630-pinctrl".
--
--- reg:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: the base address and size of the north, center and south
--		    TLMM tiles.
--
--- reg-names:
--       Usage: required
--       Value type: <stringlist>
--       Definition: names for the cells of reg, must contain "north", "center"
--                   and "south".
--
--- interrupts:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: should specify the TLMM summary IRQ.
--
--- interrupt-controller:
--	Usage: required
--	Value type: <none>
--	Definition: identifies this node as an interrupt controller
--
--- #interrupt-cells:
--	Usage: required
--	Value type: <u32>
--	Definition: must be 2. Specifying the pin number and flags, as defined
--		    in <dt-bindings/interrupt-controller/irq.h>
--
--- gpio-controller:
--	Usage: required
--	Value type: <none>
--	Definition: identifies this node as a gpio controller
--
--- gpio-ranges:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: Specifies the mapping between gpio controller and
--		    pin-controller pins.
--
--- #gpio-cells:
--	Usage: required
--	Value type: <u32>
--	Definition: must be 2. Specifying the pin number and flags, as defined
--		    in <dt-bindings/gpio/gpio.h>
--
--Please refer to ../gpio/gpio.txt and ../interrupt-controller/interrupts.txt for
--a general description of GPIO and interrupt bindings.
--
--Please refer to pinctrl-bindings.txt in this directory for details of the
--common pinctrl bindings used by client devices, including the meaning of the
--phrase "pin configuration node".
--
--The pin configuration nodes act as a container for an arbitrary number of
--subnodes. Each of these subnodes represents some desired configuration for a
--pin, a group, or a list of pins or groups. This configuration can include the
--mux function to select on those pin(s)/group(s), and various pin configuration
--parameters, such as pull-up, drive strength, etc.
--
--
--PIN CONFIGURATION NODES:
--
--The name of each subnode is not important; all subnodes should be enumerated
--and processed purely based on their content.
--
--Each subnode only affects those parameters that are explicitly listed. In
--other words, a subnode that lists a mux function but no pin configuration
--parameters implies no information about any pin configuration parameters.
--Similarly, a pin subnode that describes a pullup parameter implies no
--information about e.g. the mux function.
--
--
--The following generic properties as defined in pinctrl-bindings.txt are valid
--to specify in a pin configuration subnode:
--
--- pins:
--	Usage: required
--	Value type: <string-array>
--	Definition: List of gpio pins affected by the properties specified in
--		    this subnode.  Valid pins are:
--		    gpio0-gpio113,
--		        Supports mux, bias and drive-strength
--		    sdc1_clk, sdc1_cmd, sdc1_data sdc2_clk, sdc2_cmd, sdc2_data sdc1_rclk,
--		        Supports bias and drive-strength
--
--- function:
--	Usage: required
--	Value type: <string>
--	Definition: Specify the alternative function to be configured for the
--		    specified pins. Functions are only valid for gpio pins.
--		    Valid values are:
--		    adsp_ext, agera_pll, atest_char, atest_char0, atest_char1,
--		    atest_char2, atest_char3, atest_gpsadc0, atest_gpsadc1,
--		    atest_tsens, atest_tsens2, atest_usb1, atest_usb10,
--		    atest_usb11, atest_usb12, atest_usb13, atest_usb2,
--		    atest_usb20, atest_usb21, atest_usb22, atest_usb23,
--		    audio_ref, bimc_dte0, bimc_dte1, blsp_i2c1, blsp_i2c2,
--		    blsp_i2c3, blsp_i2c4, blsp_i2c5, blsp_i2c6, blsp_i2c7,
--		    blsp_i2c8_a, blsp_i2c8_b, blsp_spi1, blsp_spi2, blsp_spi3,
--		    blsp_spi3_cs1, blsp_spi3_cs2, blsp_spi4, blsp_spi5,
--		    blsp_spi6, blsp_spi7, blsp_spi8_a, blsp_spi8_b,
--		    blsp_spi8_cs1, blsp_spi8_cs2, blsp_uart1, blsp_uart2,
--		    blsp_uart5, blsp_uart6_a, blsp_uart6_b, blsp_uim1,
--		    blsp_uim2, blsp_uim5, blsp_uim6, cam_mclk, cci_async,
--		    cci_i2c, cri_trng, cri_trng0, cri_trng1, dbg_out, ddr_bist,
--		    gcc_gp1, gcc_gp2, gcc_gp3, gpio, gps_tx_a, gps_tx_b, gps_tx_c,
--		    isense_dbg, jitter_bist, ldo_en, ldo_update, m_voc, mdp_vsync,
--		    mdss_vsync0, mdss_vsync1, mdss_vsync2, mdss_vsync3, mss_lte,
--		    nav_pps_a, nav_pps_b, nav_pps_c, pa_indicator, phase_flag0,
--		    phase_flag1, phase_flag10, phase_flag11, phase_flag12,
--		    phase_flag13, phase_flag14, phase_flag15, phase_flag16,
--		    phase_flag17, phase_flag18, phase_flag19, phase_flag2,
--		    phase_flag20, phase_flag21, phase_flag22, phase_flag23,
--		    phase_flag24, phase_flag25, phase_flag26, phase_flag27,
--		    phase_flag28, phase_flag29, phase_flag3, phase_flag30,
--		    phase_flag31, phase_flag4, phase_flag5, phase_flag6,
--		    phase_flag7, phase_flag8, phase_flag9, pll_bypassnl,
--		    pll_reset, pri_mi2s, pri_mi2s_ws, prng_rosc, pwr_crypto,
--		    pwr_modem, pwr_nav, qdss_cti0_a, qdss_cti0_b, qdss_cti1_a,
--		    qdss_cti1_b, qdss_gpio, qdss_gpio0, qdss_gpio1, qdss_gpio10,
--		    qdss_gpio11, qdss_gpio12, qdss_gpio13, qdss_gpio14, qdss_gpio15,
--		    qdss_gpio2, qdss_gpio3, qdss_gpio4, qdss_gpio5, qdss_gpio6,
--		    qdss_gpio7, qdss_gpio8, qdss_gpio9, qlink_enable, qlink_request,
--		    qspi_clk, qspi_cs, qspi_data0, qspi_data1, qspi_data2,
--		    qspi_data3, qspi_resetn, sec_mi2s, sndwire_clk, sndwire_data,
--		    sp_cmu, ssc_irq, tgu_ch0, tgu_ch1, tsense_pwm1, tsense_pwm2,
--		    uim1_clk, uim1_data, uim1_present, uim1_reset, uim2_clk,
--		    uim2_data, uim2_present, uim2_reset, uim_batt, vfr_1,
--		    vsense_clkout, vsense_data0, vsense_data1, vsense_mode,
--		    wlan1_adc0, wlan1_adc1, wlan2_adc0, wlan2_adc1
--
--- bias-disable:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configured as no pull.
--
--- bias-pull-down:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configured as pull down.
--
--- bias-pull-up:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configured as pull up.
--
--- output-high:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are configured in output mode, driven
--		    high.
--		    Not valid for sdc pins.
--
--- output-low:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are configured in output mode, driven
--		    low.
--		    Not valid for sdc pins.
--
--- drive-strength:
--	Usage: optional
--	Value type: <u32>
--	Definition: Selects the drive strength for the specified pins, in mA.
--		    Valid values are: 2, 4, 6, 8, 10, 12, 14 and 16
--
--Example:
--
--	tlmm: pinctrl@3100000 {
--		compatible = "qcom,sdm660-pinctrl";
--		reg = <0x3100000 0x200000>,
--		      <0x3500000 0x200000>,
--		      <0x3900000 0x200000>;
--		reg-names = "south", "center", "north";
--		interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
--		gpio-controller;
--		gpio-ranges = <&tlmm 0 0 114>;
--		#gpio-cells = <2>;
--		interrupt-controller;
--		#interrupt-cells = <2>;
--	};
+Changes in v6:
+- add removed pinctrl and align touchscreen label with herobrine board
+
+Changes in v5:
+- recover whitespace change
+- new patch for Touchscreen/trackpad in v5
+
+Changes in v4:
+- fix typo in tittle and commit
+- recover change for trackpad and touchscreen
+
+Changes in v3:
+- none
+
+Changes in v2:
+- none
+
+Sheng-Liang Pan (4):
+  dt-bindings: arm: qcom: Separate LTE/WIFI SKU for sc7280-evoker
+  arm64: dts: qcom: Add LTE SKU for sc7280-evoker family
+  dt-bindings: input: touchscreen: Add goodix GT7986U touchscreen chip
+  arm64: dts: qcom: Add touchscreen and touchpad support for evoker
+
+ .../devicetree/bindings/arm/qcom.yaml         |  5 +++++
+ .../bindings/input/goodix,gt7375p.yaml        |  5 ++++-
+ arch/arm64/boot/dts/qcom/Makefile             |  3 ++-
+ .../dts/qcom/sc7280-herobrine-evoker-lte.dts  | 14 ++++++++++++
+ .../boot/dts/qcom/sc7280-herobrine-evoker.dts | 15 +++++++++++++
+ ...er-r0.dts => sc7280-herobrine-evoker.dtsi} | 22 ++++++-------------
+ 6 files changed, 47 insertions(+), 17 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
+ rename arch/arm64/boot/dts/qcom/{sc7280-herobrine-evoker-r0.dts => sc7280-herobrine-evoker.dtsi} (95%)
+
 -- 
 2.34.1
 
