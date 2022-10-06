@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 119335F64A9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 12:58:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10EA35F64AF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 12:59:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231394AbiJFK6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 06:58:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44788 "EHLO
+        id S230487AbiJFK7F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 06:59:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230433AbiJFK6j (ORCPT
+        with ESMTP id S231442AbiJFK6x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 06:58:39 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCC3D9AFA1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 03:58:37 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id u24so1346917plq.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 03:58:37 -0700 (PDT)
+        Thu, 6 Oct 2022 06:58:53 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BBFF9AFEC
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 03:58:43 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id d24so1390062pls.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 03:58:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=quanta-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=w8GOdVZWnKWXhWRfDdcY4dEl4a7Vfx0hrVhLgZn9li0=;
-        b=29c+ylwkWN3TMSSG2OM4S9b+e8L85Fhx7A54IH5gIXYVP9ITktuk5jIEKGUMjBhzS1
-         dL3FIaVaJYYBjV6pG7E3auYwMWMrkAjbfHxbppba2GS/odgwVMfuRmaWclHfs9opaM4w
-         eJGoHPfc2Tlb5JqVQyRKkqyVfNDyraUq47aYXFx1NpEB8nhKR7kk2/Z17IPv0b/aUA7D
-         ZScB7EQJix3+mJE2Kmhga5K1ut/o38i9/sdcMDfLOPiRaDyb0piDy0zx81W2AYZ6KDrP
-         oFiA5s9UxKbhIlfKk/1U/u44JTohzSr/sM+hkxsAHk/AF+zI/OJcuaOc+pyoru+fYAd1
-         9NRA==
+        bh=jOZI8SGXdjEDl/5cRiKBB/3ohsupX4oO9Re4g9HNDWE=;
+        b=UajZwV8mWNElnB3627GtP97HZhzj0zo1scWikdcoZw1y/QJll/ClitWRvKQUVSh4hW
+         2mSnK6Z+CLt2/GOc+BEY7KvM9j4/yOYYvPoTJx5680XIE7xwZP4V1WzV6OnJTQEsl9zT
+         4DSr/H538JnJqSFjBjCCuqJ5rVsgiLIuA4Emq26c3kgpmkFbKktsSlonjIUFBNdNydEh
+         VZfItGSEyXb+4zxdeUEC9uG04Q6W+n/5Ars5jQRs7g1bfliXCaa2l7K6Sdo6IIvSp+yH
+         idOqrqH6SefFPnjY+xct8vI88Tr+ANW6sKOitKcwnAciE8+F6xxdhBVmJcj0VdLaWqBz
+         euow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=w8GOdVZWnKWXhWRfDdcY4dEl4a7Vfx0hrVhLgZn9li0=;
-        b=H4mr2aB7q5Rnl96kome1I6/7ZuWj+sCiyqu3GSAeTjY3M6faPhEm1+V5eGPzBJBuqF
-         LJV/8SmdgKbOR5ZszZGLrHBzU46gundDf6CrVwfwkKHcE03LwwIY9hwQFWxKo+aVqPuL
-         SUyDKbyT1zXkcuoljQurzWp/pJPBYbM0zoHGyXCm/X9+l0szgNeGNXh7yFfimAAllA8i
-         sgRobqS4YDmJ0h2XkF9t8fwbBG9+xvTYESnL1c2Jn9jfM5aFdU84LQKzMaYnq8kFX6sW
-         ZOs7ZOrUVDF/P1NAO+kAK/U8fegsd8FEWmgGSYWlwR8t+0/CiIQf8qqpljHEq3H66kGF
-         xdFg==
-X-Gm-Message-State: ACrzQf2fM+LUKjD0o2BISC13HbBplK6DdA//jHRgQaO0X2+0+jZxTOFu
-        OBWqlNEE/cNpB+XWuZxlm+ipJQ==
-X-Google-Smtp-Source: AMsMyM59JhSzyyadVVYWhMiCfozeBzTAAeI8b1hmPnTU/9t+AWzniSRhqYLN02hySn71fpl8NrQfrw==
-X-Received: by 2002:a17:903:11c4:b0:178:634b:1485 with SMTP id q4-20020a17090311c400b00178634b1485mr3913969plh.142.1665053916771;
-        Thu, 06 Oct 2022 03:58:36 -0700 (PDT)
+        bh=jOZI8SGXdjEDl/5cRiKBB/3ohsupX4oO9Re4g9HNDWE=;
+        b=OmM2kPEroK32ukpXDFSyAdgASUnx28zN1xcLWNk2AhyviXfEykUu4wN5zxpA9gGiIA
+         zgn8sd3f8skNx3LTMJZ4VCqpxuxVT3inluv5X2vmk2dEUo+deE8fM00+5GIWkEn4EIVl
+         pj5Yq/IXtZZFtJS3nTUHJ6/kNTnR8cJHCSFIXRMVdVWW+DEifGLzL0z8Ile9c1VbRVdq
+         PGWcPXzHL+JQqTQWptJ2tPCG+BgOufehP52ps8/efJbk7bB2VWxDPF4NFGczYrMUaLKS
+         IHEPs/z9vURMv+BcsFZ1CR4e3KoDbIIvOQMQP267qKq3O+jqa9Ugf1U5A2CzbbKoUyqc
+         GOgA==
+X-Gm-Message-State: ACrzQf0zO8AW9pSYmFKJC3LKVMbjxhwZ5M4jX2LvYTedF+L/vXAU0xsh
+        lqFDnbJXKnOMwOZrrTVR3Gnr3w==
+X-Google-Smtp-Source: AMsMyM5hVYB19NYs8RMrU+wMXWuCUOp0fns6L5LwE3MhmTdt8WJKRuHYX7lGe8E0Xymy2BzrcloQOQ==
+X-Received: by 2002:a17:903:244e:b0:178:4f50:1ca0 with SMTP id l14-20020a170903244e00b001784f501ca0mr4111939pls.104.1665053922749;
+        Thu, 06 Oct 2022 03:58:42 -0700 (PDT)
 Received: from liang-Predator-PH517-52.. (60-250-232-247.hinet-ip.hinet.net. [60.250.232.247])
-        by smtp.gmail.com with ESMTPSA id c13-20020a170903234d00b0017d12d86901sm10504297plh.187.2022.10.06.03.58.34
+        by smtp.gmail.com with ESMTPSA id c13-20020a170903234d00b0017d12d86901sm10504297plh.187.2022.10.06.03.58.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 03:58:36 -0700 (PDT)
+        Thu, 06 Oct 2022 03:58:41 -0700 (PDT)
 From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
 To:     LKML <linux-kernel@vger.kernel.org>
 Cc:     dianders@chromium.org,
@@ -58,9 +58,9 @@ Cc:     dianders@chromium.org,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH v7 2/4] arm64: dts: qcom: Add LTE SKU for sc7280-evoker family
-Date:   Thu,  6 Oct 2022 18:58:21 +0800
-Message-Id: <20221006185333.v7.2.I1454364ac3d8ecc64677884d6b7d2f3e334e4b4a@changeid>
+Subject: [PATCH v7 4/4] arm64: dts: qcom: Add touchscreen and touchpad support for evoker
+Date:   Thu,  6 Oct 2022 18:58:23 +0800
+Message-Id: <20221006185333.v7.4.I50d04dcbe735dda69995cf1078824d671501869e@changeid>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221006105823.532336-1-sheng-liang.pan@quanta.corp-partner.google.com>
 References: <20221006105823.532336-1-sheng-liang.pan@quanta.corp-partner.google.com>
@@ -75,107 +75,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-evoker have wifi/lte sku, add different dts for each sku.
+Change touchpad and touchscreen node for evoker
+Touchpad: SA461D-1011
+Touchscreen: GT7986U
 
 Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
 ---
 
-(no changes since v5)
+Changes in v7:
+- add compiatable for gt7986
+
+Changes in v6:
+- add removed pinctrl and align touchscreen label with herobrine board
 
 Changes in v5:
-- recover whitespace change
+- new patch for Touchscreen/trackpad in v5
 
-Changes in v4:
-- recover change for trackpad and touchscreen
+ .../boot/dts/qcom/sc7280-herobrine-evoker.dtsi    | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
- arch/arm64/boot/dts/qcom/Makefile                 |  3 ++-
- .../boot/dts/qcom/sc7280-herobrine-evoker-lte.dts | 14 ++++++++++++++
- .../boot/dts/qcom/sc7280-herobrine-evoker.dts     | 15 +++++++++++++++
- ...evoker-r0.dts => sc7280-herobrine-evoker.dtsi} |  7 -------
- 4 files changed, 31 insertions(+), 8 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
- rename arch/arm64/boot/dts/qcom/{sc7280-herobrine-evoker-r0.dts => sc7280-herobrine-evoker.dtsi} (98%)
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 65cb0f714ed6b..91153baeeffae 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -95,7 +95,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-crd.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-evoker-r0.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-evoker.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-evoker-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r0.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r1.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dts
-new file mode 100644
-index 0000000000000..3af9224a7492e
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dts
-@@ -0,0 +1,14 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Evoker board device tree source
-+ *
-+ * Copyright 2022 Google LLC.
-+ */
-+
-+#include "sc7280-herobrine-evoker.dts"
-+#include "sc7280-herobrine-lte-sku.dtsi"
-+
-+/ {
-+	model = "Google Evoker with LTE";
-+	compatible = "google,evoker-sku512", "qcom,sc7280";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
-new file mode 100644
-index 0000000000000..dcdd4eecfe670
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
-@@ -0,0 +1,15 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Evoker board device tree source
-+ *
-+ * Copyright 2022 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7280-herobrine-evoker.dtsi"
-+
-+/ {
-+	model = "Google Evoker";
-+	compatible = "google,evoker", "qcom,sc7280";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-similarity index 98%
-rename from arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
-rename to arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-index ccbe50b6249ab..e78072159d54b 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
+index e78072159d54b..d713750f81019 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-@@ -5,15 +5,8 @@
-  * Copyright 2022 Google LLC.
-  */
+@@ -23,16 +23,15 @@ ap_tp_i2c: &i2c0 {
+ 	status = "okay";
+ 	clock-frequency = <400000>;
  
--/dts-v1/;
--
- #include "sc7280-herobrine.dtsi"
+-	trackpad: trackpad@2c {
+-		compatible = "hid-over-i2c";
+-		reg = <0x2c>;
++	trackpad: trackpad@15 {
++		compatible = "elan,ekth3000";
++		reg = <0x15>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&tp_int_odl>;
  
--/ {
--	model = "Google Evoker";
--	compatible = "google,evoker", "qcom,sc7280";
--};
--
- /*
-  * ADDITIONS TO FIXED REGULATORS DEFINED IN PARENT DEVICE TREE FILES
-  *
+ 		interrupt-parent = <&tlmm>;
+ 		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
+ 
+-		hid-descr-addr = <0x20>;
+ 		vcc-supply = <&pp3300_z1>;
+ 
+ 		wakeup-source;
+@@ -43,9 +42,9 @@ ts_i2c: &i2c13 {
+ 	status = "okay";
+ 	clock-frequency = <400000>;
+ 
+-	ap_ts: touchscreen@10 {
+-		compatible = "elan,ekth6915";
+-		reg = <0x10>;
++	ap_ts: touchscreen@5d {
++		compatible = "goodix,gt7986u", "goodix,gt7375p";
++		reg = <0x5d>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&ts_int_conn>, <&ts_rst_conn>;
+ 
+@@ -54,7 +53,7 @@ ap_ts: touchscreen@10 {
+ 
+ 		reset-gpios = <&tlmm 54 GPIO_ACTIVE_LOW>;
+ 
+-		vcc33-supply = <&ts_avdd>;
++		vdd-supply = <&ts_avdd>;
+ 	};
+ };
+ 
 -- 
 2.34.1
 
