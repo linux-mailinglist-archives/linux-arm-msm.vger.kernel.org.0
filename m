@@ -2,86 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ABB8E5F622D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 09:57:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8EE255F623E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 10:05:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230402AbiJFH5j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 03:57:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40498 "EHLO
+        id S230138AbiJFIFW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 04:05:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230241AbiJFH5i (ORCPT
+        with ESMTP id S230150AbiJFIFU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 03:57:38 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7829589AE5
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 00:57:34 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id y5so1529000lfl.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 00:57:34 -0700 (PDT)
+        Thu, 6 Oct 2022 04:05:20 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0933C37FBD
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 01:05:18 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id a12so1308861ljr.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 01:05:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=2chuQJubRNdJDdp1cl9RnHgoqXHU1pT5hlr6URidjng=;
-        b=U/JtaJ10VjlGiL/wxSq+7uUC0YzGXGyuKxVuX03CrCZWRPrfFRv6IpkAIbiT2Myhnd
-         Uu/8PPnyucEpakdlaoj0ie1ZPu0EAtPc5bzf6E7eeZ3mSsvpeVGkAvqv1WrsKYryjMiL
-         TYHBHTYDd0Hox6RrpHF3qOy65gTlZas845EXgoteSEQIhtUNqJa5397A5h2XbeRtLsW7
-         6BmNH8UqonGuiPzx461QSyyRemsGi/ZZek6V1u4CD081qapPnyjgMkwHMO5GO1Ab2icI
-         rQ9ffdcvlGdcUUq6IJp0hlxL2e8PwbMZmvxISZpOkMcVHewfSnVnmaGlofoMM1kEK+oT
-         nYMw==
+        bh=aQgLDXbifM0rqp5u4DrjFvn4pd5ZSxqJ7lQA2KzRsRM=;
+        b=nl346wPBz2+HsobbRx3iQ6LR29S6myMXMumDS5sYHXz9p43T+o9hd5fQu+RaAgYz0i
+         1aBUgoNG5LAXoJxu8SX3e1qJAO/F0SOLDRSKaJaZIVCGkmzGTnXXWOOWshx47n9N/wrl
+         QtJOCmq4XYN3DuKZhtamBUTztnozPdrshNvSGbXIGnckVO0Z8mct52GLxUqXoxmua84E
+         5ZpqwnJ5XwnQD64InAYCSnYB06bN1UCqOn0VJacJRPatbYBWugEqOMa+Av11wocj+OsX
+         h/KmS28HXbXOIipksROVro2kjIDNv8cspihYiLg/y2ge+LMo1M2PNhB6JOpcciV2RQGZ
+         DdCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=2chuQJubRNdJDdp1cl9RnHgoqXHU1pT5hlr6URidjng=;
-        b=mw5lCQoZgtfY9nM+Opl6BFzZhk2XsBN+3ZtAbeZ4daWQL+ZtgibEOKWV+tu0gx5APZ
-         JqhP8H/LgmJNf4DpeRHovtLcKRuF4QSYUddwhu7Z1B1nLysGk6fdwGqmngN/K/D+WybG
-         w1e1lBQfif8snloqZL+5RF4xS76mLNAZ/KhlyOWqWq811M8pFCKW+QoKScvaSrOMk8+l
-         DiItXINZERXT9jD0PwZ7qdUX8c3Mn72WYnn55Z4k5560DhZ+VZXkqinXIHhgpCqcVsnB
-         FQffY4Sl2y+PqUS+ADmw1RXXgDyqBFHqBYZXjHDfqsjKcs60XYhNAe4nFgWRs+hL3XUP
-         jZAw==
-X-Gm-Message-State: ACrzQf1HlZtuNz2FDBlPQnpSTejUU4LcPHra745OLNtvcPFQ1Tvw4mgJ
-        Ljk39riruJF7Yw4msalQ966JnA==
-X-Google-Smtp-Source: AMsMyM68eGfFa+0mtU08JX2IwKZzneavnZOjkLmX/YGBXmC5UCvuBCAu7d0S9FdlSTKLAW0B5c/D2g==
-X-Received: by 2002:a19:7003:0:b0:4a2:40b9:de8d with SMTP id h3-20020a197003000000b004a240b9de8dmr1453658lfc.0.1665043052858;
-        Thu, 06 Oct 2022 00:57:32 -0700 (PDT)
+        bh=aQgLDXbifM0rqp5u4DrjFvn4pd5ZSxqJ7lQA2KzRsRM=;
+        b=7zZdt876/8rgiEMQ39nK0zX4Yz19Z+pK2oOPTv7++rHcZOC4RLAgeUXa1btf8NLvSl
+         kVeAqGHm4jFK2kSCwcoXa2j+XduEKwecyu4IrgtGz6P7a9xO3720t0dpJ2JbpKua7mwo
+         +mBKJxS9zbPeXn+4OdddTAEqN0QBCHY4F6VDNO7dAEHPJgJakgEagQFPGCMaHrB4ts9K
+         kDM+MbjfEtCE66DraCGBlIjPt3AQ2i2n5lfdd/L4QwaBpmL0ujT+tadmAn3veLdPdiR6
+         Xsf0diynzAXoLlbiefzU1X8kKE+Nn+ig0IUuKMi3dizjYQGUESvrAhws3mlBbMp0kucR
+         YbeA==
+X-Gm-Message-State: ACrzQf0BKWpvOPO0gttW8pj62BajHjZfQ4PVDqhmBtC1HQ5k5Eeep7c+
+        M3hTK77f9rBgVMfS9x4i4bIPqw==
+X-Google-Smtp-Source: AMsMyM66BFjYxr3ivdx8GpkEc0toNMv635YO4cwYw2Vl8QNCfDoonAVvuantTB0QAWaMkiNDHKmZtw==
+X-Received: by 2002:a2e:b046:0:b0:26e:2a8:df8 with SMTP id d6-20020a2eb046000000b0026e02a80df8mr661441ljl.241.1665043516344;
+        Thu, 06 Oct 2022 01:05:16 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id k2-20020a05651239c200b0049876c1bb24sm2601388lfu.225.2022.10.06.00.57.31
+        by smtp.gmail.com with ESMTPSA id y13-20020a19750d000000b00497a1f92a72sm2614650lfe.221.2022.10.06.01.05.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Oct 2022 00:57:32 -0700 (PDT)
-Message-ID: <0e5438a6-80ba-ace6-b10a-df292c3e82b7@linaro.org>
-Date:   Thu, 6 Oct 2022 09:57:31 +0200
+        Thu, 06 Oct 2022 01:05:15 -0700 (PDT)
+Message-ID: <ba4a2a81-b3fd-d000-48f4-ec2270e2810d@linaro.org>
+Date:   Thu, 6 Oct 2022 10:05:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.1
-Subject: Re: Qualcomm DT bindings and DTS cleanups - tracking community wide
+Subject: Re: [PATCH v7 1/2] dt-bindings: arm: add xiaomi,sagit board based on
+ msm8998 chip
 Content-Language: en-US
-To:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Dzmitry Sankouski <dsankouski@gmail.com>,
+        linux-kernel@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Alex Elder <elder@linaro.org>,
-        Nicolas Dechesne <nicolas.dechesne@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Vinod Koul <vinod.koul@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Caleb Connolly <kc@postmarketos.org>
-References: <62e95ea6-6b72-a159-56ab-8bb11a5800c8@linaro.org>
- <faa4e821-00e0-4ee0-0c62-b5eb6f75abf7@linaro.org>
- <943ec4f3-e6a4-7614-fb6f-1adce1487857@quicinc.com>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+References: <20221006075125.1056605-1-dsankouski@gmail.com>
+ <20221006075125.1056605-2-dsankouski@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <943ec4f3-e6a4-7614-fb6f-1adce1487857@quicinc.com>
+In-Reply-To: <20221006075125.1056605-2-dsankouski@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -94,26 +84,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/10/2022 18:37, Trilok Soni wrote:
->>> If so, where?
->>> A. elinux.org (needs some formatting when pasting the output from tools)
->>> B. gitlab pages/wiki (maybe scripts could parse tools and create the page?)
->>> C. gitlab dedicated repo - some text file
->>> D. Linux kernel TODO file (might be difficult to keep updated)
->>> E. kernel.org wiki (requires LF accounts, AFAIK, a bit pain to edit; I
->>> have it for Exynos but I don't find it usable -
->>> https://exynos.wiki.kernel.org/todo_tasks)
->>
->>
->> Hi All,
->>
->> Any thoughts on this? So far I did not receive any responses, so
->> probably this could mean that there is little interest in this?
+On 06/10/2022 09:51, Dzmitry Sankouski wrote:
+> Add xiaomi,sagit board (Xiaomi Mi 6) binding.
 > 
-> My preference for tracking is gitlab. B or C. Everyone will have login 
-> and understands the workflow.
+> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
 
-Thanks Trilok for the input.
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions. However,
+there's no need to repost patches *only* to add the tags. The upstream
+maintainer will do that for acks received on the version they apply.
+
+https://elixir.bootlin.com/linux/v5.17/source/Documentation/process/submitting-patches.rst#L540
+
+If a tag was not added on purpose, please state why and what changed.
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
 Best regards,
 Krzysztof
