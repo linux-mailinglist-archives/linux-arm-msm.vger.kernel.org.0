@@ -2,107 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B41D5F6E57
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 21:42:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76F805F6E65
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 21:48:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231940AbiJFTmn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 15:42:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38418 "EHLO
+        id S232075AbiJFTsa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 15:48:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231931AbiJFTmm (ORCPT
+        with ESMTP id S232026AbiJFTs3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 15:42:42 -0400
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1410ABD78;
-        Thu,  6 Oct 2022 12:42:40 -0700 (PDT)
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-132af5e5543so3370677fac.8;
-        Thu, 06 Oct 2022 12:42:40 -0700 (PDT)
+        Thu, 6 Oct 2022 15:48:29 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D12C01144FE
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 12:48:27 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id bj12so6809842ejb.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 12:48:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sartura.hr; s=sartura;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=SubjIuBws5LPaK2F6fl7djEE32KNShOpGo87GmZ3kbY=;
+        b=FHa/vDtdebdXMgW7KVsFf9ZcK5KpzB4y2fu+78ZJO/jInIegCXwPsLxu3ycGwwfrFx
+         cvrB5c4DYtfygHY9cu8xOJGrI+J9hEGm0smqMLT3nhOnAtldgM7whWdYBfF43NBvsDKY
+         OpaKP9PTtdqFTyIT4gkP1KTx/cVrOkNyEoS/Y40beWiJvipJFh0gwZgJVo1docdObzNe
+         EMlR9KdacoLqDzGcUOYmo/Sf2CLKcIOADj3YBQFVzkxY/Xk6cagRy+NzBImEBKlN0VOk
+         WtwhKkeDM5TYdKVvbzSvFXgFwti7sKUVJD/OZGHTq7hGO7vZHYplzoPDQCQGsGBhmTt/
+         DiOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TsFWLs3oj8F4sWg6UBmyv5DMTDH4cKYoE2SmcAjVX4s=;
-        b=KFrulq+pHE6dUzpBsGxB+bSwYuuNo42A/urwCBAwF7p9V2FJnAxdwQZLdUu6hiFX3W
-         izJoksktACxPVOW//0YMpRztc+C/wQA3DQUEX3sDw5qW4sM3nCiFjyxJP7ZYq5djWwJM
-         9xQWkgSJI7oIF7ZUED6NLcaCNu75SpW4q2RutX8gVTZcOkKYzSgkxVlBh+UnQO23VWBh
-         UiwfhN2dbF++YFahve7n1iQtvgxdMuYyxyAcqG9FfcQn2PwJW2R03BMUE21mVr4VrhWS
-         MB3MOz5K1KZ1iVq0ow1OE3PuJ1Fa+GwYjnDFaaAa7t3nZ8J2I3pByd7oDAk/5lzzDUZ4
-         cUbw==
-X-Gm-Message-State: ACrzQf0iWCHPF7B/P0/C6g6emCzKOvmXU9ZKrHF5K/dm5SPCfrMJau6W
-        hlPNH4Zd5CULhKmk9Mz+RXdHm8ZN8g==
-X-Google-Smtp-Source: AMsMyM42oi6zLhFx0obOpqCDseqKBUGSLCnnYF467OVUN2yvjv/jBJeXV6+C15FmARRL0/8JLVPdzg==
-X-Received: by 2002:a05:6870:15c8:b0:133:16e6:5af8 with SMTP id k8-20020a05687015c800b0013316e65af8mr2299873oad.80.1665085360263;
-        Thu, 06 Oct 2022 12:42:40 -0700 (PDT)
-Received: from robh_at_kernel.org ([2607:fb90:8a65:c536:245:842:a3a4:9017])
-        by smtp.gmail.com with ESMTPSA id j11-20020acab90b000000b003504f8f6ac5sm16962oif.38.2022.10.06.12.42.38
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=SubjIuBws5LPaK2F6fl7djEE32KNShOpGo87GmZ3kbY=;
+        b=SRNOpHIQvJepyFTR0x43VqNuWFo7Wy/azetSzVKPOxSPp9xMr5ZVgeYo/HAhs7nuMX
+         //mVmWU6kaJN7QjHjeVeHZfS0t0uF52GZujSq0fSkVurPpxkSkE/jUYNaAHlv4Acjhed
+         uj4Dgn0YPOh5WudtYXwI12m5GD2B/8DLxHUOS2CXI6a4kDX+7htcwkg4SgxJdtp9FAs2
+         cuz6MlRtrwKUrrzKw2ow0n643DPmSt95IWgHn3z5QizSmhE63t0j9ESf7Z0IpFpwaQAl
+         VFSlXv6or/q2/WmHot8Qd4GxpkzGgxysohvNiJ+w6AgoC5Gi0QeuSqHdw7rCFOknLgli
+         tYtA==
+X-Gm-Message-State: ACrzQf2mslH98vThUJurbRA1edIDboAoGMM058TGqTEXlQXbhkD37Pl/
+        o+TIgelFRWAbVFBtzRUfHwecWg==
+X-Google-Smtp-Source: AMsMyM7lGUO5s/XfctQB/DIPjA1h+5Xa7NpwAFS4jTATaxNFrWml5ah0CQthp5237VTD/JeaAGN5EQ==
+X-Received: by 2002:a17:907:d90:b0:78d:48b1:496d with SMTP id go16-20020a1709070d9000b0078d48b1496dmr1207704ejc.665.1665085706326;
+        Thu, 06 Oct 2022 12:48:26 -0700 (PDT)
+Received: from fedora.. (dh207-96-33.xnet.hr. [88.207.96.33])
+        by smtp.googlemail.com with ESMTPSA id l26-20020a170906415a00b0078116c361d9sm174229ejk.10.2022.10.06.12.48.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 12:42:39 -0700 (PDT)
-Received: (nullmailer pid 69132 invoked by uid 1000);
-        Thu, 06 Oct 2022 19:42:37 -0000
-Date:   Thu, 6 Oct 2022 14:42:37 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Lee Jones <lee@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-gpio@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
-        devicetree@vger.kernel.org, Mark Brown <broonie@kernel.org>
-Subject: Re: [PATCH 1/6] dt-bindings: pinctrl: convert
- qcom,mdm9615-pinctrl.txt to dt-schema
-Message-ID: <20221006194237.GA66144-robh@kernel.org>
-References: <20221005-mdm9615-pinctrl-yaml-v1-0-0cbc006e2a30@linaro.org>
- <20221005-mdm9615-pinctrl-yaml-v1-1-0cbc006e2a30@linaro.org>
- <166505882828.1602503.18185089088624527425.robh@kernel.org>
- <85c9c9ee-37c3-733c-2c67-ac22734844f8@linaro.org>
+        Thu, 06 Oct 2022 12:48:25 -0700 (PDT)
+From:   Robert Marko <robert.marko@sartura.hr>
+To:     agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, broonie@kernel.org,
+        linus.walleij@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Robert Marko <robert.marko@sartura.hr>, luka.perkov@sartura.hr
+Subject: [PATCH] spi: qup: support using GPIO as chip select line
+Date:   Thu,  6 Oct 2022 21:48:19 +0200
+Message-Id: <20221006194819.1536932-1-robert.marko@sartura.hr>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <85c9c9ee-37c3-733c-2c67-ac22734844f8@linaro.org>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 06, 2022 at 06:21:28PM +0200, Neil Armstrong wrote:
-> On 06/10/2022 14:27, Rob Herring wrote:
-> > On Thu, 06 Oct 2022 09:57:58 +0000, Neil Armstrong wrote:
-> > > Convert the MDM9515 pinctrl bindings to dt-schema.
-> > > 
-> > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > > ---
-> > >   .../bindings/pinctrl/qcom,mdm9615-pinctrl.txt      | 161 ---------------------
-> > >   .../bindings/pinctrl/qcom,mdm9615-pinctrl.yaml     | 101 +++++++++++++
-> > >   2 files changed, 101 insertions(+), 161 deletions(-)
-> > > 
-> > 
-> > Running 'make dtbs_check' with the schema in this patch gives the
-> > following warnings. Consider if they are expected or the schema is
-> > incorrect. These may not be new warnings.
-> > 
-> > Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-> > This will change in the future.
-> > 
-> > Full log is available here: https://patchwork.ozlabs.org/patch/
-> > 
-> > 
-> > pinctrl@800000: 'gpioext1_pins', 'gsbi3_pins', 'gsbi4_pins', 'gsbi5_i2c_pins', 'gsbi5_uart_pins', 'reset_out_pins', 'sdc_cd_pins' do not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
-> > 	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb
-> > 
-> 
-> Yes it's fixed in the next patch, should I move the fix before the bindings conversion ?
+Most of the device with QUP SPI adapter are actually using GPIO-s for
+chip select.
 
-No, because I don't apply the dts patches. It's just informational and 
-ignore if you already took care of it.
+However, this stopped working after ("spi: Retire legacy GPIO handling")
+as it introduced a check on ->use_gpio_descriptors flag and since spi-qup
+driver does not set the flag it meant that all of boards using GPIO-s and
+with QUP adapter SPI devices stopped working.
 
-Rob
+So, to enable using GPIO-s again set ->use_gpio_descriptors to true and
+populate ->max_native_cs.
+
+Fixes: f48dc6b96649 ("spi: Retire legacy GPIO handling")
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+Cc: luka.perkov@sartura.hr
+---
+ drivers/spi/spi-qup.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
+index 00d6084306b4..81c2e00532cf 100644
+--- a/drivers/spi/spi-qup.c
++++ b/drivers/spi/spi-qup.c
+@@ -1057,6 +1057,8 @@ static int spi_qup_probe(struct platform_device *pdev)
+ 	else
+ 		master->num_chipselect = num_cs;
+ 
++	master->use_gpio_descriptors = true;
++	master->max_native_cs = SPI_NUM_CHIPSELECTS;
+ 	master->bus_num = pdev->id;
+ 	master->mode_bits = SPI_CPOL | SPI_CPHA | SPI_CS_HIGH | SPI_LOOP;
+ 	master->bits_per_word_mask = SPI_BPW_RANGE_MASK(4, 32);
+-- 
+2.37.3
+
