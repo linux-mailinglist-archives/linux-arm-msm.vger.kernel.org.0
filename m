@@ -2,154 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9E2C5F5CA7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 00:25:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FD9C5F5E38
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 03:07:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229697AbiJEWZM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Oct 2022 18:25:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33268 "EHLO
+        id S229982AbiJFBHE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Oct 2022 21:07:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229698AbiJEWZI (ORCPT
+        with ESMTP id S229965AbiJFBG7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Oct 2022 18:25:08 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 403CA30F4B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Oct 2022 15:25:06 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id j71so184129pge.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Oct 2022 15:25:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date;
-        bh=mhMPvEXXYCPlbOQG8BzvcGNV3ML97Cg893xM+52RSgQ=;
-        b=HKuN0K2/4ikar8N5dBtbFYT2BkP1HBPMufC0LN0ASsAwWLksRCjjpnM9XlJ5SeB6n+
-         ySPGxHRhhG6mCK65FB3pcbzHpPbdxpA8sA8UbmUj0+qWBmzvCPvtBm54ktu4z08OSzFW
-         DKw5YNTHUgpDkk6JP78GbjkeqmngeyhPmmJPFX2IuqVfigmcI5bwfDHJCfcOyJb2+pCl
-         6leXfPw9laNO4XY4HtELKik3uemLvs5YG3LQ5Swyl1J31KlJ+38Ysgz9EUzuMmQKBFgf
-         rKCND9i2sBRfwe91Z9K7UZIl1aVwvXlLSLG/sI2FXXdKl52AvITTPwy2aRnCQk/9Kz2i
-         yRMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=mhMPvEXXYCPlbOQG8BzvcGNV3ML97Cg893xM+52RSgQ=;
-        b=xgj4xpYDeLyhb4EPWK6T7p5oHZH3IDqPupxjYTasyUGVIaJu2ltTuU/p7CJdqMDk59
-         U+5Ow4t/bU1Cq1+4595UONWSf3f/UjPOM+QszlUVMQMI5PXEl7JbkUPAh4UiSQQv7Gsv
-         qQtRmTTwOgywg3TlUWGiiI1zPOQmo9Dw08mMDbUK9Ip1E075RW/DGfWZ0299LauoW60D
-         weclo5IizeNBudoAdA0zE1NcHCDgXlvSMFeRSjkjOdnDZeQN6eLjVj0g4bS0p1cj8sgJ
-         36xeWViwqmW016A1h1++YOsjJp7BuszHKta1tONrmxZHYDYjzMK+xHLy6gaydBsviOPi
-         A0Jg==
-X-Gm-Message-State: ACrzQf2YCpxeqIMSJR5lixCpEI96dm90G1jQofMtbsGr6gfCJue76Adn
-        XyLsKYZVhophde8q7k96TYCN
-X-Google-Smtp-Source: AMsMyM6v376O9YGcV0tO2jMHWj9Uz6l4fYQHTnPsRJHku8zvGt26Cc6qQWLWAmd/MsqnDBTBNXhdIQ==
-X-Received: by 2002:a63:5d48:0:b0:43a:390b:2183 with SMTP id o8-20020a635d48000000b0043a390b2183mr1669590pgm.29.1665008705484;
-        Wed, 05 Oct 2022 15:25:05 -0700 (PDT)
-Received: from thinkpad ([27.111.75.192])
-        by smtp.gmail.com with ESMTPSA id d2-20020a17090acd0200b001ef8ab65052sm1614744pju.11.2022.10.05.15.25.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Oct 2022 15:25:04 -0700 (PDT)
-Date:   Thu, 6 Oct 2022 03:54:58 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     lpieralisi@kernel.org, robh@kernel.org, andersson@kernel.org,
-        kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
-        dmitry.baryshkov@linaro.org,
-        Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-Subject: Re: [PATCH v4 06/12] PCI: qcom-ep: Gate Master AXI clock to MHI bus
- during L1SS
-Message-ID: <20221005222458.GA6150@thinkpad>
-References: <20220914075350.7992-7-manivannan.sadhasivam@linaro.org>
- <20221005220838.GA2400326@bhelgaas>
+        Wed, 5 Oct 2022 21:06:59 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 778D463FF1;
+        Wed,  5 Oct 2022 18:06:58 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2960wkRI018077;
+        Thu, 6 Oct 2022 01:06:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=gdxKZfydN99/mBoP4HPQ626OusmYINSQ8qsm/8OQgWQ=;
+ b=O/4TNB8+zJcre2O8ENOEnvsgZGdmCSjw7eQFIBNZhwyGYYbyx6F1UGt9Qxew/KJZ+Wuh
+ D3oJ34Jxtaxs4cJ7WAaGZW3PjzSAAVR0Pshl94j6pLL7MZnanaVhG4H/KXSvSc6mPlBv
+ uygvYjZsFfe7BuoujE0Dyuxyq22rBKLg5xu1SctsdH7AAySPZb0oYQa/EO7DQGQ60aU4
+ WWzI4A+6Wg/ZrRon4oFW8IAuHZWmu3TcJTsJ7e2cbNxO8uykizgKcxNyOJpaN6dq56If
+ HwDoF9FQZExWxAUpU8tTLXQM2rAT07r8KoPFvS+VkPxiQnsY4WgVT0aj2lW8xv1pkpOz Pg== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k0sq5tt2h-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 06 Oct 2022 01:06:50 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29616nTd017611
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 6 Oct 2022 01:06:49 GMT
+Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Wed, 5 Oct 2022 18:06:48 -0700
+From:   Asutosh Das <quic_asutoshd@quicinc.com>
+To:     <quic_cang@quicinc.com>, <quic_nitirawa@quicinc.com>,
+        <quic_rampraka@quicinc.com>, <quic_bhaskarv@quicinc.com>,
+        <quic_richardp@quicinc.com>, <linux-scsi@vger.kernel.org>
+CC:     Asutosh Das <quic_asutoshd@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <quic_nguyenb@quicinc.com>,
+        <quic_xiaosenh@quicinc.com>, <bvanassche@acm.org>,
+        <avri.altman@wdc.com>, <mani@kernel.org>, <beanhuo@micron.com>
+Subject: [PATCH v2 00/17] Add Multi Circular Queue Support 
+Date:   Wed, 5 Oct 2022 18:05:59 -0700
+Message-ID: <cover.1665017636.git.quic_asutoshd@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221005220838.GA2400326@bhelgaas>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: GNNHkoxst8BS7QKFxmCYFvVaDJN2Gu6Y
+X-Proofpoint-GUID: GNNHkoxst8BS7QKFxmCYFvVaDJN2Gu6Y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-10-05_05,2022-10-05_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
+ mlxlogscore=999 phishscore=0 spamscore=0 malwarescore=0 impostorscore=0
+ mlxscore=0 bulkscore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
+ definitions=main-2210060005
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 05, 2022 at 05:08:38PM -0500, Bjorn Helgaas wrote:
-> [+cc Krishna]
-> 
-> On Wed, Sep 14, 2022 at 01:23:44PM +0530, Manivannan Sadhasivam wrote:
-> > During L1SS, gate the Master clock supplied to the MHI bus to save power.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-qcom-ep.c | 9 +++++++++
-> >  1 file changed, 9 insertions(+)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > index 2dc6d4e44aff..526e98ea23f6 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > @@ -27,6 +27,7 @@
-> >  #define PARF_SYS_CTRL				0x00
-> >  #define PARF_DB_CTRL				0x10
-> >  #define PARF_PM_CTRL				0x20
-> > +#define PARF_MHI_CLOCK_RESET_CTRL		0x174
-> >  #define PARF_MHI_BASE_ADDR_LOWER		0x178
-> >  #define PARF_MHI_BASE_ADDR_UPPER		0x17c
-> >  #define PARF_DEBUG_INT_EN			0x190
-> > @@ -89,6 +90,9 @@
-> >  #define PARF_PM_CTRL_READY_ENTR_L23		BIT(2)
-> >  #define PARF_PM_CTRL_REQ_NOT_ENTR_L1		BIT(5)
-> >  
-> > +/* PARF_MHI_CLOCK_RESET_CTRL fields */
-> > +#define PARF_MSTR_AXI_CLK_EN			BIT(1)
-> > +
-> >  /* PARF_AXI_MSTR_RD_HALT_NO_WRITES register fields */
-> >  #define PARF_AXI_MSTR_RD_HALT_NO_WRITE_EN	BIT(0)
-> >  
-> > @@ -394,6 +398,11 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
-> >  		       pcie_ep->parf + PARF_MHI_BASE_ADDR_LOWER);
-> >  	writel_relaxed(0, pcie_ep->parf + PARF_MHI_BASE_ADDR_UPPER);
-> >  
-> > +	/* Gate Master AXI clock to MHI bus during L1SS */
-> > +	val = readl_relaxed(pcie_ep->parf + PARF_MHI_CLOCK_RESET_CTRL);
-> > +	val &= ~PARF_MSTR_AXI_CLK_EN;
-> > +	val = readl_relaxed(pcie_ep->parf + PARF_MHI_CLOCK_RESET_CTRL);
-> 
-> Is this code executed when the link actually transitions to L1.x, or
-> is this just configuring things so that when the link does transition
-> to L1.x sometime later, hardware will gate the Master AXI clock?
-> 
+UFS Multi-Circular Queue (MCQ) has been added in UFSHCI v4.0 to improve storage performance.
+The implementation uses the shared tagging mechanism so that tags are shared
+among the hardware queues. The number of hardware queues is configurable.
+This series doesn't include the ESI implementation for completion handling.
 
-It is the latter... This patch programs the EP controller in such a way that
-when the link enters L1.x, the AXI clock supplied to the MHI bus (EP function)
-will be cut-off to save power. Once the link goes out of L1.x, the clock will
-be restored by the controller.
+This implementation has been verified by booting on an emulation platform.
+During testing, all low power modes were disabled and it was in HS-G1 mode.
 
-> Just curious because this looks more like *configuration*, i.e., the
-> latter, but there's the ongoing conversation about qcom system
-> suspend/resume, where IIUC, software is involved at least in some
-> L1.2 exits.
-> 
+Please take a look and let us know your thoughts.
 
-Krishna's suspend/resume patches are for Qcom PCIe RC controller, but this
-series and this patch is for Qcom PCIe EP controller.
+v1 -> v2:
+- Added a non MCQ related change to use a function to extrace ufs extended
+feature
+- Addressed Mani's comments
+- Addressed Bart's comments
 
-Thanks,
-Mani
+v1:
+- Split the changes
+- Addressed Bart's comments
+- Addressed Bean's comments
 
-> >  	dw_pcie_ep_init_notify(&pcie_ep->pci.ep);
-> >  
-> >  	/* Enable LTSSM */
-> > -- 
-> > 2.25.1
-> > 
+* RFC versions:
+v2 -> v3:
+- Split the changes based on functionality
+- Addressed queue configuration issues
+- Faster SQE tail pointer increments
+- Addressed comments from Bart and Manivannan
+
+v1 -> v2:
+- Enabled host_tagset
+- Added queue num configuration support
+- Added one more vops to allow vendor provide the wanted MAC
+- Determine nutrs and can_queue by considering both MAC, bqueuedepth and EXT_IID support
+- Postponed MCQ initialization and scsi_add_host() to async probe
+- Used (EXT_IID, Task Tag) tuple to support up to 4096 tasks (theoretically)
+
+Asutosh Das (17):
+  ufs: core: Probe for ext_iid support
+  ufs: core: Optimize duplicate code to read extended feature
+  ufs: core: Introduce Multi-circular queue capability
+  ufs: core: Defer adding host to scsi if mcq is supported
+  ufs: core: mcq: Introduce Multi Circular Queue
+  ufs: core: mcq: Configure resource regions
+  ufs: core: mcq: Calculate queue depth
+  ufs: core: mcq: Allocate memory for mcq mode
+  ufs: core: mcq: Configure operation and runtime interface
+  ufs: core: mcq: Use shared tags for MCQ mode
+  ufs: core: Prepare ufshcd_send_command for mcq
+  ufs: core: mcq: Find hardware queue to queue request
+  ufs: core: Prepare for completion in mcq
+  ufs: mcq: Add completion support of a cqe
+  ufs: core: mcq: Add completion support in poll
+  ufs: core: mcq: Enable Multi Circular Queue
+  ufs: qcom-host: Enable multi circular queue capability
+
+ drivers/ufs/core/Makefile      |   2 +-
+ drivers/ufs/core/ufs-mcq.c     | 495 +++++++++++++++++++++++++++++++++++++++++
+ drivers/ufs/core/ufshcd-priv.h |  84 ++++++-
+ drivers/ufs/core/ufshcd.c      | 345 ++++++++++++++++++++++------
+ drivers/ufs/host/ufs-qcom.c    |  49 ++++
+ drivers/ufs/host/ufs-qcom.h    |   4 +
+ include/ufs/ufs.h              |   6 +
+ include/ufs/ufshcd.h           | 136 +++++++++++
+ include/ufs/ufshci.h           |  63 ++++++
+ 9 files changed, 1116 insertions(+), 68 deletions(-)
+ create mode 100644 drivers/ufs/core/ufs-mcq.c
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.7.4
+
