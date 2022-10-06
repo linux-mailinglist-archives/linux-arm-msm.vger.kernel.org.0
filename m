@@ -2,144 +2,244 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10EA35F64AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 12:59:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A49255F64E3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 13:09:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230487AbiJFK7F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 06:59:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45170 "EHLO
+        id S231543AbiJFLJh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 07:09:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231442AbiJFK6x (ORCPT
+        with ESMTP id S231539AbiJFLJO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 06:58:53 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BBFF9AFEC
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 03:58:43 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id d24so1390062pls.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 03:58:43 -0700 (PDT)
+        Thu, 6 Oct 2022 07:09:14 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 092509B856
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 04:09:08 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id m14so1832655ljg.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 04:09:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=quanta-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jOZI8SGXdjEDl/5cRiKBB/3ohsupX4oO9Re4g9HNDWE=;
-        b=UajZwV8mWNElnB3627GtP97HZhzj0zo1scWikdcoZw1y/QJll/ClitWRvKQUVSh4hW
-         2mSnK6Z+CLt2/GOc+BEY7KvM9j4/yOYYvPoTJx5680XIE7xwZP4V1WzV6OnJTQEsl9zT
-         4DSr/H538JnJqSFjBjCCuqJ5rVsgiLIuA4Emq26c3kgpmkFbKktsSlonjIUFBNdNydEh
-         VZfItGSEyXb+4zxdeUEC9uG04Q6W+n/5Ars5jQRs7g1bfliXCaa2l7K6Sdo6IIvSp+yH
-         idOqrqH6SefFPnjY+xct8vI88Tr+ANW6sKOitKcwnAciE8+F6xxdhBVmJcj0VdLaWqBz
-         euow==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=oSwQHAbZbNwtUkxLe3eMYZC+tGj9k+iujF/sOCF9CJA=;
+        b=Tau9z0EzEemX7HCD/owFbmkmGdHSWdR2GXMN01Pq8WD79wwfGZUUvfWdoDorqeKlmh
+         STn52wy++sn5LU1hFv0rTb34wPaqHRMXaivhDVNlcNI2ys03njv3Pz8ZibEeN8FtiS0V
+         qWBk1etdgukbW2f2r7XMM8LPpimVLULhngSZ8zBxqxNqpd37/u99toxFKpqCxeGYkdeH
+         03Lx2D90irWUd9+gwnrWZ6YTZJ/lj4AkFAfjH7owXtlhyDIlFSPYlKkiibzV3kR2qq5l
+         G5xx+DJpeE8YVuJK0vNXKj+GiKNbi38wlReyYlk1DuR35JdcPsarF3trF1/KuN+7MOKK
+         WEag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jOZI8SGXdjEDl/5cRiKBB/3ohsupX4oO9Re4g9HNDWE=;
-        b=OmM2kPEroK32ukpXDFSyAdgASUnx28zN1xcLWNk2AhyviXfEykUu4wN5zxpA9gGiIA
-         zgn8sd3f8skNx3LTMJZ4VCqpxuxVT3inluv5X2vmk2dEUo+deE8fM00+5GIWkEn4EIVl
-         pj5Yq/IXtZZFtJS3nTUHJ6/kNTnR8cJHCSFIXRMVdVWW+DEifGLzL0z8Ile9c1VbRVdq
-         PGWcPXzHL+JQqTQWptJ2tPCG+BgOufehP52ps8/efJbk7bB2VWxDPF4NFGczYrMUaLKS
-         IHEPs/z9vURMv+BcsFZ1CR4e3KoDbIIvOQMQP267qKq3O+jqa9Ugf1U5A2CzbbKoUyqc
-         GOgA==
-X-Gm-Message-State: ACrzQf0zO8AW9pSYmFKJC3LKVMbjxhwZ5M4jX2LvYTedF+L/vXAU0xsh
-        lqFDnbJXKnOMwOZrrTVR3Gnr3w==
-X-Google-Smtp-Source: AMsMyM5hVYB19NYs8RMrU+wMXWuCUOp0fns6L5LwE3MhmTdt8WJKRuHYX7lGe8E0Xymy2BzrcloQOQ==
-X-Received: by 2002:a17:903:244e:b0:178:4f50:1ca0 with SMTP id l14-20020a170903244e00b001784f501ca0mr4111939pls.104.1665053922749;
-        Thu, 06 Oct 2022 03:58:42 -0700 (PDT)
-Received: from liang-Predator-PH517-52.. (60-250-232-247.hinet-ip.hinet.net. [60.250.232.247])
-        by smtp.gmail.com with ESMTPSA id c13-20020a170903234d00b0017d12d86901sm10504297plh.187.2022.10.06.03.58.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 03:58:41 -0700 (PDT)
-From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     dianders@chromium.org,
-        Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v7 4/4] arm64: dts: qcom: Add touchscreen and touchpad support for evoker
-Date:   Thu,  6 Oct 2022 18:58:23 +0800
-Message-Id: <20221006185333.v7.4.I50d04dcbe735dda69995cf1078824d671501869e@changeid>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221006105823.532336-1-sheng-liang.pan@quanta.corp-partner.google.com>
-References: <20221006105823.532336-1-sheng-liang.pan@quanta.corp-partner.google.com>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=oSwQHAbZbNwtUkxLe3eMYZC+tGj9k+iujF/sOCF9CJA=;
+        b=4LTdEMN7z9Hxg9j8kn/u79diphEiipInrRTPHxOQVz5ODBICR29TmEOTEFx04DQpkN
+         mtIOnKCPN/O7VFbKDBempteyQGiAQ9ZqTW2PYJefQBjEB+0f1jgCHpoa9gJ6wuec+M4j
+         ZztX2YX0U8tsGVR3+2cvnJnm6FsEg8SER0++Id4zAQg3OCdLdOM2ItGhQsaUS2sj20oi
+         1cCGopZQ3CjyCl8hWYLtwYKC1mjj3nuZZng5QqBKzyeHsGG9AmqDnpNWqviMd98Pjr3I
+         wf9131LxLIEoC9mgr4VyHMmCoGJ9V8vQhwq1UDdDm8RZfHM58aJHb4x+QTlo9AMywLfb
+         Q6mw==
+X-Gm-Message-State: ACrzQf1WpUDZBXftqNlAPG6RvFNp7iFPqO20jVcyq0koLzKR5n8egBbJ
+        99B0Ve0XlNk50ZX7EKRhAmMeC4KXPgMUPw==
+X-Google-Smtp-Source: AMsMyM4kF91xOWQduw21qrOovrPo1fTjYY44G7Jsn/AvpxsUvItEagkCKICVBiqOgbBqFTMILIn/jQ==
+X-Received: by 2002:a2e:3005:0:b0:26e:18b:f8d0 with SMTP id w5-20020a2e3005000000b0026e018bf8d0mr1237702ljw.451.1665054546334;
+        Thu, 06 Oct 2022 04:09:06 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id n18-20020a2e9052000000b0026acd11cd51sm1859817ljg.59.2022.10.06.04.09.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Oct 2022 04:09:06 -0700 (PDT)
+Message-ID: <8213587e-681a-a948-42a6-2b1632b47ac0@linaro.org>
+Date:   Thu, 6 Oct 2022 13:09:05 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH 1/6] dt-bindings: pinctrl: convert
+ qcom,mdm9615-pinctrl.txt to dt-schema
+Content-Language: en-US
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>, Lee Jones <lee@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>
+Cc:     linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20221005-mdm9615-pinctrl-yaml-v1-0-0cbc006e2a30@linaro.org>
+ <20221005-mdm9615-pinctrl-yaml-v1-1-0cbc006e2a30@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221005-mdm9615-pinctrl-yaml-v1-1-0cbc006e2a30@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Change touchpad and touchscreen node for evoker
-Touchpad: SA461D-1011
-Touchscreen: GT7986U
+On 06/10/2022 11:57, Neil Armstrong wrote:
+> Convert the MDM9515 pinctrl bindings to dt-schema.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  .../bindings/pinctrl/qcom,mdm9615-pinctrl.txt      | 161 ---------------------
+>  .../bindings/pinctrl/qcom,mdm9615-pinctrl.yaml     | 101 +++++++++++++
+>  2 files changed, 101 insertions(+), 161 deletions(-)
+> 
 
-Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
----
+Thank you for your patch. There is something to discuss/improve.
 
-Changes in v7:
-- add compiatable for gt7986
+> -		};
+> -	};
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,mdm9615-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,mdm9615-pinctrl.yaml
+> new file mode 100644
+> index 000000000000..6a5966fc0098
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,mdm9615-pinctrl.yaml
+> @@ -0,0 +1,101 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,mdm9615-pinctrl.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. MDM9615 TLMM block
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +
+> +description: |
 
-Changes in v6:
-- add removed pinctrl and align touchscreen label with herobrine board
+No need for |
 
-Changes in v5:
-- new patch for Touchscreen/trackpad in v5
+> +  This binding describes the Top Level Mode Multiplexer block found in the
+> +  MDM9615 platform.
 
- .../boot/dts/qcom/sc7280-herobrine-evoker.dtsi    | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+Instead: "Top Level Mode Multiplexer pin controller node in Qualcomm
+MDM9615 SoC."
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-index e78072159d54b..d713750f81019 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-@@ -23,16 +23,15 @@ ap_tp_i2c: &i2c0 {
- 	status = "okay";
- 	clock-frequency = <400000>;
- 
--	trackpad: trackpad@2c {
--		compatible = "hid-over-i2c";
--		reg = <0x2c>;
-+	trackpad: trackpad@15 {
-+		compatible = "elan,ekth3000";
-+		reg = <0x15>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&tp_int_odl>;
- 
- 		interrupt-parent = <&tlmm>;
- 		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
- 
--		hid-descr-addr = <0x20>;
- 		vcc-supply = <&pp3300_z1>;
- 
- 		wakeup-source;
-@@ -43,9 +42,9 @@ ts_i2c: &i2c13 {
- 	status = "okay";
- 	clock-frequency = <400000>;
- 
--	ap_ts: touchscreen@10 {
--		compatible = "elan,ekth6915";
--		reg = <0x10>;
-+	ap_ts: touchscreen@5d {
-+		compatible = "goodix,gt7986u", "goodix,gt7375p";
-+		reg = <0x5d>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&ts_int_conn>, <&ts_rst_conn>;
- 
-@@ -54,7 +53,7 @@ ap_ts: touchscreen@10 {
- 
- 		reset-gpios = <&tlmm 54 GPIO_ACTIVE_LOW>;
- 
--		vcc33-supply = <&ts_avdd>;
-+		vdd-supply = <&ts_avdd>;
- 	};
- };
- 
--- 
-2.34.1
+I see this pattern is coming from other file, so I will fix all of them.
+
+> +
+> +allOf:
+> +  - $ref: "pinctrl.yaml#"
+
+Drop it, it's included from tlmm-common
+
+> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,mdm9615-pinctrl
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts: true
+> +  interrupt-controller: true
+> +  '#interrupt-cells': true
+> +  gpio-controller: true
+> +  '#gpio-cells': true
+> +  gpio-ranges: true
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +patternProperties:
+> +  '-state$':
+
+Use " as quotes
+
+> +    oneOf:
+> +      - $ref: "#/$defs/qcom-mdm9615-pinctrl-state"
+> +      - patternProperties:
+> +          "-pins$":
+> +            $ref: "#/$defs/qcom-mdm9615-pinctrl-state"
+> +
+> +'$defs':
+
+No need for quotes
+
+> +  qcom-mdm9615-pinctrl-state:
+> +    type: object
+> +    description:
+> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+> +      Client device subnodes use below standard properties.
+> +    $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
+
+No need for quotes
+
+> +
+> +    properties:
+> +      pins:
+> +        description:
+> +          List of gpio pins affected by the properties specified in this
+> +          subnode.
+> +        items:
+> +          oneOf:
+> +            - pattern: "^gpio([0-9]|[1-7][0-9]|8[0-7])$"
+
+No sd-like functions? If so, then drop oneOf
+
+> +        minItems: 1
+> +        maxItems: 16
+> +
+> +      function:
+> +        description:
+> +          Specify the alternative function to be configured for the specified
+> +          pins.
+> +
+> +        enum: [ gpio, gsbi2_i2c, gsbi3, gsbi4, gsbi5_i2c, gsbi5_uart,
+> +                sdc2, ebi2_lcdc, ps_hold, prim_audio, sec_audio, cdc_mclk, ]
+> +
+> +      bias-disable: true
+> +      bias-pull-down: true
+> +      bias-pull-up: true
+> +      drive-strength: true
+> +      output-high: true
+> +      output-low: true
+> +      input-enable: true
+> +
+> +    required:
+> +      - pins
+> +      - function
+> +
+> +    additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +        tlmm: pinctrl@1000000 {
+
+Use 4 spaces indentation.
+
+> +          compatible = "qcom,mdm9615-pinctrl";
+> +          reg = <0x01000000 0x300000>;
+> +          interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+> +          gpio-controller;
+> +          gpio-ranges = <&msmgpio 0 0 88>;
+> +          #gpio-cells = <2>;
+> +          interrupt-controller;
+> +          #interrupt-cells = <2>;
+
+Add example of -state with and without -pins node.
+
+You dropped it with conversion.
+
+
+> +        };
+> 
+
+Best regards,
+Krzysztof
 
