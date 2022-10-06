@@ -2,102 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 74F2B5F64EA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 13:10:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 021455F6606
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 14:28:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231442AbiJFLK5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 07:10:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34760 "EHLO
+        id S231327AbiJFM2Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 08:28:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231534AbiJFLKn (ORCPT
+        with ESMTP id S231238AbiJFM2L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 07:10:43 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AC6A9C211
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 04:10:37 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id a29so2204106lfo.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 04:10:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=Fxr8OaADTEzmL855dNw0fpPbUC2hlJBaCHKjv6e93ko=;
-        b=kBlcwIKjMI/OQ4B/Y+tt5aJzI6/MZmJUTrluSPtUfExDg3sgLYtbYAiPD5NXjJSqIP
-         ImW54vsJgYPMV3nq1PiBCPzMenUhW3J0xDXg/qSyqAJt5zO8aySzoxapnsIDac87FsAI
-         UyHEDLT/m1JJoXo2QbUdNPg62eb2GFUyGJQZdLYlwuHOEhu0jjg2MV7ftsH7c86o3pnQ
-         PUY2uVMUF6VUX0W/zS+tZGpQjXB/Gq4O0lXXPZmqz3+mh/7SvYYt/ixsDvvL6yjKvuj6
-         BnZ7pbDLaFuwozyA7fom3/F52QN+5xbg7iPcDlYWR88XVUTsb4JiBMTsViGVYgBbmOGh
-         CzRA==
+        Thu, 6 Oct 2022 08:28:11 -0400
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CCB0A0259;
+        Thu,  6 Oct 2022 05:28:08 -0700 (PDT)
+Received: by mail-oi1-f174.google.com with SMTP id v134so1801836oie.10;
+        Thu, 06 Oct 2022 05:28:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=Fxr8OaADTEzmL855dNw0fpPbUC2hlJBaCHKjv6e93ko=;
-        b=u8DMHZ3XGzQsuyzmaKp5R8r0ICOMzhinq+m8jH8gsAsIf8ZHS9CSOmaAs5yW3LnmzN
-         CsPcfBcXHvyNSmqKp7TADihRFcgXfvf5FdWVjk/Ot96np61MmxguXOecm2y4ODv1jIhg
-         fbJvTZ5vDUm+C4mQqZLDf9uIlPgts9O7mDjkfDtvHa5FRQ2nRcmkJdf3ql0eAtd+fzmD
-         D3AejX1vsnWe0vCfzqa9vz2eHxKcGNexoxGqe2eoRfANczPCMIZ2jT9FtFu3LsXTnlx4
-         /D8KKOQpJZvapxk92Ux65wDyPiZih52TXMs25qEztwS7WBPjGxmvFzhiSPUrYVBCwhzk
-         41rw==
-X-Gm-Message-State: ACrzQf3ZVjCwJLglKpCGR5zgy+/H2hevwhB6khcCSR9rCUhnuUaDtXxh
-        ainE06SAiPPw0P77gQP2F+cGbQ==
-X-Google-Smtp-Source: AMsMyM6S2tUawJfyzvQ7Ag5uB5FOydcGQtBD+V9HH/PYRxEppYlvy7ykgDNMW8a+OwgxRZb2chThrQ==
-X-Received: by 2002:ac2:4a78:0:b0:4a2:2974:c86d with SMTP id q24-20020ac24a78000000b004a22974c86dmr1681413lfp.514.1665054635656;
-        Thu, 06 Oct 2022 04:10:35 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id o15-20020a05651c050f00b0026de7597bffsm957400ljp.10.2022.10.06.04.10.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Oct 2022 04:10:35 -0700 (PDT)
-Message-ID: <480ef131-9d1f-8ca8-9808-e3f51457eccd@linaro.org>
-Date:   Thu, 6 Oct 2022 13:10:34 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH 2/6] arm: dts: qcom: mdm9615: fix pinctrl subnodes
-Content-Language: en-US
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>, Lee Jones <lee@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ie2NVaibuJVOQuIOjeuf0bg2Uj2OCg4BSeKdkXj8/qE=;
+        b=Q0QnV20rMXb3zHWI5NmLFjkIHlPBdiayEbUt9KChlI8Z5z2kfB4VG3kp1dwTz7uXYs
+         58U8ZjA2rMqtZ/rUemRAPmxeMgKG6Xx7vWk3q8zo4l1ArmXSabKfX9PzIBQdpaML0IxF
+         zqIEiMAVnPmeICF6073MaAXOkY6lkq/aLurJ5yJuBQbbYk8vvn0RF+dElRw5/omujuak
+         JSTOkmU3l15o+814By/9Jwh8JL/xO8n3FgKIDUMLTk8MJ1KvPs4WMc2G36fTxr7LQYeG
+         qvvck6lj8/MOdeuz0Ig46IEUR7AtJahoihkVfwU3Ho1Fr6Y1ikyDHaPfZYS8D1a5mgOr
+         grXw==
+X-Gm-Message-State: ACrzQf0URPcamhWQKdWGTm7NDY5LLR+9hP4YHjKye+ekvaBGD83NqyuC
+        VJpAx/1KfTRkm2DYMpJLYF/oHIQuSQ==
+X-Google-Smtp-Source: AMsMyM4nYeOID395+fMyqW4zTjfssuMAcg2266RidlXN1+HuyB61zkhBpt6VKV7/LUttUI8UcGRV/A==
+X-Received: by 2002:a05:6808:1704:b0:351:43bc:5e52 with SMTP id bc4-20020a056808170400b0035143bc5e52mr4675081oib.107.1665059287689;
+        Thu, 06 Oct 2022 05:28:07 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id v13-20020a056870708d00b0012779ba00fesm2131618oae.2.2022.10.06.05.28.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Oct 2022 05:28:07 -0700 (PDT)
+Received: (nullmailer pid 1613455 invoked by uid 1000);
+        Thu, 06 Oct 2022 12:27:55 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>
-Cc:     linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20221005-mdm9615-pinctrl-yaml-v1-0-0cbc006e2a30@linaro.org>
- <20221005-mdm9615-pinctrl-yaml-v1-2-0cbc006e2a30@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221005-mdm9615-pinctrl-yaml-v1-2-0cbc006e2a30@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Linus Walleij <linus.walleij@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-gpio@vger.kernel.org, Mark Brown <broonie@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Lee Jones <lee@kernel.org>, Andy Gross <agross@kernel.org>
+In-Reply-To: <20221005-mdm9615-pinctrl-yaml-v1-6-0cbc006e2a30@linaro.org>
+References: <20221005-mdm9615-pinctrl-yaml-v1-0-0cbc006e2a30@linaro.org> <20221005-mdm9615-pinctrl-yaml-v1-6-0cbc006e2a30@linaro.org>
+Message-Id: <166505883191.1602730.12398385623531260133.robh@kernel.org>
+Subject: Re: [PATCH 6/6] dt-bindings: soc: qcom: ipc-rpm: refer to qcom,ipc-rpm-regulator.yaml
+Date:   Thu, 06 Oct 2022 07:27:55 -0500
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/10/2022 11:57, Neil Armstrong wrote:
-> Fix the MDM9615 DT to the expected subnodes namings.
-
-Remove "fix" from the commit title and description, because it might
-encourage AUTOSEL to pick it up. There was nothing particularly wrong
-with DTS, so there is nothing to fix. One way to describe it is aligning
-with DT schema.
-
+On Thu, 06 Oct 2022 09:58:03 +0000, Neil Armstrong wrote:
+> Now we have bindings for the expected regulators subnode, refer
+> to the right qcom,ipc-rpm-regulator.yaml bindings.
 > 
 > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
+>  Documentation/devicetree/bindings/soc/qcom/qcom,ipc-rpm.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
+
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
+
+Full log is available here: https://patchwork.ozlabs.org/patch/
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+rpm@104000: 'clock-controller', 'clock-names', 'clocks', 'pm8058-regulators', 'pm8901-regulators' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-apq8060-dragonboard.dtb
+	arch/arm/boot/dts/qcom-msm8660-surf.dtb
 
-Best regards,
-Krzysztof
+rpm@108000: 'clock-controller', 'clock-names', 'clocks' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
+	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
+
+rpm@108000: 'clock-controller' does not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dtb
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dtb
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dtb
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dtb
+
+rpm@108000: regulators:vdd_ncp-supply: [[10]] is not of type 'object'
+	arch/arm/boot/dts/qcom-msm8960-cdp.dtb
+
+rpm@108000: regulators:vdd_ncp-supply: [[50]] is not of type 'object'
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dtb
+
+rpm@108000: regulators:vin_ncp-supply: [[48]] is not of type 'object'
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dtb
 
