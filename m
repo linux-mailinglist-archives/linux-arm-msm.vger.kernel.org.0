@@ -2,137 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5ED25F604E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 06:48:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C3CB5F6107
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Oct 2022 08:28:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230041AbiJFEsO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 00:48:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43054 "EHLO
+        id S229545AbiJFG15 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 02:27:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229955AbiJFEsM (ORCPT
+        with ESMTP id S229812AbiJFG14 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 00:48:12 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7111380F6E;
-        Wed,  5 Oct 2022 21:48:11 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id b2so675206plc.7;
-        Wed, 05 Oct 2022 21:48:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=F1j9hUcPRHywt2S2C8KGBCluu0HhtErIKV4h3/xD/eA=;
-        b=EUYYRD0RHwcLITnY0M1k+EpPSGYpuiOPdTGMv9hbTxeOGFOFl8+k0Wqzw/BLoEGwIu
-         MckKSRSqwhoU0gmXm97YOPnSAyNDUFj2dpLcTH7jdZTPkFxMc3W9yc1+rCuAcYMgV4L0
-         b9Sao/hKEAHKoReT9fc+GPACRQYxThF9Xm7Ng4QkkcLBYXb9ns7Ke380dRZ4FiAelwqh
-         WuiONLKt4ZDanbm7M5DW35yYuEuoLHMkkDs+w7NxwhYF/nXqQ+wl6BqUKsCYkJkLZVYn
-         m41J2t/yUjqyYSRYbcEHSp+IBWxg6k9ODB2sCvO9rSsl3h1ZcJWfOtelTYodR2ZIALGy
-         85SQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=F1j9hUcPRHywt2S2C8KGBCluu0HhtErIKV4h3/xD/eA=;
-        b=R2wJqHRTfoSvidV1G4zO48+j8igeWq31cF6wYeF6S9k40xTp6jPkyi4Wdk4X4+gOgZ
-         7FJ3Kr5ininWxLkYWhmKp8sVeZDW9k6/L/8qFieu0FwYCXPnTiYpqf9xB3wuUuu5uBRP
-         RsgS9H/Fr9shIAFaejfvfxMyd4Rj3K3tnH9pS3jsW/91x7v8O6E6LcSPKYcy/+B3e2ph
-         vIQP5HXPHGxrmgVYHMAGA9L/UBFVk9Oy32waUICZvJO3ffRkAzLWA2TZ3lZHAs40/LRl
-         Szxv5qxkFKTFomDjFbEcV9HgvbZkQ2r5Uy4Kiv/65wlOhD/F0DGuS6FpaLveuiWxvgsM
-         HtNQ==
-X-Gm-Message-State: ACrzQf3Ck2SB/rxzbWPPNCCLy4Qo7Jr5+I23Kxxhk440elDol9XtUaGM
-        0Qz7dR2UmeEPJiS03Vn/ayqd2hgEOoseSg==
-X-Google-Smtp-Source: AMsMyM4aIo5rvKk3852EzG4lMGB+z9v32h5qGfcegR4uO9htsNg4csa845Tha9HSAvGIkBzcF7F/1Q==
-X-Received: by 2002:a17:90b:4f91:b0:205:edc8:4ae with SMTP id qe17-20020a17090b4f9100b00205edc804aemr8818277pjb.110.1665031690388;
-        Wed, 05 Oct 2022 21:48:10 -0700 (PDT)
-Received: from skynet-linux.local ([2406:7400:61:5d7c:350b:1ad7:ecfb:8fec])
-        by smtp.googlemail.com with ESMTPSA id f7-20020aa79d87000000b0056232f5fba0sm2187448pfq.155.2022.10.05.21.48.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Oct 2022 21:48:09 -0700 (PDT)
-From:   Sireesh Kodali <sireeshkodali1@gmail.com>
-To:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, linux-kernel@vger.kernel.org
-Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        dmitry.baryshkov@linaro.org,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
+        Thu, 6 Oct 2022 02:27:56 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CC75868B4;
+        Wed,  5 Oct 2022 23:27:55 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 20840B81FFD;
+        Thu,  6 Oct 2022 06:27:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6B6C433D6;
+        Thu,  6 Oct 2022 06:27:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1665037672;
+        bh=QIfdJBiRQKsa5RhMHnupg9fLel0B7FyX4apbBxJ5XBo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hudoBHGF6wYBmTOvztFyGW3iset3ApQrpYXpMj2zXngnJytXZ0QHDgwo/hLa9PIf6
+         mYq/VIh0wL5xAUsxkAnS6YaxfgnsM+vzOJMSe8SE9iLvJxwk8/pu94QCWlpmcPhSsM
+         EyJ4H4qeVGEIucKwNIHBNSuLfgTxO7YVbljKskG0=
+Date:   Thu, 6 Oct 2022 08:28:32 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH v2 2/2] dt-bindings: remoteproc: qcom: adsp: Add ADSP on MSM8953
-Date:   Thu,  6 Oct 2022 10:17:45 +0530
-Message-Id: <20221006044745.286264-3-sireeshkodali1@gmail.com>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20221006044745.286264-1-sireeshkodali1@gmail.com>
-References: <20221006044745.286264-1-sireeshkodali1@gmail.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Arnd Bergmann <arnd@arndb.de>, devicetree@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 13/14] gunyah: rsc_mgr: Add auxiliary devices for
+ console
+Message-ID: <Yz51kCQmMUtpiEKt@kroah.com>
+References: <20220928195633.2348848-1-quic_eberman@quicinc.com>
+ <20220928195633.2348848-14-quic_eberman@quicinc.com>
+ <Yzbev2mZodsZhFY3@kroah.com>
+ <1db27cda-356e-bae2-3c6a-b7916123a269@quicinc.com>
+ <Yz0ig/Dnp4ovHjeN@kroah.com>
+ <31a4de54-9fbe-8487-903d-28528a1b42d3@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <31a4de54-9fbe-8487-903d-28528a1b42d3@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for booting the Audio DSP on the MSM8953 platform. This is
-used by SoCs like SDM450, SDM625, SDM626, APQ8053, etc. Since the
-configuration is the same on all SoCs, a single compatible string is
-used.
+On Wed, Oct 05, 2022 at 02:47:46PM -0700, Elliot Berman wrote:
+> 
+> 
+> On 10/4/2022 11:21 PM, Greg Kroah-Hartman wrote:
+> > On Tue, Oct 04, 2022 at 04:49:27PM -0700, Elliot Berman wrote:
+> > > On 9/30/2022 5:19 AM, Greg Kroah-Hartman wrote:
+> > > > On Wed, Sep 28, 2022 at 12:56:32PM -0700, Elliot Berman wrote:
+> > > > > Gunyah resource manager exposes a concrete functionalities which
+> > > > > complicate a single resource manager driver.
+> > > > 
+> > > > I am sorry, but I do not understand this sentance.  What is so
+> > > > complicated about individual devices being created?  Where are they
+> > > > created?  What bus?
+> > > 
+> > > There's no complexity here with using individual devices, that's why I
+> > > wanted to create secondary (auxiliary devices).
+> > > 
+> > > IOW -- "I have a platform device that does a lot of different things. Split
+> > > up the different functionalities of that device into sub devices using the
+> > > auxiliary bus."
+> > 
+> > Why not just have multiple platform devices?  You control them, don't
+> > make it more complex than it should be.
+> > 
+> > And why are these platform devices at all?
+> > 
+> > As you say:
+> > 
+> > > A key requirement for utilizing the auxiliary bus is that there is no
+> > > dependency on a physical bus, device, register accesses or regmap support.
+> > > These individual devices split from the core cannot live on the platform bus
+> > > as they are not physical devices that are controlled by DT/ACPI.
+> > 
+> > These are not in the DT.  So just make your own bus for them instead of
+> > using a platform device.  Don't abuse a platform device please.
+> > 
+> 
+> I'll avoid creating platform devices. Are there any concerns with creating
+> auxiliary device under the platform device?
 
-Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
----
- Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml | 5 +++++
- 1 file changed, 5 insertions(+)
+Yes, don't do it if you do not have to, auxiliary devices are there only
+if you have no other choice.
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-index 3072af5f9d79..c9d69f6160a1 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-@@ -18,6 +18,7 @@ properties:
-     enum:
-       - qcom,msm8226-adsp-pil
-       - qcom,msm8974-adsp-pil
-+      - qcom,msm8953-adsp-pil
-       - qcom,msm8996-adsp-pil
-       - qcom,msm8996-slpi-pil
-       - qcom,msm8998-adsp-pas
-@@ -179,6 +180,7 @@ allOf:
-             enum:
-               - qcom,msm8226-adsp-pil
-               - qcom,msm8974-adsp-pil
-+              - qcom,msm8953-adsp-pil
-               - qcom,msm8996-adsp-pil
-               - qcom,msm8996-slpi-pil
-               - qcom,msm8998-adsp-pas
-@@ -298,6 +300,7 @@ allOf:
-             enum:
-               - qcom,msm8226-adsp-pil
-               - qcom,msm8974-adsp-pil
-+              - qcom,msm8953-adsp-pil
-               - qcom,msm8996-adsp-pil
-               - qcom,msm8996-slpi-pil
-               - qcom,msm8998-adsp-pas
-@@ -369,6 +372,7 @@ allOf:
-           contains:
-             enum:
-               - qcom,msm8226-adsp-pil
-+              - qcom,msm8953-adsp-pil
-               - qcom,msm8996-adsp-pil
-               - qcom,msm8998-adsp-pas
-               - qcom,sm8150-adsp-pas
-@@ -559,6 +563,7 @@ allOf:
-             enum:
-               - qcom,msm8226-adsp-pil
-               - qcom,msm8974-adsp-pil
-+              - qcom,msm8953-adsp-pil
-               - qcom,msm8996-adsp-pil
-               - qcom,msm8996-slpi-pil
-               - qcom,msm8998-adsp-pas
--- 
-2.37.3
+Just make 2 real devices on your own virtual bus please.
 
+thanks,
+
+greg k-h
