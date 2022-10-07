@@ -2,115 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 44FA85F7712
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Oct 2022 12:52:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 187845F7740
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Oct 2022 13:15:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229487AbiJGKw3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Oct 2022 06:52:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58254 "EHLO
+        id S229643AbiJGLPc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Oct 2022 07:15:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229543AbiJGKw2 (ORCPT
+        with ESMTP id S229547AbiJGLPb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Oct 2022 06:52:28 -0400
-X-Greylist: delayed 559 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 07 Oct 2022 03:52:24 PDT
-Received: from mail.astralinux.ru (mail.astralinux.ru [217.74.38.119])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7318A74DFB;
-        Fri,  7 Oct 2022 03:52:24 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.astralinux.ru (Postfix) with ESMTP id 48A1B314098A;
-        Fri,  7 Oct 2022 13:43:06 +0300 (MSK)
-Received: from mail.astralinux.ru ([127.0.0.1])
-        by localhost (rbta-msk-vsrv-mail01.astralinux.ru [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id rI2mS3rOt4Ax; Fri,  7 Oct 2022 13:43:05 +0300 (MSK)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.astralinux.ru (Postfix) with ESMTP id A02AD3140957;
-        Fri,  7 Oct 2022 13:43:05 +0300 (MSK)
-X-Virus-Scanned: amavisd-new at astralinux.ru
-Received: from mail.astralinux.ru ([127.0.0.1])
-        by localhost (rbta-msk-vsrv-mail01.astralinux.ru [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id B7pUo_GVpgBY; Fri,  7 Oct 2022 13:43:05 +0300 (MSK)
-Received: from work-laptop.astralinux.ru (unknown [10.177.20.36])
-        by mail.astralinux.ru (Postfix) with ESMTPSA id A03EE314001C;
-        Fri,  7 Oct 2022 13:43:04 +0300 (MSK)
-From:   Andrew Chernyakov <acherniakov@astralinux.ru>
-To:     acherniakov@astralinux.ru, stable@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        lvc-project@linuxtesting.org
-Subject: [PATCH 5.10 1/1] Backport of rpmsg: qcom: glink: replace strncpy() with  strscpy_pad()
-Date:   Fri,  7 Oct 2022 13:41:20 +0300
-Message-Id: <20221007104120.75208-2-acherniakov@astralinux.ru>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221007104120.75208-1-acherniakov@astralinux.ru>
-References: <20221007104120.75208-1-acherniakov@astralinux.ru>
+        Fri, 7 Oct 2022 07:15:31 -0400
+Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98FF3AE209;
+        Fri,  7 Oct 2022 04:15:29 -0700 (PDT)
+Received: from mx0.riseup.net (mx0-pn.riseup.net [10.0.1.42])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
+         client-signature RSA-PSS (2048 bits) client-digest SHA256)
+        (Client CN "mx0.riseup.net", Issuer "R3" (not verified))
+        by mx1.riseup.net (Postfix) with ESMTPS id 4MkQhd1BdCzDs0G;
+        Fri,  7 Oct 2022 11:15:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+        t=1665141329; bh=ZeojxkKR8glYm7+VvnPQLktuz8n8YHSN+KZs3axH5YA=;
+        h=From:To:Cc:Subject:Date:From;
+        b=NvfhQAwHzrug7MRuqbsSgNu8hYtzMxkmSW+voHLecUqerdho8HgmmJLwsMlW4EZQw
+         9Nh3QX3sFn9JE8kzt1741R7g1+ev2+hVr7AlcP+NmA2H7TP+74lUpQAmwUtKpoNLyt
+         3PG/SbRZu5p0DUGyOaCIrsBWkTH1kobiNIEkRf1Y=
+Received: from fews1.riseup.net (fews1-pn.riseup.net [10.0.1.83])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
+         client-signature RSA-PSS (2048 bits) client-digest SHA256)
+        (Client CN "mail.riseup.net", Issuer "R3" (not verified))
+        by mx0.riseup.net (Postfix) with ESMTPS id 4MkQhb4D5Vz9t2L;
+        Fri,  7 Oct 2022 11:15:27 +0000 (UTC)
+X-Riseup-User-ID: 5C5D09C6D4573B5476A2F60EF092E2F9B852A9EB55C810406BBF89C1073B3968
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+         by fews1.riseup.net (Postfix) with ESMTPSA id 4MkQhX75BLz5vRK;
+        Fri,  7 Oct 2022 11:15:24 +0000 (UTC)
+From:   Nia Espera <a5b6@riseup.net>
+To:     Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        Nia Espera <a5b6@riseup.net>
+Subject: [PATCH v2 0/2] Samsung s6e3fc2x01 panel driver for OnePlus 6T
+Date:   Fri,  7 Oct 2022 13:14:41 +0200
+Message-Id: <20221007111442.51481-1-a5b6@riseup.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The use of strncpy() is considered deprecated for NULL-terminated
-strings[1]. Replace strncpy() with strscpy_pad(), to keep existing
-pad-behavior of strncpy, strncpy was found on line 1424 of
-/drivers/rpmsg/qcom_glink_native.c.
+This patch series adds proper support for the panel used in OnePlus 6T
+smartphones (s6e3fc2x01). Previously, the panel relied on the driver
+used by the sofef00 panel which failed to properly initialise it after
+a reset.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Nia Espera (2):
+  drivers: gpu: drm: add driver for samsung s6e3fc2x01 cmd mode panel
+  drivers: gpu: drm: remove support for sofef00 driver on s6e3fc2x01
+    panel
 
-Signed-off-by: Andrew Chernyakov <acherniakov@astralinux.ru>
----
- drivers/rpmsg/qcom_glink_native.c | 2 +-
- drivers/rpmsg/qcom_smd.c          | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ MAINTAINERS                                   |   5 +
+ drivers/gpu/drm/panel/Kconfig                 |  17 +-
+ drivers/gpu/drm/panel/Makefile                |   1 +
+ .../gpu/drm/panel/panel-samsung-s6e3fc2x01.c  | 396 ++++++++++++++++++
+ drivers/gpu/drm/panel/panel-samsung-sofef00.c |  18 -
+ 5 files changed, 416 insertions(+), 21 deletions(-)
+ create mode 100644 drivers/gpu/drm/panel/panel-samsung-s6e3fc2x01.c
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink=
-_native.c
-index 4840886532ff..66a63b205744 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1424,7 +1424,7 @@ static int qcom_glink_rx_open(struct qcom_glink *gl=
-ink, unsigned int rcid,
- 		}
-=20
- 		rpdev->ept =3D &channel->ept;
--		strncpy(rpdev->id.name, name, RPMSG_NAME_SIZE);
-+		strscpy_pad(rpdev->id.name, name, RPMSG_NAME_SIZE);
- 		rpdev->src =3D RPMSG_ADDR_ANY;
- 		rpdev->dst =3D RPMSG_ADDR_ANY;
- 		rpdev->ops =3D &glink_device_ops;
-diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-index 0b1e853d8c91..b5167ef93abf 100644
---- a/drivers/rpmsg/qcom_smd.c
-+++ b/drivers/rpmsg/qcom_smd.c
-@@ -1073,7 +1073,7 @@ static int qcom_smd_create_device(struct qcom_smd_c=
-hannel *channel)
-=20
- 	/* Assign public information to the rpmsg_device */
- 	rpdev =3D &qsdev->rpdev;
--	strncpy(rpdev->id.name, channel->name, RPMSG_NAME_SIZE);
-+	strscpy_pad(rpdev->id.name, channel->name, RPMSG_NAME_SIZE);
- 	rpdev->src =3D RPMSG_ADDR_ANY;
- 	rpdev->dst =3D RPMSG_ADDR_ANY;
-=20
-@@ -1304,7 +1304,7 @@ static void qcom_channel_state_worker(struct work_s=
-truct *work)
-=20
- 		spin_unlock_irqrestore(&edge->channels_lock, flags);
-=20
--		strncpy(chinfo.name, channel->name, sizeof(chinfo.name));
-+		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
- 		chinfo.src =3D RPMSG_ADDR_ANY;
- 		chinfo.dst =3D RPMSG_ADDR_ANY;
- 		rpmsg_unregister_device(&edge->dev, &chinfo);
---=20
-2.35.1
+-- 
+2.38.0
 
