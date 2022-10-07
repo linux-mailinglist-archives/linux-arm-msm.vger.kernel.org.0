@@ -2,129 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 344285F742C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Oct 2022 08:23:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 102F85F7473
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Oct 2022 08:59:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229519AbiJGGXR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Oct 2022 02:23:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40348 "EHLO
+        id S229588AbiJGG7j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Oct 2022 02:59:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbiJGGXR (ORCPT
+        with ESMTP id S229777AbiJGG7h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Oct 2022 02:23:17 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DF4DBEFBB;
-        Thu,  6 Oct 2022 23:23:16 -0700 (PDT)
+        Fri, 7 Oct 2022 02:59:37 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B47ADFDB5D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Oct 2022 23:59:32 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id bp15so5952379lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Oct 2022 23:59:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1665123796; x=1696659796;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=AnjXIevw6E577XhDpi0+GryOxpURKeviN/3VExojvZ4=;
-  b=N5s03SsbrqQA5+nLQDJE/cVrmqtFFCZOIeIosA6rqJfaRdXBaKLQhfSb
-   3uy40r0CMDu37kKU2BUyPs3OYtyAoCUnq+U1bh2vmJYfxdyPH6yixIkDH
-   ORKn+95It6SGs9iUpSxsyxdAOY7b6cANqQQ6bwsIDK+H7rNW1SULKzy+m
-   4=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 06 Oct 2022 23:23:15 -0700
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Oct 2022 23:23:15 -0700
-Received: from hu-arandive-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Thu, 6 Oct 2022 23:23:11 -0700
-From:   Aniket Randive <quic_arandive@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@somainline.org>, <gregkh@linuxfoundation.org>,
-        <jirislaby@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-serial@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     <quic_msavaliy@quicinc.com>, <nicolas.dechesne@linaro.org>,
-        <vinod.koul@linaro.org>, <quic_vnivarth@quicinc.com>,
-        <quic_vtanuku@quicinc.com>, <quic_ramkri@quicinc.com>,
-        Aniket Randive <quic_arandive@quicinc.com>
-Subject: [PATCH] tty: serial: qcom-geni-serial: Add support for Hibernation feature
-Date:   Fri, 7 Oct 2022 11:53:00 +0530
-Message-ID: <1665123780-20557-1-git-send-email-quic_arandive@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=VW3+3oss6LB7BSPpMVbQ+o0wN4V6S0JUswgw6rXnncU=;
+        b=y5WDIRdgh4FHvyzVk6cJyj3DMEBu8HeWt6R4yjMVOeSxAZeWMSDLQvyS2k6g4jVcz5
+         OBBgNWCEhIQTUgtef2TD8WhJRDi2WK6oekasCNu+RQ4dD9jBHsuH38vZOHGVe/GCT197
+         uF8geGQa7+XUfzyV5P8pGb4PUXt4oXLYymJ1+A9ZIK3NGMFff6dnhcpqoJb685it+7sn
+         RMKTkr+2ng62iavwX+a3K1ccS+VdKjUe2PgZ6j7FXnE6KvyPVQS/3JeHM3HTZhXUk85h
+         +jmvKEP6vT31euC5pjjJyUlWWvAftxwLcal4yCJN/5rlC763QLp4T0qA/QHRv9bDOZwJ
+         5o/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=VW3+3oss6LB7BSPpMVbQ+o0wN4V6S0JUswgw6rXnncU=;
+        b=KmE2cWcGrczI5Af2TxvPF2fTnebm/lqeCNtVngZoD58MXI3xZ/28B+XN1ulQX8wtds
+         y5XX5Z5M5q9qWVepkRP3ZZCoyLNK+zPIy8Z+WPCj/KLR8gXeIbe/pinIhmJRwqDRoy9k
+         788HrurdUZWBYLhzwhbubYDJB+Hfjtc/rXk0ImsZVdCHf2v3wXPtd9ZvaJOWigM1Bm4s
+         TpfUG8wp7fTTd/DpEoCF0sC67ZoTeXxAXmZyr8watFZKixqav4+S8zHCrIFl+LaO6SKo
+         wJcnViSZOk17tZnD+P6pYX49DSjc4kAQGDjq+L21I5HuJM+W0fDPZ332FiFq1GmbTU+A
+         Yp2w==
+X-Gm-Message-State: ACrzQf2kPFw2gcjvoQesqMI7C3yw1yXnEDeNPl9u5QklWfxz5mMogvM/
+        3lz1zOezu7lLeHOrV1yhL+yD7g==
+X-Google-Smtp-Source: AMsMyM7zFfC/u5V00RksOcmN4PrHawK1b1BsN+nXUsr9jhVs1GAmiTNwWp+Ud4iYkQSolvGVKtAmUg==
+X-Received: by 2002:ac2:4a73:0:b0:4a2:4f2c:199d with SMTP id q19-20020ac24a73000000b004a24f2c199dmr1240104lfp.443.1665125971044;
+        Thu, 06 Oct 2022 23:59:31 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id c19-20020ac25f73000000b00499fe9ce5f2sm174403lfc.175.2022.10.06.23.59.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Oct 2022 23:59:30 -0700 (PDT)
+Message-ID: <f14ae849-cb1d-d039-00d8-6ae230e8dc13@linaro.org>
+Date:   Fri, 7 Oct 2022 08:59:29 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8150: align TLMM pin
+ configuration with DT schema
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221006144518.256956-1-krzysztof.kozlowski@linaro.org>
+ <20221007025735.5iceh26gd3agawx2@builder.lan>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221007025735.5iceh26gd3agawx2@builder.lan>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Added changes to support the hibernation feature for serial UART.
-Added support for freeze, restore and thaw callbacks to put the
-device into hibernation.
+On 07/10/2022 04:57, Bjorn Andersson wrote:
+> On Thu, Oct 06, 2022 at 04:45:17PM +0200, Krzysztof Kozlowski wrote:
+>> DT schema expects TLMM pin configuration nodes to be named with
+>> '-state' suffix and their optional children with '-pins' suffix.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
-Signed-off-by: Aniket Randive <quic_arandive@quicinc.com>
----
- drivers/tty/serial/qcom_geni_serial.c | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+This one is a DTS, so it is supposed to go via your tree. :)
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 83b66b7..b487823 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -924,6 +924,7 @@ static int qcom_geni_serial_port_setup(struct uart_port *uport)
- 			       false, true, true);
- 	geni_se_init(&port->se, UART_RX_WM, port->rx_fifo_depth - 2);
- 	geni_se_select_mode(&port->se, GENI_SE_FIFO);
-+	qcom_geni_serial_start_rx(uport);
- 	port->setup = true;
- 
- 	return 0;
-@@ -1547,9 +1548,43 @@ static int __maybe_unused qcom_geni_serial_sys_resume(struct device *dev)
- 	return ret;
- }
- 
-+static int qcom_geni_serial_sys_hib_resume(struct device *dev)
-+{
-+	int ret = 0;
-+	struct uart_port *uport;
-+	struct qcom_geni_private_data *private_data;
-+	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
-+
-+	uport = &port->uport;
-+	private_data = uport->private_data;
-+
-+	if (uart_console(uport)) {
-+		geni_icc_set_tag(&port->se, 0x7);
-+		geni_icc_set_bw(&port->se);
-+		ret = uart_resume_port(private_data->drv, uport);
-+		/*
-+		 * For hibernation usecase clients for
-+		 * console UART won't call port setup during restore,
-+		 * hence call port setup for console uart.
-+		 */
-+		qcom_geni_serial_port_setup(uport);
-+	} else {
-+		/*
-+		 * Peripheral register settings are lost during hibernation.
-+		 * Update setup flag such that port setup happens again
-+		 * during next session. Clients of HS-UART will close and
-+		 * open the port during hibernation.
-+		 */
-+		port->setup = false;
-+	}
-+	return ret;
-+}
-+
- static const struct dev_pm_ops qcom_geni_serial_pm_ops = {
- 	SET_SYSTEM_SLEEP_PM_OPS(qcom_geni_serial_sys_suspend,
- 					qcom_geni_serial_sys_resume)
-+	.restore = qcom_geni_serial_sys_hib_resume,
-+	.thaw = qcom_geni_serial_sys_hib_resume,
- };
- 
- static const struct of_device_id qcom_geni_serial_match_table[] = {
--- 
-2.7.4
+Best regards,
+Krzysztof
 
