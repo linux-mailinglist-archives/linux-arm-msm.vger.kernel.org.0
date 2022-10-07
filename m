@@ -2,109 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 484965F734A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Oct 2022 05:21:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21B1E5F7363
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Oct 2022 05:32:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229769AbiJGDVF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Oct 2022 23:21:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49256 "EHLO
+        id S229575AbiJGDcw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Oct 2022 23:32:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229658AbiJGDUF (ORCPT
+        with ESMTP id S229591AbiJGDcv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Oct 2022 23:20:05 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62404115C2F;
-        Thu,  6 Oct 2022 20:19:03 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3C7C4B82188;
-        Fri,  7 Oct 2022 03:18:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDA4C433C1;
-        Fri,  7 Oct 2022 03:18:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1665112723;
-        bh=VIRCARV4gIGvlbOIUNJTjqc5GfsC7pCcDdS4M+4yack=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=l6Eauuy4UH/9AcNPIArm8dP6MAw8uQ2qCtPExmACJ97QcM0AL9Q/uPXAlCJl6i/Bh
-         ZgZVf5U233XrjrbtLBaqaCotvJTEfwzHvLYJXdjhz0EehRVS4m6Xv2ZG7bF4z8PekA
-         LM8UQhTB8NBawC4/zGIg//RwrwcE4HaXzb9GZaP/M4Wcs4Zd/ZaEoMxAWL4C8yDbV5
-         7hr/g9yoRjhFSPEBHBI/MIGBie8+fxe8mBR+s5jOmwgSB0E0NdSB8fDGtJprUE7cTV
-         vweQeWqivC2Wlg7WfFHIwJMdgbWLghxcpe29WTMNr5k3fGlhZ43urFK15gXCyVxHa4
-         mfai3tzsJAxfg==
-Date:   Thu, 6 Oct 2022 22:18:40 -0500
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v2 16/16] dt-bindings: pinctrl: qcom,sc7280: correct
- number of GPIOs
-Message-ID: <20221007031840.bce6x3put5zpcd67@builder.lan>
-References: <20220930192954.242546-1-krzysztof.kozlowski@linaro.org>
- <20220930192954.242546-17-krzysztof.kozlowski@linaro.org>
+        Thu, 6 Oct 2022 23:32:51 -0400
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 8F1E69C22B;
+        Thu,  6 Oct 2022 20:32:48 -0700 (PDT)
+Received: from localhost.localdomain (unknown [124.16.138.125])
+        by APP-05 (Coremail) with SMTP id zQCowADX3bHanT9joexyAw--.27884S2;
+        Fri, 07 Oct 2022 11:32:43 +0800 (CST)
+From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
+To:     andersson@kernel.org
+Cc:     quic_jjohnson@quicinc.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Subject: [PATCH v5] soc: qcom: apr: Add check for idr_alloc and of_property_read_string_index
+Date:   Fri,  7 Oct 2022 11:32:40 +0800
+Message-Id: <20221007033240.42442-1-jiasheng@iscas.ac.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220930192954.242546-17-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: zQCowADX3bHanT9joexyAw--.27884S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Ar43Xw48GFy5Xw4DGw18Grg_yoW8Cw1fpa
+        1avas8Cry8KFsa9ry3Zr1kWFyYga1xtaykG3s7J3sI9rn8XFnxKrnrtFy09rWrCFZ7Aa1U
+        JF1aqF95CF4UWFJanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDU0xBIdaVrnRJUUUkv14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+        rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+        1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+        6F4UM28EF7xvwVC2z280aVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVCY1x0267AKxVW8Jr
+        0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj
+        6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr
+        0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkIecxEwVAFwVW8
+        GwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r
+        1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij
+        64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr
+        0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF
+        0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JU-miiUUUUU=
+X-Originating-IP: [124.16.138.125]
+X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 30, 2022 at 09:29:54PM +0200, Krzysztof Kozlowski wrote:
-> SC7280 has 175 GPIOs (gpio0-174), so correct size of gpio-line-names and
-> narrow the pattern for matching pin names.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Acked-by: Rob Herring <robh@kernel.org>
+As idr_alloc() and of_property_read_string_index() can return negative
+numbers, it should be better to check the return value and deal with
+the exception.
+Therefore, it should be better to use goto statement to stop and return
+error.
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 6adba21eb434 ("soc: qcom: Add APR bus driver")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+---
+Changelog:
 
-> ---
->  .../devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml    | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml
-> index 1db05c43d58c..2a6b5a719d18 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml
-> @@ -43,7 +43,7 @@ properties:
->      maxItems: 1
->  
->    gpio-line-names:
-> -    maxItems: 174
-> +    maxItems: 175
->  
->    wakeup-parent: true
->  
-> @@ -70,7 +70,7 @@ $defs:
->            subnode.
->          items:
->            oneOf:
-> -            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-7][0-9]|18[0-2])$"
-> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-6][0-9]|17[0-4])$"
->              - enum: [ sdc1_rclk, sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk,
->                        sdc2_cmd, sdc2_data, ufs_reset ]
->          minItems: 1
-> @@ -132,7 +132,7 @@ $defs:
->        - if:
->            properties:
->              pins:
-> -              pattern: "^gpio([0-9]|[1-9][0-9]|1[0-7][0-9]|18[0-2])$"
-> +              pattern: "^gpio([0-9]|[1-9][0-9]|1[0-6][0-9]|17[0-4])$"
->          then:
->            required:
->              - function
-> -- 
-> 2.34.1
-> 
+v4 -> v5:
+
+1. Change dev_err and goto statements.
+
+v3 -> v4:
+
+1. Change the title and remove the kfree.
+
+v2 -> v3:
+
+1. Change the title and use goto statement to deal with the exception.
+
+v1 -> v2:
+
+1. Add dev_err and put_device in order to maintain the code consistency.
+---
+ drivers/soc/qcom/apr.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
+index b4046f393575..a942c8a8dde2 100644
+--- a/drivers/soc/qcom/apr.c
++++ b/drivers/soc/qcom/apr.c
+@@ -454,11 +454,21 @@ static int apr_add_device(struct device *dev, struct device_node *np,
+ 	adev->dev.driver = NULL;
+ 
+ 	spin_lock(&apr->svcs_lock);
+-	idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
++	ret = idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
+ 	spin_unlock(&apr->svcs_lock);
++	if (ret < 0) {
++		dev_err(dev, "idr_alloc failed: %d\n", ret);
++		put_device(&adev->dev);
++		goto out;
++	}
+ 
+-	of_property_read_string_index(np, "qcom,protection-domain",
+-				      1, &adev->service_path);
++	ret = of_property_read_string_index(np, "qcom,protection-domain",
++					    1, &adev->service_path);
++	if (ret < 0) {
++		dev_err(dev, "Failed to read second value of qcom,protection-domain\n");
++		put_device(&adev->dev);
++		goto out;
++	}
+ 
+ 	dev_info(dev, "Adding APR/GPR dev: %s\n", dev_name(&adev->dev));
+ 
+@@ -468,6 +478,7 @@ static int apr_add_device(struct device *dev, struct device_node *np,
+ 		put_device(&adev->dev);
+ 	}
+ 
++out:
+ 	return ret;
+ }
+ 
+-- 
+2.25.1
+
