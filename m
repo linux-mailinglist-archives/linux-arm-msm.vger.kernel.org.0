@@ -2,67 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 94ED95F7E9E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Oct 2022 22:23:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74F2D5F7F6B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Oct 2022 23:05:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229450AbiJGUXm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Oct 2022 16:23:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55328 "EHLO
+        id S229773AbiJGVF0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Oct 2022 17:05:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbiJGUXl (ORCPT
+        with ESMTP id S229556AbiJGVFZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Oct 2022 16:23:41 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F400D9AFF5;
-        Fri,  7 Oct 2022 13:23:40 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id n35-20020a05600c502300b003b4924c6868so4903515wmr.1;
-        Fri, 07 Oct 2022 13:23:40 -0700 (PDT)
+        Fri, 7 Oct 2022 17:05:25 -0400
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 167B971733;
+        Fri,  7 Oct 2022 14:05:24 -0700 (PDT)
+Received: by mail-il1-x136.google.com with SMTP id d14so3126840ilf.2;
+        Fri, 07 Oct 2022 14:05:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=N4kEDyMI5UqC9ruVvmCcki1BdeOTW3NtjCIMHC3n+Jg=;
-        b=Dtu4pTRs03tYHwEXfWsls4vcDbX2kF2YLFQXzp9UFGWcai2XfQqci6d2tNVUZwl6xD
-         azA5HQvB+G8u/RfN8kPHfH6y0VlDklPDTd4eVCeCqu/1kK6x6t1I6B9fKYdZO8HvihxR
-         kQ8Zf6QiW4TsoAElwkpr2S/FdZNX65olf6ULu3i5dK9t4qC9nOXwdPKHa77xQHEq1lWy
-         CI5qr8Bau4z0eFh16/8zNPKf96etRbqvHGTkhCy0aPAs8cGDaa3Dk0ZhP6Bp/sbFZAdn
-         lyasOa/K6eVTa8X0UIcQvr/J7w2rvEC1VJnNuaz+VHLj5pqVVITI3PdPBxKDsivUWJmH
-         pLeA==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+1w+iqaEsBhwauyKajeBJ7twOSMI99Dy/AXJIr5VPGk=;
+        b=ZL2z4RIKsU/WRAbXAjtxb2dBeLyeELGbuI1+d31LoloSudsW2LacTFaOu7Zyepzi7u
+         /mLolBtT9BIljmYR4ZSKTMm+MkBo7AXXDX/7IH3/22PWSerZp78h/S2zkEvgLLPEVl22
+         q++aWsGPYi1beU2UhpzR4/Ig2ziTxHYzdIfU7QThUGC5h4wMFsEIk4/2agUmQ0MwRBDB
+         u9lLhqA3Gj3b7g3dxGIX/576JAZsAgRdBRGGyhjAm+G7A+AZcfxT5X/fv+ybQ7UkLjyb
+         FWj3Z/QKXqqwaU/CBGF3t4aPa+py9JD5MWCu/JtO+BLyIBXI6mWhqRliK7MnhUuQsYJ4
+         DYYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=N4kEDyMI5UqC9ruVvmCcki1BdeOTW3NtjCIMHC3n+Jg=;
-        b=LWNCZhpBnS08LACkwCGcfb19tzsWE55fUgyW8/qNpLMXVoMkxfMG21oyZwpl2NIHbg
-         WELlerFsofRdETzUl+NWkXGStAQljyvFou9NeE0b9mLTGEFe2lgnGPsRJjpzzzjpQyhp
-         Iq+ZS7P8iGg2jl4jBT62TtH7BIiorfiEfOlaSYzWu2Zzs054hxkmKYMN/PWVySq/1IBS
-         8SpfI1hpn0ek9ufQkSM3Lrk3I6pVt0k0cYO+2hD+sLLHaPr8icR8N34C7VjyzN/ufpE/
-         wiYLt8tM2S2YL9lhzlccY5FggO5oOa9QzkGGmqTSRQs1ck/yTc8pRW+UB70KMmYzfm2L
-         Cylw==
-X-Gm-Message-State: ACrzQf1eQ/XOXj/KHNco12xMwetOKf3Zb0gY6TX6Xho5xraKs6qXykS+
-        TiPwTBLn3/7Dx8MXl98GmMA=
-X-Google-Smtp-Source: AMsMyM7FOf1VWcxEIUUoCJsxtPAhOvtPxcgbzPEoWCDXoB8cgyQj/iZHvPe5+m/QMYSmDjAAGCIoog==
-X-Received: by 2002:a05:600c:229a:b0:3c0:130d:320d with SMTP id 26-20020a05600c229a00b003c0130d320dmr9394670wmf.51.1665174219391;
-        Fri, 07 Oct 2022 13:23:39 -0700 (PDT)
-Received: from localhost (cpc154979-craw9-2-0-cust193.16-3.cable.virginm.net. [80.193.200.194])
-        by smtp.gmail.com with ESMTPSA id m7-20020a056000008700b00228daaa84aesm2843561wrx.25.2022.10.07.13.23.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Oct 2022 13:23:38 -0700 (PDT)
-From:   Colin Ian King <colin.i.king@gmail.com>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm: Kconfig: Fix spelling mistake "throught" -> "through"
-Date:   Fri,  7 Oct 2022 21:23:38 +0100
-Message-Id: <20221007202338.2755731-1-colin.i.king@gmail.com>
-X-Mailer: git-send-email 2.37.3
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+1w+iqaEsBhwauyKajeBJ7twOSMI99Dy/AXJIr5VPGk=;
+        b=jxEH15SpannG3MQDgx2xWtGHiWj4EN2b0/rksjihu+NUa2Rw+08njqvQjKEDM1hpz1
+         EzYvRMGIlj5Vg+a1x/bfqlSVY1+W8Zel0cUw95xv4sxcS2rf0GCAHSrwoOpt/92CDR3T
+         fH3UGrDEibjlBElBOyzF/cS2PpMKDnIlORHWcelSAuH1AU1cYJ2J+5+/yiBNAs7bKRct
+         5+Nf65hlWeMceWhuFlWlv7af3+c3dXW9vgrUKOTc9R81jxlMnkti+a+/L7vN6MCr98l1
+         /rJP+vkkMRLsi09xDLHR0jTliPRRRZuvUgKTO9ALjmJP7pgUjUS7zkBzR4YGiQxHBSpr
+         s10Q==
+X-Gm-Message-State: ACrzQf3avnSECiDz1Ml6qyKv/aElIwKB97bX3RqbsLYT+KoWhXOSTPJU
+        qTbke16fTR2G6yMA31fJN3o=
+X-Google-Smtp-Source: AMsMyM7wS3RBhsBWrkuMIweLCvAHxlNbERiQsXAZYUw5Po0RC//7Kj44P4I4rB2ZBbHuttiDN6nNkw==
+X-Received: by 2002:a92:cd42:0:b0:2f9:9c9f:b56b with SMTP id v2-20020a92cd42000000b002f99c9fb56bmr3343912ilq.163.1665176723466;
+        Fri, 07 Oct 2022 14:05:23 -0700 (PDT)
+Received: from localhost ([2607:fea8:a2e2:2d00::b714])
+        by smtp.gmail.com with UTF8SMTPSA id d16-20020a026050000000b00362983f80a3sm1249769jaf.30.2022.10.07.14.05.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Oct 2022 14:05:22 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Richard Acayan <mailingradian@gmail.com>,
+        Lee Jones <lee@kernel.org>, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v8 2/3] pinctrl: qcom: do not reinitialize gpio valid mask
+Date:   Fri,  7 Oct 2022 17:04:52 -0400
+Message-Id: <20221007210452.79730-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.38.0
+In-Reply-To: <20221007022406.kggtrbh52iamn2dv@builder.lan>
+References: <20221006232219.37505-1-mailingradian@gmail.com> <20221006232219.37505-3-mailingradian@gmail.com> <20221007022406.kggtrbh52iamn2dv@builder.lan>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
@@ -74,26 +79,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is a spelling mistake in a Kconfig description. Fix it.
+> On Thu, Oct 06, 2022 at 07:22:18PM -0400, Richard Acayan wrote:
+> > It may be necessary for some devices to specify reserved gpios in the
+> > device-specific DTS, in addition to the reserved gpios common to all
+> > devices with a given SoC. Remove this bitmap_fill() call so that the
+> > settings applied to the gpio valid mask by DTS are not overridden by
+> > the driver's reserved gpios.
+> > 
+> > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> > ---
+> >  drivers/pinctrl/qcom/pinctrl-msm.c | 3 +--
+> >  1 file changed, 1 insertion(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> > index a2abfe987ab1..f697e9f64360 100644
+> > --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> > +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> > @@ -687,9 +687,8 @@ static int msm_gpio_init_valid_mask(struct gpio_chip *gc,
+> >  	const int *reserved = pctrl->soc->reserved_gpios;
+> >  	u16 *tmp;
+> >  
+> > -	/* Driver provided reserved list overrides DT and ACPI */
+> > +	/* Driver provided reserved list overrides other settings here */
+> 
+> IMHO this no longer overrides things, how about changing it to:
 
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
----
- drivers/gpu/drm/msm/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Technically, it doesn't. It skips the ACPI settings entirely:
 
-diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
-index 4e0cbd682725..3c9dfdb0b328 100644
---- a/drivers/gpu/drm/msm/Kconfig
-+++ b/drivers/gpu/drm/msm/Kconfig
-@@ -155,7 +155,7 @@ config DRM_MSM_HDMI
- 	  Compile in support for the HDMI output MSM DRM driver. It can
- 	  be a primary or a secondary display on device. Note that this is used
- 	  only for the direct HDMI output. If the device outputs HDMI data
--	  throught some kind of DSI-to-HDMI bridge, this option can be disabled.
-+	  through some kind of DSI-to-HDMI bridge, this option can be disabled.
- 
- config DRM_MSM_HDMI_HDCP
- 	bool "Enable HDMI HDCP support in MSM DRM driver"
--- 
-2.37.3
+	if (reserved) {
+		for (i = 0; reserved[i] >= 0; i++) {
+			if (i >= ngpios || reserved[i] >= ngpios) {
+				dev_err(pctrl->dev, "invalid list of reserved GPIOs\n");
+				return -EINVAL;
+			}
+			clear_bit(reserved[i], valid_mask);
+		}
 
+		return 0;
+	}
+
+	/* The number of GPIOs in the ACPI tables */
+	len = ret = device_property_count_u16(pctrl->dev, "gpios");
+	if (ret < 0)
+		return 0;
+
+> 
+> 	/* Remove driver-provided reserved GPIOs from valid_mask */
+
+Will do. Let me know if you think the above information changes what the comment
+should be.
+
+> 
+> 
+> The rest of the change looks good and the commit message looks good. So
+> please consider updating the comment and feel free to add my
+> 
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> 
+> Regards,
+> Bjorn
+> 
+> >  	if (reserved) {
+> > -		bitmap_fill(valid_mask, ngpios);
+> >  		for (i = 0; reserved[i] >= 0; i++) {
+> >  			if (i >= ngpios || reserved[i] >= ngpios) {
+> >  				dev_err(pctrl->dev, "invalid list of reserved GPIOs\n");
+> > -- 
+> > 2.38.0
+> > 
