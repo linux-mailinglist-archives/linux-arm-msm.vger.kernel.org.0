@@ -2,93 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FBBC5F77F0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Oct 2022 14:28:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D5875F7820
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Oct 2022 14:43:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229587AbiJGM24 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Oct 2022 08:28:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60122 "EHLO
+        id S229586AbiJGMnu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Oct 2022 08:43:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229605AbiJGM2z (ORCPT
+        with ESMTP id S229481AbiJGMnu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Oct 2022 08:28:55 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B68AA35B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Oct 2022 05:28:54 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id a29so7102378lfo.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Oct 2022 05:28:54 -0700 (PDT)
+        Fri, 7 Oct 2022 08:43:50 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D98A4CA890;
+        Fri,  7 Oct 2022 05:43:48 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id b2so11080366eja.6;
+        Fri, 07 Oct 2022 05:43:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AaaH4Hzpc+BWxzk2RGTWufBjtoYuA+LOvqpi3Lw3mMY=;
-        b=JimTXh/0MZ1L5q5YlKnUBaL7g2yVNCqJFefLV7S7pBS22G1gGhIph68C0apbMB8qQq
-         jWqj7S4q9PcZhvdwMvBaGwifdZ0usoCgy6COmg6zABI77dNCUKLne9z9trZUaAkcUpFy
-         HJwVVByGoPIH5JLUTc4lhcJnDZdqvzC/OKRy2YgHI+jyrDXUAHHTeow3Yh/6rBq9kswm
-         1ygzt+2T1ghghERjhYUybteaZJJ8qQWF1LbLKJT7+X7xd7bu2oMJ9hw2puw3Qybgqvzc
-         8/5k3GIXazHdOqfFMa1SKgWKhvlBvzWr5D8Xwc+1kciMKNBEH3VGtWAOoeGhJv342AHY
-         /FwA==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=I0tzMj8HZWZ88Pvlv1sPYkG81c5uF1cjDyqGb2ZsiQk=;
+        b=RFskFc9lenVJPeQ1UbCk4NriqcIUAGWTaqrqkecrY73Sk7sGMyvtAxthwMY0hYEwNX
+         EbwFjRHdP3H23BIU8BKWFAImB++mw7TONsldnubK2Lse9Jv3BQQMzR1OKja3nhWYqE9G
+         nM0H5zyLJuJ35IabxHPgayUZgF1Lswxv91ptsyQNRML6ptBbmQ3PUcWscCNK7lKqlp/v
+         x/F1Bm9W/fp6fzc7xftQQznGx/gmz6Fm22s7+++JrtqdhT1u9MEquKgTgnUhCi1yJeUh
+         MUXPEB2J2tk4tZYRXArveRvP2L0dkT10+WybmwNESUGeWpNcaIdDzzfv4shEIzfi9wWW
+         hivw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AaaH4Hzpc+BWxzk2RGTWufBjtoYuA+LOvqpi3Lw3mMY=;
-        b=OSC9EW2NAATvhJYkKkMRUp6Sol6Wa6ocWSJSv7l7cCyIrRtF9LowqPQS/CRdWbL+vz
-         02IV2rdwMIfdCSvxvZ2kTq/6ZE9D7DcC9cYYM2ZmPI9saFGcsvXUgiPwI398YH8hjDuA
-         03OHaj1hC15V7oFureX/JXoPDauMKSuoId1ml/6x9N6lti43wS4Mbc/UexCJTT96sBC3
-         ZCizYoyCFKSg2v7CtLwN5/xP/Z3/K2uMx2q0+ppOEmL+kJvGuXqPO32qm/RrE0Is44gT
-         5zU8YE2ZUGkvUji9r9VGovAfs7zlM8ir8tK9ZrTNIwhHxl8jrhCJv+CN1yyq52+XbYD6
-         bSBA==
-X-Gm-Message-State: ACrzQf3AHlre4HMPnjJQovTHewSjvmnS0fc9ZexBm8jGvLjgLbmPjyYf
-        sig6Yx9wbQPgLa2Tif0x67aFKPRMTSdCqQ==
-X-Google-Smtp-Source: AMsMyM7mciDeK4YJsQJNGOMn8IAMb4ygr5ZASg/buDnVtEEy6/BWFjR4RTN1izCeik5DNvsqVlPFWg==
-X-Received: by 2002:ac2:5a44:0:b0:4a2:5c3d:d68c with SMTP id r4-20020ac25a44000000b004a25c3dd68cmr1649669lfn.347.1665145732626;
-        Fri, 07 Oct 2022 05:28:52 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id z18-20020a05651c11d200b0026c0f6be5dasm244298ljo.116.2022.10.07.05.28.51
+        bh=I0tzMj8HZWZ88Pvlv1sPYkG81c5uF1cjDyqGb2ZsiQk=;
+        b=jptZiRW2NbYgB9mq97wg2h+SZUBN9J41jn/Sw+Pt0I3xYaAJYMccFa2YaRqCnVgXKJ
+         pjBz4cd8hRj72pY5Ew/GZlH/2UqZiCL9ahzSlYFgEJbStxhqudaYyrmpxGakjKwfwLny
+         +UjcxUChlotypJn5kjmqFNZcBX0PwwxWfHCDhf/j7r7LMbtCy1isLMOs5UM74gnTS7ZA
+         1AboF1/bMjXdRt1a6X7EvUzIFtmjNcl/xSsSdaxG7XXeSHoWvxUuJeiLUqpKLjx5n7fA
+         axcSSboRl73nh4gexXj5Pc+GOpmxRbHjQvExKpXo17hX46gze5Hxm+io26i+r+FS3sGF
+         s0Cg==
+X-Gm-Message-State: ACrzQf3DQmB5b36TRN6Uei3N9nJUh4Bv/tYus2GbNmOWVo5pl/uPNynB
+        Kkw3mDM6NWkgw34d0/z/0rE=
+X-Google-Smtp-Source: AMsMyM6Dtsj6UDrj1l9WTDelpdwpLjj6rLKnsvySBaZ4BfN3keNpmQdH+U6zZBANuFGitZA31R5J1g==
+X-Received: by 2002:a17:906:ee89:b0:73d:70c5:1a4e with SMTP id wt9-20020a170906ee8900b0073d70c51a4emr3767197ejb.683.1665146627297;
+        Fri, 07 Oct 2022 05:43:47 -0700 (PDT)
+Received: from [192.168.74.101] ([77.78.20.135])
+        by smtp.gmail.com with ESMTPSA id kx1-20020a170907774100b00738467f743dsm1209601ejc.5.2022.10.07.05.43.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Oct 2022 05:28:51 -0700 (PDT)
-Message-ID: <5847d571-34d8-0af0-300b-019e6a628d6b@linaro.org>
-Date:   Fri, 7 Oct 2022 14:28:51 +0200
+        Fri, 07 Oct 2022 05:43:46 -0700 (PDT)
+Message-ID: <b30ce02b-ae60-4841-6a04-46eae019e41e@gmail.com>
+Date:   Fri, 7 Oct 2022 15:43:44 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH] dt-bindings: mfd: qcom,tcsr: add sc8280xp binding
-Content-Language: en-US
-To:     Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+ Thunderbird/102.3.0
+Subject: Re: [PATCH 06/34] dt-bindings: pinctrl: qcom,sm6115: use common TLMM
+ schema
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221007121110.5432-1-johan+linaro@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221007121110.5432-1-johan+linaro@kernel.org>
+        Stephan Gerhold <stephan@gerhold.net>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        krishna Lanka <quic_vamslank@quicinc.com>,
+        Martin Botka <martin.botka@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221006140637.246665-1-krzysztof.kozlowski@linaro.org>
+ <20221006140637.246665-7-krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+In-Reply-To: <20221006140637.246665-7-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/10/2022 14:11, Johan Hovold wrote:
-> Add a binding for the SC8280XP TCSR.
+
+
+On 10/6/22 17:06, Krzysztof Kozlowski wrote:
+> Reference common Qualcomm TLMM pin controller schema, to bring common
+> properties, other pinctrl schemas and additional checks, like function
+> required only for GPIOs.
 > 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->  Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 1 +
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+Reviewed-by: Iskren Chernev <iskren.chernev@gmail.com>
