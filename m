@@ -2,98 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EAB75F7BA1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Oct 2022 18:39:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 053F35F7DFA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Oct 2022 21:29:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229454AbiJGQjq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Oct 2022 12:39:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50368 "EHLO
+        id S229749AbiJGT3w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Oct 2022 15:29:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229627AbiJGQjp (ORCPT
+        with ESMTP id S229675AbiJGT3u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Oct 2022 12:39:45 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24EFB659D;
-        Fri,  7 Oct 2022 09:39:41 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Fri, 7 Oct 2022 15:29:50 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 297EF12AA2;
+        Fri,  7 Oct 2022 12:29:46 -0700 (PDT)
+Received: from [192.168.1.101] (95.49.30.201.neoplus.adsl.tpnet.pl [95.49.30.201])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id AA108B82405;
-        Fri,  7 Oct 2022 16:39:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2EBCC433D6;
-        Fri,  7 Oct 2022 16:39:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1665160778;
-        bh=EVRiG8wrILRusZ071HgcPsFHaVuHPPSDKTYh/GkXZ2U=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=CQ7yT9UAZqegW/mofAinMziszqqOitMFZSC3AUUAtoPdtCYZjL0XNKBntXsSWrPXP
-         xad8rnCw2VUGFwtQR/74HdGoF4g7XkVnebPs0ex+uLvqGCWf+qS6LAuWYLYRQmnUTx
-         kN5aPDpYOXcTADj0hvE1eW4GYgDhd73becO0nwwc=
-Date:   Fri, 7 Oct 2022 18:40:19 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Andrew Chernyakov <acherniakov@astralinux.ru>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        stable@vger.kernel.org, lvc-project@linuxtesting.org,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH 5.10 1/1] rpmsg: qcom: glink: replace strncpy() with
- strscpy_pad()
-Message-ID: <Y0BWc6A8C++M9TWP@kroah.com>
-References: <20221007132931.123755-1-acherniakov@astralinux.ru>
- <20221007132931.123755-2-acherniakov@astralinux.ru>
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 734172006C;
+        Fri,  7 Oct 2022 21:29:42 +0200 (CEST)
+Message-ID: <18771e86-4633-fcf5-0ae1-ecaae515eb2b@somainline.org>
+Date:   Fri, 7 Oct 2022 21:29:41 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221007132931.123755-2-acherniakov@astralinux.ru>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: fix ufs_card_phy ref clock
+Content-Language: en-US
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Brian Masney <bmasney@redhat.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221005143305.388-1-johan+linaro@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20221005143305.388-1-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 07, 2022 at 04:29:31PM +0300, Andrew Chernyakov wrote:
-> From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+
+On 5.10.2022 16:33, Johan Hovold wrote:
+> The GCC_UFS_REF_CLKREF_CLK must be enabled or the second UFS controller
+> fails to enumerate on sa8295p-adp.
 > 
-> commit 766279a8f85df32345dbda03b102ca1ee3d5ddea upstream.
+> Note that the vendor kernel enables both GCC_UFS_REF_CLKREF_CLK and
+> GCC_UFS_1_CARD_CLKREF_CLK and it is possible that the former should be
+> modelled as a parent of the latter. The clock driver also has a
+> GCC_UFS_CARD_CLKREF_CLK clock which the firmware appears to enable on
+> the ADP.
+My guess would be that XBL/whatever other bootloader enables all of them as
+it scans for bootable devices and only gates one afterwards..
+
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+
+Konrad
 > 
-> The use of strncpy() is considered deprecated for NUL-terminated
-> strings[1]. Replace strncpy() with strscpy_pad(), to keep existing
-> pad-behavior of strncpy, similarly to commit 08de420a8014 ("rpmsg:
-> glink: Replace strncpy() with strscpy_pad()").  This fixes W=1 warning:
+> The usual lack of documentation for Qualcomm SoCs makes this a highly
+> annoying guessing game, but as the second controller works on the ADP
+> without either card reference clock enabled, only enable
+> GCC_UFS_REF_CLKREF_CLK for now.
 > 
->   In function ‘qcom_glink_rx_close’,
->     inlined from ‘qcom_glink_work’ at ../drivers/rpmsg/qcom_glink_native.c:1638:4:
->   drivers/rpmsg/qcom_glink_native.c:1549:17: warning: ‘strncpy’ specified bound 32 equals destination size [-Wstringop-truncation]
->    1549 |                 strncpy(chinfo.name, channel->name, sizeof(chinfo.name));
-> 
-> [1] https://www.kernel.org/doc/html/latest/process/deprecated.html#strncpy-on-nul-terminated-strings
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Link: https://lore.kernel.org/r/20220519073330.7187-1-krzysztof.kozlowski@linaro.org
-> Signed-off-by: Andrew Chernyakov <acherniakov@astralinux.ru>
+> Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->  drivers/rpmsg/qcom_glink_native.c | 2 +-
->  drivers/rpmsg/qcom_smd.c          | 4 ++--
->  2 files changed, 3 insertions(+), 3 deletions(-)
-
-Why just this specific kernel branch?  We can't add patches to an older
-tree and have someone upgrade to a newer one and hit the same issue.
-
-So please provide backports for all active versions.  In this case that
-would be 5.15.y and 5.19.y.
-
-thanks,
-
-greg k-h
+> 
+> The related issue for the first controller is being fixed here:
+> 
+> 	https://lore.kernel.org/lkml/20220830180120.2082734-1-bmasney@redhat.com/T/#u
+> 
+> Johan
+> 
+> 
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index cf7ef37c11ec..917f1feac6ac 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -960,7 +960,7 @@ ufs_card_phy: phy@1da7000 {
+>  			ranges;
+>  			clock-names = "ref",
+>  				      "ref_aux";
+> -			clocks = <&gcc GCC_UFS_1_CARD_CLKREF_CLK>,
+> +			clocks = <&gcc GCC_UFS_REF_CLKREF_CLK>,
+>  				 <&gcc GCC_UFS_CARD_PHY_AUX_CLK>;
+>  
+>  			resets = <&ufs_card_hc 0>;
