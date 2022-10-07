@@ -2,108 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F6FA5F8020
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Oct 2022 23:36:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A11B15F80BB
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Oct 2022 00:23:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229737AbiJGVgy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Oct 2022 17:36:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39282 "EHLO
+        id S229605AbiJGWXS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Oct 2022 18:23:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229723AbiJGVgw (ORCPT
+        with ESMTP id S229507AbiJGWXR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Oct 2022 17:36:52 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A1F310325D;
-        Fri,  7 Oct 2022 14:36:52 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id h74so668279iof.0;
-        Fri, 07 Oct 2022 14:36:52 -0700 (PDT)
+        Fri, 7 Oct 2022 18:23:17 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AD5DD18C9
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Oct 2022 15:23:15 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id p26-20020a7bcc9a000000b003c384e59047so1333025wma.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Oct 2022 15:23:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EXa0o6AJijj8nZh92TnYExxwyBjBOTqBx3x8YowQqdc=;
-        b=ea4IhKNWGm6cnuAUG5tIY3qjDwSZ2lm8gHCkZ60vR7UTmBD8UNci4ZgfwP8r0TiEPh
-         AdWjw3KNDQ197dflei/W2m0E9DG7mpVtONT9NKVq0GJvJBWsUuObneqySMBKFwBZq/cJ
-         0U5pUmSdavO4fslNI0MNHUKSjxPd7TpDOp5KvSfiG9o3dAC1vbyD2BYyJ8tnfAeGrI6V
-         oEukdu0NG6FcbWXPv2B2vE4VssgBUTowtmY1JW38/KYdxoHqh1ASwc4UCtwEZG2YDCww
-         jhMRaAYI47t3yjivaiNJa7rMvL82QE4x2e69+Axs7XzN7UGdvmbuX3un7OHe/LjpZUgM
-         i87g==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=MImtf0Wf4m+QCdLQViE/JC/7ATAAtbSE1jIuWWLnJvA=;
+        b=EkmsnPinOHoAe1msnfPZIqppKVi9NZfAp14tWuESUEWdySA7FzW5P/Lx7qmFQc5xoT
+         tIKmNTq6cmITRsdnhWIdolKS/+mmCrIMH1Aisj0SVlIvqptcAnQ+WsiTrKqWlI6LGhIV
+         Tc46U5KQE4FgKgp9V94Y4A9sSU9QoVvPDUqbkZnrS98Qvz6+LJIkucRiHUX+ojVUTUB+
+         1i9RXsjYBZc+1bSKss029x+0cBASDUBc09UNd0Sasm4ix6ScqlDlk98SOUHk/OT6VRmz
+         r4tEwMbLwO/NjKoOWpsj+p4kAeDQIXdnOhao/zrS3U8OoV9fqbVLz7eyb2zBy1cHie5y
+         joYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EXa0o6AJijj8nZh92TnYExxwyBjBOTqBx3x8YowQqdc=;
-        b=N282GrhEsZ88//FYoQhUeSvR7qkIWgV2FSXTETKRNerNw5IPLh6FL/6BWv8fEaOlhi
-         XJRy6znS9CPdHWBII+HzgDBIP05STHj3RxH6sXs3Rs/YTwWjxj9V8oXzDGyBvw4b235t
-         Y+iHTui8B3/A6bxChiUmdO2C0zs8S8OKr+4CHD8Hw7C91e4dVlogU4hZHqmc96MzEePG
-         yTumPqktS7UmbrMAanYT78L3qZxgmaxNkkEu07vFhrm8wL59l75akAz7pcFZz2RIxea/
-         PmU1lB9bESI/Y+j4WNZc0ET/ELVx/cH4L531/LgH9qHNCCs7qGKU7aZnRi9e7MvAII+u
-         dQTg==
-X-Gm-Message-State: ACrzQf0lefD9fWC6mgDvPRKsOxzki337ahUv5MekymldAAs6T98HnM2k
-        h1oBBHFnoOXcy+jK/eaWK4wfIfD5MSALig==
-X-Google-Smtp-Source: AMsMyM7gLUUuKzzn2ZHTqwpvq5obp2MUcZfUKJ2G2oHtqIjJTOq89eQVFSc3ULp+OeU9fyuv4aHL5A==
-X-Received: by 2002:a05:6638:3452:b0:363:69f8:549f with SMTP id q18-20020a056638345200b0036369f8549fmr3777255jav.190.1665178611692;
-        Fri, 07 Oct 2022 14:36:51 -0700 (PDT)
-Received: from localhost ([2607:fea8:a2e2:2d00::b714])
-        by smtp.gmail.com with UTF8SMTPSA id r11-20020a92d44b000000b002f6028e31cesm1276491ilm.61.2022.10.07.14.36.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Oct 2022 14:36:51 -0700 (PDT)
-From:   Richard Acayan <mailingradian@gmail.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MImtf0Wf4m+QCdLQViE/JC/7ATAAtbSE1jIuWWLnJvA=;
+        b=BxrDknZrV19W9xjeHfk0iLfqGXD2YcPJbRDuJQxYI0GxuMQGTcMoBrqxHB/iOefFsr
+         UT2530XexpYfgJBPoJsHjG/QPILBy8Q37BB1hellNgr5hiBFtKPx+z23KQoLaRsNDioG
+         sClC64WbFHmm/KPz3JF9v8XB1zCPx+AveKM6ke0vSX/XaithaWuyFbQOFTyBAktJ7EyI
+         yg3wO/vV+z3JCcVOj0d7jVq6JWWs+BPMy6QU3lhc39OAjiaNkZuzfz7rYWTUV2upD5c4
+         y+WzVx/VRfs91m1k8CoW4MLiQ6p7vDJ45UAi42Yiw0DBYwbftWR9iqVu1zXST7+pGQWh
+         eNUg==
+X-Gm-Message-State: ACrzQf0/KhHR6V8ju8TPuEJvqCGqan/VkbFGmUtWTL63BpldzztV3qVP
+        keX5h+T6GkqhbPSv6LVUquc8IvNv4iB6pw==
+X-Google-Smtp-Source: AMsMyM5biB58MjjwoI54Sm9NJ1aowLkAk7UBf2LQFmWAjoz9bJsxy3V8abHtA4Ks8YUspX2Axq9hPg==
+X-Received: by 2002:a05:600c:1d23:b0:3c0:7701:8a54 with SMTP id l35-20020a05600c1d2300b003c077018a54mr9273178wms.84.1665181393349;
+        Fri, 07 Oct 2022 15:23:13 -0700 (PDT)
+Received: from localhost.localdomain (cpc76482-cwma10-2-0-cust629.7-3.cable.virginm.net. [86.14.22.118])
+        by smtp.gmail.com with ESMTPSA id d5-20020a05600c34c500b003c409244bb0sm1115777wmq.6.2022.10.07.15.23.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Oct 2022 15:23:12 -0700 (PDT)
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        Sebastian Reichel <sre@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        phone-devel@vger.kernel.org,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        devicetree@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v5 3/3] dmaengine: qcom: deprecate redundant of_device_id entries
-Date:   Fri,  7 Oct 2022 17:36:40 -0400
-Message-Id: <20221007213640.85469-4-mailingradian@gmail.com>
+        linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+        Tom Rix <trix@redhat.com>
+Subject: [PATCH v5 0/2] power: supply: introduce support for the Qualcomm smb2 charger
+Date:   Fri,  7 Oct 2022 23:22:01 +0100
+Message-Id: <20221007222205.126190-1-caleb.connolly@linaro.org>
 X-Mailer: git-send-email 2.38.0
-In-Reply-To: <20221007213640.85469-1-mailingradian@gmail.com>
-References: <20221007213640.85469-1-mailingradian@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The drivers are transitioning from matching against lists of specific
-compatible strings to matching against smaller lists of more generic
-compatible strings. Add a message that the compatible strings with an
-ee_offset of 0 are deprecated except for the SDM845 compatible string.
+Add a driver for the Qualcomm PMI8998/PM660 Switch-Mode Battery Charger.
+This is the second generation SMB charger, and replaces the previous
+SMBB hardware found in older PMICs.
 
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/dma/qcom/gpi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+This driver provides basic support for initialising the hardware,
+configuring the USB input current limit and reporting information about
+the state of the charger. Features like type-c dual role support and OTG
+switching will be added in future patches.
 
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index 89839864b4ec..ff22f5725ded 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -2289,6 +2289,10 @@ static const struct of_device_id gpi_of_match[] = {
- 	{ .compatible = "qcom,sc7280-gpi-dma", .data = (void *)0x10000 },
- 	{ .compatible = "qcom,sdm845-gpi-dma", .data = (void *)0x0 },
- 	{ .compatible = "qcom,sm6350-gpi-dma", .data = (void *)0x10000 },
-+	/*
-+	 * Deprecated, devices with ee_offset = 0 should use sdm845-gpi-dma as
-+	 * fallback and not need their own entries here.
-+	 */
- 	{ .compatible = "qcom,sm8150-gpi-dma", .data = (void *)0x0 },
- 	{ .compatible = "qcom,sm8250-gpi-dma", .data = (void *)0x0 },
- 	{ .compatible = "qcom,sm8350-gpi-dma", .data = (void *)0x10000 },
+This patch series depends on my previous series adding support for
+the Round Robin ADC which is used for reading the USB voltage and
+current, it is currently queued in linux-next, and can be found here:
+https://lore.kernel.org/linux-arm-msm/20220429220904.137297-1-caleb.connolly@linaro.org/
+This has now been merged
+
+Changes since v4:
+ * Fix typo when setting FAST_CHARGE_CURRENT_CFG - the OnePlus 6 now charges
+   properly!
+ * Limited charge current to 1A until we better understand the thermal
+   protection features and how to use them.
+ * Address Sebastian's comments (thanks for your patience with this)
+ * re-run clang-format
+
+Changes since v3:
+ * Drop DTS patches, to be sent in a future series
+ * Add POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT so that the charger will
+   be exposed as a cooling device,
+   see https://lore.kernel.org/linux-pm/164f2458-fb66-f238-7143-bdbe1e200870@linaro.org
+ * Run clang-format and prevent it from breaking the formatting of the
+   defines
+ * Apply Sebastian's suggested fixes
+
+Changes since v2:
+ * Use devm_delayed_work_autocancel
+ * Minor driver fixes
+ * Pick up Krzysztof's R-b on the DT patch
+
+Changes since v1:
+ * Rename the driver to pmi8998_charger
+ * Drop unnecessary (and very broken) mutex
+ * Rework the driver based on feedback to v1
+ * Fix some minor bugs and improve Automatic Input Current Limit support
+
+Caleb Connolly (2):
+  power: supply: add Qualcomm PMI8998 SMB2 Charger driver
+  dt-bindings: power: supply: qcom,pmi8998-charger: add bindings for
+    smb2 driver
+
+ .../power/supply/qcom,pmi8998-charger.yaml    |   82 ++
+ drivers/power/supply/Kconfig                  |   16 +
+ drivers/power/supply/Makefile                 |    1 +
+ drivers/power/supply/qcom_pmi8998_charger.c   | 1040 +++++++++++++++++
+ 4 files changed, 1139 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
+ create mode 100644 drivers/power/supply/qcom_pmi8998_charger.c
+
 -- 
 2.38.0
 
