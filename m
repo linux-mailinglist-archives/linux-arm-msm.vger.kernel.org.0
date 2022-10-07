@@ -2,146 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA30F5F7495
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Oct 2022 09:09:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D6015F74C6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Oct 2022 09:40:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229614AbiJGHJa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Oct 2022 03:09:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59570 "EHLO
+        id S229598AbiJGHkO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Oct 2022 03:40:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229691AbiJGHJ2 (ORCPT
+        with ESMTP id S229611AbiJGHkN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Oct 2022 03:09:28 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5587B8C15
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Oct 2022 00:09:26 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id a10so4747144ljq.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Oct 2022 00:09:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=vCRWEF8VLHqnCH4WBhxkAT6aRcv54BJkl/Tn8yVW2Vo=;
-        b=YBCTZw+sBWRkMCPLBQGtFEceujBSXZWXcLmkOGTiGGhC1iaXwMDvi+POzPsWx4Ap7t
-         wCAwtKl8t+hGOjeBbv46LMXu1KvFbSA0dfm7465ub1uRvvWWw4hS/XwJu4VOlrrMX0vC
-         N5iTFAzwKQ9sUHCPaNmCR1IXFYtX/gnGpCoX8rKqgdubi28+PHHNe3I3nCiApNJFSl1k
-         PDpuz9XR4RGndtX1sfwzmsD4U9gCv0JHEtR08MmodI1grunwrhhzQTDD+/zBjJvSDOmt
-         wWPku9B8B1gqyM2Ws4wjYahT3fekc9wMvlYM1MVl0kK6XPpy+ehoFvHfDx0UcHVYwvN2
-         Q6zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=vCRWEF8VLHqnCH4WBhxkAT6aRcv54BJkl/Tn8yVW2Vo=;
-        b=Z45P4CTYRrHP5ySXwG+fjC0O3ty4YKD2aUdjsHN3BEu+5pK02TBO9TXqgdOnr8bR3d
-         IMlFVaOrfP3TkJhpt0B7gnGJtYuZJ7PXvUkQVeKoB12lPlAx2e7DoXkUJanILaBvtvAf
-         begQuG2Z/BQqvyxVXHMdelzHbd5lsXosKp7M7ElYP8XX9ll/qcGP8RdaH+Dbq9+HQ4rZ
-         H0qlAQ/uko0s/qpXrrCq0mLDhPKhdp4ZCDyzvbagFIcR3hrQ4NKU9goHP4Nbs0yOMhdP
-         nhISlnYKptxOo21IfyvsA27ft7uzGP+3yQiqnRAkAkgBb4Y3v+Ibs7h/6h5TLor9dHNE
-         8NrQ==
-X-Gm-Message-State: ACrzQf1P7QhDEVXCnz3gfKHtaGpSvWOdAPIqbDz07ru6Nob7sBVKJTmi
-        WcFmXsITwAiktEPfRCtw5z3H+w==
-X-Google-Smtp-Source: AMsMyM69vs7GHGx7R6YuBNKkrQI65YrlPF7aY1rqRVO/tA8YuRScsTIIQAfzVZEErv0M3FWeYVzSQA==
-X-Received: by 2002:a2e:bba2:0:b0:26b:e2d6:fe44 with SMTP id y34-20020a2ebba2000000b0026be2d6fe44mr1139102lje.286.1665126565048;
-        Fri, 07 Oct 2022 00:09:25 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id v26-20020ac2559a000000b0049964f68457sm172995lfg.262.2022.10.07.00.09.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Oct 2022 00:09:24 -0700 (PDT)
-Message-ID: <da10e24f-3512-c111-13f0-a22851a99062@linaro.org>
-Date:   Fri, 7 Oct 2022 09:09:23 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH v8 1/3] dt-bindings: pinctrl: qcom: add sdm670 pinctrl
-Content-Language: en-US
-To:     Richard Acayan <mailingradian@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
+        Fri, 7 Oct 2022 03:40:13 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 188253FA16;
+        Fri,  7 Oct 2022 00:40:12 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A079461C0A;
+        Fri,  7 Oct 2022 07:40:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BCCEC433D6;
+        Fri,  7 Oct 2022 07:40:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1665128411;
+        bh=GKlx4XpC4V4eNmFalCE62eQxE/iy5Kh4EpFqqS1kpA4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=GZ9K3KULO5a/jrGADpCK92s3OF1ZGtLpoouHlBzykdZSDl0a2f+PvoVCMOjyp6M1m
+         gRhvzgyze5T4gAMbmuIN2Rbf55/EcfXwHIOLLEBo7YdDr2wCeDU692KjAriyVZTObK
+         bg1lFSw6AE8+Y1jZPiql6aBLW7DexwIQyoABzIrc=
+Date:   Fri, 7 Oct 2022 09:40:52 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lee Jones <lee@kernel.org>, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20221006232219.37505-1-mailingradian@gmail.com>
- <20221006232219.37505-2-mailingradian@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221006232219.37505-2-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Jonathan Corbet <corbet@lwn.net>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Arnd Bergmann <arnd@arndb.de>, devicetree@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 14/14] tty: gunyah: Add tty console driver for RM
+ Console Services
+Message-ID: <Yz/YBDqqwBUlswgX@kroah.com>
+References: <20220928195633.2348848-1-quic_eberman@quicinc.com>
+ <20220928195633.2348848-15-quic_eberman@quicinc.com>
+ <YzbePxTF8hRbWNRU@kroah.com>
+ <14d0ff9f-60f3-71cc-ea42-ceee389298ac@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <14d0ff9f-60f3-71cc-ea42-ceee389298ac@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/10/2022 01:22, Richard Acayan wrote:
-> There is a new driver for the Snapdragon 670 TLMM (Top-Level Mode
-> Multiplexer). Document it.
+On Thu, Oct 06, 2022 at 10:59:51PM -0700, Elliot Berman wrote:
+> > > + */
+> > > +#define RSC_MGR_TTY_ADAPTERS		16
+> > 
+> > We can have dynamic tty devices, so I don't understand this comment.
+> > What really is the problem here?
+> > 
 > 
-> Adapted from qcom,sm6350-pinctrl.yaml.
+> Yes, I see the confusion. Dynamic device addition of tty devices is
+> supported. As I understand, you need to know the maximum number of lines
+> that could be added, and that is limitation I was referring to.
+
+What do you mean by "lines"?  That's not a tty kernel term.
+
+> Is this comment better?
 > 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-> ---
->  .../bindings/pinctrl/qcom,sdm670-tlmm.yaml    | 129 ++++++++++++++++++
->  1 file changed, 129 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
+> The Linux TTY code requires us to know ahead of time how many lines we
+> might need. Each line here corresponds to a VM. 16 seems like a
+> reasonable number of lines for systems that are running Gunyah and using
+> the provided console interface.
+
+Again, line?  Do you mean port?
+
+> > > +	cons_data->tty_driver->driver_name = "gh";
+
+KBUILD_MODNAME?
+
+> > > +	cons_data->tty_driver->name = "ttyGH";
+> > 
+> > Where did you pick this name from?
+> > 
+> > Where is it documented?
+> > 
 > 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
-> new file mode 100644
-> index 000000000000..e2f563ae6bbf
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
-> @@ -0,0 +1,129 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pinctrl/qcom,sdm670-tlmm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. SDM670 TLMM block
-> +
-> +maintainers:
-> +  - Richard Acayan <mailingradian@gmail.com>
-> +
-> +description: |
-> +  This binding describes the Top Level Mode Multiplexer (TLMM) block found
-> +  in the SDM670 platform.
+> "GH" is the shorthand we've been using for "Gunyah". I didn't find
+> documentation for dynamically assigned char devices, but if it exists, I can
+> add entry for ttyGH.
 
-Drop "This bindings describes the"
+Why use a new name at all?  Why not stick with the existing tty names
+and device numbers?
 
-> +
-> +allOf:
-> +  - $ref: pinctrl.yaml#
+thanks,
 
-Drop.
-
-> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sdm670-tlmm
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts: true
-> +  interrupt-controller: true
-> +  '#interrupt-cells': true
-
-Use consistent " everywhere.
-
-Best regards,
-Krzysztof
-
+greg k-h
