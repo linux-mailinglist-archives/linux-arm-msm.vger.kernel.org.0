@@ -2,132 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F5415F8563
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Oct 2022 15:13:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 472DE5F8646
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Oct 2022 19:47:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229672AbiJHNN1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Oct 2022 09:13:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52268 "EHLO
+        id S229691AbiJHRrM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Oct 2022 13:47:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229676AbiJHNNZ (ORCPT
+        with ESMTP id S230309AbiJHRrL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Oct 2022 09:13:25 -0400
-Received: from mx0.riseup.net (mx0.riseup.net [198.252.153.6])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0E5B52084;
-        Sat,  8 Oct 2022 06:13:21 -0700 (PDT)
-Received: from fews1.riseup.net (fews1-pn.riseup.net [10.0.1.83])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
-         client-signature RSA-PSS (2048 bits) client-digest SHA256)
-        (Client CN "mail.riseup.net", Issuer "R3" (not verified))
-        by mx0.riseup.net (Postfix) with ESMTPS id 4Ml5G90XjVz9scH;
-        Sat,  8 Oct 2022 13:13:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-        t=1665234801; bh=gnBsNEwM/S9PWvUObRoQlFNCY33roZKRpy1dn0jtxok=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=emSc0gqCUKQW42V6JYa3M/wKOYykH90vytIU0O3jf0NuqriCVPiUJB7P2fvoxPhU+
-         1kZuoO2aQcREFCEy5uroiBkeTdD0OmBYp0Dd/lcXuxX3n3ms5eFBGDnoq3eALFe4bW
-         j1faTVK7JfMFkLb75ZtNm0NTIKc5QXoxuLa7snd4=
-X-Riseup-User-ID: 3783ACED89D999CB73A1EC90BE730AA5623AFE1B022D29E56059CF3EC65D5E90
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-         by fews1.riseup.net (Postfix) with ESMTPSA id 4Ml5G623Bvz5vNH;
-        Sat,  8 Oct 2022 13:13:18 +0000 (UTC)
-From:   Nia Espera <a5b6@riseup.net>
-To:     Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
-        Nia Espera <a5b6@riseup.net>,
-        Caleb Connolly <caleb@connolly.tech>
-Subject: [PATCH v3 2/2] drivers: gpu: drm: remove support for sofef00 driver on s6e3fc2x01 panel
-Date:   Sat,  8 Oct 2022 15:12:03 +0200
-Message-Id: <20221008131201.540185-3-a5b6@riseup.net>
-In-Reply-To: <20221008131201.540185-1-a5b6@riseup.net>
-References: <20221008131201.540185-1-a5b6@riseup.net>
+        Sat, 8 Oct 2022 13:47:11 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D0643641A;
+        Sat,  8 Oct 2022 10:47:10 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id d24so7135852pls.4;
+        Sat, 08 Oct 2022 10:47:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PjOpq6xMtwZ+a3cDZHo77w5YYPm/GULCq55aoUGSZUY=;
+        b=k2PdDqrMFH9TDVs4NNmkDNVW1tZ4DZI2Om3NlqRmVHq/ORP6Ek4CTPo2ChxBkffpqG
+         +exGCZ37mPRtxWvp6qBnqE51uk026LglhI9PMAO1O0WUkbcNgu4Y2BZXkX4t0sjQd2vv
+         6opOW+kcQSbdkSpElJuHFi30ya2mMiySGYPTaFGq0WxOmKGXV06z3yEjDfIXrmXuxfwG
+         LY02yLVqQiOuRSdG3YwNVAoAWHltYXP64dKm09HkasL6+NSyzt6Bu3TtVqj+KdzVFqrD
+         wkzEcXMbwaFHyPvrYgZndfNKbNlXQQI3cU0OG8RlRAKS1Hh8l7+Wf+c1raSlJVQu6xVB
+         w1dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PjOpq6xMtwZ+a3cDZHo77w5YYPm/GULCq55aoUGSZUY=;
+        b=Gz9JEEyc6WAgib6HJwb4+3Z6UQVpsqk18K4/sm5HjgTN7KrVBg5GJ6kGrgjNIVBoiR
+         NYhsCBKDEMfRE24zjdoXx8uDRX5PH+xAM6slwOlssfJPA81f92cd7Nx6TVZvkU6ze9sk
+         QlJaBrR3wyPPl9VFw32o1V/0UX+GSIipcQ+nxIezQ10yapN5GPKsbofO0IxYXuvDb1gt
+         +Kr30rSAd+JJ6Jwjq8qiY/zBzWxbxttKisgJZvKiv2wYUoGOvsBuHpldme91ZyS5fonb
+         prT/aoRetxUXxlE3JIlQcWGJ4gwthqpm0dzqpD/DbJ/znzvQBcsYKIhblFz5e7+Vd3PE
+         tq7g==
+X-Gm-Message-State: ACrzQf1mhYUfOxk6D3Cm5gLWH/Cr0mTO58oxcx3aWDW4QoQpKJ6n213l
+        oo4krmoopl+R1txDapLTokfvydvtyygNog==
+X-Google-Smtp-Source: AMsMyM5PNS0KaEXVCBl5n03E5vdpEpUJXbhW17H5h1iuFum/emGaclK/NUUxFJWQgBx3uTysCD1PQg==
+X-Received: by 2002:a17:90b:1d4c:b0:20a:8db1:da52 with SMTP id ok12-20020a17090b1d4c00b0020a8db1da52mr22216569pjb.98.1665251229287;
+        Sat, 08 Oct 2022 10:47:09 -0700 (PDT)
+Received: from skynet-linux.local ([2406:7400:61:5d7c:3fe4:8f6d:b1b6:f2bf])
+        by smtp.googlemail.com with ESMTPSA id o9-20020a170903210900b0017f7d7e95d3sm3583270ple.167.2022.10.08.10.47.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 08 Oct 2022 10:47:08 -0700 (PDT)
+From:   Sireesh Kodali <sireeshkodali1@gmail.com>
+To:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, linux-kernel@vger.kernel.org
+Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        dmitry.baryshkov@linaro.org,
+        Sireesh Kodali <sireeshkodali1@gmail.com>
+Subject: [PATCH v3 0/2] remoteproc: qcom: Add support for MSM8953 ADSP
+Date:   Sat,  8 Oct 2022 23:16:56 +0530
+Message-Id: <20221008174658.336470-1-sireeshkodali1@gmail.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Removes functionality from sofef00 panel driver which allowed it to
-drive the s6e3fc2x01 panel
+This patch series adds support for the ADSP PIL as found on the MSM8953
+platform. It is a subset of a previous patch series.
 
-Signed-off-by: Nia Espera <a5b6@riseup.net>
-Reviewed-by: Caleb Connolly <caleb@connolly.tech>
----
- drivers/gpu/drm/panel/Kconfig                 |  6 +++---
- drivers/gpu/drm/panel/panel-samsung-sofef00.c | 18 ------------------
- 2 files changed, 3 insertions(+), 21 deletions(-)
+Changes since v2:
+ * Made ordering of compatible strings lexical in doc patch
 
-diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index 0dd5e1ec5644..1addbd7e4790 100644
---- a/drivers/gpu/drm/panel/Kconfig
-+++ b/drivers/gpu/drm/panel/Kconfig
-@@ -547,16 +547,16 @@ config DRM_PANEL_SAMSUNG_S6E8AA0
- 	select VIDEOMODE_HELPERS
- 
- config DRM_PANEL_SAMSUNG_SOFEF00
--	tristate "Samsung sofef00/s6e3fc2x01 OnePlus 6/6T DSI cmd mode panels"
-+	tristate "Samsung sofef00 OnePlus 6 DSI cmd mode panel"
- 	depends on OF
- 	depends on DRM_MIPI_DSI
- 	depends on BACKLIGHT_CLASS_DEVICE
- 	select VIDEOMODE_HELPERS
- 	help
- 	  Say Y or M here if you want to enable support for the Samsung AMOLED
--	  command mode panels found in the OnePlus 6/6T smartphones.
-+	  command mode panel found in the OnePlus 6 smartphone.
- 
--	  The panels are 2280x1080@60Hz and 2340x1080@60Hz respectively
-+	  The panel is 2280x1080@60Hz
- 
- config DRM_PANEL_SAMSUNG_S6E3FC2X01
- 	tristate "Samsung s6e3fc2x01 OnePlus 6T DSI cmd mode panel"
-diff --git a/drivers/gpu/drm/panel/panel-samsung-sofef00.c b/drivers/gpu/drm/panel/panel-samsung-sofef00.c
-index bd02af81a4fe..68e58b9b8c5c 100644
---- a/drivers/gpu/drm/panel/panel-samsung-sofef00.c
-+++ b/drivers/gpu/drm/panel/panel-samsung-sofef00.c
-@@ -181,20 +181,6 @@ static const struct drm_display_mode enchilada_panel_mode = {
- 	.height_mm = 145,
- };
- 
--static const struct drm_display_mode fajita_panel_mode = {
--	.clock = (1080 + 72 + 16 + 36) * (2340 + 32 + 4 + 18) * 60 / 1000,
--	.hdisplay = 1080,
--	.hsync_start = 1080 + 72,
--	.hsync_end = 1080 + 72 + 16,
--	.htotal = 1080 + 72 + 16 + 36,
--	.vdisplay = 2340,
--	.vsync_start = 2340 + 32,
--	.vsync_end = 2340 + 32 + 4,
--	.vtotal = 2340 + 32 + 4 + 18,
--	.width_mm = 68,
--	.height_mm = 145,
--};
--
- static int sofef00_panel_get_modes(struct drm_panel *panel, struct drm_connector *connector)
- {
- 	struct drm_display_mode *mode;
-@@ -327,10 +313,6 @@ static const struct of_device_id sofef00_panel_of_match[] = {
- 		.compatible = "samsung,sofef00",
- 		.data = &enchilada_panel_mode,
- 	},
--	{ // OnePlus 6T / fajita
--		.compatible = "samsung,s6e3fc2x01",
--		.data = &fajita_panel_mode,
--	},
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, sofef00_panel_of_match);
+Link to v1: https://lkml.org/lkml/2022/10/6/18
+
+Sireesh Kodali (2):
+  remoteproc: qcom: pas: Add MSM8953 ADSP PIL support
+  dt-bindings: remoteproc: qcom: adsp: Add ADSP on MSM8953
+
+ Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml | 5 +++++
+ drivers/remoteproc/qcom_q6v5_pas.c                          | 1 +
+ 2 files changed, 6 insertions(+)
+
 -- 
-2.38.0
+2.37.3
 
