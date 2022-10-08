@@ -2,180 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E2BA5F80C2
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Oct 2022 00:23:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D43785F818F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Oct 2022 02:28:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229744AbiJGWX2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Oct 2022 18:23:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49866 "EHLO
+        id S229675AbiJHA20 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Oct 2022 20:28:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229736AbiJGWXW (ORCPT
+        with ESMTP id S229777AbiJHA2V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Oct 2022 18:23:22 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E8EDD18D4
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Oct 2022 15:23:18 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id bv10so5553808wrb.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Oct 2022 15:23:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EgD3kP0sSWca4YlP6hR+kz5HlaxlTP+KMXKfvr3kHec=;
-        b=z63HRGkupvMD+4NoIkCzY3uaFYo3KuZmH3T8nJDC4ZochdKfAnbnWQdZnAGzkqABb3
-         XjlyFEz/9uBVyhBH/ZN7x0P5/2YsPKxNipJwmw+vF5UCaAXGUJ1RhZhQfg62wFxjlFU6
-         IYOHwfblWD2ksdNi3861EBVdnSbgYvfgUkWqpZtf6AQEotEYe21Fn/CJR6Sp5RJfKKlI
-         gSWL6dQ969oP/m06Z07secgniiZiX8gYMIpe8OTZkNLjbwTtfYLbBJReC8tEqKKhUqte
-         TISvk8Mp+iTDMNBhlaf0qTZWx4xEq3rSklP3ivDDY6Wu7SrIJPBdJh/fu5JDOCicsSSu
-         +RKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EgD3kP0sSWca4YlP6hR+kz5HlaxlTP+KMXKfvr3kHec=;
-        b=Lrzyue0LorsDWZC6lgT1o4+PkqGZFn6LCSCjGyRYaI4oR1m2KmwV7S2uZ/um46fy9u
-         kZjWS4R7j8eziqJ9mD6I/u8WPOkZcXsdvyck/cLoc6Zp6H5Dl5ZOkOBb15/V8EhSXDjO
-         qyNgzDTRG2Hv2kLSW8HxIIEzVRR7A2PMPoorOLdWxS2JGKMC4FCi0Q3ECSWJm5zTIt71
-         XLUQ7UeJKRXS5zYCf6r7lva4jXkRjR1QJ1AD87D7FZdj9GbD5yPcmL2R0NC/NCDBeDiv
-         JxcZUVY0LNjE8PKIhw67JeeTQYhR7JN/ibT51G3pxpA81605kZJ6cZZoFPpd8eA8hNDo
-         oB1A==
-X-Gm-Message-State: ACrzQf1NGKw7o1wtkF+OMcSZBnEUI0VFk8QwpqXxuuBp/Mg8gdRMtc6L
-        BtMEUKou9qVAgXIzDgFrmrPyBOrCNRYvcg==
-X-Google-Smtp-Source: AMsMyM7vQZ2ZelfYFnQ1aAbj9mX8p4kUIk0V07qM6lRdjM4l+jCcYtdp2gvBBx9dFie930EjaQ6ufA==
-X-Received: by 2002:adf:ee88:0:b0:22e:330a:f741 with SMTP id b8-20020adfee88000000b0022e330af741mr4562322wro.199.1665181396846;
-        Fri, 07 Oct 2022 15:23:16 -0700 (PDT)
-Received: from localhost.localdomain (cpc76482-cwma10-2-0-cust629.7-3.cable.virginm.net. [86.14.22.118])
-        by smtp.gmail.com with ESMTPSA id d5-20020a05600c34c500b003c409244bb0sm1115777wmq.6.2022.10.07.15.23.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Oct 2022 15:23:16 -0700 (PDT)
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Sebastian Reichel <sre@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        phone-devel@vger.kernel.org,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v5 2/2] dt-bindings: power: supply: qcom,pmi8998-charger: add bindings for smb2 driver
-Date:   Fri,  7 Oct 2022 23:22:03 +0100
-Message-Id: <20221007222205.126190-3-caleb.connolly@linaro.org>
-X-Mailer: git-send-email 2.38.0
-In-Reply-To: <20221007222205.126190-1-caleb.connolly@linaro.org>
-References: <20221007222205.126190-1-caleb.connolly@linaro.org>
+        Fri, 7 Oct 2022 20:28:21 -0400
+Received: from proxmox1.postmarketos.org (proxmox1.postmarketos.org [213.239.216.189])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 59BBBBE2CF;
+        Fri,  7 Oct 2022 17:28:17 -0700 (PDT)
+Received: from [192.168.20.2] (unknown [77.239.252.99])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by proxmox1.postmarketos.org (Postfix) with ESMTPSA id 0E66C1400F8;
+        Sat,  8 Oct 2022 00:28:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+        s=donut; t=1665188895;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=f0zdQeYgf/ToW2BBlsYl7mtXmi8A/E12FwtrlpMw834=;
+        b=y2slcH71PCWLYvM1D/ge/XIMHeAX0ypPRFiTMOfcB4WB5grIYnNPFS0DgyhRXqZo67pjw7
+        fU0h3VvKjyL7XBuurKYslV2QYJdbmrTeWwD3b6aes4f+FssClFNZYEiepynYlv4pUa9ax1
+        TKSAzdSqcwSc3g4Y9Kg0IorXD8TEsYI=
+Message-ID: <fd332d80-b237-08be-e6d1-903364bd5ceb@postmarketos.org>
+Date:   Sat, 8 Oct 2022 03:28:14 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH v2 1/2] drivers: gpu: drm: add driver for samsung
+ s6e3fc2x01 cmd mode panel
+Content-Language: en-US
+To:     Nia Espera <a5b6@riseup.net>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org
+References: <20221007111442.51481-1-a5b6@riseup.net>
+ <20221007111442.51481-2-a5b6@riseup.net>
+From:   Alexey Minnekhanov <alexeymin@postmarketos.org>
+In-Reply-To: <20221007111442.51481-2-a5b6@riseup.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add devicetree bindings for the Qualcomm PMI8998/PM660 SMB2 charger
-driver.
+Hi,
 
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../power/supply/qcom,pmi8998-charger.yaml    | 82 +++++++++++++++++++
- 1 file changed, 82 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
+On 07.10.2022 14:14, Nia Espera wrote:
 
-diff --git a/Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml b/Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
-new file mode 100644
-index 000000000000..277c47e048b6
---- /dev/null
-+++ b/Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
-@@ -0,0 +1,82 @@
-+# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/power/supply/qcom,pmi8998-charger.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm PMI8998/PM660 Switch-Mode Battery Charger "2"
-+
-+maintainers:
-+  - Caleb Connolly <caleb.connolly@linaro.org>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,pmi8998-charger
-+      - qcom,pm660-charger
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 4
-+
-+  interrupt-names:
-+    items:
-+      - const: usb-plugin
-+      - const: bat-ov
-+      - const: wdog-bark
-+      - const: usbin-icl-change
-+
-+  io-channels:
-+    items:
-+      - description: USB in current in uA
-+      - description: USB in voltage in uV
-+
-+  io-channel-names:
-+    items:
-+      - const: usbin_i
-+      - const: usbin_v
-+
-+  monitored-battery:
-+    description: phandle to the simple-battery node
-+    $ref: /schemas/types.yaml#/definitions/phandle
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - interrupt-names
-+  - io-channels
-+  - io-channel-names
-+  - monitored-battery
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    pmic {
-+      #address-cells = <1>;
-+      #size-cells = <0>;
-+      #interrupt-cells = <4>;
-+
-+      charger@1000 {
-+        compatible = "qcom,pmi8998-charger";
-+        reg = <0x1000>;
-+
-+        interrupts = <0x2 0x12 0x2 IRQ_TYPE_EDGE_BOTH>,
-+                     <0x2 0x13 0x4 IRQ_TYPE_EDGE_BOTH>,
-+                     <0x2 0x13 0x6 IRQ_TYPE_EDGE_RISING>,
-+                     <0x2 0x16 0x1 IRQ_TYPE_EDGE_RISING>;
-+        interrupt-names = "usb-plugin", "bat-ov", "wdog-bark", "usbin-icl-change";
-+
-+        io-channels = <&pmi8998_rradc 3>,
-+                      <&pmi8998_rradc 4>;
-+        io-channel-names = "usbin_i",
-+                           "usbin_v";
-+
-+        monitored-battery = <&battery>;
-+      };
-+    };
+> +
+> +#define dsi_dcs_write_seq(dsi, seq...) do {				\
+> +		static const u8 d[] = { seq };				\
+> +		int ret;						\
+> +		ret = mipi_dsi_dcs_write_buffer(dsi, d, ARRAY_SIZE(d));	\
+> +		if (ret < 0)						\
+> +			return ret;					\
+> +	} while (0)
+> +
+
+There is now a standard macro for this - mipi_dsi_dcs_write_seq() [1] , 
+so you don't need to reinvent it.
+
+> +static void samsung_s6e3fc2x01_reset(struct samsung_s6e3fc2x01 *ctx)
+> +{
+> +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
+> +	usleep_range(5000, 6000);
+> +	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
+> +	usleep_range(2000, 3000);
+> +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
+> +	usleep_range(10000, 11000);
+> +}
+
+There is a high chance that first gpiod_set_value() is not needed, only 
+the last 2.
+
+[1] https://elixir.bootlin.com/linux/latest/C/ident/mipi_dsi_dcs_write_seq
+
 -- 
-2.38.0
-
+Regards
+Alexey Minnekhanov
