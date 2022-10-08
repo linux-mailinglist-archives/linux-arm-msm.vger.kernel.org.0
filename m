@@ -2,90 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D6905F84AA
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Oct 2022 11:51:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A03695F855D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Oct 2022 15:12:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229699AbiJHJvW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Oct 2022 05:51:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57174 "EHLO
+        id S229635AbiJHNMo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Oct 2022 09:12:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229695AbiJHJvV (ORCPT
+        with ESMTP id S229590AbiJHNMn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Oct 2022 05:51:21 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C53A5FC7;
-        Sat,  8 Oct 2022 02:51:20 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EBA0D60A5A;
-        Sat,  8 Oct 2022 09:51:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05B9C433D6;
-        Sat,  8 Oct 2022 09:51:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1665222679;
-        bh=x13HOIyD9suTVaFon3YOufV/ukJs++5vFFe4lyLKq8s=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Ucw/4c33UnsaixjglaVysYOQszO9SclUkKPpu4TblPcpqpDbAEsifY4ZLQGzhzWNM
-         mIx5OqB5x06BuuN3HL4HxNBXNk7K/N4x2FKfLJiJjqJLYayNOw1uxO5haIhMQx1ekf
-         isFo1ffZtrZZMtAeGHLHPgFrA2T6xgE7iTcFMyQU=
-Date:   Sat, 8 Oct 2022 11:52:01 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Zhou Furong <furong.zhou@linux.intel.com>
-Cc:     Elliot Berman <quic_eberman@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Arnd Bergmann <arnd@arndb.de>, devicetree@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 14/14] tty: gunyah: Add tty console driver for RM
- Console Services
-Message-ID: <Y0FIQd/8B48ld4VZ@kroah.com>
-References: <20220928195633.2348848-1-quic_eberman@quicinc.com>
- <20220928195633.2348848-15-quic_eberman@quicinc.com>
- <YzbePxTF8hRbWNRU@kroah.com>
- <4cb5e7eb-1571-ed91-e1da-b4223a26f41c@linux.intel.com>
+        Sat, 8 Oct 2022 09:12:43 -0400
+X-Greylist: delayed 93431 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 08 Oct 2022 06:12:40 PDT
+Received: from mx0.riseup.net (mx0.riseup.net [198.252.153.6])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 031B13ED66;
+        Sat,  8 Oct 2022 06:12:39 -0700 (PDT)
+Received: from fews1.riseup.net (fews1-pn.riseup.net [10.0.1.83])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
+         client-signature RSA-PSS (2048 bits) client-digest SHA256)
+        (Client CN "mail.riseup.net", Issuer "R3" (not verified))
+        by mx0.riseup.net (Postfix) with ESMTPS id 4Ml5FM0G60z9sBk;
+        Sat,  8 Oct 2022 13:12:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+        t=1665234759; bh=UPOia2gKXevh7S7Rz8ugfNl6OojhvizVLjwPYJRn+14=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Q0p6qq697jv1U9IWnDG6eIwt7pqzAHXjk4JWYtjSlQdYhKUeJ+HLAZH0tGiArK4IT
+         BqwMzdebphjb7SozdLPVhadjBeIMnGKsfHIMF5QQI8Tu1NqeQMBmhxyYMBQEyjFbDa
+         9M6XhCOotJAyao1UBaZsKNYFQaMgwGnW29O2xjbY=
+X-Riseup-User-ID: A3154A88590887777476615470DF5FB010718936FD254B9E07E0996EC81B7ECC
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+         by fews1.riseup.net (Postfix) with ESMTPSA id 4Ml5FH6YqDz5vNH;
+        Sat,  8 Oct 2022 13:12:35 +0000 (UTC)
+From:   Nia Espera <a5b6@riseup.net>
+To:     Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        Nia Espera <a5b6@riseup.net>
+Subject: [PATCH v3 0/2] Samsung s6e3fc2x01 panel driver for OnePlus 6T
+Date:   Sat,  8 Oct 2022 15:11:59 +0200
+Message-Id: <20221008131201.540185-1-a5b6@riseup.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4cb5e7eb-1571-ed91-e1da-b4223a26f41c@linux.intel.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Oct 08, 2022 at 03:41:53PM +0800, Zhou Furong wrote:
-> 
-> > > +
-> > > +/*
-> > > + * The Linux TTY code does not support dynamic addition of tty derived devices so we need to know
-> > > + * how many tty devices we might need when space is allocated for the tty device. Since VMs might be
-> > > + * added/removed dynamically, we need to make sure we have enough allocated.
-> > 
-> > Wrap comments at 80 columns please.
-> > 
-> 
-> checkpatch has extend LINE MAX to 100,do we still suggest wrap to 80?
+This patch series adds proper support for the panel used in OnePlus 6T
+smartphones (s6e3fc2x01). Previously, the panel relied on the driver
+used by the sofef00 panel which failed to properly initialise it after
+a reset.
 
-For comment blocks, yes please.
+Nia Espera (2):
+  drivers: gpu: drm: add driver for samsung s6e3fc2x01 cmd mode panel
+  drivers: gpu: drm: remove support for sofef00 driver on s6e3fc2x01
+    panel
+
+ MAINTAINERS                                   |   5 +
+ drivers/gpu/drm/panel/Kconfig                 |  18 +-
+ drivers/gpu/drm/panel/Makefile                |   1 +
+ .../gpu/drm/panel/panel-samsung-s6e3fc2x01.c  | 388 ++++++++++++++++++
+ drivers/gpu/drm/panel/panel-samsung-sofef00.c |  18 -
+ 5 files changed, 409 insertions(+), 21 deletions(-)
+ create mode 100644 drivers/gpu/drm/panel/panel-samsung-s6e3fc2x01.c
+
+-- 
+2.38.0
+
