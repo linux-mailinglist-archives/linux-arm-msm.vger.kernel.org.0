@@ -2,22 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1FBE5F866F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Oct 2022 20:07:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10D125F868C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Oct 2022 20:17:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230458AbiJHSHg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Oct 2022 14:07:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48246 "EHLO
+        id S231140AbiJHSRZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Oct 2022 14:17:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229821AbiJHSHf (ORCPT
+        with ESMTP id S229916AbiJHSRY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Oct 2022 14:07:35 -0400
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FBB33FECB;
-        Sat,  8 Oct 2022 11:07:31 -0700 (PDT)
+        Sat, 8 Oct 2022 14:17:24 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6159B3AB13
+        for <linux-arm-msm@vger.kernel.org>; Sat,  8 Oct 2022 11:17:23 -0700 (PDT)
 Received: from localhost.localdomain (95.49.30.238.neoplus.adsl.tpnet.pl [95.49.30.238])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id A55DC20078;
-        Sat,  8 Oct 2022 20:07:25 +0200 (CEST)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id ED0B53EBE2;
+        Sat,  8 Oct 2022 20:17:19 +0200 (CEST)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
@@ -30,15 +30,14 @@ Cc:     martin.botka@somainline.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm8250-edo: Add NXP PN553 NFC
-Date:   Sat,  8 Oct 2022 20:07:13 +0200
-Message-Id: <20221008180713.251988-1-konrad.dybcio@somainline.org>
+Subject: [PATCH v2] arm64: dts: qcom: sm8250-edo: Add NXP PN553 NFC
+Date:   Sat,  8 Oct 2022 20:17:13 +0200
+Message-Id: <20221008181714.253634-1-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -49,11 +48,15 @@ Add a node for NXP PN553 NFC, using the nxp-nci driver.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
+Changes since v1:
+- dropped useless label
+- use generic node name
+
  arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 11 ++++++++++-
  1 file changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-index f7d7f502f48b..8e0972b19690 100644
+index f7d7f502f48b..ae94065c6daa 100644
 --- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
 @@ -462,7 +462,16 @@ &i2c1 {
@@ -61,7 +64,7 @@ index f7d7f502f48b..8e0972b19690 100644
  	clock-frequency = <400000>;
  
 -	/* NXP PN553 NFC @ 28 */
-+	nfc: pn553@28 {
++	nfc@28 {
 +		compatible = "nxp,nxp-nci-i2c";
 +		reg = <0x28>;
 +
