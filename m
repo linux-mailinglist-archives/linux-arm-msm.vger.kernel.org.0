@@ -2,102 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 443ED5F88E6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Oct 2022 04:33:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83DB05F8C00
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Oct 2022 17:25:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229463AbiJICdf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Oct 2022 22:33:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34348 "EHLO
+        id S230138AbiJIPZV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Oct 2022 11:25:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229865AbiJICdc (ORCPT
+        with ESMTP id S230038AbiJIPZU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Oct 2022 22:33:32 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AED14367AE;
-        Sat,  8 Oct 2022 19:33:31 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id y4so1695461iof.3;
-        Sat, 08 Oct 2022 19:33:31 -0700 (PDT)
+        Sun, 9 Oct 2022 11:25:20 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D10A1D308
+        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Oct 2022 08:25:19 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id g11so704595qts.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Oct 2022 08:25:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=eKgMiGJ4xMxKYE+sQjNHKzDaMNVrm+oHUpyMXCSQTDs=;
-        b=NYxjOsB+i0Q2ncUgRrwdIlyCeHGXDiDQMmC2QhU/GxeAdvqZz4Jqs83TVFyc/xxPHF
-         xoxeAcjCNNk9cT36I2UsTNFh1MpzMgFw2RqsKQP1t9QKQfWaF0oQFKYuULT+bPNb1ULK
-         olXhHsfMph/NoI5REHcWMZwWXYzwhSec67GlMSVFje4mN5bn1i/18t/EQl2LTQPy5372
-         Dcs3UhVWPx01WuR08asoh6m4cksqAs92QVS7BkG9wHbGdNS9kcSRc31yPGsMdTjFkINi
-         pyG1PqaxlVn2HM/r2L5klq1kOrBxlJvCN1+E29HNVzNNUff5699oF8Z/C7MNgI+vRbyN
-         lmUw==
+        bh=zMWBP42bcqYR/9/IcRRsvCkgoPBmDNpE4tq769Q64oI=;
+        b=hzPt6d3JeW0Footcf5s588X/R44BO81hmMDQLXWaFZJY5KbRKNCumivhg/rE96IjH2
+         Kw0XoDHKhAOlIOhvgoIrD7k8SILH88ecSk16n/o8Wg6aV25QILm+OGF1vXYxAT3e77FQ
+         Ew7GlZ/QGNq7w36LYmKwZFNscIEGwPkYA1qgHpBf1koWgvgZeM03ZIm1rqptWbZIAsE/
+         X1tYIXazKHgCvi13Dvhr3XD2f/0oLPr2loqEQJOBzPUwJ1svmyqKy6wL1eE8l80zrIPj
+         lN6u8JkgPlyu1zkDaYukKKjsJ1xvIbxYYq+bQhQ91CFCjJmBB5gE+lKOgF7WYjGjPIDX
+         0Atg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eKgMiGJ4xMxKYE+sQjNHKzDaMNVrm+oHUpyMXCSQTDs=;
-        b=u5lO+knmXDvYyNdHFrFQhUCgmi0mrQY3naYW6H6lg/gKesn3SN7llBhxGXbABN2WdA
-         qC8miME9oBHzoQhTakrbO1Qi5ybPSbzsG1eO+iWwZ3cnxxxAgfMaPaXbiEGAmhmfojBU
-         u5KYxrtBPNT/ZXiE+D3VfUk5qYzJmhaneCBNIhR7ek2YVMjcM7GPz46qoZvAvk14ULLS
-         TYPVuL0MaNTlC4xO8S3pFmOwO8fJtud/aWL++R+mJCVMZ8bp7AYnMlq4tI0bqYf7zBjo
-         7ccjmK3ALlv2VhKoPYb9bmmvHpwAyZfRKSpuQu2YDeeC5vjNNzVq8vWciZVayphD3Ljg
-         VvWA==
-X-Gm-Message-State: ACrzQf0dP2vIxzN55AW2nsu6NYubxeFwtazdGbPWFKwlxMZYwAHFJOhj
-        3CdRePqtNfUufFYrvy2Mw2M=
-X-Google-Smtp-Source: AMsMyM5GzbjwHI/Y3eo0drTr+O2Tna+hX32qEn8v3GHuwVNW5h74J0HM80QYq2XPcO73lKQxp6N5LQ==
-X-Received: by 2002:a05:6602:98:b0:6a2:1723:bee1 with SMTP id h24-20020a056602009800b006a21723bee1mr5195402iob.58.1665282810832;
-        Sat, 08 Oct 2022 19:33:30 -0700 (PDT)
-Received: from ?IPV6:2604:2d80:4d87:cd00:9f51:32d7:1177:67d? ([2604:2d80:4d87:cd00:9f51:32d7:1177:67d])
-        by smtp.gmail.com with ESMTPSA id v14-20020a92ab0e000000b002faa9fe86bfsm2449714ilh.56.2022.10.08.19.33.29
+        bh=zMWBP42bcqYR/9/IcRRsvCkgoPBmDNpE4tq769Q64oI=;
+        b=KIUccpaCpjLIioCgzDiKqv18TPNYgWPl58A7lJsjlIzXjma35+J4Cu4VX73tHlI/gx
+         AnhVfYJbA6L6FT0YQzWM7LSlFI3pBOwHTjrUcVqcHvxF1JG1AzjWzIV5qTWDtf1FrwQ5
+         oqV95H31exYYbgSjR1hPg9CEcxI5NPsIqQC3RCTF1sPL8HbaUwPTCSBDS1uKru7rQTKg
+         6mujdnhsocdcLr0HOOAo26/BLNr5BhYjo20kfs9cS272pcdGrGSSJ+ofFZs2WFwvZy6l
+         3KchR/4bpyoO6zTTpgPLKjGP7QnMOmx1dzgW2af1BxH7futwsdN7Un496Ed7PAFHLyLe
+         lgZQ==
+X-Gm-Message-State: ACrzQf1IVCTy0ZrJbsvvSkws5ZWRPAynYLUTLO6lDueTXsyspoVhq/CI
+        OhynShvE/U9x03yvOCOruVJcSw==
+X-Google-Smtp-Source: AMsMyM6WOzEKoFOz4nRaUQLwSDLVPIGwcjJ8aEcuHay/BBUrycXh6QCMWv6+memfJTEi64NCDRE5Tw==
+X-Received: by 2002:ac8:7e94:0:b0:38e:2bea:9dd9 with SMTP id w20-20020ac87e94000000b0038e2bea9dd9mr11825064qtj.67.1665329118301;
+        Sun, 09 Oct 2022 08:25:18 -0700 (PDT)
+Received: from [192.168.1.57] (cpe-72-225-192-120.nyc.res.rr.com. [72.225.192.120])
+        by smtp.gmail.com with ESMTPSA id fp25-20020a05622a509900b0034305a91aaesm6549834qtb.83.2022.10.09.08.25.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 08 Oct 2022 19:33:30 -0700 (PDT)
-Message-ID: <f488fa30-a307-96f6-fe85-271cdc48faa3@gmail.com>
-Date:   Sat, 8 Oct 2022 21:33:28 -0500
+        Sun, 09 Oct 2022 08:25:17 -0700 (PDT)
+Message-ID: <e829329e-ac55-e04a-c8ab-4eeeec6217ab@linaro.org>
+Date:   Sun, 9 Oct 2022 17:23:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: [PATCH v6 1/2] power: supply: add Qualcomm PMI8998 SMB2 Charger
- driver
+ Thunderbird/102.3.1
+Subject: Re: [PATCH 5.10 1/1] rpmsg: qcom: glink: replace strncpy() with
+ strscpy_pad()
 Content-Language: en-US
-To:     Caleb Connolly <caleb.connolly@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Sebastian Reichel <sre@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+To:     David Laight <David.Laight@ACULAB.COM>,
+        'Greg Kroah-Hartman' <gregkh@linuxfoundation.org>,
+        Andrew Chernyakov <acherniakov@astralinux.ru>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Tom Rix <trix@redhat.com>, linux-kernel@vger.kernel.org,
-        llvm@lists.linux.dev
-References: <20221008183753.249514-1-caleb.connolly@linaro.org>
- <20221008183753.249514-2-caleb.connolly@linaro.org>
-From:   Joel Selvaraj <joelselvaraj.oss@gmail.com>
-In-Reply-To: <20221008183753.249514-2-caleb.connolly@linaro.org>
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-remoteproc@vger.kernel.org" <linux-remoteproc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "stable@vger.kernel.org" <stable@vger.kernel.org>,
+        "lvc-project@linuxtesting.org" <lvc-project@linuxtesting.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20221007132931.123755-1-acherniakov@astralinux.ru>
+ <20221007132931.123755-2-acherniakov@astralinux.ru>
+ <Y0BWc6A8C++M9TWP@kroah.com>
+ <36f776cbc16f4e988d96b7bcb77cd559@AcuMS.aculab.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <36f776cbc16f4e988d96b7bcb77cd559@AcuMS.aculab.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 08/10/22 13:37, Caleb Connolly wrote:
-> Add a driver for the SMB2 charger block found in the Qualcomm PMI8998
-> and PM660.
-> This driver adds initial support for detecting USB cables and managing
-> basic battery charging.
+On 08/10/2022 23:11, David Laight wrote:
+>>> ---
+>>>  drivers/rpmsg/qcom_glink_native.c | 2 +-
+>>>  drivers/rpmsg/qcom_smd.c          | 4 ++--
+>>>  2 files changed, 3 insertions(+), 3 deletions(-)
+>>
+>> Why just this specific kernel branch?  We can't add patches to an older
+>> tree and have someone upgrade to a newer one and hit the same issue.
+>>
+>> So please provide backports for all active versions.  In this case that
+>> would be 5.15.y and 5.19.y.
 > 
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> If it is only fixing a compile warning is it even stable material?
+> The generic commit message doesn't say whether the old code was
+> actually right or wrong.
+> 
+> At least one of these 'replace strncpy()' changes was definitely
+> broken (the copy needed to be equivalent to memcpy()).
+> 
+> So applying ANY of them to stable unless they actually fix
+> a real bug seems dubious.
 
-I can confirm that this driver works as expected on boot and when
-suspended/resumed. Tested in my Xiaomi Poco F1 running postmarketOS.
+Except the warning from GCC, there was no bug to fix. The warning is
+about discouraged and risky practice, but no actual real risk was
+identified, so for me it matches stable rules poorly.
 
-Tested-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
+It's basically backporting to silence automated code checkers...
 
-Regards
-Joel Selvaraj
+Best regards,
+Krzysztof
+
