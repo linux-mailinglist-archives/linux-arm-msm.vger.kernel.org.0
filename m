@@ -2,63 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BD1F5F8D0D
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Oct 2022 20:18:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 665775F8D49
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Oct 2022 20:48:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230243AbiJISSB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Oct 2022 14:18:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40148 "EHLO
+        id S230336AbiJISsj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Oct 2022 14:48:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229996AbiJISRh (ORCPT
+        with ESMTP id S230308AbiJISsi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Oct 2022 14:17:37 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8639CE1A;
-        Sun,  9 Oct 2022 11:17:11 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Sun, 9 Oct 2022 14:48:38 -0400
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [5.144.164.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92D5E29375
+        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Oct 2022 11:48:37 -0700 (PDT)
+Received: from localhost.localdomain (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C35D9B80D13;
-        Sun,  9 Oct 2022 18:17:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093F1C433D6;
-        Sun,  9 Oct 2022 18:17:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1665339428;
-        bh=WlUVYWcv0RSfNrnisKDi/OW/RV7h0cjuQQ19bFBOoog=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Rw38q9pBwLqsPyZDDYNCUJVBM/wQdBpInwfKXrazRDvratMB1+6APuHPbMdcHL+tR
-         alh1uFrcM2QaDGYEEa9Ik0BNxthXgmQq9lBiv8sDxOxB4YOspqrAFf70S0yVAsH5yg
-         DoiwdVTyLl225YVSwhFR/J3E6MuPtUqjH3skq9iE=
-Date:   Sun, 9 Oct 2022 20:17:51 +0200
-From:   'Greg Kroah-Hartman' <gregkh@linuxfoundation.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     David Laight <David.Laight@aculab.com>,
-        Andrew Chernyakov <acherniakov@astralinux.ru>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 775AD1F939;
+        Sun,  9 Oct 2022 20:48:34 +0200 (CEST)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-remoteproc@vger.kernel.org" <linux-remoteproc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "stable@vger.kernel.org" <stable@vger.kernel.org>,
-        "lvc-project@linuxtesting.org" <lvc-project@linuxtesting.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH 5.10 1/1] rpmsg: qcom: glink: replace strncpy() with
- strscpy_pad()
-Message-ID: <Y0MQT2z+nc8+0WPY@kroah.com>
-References: <20221007132931.123755-1-acherniakov@astralinux.ru>
- <20221007132931.123755-2-acherniakov@astralinux.ru>
- <Y0BWc6A8C++M9TWP@kroah.com>
- <36f776cbc16f4e988d96b7bcb77cd559@AcuMS.aculab.com>
- <e829329e-ac55-e04a-c8ab-4eeeec6217ab@linaro.org>
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Douglas Anderson <dianders@chromium.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 00/10] drm/msm: Fix math issues in MSM DSC implementation
+Date:   Sun,  9 Oct 2022 20:48:14 +0200
+Message-Id: <20221009184824.457416-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.38.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e829329e-ac55-e04a-c8ab-4eeeec6217ab@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,38 +53,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Oct 09, 2022 at 05:23:06PM +0200, Krzysztof Kozlowski wrote:
-> On 08/10/2022 23:11, David Laight wrote:
-> >>> ---
-> >>>  drivers/rpmsg/qcom_glink_native.c | 2 +-
-> >>>  drivers/rpmsg/qcom_smd.c          | 4 ++--
-> >>>  2 files changed, 3 insertions(+), 3 deletions(-)
-> >>
-> >> Why just this specific kernel branch?  We can't add patches to an older
-> >> tree and have someone upgrade to a newer one and hit the same issue.
-> >>
-> >> So please provide backports for all active versions.  In this case that
-> >> would be 5.15.y and 5.19.y.
-> > 
-> > If it is only fixing a compile warning is it even stable material?
-> > The generic commit message doesn't say whether the old code was
-> > actually right or wrong.
-> > 
-> > At least one of these 'replace strncpy()' changes was definitely
-> > broken (the copy needed to be equivalent to memcpy()).
-> > 
-> > So applying ANY of them to stable unless they actually fix
-> > a real bug seems dubious.
-> 
-> Except the warning from GCC, there was no bug to fix. The warning is
-> about discouraged and risky practice, but no actual real risk was
-> identified, so for me it matches stable rules poorly.
-> 
-> It's basically backporting to silence automated code checkers...
+Various removals of complex yet unnecessary math, fixing all uses of
+drm_dsc_config::bits_per_pixel to deal with the fact that this field
+includes four fractional bits, and finally making sure that
+range_bpg_offset contains values 6-bits wide to prevent overflows in
+drm_dsc_pps_payload_pack().
 
-Are you sure?  Look at the code path here, there might be a way to
-overflow the string, from the virtio interface, but I might be wrong...
+Altogether this series is responsible for solving _all_ Display Stream
+Compression issues and artifacts on the Sony Tama (sdm845) Akatsuki
+smartphone (2880x1440p).
 
-Anyway, I need all the backports before I can take this one, sorry.
+Changes since v2:
+- Generalize mux_word_size setting depending on bits_per_component;
+- Migrate DSI's DSC calculations to drm_dsc_compute_rc_parameters(),
+  implicitly addressing existing math issues;
+- Disallow any bits_per_component other than 8, until hardcoded values
+  are updated and tested to support such cases.
 
-greg k-h
+v2: https://lore.kernel.org/linux-arm-msm/20221005181657.784375-1-marijn.suijten@somainline.org/T/#u
+
+Changes since v1:
+
+- Propagate r-b's, except (obviously) in patches that were (heavily)
+  modified;
+- Remove accidental debug code in dsi_cmd_dma_add;
+- Move Range BPG Offset masking out of DCS PPS packing, back into the
+  DSI driver when it is assigned to drm_dsc_config (this series is now
+  strictly focusing on drm/msm again);
+- Replace modulo-check resulting in conditional increment with
+  DIV_ROUND_UP;
+- Remove repeated calculation of slice_chunk_size;
+- Use u16 instead of int when handling bits_per_pixel;
+- Use DRM_DEV_ERROR instead of pr_err in DSI code;
+- Also remove redundant target_bpp_x16 variable.
+
+v1: https://lore.kernel.org/linux-arm-msm/20221001190807.358691-1-marijn.suijten@somainline.org/T/#u
+
+Marijn Suijten (10):
+  drm/msm/dsi: Remove useless math in DSC calculations
+  drm/msm/dsi: Remove repeated calculation of slice_per_intf
+  drm/msm/dsi: Use DIV_ROUND_UP instead of conditional increment on
+    modulo
+  drm/msm/dsi: Reuse earlier computed dsc->slice_chunk_size
+  drm/msm/dsi: Appropriately set dsc->mux_word_size based on bpc
+  drm/msm/dsi: Migrate to drm_dsc_compute_rc_parameters()
+  drm/msm/dsi: Disallow 8 BPC DSC configuration for alternative BPC
+    values
+  drm/msm/dsi: Account for DSC's bits_per_pixel having 4 fractional bits
+  drm/msm/dpu1: Account for DSC's bits_per_pixel having 4 fractional
+    bits
+  drm/msm/dsi: Prevent signed BPG offsets from bleeding into adjacent
+    bits
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c |  11 +-
+ drivers/gpu/drm/msm/dsi/dsi_host.c         | 121 ++++++---------------
+ 2 files changed, 37 insertions(+), 95 deletions(-)
+
+--
+2.38.0
+
