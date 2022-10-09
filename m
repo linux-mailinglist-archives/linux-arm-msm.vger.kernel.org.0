@@ -2,116 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C134B5F8DB3
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Oct 2022 21:24:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3760C5F8ECE
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Oct 2022 23:10:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230192AbiJITYn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Oct 2022 15:24:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40524 "EHLO
+        id S231144AbiJIVKj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Oct 2022 17:10:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230012AbiJITYl (ORCPT
+        with ESMTP id S231225AbiJIVKQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Oct 2022 15:24:41 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E3DB6319
-        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Oct 2022 12:24:39 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id a25so5151999ljk.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Oct 2022 12:24:39 -0700 (PDT)
+        Sun, 9 Oct 2022 17:10:16 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9241238697;
+        Sun,  9 Oct 2022 14:04:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=d8Zf3BsxO45m3r/45zObKvChnR3gfGHDc8wwHfVB+mM=;
-        b=Jo9FydsSo3KFqrMCPz1dJsMMf24LFsWe5cCzzTzQDbtFmRMvq1lX56myj+xDLnPLlF
-         MUZEZXHctCl7yP//dIcPizkSs76q1iHU4aukA2TogMY3zvIRIq+1xArPgUZJmPnoZakX
-         LONOD0jWD0X5Reod3urH0E05Jc9rfxhqydw6tF0uK5uBZfJwq+JbzDj1ko9Tj2KYuC/F
-         eDzeaeOvFbzXGHrpkZbSAk4tcmLAJA8NkWeCWXng7V0+uF27JUMKsA3OqAgISqFLQZ2Z
-         NoJf2V0YtA6NHTE1ecsbqEfwzX6xO7J+kQs0rkCMMxT5G0u1Xb+n+upE+Y8JpHswZ1mP
-         BvlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=d8Zf3BsxO45m3r/45zObKvChnR3gfGHDc8wwHfVB+mM=;
-        b=IDklwOFCzHGVgdu+skZdluvCvaf882a3Vl8bqETEGlU/X02heBxB1FM34YgX/5Knec
-         z/hDjhMkVd1asEz82jt9pcNANS2Ye95GRlOSrKu3VtcwuDvNvCu6ofBlRpK+cHKnctwO
-         HHC0MLwgS158atR2iM9fu6uj9E8rhmqZqsyBL+ZHbX9B6jNpEVwhpcpP+tnfJCcnZAId
-         XwoZHbMUuC84hWdyjtpslsf48VUtCZ7NKB1+sRchB9VfQkDV+TyC4lLiGkpkfWdPBHiV
-         LHqM/jxNy/Um0cK345/JfadkJxiom3akAikGdp29oaF1BCp8iyS562sPlo8LXyAZzBGX
-         qMyQ==
-X-Gm-Message-State: ACrzQf2rfkB+ZnEPKFVky1Zz7SSeHILR/kO7jHqKwGJwcYrt+vo7ryDK
-        TrgALG3b3X7ig7UxMUmbDpG5pw==
-X-Google-Smtp-Source: AMsMyM66JUJ2jqCOTzPTtqfXv5I+mno/7wauBHCBh7zYyj1HZ/eXqdJXn8tZeHWFk4fcR/T4hyf7Pw==
-X-Received: by 2002:a05:651c:1590:b0:26c:4311:9b84 with SMTP id h16-20020a05651c159000b0026c43119b84mr5816939ljq.152.1665343477534;
-        Sun, 09 Oct 2022 12:24:37 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id n17-20020a0565120ad100b0049936272173sm1111974lfu.204.2022.10.09.12.24.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 09 Oct 2022 12:24:37 -0700 (PDT)
-Message-ID: <13755211-82fe-937b-f96e-966a55e68917@linaro.org>
-Date:   Sun, 9 Oct 2022 22:24:36 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1665349471; x=1696885471;
+  h=message-id:date:mime-version:from:subject:to:cc:
+   references:in-reply-to:content-transfer-encoding;
+  bh=YEYGFGEhRUF1GvIBQpFpZ4vv7/I8t1gr51UudbUv544=;
+  b=Bs7jzHJRIvuHHpNEGGD1xeqCUt9TOTEHsqX+75/607+77Vnmzr5KzyMF
+   8JJmog56YXTl1O9mnCwoFOykHY6lmiYkCbUT9ErTAspZbZtOUngjoyn8V
+   1ZszqJJKBBsdQ+5uA2j+ZhKp89G/9qgZ0HRvLYOuCKV6zxeqhomYFMXIk
+   4=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Oct 2022 13:59:23 -0700
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2022 13:59:23 -0700
+Received: from [10.110.10.240] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Sun, 9 Oct 2022
+ 13:59:22 -0700
+Message-ID: <615493a8-449d-b105-709e-0642dfb5359b@quicinc.com>
+Date:   Sun, 9 Oct 2022 13:59:21 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH v3 08/10] drm/msm/dsi: Account for DSC's bits_per_pixel
- having 4 fractional bits
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, Vinod Koul <vkoul@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20221009184824.457416-1-marijn.suijten@somainline.org>
- <20221009185316.462522-1-marijn.suijten@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221009185316.462522-1-marijn.suijten@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+From:   Elliot Berman <quic_eberman@quicinc.com>
+Subject: Re: [PATCH v4 14/14] tty: gunyah: Add tty console driver for RM
+ Console Services
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>
+CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        "Will Deacon" <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        "Arnd Bergmann" <arnd@arndb.de>, <devicetree@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20220928195633.2348848-1-quic_eberman@quicinc.com>
+ <20220928195633.2348848-15-quic_eberman@quicinc.com>
+ <YzbePxTF8hRbWNRU@kroah.com>
+ <14d0ff9f-60f3-71cc-ea42-ceee389298ac@quicinc.com>
+ <Yz/YBDqqwBUlswgX@kroah.com>
+Content-Language: en-US
+In-Reply-To: <Yz/YBDqqwBUlswgX@kroah.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/10/2022 21:53, Marijn Suijten wrote:
-> drm_dsc_config's bits_per_pixel field holds a fractional value with 4
-> bits, which all panel drivers should adhere to for
-> drm_dsc_pps_payload_pack() to generate a valid payload.  All code in the
-> DSI driver here seems to assume that this field doesn't contain any
-> fractional bits, hence resulting in the wrong values being computed.
-> Since none of the calculations leave any room for fractional bits or
-> seem to indicate any possible area of support, disallow such values
-> altogether.  calculate_rc_params() in intel_vdsc.c performs an identical
-> bitshift to get at this integer value.
+
+
+On 10/7/2022 12:40 AM, Greg Kroah-Hartman wrote:
+> On Thu, Oct 06, 2022 at 10:59:51PM -0700, Elliot Berman wrote:
+>>
+>> "GH" is the shorthand we've been using for "Gunyah". I didn't find
+>> documentation for dynamically assigned char devices, but if it exists, I can
+>> add entry for ttyGH.
 > 
-> Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-> ---
->   drivers/gpu/drm/msm/dsi/dsi_host.c | 19 ++++++++++++++-----
->   1 file changed, 14 insertions(+), 5 deletions(-)
+> Why use a new name at all?  Why not stick with the existing tty names
+> and device numbers?
 > 
 
--- 
-With best wishes
-Dmitry
+I can use hvc framework, although driver-level buffering is needed on
+both the get_chars/put_chars paths because:
 
+  - get_chars wants to poll for characters, but Gunyah will push
+    characters to Linux
+  - put_chars can be called in atomic context in the printk console path.
+    Gunyah RM calls can sleep, so we add to buffer and queue work to
+    write the characters.
+
+I also chose to use new tty driver because the Gunyah hypervisor call to 
+open the console (gh_rm_console_open) can only be done after starting 
+the VM. Gunyah will only forward characters sent from the other VM to 
+Linux after the gh_rm_console_open call is made. When launching a VM, 
+users would want to open console before VM starts so they can get 
+startup messages from the VM. I planned to use the carrier_raised() to 
+hold tty_port_block_until_ready until the VM is started and the 
+gh_rm_console_open() happens.
+
+Thanks,
+Elliot
