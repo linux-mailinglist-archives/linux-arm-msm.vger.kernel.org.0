@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D24805F95D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Oct 2022 02:25:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1B045F95D1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Oct 2022 02:25:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232480AbiJJAZp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Oct 2022 20:25:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35980 "EHLO
+        id S232027AbiJJAZo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Oct 2022 20:25:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232370AbiJJAW6 (ORCPT
+        with ESMTP id S232918AbiJJAXx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Oct 2022 20:22:58 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21D33178A4;
-        Sun,  9 Oct 2022 16:56:50 -0700 (PDT)
+        Sun, 9 Oct 2022 20:23:53 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EC453DBE5;
+        Sun,  9 Oct 2022 16:57:42 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AD62C60DD1;
-        Sun,  9 Oct 2022 23:56:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C1DC43470;
-        Sun,  9 Oct 2022 23:56:47 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 65E6160CBB;
+        Sun,  9 Oct 2022 23:57:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63C5C43142;
+        Sun,  9 Oct 2022 23:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1665359809;
-        bh=mUdPkcinbaaDmr2EIH5eTUOcBG9ba61MG0Xo4Gj1jWg=;
+        s=k20201202; t=1665359860;
+        bh=lMngYpEaHn+GSZ8B6h5KSHU2ZLlH+zvHYVzQIpHhrHI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=GtUOlOsHjzXm9s5XB3toQrBf7ybnVE1PiBpm2FKfHcSAT5APrs4I7zyVqU/5OogOm
-         s5VYJKWYAzIRxYLAmv9stft2b94GkQvksvu8/hF6MDALzYmeoYJ/7TKjJRTTNO5mkl
-         gIc8z0HouqOspftqn8UFDcyJsNhbl4zlp+xKZkNWHOY2rhXTsxrqYdqnpLLJYr5M7Y
-         LbBRSdFs8aMuVmsQU1vVt2an+C6rL7DXqWPtpN/JFHUmszilRLoV8tvYtV3ZHF/tOY
-         2ezMm7ZD3o/dLcgT54PHB68EN5c4I4Bj3YF4BHCxpPYHCy68cauaVBTr3bHAj3onOV
-         3LaW0boZmrZjw==
+        b=e2Qv/c1zHT+Ng42InjKOilpqk2/+Ty47quvqY4ZdRDiQU1mQ4a/r4tABNGrRQYOdo
+         D3oIN7eFHSZpf6lccCPQBOjC24YgiBAiOhAUgneaZcjqRDJpDim6Zmcb274Wq97dql
+         2vxxKaGeM2vnSMDd8TQfju8ypXVB1gMs+zytEQKD3veF69v5cARyfFcHnJylXsQFu2
+         dKAYyVlwwzZGtcnRuKxWhqvQ+O5J7qxjRCLlw+dO6pXr0domAHRzUK7aXBxb6+MU7L
+         FkGH8ccUlPHFaAWrX6ehoOJoNxbdlmxz+Bs95LqF1S0VqyG2MU2g/gd4sI7skijAue
+         9QfYZCr0LRa2A==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Richard Acayan <mailingradian@gmail.com>,
         Bhupesh Sharma <bhupesh.sharma@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Ulf Hansson <ulf.hansson@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, adrian.hunter@intel.com,
-        agross@kernel.org, andersson@kernel.org, linux-mmc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 19/22] mmc: sdhci-msm: add compatible string check for sdm670
-Date:   Sun,  9 Oct 2022 19:55:37 -0400
-Message-Id: <20221009235540.1231640-19-sashal@kernel.org>
+        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
+        andersson@kernel.org, adrian.hunter@intel.com,
+        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 13/14] mmc: sdhci-msm: add compatible string check for sdm670
+Date:   Sun,  9 Oct 2022 19:57:09 -0400
+Message-Id: <20221009235710.1231937-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221009235540.1231640-1-sashal@kernel.org>
-References: <20221009235540.1231640-1-sashal@kernel.org>
+In-Reply-To: <20221009235710.1231937-1-sashal@kernel.org>
+References: <20221009235710.1231937-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -79,17 +79,17 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 192cb8b20b47..ad2e73f9a58f 100644
+index 8ab963055238..5e6f6c951fd4 100644
 --- a/drivers/mmc/host/sdhci-msm.c
 +++ b/drivers/mmc/host/sdhci-msm.c
-@@ -2182,6 +2182,7 @@ static const struct sdhci_msm_variant_info sm8250_sdhci_var = {
+@@ -1755,6 +1755,7 @@ static const struct sdhci_msm_variant_info sdm845_sdhci_var = {
  static const struct of_device_id sdhci_msm_dt_match[] = {
  	{.compatible = "qcom,sdhci-msm-v4", .data = &sdhci_msm_mci_var},
  	{.compatible = "qcom,sdhci-msm-v5", .data = &sdhci_msm_v5_var},
 +	{.compatible = "qcom,sdm670-sdhci", .data = &sdm845_sdhci_var},
  	{.compatible = "qcom,sdm845-sdhci", .data = &sdm845_sdhci_var},
- 	{.compatible = "qcom,sm8250-sdhci", .data = &sm8250_sdhci_var},
- 	{.compatible = "qcom,sc7180-sdhci", .data = &sdm845_sdhci_var},
+ 	{},
+ };
 -- 
 2.35.1
 
