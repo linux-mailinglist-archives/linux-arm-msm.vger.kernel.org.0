@@ -2,84 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3760C5F8ECE
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Oct 2022 23:10:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B9365F9518
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Oct 2022 02:15:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231144AbiJIVKj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Oct 2022 17:10:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36202 "EHLO
+        id S231950AbiJJAP0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Oct 2022 20:15:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231225AbiJIVKQ (ORCPT
+        with ESMTP id S231616AbiJJANv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Oct 2022 17:10:16 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9241238697;
-        Sun,  9 Oct 2022 14:04:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1665349471; x=1696885471;
-  h=message-id:date:mime-version:from:subject:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=YEYGFGEhRUF1GvIBQpFpZ4vv7/I8t1gr51UudbUv544=;
-  b=Bs7jzHJRIvuHHpNEGGD1xeqCUt9TOTEHsqX+75/607+77Vnmzr5KzyMF
-   8JJmog56YXTl1O9mnCwoFOykHY6lmiYkCbUT9ErTAspZbZtOUngjoyn8V
-   1ZszqJJKBBsdQ+5uA2j+ZhKp89G/9qgZ0HRvLYOuCKV6zxeqhomYFMXIk
-   4=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Oct 2022 13:59:23 -0700
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2022 13:59:23 -0700
-Received: from [10.110.10.240] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Sun, 9 Oct 2022
- 13:59:22 -0700
-Message-ID: <615493a8-449d-b105-709e-0642dfb5359b@quicinc.com>
-Date:   Sun, 9 Oct 2022 13:59:21 -0700
+        Sun, 9 Oct 2022 20:13:51 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55CD65F6C;
+        Sun,  9 Oct 2022 16:51:51 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id E0097B80C74;
+        Sun,  9 Oct 2022 23:51:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855E0C43141;
+        Sun,  9 Oct 2022 23:51:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1665359508;
+        bh=ThY2MOp/n/nLpFQXMwnUVPXfqCJib/tNxueBla8bxI4=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=uFPnJLpGiupSaFUpuWCapFeYUCbMV1we+3JhFkkYWRUO38bWQPMRD3VeqhTCLydot
+         qwnO8A4TYf9wQLoLmlJjBu5wgcim/giNJVLuBZjmZIHgdVV2jU4ukH+tQtDloz2g1N
+         +j1UcgNXA6Pg91pamjRTicXXOEU38AUOZHWDV4tNZtYD90g8e20Y354Y6P6E0wT8/k
+         S4hyqCuUnba5K9/WVB10Hb0dCIh+qwT9oQSg8Hfqk1rym48NiVepm8Ip0oN0De5pyx
+         ZlonHt+NaCQgXpFnuWoXyylBr8V7JpdPmnMGtKeCD735zadN+M7F2AF6ZGUcLnT2tA
+         inkMUDBug5WiA==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Richard Acayan <mailingradian@gmail.com>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
+        andersson@kernel.org, adrian.hunter@intel.com,
+        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.0 39/44] mmc: sdhci-msm: add compatible string check for sdm670
+Date:   Sun,  9 Oct 2022 19:49:27 -0400
+Message-Id: <20221009234932.1230196-39-sashal@kernel.org>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20221009234932.1230196-1-sashal@kernel.org>
+References: <20221009234932.1230196-1-sashal@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-From:   Elliot Berman <quic_eberman@quicinc.com>
-Subject: Re: [PATCH v4 14/14] tty: gunyah: Add tty console driver for RM
- Console Services
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>
-CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        "Will Deacon" <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        "Arnd Bergmann" <arnd@arndb.de>, <devicetree@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20220928195633.2348848-1-quic_eberman@quicinc.com>
- <20220928195633.2348848-15-quic_eberman@quicinc.com>
- <YzbePxTF8hRbWNRU@kroah.com>
- <14d0ff9f-60f3-71cc-ea42-ceee389298ac@quicinc.com>
- <Yz/YBDqqwBUlswgX@kroah.com>
-Content-Language: en-US
-In-Reply-To: <Yz/YBDqqwBUlswgX@kroah.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,36 +60,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Richard Acayan <mailingradian@gmail.com>
 
+[ Upstream commit 4de95950d970c71a9e82a24573bb7a44fd95baa1 ]
 
-On 10/7/2022 12:40 AM, Greg Kroah-Hartman wrote:
-> On Thu, Oct 06, 2022 at 10:59:51PM -0700, Elliot Berman wrote:
->>
->> "GH" is the shorthand we've been using for "Gunyah". I didn't find
->> documentation for dynamically assigned char devices, but if it exists, I can
->> add entry for ttyGH.
-> 
-> Why use a new name at all?  Why not stick with the existing tty names
-> and device numbers?
-> 
+The Snapdragon 670 has the same quirk as Snapdragon 845 (needing to
+restore the dll config). Add a compatible string check to detect the need
+for this.
 
-I can use hvc framework, although driver-level buffering is needed on
-both the get_chars/put_chars paths because:
+Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20220923014322.33620-3-mailingradian@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/mmc/host/sdhci-msm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-  - get_chars wants to poll for characters, but Gunyah will push
-    characters to Linux
-  - put_chars can be called in atomic context in the printk console path.
-    Gunyah RM calls can sleep, so we add to buffer and queue work to
-    write the characters.
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index dc2991422a87..3a091a387ecb 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -2441,6 +2441,7 @@ static const struct of_device_id sdhci_msm_dt_match[] = {
+ 	 */
+ 	{.compatible = "qcom,sdhci-msm-v4", .data = &sdhci_msm_mci_var},
+ 	{.compatible = "qcom,sdhci-msm-v5", .data = &sdhci_msm_v5_var},
++	{.compatible = "qcom,sdm670-sdhci", .data = &sdm845_sdhci_var},
+ 	{.compatible = "qcom,sdm845-sdhci", .data = &sdm845_sdhci_var},
+ 	{.compatible = "qcom,sc7180-sdhci", .data = &sdm845_sdhci_var},
+ 	{},
+-- 
+2.35.1
 
-I also chose to use new tty driver because the Gunyah hypervisor call to 
-open the console (gh_rm_console_open) can only be done after starting 
-the VM. Gunyah will only forward characters sent from the other VM to 
-Linux after the gh_rm_console_open call is made. When launching a VM, 
-users would want to open console before VM starts so they can get 
-startup messages from the VM. I planned to use the carrier_raised() to 
-hold tty_port_block_until_ready until the VM is started and the 
-gh_rm_console_open() happens.
-
-Thanks,
-Elliot
