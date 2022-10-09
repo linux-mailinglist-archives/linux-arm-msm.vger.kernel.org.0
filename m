@@ -2,86 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83DB05F8C00
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Oct 2022 17:25:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E00885F8CA9
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Oct 2022 19:46:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230138AbiJIPZV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Oct 2022 11:25:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59444 "EHLO
+        id S230027AbiJIRq3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Oct 2022 13:46:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230038AbiJIPZU (ORCPT
+        with ESMTP id S229986AbiJIRq2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Oct 2022 11:25:20 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D10A1D308
-        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Oct 2022 08:25:19 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id g11so704595qts.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Oct 2022 08:25:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zMWBP42bcqYR/9/IcRRsvCkgoPBmDNpE4tq769Q64oI=;
-        b=hzPt6d3JeW0Footcf5s588X/R44BO81hmMDQLXWaFZJY5KbRKNCumivhg/rE96IjH2
-         Kw0XoDHKhAOlIOhvgoIrD7k8SILH88ecSk16n/o8Wg6aV25QILm+OGF1vXYxAT3e77FQ
-         Ew7GlZ/QGNq7w36LYmKwZFNscIEGwPkYA1qgHpBf1koWgvgZeM03ZIm1rqptWbZIAsE/
-         X1tYIXazKHgCvi13Dvhr3XD2f/0oLPr2loqEQJOBzPUwJ1svmyqKy6wL1eE8l80zrIPj
-         lN6u8JkgPlyu1zkDaYukKKjsJ1xvIbxYYq+bQhQ91CFCjJmBB5gE+lKOgF7WYjGjPIDX
-         0Atg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zMWBP42bcqYR/9/IcRRsvCkgoPBmDNpE4tq769Q64oI=;
-        b=KIUccpaCpjLIioCgzDiKqv18TPNYgWPl58A7lJsjlIzXjma35+J4Cu4VX73tHlI/gx
-         AnhVfYJbA6L6FT0YQzWM7LSlFI3pBOwHTjrUcVqcHvxF1JG1AzjWzIV5qTWDtf1FrwQ5
-         oqV95H31exYYbgSjR1hPg9CEcxI5NPsIqQC3RCTF1sPL8HbaUwPTCSBDS1uKru7rQTKg
-         6mujdnhsocdcLr0HOOAo26/BLNr5BhYjo20kfs9cS272pcdGrGSSJ+ofFZs2WFwvZy6l
-         3KchR/4bpyoO6zTTpgPLKjGP7QnMOmx1dzgW2af1BxH7futwsdN7Un496Ed7PAFHLyLe
-         lgZQ==
-X-Gm-Message-State: ACrzQf1IVCTy0ZrJbsvvSkws5ZWRPAynYLUTLO6lDueTXsyspoVhq/CI
-        OhynShvE/U9x03yvOCOruVJcSw==
-X-Google-Smtp-Source: AMsMyM6WOzEKoFOz4nRaUQLwSDLVPIGwcjJ8aEcuHay/BBUrycXh6QCMWv6+memfJTEi64NCDRE5Tw==
-X-Received: by 2002:ac8:7e94:0:b0:38e:2bea:9dd9 with SMTP id w20-20020ac87e94000000b0038e2bea9dd9mr11825064qtj.67.1665329118301;
-        Sun, 09 Oct 2022 08:25:18 -0700 (PDT)
-Received: from [192.168.1.57] (cpe-72-225-192-120.nyc.res.rr.com. [72.225.192.120])
-        by smtp.gmail.com with ESMTPSA id fp25-20020a05622a509900b0034305a91aaesm6549834qtb.83.2022.10.09.08.25.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 09 Oct 2022 08:25:17 -0700 (PDT)
-Message-ID: <e829329e-ac55-e04a-c8ab-4eeeec6217ab@linaro.org>
-Date:   Sun, 9 Oct 2022 17:23:06 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH 5.10 1/1] rpmsg: qcom: glink: replace strncpy() with
- strscpy_pad()
-Content-Language: en-US
-To:     David Laight <David.Laight@ACULAB.COM>,
-        'Greg Kroah-Hartman' <gregkh@linuxfoundation.org>,
-        Andrew Chernyakov <acherniakov@astralinux.ru>
+        Sun, 9 Oct 2022 13:46:28 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98B5323BE7
+        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Oct 2022 10:46:25 -0700 (PDT)
+Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 9A06E3EECF;
+        Sun,  9 Oct 2022 19:46:22 +0200 (CEST)
+Date:   Sun, 9 Oct 2022 19:46:21 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-remoteproc@vger.kernel.org" <linux-remoteproc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "stable@vger.kernel.org" <stable@vger.kernel.org>,
-        "lvc-project@linuxtesting.org" <lvc-project@linuxtesting.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20221007132931.123755-1-acherniakov@astralinux.ru>
- <20221007132931.123755-2-acherniakov@astralinux.ru>
- <Y0BWc6A8C++M9TWP@kroah.com>
- <36f776cbc16f4e988d96b7bcb77cd559@AcuMS.aculab.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <36f776cbc16f4e988d96b7bcb77cd559@AcuMS.aculab.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Martin Botka <martin.botka@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 34/40] arm64: dts: qcom: sm6125: align TLMM pin
+ configuration with DT schema
+Message-ID: <20221009174621.ecamh76faoibuykv@SoMainline.org>
+References: <20220912061746.6311-1-krzysztof.kozlowski@linaro.org>
+ <20220912061746.6311-35-krzysztof.kozlowski@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220912061746.6311-35-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,34 +52,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/10/2022 23:11, David Laight wrote:
->>> ---
->>>  drivers/rpmsg/qcom_glink_native.c | 2 +-
->>>  drivers/rpmsg/qcom_smd.c          | 4 ++--
->>>  2 files changed, 3 insertions(+), 3 deletions(-)
->>
->> Why just this specific kernel branch?  We can't add patches to an older
->> tree and have someone upgrade to a newer one and hit the same issue.
->>
->> So please provide backports for all active versions.  In this case that
->> would be 5.15.y and 5.19.y.
+On 2022-09-12 08:17:40, Krzysztof Kozlowski wrote:
+> DT schema expects TLMM pin configuration nodes to be named with '-state'
+> suffix and their optional children with '-pins' suffix.
 > 
-> If it is only fixing a compile warning is it even stable material?
-> The generic commit message doesn't say whether the old code was
-> actually right or wrong.
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts  |  4 ++--
+>  arch/arm64/boot/dts/qcom/sm6125.dtsi                   | 10 +++++-----
+>  2 files changed, 7 insertions(+), 7 deletions(-)
 > 
-> At least one of these 'replace strncpy()' changes was definitely
-> broken (the copy needed to be equivalent to memcpy()).
+> diff --git a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
+> index 0aad2e94e757..6a8b88cc4385 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
+> @@ -87,7 +87,7 @@ &hsusb_phy1 {
+>  };
+>  
+>  &sdc2_off_state {
+> -	sd-cd {
+> +	sd-cd-pins {
+>  		pins = "gpio98";
+>  		drive-strength = <2>;
+>  		bias-disable;
+> @@ -95,7 +95,7 @@ sd-cd {
+>  };
+>  
+>  &sdc2_on_state {
+> -	sd-cd {
+> +	sd-cd-pins {
+>  		pins = "gpio98";
+>  		drive-strength = <2>;
+>  		bias-pull-up;
+> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> index 8c582a9e4ada..1fe3fa3ad877 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+> @@ -387,19 +387,19 @@ tlmm: pinctrl@500000 {
+>  			#interrupt-cells = <2>;
+>  
+>  			sdc2_off_state: sdc2-off-state {
+> -				clk {
+> +				clk-pins {
+>  					pins = "sdc2_clk";
+>  					drive-strength = <2>;
+>  					bias-disable;
+>  				};
+>  
+> -				cmd {
+> +				cmd-pins {
+>  					pins = "sdc2_cmd";
+>  					drive-strength = <2>;
+>  					bias-pull-up;
+>  				};
+>  
+> -				data {
+> +				data-pins {
+>  					pins = "sdc2_data";
+>  					drive-strength = <2>;
+>  					bias-pull-up;
+> @@ -413,13 +413,13 @@ clk {
+>  					bias-disable;
+>  				};
+>  
+> -				cmd {
+> +				cmd-pins-pins {
+
+Is this double -pins-pins suffix intended?
+
+- Marijn
+
+>  					pins = "sdc2_cmd";
+>  					drive-strength = <10>;
+>  					bias-pull-up;
+>  				};
+>  
+> -				data {
+> +				data-pins {
+>  					pins = "sdc2_data";
+>  					drive-strength = <10>;
+>  					bias-pull-up;
+> -- 
+> 2.34.1
 > 
-> So applying ANY of them to stable unless they actually fix
-> a real bug seems dubious.
-
-Except the warning from GCC, there was no bug to fix. The warning is
-about discouraged and risky practice, but no actual real risk was
-identified, so for me it matches stable rules poorly.
-
-It's basically backporting to silence automated code checkers...
-
-Best regards,
-Krzysztof
-
