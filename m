@@ -2,56 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C68FE5F9DE5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Oct 2022 13:47:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58FC15F9E4A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Oct 2022 14:04:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232283AbiJJLrF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Oct 2022 07:47:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45116 "EHLO
+        id S232290AbiJJMEK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Oct 2022 08:04:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232221AbiJJLqf (ORCPT
+        with ESMTP id S231891AbiJJMEJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Oct 2022 07:46:35 -0400
-Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB3A457E16
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Oct 2022 04:46:32 -0700 (PDT)
-Received: by mail-qv1-xf30.google.com with SMTP id h10so6942934qvq.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Oct 2022 04:46:32 -0700 (PDT)
+        Mon, 10 Oct 2022 08:04:09 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4AB961B3B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Oct 2022 05:04:02 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id e18so6704888wmq.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Oct 2022 05:04:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B5hMN0AShy2iBlveQhyBkxGJolgv+xG6vrXT/lkbIvU=;
-        b=RA7bz48A0fK05FT4rAM8zEboV7OsQuNPAErJ0KbaZzZvxO2TWTA3vwUq4ajIKbBzhS
-         7EWRXZYdEZzLln3008G+lPIjRwSyRT572MNrpPtatva+II89vbvlp3QTxsJhpUfd1fHy
-         /wgUjciIB4vY5nWqorE7w1/CAvTsDK9wP92muHGjmxe6FRGhoEH/Ky1MHRTElOy9R9Bu
-         EuMsSmVYcwI6RGFA+kipg/fqJIx6zh00UXjhyOo3oS8HMerjxBMJkQrOUPNV/O1ycttR
-         Y9KNB7ipYDxscRW+Cjhe14lirUp0zXMRmFzK8W7r2jMXGCWcQhUsQKwqj4NU/BUqZsOB
-         ifKQ==
+        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=anupc4X0yEkslqWKC62ceahK3G1bRO/6awTx/DjrXFY=;
+        b=XNtx65jOCrdtHOvpAYPzGEIcsToZ4E+YRQ+lQ3tLDOQVnAjXzokwPSIV8KHt3qrQ5A
+         xwgc3UHA4CJewkbWylvogz2sTkeGXeImQTKW4Mbcw9iLxfQHkMUDIzxWx7Tft0CjC4Si
+         TYbZ9dtRJ1F2Z0Y+bfq5WdW1+otL8ZFbsBOibPag9I7tjHQN3Jb7mJy6umHqsCLlnG3F
+         7r1DUoZW1Nz/ZgQ8dPk7lbHj4vkfysJe7ZuWcQbMdDYxsevfZz/Na6uWVdTBQjIsKtVP
+         MHFE6smnhcoWlE4DBg9KaGikefc/unMT13qTaE3jpepbPnd5Krdqt+rwo1i6JgpapflS
+         uzgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=B5hMN0AShy2iBlveQhyBkxGJolgv+xG6vrXT/lkbIvU=;
-        b=4I5XohMy3hKUtynV/iozzjmbaiWxnY4gxjO4cUH8XsWTkhu6WhIx8ENwYd+S1snR2t
-         Vibk3PxAgCswwEaXKfIs4A5XU7JSdSbk3SZpE+rJkxrGTgAVXVaDvZA8IJScEY/FqfEk
-         8kzMq7t1MOfzhZ3wl2Hg5YFA3+dW+53aA5OmWKIA6vA6PED4rjik5U5UACzSHIkqPwGf
-         b4qWZY8Dz0dX1GuxcL3EWzOj9ZYLgAIWGyDPBGQfGNMxtBEURXOq4+CSLFKVVVAD2l14
-         merFFByUe5IlE7QOFZo/Sg3ju1QXE0jcw5RaYy1F/14uAuHK/24JgrTbfgknFcG4w53U
-         GzoA==
-X-Gm-Message-State: ACrzQf3NCT6HCMHo6iLUmtbZp51zRxVv5xBA0N/1MaufE2RqeXb29Qtd
-        xb9Z6BBRHtoRWdijEMz4jwI5XA==
-X-Google-Smtp-Source: AMsMyM7NYDPlnuFVi7kv4exVXiPLFWMbSifoAadJIpEoLZjyRpqDNKNq0gzeWcHIeV0ezEBK/PiJKA==
-X-Received: by 2002:a05:6214:508e:b0:4b1:a7ae:f5a6 with SMTP id kk14-20020a056214508e00b004b1a7aef5a6mr14175621qvb.28.1665402392179;
-        Mon, 10 Oct 2022 04:46:32 -0700 (PDT)
-Received: from krzk-bin.home (cpe-72-225-192-120.nyc.res.rr.com. [72.225.192.120])
-        by smtp.gmail.com with ESMTPSA id s12-20020a05622a178c00b003972790deb9sm6698707qtk.84.2022.10.10.04.46.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Oct 2022 04:46:31 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=anupc4X0yEkslqWKC62ceahK3G1bRO/6awTx/DjrXFY=;
+        b=7o84sKLi9CfNTDl+UCvE9cs20QwYlhOUmQVi9W+qtN1zmswGyJPP3fGKgVppBnBtVJ
+         arxLS6WZlhkX3jKWMrh8ktAb/oFgWT8P1N13OnjLNvjmR4N8dciuOodgwnxUh96SutCK
+         s6YLP7w9U6d3YUp4qlmY+3V1OfbpxN8WD6HmOXoL2vei4ZSOZVkPTrZYncsHa88evr1a
+         h3Fmajxrq4Al6mXPxOo+oDOqtDyTJ9TNP2msVNvoUaNsv8ryOu0RNfMBSc/Xokipc2gJ
+         5MPfWAf58dyg8CUJa5Ovk25EQGeT26714q4CYq1DbL3eZSnTUKLw5QbbyTAh5ZmSRTIr
+         lnnw==
+X-Gm-Message-State: ACrzQf1vsxyj6eCWDJM3YtHNYwPT8z2lzpWL/JPmBJ7Af3iG1XYjOnyx
+        KbMNLntr8PYyVf5MRatoHe5KSA==
+X-Google-Smtp-Source: AMsMyM5WhmkC9zQn6K5Zcxtc7sS4mTlFVp3bIYMUmhkCnJPdtTGjGloyPN9n0NLIBomMJYMAAlkMcQ==
+X-Received: by 2002:a05:600c:198d:b0:3b4:a62c:a085 with SMTP id t13-20020a05600c198d00b003b4a62ca085mr18698587wmq.140.1665403441074;
+        Mon, 10 Oct 2022 05:04:01 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:1d81:c6ce:69e8:c0? ([2a01:e0a:982:cbb0:1d81:c6ce:69e8:c0])
+        by smtp.gmail.com with ESMTPSA id l9-20020adfe589000000b0022e6178bd84sm8711022wrm.8.2022.10.10.05.04.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Oct 2022 05:04:00 -0700 (PDT)
+Message-ID: <6cc7ef4b-8c11-96ad-76dd-77a4e2de3d2b@linaro.org>
+Date:   Mon, 10 Oct 2022 14:03:59 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH v2 2/6] arm64: dts: qcom: sdm845-db845c: correct SPI2 pins
+ drive strength
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -66,53 +74,48 @@ To:     Andy Gross <agross@kernel.org>,
         Molly Sophia <mollysophia379@gmail.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 6/6] arm64: dts: qcom: sdm845-xiaomi-polaris: fix codec pin conf name
-Date:   Mon, 10 Oct 2022 07:44:17 -0400
-Message-Id: <20221010114417.29859-6-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221010114417.29859-1-krzysztof.kozlowski@linaro.org>
+Cc:     stable@vger.kernel.org
 References: <20221010114417.29859-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+ <20221010114417.29859-2-krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Reply-To: neil.armstrong@linaro.org
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20221010114417.29859-2-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix typo in the codec's pin name to be configured.  Mismatched name
-caused the pin configuration to be ignored.
+On 10/10/2022 13:44, Krzysztof Kozlowski wrote:
+> The pin configuration (done with generic pin controller helpers and
+> as expressed by bindings) requires children nodes with either:
+> 1. "pins" property and the actual configuration,
+> 2. another set of nodes with above point.
+> 
+> The qup_spi2_default pin configuration uses alreaady the second method
+> with a "pinmux" child, so configure drive-strength similarly in
+> "pinconf".  Otherwise the PIN drive strength would not be applied.
+> 
+> Fixes: 8d23a0040475 ("arm64: dts: qcom: db845c: add Low speed expansion i2c and spi nodes")
+> Cc: <stable@vger.kernel.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> Not tested on hardware.
+> 
+> Changes since v1:
+> 1. Put it under pinconf instead of pinmux, as suggested by Doug.
+> ---
 
-Fixes: be497abe19bf ("arm64: dts: qcom: Add support for Xiaomi Mi Mix2s")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Tested-by: Molly Sophia <mollysophia379@gmail.com>
+<snip>
 
----
-
-Changes since v1:
-1. Add tags.
----
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-index afc17e4d403f..f98259489679 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-@@ -628,7 +628,7 @@ sde_dsi_suspend: sde-dsi-suspend {
- 	};
- 
- 	wcd_intr_default: wcd-intr-default {
--		pins = "goui54";
-+		pins = "gpio54";
- 		function = "gpio";
- 		input-enable;
- 		bias-pull-down;
--- 
-2.34.1
-
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
