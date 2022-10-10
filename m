@@ -1,72 +1,70 @@
 Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3150C5FA89B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 01:24:15 +0200 (CEST)
+Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
+	by mail.lfdr.de (Postfix) with ESMTP id 12DF95FA8B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 01:44:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229992AbiJJXWj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Oct 2022 19:22:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55700 "EHLO
+        id S230090AbiJJXoI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Oct 2022 19:44:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229544AbiJJXWg (ORCPT
+        with ESMTP id S230077AbiJJXoH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Oct 2022 19:22:36 -0400
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07DFB7CB65;
-        Mon, 10 Oct 2022 16:22:35 -0700 (PDT)
-Received: by mail-il1-x129.google.com with SMTP id u10so6366770ilm.5;
-        Mon, 10 Oct 2022 16:22:35 -0700 (PDT)
+        Mon, 10 Oct 2022 19:44:07 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6084872FFB;
+        Mon, 10 Oct 2022 16:44:06 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id p16so3933428iod.6;
+        Mon, 10 Oct 2022 16:44:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xXda3aTJALziQd8LZ4HyvmpbEN2s8N724Nf4X7JuxXw=;
-        b=DiCdkPM3ayZgQGw1oFuPR+4CcnJaM+6jx805hFxp2dG/evzVYwc9uJGBEMQw9hKuPq
-         jET16b5fYgzd8HR197N65zcF5rT20s0WAAbGdvymCm35MsSdRnafDNob5dvU0FVwWfHn
-         y3A1GONfWWf7HIdBBekyJWNoM0cRyhzdEuypCmSW5jo6HJMnPXSGokfRN8GZp0BH24i3
-         y8srnBDgwJlaQeZJEp3tPcWel4/OA0W4WuCntjouXcTKhx96LxBAV1F/VkzR1aBib6Hb
-         jgqiJ+S2efWODcW/SpUbbfURA15rqAPmIMwQ1MCDbJqmc69kewk86UNQznnW3KQGKoS9
-         NgNg==
+        bh=JGXQpUDqxnEwTxBqXBwQEZ5KNzj6zmyw1kyNu9kYUSE=;
+        b=VEqaRrfWhyyGqYHS++GaZocRuEd3nh0xif6n9uJX+T6U+vm5O5SYeR3Q5jj0rgO8Cq
+         qNhwRbrLdCgQi3m2/KHn7279Jemt+zTliw9noBALte9wqzL/Ihf6Nk/4qaFZKJQBhmAt
+         0eTIGMIb7FjnpANS8pvcZ1tT+z6itQRm+UykSM1lsSqJInCeQY5tuZH4QrRedBP3ZLnN
+         eAbTCQSD1QHEvRK4dyYwfuinkYnfOtMIlb3WhFA+hr2GNl8MmgWwN1iFNK5RAKOPVyME
+         STjgnTzMfa442rkhHzfN3jUtpZyJuXQVrlD3Q30TAuluvtTv1LTvusK06PQyi0NWBgX7
+         RoAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xXda3aTJALziQd8LZ4HyvmpbEN2s8N724Nf4X7JuxXw=;
-        b=Rjl28wIrIeXNNCc6rHFkShSwgqW9UkcsTZ1Q8JVxPlHUmv+nQIQXB4F9zmebrdWTk0
-         cxil0yh4qaBcOEc/e1f5pxVauiDkYwAg+O3D6J3vmePuMiVQfV+lsHgpm7NvS1pg+qag
-         afB9z9Sd2Nyj1tCLZG/sdvWPSygp31AIgWQwY22gWJn7RPi1HHf9cFHM+HaOCm9HzuCF
-         MxSkjem9ESVt7S+SSNDEJZrCjsCsRJ8RQFDqBIzHVNqtglXKB3CpDSgps4WOD/JMrq/x
-         lUVK7LaYod0+T8DTgg2z54kq/rcy/BkJrTPF+VWVVyHhvmkr9W9VCxjcE+C9XtXl6hav
-         4z1w==
-X-Gm-Message-State: ACrzQf0AJlTWD9zfrZGQMTmAmDXOMfor/+8XL+So4DXO7eYgMYe0jhB2
-        JmoKRhQ5YUd9pW05lbYrq7ggCqVgTw2yKA==
-X-Google-Smtp-Source: AMsMyM6czbGTLFOK8h5xrObQR2p50k9F6EeWMjxD0SKBxhkM17PfkoMsy3Ks6dj7cIpjBmV3+OJFGg==
-X-Received: by 2002:a92:ca4d:0:b0:2f9:3e9e:e566 with SMTP id q13-20020a92ca4d000000b002f93e9ee566mr10533363ilo.165.1665444154326;
-        Mon, 10 Oct 2022 16:22:34 -0700 (PDT)
+        bh=JGXQpUDqxnEwTxBqXBwQEZ5KNzj6zmyw1kyNu9kYUSE=;
+        b=2yOlC+zbWy/SHtI95F7HWwXSgmeMHjL19FzB0frQ0+QBfIpnYaZry+LRlQt1BjWX65
+         szjT+DICElNkC8Iw7tpZ/m4REXsLIZ7KbFALV/huvdYwlBqSff9KH4msO+z+xOckTyZd
+         lU1c0z4NWKxxqVwn5DezwALJKhGL/iUntFQ32J1IVWlLHSV4gphpF15fpZ5abqGDW3gv
+         KWAZbjWA1TFxWctkan73T7znfLGjyqbAnhRt6p5yTImLj2vO0rOGtc1jSavB/IYs45v9
+         kQWhsqtH0OqiMKRn6UFwOlhWAevOUyzf9VVvDscj0rjHTFSaz1hp0/VFpwssnG2p71LC
+         DoBQ==
+X-Gm-Message-State: ACrzQf3RKi/pu5d80c0Po8KyPzIfTi7uFlV1Tms1n5tAsYaaTY/aF29l
+        XGhy9Pe3NRJE0fIcL2xzdSw=
+X-Google-Smtp-Source: AMsMyM7uy9ysKxSzfhAJ3o38ZApkJ4J4EA0HNO9tCKB/mY40u6SxiLwggHcVon//bqOfvE8sh32r5Q==
+X-Received: by 2002:a05:6638:1411:b0:363:c9fa:a6c1 with SMTP id k17-20020a056638141100b00363c9faa6c1mr1644106jad.306.1665445445649;
+        Mon, 10 Oct 2022 16:44:05 -0700 (PDT)
 Received: from localhost ([2607:fea8:a2e2:2d00::deb2])
-        by smtp.gmail.com with UTF8SMTPSA id d3-20020a056e020be300b002f584a19a79sm4207450ilu.34.2022.10.10.16.22.32
+        by smtp.gmail.com with UTF8SMTPSA id a8-20020a056e02120800b002f5447b47f8sm4328028ilq.33.2022.10.10.16.44.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Oct 2022 16:22:33 -0700 (PDT)
+        Mon, 10 Oct 2022 16:44:05 -0700 (PDT)
 From:   Richard Acayan <mailingradian@gmail.com>
-To:     Lee Jones <lee@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To:     Sasha Levin <sashal@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, stable@vger.kernel.org,
         Richard Acayan <mailingradian@gmail.com>,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH v9 0/3] SDM670 Pin Control Driver
-Date:   Mon, 10 Oct 2022 19:22:25 -0400
-Message-Id: <20221010232225.209700-1-mailingradian@gmail.com>
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, adrian.hunter@intel.com,
+        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org
+Subject: Re: [PATCH AUTOSEL 6.0 39/44] mmc: sdhci-msm: add compatible string check for sdm670
+Date:   Mon, 10 Oct 2022 19:43:53 -0400
+Message-Id: <20221010234353.228833-1-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.38.0
-In-Reply-To: <Y0POmQ+xrQ/HT7RF@google.com>
-References: <20221007213241.84962-1-mailingradian@gmail.com> <Y0POmQ+xrQ/HT7RF@google.com>
+In-Reply-To: <20221009234932.1230196-39-sashal@kernel.org>
+References: <20221009234932.1230196-1-sashal@kernel.org> <20221009234932.1230196-39-sashal@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -79,30 +77,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> On Fri, 07 Oct 2022, Richard Acayan wrote:
-> > Richard Acayan (3):
-> >   dt-bindings: pinctrl: qcom: add sdm670 pinctrl
-> >   pinctrl: qcom: do not reinitialize gpio valid mask
-> >   pinctrl: qcom: add sdm670 pinctrl
-> > 
-> >  .../bindings/pinctrl/qcom,sdm670-tlmm.yaml    |  127 ++
-> >  drivers/pinctrl/qcom/Kconfig                  |    9 +
-> >  drivers/pinctrl/qcom/Makefile                 |    1 +
-> >  drivers/pinctrl/qcom/pinctrl-msm.c            |    3 +-
-> >  drivers/pinctrl/qcom/pinctrl-sdm670.c         | 1345 +++++++++++++++++
+> From: Richard Acayan <mailingradian@gmail.com>
 > 
-> And I'm receiving this because ... ?
-
-You wrote a patch a few years ago, then supposedly changed your email, and I
-wanted to know if there's anything we should consider before removing some of
-the code you wrote for it (in patch 2). After I added you as a recipient, it got
-a review tag, so I don't know what input you can give now (unless it's
-important). My bad for not removing you yet.
-
-Link: https://lore.kernel.org/all/20190610084213.1052-3-lee.jones@linaro.org/
-
+> [ Upstream commit 4de95950d970c71a9e82a24573bb7a44fd95baa1 ]
 > 
-> >  5 files changed, 1483 insertions(+), 2 deletions(-)
-> >  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
-> >  create mode 100644 drivers/pinctrl/qcom/pinctrl-sdm670.c
-> > 
+> The Snapdragon 670 has the same quirk as Snapdragon 845 (needing to
+> restore the dll config). Add a compatible string check to detect the need
+> for this.
+> 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Link: https://lore.kernel.org/r/20220923014322.33620-3-mailingradian@gmail.com
+> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index dc2991422a87..3a091a387ecb 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -2441,6 +2441,7 @@ static const struct of_device_id sdhci_msm_dt_match[] = {
+>  	 */
+>  	{.compatible = "qcom,sdhci-msm-v4", .data = &sdhci_msm_mci_var},
+>  	{.compatible = "qcom,sdhci-msm-v5", .data = &sdhci_msm_v5_var},
+> +	{.compatible = "qcom,sdm670-sdhci", .data = &sdm845_sdhci_var},
+
+Supporting device trees which are invalid under 6.0 schema? It's not a bug fix,
+it's a feature.
+
+Documentation/devicetree/bindings/mmc/sdhci-msm.yaml:17-49, at tag v6.0:
+
+    properties:
+      compatible:
+        oneOf:
+          - enum:
+              - qcom,sdhci-msm-v4
+            deprecated: true
+          - items:
+              - enum:
+                  - qcom,apq8084-sdhci
+                  - qcom,msm8226-sdhci
+                  - qcom,msm8953-sdhci
+                  - qcom,msm8974-sdhci
+                  - qcom,msm8916-sdhci
+                  - qcom,msm8992-sdhci
+                  - qcom,msm8994-sdhci
+                  - qcom,msm8996-sdhci
+                  - qcom,msm8998-sdhci
+              - const: qcom,sdhci-msm-v4 # for sdcc versions less than 5.0
+          - items:
+              - enum:
+                  - qcom,qcs404-sdhci
+                  - qcom,sc7180-sdhci
+                  - qcom,sc7280-sdhci
+                  - qcom,sdm630-sdhci
+                  - qcom,sdm845-sdhci
+                  - qcom,sdx55-sdhci
+                  - qcom,sdx65-sdhci
+                  - qcom,sm6125-sdhci
+                  - qcom,sm6350-sdhci
+                  - qcom,sm8150-sdhci
+                  - qcom,sm8250-sdhci
+                  - qcom,sm8450-sdhci
+              - const: qcom,sdhci-msm-v5 # for sdcc version 5.0
+
+I'm new to this, so I apologize if I don't understand stable kernel development.
+
+>  	{.compatible = "qcom,sdm845-sdhci", .data = &sdm845_sdhci_var},
+>  	{.compatible = "qcom,sc7180-sdhci", .data = &sdm845_sdhci_var},
+>  	{},
+> -- 
+> 2.35.1
