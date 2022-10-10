@@ -2,81 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A9C75FA379
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Oct 2022 20:40:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 470AA5FA3D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Oct 2022 20:57:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229798AbiJJSkg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Oct 2022 14:40:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39334 "EHLO
+        id S229798AbiJJS5A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Oct 2022 14:57:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229745AbiJJSkf (ORCPT
+        with ESMTP id S229942AbiJJS4n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Oct 2022 14:40:35 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE61711C17
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Oct 2022 11:40:32 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id i12so1365688qkm.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Oct 2022 11:40:32 -0700 (PDT)
+        Mon, 10 Oct 2022 14:56:43 -0400
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE3ED50F88
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Oct 2022 11:56:39 -0700 (PDT)
+Received: by mail-qk1-x72b.google.com with SMTP id z30so7194386qkz.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Oct 2022 11:56:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=09B2lIfMW5FCv/PYhSBROv85IU3XYzHTU0Y/zt/18Vc=;
-        b=xJIKm4xbDTHtlD/6nmZeJ0m4F0qWhqvcIK/AcJdYzLFhm/yTP3goZYKQo89gG7WSfM
-         9Gh+carIFB8Ex+vfQQhoXMU0k697vtnSSvhsiPNEEZAmCzzoQb3d86fORJwNzNJksxa+
-         zVNM8JQEskJyAu4PxM8IGg4dXuGUk+YNT98pbiW0Wl04KulYxTip5GMxI1AfEfhiuAZ4
-         Lf8zGCIHuxmpP0If3aKNwVJmDOrUYd2Z4NZ4XKn3LnUaBsVrQesZcsdf9jE/5rCCk9Uc
-         1ulHp7U06Hi8MIjR8ymYMV0ibx5nga+dhG3v78L92KWJCQuype/VDn9WaeiK7xfFVByE
-         xblA==
+        d=ziepe.ca; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=mfdinePb/h+FQryCI1VnJk1iVMwwW9XbS8GRZ1SXnEM=;
+        b=Y1FJnNxKCCmUeBjERypSSpOT5hLZIa3B6ZfL7TmeBlDcYn7G53u+wzaqGztD4xstS6
+         H56NjZrTnnAs/mwbv/53uHY1GhzxoFxOLWj+6+255TR+XIgzukZ2wrhnTPfXH4rpl0ll
+         x20RYa7gkPKPOAB+2GjUbYRf86UKilK/+RP5mPzo1iTwxgbIcI/NL1hAwcQva+CI+c58
+         wXQg1m452/c0qjzqE/xGhDgd9xycIGhUX5tiX7SJhqTWnYftDSAsnXqQ0qceqqSNwxFf
+         a0gsQbHVGj7OQXKVN8LpCmOTHmcWT/lMPoHErC7k7GBXJjyyytJ8h/nDzI7STIfMcpme
+         CGHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=09B2lIfMW5FCv/PYhSBROv85IU3XYzHTU0Y/zt/18Vc=;
-        b=TIvoKXMaMqP3k5YJ6qv63GlBIdCmL4juYMxlOtn7rg9S0sl9Q1LHGTzVUNcNuq74vw
-         cn1RLI5WhBBPKBG5MfV+egXCk4N813BHxC7/rsyPyZaJmjuFjxMmfEsQyssigPo9//EB
-         rxRSgB7fv19U8HA2ZTOoqxgpKlOAIwxQnZl1BTnIBdOUV+DtS0GajaH2XNj/cVym5VFN
-         v/ZSiml71WFtJaNMfqcWX2gfRwAK5cAMtXSVkw5fnVJ8igOY4dS/nuQNkokIp5CkOKFv
-         4ifMY5Vj0+y0srW2B8whb8BOvEgjGrYarHTY6SfBJCoY+2QHbZCQWdKjFghd7eld11b/
-         OoRg==
-X-Gm-Message-State: ACrzQf3Evv4ri3hIEyW82lObQrMmJv918fwBdGZ74zlVdVaazDZQOW1E
-        jDK5X25HANgNtXyUm3Psko0DDQ==
-X-Google-Smtp-Source: AMsMyM50RUj/Zs5jIlJ1Ia0KMBQ2dFhE/Svrs294KEyNiV4K5xJk+7tGEEKmPzUEBZXHKqaQbVPPrQ==
-X-Received: by 2002:a05:620a:2808:b0:6bc:5d4a:a01a with SMTP id f8-20020a05620a280800b006bc5d4aa01amr13704079qkp.371.1665427231283;
-        Mon, 10 Oct 2022 11:40:31 -0700 (PDT)
-Received: from [192.168.1.57] (cpe-72-225-192-120.nyc.res.rr.com. [72.225.192.120])
-        by smtp.gmail.com with ESMTPSA id t19-20020ac865d3000000b0035ba48c032asm8849457qto.25.2022.10.10.11.40.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Oct 2022 11:40:29 -0700 (PDT)
-Message-ID: <af4655e9-d1a0-fbd2-0724-ab358366532d@linaro.org>
-Date:   Mon, 10 Oct 2022 14:40:27 -0400
+        bh=mfdinePb/h+FQryCI1VnJk1iVMwwW9XbS8GRZ1SXnEM=;
+        b=eSWXp3BQHXACw4hIhegahzBIsd7j5BlhHA/W9B2+mCMiO5toUAvyX5a8fBuZscwetd
+         IHvo/+SJ7rkLUaUH3hBc4+ijSXMZ6+gIY9fnwJfmaznRMx/DXV8NIgGfB17AwVZn5jXH
+         nudrVfmNuE4U9TNwN5ufDkPZ6BB+nEgfvAWdUfFbB+mFy8H7dqYK1tC6+hi3Jfrf0OCp
+         QrG5vkzpJpj88uLQghjK5ykeZVnSzZ6TOnedpplVKeefGT+H6I/canpFvnerB7c0tDFt
+         dJdF6otYe7sie5K5TPm/t8aKJf0idJPGDQ8I0v/pCfEPMsvdPxwnSN7St8ARUU4k9jS/
+         4FyQ==
+X-Gm-Message-State: ACrzQf0t/vCKdlV1Dd5AnYtLSXCxswfobgE8udvWvxepxn0zhiL2BgLF
+        l2memOv9fWQB+R7MclPgK/Q8Yg==
+X-Google-Smtp-Source: AMsMyM4cq1ZiSompu2ffs6ddf24dPwkk/2Lnq1GVt1O6/KQn3scUPTnTqdwZ/uWcjL7riJrPyy9iDQ==
+X-Received: by 2002:a05:620a:4397:b0:6e1:345a:e080 with SMTP id a23-20020a05620a439700b006e1345ae080mr13783062qkp.677.1665428198984;
+        Mon, 10 Oct 2022 11:56:38 -0700 (PDT)
+Received: from ziepe.ca (hlfxns017vw-47-55-122-23.dhcp-dynamic.fibreop.ns.bellaliant.net. [47.55.122.23])
+        by smtp.gmail.com with ESMTPSA id j8-20020a05620a288800b006bb2cd2f6d1sm10684472qkp.127.2022.10.10.11.56.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Oct 2022 11:56:38 -0700 (PDT)
+Received: from jgg by wakko with local (Exim 4.95)
+        (envelope-from <jgg@ziepe.ca>)
+        id 1ohxx7-0012V5-CO;
+        Mon, 10 Oct 2022 15:56:37 -0300
+Date:   Mon, 10 Oct 2022 15:56:37 -0300
+From:   Jason Gunthorpe <jgg@ziepe.ca>
+To:     Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc:     Leon Romanovsky <leon@kernel.org>, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, Dmitry Osipenko <digetx@gmail.com>,
+        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
+        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        kernel@collabora.com, virtualization@lists.linux-foundation.org,
+        linux-rdma@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        David Airlie <airlied@linux.ie>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Daniel Almeida <daniel.almeida@collabora.com>,
+        Gert Wollny <gert.wollny@collabora.com>,
+        Gustavo Padovan <gustavo.padovan@collabora.com>,
+        Daniel Stone <daniel@fooishbar.org>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Clark <robdclark@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Thomas =?utf-8?Q?Hellstr=C3=B6m?= <thomas_os@shipmail.org>,
+        Qiang Yu <yuq825@gmail.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Juergen Gross <jgross@suse.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        Ruhl Michael J <michael.j.ruhl@intel.com>
+Subject: Re: [PATCH v6 10/21] RDMA/umem: Prepare to dynamic dma-buf locking
+ specification
+Message-ID: <Y0Rq5Zb9+63++2z/@ziepe.ca>
+References: <20220928191600.5874-1-dmitry.osipenko@collabora.com>
+ <20220928191600.5874-11-dmitry.osipenko@collabora.com>
+ <e3ba146d-8153-add5-2cf4-02fe6519abee@collabora.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH v2] arm64: dts: qcom: starqltechn: add initial device tree
- for starqltechn
-Content-Language: en-US
-To:     Dzmitry Sankouski <dsankouski@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220617110130.2300438-1-dsankouski@gmail.com>
- <9bf584a1-bab9-33f3-02b6-6b10a7cfb043@linaro.org>
- <CABTCjFBneTPT=PoCh=c8hyxfgvCr=14pJYA+11sQ0ooyf6Ri1g@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CABTCjFBneTPT=PoCh=c8hyxfgvCr=14pJYA+11sQ0ooyf6Ri1g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e3ba146d-8153-add5-2cf4-02fe6519abee@collabora.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,20 +121,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/10/2022 12:43, Dzmitry Sankouski wrote:
-> (...)
->>
->> Why do you have DTSI for one DTS?
-> Samsung has several devices on sdm845 SoC (at least 3 phones:
-> starqltechn, starq2ltechn, crownltechn). I don't have plans to
-> introduce support for any new Samsung sdm845 device except
-> starqltechn, but I guess we should extract common dtsi now to make
-> future contributions easier. I think I should rename common dtsi file
-> to '$soc-$vendor-common.dtsi', like others device trees doing now
+On Sun, Oct 09, 2022 at 03:08:56AM +0300, Dmitry Osipenko wrote:
+> On 9/28/22 22:15, Dmitry Osipenko wrote:
+> > Prepare InfiniBand drivers to the common dynamic dma-buf locking
+> > convention by starting to use the unlocked versions of dma-buf API
+> > functions.
+> > 
+> > Acked-by: Christian König <christian.koenig@amd.com>
+> > Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> > ---
+> >  drivers/infiniband/core/umem_dmabuf.c | 7 ++++---
+> >  1 file changed, 4 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/drivers/infiniband/core/umem_dmabuf.c b/drivers/infiniband/core/umem_dmabuf.c
+> > index 04c04e6d24c3..43b26bc12288 100644
+> > --- a/drivers/infiniband/core/umem_dmabuf.c
+> > +++ b/drivers/infiniband/core/umem_dmabuf.c
+> > @@ -26,7 +26,8 @@ int ib_umem_dmabuf_map_pages(struct ib_umem_dmabuf *umem_dmabuf)
+> >  	if (umem_dmabuf->sgt)
+> >  		goto wait_fence;
+> >  
+> > -	sgt = dma_buf_map_attachment(umem_dmabuf->attach, DMA_BIDIRECTIONAL);
+> > +	sgt = dma_buf_map_attachment_unlocked(umem_dmabuf->attach,
+> > +					      DMA_BIDIRECTIONAL);
+> >  	if (IS_ERR(sgt))
+> >  		return PTR_ERR(sgt);
+> >  
+> > @@ -102,8 +103,8 @@ void ib_umem_dmabuf_unmap_pages(struct ib_umem_dmabuf *umem_dmabuf)
+> >  		umem_dmabuf->last_sg_trim = 0;
+> >  	}
+> >  
+> > -	dma_buf_unmap_attachment(umem_dmabuf->attach, umem_dmabuf->sgt,
+> > -				 DMA_BIDIRECTIONAL);
+> > +	dma_buf_unmap_attachment_unlocked(umem_dmabuf->attach, umem_dmabuf->sgt,
+> > +					  DMA_BIDIRECTIONAL);
+> >  
+> >  	umem_dmabuf->sgt = NULL;
+> >  }
+> 
+> Jason / Leon,
+> 
+> Could you please ack this patch?
 
-File can be easily renamed later, but if additional devices are not
-mainlined we will always need to deal with almost empty DTS.
+You probably don't need it, for something so simple, but sure
 
-Best regards,
-Krzysztof
+Acked-by: Jason Gunthorpe <jgg@nvidia.com>
 
+Jason
