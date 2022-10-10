@@ -2,156 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA43D5F0B2C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 13:57:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A46735F0A97
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Sep 2022 13:34:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231280AbiI3L5z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Sep 2022 07:57:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46858 "EHLO
+        id S229882AbiI3LeO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Sep 2022 07:34:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229870AbiI3L5y (ORCPT
+        with ESMTP id S231637AbiI3LdS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Sep 2022 07:57:54 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A884163B67;
-        Fri, 30 Sep 2022 04:57:51 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28UAcTxO004250;
-        Fri, 30 Sep 2022 11:57:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=6r3IHl38uTfFy9rn6v0/eEMi3/2iLaVdrH1J1BCBHN8=;
- b=E1tthoWDAL8+R5uP/rXiLykkT/WDtID69h/mhV2cpx9Lswf0qdu0Grig4A5ha4kvkKvE
- 33EwQSJSAw8pTC4pL19u4VcDSoxEMQ6EAjMW/zxLObBihEx3Oqf6LnUfP2l2joBmW3p6
- RHKLgYtysUE0uzriSq1ql+GwSBnVRXjLenMvZgGqstAaKD7MkAjsh/fBPvuyiaLCQsqA
- FXIKsALLXJLVDS/UP2UNcBk60B7NHsrY/uvla6OkBhKjytsC8P/98YDoiQXdyVw9xLVZ
- M4BumJn/GLFTyGExfCrknMKkvzIyl+gYiC5abrPzg85vErhI2Dn1cBrvol5sQMnNjxzR Kg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jwr49hh08-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 30 Sep 2022 11:57:43 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28UBvhmJ006966
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 30 Sep 2022 11:57:43 GMT
-Received: from [10.216.29.114] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Fri, 30 Sep
- 2022 04:57:39 -0700
-Message-ID: <30c95220-f3fd-3105-18a7-a9588af69b7d@quicinc.com>
-Date:   Fri, 30 Sep 2022 17:27:28 +0530
+        Fri, 30 Sep 2022 07:33:18 -0400
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 678D1C77D0;
+        Fri, 30 Sep 2022 04:27:03 -0700 (PDT)
+Received: from dggpemm500023.china.huawei.com (unknown [172.30.72.55])
+        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4Mf7DV3SHhzHq0v;
+        Fri, 30 Sep 2022 19:24:42 +0800 (CST)
+Received: from dggpemm500013.china.huawei.com (7.185.36.172) by
+ dggpemm500023.china.huawei.com (7.185.36.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Fri, 30 Sep 2022 19:27:01 +0800
+Received: from huawei.com (10.67.174.245) by dggpemm500013.china.huawei.com
+ (7.185.36.172) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Fri, 30 Sep
+ 2022 19:27:01 +0800
+From:   Chen Zhongjin <chenzhongjin@huawei.com>
+To:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+CC:     <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>,
+        <dmitry.baryshkov@linaro.org>, <sean@poorly.run>,
+        <airlied@gmail.com>, <daniel@ffwll.ch>, <swboyd@chromium.org>,
+        <dianders@chromium.org>, <andersson@kernel.org>,
+        <chenzhongjin@huawei.com>
+Subject: [PATCH -next] drm/msm: Remove unused variables 'top'
+Date:   Mon, 10 Oct 2022 10:40:10 +0800
+Message-ID: <20221010024010.2873633-1-chenzhongjin@huawei.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH] clk: gcc-sc8280xp: use retention for USB power domains
-Content-Language: en-US
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20220929161124.18138-1-johan+linaro@kernel.org>
-From:   Rajendra Nayak <quic_rjendra@quicinc.com>
-In-Reply-To: <20220929161124.18138-1-johan+linaro@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: L6xfAgwQ05Xoyj1MyaDsMay5mYL3DJgS
-X-Proofpoint-ORIG-GUID: L6xfAgwQ05Xoyj1MyaDsMay5mYL3DJgS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-30_04,2022-09-29_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
- malwarescore=0 spamscore=0 suspectscore=0 phishscore=0 adultscore=0
- mlxlogscore=999 lowpriorityscore=0 impostorscore=0 clxscore=1015
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209300075
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.67.174.245]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ dggpemm500013.china.huawei.com (7.185.36.172)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_DATE_IN_FUTURE_96_Q autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+'commit 1e5df24b996c ("drm/msm/dpu: drop length from struct dpu_hw_blk_reg_map")'
+'commit 9403f9a42c88 ("drm/msm/dpu: merge base_off with blk_off in struct dpu_hw_blk_reg_map")'
+These commits had merged hw.blk_off and hw.blk_off to mdp.
+So we don't need to get dpu_hw_mdp in dpu_kms_mdp_snapshot() now.
 
-On 9/29/2022 9:41 PM, Johan Hovold wrote:
-> Since commit d399723950c4 ("clk: qcom: gdsc: Fix the handling of
-> PWRSTS_RET support) retention mode can be used on sc8280xp to maintain
-> state during suspend instead of leaving the domain always on.
-> 
-> This is needed to eventually allow the parent CX domain to be powered
-> down during suspend.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->   drivers/clk/qcom/gcc-sc8280xp.c | 13 +++----------
->   1 file changed, 3 insertions(+), 10 deletions(-)
-> 
-> While we're not yet able to fully test this (since we're not hitting CX
-> power down) this can still go in as we'll need it in some form
-> eventually.
+Since there is no code using 'top' in this function. Remove it.
 
-If sc8280xp supports CX power down, it would be good to also put in the
-cxcs offsets so USB RET still works even when you do hit CX power down some
-time in the future.
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-> 
-> Note that the PCIe domains should remain always-on until we have driver
-> support for suspend in place.
-> 
-> Johan
-> 
-> 
-> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-> index 7768e6901dcc..a18ed88f3b82 100644
-> --- a/drivers/clk/qcom/gcc-sc8280xp.c
-> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
-> @@ -6843,17 +6843,12 @@ static struct gdsc ufs_phy_gdsc = {
->   	.pwrsts = PWRSTS_OFF_ON,
->   };
->   
-> -/*
-> - * The Qualcomm DWC3 driver suspend implementation appears to be incomplete
-> - * for sc8280xp so keep the USB power domains always-on for now.
-> - */
->   static struct gdsc usb30_mp_gdsc = {
->   	.gdscr = 0xab004,
->   	.pd = {
->   		.name = "usb30_mp_gdsc",
->   	},
-> -	.pwrsts = PWRSTS_OFF_ON,
-> -	.flags = ALWAYS_ON,
-> +	.pwrsts = PWRSTS_RET_ON,
->   };
->   
->   static struct gdsc usb30_prim_gdsc = {
-> @@ -6861,8 +6856,7 @@ static struct gdsc usb30_prim_gdsc = {
->   	.pd = {
->   		.name = "usb30_prim_gdsc",
->   	},
-> -	.pwrsts = PWRSTS_OFF_ON,
-> -	.flags = ALWAYS_ON,
-> +	.pwrsts = PWRSTS_RET_ON,
->   };
->   
->   static struct gdsc usb30_sec_gdsc = {
-> @@ -6870,8 +6864,7 @@ static struct gdsc usb30_sec_gdsc = {
->   	.pd = {
->   		.name = "usb30_sec_gdsc",
->   	},
-> -	.pwrsts = PWRSTS_OFF_ON,
-> -	.flags = ALWAYS_ON,
-> +	.pwrsts = PWRSTS_RET_ON,
->   };
->   
->   static struct clk_regmap *gcc_sc8280xp_clocks[] = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 008e1420e6e5..79e81f1443be 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -902,13 +902,9 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
+ 	int i;
+ 	struct dpu_kms *dpu_kms;
+ 	const struct dpu_mdss_cfg *cat;
+-	struct dpu_hw_mdp *top;
+ 
+ 	dpu_kms = to_dpu_kms(kms);
+-
+ 	cat = dpu_kms->catalog;
+-	top = dpu_kms->hw_mdp;
+-
+ 	pm_runtime_get_sync(&dpu_kms->pdev->dev);
+ 
+ 	/* dump CTL sub-blocks HW regs info */
+-- 
+2.33.0
+
