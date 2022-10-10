@@ -2,169 +2,264 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 470AA5FA3D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Oct 2022 20:57:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 361FE5FA492
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Oct 2022 22:15:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229798AbiJJS5A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Oct 2022 14:57:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47018 "EHLO
+        id S229626AbiJJUPF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Oct 2022 16:15:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229942AbiJJS4n (ORCPT
+        with ESMTP id S229502AbiJJUPB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Oct 2022 14:56:43 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE3ED50F88
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Oct 2022 11:56:39 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id z30so7194386qkz.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Oct 2022 11:56:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=mfdinePb/h+FQryCI1VnJk1iVMwwW9XbS8GRZ1SXnEM=;
-        b=Y1FJnNxKCCmUeBjERypSSpOT5hLZIa3B6ZfL7TmeBlDcYn7G53u+wzaqGztD4xstS6
-         H56NjZrTnnAs/mwbv/53uHY1GhzxoFxOLWj+6+255TR+XIgzukZ2wrhnTPfXH4rpl0ll
-         x20RYa7gkPKPOAB+2GjUbYRf86UKilK/+RP5mPzo1iTwxgbIcI/NL1hAwcQva+CI+c58
-         wXQg1m452/c0qjzqE/xGhDgd9xycIGhUX5tiX7SJhqTWnYftDSAsnXqQ0qceqqSNwxFf
-         a0gsQbHVGj7OQXKVN8LpCmOTHmcWT/lMPoHErC7k7GBXJjyyytJ8h/nDzI7STIfMcpme
-         CGHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mfdinePb/h+FQryCI1VnJk1iVMwwW9XbS8GRZ1SXnEM=;
-        b=eSWXp3BQHXACw4hIhegahzBIsd7j5BlhHA/W9B2+mCMiO5toUAvyX5a8fBuZscwetd
-         IHvo/+SJ7rkLUaUH3hBc4+ijSXMZ6+gIY9fnwJfmaznRMx/DXV8NIgGfB17AwVZn5jXH
-         nudrVfmNuE4U9TNwN5ufDkPZ6BB+nEgfvAWdUfFbB+mFy8H7dqYK1tC6+hi3Jfrf0OCp
-         QrG5vkzpJpj88uLQghjK5ykeZVnSzZ6TOnedpplVKeefGT+H6I/canpFvnerB7c0tDFt
-         dJdF6otYe7sie5K5TPm/t8aKJf0idJPGDQ8I0v/pCfEPMsvdPxwnSN7St8ARUU4k9jS/
-         4FyQ==
-X-Gm-Message-State: ACrzQf0t/vCKdlV1Dd5AnYtLSXCxswfobgE8udvWvxepxn0zhiL2BgLF
-        l2memOv9fWQB+R7MclPgK/Q8Yg==
-X-Google-Smtp-Source: AMsMyM4cq1ZiSompu2ffs6ddf24dPwkk/2Lnq1GVt1O6/KQn3scUPTnTqdwZ/uWcjL7riJrPyy9iDQ==
-X-Received: by 2002:a05:620a:4397:b0:6e1:345a:e080 with SMTP id a23-20020a05620a439700b006e1345ae080mr13783062qkp.677.1665428198984;
-        Mon, 10 Oct 2022 11:56:38 -0700 (PDT)
-Received: from ziepe.ca (hlfxns017vw-47-55-122-23.dhcp-dynamic.fibreop.ns.bellaliant.net. [47.55.122.23])
-        by smtp.gmail.com with ESMTPSA id j8-20020a05620a288800b006bb2cd2f6d1sm10684472qkp.127.2022.10.10.11.56.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Oct 2022 11:56:38 -0700 (PDT)
-Received: from jgg by wakko with local (Exim 4.95)
-        (envelope-from <jgg@ziepe.ca>)
-        id 1ohxx7-0012V5-CO;
-        Mon, 10 Oct 2022 15:56:37 -0300
-Date:   Mon, 10 Oct 2022 15:56:37 -0300
-From:   Jason Gunthorpe <jgg@ziepe.ca>
-To:     Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc:     Leon Romanovsky <leon@kernel.org>, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, Dmitry Osipenko <digetx@gmail.com>,
-        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
-        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        kernel@collabora.com, virtualization@lists.linux-foundation.org,
-        linux-rdma@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        David Airlie <airlied@linux.ie>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Daniel Almeida <daniel.almeida@collabora.com>,
-        Gert Wollny <gert.wollny@collabora.com>,
-        Gustavo Padovan <gustavo.padovan@collabora.com>,
-        Daniel Stone <daniel@fooishbar.org>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Rob Clark <robdclark@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mon, 10 Oct 2022 16:15:01 -0400
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AE9330F76;
+        Mon, 10 Oct 2022 13:14:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1665432899; x=1696968899;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=hoHtp7ua/tOZfAXpLOK1gBSb/sEyQkWFQ6Xh4kF5nfY=;
+  b=HubOx1wdiYmCEBX6FHOglY66/019WVdLKdldl1tmK89hflxiia2wDcwC
+   YFSxDYvlzHjqcHty7/l4oLWatyOdIwzfzalp4tD5YDDOSiSIBzQfR1vo5
+   kgBHAvWO+IWbXTpQAqjP28BiO4A0dxflwDUJ4Ffs5gpXjBG6FsQHcCdm2
+   gyCH+p3hKUiA5LG1qKn8dA8xlZExfbDjLU21MnMstn/DFZQz8QIIb95gh
+   jN8vNEaCyCU0jwOyKYULlrh66HJCVNaIkXWL3AiDeeu94GdJ1Hk4XZBur
+   8k64Q6RiU+2kjKsnl8trzwMbxHvp7xaFlkUocScYOy0fdkTC4+TfI4sNO
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10496"; a="303065999"
+X-IronPort-AV: E=Sophos;i="5.95,173,1661842800"; 
+   d="scan'208";a="303065999"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Oct 2022 13:14:59 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10496"; a="603862730"
+X-IronPort-AV: E=Sophos;i="5.95,173,1661842800"; 
+   d="scan'208";a="603862730"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by orsmga006.jf.intel.com with ESMTP; 10 Oct 2022 13:14:48 -0700
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+        id 8E95D1C8; Mon, 10 Oct 2022 23:15:08 +0300 (EEST)
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Marc Zyngier <maz@kernel.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Kent Gibson <warthog618@gmail.com>,
         Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Thomas =?utf-8?Q?Hellstr=C3=B6m?= <thomas_os@shipmail.org>,
-        Qiang Yu <yuq825@gmail.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Juergen Gross <jgross@suse.com>,
-        Stefano Stabellini <sstabellini@kernel.org>,
-        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Christian Gmeiner <christian.gmeiner@gmail.com>,
-        Ruhl Michael J <michael.j.ruhl@intel.com>
-Subject: Re: [PATCH v6 10/21] RDMA/umem: Prepare to dynamic dma-buf locking
- specification
-Message-ID: <Y0Rq5Zb9+63++2z/@ziepe.ca>
-References: <20220928191600.5874-1-dmitry.osipenko@collabora.com>
- <20220928191600.5874-11-dmitry.osipenko@collabora.com>
- <e3ba146d-8153-add5-2cf4-02fe6519abee@collabora.com>
+        Billy Tsai <billy_tsai@aspeedtech.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Chen-Yu Tsai <wenst@chromium.org>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Horatiu Vultur <horatiu.vultur@microchip.com>,
+        =?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Phil Edworthy <phil.edworthy@renesas.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Fabien Dessenne <fabien.dessenne@foss.st.com>,
+        Prathamesh Shete <pshete@nvidia.com>,
+        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-media@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org, alsa-devel@alsa-project.org,
+        patches@opensource.cirrus.com, linux-mediatek@lists.infradead.org,
+        linux-mips@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-omap@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        =?UTF-8?q?Andreas=20F=C3=A4rber?= <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Joel Stanley <joel@jms.id.au>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Charles Keepax <ckeepax@opensource.cirrus.com>,
+        Richard Fitzgerald <rf@opensource.cirrus.com>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andy Shevchenko <andy@kernel.org>,
+        Sean Wang <sean.wang@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Patrick Venture <venture@google.com>,
+        Nancy Yuen <yuenn@google.com>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Damien Le Moal <damien.lemoal@wdc.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Haojian Zhuang <haojian.zhuang@linaro.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Emil Renner Berthing <kernel@esmil.dk>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>
+Subject: [rft, PATCH v2 00/36] pinctrl: Clean up and add missed headers
+Date:   Mon, 10 Oct 2022 23:14:16 +0300
+Message-Id: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <e3ba146d-8153-add5-2cf4-02fe6519abee@collabora.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Oct 09, 2022 at 03:08:56AM +0300, Dmitry Osipenko wrote:
-> On 9/28/22 22:15, Dmitry Osipenko wrote:
-> > Prepare InfiniBand drivers to the common dynamic dma-buf locking
-> > convention by starting to use the unlocked versions of dma-buf API
-> > functions.
-> > 
-> > Acked-by: Christian König <christian.koenig@amd.com>
-> > Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> > ---
-> >  drivers/infiniband/core/umem_dmabuf.c | 7 ++++---
-> >  1 file changed, 4 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/drivers/infiniband/core/umem_dmabuf.c b/drivers/infiniband/core/umem_dmabuf.c
-> > index 04c04e6d24c3..43b26bc12288 100644
-> > --- a/drivers/infiniband/core/umem_dmabuf.c
-> > +++ b/drivers/infiniband/core/umem_dmabuf.c
-> > @@ -26,7 +26,8 @@ int ib_umem_dmabuf_map_pages(struct ib_umem_dmabuf *umem_dmabuf)
-> >  	if (umem_dmabuf->sgt)
-> >  		goto wait_fence;
-> >  
-> > -	sgt = dma_buf_map_attachment(umem_dmabuf->attach, DMA_BIDIRECTIONAL);
-> > +	sgt = dma_buf_map_attachment_unlocked(umem_dmabuf->attach,
-> > +					      DMA_BIDIRECTIONAL);
-> >  	if (IS_ERR(sgt))
-> >  		return PTR_ERR(sgt);
-> >  
-> > @@ -102,8 +103,8 @@ void ib_umem_dmabuf_unmap_pages(struct ib_umem_dmabuf *umem_dmabuf)
-> >  		umem_dmabuf->last_sg_trim = 0;
-> >  	}
-> >  
-> > -	dma_buf_unmap_attachment(umem_dmabuf->attach, umem_dmabuf->sgt,
-> > -				 DMA_BIDIRECTIONAL);
-> > +	dma_buf_unmap_attachment_unlocked(umem_dmabuf->attach, umem_dmabuf->sgt,
-> > +					  DMA_BIDIRECTIONAL);
-> >  
-> >  	umem_dmabuf->sgt = NULL;
-> >  }
-> 
-> Jason / Leon,
-> 
-> Could you please ack this patch?
+Currently the header inclusion inside the pinctrl headers seems more arbitrary
+than logical. This series is basically out of two parts:
+- add missed headers to the pin control drivers / users
+- clean up the headers of pin control subsystem
 
-You probably don't need it, for something so simple, but sure
+The idea is to have this series to be pulled after -rc1 by the GPIO and
+pin control subsystems, so all new drivers will utilize cleaned up headers
+of the pin control.
 
-Acked-by: Jason Gunthorpe <jgg@nvidia.com>
+Please, review and comment.
 
-Jason
+Changelog v2:
+- added preparatory patches: all, but last (LKP)
+- added missed forward declaration to the last patch (LKP)
+
+Andy Shevchenko (36):
+  gpiolib: tegra186: Add missed header(s)
+  gpiolib: cdev: Add missed header(s)
+  media: c8sectpfe: Add missed header(s)
+  pinctrl: actions: Add missed header(s)
+  pinctrl: aspeed: Add missed header(s)
+  pinctrl: at91: Add missed header(s)
+  pinctrl: axp209: Add missed header(s)
+  pinctrl: bcm: Add missed header(s)
+  pinctrl: cygnus-mux: Add missed header(s)
+  pinctrl: imx: Add missed header(s)
+  pinctrl: ingenic: Add missed header(s)
+  pinctrl: k210: Add missed header(s)
+  pinctrl: lochnagar: Add missed header(s)
+  pinctrl: mediatek: Add missed header(s)
+  pinctrl: mvebu: Add missed header(s)
+  pinctrl: npcm7xx: Add missed header(s)
+  pinctrl: ocelot: Add missed header(s)
+  pinctrl: qcom: Add missed header(s)
+  pinctrl: renesas: Add missed header(s)
+  pinctrl: samsung: Add missed header(s)
+  pinctrl: single: Add missed header(s)
+  pinctrl: spear: Add missed header(s)
+  pinctrl: sprd: Add missed header(s)
+  pinctrl: st: Add missed header(s)
+  pinctrl: starfive: Add missed header(s)
+  pinctrl: stm32: Add missed header(s)
+  pinctrl: stmfx: Add missed header(s)
+  pinctrl: tegra: Add missed header(s)
+  pinctrl: ti-iodelay: Add missed header(s)
+  pinctrl: uniphier: Add missed header(s)
+  pinctrl: zynqmp: Add missed header(s)
+  pinctrl: cherryview: Add missed header(s)
+  pinctrl: lynxpoint: Add missed header(s)
+  pinctrl: merrifield: Add missed header(s)
+  pinctrl: intel: Add missed header(s)
+  pinctrl: Clean up headers
+
+ drivers/gpio/gpio-tegra186.c                  |  3 +-
+ drivers/gpio/gpiolib-cdev.c                   |  6 ++--
+ .../st/sti/c8sectpfe/c8sectpfe-core.c         |  8 +++--
+ drivers/pinctrl/actions/pinctrl-owl.c         | 10 +++---
+ drivers/pinctrl/aspeed/pinctrl-aspeed.c       |  1 +
+ drivers/pinctrl/bcm/pinctrl-bcm281xx.c        | 13 +++++---
+ drivers/pinctrl/bcm/pinctrl-cygnus-mux.c      |  9 ++++--
+ drivers/pinctrl/bcm/pinctrl-iproc-gpio.c      | 12 ++++---
+ drivers/pinctrl/bcm/pinctrl-ns2-mux.c         |  8 +++--
+ drivers/pinctrl/bcm/pinctrl-nsp-mux.c         |  8 +++--
+ drivers/pinctrl/cirrus/pinctrl-lochnagar.c    |  6 ++--
+ drivers/pinctrl/core.c                        | 19 ++++++------
+ drivers/pinctrl/core.h                        | 12 ++++++-
+ drivers/pinctrl/devicetree.h                  |  6 ++++
+ drivers/pinctrl/freescale/pinctrl-imx.c       |  8 +++--
+ drivers/pinctrl/intel/pinctrl-cherryview.c    |  6 ++--
+ drivers/pinctrl/intel/pinctrl-intel.c         |  6 ++--
+ drivers/pinctrl/intel/pinctrl-lynxpoint.c     |  6 ++--
+ drivers/pinctrl/intel/pinctrl-merrifield.c    |  4 ++-
+ drivers/pinctrl/mediatek/pinctrl-moore.c      |  3 ++
+ drivers/pinctrl/mediatek/pinctrl-paris.c      |  5 +++
+ drivers/pinctrl/mvebu/pinctrl-mvebu.c         | 14 +++++----
+ drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c     | 11 ++++---
+ drivers/pinctrl/pinconf.h                     | 10 ++++++
+ drivers/pinctrl/pinctrl-at91-pio4.c           | 10 ++++--
+ drivers/pinctrl/pinctrl-at91.c                | 16 +++++-----
+ drivers/pinctrl/pinctrl-axp209.c              |  8 +++--
+ drivers/pinctrl/pinctrl-ingenic.c             | 10 +++---
+ drivers/pinctrl/pinctrl-k210.c                | 12 ++++---
+ drivers/pinctrl/pinctrl-ocelot.c              | 10 +++---
+ drivers/pinctrl/pinctrl-single.c              |  5 ++-
+ drivers/pinctrl/pinctrl-st.c                  | 21 ++++++++-----
+ drivers/pinctrl/pinctrl-stmfx.c               |  2 ++
+ drivers/pinctrl/pinctrl-utils.h               |  5 +++
+ drivers/pinctrl/pinctrl-zynqmp.c              |  4 ++-
+ drivers/pinctrl/pinmux.c                      | 17 +++++-----
+ drivers/pinctrl/pinmux.h                      | 11 +++++++
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c      |  8 +++--
+ drivers/pinctrl/qcom/pinctrl-spmi-mpp.c       |  8 +++--
+ drivers/pinctrl/renesas/pinctrl-rzg2l.c       |  7 +++--
+ drivers/pinctrl/renesas/pinctrl-rzv2m.c       |  4 ++-
+ drivers/pinctrl/renesas/pinctrl.c             |  8 +++--
+ drivers/pinctrl/samsung/pinctrl-samsung.c     | 11 ++++---
+ drivers/pinctrl/spear/pinctrl-spear.c         |  6 ++--
+ drivers/pinctrl/sprd/pinctrl-sprd.c           |  6 ++--
+ .../starfive/pinctrl-starfive-jh7100.c        |  2 ++
+ drivers/pinctrl/stm32/pinctrl-stm32.c         | 16 +++++-----
+ drivers/pinctrl/tegra/pinctrl-tegra.c         |  6 ++--
+ drivers/pinctrl/ti/pinctrl-ti-iodelay.c       |  8 +++--
+ .../pinctrl/uniphier/pinctrl-uniphier-core.c  |  8 +++--
+ include/linux/pinctrl/consumer.h              | 31 +++++++++----------
+ include/linux/pinctrl/devinfo.h               |  6 ++--
+ include/linux/pinctrl/machine.h               |  8 +++--
+ include/linux/pinctrl/pinconf-generic.h       | 23 ++++++++------
+ include/linux/pinctrl/pinctrl.h               | 18 +++++------
+ include/linux/pinctrl/pinmux.h                |  5 ++-
+ 56 files changed, 328 insertions(+), 186 deletions(-)
+
+
+base-commit: 9d157c89c5569f0ef560b7a5b2d7bf59ae98499c
+-- 
+2.35.1
+
