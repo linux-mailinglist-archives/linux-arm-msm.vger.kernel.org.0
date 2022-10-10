@@ -2,70 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 053A55F97F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Oct 2022 07:55:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B2D55F9802
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Oct 2022 08:00:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231392AbiJJFzn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Oct 2022 01:55:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37604 "EHLO
+        id S229628AbiJJGAj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Oct 2022 02:00:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231409AbiJJFzi (ORCPT
+        with ESMTP id S229505AbiJJGAi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Oct 2022 01:55:38 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B78771CB2B
-        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Oct 2022 22:55:33 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id i6so9929406pfb.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Oct 2022 22:55:33 -0700 (PDT)
+        Mon, 10 Oct 2022 02:00:38 -0400
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F9032251B
+        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Oct 2022 23:00:37 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id h185so2452502pgc.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Oct 2022 23:00:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=KuJs/6I+cN8TE2/6QkPMYCE4khGiwZOavYjTwbehxuU=;
-        b=oJQSUhOY41s4B4a5RIRgnQyLQDX5ZdWQabFA8tjd157D0kcEfoz+mrJb02795fSz1U
-         v/8YOvuNw/4ZwwhOGH0rnT97Hzbeu2OUgEC0eZNRVtrHeXAjlxc9WVOcxeALpumO4Swi
-         yTuk7U3DJQop54GqVbmbHnmKkFSw/aBhpucDHzb5d9IjKGnX3LUSzqhgSkvWLdggFpei
-         wiFIAH+ABO7JL6Sr+ALGdUFC15iNsx2qYJJsV0dZqp4L3OrbJEmGPjgZV1+4eBBQFnoN
-         TcEk0KNUxWAMX1SBlHLKN7gybqOQPMReYefd+Sgo/QTTQx/Nn2idmjhXLmzbkmZSaxNL
-         nWew==
+        bh=oDcZ6XrkCz+D/dAyJUEiNRSpCMVbOwinoaCkgsqNcx0=;
+        b=nXFCmfgMVA28LXsKRlEZ41pj7NLm8J6VAnx4xLauh8ci6+981nde+uyN2txiKsRv4A
+         DAsHJx7XCh3p4aKF1fc7TICgMGRb25RlvXYB63I1RtUf22UYRuuqa/NVmUoi0LZbBbFc
+         2fmlnZz1z7b+/BvB5riLJT234wJc0PidEajIatYK3DfcaZt/wh3evp5JwFIWdpphUHAD
+         SHNpX65imo1p880UgZRabtsqwcVKxxru2J/v/Tu6UKO+A9NjMjY0tLDzdd+9f+rrX8nY
+         ymeyeKGZE1mK9HRVU/L2l7ErlqmdlGWkKUc9IITfebzSJF2Iil5iVTzDeGlLWnEEBVVD
+         MPwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KuJs/6I+cN8TE2/6QkPMYCE4khGiwZOavYjTwbehxuU=;
-        b=mkH0YgkxHxsfoL9EgPmhC//u8tILt3G1zQaxejNWjPg99DaTAm1VLHQjbqnLup+tdY
-         LtMBN78TLiPAcfyaZLoMiiY/1KICNt1fcEslA5JYDuUdG+eKleS8Ct44j+p+k0CWTQ5U
-         xPnY7BVoBjVsicylBG+9ooJG11mlWvFXg8B0NO4xpshKxJfKjAXk4oZtPTnDVmaSLBaY
-         Jv2gXzDubszKaRcDOzZ58tHivr4rWYquyw/prMllXYQB3tM05A9T1SUt0FJ4TWZ1hfF1
-         QFaIQF/BwQIuOUbv3bKOryHM4texTHsKBfpBMCPwYrWDiZEOIqAbGd1cxy1L33JQhw0s
-         O/5Q==
-X-Gm-Message-State: ACrzQf1VZh2SjgA4QnEMROtzSQHmAImg0DvjlVIfypEkFPgvWm2cR+P+
-        ctAlpUxoCKfD6ndjsefNZebGQQ==
-X-Google-Smtp-Source: AMsMyM5SRJNrvGYj1V4EedkIj4QZPS8xER6LRPxu2Ofd5vGxJrAifc97ZTOl/4hKrZ38fLgluMrqgw==
-X-Received: by 2002:a05:6a00:1814:b0:563:6bd7:f9e0 with SMTP id y20-20020a056a00181400b005636bd7f9e0mr2553668pfa.33.1665381333058;
-        Sun, 09 Oct 2022 22:55:33 -0700 (PDT)
+        bh=oDcZ6XrkCz+D/dAyJUEiNRSpCMVbOwinoaCkgsqNcx0=;
+        b=PrHeuA4MZfyftUWaXVZZKYHr6hE2MjxWlx8BWJKruWYU8b+6v9L2U+wxe1wbfQboUC
+         blXEAcoJlCHgsYbNe1C6v/8YFJ9TIjAb+ka3R0CuU+zKR1LB+D4GOhaBnVV4cO+r4SQX
+         MINFTAWB0VmHXmPZbD7EEvoWs6wc81q2Ijil3sc4pe/EtNi+gajFRqwHDhwMxQuobtw3
+         0xsydlkhA3Wcw9Wgbsr7av+U2VxMIVvj4mB0Tkot46kI9xLh1os9P+q/6BWD/MXTxL0z
+         +evjlFtM4IDw+lwnhEMJMzl1TrRC/9A8uFCUMDGkRRYVrZL0al5rBA2cVXgmLmHGAYgk
+         IX0A==
+X-Gm-Message-State: ACrzQf0W9XERZDFEXjjCwfNMXU64pheiCvgv/T2R+RXoRoryQnv+4moh
+        4dXaV04E0q9ezHf9A3qJGi0How==
+X-Google-Smtp-Source: AMsMyM5mc4TuX/P+ibYfEZi+dk0sWiJ7gO3mGpLYfFjFzqZ8cfa0qHdIF4N+nC8mLQXsr3LlAkU8fA==
+X-Received: by 2002:a63:e74d:0:b0:440:6c50:eab7 with SMTP id j13-20020a63e74d000000b004406c50eab7mr14924503pgk.308.1665381636665;
+        Sun, 09 Oct 2022 23:00:36 -0700 (PDT)
 Received: from localhost ([122.172.86.128])
-        by smtp.gmail.com with ESMTPSA id a29-20020a631a1d000000b0045c5a749a8fsm5410093pga.61.2022.10.09.22.55.32
+        by smtp.gmail.com with ESMTPSA id y22-20020a17090a6c9600b0020ad46d277bsm8375405pjj.42.2022.10.09.23.00.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Oct 2022 22:55:32 -0700 (PDT)
-Date:   Mon, 10 Oct 2022 11:25:30 +0530
+        Sun, 09 Oct 2022 23:00:36 -0700 (PDT)
+Date:   Mon, 10 Oct 2022 11:30:34 +0530
 From:   Viresh Kumar <viresh.kumar@linaro.org>
 To:     Fabien Parent <fabien.parent@linaro.org>
 Cc:     ilia.lin@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
         rafael@kernel.org, linux-pm@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] cpufreq: qcom: fix memory leak in error path
-Message-ID: <20221010055530.2mf6lq4mn6zfdkzt@vireshk-i7>
+Subject: Re: [PATCH 3/3] cpufreq: qcom: fix writes in read-only memory region
+Message-ID: <20221010060034.wgs7w4onkadoseeb@vireshk-i7>
 References: <20221001171027.2101923-1-fabien.parent@linaro.org>
+ <20221001171027.2101923-3-fabien.parent@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221001171027.2101923-1-fabien.parent@linaro.org>
+In-Reply-To: <20221001171027.2101923-3-fabien.parent@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -73,50 +73,66 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 01-10-22, 19:10, Fabien Parent wrote:
-> If for some reason the speedbin length is incorrect, then there is a
-> memory leak in the error path because we never free the speedbin buffer.
-> This commit fixes the error path to always free the speedbin buffer.
+> This commit fixes a kernel oops because of a write in some read-only memory:
+> 
+> 	[    9.068287] Unable to handle kernel write to read-only memory at virtual address ffff800009240ad8
+> 	..snip..
+> 	[    9.138790] Internal error: Oops: 9600004f [#1] PREEMPT SMP
+> 	..snip..
+> 	[    9.269161] Call trace:
+> 	[    9.276271]  __memcpy+0x5c/0x230
+> 	[    9.278531]  snprintf+0x58/0x80
+> 	[    9.282002]  qcom_cpufreq_msm8939_name_version+0xb4/0x190
+> 	[    9.284869]  qcom_cpufreq_probe+0xc8/0x39c
+> 	..snip..
+> 
+> The following line defines a pointer that point to a char buffer stored
+> in read-only memory:
+> 
+> 	char *pvs_name = PVS_NAME;
+> 
+> This pointer is meant to hold a template "speedXX-pvsXX-vXX" where the
+> XX values get overridden by the qcom_cpufreq_krait_name_version function. Since
+> the template is actually stored in read-only memory, when the function
+> executes the following call we get an oops:
+> 
+> 	snprintf(*pvs_name, sizeof(PVS_NAME), "speed%d-pvs%d-v%d",
+> 		 speed, pvs, pvs_ver);
+> 
+> To fix this issue, we instead store the template name onto the stack by
+> using the following syntax:
+> 
+> 	char pvs_name_buffer[] = PVS_NAME;
+> 
+> Because the `pvs_name` needs to be able to be assigned to NULL, the
+> template buffer is stored in the pvs_name_template and not under the
+> pvs_name variable.
 > 
 > Signed-off-by: Fabien Parent <fabien.parent@linaro.org>
+
+No Fixes or Cc:Stable for this ? This looks like a bug fix and this
+should be sent before patch 2/3 so it can be back ported properly.
+
 > ---
->  drivers/cpufreq/qcom-cpufreq-nvmem.c | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
+>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
 > diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> index 863548f59c3e..3bd38acde4b9 100644
+> index 64ce077a4848..3e097262f612 100644
 > --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
 > +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> @@ -213,6 +213,7 @@ static int qcom_cpufreq_krait_name_version(struct device *cpu_dev,
->  	int speed = 0, pvs = 0, pvs_ver = 0;
->  	u8 *speedbin;
->  	size_t len;
-> +	int ret = 0;
->  
->  	speedbin = nvmem_cell_read(speedbin_nvmem, &len);
->  
-> @@ -230,7 +231,8 @@ static int qcom_cpufreq_krait_name_version(struct device *cpu_dev,
->  		break;
->  	default:
->  		dev_err(cpu_dev, "Unable to read nvmem data. Defaulting to 0!\n");
-> -		return -ENODEV;
-> +		ret = -ENODEV;
-> +		goto len_error;
->  	}
->  
->  	snprintf(*pvs_name, sizeof("speedXX-pvsXX-vXX"), "speed%d-pvs%d-v%d",
-> @@ -238,8 +240,9 @@ static int qcom_cpufreq_krait_name_version(struct device *cpu_dev,
->  
->  	drv->versions = (1 << speed);
->  
-> +len_error:
->  	kfree(speedbin);
-> -	return 0;
-> +	return ret;
->  }
->  
->  static const struct qcom_cpufreq_match_data match_data_kryo = {
-
-Applied. Thanks.
+> @@ -269,7 +269,8 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+>  	struct nvmem_cell *speedbin_nvmem;
+>  	struct device_node *np;
+>  	struct device *cpu_dev;
+> -	char *pvs_name = PVS_NAME_TEMPLATE;
+> +	char pvs_name_buffer[] = PVS_NAME_TEMPLATE;
+> +	char *pvs_name = pvs_name_buffer;
+>  	unsigned cpu;
+>  	const struct of_device_id *match;
+>  	int ret;
+> -- 
+> 2.37.2
 
 -- 
 viresh
