@@ -1,92 +1,108 @@
 Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 18DBC5FA7D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 00:46:33 +0200 (CEST)
+Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
+	by mail.lfdr.de (Postfix) with ESMTP id 3150C5FA89B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 01:24:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229436AbiJJWqb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Oct 2022 18:46:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35522 "EHLO
+        id S229992AbiJJXWj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Oct 2022 19:22:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229900AbiJJWqL (ORCPT
+        with ESMTP id S229544AbiJJXWg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Oct 2022 18:46:11 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B725D7F0A6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Oct 2022 15:45:27 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id b2so18556370lfp.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Oct 2022 15:45:27 -0700 (PDT)
+        Mon, 10 Oct 2022 19:22:36 -0400
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07DFB7CB65;
+        Mon, 10 Oct 2022 16:22:35 -0700 (PDT)
+Received: by mail-il1-x129.google.com with SMTP id u10so6366770ilm.5;
+        Mon, 10 Oct 2022 16:22:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ojWSmygiziuSMKGh3XbZGWS7SbAi/9HsoxfpH+m8lLo=;
-        b=gZlEGIYHv5Yda3m/gkN6SfDBeVu9EFOQN7P0fTjQQrMcfVmC7NQrf3NzO7a1N8a61F
-         WlK08fZAnFbiTv5p15MktG9cXvHFZ8BEd117RCFUTZGABRsXmKrn56uy2bUtiHjBvItc
-         P78Yy0pbqsLBVNrgT+e/yreJ7kJSSVvaNwSXUeuBr+yUov4qQYGXuvJJIXuT8CGZ8eYJ
-         FfVcZnePCE8h1zeT1VsnXcsNzT7bKd4AvuMxO19ELCDOIaJhSBlRpYwlFhE2ucyZGsxx
-         /74t3vcrO+lATfBoOkcvkgXYrDLQ2c44+R6NxhcoaXAK8HDDS2baUT4WS8wGoMsDhnXX
-         iZcQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xXda3aTJALziQd8LZ4HyvmpbEN2s8N724Nf4X7JuxXw=;
+        b=DiCdkPM3ayZgQGw1oFuPR+4CcnJaM+6jx805hFxp2dG/evzVYwc9uJGBEMQw9hKuPq
+         jET16b5fYgzd8HR197N65zcF5rT20s0WAAbGdvymCm35MsSdRnafDNob5dvU0FVwWfHn
+         y3A1GONfWWf7HIdBBekyJWNoM0cRyhzdEuypCmSW5jo6HJMnPXSGokfRN8GZp0BH24i3
+         y8srnBDgwJlaQeZJEp3tPcWel4/OA0W4WuCntjouXcTKhx96LxBAV1F/VkzR1aBib6Hb
+         jgqiJ+S2efWODcW/SpUbbfURA15rqAPmIMwQ1MCDbJqmc69kewk86UNQznnW3KQGKoS9
+         NgNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ojWSmygiziuSMKGh3XbZGWS7SbAi/9HsoxfpH+m8lLo=;
-        b=NVs9h2j3GW2RypIycK5qCQNvr6w8Kutg1v1+Eqtrx2ujWOikgYCZBjjiMZj3dYKrd9
-         XJIH1HpY9dPSHsfAwsy/fAXdqEfOuXLcnD1u7PmNN7Ws1qx211AwaCamOrFAE7OHGZiF
-         8obRvRpI1sIZbu4183gX2SdrNHwiq89GKBz+q4xY0gxsUmilDKaVfaTGh8Jj9upyRtbV
-         Uri3R42+wuR5tfrRdtOuSF2Nk5zlrjkEZCLy3KeCT28WoVmPd1GvPUTD8/OoPBBYHSY1
-         1flOl1wBBGPx/FZmcefm0Pqc5e3K8IMqwMUzjdBdtT/XBkHFOmNHOR8vbqW6TozE4fW5
-         4pnQ==
-X-Gm-Message-State: ACrzQf2T3GyIrrsevuwOXw8BtNLlJBhYCAkMCUGyOQw2Bnp7EzyFcKon
-        iavdzyBHTFzEtV+mCrbxCMaFJw==
-X-Google-Smtp-Source: AMsMyM5p1CJmxCtHf5WjzdKCcKLbCFjNxJi+YH+CB8LLEucq2hy6XvfgdYTs8HMsYomnPJ5aQHyC/Q==
-X-Received: by 2002:ac2:5a5d:0:b0:4a2:3d64:8ad3 with SMTP id r29-20020ac25a5d000000b004a23d648ad3mr7596244lfn.530.1665441925095;
-        Mon, 10 Oct 2022 15:45:25 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s16-20020ac24650000000b004994c190581sm1585272lfo.123.2022.10.10.15.45.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Oct 2022 15:45:24 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     linux-firmware@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xXda3aTJALziQd8LZ4HyvmpbEN2s8N724Nf4X7JuxXw=;
+        b=Rjl28wIrIeXNNCc6rHFkShSwgqW9UkcsTZ1Q8JVxPlHUmv+nQIQXB4F9zmebrdWTk0
+         cxil0yh4qaBcOEc/e1f5pxVauiDkYwAg+O3D6J3vmePuMiVQfV+lsHgpm7NvS1pg+qag
+         afB9z9Sd2Nyj1tCLZG/sdvWPSygp31AIgWQwY22gWJn7RPi1HHf9cFHM+HaOCm9HzuCF
+         MxSkjem9ESVt7S+SSNDEJZrCjsCsRJ8RQFDqBIzHVNqtglXKB3CpDSgps4WOD/JMrq/x
+         lUVK7LaYod0+T8DTgg2z54kq/rcy/BkJrTPF+VWVVyHhvmkr9W9VCxjcE+C9XtXl6hav
+         4z1w==
+X-Gm-Message-State: ACrzQf0AJlTWD9zfrZGQMTmAmDXOMfor/+8XL+So4DXO7eYgMYe0jhB2
+        JmoKRhQ5YUd9pW05lbYrq7ggCqVgTw2yKA==
+X-Google-Smtp-Source: AMsMyM6czbGTLFOK8h5xrObQR2p50k9F6EeWMjxD0SKBxhkM17PfkoMsy3Ks6dj7cIpjBmV3+OJFGg==
+X-Received: by 2002:a92:ca4d:0:b0:2f9:3e9e:e566 with SMTP id q13-20020a92ca4d000000b002f93e9ee566mr10533363ilo.165.1665444154326;
+        Mon, 10 Oct 2022 16:22:34 -0700 (PDT)
+Received: from localhost ([2607:fea8:a2e2:2d00::deb2])
+        by smtp.gmail.com with UTF8SMTPSA id d3-20020a056e020be300b002f584a19a79sm4207450ilu.34.2022.10.10.16.22.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Oct 2022 16:22:33 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     Lee Jones <lee@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        freedreno@lists.freedesktop.org
-Subject: [PULL] qcom: add squashed version of a530 zap shader
-Date:   Tue, 11 Oct 2022 01:45:23 +0300
-Message-Id: <20221010224523.3603000-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Richard Acayan <mailingradian@gmail.com>,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v9 0/3] SDM670 Pin Control Driver
+Date:   Mon, 10 Oct 2022 19:22:25 -0400
+Message-Id: <20221010232225.209700-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.38.0
+In-Reply-To: <Y0POmQ+xrQ/HT7RF@google.com>
+References: <20221007213241.84962-1-mailingradian@gmail.com> <Y0POmQ+xrQ/HT7RF@google.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit fdf1a65258522edf18a0a1768fbafa61ed07e598:
+> On Fri, 07 Oct 2022, Richard Acayan wrote:
+> > Richard Acayan (3):
+> >   dt-bindings: pinctrl: qcom: add sdm670 pinctrl
+> >   pinctrl: qcom: do not reinitialize gpio valid mask
+> >   pinctrl: qcom: add sdm670 pinctrl
+> > 
+> >  .../bindings/pinctrl/qcom,sdm670-tlmm.yaml    |  127 ++
+> >  drivers/pinctrl/qcom/Kconfig                  |    9 +
+> >  drivers/pinctrl/qcom/Makefile                 |    1 +
+> >  drivers/pinctrl/qcom/pinctrl-msm.c            |    3 +-
+> >  drivers/pinctrl/qcom/pinctrl-sdm670.c         | 1345 +++++++++++++++++
+> 
+> And I'm receiving this because ... ?
 
-  linux-firmware: Update AMD cpu microcode (2022-09-30 17:33:35 -0400)
+You wrote a patch a few years ago, then supposedly changed your email, and I
+wanted to know if there's anything we should consider before removing some of
+the code you wrote for it (in patch 2). After I added you as a recipient, it got
+a review tag, so I don't know what input you can give now (unless it's
+important). My bad for not removing you yet.
 
-are available in the Git repository at:
+Link: https://lore.kernel.org/all/20190610084213.1052-3-lee.jones@linaro.org/
 
-  https://github.com/lumag/linux-firmware a530-mbn
-
-for you to fetch changes up to 44fa25ddf7d803f347dcdb0ecc52f72268979b92:
-
-  qcom: add squashed version of a530 zap shader (2022-10-11 01:31:10 +0300)
-
-----------------------------------------------------------------
-Dmitry Baryshkov (1):
-      qcom: add squashed version of a530 zap shader
-
- WHENCE                    |   1 +
- qcom/apq8096/a530_zap.mbn | Bin 0 -> 17188 bytes
- 2 files changed, 1 insertion(+)
- create mode 100644 qcom/apq8096/a530_zap.mbn
+> 
+> >  5 files changed, 1483 insertions(+), 2 deletions(-)
+> >  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
+> >  create mode 100644 drivers/pinctrl/qcom/pinctrl-sdm670.c
+> > 
