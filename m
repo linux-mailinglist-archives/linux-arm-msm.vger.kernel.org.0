@@ -2,93 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 082A35F9F02
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Oct 2022 15:00:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16D5A5F9F31
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Oct 2022 15:12:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229771AbiJJNAJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Oct 2022 09:00:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54000 "EHLO
+        id S229461AbiJJNMo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Oct 2022 09:12:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbiJJNAI (ORCPT
+        with ESMTP id S229691AbiJJNMl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Oct 2022 09:00:08 -0400
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAC2C13F63;
-        Mon, 10 Oct 2022 06:00:07 -0700 (PDT)
-Received: by mail-oo1-f54.google.com with SMTP id s1-20020a4a81c1000000b0047d5e28cdc0so7880053oog.12;
-        Mon, 10 Oct 2022 06:00:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PQgW7lo0zUMDYP1RepfUvxdbQM2PCGljk0xH1fZ56Tk=;
-        b=MTXVpW+8GdI29x7xKpriiGWJldkoZ3ghaBJkvlIqUxGziBPT+3XaoJ+4nbI14mojH7
-         ojF4cvmq/eII5y9Vsl3v5OTIwpWWd5H3RgrQLSz081MeHSMAhmxzy21VMNJ0OE7i/gIK
-         HDch66PUhZ7IS02EuCHwZdcWKmdTEbmhRNcfhq4Kn3yYEGLSzcZy/N00VZXHgUK8JN1r
-         Qe1+QF7LQvZXGByr/DJ4Vw/F68YFat9LdG3qS+Lz981q5jwzYIwhqv+Bss2XpmfPtkHu
-         eiefuo4RgjICDh3H1XBQ/i+ofK6jQguc1ka23Pmxnrm17DxdZSShiBNpUFdxIDbGW93J
-         eVrA==
-X-Gm-Message-State: ACrzQf1qMA6fxuBY7O26Txjr02ZekOMYXHdF1y+jTCm6T4zAk2+A8UMz
-        OaWGED+P3LuwY4i8bi07bw==
-X-Google-Smtp-Source: AMsMyM7TI9rjDVlg50qScFZDGmsEAfWkS7KThYiSzOK+ko7XVhgsfxPGblu23n14sXgcImoJXvTsig==
-X-Received: by 2002:a9d:73cc:0:b0:659:9686:5563 with SMTP id m12-20020a9d73cc000000b0065996865563mr8320503otk.40.1665406806868;
-        Mon, 10 Oct 2022 06:00:06 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id z22-20020a9d62d6000000b00661a1d92aacsm595112otk.33.2022.10.10.06.00.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Oct 2022 06:00:06 -0700 (PDT)
-Received: (nullmailer pid 478335 invoked by uid 1000);
-        Mon, 10 Oct 2022 13:00:07 -0000
-Date:   Mon, 10 Oct 2022 08:00:07 -0500
-From:   Rob Herring <robh@kernel.org>
+        Mon, 10 Oct 2022 09:12:41 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BA0C2ED63
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Oct 2022 06:12:39 -0700 (PDT)
+Received: from SoMainline.org (D57D4C6E.static.ziggozakelijk.nl [213.125.76.110])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id A824B1F924;
+        Mon, 10 Oct 2022 15:12:35 +0200 (CEST)
+Date:   Mon, 10 Oct 2022 15:12:34 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Doug Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        devicetree@vger.kernel.org,
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-gpio@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: Re: [PATCH 2/2] dt-bindings: pinctrl: qcom,sc7180: convert to
- dtschema
-Message-ID: <166540680726.478270.1817901990631570843.robh@kernel.org>
-References: <20221007145116.46554-1-krzysztof.kozlowski@linaro.org>
- <20221007145116.46554-2-krzysztof.kozlowski@linaro.org>
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Martin Botka <martin.botka@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 34/40] arm64: dts: qcom: sm6125: align TLMM pin
+ configuration with DT schema
+Message-ID: <20221010131234.e4gxdaixs3acgayf@SoMainline.org>
+References: <20220912061746.6311-1-krzysztof.kozlowski@linaro.org>
+ <20220912061746.6311-35-krzysztof.kozlowski@linaro.org>
+ <20221009174621.ecamh76faoibuykv@SoMainline.org>
+ <d97b7d32-6e27-5a04-336b-0af6bd92c83c@linaro.org>
+ <d6765e12-715a-066e-c6c3-63e0962ee3af@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221007145116.46554-2-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+In-Reply-To: <d6765e12-715a-066e-c6c3-63e0962ee3af@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 07 Oct 2022 16:51:16 +0200, Krzysztof Kozlowski wrote:
-> Convert Qualcomm SC7180 pin controller bindings to DT schema.  Keep the
-> parsing of pin configuration subnodes consistent with other Qualcomm
-> schemas (children named with '-state' suffix, their children with
-> '-pins').
+On 2022-10-10 07:31:31, Krzysztof Kozlowski wrote:
+> On 10/10/2022 06:26, Krzysztof Kozlowski wrote:
+> > On 09/10/2022 13:46, Marijn Suijten wrote:
+> >>> [..]
+> >>> -				cmd {
+> >>> +				cmd-pins-pins {
+> >>
+> >> Is this double -pins-pins suffix intended?
+> >>
+> > 
+> > No, thanks for noticing it.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Cc: Doug Anderson <dianders@chromium.org>
-> ---
->  .../bindings/pinctrl/qcom,sc7180-pinctrl.txt  | 187 ------------------
->  .../bindings/pinctrl/qcom,sc7180-pinctrl.yaml | 163 +++++++++++++++
->  2 files changed, 163 insertions(+), 187 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.yaml
-> 
+> Wait, you commented on patch which was already merged. Fix is here already:
+> https://lore.kernel.org/linux-devicetree/20220930192954.242546-11-krzysztof.kozlowski@linaro.org/
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Correct, I came across this while working on another SoC on -next and
+wasn't sure if this patch was pulled in through some staging branch, or
+if you or I should send up a followup patch.  Seems you've already done
+so, thanks!
+
+- Marijn
