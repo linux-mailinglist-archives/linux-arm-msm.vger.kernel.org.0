@@ -2,50 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 54C6F5FB586
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 16:55:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEB9E5FB58D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 16:55:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230456AbiJKOy5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 10:54:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35244 "EHLO
+        id S230479AbiJKOzR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 10:55:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230368AbiJKOyG (ORCPT
+        with ESMTP id S230399AbiJKOyR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 10:54:06 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 245FC9C213;
-        Tue, 11 Oct 2022 07:51:34 -0700 (PDT)
+        Tue, 11 Oct 2022 10:54:17 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 098489C2C5;
+        Tue, 11 Oct 2022 07:51:42 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4992961166;
-        Tue, 11 Oct 2022 14:51:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FB4C433D6;
-        Tue, 11 Oct 2022 14:51:31 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 48904B8160D;
+        Tue, 11 Oct 2022 14:51:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B81C433D7;
+        Tue, 11 Oct 2022 14:51:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1665499892;
-        bh=EjxclP/xjylIuQyVCMXwjL3KglQqFnui4k5D9fx+T7U=;
-        h=From:To:Cc:Subject:Date:From;
-        b=DVFBtx5ZzijXhyRdOusYm1kCey5V50eCwciPDa+cQ/d+3ZvbtwFhw19ZQ+Dh1+FMa
-         mGe3aoCXRQORPoQO62chGAUcg8kDdvtIXwS7Xx2ylefYQwgi/tiaP5TdNpU3/tO3ir
-         a+4zAtnPpFsaPFHXcu7oTDn2h9s17q7Yv71EF/m1/4aLG00uSZtuZ/0DWdOvNoHR8d
-         uBumUWROLz4LC6zSXpbPrQNc2t1bRjHQNRi0MEkAf7hDSeebX1eTEyJ3oiQ1mmQKSl
-         vBlWTpae1KU2yCUXBkGl6+A8B9+UZ9XC9XZXcb/daRCt5ywty9x/ahknclNFwiBT2H
-         t/9M79JVf2nOQ==
+        s=k20201202; t=1665499899;
+        bh=PaC8jEflw0FOLaGuYNpIga/kLtJ4AMUin+oxJxX25Ss=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=jj5aYtko6xKq35+uzYl3bFNTiDUFp9S7kDEO9YnpcpaHYzacUg/JCoHyD0WahmASx
+         zBidJKD3i9W7f/0M7uv21Z1EvUFhY1wQL/QwBPyl4B0GZtTTRRhr5Hieccu8f8dRf1
+         uEX9dEuMU1OlLBJmL99O5iw+ohUxUPi4BqbEWwx5xFbwKMw7rWHcefSGkAx60yrtrE
+         t9d/73ZPIr9EZ+jfKbhvRnpaOzP5TWZlswoRh5suCmjWQYo3QxB+XGhAzpyeRwkzKp
+         IS0KlP5sQXfc70SdLYJEjreglCtVABwyCeOIZgPKNT048y0GWuUBxacf9OcJ8s3jGg
+         aybQpYJxGjYdQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        David Heidelberg <david@ixit.cz>,
+        Bjorn Andersson <andersson@kernel.org>,
         Sasha Levin <sashal@kernel.org>, agross@kernel.org,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.19 01/40] arm64: dts: qcom: sdm845: narrow LLCC address space
-Date:   Tue, 11 Oct 2022 10:50:50 -0400
-Message-Id: <20221011145129.1623487-1-sashal@kernel.org>
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.19 05/40] arm64: dts: qcom: sc7280-idp: correct ADC channel node name and unit address
+Date:   Tue, 11 Oct 2022 10:50:54 -0400
+Message-Id: <20221011145129.1623487-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20221011145129.1623487-1-sashal@kernel.org>
+References: <20221011145129.1623487-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -61,40 +62,54 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 300b5f661eebefb8571841b78091343eb87eca54 ]
+[ Upstream commit 5589ffb2da2a66988ab3a68334dad3e68b42e3a9 ]
 
-The Last Level Cache Controller (LLCC) device does not need to access
-entire LLCC address space.  Currently driver uses only hardware info and
-status registers which both reside in LLCC0_COMMON range (offset
-0x30000, size 0x1000).  Narrow the address space to allow binding other
-drivers to rest of LLCC address space.
+Correct SPMI PMIC VADC channel node name:
+1. Use hyphens instead of underscores,
+2. Add missing unit address.
 
-Cc: Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc: Sibi Sankar <quic_sibis@quicinc.com>
-Reported-by: Steev Klimaszewski <steev@kali.org>
-Suggested-by: Sibi Sankar <quic_sibis@quicinc.com>
+This fixes `make dtbs_check` warnings like:
+
+  qcom/sc7280-idp.dtb: pmic@0: adc@3100: 'pmk8350_die_temp', 'pmr735a_die_temp' do not match any of the regexes: '^.*@[0-9a-f]+$', 'pinctrl-[0-9]+'
+
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Steev Klimaszewski <steev@kali.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20220728113748.170548-11-krzysztof.kozlowski@linaro.org
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Reviewed-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220828084341.112146-12-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts  | 2 +-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 7783005c8028..6d9787e32b88 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2021,7 +2021,7 @@ uart15: serial@a9c000 {
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+index 6d3ff80582ae..e2e37a0292ad 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+@@ -78,7 +78,7 @@ &nvme_3v3_regulator {
+ };
  
- 		llcc: system-cache-controller@1100000 {
- 			compatible = "qcom,sdm845-llcc";
--			reg = <0 0x01100000 0 0x200000>, <0 0x01300000 0 0x50000>;
-+			reg = <0 0x01100000 0 0x31000>, <0 0x01300000 0 0x50000>;
- 			reg-names = "llcc_base", "llcc_broadcast_base";
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
+ &pmk8350_vadc {
+-	pmr735a_die_temp {
++	pmr735a-die-temp@403 {
+ 		reg = <PMR735A_ADC7_DIE_TEMP>;
+ 		label = "pmr735a_die_temp";
+ 		qcom,pre-scaling = <1 1>;
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+index 5eb668991e24..893d3031cfd5 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+@@ -264,7 +264,7 @@ &pcie1_phy {
+ };
+ 
+ &pmk8350_vadc {
+-	pmk8350_die_temp {
++	pmk8350-die-temp@3 {
+ 		reg = <PMK8350_ADC7_DIE_TEMP>;
+ 		label = "pmk8350_die_temp";
+ 		qcom,pre-scaling = <1 1>;
 -- 
 2.35.1
 
