@@ -2,93 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC2CF5FADA7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 09:45:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 004515FADC7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 09:51:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229577AbiJKHpX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 03:45:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40420 "EHLO
+        id S229771AbiJKHv0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 03:51:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229818AbiJKHpU (ORCPT
+        with ESMTP id S229586AbiJKHvY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 03:45:20 -0400
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [5.144.164.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F0F43AE7D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 00:45:16 -0700 (PDT)
+        Tue, 11 Oct 2022 03:51:24 -0400
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7A67A450
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 00:51:23 -0700 (PDT)
 Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id A82611F886;
-        Tue, 11 Oct 2022 09:45:14 +0200 (CEST)
-Date:   Tue, 11 Oct 2022 09:45:12 +0200
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 3D3FC2063E;
+        Tue, 11 Oct 2022 09:51:21 +0200 (CEST)
+Date:   Tue, 11 Oct 2022 09:51:19 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 10/16] arm64: dts: qcom: sm6125: align TLMM pin
- configuration with DT schema
-Message-ID: <20221011074512.anifehocqjnxuf35@SoMainline.org>
-References: <20220930192954.242546-1-krzysztof.kozlowski@linaro.org>
- <20220930192954.242546-11-krzysztof.kozlowski@linaro.org>
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Vinod Koul <vkoul@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 10/10] drm/msm/dsi: Prevent signed BPG offsets from
+ bleeding into adjacent bits
+Message-ID: <20221011075119.tvn5j5jm6aqnhqv2@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Vinod Koul <vkoul@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20221009184824.457416-1-marijn.suijten@somainline.org>
+ <20221009185316.462522-3-marijn.suijten@somainline.org>
+ <408bf6a2-47fe-3eaf-7235-578d33a576c9@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220930192954.242546-11-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <408bf6a2-47fe-3eaf-7235-578d33a576c9@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-09-30 21:29:48, Krzysztof Kozlowski wrote:
-> DT schema expects TLMM pin configuration nodes to be named with
-> '-state' suffix and their optional children with '-pins' suffix.
+On 2022-10-09 22:14:16, Dmitry Baryshkov wrote:
+> On 09/10/2022 21:53, Marijn Suijten wrote:
+> > The bpg_offset array contains negative BPG offsets which fill the full 8
+> > bits of a char thanks to two's complement: this however results in those
+> > bits bleeding into the next field when the value is packed into DSC PPS
+> > by the drm_dsc_helper function, which only expects range_bpg_offset to
+> > contain 6-bit wide values.  As a consequence random slices appear
+> > corrupted on-screen (tested on a Sony Tama Akatsuki device with sdm845).
+> > 
+> > Use AND operators to limit these two's complement values to 6 bits,
+> > similar to the AMD and i915 drivers.
+> > 
+> > Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
+> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> Side note: the DSC params tables are more or less common between amd, 
+> i916 and msm drivers. It might be worth moving them to the DSC helpers 
+> from the individual drivers. This would mean such masks handling can go 
+> into the helper too.
 
-Thanks!
+I'll queue this up in my list and perhaps tackle it in the next round of
+DSC fixes, assuming things don't get too big.
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-
-Perhaps mention more clearly that this is fixing up an earlier patch
-that tried to address missing `-pins`?
+If there are no more reviews I'll respin v4 with your review picked up
+and patch 7/10 reworked or reordered to have access to the msm_host
+pointer added in 8/10 (see kernel test robot mail).
 
 - Marijn
-
-> ---
->  arch/arm64/boot/dts/qcom/sm6125.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-> index 1fe3fa3ad877..af49a748e511 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-> @@ -407,13 +407,13 @@ data-pins {
->  			};
->  
->  			sdc2_on_state: sdc2-on-state {
-> -				clk {
-> +				clk-pins {
->  					pins = "sdc2_clk";
->  					drive-strength = <16>;
->  					bias-disable;
->  				};
->  
-> -				cmd-pins-pins {
-> +				cmd-pins {
->  					pins = "sdc2_cmd";
->  					drive-strength = <10>;
->  					bias-pull-up;
-> -- 
-> 2.34.1
-> 
