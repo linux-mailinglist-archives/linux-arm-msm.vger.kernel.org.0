@@ -2,60 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 732235FB3EB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 15:53:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C46EE5FB3FB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 15:59:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229511AbiJKNxa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 09:53:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33006 "EHLO
+        id S229468AbiJKN7W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 09:59:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229852AbiJKNx2 (ORCPT
+        with ESMTP id S229541AbiJKN7U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 09:53:28 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85FDE7C742;
-        Tue, 11 Oct 2022 06:53:27 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2197861123;
-        Tue, 11 Oct 2022 13:53:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBBDC433D6;
-        Tue, 11 Oct 2022 13:53:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1665496406;
-        bh=EINtKE+ZFkOpiRcj5jShXlOH+liwnEAnMQj9W0oJVX4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nZedtaGSuVaOlqhcBPxFIN27eEettJmZ6fU1Z3yI5pN4IXW6UFYev7+ypWycCeg/+
-         F+0EDMO+rg9HKfHuSo4l/hxHCDDi8OKkvpKJOzNT0GX5kTOVsVX06ajSXrFL65kBKm
-         yLjLHFXaPK/QYJEF3bOw5wxJyzc/1E7oMwGnpZrIlBObt+zdglbYGu4DTbo13u1Cfb
-         XmM+wYHxMCJpbzkyox55Fnmqg6kOqMMv3VbTM1NYlVvby2jXuMnvTB+BNFPEQsqo3m
-         IeAixo9n4t5SRUy5vt7DSxkgxK8VHFxgxUYi9iut+uQVKWG47oVnbwdegyauqkDSnP
-         DUc8wKuCq889A==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oiFh6-0002h8-RF; Tue, 11 Oct 2022 15:53:17 +0200
-Date:   Tue, 11 Oct 2022 15:53:16 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Tue, 11 Oct 2022 09:59:20 -0400
+Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F8D27B2B1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 06:59:18 -0700 (PDT)
+Received: by mail-qv1-xf33.google.com with SMTP id f14so8983128qvo.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 06:59:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:references:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2YVyCU1GyrgH/o8lcSvAoAfWW/XK1pu5VGWnGETyseE=;
+        b=mI4TFQLi0+TZmxLnwmkbsVFlVqUMsPyDpOEOH83Eb4KcFWutHMNhymkYm1YlA3LGo0
+         mXKEb2EkGw20UZraBrUBizSDkm07hhzT2JfCPhVDW14KiyX2WOqRHXZqiYoljcPUbndu
+         lH0lIXFkpXfQn6o8wx7Nn9LRfISPcfHEYqbGBKHUOqDvQDLxbqOwhX0aZJmTsFA780iJ
+         sxwdvQpugzzUKnsTTOIxJFqED2gwD7kB/zP4Ftyx/LI3yIEaTBYMVIntOFRqavfJ+Vah
+         5H5hOVHXXCC/zjxWWMKSPrQ7EsYgF3wa5xpAYNTqZXVE7vxtyDBkGiWu2L9FZQm1NUd4
+         pEew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2YVyCU1GyrgH/o8lcSvAoAfWW/XK1pu5VGWnGETyseE=;
+        b=NPJBSin7VZyaLsBZz2/c9g2jPfJ9fmbRZpffg5PFSxuatc/QeVjlKrFomIroZkWypO
+         a0AQXpSymkmpZEeCt42hUuao5cSO1jV6EaxUQF4lFAG79rrxVljUSmEhKfXiVXLIlfKC
+         z+FPm3FxAGjp8aOXdnExKVSBh4tg8I6oYhcsZ5ERFwvGVbz4wlwU14S8k5I1OsEWb4GG
+         cVZQoD8vXnHRYmZkYGyzNAuRBPqFN7ZPKXZmGBe5h7bjOwYLaojBCrC0t4DkyYjNaeIC
+         vbuI9Vz8T7LZ7TDpq6FQwvqx9pQes1loUXl6UNl6MykWHMe+EoVrQyozi9vNyQ1Fqz9u
+         7jEg==
+X-Gm-Message-State: ACrzQf1PI3xGhY2opFVbziAZzkvmiFvtVdKL9gEIRcBdKpJi1+VGHwsL
+        w4vFmB4iWefh244OolN5aacUMw==
+X-Google-Smtp-Source: AMsMyM6MUJbFVRMNY9hUSOWI/089zqY1BN3IH3YZz20z5RhRcBMV5IifDF8pNrEArjODrrmry5bfxQ==
+X-Received: by 2002:ad4:5dea:0:b0:4b2:e813:7c35 with SMTP id jn10-20020ad45dea000000b004b2e8137c35mr17933397qvb.74.1665496757499;
+        Tue, 11 Oct 2022 06:59:17 -0700 (PDT)
+Received: from [192.168.1.57] (cpe-72-225-192-120.nyc.res.rr.com. [72.225.192.120])
+        by smtp.gmail.com with ESMTPSA id o8-20020ac841c8000000b00398313f286dsm7424666qtm.40.2022.10.11.06.59.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Oct 2022 06:59:16 -0700 (PDT)
+Message-ID: <0f5bb12f-814d-37f2-9307-b2b649aedfe3@linaro.org>
+Date:   Tue, 11 Oct 2022 09:57:03 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: Qualcomm DT bindings and DTS cleanups - tracking community wide
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 08/13] phy: qcom-qmp-pcie: drop power-down delay config
-Message-ID: <Y0V1TIBySTPhYqX/@hovoldconsulting.com>
-References: <20221011131416.2478-1-johan+linaro@kernel.org>
- <20221011131416.2478-9-johan+linaro@kernel.org>
- <66261491-530d-c368-6cc8-daeef74fcbda@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <66261491-530d-c368-6cc8-daeef74fcbda@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Alex Elder <elder@linaro.org>,
+        Nicolas Dechesne <nicolas.dechesne@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Vinod Koul <vinod.koul@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Caleb Connolly <kc@postmarketos.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Johan Hovold <johan@kernel.org>
+References: <62e95ea6-6b72-a159-56ab-8bb11a5800c8@linaro.org>
+In-Reply-To: <62e95ea6-6b72-a159-56ab-8bb11a5800c8@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,42 +93,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 11, 2022 at 04:46:53PM +0300, Dmitry Baryshkov wrote:
-> On 11/10/2022 16:14, Johan Hovold wrote:
-> > The power-down delay was included in the first version of the QMP driver
-> > as an optional delay after powering on the PHY (using
-> > POWER_DOWN_CONTROL) and just before starting it. Later changes modified
-> > this sequence by powering on before initialising the PHY, but the
-> > optional delay stayed where it was (i.e. before starting the PHY).
-> > 
-> > The vendor driver does not use a delay before starting the PHY and this
-> > is likely not needed on any platform unless there is a corresponding
-> > delay in the vendor kernel init sequence tables (i.e. in devicetree).
-> > 
-> > Let's keep the delay for now, but drop the redundant delay period
-> > configuration while increasing the unnecessarily low timer slack
-> > somewhat.
+On 22/09/2022 10:32, Krzysztof Kozlowski wrote:
+> Hi everyone,
 > 
-> Actually, the vendor driver does this 995..1005 sleep. But contrary to 
-> our driver it does that after programming whole PHY init sequence, which 
-> includes SW_RESET / START_CTL, but before programming the pipe clocks.
+> Quite a lot of people are working on Qualcomm DT bindings conversion
+> (TXT->YAML) and fixups to Qualcomm DTS. We track a bit of this effort
+> internally in Linaro, but that has many shortcomings and we would like
+> to track it rather community-wide with the support and contributions
+> from the community.
+> 
+> What to track:
+> 1. Which bindings to convert to YAML,
+> 2. Missing compatibles (either entirely or because of missing conversion),
+> 3. `dt_binding_check` warnings (usually connected with 1-2),
+> 4. `dtbs_check` warnings.
+> 
+> Rob's bot gives us daily output for 1-4, but how can we track current
+> efforts to avoid duplication of work? Also it would allow people to find
+> tasks for them to get contributions to Linux kernel :). Is anyone in
+> community interested in tracking it together, in a public way?
+> 
+> If so, where?
+> A. elinux.org (needs some formatting when pasting the output from tools)
+> B. gitlab pages/wiki (maybe scripts could parse tools and create the page?)
+> C. gitlab dedicated repo - some text file
+> D. Linux kernel TODO file (might be difficult to keep updated)
+> E. kernel.org wiki (requires LF accounts, AFAIK, a bit pain to edit; I
+> have it for Exynos but I don't find it usable -
+> https://exynos.wiki.kernel.org/todo_tasks)
+> 
+> I am leaning towards Gitlab pages because they could be quite automated
+> - with CI or with scripts.
 
-Right, it does it after starting the PHY which means that you don't have
-to poll for as long for the PHY status.
+This could be looking like that - the list of missing compatibles from
+Rob's tasks:
+https://gitlab.com/krzkoz/linux-dt-todo/-/blob/main/todo-compatibles.rst
 
-It's a different delay entirely.
+There is a script which will automatically add new entries to the list
+(above RST file), once fed with Rob's job output. Further this could be
+probably pipelined with Rob's jobs.
 
-> I think we can either drop this delay completely, or move it before 
-> read_poll_timeout().
+List anyway has to be manually updated with work in progress.
 
-It definitely shouldn't be used for any new platforms, but I opted for
-the conservative route of keeping it in case some of the older platforms
-actually do need it.
+This is for the compatibles. Missing part is doing something similar for
+the dtbs_check warnings.
 
-My bet is that this is all copy-paste cruft that could be removed, but
-I'd rather do that as a separate follow-on change. Perhaps after testing
-some more SoC after removing the delay.
+In replies Luca, Caleb and Neil mentioned GitLab issues. That could be
+useful, so if someone would like to hook into GitLab API - feel free to
+work on that (either in that repo or in separate).
 
-SC8280XP certainly doesn't need it.
+Best regards,
+Krzysztof
 
-Johan
