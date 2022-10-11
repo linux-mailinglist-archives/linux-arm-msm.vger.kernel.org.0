@@ -2,110 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CAC0C5FBB0A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 21:05:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DB605FBB1D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 21:08:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229569AbiJKTFs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 15:05:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37412 "EHLO
+        id S229701AbiJKTIy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 15:08:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229920AbiJKTFk (ORCPT
+        with ESMTP id S230102AbiJKTIr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 15:05:40 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEC74895E8;
-        Tue, 11 Oct 2022 12:05:23 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29BIw8mv015149;
-        Tue, 11 Oct 2022 19:05:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=EYm+I0EdSlNpd9mSd7z1h0MROHQQv6hwVSWzb1HFd6U=;
- b=D/3Q5HMstpCtUASMJXX88Ic3kJOf3zO9t8VkGSve/IgHJOxiQPkeJ+EbIK9rgMLzqHJF
- arvtdczrUPqW7RC4HTK2BsLeG0K3xF72mcV+epI45Ox8qMNS36/V5amKPLzX09mADX5a
- LmtLoHjSZ44dTg9dTD43TIICmHv/s1fJvZBu2cvCTbkardO64QmEEznwaNeDvEbRrYab
- LNlDmlfMsU6RVdgLUgtpVHlTFyB64WNUy/P0IqAKGhCGYWoYpqVtb4l3vGFBpCQpf+Fx
- MN+kPLyRXIh0u/2X7ReyZIWaQIWSWkIBmbqy2PaOyeQDjCIi1nfFDkehbANSMS+/Iv0W bg== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k5e7fg0sy-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 11 Oct 2022 19:05:20 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29BJ5JDW016241
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 11 Oct 2022 19:05:19 GMT
-Received: from [10.110.3.66] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 11 Oct
- 2022 12:05:19 -0700
-Message-ID: <3885c1d1-ab6f-2b30-2950-f4dc0ec54152@quicinc.com>
-Date:   Tue, 11 Oct 2022 12:05:19 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH 03/19] arm64: dts: qcom: qdru1000: Add tlmm nodes
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Tue, 11 Oct 2022 15:08:47 -0400
+Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FBF3915C6;
+        Tue, 11 Oct 2022 12:08:40 -0700 (PDT)
+Date:   Tue, 11 Oct 2022 19:07:50 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=noorman.info;
+        s=protonmail3; t=1665515291; x=1665774491;
+        bh=cUA9w+TR1CwCowvfDEfjdWk184wmOwUiLKbtVJgBB3A=;
+        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+         Subject:Reply-To:Feedback-ID:Message-ID;
+        b=I5Jxa0UygdvECoK1FrATXZLbH6BsloyJMFA9SibfXLxSS2I+E0yc50UQE0NjG4zk9
+         GotR5qpxLMrgnkc86pfsqG4Lo9KNA7uX/x8pScPf8BbLQPMpVeUCgY4HH/LBiKwjfC
+         uexkp2jr5c1J4yte8eLEstyiZEGcg4hIOTC/Jptz5c/KqTt1g9j2n9R3Tug9dIdzlk
+         IYPQ63EPMprYFNI/vEGzsP/OXF22bD9hHbQWJDFCT+OIs4lAixJ8+T4RegqgamK57X
+         00vHo7/BdyjBNTvh3PzYkEJsJAPmphMHivgH8VVDOdI+o6ofQ2bvEpaSdddW+rM0D+
+         dMjtcxK/7ldEA==
+To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20221001030656.29365-1-quic_molvera@quicinc.com>
- <20221001030656.29365-4-quic_molvera@quicinc.com>
- <ad743621-8e2d-23f9-8c44-53f6681aa134@linaro.org>
- <7674b756-75d5-6ca3-d4fe-c54bd92a3fd7@quicinc.com>
- <ddb4566f-b420-6ee8-b3f5-3eeb83ad2d8b@linaro.org>
-From:   Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <ddb4566f-b420-6ee8-b3f5-3eeb83ad2d8b@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: u4Mm87_TtmyBWd4HrZtw4i2Xk2pN-jEy
-X-Proofpoint-GUID: u4Mm87_TtmyBWd4HrZtw4i2Xk2pN-jEy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-11_08,2022-10-11_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=552 spamscore=0
- impostorscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
- malwarescore=0 adultscore=0 mlxscore=0 priorityscore=1501 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210110111
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Henrik Rydberg <rydberg@bitmath.org>
+From:   Job Noorman <job@noorman.info>
+Cc:     Luca Weiss <luca@z3ntu.xyz>, linux-input@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 0/3] Add Himax hx83112b touchscreen driver
+Message-ID: <20221011190729.14747-1-job@noorman.info>
+Feedback-ID: 14439221:user:proton
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series adds support for the Himax hx83112b. The hx83112b supports 10
+point multitouch with hardware tracking of touch points. It is the
+touchschreen used by the Fairphone 3.
+
+Note that a datasheet was unavailable for this device, so it was built
+based on the Android driver that was tagged as GPLv2. This series is a
+complete rewrite, though, and the code bears no resemblence to the original
+implementation.
+
+It is expected that this driver can be made to work on other hx83xxx
+devices, especially the hx83112a used in the Fairphone 4. However, since we
+have been unable to verify this, this driver only declares compatibility
+with the hx83112b and uses very specific file names.
+
+Job Noorman (3):
+  dt-bindings: touchscreen: add Himax hx83112b bindings
+  Input: add driver for Himax hx83112b touchscreen devices
+  arm64: dts: qcom: sdm632: fairphone-fp3: add touchscreen
+
+ .../input/touchscreen/himax,hx83112b.yaml     |  59 +++
+ MAINTAINERS                                   |   7 +
+ .../boot/dts/qcom/sdm632-fairphone-fp3.dts    |  14 +
+ drivers/input/touchscreen/Kconfig             |  11 +
+ drivers/input/touchscreen/Makefile            |   1 +
+ drivers/input/touchscreen/himax_hx83112b.c    | 376 ++++++++++++++++++
+ 6 files changed, 468 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/input/touchscreen/him=
+ax,hx83112b.yaml
+ create mode 100644 drivers/input/touchscreen/himax_hx83112b.c
+
+--
+2.38.0
 
 
-On 10/11/2022 11:57 AM, Krzysztof Kozlowski wrote:
-> On 11/10/2022 14:48, Melody Olvera wrote:
->>
->> On 10/1/2022 2:14 AM, Krzysztof Kozlowski wrote:
->>> On 01/10/2022 05:06, Melody Olvera wrote:
->>>> Add tlmm node for the QDU1000 and QRU1000 SoCs and the uart pin
->>>> configuration.
->>> The patchset should be squashed with previous. There is no point in
->>> bringing support piece by piece. You can bring support in steps if you
->>> submissions are separate in time. But if you have everything ready -
->>> your patch must be complete and bisectable.
->> To be clear, does it make more sense to submit the base dt first, then submit each
->> driver with all the dt changes as one patchset?
-> No, because you have DTS ready. There is no incremental work here.
-Ah ok so just squash all these commits into one and submit.
->
-> Best regards,
-> Krzysztof
->
-Thanks,
-Melody
