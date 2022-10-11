@@ -2,102 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 819075FBADD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 20:59:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC6B05FBAEE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 21:02:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229691AbiJKS7f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 14:59:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48498 "EHLO
+        id S230134AbiJKTCF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 15:02:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229788AbiJKS73 (ORCPT
+        with ESMTP id S229942AbiJKTB0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 14:59:29 -0400
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB0D886834
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 11:59:27 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id m6so4015967qkm.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 11:59:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0wCN5RZ+L8i/oN57QmIvmcE2DqsyjZQyxM8LL5Wvecw=;
-        b=OYOpwA00168+Sn1npw1oL58Fo+MJaQyLFCqVdGdf7vXkNFi5pgDHeSYPE265v1fk3U
-         43cUJtNVbasO+3J8ihdCrso3YZH+bnE97UgGQ+WJjjFdrITLESiIYyCVUuLH9IWdZQyJ
-         +koIQr96yAJFGMwL99V3TmFC//4vyOQcXDoWqPklpIRVAivPFyT0IWAX2HdH7Zc6CUxz
-         Cgf+zeA+6PeM8xj8bzTnIfnfvQ5a/QDGI4MxHIHPX97wz0remhhzrHMohvtAIPfLo4ET
-         j0Gw2MOzKHFNiqpXycHEwEKkAuyJd9GrUdzArT3sOGgiq2ihXRyAoBwf0EeXn6kcEfT4
-         9IzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0wCN5RZ+L8i/oN57QmIvmcE2DqsyjZQyxM8LL5Wvecw=;
-        b=e/5aClhyNjRbpl7RnVtongkv25H6OM3J7c7UD0bmxjk4u5IMWJXfnBU4H2R/Hc1pOY
-         jp/85MTdvPiJwi3lgM2/X8x3owAAXSitlBJeN0Z3ljcGqZFkFhjTLd6CA9bJR5431LVR
-         2e1Jc19umObb8i0xWZMOLIgTflArXFim+vMoTGphvdxF6BB3QcL7qPkOudhfSJ2YZaCK
-         +SxVVhMYCTayFDbGtQqbLJvVXI+/bODIV4H461JmZyWE7NfQ7coWGPc61BaFRG2RUlUL
-         ZIzSk2P5wTb6uvH+H8vuXxjypB1byMfrwRdQDyDsZnZjblu2Z5qbxRShlN3Md8/GCntp
-         BkMA==
-X-Gm-Message-State: ACrzQf3FwdBr83uxyntQPn00tHl/a+NFfAn6Z897hEIcXHyVzXY5K7LF
-        dZW2vI+AVwGc8PwlNS6scc9d9Q==
-X-Google-Smtp-Source: AMsMyM6Bn+yZ7GM457z+pCMlyEfivAVrDfm1n7o3H+EW0SKcPQs+s0LIDrkPQj1pe2vx0w6xMzD1bw==
-X-Received: by 2002:a05:620a:6017:b0:6ce:3c51:66b9 with SMTP id dw23-20020a05620a601700b006ce3c5166b9mr18110981qkb.605.1665514766652;
-        Tue, 11 Oct 2022 11:59:26 -0700 (PDT)
-Received: from [192.168.1.57] (cpe-72-225-192-120.nyc.res.rr.com. [72.225.192.120])
-        by smtp.gmail.com with ESMTPSA id c2-20020ac87dc2000000b0039a8b075248sm4688296qte.14.2022.10.11.11.59.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Oct 2022 11:59:25 -0700 (PDT)
-Message-ID: <ddb4566f-b420-6ee8-b3f5-3eeb83ad2d8b@linaro.org>
-Date:   Tue, 11 Oct 2022 14:57:13 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH 03/19] arm64: dts: qcom: qdru1000: Add tlmm nodes
-Content-Language: en-US
-To:     Melody Olvera <quic_molvera@quicinc.com>,
+        Tue, 11 Oct 2022 15:01:26 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8E0389826;
+        Tue, 11 Oct 2022 12:01:15 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id B9571CE17E9;
+        Tue, 11 Oct 2022 19:01:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81992C433D7;
+        Tue, 11 Oct 2022 19:01:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1665514870;
+        bh=+alAofN7M62G6kKsH4kJ9xjNMHw9HoKNNk4jSYu6pg8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jPiQ4OMo78Xp1XH3B2CwGl5IzZEDUNPlkNOgGsdeDNGLtJSEMElxxWD84R84VykPT
+         UAPM1hq/BM9CFhAhb1zH4f4rNphx8lj0iZ+f0sR0yruGgdqWc3c5xj5XLOuZeK3keO
+         r1SdbJHxwDNxHbuttB7Gxwz2YNY731xIm3UZl1Y0=
+Date:   Tue, 11 Oct 2022 21:01:54 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Trilok Soni <quic_tsoni@quicinc.com>
+Cc:     Elliot Berman <quic_eberman@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221001030656.29365-1-quic_molvera@quicinc.com>
- <20221001030656.29365-4-quic_molvera@quicinc.com>
- <ad743621-8e2d-23f9-8c44-53f6681aa134@linaro.org>
- <7674b756-75d5-6ca3-d4fe-c54bd92a3fd7@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <7674b756-75d5-6ca3-d4fe-c54bd92a3fd7@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 03/13] gunyah: Common types and error codes for Gunyah
+ hypercalls
+Message-ID: <Y0W9oqAbilTk5HOT@kroah.com>
+References: <20221011000840.289033-1-quic_eberman@quicinc.com>
+ <20221011000840.289033-4-quic_eberman@quicinc.com>
+ <Y0UZcLl20HobX4w3@kroah.com>
+ <52b07662-666a-2fc7-cb18-a9d294f7ae9b@quicinc.com>
+ <Y0W6gVcxTRg/m5Nb@kroah.com>
+ <b738a208-26a8-03fa-b54f-811dd7c649dd@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b738a208-26a8-03fa-b54f-811dd7c649dd@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/10/2022 14:48, Melody Olvera wrote:
+On Tue, Oct 11, 2022 at 11:50:04AM -0700, Trilok Soni wrote:
+> On 10/11/2022 11:48 AM, Greg Kroah-Hartman wrote:
+> > On Tue, Oct 11, 2022 at 11:21:36AM -0700, Elliot Berman wrote:
+> > > 
+> > > 
+> > > On 10/11/2022 12:21 AM, Greg Kroah-Hartman wrote:
+> > > > On Mon, Oct 10, 2022 at 05:08:30PM -0700, Elliot Berman wrote:
+> > > > > Add architecture-independent standard error codes, types, and macros for
+> > > > > Gunyah hypercalls.
+> > > > > 
+> > > > > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> > > > > ---
+> > > > >    MAINTAINERS                  |  1 +
+> > > > >    include/asm-generic/gunyah.h | 74 ++++++++++++++++++++++++++++++++++++
+> > > > >    2 files changed, 75 insertions(+)
+> > > > >    create mode 100644 include/asm-generic/gunyah.h
+> > > > > 
+> > > > > diff --git a/MAINTAINERS b/MAINTAINERS
+> > > > > index ef6de7599d98..4fe8cec61551 100644
+> > > > > --- a/MAINTAINERS
+> > > > > +++ b/MAINTAINERS
+> > > > > @@ -8886,6 +8886,7 @@ L:	linux-arm-msm@vger.kernel.org
+> > > > >    S:	Supported
+> > > > >    F:	Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
+> > > > >    F:	Documentation/virt/gunyah/
+> > > > > +F:	include/asm-generic/gunyah.h
+> > > > >    HABANALABS PCI DRIVER
+> > > > >    M:	Oded Gabbay <ogabbay@kernel.org>
+> > > > > diff --git a/include/asm-generic/gunyah.h b/include/asm-generic/gunyah.h
+> > > > > new file mode 100644
+> > > > > index 000000000000..64a02dd3b5ad
+> > > > > --- /dev/null
+> > > > > +++ b/include/asm-generic/gunyah.h
+> > > > 
+> > > > Why not include/linux/gunyah.h?  Why asm-generic?  This is not an
+> > > > architecture.
+> > > > 
+> > > 
+> > > My idea here is to differentiate between code that interacts with hypercalls
+> > > and code that uses the abstractions provided on top of those hypercalls.
+> > > include/asm-generic/gunyah.h contains architecture-independent definitions
+> > > for hypercalls. Hypercalls are architecture-specific.
+> > > 
+> > > For instance, I wanted to avoid a header file that mixes the definitions for
+> > > the message-queue mailbox with the hypercall definitions that the
+> > > message-queue mailbox driver itself uses.
+> > > 
+> > > I can put it all in include/linux/gunyah.h and delineate with some clear
+> > > comments, but I initially felt it would be better to have separate header
+> > > file.
+> > 
+> > Please put it all in one place, this is just one tiny driver and should
+> > not abuse the asm-generic location at all, no one is only going to want
+> > just this one file, they are going to need the whole thing or nothing.
+> > 
 > 
-> 
-> On 10/1/2022 2:14 AM, Krzysztof Kozlowski wrote:
->> On 01/10/2022 05:06, Melody Olvera wrote:
->>> Add tlmm node for the QDU1000 and QRU1000 SoCs and the uart pin
->>> configuration.
->> The patchset should be squashed with previous. There is no point in
->> bringing support piece by piece. You can bring support in steps if you
->> submissions are separate in time. But if you have everything ready -
->> your patch must be complete and bisectable.
-> To be clear, does it make more sense to submit the base dt first, then submit each
-> driver with all the dt changes as one patchset?
+> Let's say when we do the RISC-V port for Gunyah, we may need to move it back
+> to asm-generic then?
 
-No, because you have DTS ready. There is no incremental work here.
+If that really happens and the things are arch-specific, yes, we can
+worry about that then.  You know better than this, we only do what is
+needed now.  We do not add code, or make splits like this, when it is
+not needed today.
 
-Best regards,
-Krzysztof
+Keep it simple first, you want to get this merged first, and then you
+can iterate on it to make it complex and messy :)
 
+thanks,
+
+greg k-h
