@@ -2,96 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 484F45FB251
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 14:21:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0CA15FB2FB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 15:15:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229573AbiJKMVG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 08:21:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50772 "EHLO
+        id S229984AbiJKNPB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 09:15:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229620AbiJKMVE (ORCPT
+        with ESMTP id S229854AbiJKNOx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 08:21:04 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C66667C8C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 05:21:03 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id a24so525170qto.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 05:21:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yBOAePam/DgpbvIZKnayxFMZARU8chc5AqDW1+FCM2I=;
-        b=N2Av06SynhLlqyKUPYpU9sFyV4crCJw6JMcK0GqnNzX30nGGc6tVyt0kkE0weU8zFA
-         iLWlFY9uSXUpUwb3eThXOsfKSMalCdPVF7+MlE6NMK9gjPwY0s+HeDOaHAwbg2ywugqT
-         V59C/6Mo0/kULe+E0/wA9+xyWKDoaIji7r1UfXjDYZpgVqB/g7VxA1Raa1DDhf7vcak8
-         nzFs6LYu3mmaFppBy/bN1pfPqwEolE1EPGDyd/77l0puJZ+iehIXeS+1hEOHZoi0P6ax
-         J/mvcZ8reTIeVvxve7tBlE1ok2fcKg9S8Laoy8FqiD/v7tEhQN7JG7BCxaP7p6GGKi1x
-         Rr/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yBOAePam/DgpbvIZKnayxFMZARU8chc5AqDW1+FCM2I=;
-        b=i1jMOhbZ8utLbc4TZ+9RY9AgBHf1ZPV/Ze+DkFbbfmx6zfi72jo6LncPtprgr3jNme
-         ZWGupZ/WPmrRUOKpcqAS4iNnfPyNeJzRbT41/Ks7Ty7tW6DzkA53hbMJiiCL7snRb9IT
-         82btkSaHMgxI6vvUPTig33mdaZJq02WQKp2HRw8mR2sICfg3jm9oiq7GxSAlM5IG4dPY
-         +Tc8E7WBcB1WoPKlUSKcmKXwBezWPZJ6sZ4IUsTQdE/5GWbK8vo2kuP/JY2s5z8smrmp
-         3nlNfBt0DEu689HK7uXc8KIxIK+6yhFWECf2CZBjseY6PEUyg7oOgh0ZEPFo6gBDf3NQ
-         89Fw==
-X-Gm-Message-State: ACrzQf23fd9W1EDe6AYzqVjGh7ko67ecEflO+9GAXUtMbkS00nHEdVaS
-        uv8rFtxrNEDJ7xOgaHeBn2JteA==
-X-Google-Smtp-Source: AMsMyM7AJnOBQB/Gg2N3m8SMAoT0i2mFurtiGSL0hqFqd2bnOqwBX/9LST5A7m3icFJCBykX1lckwg==
-X-Received: by 2002:a05:622a:13c6:b0:35b:a742:28ae with SMTP id p6-20020a05622a13c600b0035ba74228aemr18341931qtk.435.1665490862732;
-        Tue, 11 Oct 2022 05:21:02 -0700 (PDT)
-Received: from [192.168.1.57] (cpe-72-225-192-120.nyc.res.rr.com. [72.225.192.120])
-        by smtp.gmail.com with ESMTPSA id i8-20020a05620a404800b006bc192d277csm13282700qko.10.2022.10.11.05.21.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Oct 2022 05:21:02 -0700 (PDT)
-Message-ID: <a687cb53-2dc6-5dec-e083-f66c5f924924@linaro.org>
-Date:   Tue, 11 Oct 2022 08:18:50 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH v8 1/2] dt-bindings: arm: add xiaomi,sagit board based on
- msm8998 chip
-Content-Language: en-US
-To:     Dzmitry Sankouski <dsankouski@gmail.com>,
-        linux-kernel@vger.kernel.org
+        Tue, 11 Oct 2022 09:14:53 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85C4D12755;
+        Tue, 11 Oct 2022 06:14:51 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B63B561198;
+        Tue, 11 Oct 2022 13:14:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA3AC43143;
+        Tue, 11 Oct 2022 13:14:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1665494087;
+        bh=9HRhRdXIRmiU7I2WSz0xoKSZxg0uzVikdH/YtorN4yM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=mhw3n7Hnu7eop78YWn7znE/ZTii6xmAZCInojvRQ00txMa77ZiKaEthLXZkRUMouV
+         XsjbiQPdX7iK4P5wKAY801gVVXigBRuyri1qlwTbwyX8JEUqIdLHcLh0McPVLrMoyD
+         xagWd0Vekp5UwjZHplXTCoLFuLl1YIHtZoblKhJkALlOkku3F34dn/tB4RQ805eqpn
+         gu/xGaP4xBAJ2zrSleCy/LNfTxfReU4LVYfVuh1jQ0mmfXwTZJjcNw3ydn9B2d2Uhe
+         YysQF0YW1VHlWEUheYa8vzQbk0yXd+7gurXQWk+S/OO6hkjknXsIe3jtpd7BDeRfya
+         UKKUKDVM6VCgw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1oiF5i-0000eb-4B; Tue, 11 Oct 2022 15:14:38 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-References: <20221010154039.1144605-1-dsankouski@gmail.com>
- <20221010154039.1144605-2-dsankouski@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221010154039.1144605-2-dsankouski@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 00/13] phy: qcom-qmp: further prep cleanups
+Date:   Tue, 11 Oct 2022 15:14:03 +0200
+Message-Id: <20221011131416.2478-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/10/2022 11:40, Dzmitry Sankouski wrote:
-> Add xiaomi,sagit board (Xiaomi Mi 6) binding.
-> 
-> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+Here's the next batch of QMP cleanups in preparation for adding support
+for SC8280XP and its four-lane PCIe PHYs.
 
-Really, you ignore it for the second time. You received feedback, so
-implement it.
+Note that these apply on top of the following two series that have been
+reviewed and should be ready to be merged when the PHY tree opens:
 
-Best regards,
-Krzysztof
+	https://lore.kernel.org/linux-arm-msm/20220929092916.23068-1-johan+linaro@kernel.org/
+	https://lore.kernel.org/all/20220927092207.161501-1-dmitry.baryshkov@linaro.org/
+
+After this I have one more series of related cleanups before posting the
+SC8280XP support.
+
+Johan
+
+
+Johan Hovold (13):
+  phy: qcom-qmp: drop regulator error message
+  phy: qcom-qmp: drop superfluous comments
+  phy: qcom-qmp-combo: drop unused in-layout configuration
+  phy: qcom-qmp-pcie: drop redundant ipq8074 power on
+  phy: qcom-qmp-pcie-msm8996: drop unused in-layout configuration
+  phy: qcom-qmp-ufs: drop unused in-layout configuration
+  phy: qcom-qmp-usb: drop unused in-layout configuration
+  phy: qcom-qmp-pcie: drop power-down delay config
+  phy: qcom-qmp-pcie-msm8996: drop power-down delay config
+  phy: qcom-qmp-combo: drop sc8280xp power-down delay
+  phy: qcom-qmp-combo: drop power-down delay config
+  phy: qcom-qmp-usb: drop sc8280xp power-down delay
+  phy: qcom-qmp-usb: drop power-down delay config
+
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 81 ++++-------------
+ .../phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c  | 55 ++----------
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 75 +++-------------
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       | 48 +++-------
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 89 +++----------------
+ 5 files changed, 59 insertions(+), 289 deletions(-)
+
+-- 
+2.35.1
 
