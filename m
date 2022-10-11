@@ -2,154 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C30D35FAF08
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 11:07:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C5185FAF6A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 11:36:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229606AbiJKJHf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 05:07:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59706 "EHLO
+        id S229799AbiJKJgY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 05:36:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbiJKJHe (ORCPT
+        with ESMTP id S229782AbiJKJgV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 05:07:34 -0400
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0417E57273;
-        Tue, 11 Oct 2022 02:07:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1665479253; x=1697015253;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=U6Q0eqDO5XKNfPO1gS4tfAxW8aSXRLRmUbuizVaigrU=;
-  b=KJ1hWgUoJueGsT1kB1BMADWZ8TRSmMH1lULOu9izZcMoVET1iuLdebxx
-   Bq/AqfXXoXuXSEKosgnnknH51Z2HbEij4dZC9wezdAi2VK3Bep2nPVF5g
-   N+oYMPF9x//YONE+dXuRmRcnpBWRPNrM4kplR4Lk/G0iV2U5ojQehGJkc
-   JBGCcweO/x7i4UcaJS+fmuMwxlaPAI9TTobTByovbEtXa8l7QYVvoRIPs
-   j/16B9+YqU51mJsvQG5GJGf15y15vuuDXi6gGeFejf1uk8AnPpUr9jZp+
-   j+Sc2fqGM5CtQFM/7AYRbHnR5fPT/Kn8NjDUzRo7wd3RU2oEbYIcPp58r
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10496"; a="330928651"
-X-IronPort-AV: E=Sophos;i="5.95,176,1661842800"; 
-   d="scan'208";a="330928651"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2022 02:07:32 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10496"; a="871436201"
-X-IronPort-AV: E=Sophos;i="5.95,176,1661842800"; 
-   d="scan'208";a="871436201"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmsmga006.fm.intel.com with ESMTP; 11 Oct 2022 02:07:11 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.96)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1oiBEA-005EiK-07;
-        Tue, 11 Oct 2022 12:07:06 +0300
-Date:   Tue, 11 Oct 2022 12:07:05 +0300
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Geert Uytterhoeven <geert@linux-m68k.org>
-Cc:     Basavaraj Natikar <bnatikar@amd.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Kent Gibson <warthog618@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Billy Tsai <billy_tsai@aspeedtech.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Chen-Yu Tsai <wenst@chromium.org>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Horatiu Vultur <horatiu.vultur@microchip.com>,
-        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Phil Edworthy <phil.edworthy@renesas.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Fabien Dessenne <fabien.dessenne@foss.st.com>,
-        Prathamesh Shete <pshete@nvidia.com>,
-        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-media@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org, alsa-devel@alsa-project.org,
-        patches@opensource.cirrus.com, linux-mediatek@lists.infradead.org,
-        linux-mips@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-omap@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Joel Stanley <joel@jms.id.au>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Charles Keepax <ckeepax@opensource.cirrus.com>,
-        Richard Fitzgerald <rf@opensource.cirrus.com>,
-        Dong Aisheng <aisheng.dong@nxp.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Sean Wang <sean.wang@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Patrick Venture <venture@google.com>,
-        Nancy Yuen <yuenn@google.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Damien Le Moal <damien.lemoal@wdc.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Haojian Zhuang <haojian.zhuang@linaro.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Emil Renner Berthing <kernel@esmil.dk>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>
-Subject: Re: [PATCH v2 36/36] pinctrl: Clean up headers
-Message-ID: <Y0UyOWALxSFai2w6@smile.fi.intel.com>
-References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
- <20221010201453.77401-37-andriy.shevchenko@linux.intel.com>
- <d63088d7-202b-a550-01e5-345a22de5f7d@amd.com>
- <CAMuHMdUfdQnisexfs4yLjeKs-LUPY1HjChrgeNjNL1qSErir9Q@mail.gmail.com>
+        Tue, 11 Oct 2022 05:36:21 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56CE280F7F;
+        Tue, 11 Oct 2022 02:36:20 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id l1so12657959pld.13;
+        Tue, 11 Oct 2022 02:36:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IjEDzCZ7FMePv51+qKNV+Auv7I6iSTsYL37Gle+Fwyc=;
+        b=NXfKM567zgYtZA7LDsbzhbC+Pvmgn4PnLcx1kwCHYGgJBm0o4SYOJnxOaBQWprRrLF
+         S/NEBBXdxZYzk/7cSjBhU2UNpokd+ZjYdmMbbwsWFBIaLn0dH6W1d28ibXODolxh9dfR
+         EsbDWrS71dp2RdeIN2DotRAbrE41OuT4Y1r+XMboP0Y2pfbIqnwrFl+Au86IIgSoCzOV
+         4XX0qkJKBrrXaGRL8quhHeszk1W1LWJwkCuTRrMhipphUmr8jmPPES89s8/RmCwkQQnc
+         zgK0cwCYYtiSjRiluB7yzvW9FrHyZCY8tm5Gg3S2F6+4exdzPQB+cu0E8YBRsQ7QkjJy
+         tpcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IjEDzCZ7FMePv51+qKNV+Auv7I6iSTsYL37Gle+Fwyc=;
+        b=CkqtUZUrLrEObHv7kZZP/LtSwL8RNqPvPUKKmJ3gdPNmjeB1n/1JPWnOmDoUNByqvi
+         S0FwbREki0XEovyHIlK+ha5k6KZTwEk7i/gE669j94nyiuhcKJhPxDa8BgaeLqNmcTQm
+         MkInILiefAU/L1llMZ1bmmq3o97ehpIeZudRJcdcuFtvAM5eor5BeOrNM0hKZaGaFxJ9
+         YhDEyrPlO0G2FJiv/hFGDZNuDTkyAIpGCFurCBzPSqwcNH5CtXbm3QgK3kwOWeOZXs76
+         BZJbLQXGrsxen1Pq7aLFkkagZ5W4a1dMpSH43rdzsp9Rp7EMBvrfyy52TFS+yuYAkoEL
+         DbAg==
+X-Gm-Message-State: ACrzQf0V8/GH5qqGwSKAlNsWBE+mUdfwA1KrF4LrXO6Mo5PIjoZbVNoC
+        Ihy3Xd3DyhLCYz4t1Bds0Nk=
+X-Google-Smtp-Source: AMsMyM7WhVZF+nawGLSBaVkAAb7yHhMnsbIsfdU06GHec1RRjpnYOayT9epY9SV/ItigASfR9LongQ==
+X-Received: by 2002:a17:90b:1b4f:b0:20d:363d:7943 with SMTP id nv15-20020a17090b1b4f00b0020d363d7943mr12728402pjb.106.1665480979825;
+        Tue, 11 Oct 2022 02:36:19 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-57.three.co.id. [116.206.28.57])
+        by smtp.gmail.com with ESMTPSA id n15-20020a65488f000000b0042bf6034b3fsm7537757pgs.55.2022.10.11.02.36.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Oct 2022 02:36:19 -0700 (PDT)
+Message-ID: <e60a114b-b99a-8a11-ac39-c9ddc3ed926e@gmail.com>
+Date:   Tue, 11 Oct 2022 16:36:10 +0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMuHMdUfdQnisexfs4yLjeKs-LUPY1HjChrgeNjNL1qSErir9Q@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-7.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH v5 01/13] docs: gunyah: Introduce Gunyah Hypervisor
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Jonathan Corbet <corbet@lwn.net>
+Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221011000840.289033-1-quic_eberman@quicinc.com>
+ <20221011000840.289033-2-quic_eberman@quicinc.com>
+Content-Language: en-US
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <20221011000840.289033-2-quic_eberman@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -157,30 +97,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 11, 2022 at 10:46:30AM +0200, Geert Uytterhoeven wrote:
-> On Tue, Oct 11, 2022 at 9:31 AM Basavaraj Natikar <bnatikar@amd.com> wrote:
-> > On 10/11/2022 1:44 AM, Andy Shevchenko wrote:
+On 10/11/22 07:08, Elliot Berman wrote:
+> +The diagram below shows how message queue works. A typical configuration involves
+> +2 message queues. Message queue 1 allows VM_A to send messages to VM_B. Message
+> +queue 2 allows VM_B to send messages to VM_A.
+> +
+> +1. VM_A sends a message of up to 1024 bytes in length. It raises a hypercall
+> +   with the message to inform the hypervisor to add the message to
+> +   message queue 1's queue.
+> +
+> +2. Gunyah raises the corresponding interrupt for VM_B when any of these happens:
+> +   a. gh_msgq_send has PUSH flag. Queue is immediately flushed. This is the typical case.
+> +   b. Explicility with gh_msgq_push command from VM_A.
+> +   c. Message queue has reached a threshold depth.
+> +
+> +3. VM_B calls gh_msgq_recv and Gunyah copies message to requested buffer.
+> +
 
-> > > +++ b/drivers/pinctrl/core.h
+Seems like you forget to apply my suggestion fixes at [1].
 
-> > > -#include <linux/pinctrl/pinconf.h>
-> >
-> > Removing pinconf.h from the core.h may cause build failure in other files
-> > because where-ever core.h is included to use “struct pinconf_ops”, there
-> > is a need to include pinconf.h.
-> 
-> I can confirm adding
-> 
->     #include <linux/pinctrl/pinconf.h>
-> 
-> to drivers/pinctrl/renesas/pinctrl-rzn1.c and drivers/pinctrl/pinctrl-single.c
-> fixes the issues I was seeing with shmobile_defconfig and (out-of-tree)
-> renesas_defconfig.
+[1]: https://lore.kernel.org/all/YzUUaIx+azyzFDNX@debian.me/
 
-I will add this, thank you for reporting.
+Thanks.
 
 -- 
-With Best Regards,
-Andy Shevchenko
-
+An old man doll... just what I always wanted! - Clara
 
