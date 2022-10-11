@@ -2,44 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DB605FBB1D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 21:08:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDD825FBB22
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 21:09:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229701AbiJKTIy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 15:08:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44538 "EHLO
+        id S229943AbiJKTI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 15:08:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230102AbiJKTIr (ORCPT
+        with ESMTP id S230144AbiJKTIv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 15:08:47 -0400
+        Tue, 11 Oct 2022 15:08:51 -0400
 Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FBF3915C6;
-        Tue, 11 Oct 2022 12:08:40 -0700 (PDT)
-Date:   Tue, 11 Oct 2022 19:07:50 +0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70BA0895C8;
+        Tue, 11 Oct 2022 12:08:50 -0700 (PDT)
+Date:   Tue, 11 Oct 2022 19:08:37 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=noorman.info;
-        s=protonmail3; t=1665515291; x=1665774491;
-        bh=cUA9w+TR1CwCowvfDEfjdWk184wmOwUiLKbtVJgBB3A=;
-        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-         Subject:Reply-To:Feedback-ID:Message-ID;
-        b=I5Jxa0UygdvECoK1FrATXZLbH6BsloyJMFA9SibfXLxSS2I+E0yc50UQE0NjG4zk9
-         GotR5qpxLMrgnkc86pfsqG4Lo9KNA7uX/x8pScPf8BbLQPMpVeUCgY4HH/LBiKwjfC
-         uexkp2jr5c1J4yte8eLEstyiZEGcg4hIOTC/Jptz5c/KqTt1g9j2n9R3Tug9dIdzlk
-         IYPQ63EPMprYFNI/vEGzsP/OXF22bD9hHbQWJDFCT+OIs4lAixJ8+T4RegqgamK57X
-         00vHo7/BdyjBNTvh3PzYkEJsJAPmphMHivgH8VVDOdI+o6ofQ2bvEpaSdddW+rM0D+
-         dMjtcxK/7ldEA==
-To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        s=protonmail3; t=1665515328; x=1665774528;
+        bh=diUYicMMh/+7TmI9we8Hv3+n8vLxeIEDGHZbjZlmuFU=;
+        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID;
+        b=ArvBWdN8ZwMxc7EjLra9tvN8TpEWHUg5WKTQil2zJC+dJ9PjYeECDU5lG1l7SmimA
+         xSz8cZsDClxxwSc4wyVFSKuFc1g0n70hYFah8aR/kYgYiqLlE1lZsctTC1v8V9Fk3P
+         KPBf+6MhVnhD+60Iz/Y0pO1n5dupwcN4KDPybhL8qyhzPcNb1K4eW/rs2NRIBfcOHx
+         Z0Y21q2e6EHzYJHz31BaDmgYcQQtTEQ8JY7de3GceZBeiDvd8HzcMBXC/TcGkRmDBj
+         0x6oDBhQKHprMXPP4IByaM8/+KCxRAjtS0b9++M9bWZbXkt6aviNgGOfB8xUK8fExD
+         vA01np3crUqNQ==
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Henrik Rydberg <rydberg@bitmath.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 From:   Job Noorman <job@noorman.info>
-Cc:     Luca Weiss <luca@z3ntu.xyz>, linux-input@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH 0/3] Add Himax hx83112b touchscreen driver
-Message-ID: <20221011190729.14747-1-job@noorman.info>
+Cc:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 3/3] arm64: dts: qcom: sdm632: fairphone-fp3: add touchscreen
+Message-ID: <20221011190729.14747-4-job@noorman.info>
+In-Reply-To: <20221011190729.14747-1-job@noorman.info>
+References: <20221011190729.14747-1-job@noorman.info>
 Feedback-ID: 14439221:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -53,36 +53,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series adds support for the Himax hx83112b. The hx83112b supports 10
-point multitouch with hardware tracking of touch points. It is the
-touchschreen used by the Fairphone 3.
+Add Himax hx83112b touchscreen to the FP3 DT.
 
-Note that a datasheet was unavailable for this device, so it was built
-based on the Android driver that was tagged as GPLv2. This series is a
-complete rewrite, though, and the code bears no resemblence to the original
-implementation.
+Signed-off-by: Job Noorman <job@noorman.info>
+---
+ arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-It is expected that this driver can be made to work on other hx83xxx
-devices, especially the hx83112a used in the Fairphone 4. However, since we
-have been unable to verify this, this driver only declares compatibility
-with the hx83112b and uses very specific file names.
+diff --git a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts b/arch/arm64=
+/boot/dts/qcom/sdm632-fairphone-fp3.dts
+index 891e314bc782..2920504461d3 100644
+--- a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
++++ b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
+@@ -49,6 +49,20 @@ &hsusb_phy {
+ =09vdda-phy-dpdm-supply =3D <&pm8953_l13>;
+ };
 
-Job Noorman (3):
-  dt-bindings: touchscreen: add Himax hx83112b bindings
-  Input: add driver for Himax hx83112b touchscreen devices
-  arm64: dts: qcom: sdm632: fairphone-fp3: add touchscreen
-
- .../input/touchscreen/himax,hx83112b.yaml     |  59 +++
- MAINTAINERS                                   |   7 +
- .../boot/dts/qcom/sdm632-fairphone-fp3.dts    |  14 +
- drivers/input/touchscreen/Kconfig             |  11 +
- drivers/input/touchscreen/Makefile            |   1 +
- drivers/input/touchscreen/himax_hx83112b.c    | 376 ++++++++++++++++++
- 6 files changed, 468 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/input/touchscreen/him=
-ax,hx83112b.yaml
- create mode 100644 drivers/input/touchscreen/himax_hx83112b.c
-
++&i2c_3 {
++=09status =3D "okay";
++
++=09touchscreen@48 {
++=09=09compatible =3D "himax,hx83112b";
++=09=09reg =3D <0x48>;
++=09=09interrupt-parent =3D <&tlmm>;
++=09=09interrupts =3D <65 IRQ_TYPE_LEVEL_LOW>;
++=09=09touchscreen-size-x =3D <1080>;
++=09=09touchscreen-size-y =3D <2160>;
++=09=09reset-gpios =3D <&tlmm 64 GPIO_ACTIVE_LOW>;
++=09};
++};
++
+ &pm8953_resin {
+ =09status =3D "okay";
+ =09linux,code =3D <KEY_VOLUMEDOWN>;
 --
 2.38.0
 
