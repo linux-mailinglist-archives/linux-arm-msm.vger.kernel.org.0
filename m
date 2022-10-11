@@ -2,74 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12DF95FA8B3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 01:44:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 61CBB5FA8DC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 02:02:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230090AbiJJXoI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Oct 2022 19:44:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36358 "EHLO
+        id S229745AbiJKACE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Oct 2022 20:02:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230077AbiJJXoH (ORCPT
+        with ESMTP id S229699AbiJKACC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Oct 2022 19:44:07 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6084872FFB;
-        Mon, 10 Oct 2022 16:44:06 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id p16so3933428iod.6;
-        Mon, 10 Oct 2022 16:44:06 -0700 (PDT)
+        Mon, 10 Oct 2022 20:02:02 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EE4678585;
+        Mon, 10 Oct 2022 17:02:01 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id 67so12017200pfz.12;
+        Mon, 10 Oct 2022 17:02:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JGXQpUDqxnEwTxBqXBwQEZ5KNzj6zmyw1kyNu9kYUSE=;
-        b=VEqaRrfWhyyGqYHS++GaZocRuEd3nh0xif6n9uJX+T6U+vm5O5SYeR3Q5jj0rgO8Cq
-         qNhwRbrLdCgQi3m2/KHn7279Jemt+zTliw9noBALte9wqzL/Ihf6Nk/4qaFZKJQBhmAt
-         0eTIGMIb7FjnpANS8pvcZ1tT+z6itQRm+UykSM1lsSqJInCeQY5tuZH4QrRedBP3ZLnN
-         eAbTCQSD1QHEvRK4dyYwfuinkYnfOtMIlb3WhFA+hr2GNl8MmgWwN1iFNK5RAKOPVyME
-         STjgnTzMfa442rkhHzfN3jUtpZyJuXQVrlD3Q30TAuluvtTv1LTvusK06PQyi0NWBgX7
-         RoAw==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=HDvDPLCLAPPvF5TVvL+FWbJtEqmbYVODvwDkJg3SqIo=;
+        b=BMj8f33/fyuY4YUgfzIsC8MB079NtlG/lc5y1lSPpCGAsz+jvSYZCTpuRzKVZGf2GY
+         nZi6ZRgOudbzROz6pHhHElsWmoKQQy847SVQHPP6Lzs+V2eA/brEnXLuDstKnq7MW7Ih
+         TzHZfV7XKs3PD0GAaAkJAXCvXBlxf5lB+KS3lhnFICm9Tq4yaQhhQQax921FRXOWW/if
+         /toe/pDvQON4HdgY5CGmbYgif/tTyjDjkjRdKQFAulnURnCwp8NMFdEBa3NYmPI0A+fB
+         fhamlfjudZxMTaB+1mSMxDuObe1ocZe7cQbErJKQBTAEur2a0QkUbRoT5VJEglEdMX1y
+         d2HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JGXQpUDqxnEwTxBqXBwQEZ5KNzj6zmyw1kyNu9kYUSE=;
-        b=2yOlC+zbWy/SHtI95F7HWwXSgmeMHjL19FzB0frQ0+QBfIpnYaZry+LRlQt1BjWX65
-         szjT+DICElNkC8Iw7tpZ/m4REXsLIZ7KbFALV/huvdYwlBqSff9KH4msO+z+xOckTyZd
-         lU1c0z4NWKxxqVwn5DezwALJKhGL/iUntFQ32J1IVWlLHSV4gphpF15fpZ5abqGDW3gv
-         KWAZbjWA1TFxWctkan73T7znfLGjyqbAnhRt6p5yTImLj2vO0rOGtc1jSavB/IYs45v9
-         kQWhsqtH0OqiMKRn6UFwOlhWAevOUyzf9VVvDscj0rjHTFSaz1hp0/VFpwssnG2p71LC
-         DoBQ==
-X-Gm-Message-State: ACrzQf3RKi/pu5d80c0Po8KyPzIfTi7uFlV1Tms1n5tAsYaaTY/aF29l
-        XGhy9Pe3NRJE0fIcL2xzdSw=
-X-Google-Smtp-Source: AMsMyM7uy9ysKxSzfhAJ3o38ZApkJ4J4EA0HNO9tCKB/mY40u6SxiLwggHcVon//bqOfvE8sh32r5Q==
-X-Received: by 2002:a05:6638:1411:b0:363:c9fa:a6c1 with SMTP id k17-20020a056638141100b00363c9faa6c1mr1644106jad.306.1665445445649;
-        Mon, 10 Oct 2022 16:44:05 -0700 (PDT)
-Received: from localhost ([2607:fea8:a2e2:2d00::deb2])
-        by smtp.gmail.com with UTF8SMTPSA id a8-20020a056e02120800b002f5447b47f8sm4328028ilq.33.2022.10.10.16.44.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Oct 2022 16:44:05 -0700 (PDT)
-From:   Richard Acayan <mailingradian@gmail.com>
-To:     Sasha Levin <sashal@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        Richard Acayan <mailingradian@gmail.com>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HDvDPLCLAPPvF5TVvL+FWbJtEqmbYVODvwDkJg3SqIo=;
+        b=NuI07QtXdjFYbAa1yhmBPqDGF+I+kOJfrpHyTxYbftMqE8a7rvr2AseEQRCVnLOZIl
+         zxNqx28qdEYcDRg9buY5tOp6KfkFH334CHpsDfGSgxswtRg9CBzk8HMGUXvE+26LLOGC
+         Fu6hABTE4MMU7l4OR5hFUE3bgV/urZTATqe4erQQWmIxhRqz3Fxz9xyZfFGXaUUjkAHx
+         s8qVza7KzYSIohxmhW0z4DVrMEr99EXT3zur0OIFMBYLft11KdLmLlbofEXNYARigMt/
+         qkuzpf/yhwC9zXQxTboKroV50fjIwKyrxTlS9VSa0kI/X+MBR4ZfxBxnYf7etvyv/pnG
+         u9DQ==
+X-Gm-Message-State: ACrzQf0IFsQ+hyNaioHQbGQA7RKVXQ/ys6ACwenVUDaI4yLv0ojP6Vc5
+        tpfqQuyOdM2neciYtshI6WQ=
+X-Google-Smtp-Source: AMsMyM7Y6pAnL5W1EJS9G7oSUu8S6FVrr9k2c5r6QKOELR9o0pNGH3yk7s3YJUqb5vMyZxDtzUjxCg==
+X-Received: by 2002:a63:4949:0:b0:442:b733:2fae with SMTP id y9-20020a634949000000b00442b7332faemr18227721pgk.424.1665446520354;
+        Mon, 10 Oct 2022 17:02:00 -0700 (PDT)
+Received: from sol (110-174-58-111.static.tpgi.com.au. [110.174.58.111])
+        by smtp.gmail.com with ESMTPSA id v29-20020aa799dd000000b0056258a3606csm7454081pfi.215.2022.10.10.17.01.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Oct 2022 17:01:59 -0700 (PDT)
+Date:   Tue, 11 Oct 2022 08:01:27 +0800
+From:   Kent Gibson <warthog618@gmail.com>
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc:     Marc Zyngier <maz@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Billy Tsai <billy_tsai@aspeedtech.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Chen-Yu Tsai <wenst@chromium.org>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Horatiu Vultur <horatiu.vultur@microchip.com>,
+        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Phil Edworthy <phil.edworthy@renesas.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>, agross@kernel.org,
-        andersson@kernel.org, adrian.hunter@intel.com,
-        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.0 39/44] mmc: sdhci-msm: add compatible string check for sdm670
-Date:   Mon, 10 Oct 2022 19:43:53 -0400
-Message-Id: <20221010234353.228833-1-mailingradian@gmail.com>
-X-Mailer: git-send-email 2.38.0
-In-Reply-To: <20221009234932.1230196-39-sashal@kernel.org>
-References: <20221009234932.1230196-1-sashal@kernel.org> <20221009234932.1230196-39-sashal@kernel.org>
+        Fabien Dessenne <fabien.dessenne@foss.st.com>,
+        Prathamesh Shete <pshete@nvidia.com>,
+        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-media@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org, alsa-devel@alsa-project.org,
+        patches@opensource.cirrus.com, linux-mediatek@lists.infradead.org,
+        linux-mips@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-omap@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Joel Stanley <joel@jms.id.au>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Charles Keepax <ckeepax@opensource.cirrus.com>,
+        Richard Fitzgerald <rf@opensource.cirrus.com>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andy Shevchenko <andy@kernel.org>,
+        Sean Wang <sean.wang@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Patrick Venture <venture@google.com>,
+        Nancy Yuen <yuenn@google.com>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Damien Le Moal <damien.lemoal@wdc.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Haojian Zhuang <haojian.zhuang@linaro.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Emil Renner Berthing <kernel@esmil.dk>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>
+Subject: Re: [PATCH v2 02/36] gpiolib: cdev: Add missed header(s)
+Message-ID: <Y0SyVwjDl7NGfTPn@sol>
+References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
+ <20221010201453.77401-3-andriy.shevchenko@linux.intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221010201453.77401-3-andriy.shevchenko@linux.intel.com>
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,77 +157,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> From: Richard Acayan <mailingradian@gmail.com>
+On Mon, Oct 10, 2022 at 11:14:18PM +0300, Andy Shevchenko wrote:
+> Do not imply that some of the generic headers may be always included.
+> Instead, include explicitly what we are direct user of.
 > 
-> [ Upstream commit 4de95950d970c71a9e82a24573bb7a44fd95baa1 ]
+> While at it, sort headers alphabetically.
 > 
-> The Snapdragon 670 has the same quirk as Snapdragon 845 (needing to
-> restore the dll config). Add a compatible string check to detect the need
-> for this.
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Link: https://lore.kernel.org/r/20220923014322.33620-3-mailingradian@gmail.com
-> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 > ---
->  drivers/mmc/host/sdhci-msm.c | 1 +
->  1 file changed, 1 insertion(+)
+>  drivers/gpio/gpiolib-cdev.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index dc2991422a87..3a091a387ecb 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -2441,6 +2441,7 @@ static const struct of_device_id sdhci_msm_dt_match[] = {
->  	 */
->  	{.compatible = "qcom,sdhci-msm-v4", .data = &sdhci_msm_mci_var},
->  	{.compatible = "qcom,sdhci-msm-v5", .data = &sdhci_msm_v5_var},
-> +	{.compatible = "qcom,sdm670-sdhci", .data = &sdm845_sdhci_var},
+> diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
+> index f8041d4898d1..60a60e2d60c5 100644
+> --- a/drivers/gpio/gpiolib-cdev.c
+> +++ b/drivers/gpio/gpiolib-cdev.c
+> @@ -10,8 +10,9 @@
+>  #include <linux/device.h>
+>  #include <linux/err.h>
+>  #include <linux/file.h>
+> -#include <linux/gpio.h>
+>  #include <linux/gpio/driver.h>
+> +#include <linux/gpio.h>
+> +#include <linux/hte.h>
 
-Supporting device trees which are invalid under 6.0 schema? It's not a bug fix,
-it's a feature.
+Ok with the hte re-order.
 
-Documentation/devicetree/bindings/mmc/sdhci-msm.yaml:17-49, at tag v6.0:
+But moving the gpio subsystem header after the gpio/driver is not
+alphabetical ('.' precedes '/') and it read better and made more sense
+to me the way it was.
 
-    properties:
-      compatible:
-        oneOf:
-          - enum:
-              - qcom,sdhci-msm-v4
-            deprecated: true
-          - items:
-              - enum:
-                  - qcom,apq8084-sdhci
-                  - qcom,msm8226-sdhci
-                  - qcom,msm8953-sdhci
-                  - qcom,msm8974-sdhci
-                  - qcom,msm8916-sdhci
-                  - qcom,msm8992-sdhci
-                  - qcom,msm8994-sdhci
-                  - qcom,msm8996-sdhci
-                  - qcom,msm8998-sdhci
-              - const: qcom,sdhci-msm-v4 # for sdcc versions less than 5.0
-          - items:
-              - enum:
-                  - qcom,qcs404-sdhci
-                  - qcom,sc7180-sdhci
-                  - qcom,sc7280-sdhci
-                  - qcom,sdm630-sdhci
-                  - qcom,sdm845-sdhci
-                  - qcom,sdx55-sdhci
-                  - qcom,sdx65-sdhci
-                  - qcom,sm6125-sdhci
-                  - qcom,sm6350-sdhci
-                  - qcom,sm8150-sdhci
-                  - qcom,sm8250-sdhci
-                  - qcom,sm8450-sdhci
-              - const: qcom,sdhci-msm-v5 # for sdcc version 5.0
+>  #include <linux/interrupt.h>
+>  #include <linux/irqreturn.h>
+>  #include <linux/kernel.h>
+> @@ -20,11 +21,12 @@
+>  #include <linux/mutex.h>
+>  #include <linux/pinctrl/consumer.h>
+>  #include <linux/poll.h>
+> +#include <linux/seq_file.h>
 
-I'm new to this, so I apologize if I don't understand stable kernel development.
+I wasn't aware that we use anything from seq_file.
+What am I missing?
 
->  	{.compatible = "qcom,sdm845-sdhci", .data = &sdm845_sdhci_var},
->  	{.compatible = "qcom,sc7180-sdhci", .data = &sdm845_sdhci_var},
->  	{},
+Cheers,
+Kent.
+
+>  #include <linux/spinlock.h>
+>  #include <linux/timekeeping.h>
+>  #include <linux/uaccess.h>
+>  #include <linux/workqueue.h>
+> -#include <linux/hte.h>
+> +
+>  #include <uapi/linux/gpio.h>
+>  
+>  #include "gpiolib.h"
 > -- 
 > 2.35.1
+> 
