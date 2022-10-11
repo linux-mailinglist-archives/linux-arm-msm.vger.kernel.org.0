@@ -2,145 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98A805FB4B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 16:40:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5377C5FB4C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 16:41:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229557AbiJKOkE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 10:40:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40648 "EHLO
+        id S229648AbiJKOle (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 10:41:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbiJKOkD (ORCPT
+        with ESMTP id S229548AbiJKOlc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 10:40:03 -0400
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C60C813FB8;
-        Tue, 11 Oct 2022 07:40:01 -0700 (PDT)
-Received: by mail-qt1-f177.google.com with SMTP id cj27so8340090qtb.7;
-        Tue, 11 Oct 2022 07:40:01 -0700 (PDT)
+        Tue, 11 Oct 2022 10:41:32 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61A2F476C7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 07:41:31 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id d6so21401255lfs.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 07:41:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=L6X11cP/UuvWsmC5+JuzfzTsN8jfZXH1VKI3byABTrk=;
+        b=l9ffPAt40gUOCMlYqkfjDGnFdUwMK21YU6Tl+TgF1rex0RCnlsSGG3VWpNY/8JV+jD
+         R3aqOZcdkOSLoaXxRm4TvkdOb2bsAb49/c8d057cxJUyd6oTAweqojh4ni33/fAjsOmL
+         aTn8S6YwujhKPaKSX6e/qJv7pEAGVvNoBDFFkI7vULfKjH+FvbrN/1toIf+kpAK6Y1Oq
+         So/PbhDWsklYINBk+kbhG0C8TJTpLXZ5MIEKTbDBOr5AdmZTyHAuyPujQ/0/oEFPZ6bi
+         GtxUzLl47VWCeqFwCyHeWO5fKuVLng4y5mAX/mwDorRLoJ+H4NyEJqLhjlIEc0+jYRel
+         hy0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7sKcP+GTT+SWbU28Mvg7qTSCnoQqhpg8QoNv8i57vas=;
-        b=1aNMOHpvof8T12wTAyU55u7qVFoNhS1TB23r1CqXs3i1eZK+TM5HO59VOvt6M/E27R
-         EA38S3n/l+OM2H2sSAdK/RugbSUkW0SR5K/icQ3Q1jzYLG5x4NpMuSx0ThSgbFRv2IK6
-         7yUDy4NEgldJumzmi3qa+RobR1ce6xc63cez23NNNEBEC5YMA5jMvku0xy3BTQbLTLtX
-         AfnpU0jDlsNRErk7JqdRLNmqaeb5fkPOYNg2h+pgKouGSh8exYETRNtek7P0gDUcd69D
-         4bxucfkk+JDtgW0y8yBxvVlFPp0EZ4DBuF/lqh7uo6wUu+EyQW9xIK2ZadmP9hfbvyQX
-         O1fg==
-X-Gm-Message-State: ACrzQf1SCNwAc5AdJHKXDqN3KCAbnw9ZsWfgLowXcIs+kRXuz8atLkb2
-        4a9rw6P7hoQGpjXE/a70EFcW5vWbkGb1NQ==
-X-Google-Smtp-Source: AMsMyM4YpuJRtELUxBQ47QR4BZqAaZNk2NdfGebfSuG/kCUVyPn3dFtBV9xGHo8vAZs7LWsqk/l0hA==
-X-Received: by 2002:ac8:7c4c:0:b0:35c:fa89:5a30 with SMTP id o12-20020ac87c4c000000b0035cfa895a30mr19674630qtv.359.1665499200606;
-        Tue, 11 Oct 2022 07:40:00 -0700 (PDT)
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com. [209.85.219.182])
-        by smtp.gmail.com with ESMTPSA id az31-20020a05620a171f00b006ce9e880c6fsm13030433qkb.111.2022.10.11.07.39.58
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=L6X11cP/UuvWsmC5+JuzfzTsN8jfZXH1VKI3byABTrk=;
+        b=MSBIiCIPh6sLA4Up0E553YVzPWqcfA1Vsr4zV1oHc6tjnpxJgDwxLlWZSuomHdcUfm
+         caVi7sD2+fXUm1tT+vbsttEht9bTaR46v3COp7cvwI+QqGqjK2NCnihfCqSCdB4xBvVD
+         Fg9Hleb4fg9mqJhOZFQoPp8C4QDjP3BBJtlwWB7NDl41tryNoHSqYyMbKtq8avBVjfcJ
+         qVMScap941TeSO/c7rQ/BNt1emp3j2kIXx3gHMEHQjXd7RfXSjYlh8hlVK4iIzjiaXrM
+         Q53TD0DqrCIXVzjLQe5PLRx8D6sUReDQBN4rFamDCs7EsaoFeN//DcGtsnT4r4oDfwZO
+         zo0w==
+X-Gm-Message-State: ACrzQf3dZ2ywCNLnL4WEloYZ5n1IvP0dkwejGNvlhHLMuM6WEgqnISow
+        nC69GtzkoG944muZtnjA9zZTNw==
+X-Google-Smtp-Source: AMsMyM777wQ9nWguMeYr7N7mq+Bdd14bNohbJtWdNzwjLNWojR+TZ3UstXaUlwi4BsWWwmZRrD8C9w==
+X-Received: by 2002:a05:6512:3090:b0:4a2:7db9:b15c with SMTP id z16-20020a056512309000b004a27db9b15cmr8204163lfd.424.1665499289726;
+        Tue, 11 Oct 2022 07:41:29 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id p20-20020a056512235400b004a05622a852sm1880189lfu.241.2022.10.11.07.41.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Oct 2022 07:39:58 -0700 (PDT)
-Received: by mail-yb1-f182.google.com with SMTP id b145so16775121yba.0;
-        Tue, 11 Oct 2022 07:39:58 -0700 (PDT)
-X-Received: by 2002:a25:4fc2:0:b0:6be:afb4:d392 with SMTP id
- d185-20020a254fc2000000b006beafb4d392mr21857240ybb.604.1665499197788; Tue, 11
- Oct 2022 07:39:57 -0700 (PDT)
+        Tue, 11 Oct 2022 07:41:29 -0700 (PDT)
+Message-ID: <dbd85c78-86dc-8dd0-83d2-43af933e5a92@linaro.org>
+Date:   Tue, 11 Oct 2022 17:41:28 +0300
 MIME-Version: 1.0
-References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
- <20221010201453.77401-3-andriy.shevchenko@linux.intel.com>
- <Y0SyVwjDl7NGfTPn@sol> <CAHp75Vf4oS8g0zxgismtLrzsJ7AE-bdMEq+GAzx2=Mwnhuk3UA@mail.gmail.com>
- <Y0V0IXF3sASTGdMU@smile.fi.intel.com> <Y0V57gI75ik4ki3A@sol> <Y0V9eJX7a0fe6EfX@smile.fi.intel.com>
-In-Reply-To: <Y0V9eJX7a0fe6EfX@smile.fi.intel.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Tue, 11 Oct 2022 16:39:46 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdUhSKuJ3N5zf_+ad_dFu6kSmVTqRpgFUWtd54S9ryw=ew@mail.gmail.com>
-Message-ID: <CAMuHMdUhSKuJ3N5zf_+ad_dFu6kSmVTqRpgFUWtd54S9ryw=ew@mail.gmail.com>
-Subject: Re: [PATCH v2 02/36] gpiolib: cdev: Add missed header(s)
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     Kent Gibson <warthog618@gmail.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-media@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org, alsa-devel@alsa-project.org,
-        patches@opensource.cirrus.com, linux-mediatek@lists.infradead.org,
-        linux-mips@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-omap@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
-        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH 08/13] phy: qcom-qmp-pcie: drop power-down delay config
+Content-Language: en-GB
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+References: <20221011131416.2478-1-johan+linaro@kernel.org>
+ <20221011131416.2478-9-johan+linaro@kernel.org>
+ <66261491-530d-c368-6cc8-daeef74fcbda@linaro.org>
+ <Y0V1TIBySTPhYqX/@hovoldconsulting.com>
+ <ebe1e26a-7335-29ac-4990-6b8fdb02ba7c@linaro.org>
+ <Y0V66q53I4ivlXI+@hovoldconsulting.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <Y0V66q53I4ivlXI+@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Andy,
+On 11/10/2022 17:17, Johan Hovold wrote:
+> On Tue, Oct 11, 2022 at 05:04:04PM +0300, Dmitry Baryshkov wrote:
+>> On 11/10/2022 16:53, Johan Hovold wrote:
+>>> On Tue, Oct 11, 2022 at 04:46:53PM +0300, Dmitry Baryshkov wrote:
+>>>> On 11/10/2022 16:14, Johan Hovold wrote:
+>>>>> The power-down delay was included in the first version of the QMP driver
+>>>>> as an optional delay after powering on the PHY (using
+>>>>> POWER_DOWN_CONTROL) and just before starting it. Later changes modified
+>>>>> this sequence by powering on before initialising the PHY, but the
+>>>>> optional delay stayed where it was (i.e. before starting the PHY).
+>>>>>
+>>>>> The vendor driver does not use a delay before starting the PHY and this
+>>>>> is likely not needed on any platform unless there is a corresponding
+>>>>> delay in the vendor kernel init sequence tables (i.e. in devicetree).
+>>>>>
+>>>>> Let's keep the delay for now, but drop the redundant delay period
+>>>>> configuration while increasing the unnecessarily low timer slack
+>>>>> somewhat.
+>>>>
+>>>> Actually, the vendor driver does this 995..1005 sleep. But contrary to
+>>>> our driver it does that after programming whole PHY init sequence, which
+>>>> includes SW_RESET / START_CTL, but before programming the pipe clocks.
+>>>
+>>> Right, it does it after starting the PHY which means that you don't have
+>>> to poll for as long for the PHY status.
+>>>
+>>> It's a different delay entirely.
+>>
+>> No-no-no. The 995-1005 delay was added guess for which SoC? For ipq8074,
+>> where the config tables contain the ugly CFG_L writes for SW_RESET /
+>> START_CTRL. So, it is the same delay, but added by somebody who didn't
+>> care enough. The original 10-11 delay is a completely different story,
+>> you are correct here.
+> 
+> Yeah, I noticed that ipq8074 was the first to abuse the prwdn_delay
+> and possibly because of it starting the PHY already in its PCS table
+> (which it never should have).
+> 
+> I'm talking about the intent of pwrdn_delay which was to add a delay
+> after powering-on the phy and before starting it.
+> 
+> The vendor driver has a 1 ms delay after starting the PHY and before it
+> starts polling as the PHY on newer SoC tend to take > 1 ms before they
+> are ready.
+> 
+> So, I still claim that that delay in the vendor driver is a different
+> one entirely.
+> 
+>> Thus, I'd say, the PCIe delay should be moved after the registers
+>> programming.
+> 
+> No, not necessarily. Again, that's an optimisation in the vendor driver
+> to avoid polling so many times. Since I can say for sure that there are
+> no PHY that start in less than 1 ms, I wouldn't add it unconditionally.
 
-On Tue, Oct 11, 2022 at 4:31 PM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
-> On Tue, Oct 11, 2022 at 10:13:02PM +0800, Kent Gibson wrote:
-> > On Tue, Oct 11, 2022 at 04:48:17PM +0300, Andy Shevchenko wrote:
-> > > On Tue, Oct 11, 2022 at 11:05:42AM +0300, Andy Shevchenko wrote:
-> > > > On Tue, Oct 11, 2022 at 3:02 AM Kent Gibson <warthog618@gmail.com> wrote:
-> > > > > On Mon, Oct 10, 2022 at 11:14:18PM +0300, Andy Shevchenko wrote:
->
-> ...
->
-> > > > > > -#include <linux/gpio.h>
-> > > > > >  #include <linux/gpio/driver.h>
-> > > > > > +#include <linux/gpio.h>
-> > > > > > +#include <linux/hte.h>
-> > > > >
-> > > > > Ok with the hte re-order.
-> > > > >
-> > > > > But moving the gpio subsystem header after the gpio/driver is not
-> > > > > alphabetical ('.' precedes '/') and it read better and made more sense
-> > > > > to me the way it was.
-> > > >
-> > > > I see, I guess this is vim sort vs shell sort. Strange, they should
-> > > > follow the locale settings...
-> > >
-> > > I have checked, the shell and vim sort gave the same result as in this patch.
-> > >
-> >
-> > The original order (sans hte.h) was done by VSCode Sort Lines Ascending,
-> > and that still returns the same result.  That matches what I would
-> > expect to see given the content of the text.
-> >
-> > And for me vim also gives the original order.
-> >
-> > Just to confirm - is '.' 0x2e and '/' 0x2f in your universe?
->
-> $ LC_COLLATE=C sort test1.txt
-> #include <linux/gpio.h>
-> #include <linux/gpio/driver.h>
->
-> $ LC_COLLATE= sort test1.txt
-> #include <linux/gpio/driver.h>
-> #include <linux/gpio.h>
->
-> I guess this explains the difference. Currently I have en_US.UTF-8.
+I don't think it's an optimization. For me it looks like some kind of 
+stabilization delay before touching pipe clocks.
 
-Throwing my can of paint into the mix...
+> 
+> Either way, separate change.
+>   
+>>>> I think we can either drop this delay completely, or move it before
+>>>> read_poll_timeout().
+>>>
+>>> It definitely shouldn't be used for any new platforms, but I opted for
+>>> the conservative route of keeping it in case some of the older platforms
+>>> actually do need it.
+>>>
+>>> My bet is that this is all copy-paste cruft that could be removed, but
+>>> I'd rather do that as a separate follow-on change. Perhaps after testing
+>>> some more SoC after removing the delay.
+>>>
+>>> SC8280XP certainly doesn't need it.
+>>
+>> I think in our case this delay just falls into status polling. We'd
+>> probably need it, if we'd add the noretain handling.
+> 
+> I'm not sure I understand what you're referring to here ("noretain
+> handling")?
 
-I think it is more logical to first include the general <linux/gpio.h>,
-followed by whatever <linux/gpio-foo.h> and <linux/gpio/bar.h>,
-irrespective of (language-specific or phonebook) sort order.
+ From what I see in the downstream (4.19 at hand), the sequence is the 
+following:
 
-Yeah, it sucks that this requires some manual work after running sort...
+program_phy_config() // including SW_RESET & START_CTRL
 
-Gr{oetje,eeting}s,
+delay
 
-                        Geert
+for pipe clocks:
+clk_set_flags(info->hdl, CLKFLAG_NORETAIN_MEM)
+clk_set_flags(info->hdl, CLKFLAG_NORETAIN_PERIPH)
 
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+set clock rates, prepare & enable pipe clocks
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+wmb()
+
+poll for the PHY STATUS
+
+
+-- 
+With best wishes
+Dmitry
+
