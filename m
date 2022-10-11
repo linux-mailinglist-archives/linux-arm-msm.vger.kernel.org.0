@@ -2,81 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22A075FBA94
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 20:40:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43D075FBAB1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 20:48:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229791AbiJKSky (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 14:40:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44838 "EHLO
+        id S229852AbiJKSr6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 14:47:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229675AbiJKSkw (ORCPT
+        with ESMTP id S229802AbiJKSr5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 14:40:52 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D2EE7CB67;
-        Tue, 11 Oct 2022 11:40:50 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29BBeKYZ030456;
-        Tue, 11 Oct 2022 18:40:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=h1BvboPV+q0O/fs3qxdcsJfGYHdo3ib28v+3LY8CB1k=;
- b=JL5G78K3BcH4pq2z2MiK+KQ0tT7p1lAGpPEIkl3QFQJuEnd+BXe/srHQ394xZmr0K+5p
- IIcEYR1vANcO5xzA3TVeL5uVUzcBOB6/yCzYvcsglKS9Sat/jn+uCOs/HSBAjj7HJ2vG
- qDrYNJy6hsVCP6aq/XCPcGxcAzisvYxL11zf4vB5pvFYAPqv5po8RijuStA1Zjs+fxk+
- ObNEDMLsw6hyzef/y3Z4RBq96noQBPdtAtbRff+c5OHwwY/qSiBG9fL/V6WGraVfWNkR
- mTFusYn7drSOxdfa4libsT5eEdrAmDi4ZGpDUJ/ZS1mFb1ni03oqkmC0EO/QbLDrY5ga Zg== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k4rwxuv48-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 11 Oct 2022 18:40:47 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29BIekZU032317
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 11 Oct 2022 18:40:47 GMT
-Received: from [10.110.3.66] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 11 Oct
- 2022 11:40:46 -0700
-Message-ID: <401219d2-43f1-5816-54c2-80be8a4afb1c@quicinc.com>
-Date:   Tue, 11 Oct 2022 11:40:46 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH 03/19] arm64: dts: qcom: qdru1000: Add tlmm nodes
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Tue, 11 Oct 2022 14:47:57 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8375784E43;
+        Tue, 11 Oct 2022 11:47:50 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1CB6F61277;
+        Tue, 11 Oct 2022 18:47:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C6DC4314C;
+        Tue, 11 Oct 2022 18:47:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1665514069;
+        bh=d5RRKxQbKRz2TycMKkEiQane8TWoQjQVycIG9gWcv6c=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=zuE3UyQu22I/ykCVQKxDAlyPkucwHD77jc3RLRZKQUEf1GrkYa7W1w45bi2jwZ2FH
+         hmEoKx/IAIwylgeOUAlAcDiBqQbw90YreVNrudvc/vpqvKzP/YzSisNvb2uRwxTuir
+         YdT4/XvzLuZPkxIK4hDGXSUSV2dGPyxFttixWZtY=
+Date:   Tue, 11 Oct 2022 20:48:33 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20221001030656.29365-1-quic_molvera@quicinc.com>
- <20221001030656.29365-4-quic_molvera@quicinc.com>
- <CAA8EJpp2h3j9cPLPzCzgnYm07D5PPZg3H5_LkcXizhXt9ekkiQ@mail.gmail.com>
-From:   Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <CAA8EJpp2h3j9cPLPzCzgnYm07D5PPZg3H5_LkcXizhXt9ekkiQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: i3X1gpRH1cqkzW_EGShuDoN16EMgwD3H
-X-Proofpoint-GUID: i3X1gpRH1cqkzW_EGShuDoN16EMgwD3H
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-11_08,2022-10-11_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 bulkscore=0 spamscore=0 clxscore=1015 malwarescore=0
- adultscore=0 impostorscore=0 priorityscore=1501 mlxscore=0 phishscore=0
- mlxlogscore=819 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210110108
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        Jonathan Corbet <corbet@lwn.net>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 03/13] gunyah: Common types and error codes for Gunyah
+ hypercalls
+Message-ID: <Y0W6gVcxTRg/m5Nb@kroah.com>
+References: <20221011000840.289033-1-quic_eberman@quicinc.com>
+ <20221011000840.289033-4-quic_eberman@quicinc.com>
+ <Y0UZcLl20HobX4w3@kroah.com>
+ <52b07662-666a-2fc7-cb18-a9d294f7ae9b@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <52b07662-666a-2fc7-cb18-a9d294f7ae9b@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,78 +74,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Oct 11, 2022 at 11:21:36AM -0700, Elliot Berman wrote:
+> 
+> 
+> On 10/11/2022 12:21 AM, Greg Kroah-Hartman wrote:
+> > On Mon, Oct 10, 2022 at 05:08:30PM -0700, Elliot Berman wrote:
+> > > Add architecture-independent standard error codes, types, and macros for
+> > > Gunyah hypercalls.
+> > > 
+> > > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> > > ---
+> > >   MAINTAINERS                  |  1 +
+> > >   include/asm-generic/gunyah.h | 74 ++++++++++++++++++++++++++++++++++++
+> > >   2 files changed, 75 insertions(+)
+> > >   create mode 100644 include/asm-generic/gunyah.h
+> > > 
+> > > diff --git a/MAINTAINERS b/MAINTAINERS
+> > > index ef6de7599d98..4fe8cec61551 100644
+> > > --- a/MAINTAINERS
+> > > +++ b/MAINTAINERS
+> > > @@ -8886,6 +8886,7 @@ L:	linux-arm-msm@vger.kernel.org
+> > >   S:	Supported
+> > >   F:	Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
+> > >   F:	Documentation/virt/gunyah/
+> > > +F:	include/asm-generic/gunyah.h
+> > >   HABANALABS PCI DRIVER
+> > >   M:	Oded Gabbay <ogabbay@kernel.org>
+> > > diff --git a/include/asm-generic/gunyah.h b/include/asm-generic/gunyah.h
+> > > new file mode 100644
+> > > index 000000000000..64a02dd3b5ad
+> > > --- /dev/null
+> > > +++ b/include/asm-generic/gunyah.h
+> > 
+> > Why not include/linux/gunyah.h?  Why asm-generic?  This is not an
+> > architecture.
+> > 
+> 
+> My idea here is to differentiate between code that interacts with hypercalls
+> and code that uses the abstractions provided on top of those hypercalls.
+> include/asm-generic/gunyah.h contains architecture-independent definitions
+> for hypercalls. Hypercalls are architecture-specific.
+> 
+> For instance, I wanted to avoid a header file that mixes the definitions for
+> the message-queue mailbox with the hypercall definitions that the
+> message-queue mailbox driver itself uses.
+> 
+> I can put it all in include/linux/gunyah.h and delineate with some clear
+> comments, but I initially felt it would be better to have separate header
+> file.
 
+Please put it all in one place, this is just one tiny driver and should
+not abuse the asm-generic location at all, no one is only going to want
+just this one file, they are going to need the whole thing or nothing.
 
-On 10/1/2022 12:26 AM, Dmitry Baryshkov wrote:
-> On Sat, 1 Oct 2022 at 06:09, Melody Olvera <quic_molvera@quicinc.com> wrote:
->> Add tlmm node for the QDU1000 and QRU1000 SoCs and the uart pin
->> configuration.
->>
->> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
->> ---
->>  arch/arm64/boot/dts/qcom/qdru1000.dtsi | 30 ++++++++++++++++++++++++++
->>  1 file changed, 30 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qdru1000.dtsi b/arch/arm64/boot/dts/qcom/qdru1000.dtsi
->> index 3610f94bef35..39b9a00d3ad8 100644
->> --- a/arch/arm64/boot/dts/qcom/qdru1000.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/qdru1000.dtsi
->> @@ -235,6 +235,8 @@ uart7: serial@99c000 {
->>                                 reg = <0x0 0x99c000 0x0 0x4000>;
->>                                 clock-names = "se";
->>                                 clocks = <&gcc GCC_QUPV3_WRAP0_S7_CLK>;
->> +                               pinctrl-names = "default";
->> +                               pinctrl-0 = <&qup_uart7_default>;
->>                                 interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
->>                                 #address-cells = <1>;
->>                                 #size-cells = <0>;
->> @@ -248,6 +250,34 @@ tcsr_mutex: hwlock@1f40000 {
->>                         #hwlock-cells = <1>;
->>                 };
->>
->> +               tlmm: pinctrl@f000000 {
->> +                       compatible = "qcom,qdu1000-tlmm", "qcom,qru1000-tlmm";
->> +                       reg = <0x0 0xf000000 0x0 0x1000000>;
->> +                       interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
->> +                       gpio-controller;
->> +                       #gpio-cells = <2>;
->> +                       interrupt-controller;
->> +                       #interrupt-cells = <2>;
->> +                       gpio-ranges = <&tlmm 0 0 151>;
->> +                       wakeup-parent = <&pdc>;
->> +
->> +                       qup_uart7_default: qup-uart7-default {
->> +                               tx {
->> +                                       pins = "gpio134";
->> +                                       function = "qup0_se7_l2";
-> This looks strange. Usually we'd have a single 'qup7' function here.
-> I'd go back to the interconnect driver. Maybe the functions are not
-> correctly defined there.
-Yeah; will correct. Pinctrl driver was not in line with upstream standards.
->
->> +                                       drive-strength = <2>;
->> +                                       bias-disable;
-> 'drive-strength' and 'bias-disable' are to be patched in in the board dts file.
-Really? Looking at sm8450.dtsi and sm8350.dtsi I see them defined in the dtsi file instead of the
-dts file. Is this new?
->
->> +                               };
->> +
->> +                               rx {
->> +                                       pins = "gpio135";
->> +                                       function = "qup0_se7_l3";
->> +                                       drive-strength = <2>;
->> +                                       bias-disable;
->> +                               };
->> +                       };
->> +               };
->> +
->>                 pdc: interrupt-controller@b220000 {
->>                         compatible = "qcom,pdc";
->>                         reg = <0x0 0xb220000 0x0 0x30000>, <0x0 0x174000f0 0x0 0x64>;
->> --
->> 2.37.3
->>
->
-Thanks,
-Melody
+thanks,
+
+greg k-h
