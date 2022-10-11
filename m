@@ -2,236 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD3725FB3A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 15:47:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFD265FB3AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 15:48:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229663AbiJKNrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 09:47:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48680 "EHLO
+        id S229870AbiJKNsm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 09:48:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229543AbiJKNq7 (ORCPT
+        with ESMTP id S230004AbiJKNs0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 09:46:59 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AE986552
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 06:46:56 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id y5so21189043lfl.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 06:46:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Br0NTj8ZuH0OMXFiG8Wg0lpHMqpiMdL9G9IUbDLd/Zs=;
-        b=RQSrGdfX0bpIJ+tAeoNzDiC1J6uuDKzs+4KorXjRVyWtREspgXAUskhA/H67L51QTc
-         VLbYqejgMfLEPc3Jdwl4hVyrgFyq6q+kwAAYqM3ojG+9BRx0MNlqlE2g1ym8KiTpBtsZ
-         LbJ15asNufiZcc1paa60exl/aSLvMaD6Yc6OVz+V8xs0bcUjMUo62qMzW/4QNCevKipm
-         hqO53NlKsBBtZnkfn90wERhPBaBP2Xf2rYSpLKZ9R/fuTX2V9yhevm88zjenHxnQDMNr
-         fSsY0WsL1yLowE7ChAilBqRR04wdAxOrINdDiAOL7TGC94mo4lvIxFYm8S+1f3sGm29A
-         iHqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Br0NTj8ZuH0OMXFiG8Wg0lpHMqpiMdL9G9IUbDLd/Zs=;
-        b=sed7yaqyDemGJnro+e6Lnj0NbhxiI8xIJ58uiWnEUa3ZGodoL+dTMvFHlTiTmibM1Q
-         NUpK125NOhyrO6rWhGh9XPrNvVcE+AAUaRB0oy8yXpmbSYm/hpapJec5iRcpIp6Ybyjx
-         yig6aYBYbyywnIRrVxuiLYKxIQuEfjXUaqV6gHivQ8hbK4o85dHqM0x/noxQYR3ONpjK
-         MYiCiefaYhLijhhynyV2gZqyvAmxlqfiZhknFD9i/uL4R5xAxG5MolTU124E2T/ywFcP
-         SjRkVqF/Jnhe3D9mw7tdxSzK/3LutHuWvnbUxy2hLnhvlN6gHEwl78SazJIes0HQmvi5
-         hoyg==
-X-Gm-Message-State: ACrzQf1thYtufEuE0lQ46q73HLXucJvCNRkHCZRHL6fZyPTY6k0/9wvu
-        Yu7gdpy8FFG6kwz1BTApMHvfbg==
-X-Google-Smtp-Source: AMsMyM6dqVFivVBAfJnusOTTHFixr6ta36EYELj9FkxhYexenNncJW1G3ektGPum7oYy8DXfnSf/1w==
-X-Received: by 2002:a05:6512:3b13:b0:4a2:564e:6cea with SMTP id f19-20020a0565123b1300b004a2564e6ceamr8373899lfv.242.1665496014326;
-        Tue, 11 Oct 2022 06:46:54 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id z18-20020a056512371200b0049313f77755sm1858954lfr.213.2022.10.11.06.46.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Oct 2022 06:46:53 -0700 (PDT)
-Message-ID: <66261491-530d-c368-6cc8-daeef74fcbda@linaro.org>
-Date:   Tue, 11 Oct 2022 16:46:53 +0300
+        Tue, 11 Oct 2022 09:48:26 -0400
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD8AE77555;
+        Tue, 11 Oct 2022 06:48:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1665496105; x=1697032105;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=QHbuyb2S/uUcVxyF/lwXUqAZuHdBPKm0sW+WbMyb3sc=;
+  b=Pj4BNK+rzzSTyBXemPpBH2NMgeihtQKzOP08GkE32BBDFHsEGUAOjS/g
+   YtBTzP+IhzjASx0CQoxtsOGSgggsc6r1ZngggideScpztEHBpvubxJvM/
+   PrBL8xLU0ZS173Xl1LBsRCKZZsUhVi7fKD8k2d9jHx/MqBAXkHRDZRdt4
+   jP4ZP+oPiaF9m0MFT6RAOay9XKsfteS6LOUKuYpRkK5k6bSbSgcvtu+/L
+   naYmNshmjYqukJl6ZQrLY6QTS7HynU+I2J6mqh2J4UJJdOFmwMHwDGHsu
+   Dh8DYhwk1KYkPnYhlJoeIytZJScs+etnJw5/us2S84x9IdC3nJtnr0iej
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10497"; a="303244167"
+X-IronPort-AV: E=Sophos;i="5.95,176,1661842800"; 
+   d="scan'208";a="303244167"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2022 06:48:24 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10497"; a="695068698"
+X-IronPort-AV: E=Sophos;i="5.95,176,1661842800"; 
+   d="scan'208";a="695068698"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmsmga004.fm.intel.com with ESMTP; 11 Oct 2022 06:48:19 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.96)
+        (envelope-from <andriy.shevchenko@linux.intel.com>)
+        id 1oiFcH-005KIR-1Z;
+        Tue, 11 Oct 2022 16:48:17 +0300
+Date:   Tue, 11 Oct 2022 16:48:17 +0300
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Kent Gibson <warthog618@gmail.com>
+Cc:     Bartosz Golaszewski <brgl@bgdev.pl>, linux-gpio@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
+        linux-actions@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+        openbmc@lists.ozlabs.org, linux-rpi-kernel@lists.infradead.org,
+        alsa-devel@alsa-project.org, patches@opensource.cirrus.com,
+        linux-mediatek@lists.infradead.org, linux-mips@vger.kernel.org,
+        linux-riscv@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH v2 02/36] gpiolib: cdev: Add missed header(s)
+Message-ID: <Y0V0IXF3sASTGdMU@smile.fi.intel.com>
+References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
+ <20221010201453.77401-3-andriy.shevchenko@linux.intel.com>
+ <Y0SyVwjDl7NGfTPn@sol>
+ <CAHp75Vf4oS8g0zxgismtLrzsJ7AE-bdMEq+GAzx2=Mwnhuk3UA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH 08/13] phy: qcom-qmp-pcie: drop power-down delay config
-Content-Language: en-GB
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-References: <20221011131416.2478-1-johan+linaro@kernel.org>
- <20221011131416.2478-9-johan+linaro@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221011131416.2478-9-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHp75Vf4oS8g0zxgismtLrzsJ7AE-bdMEq+GAzx2=Mwnhuk3UA@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/10/2022 16:14, Johan Hovold wrote:
-> The power-down delay was included in the first version of the QMP driver
-> as an optional delay after powering on the PHY (using
-> POWER_DOWN_CONTROL) and just before starting it. Later changes modified
-> this sequence by powering on before initialising the PHY, but the
-> optional delay stayed where it was (i.e. before starting the PHY).
-> 
-> The vendor driver does not use a delay before starting the PHY and this
-> is likely not needed on any platform unless there is a corresponding
-> delay in the vendor kernel init sequence tables (i.e. in devicetree).
-> 
-> Let's keep the delay for now, but drop the redundant delay period
-> configuration while increasing the unnecessarily low timer slack
-> somewhat.
+On Tue, Oct 11, 2022 at 11:05:42AM +0300, Andy Shevchenko wrote:
+> On Tue, Oct 11, 2022 at 3:02 AM Kent Gibson <warthog618@gmail.com> wrote:
+> > On Mon, Oct 10, 2022 at 11:14:18PM +0300, Andy Shevchenko wrote:
 
-Actually, the vendor driver does this 995..1005 sleep. But contrary to 
-our driver it does that after programming whole PHY init sequence, which 
-includes SW_RESET / START_CTL, but before programming the pipe clocks.
+...
 
-I think we can either drop this delay completely, or move it before 
-read_poll_timeout().
+> > > -#include <linux/gpio.h>
+> > >  #include <linux/gpio/driver.h>
+> > > +#include <linux/gpio.h>
+> > > +#include <linux/hte.h>
+> >
+> > Ok with the hte re-order.
+> >
+> > But moving the gpio subsystem header after the gpio/driver is not
+> > alphabetical ('.' precedes '/') and it read better and made more sense
+> > to me the way it was.
+> 
+> I see, I guess this is vim sort vs shell sort. Strange, they should
+> follow the locale settings...
 
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 27 +-----------------------
->   1 file changed, 1 insertion(+), 26 deletions(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index fa8bc6aeedf1..315de484f875 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> @@ -1362,9 +1362,6 @@ struct qmp_phy_cfg {
->   
->   	/* true, if PHY needs delay after POWER_DOWN */
->   	bool has_pwrdn_delay;
-> -	/* power_down delay in usec */
-> -	int pwrdn_delay_min;
-> -	int pwrdn_delay_max;
->   
->   	/* QMP PHY pipe clock interface rate */
->   	unsigned long pipe_clock_rate;
-> @@ -1500,8 +1497,6 @@ static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
->   	.phy_status		= PHYSTATUS,
->   
->   	.has_pwrdn_delay	= true,
-> -	.pwrdn_delay_min	= 995,		/* us */
-> -	.pwrdn_delay_max	= 1005,		/* us */
->   };
->   
->   static const struct qmp_phy_cfg ipq8074_pciephy_gen3_cfg = {
-> @@ -1529,8 +1524,6 @@ static const struct qmp_phy_cfg ipq8074_pciephy_gen3_cfg = {
->   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
->   
->   	.has_pwrdn_delay	= true,
-> -	.pwrdn_delay_min	= 995,		/* us */
-> -	.pwrdn_delay_max	= 1005,		/* us */
->   
->   	.pipe_clock_rate	= 250000000,
->   };
-> @@ -1562,8 +1555,6 @@ static const struct qmp_phy_cfg ipq6018_pciephy_cfg = {
->   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
->   
->   	.has_pwrdn_delay	= true,
-> -	.pwrdn_delay_min	= 995,		/* us */
-> -	.pwrdn_delay_max	= 1005,		/* us */
->   };
->   
->   static const struct qmp_phy_cfg sdm845_qmp_pciephy_cfg = {
-> @@ -1594,8 +1585,6 @@ static const struct qmp_phy_cfg sdm845_qmp_pciephy_cfg = {
->   	.phy_status		= PHYSTATUS,
->   
->   	.has_pwrdn_delay	= true,
-> -	.pwrdn_delay_min	= 995,		/* us */
-> -	.pwrdn_delay_max	= 1005,		/* us */
->   };
->   
->   static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
-> @@ -1624,8 +1613,6 @@ static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
->   	.phy_status		= PHYSTATUS,
->   
->   	.has_pwrdn_delay	= true,
-> -	.pwrdn_delay_min	= 995,		/* us */
-> -	.pwrdn_delay_max	= 1005,		/* us */
->   };
->   
->   static const struct qmp_phy_cfg sm8250_qmp_gen3x1_pciephy_cfg = {
-> @@ -1666,8 +1653,6 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x1_pciephy_cfg = {
->   	.phy_status		= PHYSTATUS,
->   
->   	.has_pwrdn_delay	= true,
-> -	.pwrdn_delay_min	= 995,		/* us */
-> -	.pwrdn_delay_max	= 1005,		/* us */
->   };
->   
->   static const struct qmp_phy_cfg sm8250_qmp_gen3x2_pciephy_cfg = {
-> @@ -1708,8 +1693,6 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x2_pciephy_cfg = {
->   	.phy_status		= PHYSTATUS,
->   
->   	.has_pwrdn_delay	= true,
-> -	.pwrdn_delay_min	= 995,		/* us */
-> -	.pwrdn_delay_max	= 1005,		/* us */
->   };
->   
->   static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
-> @@ -1765,8 +1748,6 @@ static const struct qmp_phy_cfg sc8180x_pciephy_cfg = {
->   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
->   
->   	.has_pwrdn_delay	= true,
-> -	.pwrdn_delay_min	= 995,		/* us */
-> -	.pwrdn_delay_max	= 1005,		/* us */
->   };
->   
->   static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
-> @@ -1797,8 +1778,6 @@ static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
->   	.phy_status		= PHYSTATUS_4_20,
->   
->   	.has_pwrdn_delay	= true,
-> -	.pwrdn_delay_min	= 995,		/* us */
-> -	.pwrdn_delay_max	= 1005,		/* us */
->   };
->   
->   static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
-> @@ -1829,8 +1808,6 @@ static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
->   	.phy_status		= PHYSTATUS,
->   
->   	.has_pwrdn_delay	= true,
-> -	.pwrdn_delay_min	= 995,		/* us */
-> -	.pwrdn_delay_max	= 1005,		/* us */
->   };
->   
->   static const struct qmp_phy_cfg sm8450_qmp_gen4x2_pciephy_cfg = {
-> @@ -1876,8 +1853,6 @@ static const struct qmp_phy_cfg sm8450_qmp_gen4x2_pciephy_cfg = {
->   	.phy_status		= PHYSTATUS_4_20,
->   
->   	.has_pwrdn_delay	= true,
-> -	.pwrdn_delay_min	= 995,		/* us */
-> -	.pwrdn_delay_max	= 1005,		/* us */
->   };
->   
->   static void qmp_pcie_configure_lane(void __iomem *base,
-> @@ -2037,7 +2012,7 @@ static int qmp_pcie_power_on(struct phy *phy)
->   	qmp_pcie_pcs_init(qphy, mode_tables);
->   
->   	if (cfg->has_pwrdn_delay)
-> -		usleep_range(cfg->pwrdn_delay_min, cfg->pwrdn_delay_max);
-> +		usleep_range(1000, 1200);
->   
->   	/* Pull PHY out of reset state */
->   	qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
+I have checked, the shell and vim sort gave the same result as in this patch.
 
 -- 
-With best wishes
-Dmitry
+With Best Regards,
+Andy Shevchenko
+
 
