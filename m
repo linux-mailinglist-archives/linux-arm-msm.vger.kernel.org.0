@@ -2,128 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 56E4F5FB10A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 13:09:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 369D45FB202
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 14:07:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229621AbiJKLJm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 07:09:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57044 "EHLO
+        id S229587AbiJKMHJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 08:07:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbiJKLJl (ORCPT
+        with ESMTP id S229487AbiJKMHI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 07:09:41 -0400
-Received: from wnew3-smtp.messagingengine.com (wnew3-smtp.messagingengine.com [64.147.123.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60591D73;
-        Tue, 11 Oct 2022 04:09:37 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailnew.west.internal (Postfix) with ESMTP id 005F72B066FE;
-        Tue, 11 Oct 2022 07:09:34 -0400 (EDT)
-Received: from imap51 ([10.202.2.101])
-  by compute3.internal (MEProxy); Tue, 11 Oct 2022 07:09:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm2; t=1665486574; x=1665490174; bh=RM6oJ+Wm8I
-        //KZ/oFLABpSMFlOHOa+xN+BM+5SLLxTE=; b=aSIYxCtYdt1yek8Ky0J+MBBZGd
-        YNsaNQ38C8MlliiHZiynR73WHIEKlaMYrUM/xptOq/d1VGxGKHilri/wt4TPhIFl
-        64pWwEtnf3Mm+GBlyIbpVJpQnIu9y4g0d9eCxZLWYdqXFtjPyxTjbNw9ilvakv0s
-        kTrl5vahN583XPq/hWNgme/dnMN0//GaRZfS9XwvyoL/O8sPfeDb8mVlY1H3DBz1
-        tsPsgCvF/r+aJNF6QQAjG70KR4G0PF6amSQjNEACaEL8rf2MK4osNJnaWCfaBIl3
-        xyB1psknJFftHp9vNRmjc1vTmSguTPn70u5jJmIgnouMXY3jQ+mF8YwbruLA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm3; t=1665486574; x=1665490174; bh=RM6oJ+Wm8I//KZ/oFLABpSMFlOHO
-        a+xN+BM+5SLLxTE=; b=jflLYEknFINqe7qRTsk0daaR0znwMVl7nJ1IGdyv2ncY
-        bVqpuAfif81zf9VlFFkyx4IUQoxDrHT8FtR/CGpTze63zrHIVbL1Q+fMroo/Z2dY
-        pyd8G7jevH56aCaY4REcLf7jDd/DM4ioJvsToesOIgYmUg/Pp9v0fjWsbM/ULdQU
-        1llbnH6kO5bK+hMIMfzpiS1/CL6hZahPp9t3/yDhMt37JQWUfw/SiWQgJwCEJvVY
-        PvBWDFObOFEzSiPMWB9n8kguEKV6oVYvvMC84SfDlTANpR8pJEx/QXM66QIjwJv/
-        UnKlF1rNoJ6V+kVms7q4RXjJxWsUchfap5IawwCxrQ==
-X-ME-Sender: <xms:7k5FY_vwrB21dr5I-_tycqIxrn-vjDge8tsH9Kv-V3NzbDTGvWAYaA>
-    <xme:7k5FYwc5fhyKd0kE9p10FFRWBbghqc2bpSz8sAVxmXT-fPPSE19_4I3ahqnTcZyWJ
-    Frr_J0OVNjkEC2Muhs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeejiedgfedvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
-    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
-    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
-    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
-    hrnhgusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:7k5FYyzqziQBZRQ0Hlsh_jpYvdINfcj15npmDLShu1EAKIwtbms89g>
-    <xmx:7k5FY-Oo8N9U2caNl5qYk7udqrpZq0DOZs-IaO1W7RR3e_HA2KbNNg>
-    <xmx:7k5FY_-eu1g9YafbA0dDkaMf1xZB_23gMIJaN56laXcOXrjUYnx6oA>
-    <xmx:7k5FY384T46l2ky4ckvjowwTBWaP2xs0Q-JhSsNpZGfEEsn6w0lE2z_SfE0>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 2CA43B60086; Tue, 11 Oct 2022 07:09:34 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-1015-gaf7d526680-fm-20220929.001-gaf7d5266
-Mime-Version: 1.0
-Message-Id: <85ca7eb4-3e0c-4ffb-8bac-a435594ca0f7@app.fastmail.com>
-In-Reply-To: <7438406d-b446-201e-0ec3-5cf0a5b9f32c@kernel.org>
-References: <20221011000840.289033-1-quic_eberman@quicinc.com>
- <20221011000840.289033-14-quic_eberman@quicinc.com>
- <7438406d-b446-201e-0ec3-5cf0a5b9f32c@kernel.org>
-Date:   Tue, 11 Oct 2022 13:09:13 +0200
-From:   "Arnd Bergmann" <arnd@arndb.de>
-To:     "Jiri Slaby" <jirislaby@kernel.org>,
-        "Elliot Berman" <quic_eberman@quicinc.com>,
-        "Bjorn Andersson" <quic_bjorande@quicinc.com>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
-Cc:     "Murali Nalajala" <quic_mnalajal@quicinc.com>,
-        "Trilok Soni" <quic_tsoni@quicinc.com>,
-        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
-        "Carl van Schaik" <quic_cvanscha@quicinc.com>,
-        "Prakruthi Deepak Heragu" <quic_pheragu@quicinc.com>,
-        "Andy Gross" <agross@kernel.org>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        "Jassi Brar" <jassisinghbrar@gmail.com>,
-        linux-arm-kernel@lists.infradead.org,
-        "Mark Rutland" <mark.rutland@arm.com>,
-        "Lorenzo Pieralisi" <lorenzo.pieralisi@arm.com>,
-        "Sudeep Holla" <sudeep.holla@arm.com>,
-        "Marc Zyngier" <maz@kernel.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Jonathan Corbet" <corbet@lwn.net>,
-        "Will Deacon" <will@kernel.org>,
-        "Catalin Marinas" <catalin.marinas@arm.com>,
-        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 13/13] tty: gunyah: Add tty console driver for RM Console
- Services
-Content-Type: text/plain
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Tue, 11 Oct 2022 08:07:08 -0400
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61B9A4DB5D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 05:07:00 -0700 (PDT)
+Received: by mail-qk1-x72b.google.com with SMTP id a18so5392548qko.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 05:07:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BhPGevqSzqibqgd/vwJP8Td87JD8l5NLBMf17yZuOLk=;
+        b=SvLQDgWIQMBN2ynGQgGS86FJak4gVhl4lKseaec29ZOYSMRNI6NpM8AZUWrpih7WaE
+         T7OFgsG+y9AJ+GjCjKK2U5q7WQQrbSTIgBdqrG/VLdjPnPwRf9sCZDscyZ0Oa1acMAlH
+         TKJWz1DGwU0INMN711f3Oh72PYox/1X7PYgW8vt8UU9WlZw5lOPf6EQ/hl7ladfW8qCe
+         QxGaGtnkQWTlInBDMx35U0/3fGN8Go9GoH6vdFLLlITIKwR9L0cnn363EEnTlJ+i16UC
+         zULEARG/kZYZV8YKqZzSsb/Yf2GCi1XGkd+8vU7qV8+IuZLnQooTn3WrecSLQOSH+mfb
+         baSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BhPGevqSzqibqgd/vwJP8Td87JD8l5NLBMf17yZuOLk=;
+        b=3SGFfp8DOXAXieH2RbVKDW+PQMR5P0Tf5nGvQZSVb3N7nu+q4lXMLVdx6RpWM2m9f3
+         ueAaIQROMNNviDLWwLUs8c3kUIUmiFSIhvqTboYgO1yeGlh7FdLaqMS8VArgbJFVMkWp
+         GAFq0EqUTlkDBYSMj9ojeSP78lwocRtTMrk8c5CjLRLFeAhiE1FZRwU/DiF6LvT+BxIk
+         EYzBlTv181PNlRU8Idg/7jMqIK/hZ6aTglB63nrwIUGxAhdzMXBpc1f/MSww5KhFbPfe
+         9g+obwe/7UWkPTexlH+WSuORrxTWOFNvMoCgzjqSKQBvoqNwpqNNeI4IBVdN8xsDypE0
+         ZXfQ==
+X-Gm-Message-State: ACrzQf3MrD/5dogXreh9OcJutiWZ31PNoAax3lm07SXJm1dZRxPU3G5Q
+        FXf6UKae8W4pbmNaoSfO8ycquA==
+X-Google-Smtp-Source: AMsMyM5b7GFYwAPsgxTr/Cv/cVXl6z8IZHNqcX/niaD9yWf2bf96abSPTyBoyjzKL6lld470m4fQAQ==
+X-Received: by 2002:a05:620a:6084:b0:6ce:342e:5c31 with SMTP id dx4-20020a05620a608400b006ce342e5c31mr15553325qkb.404.1665490018771;
+        Tue, 11 Oct 2022 05:06:58 -0700 (PDT)
+Received: from [192.168.1.57] (cpe-72-225-192-120.nyc.res.rr.com. [72.225.192.120])
+        by smtp.gmail.com with ESMTPSA id x4-20020a05620a448400b006cebda00630sm13346818qkp.60.2022.10.11.05.06.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Oct 2022 05:06:57 -0700 (PDT)
+Message-ID: <112ada96-f742-8d06-dc90-a422d3636e06@linaro.org>
+Date:   Tue, 11 Oct 2022 08:06:55 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH v2 10/16] arm64: dts: qcom: sm6125: align TLMM pin
+ configuration with DT schema
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220930192954.242546-1-krzysztof.kozlowski@linaro.org>
+ <20220930192954.242546-11-krzysztof.kozlowski@linaro.org>
+ <20221011074512.anifehocqjnxuf35@SoMainline.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221011074512.anifehocqjnxuf35@SoMainline.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 11, 2022, at 8:02 AM, Jiri Slaby wrote:
-> On 11. 10. 22, 2:08, Elliot Berman wrote:
->> +
->> +	/* below are for printk console.
->> +	 * gh_rm_console_* calls will sleep and console_write can be called from
->> +	 * atomic ctx. Two xmit buffers are used. The active buffer is tracked with
->> +	 * co_xmit_idx. Writes go into the co_xmit_buf[co_xmit_idx] buffer.
->> +	 * A work is scheduled to flush the bytes. The work will swap the active buffer
->> +	 * and write out the other buffer.
->> +	 */
->
-> Ugh, why? This is too ugly and unnecessary. What about passing the kfifo 
-> to gh_rm_console_write() instead? You do memcpy() there anyway.
+On 11/10/2022 03:45, Marijn Suijten wrote:
+> On 2022-09-30 21:29:48, Krzysztof Kozlowski wrote:
+>> DT schema expects TLMM pin configuration nodes to be named with
+>> '-state' suffix and their optional children with '-pins' suffix.
+>>
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> Thanks!
+> 
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> 
+> Perhaps mention more clearly that this is fixing up an earlier patch
+> that tried to address missing `-pins`?
 
-Another problem here is that you really want the console output to be
-printed from atomic context, otherwise one would never see e.g. the
-output of a panic() call. Having a deferred write is probably fine for
-normal tty operations, but you probably want a different device for the
-console here, e.g. the hvc_dcc driver.
+It is not fixing only that patch, but also nodes added later without suffix.
 
-     Arnd
+Best regards,
+Krzysztof
+
