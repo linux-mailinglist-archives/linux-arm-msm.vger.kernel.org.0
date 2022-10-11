@@ -2,75 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A7895FB410
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 16:04:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBE2D5FB414
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 16:05:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229779AbiJKOEK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 10:04:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53990 "EHLO
+        id S229655AbiJKOFW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 10:05:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229663AbiJKOEJ (ORCPT
+        with ESMTP id S229749AbiJKOFV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 10:04:09 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 110288E9AD
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 07:04:08 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id g1so21233062lfu.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 07:04:07 -0700 (PDT)
+        Tue, 11 Oct 2022 10:05:21 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E2131EC7D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 07:05:20 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id f9so16931447ljk.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 07:05:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=miXLZk8v5YqNNtiDLYh+RE8Lp+zqisULlUcCYgeHoAE=;
-        b=VCTokd2xjoi7u4WGZYNZlVC3KvGj/Zwa3YIctwlsTfta5SBxhK8l1EBxyOSAHZbYqv
-         /0Qr3SMo1BiLWJ5q1EWD/DOmKxe6otD2Q46i3M+BrNWNEm7jOpf0GH4CdPD+Se98xXmJ
-         Fdk4PAyxKXgHXouIdi+m6U6o7dIhjSuTNcV6aHEyG/f9Xl22sGl5qMdhDrduIFxfTe9P
-         B6g21isG/BFzLjKezb4vh5bD6ZT4zAwb1/L1wUTMU7jU6brqIvcQT6f88X6doY2liHG3
-         8c96nICAbtsvRN2JowboqAXiIqylWZaSwBOYora7geeMWtOIvpqAkLfsOTDJAKNr5+B3
-         LKJQ==
+        bh=UmJosukTcNXPq7QpHRkQ7HCuPYF8BwzQnDoh2vNnO6I=;
+        b=gyS7VEpV9tQaMXim08Y4nduzhuIEz2ky+dX/U0PWXSvzQrjAS9tPCvFcoRIF8MjqE7
+         rxevgYcUfAXY0b6ERYAiMXnPafQNlWh9sHkokv+d2s+rDI2O5SHez91xh+YejrZ1rzDC
+         aNCkTBiuYG49DoYsXC8OItML2EYHP3RSTKH51siJiEOKeL/Q4TuKJbqDFYUZTZQUtiZE
+         AbCWBGDel9qaxCS6qJKT1kifEeL/O/XUL7Zun5lk/EYhRe+/Fe1z3Wygp/VxHC46SBgU
+         CN3X4IEu0/J0n98Kg0fbk+BpFTvMAjsG+E20jQnzA9HrSuHaYzPf3NEkxEMdDn2WZfUv
+         bIxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=miXLZk8v5YqNNtiDLYh+RE8Lp+zqisULlUcCYgeHoAE=;
-        b=INKZBANuVNBq3VdeRmVY5Negv3Zv/5OLoP5hon/sMJO9rZujQwGg2zBEBaFMZevb25
-         F9PLpzLCdEouOkWZr7vb9K+bdZBvCs0qV1MpEulAlPp6qUIjfZkxFBayoTo6TqUmEfcS
-         WI1ugHezxHFr0CdC2uQGG9AdMrhfdXg/TKWjbatkbhVR5M3TcJeLDPHvqwc+p8cstT2e
-         sdkSSROUDp+J+WGqJZFqqWIH2QQg12f3hKQ+IGSOEbdSp65jtgXi1CuZh2wJl3bz58q4
-         pZbQpUF4TgJUdym8nWN3Y6Ac3SZ92fia3EmKNbAHlzelbL8ScARtafGuCsaKuIqj7TKw
-         cFrw==
-X-Gm-Message-State: ACrzQf1Ebd2VmRjT1AmZytE9tIyN4Q7/CTfi5Hrhp5QxcceA3eOQRdao
-        dWSClOLb2g6aL/t1/M9a5/OGLg==
-X-Google-Smtp-Source: AMsMyM5ltcAwdQHcdi8OnPxvv/cRJbPc0SAmnFJd7Ua6IjdfR1eSgoyRab2DlhLFc9bI4SQhvQwW3w==
-X-Received: by 2002:ac2:4c18:0:b0:4a2:6dbd:97d7 with SMTP id t24-20020ac24c18000000b004a26dbd97d7mr8327795lfq.144.1665497045747;
-        Tue, 11 Oct 2022 07:04:05 -0700 (PDT)
+        bh=UmJosukTcNXPq7QpHRkQ7HCuPYF8BwzQnDoh2vNnO6I=;
+        b=ynMGDXqziSFLFER9n3MG5NwKc5t2luaQ70yBTpZLU0WtMir1q14e+kObFHMmN22iF2
+         SiBLBuhH3YlmyOl8kywwPeMpeA4jviFyrKfMwKx1zJIfIO02sCfeWn6eNKVTNO0UawMB
+         fOZ/EnsxBQ0ghaNpZdBL2/IoblKcLKnQc9DptuydLfzcRChsTrvaO/cvROjPHLyuhvJ+
+         vFv1kaF1Jgqqv5H8g2PFPGIEW2pPoJj3G1pDt4ejOCHxJfre/ZI8muhatbNS5EAF0I2H
+         YKjHZYBMC2UUnD0M/aWJe8jl1xCx0Bkdi0pb74u0sGdYcUw+IrAkUgp6C0PCibGTgLpy
+         e41g==
+X-Gm-Message-State: ACrzQf1IuM7yHjQ+e0SduXyLt6epUZqflEwsV0mWehxx771jEsQcI+rw
+        vE0wz7+eBdsxtGD7kQG2JlnTvg==
+X-Google-Smtp-Source: AMsMyM4/ghz+u0OuwIx9672vf3jqEPPcpS2RYAYfYGtZSIDWv7zQCEGyQK7EOwS5pgq8yfvg0ufRZg==
+X-Received: by 2002:a05:651c:11c3:b0:26d:fb49:4b12 with SMTP id z3-20020a05651c11c300b0026dfb494b12mr8765815ljo.492.1665497118693;
+        Tue, 11 Oct 2022 07:05:18 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id c14-20020a19760e000000b004a031805c8bsm1872414lff.106.2022.10.11.07.04.05
+        by smtp.gmail.com with ESMTPSA id c9-20020a056512324900b004a054535826sm1886488lfr.24.2022.10.11.07.05.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Oct 2022 07:04:05 -0700 (PDT)
-Message-ID: <ebe1e26a-7335-29ac-4990-6b8fdb02ba7c@linaro.org>
-Date:   Tue, 11 Oct 2022 17:04:04 +0300
+        Tue, 11 Oct 2022 07:05:18 -0700 (PDT)
+Message-ID: <2fed12b6-b3a5-a360-f040-fc8b1d3ced20@linaro.org>
+Date:   Tue, 11 Oct 2022 17:05:17 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.1
-Subject: Re: [PATCH 08/13] phy: qcom-qmp-pcie: drop power-down delay config
+Subject: Re: [PATCH 11/13] phy: qcom-qmp-combo: drop power-down delay config
 Content-Language: en-GB
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Kishon Vijay Abraham I <kishon@ti.com>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
 References: <20221011131416.2478-1-johan+linaro@kernel.org>
- <20221011131416.2478-9-johan+linaro@kernel.org>
- <66261491-530d-c368-6cc8-daeef74fcbda@linaro.org>
- <Y0V1TIBySTPhYqX/@hovoldconsulting.com>
+ <20221011131416.2478-12-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <Y0V1TIBySTPhYqX/@hovoldconsulting.com>
+In-Reply-To: <20221011131416.2478-12-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,60 +80,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/10/2022 16:53, Johan Hovold wrote:
-> On Tue, Oct 11, 2022 at 04:46:53PM +0300, Dmitry Baryshkov wrote:
->> On 11/10/2022 16:14, Johan Hovold wrote:
->>> The power-down delay was included in the first version of the QMP driver
->>> as an optional delay after powering on the PHY (using
->>> POWER_DOWN_CONTROL) and just before starting it. Later changes modified
->>> this sequence by powering on before initialising the PHY, but the
->>> optional delay stayed where it was (i.e. before starting the PHY).
->>>
->>> The vendor driver does not use a delay before starting the PHY and this
->>> is likely not needed on any platform unless there is a corresponding
->>> delay in the vendor kernel init sequence tables (i.e. in devicetree).
->>>
->>> Let's keep the delay for now, but drop the redundant delay period
->>> configuration while increasing the unnecessarily low timer slack
->>> somewhat.
->>
->> Actually, the vendor driver does this 995..1005 sleep. But contrary to
->> our driver it does that after programming whole PHY init sequence, which
->> includes SW_RESET / START_CTL, but before programming the pipe clocks.
+On 11/10/2022 16:14, Johan Hovold wrote:
+> The power-down delay was included in the first version of the QMP driver
+> as an optional delay after powering on the PHY (using
+> POWER_DOWN_CONTROL) and just before starting it. Later changes modified
+> this sequence by powering on before initialising the PHY, but the
+> optional delay stayed where it was (i.e. before starting the PHY).
 > 
-> Right, it does it after starting the PHY which means that you don't have
-> to poll for as long for the PHY status.
+> The vendor driver does not use a delay before starting the PHY and this
+> is likely not needed on any platform unless there is a corresponding
+> delay in the vendor kernel init sequence tables (i.e. in devicetree).
 > 
-> It's a different delay entirely.
+> Let's keep the delay for now, but drop the redundant delay period
+> configuration while increasing the unnecessarily low timer slack
+> somewhat.
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 16 +---------------
+>   1 file changed, 1 insertion(+), 15 deletions(-)
 
-No-no-no. The 995-1005 delay was added guess for which SoC? For ipq8074, 
-where the config tables contain the ugly CFG_L writes for SW_RESET / 
-START_CTRL. So, it is the same delay, but added by somebody who didn't 
-care enough. The original 10-11 delay is a completely different story, 
-you are correct here.
-
-Thus, I'd say, the PCIe delay should be moved after the registers 
-programming.
-
-> 
->> I think we can either drop this delay completely, or move it before
->> read_poll_timeout().
-> 
-> It definitely shouldn't be used for any new platforms, but I opted for
-> the conservative route of keeping it in case some of the older platforms
-> actually do need it.
-> 
-> My bet is that this is all copy-paste cruft that could be removed, but
-> I'd rather do that as a separate follow-on change. Perhaps after testing
-> some more SoC after removing the delay.
-> 
-> SC8280XP certainly doesn't need it.
-
-I think in our case this delay just falls into status polling. We'd 
-probably need it, if we'd add the noretain handling.
-
-> 
-> Johan
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
