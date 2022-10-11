@@ -2,171 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA1FC5FB4EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 16:50:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54C6F5FB586
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 16:55:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229724AbiJKOuC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 10:50:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60234 "EHLO
+        id S230456AbiJKOy5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 10:54:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229573AbiJKOuB (ORCPT
+        with ESMTP id S230368AbiJKOyG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 10:50:01 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0562B1D0FA;
-        Tue, 11 Oct 2022 07:49:57 -0700 (PDT)
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        Tue, 11 Oct 2022 10:54:06 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 245FC9C213;
+        Tue, 11 Oct 2022 07:51:34 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 3DECE660235B;
-        Tue, 11 Oct 2022 15:49:51 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1665499795;
-        bh=WjWfvO7t5fdyGrI6m+hgGbT3QH4QBKj79I/hqKmON7Y=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=JOT+AnjvhQZ3vD+INlRyJUZGm23CWRspXdxuJNoFNT/2BU3BDi5IDkH2Yrh9cl34H
-         N8tYn0ib9h2NSJZ2wAIfZfryQVLEoNCgFUyUgtoeB3uep2/6DEsQ7yGEO0febOyHvI
-         hMQps4hKjRpiDfHJVubm1kSgDODcE0fxz35XL3pmTQUoBsYWlj52rSQaBN3or/Qysa
-         Nnl5TlEZJvEM/mGOVrA3G338yKAO4fX3D/W0mLbDZJMGmbluyKM/eYT4wVNA1RFmtD
-         w5vR7Uu6LnwTML9dH9/oGV1Cci4KZACKsyC/Ihfwo8y3IRLkhbhb0iRzW5ZY4Zwh1d
-         X736PHBsaUIKg==
-Message-ID: <74cdcd93-a528-ec8c-0808-0d698b86e47d@collabora.com>
-Date:   Tue, 11 Oct 2022 16:49:48 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [PATCH v2 14/36] pinctrl: mediatek: Add missed header(s)
-Content-Language: en-US
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Kent Gibson <warthog618@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Billy Tsai <billy_tsai@aspeedtech.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Chen-Yu Tsai <wenst@chromium.org>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Horatiu Vultur <horatiu.vultur@microchip.com>,
-        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4992961166;
+        Tue, 11 Oct 2022 14:51:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FB4C433D6;
+        Tue, 11 Oct 2022 14:51:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1665499892;
+        bh=EjxclP/xjylIuQyVCMXwjL3KglQqFnui4k5D9fx+T7U=;
+        h=From:To:Cc:Subject:Date:From;
+        b=DVFBtx5ZzijXhyRdOusYm1kCey5V50eCwciPDa+cQ/d+3ZvbtwFhw19ZQ+Dh1+FMa
+         mGe3aoCXRQORPoQO62chGAUcg8kDdvtIXwS7Xx2ylefYQwgi/tiaP5TdNpU3/tO3ir
+         a+4zAtnPpFsaPFHXcu7oTDn2h9s17q7Yv71EF/m1/4aLG00uSZtuZ/0DWdOvNoHR8d
+         uBumUWROLz4LC6zSXpbPrQNc2t1bRjHQNRi0MEkAf7hDSeebX1eTEyJ3oiQ1mmQKSl
+         vBlWTpae1KU2yCUXBkGl6+A8B9+UZ9XC9XZXcb/daRCt5ywty9x/ahknclNFwiBT2H
+         t/9M79JVf2nOQ==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Steev Klimaszewski <steev@kali.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Phil Edworthy <phil.edworthy@renesas.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Fabien Dessenne <fabien.dessenne@foss.st.com>,
-        Prathamesh Shete <pshete@nvidia.com>,
-        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-media@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org, alsa-devel@alsa-project.org,
-        patches@opensource.cirrus.com, linux-mediatek@lists.infradead.org,
-        linux-mips@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-omap@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        =?UTF-8?Q?Andreas_F=c3=a4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Joel Stanley <joel@jms.id.au>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Charles Keepax <ckeepax@opensource.cirrus.com>,
-        Richard Fitzgerald <rf@opensource.cirrus.com>,
-        Dong Aisheng <aisheng.dong@nxp.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Shevchenko <andy@kernel.org>,
-        Sean Wang <sean.wang@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Patrick Venture <venture@google.com>,
-        Nancy Yuen <yuenn@google.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Damien Le Moal <damien.lemoal@wdc.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Haojian Zhuang <haojian.zhuang@linaro.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Emil Renner Berthing <kernel@esmil.dk>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>
-References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
- <20221010201453.77401-15-andriy.shevchenko@linux.intel.com>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20221010201453.77401-15-andriy.shevchenko@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.19 01/40] arm64: dts: qcom: sdm845: narrow LLCC address space
+Date:   Tue, 11 Oct 2022 10:50:50 -0400
+Message-Id: <20221011145129.1623487-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 10/10/22 22:14, Andy Shevchenko ha scritto:
-> Do not imply that some of the generic headers may be always included.
-> Instead, include explicitly what we are direct user of.
-> 
-> While at it, sort headers alphabetically.
-> 
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> ---
->   drivers/pinctrl/mediatek/pinctrl-moore.c | 3 +++
->   drivers/pinctrl/mediatek/pinctrl-paris.c | 5 +++++
->   2 files changed, 8 insertions(+)
-> 
-> diff --git a/drivers/pinctrl/mediatek/pinctrl-moore.c b/drivers/pinctrl/mediatek/pinctrl-moore.c
-> index 526faaebaf77..9474ada5addb 100644
-> --- a/drivers/pinctrl/mediatek/pinctrl-moore.c
-> +++ b/drivers/pinctrl/mediatek/pinctrl-moore.c
-> @@ -9,6 +9,9 @@
->    */
->   
->   #include <linux/gpio/driver.h>
-> +
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Apart from this blank line that I deem unnecessary....
+[ Upstream commit 300b5f661eebefb8571841b78091343eb87eca54 ]
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+The Last Level Cache Controller (LLCC) device does not need to access
+entire LLCC address space.  Currently driver uses only hardware info and
+status registers which both reside in LLCC0_COMMON range (offset
+0x30000, size 0x1000).  Narrow the address space to allow binding other
+drivers to rest of LLCC address space.
 
+Cc: Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>
+Reported-by: Steev Klimaszewski <steev@kali.org>
+Suggested-by: Sibi Sankar <quic_sibis@quicinc.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Steev Klimaszewski <steev@kali.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/20220728113748.170548-11-krzysztof.kozlowski@linaro.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 7783005c8028..6d9787e32b88 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -2021,7 +2021,7 @@ uart15: serial@a9c000 {
+ 
+ 		llcc: system-cache-controller@1100000 {
+ 			compatible = "qcom,sdm845-llcc";
+-			reg = <0 0x01100000 0 0x200000>, <0 0x01300000 0 0x50000>;
++			reg = <0 0x01100000 0 0x31000>, <0 0x01300000 0 0x50000>;
+ 			reg-names = "llcc_base", "llcc_broadcast_base";
+ 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
+-- 
+2.35.1
 
