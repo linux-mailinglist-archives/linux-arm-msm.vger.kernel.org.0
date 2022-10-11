@@ -2,91 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DDD825FBB22
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 21:09:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CED005FBB47
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 21:21:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229943AbiJKTI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 15:08:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44950 "EHLO
+        id S229778AbiJKTVV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 15:21:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230144AbiJKTIv (ORCPT
+        with ESMTP id S230028AbiJKTVP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 15:08:51 -0400
-Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70BA0895C8;
-        Tue, 11 Oct 2022 12:08:50 -0700 (PDT)
-Date:   Tue, 11 Oct 2022 19:08:37 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=noorman.info;
-        s=protonmail3; t=1665515328; x=1665774528;
-        bh=diUYicMMh/+7TmI9we8Hv3+n8vLxeIEDGHZbjZlmuFU=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID;
-        b=ArvBWdN8ZwMxc7EjLra9tvN8TpEWHUg5WKTQil2zJC+dJ9PjYeECDU5lG1l7SmimA
-         xSz8cZsDClxxwSc4wyVFSKuFc1g0n70hYFah8aR/kYgYiqLlE1lZsctTC1v8V9Fk3P
-         KPBf+6MhVnhD+60Iz/Y0pO1n5dupwcN4KDPybhL8qyhzPcNb1K4eW/rs2NRIBfcOHx
-         Z0Y21q2e6EHzYJHz31BaDmgYcQQtTEQ8JY7de3GceZBeiDvd8HzcMBXC/TcGkRmDBj
-         0x6oDBhQKHprMXPP4IByaM8/+KCxRAjtS0b9++M9bWZbXkt6aviNgGOfB8xUK8fExD
-         vA01np3crUqNQ==
-To:     Andy Gross <agross@kernel.org>,
+        Tue, 11 Oct 2022 15:21:15 -0400
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B06404CA3E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 12:21:13 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id i12so9601284qvs.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 12:21:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pmEF+NGLF11jPqtgt2Pd4Z8enI9aLSuKQeY/WvYqRjs=;
+        b=LibFoMgc48nlHlZ428E8aZbPq7/XknNj97vx6Cv9C2j900wmWIxaKdqhF2Yfj2r6i1
+         wfKGku0x5Zc964sNjHVE2FIJCtmsJMEq+g3ynD3sq2Ew2i9W7WPa30+y0duyZad73uTk
+         FiHldmwcEv7e0spGT+D51o+T+XpCXPeS89knzp89kn6cBoGiNAPB2uQCVYqaCoFZgyps
+         cqoD4mpbBkvAUFwGN/6W5sMjdf5TUNyWFuwlZuj/F26raA+5zKnE2U2PDrcBP2Q475Nz
+         f9NEpH3PqpxwaTscccr16q/x5JodLpYFcBwI4a2AnhsUurKCjbSy3oljr7N2Da028hkW
+         DfnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pmEF+NGLF11jPqtgt2Pd4Z8enI9aLSuKQeY/WvYqRjs=;
+        b=kHu6ZmMFvp9FUy9iFiAoGnfCK3t4Fk/lvG0PWnwb57nmEpUx9hVK0gT2pio/cY6dkx
+         E0H1z0gqUYM1PNRwqbij+hr5t9eOSKXDqchzByKH4xf1YwWA1p8rPgS2361VGc5l4vYd
+         juhIkDs/28uu4OlHpV/ajJWDjrMJlQl85opdVqeJftwdvuWHUjMSBGVRwDLoMhiLfnIS
+         aRnv71epa6yibv/q9v6n0Y65PZxLFYk5AYI0pHFyfVkAps1dL2fmcDXtsXmS13jCeblR
+         N/1bCCZHstT4+uys0J/SK+iT84OAlSH5C3DNO0IReAU8JADvUsnzHr/auCnJ9fRnBog0
+         LTeg==
+X-Gm-Message-State: ACrzQf3cAceLxOs4lqFa3+P4wTt85ZumyZNlSFkC3AAO2NwWyUfFGba1
+        QzdoiPEUpSntOgeRzFafQyYe/ugeOHy2oA==
+X-Google-Smtp-Source: AMsMyM5DUxIlpfZ6bqiFNuPrrfAew0wxvdSaoYn3nWXxqrjTp53xuByVBAfEkoeEGSO29IhHWKE4/g==
+X-Received: by 2002:a05:6214:d8a:b0:4b1:9f67:450b with SMTP id e10-20020a0562140d8a00b004b19f67450bmr20415304qve.119.1665516072837;
+        Tue, 11 Oct 2022 12:21:12 -0700 (PDT)
+Received: from [192.168.1.57] (cpe-72-225-192-120.nyc.res.rr.com. [72.225.192.120])
+        by smtp.gmail.com with ESMTPSA id e124-20020a37b582000000b006ceb933a9fesm13684107qkf.81.2022.10.11.12.21.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Oct 2022 12:21:12 -0700 (PDT)
+Message-ID: <4912f46c-e990-a886-cc2a-8684d61eed38@linaro.org>
+Date:   Tue, 11 Oct 2022 15:19:00 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH 03/19] arm64: dts: qcom: qdru1000: Add tlmm nodes
+Content-Language: en-US
+To:     Melody Olvera <quic_molvera@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-From:   Job Noorman <job@noorman.info>
-Cc:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] arm64: dts: qcom: sdm632: fairphone-fp3: add touchscreen
-Message-ID: <20221011190729.14747-4-job@noorman.info>
-In-Reply-To: <20221011190729.14747-1-job@noorman.info>
-References: <20221011190729.14747-1-job@noorman.info>
-Feedback-ID: 14439221:user:proton
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221001030656.29365-1-quic_molvera@quicinc.com>
+ <20221001030656.29365-4-quic_molvera@quicinc.com>
+ <ad743621-8e2d-23f9-8c44-53f6681aa134@linaro.org>
+ <7674b756-75d5-6ca3-d4fe-c54bd92a3fd7@quicinc.com>
+ <ddb4566f-b420-6ee8-b3f5-3eeb83ad2d8b@linaro.org>
+ <3885c1d1-ab6f-2b30-2950-f4dc0ec54152@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <3885c1d1-ab6f-2b30-2950-f4dc0ec54152@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add Himax hx83112b touchscreen to the FP3 DT.
+On 11/10/2022 15:05, Melody Olvera wrote:
+> 
+> 
+> On 10/11/2022 11:57 AM, Krzysztof Kozlowski wrote:
+>> On 11/10/2022 14:48, Melody Olvera wrote:
+>>>
+>>> On 10/1/2022 2:14 AM, Krzysztof Kozlowski wrote:
+>>>> On 01/10/2022 05:06, Melody Olvera wrote:
+>>>>> Add tlmm node for the QDU1000 and QRU1000 SoCs and the uart pin
+>>>>> configuration.
+>>>> The patchset should be squashed with previous. There is no point in
+>>>> bringing support piece by piece. You can bring support in steps if you
+>>>> submissions are separate in time. But if you have everything ready -
+>>>> your patch must be complete and bisectable.
+>>> To be clear, does it make more sense to submit the base dt first, then submit each
+>>> driver with all the dt changes as one patchset?
+>> No, because you have DTS ready. There is no incremental work here.
+> Ah ok so just squash all these commits into one and submit.
 
-Signed-off-by: Job Noorman <job@noorman.info>
----
- arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+Except the board DTS. Other bigger, self-contained pieces of work can be
+also kept separate, but such work is not "add a DMA". Such work could be
+- add display (with clocks, DMA, GPU, power domains) or sound (again
+multiple separate devices added).
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts b/arch/arm64=
-/boot/dts/qcom/sdm632-fairphone-fp3.dts
-index 891e314bc782..2920504461d3 100644
---- a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-@@ -49,6 +49,20 @@ &hsusb_phy {
- =09vdda-phy-dpdm-supply =3D <&pm8953_l13>;
- };
-
-+&i2c_3 {
-+=09status =3D "okay";
-+
-+=09touchscreen@48 {
-+=09=09compatible =3D "himax,hx83112b";
-+=09=09reg =3D <0x48>;
-+=09=09interrupt-parent =3D <&tlmm>;
-+=09=09interrupts =3D <65 IRQ_TYPE_LEVEL_LOW>;
-+=09=09touchscreen-size-x =3D <1080>;
-+=09=09touchscreen-size-y =3D <2160>;
-+=09=09reset-gpios =3D <&tlmm 64 GPIO_ACTIVE_LOW>;
-+=09};
-+};
-+
- &pm8953_resin {
- =09status =3D "okay";
- =09linux,code =3D <KEY_VOLUMEDOWN>;
---
-2.38.0
-
+Best regards,
+Krzysztof
 
