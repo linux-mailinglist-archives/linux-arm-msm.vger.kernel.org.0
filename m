@@ -2,157 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A2E05FAC80
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 08:18:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76B635FACB1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 08:23:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229502AbiJKGSz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 02:18:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42228 "EHLO
+        id S229975AbiJKGXb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 02:23:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229628AbiJKGSx (ORCPT
+        with ESMTP id S229982AbiJKGXH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 02:18:53 -0400
-Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05161876A6;
-        Mon, 10 Oct 2022 23:18:47 -0700 (PDT)
-Received: from pps.filterd (m0288072.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29B39Tju018454;
-        Tue, 11 Oct 2022 08:17:28 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=selector1;
- bh=V624t9QB3OSFw1zXs27adq0X5KpBePyR7bffgkCPRgU=;
- b=BZf/TzD7V4AtrlAgEDz6HL8SxTEK/5w1vBLbT8B1I9w28vpK6WHq3xeJborxfXPaBq9y
- fqyuzA9fywbTg4i7IJQ2v1kPG79G2n0opDaTASGt3tMCVYL9cBmkf6fE+2WicTrCml6P
- Y7YAwErbxa1YhpRNtesvKfazBcEzYEAhjO868pw7nnAoWyhR3Bhe/fywdiuFVVNBhB+h
- 0yFzgSwd6U20ptBS6LlbC1XKmqgtzxBU6WV1i1mzgkyosXXIHGd/em5fGJ70isDXIXXW
- sdw8LFZBrcGq7uRHshPzjvFkEOGGjViuZ9vFQlYhueo8wMQ2kkgYPsSECxsK0Qs4EJgE PA== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3k31exfmc6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 11 Oct 2022 08:17:28 +0200
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id A841110002A;
-        Tue, 11 Oct 2022 08:17:17 +0200 (CEST)
-Received: from Webmail-eu.st.com (shfdag1node1.st.com [10.75.129.69])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 848F42128B9;
-        Tue, 11 Oct 2022 08:17:17 +0200 (CEST)
-Received: from [10.201.21.72] (10.75.127.46) by SHFDAG1NODE1.st.com
- (10.75.129.69) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2375.31; Tue, 11 Oct
- 2022 08:17:13 +0200
-Message-ID: <8425ef44-f756-6e54-401a-e2665d4967f4@foss.st.com>
-Date:   Tue, 11 Oct 2022 08:16:19 +0200
+        Tue, 11 Oct 2022 02:23:07 -0400
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3411288DF8;
+        Mon, 10 Oct 2022 23:22:32 -0700 (PDT)
+Received: by mail-wr1-f43.google.com with SMTP id j16so19972362wrh.5;
+        Mon, 10 Oct 2022 23:22:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tUmVSog6DafYW00ovmcYQ82S07flTbx/yM+Khtpjc6Q=;
+        b=fogBWlSF+F66RMFv6uxgnCTx/XL8mKg6cQwVPd6ZFpBUuM9oQrydY+6+jZmmy7JLaF
+         FKQVyZLaQ0B8pM+2mn17QX7IOBTVmGYJ/QA/d6SvnQkr/xxjn8VpxttT/x0HdAmDedQE
+         Tz7mwtl2i4avpVsHNvZSMjtYKidgjpMMng2kpKXAb8jpMyPhGBRxf+t1jw3enDW8I5Jq
+         Qurc7ZWFxssjh5adJ419g4+8pV9vFDxQqxv9+NCuaiBD9RQW1DD/D1x31K8gMTvi58ZU
+         6Q/32GEQl9X+zV8zk1kqal6fdIwgEoeqIgP9WH4PrjJbR1vt+TuL85fWuWhjFc2aEQiN
+         iuCA==
+X-Gm-Message-State: ACrzQf0gh+zvVyvkNj9G7mKqMEP8z+cpQ9H/LfyNzfxpLftLqL9RI9D/
+        9aICjNMb+fbXJMcbBa5C2gU=
+X-Google-Smtp-Source: AMsMyM7YsvlisljG56rl4mKbWpZ8mWhhcw6Yxtv533MdMmZZxuLe54/n0F/l5XBSXRmdo4e+D8PzGw==
+X-Received: by 2002:a5d:588c:0:b0:231:891c:6fc1 with SMTP id n12-20020a5d588c000000b00231891c6fc1mr522132wrf.25.1665469325767;
+        Mon, 10 Oct 2022 23:22:05 -0700 (PDT)
+Received: from ?IPV6:2a0b:e7c0:0:107::70f? ([2a0b:e7c0:0:107::70f])
+        by smtp.gmail.com with ESMTPSA id p17-20020a5d4591000000b0022e32f4c06asm10301834wrq.11.2022.10.10.23.22.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Oct 2022 23:22:05 -0700 (PDT)
+Message-ID: <2b6804ff-5386-06bd-7c01-4e1cd4ad23f3@kernel.org>
+Date:   Tue, 11 Oct 2022 08:22:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v2 24/36] pinctrl: st: Add missed header(s)
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Kent Gibson <warthog618@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Billy Tsai <billy_tsai@aspeedtech.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Chen-Yu Tsai <wenst@chromium.org>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Horatiu Vultur <horatiu.vultur@microchip.com>,
-        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Phil Edworthy <phil.edworthy@renesas.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Fabien Dessenne <fabien.dessenne@foss.st.com>,
-        Prathamesh Shete <pshete@nvidia.com>,
-        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-        <linux-gpio@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-media@vger.kernel.org>, <linux-actions@lists.infradead.org>,
-        <linux-aspeed@lists.ozlabs.org>, <openbmc@lists.ozlabs.org>,
-        <linux-rpi-kernel@lists.infradead.org>,
-        <alsa-devel@alsa-project.org>, <patches@opensource.cirrus.com>,
-        <linux-mediatek@lists.infradead.org>, <linux-mips@vger.kernel.org>,
-        <linux-riscv@lists.infradead.org>, <linux-omap@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-renesas-soc@vger.kernel.org>,
-        <linux-samsung-soc@vger.kernel.org>
-CC:     Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        =?UTF-8?Q?Andreas_F=c3=a4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Joel Stanley <joel@jms.id.au>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Charles Keepax <ckeepax@opensource.cirrus.com>,
-        Richard Fitzgerald <rf@opensource.cirrus.com>,
-        Dong Aisheng <aisheng.dong@nxp.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Shevchenko <andy@kernel.org>,
-        Sean Wang <sean.wang@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Patrick Venture <venture@google.com>,
-        Nancy Yuen <yuenn@google.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Damien Le Moal <damien.lemoal@wdc.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Haojian Zhuang <haojian.zhuang@linaro.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Shiraz Hashim <shiraz.linux.kernel@gmail.com>,
-        <soc@kernel.org>, Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Emil Renner Berthing <kernel@esmil.dk>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>
-References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
- <20221010201453.77401-25-andriy.shevchenko@linux.intel.com>
+ Thunderbird/102.3.1
+Subject: Re: [PATCH v5 5/13] virt: gunyah: Add hypercalls to identify Gunyah
 Content-Language: en-US
-From:   Patrice CHOTARD <patrice.chotard@foss.st.com>
-In-Reply-To: <20221010201453.77401-25-andriy.shevchenko@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Arnd Bergmann <arnd@arndb.de>
+Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Marc Zyngier <maz@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221011000840.289033-1-quic_eberman@quicinc.com>
+ <20221011000840.289033-6-quic_eberman@quicinc.com>
+From:   Jiri Slaby <jirislaby@kernel.org>
+In-Reply-To: <20221011000840.289033-6-quic_eberman@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.75.127.46]
-X-ClientProxiedBy: SFHDAG2NODE3.st.com (10.75.127.6) To SHFDAG1NODE1.st.com
- (10.75.129.69)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-10-11_03,2022-10-10_02,2022-06-22_01
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -160,60 +85,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 11. 10. 22, 2:08, Elliot Berman wrote:
+> Add hypercalls to identify when Linux is running a virtual machine under
+> Gunyah.
+> 
+> There are two calls to help identify Gunyah:
+> 
+> 1. gh_hypercall_get_uid() returns a UID when running under a Gunyah
+>     hypervisor.
+> 2. gh_hypercall_hyp_identify() returns build information and a set of
+>     feature flags that are supported by Gunyah.
+...
+> --- /dev/null
+> +++ b/arch/arm64/gunyah/hypercall.c
+> @@ -0,0 +1,71 @@
+...
+> +/**
+> + * gh_hypercall_get_uid() - Returns a UID when running under a Gunyah hypervisor.
+> + * @uid: An array of 4 u32's (u32 uid[4];)
+> + *
+> + * The UID will be either QC_HYP_UID or GUNYAH_UID defined in include/asm-generic/gunyah.h.
+> + * QC_HYP_UID is returned on platforms using Qualcomm's version of Gunyah.
+> + * GUNYAH_UID is returned on platforms using open source version of Gunyah.
+> + * If the uid is not one of the above two UIDs, then it is assumed that the hypervisor or firmware
+> + * is not Gunyah.
+> + */
+> +void gh_hypercall_get_uid(u32 *uid)
 
+So why this isn't u32 uid[4], or u32 uid[static 4] to aid the compiler 
+(and limit users)?
 
-On 10/10/22 22:14, Andy Shevchenko wrote:
-> Do not imply that some of the generic headers may be always included.
-> Instead, include explicitly what we are direct user of.
-> 
-> While at it, sort headers alphabetically.
-> 
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> ---
->  drivers/pinctrl/pinctrl-st.c | 21 +++++++++++++--------
->  1 file changed, 13 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/pinctrl/pinctrl-st.c b/drivers/pinctrl/pinctrl-st.c
-> index cf7f9cbe6044..985dfceb127d 100644
-> --- a/drivers/pinctrl/pinctrl-st.c
-> +++ b/drivers/pinctrl/pinctrl-st.c
-> @@ -5,21 +5,26 @@
->   *	Srinivas Kandagatla <srinivas.kandagatla@st.com>
->   */
->  
-> -#include <linux/init.h>
-> -#include <linux/module.h>
-> -#include <linux/slab.h>
->  #include <linux/err.h>
-> +#include <linux/gpio/driver.h>
-> +#include <linux/init.h>
->  #include <linux/io.h>
-> +#include <linux/mfd/syscon.h>
-> +#include <linux/module.h>
->  #include <linux/of.h>
-> -#include <linux/of_irq.h>
->  #include <linux/of_address.h>
-> -#include <linux/gpio/driver.h>
-> +#include <linux/of_irq.h>
-> +#include <linux/platform_device.h>
->  #include <linux/regmap.h>
-> -#include <linux/mfd/syscon.h>
-> +#include <linux/seq_file.h>
-> +#include <linux/slab.h>
-> +#include <linux/string_helpers.h>
+> +{
+> +	struct arm_smccc_res res;
 > +
-> +#include <linux/pinctrl/consumer.h>
-> +#include <linux/pinctrl/pinconf.h>
->  #include <linux/pinctrl/pinctrl.h>
->  #include <linux/pinctrl/pinmux.h>
-> -#include <linux/pinctrl/pinconf.h>
-> -#include <linux/platform_device.h>
+> +	arm_smccc_1_1_hvc(GH_HYPERCALL_CALL_UID, &res);
 > +
->  #include "core.h"
->  
->  /* PIO Block registers */
+> +	uid[0] = res.a0;
+> +	uid[1] = res.a1;
+> +	uid[2] = res.a2;
+> +	uid[3] = res.a3;
+> +}
+> +EXPORT_SYMBOL_GPL(gh_hypercall_get_uid);
 
-Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
+...
 
-Thanks
-Patrice
+> --- a/include/asm-generic/gunyah.h
+> +++ b/include/asm-generic/gunyah.h
+> @@ -71,4 +71,40 @@ static inline int gh_remap_error(int gh_error)
+...
+> +#define GH_API_INFO_API_VERSION(x)	(((x) >> 0) & 0x3fff)
+> +#define GH_API_INFO_BIG_ENDIAN(x)	(((x) >> 14) & 1)
+> +#define GH_API_INFO_IS_64BIT(x)		(((x) >> 15) & 1)
+> +#define GH_API_INFO_VARIANT(x)		(((x) >> 56) & 0xff)
+
+Use GET_FIELD()?
+
+regards,
+-- 
+-- 
+js
+suse labs
+
