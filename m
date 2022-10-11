@@ -2,163 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9597A5FB80D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 18:14:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 71AA75FB923
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 19:26:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229922AbiJKQOw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 12:14:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51628 "EHLO
+        id S230092AbiJKR0L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 13:26:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229744AbiJKQOs (ORCPT
+        with ESMTP id S230054AbiJKR0K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 12:14:48 -0400
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3B42F003;
-        Tue, 11 Oct 2022 09:14:45 -0700 (PDT)
-Received: by mail-ed1-f54.google.com with SMTP id v12so2565050edc.6;
-        Tue, 11 Oct 2022 09:14:45 -0700 (PDT)
+        Tue, 11 Oct 2022 13:26:10 -0400
+Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6C3419C37
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 10:26:05 -0700 (PDT)
+Received: by mail-qv1-xf2d.google.com with SMTP id mg6so9372173qvb.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 10:26:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=sT4AqRAWASoX6ZgH8nYBolMpdFX1XCQaQY8kPd1JKO0=;
+        b=GKvd6HUFgR3TXrkq/cFvYNYP0bVqtDrH3w9bl5n9MWU464GYeYMs0HmQCs6Jb/j2u7
+         OPaoShcQHGX0KB6/tpgXoqc3+avcqHpFcv8QZB0C97ovzsm1DOuHWfN7DVJWdY3Hw2q0
+         GC4gZ50EtvPfZuclKSm8h+JvDU5H4YeyvRXqc+6hjfI6cXd9RCqgSFNb89qasU9bkLdW
+         CPIlNlk9FzNM5j4MLfJvJ7dDCgMH+El86aBDIIX4MvUt8NTx9DTjCcp3fKHsXODgAra5
+         sIzxWQjLYeJPE9umzRNT8uWnV/G78HkypQRM/hpfjMdPbMTubobafStV8a9F+oyN/sBZ
+         gXGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=gcCjfDN4mDKfmx6uTh8+bavSggaZhIbJoPNugTf0yYI=;
-        b=JMFnbtPjwrDpGhFMR1mf2dgkS3as4HvfFlzlExRVkpiEmbI7t8GMtE3sbMlBCEUMi8
-         d4HZXbGJEhNcNK/Rlt2vTgJmHJHrGV/nnM/iVvZI5oDgJwZPPnl1f0l1qJvLijXvdgQW
-         rG+Wbm7agFfsi9DJ/0WD1Zab7mpgfMcXuW4A0objUlrVTg/Fya+eKYfFfXFbE0clcUKd
-         bHaqHmnFl6JpnN8tP0q5+IxwEGGA/NUDXiE7hj/mED1GNfOgPDJGDGG5tbyOE2DbWYC2
-         B39U7weAETlxZy0DJ2IlJpVM6gXKJVSokML7jcc2Wi6ipQC8MC4jbLSBQpCrr/eZMbAI
-         7Log==
-X-Gm-Message-State: ACrzQf0dGMMPUNn295rp50aTfJQZyVHCFkWsUrlsQoJUU8BLKfcF+oZB
-        DXcZPf505Cjzdio1Tiho8s3h7y0iidQnCB3a
-X-Google-Smtp-Source: AMsMyM7ZqUp8nr4UTSkIePDm3PChCTNq8ODcC9u6v+t1VPzyVXQm6vECSYNxICUxkk5mMNcW3biFhw==
-X-Received: by 2002:a05:6402:4313:b0:45a:b150:6796 with SMTP id m19-20020a056402431300b0045ab1506796mr18367378edc.246.1665504883732;
-        Tue, 11 Oct 2022 09:14:43 -0700 (PDT)
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com. [209.85.221.51])
-        by smtp.gmail.com with ESMTPSA id l1-20020a1709060cc100b007402796f065sm2884993ejh.132.2022.10.11.09.14.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Oct 2022 09:14:42 -0700 (PDT)
-Received: by mail-wr1-f51.google.com with SMTP id u10so22398844wrq.2;
-        Tue, 11 Oct 2022 09:14:41 -0700 (PDT)
-X-Received: by 2002:adf:eb84:0:b0:22a:917e:1c20 with SMTP id
- t4-20020adfeb84000000b0022a917e1c20mr15144886wrn.223.1665504881328; Tue, 11
- Oct 2022 09:14:41 -0700 (PDT)
-MIME-Version: 1.0
-References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com> <20221010201453.77401-8-andriy.shevchenko@linux.intel.com>
-In-Reply-To: <20221010201453.77401-8-andriy.shevchenko@linux.intel.com>
-Reply-To: wens@csie.org
-From:   Chen-Yu Tsai <wens@csie.org>
-Date:   Wed, 12 Oct 2022 00:14:28 +0800
-X-Gmail-Original-Message-ID: <CAGb2v65EuTdS3uvr6EgpiiK25PeYrVh+itte2wHz_wM=E1S4OA@mail.gmail.com>
-Message-ID: <CAGb2v65EuTdS3uvr6EgpiiK25PeYrVh+itte2wHz_wM=E1S4OA@mail.gmail.com>
-Subject: Re: [PATCH v2 07/36] pinctrl: axp209: Add missed header(s)
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     Marc Zyngier <maz@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>,
-        Kent Gibson <warthog618@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Billy Tsai <billy_tsai@aspeedtech.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Chen-Yu Tsai <wenst@chromium.org>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Horatiu Vultur <horatiu.vultur@microchip.com>,
-        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Phil Edworthy <phil.edworthy@renesas.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Fabien Dessenne <fabien.dessenne@foss.st.com>,
-        Prathamesh Shete <pshete@nvidia.com>,
-        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-media@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org, alsa-devel@alsa-project.org,
-        patches@opensource.cirrus.com, linux-mediatek@lists.infradead.org,
-        linux-mips@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-omap@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Joel Stanley <joel@jms.id.au>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Charles Keepax <ckeepax@opensource.cirrus.com>,
-        Richard Fitzgerald <rf@opensource.cirrus.com>,
-        Dong Aisheng <aisheng.dong@nxp.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Shevchenko <andy@kernel.org>,
-        Sean Wang <sean.wang@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Patrick Venture <venture@google.com>,
-        Nancy Yuen <yuenn@google.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Damien Le Moal <damien.lemoal@wdc.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Haojian Zhuang <haojian.zhuang@linaro.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Andy Gross <agross@kernel.org>,
+        bh=sT4AqRAWASoX6ZgH8nYBolMpdFX1XCQaQY8kPd1JKO0=;
+        b=gEjbAVub4HsAg7Xr0YDwjiKy06Rf7TLLthAPVNZ91FssWGh1Znj1Soo17HCDLwuLug
+         6h73ihYzzV9sauS22adzHIsbFL2N+JZZ9d8IE68xnEGJcR0y7VDUONLxRhoxDEUjqbzU
+         OIUXJX+N+KAjPSpWrS12cF+VhUZePkiT5v7zgVJgdWGRZihxrZ7RGROYP6I/YjxAeNtE
+         m3gbmWBOS8/4geCT2CaESXdFi/evx0bW0FSmOFjB3OacbRGnOtfSk3jTZAxQhrcMOKoi
+         RA4OmD6v2bV+XkEH6JsFdlCkRTP0xfg5ysArGGazMWJo/3g7rW0nQ7v/miIv9AVfiPDl
+         mb0A==
+X-Gm-Message-State: ACrzQf1pl+S7xOVVrz4/F408lvvEdF6xN8hxBxgwplppBza1vuGS817U
+        1/bfHJgIW8mCy3Mu7Jaj7ZCK8Q==
+X-Google-Smtp-Source: AMsMyM466WD0TDH7EIGB2VENiKEbgepbvG9xFJNtMPPY759XPJJjgx+758oWOSYi6Ai1JbhnCCzdSw==
+X-Received: by 2002:ad4:596b:0:b0:4b1:ee66:1cb8 with SMTP id eq11-20020ad4596b000000b004b1ee661cb8mr20088644qvb.3.1665509164701;
+        Tue, 11 Oct 2022 10:26:04 -0700 (PDT)
+Received: from krzk-bin.home (cpe-72-225-192-120.nyc.res.rr.com. [72.225.192.120])
+        by smtp.gmail.com with ESMTPSA id i14-20020a05620a248e00b006bba46e5eeasm14289087qkn.37.2022.10.11.10.26.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Oct 2022 10:26:03 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Emil Renner Berthing <kernel@esmil.dk>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        krishna Lanka <quic_vamslank@quicinc.com>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Martin Botka <martin.botka@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 00/34] pinctrl/arm64: qcom: continued - fix Qualcomm TLMM pinctrl schema warnings (5th set)
+Date:   Tue, 11 Oct 2022 13:23:24 -0400
+Message-Id: <20221011172358.69043-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 11, 2022 at 4:16 AM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
->
-> Do not imply that some of the generic headers may be always included.
-> Instead, include explicitly what we are direct user of.
->
-> While at it, sort headers alphabetically.
->
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Hi,
 
-Acked-by: Chen-Yu Tsai <wens@csie.org>
+Patches are organized not by file, but rather type of change
+1. First patches is for common TLMM schema and dropping unneeded refs.
+2. Last patches are pure cleanups without functional impact.
+
+Changes since v1
+================
+1. Rename several files to match compatible (Stephan).
+2. Add tags.
+
+Overview
+========
+This is the *fifth* patchset around Qualcomm pinctrl in recent days:
+1. First round of TLMM fixes: merged
+2. LPASS fixes:
+   https://lore.kernel.org/linux-devicetree/20220927153429.55365-1-krzysztof.kozlowski@linaro.org/
+3. ARMv7 TLMM fixes:
+   https://lore.kernel.org/linux-devicetree/20221006124659.217540-1-krzysztof.kozlowski@linaro.org/
+4. ARMv8 remaining TLMM fixes:
+   https://lore.kernel.org/linux-devicetree/20220930192954.242546-1-krzysztof.kozlowski@linaro.org/
+5. Fifth clean - styles and using common TLMM schema: *THIS PATCHSET*
+
+Dependencies
+============
+1. Almost no dependencies - logically the bindings patch "dt-bindings: pinctrl:
+   qcom,sm8250: drop checks used in common TLMM" depends on patchset #3 above.
+   This is not a hard-dependency, everything will compile nicely, no warnings.
+
+2. dt-bindings are independent of DTS patches.
+
+Best regards,
+Krzysztof
+
+Krzysztof Kozlowski (34):
+  dt-bindings: pinctrl: qcom,mdm9607: drop ref to pinctrl.yaml
+  dt-bindings: pinctrl: qcom,sc7280: drop checks used in common TLMM
+  dt-bindings: pinctrl: qcom,sc8180x: drop ref to pinctrl.yaml
+  dt-bindings: pinctrl: qcom,sc8180x: drop checks used in common TLMM
+  dt-bindings: pinctrl: qcom,sc8280xp: drop checks used in common TLMM
+  dt-bindings: pinctrl: qcom,sm6115: use common TLMM schema
+  dt-bindings: pinctrl: qcom,sm6125: drop checks used in common TLMM
+  dt-bindings: pinctrl: qcom,sm6125: drop ref to pinctrl.yaml
+  dt-bindings: pinctrl: qcom,sm6350: drop ref to pinctrl.yaml
+  dt-bindings: pinctrl: qcom,sm6350: drop checks used in common TLMM
+  dt-bindings: pinctrl: qcom,sm6375-tlmm: drop ref to pinctrl.yaml
+  dt-bindings: pinctrl: qcom,sm6375-tlmm: drop checks used in common
+    TLMM
+  dt-bindings: pinctrl: qcom,sm8250: use common TLMM schema
+  dt-bindings: pinctrl: qcom,sm8350: drop ref to pinctrl.yaml
+  dt-bindings: pinctrl: qcom,sm8350: drop checks used in common TLMM
+  dt-bindings: pinctrl: qcom,sm8450: drop checks used in common TLMM
+  dt-bindings: pinctrl: qcom,mdm9607-tlmm: minor style cleanups
+  dt-bindings: pinctrl: qcom,msm8909-tlmm: minor style cleanups
+  dt-bindings: pinctrl: qcom,qcm2290-tlmm: minor style cleanups
+  dt-bindings: pinctrl: qcom,sdx65-tlmm: minor style cleanups
+  dt-bindings: pinctrl: qcom,sc8180x-tlmm: minor style cleanups
+  dt-bindings: pinctrl: qcom,sc8280xp-tlmm: minor style cleanups
+  dt-bindings: pinctrl: qcom,sm6115-tlmm: minor style cleanups
+  dt-bindings: pinctrl: qcom,sm6125-tlmm: minor style cleanups
+  dt-bindings: pinctrl: qcom,sm6350-tlmm: minor style cleanups
+  dt-bindings: pinctrl: qcom,sm6375-tlmm: minor style cleanups
+  dt-bindings: pinctrl: qcom,sm8250: minor style cleanups
+  dt-bindings: pinctrl: qcom,sm8350-tlmm: minor style cleanups
+  dt-bindings: pinctrl: qcom,sm8450-tlmm: minor style cleanups
+  dt-bindings: pinctrl: qcom,sc7280-lpass-lpi: minor style cleanups
+  dt-bindings: pinctrl: qcom,sc8280xp-lpass-lpi: minor style cleanups
+  dt-bindings: pinctrl: qcom,sm8250-lpass-lpi: minor style cleanups
+  dt-bindings: pinctrl: qcom,sm8450-lpass-lpi: minor style cleanups
+  dt-bindings: pinctrl: qcom: adjust description
+
+ .../pinctrl/qcom,ipq6018-pinctrl.yaml         |  5 +-
+ ...07-pinctrl.yaml => qcom,mdm9607-tlmm.yaml} | 18 +++--
+ .../pinctrl/qcom,msm8226-pinctrl.yaml         |  5 +-
+ .../bindings/pinctrl/qcom,msm8909-tlmm.yaml   | 11 ++-
+ .../pinctrl/qcom,msm8953-pinctrl.yaml         |  5 +-
+ ...90-pinctrl.yaml => qcom,qcm2290-tlmm.yaml} | 12 ++--
+ .../qcom,sc7280-lpass-lpi-pinctrl.yaml        | 13 ++--
+ .../bindings/pinctrl/qcom,sc7280-pinctrl.yaml | 16 +----
+ ...0x-pinctrl.yaml => qcom,sc8180x-tlmm.yaml} | 29 +++-----
+ .../qcom,sc8280xp-lpass-lpi-pinctrl.yaml      | 13 ++--
+ ...p-pinctrl.yaml => qcom,sc8280xp-tlmm.yaml} | 24 ++-----
+ .../bindings/pinctrl/qcom,sdx55-pinctrl.yaml  |  5 +-
+ ...dx65-pinctrl.yaml => qcom,sdx65-tlmm.yaml} | 12 ++--
+ ...115-pinctrl.yaml => qcom,sm6115-tlmm.yaml} | 55 +++------------
+ ...125-pinctrl.yaml => qcom,sm6125-tlmm.yaml} | 32 +++------
+ ...350-pinctrl.yaml => qcom,sm6350-tlmm.yaml} | 25 ++-----
+ .../bindings/pinctrl/qcom,sm6375-tlmm.yaml    | 23 ++----
+ .../qcom,sm8250-lpass-lpi-pinctrl.yaml        | 16 ++---
+ .../bindings/pinctrl/qcom,sm8250-pinctrl.yaml | 70 ++++++-------------
+ ...350-pinctrl.yaml => qcom,sm8350-tlmm.yaml} | 25 ++-----
+ .../qcom,sm8450-lpass-lpi-pinctrl.yaml        | 13 ++--
+ ...450-pinctrl.yaml => qcom,sm8450-tlmm.yaml} | 24 ++-----
+ 22 files changed, 146 insertions(+), 305 deletions(-)
+ rename Documentation/devicetree/bindings/pinctrl/{qcom,mdm9607-pinctrl.yaml => qcom,mdm9607-tlmm.yaml} (92%)
+ rename Documentation/devicetree/bindings/pinctrl/{qcom,qcm2290-pinctrl.yaml => qcom,qcm2290-tlmm.yaml} (93%)
+ rename Documentation/devicetree/bindings/pinctrl/{qcom,sc8180x-pinctrl.yaml => qcom,sc8180x-tlmm.yaml} (88%)
+ rename Documentation/devicetree/bindings/pinctrl/{qcom,sc8280xp-pinctrl.yaml => qcom,sc8280xp-tlmm.yaml} (90%)
+ rename Documentation/devicetree/bindings/pinctrl/{qcom,sdx65-pinctrl.yaml => qcom,sdx65-tlmm.yaml} (96%)
+ rename Documentation/devicetree/bindings/pinctrl/{qcom,sm6115-pinctrl.yaml => qcom,sm6115-tlmm.yaml} (79%)
+ rename Documentation/devicetree/bindings/pinctrl/{qcom,sm6125-pinctrl.yaml => qcom,sm6125-tlmm.yaml} (87%)
+ rename Documentation/devicetree/bindings/pinctrl/{qcom,sm6350-pinctrl.yaml => qcom,sm6350-tlmm.yaml} (90%)
+ rename Documentation/devicetree/bindings/pinctrl/{qcom,sm8350-pinctrl.yaml => qcom,sm8350-tlmm.yaml} (89%)
+ rename Documentation/devicetree/bindings/pinctrl/{qcom,sm8450-pinctrl.yaml => qcom,sm8450-tlmm.yaml} (89%)
+
+-- 
+2.34.1
+
