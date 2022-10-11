@@ -2,99 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C6E1B5FBD9C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 00:05:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 674015FBDAE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 00:12:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229561AbiJKWFb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 18:05:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34044 "EHLO
+        id S229502AbiJKWMA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 18:12:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229532AbiJKWFa (ORCPT
+        with ESMTP id S229446AbiJKWL7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 18:05:30 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9E041F8;
-        Tue, 11 Oct 2022 15:05:27 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29BKNR06016412;
-        Tue, 11 Oct 2022 22:04:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=m2ky4svN6c78eZHfjYuoCzrkPF0YSmn2G2T87NbgUtk=;
- b=BLaJEDA0hxe19fi8DKBXqVUqLzMf1aj4cQpXn9HuTiwOtfrco/VW7zr+A7NSeYr4/qOG
- BYwJyXbAod8XTENQHic6rHXEkcA9RGt5pmipTv12acnGs7TDbU4245WYGt5p0K7rIXMC
- W0CJxQWp2isyss9riOQDncbZoKcvq5pbxr4HNCFqPixOXBKUQX0vkRR7/VYDx5SLlfck
- /mBVqRM56DY378e9cbgVd8yUNz9MWAS0twgC/l7YbeGhHOro3zejbdKctwP6WMUr41H0
- mUWyATIS9mWIQVAC+z6sjnKF5xq0yc37DAQug3SSnPiaW8wb7D9poAZ0t1SffpqX9ln2 rw== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k5e7fgcn5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 11 Oct 2022 22:04:48 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29BM4mu6017012
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 11 Oct 2022 22:04:48 GMT
-Received: from [10.134.65.5] (10.80.80.8) by nasanex01b.na.qualcomm.com
+        Tue, 11 Oct 2022 18:11:59 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECB119411F;
+        Tue, 11 Oct 2022 15:11:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1665526319; x=1697062319;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=aNynsuIV0rHuoqeRVnCVfLglarBP1m5Y0PIq4JPDuPI=;
+  b=vd6KliiuXmEixVMuPBUuU2haYHFT1TOVQpDg2ID0xHNjOPAy4/iyAATC
+   15qu7Q3emke2DEf/vaC2xr3Q0bY2WKoFJJOy9Mb/Zo/CUXayhm0FalFGd
+   mhPAsgm1YH1nADGexgDZjxouSLqYQY6umNsEFhTo5um2xrIjuJy/roAlI
+   4=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 11 Oct 2022 15:11:58 -0700
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2022 15:11:57 -0700
+Received: from [10.110.3.66] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 11 Oct
- 2022 15:04:47 -0700
-Message-ID: <b7cca9c7-5170-bf40-c030-d676944b03c6@quicinc.com>
-Date:   Tue, 11 Oct 2022 15:04:47 -0700
+ 2022 15:11:58 -0700
+Message-ID: <d57d500b-a322-4aaa-42ed-5638363b787d@quicinc.com>
+Date:   Tue, 11 Oct 2022 15:11:57 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v5 13/13] tty: gunyah: Add tty console driver for RM
- Console Services
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH 1/5] dt-bindings: clock: Add QDU1000 and QRU1000 GCC clock
+ bindings
 Content-Language: en-US
-To:     Arnd Bergmann <arnd@arndb.de>, Jiri Slaby <jirislaby@kernel.org>,
-        "Bjorn Andersson" <quic_bjorande@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        "Will Deacon" <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        <devicetree@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20221011000840.289033-1-quic_eberman@quicinc.com>
- <20221011000840.289033-14-quic_eberman@quicinc.com>
- <7438406d-b446-201e-0ec3-5cf0a5b9f32c@kernel.org>
- <85ca7eb4-3e0c-4ffb-8bac-a435594ca0f7@app.fastmail.com>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <85ca7eb4-3e0c-4ffb-8bac-a435594ca0f7@app.fastmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20221001030403.27659-1-quic_molvera@quicinc.com>
+ <20221001030403.27659-2-quic_molvera@quicinc.com>
+ <37926f0f-e176-929e-939a-cd43a031e224@linaro.org>
+ <bb241d46-6f90-8604-e79d-30a1f3527ce4@quicinc.com>
+ <CAA8EJpqqLRJK3GaXt3Uf=+TAupYFkG4Ey_wG2si2WePp5gAaQA@mail.gmail.com>
+From:   Melody Olvera <quic_molvera@quicinc.com>
+In-Reply-To: <CAA8EJpqqLRJK3GaXt3Uf=+TAupYFkG4Ey_wG2si2WePp5gAaQA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 1oiHcYJc3plJZX0C5nyA_0BPPVmJecTJ
-X-Proofpoint-GUID: 1oiHcYJc3plJZX0C5nyA_0BPPVmJecTJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-11_08,2022-10-11_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=997 spamscore=0
- impostorscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
- malwarescore=0 adultscore=0 mlxscore=0 priorityscore=1501 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210110128
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -104,35 +76,79 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/11/2022 4:09 AM, Arnd Bergmann wrote:
-> On Tue, Oct 11, 2022, at 8:02 AM, Jiri Slaby wrote:
->> On 11. 10. 22, 2:08, Elliot Berman wrote:
->>> +
->>> +	/* below are for printk console.
->>> +	 * gh_rm_console_* calls will sleep and console_write can be called from
->>> +	 * atomic ctx. Two xmit buffers are used. The active buffer is tracked with
->>> +	 * co_xmit_idx. Writes go into the co_xmit_buf[co_xmit_idx] buffer.
->>> +	 * A work is scheduled to flush the bytes. The work will swap the active buffer
->>> +	 * and write out the other buffer.
->>> +	 */
+On 10/3/2022 2:32 PM, Dmitry Baryshkov wrote:
+> On Mon, 3 Oct 2022 at 21:47, Melody Olvera <quic_molvera@quicinc.com> wrote:
 >>
->> Ugh, why? This is too ugly and unnecessary. What about passing the kfifo
->> to gh_rm_console_write() instead? You do memcpy() there anyway.
-> 
-> Another problem here is that you really want the console output to be
-> printed from atomic context, otherwise one would never see e.g. the
-> output of a panic() call. Having a deferred write is probably fine for
-> normal tty operations, but you probably want a different device for the
-> console here, e.g. the hvc_dcc driver.
-> 
-
-Yes, that is our perspective on the RM console driver as well. I'll make 
-this more explicit in the Kconfig/commit text. We expect most VMs 
-(especially Linux) to use some other console mechanism provided by their 
-VMM. I'm submitting here because we are presently using RM console on 
-some of our VMs where we have other ways to collects logs on panic. It 
-also makes it easier to implement a simple virtual machine manager that 
-does not want to virtualize a serial device or have a virtio stack.
+>> On 10/1/2022 4:24 AM, Krzysztof Kozlowski wrote:
+>>> On 01/10/2022 05:03, Melody Olvera wrote:
+>>>> Add device tree bindings for global clock controller on QDU1000 and
+>>>> QRU1000 SoCs.
+>>>>
+>>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>>>> ---
+>>>>  .../bindings/clock/qcom,gcc-qdru1000.yaml     |  74 ++++++++
+>>>>  include/dt-bindings/clock/qcom,gcc-qdru1000.h | 170 ++++++++++++++++++
+>>>>  2 files changed, 244 insertions(+)
+>>>>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-qdru1000.yaml
+>>>>  create mode 100644 include/dt-bindings/clock/qcom,gcc-qdru1000.h
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-qdru1000.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-qdru1000.yaml
+>>>> new file mode 100644
+>>>> index 000000000000..d92f558d547c
+>>>> --- /dev/null
+>>>> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-qdru1000.yaml
+>>>> @@ -0,0 +1,74 @@
+>>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>>> +%YAML 1.2
+>>>> +---
+>>>> +$id: http://devicetree.org/schemas/clock/qcom,gcc-qdru.yaml#
+>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>>> +
+>>>> +title: Qualcomm Global Clock & Reset Controller Binding for QDU1000 and QRU1000
+>>> Drop "Binding"
+>> Will do in v2.
+>>
+>>>> +
+>>>> +maintainers:
+>>>> +  - Melody Olvera <quic_molvera@quicinc.com>
+>>>> +
+>>>> +description: |
+>>>> +  Qualcomm global clock control module which supports the clocks, resets and
+>>>> +  power domains on QDU1000 and QRU1000
+>>>> +
+>>>> +  See also:
+>>>> +  - dt-bindings/clock/qcom,gcc-qdru1000.h
+>>> Full path
+>> Understood.
+>>>> +
+>>>> +properties:
+>>>> +  compatible:
+>>>> +    enum:
+>>>> +      - qcom,gcc-qdu1000
+>>>> +      - qcom,gcc-qru1000
+>>>> +
+>>>> +  clocks:
+>>>> +    items:
+>>>> +      - description: Board XO source
+>>>> +      - description: Sleep clock source
+>>>> +      - description: PCIE 0 Pipe clock source (Optional clock)
+>>> Skip "Optional clock"
+>>>
+>>>> +      - description: PCIE 0 Phy Auxiliary clock source (Optional clock)
+>>>> +      - description: USB3 Phy wrapper pipe clock source (Optional clock)
+>>>> +    minItems: 2
+>>>> +
+>>>> +  clock-names:
+>>>> +    items:
+>>>> +      - const: bi_tcxo
+>>>> +      - const: sleep_clk
+>>>> +      - const: pcie_0_pipe_clk # Optional clock
+>>> Skip "Optional clock"
+>> Will remove all optional clock instances.
+> Drop the 'optional clock' words, not the clocks themselves. See
+> existing examples, which have optional clocks.
+>
+Ah apologies; I misunderstood.
 
 Thanks,
-Elliot
+Melody
