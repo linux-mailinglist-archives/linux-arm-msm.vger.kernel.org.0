@@ -2,93 +2,236 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2CB85FB348
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 15:21:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD3725FB3A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 15:47:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230168AbiJKNVw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 09:21:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58432 "EHLO
+        id S229663AbiJKNrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 09:47:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229514AbiJKNVZ (ORCPT
+        with ESMTP id S229543AbiJKNq7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 09:21:25 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F28C995AF8;
-        Tue, 11 Oct 2022 06:20:19 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 179DCB815AA;
-        Tue, 11 Oct 2022 13:20:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D89C433D6;
-        Tue, 11 Oct 2022 13:20:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1665494416;
-        bh=7BJj9ntWujvZUcRvi4blwOWkNq/G60WMX4wF6oHAeQQ=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=tNOdFCFKizRJfRKHmI/dGPJqEoUNa+6wHGLQeo0I+2Xgel29gy4YF17yr0suhuKE2
-         v2o44G/WteBZnGRRtj2q+mTdvhJxgvdF3CO//ON4rpdVac9WeA3LZVG3zMHkdQ2VEr
-         bOpf1ivzEy7IxJVHHKVWSEr41l42HiWhViWaU/qzWj2lzkvrgGc1wxTYKJltqYJEjX
-         K/SWssMSh1D1aTtHWAehhwJ6h+p++7G2gdYBXpYQz2Gno5FFlbqClxaIoikTLJ8+on
-         9qg9/H7/+54gDjk6Zyyu+FjzrEoCWRSU8WVCf49oM4WGhUjk8RVSA6EyypRJ5X6R++
-         fF0ZcPazdNvHw==
-Message-ID: <e028ad6a-9687-5089-4938-e982764b9c58@kernel.org>
-Date:   Tue, 11 Oct 2022 09:20:10 -0400
+        Tue, 11 Oct 2022 09:46:59 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AE986552
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 06:46:56 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id y5so21189043lfl.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Oct 2022 06:46:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Br0NTj8ZuH0OMXFiG8Wg0lpHMqpiMdL9G9IUbDLd/Zs=;
+        b=RQSrGdfX0bpIJ+tAeoNzDiC1J6uuDKzs+4KorXjRVyWtREspgXAUskhA/H67L51QTc
+         VLbYqejgMfLEPc3Jdwl4hVyrgFyq6q+kwAAYqM3ojG+9BRx0MNlqlE2g1ym8KiTpBtsZ
+         LbJ15asNufiZcc1paa60exl/aSLvMaD6Yc6OVz+V8xs0bcUjMUo62qMzW/4QNCevKipm
+         hqO53NlKsBBtZnkfn90wERhPBaBP2Xf2rYSpLKZ9R/fuTX2V9yhevm88zjenHxnQDMNr
+         fSsY0WsL1yLowE7ChAilBqRR04wdAxOrINdDiAOL7TGC94mo4lvIxFYm8S+1f3sGm29A
+         iHqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Br0NTj8ZuH0OMXFiG8Wg0lpHMqpiMdL9G9IUbDLd/Zs=;
+        b=sed7yaqyDemGJnro+e6Lnj0NbhxiI8xIJ58uiWnEUa3ZGodoL+dTMvFHlTiTmibM1Q
+         NUpK125NOhyrO6rWhGh9XPrNvVcE+AAUaRB0oy8yXpmbSYm/hpapJec5iRcpIp6Ybyjx
+         yig6aYBYbyywnIRrVxuiLYKxIQuEfjXUaqV6gHivQ8hbK4o85dHqM0x/noxQYR3ONpjK
+         MYiCiefaYhLijhhynyV2gZqyvAmxlqfiZhknFD9i/uL4R5xAxG5MolTU124E2T/ywFcP
+         SjRkVqF/Jnhe3D9mw7tdxSzK/3LutHuWvnbUxy2hLnhvlN6gHEwl78SazJIes0HQmvi5
+         hoyg==
+X-Gm-Message-State: ACrzQf1thYtufEuE0lQ46q73HLXucJvCNRkHCZRHL6fZyPTY6k0/9wvu
+        Yu7gdpy8FFG6kwz1BTApMHvfbg==
+X-Google-Smtp-Source: AMsMyM6dqVFivVBAfJnusOTTHFixr6ta36EYELj9FkxhYexenNncJW1G3ektGPum7oYy8DXfnSf/1w==
+X-Received: by 2002:a05:6512:3b13:b0:4a2:564e:6cea with SMTP id f19-20020a0565123b1300b004a2564e6ceamr8373899lfv.242.1665496014326;
+        Tue, 11 Oct 2022 06:46:54 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id z18-20020a056512371200b0049313f77755sm1858954lfr.213.2022.10.11.06.46.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Oct 2022 06:46:53 -0700 (PDT)
+Message-ID: <66261491-530d-c368-6cc8-daeef74fcbda@linaro.org>
+Date:   Tue, 11 Oct 2022 16:46:53 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH V14 1/7] dt-bindings: Added the yaml bindings for DCC
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+ Thunderbird/102.3.1
+Subject: Re: [PATCH 08/13] phy: qcom-qmp-pcie: drop power-down delay config
+Content-Language: en-GB
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>, vkoul@kernel.org
-References: <cover.1664383851.git.quic_schowdhu@quicinc.com>
- <e320555b2075c94946ef3f9c78732dc84ba39449.1664383851.git.quic_schowdhu@quicinc.com>
- <4d0f7a01-1995-1b1e-40b9-125c3447b8c7@kernel.org>
- <78b42aab-164a-7fe6-fec5-77f52199c641@quicinc.com>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <78b42aab-164a-7fe6-fec5-77f52199c641@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+References: <20221011131416.2478-1-johan+linaro@kernel.org>
+ <20221011131416.2478-9-johan+linaro@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221011131416.2478-9-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-10.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/09/2022 02:59, Souradeep Chowdhury wrote:
+On 11/10/2022 16:14, Johan Hovold wrote:
+> The power-down delay was included in the first version of the QMP driver
+> as an optional delay after powering on the PHY (using
+> POWER_DOWN_CONTROL) and just before starting it. Later changes modified
+> this sequence by powering on before initialising the PHY, but the
+> optional delay stayed where it was (i.e. before starting the PHY).
 > 
-> Also the ./script/maintainers.pl gives the below output
+> The vendor driver does not use a delay before starting the PHY and this
+> is likely not needed on any platform unless there is a corresponding
+> delay in the vendor kernel init sequence tables (i.e. in devicetree).
 > 
-> Souradeep Chowdhury <quic_schowdhu@quicinc.com> (maintainer:DCC QTI 
-> DRIVER,in file)
-> Andy Gross <agross@kernel.org> (maintainer:ARM/QUALCOMM SUPPORT)
-> Bjorn Andersson <andersson@kernel.org> (maintainer:ARM/QUALCOMM SUPPORT)
-> Konrad Dybcio <konrad.dybcio@somainline.org> (reviewer:ARM/QUALCOMM SUPPORT)
-> Rob Herring <robh+dt@kernel.org> (maintainer:OPEN FIRMWARE AND FLATTENED 
-> DEVICE TREE BINDINGS)
-> Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org> (maintainer:OPEN 
-> FIRMWARE AND FLATTENED DEVICE TREE BINDINGS)
-> linux-arm-msm@vger.kernel.org (open list:DCC QTI DRIVER)
-> devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED DEVICE 
-> TREE BINDINGS)
-> linux-kernel@vger.kernel.org (open list)
-> 
-> Will send out the next version accordingly, let me know in case of any 
-> further concerns.
+> Let's keep the delay for now, but drop the redundant delay period
+> configuration while increasing the unnecessarily low timer slack
+> somewhat.
 
-v15 and v16 was still not sent according to what you wrote above...
+Actually, the vendor driver does this 995..1005 sleep. But contrary to 
+our driver it does that after programming whole PHY init sequence, which 
+includes SW_RESET / START_CTL, but before programming the pipe clocks.
 
-Best regards,
-Krzysztof
+I think we can either drop this delay completely, or move it before 
+read_poll_timeout().
+
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 27 +-----------------------
+>   1 file changed, 1 insertion(+), 26 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index fa8bc6aeedf1..315de484f875 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -1362,9 +1362,6 @@ struct qmp_phy_cfg {
+>   
+>   	/* true, if PHY needs delay after POWER_DOWN */
+>   	bool has_pwrdn_delay;
+> -	/* power_down delay in usec */
+> -	int pwrdn_delay_min;
+> -	int pwrdn_delay_max;
+>   
+>   	/* QMP PHY pipe clock interface rate */
+>   	unsigned long pipe_clock_rate;
+> @@ -1500,8 +1497,6 @@ static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
+>   	.phy_status		= PHYSTATUS,
+>   
+>   	.has_pwrdn_delay	= true,
+> -	.pwrdn_delay_min	= 995,		/* us */
+> -	.pwrdn_delay_max	= 1005,		/* us */
+>   };
+>   
+>   static const struct qmp_phy_cfg ipq8074_pciephy_gen3_cfg = {
+> @@ -1529,8 +1524,6 @@ static const struct qmp_phy_cfg ipq8074_pciephy_gen3_cfg = {
+>   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+>   
+>   	.has_pwrdn_delay	= true,
+> -	.pwrdn_delay_min	= 995,		/* us */
+> -	.pwrdn_delay_max	= 1005,		/* us */
+>   
+>   	.pipe_clock_rate	= 250000000,
+>   };
+> @@ -1562,8 +1555,6 @@ static const struct qmp_phy_cfg ipq6018_pciephy_cfg = {
+>   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+>   
+>   	.has_pwrdn_delay	= true,
+> -	.pwrdn_delay_min	= 995,		/* us */
+> -	.pwrdn_delay_max	= 1005,		/* us */
+>   };
+>   
+>   static const struct qmp_phy_cfg sdm845_qmp_pciephy_cfg = {
+> @@ -1594,8 +1585,6 @@ static const struct qmp_phy_cfg sdm845_qmp_pciephy_cfg = {
+>   	.phy_status		= PHYSTATUS,
+>   
+>   	.has_pwrdn_delay	= true,
+> -	.pwrdn_delay_min	= 995,		/* us */
+> -	.pwrdn_delay_max	= 1005,		/* us */
+>   };
+>   
+>   static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
+> @@ -1624,8 +1613,6 @@ static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
+>   	.phy_status		= PHYSTATUS,
+>   
+>   	.has_pwrdn_delay	= true,
+> -	.pwrdn_delay_min	= 995,		/* us */
+> -	.pwrdn_delay_max	= 1005,		/* us */
+>   };
+>   
+>   static const struct qmp_phy_cfg sm8250_qmp_gen3x1_pciephy_cfg = {
+> @@ -1666,8 +1653,6 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x1_pciephy_cfg = {
+>   	.phy_status		= PHYSTATUS,
+>   
+>   	.has_pwrdn_delay	= true,
+> -	.pwrdn_delay_min	= 995,		/* us */
+> -	.pwrdn_delay_max	= 1005,		/* us */
+>   };
+>   
+>   static const struct qmp_phy_cfg sm8250_qmp_gen3x2_pciephy_cfg = {
+> @@ -1708,8 +1693,6 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x2_pciephy_cfg = {
+>   	.phy_status		= PHYSTATUS,
+>   
+>   	.has_pwrdn_delay	= true,
+> -	.pwrdn_delay_min	= 995,		/* us */
+> -	.pwrdn_delay_max	= 1005,		/* us */
+>   };
+>   
+>   static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
+> @@ -1765,8 +1748,6 @@ static const struct qmp_phy_cfg sc8180x_pciephy_cfg = {
+>   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+>   
+>   	.has_pwrdn_delay	= true,
+> -	.pwrdn_delay_min	= 995,		/* us */
+> -	.pwrdn_delay_max	= 1005,		/* us */
+>   };
+>   
+>   static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
+> @@ -1797,8 +1778,6 @@ static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
+>   	.phy_status		= PHYSTATUS_4_20,
+>   
+>   	.has_pwrdn_delay	= true,
+> -	.pwrdn_delay_min	= 995,		/* us */
+> -	.pwrdn_delay_max	= 1005,		/* us */
+>   };
+>   
+>   static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
+> @@ -1829,8 +1808,6 @@ static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
+>   	.phy_status		= PHYSTATUS,
+>   
+>   	.has_pwrdn_delay	= true,
+> -	.pwrdn_delay_min	= 995,		/* us */
+> -	.pwrdn_delay_max	= 1005,		/* us */
+>   };
+>   
+>   static const struct qmp_phy_cfg sm8450_qmp_gen4x2_pciephy_cfg = {
+> @@ -1876,8 +1853,6 @@ static const struct qmp_phy_cfg sm8450_qmp_gen4x2_pciephy_cfg = {
+>   	.phy_status		= PHYSTATUS_4_20,
+>   
+>   	.has_pwrdn_delay	= true,
+> -	.pwrdn_delay_min	= 995,		/* us */
+> -	.pwrdn_delay_max	= 1005,		/* us */
+>   };
+>   
+>   static void qmp_pcie_configure_lane(void __iomem *base,
+> @@ -2037,7 +2012,7 @@ static int qmp_pcie_power_on(struct phy *phy)
+>   	qmp_pcie_pcs_init(qphy, mode_tables);
+>   
+>   	if (cfg->has_pwrdn_delay)
+> -		usleep_range(cfg->pwrdn_delay_min, cfg->pwrdn_delay_max);
+> +		usleep_range(1000, 1200);
+>   
+>   	/* Pull PHY out of reset state */
+>   	qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
+
+-- 
+With best wishes
+Dmitry
 
