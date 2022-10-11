@@ -2,38 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 24B165FAD57
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 09:20:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBA6D5FAD5D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 09:21:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229547AbiJKHUm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 03:20:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50238 "EHLO
+        id S229969AbiJKHVo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 03:21:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbiJKHUl (ORCPT
+        with ESMTP id S229972AbiJKHVl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 03:20:41 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8037333A2F;
-        Tue, 11 Oct 2022 00:20:40 -0700 (PDT)
+        Tue, 11 Oct 2022 03:21:41 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B9AA7B788;
+        Tue, 11 Oct 2022 00:21:40 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 2DEF9B81201;
-        Tue, 11 Oct 2022 07:20:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C60C433D7;
-        Tue, 11 Oct 2022 07:20:37 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id DBC94B811FC;
+        Tue, 11 Oct 2022 07:21:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205ECC433D6;
+        Tue, 11 Oct 2022 07:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1665472837;
-        bh=/8HeXdDL44KxP1+8V4r577mz41Pbncg8nfnzpe0Uy+o=;
+        s=korg; t=1665472897;
+        bh=fpA2CLhghAgNp9uGr6caPeXx7Hj5XJxzoPmmKzYbBJ0=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=UWNzE2f7GJx+sDmABCspUuoQSud9KlR8uPRpFPqVr2JkoWMDNvixagqxNIrtW5UEg
-         WqEVhe4rprezKarJQ+N65K9SlqMd3+4vxSa1TO+2sN3ghNBbjmQ56Q2F9m8usre6xn
-         R4MhKFJ3d7zWSbs7ITCCKyM8njzdaTl4AlTThUTk=
-Date:   Tue, 11 Oct 2022 09:21:20 +0200
+        b=EFbTwl1zWi6KSjSh2HZ5tF2hdOae8JeUNQ9giF1cqh0NYIlLbEuMwFLAukqeahUTn
+         prDbiB+guW0eS952j8R0i5W126UCXd7AQD88GSv69Ck2AdmPiud8w0/X5gJvCVkE96
+         H72TBsQ1lq+qZcPM/dJCdBGDkrw2/LniowzoTGaY=
+Date:   Tue, 11 Oct 2022 09:22:20 +0200
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     Elliot Berman <quic_eberman@quicinc.com>
 Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Arnd Bergmann <arnd@arndb.de>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
         Murali Nalajala <quic_mnalajal@quicinc.com>,
         Trilok Soni <quic_tsoni@quicinc.com>,
         Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
@@ -43,26 +45,23 @@ Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Jassi Brar <jassisinghbrar@gmail.com>,
         linux-arm-kernel@lists.infradead.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
         Marc Zyngier <maz@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Jonathan Corbet <corbet@lwn.net>,
         Will Deacon <will@kernel.org>,
         Catalin Marinas <catalin.marinas@arm.com>,
-        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 03/13] gunyah: Common types and error codes for Gunyah
- hypercalls
-Message-ID: <Y0UZcLl20HobX4w3@kroah.com>
+        Arnd Bergmann <arnd@arndb.de>, devicetree@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 04/13] arm64: smccc: Include alternative-macros.h
+Message-ID: <Y0UZrAavHNxkJVm9@kroah.com>
 References: <20221011000840.289033-1-quic_eberman@quicinc.com>
- <20221011000840.289033-4-quic_eberman@quicinc.com>
+ <20221011000840.289033-5-quic_eberman@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221011000840.289033-4-quic_eberman@quicinc.com>
+In-Reply-To: <20221011000840.289033-5-quic_eberman@quicinc.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -72,37 +71,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 10, 2022 at 05:08:30PM -0700, Elliot Berman wrote:
-> Add architecture-independent standard error codes, types, and macros for
-> Gunyah hypercalls.
+On Mon, Oct 10, 2022 at 05:08:31PM -0700, Elliot Berman wrote:
+> Fix build error when CONFIG_ARM64_SVE is selected and
+> asm/alternative-macros.h wasn't implicitly included by another header.
 > 
+> Fixes: cfa7ff959a78 ("arm64: smccc: Support SMCCC v1.3 SVE register saving hint")
 > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->  MAINTAINERS                  |  1 +
->  include/asm-generic/gunyah.h | 74 ++++++++++++++++++++++++++++++++++++
->  2 files changed, 75 insertions(+)
->  create mode 100644 include/asm-generic/gunyah.h
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index ef6de7599d98..4fe8cec61551 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -8886,6 +8886,7 @@ L:	linux-arm-msm@vger.kernel.org
->  S:	Supported
->  F:	Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
->  F:	Documentation/virt/gunyah/
-> +F:	include/asm-generic/gunyah.h
->  
->  HABANALABS PCI DRIVER
->  M:	Oded Gabbay <ogabbay@kernel.org>
-> diff --git a/include/asm-generic/gunyah.h b/include/asm-generic/gunyah.h
-> new file mode 100644
-> index 000000000000..64a02dd3b5ad
-> --- /dev/null
-> +++ b/include/asm-generic/gunyah.h
 
-Why not include/linux/gunyah.h?  Why asm-generic?  This is not an
-architecture.
+Shouldn't this be independant of this whole series and get merged now
+and backported to stable kernels if it really is causing a build problem
+today?
 
 thanks,
 
