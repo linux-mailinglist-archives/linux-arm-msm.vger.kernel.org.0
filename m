@@ -2,79 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E1AE5FBA63
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 20:31:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22A075FBA94
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Oct 2022 20:40:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229477AbiJKSbT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Oct 2022 14:31:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54072 "EHLO
+        id S229791AbiJKSky (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Oct 2022 14:40:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229613AbiJKSbS (ORCPT
+        with ESMTP id S229675AbiJKSkw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Oct 2022 14:31:18 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7D22543D8;
-        Tue, 11 Oct 2022 11:31:15 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29BIMn1J000719;
-        Tue, 11 Oct 2022 18:31:12 GMT
+        Tue, 11 Oct 2022 14:40:52 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D2EE7CB67;
+        Tue, 11 Oct 2022 11:40:50 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29BBeKYZ030456;
+        Tue, 11 Oct 2022 18:40:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=LdlPJjUMuqtqZvwO9QM8/pk55gzXxoC9vNpl+NH9mRA=;
- b=dB1r4NpAfW951nF8Xth3WzNVmMZIm/qDbEbcpLTJWqLksph+f5P9FJ6ATx3IHysX7XaJ
- 1e/iOvTUBvexrSk8qnVICaAB+IxG5h9qcu+/Iw9N6GWgwcwXYDMkk+FHakyiF0ChYv66
- X3jw5Ymy7asTvBziPf+lTeRZD18GixzB9pRGiE6VmQRqg6fJ5vEOG6cbzBe3NPLri17c
- cQv6oOHIt0X4fvtSIBUvDxhWJ6rNNVbBtP2agoc+iMsuzY20YC5D6i/MjQ5xyieTCDXG
- 4+ULtQNdFj69Mqn6Py3ZanjtJMvNjQpbJhAL2VWlR1DbA8L7LI9pOi7Tb6HicHWNN5BD og== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k4rxkk15g-1
+ bh=h1BvboPV+q0O/fs3qxdcsJfGYHdo3ib28v+3LY8CB1k=;
+ b=JL5G78K3BcH4pq2z2MiK+KQ0tT7p1lAGpPEIkl3QFQJuEnd+BXe/srHQ394xZmr0K+5p
+ IIcEYR1vANcO5xzA3TVeL5uVUzcBOB6/yCzYvcsglKS9Sat/jn+uCOs/HSBAjj7HJ2vG
+ qDrYNJy6hsVCP6aq/XCPcGxcAzisvYxL11zf4vB5pvFYAPqv5po8RijuStA1Zjs+fxk+
+ ObNEDMLsw6hyzef/y3Z4RBq96noQBPdtAtbRff+c5OHwwY/qSiBG9fL/V6WGraVfWNkR
+ mTFusYn7drSOxdfa4libsT5eEdrAmDi4ZGpDUJ/ZS1mFb1ni03oqkmC0EO/QbLDrY5ga Zg== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k4rwxuv48-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 11 Oct 2022 18:31:11 +0000
+        Tue, 11 Oct 2022 18:40:47 +0000
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29BIVAue004070
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29BIekZU032317
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 11 Oct 2022 18:31:10 GMT
+        Tue, 11 Oct 2022 18:40:47 GMT
 Received: from [10.110.3.66] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 11 Oct
- 2022 11:31:09 -0700
-Message-ID: <e4ea85f0-8167-ba78-ad42-0fc22ef9f96c@quicinc.com>
-Date:   Tue, 11 Oct 2022 11:31:09 -0700
+ 2022 11:40:46 -0700
+Message-ID: <401219d2-43f1-5816-54c2-80be8a4afb1c@quicinc.com>
+Date:   Tue, 11 Oct 2022 11:40:46 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.2
-Subject: Re: [PATCH 02/19] arm64: dts: qcom: Add base QDU1000/QRU1000 IDP DTs
+Subject: Re: [PATCH 03/19] arm64: dts: qcom: qdru1000: Add tlmm nodes
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
 References: <20221001030656.29365-1-quic_molvera@quicinc.com>
- <20221001030656.29365-3-quic_molvera@quicinc.com>
- <2887c49c-434a-cc1b-b078-1506416e583f@linaro.org>
+ <20221001030656.29365-4-quic_molvera@quicinc.com>
+ <CAA8EJpp2h3j9cPLPzCzgnYm07D5PPZg3H5_LkcXizhXt9ekkiQ@mail.gmail.com>
 From:   Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <2887c49c-434a-cc1b-b078-1506416e583f@linaro.org>
+In-Reply-To: <CAA8EJpp2h3j9cPLPzCzgnYm07D5PPZg3H5_LkcXizhXt9ekkiQ@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: jCtH7kNLdfumEHFQPVvmR-jkziE9XQzZ
-X-Proofpoint-GUID: jCtH7kNLdfumEHFQPVvmR-jkziE9XQzZ
+X-Proofpoint-ORIG-GUID: i3X1gpRH1cqkzW_EGShuDoN16EMgwD3H
+X-Proofpoint-GUID: i3X1gpRH1cqkzW_EGShuDoN16EMgwD3H
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
  definitions=2022-10-11_08,2022-10-11_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
- suspectscore=0 spamscore=0 lowpriorityscore=0 priorityscore=1501
- adultscore=0 mlxscore=0 malwarescore=0 phishscore=0 impostorscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210110107
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 bulkscore=0 spamscore=0 clxscore=1015 malwarescore=0
+ adultscore=0 impostorscore=0 priorityscore=1501 mlxscore=0 phishscore=0
+ mlxlogscore=819 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210110108
 X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -86,99 +86,76 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/1/2022 2:12 AM, Krzysztof Kozlowski wrote:
-> On 01/10/2022 05:06, Melody Olvera wrote:
->> Add DTs for Qualcomm IDP platforms using the QDU1000 and QRU1000
->> SoCs.
+On 10/1/2022 12:26 AM, Dmitry Baryshkov wrote:
+> On Sat, 1 Oct 2022 at 06:09, Melody Olvera <quic_molvera@quicinc.com> wrote:
+>> Add tlmm node for the QDU1000 and QRU1000 SoCs and the uart pin
+>> configuration.
 >>
 >> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 >> ---
->>  arch/arm64/boot/dts/qcom/Makefile        |  2 ++
->>  arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 30 ++++++++++++++++++++++++
->>  arch/arm64/boot/dts/qcom/qru1000-idp.dts | 30 ++++++++++++++++++++++++
->>  3 files changed, 62 insertions(+)
->>  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>  create mode 100644 arch/arm64/boot/dts/qcom/qru1000-idp.dts
+>>  arch/arm64/boot/dts/qcom/qdru1000.dtsi | 30 ++++++++++++++++++++++++++
+>>  1 file changed, 30 insertions(+)
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->> index 1d86a33de528..398920c530b0 100644
->> --- a/arch/arm64/boot/dts/qcom/Makefile
->> +++ b/arch/arm64/boot/dts/qcom/Makefile
->> @@ -152,3 +152,5 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-sony-xperia-sagami-pdx214.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-sony-xperia-sagami-pdx215.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-hdk.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-qrd.dtb
->> +dtb-$(CONFIG_ARCH_QCOM) += qdu1000-idp.dtb
->> +dtb-$(CONFIG_ARCH_QCOM) += qru1000-idp.dtb
-> List is ordered by name.
+>> diff --git a/arch/arm64/boot/dts/qcom/qdru1000.dtsi b/arch/arm64/boot/dts/qcom/qdru1000.dtsi
+>> index 3610f94bef35..39b9a00d3ad8 100644
+>> --- a/arch/arm64/boot/dts/qcom/qdru1000.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/qdru1000.dtsi
+>> @@ -235,6 +235,8 @@ uart7: serial@99c000 {
+>>                                 reg = <0x0 0x99c000 0x0 0x4000>;
+>>                                 clock-names = "se";
+>>                                 clocks = <&gcc GCC_QUPV3_WRAP0_S7_CLK>;
+>> +                               pinctrl-names = "default";
+>> +                               pinctrl-0 = <&qup_uart7_default>;
+>>                                 interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
+>>                                 #address-cells = <1>;
+>>                                 #size-cells = <0>;
+>> @@ -248,6 +250,34 @@ tcsr_mutex: hwlock@1f40000 {
+>>                         #hwlock-cells = <1>;
+>>                 };
+>>
+>> +               tlmm: pinctrl@f000000 {
+>> +                       compatible = "qcom,qdu1000-tlmm", "qcom,qru1000-tlmm";
+>> +                       reg = <0x0 0xf000000 0x0 0x1000000>;
+>> +                       interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+>> +                       gpio-controller;
+>> +                       #gpio-cells = <2>;
+>> +                       interrupt-controller;
+>> +                       #interrupt-cells = <2>;
+>> +                       gpio-ranges = <&tlmm 0 0 151>;
+>> +                       wakeup-parent = <&pdc>;
+>> +
+>> +                       qup_uart7_default: qup-uart7-default {
+>> +                               tx {
+>> +                                       pins = "gpio134";
+>> +                                       function = "qup0_se7_l2";
+> This looks strange. Usually we'd have a single 'qup7' function here.
+> I'd go back to the interconnect driver. Maybe the functions are not
+> correctly defined there.
+Yeah; will correct. Pinctrl driver was not in line with upstream standards.
 >
+>> +                                       drive-strength = <2>;
+>> +                                       bias-disable;
+> 'drive-strength' and 'bias-disable' are to be patched in in the board dts file.
+Really? Looking at sm8450.dtsi and sm8350.dtsi I see them defined in the dtsi file instead of the
+dts file. Is this new?
 >
->> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->> new file mode 100644
->> index 000000000000..0ecf9a7c41ec
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->> @@ -0,0 +1,30 @@
->> +// SPDX-License-Identifier: BSD-3-Clause-Clear
->> +/*
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
+>> +                               };
 >> +
->> +/dts-v1/;
+>> +                               rx {
+>> +                                       pins = "gpio135";
+>> +                                       function = "qup0_se7_l3";
+>> +                                       drive-strength = <2>;
+>> +                                       bias-disable;
+>> +                               };
+>> +                       };
+>> +               };
 >> +
->> +#include "qdu1000.dtsi"
->> +
->> +/ {
->> +	model = "Qualcomm Technologies, Inc. QDU1000 IDP";
->> +	compatible = "qcom,qdu1000-idp", "qcom,qdu1000";
-> Undocumented compatibles. You need bindings for these.
-Will make sure these are documented.
->
->> +	qcom,board-id = <0x22 0x0>;
->> +
->> +	aliases {
->> +		serial0 = &uart7;
->> +	};
->> +
->> +	chosen {
->> +		stdout-path = "serial0:115200n8";
->> +	};
->> +};
->> +
->> +&qupv3_id_0 {
->> +	status = "okay";
->> +};
->> +
->> +&uart7 {
->> +	status = "okay";
->> +};
->> diff --git a/arch/arm64/boot/dts/qcom/qru1000-idp.dts b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
->> new file mode 100644
->> index 000000000000..ddb4ea17f7d2
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
->> @@ -0,0 +1,30 @@
->> +// SPDX-License-Identifier: BSD-3-Clause-Clear
->> +/*
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +/dts-v1/;
->> +
->> +#include "qru1000.dtsi"
->> +
->> +/ {
->> +	model = "Qualcomm Technologies, Inc. QRU1000 IDP";
->> +	compatible = "qcom,qru1000-idp", "qcom,qru1000";
-> Same problem.
-Ack.
->
->> +	qcom,board-id = <0x22 0x0>;
-> Undocumented compatible. Drop it.
-Will drop.
->
-> Best regards,
-> Krzysztof
+>>                 pdc: interrupt-controller@b220000 {
+>>                         compatible = "qcom,pdc";
+>>                         reg = <0x0 0xb220000 0x0 0x30000>, <0x0 0x174000f0 0x0 0x64>;
+>> --
+>> 2.37.3
+>>
 >
 Thanks,
 Melody
