@@ -2,87 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E32C5FC0D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 08:42:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 815DB5FC0F3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 08:53:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229656AbiJLGmE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Oct 2022 02:42:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33784 "EHLO
+        id S229572AbiJLGxK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Oct 2022 02:53:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229605AbiJLGmD (ORCPT
+        with ESMTP id S229541AbiJLGxJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Oct 2022 02:42:03 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12F774D818;
-        Tue, 11 Oct 2022 23:42:03 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29C5np1W030643;
-        Wed, 12 Oct 2022 06:41:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=MA5guw7a0c13JePpvNEp5lk8mucRGKkZURE+DJS4VhU=;
- b=Dv4oywekiMovuFhdZ5hLhjfi3MXw9X+az60i6JeD81A++Bu+lyXg+fRVG1xhQoLKBEeC
- aJq/m+6a0OBbMejfSikAVJHVwDXPKSF9z6zZXKl5C4vOGrKY3x/JhFXYhuZQc17fTxdQ
- SplVkCBA63eT/Kio3PWNdCQRBJBu8pQ5wThNBMTVF1gm2mtY1dA+zU/VOpnijIa9CpRX
- sFbmk6y4HaKi8mO3IHWfHU8D7mbrnX1FVFvb8SOWeX10rvq4CFDU9FvLIct1kMXCrRjB
- /fvfTczQXzL1ar4xHpPSccj30LceGtHCvhYapj0DkoZnPondhfM8bKfqO5UXRHkhzgXc 7A== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k5e7fhdu2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 12 Oct 2022 06:41:55 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29C6fsMr015783
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 12 Oct 2022 06:41:54 GMT
-Received: from [10.110.0.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 11 Oct
- 2022 23:41:49 -0700
-Message-ID: <3e2a3f01-0283-1c9c-9d12-c171fc381813@quicinc.com>
-Date:   Wed, 12 Oct 2022 12:11:45 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH V14 1/7] dt-bindings: Added the yaml bindings for DCC
-Content-Language: en-US
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-To:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Wed, 12 Oct 2022 02:53:09 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CD1DA025C;
+        Tue, 11 Oct 2022 23:53:08 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3D6E5B81981;
+        Wed, 12 Oct 2022 06:53:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64741C433D6;
+        Wed, 12 Oct 2022 06:53:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1665557585;
+        bh=kfeTdt8LgFzpRd1qO+A5KoG7Tuot/w4Ck8QJHAn273s=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=x0HW7/m2tSyoFLA3qql8FIicJScZBTHHWTk/xt1rAnuVz2+u+RtSLbMkWsaDyeE+T
+         WqbtrwvSDbljxNm4Fd1SpdW1W8xvlJbPyt5En0oXTZChaUVbkQuGYXErqZoxq+cMyV
+         DbRERVUUjp7aDrTCOQWdVwBJzW2605lWG9H+qxLE=
+Date:   Wed, 12 Oct 2022 08:53:49 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Jiri Slaby <jirislaby@kernel.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>, <vkoul@kernel.org>
-References: <cover.1664383851.git.quic_schowdhu@quicinc.com>
- <e320555b2075c94946ef3f9c78732dc84ba39449.1664383851.git.quic_schowdhu@quicinc.com>
- <4d0f7a01-1995-1b1e-40b9-125c3447b8c7@kernel.org>
- <78b42aab-164a-7fe6-fec5-77f52199c641@quicinc.com>
- <e028ad6a-9687-5089-4938-e982764b9c58@kernel.org>
- <a1a79910-c697-3660-ddf8-5f4f164c1b34@quicinc.com>
-In-Reply-To: <a1a79910-c697-3660-ddf8-5f4f164c1b34@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: p6yeGIy7_WJbPpgCJyUyyOwJplW7Bg2r
-X-Proofpoint-GUID: p6yeGIy7_WJbPpgCJyUyyOwJplW7Bg2r
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-12_03,2022-10-11_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=927 spamscore=0
- impostorscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
- malwarescore=0 adultscore=0 mlxscore=0 priorityscore=1501 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210120043
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Arnd Bergmann <arnd@arndb.de>, devicetree@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 14/14] tty: gunyah: Add tty console driver for RM
+ Console Services
+Message-ID: <Y0ZkfT8gSSbKQSI4@kroah.com>
+References: <20220928195633.2348848-1-quic_eberman@quicinc.com>
+ <20220928195633.2348848-15-quic_eberman@quicinc.com>
+ <YzbePxTF8hRbWNRU@kroah.com>
+ <14d0ff9f-60f3-71cc-ea42-ceee389298ac@quicinc.com>
+ <Yz/YBDqqwBUlswgX@kroah.com>
+ <615493a8-449d-b105-709e-0642dfb5359b@quicinc.com>
+ <Y0R/QbysXa6ebNd8@kroah.com>
+ <ca42d89e-9e19-0536-0951-2c123d898892@quicinc.com>
+ <Y0ULqlIMKTc6gdeV@kroah.com>
+ <13eee213-f6c2-d998-ba2e-459509ae7ee7@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <13eee213-f6c2-d998-ba2e-459509ae7ee7@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,47 +81,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/12/2022 11:27 AM, Souradeep Chowdhury wrote:
+On Tue, Oct 11, 2022 at 03:04:08PM -0700, Elliot Berman wrote:
 > 
-> On 10/11/2022 6:50 PM, Krzysztof Kozlowski wrote:
->> On 30/09/2022 02:59, Souradeep Chowdhury wrote:
->>> Also the ./script/maintainers.pl gives the below output
->>>
->>> Souradeep Chowdhury<quic_schowdhu@quicinc.com>  (maintainer:DCC QTI
->>> DRIVER,in file)
->>> Andy Gross<agross@kernel.org>  (maintainer:ARM/QUALCOMM SUPPORT)
->>> Bjorn Andersson<andersson@kernel.org>  (maintainer:ARM/QUALCOMM SUPPORT)
->>> Konrad Dybcio<konrad.dybcio@somainline.org>  (reviewer:ARM/QUALCOMM SUPPORT)
->>> Rob Herring<robh+dt@kernel.org>  (maintainer:OPEN FIRMWARE AND FLATTENED
->>> DEVICE TREE BINDINGS)
->>> Krzysztof Kozlowski<krzysztof.kozlowski+dt@linaro.org>  (maintainer:OPEN
->>> FIRMWARE AND FLATTENED DEVICE TREE BINDINGS)
->>> linux-arm-msm@vger.kernel.org  (open list:DCC QTI DRIVER)
->>> devicetree@vger.kernel.org  (open list:OPEN FIRMWARE AND FLATTENED DEVICE
->>> TREE BINDINGS)
->>> linux-kernel@vger.kernel.org  (open list)
->>>
->>> Will send out the next version accordingly, let me know in case of any
->>> further concerns.
->> v15 and v16 was still not sent according to what you wrote above...
 > 
-> I have copied all of the above in the mailing list, also I have 
-> implemented all the previous comments.
+> On 10/10/2022 11:22 PM, Greg Kroah-Hartman wrote:
+> > On Mon, Oct 10, 2022 at 01:58:00PM -0700, Elliot Berman wrote:
+> > > 
+> > > 
+> > > On 10/10/2022 1:23 PM, Greg Kroah-Hartman wrote:
+> > > > On Sun, Oct 09, 2022 at 01:59:21PM -0700, Elliot Berman wrote:
+> > > > > 
+> > > > > > > > On 10/7/2022 12:40 AM, Greg Kroah-Hartman wrote:
+> > > > > > On Thu, Oct 06, 2022 at 10:59:51PM -0700, Elliot Berman wrote:
+> > > > > > > 
+> > > > > > > "GH" is the shorthand we've been using for "Gunyah". I didn't find
+> > > > > > > documentation for dynamically assigned char devices, but if it exists, I can
+> > > > > > > add entry for ttyGH.
+> > > > > > 
+> > > > > > Why use a new name at all?  Why not stick with the existing tty names
+> > > > > > and device numbers?
+> > > > > > 
+> > > > > 
+> > > > > I can use hvc framework, although driver-level buffering is needed on
+> > > > > both the get_chars/put_chars paths because:
+> > > > 
+> > > > I'm not asking about the framework (although that is a good question,
+> > > > you need to document why this has to be new.)  I'm asking why pick a new
+> > > > name?  You will not have a name conflict in your system with this device
+> > > > with any other tty name right?
+> > > > 
+> > > 
+> > > That's correct, I didn't see any other instances of "ttyGH" in kernel.
+> > 
+> > Do you see any instances of ttyS?  Any other existing name?  Why pick a
+> > new name at all?
+> > 
+> > And if you do pick a new name, you need to document it really really
+> > well, not bury it downn within the tty driver code.
+> > 
 > 
-> [PATCH V16 0/7] soc: qcom: dcc: Add driver support for Data Capture and 
-> Compare unit(DCC) - Souradeep Chowdhury (kernel.org) 
-> <https://lore.kernel.org/lkml/cover.1664805059.git.quic_schowdhu@quicinc.com/#r>
-> 
-> Can you please let me know what is expected here so that I can correct 
-> in the next version accordingly?
+> Seems other drivers are adding a comment in Kconfig help text. I can do the
+> same.
 
-Apologies for sending the previous mail in html format.
-My comments are as above.
-
-
-> 
->> Best regards,
->> Krzysztof
->>
+If you really want this, yes.  But again, you have not justified a whole
+new name yet...
