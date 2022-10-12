@@ -2,135 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BCADD5FCC46
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 22:44:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0447E5FCC4A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 22:44:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229904AbiJLUoT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Oct 2022 16:44:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59734 "EHLO
+        id S229837AbiJLUol (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Oct 2022 16:44:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229880AbiJLUnw (ORCPT
+        with ESMTP id S229914AbiJLUo1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Oct 2022 16:43:52 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF0CD4CA0D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 13:43:47 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id x6so17322205pll.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 13:43:47 -0700 (PDT)
+        Wed, 12 Oct 2022 16:44:27 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B27ECBFDE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 13:44:22 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id b1so22476354lfs.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 13:44:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/XV5pr8QqFGjPs8+6LG6NFfr+//dPbYGj0pCHlYmCJo=;
-        b=O3BbsgmKcyrP8JEZyCXj8RAZ2efDkDTDsgnsREnCkCP1sXwl0wl4OXjVLPkwgocarI
-         Eh6eeUvtYyniV3TaJaml6MFIpbXpJUN8gPtZa8iJCHm/NfijSkyViAb/LQNR4N7SzCR7
-         Qk5eBDdK86ktcQzBhwiC0Wk/sF1B6d5H0y4JAcTWOir5CtQACV8ajvzApP9Py+HuQ8TC
-         D8r/e6GKsJaa54aKLq7l/cIOB+ammSdhY6RCGanZqpHED9m/+wsFboJRj/XVYJCpbsaS
-         GMDPv/h7KMlE5vZCQ45ySUITpN3V1y21y3mPz5QXL9BBC3C8PuvCN8/I6BCLt/Wmr6Hq
-         7agg==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=C+C0Mxv2tX523uCK05eKZPxUZ5oE4e3IyCVHLYGN5SI=;
+        b=uvNDbWbG5eSo8weiIPDDLGWl8An4BMkTYO8SF7yC+yGjExdt81T37ieOfK+IDhI76d
+         FqreDaEtg524sTKjC5lkpsWNNx0IlE+xv9xOZ0RkZx1FKjpP+4I15YgSZXadvR+/ryQk
+         wCL3N1EI28kqJ6qJS+diwz1RwBORJrMX/EuWvdSnn/5kRs/BrxOgwN8l6h+486bpZTNz
+         u0a2eZNigxL+OtWtlWMvQR6oIGMZuGwCuW4tZciVSsYskj1CQ8ywvoT2mA+EF8yaN8lm
+         UIze/0FoQ+jh5NuSBrsDXDC4EOUcc3PiCtgH2Ycd5qy574j4mVE+UBMqJkYowJglYOhY
+         d8xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/XV5pr8QqFGjPs8+6LG6NFfr+//dPbYGj0pCHlYmCJo=;
-        b=VXnCw54m9XLFoAq7H7gIkc0N6DWm3X5++V9JmB590BleGhLdLN6hMBt97zk7nGWYYP
-         uD4idIvurEpJ8nWmZOnHQqP0ASkW2WRkLXUXp5781FtYdao/vyKSvSCxyIhpm62ba16+
-         WnlKHMCB+jjIkoEyJoB/HHPFjr30FnjIuj7OFUMabQvz2Gh4PLochmXLXa58QO72TpyS
-         EQyCmgjGLrGclhT0IKLJKNU6BtB+WgMjH/BkVjA9lDWnPMlSXhd8BX/pLmWDufgJrsNg
-         7o+0uUxbwLyU/38uyUnmKRJwUBAa7BrsKFmH5vWVdfZjGhB5Nv7mlCEmiBmyUiNfjMFA
-         VPaw==
-X-Gm-Message-State: ACrzQf23mNXYSAdR73koClc4cCLP24idaxbe8QT0N1wBR6NKFQ4T8uqo
-        zejXpFSrUGwTwcfcrUcrDpyg5g==
-X-Google-Smtp-Source: AMsMyM7LKuK725wPc8GpTSojQ0O9922L8xMD/vZb34gAp6nqMYstaPxFfsYeAgOfShV9qxydWjJbGA==
-X-Received: by 2002:a17:902:e1cd:b0:184:aa71:217d with SMTP id t13-20020a170902e1cd00b00184aa71217dmr3824714pla.77.1665607427224;
-        Wed, 12 Oct 2022 13:43:47 -0700 (PDT)
-Received: from p14s (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id c18-20020a624e12000000b005626c3e5fdbsm288176pfb.143.2022.10.12.13.43.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Oct 2022 13:43:46 -0700 (PDT)
-Date:   Wed, 12 Oct 2022 14:43:44 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Maria Yu <quic_aiquny@quicinc.com>
-Cc:     linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_clew@quicinc.com
-Subject: Re: [PATCH v4] remoteproc: core: do pm relax when in RPROC_OFFLINE
-Message-ID: <20221012204344.GA1178915@p14s>
-References: <128dc161-8949-1146-bf8b-310aa33c06a8@quicinc.com>
- <1663312351-28476-1-git-send-email-quic_aiquny@quicinc.com>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=C+C0Mxv2tX523uCK05eKZPxUZ5oE4e3IyCVHLYGN5SI=;
+        b=GJIcItm4SLM7CxmP1KF2v8yq5xpy3G1y3+WdVpeET/eDMiu90pq1IMNzWXhW+rc8uY
+         F01Wi1WkrfRzncYI4RJxciDl273GliPMMdBPquLyxg0Gwwx9dC7PrL+z0XP/H3NhxBTF
+         /HOGUsfwIzLQP7BO+ujhrgcDae1hnKn+Eppg/mlxrW3QZ8xn5HUZNSFss2RINvRFPzaP
+         A8PLvImJ8zPYyMesUNqbdElICMhGK6rSD+NIUaWg/YlWhd1WhTHTR3xyX3bZivmz6J5W
+         T5mykUV2fTfWVCo3TLB9PLQTJ+znqt+9b15qH9YPNdtQiQ0dUEQPM2nQqllJkE8Shz6b
+         qLrw==
+X-Gm-Message-State: ACrzQf1c4I8gYkxGwyChaqbffwJwzI61FxxPlRxkBDn8T04wty7CN7Mj
+        7+TupbH3oZQ7J28MHpseq7xu9w==
+X-Google-Smtp-Source: AMsMyM6hBJPbIlXaMhcnTghNSdmHcOfNis3jxOSvhveulPVBL8W/p5rpNKObX5xbxRTdurBq5KrwmQ==
+X-Received: by 2002:a05:6512:2392:b0:4a2:550a:e21d with SMTP id c18-20020a056512239200b004a2550ae21dmr11490183lfv.550.1665607460721;
+        Wed, 12 Oct 2022 13:44:20 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id d23-20020a056512369700b0049fbf5facf4sm103561lfs.75.2022.10.12.13.44.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Oct 2022 13:44:20 -0700 (PDT)
+Message-ID: <996cf5ca-fb54-a69b-f107-13571b6530e7@linaro.org>
+Date:   Wed, 12 Oct 2022 23:44:19 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1663312351-28476-1-git-send-email-quic_aiquny@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH 01/20] phy: qcom-qmp-pcie: fix sc8180x initialisation
+Content-Language: en-GB
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+References: <20221012084846.24003-1-johan+linaro@kernel.org>
+ <20221012085002.24099-1-johan+linaro@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221012085002.24099-1-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Please add what has changed from one version to another, either in a cover
-letter or after the "Signed-off-by".  There are many examples on how to do that
-on the mailing list.
-
-On Fri, Sep 16, 2022 at 03:12:31PM +0800, Maria Yu wrote:
-> RPROC_OFFLINE state indicate there is no recovery process
-> is in progress and no chance to do the pm_relax.
-> Because when recovering from crash, rproc->lock is held and
-> state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
-> and then unlock rproc->lock.
-
-You are correct - because the lock is held rproc->state should be set to RPROC_RUNNING
-when rproc_trigger_recovery() returns.  If that is not the case then something
-went wrong.
-
-Function rproc_stop() sets rproc->state to RPROC_OFFLINE just before returning,
-so we know the remote processor was stopped.  Therefore if rproc->state is set
-to RPROC_OFFLINE something went wrong in either request_firmware() or
-rproc_start().  Either way the remote processor is offline and the system probably
-in an unknown/unstable.  As such I don't see how calling pm_relax() can help
-things along.  
-
-I suggest spending time understanding what leads to the failure when recovering
-from a crash and address that problem(s).
-
-Thanks,
-Mathieu
-
-
-> When the state is in RPROC_OFFLINE it means separate request
-> of rproc_stop was done and no need to hold the wakeup source
-> in crash handler to recover any more.
+On 12/10/2022 11:49, Johan Hovold wrote:
+> The phy_status mask was never set for SC8180X which meant that the
+> driver would not wait for the PHY to be initialised during power-on and
+> would never detect PHY initialisation timeouts.
 > 
-> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+> Fixes: f839f14e24f2 ("phy: qcom-qmp: Add sc8180x PCIe support")
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->  drivers/remoteproc/remoteproc_core.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-> index e5279ed9a8d7..6bc7b8b7d01e 100644
-> --- a/drivers/remoteproc/remoteproc_core.c
-> +++ b/drivers/remoteproc/remoteproc_core.c
-> @@ -1956,6 +1956,17 @@ static void rproc_crash_handler_work(struct work_struct *work)
->  	if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
->  		/* handle only the first crash detected */
->  		mutex_unlock(&rproc->lock);
-> +		/*
-> +		 * RPROC_OFFLINE state indicate there is no recovery process
-> +		 * is in progress and no chance to have pm_relax in place.
-> +		 * Because when recovering from crash, rproc->lock is held and
-> +		 * state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
-> +		 * and then unlock rproc->lock.
-> +		 * RPROC_OFFLINE is only an intermediate state in recovery
-> +		 * process.
-> +		 */
-> +		if (rproc->state == RPROC_OFFLINE)
-> +			pm_relax(rproc->dev.parent);
->  		return;
->  	}
->  
-> -- 
-> 2.7.4
-> 
+>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 1 +
+>   1 file changed, 1 insertion(+)
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+-- 
+With best wishes
+Dmitry
+
