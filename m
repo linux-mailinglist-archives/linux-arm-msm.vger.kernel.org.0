@@ -2,44 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93E445FCEE1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 01:25:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 867845FCEE4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 01:25:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229534AbiJLXZO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Oct 2022 19:25:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36886 "EHLO
+        id S229678AbiJLXZg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Oct 2022 19:25:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbiJLXZN (ORCPT
+        with ESMTP id S229693AbiJLXZd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Oct 2022 19:25:13 -0400
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02D312E6B8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 16:25:07 -0700 (PDT)
-Received: from cp.tophost.it (vm1054.cs12.seeweb.it [217.64.195.253])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 5269720706;
-        Thu, 13 Oct 2022 01:25:05 +0200 (CEST)
+        Wed, 12 Oct 2022 19:25:33 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 117964F6A3;
+        Wed, 12 Oct 2022 16:25:32 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29CM0Aog025968;
+        Wed, 12 Oct 2022 23:25:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ATY+rKANhUcA1m2bKUbEATQWhSBMgiL3uJ/rfeu58Ls=;
+ b=mb4nROM10RQmQogx/dEud0UtR9GQJRuoegNyxGrrBv5PkKiTOhN2Sr3Vz7CvK7Q9JmkY
+ cMo6pb1Ge0X1e9mbtUl5874ChTF8cWKdxhK6usp3OdZViAE8HMgmlsrez/icNmxfyHDi
+ aWuRoeEfsB7rpRiV/eNkTKvTEEmMkShjRkR558Dd1F9GGYj/jHxIa2rKTK1rQcILJ0Br
+ LcaqSKqxGH75Z8i1z38bpR/ZNFfKQb1oKvYQLEYLZBSr+7StfvFVqxtDd8hrVfYH5dEt
+ wGNpZDkJV39J06DT0Kiv5Z5YXZzrzTFjsUjbb2k92XowHmmjyOReAWX9///sTlSZZBad 5w== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k5q4q2brc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 12 Oct 2022 23:25:19 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29CNPI0v026081
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 12 Oct 2022 23:25:18 GMT
+Received: from [10.38.241.12] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 12 Oct
+ 2022 16:25:14 -0700
+Message-ID: <cd860bb3-d2e7-9706-edfc-332f488dfad4@quicinc.com>
+Date:   Wed, 12 Oct 2022 16:25:12 -0700
 MIME-Version: 1.0
-Date:   Thu, 13 Oct 2022 01:11:23 +0200
-From:   konrad.dybcio@somainline.org
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v3 08/10] drm/msm/dsi: Account for DSC's bits_per_pixel
+ having 4 fractional bits
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        <phone-devel@vger.kernel.org>
+CC:     <~postmarketos/upstreaming@lists.sr.ht>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: msm8996: remove bogus ufs_variant node
-In-Reply-To: <20221012215613.32054-1-luca@z3ntu.xyz>
-References: <20221012215613.32054-1-luca@z3ntu.xyz>
-User-Agent: Roundcube Webmail/1.4.6
-Message-ID: <f52bff659bba370220a76f72ec32fa0c@somainline.org>
-X-Sender: konrad.dybcio@somainline.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Vinod Koul <vkoul@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20221009184824.457416-1-marijn.suijten@somainline.org>
+ <20221009185316.462522-1-marijn.suijten@somainline.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20221009185316.462522-1-marijn.suijten@somainline.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: m8KX8HkSMl8a41P0AhJg_eeU4_M9V_EC
+X-Proofpoint-ORIG-GUID: m8KX8HkSMl8a41P0AhJg_eeU4_M9V_EC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-12_11,2022-10-12_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 adultscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0
+ mlxlogscore=999 mlxscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210120145
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -47,39 +93,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-10-12 23:56, Luca Weiss wrote:
-> This ufs_variant node seems to be a remnant from downstream devicetree.
-Totally [1]
 
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-
-Konrad
-
-[1] 
-https://android.googlesource.com/kernel/msm/+/dff8939cd46ee6b95535d68c54b8bd05ddb6bc1e
+On 10/9/2022 11:53 AM, Marijn Suijten wrote:
+> drm_dsc_config's bits_per_pixel field holds a fractional value with 4
+> bits, which all panel drivers should adhere to for
+> drm_dsc_pps_payload_pack() to generate a valid payload.  All code in the
+> DSI driver here seems to assume that this field doesn't contain any
+> fractional bits, hence resulting in the wrong values being computed.
+> Since none of the calculations leave any room for fractional bits or
+> seem to indicate any possible area of support, disallow such values
+> altogether.  calculate_rc_params() in intel_vdsc.c performs an identical
+> bitshift to get at this integer value.
 > 
-> As it doesn't seem to be used by anything upstream, remove it from the
-> dtsi.
-> 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/msm8996.dtsi | 4 ----
->  1 file changed, 4 deletions(-)
+>   drivers/gpu/drm/msm/dsi/dsi_host.c | 19 ++++++++++++++-----
+>   1 file changed, 14 insertions(+), 5 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> index c0a2baffa49d..87e9aef951ab 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> @@ -1995,10 +1995,6 @@ ufshc: ufshc@624000 {
->  			lanes-per-direction = <1>;
->  			#reset-cells = <1>;
->  			status = "disabled";
-> -
-> -			ufs_variant {
-> -				compatible = "qcom,ufs_variant";
-> -			};
->  		};
-> 
->  		ufsphy: phy@627000 {
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 7e6b7e506ae8..46032c576a59 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -34,7 +34,7 @@
+>   
+>   #define DSI_RESET_TOGGLE_DELAY_MS 20
+>   
+> -static int dsi_populate_dsc_params(struct drm_dsc_config *dsc);
+> +static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc_config *dsc);
+>   
+>   static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
+>   {
+> @@ -909,6 +909,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>   	u32 va_end = va_start + mode->vdisplay;
+>   	u32 hdisplay = mode->hdisplay;
+>   	u32 wc;
+> +	int ret;
+>   
+>   	DBG("");
+>   
+> @@ -944,7 +945,9 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>   		/* we do the calculations for dsc parameters here so that
+>   		 * panel can use these parameters
+>   		 */
+> -		dsi_populate_dsc_params(dsc);
+> +		ret = dsi_populate_dsc_params(msm_host, dsc);
+> +		if (ret)
+> +			return;
+>   
+>   		/* Divide the display by 3 but keep back/font porch and
+>   		 * pulse width same
+> @@ -1770,9 +1773,15 @@ static char bpg_offset[DSC_NUM_BUF_RANGES] = {
+>   	2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -12, -12, -12
+>   };
+>   
+> -static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
+> +static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc_config *dsc)
+>   {
+>   	int i;
+> +	u16 bpp = dsc->bits_per_pixel >> 4;
+> +
+> +	if (dsc->bits_per_pixel & 0xf) {
+> +		DRM_DEV_ERROR(&msm_host->pdev->dev, "DSI does not support fractional bits_per_pixel\n");
+> +		return -EINVAL;
+> +	}
+>   
+>   	if (dsc->bits_per_component != 8) {
+>   		DRM_DEV_ERROR(&msm_host->pdev->dev, "DSI does not support bits_per_component != 8 yet\n");
+> @@ -1798,8 +1807,8 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
+>   		dsc->rc_range_params[i].range_bpg_offset = bpg_offset[i];
+>   	}
+>   
+> -	dsc->initial_offset = 6144; /* Not bpp 12 */
+> -	if (dsc->bits_per_pixel != 8)
+> +	dsc->initial_offset = 6144;		/* Not bpp 12 */
+> +	if (bpp != 8)
+>   		dsc->initial_offset = 2048;	/* bpp = 12 */
+>   
+>   	if (dsc->bits_per_component <= 10)
