@@ -2,227 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A514E5FC8C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 17:56:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1C785FC8ED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 18:11:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230004AbiJLP4t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Oct 2022 11:56:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35670 "EHLO
+        id S229808AbiJLQLX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Oct 2022 12:11:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229620AbiJLP4s (ORCPT
+        with ESMTP id S229734AbiJLQLV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Oct 2022 11:56:48 -0400
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C844BB7EE1;
-        Wed, 12 Oct 2022 08:56:45 -0700 (PDT)
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-12c8312131fso19938096fac.4;
-        Wed, 12 Oct 2022 08:56:45 -0700 (PDT)
+        Wed, 12 Oct 2022 12:11:21 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 915EDA033F;
+        Wed, 12 Oct 2022 09:11:20 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id qw20so38431670ejc.8;
+        Wed, 12 Oct 2022 09:11:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=B17w69Iz2NdYtUdmzCUWZNwrLTOOl7h6wkcqw6Cxh6Y=;
+        b=nnmYhgT6yHUjLg00VqhHteLb5AO8Pdjt/70ZiPO1TpGKF8Ig4Dpf1Tstm3q96mNDeG
+         YbB+YCO5g/au6QhZIkNblqIPL2ltJdNgUg+p+VeJYDYPDoKilk088OIIOSxXYL/afPWp
+         ekwTzNNdx6rvRXNp+eoKwF0zH50fjbQ+pyKxJNquzDMK0YA1vJa4bevNF8gCrq9w/xQp
+         VNl5NKACtAFkEzoDWNGOcqE5kUhIarG24q1o0d/5wjl6L8DWNa/ijd2FzMj5PJ4dHOVa
+         koS/wTN6shEZRFyuhRwqvQCTjTYOM2AqglTtnEYzGuEnv/jED3y1ocZHWOWKsosM/zjC
+         zXNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+J5rBH2Ax6+Mtwp/uLP5yn6FuEpFbZJdzQoPclekoRQ=;
-        b=ctZPtJRERHVDgPm29Klngd3867Gz83FJae322phIE8kaS13k7k09DpV9rXFbHFicVL
-         69FII57uCx9FxvvrCAWiSU5E/575K5EkyoF8tVcjf/YzeGqVzBfT+icQuCHz+DLaaQIl
-         UlNoTbQGcuPVcaGsQ9dANS5xYYYYW67L7HNdPnii3h6ScYoSGTNYDZG1GsQT/V3rp2zQ
-         QUX3Y1BxX8DITfPD3i1U073XCE3rdNSaSvSi/sgrijpoM4Hk6SU3m1NBZn6F7v8vBCG7
-         eqiRHTo0/FnuvwBiHsJU0ssQVgfk9k8kWnP1c7J25XB6P0jQXaxyenQKEJF/zzP8alvZ
-         csBg==
-X-Gm-Message-State: ACrzQf18S137FVUrEOPCm8zmHsz8A9RIAUQ6OSa4WpXAxW8m9NRyQbx2
-        RscQq6RLPGouMk42YCJ0TNUGTSiHmw==
-X-Google-Smtp-Source: AMsMyM7eg6DI/M1+ccTCr5c2InEdknfBOftpJQN1uw9+vlHkdneRdNuwICBHaQyeqK5xSUvxtk/P7Q==
-X-Received: by 2002:a05:6870:ac2b:b0:132:f761:8f4c with SMTP id kw43-20020a056870ac2b00b00132f7618f4cmr2730690oab.17.1665590205023;
-        Wed, 12 Oct 2022 08:56:45 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id bi35-20020a05680818a300b00354978180d8sm2981717oib.22.2022.10.12.08.56.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Oct 2022 08:56:44 -0700 (PDT)
-Received: (nullmailer pid 2187963 invoked by uid 1000);
-        Wed, 12 Oct 2022 15:56:45 -0000
-Date:   Wed, 12 Oct 2022 10:56:45 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 02/13] dt-bindings: Add binding for gunyah hypervisor
-Message-ID: <20221012155645.GA2173829-robh@kernel.org>
-References: <20221011000840.289033-1-quic_eberman@quicinc.com>
- <20221011000840.289033-3-quic_eberman@quicinc.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B17w69Iz2NdYtUdmzCUWZNwrLTOOl7h6wkcqw6Cxh6Y=;
+        b=sjnibrLD/mTm7ML7JmXDG68bJ9XUsPbXhytQqgSCJholNd/eJrKBFicPRmuKQUpwQW
+         aPy33a//fMvEaxag5xx+GR4LYAh4B9TPzFJ+7I5wmRQPMP/Ql2n3rDwMRMlrsvxz5S5e
+         HZyy5sIirzRJ+bufM9GS/8zgGuSLz15Z10A1tacg0mRNZOWygtZw5GzzunQ7GCsviTnx
+         nBsDzHXm3alE7vfRx6mUwIekxyBycwOW+MbTNTi8gYACgwjH66OAJhslczcHy04gDrYm
+         nGZC+IyEYKJFPwYGIUhjTjnLTyWNTJQugIglTs/Le7HtfL1i1YDIXTxCAOoyJDtVIy2/
+         S62A==
+X-Gm-Message-State: ACrzQf1ljsBwgYKGwAxZnGIm8Drz/Q7j+G2NWhs6zrxomk99VzBW27VH
+        VUmZ+EQ7JJ3tAbS9HRQA6PcrcgY92OKyGSRO/YKVfXPdlWVQjw==
+X-Google-Smtp-Source: AMsMyM6TEL6eeZKt8sdOki9RvQU7WssLXUhEdZuXfciNBAxs+hiMJqvFhMHxQS02jfK1Jhm5S7yAUYuA/DK1kFA+j48=
+X-Received: by 2002:a17:906:cc56:b0:78d:98c3:8714 with SMTP id
+ mm22-20020a170906cc5600b0078d98c38714mr17354646ejb.445.1665591078973; Wed, 12
+ Oct 2022 09:11:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221011000840.289033-3-quic_eberman@quicinc.com>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+References: <20221011172358.69043-1-krzysztof.kozlowski@linaro.org> <20221011172358.69043-24-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221011172358.69043-24-krzysztof.kozlowski@linaro.org>
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+Date:   Wed, 12 Oct 2022 19:11:06 +0300
+Message-ID: <CAL7jhicvj2mH6eMG0q=YcUW99ngz7tedQO0U4HsHkAuVKhrJrw@mail.gmail.com>
+Subject: Re: [PATCH v2 23/34] dt-bindings: pinctrl: qcom,sm6115-tlmm: minor
+ style cleanups
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        krishna Lanka <quic_vamslank@quicinc.com>,
+        Martin Botka <martin.botka@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rob Herring <robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 10, 2022 at 05:08:29PM -0700, Elliot Berman wrote:
-> When Linux is booted as a guest under the Gunyah hypervisor, the Gunyah
-> Resource Manager applies a devicetree overlay describing the virtual
-> platform configuration of the guest VM, such as the message queue
-> capability IDs for communicating with the Resource Manager. This
-> information is not otherwise discoverable by a VM: the Gunyah hypervisor
-> core does not provide a direct interface to discover capability IDs nor
-> a way to communicate with RM without having already known the
-> corresponding message queue capability ID. Add the DT bindings that
-> Gunyah adheres for the hypervisor node and message queues.
-> 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->  .../bindings/firmware/gunyah-hypervisor.yaml  | 87 +++++++++++++++++++
->  MAINTAINERS                                   |  1 +
->  2 files changed, 88 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml b/Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
-> new file mode 100644
-> index 000000000000..f0a14101e2fd
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
-> @@ -0,0 +1,87 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/firmware/gunyah-hypervisor.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Gunyah Hypervisor
-> +
-> +maintainers:
-> +  - Murali Nalajala <quic_mnalajal@quicinc.com>
-> +  - Elliot Berman <quic_eberman@quicinc.com>
-> +
-> +description: |+
-> +  On systems which support devicetree, Gunyah generates and overlays a deviceetree overlay which
+On Tue, Oct 11, 2022 at 8:26 PM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> Drop "binding" from description (and align it with other Qualcomm
+> pinctrl bindings), use double quotes consistently, drop redundant
+> quotes and rename file to match compatible (to match coding convention).
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Acked-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Iskren Chernev <iskren.chernev@gmail.com>
 
-How you end up with the node (applying an overlay) is not relavent to 
-the binding.
-
-> +  describes the basic configuration of the hypervisor. Virtual machines use this information to determine
-> +  the capability IDs of the message queues used to communicate with the Gunyah Resource Manager.
-
-Wrap at 80. That is the coding standard still though 100 is deemed 
-allowed. And yamllint only complains at 110 because I didn't care to fix 
-everyones lines over 100.
-
-> +  See also: https://github.com/quic/gunyah-resource-manager/blob/develop/src/vm_creation/dto_construct.c
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - const: gunyah-hypervisor-1.0
-> +      - const: gunyah-hypervisor
-
-2 compatibles implies a difference between the 2. What's the difference? 
-Where does '1.0' come from?
-
-> +
-> +  "#address-cells":
-> +    description: Number of cells needed to represent 64-bit capability IDs.
-> +    const: 2
-> +
-> +  "#size-cells":
-> +    description: must be 0, because capability IDs are not memory address
-> +                  ranges and do not have a size.
-> +    const: 0
-> +
-> +patternProperties:
-> +  "^gunyah-resource-mgr(@.*)?":
-> +    type: object
-> +    description:
-> +      Resource Manager node which is required to communicate to Resource
-> +      Manager VM using Gunyah Message Queues.
-> +
-> +    properties:
-> +      compatible:
-> +        items:
-> +          - const: gunyah-resource-manager-1-0
-> +          - const: gunyah-resource-manager
-
-Same comment here.
-
-> +
-> +      reg:
-> +        items:
-> +          - description: Gunyah capability ID of the TX message queue
-> +          - description: Gunyah capability ID of the RX message queue
-> +
-> +      interrupts:
-> +        items:
-> +          - description: Interrupt for the TX message queue
-> +          - description: Interrupt for the RX message queue
-> +
-> +    additionalProperties: false
-> +
-> +    required:
-> +      - compatible
-> +      - reg
-> +      - interrupts
-> +
-> +additionalProperties: false
-> +
-> +required:
-> +  - compatible
-> +  - "#address-cells"
-> +  - "#size-cells"
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +
-> +    hypervisor {
-> +        #address-cells = <2>;
-> +        #size-cells = <0>;
-> +        compatible = "gunyah-hypervisor-1.0", "gunyah-hypervisor";
-> +
-> +        gunyah-resource-mgr@0 {
-> +            compatible = "gunyah-resource-manager-1-0", "gunyah-resource-manager";
-> +            interrupts = <GIC_SPI 3 IRQ_TYPE_EDGE_RISING>, /* TX full IRQ */
-> +                         <GIC_SPI 4 IRQ_TYPE_EDGE_RISING>; /* RX empty IRQ */
-> +            reg = <0x00000000 0x00000000>, <0x00000000 0x00000001>;
-> +                  /* TX, RX cap ids */
-> +        };
-> +    };
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 91d00b00d91c..ef6de7599d98 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -8884,6 +8884,7 @@ M:	Elliot Berman <quic_eberman@quicinc.com>
->  M:	Murali Nalajala <quic_mnalajal@quicinc.com>
->  L:	linux-arm-msm@vger.kernel.org
->  S:	Supported
-> +F:	Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
->  F:	Documentation/virt/gunyah/
->  
->  HABANALABS PCI DRIVER
-> -- 
-> 2.25.1
-> 
-> 
+>  ...qcom,sm6115-pinctrl.yaml => qcom,sm6115-tlmm.yaml} | 11 +++++------
+>  1 file changed, 5 insertions(+), 6 deletions(-)
+>  rename Documentation/devicetree/bindings/pinctrl/{qcom,sm6115-pinctrl.yaml => qcom,sm6115-tlmm.yaml} (95%)
+>
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml
+> similarity index 95%
+> rename from Documentation/devicetree/bindings/pinctrl/qcom,sm6115-pinctrl.yaml
+> rename to Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml
+> index 3f5f5229a86c..ed68c4ee032f 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-pinctrl.yaml
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml
+> @@ -1,7 +1,7 @@
+>  # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>  %YAML 1.2
+>  ---
+> -$id: http://devicetree.org/schemas/pinctrl/qcom,sm6115-pinctrl.yaml#
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,sm6115-tlmm.yaml#
+>  $schema: http://devicetree.org/meta-schemas/core.yaml#
+>
+>  title: Qualcomm Technologies, Inc. SM6115, SM4250 TLMM block
+> @@ -10,8 +10,8 @@ maintainers:
+>    - Iskren Chernev <iskren.chernev@gmail.com>
+>
+>  description:
+> -  This binding describes the Top Level Mode Multiplexer block found in the
+> -  SM4250/6115 platforms.
+> +  Top Level Mode Multiplexer pin controller in Qualcomm SM4250 and SM6115
+> +  SoCs.
+>
+>  properties:
+>    compatible:
+> @@ -36,9 +36,8 @@ properties:
+>    gpio-reserved-ranges: true
+>    wakeup-parent: true
+>
+> -#PIN CONFIGURATION NODES
+>  patternProperties:
+> -  '-state$':
+> +  "-state$":
+>      oneOf:
+>        - $ref: "#/$defs/qcom-sm6115-tlmm-state"
+>        - patternProperties:
+> @@ -46,7 +45,7 @@ patternProperties:
+>              $ref: "#/$defs/qcom-sm6115-tlmm-state"
+>          additionalProperties: false
+>
+> -'$defs':
+> +$defs:
+>    qcom-sm6115-tlmm-state:
+>      type: object
+>      description:
+> --
+> 2.34.1
+>
