@@ -2,100 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25E5C5FC9FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 19:42:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 112E55FCA2C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 20:02:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229587AbiJLRmk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Oct 2022 13:42:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36214 "EHLO
+        id S229533AbiJLSCI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Oct 2022 14:02:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229608AbiJLRmh (ORCPT
+        with ESMTP id S229572AbiJLSCC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Oct 2022 13:42:37 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E45AEF87DC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 10:42:35 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id s2so25505276edd.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 10:42:35 -0700 (PDT)
+        Wed, 12 Oct 2022 14:02:02 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15096DD898;
+        Wed, 12 Oct 2022 11:02:01 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id q1so7829392pgl.11;
+        Wed, 12 Oct 2022 11:02:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=F+/oGLzREG21Yj0uftDYL1IyCwSjsexCNfPmeCYYK5U=;
-        b=j7mlJDdtav9g6vWHhzB0NwAdum8QysC2za2V7GrivI/Px5eW1urR25/m6DIOgTwa2z
-         N7Do86PkEu10oKl5S4Dl/HsMgMoPZmu1QdafheG/q9BqAeH/4gWGmms7wQNlGqFWSZMr
-         xCP/NgrU2d8KsGwj/W4HbnB42/mUWL68QTz2c=
+        d=gmail.com; s=20210112;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mI6JTDhKVYSrCGCD4V56C9X6Kiak+3dUkc3QnuibHPU=;
+        b=ZwTl6AAaQ0Ws45vSBrLIcUrnyeGPkzph09dsda8I/3iok8sidXoeHPpBSYWXOhWO4I
+         VotyRNrTD2SYFyLa0rgP3w9dLcgU0io4629+19FHN7tg5P7vrE9tTi871hDFV81cYjgf
+         s05P6xeO/0de/53iAG8UuId+EXcpeOBccSvpUxeEcWXz9cyEyrKfHnYSvuhWjccb6/CE
+         sQNFkSa7PZFUOTCbx/fQ+02VgEkRTs0qibiKXdmr7plpmDS/81QioTTfVhHBbYG8fTqo
+         CQoct7DhqlQpGvbd6vSyxz/dbVVl7CyWJ2771hpPjKopD5so1Nq8b4vzopepLQvUUL+V
+         tXUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=F+/oGLzREG21Yj0uftDYL1IyCwSjsexCNfPmeCYYK5U=;
-        b=2N5r/c+PgnriZx2OuFszI/UOA2B6Ik03Siynuqp4zCFht+1FX171iog3M4LQstpjSM
-         /CIN0veiD3B0b8wGxTgAgvG8rnOE5T3+cPNBBsFsJwfEhaXJqRwLioaNggTn+pYZ5sPp
-         AM/nZf/awF6t++28km4fzdUHAP02s9lQJQVqz6GrBTY/b6gsmQAEdYX/wAdKWIO+UVQw
-         RYlFcmF1LvjBZVqt+pfDRLFxhxTmUgOu0qlxQu3lggz9suh2Xu9k0nwmpco2W1P28wRa
-         A6al1nY4JETwIyssWgwUlvrp88mBZ+6rzkluE6gazcCAO39zbgnM6z4IA/TeQg+UPF3x
-         PhEA==
-X-Gm-Message-State: ACrzQf3vSs03XCq1CUJYVFnvutxfgTLS0CRYY4aDNgOIZ56BD4AcRf21
-        lZ+MnHE1/JW/vP4TQq0bvTaLcrFHdn2W/mQD
-X-Google-Smtp-Source: AMsMyM6SgkTYGywxLpFuyBflHeydCATR1sg6ZbIwr0frhnAtw/otRKfOjcoJ4RO828+qlDx0O5rXrA==
-X-Received: by 2002:a05:6402:ea0:b0:454:38bf:aa3d with SMTP id h32-20020a0564020ea000b0045438bfaa3dmr28435374eda.291.1665596554247;
-        Wed, 12 Oct 2022 10:42:34 -0700 (PDT)
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com. [209.85.221.45])
-        by smtp.gmail.com with ESMTPSA id o8-20020aa7d3c8000000b0045769dee1fdsm11684567edr.29.2022.10.12.10.42.31
-        for <linux-arm-msm@vger.kernel.org>
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=mI6JTDhKVYSrCGCD4V56C9X6Kiak+3dUkc3QnuibHPU=;
+        b=bYEYMkdXdGL8vg+I3STyGeb1izw5IYtr7/ObPH9POETAXf98dFkfnJZoI6ylm71pAR
+         LlVci1EYwZSCplV+AdgLd2PC0kPOS/aVWYyZOrnIAB4OFd0OHUUasuJo3p46XQQgNTE/
+         rh1Kq2e7uxjjo2JT3Qe+QgNMT5MjjmXegWzSQz34y8m455E+b19lRMODg4ALuJQUk35Y
+         QGmoAL7CdFHMVXmPgIcpLzQlR/vWAfJu64pBNxkgMqyzkCx8DgLUl9I3l63Y3uCeBnXV
+         GlXBoq8v9RH/w870x/+IWQJz5v7jjdJ5aaAhuV64hl0AjDApHmzOZuXSYvXMohKpQgw0
+         9G6A==
+X-Gm-Message-State: ACrzQf1RVHuQA/eEm0mIXlVeHbBVeh11x+3V7ac/+/X+C1BCu1++CN8M
+        +B07ZkVvs9KNKFWIPL80+aiTvSS4kfKKYA==
+X-Google-Smtp-Source: AMsMyM6wGKajSAd4wPGHhoHm+LRw505WIZj871/gi+wZTScVudBPvwvqo9aSHUegpMeeYFn/afRAgg==
+X-Received: by 2002:a63:1c47:0:b0:44c:2476:12ff with SMTP id c7-20020a631c47000000b0044c247612ffmr27537426pgm.50.1665597720308;
+        Wed, 12 Oct 2022 11:02:00 -0700 (PDT)
+Received: from localhost ([2406:7400:61:b6fa:b70b:65a4:a699:40c8])
+        by smtp.gmail.com with ESMTPSA id d10-20020a170902654a00b0016c50179b1esm10777750pln.152.2022.10.12.11.01.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Oct 2022 10:42:32 -0700 (PDT)
-Received: by mail-wr1-f45.google.com with SMTP id bp11so14543574wrb.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 10:42:31 -0700 (PDT)
-X-Received: by 2002:adf:dd0c:0:b0:22e:4bf6:6c08 with SMTP id
- a12-20020adfdd0c000000b0022e4bf66c08mr19368307wrm.617.1665596551460; Wed, 12
- Oct 2022 10:42:31 -0700 (PDT)
-MIME-Version: 1.0
-References: <20221007145116.46554-1-krzysztof.kozlowski@linaro.org> <20221007145116.46554-2-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221007145116.46554-2-krzysztof.kozlowski@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 12 Oct 2022 10:42:19 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WN+9DJp-3Ny04NmOLau2RYibeJayEtB7x0uT-YoizFQA@mail.gmail.com>
-Message-ID: <CAD=FV=WN+9DJp-3Ny04NmOLau2RYibeJayEtB7x0uT-YoizFQA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] dt-bindings: pinctrl: qcom,sc7180: convert to dtschema
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Wed, 12 Oct 2022 11:01:59 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Wed, 12 Oct 2022 23:31:51 +0530
+Message-Id: <CNK541A4RD4B.31EY633R2WS9O@skynet-linux>
+To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        <linux-kernel@vger.kernel.org>
+Cc:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <dmitry.baryshkov@linaro.org>, "Andy Gross" <agross@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
+        "Mathieu Poirier" <mathieu.poirier@linaro.org>
+Subject: Re: [PATCH v3 1/2] remoteproc: qcom: pas: Add MSM8953 ADSP PIL
+ support
+From:   "Sireesh Kodali" <sireeshkodali1@gmail.com>
+X-Mailer: aerc 0.12.0
+References: <20221008174658.336470-1-sireeshkodali1@gmail.com>
+ <20221008174658.336470-2-sireeshkodali1@gmail.com>
+ <56e8fc84-aad0-b153-e415-8c1bd1647c2b@linaro.org>
+In-Reply-To: <56e8fc84-aad0-b153-e415-8c1bd1647c2b@linaro.org>
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Fri, Oct 7, 2022 at 7:51 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+On Mon Oct 10, 2022 at 4:22 PM IST, Krzysztof Kozlowski wrote:
+> On 08/10/2022 13:46, Sireesh Kodali wrote:
+> > Add support for the Audio DSP PIL found on the Qualcomm MSM8953
+> > platform. The same configuration is used on all SoCs based on the
+> > MSM8953 platform (SDM450, SDA450, SDM625, SDM632, APQ8053).
+> >=20
+> > Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+> > ---
+> >  drivers/remoteproc/qcom_q6v5_pas.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> >=20
+> > diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qc=
+om_q6v5_pas.c
+> > index 6afd0941e552..70b3a37c4814 100644
+> > --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> > +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> > @@ -950,6 +950,7 @@ static const struct of_device_id adsp_of_match[] =
+=3D {
+> >  	{ .compatible =3D "qcom,msm8226-adsp-pil", .data =3D &adsp_resource_i=
+nit},
+> >  	{ .compatible =3D "qcom,msm8974-adsp-pil", .data =3D &adsp_resource_i=
+nit},
+> >  	{ .compatible =3D "qcom,msm8996-adsp-pil", .data =3D &msm8996_adsp_re=
+source},
+> > +	{ .compatible =3D "qcom,msm8953-adsp-pil", .data =3D &msm8996_adsp_re=
+source},
 >
-> +      drive-strength:
-> +        enum: [2, 4, 6, 8, 10, 12, 14, 16]
-> +        default: 2
-> +        description:
-> +          Selects the drive strength for the specified pins, in mA.
+> This one also in alphanumeric order, by compatible.
 
-The "default" of 2 is not correct. Please see commit 768f8d8e45f9
-("dt-bindings: pinctrl: drive-strength doesn't default to 2 if
-unspecified")
+Will be fixed in the next iteration
 
-In fact, are you sure this even needs to be replicated here? This is
-part of the common "qcom,tlmm-common.yaml" bindings file, isn't it?
+Regards,
+Sireesh Kodali
+>
+>
+> Best regards,
+> Krzysztof
 
--Doug
