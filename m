@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 892755FC1C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 10:16:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 716265FC23A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 10:49:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229936AbiJLIQK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Oct 2022 04:16:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50000 "EHLO
+        id S229607AbiJLItU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Oct 2022 04:49:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229902AbiJLIQA (ORCPT
+        with ESMTP id S229599AbiJLItT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Oct 2022 04:16:00 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8001A9F745;
-        Wed, 12 Oct 2022 01:15:58 -0700 (PDT)
+        Wed, 12 Oct 2022 04:49:19 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BF6BB6025;
+        Wed, 12 Oct 2022 01:49:18 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6F1BD6147B;
-        Wed, 12 Oct 2022 08:15:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5A69C4FF0B;
-        Wed, 12 Oct 2022 08:15:55 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id F3EF1B819D8;
+        Wed, 12 Oct 2022 08:49:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B15CC433D7;
+        Wed, 12 Oct 2022 08:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1665562555;
-        bh=nTh2lwlRgXzKhugVBnE4PFdAg98XwlPj4nCwR3AOzzE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=V26VyxmGvzJtCCfXWYvJQZ202ubdjNhF3A6hQUIgfrcSuYzCZXvUSWJrxWm7aTaqW
-         jabUc3iCA1i31uOrLoAxVoOknyaKLEs3FiMzhqNPVpUASSNT9o+UUH46bwR4B/qqxL
-         xbl8hasI32R4ncgkYzx8TZK20vSsmbS3Mt3yG330M9rv3TjVEuTY4V64fz3ygfjQtK
-         NhAZGus73/H49RS3AD+foR+btnqcSbdoONdSxFaqFVFaVW4eZLwODWlhZ5yKJd8DmP
-         Ten5QREBwpblP2wovvm14eK777eJiUn3I+J0ip0BPXez/0Q8KA1/HshxsshvBrMU5Z
-         SR87MmT6vmktg==
+        s=k20201202; t=1665564555;
+        bh=xX5IVlc2R/KkmJrk54vJKvxJp0nawmXPvcm/+1PLy84=;
+        h=From:To:Cc:Subject:Date:From;
+        b=A7UpJexEM00HtjWf9H3Kub1GaCfU/eEw7juC8cPpgInLbEU4LRIkSmq0clCDZIwGV
+         hQKGUElMySmxhwWHdtyQklvrxymE7TIOkzVPbkOdUZxeOliJZAqs8iRQqfdgyzbtCG
+         9R4A7Q7hkh12O88YodyQuGztmmF1efs4AtH01hrmLQ4jA4NS0kkZVLuYYOl1U0J4AW
+         KmRd8wc7837BN2zUisfPZMKzU7jtQKQBCjEkmbTIPGCK8K23c+2jCBogwIhq5mSdtL
+         0A181nyJSzuX3cKRGQefuD9IW0hHF4f9JUzQNGPeTICU14mwtBAa9WNptLcLUEYse1
+         BuSD4flefK/HA==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan+linaro@kernel.org>)
-        id 1oiWu3-0004ox-Cb; Wed, 12 Oct 2022 10:15:47 +0200
+        id 1oiXQH-0006Fe-4S; Wed, 12 Oct 2022 10:49:05 +0200
 From:   Johan Hovold <johan+linaro@kernel.org>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -45,12 +45,10 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org,
         Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v2 14/14] phy: qcom-qmp-usb: drop power-down delay config
-Date:   Wed, 12 Oct 2022 10:12:41 +0200
-Message-Id: <20221012081241.18273-15-johan+linaro@kernel.org>
+Subject: [PATCH 00/20] phy: qcom-qmp: further prep fixes and cleanups (set 3)
+Date:   Wed, 12 Oct 2022 10:48:46 +0200
+Message-Id: <20221012084846.24003-1-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221012081241.18273-1-johan+linaro@kernel.org>
-References: <20221012081241.18273-1-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
@@ -62,164 +60,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The power-down delay was included in the first version of the QMP driver
-as an optional delay after powering on the PHY (using
-POWER_DOWN_CONTROL) and just before starting it. Later changes modified
-this sequence by powering on before initialising the PHY, but the
-optional delay stayed where it was (i.e. before starting the PHY).
+Here's the next batch of QMP fixes and cleanups in preparation for
+adding support for SC8280XP and its four-lane PCIe PHYs.
 
-The vendor driver does not use a delay before starting the PHY and this
-is likely not needed on any platform unless there is a corresponding
-delay in the vendor kernel init sequence tables (i.e. in devicetree).
+Note that these apply on top of the following three series that have
+been reviewed and should be ready to be merged when the PHY tree opens:
 
-Let's keep the delay for now, but drop the redundant delay period
-configuration while increasing the unnecessarily low timer slack
-somewhat.
+	https://lore.kernel.org/lkml/20220929092916.23068-1-johan+linaro@kernel.org/
+	https://lore.kernel.org/linux-phy/20220927092207.161501-1-dmitry.baryshkov@linaro.org/
+	https://lore.kernel.org/lkml/20221012081241.18273-1-johan+linaro@kernel.org/
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 35 +------------------------
- 1 file changed, 1 insertion(+), 34 deletions(-)
+Note that I did not add stable tags to the initialisation fixes as these
+drivers obviously work to some degree also without waiting for the PHY
+to become ready during power on. After they have been tested on the
+corresponding platforms, any interested party can ask the stable team to
+backport them.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index 57dda1ecefe6..751f628710eb 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -63,8 +63,6 @@
- #define CLAMP_EN				BIT(0) /* enables i/o clamp_n */
- 
- #define PHY_INIT_COMPLETE_TIMEOUT		10000
--#define POWER_DOWN_DELAY_US_MIN			10
--#define POWER_DOWN_DELAY_US_MAX			11
- 
- struct qmp_phy_init_tbl {
- 	unsigned int offset;
-@@ -1452,9 +1450,6 @@ struct qmp_phy_cfg {
- 
- 	/* true, if PHY needs delay after POWER_DOWN */
- 	bool has_pwrdn_delay;
--	/* power_down delay in usec */
--	int pwrdn_delay_min;
--	int pwrdn_delay_max;
- 
- 	/* true, if PHY has a separate DP_COM control block */
- 	bool has_phy_dp_com_ctrl;
-@@ -1660,9 +1655,6 @@ static const struct qmp_phy_cfg qmp_v3_usb3phy_cfg = {
- 	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
--	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
--
- 	.has_phy_dp_com_ctrl	= true,
- };
- 
-@@ -1690,9 +1682,6 @@ static const struct qmp_phy_cfg sc7180_usb3phy_cfg = {
- 	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
--	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
--
- 	.has_phy_dp_com_ctrl	= true,
- };
- 
-@@ -1744,8 +1733,6 @@ static const struct qmp_phy_cfg qmp_v3_usb3_uniphy_cfg = {
- 	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
--	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
- };
- 
- static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
-@@ -1798,11 +1785,7 @@ static const struct qmp_phy_cfg sm8150_usb3phy_cfg = {
- 	.pwrdn_ctrl		= SW_PWRDN,
- 	.phy_status		= PHYSTATUS,
- 
--
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
--	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
--
- 	.has_phy_dp_com_ctrl	= true,
- };
- 
-@@ -1833,8 +1816,6 @@ static const struct qmp_phy_cfg sm8150_usb3_uniphy_cfg = {
- 	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
--	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
- };
- 
- static const struct qmp_phy_cfg sm8250_usb3phy_cfg = {
-@@ -1864,9 +1845,6 @@ static const struct qmp_phy_cfg sm8250_usb3phy_cfg = {
- 	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
--	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
--
- 	.has_phy_dp_com_ctrl	= true,
- };
- 
-@@ -1897,8 +1875,6 @@ static const struct qmp_phy_cfg sm8250_usb3_uniphy_cfg = {
- 	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
--	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
- };
- 
- static const struct qmp_phy_cfg sdx55_usb3_uniphy_cfg = {
-@@ -1928,8 +1904,6 @@ static const struct qmp_phy_cfg sdx55_usb3_uniphy_cfg = {
- 	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
--	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
- };
- 
- static const struct qmp_phy_cfg sdx65_usb3_uniphy_cfg = {
-@@ -1959,8 +1933,6 @@ static const struct qmp_phy_cfg sdx65_usb3_uniphy_cfg = {
- 	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
--	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
- };
- 
- static const struct qmp_phy_cfg sm8350_usb3phy_cfg = {
-@@ -1990,9 +1962,6 @@ static const struct qmp_phy_cfg sm8350_usb3phy_cfg = {
- 	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
--	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
--
- 	.has_phy_dp_com_ctrl	= true,
- };
- 
-@@ -2023,8 +1992,6 @@ static const struct qmp_phy_cfg sm8350_usb3_uniphy_cfg = {
- 	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
--	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
- };
- 
- static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
-@@ -2205,7 +2172,7 @@ static int qmp_usb_power_on(struct phy *phy)
- 	qmp_usb_configure(pcs, cfg->pcs_tbl, cfg->pcs_tbl_num);
- 
- 	if (cfg->has_pwrdn_delay)
--		usleep_range(cfg->pwrdn_delay_min, cfg->pwrdn_delay_max);
-+		usleep_range(10, 20);
- 
- 	/* Pull PHY out of reset state */
- 	qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
+Johan
+
+
+Johan Hovold (20):
+  phy: qcom-qmp-pcie: fix sc8180x initialisation
+  phy: qcom-qmp-pcie: fix ipq8074-gen3 initialisation
+  phy: qcom-qmp-pcie: fix ipq6018 initialisation
+  phy: qcom-qmp-pcie: clean up status polling
+  phy: qcom-qmp-pcie: increase status polling period
+  phy: qcom-qmp-pcie-msm8996: clean up ready and status polling
+  phy: qcom-qmp-pcie-msm8996: increase status polling period
+  phy: qcom-qmp-combo: clean up status polling
+  phy: qcom-qmp-combo: increase status polling period
+  phy: qcom-qmp-ufs: drop unused phy-status config
+  phy: qcom-qmp-ufs: clean up ready polling
+  phy: qcom-qmp-ufs: increase ready polling period
+  phy: qcom-qmp-usb: clean up status polling
+  phy: qcom-qmp-usb: increase status polling period
+  phy: qcom-qmp-combo: drop start and pwrdn-ctrl abstraction
+  phy: qcom-qmp-pcie: drop start-ctrl abstraction
+  phy: qcom-qmp-pcie: add config sanity checks
+  phy: qcom-qmp-pcie-msm8996: drop start and pwrdn-ctrl abstraction
+  phy: qcom-qmp-ufs: drop start and pwrdn-ctrl abstraction
+  phy: qcom-qmp-usb: drop start and pwrdn-ctrl abstraction
+
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 43 ++--------
+ .../phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c  | 36 +++-----
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 30 +++----
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       | 51 ++---------
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 86 ++-----------------
+ 5 files changed, 46 insertions(+), 200 deletions(-)
+
 -- 
 2.35.1
 
