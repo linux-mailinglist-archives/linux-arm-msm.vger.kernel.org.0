@@ -2,81 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30A445FC570
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 14:36:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FA8D5FC59E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 14:54:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229896AbiJLMgi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Oct 2022 08:36:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33870 "EHLO
+        id S229480AbiJLMyY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Oct 2022 08:54:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229887AbiJLMgg (ORCPT
+        with ESMTP id S229696AbiJLMyN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Oct 2022 08:36:36 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32127C7040;
-        Wed, 12 Oct 2022 05:36:35 -0700 (PDT)
+        Wed, 12 Oct 2022 08:54:13 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AB88C97F2;
+        Wed, 12 Oct 2022 05:54:11 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id AAC1EB818F7;
-        Wed, 12 Oct 2022 12:36:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B50C433D6;
-        Wed, 12 Oct 2022 12:36:32 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 920846141C;
+        Wed, 12 Oct 2022 12:54:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5AAC433D6;
+        Wed, 12 Oct 2022 12:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1665578192;
-        bh=Db+uhFCwSlxVQ3TiIbRMEXABKltWPh+mXJQChhSYZlY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=i84PNqzlzqRLLjJ2tzk5cG8lz6wp18yYayD0cYlcjx2alRv1ll5b5BRIsC9hJ7loG
-         2+52jjuOS3CMxwVByoVhGcGa/rql8sbjR0dB7KTMmwGWIK8PBmX9frvgbfU9sMOyLA
-         TTayfJWPW1iy2X1+Ai94/uT/02vD292ZkUR0Zw5696SQpiPshTbs87zCtQuvikhpCW
-         dbWZ59uHRY6Pxu1BHUup7j5ny1bamYxxeh0a7zEA8/vyJWXbaEU0isDq3gZTeS/g4C
-         zQGVO01Sq8FuoPOrrVZ5zqNSZ5bDqzah/hTTObC3AVH1tggNGEOySqlocpjUV7ykK6
-         GFztbC0MZCzlA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oiayA-0008G3-NF; Wed, 12 Oct 2022 14:36:18 +0200
-Date:   Wed, 12 Oct 2022 14:36:18 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 00/20] phy: qcom-qmp: further prep fixes and cleanups
- (set 3)
-Message-ID: <Y0a0wuhKieNLDamy@hovoldconsulting.com>
-References: <20221012084846.24003-1-johan+linaro@kernel.org>
+        s=k20201202; t=1665579251;
+        bh=AIeGGSg/EfOPT/q/5pGppJEf2mu95V7y75CXy5HDoLY=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=eghw1zmWDlGQL6bVwaqS77HemFRMGuZ2H+EbyNO069FGb4Eb/0lVuGESOshgOGPAG
+         93pqukcfVGNRVLX0KoGz7mPxXXG/KvxKXm8WfI7UXzQ7nnDW7yEUxQn/tdeCOb4YC8
+         bfoX31FcNxkE/zyF137OmHghScvxw34m/oadhqN9aVRYYCBtuy+Yw3ghDNcMDLFnbF
+         y0Uyr3wXOXIR0hTE3uhMMSRBeF52vzVBZI10O+5gA0fampASQ6cyQ+i/sXhBkJgYnZ
+         dnoSevIC3y5P5plUORPRyFUdVEWxTNaW/JDRu47y2Qr9Z0NF/ee3/T1aUxIU5l6vFC
+         YzmbMXV0pIetQ==
+Message-ID: <2ee13936-4589-8711-2f20-a52f27047492@kernel.org>
+Date:   Wed, 12 Oct 2022 08:54:06 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221012084846.24003-1-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH V14 1/7] dt-bindings: Added the yaml bindings for DCC
+Content-Language: en-US
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, vkoul@kernel.org
+References: <cover.1664383851.git.quic_schowdhu@quicinc.com>
+ <e320555b2075c94946ef3f9c78732dc84ba39449.1664383851.git.quic_schowdhu@quicinc.com>
+ <4d0f7a01-1995-1b1e-40b9-125c3447b8c7@kernel.org>
+ <78b42aab-164a-7fe6-fec5-77f52199c641@quicinc.com>
+ <e028ad6a-9687-5089-4938-e982764b9c58@kernel.org>
+ <a1a79910-c697-3660-ddf8-5f4f164c1b34@quicinc.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <a1a79910-c697-3660-ddf8-5f4f164c1b34@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 12, 2022 at 10:48:46AM +0200, Johan Hovold wrote:
-> Here's the next batch of QMP fixes and cleanups in preparation for
-> adding support for SC8280XP and its four-lane PCIe PHYs.
+On 12/10/2022 01:57, Souradeep Chowdhury wrote:
 > 
-> Note that these apply on top of the following three series that have
-> been reviewed and should be ready to be merged when the PHY tree opens:
+> On 10/11/2022 6:50 PM, Krzysztof Kozlowski wrote:
+>> On 30/09/2022 02:59, Souradeep Chowdhury wrote:
+>>> Also the ./script/maintainers.pl gives the below output
+>>>
+>>> Souradeep Chowdhury<quic_schowdhu@quicinc.com>  (maintainer:DCC QTI
+>>> DRIVER,in file)
+>>> Andy Gross<agross@kernel.org>  (maintainer:ARM/QUALCOMM SUPPORT)
+>>> Bjorn Andersson<andersson@kernel.org>  (maintainer:ARM/QUALCOMM SUPPORT)
+>>> Konrad Dybcio<konrad.dybcio@somainline.org>  (reviewer:ARM/QUALCOMM SUPPORT)
+>>> Rob Herring<robh+dt@kernel.org>  (maintainer:OPEN FIRMWARE AND FLATTENED
+>>> DEVICE TREE BINDINGS)
+>>> Krzysztof Kozlowski<krzysztof.kozlowski+dt@linaro.org>  (maintainer:OPEN
+>>> FIRMWARE AND FLATTENED DEVICE TREE BINDINGS)
+>>> linux-arm-msm@vger.kernel.org  (open list:DCC QTI DRIVER)
+>>> devicetree@vger.kernel.org  (open list:OPEN FIRMWARE AND FLATTENED DEVICE
+>>> TREE BINDINGS)
+>>> linux-kernel@vger.kernel.org  (open list)
+>>>
+>>> Will send out the next version accordingly, let me know in case of any
+>>> further concerns.
+>> v15 and v16 was still not sent according to what you wrote above...
+> 
+> I have copied all of the above in the mailing list, also I have 
+> implemented all the previous comments.
 
-Same here; I forgot to mention this series:
+At least my address is not correct.
 
-	https://lore.kernel.org/lkml/20220928152822.30687-1-johan+linaro@kernel.org/
+Best regards,
+Krzysztof
 
-which has also been reviewed but did not make it into 6.1.
-
-> 	https://lore.kernel.org/lkml/20220929092916.23068-1-johan+linaro@kernel.org/
-> 	https://lore.kernel.org/linux-phy/20220927092207.161501-1-dmitry.baryshkov@linaro.org/
-> 	https://lore.kernel.org/lkml/20221012081241.18273-1-johan+linaro@kernel.org/
-
-Johan
