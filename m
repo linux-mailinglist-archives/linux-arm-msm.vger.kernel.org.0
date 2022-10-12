@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BD035FCC51
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 22:45:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B65AA5FCC57
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 22:45:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229929AbiJLUpZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Oct 2022 16:45:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38616 "EHLO
+        id S230015AbiJLUpw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Oct 2022 16:45:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229948AbiJLUo7 (ORCPT
+        with ESMTP id S229896AbiJLUpV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Oct 2022 16:44:59 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15D3D25EA4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 13:44:55 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id r14so27483655lfm.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 13:44:54 -0700 (PDT)
+        Wed, 12 Oct 2022 16:45:21 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 737BA57BF8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 13:45:16 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id a6so295933ljq.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 13:45:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=q9wl5+PiSZN6AaJzBZ/KLRxxihfd/IciBfNo3fkYfNE=;
-        b=RkTPnQLNHAFNhKBnX0jd6a8iEC8tcazzvdET2h5nGgP0nysQZ94sDVwrer8iIaBN2C
-         hiboq+h869MYgY8zS0R8+EDoVcApXEYgpRaBLtqt0eKvRAiVBZBDcseyLseA1iWIPaER
-         DoAe0Icg+c4m8AZXamFNYhOndCInZISW6XoFKB1+gCmYdnxAaqk6tsdtkTiuA/mAw3KP
-         KYVSKEfkAbCGqOHbmlo9WIUXO8QvgJ0tyrAiBChPLzaCTb+/VWyfaqTa7RwlHz7b+6uy
-         7vVVbHRNN6bpPdGbjZS6ZCl6TAp/LdLV/m0e4TqEs3NuU2N89Tz+e1ZXl8z7yFQA8f34
-         6ASQ==
+        bh=Sti7xlJS8BDmPeM82erSW44bu9sTdRGshhN8rLPU3bA=;
+        b=RbhRt1rpSUaAOSD9pBZPyvuMFoWe6OutvYUttzUiIkADnJ4ofq2sMk1thS3vJa3JDX
+         N2nGP+2pMgqi9t8wBUFAKEFGZ8dMIuhpZfnpdWV5TJhYX23En8L39Lk13fwrwZph7Rvz
+         LSf6k0EbODorm4dKGTClNXmcko05jjDlV2+r211Z34RSwRg+nYN1V1QpM8shPUHNA4Au
+         6RBolRLH1AJUeh0xmnMeEF5dOYE4rg+St0HQUe4GqHRA8tdmpa07JGKOHmrmtDphhcRe
+         z318noV8MdCGzaomGb9ZZjBadvI6QG3wzg0Gc9GSEuGiJIxJrKx3iQks/vtGzQItVhQ3
+         fm7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q9wl5+PiSZN6AaJzBZ/KLRxxihfd/IciBfNo3fkYfNE=;
-        b=OSwlVoEEQrh6ZxqijajUnQNue62o/N+6OgpHDbsstdq1FnSuqT16r0HhfoEoXLg2Zq
-         ID8in5Syv+FdeDeb5T6VkxY4y4a/XD5nIWtbk2pPl4Ph1tlx8XaVEJJ6v6U+bpeUNAzs
-         y2EIKdxtdFadD2wELTDevGDGawkUAB3xzETyr8k9NMcRfRdn31+IieJp9E3GEOVCjDMs
-         qZGTEeJ5xE2403pQcSfTcsUML2DtguKZ2mLCUe2+ByrvJf52zbL6ubLBB/uYCAL7z6av
-         FwhEKIPAEX4GFF1pM+pgAlARk5ktbwHq3COUJpT8mhxacDDGY2Siw/5VcnlKKk0XtQdi
-         sNMw==
-X-Gm-Message-State: ACrzQf12M7ni7+8BU0Z1yBUJVzoW5qLOMHChYN3yHDnzzBssu1veRzBg
-        e2fm1vAuNT6OV2qS54oLQnsT1w==
-X-Google-Smtp-Source: AMsMyM7SrYIpx4hJ1TfdwcVVt2hXwM9KLIZKDfBrcAuFImQPd0eSRK0JEmCZGB3vyARdRbmiebiDoQ==
-X-Received: by 2002:a05:6512:b1e:b0:4a1:ba8c:7ea7 with SMTP id w30-20020a0565120b1e00b004a1ba8c7ea7mr10975882lfu.608.1665607493425;
-        Wed, 12 Oct 2022 13:44:53 -0700 (PDT)
+        bh=Sti7xlJS8BDmPeM82erSW44bu9sTdRGshhN8rLPU3bA=;
+        b=CsEXUOccTTXLNhA3Wit20IikVV2eXeHA4IWHzqQ+ZMaQHYYbhPe8Ch/pMm7vMHbjQ6
+         H/GhA8rJKBhDoLTLoUnd6ZvGeqPNQdVMNPLl6/owQKTNRJp/XDRX78drHWhAxSDO5P4I
+         mIPUS7ag49EhQcVr+ZQQAfEf9SsJc/+VMDWCyChWOLsSVaMKbXQzjD7QoJUV+4vQiNUq
+         6Oaftk50/1Uk19/h6K+8/E2TZXPYtGCmDkDjFrBCVsRA1grFlOLOjH6LfieNIciG2NnC
+         q7i0nUgqn7GQdpls+ceT2K4IXeHsNpndjR4mcv8AkRGpW0vAhagZ1/QgfjIo9VBvhF4Y
+         3llw==
+X-Gm-Message-State: ACrzQf1illvLltaNQtsfbg1P8yoHp2Pbxqh/lDS7R3RzkuRfqRRm6RYw
+        z888+S7Ium84vfyavrBwWBU3bg==
+X-Google-Smtp-Source: AMsMyM71pvu/vjt3lZgu3Ss9P4ecS3RXKZjg0NzEj/bQ//NP9sw6TtXb/w0ZyLNfe2xeJ4G3thg5Qw==
+X-Received: by 2002:a2e:92c4:0:b0:25d:9d30:5d61 with SMTP id k4-20020a2e92c4000000b0025d9d305d61mr12046148ljh.202.1665607514237;
+        Wed, 12 Oct 2022 13:45:14 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id q1-20020ac246e1000000b0049f9799d349sm95735lfo.187.2022.10.12.13.44.52
+        by smtp.gmail.com with ESMTPSA id e3-20020a2e8ec3000000b0026c3ecf9a39sm115541ljl.38.2022.10.12.13.45.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Oct 2022 13:44:53 -0700 (PDT)
-Message-ID: <0a32e581-9b75-0d31-21c9-cae65eddfa86@linaro.org>
-Date:   Wed, 12 Oct 2022 23:44:52 +0300
+        Wed, 12 Oct 2022 13:45:13 -0700 (PDT)
+Message-ID: <b9ae4d56-3d16-cf78-91c5-ce52dad02daa@linaro.org>
+Date:   Wed, 12 Oct 2022 23:45:13 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.1
-Subject: Re: [PATCH 03/20] phy: qcom-qmp-pcie: fix ipq6018 initialisation
+Subject: Re: [PATCH 04/20] phy: qcom-qmp-pcie: clean up status polling
 Content-Language: en-GB
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>
@@ -67,15 +67,14 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-kernel@vger.kernel.org
 References: <20221012084846.24003-1-johan+linaro@kernel.org>
  <20221012085002.24099-1-johan+linaro@kernel.org>
- <20221012085002.24099-3-johan+linaro@kernel.org>
+ <20221012085002.24099-4-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221012085002.24099-3-johan+linaro@kernel.org>
+In-Reply-To: <20221012085002.24099-4-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -83,15 +82,13 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 12/10/2022 11:49, Johan Hovold wrote:
-> The phy_status mask was never set for IPQ6018 which meant that the
-> driver would not wait for the PHY to be initialised during power-on and
-> would never detect PHY initialisation timeouts.
+> Clean up the status polling by dropping the ready bit mask which is no
+> longer needed since the QMP driver split.
 > 
-> Fixes: 520264db3bf9 ("phy: qcom-qmp: add QMP V2 PCIe PHY support for ipq60xx")
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 1 +
->   1 file changed, 1 insertion(+)
+>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 6 ++----
+>   1 file changed, 2 insertions(+), 4 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
