@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51D4A5FCCD9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 23:14:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBF5B5FCCDC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 23:14:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229641AbiJLVOa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Oct 2022 17:14:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52218 "EHLO
+        id S230063AbiJLVOx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Oct 2022 17:14:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229872AbiJLVO3 (ORCPT
+        with ESMTP id S230053AbiJLVOt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Oct 2022 17:14:29 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3987C118773
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 14:14:20 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id m23so60620lji.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 14:14:19 -0700 (PDT)
+        Wed, 12 Oct 2022 17:14:49 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 061012677
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 14:14:41 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id m23so61533lji.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 14:14:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=k2wHfeYVczJ7pTmpwYQg5AHr9jzgUcdFH8v2Yq9evuY=;
-        b=yAtZrddc3MZD0cYVyNGcrcByzmQI0MosWirM10UwAJre9HSEuICNwu9G3LH5csOhe7
-         XLRM9870ZU8Gt0MtgXvPHTHeDRRm0FonC6ZQW69kyyxazEyB0dB3ScesYQMNxfCRAaOf
-         jvK8AtvJ4EV3fTQDR79QudKQfviO7ekHYlDa/OJ63Yk7qjaoWfEERgyYQOHP8eFCW/e+
-         f34c1X72QedByimJK95WQ4FjEYwxN1k7uGf50wtQnSOAF7AC3y7eeqPaipk9xiFOnK+G
-         gjsbIvmko4Ww1BtQvgvWbzqlGpKasYh0iTjnR78zasP4nF9DPGoBgUXRgDkVVtH0uP+u
-         5/6Q==
+        bh=nZyBNqSnvYMphKf3R14IEtoGMj+mpBrmqZfyga1bqsw=;
+        b=VhMak40WlTljj0imeT8iGYU7G7/1WjAWnDS/DMVdrvBjsXX31m9R84HCdbfC1wrU48
+         ELeeYCTf/YSdM4Di7aHLVj0oqD1Z7rIkGSDSC2Xd5q9A1yBuPhmIfanxNNGa87G5l5f3
+         YEHxo9IAnA7MwOQrTnInMxGEnmNsAX9SWPA+lnKZyEVL47+YgHZ2awAwK0aEx3hDCPg4
+         6P18UQVpr0Kbx1CF03mAe64Fp0+BEZqfbKy1NWQ6jQRl9PIg0v7AyzoLiL6uZNPpTLJl
+         fNaSh2alT4mfh241jqGOaqc3dgB81AEr4VEA5zF2obCuCafi0sWSSDIYzPrhwsZoC8oJ
+         xRFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=k2wHfeYVczJ7pTmpwYQg5AHr9jzgUcdFH8v2Yq9evuY=;
-        b=MsHcH/Sr72cn4qfnEYLQEhYnzy/EAljbP5dJEYu+hI5je8KV15XfLyUZwIMtdc4BJs
-         2nrIDZ0dyUjECpsnQX43YVW+XTcnhqifLB5tdxxyYstQW77DHeGDoZhHM4v2KGm4eCOc
-         3CFtXJsLzA9ZY2BUvrm3+3asWe1/R9K3tJADWpT3XUCFPNxUEggqjS6Iq759Q8b622gw
-         HwIbZyfaFgZxaoMa8uevRB+TkZV+kIbzqADAAraZS5+03Vv73Vt/nohAm27QLq8IOm8T
-         bjUoTftstIl1s/CtAYcaMXCHBcvpnoEGpZyXs8ff58tfHDKPBw84NaqUvGhj5Fk4Qa95
-         6dRQ==
-X-Gm-Message-State: ACrzQf32BRqJMVZQm9BPfB7uUOJXu62/BwREHqZ6guyXOWuyuL7C1p1a
-        /+cZA1pbaKUAAi87vs7PB8PRXQ==
-X-Google-Smtp-Source: AMsMyM7BUlUaBh67kpcRmFBSY56N1BjyNPwpKtT3CxzjKJVNnPUOrReFRfvSZW/wQDKBXLEWxYaeFw==
-X-Received: by 2002:a2e:a910:0:b0:261:b408:1169 with SMTP id j16-20020a2ea910000000b00261b4081169mr12189526ljq.360.1665609258091;
-        Wed, 12 Oct 2022 14:14:18 -0700 (PDT)
+        bh=nZyBNqSnvYMphKf3R14IEtoGMj+mpBrmqZfyga1bqsw=;
+        b=pmJ0knMC1aEMf8DNrBg78CCnMgm7MNkHX9hmp6bVytsOvxlDZXVYlL830VTl6fCSfp
+         PwrUrERbHe2GrWchlVswrEqcm2LysfsDMbU39FL33vQGVvkXDLW2p9gg8+IeDwAShn/n
+         +Q4LyoncNrRrY6gpQp9jaAh0KSGMTogLA9FU4j9OCiCGC+FdeM9jQCrdsMhzdSdOnUUl
+         i78onbPLUGUbMSWX7Q4kaqfdfPfQYpW5J6wdoEZJfwDki/sbc4vdgJ7rvWzB0e/4kGCr
+         ScM+VGVGzZTBBE6x53oTGYnz8pAPoBiDxYxHlTXZYnfaAJYww/BtPgqnm/vx0fmDZnqL
+         l98Q==
+X-Gm-Message-State: ACrzQf0PCORhhScTxLIR7HTYdW8GOyyxX78YQLsgu4gFhj7gOAiUtlsA
+        YmyvIj5bQLHANfZGtr+7/xt9Tw==
+X-Google-Smtp-Source: AMsMyM7W9fcKv5hoMaeiG57NqvIo+vlchll+kekxhky2K8C66dGlelY28KhA7csxWFX1UvFQaTn0Zw==
+X-Received: by 2002:a05:651c:1950:b0:26f:a406:6f6d with SMTP id bs16-20020a05651c195000b0026fa4066f6dmr7354742ljb.240.1665609279521;
+        Wed, 12 Oct 2022 14:14:39 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id j28-20020ac253bc000000b00494792ea34esm98713lfh.273.2022.10.12.14.14.17
+        by smtp.gmail.com with ESMTPSA id f15-20020a05651c02cf00b0026ab2a04055sm112848ljo.130.2022.10.12.14.14.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Oct 2022 14:14:17 -0700 (PDT)
-Message-ID: <ca4eef6a-dedd-1823-9525-67d695ac3e58@linaro.org>
-Date:   Thu, 13 Oct 2022 00:14:17 +0300
+        Wed, 12 Oct 2022 14:14:39 -0700 (PDT)
+Message-ID: <e1d03a86-4369-763e-2559-68ff044cbad1@linaro.org>
+Date:   Thu, 13 Oct 2022 00:14:38 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.1
-Subject: Re: [PATCH 08/20] phy: qcom-qmp-combo: clean up status polling
+Subject: Re: [PATCH 10/20] phy: qcom-qmp-ufs: drop unused phy-status config
 Content-Language: en-GB
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>
@@ -67,14 +67,15 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-kernel@vger.kernel.org
 References: <20221012084846.24003-1-johan+linaro@kernel.org>
  <20221012085002.24099-1-johan+linaro@kernel.org>
- <20221012085002.24099-8-johan+linaro@kernel.org>
+ <20221012085002.24099-10-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221012085002.24099-8-johan+linaro@kernel.org>
+In-Reply-To: <20221012085002.24099-10-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,94 +83,15 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 12/10/2022 11:49, Johan Hovold wrote:
-> Clean up the PHY status polling by dropping the configuration mask which
-> is no longer needed since the QMP driver split.
+> Drop the unused phy-status configuration mask which has never been used
+> for UFS PHYs.
 > 
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-
-This comes in expectation that 4.20 / 5.20 PHYs will be limited to PCIe. 
-I'd add this to the commit message. With that fixed:
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 9 ---------
+>   1 file changed, 9 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-> ---
->   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 14 ++------------
->   1 file changed, 2 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> index 82055d3a3536..e312cad6d9c2 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> @@ -853,8 +853,6 @@ struct qmp_phy_cfg {
->   
->   	unsigned int start_ctrl;
->   	unsigned int pwrdn_ctrl;
-> -	/* bit offset of PHYSTATUS in QPHY_PCS_STATUS register */
-> -	unsigned int phy_status;
->   
->   	/* true, if PHY needs delay after POWER_DOWN */
->   	bool has_pwrdn_delay;
-> @@ -1023,7 +1021,6 @@ static const struct qmp_phy_cfg sc7180_usb3phy_cfg = {
->   
->   	.start_ctrl		= SERDES_START | PCS_START,
->   	.pwrdn_ctrl		= SW_PWRDN,
-> -	.phy_status		= PHYSTATUS,
->   
->   	.has_pwrdn_delay	= true,
->   };
-> @@ -1092,7 +1089,6 @@ static const struct qmp_phy_cfg sdm845_usb3phy_cfg = {
->   
->   	.start_ctrl		= SERDES_START | PCS_START,
->   	.pwrdn_ctrl		= SW_PWRDN,
-> -	.phy_status		= PHYSTATUS,
->   
->   	.has_pwrdn_delay	= true,
->   };
-> @@ -1127,7 +1123,6 @@ static const struct qmp_phy_cfg sm8150_usb3phy_cfg = {
->   
->   	.start_ctrl		= SERDES_START | PCS_START,
->   	.pwrdn_ctrl		= SW_PWRDN,
-> -	.phy_status		= PHYSTATUS,
->   
->   	.has_pwrdn_delay	= true,
->   };
-> @@ -1197,7 +1192,6 @@ static const struct qmp_phy_cfg sc8280xp_usb43dp_usb_cfg = {
->   
->   	.start_ctrl		= SERDES_START | PCS_START,
->   	.pwrdn_ctrl		= SW_PWRDN,
-> -	.phy_status		= PHYSTATUS,
->   };
->   
->   static const struct qmp_phy_cfg sc8280xp_usb43dp_dp_cfg = {
-> @@ -1267,7 +1261,6 @@ static const struct qmp_phy_cfg sm8250_usb3phy_cfg = {
->   
->   	.start_ctrl		= SERDES_START | PCS_START,
->   	.pwrdn_ctrl		= SW_PWRDN,
-> -	.phy_status		= PHYSTATUS,
->   
->   	.has_pwrdn_delay	= true,
->   };
-> @@ -2017,7 +2010,7 @@ static int qmp_combo_power_on(struct phy *phy)
->   	void __iomem *rx = qphy->rx;
->   	void __iomem *pcs = qphy->pcs;
->   	void __iomem *status;
-> -	unsigned int mask, val, ready;
-> +	unsigned int val;
->   	int ret;
->   
->   	qmp_combo_serdes_init(qphy);
-> @@ -2059,10 +2052,7 @@ static int qmp_combo_power_on(struct phy *phy)
->   		qphy_setbits(pcs, cfg->regs[QPHY_START_CTRL], cfg->start_ctrl);
->   
->   		status = pcs + cfg->regs[QPHY_PCS_STATUS];
-> -		mask = cfg->phy_status;
-> -		ready = 0;
-> -
-> -		ret = readl_poll_timeout(status, val, (val & mask) == ready, 10,
-> +		ret = readl_poll_timeout(status, val, !(val & PHYSTATUS), 10,
->   					 PHY_INIT_COMPLETE_TIMEOUT);
->   		if (ret) {
->   			dev_err(qmp->dev, "phy initialization timed-out\n");
 
 -- 
 With best wishes
