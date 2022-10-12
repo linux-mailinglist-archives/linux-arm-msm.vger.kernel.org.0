@@ -2,56 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA1815FC9A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 18:59:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CBE35FC9EE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 19:31:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229978AbiJLQ71 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Oct 2022 12:59:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40356 "EHLO
+        id S229487AbiJLRb6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Oct 2022 13:31:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229894AbiJLQ7V (ORCPT
+        with ESMTP id S229547AbiJLRb5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Oct 2022 12:59:21 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A439FE750
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 09:59:19 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id s3so2257416qtn.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 09:59:19 -0700 (PDT)
+        Wed, 12 Oct 2022 13:31:57 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7775EB5FF0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 10:31:55 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id e18so25434780edj.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 10:31:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HQmvEnxCacSKmyhsDZfwB55uF8afbebAIdbb3HMdfts=;
-        b=s6Wzx5P4f8uEwd+o6Qzs040cp30gJ6wUNosjjCWK/EwmGMuIhgM42PrbcogJ2eiu12
-         aovwR2z9NRGsQNenpprlj2MvSlyvg988/0Esx2WJgxYMyxuFHreqXae4/CxGwpLwVqK6
-         QysE73f1hzUAMecCRohR+cA6WeO5apFPx2DsWchMk7KzCmUQ00rZy28MdHdZWXs4XGHm
-         Uhd+X0xYYCnQVaesXAAK5cUTYm+1gTybr+YMvQDU24tgKPxlv/9BC4bM4oR75oBDMbbF
-         XAVCDrVF5eT0jABbeSkOgGkaqHZXC7SWvQ0cZg9DgjjDcYuzimuyv6Ck/jDpeyXSe6or
-         xfHg==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=7g3dd5oDblHSvi18BkA/g8g+g7bbmFZJfYmI1TEETpo=;
+        b=NynZaqiW8iZBWr74bVjdNFWdXcRTfSd282NrBTXL3fuag703GobvYOkLPxqyhXQS48
+         7VZKSimGgc+CFlVqetGlUZZYWlECy91Xqw7ymAjZ0OdCsKsqKEqOOmqji6hO182aNtjB
+         47eFZ3fudM9qwmG2j9liKzxFKIPGKZquutDxs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HQmvEnxCacSKmyhsDZfwB55uF8afbebAIdbb3HMdfts=;
-        b=0IAuu9NOx5DT83ubov968ANUNa25MkDDDmNiQYpUHyH8jHn6E6gg+9q6iqSTB/+Y/l
-         /axVpdHknExhaHvmgTG7Ub6ZnohQDb0xNVfVztq2tc/k1pwVk/s3N5EbHvz1TqiM7US1
-         VPOGsgYLi7lcjDslmxVOE8fMBikhjTYn0cjnZaYM+zusm5Q7kcK5jtyghqo4680MnzD7
-         JvLs9+S2BenvOffEEOeO8AcfPpmh++vVCo1HnCtD4ZBm2idTS+eDXN37e+Y7CG/8LC1D
-         9GKFS6qNKkq3ngLPz22Nwq6YK97Ow0QtVqRPgm0lwsUfasfA6+RM5YNrWST3gZhBem7R
-         +Lgw==
-X-Gm-Message-State: ACrzQf3GrMV1JMU5Z3Hmx6+uiKHa00RIVRHXHy0ie4NqB+19oVu/9Jej
-        FGGvAYl3SZsH/RGOIh1RapYvYQ==
-X-Google-Smtp-Source: AMsMyM65dtK7p0p/HXjsHGYyfbRzuz2UDQRLeNnp8iPJyAAVb/nn+f5tYXkqvMZe2HT8ejYK0hZ4Lg==
-X-Received: by 2002:ac8:5208:0:b0:399:5248:aad2 with SMTP id r8-20020ac85208000000b003995248aad2mr15222060qtn.449.1665593958567;
-        Wed, 12 Oct 2022 09:59:18 -0700 (PDT)
-Received: from krzk-bin.home (cpe-72-225-192-120.nyc.res.rr.com. [72.225.192.120])
-        by smtp.gmail.com with ESMTPSA id r4-20020a05622a034400b00398a7c860c2sm9476039qtw.4.2022.10.12.09.59.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Oct 2022 09:59:18 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7g3dd5oDblHSvi18BkA/g8g+g7bbmFZJfYmI1TEETpo=;
+        b=kR3aq7yUtpnd9i8MNRzaFxIXk6GkZAI8Fy+YiGl/d50OdKYeXaoeK2SezyhvNWcBC/
+         YXoN8TZgxjOg8c3DULpQm7/5cHWmJRdS4Ww/lFMrdK/t3P6CXNd0T6neaVbFarU/4eBY
+         kh5E3y+qUy4frCWF8UpqKrp8UFFj+9PqyWdKLqp0mC/Dk7TlAuz64bGoP8Zz+fjzqQ8t
+         T4PXD77D7oZh4drfTGH9R5fWxT0f4OExmcYKStnQ1UIhwiX9fAlBXuUZNyfhVkDBqdjl
+         Co9fLNgNlJeC7EDFNOBlVvFDjRtyfuymS5lLZaipek9JdcmOwSwghAyD7dM+YQGq/cO+
+         akHg==
+X-Gm-Message-State: ACrzQf1kaIl0trzGQG56zSQlf4RjItaP98VpoYcmKgIc2nkgA3kcYayM
+        a3GHCQJJTaH8QZHziFx/GZmFvyfmmFkPF70J
+X-Google-Smtp-Source: AMsMyM6mwDXLo/XtzoQm1UekmggFwa3701xQjE4e6Nm/en9jvwFtpywKIi1fTygLxd5YSR67xeajdg==
+X-Received: by 2002:a05:6402:176b:b0:45c:cf1e:7ff7 with SMTP id da11-20020a056402176b00b0045ccf1e7ff7mr1277403edb.44.1665595913629;
+        Wed, 12 Oct 2022 10:31:53 -0700 (PDT)
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com. [209.85.221.46])
+        by smtp.gmail.com with ESMTPSA id j17-20020a170906411100b0078cb06c2ef9sm1648820ejk.8.2022.10.12.10.31.52
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Oct 2022 10:31:53 -0700 (PDT)
+Received: by mail-wr1-f46.google.com with SMTP id j7so27262226wrr.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 10:31:52 -0700 (PDT)
+X-Received: by 2002:adf:dfc1:0:b0:22f:edf7:b11b with SMTP id
+ q1-20020adfdfc1000000b0022fedf7b11bmr12498392wrn.583.1665595912117; Wed, 12
+ Oct 2022 10:31:52 -0700 (PDT)
+MIME-Version: 1.0
+References: <20221007145116.46554-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221007145116.46554-1-krzysztof.kozlowski@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 12 Oct 2022 10:31:38 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UAcn=yeCZ_jum9kGgqsdKsPpya-FPumYUWO=iyp-kKYw@mail.gmail.com>
+Message-ID: <CAD=FV=UAcn=yeCZ_jum9kGgqsdKsPpya-FPumYUWO=iyp-kKYw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180: align TLMM pin
+ configuration with DT schema
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Linus Walleij <linus.walleij@linaro.org>,
@@ -59,17 +70,9 @@ To:     Bjorn Andersson <andersson@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 3/3] dt-bindings: pinctrl: qcom,msm8994: convert to dtschema
-Date:   Wed, 12 Oct 2022 12:57:12 -0400
-Message-Id: <20221012165712.93053-3-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221012165712.93053-1-krzysztof.kozlowski@linaro.org>
-References: <20221012165712.93053-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,384 +81,249 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert Qualcomm MSM8994 pin controller bindings to DT schema.  Keep the
-parsing of pin configuration subnodes consistent with other Qualcomm
-schemas (children named with '-state' suffix, their children with
-'-pins').
+Hi,
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../bindings/pinctrl/qcom,msm8994-pinctrl.txt | 186 ------------------
- .../pinctrl/qcom,msm8994-pinctrl.yaml         | 167 ++++++++++++++++
- 2 files changed, 167 insertions(+), 186 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8994-pinctrl.txt
- create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8994-pinctrl.yaml
+On Fri, Oct 7, 2022 at 7:51 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> DT schema expects TLMM pin configuration nodes to be named with
+> '-state' suffix and their optional children with '-pins' suffix.
+>
+> Merge subnodes named 'pinconf' and 'pinmux' into one entry, add function
+> where missing (required by bindings for GPIOs) and reorganize overriding
+> pins by boards.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
+> ---
+>
+> Not tested on hardware.
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8994-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,msm8994-pinctrl.txt
-deleted file mode 100644
-index da52df6273bc..000000000000
---- a/Documentation/devicetree/bindings/pinctrl/qcom,msm8994-pinctrl.txt
-+++ /dev/null
-@@ -1,186 +0,0 @@
--Qualcomm MSM8994 TLMM block
--
--This binding describes the Top Level Mode Multiplexer block found in the
--MSM8994 platform.
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: Should contain one of:
--		    "qcom,msm8992-pinctrl",
--		    "qcom,msm8994-pinctrl".
--
--- reg:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: the base address and size of the TLMM register space.
--
--- interrupts:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: should specify the TLMM summary IRQ.
--
--- interrupt-controller:
--	Usage: required
--	Value type: <none>
--	Definition: identifies this node as an interrupt controller
--
--- #interrupt-cells:
--	Usage: required
--	Value type: <u32>
--	Definition: must be 2. Specifying the pin number and flags, as defined
--		    in <dt-bindings/interrupt-controller/irq.h>
--
--- gpio-controller:
--	Usage: required
--	Value type: <none>
--	Definition: identifies this node as a gpio controller
--
--- #gpio-cells:
--	Usage: required
--	Value type: <u32>
--	Definition: must be 2. Specifying the pin number and flags, as defined
--		    in <dt-bindings/gpio/gpio.h>
--
--- gpio-ranges:
--	Usage: required
--	Definition:  see ../gpio/gpio.txt
--
--- gpio-reserved-ranges:
--	Usage: optional
--	Definition: see ../gpio/gpio.txt
--
--Please refer to ../gpio/gpio.txt and ../interrupt-controller/interrupts.txt for
--a general description of GPIO and interrupt bindings.
--
--Please refer to pinctrl-bindings.txt in this directory for details of the
--common pinctrl bindings used by client devices, including the meaning of the
--phrase "pin configuration node".
--
--The pin configuration nodes act as a container for an arbitrary number of
--subnodes. Each of these subnodes represents some desired configuration for a
--pin, a group, or a list of pins or groups. This configuration can include the
--mux function to select on those pin(s)/group(s), and various pin configuration
--parameters, such as pull-up, drive strength, etc.
--
--
--PIN CONFIGURATION NODES:
--
--The name of each subnode is not important; all subnodes should be enumerated
--and processed purely based on their content.
--
--Each subnode only affects those parameters that are explicitly listed. In
--other words, a subnode that lists a mux function but no pin configuration
--parameters implies no information about any pin configuration parameters.
--Similarly, a pin subnode that describes a pullup parameter implies no
--information about e.g. the mux function.
--
--
--The following generic properties as defined in pinctrl-bindings.txt are valid
--to specify in a pin configuration subnode:
--
--- pins:
--	Usage: required
--	Value type: <string-array>
--	Definition: List of gpio pins affected by the properties specified in
--		    this subnode.
--
--		    Valid pins are:
--		      gpio0-gpio145
--		        Supports mux, bias and drive-strength
--
--		      sdc1_clk, sdc1_cmd, sdc1_data sdc1_rclk, sdc2_clk,
--		      sdc2_cmd, sdc2_data
--		        Supports bias and drive-strength
--
--- function:
--	Usage: required
--	Value type: <string>
--	Definition: Specify the alternative function to be configured for the
--		    specified pins. Functions are only valid for gpio pins.
--		    Valid values are:
--
--		    audio_ref_clk,  blsp_i2c1, blsp_i2c2, blsp_i2c3, blsp_i2c4, blsp_i2c5,
--		    blsp_i2c6, blsp_i2c7, blsp_i2c8, blsp_i2c9, blsp_i2c10, blsp_i2c11,
--		    blsp_i2c12, blsp_spi1, blsp_spi1_cs1, blsp_spi1_cs2, blsp_spi1_cs3,
--		    blsp_spi2, blsp_spi2_cs1, blsp_spi2_cs2, blsp_spi2_cs3, blsp_spi3,
--		    blsp_spi4, blsp_spi5, blsp_spi6, blsp_spi7, blsp_spi8, blsp_spi9,
--		    blsp_spi10, blsp_spi10_cs1, blsp_spi10_cs2, blsp_spi10_cs3, blsp_spi11,
--		    blsp_spi12, blsp_uart1, blsp_uart2, blsp_uart3, blsp_uart4, blsp_uart5,
--		    blsp_uart6, blsp_uart7, blsp_uart8, blsp_uart9, blsp_uart10, blsp_uart11,
--		    blsp_uart12, blsp_uim1, blsp_uim2, blsp_uim3, blsp_uim4, blsp_uim5,
--		    blsp_uim6, blsp_uim7, blsp_uim8, blsp_uim9, blsp_uim10, blsp_uim11,
--		    blsp_uim12, blsp11_i2c_scl_b, blsp11_i2c_sda_b, blsp11_uart_rx_b,
--		    blsp11_uart_tx_b, cam_mclk0, cam_mclk1, cam_mclk2, cam_mclk3,
--		    cci_async_in0, cci_async_in1, cci_async_in2, cci_i2c0, cci_i2c1,
--		    cci_timer0, cci_timer1, cci_timer2, cci_timer3, cci_timer4,
--		    gcc_gp1_clk_a, gcc_gp1_clk_b, gcc_gp2_clk_a, gcc_gp2_clk_b, gcc_gp3_clk_a,
--		    gcc_gp3_clk_b, gp_mn, gp_pdm0, gp_pdm1, gp_pdm2, gp0_clk,
--		    gp1_clk, gps_tx, gsm_tx, hdmi_cec, hdmi_ddc, hdmi_hpd, hdmi_rcv,
--		    mdp_vsync, mss_lte, nav_pps, nav_tsync, qdss_cti_trig_in_a,
--		    qdss_cti_trig_in_b, qdss_cti_trig_in_c, qdss_cti_trig_in_d,
--		    qdss_cti_trig_out_a, qdss_cti_trig_out_b, qdss_cti_trig_out_c,
--		    qdss_cti_trig_out_d, qdss_traceclk_a, qdss_traceclk_b, qdss_tracectl_a,
--		    qdss_tracectl_b, qdss_tracedata_a, qdss_tracedata_b, qua_mi2s, pci_e0,
--		    pci_e1, pri_mi2s, sdc4, sec_mi2s, slimbus, spkr_i2s, ter_mi2s, tsif1,
--		    tsif2, uim_batt_alarm, uim1, uim2, uim3, uim4, gpio
--
--- bias-disable:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configured as no pull.
--
--- bias-pull-down:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configured as pull down.
--
--- bias-pull-up:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configured as pull up.
--
--- output-high:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are configured in output mode, driven
--		    high.
--		    Not valid for sdc pins.
--
--- output-low:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are configured in output mode, driven
--		    low.
--		    Not valid for sdc pins.
--
--- drive-strength:
--	Usage: optional
--	Value type: <u32>
--	Definition: Selects the drive strength for the specified pins, in mA.
--		    Valid values are: 2, 4, 6, 8, 10, 12, 14 and 16
--
--Example:
--
--	msmgpio: pinctrl@fd510000 {
--		compatible = "qcom,msm8994-pinctrl";
--		reg = <0xfd510000 0x4000>;
--		interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
--		gpio-controller;
--		#gpio-cells = <2>;
--		gpio-ranges = <&msmgpio 0 0 146>;
--		interrupt-controller;
--		#interrupt-cells = <2>;
--
--		blsp1_uart2_default: blsp1_uart2_default {
--			pinmux {
--				pins = "gpio4", "gpio5";
--				function = "blsp_uart2";
--			};
--			pinconf {
--				pins = "gpio4", "gpio5";
--				drive-strength = <16>;
--				bias-disable;
--			};
--		};
--	};
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8994-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,msm8994-pinctrl.yaml
-new file mode 100644
-index 000000000000..611a51269487
---- /dev/null
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,msm8994-pinctrl.yaml
-@@ -0,0 +1,167 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/pinctrl/qcom,msm8994-pinctrl.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm MSM8994 TLMM pin controller
-+
-+maintainers:
-+  - Bjorn Andersson <andersson@kernel.org>
-+  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-+
-+description:
-+  Top Level Mode Multiplexer pin controller in Qualcomm MSM8994 SoC.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,msm8992-pinctrl
-+      - qcom,msm8994-pinctrl
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts: true
-+  interrupt-controller: true
-+  "#interrupt-cells": true
-+  gpio-controller: true
-+  "#gpio-cells": true
-+  gpio-ranges: true
-+  wakeup-parent: true
-+
-+  gpio-reserved-ranges:
-+    minItems: 1
-+    maxItems: 75
-+
-+  gpio-line-names:
-+    maxItems: 150
-+
-+patternProperties:
-+  "-state$":
-+    oneOf:
-+      - $ref: "#/$defs/qcom-msm8994-tlmm-state"
-+      - patternProperties:
-+          "-pins$":
-+            $ref: "#/$defs/qcom-msm8994-tlmm-state"
-+        additionalProperties: false
-+
-+$defs:
-+  qcom-msm8994-tlmm-state:
-+    type: object
-+    description:
-+      Pinctrl node's client devices use subnodes for desired pin configuration.
-+      Client device subnodes use below standard properties.
-+    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
-+
-+    properties:
-+      pins:
-+        description:
-+          List of gpio pins affected by the properties specified in this
-+          subnode.
-+        items:
-+          oneOf:
-+            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-4][0-9])$"
-+            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc1_rclk, sdc2_clk,
-+                      sdc2_cmd, sdc2_data, sdc3_clk, sdc3_cmd, sdc3_data ]
-+        minItems: 1
-+        maxItems: 36
-+
-+      function:
-+        description:
-+          Specify the alternative function to be configured for the specified
-+          pins.
-+
-+        enum: [ gpio, audio_ref_clk, blsp_i2c1, blsp_i2c2, blsp_i2c3,
-+                blsp_i2c4, blsp_i2c5, blsp_i2c6, blsp_i2c7, blsp_i2c8,
-+                blsp_i2c9, blsp_i2c10, blsp_i2c11, blsp_i2c12, blsp_spi1,
-+                blsp_spi1_cs1, blsp_spi1_cs2, blsp_spi1_cs3, blsp_spi2,
-+                blsp_spi2_cs1, blsp_spi2_cs2, blsp_spi2_cs3, blsp_spi3,
-+                blsp_spi4, blsp_spi5, blsp_spi6, blsp_spi7, blsp_spi8,
-+                blsp_spi9, blsp_spi10, blsp_spi10_cs1, blsp_spi10_cs2,
-+                blsp_spi10_cs3, blsp_spi11, blsp_spi12, blsp_uart1, blsp_uart2,
-+                blsp_uart3, blsp_uart4, blsp_uart5, blsp_uart6, blsp_uart7,
-+                blsp_uart8, blsp_uart9, blsp_uart10, blsp_uart11, blsp_uart12,
-+                blsp_uim1, blsp_uim2, blsp_uim3, blsp_uim4, blsp_uim5,
-+                blsp_uim6, blsp_uim7, blsp_uim8, blsp_uim9, blsp_uim10,
-+                blsp_uim11, blsp_uim12, blsp11_i2c_scl_b, blsp11_i2c_sda_b,
-+                blsp11_uart_rx_b, blsp11_uart_tx_b, cam_mclk0, cam_mclk1,
-+                cam_mclk2, cam_mclk3, cci_async_in0, cci_async_in1,
-+                cci_async_in2, cci_i2c0, cci_i2c1, cci_timer0, cci_timer1,
-+                cci_timer2, cci_timer3, cci_timer4, gcc_gp1_clk_a,
-+                gcc_gp1_clk_b, gcc_gp2_clk_a, gcc_gp2_clk_b, gcc_gp3_clk_a,
-+                gcc_gp3_clk_b, gp_mn, gp_pdm0, gp_pdm1, gp_pdm2, gp0_clk,
-+                gp1_clk, gps_tx, gsm_tx, hdmi_cec, hdmi_ddc, hdmi_hpd,
-+                hdmi_rcv, mdp_vsync, mss_lte, nav_pps, nav_tsync,
-+                qdss_cti_trig_in_a, qdss_cti_trig_in_b, qdss_cti_trig_in_c,
-+                qdss_cti_trig_in_d, qdss_cti_trig_out_a, qdss_cti_trig_out_b,
-+                qdss_cti_trig_out_c, qdss_cti_trig_out_d, qdss_traceclk_a,
-+                qdss_traceclk_b, qdss_tracectl_a, qdss_tracectl_b,
-+                qdss_tracedata_a, qdss_tracedata_b, qua_mi2s, pci_e0, pci_e1,
-+                pri_mi2s, sdc4, sec_mi2s, slimbus, spkr_i2s, ter_mi2s, tsif1,
-+                tsif2, uim_batt_alarm, uim1, uim2, uim3, uim4 ]
-+
-+      drive-strength:
-+        enum: [2, 4, 6, 8, 10, 12, 14, 16]
-+        default: 2
-+        description:
-+          Selects the drive strength for the specified pins, in mA.
-+
-+      bias-pull-down: true
-+      bias-pull-up: true
-+      bias-disable: true
-+      input-enable: true
-+      output-high: true
-+      output-low: true
-+
-+    required:
-+      - pins
-+
-+    additionalProperties: false
-+
-+allOf:
-+  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
-+
-+required:
-+  - compatible
-+  - reg
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+    tlmm: pinctrl@fd510000 {
-+        compatible = "qcom,msm8994-pinctrl";
-+        reg = <0xfd510000 0x4000>;
-+        interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-+        gpio-controller;
-+        gpio-ranges = <&tlmm 0 0 146>;
-+        #gpio-cells = <2>;
-+        interrupt-controller;
-+        #interrupt-cells = <2>;
-+
-+        blsp1-uart2-default-state {
-+            function = "blsp_uart2";
-+            pins = "gpio4", "gpio5";
-+            drive-strength = <16>;
-+            bias-disable;
-+        };
-+
-+        blsp1-spi1-default-state {
-+            default-pins {
-+                pins = "gpio0", "gpio1", "gpio3";
-+                function = "blsp_spi1";
-+                drive-strength = <10>;
-+                bias-pull-down;
-+            };
-+
-+            cs-pins {
-+                pins = "gpio8";
-+                function = "gpio";
-+                drive-strength = <2>;
-+                bias-disable;
-+            };
-+        };
-+    };
--- 
-2.34.1
+I applied these two patches to the top of mainline today and booted up
+a sc7180-trogdor-coachz. I didn't do any stress testing, but at least
+it boots up and basic smoke tests pass.
 
+> Doug,
+>
+> I think this implements our conclusion from SDM845 patches (alignment of
+> pinctrl with DT schema).
+
+Yeah, it looks really great! Hopefully others agree that this scheme
+looks great and it also validates nicely with your schema changes.
+Sorry for taking a few days to get back--your email coincided with a
+few vacation days for me.
+
+I have a few nits and there's at least one problem (the glitching of
+the SPI chip select at boot).
+
+
+> Cc: Doug Anderson <dianders@chromium.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts       | 211 +++---
+>  .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  36 +-
+>  .../dts/qcom/sc7180-trogdor-homestar.dtsi     |  41 +-
+>  .../dts/qcom/sc7180-trogdor-kingoftown-r0.dts |  16 +-
+>  .../dts/qcom/sc7180-trogdor-kingoftown.dtsi   |   8 +-
+>  .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  16 +-
+>  .../dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi |  25 +-
+>  .../boot/dts/qcom/sc7180-trogdor-mrbland.dtsi |  72 +-
+>  .../qcom/sc7180-trogdor-parade-ps8640.dtsi    |  32 +-
+>  .../boot/dts/qcom/sc7180-trogdor-pazquel.dtsi |   8 +-
+>  .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |  14 +-
+>  .../qcom/sc7180-trogdor-quackingstick.dtsi    |  56 +-
+>  .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |   8 +-
+>  .../dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi |  16 +-
+>  .../qcom/sc7180-trogdor-wormdingler-rev0.dtsi |  25 +-
+>  .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  |  72 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 655 +++++++-----------
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi          | 410 +++++------
+>  18 files changed, 613 insertions(+), 1108 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> index 9dee131b1e24..3e93b13d275e 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+
+[ ...cut... ]
+
+> @@ -642,126 +596,131 @@ pinconf-rts {
+>                          * pulling RX low (by sending wakeup bytes).
+>                          */
+>                          pins = "gpio39";
+> +                       function = "gpio";
+>                          bias-pull-down;
+
+optional nit: your new addition makes it obvious that the indentation of the
+surrounding lines is wrong. Maybe fix it as part of this patch?
+
+
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
+> index 1bd6c7dcd9e9..c66568a882b3 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
+> @@ -180,30 +180,19 @@ &wifi {
+>  /* PINCTRL - modifications to sc7180-trogdor.dtsi */
+>
+>  &en_pp3300_dx_edp {
+> -       pinmux {
+> -               pins = "gpio67";
+> -       };
+> -
+> -       pinconf {
+> -               pins = "gpio67";
+> -       };
+> +       pins = "gpio67";
+>  };
+>
+>  &sec_mi2s_active{
+> -       pinmux {
+> -               pins = "gpio49", "gpio50", "gpio51", "gpio52";
+> -               function = "mi2s_1";
+> -       };
+> +       pins = "gpio49", "gpio50", "gpio51", "gpio52";
+
+Looks like the point of the homestar override is to add an extra pin
+(gpio52) but it forgot to update the list in the "pinconf" as well so
+gpio52 wasn't getting a drive strength and bias set. Your patch
+has the side effect of fixing this. That looks right to me (match
+GPIO51) given that the name of GPIO51 is AMP_DIN and GPIO52 AMP_DIN2.
+
+Assuming my analysis is correct, it's probably worth mentioning this
+behavior change in the commit message.
+
+
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> index eae22e6e97c1..d923ddca8b8b 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> @@ -880,17 +880,17 @@ &sdhc_2 {
+>  };
+>
+>  &spi0 {
+> -       pinctrl-0 = <&qup_spi0_cs_gpio_init_high>, <&qup_spi0_cs_gpio>;
+> +       pinctrl-0 = <&qup_spi0_cs_gpio>;
+
+I think this is going to cause a problem. This is pretty much a direct
+revert of commit e440e30e26dd ("arm64: dts: qcom: sc7180: Avoid glitching
+SPI CS at bootup on trogdor").
+
+I was never crazy about the solution in the patch, but I really couldn't
+find another great way to solve it. I think the problem is fairly well
+described in that commit message, at least, and I'm certainly open to
+alternate solutions. Until then, I think this prevents landing your
+patch.
+
+[ ... cut ... ]
+
+> @@ -1467,197 +1315,174 @@ pinconf-rts {
+>                          * pulling RX low (by sending wakeup bytes).
+>                          */
+>                          pins = "gpio39";
+> +                       function = "gpio";
+>                          bias-pull-down;
+
+optional nit: your new addition makes it obvious that the indentation of the
+surrounding lines is wrong. Maybe fix it as part of this patch?
+
+
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 58976a1ba06b..8f7845fa669c 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -1486,410 +1486,336 @@ tlmm: pinctrl@3500000 {
+
+[ ... cut ... ]
+
+> -                       qup_spi0_default: qup-spi0-default {
+> -                               pinmux {
+> -                                       pins = "gpio34", "gpio35",
+> -                                              "gpio36", "gpio37";
+> -                                       function = "qup00";
+> -                               };
+> +                       qup_spi0_default: qup-spi0-default-state {
+> +                               pins = "gpio34", "gpio35", "gpio36", "gpio37";
+> +                               function = "qup00";
+>                         };
+>
+> -                       qup_spi0_cs_gpio: qup-spi0-cs-gpio {
+> -                               pinmux {
+> +                       qup_spi0_cs_gpio: qup-spi0-cs-gpio-state {
+> +                               qup_spi0_spi: spi-pins {
+>                                         pins = "gpio34", "gpio35",
+>                                                "gpio36";
+>                                         function = "qup00";
+>                                 };
+>
+> -                               pinmux-cs {
+> +                               qup_spi0_cs: cs-pins {
+>                                         pins = "gpio37";
+>                                         function = "gpio";
+>                                 };
+>                         };
+
+The way that the cs_gpio ended up after your patch series threw me for
+a loop. It's counterintutive that we have labels "qup_spi0_spi" and
+"qup_spi0_cs" and they're _not_ under "qup_spi0_default".
+
+Here are two proposals and I'd be happy with either of them:
+
+a) Get rid of the gpio nodes. Instead in the dtsi file do:
+
+  qup_spi0_cs_gpio: qup-spi0-cs-gpio-state {
+    qup_spi0_spi: spi-pins {
+      pins = "gpio34", "gpio35", "gpio36";
+      function = "qup00";
+    };
+
+    qup_spi0_cs: cs-pins {
+      pins = "gpio37";
+      function = "qup00";
+    };
+  };
+
+In the board file just:
+
+  &qup_spi0_cs {
+    function = "gpio";
+  };
+
+b) Split the whole thing up. In the dtsi file pinctrl section:
+
+  qup_spi0_spi: qup-spi0-spi-state {
+    pins = "gpio34", "gpio35", "gpio36";
+    function = "qup00";
+  };
+
+  qup_spi0_cs: qup-spi0-cs-state {
+    pins = "gpio37";
+    function = "qup00";
+  };
+
+  qup_spi0_cs_gpio: qup-spi0-cs-gpio-state {
+    pins = "gpio37";
+    function = "gpio";
+  };
+
+...in the dtsi file SPI section:
+
+  pinctrl-0 = <&qup_spi0_spi> <&qup_spi0_cs>;
+
+...in the board SPI section:
+
+  pinctrl-0 = <&qup_spi0_spi> <&qup_spi0_cs_gpio>;
+
+[ ... cut ... ]
+> -                       qup_uart0_default: qup-uart0-default {
+> -                               pinmux {
+> -                                       pins = "gpio34", "gpio35",
+> -                                              "gpio36", "gpio37";
+> -                                       function = "qup00";
+> -                               };
+> +                       qup_uart0_default: qup-uart0-default-state {
+> +                               pins = "gpio34", "gpio35", "gpio36", "gpio37";
+> +                               function = "qup00";
+>                         };
+
+It feels like all of the UARTs should be split up like uart3/uart8 are
+If any board actually uses these they will likely want different pulls
+and configs for the different pins.
