@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 797B25FCC5E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 22:47:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51D4A5FCCD9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 23:14:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229910AbiJLUrq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Oct 2022 16:47:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49352 "EHLO
+        id S229641AbiJLVOa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Oct 2022 17:14:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229872AbiJLUrk (ORCPT
+        with ESMTP id S229872AbiJLVO3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Oct 2022 16:47:40 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA271D25BD
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 13:47:32 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id j23so21917524lji.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 13:47:32 -0700 (PDT)
+        Wed, 12 Oct 2022 17:14:29 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3987C118773
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 14:14:20 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id m23so60620lji.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 14:14:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=QRi07UGE41OwqQfpU78z2swnPD/UtUjDseXmNlB/AVs=;
-        b=HNsQRbXmlY3u6rH7OV+pp5MZo1KXdAWVRcn5faiUXkVpoe7E8AdjKH7ERheNRJ21hY
-         s26KiCsDTKOsifZPdzlALNJlPK8d2bnHxV1rA/6OXr7aL13b2DY8XzCiYq3Ut7CkBZQS
-         QtqoJsr/PXwQ2H9LtO+3ULlJGT1h1hxd2NHZh+zHvam+xTcevX/Nf7nDmr2ntkbY9xSf
-         InA+z+yEw8am6oWvheIyAHm33rVwwtESEM/rORjU8GHxzkkrx2a84prw0frXQ0NZUZaY
-         /YnOq5rY4fHQBiXry49t/QzAgWapIcLIR9MruPWN6B0oi8B0FF64tfvFoyCdkCcKOdMj
-         LIYA==
+        bh=k2wHfeYVczJ7pTmpwYQg5AHr9jzgUcdFH8v2Yq9evuY=;
+        b=yAtZrddc3MZD0cYVyNGcrcByzmQI0MosWirM10UwAJre9HSEuICNwu9G3LH5csOhe7
+         XLRM9870ZU8Gt0MtgXvPHTHeDRRm0FonC6ZQW69kyyxazEyB0dB3ScesYQMNxfCRAaOf
+         jvK8AtvJ4EV3fTQDR79QudKQfviO7ekHYlDa/OJ63Yk7qjaoWfEERgyYQOHP8eFCW/e+
+         f34c1X72QedByimJK95WQ4FjEYwxN1k7uGf50wtQnSOAF7AC3y7eeqPaipk9xiFOnK+G
+         gjsbIvmko4Ww1BtQvgvWbzqlGpKasYh0iTjnR78zasP4nF9DPGoBgUXRgDkVVtH0uP+u
+         5/6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QRi07UGE41OwqQfpU78z2swnPD/UtUjDseXmNlB/AVs=;
-        b=a3uwgQ/JY3Lixxaf2b3zRY8qQD/LkwtBZox5ztTPjQ2SoByUN4hDBoUhEgMFalpJrR
-         ZVZbs33Pd4NBloWEAqfwaHVby3z8gkAcH21wFFfHoKeaU3IchOXWTyNmzgybc8KF9+sW
-         tWOEFKnxvO7gH7NdLmWgXYAwgGW+fpkdYeA4SKZieX+0tWSWqB+chDOZJ/RNJaF9VP7r
-         VdJwceMTKsCSZ79dI0+WuSwfTtrIu9wB8BFXC35ouIkG9VOp9dVJyomZeezq/Q15vYG4
-         dUbkAEElM+V4Oly0dG/c3ie8SasucoquvSMVPGZwaiqhVYHDQ/TOUzAJjyvHnsUwXFhu
-         0OJg==
-X-Gm-Message-State: ACrzQf1UvXFh2nyhInBK0Sq95PPArKZoEP0ZzfmZAhD/tgMTfQCz0Wil
-        +7jZiy2iV//tqHGmmE1sjg4IFQ==
-X-Google-Smtp-Source: AMsMyM6TPgGEwHy/lPNlSNdyqSHU9MouHQlSUyHWi5kf+3eAyyX7PbeF0PNOhjFNRRp0f0gIwqV9IQ==
-X-Received: by 2002:a2e:984b:0:b0:26d:ff5f:53c6 with SMTP id e11-20020a2e984b000000b0026dff5f53c6mr11466123ljj.59.1665607650922;
-        Wed, 12 Oct 2022 13:47:30 -0700 (PDT)
+        bh=k2wHfeYVczJ7pTmpwYQg5AHr9jzgUcdFH8v2Yq9evuY=;
+        b=MsHcH/Sr72cn4qfnEYLQEhYnzy/EAljbP5dJEYu+hI5je8KV15XfLyUZwIMtdc4BJs
+         2nrIDZ0dyUjECpsnQX43YVW+XTcnhqifLB5tdxxyYstQW77DHeGDoZhHM4v2KGm4eCOc
+         3CFtXJsLzA9ZY2BUvrm3+3asWe1/R9K3tJADWpT3XUCFPNxUEggqjS6Iq759Q8b622gw
+         HwIbZyfaFgZxaoMa8uevRB+TkZV+kIbzqADAAraZS5+03Vv73Vt/nohAm27QLq8IOm8T
+         bjUoTftstIl1s/CtAYcaMXCHBcvpnoEGpZyXs8ff58tfHDKPBw84NaqUvGhj5Fk4Qa95
+         6dRQ==
+X-Gm-Message-State: ACrzQf32BRqJMVZQm9BPfB7uUOJXu62/BwREHqZ6guyXOWuyuL7C1p1a
+        /+cZA1pbaKUAAi87vs7PB8PRXQ==
+X-Google-Smtp-Source: AMsMyM7BUlUaBh67kpcRmFBSY56N1BjyNPwpKtT3CxzjKJVNnPUOrReFRfvSZW/wQDKBXLEWxYaeFw==
+X-Received: by 2002:a2e:a910:0:b0:261:b408:1169 with SMTP id j16-20020a2ea910000000b00261b4081169mr12189526ljq.360.1665609258091;
+        Wed, 12 Oct 2022 14:14:18 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 14-20020a2eb94e000000b0026dd4be2290sm108011ljs.90.2022.10.12.13.47.30
+        by smtp.gmail.com with ESMTPSA id j28-20020ac253bc000000b00494792ea34esm98713lfh.273.2022.10.12.14.14.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Oct 2022 13:47:30 -0700 (PDT)
-Message-ID: <8e39d242-9b88-6a33-384c-00fe5dad4a17@linaro.org>
-Date:   Wed, 12 Oct 2022 23:47:29 +0300
+        Wed, 12 Oct 2022 14:14:17 -0700 (PDT)
+Message-ID: <ca4eef6a-dedd-1823-9525-67d695ac3e58@linaro.org>
+Date:   Thu, 13 Oct 2022 00:14:17 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.1
-Subject: Re: [PATCH 06/20] phy: qcom-qmp-pcie-msm8996: clean up ready and
- status polling
+Subject: Re: [PATCH 08/20] phy: qcom-qmp-combo: clean up status polling
 Content-Language: en-GB
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>
@@ -68,15 +67,14 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-kernel@vger.kernel.org
 References: <20221012084846.24003-1-johan+linaro@kernel.org>
  <20221012085002.24099-1-johan+linaro@kernel.org>
- <20221012085002.24099-6-johan+linaro@kernel.org>
+ <20221012085002.24099-8-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221012085002.24099-6-johan+linaro@kernel.org>
+In-Reply-To: <20221012085002.24099-8-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -84,15 +82,94 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 12/10/2022 11:49, Johan Hovold wrote:
-> Clean up the PHY ready and status polling by dropping the configuration
-> masks which are no longer needed since the QMP driver split.
+> Clean up the PHY status polling by dropping the configuration mask which
+> is no longer needed since the QMP driver split.
 > 
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->   .../phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c  | 19 ++++---------------
->   1 file changed, 4 insertions(+), 15 deletions(-)
-> 
+
+This comes in expectation that 4.20 / 5.20 PHYs will be limited to PCIe. 
+I'd add this to the commit message. With that fixed:
+
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 14 ++------------
+>   1 file changed, 2 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> index 82055d3a3536..e312cad6d9c2 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> @@ -853,8 +853,6 @@ struct qmp_phy_cfg {
+>   
+>   	unsigned int start_ctrl;
+>   	unsigned int pwrdn_ctrl;
+> -	/* bit offset of PHYSTATUS in QPHY_PCS_STATUS register */
+> -	unsigned int phy_status;
+>   
+>   	/* true, if PHY needs delay after POWER_DOWN */
+>   	bool has_pwrdn_delay;
+> @@ -1023,7 +1021,6 @@ static const struct qmp_phy_cfg sc7180_usb3phy_cfg = {
+>   
+>   	.start_ctrl		= SERDES_START | PCS_START,
+>   	.pwrdn_ctrl		= SW_PWRDN,
+> -	.phy_status		= PHYSTATUS,
+>   
+>   	.has_pwrdn_delay	= true,
+>   };
+> @@ -1092,7 +1089,6 @@ static const struct qmp_phy_cfg sdm845_usb3phy_cfg = {
+>   
+>   	.start_ctrl		= SERDES_START | PCS_START,
+>   	.pwrdn_ctrl		= SW_PWRDN,
+> -	.phy_status		= PHYSTATUS,
+>   
+>   	.has_pwrdn_delay	= true,
+>   };
+> @@ -1127,7 +1123,6 @@ static const struct qmp_phy_cfg sm8150_usb3phy_cfg = {
+>   
+>   	.start_ctrl		= SERDES_START | PCS_START,
+>   	.pwrdn_ctrl		= SW_PWRDN,
+> -	.phy_status		= PHYSTATUS,
+>   
+>   	.has_pwrdn_delay	= true,
+>   };
+> @@ -1197,7 +1192,6 @@ static const struct qmp_phy_cfg sc8280xp_usb43dp_usb_cfg = {
+>   
+>   	.start_ctrl		= SERDES_START | PCS_START,
+>   	.pwrdn_ctrl		= SW_PWRDN,
+> -	.phy_status		= PHYSTATUS,
+>   };
+>   
+>   static const struct qmp_phy_cfg sc8280xp_usb43dp_dp_cfg = {
+> @@ -1267,7 +1261,6 @@ static const struct qmp_phy_cfg sm8250_usb3phy_cfg = {
+>   
+>   	.start_ctrl		= SERDES_START | PCS_START,
+>   	.pwrdn_ctrl		= SW_PWRDN,
+> -	.phy_status		= PHYSTATUS,
+>   
+>   	.has_pwrdn_delay	= true,
+>   };
+> @@ -2017,7 +2010,7 @@ static int qmp_combo_power_on(struct phy *phy)
+>   	void __iomem *rx = qphy->rx;
+>   	void __iomem *pcs = qphy->pcs;
+>   	void __iomem *status;
+> -	unsigned int mask, val, ready;
+> +	unsigned int val;
+>   	int ret;
+>   
+>   	qmp_combo_serdes_init(qphy);
+> @@ -2059,10 +2052,7 @@ static int qmp_combo_power_on(struct phy *phy)
+>   		qphy_setbits(pcs, cfg->regs[QPHY_START_CTRL], cfg->start_ctrl);
+>   
+>   		status = pcs + cfg->regs[QPHY_PCS_STATUS];
+> -		mask = cfg->phy_status;
+> -		ready = 0;
+> -
+> -		ret = readl_poll_timeout(status, val, (val & mask) == ready, 10,
+> +		ret = readl_poll_timeout(status, val, !(val & PHYSTATUS), 10,
+>   					 PHY_INIT_COMPLETE_TIMEOUT);
+>   		if (ret) {
+>   			dev_err(qmp->dev, "phy initialization timed-out\n");
 
 -- 
 With best wishes
