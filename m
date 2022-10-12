@@ -2,121 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 112E55FCA2C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 20:02:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80D335FCA87
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Oct 2022 20:24:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229533AbiJLSCI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Oct 2022 14:02:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44764 "EHLO
+        id S229729AbiJLSYC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Oct 2022 14:24:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229572AbiJLSCC (ORCPT
+        with ESMTP id S229513AbiJLSYA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Oct 2022 14:02:02 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15096DD898;
-        Wed, 12 Oct 2022 11:02:01 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id q1so7829392pgl.11;
-        Wed, 12 Oct 2022 11:02:01 -0700 (PDT)
+        Wed, 12 Oct 2022 14:24:00 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 067E5B4C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 11:24:00 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id d6so26947777lfs.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Oct 2022 11:23:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mI6JTDhKVYSrCGCD4V56C9X6Kiak+3dUkc3QnuibHPU=;
-        b=ZwTl6AAaQ0Ws45vSBrLIcUrnyeGPkzph09dsda8I/3iok8sidXoeHPpBSYWXOhWO4I
-         VotyRNrTD2SYFyLa0rgP3w9dLcgU0io4629+19FHN7tg5P7vrE9tTi871hDFV81cYjgf
-         s05P6xeO/0de/53iAG8UuId+EXcpeOBccSvpUxeEcWXz9cyEyrKfHnYSvuhWjccb6/CE
-         sQNFkSa7PZFUOTCbx/fQ+02VgEkRTs0qibiKXdmr7plpmDS/81QioTTfVhHBbYG8fTqo
-         CQoct7DhqlQpGvbd6vSyxz/dbVVl7CyWJ2771hpPjKopD5so1Nq8b4vzopepLQvUUL+V
-         tXUQ==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=f8EawSfGRFWzbyxxqHZ/CXnplUxOrrkRY1TiQySTK7A=;
+        b=eeXAatAdr9oRMAO2qqcunj8ZEr+oAJ/Xv/9/Y5iz1U+D24htTr2K78DpHWm+gon7uy
+         UpDKjmin0I2YYwX54XOtQR3LbsG4SFs3AnuE/0v81yGlZeI+FraVhrD+TkBg0VKhbY25
+         p0SH/D0wh9+ykibzQbmWC0Ky24M2HUzt1B6fM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=mI6JTDhKVYSrCGCD4V56C9X6Kiak+3dUkc3QnuibHPU=;
-        b=bYEYMkdXdGL8vg+I3STyGeb1izw5IYtr7/ObPH9POETAXf98dFkfnJZoI6ylm71pAR
-         LlVci1EYwZSCplV+AdgLd2PC0kPOS/aVWYyZOrnIAB4OFd0OHUUasuJo3p46XQQgNTE/
-         rh1Kq2e7uxjjo2JT3Qe+QgNMT5MjjmXegWzSQz34y8m455E+b19lRMODg4ALuJQUk35Y
-         QGmoAL7CdFHMVXmPgIcpLzQlR/vWAfJu64pBNxkgMqyzkCx8DgLUl9I3l63Y3uCeBnXV
-         GlXBoq8v9RH/w870x/+IWQJz5v7jjdJ5aaAhuV64hl0AjDApHmzOZuXSYvXMohKpQgw0
-         9G6A==
-X-Gm-Message-State: ACrzQf1RVHuQA/eEm0mIXlVeHbBVeh11x+3V7ac/+/X+C1BCu1++CN8M
-        +B07ZkVvs9KNKFWIPL80+aiTvSS4kfKKYA==
-X-Google-Smtp-Source: AMsMyM6wGKajSAd4wPGHhoHm+LRw505WIZj871/gi+wZTScVudBPvwvqo9aSHUegpMeeYFn/afRAgg==
-X-Received: by 2002:a63:1c47:0:b0:44c:2476:12ff with SMTP id c7-20020a631c47000000b0044c247612ffmr27537426pgm.50.1665597720308;
-        Wed, 12 Oct 2022 11:02:00 -0700 (PDT)
-Received: from localhost ([2406:7400:61:b6fa:b70b:65a4:a699:40c8])
-        by smtp.gmail.com with ESMTPSA id d10-20020a170902654a00b0016c50179b1esm10777750pln.152.2022.10.12.11.01.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Oct 2022 11:01:59 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Wed, 12 Oct 2022 23:31:51 +0530
-Message-Id: <CNK541A4RD4B.31EY633R2WS9O@skynet-linux>
-To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <linux-kernel@vger.kernel.org>
-Cc:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <dmitry.baryshkov@linaro.org>, "Andy Gross" <agross@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
-        "Mathieu Poirier" <mathieu.poirier@linaro.org>
-Subject: Re: [PATCH v3 1/2] remoteproc: qcom: pas: Add MSM8953 ADSP PIL
- support
-From:   "Sireesh Kodali" <sireeshkodali1@gmail.com>
-X-Mailer: aerc 0.12.0
-References: <20221008174658.336470-1-sireeshkodali1@gmail.com>
- <20221008174658.336470-2-sireeshkodali1@gmail.com>
- <56e8fc84-aad0-b153-e415-8c1bd1647c2b@linaro.org>
-In-Reply-To: <56e8fc84-aad0-b153-e415-8c1bd1647c2b@linaro.org>
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=f8EawSfGRFWzbyxxqHZ/CXnplUxOrrkRY1TiQySTK7A=;
+        b=skaCwV4/2CzoAGTiNRUjtZsp2Bd8AUEpCNJDvdYVrlSBPHbfwR3Kr1ZZwOIaIyGcjZ
+         kHHzr2EcgbeBrsqdBFhDM4mkOYHx/Xc7QEa1QfdOZSP90ExyZJXMBBXgox/qodUkcUzy
+         hnFUxItbaRalo0gWrcV1fmMoL4pawQ3CJmTfI5IGrgOqVYyHYaEZHZwkSTNkni4uVfyX
+         KBe8VGfx8DCLt0hr5E5scDg2H5b5r9PbJ9RF6XlEY0qEbnl4CmfsU93WlQum7ggNCzkF
+         jzERT/fEWWYobbyjkdNdbk45RbWS4IKXZhxiIW0LQWduwf7h3a0+Rr0wZ6tjmowksaQJ
+         JLdw==
+X-Gm-Message-State: ACrzQf2lAoLW9SXD0h6om4ljANNP20MaoZGbV3qcvu29jbb6FO/TTMWq
+        oYsHLCAuNBZd2jOYYqZtQ7nIO1mnBrYO0TyIpsOfFD67+rs=
+X-Google-Smtp-Source: AMsMyM7ctxGy1xfpOUr7onOXWKeqnUCIjPXxitKzTa8le/LjesknS63vkHu4WHzJwKdW/y1zALUhzudybYMIa4qyNWQ=
+X-Received: by 2002:a05:6512:3403:b0:48c:9727:50b0 with SMTP id
+ i3-20020a056512340300b0048c972750b0mr10355719lfr.309.1665599038342; Wed, 12
+ Oct 2022 11:23:58 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 12 Oct 2022 13:23:57 -0500
+MIME-Version: 1.0
+In-Reply-To: <1665569560-28943-1-git-send-email-quic_srivasam@quicinc.com>
+References: <1665569560-28943-1-git-send-email-quic_srivasam@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Wed, 12 Oct 2022 13:23:57 -0500
+Message-ID: <CAE-0n52dsaTLQ7o6Z2PeFSv2_vTjvtujJ0JWCPE3uXxpKD0O4Q@mail.gmail.com>
+Subject: Re: [PATCH] ASoC: qcom: lpass-cpu: mark HDMI TX registers as volatile
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        agross@kernel.org, alsa-devel@alsa-project.org,
+        andersson@kernel.org, bgoswami@quicinc.com, broonie@kernel.org,
+        devicetree@vger.kernel.org, judyhsiao@chromium.org,
+        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, perex@perex.cz,
+        quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
+        robh+dt@kernel.org, srinivas.kandagatla@linaro.org, tiwai@suse.com
+Cc:     Srinivasa Rao Mandadapu 
+        <srivasam@qualcomm.corp-partner.google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon Oct 10, 2022 at 4:22 PM IST, Krzysztof Kozlowski wrote:
-> On 08/10/2022 13:46, Sireesh Kodali wrote:
-> > Add support for the Audio DSP PIL found on the Qualcomm MSM8953
-> > platform. The same configuration is used on all SoCs based on the
-> > MSM8953 platform (SDM450, SDA450, SDM625, SDM632, APQ8053).
-> >=20
-> > Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
-> > ---
-> >  drivers/remoteproc/qcom_q6v5_pas.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >=20
-> > diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qc=
-om_q6v5_pas.c
-> > index 6afd0941e552..70b3a37c4814 100644
-> > --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> > +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> > @@ -950,6 +950,7 @@ static const struct of_device_id adsp_of_match[] =
-=3D {
-> >  	{ .compatible =3D "qcom,msm8226-adsp-pil", .data =3D &adsp_resource_i=
-nit},
-> >  	{ .compatible =3D "qcom,msm8974-adsp-pil", .data =3D &adsp_resource_i=
-nit},
-> >  	{ .compatible =3D "qcom,msm8996-adsp-pil", .data =3D &msm8996_adsp_re=
-source},
-> > +	{ .compatible =3D "qcom,msm8953-adsp-pil", .data =3D &msm8996_adsp_re=
-source},
+Quoting Srinivasa Rao Mandadapu (2022-10-12 03:12:40)
+> From: Srinivasa Rao Mandadapu <srivasam@qualcomm.corp-partner.google.com>
 >
-> This one also in alphanumeric order, by compatible.
+> Update HDMI volatile registers list as DMA, Channel Selection registers
+> , vbit control registers are being reflected by hardware DP port
 
-Will be fixed in the next iteration
+No idea why a comma starts this line.
 
-Regards,
-Sireesh Kodali
+> disconnection.
+
+Add a newline here?
+
+> This update is required to fix no display and no sound issue
+> observed after reconnecting TAMA/SANWA DP cables.
+> Once DP cable is unplugged, DMA control registers are being reset by
+> hardware, however at second plugin, new dma control values does not
+> updated to the dma hardware registers since new register value and
+> cached values at the time of first plugin are same.
 >
->
-> Best regards,
-> Krzysztof
 
+Any Fixes tag?
+
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@qualcomm.corp-partner.google.com>
+
+Why not simply the quicinc email?
