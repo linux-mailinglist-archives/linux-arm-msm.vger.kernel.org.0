@@ -2,138 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 494BB5FD8EF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 14:13:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 611E05FD931
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 14:30:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229567AbiJMMNh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Oct 2022 08:13:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36454 "EHLO
+        id S229709AbiJMMaw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Oct 2022 08:30:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229650AbiJMMNf (ORCPT
+        with ESMTP id S229701AbiJMMav (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Oct 2022 08:13:35 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CED99F88DB;
-        Thu, 13 Oct 2022 05:13:28 -0700 (PDT)
+        Thu, 13 Oct 2022 08:30:51 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43E2DD18FB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 05:30:49 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id g9so1132684qvo.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 05:30:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1665663209; x=1697199209;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=1qoOj96ApBOzc1TcpPtjYI+umqPnp7rb8jnSe3iG49w=;
-  b=PjXj/8KX2MSkKjyJ7T0Nq+JeEc64LtDFNZHDeirz12s0k7m1inr6xwK/
-   vYkaQF9i7C4ZGXzVvz+2f4Q5/DqrAlxAIwQc9yNFLxhV7Xs+tMN2Wg2qn
-   VKJMaaB/gbU7lZuGRZTeFucLJ062xd8zczstQhPURNHTFIUx86pmgVaVq
-   U=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 13 Oct 2022 05:13:27 -0700
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2022 05:13:27 -0700
-Received: from mmitkov.eu.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Thu, 13 Oct 2022 05:13:24 -0700
-From:   <quic_mmitkov@quicinc.com>
-To:     <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <robert.foss@linaro.org>, <akapatra@quicinc.com>,
-        <jzala@quicinc.com>, <todor.too@gmail.com>
-CC:     <agross@kernel.org>, <konrad.dybcio@somainline.org>,
-        <mchehab@kernel.org>, <bryan.odonoghue@linaro.org>,
-        <cgera@qti.qualcomm.com>, <gchinnab@quicinc.com>,
-        <ayasan@qti.qualcomm.com>, <laurent.pinchart@ideasonboard.com>,
-        Milen Mitkov <quic_mmitkov@quicinc.com>
-Subject: [PATCH v4 4/4] media: camss: sm8250: Pipeline starting and stopping for multiple virtual channels
-Date:   Thu, 13 Oct 2022 15:12:55 +0300
-Message-ID: <20221013121255.1977-5-quic_mmitkov@quicinc.com>
-X-Mailer: git-send-email 2.37.3.windows.1
-In-Reply-To: <20221013121255.1977-1-quic_mmitkov@quicinc.com>
-References: <20221013121255.1977-1-quic_mmitkov@quicinc.com>
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=390wRPD9oe0xd/uU6WvHiSqS/MuVjNl5zczVPfqBsBg=;
+        b=yNPj4OaJGCY11Uif7Ct3WjVbag7S3DlIvdhknbtIL6sUVINs6EKBi46FfRYAhsLrdN
+         X1crCWv0aa80GCQdmRyjSdvzQM1U5utSgYP6yIPukzj7myYEfhm6UsBnizr+hJ2ibEPA
+         2mEcEU4miIkLLuHJg5It4JvUIdEXEAT5bV7FoF98N8w1gCXN8pegmEDvKkk/CoUhD4Jm
+         QadoMCni0eNEzRxie4ReRhY8fiD5cRsEW9SDw/UwKj2u+BT1gDEY9HjoC8uVqy9HN85O
+         2pitzE3eElslji7v1gfRy4RhqoccuD4LaWdPi/Z/O3J8s8kzEQUP4YgSaiyK2xmCwlhT
+         tSDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=390wRPD9oe0xd/uU6WvHiSqS/MuVjNl5zczVPfqBsBg=;
+        b=I8sAAuBazDMBSH8d0Oun3QRf4o5KikZplBMWmp06eXU8RVWcbjrcibXrndIKPjcR+r
+         4ZJfm9iuoaYdRzT4tToCEWSLfSwb4NzTvV2rpPUA3DTWFAcKXgTyWFqmXaDSct4dzegE
+         Tc5DJFPISRPTPA2cs23Vwc7A93Xoq66qsTuiwyA1/buk93ZvwV0D0PKM0aJOBl8vbbtz
+         4zaAuM5EGmkag19xvOL60FHShvs61LLi0Ee521EYJN7ucllvycrNTQui0T69i5L3B0Dl
+         1oLNed8MdbZAZ+9WE8F7I6hdm8ljGaM9dYXgwhaNCDjYDPKi8qShOMUNehuT/FPW3jcE
+         4exA==
+X-Gm-Message-State: ACrzQf0RxCWkA6kj52cSsziTgT5ImQB9sgo538ww+mh05vaNFlV5ML78
+        rlacOuLm1+Sy1j/P2rebd1CXkw==
+X-Google-Smtp-Source: AMsMyM7i9FnSn4FHPOjamLwitqnVbZj6hoNBEAuS60cFFO20v9rF1UmJBF12yB2i3drGw2XYFsFnlw==
+X-Received: by 2002:a05:6214:1d24:b0:4b1:8acb:b3bc with SMTP id f4-20020a0562141d2400b004b18acbb3bcmr26794446qvd.126.1665664248312;
+        Thu, 13 Oct 2022 05:30:48 -0700 (PDT)
+Received: from [192.168.1.57] (cpe-72-225-192-120.nyc.res.rr.com. [72.225.192.120])
+        by smtp.gmail.com with ESMTPSA id dt39-20020a05620a47a700b006ec59941acasm13206478qkb.11.2022.10.13.05.30.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Oct 2022 05:30:47 -0700 (PDT)
+Message-ID: <84dee7a6-f8f7-75ee-b0a2-5c1516e7c0fd@linaro.org>
+Date:   Thu, 13 Oct 2022 08:28:37 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: msm8996: align TLMM pin
+ configuration with DT schema
+Content-Language: en-US
+To:     konrad.dybcio@somainline.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221012151545.39061-1-krzysztof.kozlowski@linaro.org>
+ <20221012151545.39061-2-krzysztof.kozlowski@linaro.org>
+ <99ae66c725776f110272cdc2359241f7@somainline.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <99ae66c725776f110272cdc2359241f7@somainline.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Milen Mitkov <quic_mmitkov@quicinc.com>
+On 12/10/2022 14:32, konrad.dybcio@somainline.org wrote:
+> On 2022-10-12 17:15, Krzysztof Kozlowski wrote:
+>> DT schema expects TLMM pin configuration nodes to be named with
+>> '-state' suffix and their optional children with '-pins' suffix.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/apq8096-db820c.dts   |  96 ++++------
+>>  arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts  |  68 ++------
+>>  .../dts/qcom/msm8996-sony-xperia-tone.dtsi    |  26 +--
+>>  .../boot/dts/qcom/msm8996-xiaomi-common.dtsi  |  10 +-
+>>  .../boot/dts/qcom/msm8996-xiaomi-gemini.dts   |   8 +-
+>>  .../boot/dts/qcom/msm8996-xiaomi-natrium.dts  |   4 +-
+>>  .../boot/dts/qcom/msm8996-xiaomi-scorpio.dts  |   8 +-
+>>  arch/arm64/boot/dts/qcom/msm8996.dtsi         | 164 +++++++++---------
+>>  8 files changed, 153 insertions(+), 231 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+>> b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+>> index 5cdc7ac1a9c0..a3d1ff1aba8f 100644
+>> --- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+>> +++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+>> @@ -422,82 +422,46 @@ &tlmm {
+>>  		"NC", /* GPIO_148 */
+>>  		"NC"; /* GPIO_149 */
+>>
+>> -	sdc2_cd_on: sdc2_cd_on {
+>> -		mux {
+>> -			pins = "gpio38";
+>> -			function = "gpio";
+>> -		};
+>> -
+>> -		config {
+>> -			pins = "gpio38";
+>> -			bias-pull-up;		/* pull up */
+>> -			drive-strength = <16>;	/* 16 MA */
+>> -		};
+>> +	sdc2_cd_on: sdc2-cd-on-state {
+>> +		pins = "gpio38";
+>> +		function = "gpio";
+>> +		bias-pull-up;
+>> +		drive-strength = <16>;
+> How about drive-strength before bias- properties? I think most DTs have 
+> it like that.
 
-Use the multistream series function video_device_pipeline_alloc_start
-to allows multiple clients of the same pipeline.
+Sure, I can move it.
 
-If any of the entities in the pipeline doesn't return success at stop
-(e.g. if a VFE line remains running), the full pipeline won't be stopped.
-This allows for stopping and starting streams at any point without
-disrupting the other running streams.
+> 
+> Other than that,
+> 
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
-Signed-off-by: Milen Mitkov <quic_mmitkov@quicinc.com>
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
----
- .../media/platform/qcom/camss/camss-video.c   | 21 ++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-index 81fb3a5bc1d5..094971e2ff02 100644
---- a/drivers/media/platform/qcom/camss/camss-video.c
-+++ b/drivers/media/platform/qcom/camss/camss-video.c
-@@ -351,6 +351,7 @@ static int video_get_subdev_format(struct camss_video *video,
- 	if (subdev == NULL)
- 		return -EPIPE;
- 
-+	memset(&fmt, 0, sizeof(fmt));
- 	fmt.pad = pad;
- 	fmt.which = V4L2_SUBDEV_FORMAT_ACTIVE;
- 
-@@ -493,9 +494,11 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
- 	struct v4l2_subdev *subdev;
- 	int ret;
- 
--	ret = video_device_pipeline_start(vdev, &video->pipe);
--	if (ret < 0)
-+	ret = video_device_pipeline_alloc_start(vdev);
-+	if (ret < 0) {
-+		dev_err(video->camss->dev, "Failed to start media pipeline: %d\n", ret);
- 		return ret;
-+	}
- 
- 	ret = video_check_format(video);
- 	if (ret < 0)
-@@ -536,6 +539,7 @@ static void video_stop_streaming(struct vb2_queue *q)
- 	struct media_entity *entity;
- 	struct media_pad *pad;
- 	struct v4l2_subdev *subdev;
-+	int ret;
- 
- 	entity = &vdev->entity;
- 	while (1) {
-@@ -550,7 +554,18 @@ static void video_stop_streaming(struct vb2_queue *q)
- 		entity = pad->entity;
- 		subdev = media_entity_to_v4l2_subdev(entity);
- 
--		v4l2_subdev_call(subdev, video, s_stream, 0);
-+		ret = v4l2_subdev_call(subdev, video, s_stream, 0);
-+
-+		if (ret == -EBUSY) {
-+			/* Don't stop if other instances of the pipeline are still running */
-+			dev_dbg(video->camss->dev, "Video pipeline still used, don't stop streaming.\n");
-+			return;
-+		}
-+
-+		if (ret) {
-+			dev_err(video->camss->dev, "Video pipeline stop failed: %d\n", ret);
-+			return;
-+		}
- 	}
- 
- 	video_device_pipeline_stop(vdev);
--- 
-2.37.3
+Best regards,
+Krzysztof
 
