@@ -2,172 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD6835FDDF8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 18:08:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB55B5FDF11
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 19:34:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229620AbiJMQIL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Oct 2022 12:08:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59034 "EHLO
+        id S229700AbiJMRew (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Oct 2022 13:34:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229587AbiJMQIK (ORCPT
+        with ESMTP id S229651AbiJMRew (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Oct 2022 12:08:10 -0400
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4540013332B;
-        Thu, 13 Oct 2022 09:08:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1665677289; x=1697213289;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=OPQmeZ5uzAfg/Yu3vsd+t3FuvAOQsHliIP9WOqPYQKw=;
-  b=SoZ6M8rz0w4z3tqVEyO+XsZ4LpzrSB+j4psBjwxxkGr7ZlvtlxbeZnOr
-   cH34D89cSJvtC0Tw4UD++MXu8FsT/uvqY8KhCDGhMdPPMCEIr0yJYUp0/
-   /rjZ5me0OzZW1Pd9jDrUcECkiX2WROEzlzIg4TuT86UMTv9Z1NqmiheM1
-   P9UHM8zb2/Kg19M+1TXwiYu2WFmcpC+NYZeAHWUMclTlMEy4ISS0Nguqd
-   Ob0eoReheIzChHZZJGmpD4qMulHNYBjjrK7bTOIkSRF0eXuq6yHUikDN7
-   kjRunC/rEc1Hw1vmhf8+ai//880HxGdovPSIqDnCmvqVrZXlAVGNIsLJU
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10499"; a="306770460"
-X-IronPort-AV: E=Sophos;i="5.95,182,1661842800"; 
-   d="scan'208";a="306770460"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2022 09:05:42 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10499"; a="802296581"
-X-IronPort-AV: E=Sophos;i="5.95,182,1661842800"; 
-   d="scan'208";a="802296581"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orsmga005.jf.intel.com with ESMTP; 13 Oct 2022 09:05:20 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.96)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1oj0hv-006V2r-0F;
-        Thu, 13 Oct 2022 19:05:15 +0300
-Date:   Thu, 13 Oct 2022 19:05:14 +0300
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Mika Westerberg <mika.westerberg@linux.intel.com>
-Cc:     Marc Zyngier <maz@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>,
-        Kent Gibson <warthog618@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Billy Tsai <billy_tsai@aspeedtech.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Chen-Yu Tsai <wenst@chromium.org>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Horatiu Vultur <horatiu.vultur@microchip.com>,
-        Rafa?? Mi??ecki <rafal@milecki.pl>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Phil Edworthy <phil.edworthy@renesas.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Fabien Dessenne <fabien.dessenne@foss.st.com>,
-        Prathamesh Shete <pshete@nvidia.com>,
-        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-media@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org, alsa-devel@alsa-project.org,
-        patches@opensource.cirrus.com, linux-mediatek@lists.infradead.org,
-        linux-mips@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-omap@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        Andreas F??rber <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Joel Stanley <joel@jms.id.au>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Charles Keepax <ckeepax@opensource.cirrus.com>,
-        Richard Fitzgerald <rf@opensource.cirrus.com>,
-        Dong Aisheng <aisheng.dong@nxp.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Sean Wang <sean.wang@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Patrick Venture <venture@google.com>,
-        Nancy Yuen <yuenn@google.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Damien Le Moal <damien.lemoal@wdc.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Haojian Zhuang <haojian.zhuang@linaro.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Emil Renner Berthing <kernel@esmil.dk>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>
-Subject: Re: [PATCH v2 35/36] pinctrl: intel: Add missed header(s)
-Message-ID: <Y0g3OiL/9oQlcovJ@smile.fi.intel.com>
-References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
- <20221010201453.77401-36-andriy.shevchenko@linux.intel.com>
- <Y0gma4fmhWISrKHe@black.fi.intel.com>
+        Thu, 13 Oct 2022 13:34:52 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6323712A97
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 10:34:46 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id g8-20020a17090a128800b0020c79f987ceso5544220pja.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 10:34:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=i39DpSGkp8A10ysnMtqm1kXI7Ca0HoR3xGRlSs67Fps=;
+        b=YXn81mHbG8xm3NTs9AYPyPRj1ew4NX+TAeYudXTmcMoYjS8v3ilqkOEaW2ZudxtAkf
+         7Rm/34/MOhb4m1mWFeX1ijinGozag51xfloGfyD6oyyq0d0OoroQVAGKTgryBSouOKq3
+         /QJk5tb6peghBnxESaMWagIj+UWvHoh3wgxdRD2tE5Ji0eehu69uW7oGsEfPJHuyDJOd
+         okrTxt8qypBAQNkZ0Sy7nYYXJWEXle/fBqysIQNlODa0r9RyvrOAUWn36Eko5RTNrE8d
+         HPs+abmE2pKf0lGi5fWH2rN9sXcSBBX76zsZNYx6t5qQqmojSmSdJo6zHSIp+7xFdCKM
+         2/3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i39DpSGkp8A10ysnMtqm1kXI7Ca0HoR3xGRlSs67Fps=;
+        b=ERKV+AVWbovNuvtZ1V9dArVZmYyhS8a0HyyRFSmwhgvggsx3fSFVqyQkTrQv+Dfor7
+         tPWuPjNUSHMw/OF2XLD8/Sd0kQPL3nUY/s0CNi1aldxc1T3mkefJoAVvY+rCx9aFARzg
+         mAITr3cCuU86djyugKoPRgOXRFbS6BoIJ5yZHsICTobuYWhtvbgasyuFmmkZKHDv5bHb
+         YNMZslGchTO/XtBnQBH9mP1FBR8Ec+HfEwi7mwPON/DEtdn8Wirpz6oQmMEoAboYiKsp
+         ZnTJ5PBMirbXCLPHTDIMIBcVwsfSuHW3v+8ANEwNzAhwy2dCowtcNUSPGI+jFU4mlqZD
+         BuUA==
+X-Gm-Message-State: ACrzQf3nCFmyEYSf2IqPRTsWoJY7WXF0ksN//JmhHWIrnrjqjJDZkyZE
+        xRIR9isUlE+ejvjGINdPdGmNwIz+YssS8w==
+X-Google-Smtp-Source: AMsMyM7nPsJ/hGKbjnknq8Z3lBs2WUWdwKBt5mW827Ilx/KIiaVgnOCY9zxfPvvaGzpHRx5M+QDNOQ==
+X-Received: by 2002:a17:90b:1e0b:b0:20d:85ca:b50e with SMTP id pg11-20020a17090b1e0b00b0020d85cab50emr12120186pjb.82.1665682485835;
+        Thu, 13 Oct 2022 10:34:45 -0700 (PDT)
+Received: from p14s (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
+        by smtp.gmail.com with ESMTPSA id e2-20020a17090ab38200b0020aaa678098sm44499pjr.49.2022.10.13.10.34.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Oct 2022 10:34:44 -0700 (PDT)
+Date:   Thu, 13 Oct 2022 11:34:42 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
+Cc:     linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_clew@quicinc.com
+Subject: Re: [PATCH v4] remoteproc: core: do pm relax when in RPROC_OFFLINE
+Message-ID: <20221013173442.GA1279972@p14s>
+References: <128dc161-8949-1146-bf8b-310aa33c06a8@quicinc.com>
+ <1663312351-28476-1-git-send-email-quic_aiquny@quicinc.com>
+ <20221012204344.GA1178915@p14s>
+ <792f05fc-995e-9a87-ab7d-bee03f15bc79@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Y0gma4fmhWISrKHe@black.fi.intel.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <792f05fc-995e-9a87-ab7d-bee03f15bc79@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 13, 2022 at 05:53:31PM +0300, Mika Westerberg wrote:
-> On Mon, Oct 10, 2022 at 11:14:51PM +0300, Andy Shevchenko wrote:
-> > Do not imply that some of the generic headers may be always included.
-> > Instead, include explicitly what we are direct user of.
-> > 
-> > While at it, sort headers alphabetically.
-> > 
-> > Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+On Thu, Oct 13, 2022 at 09:40:09AM +0800, Aiqun(Maria) Yu wrote:
+> Hi Mathieu,
 > 
-> Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+> On 10/13/2022 4:43 AM, Mathieu Poirier wrote:
+> > Please add what has changed from one version to another, either in a cover
+> > letter or after the "Signed-off-by".  There are many examples on how to do that
+> > on the mailing list.
+> > 
+> Thx for the information, will take a note and benefit for next time.
 > 
-> For all the intel pinctrl changes.
+> > On Fri, Sep 16, 2022 at 03:12:31PM +0800, Maria Yu wrote:
+> > > RPROC_OFFLINE state indicate there is no recovery process
+> > > is in progress and no chance to do the pm_relax.
+> > > Because when recovering from crash, rproc->lock is held and
+> > > state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
+> > > and then unlock rproc->lock.
+> > 
+> > You are correct - because the lock is held rproc->state should be set to RPROC_RUNNING
+> > when rproc_trigger_recovery() returns.  If that is not the case then something
+> > went wrong.
+> > 
+> > Function rproc_stop() sets rproc->state to RPROC_OFFLINE just before returning,
+> > so we know the remote processor was stopped.  Therefore if rproc->state is set
+> > to RPROC_OFFLINE something went wrong in either request_firmware() or
+> > rproc_start().  Either way the remote processor is offline and the system probably
+> > in an unknown/unstable.  As such I don't see how calling pm_relax() can help
+> > things along.
+> > 
+> PROC_OFFLINE is possible that rproc_shutdown is triggered and successfully
+> finished.
+> Even if it is multi crash rproc_crash_handler_work contention issue, and
+> last rproc_trigger_recovery bailed out with only
+> rproc->state==RPROC_OFFLINE, it is still worth to do pm_relax in pair.
+> Since the subsystem may still can be recovered with customer's next trigger
+> of rproc_start, and we can make each error out path clean with pm resources.
+> 
+> > I suggest spending time understanding what leads to the failure when recovering
+> > from a crash and address that problem(s).
+> > 
+> In current case, the customer's information is that the issue happened when
+> rproc_shutdown is triggered at similar time. So not an issue from error out
+> of rproc_trigger_recovery.
 
-Thank you, I have added it to the 4 Intel related patches.
+That is a very important element to consider and should have been mentioned from
+the beginning.  What I see happening is the following:
 
--- 
-With Best Regards,
-Andy Shevchenko
+rproc_report_crash()
+        pm_stay_awake()
+        queue_work() // current thread is suspended
+
+rproc_shutdown()
+        rproc_stop()
+                rproc->state = RPROC_OFFLINE;
+
+rproc_crash_handler_work()
+        if (rproc->state == RPROC_OFFLINE)
+                return // pm_relax() is not called
+
+The right way to fix this is to add a pm_relax() in rproc_shutdown() and
+rproc_detach(), along with a very descriptive comment as to why it is needed.
 
 
+> > Thanks,
+> > Mathieu
+> > 
+> > 
+> > > When the state is in RPROC_OFFLINE it means separate request
+> > > of rproc_stop was done and no need to hold the wakeup source
+> > > in crash handler to recover any more.
+> > > 
+> > > Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+> > > ---
+> > >   drivers/remoteproc/remoteproc_core.c | 11 +++++++++++
+> > >   1 file changed, 11 insertions(+)
+> > > 
+> > > diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+> > > index e5279ed9a8d7..6bc7b8b7d01e 100644
+> > > --- a/drivers/remoteproc/remoteproc_core.c
+> > > +++ b/drivers/remoteproc/remoteproc_core.c
+> > > @@ -1956,6 +1956,17 @@ static void rproc_crash_handler_work(struct work_struct *work)
+> > >   	if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
+> > >   		/* handle only the first crash detected */
+> > >   		mutex_unlock(&rproc->lock);
+> > > +		/*
+> > > +		 * RPROC_OFFLINE state indicate there is no recovery process
+> > > +		 * is in progress and no chance to have pm_relax in place.
+> > > +		 * Because when recovering from crash, rproc->lock is held and
+> > > +		 * state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
+> > > +		 * and then unlock rproc->lock.
+> > > +		 * RPROC_OFFLINE is only an intermediate state in recovery
+> > > +		 * process.
+> > > +		 */
+> > > +		if (rproc->state == RPROC_OFFLINE)
+> > > +			pm_relax(rproc->dev.parent);
+> > >   		return;
+> > >   	}
+> > > -- 
+> > > 2.7.4
+> > > 
+> 
+> 
+> -- 
+> Thx and BRs,
+> Aiqun(Maria) Yu
