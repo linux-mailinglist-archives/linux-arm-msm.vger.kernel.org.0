@@ -2,77 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AA465FD948
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 14:39:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D58A5FD944
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 14:38:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229694AbiJMMi6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Oct 2022 08:38:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59346 "EHLO
+        id S229576AbiJMMiW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Oct 2022 08:38:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229662AbiJMMi5 (ORCPT
+        with ESMTP id S229561AbiJMMiV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Oct 2022 08:38:57 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FBA711D9A1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 05:38:56 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id r19so868277qtx.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 05:38:56 -0700 (PDT)
+        Thu, 13 Oct 2022 08:38:21 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C77B911D998
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 05:38:19 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id i133-20020a1c3b8b000000b003c6c154d528so28827wma.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 05:38:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5kz9tUsFqTbeOstAmkjMnqXNuAGfE9Jg+Fa6WSlHaXY=;
-        b=ZK8VDKTZB/G6KzUx18/x7iGXsNCnhmsEUHjFq/DOGq3C+2rzQ/onKPlyoiLxY3kr6u
-         vmvmQTeAHzrP7zl8Cq8dRTULBmrnfhxqFAi2p74AvAI/iw89aODcguStpcU8iM0RAC4l
-         i0WtaMk1sA7rak0Go/GCe7uQYyXkVU3nJ39s17YsxyblW0OHO6ltbHSHwTc+0QaH0iNL
-         XFap/X+b5TxlTZPpUzZcWR1leFsj6UF0ApCD11XqHYW5BDM4tJdzENUx1dnvo+NaDHhW
-         9YCg/g6zV/tYFGch21jEvfbTGotqlXqbVKw2ZUxtF98WTzs7jx3k7tqe8qvZxama4pi7
-         zJdQ==
+        bh=n98JEg0aU1YMdIAxv7Liv37PwlgbINKHuzKrarqY9oc=;
+        b=iDrElDPw41gvQqgZ7TCAlQXfNmXe96Amnb7+vhhTeovAYPx4oTjcfZ051zH+LVawP/
+         pliD9rHIbDthh33BiZWTDDwp9amDjROYQ6aBl7n2A0phJk0CDjqgsFxGxad9Zzzz/tkm
+         G7lLj0DHttDzf4VOMG2TkHnxEvR4CfitJnAdCbK3ubOSX3CqbQEjzFHKFIrVFIz4Ux9u
+         zRBR5mxWpf8IxBXTtxSZDqATLtC60CqjexUvfQ6qO37SBtZlc/rKe9AZs+nLrnuJ6Mif
+         EgI/v1hbWPK3Q+nBJ+iuevV+hjPgfzQtG3mhrxC0HRgLpdhInNCa/bkDfjl8i/4b2MhI
+         nM+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5kz9tUsFqTbeOstAmkjMnqXNuAGfE9Jg+Fa6WSlHaXY=;
-        b=g3NaPBAx5GmWi3jLxjuYmMhp9XmDSobDNGgXFe3W42Pom9pQgnT4EC/PgtErwXVP77
-         9sa91zt0NXbLatqsOgdAc7hUk6vnSkJT2qfuO95NqDf0vJEOLDOFEz7347dnz0oRLA6X
-         eBSnFhZRoeV0ogQ+JvJhn9M4jwW7ketg6tUq7EQu0MFiQ5n/NbeP3nipWd2L7awqzZkz
-         kmzjDn7brXnHD6W0O55XRD390GD+8CWW4LXnfNdQi2qLQSApAckJ3W0Tw+Nfq9PTYXed
-         6BN3d6/504jXFR9uBsRQrMt01TKIKyF3CoCIp7cntwxtTEjwclgqtpRy+VDJXNGZeHOQ
-         xB8A==
-X-Gm-Message-State: ACrzQf2AwKwTDVAqHzeS2YcyUKbK8UVfwpg6iVnnfAetGhjioZLVG1Lg
-        Oi5iX6Sw8qGBP3Qdc2aaFPa9TW9Zn8NoHw==
-X-Google-Smtp-Source: AMsMyM7QGWwq2TvteduWwhCjLEthvj2mVj02Nsr1AAZ/3O3uzKlIbcCYr5JBhY8RY7/i+vnIKYW/Sg==
-X-Received: by 2002:ac8:7d45:0:b0:396:ce08:4b49 with SMTP id h5-20020ac87d45000000b00396ce084b49mr25163847qtb.650.1665664734315;
-        Thu, 13 Oct 2022 05:38:54 -0700 (PDT)
-Received: from [192.168.1.57] (cpe-72-225-192-120.nyc.res.rr.com. [72.225.192.120])
-        by smtp.gmail.com with ESMTPSA id o15-20020a05620a2a0f00b006ce40fbb8f6sm18877024qkp.21.2022.10.13.05.38.52
+        bh=n98JEg0aU1YMdIAxv7Liv37PwlgbINKHuzKrarqY9oc=;
+        b=t1+PxdpByxjC13qpVRDdBHgUaQ8xUJAlbKKVO7Mf3/XB/WRNEr4GP3wuydPwCGAWl8
+         OHbhqJ5BuaDmMHkrv6BLkNN9RjZR5ZjyJgsPN7i5/yaa7iEDnFqC4jkvt5zUL5czPivV
+         PRnlr8cS6doumM7ZQPY4pZsQWNB0ze1rNPHW464D1qArxCBCaSd3RdQlOnKlSzFIKbUF
+         4X78/sAa4n0lXDQykSaxQ5PDnCv0/+94mTmt88z6sbcc3XJfn7M6PbXGaOpy8cE0a8yQ
+         z2ikk8s+XyESYsfXFZZWxeGEVmVm4XsSBz64Fh+tWZ5Lk781Cc0jQ0iQzZjItV68G+j/
+         nfBA==
+X-Gm-Message-State: ACrzQf2GkRQ2zoazO191XXZThh95MOXlUphtmK7xHxhRIC2/0nhv72L8
+        Nlql9bfKa8ibmIxOzzOZKDof9w==
+X-Google-Smtp-Source: AMsMyM6xvD7KaKmCY3+ro/8lfB0TUt9lb1jEjbicKFawRN/dFfDJGtC6Pxnpi9cJz+RClZlE3Bj/xg==
+X-Received: by 2002:a7b:c056:0:b0:3b4:e007:2050 with SMTP id u22-20020a7bc056000000b003b4e0072050mr6443748wmc.38.1665664698341;
+        Thu, 13 Oct 2022 05:38:18 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id e5-20020a5d5945000000b00231893bfdc7sm2030004wri.2.2022.10.13.05.38.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Oct 2022 05:38:53 -0700 (PDT)
-Message-ID: <ee305dbb-0714-4d7c-437f-66b66842370f@linaro.org>
-Date:   Thu, 13 Oct 2022 08:36:42 -0400
+        Thu, 13 Oct 2022 05:38:17 -0700 (PDT)
+Message-ID: <a6558ad9-bd04-ca1a-fa20-8d1d55612887@linaro.org>
+Date:   Thu, 13 Oct 2022 13:38:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH 2/2] dt-bindings: pinctrl: qcom,sc7180: convert to
- dtschema
+ Thunderbird/102.3.1
+Subject: Re: [PATCH v4 0/4] media: camss: sm8250: Virtual channels support for
+ SM8250
 Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221007145116.46554-1-krzysztof.kozlowski@linaro.org>
- <20221007145116.46554-2-krzysztof.kozlowski@linaro.org>
- <CAD=FV=WN+9DJp-3Ny04NmOLau2RYibeJayEtB7x0uT-YoizFQA@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=WN+9DJp-3Ny04NmOLau2RYibeJayEtB7x0uT-YoizFQA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+To:     quic_mmitkov@quicinc.com, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, robert.foss@linaro.org,
+        akapatra@quicinc.com, jzala@quicinc.com, todor.too@gmail.com
+Cc:     agross@kernel.org, konrad.dybcio@somainline.org,
+        mchehab@kernel.org, cgera@qti.qualcomm.com, gchinnab@quicinc.com,
+        ayasan@qti.qualcomm.com, laurent.pinchart@ideasonboard.com
+References: <20221013121255.1977-1-quic_mmitkov@quicinc.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20221013121255.1977-1-quic_mmitkov@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -83,32 +78,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/10/2022 13:42, Doug Anderson wrote:
-> Hi,
-> 
-> On Fri, Oct 7, 2022 at 7:51 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> +      drive-strength:
->> +        enum: [2, 4, 6, 8, 10, 12, 14, 16]
->> +        default: 2
->> +        description:
->> +          Selects the drive strength for the specified pins, in mA.
-> 
-> The "default" of 2 is not correct. Please see commit 768f8d8e45f9
-> ("dt-bindings: pinctrl: drive-strength doesn't default to 2 if
-> unspecified")
+On 13/10/2022 13:12, quic_mmitkov@quicinc.com wrote:
+> For v4:
+> - fixes the warning reported by the kernel test robot
+> - tiny code change to enable the vc functionality with the partially-applied
+>    multistream patches on linux-next (tested on tag:next-20221010)
 
-Uh, you're right. This was copied to one binding and then I copied to
-another, and another...
+Ah.
 
-> 
-> In fact, are you sure this even needs to be replicated here? This is
-> part of the common "qcom,tlmm-common.yaml" bindings file, isn't it?
+I never groked I need to apply an alternative set on top to test this.
+Doh !
 
-If the value was correct, it might be per-SoC specific, but that's
-another question. The default value is actually unknown, so I'll remove it.
+Let me see if I can give you a tested-by
 
-Best regards,
-Krzysztof
-
+---
+bod
