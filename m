@@ -2,149 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70BE35FD65E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 10:44:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B7045FD6C9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 11:14:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229546AbiJMIoN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Oct 2022 04:44:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41406 "EHLO
+        id S229985AbiJMJOR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Oct 2022 05:14:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229545AbiJMIoN (ORCPT
+        with ESMTP id S230004AbiJMJNo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Oct 2022 04:44:13 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BF7714BB79
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 01:44:11 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id 13so2402137ejn.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 01:44:11 -0700 (PDT)
+        Thu, 13 Oct 2022 05:13:44 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C6A1197F97
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 02:13:38 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id l22so1715922edj.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 02:13:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1turIhhCY/CNq6vedzeKW5KsXI/Kc8E5BbkBmS9//dw=;
-        b=W4aCnSv/pS6sxxmcDpVOLBiP3nJa+/KfvNOAeQNKJGBglZJN2eu9WG3GmO3KaZrfnT
-         3d0BNOc6SDzFsMGcqWZxJDpHvhWOss+9Vw6wv/sokjE+5TgI71wcW+8Usml460WG5aRk
-         9/w0FI8nsS4UIET/gHIO/QLb3xP/qLk65Yf+yChupUoVPlYwal+MUcBlhLlzRm66Rmj+
-         PU19fwARVl9hYcNrQj48Gf38HXVk55g2NrpRJ1jZPT3+RITN629FpNKAusBtspBkQI+6
-         6SmeTpe2y4On5r+0xwHWsCOrZ3OgRbUXmHALGB4P67K19COng0K63b9EvqwdORPok8f2
-         7mqg==
+        d=fairphone.com; s=fair;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+dzrAn+aBg/5KVcVy/4aX4joCWNIa7ky5mt/LVd7Cts=;
+        b=EpOkGGCsgHYv53DtFoFfROkk3L70Tad3Fr98hzdLPuGpB67l/RLNzEBfk6W4b2EshY
+         heegHPUgBEw1hcrGaYOATLKXTKvem4g5S6Lb3RMMoJufXUlAxAamcbyAY13lmYodkLeX
+         u6SHw0M8I7LxbQAztnvDt2hOo8zLTOKUeT3zGoM3n/MiiwU1TLm72iCfKo3Btj9qeuSr
+         SBtQffQhJawJuoSnXkJ1hYdSEIdN4zYqlp7AE4TyZ6Uby+P2Wr9cbdnQTBDBexZGQ/AZ
+         Jd7XJ53v38BYyjY0H+QHMPGtwcluNUpf4di0GT/wReLKc0mWX74+PHtfMGqv0efLG7Bo
+         t5yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1turIhhCY/CNq6vedzeKW5KsXI/Kc8E5BbkBmS9//dw=;
-        b=j0nI+awQI8S7hFfYTjY9QArh7aKZk2EkknEeqfWc//YKkbN8cgHtuL+tXsMhR9xTHk
-         18Eex4K3+QNvUkYCqcfS6Ubx3cmlc2hyO2S0ZT4+f471hNszByznap9p/NErmE6W4G8J
-         Y+8KCn1HPUohdxNPjHGUd9iz17vmRCAUU2gLooJ1IaSYeuWCYa/dqVzJw2qG+8J2Dhli
-         rpp1umMzAJO0fWKzw6NATMqgxB0N1xyjOnzNx9gPMCqZaMAKIGAR0Sg9rHqd23wC3K0f
-         cOieXhlDoFEuE8wf9ZhJu9JvSC2ud4Dp5CK3lSMXbtmsbKT/mdqiTxlCHSalki63RASV
-         ImAw==
-X-Gm-Message-State: ACrzQf30h1q+yHf6Cj3X5EgYFX+VQegHZvdHvwPcroHZfsK8R/HoPJUy
-        u8PnDwEOIRJgByg8sDTbdmmlpywVzyGEeQT4awWGHw==
-X-Google-Smtp-Source: AMsMyM7wNqIO+EB2D/0v+xopEqUBPYinzoMy1XCYOu8eZX0GDYt8CcigXnBWY7cmGmj8pgyuwPwQq+sHevEYcnC4UP8=
-X-Received: by 2002:a17:907:5c2:b0:77e:def7:65d8 with SMTP id
- wg2-20020a17090705c200b0077edef765d8mr25999403ejb.487.1665650650112; Thu, 13
- Oct 2022 01:44:10 -0700 (PDT)
+        bh=+dzrAn+aBg/5KVcVy/4aX4joCWNIa7ky5mt/LVd7Cts=;
+        b=c3Q9+pDaUkl8/9nd1UOYvsEkITVJDfiSR9OxHkAWXhB1pQvyVXoBr5ffh3I8smiQsH
+         dAImUWeIEHy8lY857dalWmLH5OLAaSD0HQbpUEy7kTJe0MxSdmOiFFnVmom+KoRL1UyJ
+         +LGU0rp9htBWJFwMYFElgDHlaft/fvij3QvOejg5qZUWKp5shJTlMb5q9HzAYYNUedrZ
+         fdcx3QmdP4eIiTM3hDPkBRx8/MfZu8vg5wUhAaN9lSuIwdpAtMkj1UtcPmj22XPa1VrZ
+         t+U0HmyeVVQXL0/yU6S3e+Y29nmYSb5z8MDsBGGDJAy+IExVz/X79NXKEXffbbqAj/17
+         xrDQ==
+X-Gm-Message-State: ACrzQf2KCGqY+tnB5JIq07jdUtSNPsKRpFntuO3wkiBf9917g6JLClbs
+        yf1HYh5exGf90OsbehsPLAAS7H0hdjieSw==
+X-Google-Smtp-Source: AMsMyM5p8hsyMuf8fEG6NDPh7dYuTrJBp5jGeer89w4o0UR99iwkf54abNti1vvH5DL5t0oMqY+4Dw==
+X-Received: by 2002:a05:6402:5510:b0:459:5ea:9bc0 with SMTP id fi16-20020a056402551000b0045905ea9bc0mr30068091edb.152.1665652416151;
+        Thu, 13 Oct 2022 02:13:36 -0700 (PDT)
+Received: from otso.. (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id ti5-20020a170907c20500b0073dd1ac2fc8sm2582725ejc.195.2022.10.13.02.13.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Oct 2022 02:13:35 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH] dt-bindings: qcom,pdc: Add missing compatibles
+Date:   Thu, 13 Oct 2022 11:12:08 +0200
+Message-Id: <20221013091208.356739-1-luca.weiss@fairphone.com>
+X-Mailer: git-send-email 2.38.0
 MIME-Version: 1.0
-References: <20221007132009.1886-1-quic_mmitkov@quicinc.com> <20221007132009.1886-5-quic_mmitkov@quicinc.com>
-In-Reply-To: <20221007132009.1886-5-quic_mmitkov@quicinc.com>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Thu, 13 Oct 2022 10:43:59 +0200
-Message-ID: <CAG3jFyurUzHruDxCt33A+YPyqjhgk6u1tctbL+97GuTmZOyaqw@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] media: camss: sm8250: Pipeline starting and
- stopping for multiple virtual channels
-To:     quic_mmitkov@quicinc.com
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        akapatra@quicinc.com, jzala@quicinc.com, todor.too@gmail.com,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, mchehab@kernel.org,
-        bryan.odonoghue@linaro.org, cgera@qti.qualcomm.com,
-        gchinnab@quicinc.com, ayasan@qti.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_PDS_OTHER_BAD_TLD autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 7 Oct 2022 at 15:20, <quic_mmitkov@quicinc.com> wrote:
->
-> From: Milen Mitkov <quic_mmitkov@quicinc.com>
->
-> Use the multistream series function video_device_pipeline_alloc_start
-> to allows multiple clients of the same pipeline.
->
-> If any of the entities in the pipeline doesn't return success at stop
-> (e.g. if a VFE line remains running), the full pipeline won't be stopped.
-> This allows for stopping and starting streams at any point without
-> disrupting the other running streams.
->
-> Signed-off-by: Milen Mitkov <quic_mmitkov@quicinc.com>
-> ---
->  .../media/platform/qcom/camss/camss-video.c   | 21 ++++++++++++++++---
->  1 file changed, 18 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-> index 81fb3a5bc1d5..b042faf3dcda 100644
-> --- a/drivers/media/platform/qcom/camss/camss-video.c
-> +++ b/drivers/media/platform/qcom/camss/camss-video.c
-> @@ -353,6 +353,7 @@ static int video_get_subdev_format(struct camss_video *video,
->
->         fmt.pad = pad;
->         fmt.which = V4L2_SUBDEV_FORMAT_ACTIVE;
-> +       fmt.stream = 0;
->
->         ret = v4l2_subdev_call(subdev, pad, get_fmt, NULL, &fmt);
->         if (ret)
-> @@ -493,9 +494,11 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
->         struct v4l2_subdev *subdev;
->         int ret;
->
-> -       ret = video_device_pipeline_start(vdev, &video->pipe);
-> -       if (ret < 0)
-> +       ret = video_device_pipeline_alloc_start(vdev);
-> +       if (ret < 0) {
-> +               dev_err(video->camss->dev, "Failed to start media pipeline: %d\n", ret);
->                 return ret;
-> +       }
->
->         ret = video_check_format(video);
->         if (ret < 0)
-> @@ -536,6 +539,7 @@ static void video_stop_streaming(struct vb2_queue *q)
->         struct media_entity *entity;
->         struct media_pad *pad;
->         struct v4l2_subdev *subdev;
-> +       int ret;
->
->         entity = &vdev->entity;
->         while (1) {
-> @@ -550,7 +554,18 @@ static void video_stop_streaming(struct vb2_queue *q)
->                 entity = pad->entity;
->                 subdev = media_entity_to_v4l2_subdev(entity);
->
-> -               v4l2_subdev_call(subdev, video, s_stream, 0);
-> +               ret = v4l2_subdev_call(subdev, video, s_stream, 0);
-> +
-> +               if (ret == -EBUSY) {
-> +                       /* Don't stop if other instances of the pipeline are still running */
-> +                       dev_dbg(video->camss->dev, "Video pipeline still used, don't stop streaming.\n");
-> +                       return;
-> +               }
-> +
-> +               if (ret) {
-> +                       dev_err(video->camss->dev, "Video pipeline stop failed: %d\n", ret);
-> +                       return;
-> +               }
->         }
->
->         video_device_pipeline_stop(vdev);
-> --
-> 2.37.3
->
+Document the compatibles that are already in use in the upstream Linux
+kernel to resolve dtbs_check warnings.
 
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+ .../devicetree/bindings/interrupt-controller/qcom,pdc.yaml    | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+index b6f56cf5fbe3..94791e261c42 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+@@ -28,11 +28,15 @@ properties:
+       - enum:
+           - qcom,sc7180-pdc
+           - qcom,sc7280-pdc
++          - qcom,sc8280xp-pdc
+           - qcom,sdm845-pdc
++          - qcom,sdx55-pdc
++          - qcom,sdx65-pdc
+           - qcom,sm6350-pdc
+           - qcom,sm8150-pdc
+           - qcom,sm8250-pdc
+           - qcom,sm8350-pdc
++          - qcom,sm8450-pdc
+       - const: qcom,pdc
+ 
+   reg:
+-- 
+2.38.0
+
