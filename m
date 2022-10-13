@@ -2,111 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D18915FE5A9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Oct 2022 00:55:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9D6D5FE5C3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Oct 2022 01:00:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229772AbiJMWzi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Oct 2022 18:55:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56028 "EHLO
+        id S229659AbiJMXAW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Oct 2022 19:00:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229788AbiJMWz3 (ORCPT
+        with ESMTP id S229485AbiJMXAV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Oct 2022 18:55:29 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0E6FC895A;
-        Thu, 13 Oct 2022 15:55:20 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id k9so2706310pll.11;
-        Thu, 13 Oct 2022 15:55:20 -0700 (PDT)
+        Thu, 13 Oct 2022 19:00:21 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA65B9379F;
+        Thu, 13 Oct 2022 16:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mZPNZ3VLE0Hgex87FN0OkV1DekcEt1bf70+VW9u0u5I=;
-        b=XR4pOh/xQyh1rFhshT6o+clCP1DO1ClDFqI7cfZDk7kMzC3yec7YYkEYOChszeCWGr
-         wAQvsbjAKyigjj2ez4ReqZ2Y7Cn40BHbeMfpeCluilMs33cFWOUoLnTpltyDzST1Et51
-         pUMeyHwOnpRh5N7/mnLAlFO+8FxRM6LnOld79xUj7kA+o2sYaEom0MTPTc8+FeLiBhm0
-         wwUXnkun4WKBcKd8XzEkxNTepq8zllGyVRnDhHc4uYQJ5EphYdlgjjjgA5xzBAlA+DXg
-         jPd+FKWfFoe6WIoZ95vGLOMs/0a6UxmT8X6bfT6XiJHyF7RT45ALIWGIDgJDoBuNgH72
-         nPug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mZPNZ3VLE0Hgex87FN0OkV1DekcEt1bf70+VW9u0u5I=;
-        b=ksztETRY4bEjxPU8ZEB1vBBmdwoZ8CupwkOOZkFqtt2JXkbfRTOFabWBiL269ue6l/
-         9BIQgyC3g1xXc9yiGTRt4Wfotj5X4Xm+4c5DHe1DSozkxvx/ScAlqDugYdFDhktBNL7t
-         xw16y8Tpq5qvA3O0bn1/hA56su+VaeXRn2rxOaEa08bWt4tDe0wz8WLEFPnCdFKnjhGV
-         PEua/YO/aX4Fi8oUgVfR5fW2p5IsbqmFjjJ0DmbI8uu42twVB4iWQxpiRLTfTSCs5zef
-         cXEC8rDKRPqhbUFYNehQb5dGhrLeThU3sLLPrWdvj/xyQgiiqIwdEoGjfsx/HVJvPxxP
-         y+ow==
-X-Gm-Message-State: ACrzQf19AblrwKPmEHU/dVgTBhIGXijRT9tJWZLrijXVgkBejWgQKQUI
-        WegOrmR13Kab7EvUlxgbByw=
-X-Google-Smtp-Source: AMsMyM5SeaxGSOFjUEc1amD9PN0v9n6v+ZxTXU3WfxZU7s4Bd2Hpy5ww3QAawc27sjg9tF94dvu3JA==
-X-Received: by 2002:a17:902:cf03:b0:17e:c7a:678e with SMTP id i3-20020a170902cf0300b0017e0c7a678emr2034151plg.10.1665701720262;
-        Thu, 13 Oct 2022 15:55:20 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
-        by smtp.gmail.com with ESMTPSA id h3-20020aa796c3000000b0055fc0a132aasm221198pfq.92.2022.10.13.15.55.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Oct 2022 15:55:19 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 3/3] drm/msm/a6xx: Remove state objects from list before freeing
-Date:   Thu, 13 Oct 2022 15:55:15 -0700
-Message-Id: <20221013225520.371226-4-robdclark@gmail.com>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20221013225520.371226-1-robdclark@gmail.com>
-References: <20221013225520.371226-1-robdclark@gmail.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1665702018; x=1697238018;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=j8NPJhobSjrTW6bjQXlYZSYkhG0tbDt3mMbxMdeVS4Q=;
+  b=TOTNMWNj/B9eQCe8iGIiRaNWMgFIcp5XnXU6TqKx/+80u0ooqlaAsHzj
+   sWI9whTdPkgYuRVfmQWhtemmm2+12qp1PB8zRqhykR7SUJCS4Z67HsjEa
+   v6wDFyCiDzyJ5sVooo6M+Q7oov9V4ncC1kjAQcP7KOhHWUeMUCC4RQ3Y6
+   I=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 13 Oct 2022 16:00:12 -0700
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2022 16:00:12 -0700
+Received: from [10.110.38.147] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 13 Oct
+ 2022 16:00:10 -0700
+Message-ID: <2f313bf8-b366-e094-b5b6-c601458f5cfa@quicinc.com>
+Date:   Thu, 13 Oct 2022 16:00:10 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v5 06/13] virt: gunyah: Identify hypervisor version
+Content-Language: en-US
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        "Will Deacon" <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        "Arnd Bergmann" <arnd@arndb.de>, <devicetree@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20221011000840.289033-1-quic_eberman@quicinc.com>
+ <20221011000840.289033-7-quic_eberman@quicinc.com>
+ <Y0UJgcc0+AEbHTIM@kroah.com>
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <Y0UJgcc0+AEbHTIM@kroah.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 10/10/2022 11:13 PM, Greg Kroah-Hartman wrote:
+> On Mon, Oct 10, 2022 at 05:08:33PM -0700, Elliot Berman wrote:
+> 
+> EXPORT_SYMBOL_GPL()?  I have to ask.
 
-Technically it worked as it was before, only because it was using the
-_safe version of the iterator.  But it is sloppy practice to leave
-dangling pointers.
+typo only :)
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> But why is it exported at all?  No one is using it in this patch.
+> 
+It's used later in the series by the message queue driver. The idea here 
+now is that gunyah.ko is capable of identifying Gunyah and other drivers 
+can check if they are individually compatible with the reported version 
+of Gunyah.
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index b0124d0f286c..a5c3d1ed255a 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -1046,8 +1046,10 @@ static void a6xx_gpu_state_destroy(struct kref *kref)
- 	if (a6xx_state->gmu_debug)
- 		kvfree(a6xx_state->gmu_debug->data);
- 
--	list_for_each_entry_safe(obj, tmp, &a6xx_state->objs, node)
-+	list_for_each_entry_safe(obj, tmp, &a6xx_state->objs, node) {
-+		list_del(&obj->node);
- 		kvfree(obj);
+ From Patch 9:
+
++static int __init gh_msgq_init(void)
++{
++	if (GH_API_INFO_API_VERSION(gunyah_api.api_info) != GUNYAH_API_V1) {
++		pr_warn("Unrecognized gunyah version: %llu. Currently supported: %d\n",
++			GH_API_INFO_API_VERSION(gunyah_api.api_info), GUNYAH_API_V1);
++		return -ENODEV;
 +	}
- 
- 	adreno_gpu_state_destroy(state);
- 	kfree(a6xx_state);
--- 
-2.37.3
++
++	return 0;
++}
 
+>> +
+>> +static int __init gunyah_init(void)
+>> +{
+>> +	u32 uid[4];
+>> +
+>> +	gh_hypercall_get_uid(uid);
+>> +
+>> +	if (!(gh_uid_matches(GUNYAH, uid) || gh_uid_matches(QC_HYP, uid)))
+>> +		return 0;
+> 
+> Why return success if this is not true?  Shouldn't you return an error
+> and fail to load?
+> 
+That's fair -- easy to fix.
+
+>> +
+>> +	gh_hypercall_hyp_identify(&gunyah_api);
+>> +
+>> +	pr_info("Running under Gunyah hypervisor %llx/v%lld\n",
+>> +		  GH_API_INFO_VARIANT(gunyah_api.api_info),
+>> +		  GH_API_INFO_API_VERSION(gunyah_api.api_info));
+>> +
+>> +	return 0;
+>> +}
+>> +arch_initcall(gunyah_init);
+>> +
+>> +static void __exit gunyah_exit(void)
+>> +{
+>> +}
+>> +module_exit(gunyah_exit);
+> 
+> Why do you need a module_exit() call?
+> 
+
+I can remove.
+
+>> +
+>> +MODULE_LICENSE("GPL");
+>> +MODULE_DESCRIPTION("Gunyah Hypervisor Driver");
+> 
+> What will cause this module to be properly automatically loaded?  I do
+> not see that happening here at all.
+> 
+>> diff --git a/include/asm-generic/gunyah.h b/include/asm-generic/gunyah.h
+>> index 86eb59e203ef..8f9d4c649ba8 100644
+>> --- a/include/asm-generic/gunyah.h
+>> +++ b/include/asm-generic/gunyah.h
+>> @@ -85,6 +85,8 @@ static inline int gh_remap_error(int gh_error)
+>>   	((uid)[0] == prefix ## _UID0 && (uid)[1] == prefix ## _UID1 && \
+>>   	 (uid)[2] == prefix ## _UID2 && (uid)[3] == prefix ## _UID3)
+>>   
+>> +#define GUNYAH_API_V1			1
+> 
+> You do not use this define anywhere in this patch.
+> 
+> 
+>> +
+>>   #define GH_API_INFO_API_VERSION(x)	(((x) >> 0) & 0x3fff)
+>>   #define GH_API_INFO_BIG_ENDIAN(x)	(((x) >> 14) & 1)
+>>   #define GH_API_INFO_IS_64BIT(x)		(((x) >> 15) & 1)
+>> @@ -103,6 +105,7 @@ struct gh_hypercall_hyp_identify_resp {
+>>   	u64 api_info;
+>>   	u64 flags[3];
+>>   };
+>> +extern struct gh_hypercall_hyp_identify_resp gunyah_api;
+> 
+> Again, not used.
+> 
+> thanks,
+> 
+> greg k-h
