@@ -2,93 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A1D95FE387
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 22:53:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64DA75FE391
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 22:55:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229678AbiJMUxC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Oct 2022 16:53:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60500 "EHLO
+        id S229919AbiJMUzH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Oct 2022 16:55:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229607AbiJMUxB (ORCPT
+        with ESMTP id S229629AbiJMUzG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Oct 2022 16:53:01 -0400
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4E4730569;
-        Thu, 13 Oct 2022 13:53:00 -0700 (PDT)
-Received: by mail-oi1-f182.google.com with SMTP id n83so3043860oif.11;
-        Thu, 13 Oct 2022 13:53:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wEa8MzuBXqW8d10/nVywQl6OG+GmLxQIsROSS6dBhAI=;
-        b=460D+JcotfrfTz8vvabr/FIMhyqUDEbdD+L69A9j9lSxIEKSvkevuFHEb0eAhQJHF1
-         AWIm8GOeXa2Ryri64i3tN6WkfxIme27jztzpqyclzA5FGMVUVefwABfWbUfORLnJCSjQ
-         PToLrx0mNcBnOxGoIxQFJk+lQDsomvRU5Z3PCW797jM1TyLRPJfWgA1PJDmzCYW7r/Ed
-         jmaNw+M1zwUZBt6zLmi9gZ9eL9FX3X0LfsfZCo90bkT0q8h0RKzidFbItKBN3SrUv9sG
-         ag9IidmjqKX9qZeEwgNoBlMoWFLt3yQOAAhxcfbnqmo2tunU8k3s4DQQSZ32tyIUddCE
-         Ah5A==
-X-Gm-Message-State: ACrzQf2NjRMPn+bENWO+FxSFKMyayCz/103URY665hm3C9W51uXpLok4
-        0cY2HrM6cVOfDxINfxSWCg==
-X-Google-Smtp-Source: AMsMyM7zy1cDs+EvWqGR047HtGCXe5RqsaoGQbolt9KFGr83b3U6GRoXUxT7cZmKfKuxpyIdO1ihEw==
-X-Received: by 2002:a05:6808:d53:b0:354:ba42:bc51 with SMTP id w19-20020a0568080d5300b00354ba42bc51mr873968oik.186.1665694379881;
-        Thu, 13 Oct 2022 13:52:59 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id t12-20020a4adbcc000000b0044884c40c8asm199965oou.30.2022.10.13.13.52.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Oct 2022 13:52:59 -0700 (PDT)
-Received: (nullmailer pid 198040 invoked by uid 1000);
-        Thu, 13 Oct 2022 20:53:00 -0000
-Date:   Thu, 13 Oct 2022 15:53:00 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-gpio@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Thu, 13 Oct 2022 16:55:06 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49CD357888;
+        Thu, 13 Oct 2022 13:55:01 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29DKRjkZ028461;
+        Thu, 13 Oct 2022 20:54:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=3cgLBKJ0TTYjcPeIF+PUk3iZ5s/oK3No0mEb7w+6cQc=;
+ b=j8fOx8CQu8RLBgs/eofgBDjqyFnj9i1kcP12vLs45HqE7en/pyRl4ePwgeLnKaX6ej5p
+ WX6lNh5f0QoyMby161ivcjcYEq6TJDGTO/rVBEKkqyjQLOBLFK+D8H8z8ZPaPbJHclr9
+ 2tqRHTEh4M7UcFG5AjdoxiGPjIc0BmyJOAcEVJ5Z1rJTCuVnDAG3H4yCDL4SJT06ZWVS
+ XNnjr7oA/cdDMNkLkxxuzms1aVMKp7bXJUQy2TUHWc4V2DJdlh5VLvv3GMeKuw5IFOQW
+ ZC8qc7zf0QxYsfzOzYxz79+aEWo3gZZKhor6bHzY7De8pyVaLL63GhJ+7SExez+ntlIw oQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k6mkdrwkw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 13 Oct 2022 20:54:38 +0000
+Received: from nasanex01b.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29DKscHA010299
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 13 Oct 2022 20:54:38 GMT
+Received: from [10.110.38.147] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 13 Oct
+ 2022 13:54:36 -0700
+Message-ID: <0640f0a5-19c1-55d2-229a-37751a18118f@quicinc.com>
+Date:   Thu, 13 Oct 2022 13:54:36 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v5 13/13] tty: gunyah: Add tty console driver for RM
+ Console Services
+Content-Language: en-US
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     Arnd Bergmann <arnd@arndb.de>, Jiri Slaby <jirislaby@kernel.org>,
+        "Bjorn Andersson" <quic_bjorande@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] dt-bindings: pinctrl: qcom,msm8994: convert to
- dtschema
-Message-ID: <166569437976.198001.10995993679277186924.robh@kernel.org>
-References: <20221013185314.91266-1-krzysztof.kozlowski@linaro.org>
- <20221013185314.91266-3-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221013185314.91266-3-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+        Jonathan Corbet <corbet@lwn.net>,
+        "Will Deacon" <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        <devicetree@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20221011000840.289033-1-quic_eberman@quicinc.com>
+ <20221011000840.289033-14-quic_eberman@quicinc.com>
+ <7438406d-b446-201e-0ec3-5cf0a5b9f32c@kernel.org>
+ <85ca7eb4-3e0c-4ffb-8bac-a435594ca0f7@app.fastmail.com>
+ <b7cca9c7-5170-bf40-c030-d676944b03c6@quicinc.com>
+ <Y0Zk2hN4uEbxCp56@kroah.com>
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <Y0Zk2hN4uEbxCp56@kroah.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: hbID-XQjcqGdsWVOrIjkPsQcGwnYKEmX
+X-Proofpoint-ORIG-GUID: hbID-XQjcqGdsWVOrIjkPsQcGwnYKEmX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-13_08,2022-10-13_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
+ clxscore=1015 impostorscore=0 mlxscore=0 bulkscore=0 priorityscore=1501
+ lowpriorityscore=0 mlxlogscore=875 suspectscore=0 adultscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210130117
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 13 Oct 2022 14:53:14 -0400, Krzysztof Kozlowski wrote:
-> Convert Qualcomm MSM8994 pin controller bindings to DT schema.  Keep the
-> parsing of pin configuration subnodes consistent with other Qualcomm
-> schemas (children named with '-state' suffix, their children with
-> '-pins').
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Changes since v1:
-> 1. Drop default:2 for drive strength
-> ---
->  .../bindings/pinctrl/qcom,msm8994-pinctrl.txt | 186 ------------------
->  .../pinctrl/qcom,msm8994-pinctrl.yaml         | 166 ++++++++++++++++
->  2 files changed, 166 insertions(+), 186 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8994-pinctrl.txt
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8994-pinctrl.yaml
-> 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+
+On 10/11/2022 11:55 PM, Greg Kroah-Hartman wrote:
+> On Tue, Oct 11, 2022 at 03:04:47PM -0700, Elliot Berman wrote:
+>>
+>>
+>> On 10/11/2022 4:09 AM, Arnd Bergmann wrote:
+>>> On Tue, Oct 11, 2022, at 8:02 AM, Jiri Slaby wrote:
+>>>> On 11. 10. 22, 2:08, Elliot Berman wrote:
+>>>>> +
+>>>>> +	/* below are for printk console.
+>>>>> +	 * gh_rm_console_* calls will sleep and console_write can be called from
+>>>>> +	 * atomic ctx. Two xmit buffers are used. The active buffer is tracked with
+>>>>> +	 * co_xmit_idx. Writes go into the co_xmit_buf[co_xmit_idx] buffer.
+>>>>> +	 * A work is scheduled to flush the bytes. The work will swap the active buffer
+>>>>> +	 * and write out the other buffer.
+>>>>> +	 */
+>>>>
+>>>> Ugh, why? This is too ugly and unnecessary. What about passing the kfifo
+>>>> to gh_rm_console_write() instead? You do memcpy() there anyway.
+>>>
+>>> Another problem here is that you really want the console output to be
+>>> printed from atomic context, otherwise one would never see e.g. the
+>>> output of a panic() call. Having a deferred write is probably fine for
+>>> normal tty operations, but you probably want a different device for the
+>>> console here, e.g. the hvc_dcc driver.
+>>>
+>>
+>> Yes, that is our perspective on the RM console driver as well. I'll make
+>> this more explicit in the Kconfig/commit text. We expect most VMs
+>> (especially Linux) to use some other console mechanism provided by their
+>> VMM. I'm submitting here because we are presently using RM console on some
+>> of our VMs where we have other ways to collects logs on panic. It also makes
+>> it easier to implement a simple virtual machine manager that does not want
+>> to virtualize a serial device or have a virtio stack.
+> 
+> The whole goal of virtio was so that we would not have all of these
+> random custom drivers for new hypervisors all over the place, requiring
+> custom userspace interaction with them.
+> 
+> Please use virtio, that's what it is there for, don't create a new
+> console device if you do not have to.
+
+We have a lightweight VM product use case today that doesn't want to 
+support an entire virtio stack just for a console. This VM already has a 
+Gunyah stack present, and to facilitate their console needs, we want to 
+give them the Gunyah console.
+
+There are a few other hypervisors that also provide a console facility 
+in Linux: Xen, ePAPR hypervisor and z/VM.
+
+Thanks,
+Elliot
