@@ -2,185 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F285B5FE067
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 20:09:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA7FD5FE21C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 20:52:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230500AbiJMSJB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Oct 2022 14:09:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46380 "EHLO
+        id S232271AbiJMSwy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Oct 2022 14:52:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231764AbiJMSIo (ORCPT
+        with ESMTP id S231767AbiJMSwG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Oct 2022 14:08:44 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48CD92DABF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 11:06:20 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id b2so2507164plc.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 11:06:20 -0700 (PDT)
+        Thu, 13 Oct 2022 14:52:06 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20A122B601
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 11:49:50 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id m6so1040956qkm.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 11:49:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xCWA1UQ/X9XLQRtiSBAZ35Ajn8E1QiW5dMdBJEYMpWU=;
-        b=bBeXLAx5gQTniWGq6WPRBxi37Ku76/7XU7c3PqqlcoUtL2cfoBADOu5zHduMl5CN+k
-         E3gvT6AGoioNizHj53DiUlPj8uKDXSd6V3ZvEkYQNuj4iNfIef/Wr5kM5aLv76LTm9YQ
-         jFqhhfH6Fe/VZ2etS1g9yAEpQTewdtoGjN3Vi57M2hcrF0I92yKCtyjjjZBsqbd+3aCX
-         SS2W7tRckXpffX3RMmwy2bo4E+h3lvuc+i36f7JAzUsd5vhjXCzECC95oPQXk1r3pgeQ
-         QHES/xiPox5LBmoVSuvq/uqNUggUBFPDQ0R8CqkQ9zjpeLPVk+tpxYjzYTWsOpK7DK3j
-         rF/A==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=C2SGbqYHT7CkdaSBV8U5e0zJ3eRE5mDDsTrhswazFq4=;
+        b=AZv610mXBZDZ/MHOrJ7h144VlGimj+29vBs6ewMkCQX8o1YkHBpRNRhHsy/yP5tM8C
+         on7RUkA+kh9IqbTI+uaxSqEvLAoqI8okrxToVcWT/LGYSo8qte45INSkKmqFgb5K/MP3
+         zOaHgfXjBhwmAnbBEUFZcehmnc020q2OSVWENTbWcTLo2DRD4BCujiDjlay+rHN8z6xP
+         VzQe1dsEbPbyt9Cp1hW+1GdKSQKHyYOh+DDwK13ILeQV+muCNBsK6URj157EbtIqv2xb
+         dBQyhpBTa+/oxsGgsq9HfCqKdsltd8idIngjnQt0cosMXjhKfebfmcE62totxdGP2Ryn
+         g+RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xCWA1UQ/X9XLQRtiSBAZ35Ajn8E1QiW5dMdBJEYMpWU=;
-        b=1Y9vuYVskFlhglOOnmn7LhR1HLSP19VwtL/oGGrbL0a32lbhZpEIPJAdkuu3eUtHHW
-         ejGjcZTGABVSPLDXV0btK6e5OBnI5TQv8UFoLeqVc+DFOMG7roAJTdNrYTmfPmBHRqD3
-         bVQpwbWJSoP+y1bwmrV9YpU65gKta1w/H9eBL+G/L6i4xKtvdRPaLyFTII71L7NuNLBk
-         BeVBJa32kGCoD913QhFrnJA7D1CLbwX2hPa54BvW5lKh8U3yOXAMvWULI8M/+lO/ecx4
-         GjSOqf7Pecr6LxPynxynjdn5DAUI/mLMNwr83640pDR2uqUf0xDU9iyBEkVSHtkPqWsJ
-         /DnA==
-X-Gm-Message-State: ACrzQf0tdnuhmm3J6Cg8sRcXh351zKeLHyw35arUu6pOyT3ExSLJJnoG
-        ThhMoW1Wkf01JvO47RkRBAdtTh3Y7jF4RQ==
-X-Google-Smtp-Source: AMsMyM7iJu2iTuL4rB5YO0BvSUxF8edDqk6gFEg3tC3Rh+Pe3l5RAYCCCA3fVPA9mGzKnUSClCiHIA==
-X-Received: by 2002:a17:902:7281:b0:178:388d:6f50 with SMTP id d1-20020a170902728100b00178388d6f50mr937853pll.127.1665684217314;
-        Thu, 13 Oct 2022 11:03:37 -0700 (PDT)
-Received: from p14s (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id t2-20020a170902e84200b00185002f0c6csm153189plg.134.2022.10.13.11.03.35
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C2SGbqYHT7CkdaSBV8U5e0zJ3eRE5mDDsTrhswazFq4=;
+        b=ejpep1iievW7MH4LkpkXacte/GX50jRBIqk75/2meSWWocui/qm7EGSBuUg/nK996k
+         2Sq67PaoE6TQA3w0xkjduP1fBFgTaWnj/LCChjbX0Ev25M9W9lbW1w4XNaEv3kHxWpt7
+         A7hLt3DVJFs/u2gqi1OUT/is9t5kKkTTMrL6+KelCT8UitKUbgDKnL+6SOzIASf/K2rX
+         BnmNTTIN/baISt1AjSe3aaeU9iFIcw+8zoV8a0LbxZMx/iRcgZuzLt7NnBDgj+OvVLrz
+         HFJk/EqyocbmHiYJVQho78pF6WBw5nQ41SQlMDW9i3atvpkegKMmW3GUVwfcdbFAXrNU
+         R/iw==
+X-Gm-Message-State: ACrzQf2vDu66QqeA4KukZyrFiRYq17wPUchZNI0PnkVZtHJLER7QZHgM
+        s7a/63wapDGn3ohBmhSbdLttCw==
+X-Google-Smtp-Source: AMsMyM7/2b+G5jEnO5nVlVP7slW4uGeZAxa9BQrGjiAA8NltfQ5dtjXa+6JSa9Lz4G4z33ssXKboVw==
+X-Received: by 2002:a05:620a:44c6:b0:6ee:7a7a:93d1 with SMTP id y6-20020a05620a44c600b006ee7a7a93d1mr1068341qkp.256.1665686944114;
+        Thu, 13 Oct 2022 11:49:04 -0700 (PDT)
+Received: from krzk-bin.home (cpe-72-225-192-120.nyc.res.rr.com. [72.225.192.120])
+        by smtp.gmail.com with ESMTPSA id u6-20020a05620a430600b006e16dcf99c8sm400748qko.71.2022.10.13.11.49.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Oct 2022 11:03:36 -0700 (PDT)
-Date:   Thu, 13 Oct 2022 12:03:34 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
-Cc:     linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_clew@quicinc.com
-Subject: Re: [PATCH v4] remoteproc: core: do pm relax when in RPROC_OFFLINE
-Message-ID: <20221013180334.GB1279972@p14s>
-References: <128dc161-8949-1146-bf8b-310aa33c06a8@quicinc.com>
- <1663312351-28476-1-git-send-email-quic_aiquny@quicinc.com>
- <20221012204344.GA1178915@p14s>
- <792f05fc-995e-9a87-ab7d-bee03f15bc79@quicinc.com>
- <20221013173442.GA1279972@p14s>
+        Thu, 13 Oct 2022 11:49:03 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Doug Anderson <dianders@chromium.org>
+Subject: [PATCH v2 1/3] arm64: dts: qcom: sc7180-trogdor-homestar: fully configure secondary I2S pins
+Date:   Thu, 13 Oct 2022 14:46:58 -0400
+Message-Id: <20221013184700.87260-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221013173442.GA1279972@p14s>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 13, 2022 at 11:34:42AM -0600, Mathieu Poirier wrote:
-> On Thu, Oct 13, 2022 at 09:40:09AM +0800, Aiqun(Maria) Yu wrote:
-> > Hi Mathieu,
-> > 
-> > On 10/13/2022 4:43 AM, Mathieu Poirier wrote:
-> > > Please add what has changed from one version to another, either in a cover
-> > > letter or after the "Signed-off-by".  There are many examples on how to do that
-> > > on the mailing list.
-> > > 
-> > Thx for the information, will take a note and benefit for next time.
-> > 
-> > > On Fri, Sep 16, 2022 at 03:12:31PM +0800, Maria Yu wrote:
-> > > > RPROC_OFFLINE state indicate there is no recovery process
-> > > > is in progress and no chance to do the pm_relax.
-> > > > Because when recovering from crash, rproc->lock is held and
-> > > > state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
-> > > > and then unlock rproc->lock.
-> > > 
-> > > You are correct - because the lock is held rproc->state should be set to RPROC_RUNNING
-> > > when rproc_trigger_recovery() returns.  If that is not the case then something
-> > > went wrong.
-> > > 
-> > > Function rproc_stop() sets rproc->state to RPROC_OFFLINE just before returning,
-> > > so we know the remote processor was stopped.  Therefore if rproc->state is set
-> > > to RPROC_OFFLINE something went wrong in either request_firmware() or
-> > > rproc_start().  Either way the remote processor is offline and the system probably
-> > > in an unknown/unstable.  As such I don't see how calling pm_relax() can help
-> > > things along.
-> > > 
-> > PROC_OFFLINE is possible that rproc_shutdown is triggered and successfully
-> > finished.
-> > Even if it is multi crash rproc_crash_handler_work contention issue, and
-> > last rproc_trigger_recovery bailed out with only
-> > rproc->state==RPROC_OFFLINE, it is still worth to do pm_relax in pair.
-> > Since the subsystem may still can be recovered with customer's next trigger
-> > of rproc_start, and we can make each error out path clean with pm resources.
-> > 
-> > > I suggest spending time understanding what leads to the failure when recovering
-> > > from a crash and address that problem(s).
-> > > 
-> > In current case, the customer's information is that the issue happened when
-> > rproc_shutdown is triggered at similar time. So not an issue from error out
-> > of rproc_trigger_recovery.
-> 
-> That is a very important element to consider and should have been mentioned from
-> the beginning.  What I see happening is the following:
-> 
-> rproc_report_crash()
->         pm_stay_awake()
->         queue_work() // current thread is suspended
-> 
-> rproc_shutdown()
->         rproc_stop()
->                 rproc->state = RPROC_OFFLINE;
-> 
-> rproc_crash_handler_work()
->         if (rproc->state == RPROC_OFFLINE)
->                 return // pm_relax() is not called
-> 
-> The right way to fix this is to add a pm_relax() in rproc_shutdown() and
-> rproc_detach(), along with a very descriptive comment as to why it is needed.
+The Trogdor Homestar DTSI adds additional GPIO52 pin to secondary I2S pins
+("sec_mi2s_active") and configures it to "mi2s_1" function.
 
-Thinking about this further there are more ramifications to consider.  Please
-confirm the above scenario is what you are facing.  I will advise on how to move
-forward if that is the case.
+The Trogdor DTSI (which is included by Homestar) configures drive
+strength and bias for all "sec_mi2s_active" pins, thus the intention was
+to apply this configuration also to GPIO52 on Homestar.
 
-> 
-> 
-> > > Thanks,
-> > > Mathieu
-> > > 
-> > > 
-> > > > When the state is in RPROC_OFFLINE it means separate request
-> > > > of rproc_stop was done and no need to hold the wakeup source
-> > > > in crash handler to recover any more.
-> > > > 
-> > > > Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
-> > > > ---
-> > > >   drivers/remoteproc/remoteproc_core.c | 11 +++++++++++
-> > > >   1 file changed, 11 insertions(+)
-> > > > 
-> > > > diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-> > > > index e5279ed9a8d7..6bc7b8b7d01e 100644
-> > > > --- a/drivers/remoteproc/remoteproc_core.c
-> > > > +++ b/drivers/remoteproc/remoteproc_core.c
-> > > > @@ -1956,6 +1956,17 @@ static void rproc_crash_handler_work(struct work_struct *work)
-> > > >   	if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
-> > > >   		/* handle only the first crash detected */
-> > > >   		mutex_unlock(&rproc->lock);
-> > > > +		/*
-> > > > +		 * RPROC_OFFLINE state indicate there is no recovery process
-> > > > +		 * is in progress and no chance to have pm_relax in place.
-> > > > +		 * Because when recovering from crash, rproc->lock is held and
-> > > > +		 * state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
-> > > > +		 * and then unlock rproc->lock.
-> > > > +		 * RPROC_OFFLINE is only an intermediate state in recovery
-> > > > +		 * process.
-> > > > +		 */
-> > > > +		if (rproc->state == RPROC_OFFLINE)
-> > > > +			pm_relax(rproc->dev.parent);
-> > > >   		return;
-> > > >   	}
-> > > > -- 
-> > > > 2.7.4
-> > > > 
-> > 
-> > 
-> > -- 
-> > Thx and BRs,
-> > Aiqun(Maria) Yu
+Reported-by: Doug Anderson <dianders@chromium.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+---
+
+Changes since v1:
+1. New patch
+
+Not tested on hardware.
+
+Cc: Doug Anderson <dianders@chromium.org>
+---
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
+index 1bd6c7dcd9e9..bfab67f4a7c9 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
+@@ -194,6 +194,12 @@ pinmux {
+ 		pins = "gpio49", "gpio50", "gpio51", "gpio52";
+ 		function = "mi2s_1";
+ 	};
++
++	pinconf {
++		pins = "gpio49", "gpio50", "gpio51", "gpio52";
++		drive-strength = <2>;
++		bias-pull-down;
++	};
+ };
+ 
+ &ts_reset_l {
+-- 
+2.34.1
+
