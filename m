@@ -2,179 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB55B5FDF11
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 19:34:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D39995FE0C4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 20:15:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229700AbiJMRew (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Oct 2022 13:34:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34102 "EHLO
+        id S230379AbiJMSPD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Oct 2022 14:15:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229651AbiJMRew (ORCPT
+        with ESMTP id S232255AbiJMSOc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Oct 2022 13:34:52 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6323712A97
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 10:34:46 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id g8-20020a17090a128800b0020c79f987ceso5544220pja.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 10:34:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=i39DpSGkp8A10ysnMtqm1kXI7Ca0HoR3xGRlSs67Fps=;
-        b=YXn81mHbG8xm3NTs9AYPyPRj1ew4NX+TAeYudXTmcMoYjS8v3ilqkOEaW2ZudxtAkf
-         7Rm/34/MOhb4m1mWFeX1ijinGozag51xfloGfyD6oyyq0d0OoroQVAGKTgryBSouOKq3
-         /QJk5tb6peghBnxESaMWagIj+UWvHoh3wgxdRD2tE5Ji0eehu69uW7oGsEfPJHuyDJOd
-         okrTxt8qypBAQNkZ0Sy7nYYXJWEXle/fBqysIQNlODa0r9RyvrOAUWn36Eko5RTNrE8d
-         HPs+abmE2pKf0lGi5fWH2rN9sXcSBBX76zsZNYx6t5qQqmojSmSdJo6zHSIp+7xFdCKM
-         2/3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=i39DpSGkp8A10ysnMtqm1kXI7Ca0HoR3xGRlSs67Fps=;
-        b=ERKV+AVWbovNuvtZ1V9dArVZmYyhS8a0HyyRFSmwhgvggsx3fSFVqyQkTrQv+Dfor7
-         tPWuPjNUSHMw/OF2XLD8/Sd0kQPL3nUY/s0CNi1aldxc1T3mkefJoAVvY+rCx9aFARzg
-         mAITr3cCuU86djyugKoPRgOXRFbS6BoIJ5yZHsICTobuYWhtvbgasyuFmmkZKHDv5bHb
-         YNMZslGchTO/XtBnQBH9mP1FBR8Ec+HfEwi7mwPON/DEtdn8Wirpz6oQmMEoAboYiKsp
-         ZnTJ5PBMirbXCLPHTDIMIBcVwsfSuHW3v+8ANEwNzAhwy2dCowtcNUSPGI+jFU4mlqZD
-         BuUA==
-X-Gm-Message-State: ACrzQf3nCFmyEYSf2IqPRTsWoJY7WXF0ksN//JmhHWIrnrjqjJDZkyZE
-        xRIR9isUlE+ejvjGINdPdGmNwIz+YssS8w==
-X-Google-Smtp-Source: AMsMyM7nPsJ/hGKbjnknq8Z3lBs2WUWdwKBt5mW827Ilx/KIiaVgnOCY9zxfPvvaGzpHRx5M+QDNOQ==
-X-Received: by 2002:a17:90b:1e0b:b0:20d:85ca:b50e with SMTP id pg11-20020a17090b1e0b00b0020d85cab50emr12120186pjb.82.1665682485835;
-        Thu, 13 Oct 2022 10:34:45 -0700 (PDT)
-Received: from p14s (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id e2-20020a17090ab38200b0020aaa678098sm44499pjr.49.2022.10.13.10.34.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Oct 2022 10:34:44 -0700 (PDT)
-Date:   Thu, 13 Oct 2022 11:34:42 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
-Cc:     linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_clew@quicinc.com
-Subject: Re: [PATCH v4] remoteproc: core: do pm relax when in RPROC_OFFLINE
-Message-ID: <20221013173442.GA1279972@p14s>
-References: <128dc161-8949-1146-bf8b-310aa33c06a8@quicinc.com>
- <1663312351-28476-1-git-send-email-quic_aiquny@quicinc.com>
- <20221012204344.GA1178915@p14s>
- <792f05fc-995e-9a87-ab7d-bee03f15bc79@quicinc.com>
+        Thu, 13 Oct 2022 14:14:32 -0400
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on20625.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e89::625])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25897183E18;
+        Thu, 13 Oct 2022 11:11:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=C+B8mGHrnK7sgVjwojKYx+9RftbZ2x+CutbJvNpo1MEaVDJaPzKy1hrA27EVgZBfGLLMzgf5MmP/ruer4QDbQDU95X1Mvm23cMOUCx+8Evg9L0Mk1awFL2LBtDO/KVl+QLw6qdHXZzZ973/nPGnoat76GOK10KWL1FqV9Na2SU9EUkPIM+CS0qw+RCBuDDmVvVPbwGwLv1YFNz7/rXUNA0A/zmmJu35DxfKEnBodSfjjhISZne/qPT52F7UtBwDay/DtY/fdXRM1KBwfihCCaEKiei/5NIn55s1Cs1yQxZHfgfgg09XL0yxMa0WrRGfILBiGqNRKEuIr047/awLbXA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=i1gjqg7L4/2RxWainXFQrd7fIoFu1Cqs2UbwwWuBGRQ=;
+ b=O/72saJ+hnqQ/JPxmC6gNKhf3h7I6DwInvL1dfUiBOchrJocwDsj87LZ/tQlRgkw16AIeE9DTw5jKbyFCaClLKJHsymGgpdIj1DsgX3NIsfJXeWaom+ZXqCt1KF/E3W5HKZHpsA/eV4D8OzDbcaxUmFw9jjef/UnC/aF4CXy3bjxbzfT7zVXEFhoEGk71od72PyRla7ogURRc2jFjdpe1VqX7NYn3zLogv67uaSD75Q5XlHkaFXTU+xBa+aV6duTVJ4UPAnxM/Bn4K/YF1FzfA4j1WMNjvMtn7R0+/D7yVg3rNbgJ2yTj2A/IGGbcdwZac03RMGC8y9xuisQAC0NzQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=gmail.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=i1gjqg7L4/2RxWainXFQrd7fIoFu1Cqs2UbwwWuBGRQ=;
+ b=nqEyd3sLdhdbeH7bwBzFK4f/TON9ZAgaPUwzdMUB7CkRv6Ohlrh2NeNW5aqWD2jvGQObEf2LeGHSjQW/tenYnHWsLl1tRrXKRWOc7JwFNkL7flZoDinfPGjaS0VwT6SbdSiZNILkg2yAeb6xedClsF0AkukeN9VSzVuhZ/ElYb+1FHUcmZ9QfZPJuiMTr9PoUSXpgl3DhOKDEwNTomvelZelkhnwgpHQze/E0VortZCu3TXgSrbTB88/WA9Ixim7y94EHEMkrLUaNTsNs5Hw/WlBseczcb0gzcOsj/Nb6M1hNfl2WT6HbObt4gywOCwfoEiLt/bWVvi1D8s2B7vy9g==
+Received: from MW4P223CA0023.NAMP223.PROD.OUTLOOK.COM (2603:10b6:303:80::28)
+ by CH0PR12MB5297.namprd12.prod.outlook.com (2603:10b6:610:d4::24) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5723.26; Thu, 13 Oct
+ 2022 17:57:39 +0000
+Received: from CO1NAM11FT016.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:303:80:cafe::55) by MW4P223CA0023.outlook.office365.com
+ (2603:10b6:303:80::28) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5723.26 via Frontend
+ Transport; Thu, 13 Oct 2022 17:57:39 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CO1NAM11FT016.mail.protection.outlook.com (10.13.175.141) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5723.20 via Frontend Transport; Thu, 13 Oct 2022 17:57:38 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Thu, 13 Oct
+ 2022 10:57:19 -0700
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 13 Oct
+ 2022 10:57:19 -0700
+Received: from vidyas-desktop.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server id 15.2.986.29 via Frontend
+ Transport; Thu, 13 Oct 2022 10:57:14 -0700
+From:   Vidya Sagar <vidyas@nvidia.com>
+To:     <jingoohan1@gmail.com>, <gustavo.pimentel@synopsys.com>,
+        <lpieralisi@kernel.org>, <robh@kernel.org>, <kw@linux.com>,
+        <bhelgaas@google.com>, <mani@kernel.org>,
+        <Sergey.Semin@baikalelectronics.ru>, <dmitry.baryshkov@linaro.org>,
+        <linmq006@gmail.com>, <ffclaire1224@gmail.com>
+CC:     <thierry.reding@gmail.com>, <jonathanh@nvidia.com>,
+        <linux-pci@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kthota@nvidia.com>,
+        <mmaddireddy@nvidia.com>, <vidyas@nvidia.com>, <sagar.tv@gmail.com>
+Subject: [PATCH V5 0/3] PCI: designware-ep: Fix DBI access before core init
+Date:   Thu, 13 Oct 2022 23:27:09 +0530
+Message-ID: <20221013175712.7539-1-vidyas@nvidia.com>
+X-Mailer: git-send-email 2.17.1
+X-NVConfidentiality: public
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <792f05fc-995e-9a87-ab7d-bee03f15bc79@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1NAM11FT016:EE_|CH0PR12MB5297:EE_
+X-MS-Office365-Filtering-Correlation-Id: 96c065dd-d0db-49ba-8df6-08daad446b06
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: AYXrHcBCB01dtAPZCwCMcqfHLvNXSt2A5pBKn1hDhmapm7HXpjV/1V7mhDw61GjpamG5Df21DZOuL2e4AIBp+EWjaOZKpvYwmgBas3eRl7e5HCTa55tZru9/GjeDm/fJa5MPW6AgxZMSbzi7iERbXSPI5OwlOzAJ5v1utfuElqiUH8Sq36gUmoeEcjML1z+yitI/vQbaRFZ3WfCpCEAHI2MUh7ObxHE3jganaxECC23Yh6rtJpGlP3QplBg+f/8PfpkckHdPQFmB/az/11kdDgJ6soCuiHkH+emvcxVijf/O1pImnUMzYNfO4dXJI+VMBkfolXE1uLcGz44VvgP/urwa0QWPo/TESLnX2QDOEpMQQ3OLudKB7Qe35vxQuRCLgHQ4wRSJh6mtxtFyqAKYYsakUZ/yfttLYWVuYvKsJ5SgKLg2zYriz61MzNiRX6mj2Y3f6+Ulf5cTLrSePNNnH5nl103LBaRQPZR5soBRqPPQ88OP3rnETOTfhY5jBXq+vr6LXOXdTayDIPbFhOLpl6idhzwmkwsltE4laAKnNrwbjQpY0WLTaHTpVRz++vhoIEIyN7iTDgAUeYxrNsVXb9I8g1GZNjYFddmzt2FPS/ZserY8A2BhzLjf7084qByl/0fzhU+dEOsIvL/6w939Ycc0a09thPP0+gVYzaG6Urd2BN4GVPxljwJyL0dT7ioZ3Xyssjaz8VPzd4nTCGd7LDTAA+aT2g1wr3piiLlmh4MmUIyAQfgK+QjbReA6XIOk1K6bthQJSchCwYLAhBk81wFtRRPKN29mZCIKA/GPf88=
+X-Forefront-Antispam-Report: CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(136003)(39860400002)(346002)(376002)(396003)(451199015)(46966006)(40470700004)(36840700001)(82740400003)(6666004)(316002)(40480700001)(36756003)(356005)(7636003)(83380400001)(70586007)(70206006)(4326008)(8676002)(426003)(47076005)(40460700003)(7696005)(921005)(82310400005)(36860700001)(336012)(8936002)(2616005)(110136005)(7416002)(26005)(54906003)(41300700001)(478600001)(186003)(5660300002)(1076003)(86362001)(2906002);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Oct 2022 17:57:38.9444
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 96c065dd-d0db-49ba-8df6-08daad446b06
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CO1NAM11FT016.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR12MB5297
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_NONE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 13, 2022 at 09:40:09AM +0800, Aiqun(Maria) Yu wrote:
-> Hi Mathieu,
-> 
-> On 10/13/2022 4:43 AM, Mathieu Poirier wrote:
-> > Please add what has changed from one version to another, either in a cover
-> > letter or after the "Signed-off-by".  There are many examples on how to do that
-> > on the mailing list.
-> > 
-> Thx for the information, will take a note and benefit for next time.
-> 
-> > On Fri, Sep 16, 2022 at 03:12:31PM +0800, Maria Yu wrote:
-> > > RPROC_OFFLINE state indicate there is no recovery process
-> > > is in progress and no chance to do the pm_relax.
-> > > Because when recovering from crash, rproc->lock is held and
-> > > state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
-> > > and then unlock rproc->lock.
-> > 
-> > You are correct - because the lock is held rproc->state should be set to RPROC_RUNNING
-> > when rproc_trigger_recovery() returns.  If that is not the case then something
-> > went wrong.
-> > 
-> > Function rproc_stop() sets rproc->state to RPROC_OFFLINE just before returning,
-> > so we know the remote processor was stopped.  Therefore if rproc->state is set
-> > to RPROC_OFFLINE something went wrong in either request_firmware() or
-> > rproc_start().  Either way the remote processor is offline and the system probably
-> > in an unknown/unstable.  As such I don't see how calling pm_relax() can help
-> > things along.
-> > 
-> PROC_OFFLINE is possible that rproc_shutdown is triggered and successfully
-> finished.
-> Even if it is multi crash rproc_crash_handler_work contention issue, and
-> last rproc_trigger_recovery bailed out with only
-> rproc->state==RPROC_OFFLINE, it is still worth to do pm_relax in pair.
-> Since the subsystem may still can be recovered with customer's next trigger
-> of rproc_start, and we can make each error out path clean with pm resources.
-> 
-> > I suggest spending time understanding what leads to the failure when recovering
-> > from a crash and address that problem(s).
-> > 
-> In current case, the customer's information is that the issue happened when
-> rproc_shutdown is triggered at similar time. So not an issue from error out
-> of rproc_trigger_recovery.
+This series attempts to fix the issue with core register (Ex:- DBI) accesses
+causing system hang issues in platforms where there is a dependency on the
+availability of PCIe Reference clock from the host for their core
+initialization.
+This series is verified on Tegra194 & Tegra234 platforms.
 
-That is a very important element to consider and should have been mentioned from
-the beginning.  What I see happening is the following:
+Manivannan, could you please verify on qcom platforms?
 
-rproc_report_crash()
-        pm_stay_awake()
-        queue_work() // current thread is suspended
+V5:
+* Addressed review comments from Bjorn
+* Changed dw_pcie_ep_init_complete() to dw_pcie_ep_init_late()
+* Skipped memory allocation if done already. This is to avoid freeing and then
+  allocating again during PERST# toggles from the host.
 
-rproc_shutdown()
-        rproc_stop()
-                rproc->state = RPROC_OFFLINE;
+V4:
+* Addressed review comments from Bjorn and Manivannan
+* Added .ep_init_late() ops
+* Added patches to refactor code in qcom and tegra platforms
 
-rproc_crash_handler_work()
-        if (rproc->state == RPROC_OFFLINE)
-                return // pm_relax() is not called
+Vidya Sagar (3):
+  PCI: designware-ep: Fix DBI access before core init
+  PCI: qcom-ep: Refactor EP initialization completion
+  PCI: tegra194: Refactor EP initialization completion
 
-The right way to fix this is to add a pm_relax() in rproc_shutdown() and
-rproc_detach(), along with a very descriptive comment as to why it is needed.
+ .../pci/controller/dwc/pcie-designware-ep.c   | 125 +++++++++++-------
+ drivers/pci/controller/dwc/pcie-designware.h  |  10 +-
+ drivers/pci/controller/dwc/pcie-qcom-ep.c     |  27 ++--
+ drivers/pci/controller/dwc/pcie-tegra194.c    |   4 +-
+ 4 files changed, 97 insertions(+), 69 deletions(-)
 
+-- 
+2.17.1
 
-> > Thanks,
-> > Mathieu
-> > 
-> > 
-> > > When the state is in RPROC_OFFLINE it means separate request
-> > > of rproc_stop was done and no need to hold the wakeup source
-> > > in crash handler to recover any more.
-> > > 
-> > > Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
-> > > ---
-> > >   drivers/remoteproc/remoteproc_core.c | 11 +++++++++++
-> > >   1 file changed, 11 insertions(+)
-> > > 
-> > > diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-> > > index e5279ed9a8d7..6bc7b8b7d01e 100644
-> > > --- a/drivers/remoteproc/remoteproc_core.c
-> > > +++ b/drivers/remoteproc/remoteproc_core.c
-> > > @@ -1956,6 +1956,17 @@ static void rproc_crash_handler_work(struct work_struct *work)
-> > >   	if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
-> > >   		/* handle only the first crash detected */
-> > >   		mutex_unlock(&rproc->lock);
-> > > +		/*
-> > > +		 * RPROC_OFFLINE state indicate there is no recovery process
-> > > +		 * is in progress and no chance to have pm_relax in place.
-> > > +		 * Because when recovering from crash, rproc->lock is held and
-> > > +		 * state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
-> > > +		 * and then unlock rproc->lock.
-> > > +		 * RPROC_OFFLINE is only an intermediate state in recovery
-> > > +		 * process.
-> > > +		 */
-> > > +		if (rproc->state == RPROC_OFFLINE)
-> > > +			pm_relax(rproc->dev.parent);
-> > >   		return;
-> > >   	}
-> > > -- 
-> > > 2.7.4
-> > > 
-> 
-> 
-> -- 
-> Thx and BRs,
-> Aiqun(Maria) Yu
