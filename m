@@ -2,166 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CF7B5FD2C1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 03:40:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F2E35FD3C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 06:28:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229604AbiJMBkb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Oct 2022 21:40:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45910 "EHLO
+        id S229484AbiJME2K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Oct 2022 00:28:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229615AbiJMBk3 (ORCPT
+        with ESMTP id S229485AbiJME2D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Oct 2022 21:40:29 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C561B11878E;
-        Wed, 12 Oct 2022 18:40:18 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29CNqHg7012270;
-        Thu, 13 Oct 2022 01:40:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=/I5VSY/VfJ1Zt2lCBPDZy5GNtmylRuOdCc30WZBMSkU=;
- b=AVpb1x8lIqGs/OSqflHO52jszMdaDZL33gXSSn53oXEc3ZJnY9FH9mGDogW2lWlUBmly
- QRJ+okZckDsSif/wDiTZ1RKdYgkDZdzAq2RyeqBMw/OJv39oMZxVLuIcoWAp9IGTWb1m
- /eIJMUPizo1Lww7bZYUHGaNKfgQAg6cMrKMZzOYj3uII1BiVRe6bNjExf0uR8JCl4TBp
- 7wmZCwwyLJ2vAGDEgv3nzNsozV+LPHUz3j+yEt6JvmmI3t6hRR+62uBzM7WRH3hGi4Os
- nfjntBdNjnh/qGcoykJHdFwss09HvUjUmzku7lv07e74PDJKQ8/VVlrjy+80Ar8BqRDV 9w== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k643h0tbg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 13 Oct 2022 01:40:15 +0000
-Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29D1eEaF025474
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 13 Oct 2022 01:40:14 GMT
-Received: from [10.239.133.73] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 12 Oct
- 2022 18:40:12 -0700
-Message-ID: <792f05fc-995e-9a87-ab7d-bee03f15bc79@quicinc.com>
-Date:   Thu, 13 Oct 2022 09:40:09 +0800
+        Thu, 13 Oct 2022 00:28:03 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2B4812D0F;
+        Wed, 12 Oct 2022 21:28:01 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id l1so737362pld.13;
+        Wed, 12 Oct 2022 21:28:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fYIg2WzOf03nIwqbYuPMBWLrzXyBCEb4x8ZfCAzdDu0=;
+        b=PB6hHHSd3+SuFQWbK6NTZO7GxvFQskAA6dAhhOpKXIzIUkmu0LDVSisLFpRfraApmG
+         ZQr5Am381sO9KaXYV2ZKKu9wvLU3AbfnWAkzzT0tRFUGRa9vSE3ZEmZMglCl3Ta286jg
+         jXu9WVFnTVSW7ZG1uCv1WtWuyY0vV7/OnWMZe9i52CU6A7rQrBcKyM4V/FLx2U5rf/a8
+         swUHsQQdoCBr3EgLWrkYla+bJwmH6bt8bRmlkB7UBBBnL1FTQ8eNdO1ro1LXzr91V77a
+         halV0HUwoBpAI/3S/viSP8KUMVGXnLRPnMHuzSL/gjIzRZKJ56ZOXUg4hLThRv9qEM06
+         Akiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fYIg2WzOf03nIwqbYuPMBWLrzXyBCEb4x8ZfCAzdDu0=;
+        b=7utCaIUmp+Owuwl5B6p3RuiATar+vylSs/LlPIqkUHi+qW8yS05daC/PVyhPTp4sB7
+         qxidtOPiPQ8E/NEeJXtVOGyMSCfpw3x+vLPdOkBwfPsqqcEA2YjDW3+9fEEzw7Nc6q9c
+         jxShQgP9TrPH5BC42CaRzlzxagxyHwHY2y0AWW2q1tFE9XV2qRexA+koqccKS80uPzn9
+         xbS22u0GBrA6gXJqwhKuo8unIgWhPjv8lw331O+UYLbfmhF2ZCFcnB3VvGYn8uxnrP3X
+         fYaV8R4RHmLG1GPkPPDXllT/kCEByq3S63HA0PUrp8HICNLwM5wNBBwtZu+D1k64ZILn
+         tQ0Q==
+X-Gm-Message-State: ACrzQf0Z3G2hHovGZmU24BaGt6AcjbYz89IUD/48THg7JYtthfkCwMpj
+        UkkG97sgnj7hX3EfCvNmQpz8Vk8FcWx25g==
+X-Google-Smtp-Source: AMsMyM5vIGCV8Tqdy5wnHnZQgZA4M21IavJpM74n0vLZn8SisXMe4S2DLvBTrkVJaZKPYwH2gdkMVw==
+X-Received: by 2002:a17:902:f706:b0:184:7a4c:fdd0 with SMTP id h6-20020a170902f70600b001847a4cfdd0mr6715091plo.98.1665635280609;
+        Wed, 12 Oct 2022 21:28:00 -0700 (PDT)
+Received: from skynet-linux.local ([2406:7400:61:b6fa:b70b:65a4:a699:40c8])
+        by smtp.googlemail.com with ESMTPSA id y9-20020a17090aca8900b001faafa42a9esm2192007pjt.26.2022.10.12.21.27.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Oct 2022 21:27:59 -0700 (PDT)
+From:   Sireesh Kodali <sireeshkodali1@gmail.com>
+To:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, linux-kernel@vger.kernel.org
+Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        dmitry.baryshkov@linaro.org,
+        Sireesh Kodali <sireeshkodali1@gmail.com>
+Subject: [PATCH v4 0/2] remoteproc: qcom: Add support for MSM8953 ADSP
+Date:   Thu, 13 Oct 2022 09:57:47 +0530
+Message-Id: <20221013042749.104668-1-sireeshkodali1@gmail.com>
+X-Mailer: git-send-email 2.38.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [PATCH v4] remoteproc: core: do pm relax when in RPROC_OFFLINE
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>
-CC:     <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_clew@quicinc.com>
-References: <128dc161-8949-1146-bf8b-310aa33c06a8@quicinc.com>
- <1663312351-28476-1-git-send-email-quic_aiquny@quicinc.com>
- <20221012204344.GA1178915@p14s>
-From:   "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
-In-Reply-To: <20221012204344.GA1178915@p14s>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Up-brqwYjGyTH4VqJznilO8Jv6gUfk3I
-X-Proofpoint-ORIG-GUID: Up-brqwYjGyTH4VqJznilO8Jv6gUfk3I
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-12_12,2022-10-12_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
- adultscore=0 suspectscore=0 spamscore=0 bulkscore=0 phishscore=0
- impostorscore=0 mlxlogscore=999 clxscore=1011 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210130008
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mathieu,
+This patch series adds support for the ADSP PIL as found on the MSM8953
+platform. It is a subset of a previous patch series.
 
-On 10/13/2022 4:43 AM, Mathieu Poirier wrote:
-> Please add what has changed from one version to another, either in a cover
-> letter or after the "Signed-off-by".  There are many examples on how to do that
-> on the mailing list.
-> 
-Thx for the information, will take a note and benefit for next time.
+Changes since v3:
+ * Made ordering of compatible strings lexical in driver patch
 
-> On Fri, Sep 16, 2022 at 03:12:31PM +0800, Maria Yu wrote:
->> RPROC_OFFLINE state indicate there is no recovery process
->> is in progress and no chance to do the pm_relax.
->> Because when recovering from crash, rproc->lock is held and
->> state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
->> and then unlock rproc->lock.
-> 
-> You are correct - because the lock is held rproc->state should be set to RPROC_RUNNING
-> when rproc_trigger_recovery() returns.  If that is not the case then something
-> went wrong.
-> 
-> Function rproc_stop() sets rproc->state to RPROC_OFFLINE just before returning,
-> so we know the remote processor was stopped.  Therefore if rproc->state is set
-> to RPROC_OFFLINE something went wrong in either request_firmware() or
-> rproc_start().  Either way the remote processor is offline and the system probably
-> in an unknown/unstable.  As such I don't see how calling pm_relax() can help
-> things along.
-> 
-PROC_OFFLINE is possible that rproc_shutdown is triggered and 
-successfully finished.
-Even if it is multi crash rproc_crash_handler_work contention issue, and 
-last rproc_trigger_recovery bailed out with only 
-rproc->state==RPROC_OFFLINE, it is still worth to do pm_relax in pair.
-Since the subsystem may still can be recovered with customer's next 
-trigger of rproc_start, and we can make each error out path clean with 
-pm resources.
+Link to v3: https://lkml.org/lkml/2022/10/8/204
 
-> I suggest spending time understanding what leads to the failure when recovering
-> from a crash and address that problem(s).
-> 
-In current case, the customer's information is that the issue happened 
-when rproc_shutdown is triggered at similar time. So not an issue from 
-error out of rproc_trigger_recovery.
-> Thanks,
-> Mathieu
-> 
-> 
->> When the state is in RPROC_OFFLINE it means separate request
->> of rproc_stop was done and no need to hold the wakeup source
->> in crash handler to recover any more.
->>
->> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
->> ---
->>   drivers/remoteproc/remoteproc_core.c | 11 +++++++++++
->>   1 file changed, 11 insertions(+)
->>
->> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
->> index e5279ed9a8d7..6bc7b8b7d01e 100644
->> --- a/drivers/remoteproc/remoteproc_core.c
->> +++ b/drivers/remoteproc/remoteproc_core.c
->> @@ -1956,6 +1956,17 @@ static void rproc_crash_handler_work(struct work_struct *work)
->>   	if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
->>   		/* handle only the first crash detected */
->>   		mutex_unlock(&rproc->lock);
->> +		/*
->> +		 * RPROC_OFFLINE state indicate there is no recovery process
->> +		 * is in progress and no chance to have pm_relax in place.
->> +		 * Because when recovering from crash, rproc->lock is held and
->> +		 * state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
->> +		 * and then unlock rproc->lock.
->> +		 * RPROC_OFFLINE is only an intermediate state in recovery
->> +		 * process.
->> +		 */
->> +		if (rproc->state == RPROC_OFFLINE)
->> +			pm_relax(rproc->dev.parent);
->>   		return;
->>   	}
->>   
->> -- 
->> 2.7.4
->>
+Sireesh Kodali (2):
+  remoteproc: qcom: pas: Add MSM8953 ADSP PIL support
+  dt-bindings: remoteproc: qcom: adsp: Add ADSP on MSM8953
 
+ Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml | 5 +++++
+ drivers/remoteproc/qcom_q6v5_pas.c                          | 1 +
+ 2 files changed, 6 insertions(+)
 
 -- 
-Thx and BRs,
-Aiqun(Maria) Yu
+2.38.0
+
