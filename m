@@ -2,140 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 125F15FD3CC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 06:28:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABFD05FD414
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 07:09:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229554AbiJME2R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Oct 2022 00:28:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60370 "EHLO
+        id S229595AbiJMFJ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Oct 2022 01:09:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiJME2P (ORCPT
+        with ESMTP id S229526AbiJMFJ0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Oct 2022 00:28:15 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED2D312D0F;
-        Wed, 12 Oct 2022 21:28:13 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id 128so607612pga.1;
-        Wed, 12 Oct 2022 21:28:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e4Yrx0WZ/e/LKeJiOOjo3tMuzAFvM4EVo9Qsuuw69mM=;
-        b=ODmqkmxC4WZxYbIBOSN4scr5SxuVe0XceZnfeFlEx3cmb2Uk2TmqrpoLlhk1kFusmS
-         mr2LT410i66wZqoc3eGcLU8HSl5QkEHFfe815ZMOpt+WSUUyGwppWUtgfwRV1QMe74za
-         Ma4KHrLsUqERuvTrpOw5UPWQ6TKk7/WzSJZOp+HZDdA1PBjyVPbYXyY26+9u5hg6Rq2N
-         w+LVY2dvNJhe+51XiOTD8Md68DxYgjeATQz1UKL7rSzGFigyEVv4Bd0YZMsi8xTRlMJV
-         lE8/Xcs2YocSGtPN6I8NJKsyznS0Br49nq6mVrM40G/pi8yVsc0Jij9fGhe5/T7iKox5
-         paNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e4Yrx0WZ/e/LKeJiOOjo3tMuzAFvM4EVo9Qsuuw69mM=;
-        b=aQeUERt0yfqL3Ut9g3K34iiSeC9d68rWS6ftfo5n6qozjozttlAZNF+botCjxG2FQs
-         LLfCpIysHtt8V13zD7Ymbp0s1wbSyinyCqh+9uDrThrftyDDkpEeX+Fb9MlPWN5o10e1
-         ktOFHGelqNNKUz4pBOxYH11xjKxI4bN7lOIbMMjh0XDDBxiLTgulwcpmYBFVHoA8eIo6
-         nOLw1wyl9F/hCu4n10F3tevZ29gpuRMlBhTAAdtRNyEVcQ0jwFd8qWuVu93Nje3Qt4Ln
-         SJNqPjtNr0oeP5vEP8FPi/RQnr8bAYNGtoK+jg6zYM9UbhGpPbocYKufxI7I1/BQsl3O
-         MkIA==
-X-Gm-Message-State: ACrzQf2ozt667jS3wkzI/UXLcOmMeHD8B/bPF8vxKA8V/LDArBxt7PTs
-        6713u670/E9BsIrVY/IIkBDKI7Toz7f04g==
-X-Google-Smtp-Source: AMsMyM4Cou++uNck0Zxh91K9FPzK92ptGgjuHViVaxHDwbAVoKXvQ3WQN0vpjcETyIgmGZi+v2s7RA==
-X-Received: by 2002:a63:2a86:0:b0:46a:eaba:f1f3 with SMTP id q128-20020a632a86000000b0046aeabaf1f3mr3857474pgq.79.1665635292633;
-        Wed, 12 Oct 2022 21:28:12 -0700 (PDT)
-Received: from skynet-linux.local ([2406:7400:61:b6fa:b70b:65a4:a699:40c8])
-        by smtp.googlemail.com with ESMTPSA id y9-20020a17090aca8900b001faafa42a9esm2192007pjt.26.2022.10.12.21.28.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Oct 2022 21:28:12 -0700 (PDT)
-From:   Sireesh Kodali <sireeshkodali1@gmail.com>
-To:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, linux-kernel@vger.kernel.org
-Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        dmitry.baryshkov@linaro.org,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH v4 2/2] dt-bindings: remoteproc: qcom: adsp: Add ADSP on MSM8953
-Date:   Thu, 13 Oct 2022 09:57:49 +0530
-Message-Id: <20221013042749.104668-3-sireeshkodali1@gmail.com>
-X-Mailer: git-send-email 2.38.0
-In-Reply-To: <20221013042749.104668-1-sireeshkodali1@gmail.com>
-References: <20221013042749.104668-1-sireeshkodali1@gmail.com>
+        Thu, 13 Oct 2022 01:09:26 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 900D3D8EFA;
+        Wed, 12 Oct 2022 22:09:25 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29D4gGDD001011;
+        Thu, 13 Oct 2022 05:08:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=hRi0hxvb8ULH4SSXgcEOBo/E1ayRuxkvHkANtCDsSNs=;
+ b=NWQapbWRWpeLb4s9yBwyktnf27VoiwBfcVAsf4qBKJFNanENqxvI6a8Ragz+WhVyboQ5
+ WIkkB/50Xtj/k6965IpQtdMv5FyAXX0TUZgbQ5BxLttOsmyisvyDAlbaFIyPB5z3/zm9
+ jmBJF30A/OKGj12fgR6xvILvyFm47aMIQbXLe8YCaWH3I5lW/3GBd626yKi77p47/W7Q
+ XPTK8O9GGUxQ0IhWdf+AzYGAiUTEtZJU5XBPak3h0UpnSMFYUKzBZV6U4QQ+RsECvGVv
+ 6gPdolplGM+pXfsdqA1ObFDXBAwp7QiEI2Xt0vlkN9kF1YdPjTKd3hoCVZIbjhtyz0Ty Dw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k6ae4086h-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 13 Oct 2022 05:08:52 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29D58pR0024144
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 13 Oct 2022 05:08:51 GMT
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Wed, 12 Oct 2022 22:08:46 -0700
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        <devicetree@vger.kernel.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v2] ASoC: qcom: lpass-cpu: mark HDMI TX registers as volatile
+Date:   Thu, 13 Oct 2022 10:38:31 +0530
+Message-ID: <1665637711-13300-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: OGksqCcJge4VA7HNf3pIL5LRC_Ik1Z3G
+X-Proofpoint-GUID: OGksqCcJge4VA7HNf3pIL5LRC_Ik1Z3G
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-13_04,2022-10-12_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 priorityscore=1501 bulkscore=0 adultscore=0
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 phishscore=0 mlxscore=0
+ spamscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2209130000 definitions=main-2210130030
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for booting the Audio DSP on the MSM8953 platform. This is
-used by SoCs like SDM450, SDM625, SDM626, APQ8053, etc. Since the
-configuration is the same on all SoCs, a single compatible string is
-used.
+Update HDMI volatile registers list as DMA, Channel Selection registers,
+vbit control registers are being reflected by hardware DP port
+disconnection.
 
-Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+This update is required to fix no display and no sound issue observed
+after reconnecting TAMA/SANWA DP cables.
+Once DP cable is unplugged, DMA control registers are being reset by
+hardware, however at second plugin, new dma control values does not
+updated to the dma hardware registers since new register value and
+cached values at the time of first plugin are same.
+
+Fixes: 7cb37b7bd0d3 ("ASoC: qcom: Add support for lpass hdmi driver")
+
+Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Reported-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 ---
- Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/qcom/lpass-cpu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-index db9e0f0c2bea..b1127bc0f01a 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-@@ -17,6 +17,7 @@ properties:
-   compatible:
-     enum:
-       - qcom,msm8226-adsp-pil
-+      - qcom,msm8953-adsp-pil
-       - qcom,msm8974-adsp-pil
-       - qcom,msm8996-adsp-pil
-       - qcom,msm8996-slpi-pil
-@@ -179,6 +180,7 @@ allOf:
-           contains:
-             enum:
-               - qcom,msm8226-adsp-pil
-+              - qcom,msm8953-adsp-pil
-               - qcom,msm8974-adsp-pil
-               - qcom,msm8996-adsp-pil
-               - qcom,msm8996-slpi-pil
-@@ -298,6 +300,7 @@ allOf:
-           contains:
-             enum:
-               - qcom,msm8226-adsp-pil
-+              - qcom,msm8953-adsp-pil
-               - qcom,msm8974-adsp-pil
-               - qcom,msm8996-adsp-pil
-               - qcom,msm8996-slpi-pil
-@@ -370,6 +373,7 @@ allOf:
-           contains:
-             enum:
-               - qcom,msm8226-adsp-pil
-+              - qcom,msm8953-adsp-pil
-               - qcom,msm8996-adsp-pil
-               - qcom,msm8998-adsp-pas
-               - qcom,sm8150-adsp-pas
-@@ -559,6 +563,7 @@ allOf:
-           contains:
-             enum:
-               - qcom,msm8226-adsp-pil
-+              - qcom,msm8953-adsp-pil
-               - qcom,msm8974-adsp-pil
-               - qcom,msm8996-adsp-pil
-               - qcom,msm8996-slpi-pil
+diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+index 8a56f38..99a3b44 100644
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -782,10 +782,18 @@ static bool lpass_hdmi_regmap_volatile(struct device *dev, unsigned int reg)
+ 		return true;
+ 	if (reg == LPASS_HDMI_TX_LEGACY_ADDR(v))
+ 		return true;
++	if (reg == LPASS_HDMI_TX_VBIT_CTL_ADDR(v))
++		return true;
+ 
+ 	for (i = 0; i < v->hdmi_rdma_channels; ++i) {
+ 		if (reg == LPAIF_HDMI_RDMACURR_REG(v, i))
+ 			return true;
++		if (reg == LPASS_HDMI_TX_DMA_ADDR(v, i))
++			return true;
++		if (reg == LPASS_HDMI_TX_CH_LSB_ADDR(v, i))
++			return true;
++		if (reg == LPASS_HDMI_TX_CH_MSB_ADDR(v, i))
++			return true;
+ 	}
+ 	return false;
+ }
 -- 
-2.38.0
+2.7.4
 
