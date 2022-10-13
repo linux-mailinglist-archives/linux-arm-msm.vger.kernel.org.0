@@ -1,88 +1,76 @@
 Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D456A5FD983
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 14:48:23 +0200 (CEST)
+Received: from out1.vger.email (unknown [IPv6:2620:137:e000::1:20])
+	by mail.lfdr.de (Postfix) with ESMTP id 39B7D5FDB25
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 15:41:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229721AbiJMMsW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Oct 2022 08:48:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53946 "EHLO
+        id S229822AbiJMNlT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Oct 2022 09:41:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229656AbiJMMsW (ORCPT
+        with ESMTP id S229810AbiJMNlR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Oct 2022 08:48:22 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CBA8F037E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 05:48:21 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id bb5so870203qtb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 05:48:21 -0700 (PDT)
+        Thu, 13 Oct 2022 09:41:17 -0400
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EC3958DF2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 06:41:16 -0700 (PDT)
+Received: by mail-qt1-x836.google.com with SMTP id g11so1063516qts.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 06:41:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:to:from
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=vset9KWE9zQivwm9UZ3Uu6zccP3Nk+eON+QXvI2NVg0=;
-        b=LvTLUde8Kt5rW+JBv1vjyv1237A1v9omg/RrjwGYXeyCXx813ujpeDz5Hqp8MRoXZW
-         M469/E04zULZxsQzM85RmOwOhbJ0O9GVc1ms+Mkx3660wsYX4i+4rKfJlniTSQohya99
-         UmdK9OnNcryhOVH6vvnWM4MFen2czLoUHvPbkZaH1cQOFUl2yJHtt2tPEx/vH7b+tGoC
-         PUJGBkd+zfWaoR4Uln+vqVfE2KrZC3wI6u+uQd2HhpMgJx80ZJz+1kGx3tFzRgWV2cOl
-         TPv8hqm3fa/igMkKYX603TxobALqfAIW5SSIpasR/nRg606FnMFD0Cmr0xVVV7Ap48Ek
-         xlsw==
+        bh=KfmEgQuQVh7sTBmqJ0VUPOWywieYxc2ZYWNI1q6xxkM=;
+        b=m7VC4poWRxJmtaAHaMM31ThEfzElZ6O9xDTexyesxF9+tAuMlB9okvMdWIQIbpZRab
+         lfyXIBDjGQ7PEMRwGd8V+ORRJRIdpxfrkJF2rGEUmGSVNzqVEVnE49Q76NktnfSB2od1
+         cs080AfipvWFO3fPZIEDii/reoH7m0zVr2xUSiF4wGG6TZ5EDkHXgUZpfFctSHHtWGul
+         0bJWyUWuaBOfOTWZ6NA4IQfMQ6VY0evvj74Y3FVtck+5iyXNHxqDOV17upBHCFj/XQlL
+         Fig5CCf49g0Lgeu2pqIjr/HQkc73LkKuQO1pOJ2a7BN5Ndi/TyZn8+MdhSqZbupHPKn7
+         fhJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:to:from
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vset9KWE9zQivwm9UZ3Uu6zccP3Nk+eON+QXvI2NVg0=;
-        b=5vq7122Hy/2bexIOtNMN4Le6+y8OOoofS4F5aU1lPdZFu2a/lsGfJ7UD0cpZtCpvQ6
-         wQnUGKQ1c2Sw5Ost41eRKls5J126zWX96//8JMlXtKYYb2/HEKS3moPdLzVKjU0xkggS
-         5LQdOg9GENBLt1iXfBQFJDuUJYt7GiMDz2+L3DvAkRXT22/yYlv2uYY7e4Hz7a8zejeh
-         6pPRXmOj5alHk82Vtpe7RjDi658iJE9ROijPCkKCvrLtWkuBoMD6V0tmgTbsPWrr+lZ7
-         x7VDyxVF5w39iP64nUdL8XO+9NBfrX2syKv/uflw3mkmUo7nv9fSM09YVfAWoWmYc+GU
-         UhAw==
-X-Gm-Message-State: ACrzQf3EtxYeBK9FAuZ+8ac3dIhyuuEbcctC/KqNSKTCQP0/sXOpCk7i
-        Ab3Ow/2Opij/yw34dmnpdJ5Qag==
-X-Google-Smtp-Source: AMsMyM7JmMnI/2BQnv3tqfrtm7zHuh3DrERSRZmtQBAVoHUAQNxGy8s3VLss49wirQ4l0EhNx4xgnQ==
-X-Received: by 2002:ac8:4e51:0:b0:35d:43ba:1ebf with SMTP id e17-20020ac84e51000000b0035d43ba1ebfmr27195534qtw.366.1665665300282;
-        Thu, 13 Oct 2022 05:48:20 -0700 (PDT)
+        bh=KfmEgQuQVh7sTBmqJ0VUPOWywieYxc2ZYWNI1q6xxkM=;
+        b=l95UP5zQ9RnjREoGCTZhSK3Px19qK2+DUZ8M7O3KIuD/LtcS0cfoGJB5TDYTYgH6YF
+         B8ilwg8UWmA9UFVmeLD5XTZ8beYFWJY1IUbqjxNDPCJ/wvzAmmsVsXtrTVSgWrqEHvTO
+         1NPHqQsLduaCmyAjOQFBre6K55TSPzz7E7d4vlVd1G0joldOVpcUU/F+UCUN4L0Vp6a1
+         UcZyvXzvC6/5kNgXH4oTmGd5W9wzj96MOY+oXwaIWx2jIC5b+U9h+Gh9LTsL1x0n9V7B
+         5UTevBaeHH6d8k/wSXrurReTRbnD2t4TXtMMgcIVatZz5AomNTIr++tNcvMij2bRcrQ6
+         qBKA==
+X-Gm-Message-State: ACrzQf1+EBPf5muDdHpKxv51SAHu4FSjCTw30o0XIXoU0rAcDWvcsDdY
+        uEtkq4Q9Uh2fCqsYPxm0DGxqCA==
+X-Google-Smtp-Source: AMsMyM6Yeebymip42Gn94hyjo2aEpwIcg+DQ9YQgBwfVTw3CqEJJ95fFwLXiRpj2B1Xm48vHnDeqww==
+X-Received: by 2002:ac8:5e11:0:b0:39c:b869:491f with SMTP id h17-20020ac85e11000000b0039cb869491fmr9642738qtx.315.1665668475630;
+        Thu, 13 Oct 2022 06:41:15 -0700 (PDT)
 Received: from [192.168.1.57] (cpe-72-225-192-120.nyc.res.rr.com. [72.225.192.120])
-        by smtp.gmail.com with ESMTPSA id j19-20020a05620a289300b006bb87c4833asm19054698qkp.109.2022.10.13.05.48.18
+        by smtp.gmail.com with ESMTPSA id o19-20020a05620a2a1300b006cddf59a600sm18876143qkp.34.2022.10.13.06.41.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Oct 2022 05:48:19 -0700 (PDT)
-Message-ID: <1f441795-c771-835b-731b-f5dd9557dc09@linaro.org>
-Date:   Thu, 13 Oct 2022 08:46:06 -0400
+        Thu, 13 Oct 2022 06:41:14 -0700 (PDT)
+Message-ID: <861dd64f-0443-db69-ef81-900973f2fa11@linaro.org>
+Date:   Thu, 13 Oct 2022 09:39:03 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.2
-Subject: Re: Qualcomm DT bindings and DTS cleanups - tracking community wide
+Subject: Re: [PATCH] dt-bindings: qcom,pdc: Add missing compatibles
 Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Alex Elder <elder@linaro.org>,
-        Nicolas Dechesne <nicolas.dechesne@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Vinod Koul <vinod.koul@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Caleb Connolly <kc@postmarketos.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Johan Hovold <johan@kernel.org>
-References: <62e95ea6-6b72-a159-56ab-8bb11a5800c8@linaro.org>
- <0f5bb12f-814d-37f2-9307-b2b649aedfe3@linaro.org>
-In-Reply-To: <0f5bb12f-814d-37f2-9307-b2b649aedfe3@linaro.org>
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20221013091208.356739-1-luca.weiss@fairphone.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221013091208.356739-1-luca.weiss@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -94,62 +82,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/10/2022 09:57, Krzysztof Kozlowski wrote:
-> On 22/09/2022 10:32, Krzysztof Kozlowski wrote:
->> Hi everyone,
->>
->> Quite a lot of people are working on Qualcomm DT bindings conversion
->> (TXT->YAML) and fixups to Qualcomm DTS. We track a bit of this effort
->> internally in Linaro, but that has many shortcomings and we would like
->> to track it rather community-wide with the support and contributions
->> from the community.
->>
->> What to track:
->> 1. Which bindings to convert to YAML,
->> 2. Missing compatibles (either entirely or because of missing conversion),
->> 3. `dt_binding_check` warnings (usually connected with 1-2),
->> 4. `dtbs_check` warnings.
->>
->> Rob's bot gives us daily output for 1-4, but how can we track current
->> efforts to avoid duplication of work? Also it would allow people to find
->> tasks for them to get contributions to Linux kernel :). Is anyone in
->> community interested in tracking it together, in a public way?
->>
->> If so, where?
->> A. elinux.org (needs some formatting when pasting the output from tools)
->> B. gitlab pages/wiki (maybe scripts could parse tools and create the page?)
->> C. gitlab dedicated repo - some text file
->> D. Linux kernel TODO file (might be difficult to keep updated)
->> E. kernel.org wiki (requires LF accounts, AFAIK, a bit pain to edit; I
->> have it for Exynos but I don't find it usable -
->> https://exynos.wiki.kernel.org/todo_tasks)
->>
->> I am leaning towards Gitlab pages because they could be quite automated
->> - with CI or with scripts.
+On 13/10/2022 05:12, Luca Weiss wrote:
+> Document the compatibles that are already in use in the upstream Linux
+> kernel to resolve dtbs_check warnings.
 > 
-> This could be looking like that - the list of missing compatibles from
-> Rob's tasks:
-> https://gitlab.com/krzkoz/linux-dt-todo/-/blob/main/todo-compatibles.rst
-> 
-> There is a script which will automatically add new entries to the list
-> (above RST file), once fed with Rob's job output. Further this could be
-> probably pipelined with Rob's jobs.
-> 
-> List anyway has to be manually updated with work in progress.
-> 
-> This is for the compatibles. Missing part is doing something similar for
-> the dtbs_check warnings.
-> 
-> In replies Luca, Caleb and Neil mentioned GitLab issues. That could be
-> useful, so if someone would like to hook into GitLab API - feel free to
-> work on that (either in that repo or in separate).
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 
-Just to be clear - if the approach is interesting to anyone, just join
-the project / ask for access and make edits/changes etc.
 
-To do this, you can visit https://gitlab.com/krzkoz/linux-dt-todo/ and
-next to repository name (top/middle part of page) there should be
-"Request Access" link.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
