@@ -2,97 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E31C55FDB46
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 15:43:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C26C05FDC83
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Oct 2022 16:44:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229940AbiJMNnb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Oct 2022 09:43:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39996 "EHLO
+        id S229733AbiJMOn5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Oct 2022 10:43:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229933AbiJMNn3 (ORCPT
+        with ESMTP id S229722AbiJMOn4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Oct 2022 09:43:29 -0400
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23AD21142E3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 06:43:23 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id a24so1051511qto.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Oct 2022 06:43:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=92Wr9RbYlDzYG+EccbOZ9/lA2+u8rVgqL8BcyqXuSl4=;
-        b=MKZu94Otqs5Xf0Ps1VSdRaQ+O1BRPqeX4mZhRhqImrygdnhYfbChLV4NFuAhcwbUGK
-         c/VPuLXYOPRlf6JAb104HlkvecWkCmJ2s5Xuh7/AKhndNMy7DE1IL6pwiQCuQEsu9coW
-         Ch9j5DkoB6gsR2owE2VBSKTzi4OxJhridsLkafLPWIyaQOyMJVRb+e9nxBqotY0lpDxX
-         95S6Y6ET2OKRUb6upZKDd5QRPGxSfyIRtYhfm0itycTz914EZ8PESR1bRofD1rOnA2nC
-         06xRT6Dg07tu1d0z4wj3z2l57M9GPwpt2rKs9MfuLY6p9A6zoMnoKZfmmoPty/i9IZ9V
-         EAWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=92Wr9RbYlDzYG+EccbOZ9/lA2+u8rVgqL8BcyqXuSl4=;
-        b=sP0aLOQ1MuuOLZqEKjcWbWqrFk5t4iDCLZuHzcyyZFzDLjDFUl12IxzehQ0QkQC8l4
-         JpKJGdkv0rpEH52BYQ1dTZBqvsHAfkPni6+pDZTuWrYxBzc5ZhneiTJYkNWrQZAIrrl0
-         L78bkI4Va/jIDswpvdgo7xVSuSDncEGxkN2JS/sXYCVNe31c6y1xU38AT/KAwd6dFjkW
-         bvHSbac080qAD8QNNDGDjopSZq8PvMBLzYWM1y5jwvp26IMtYcb61NmPTExj8rIL5nXo
-         P6yPgXriU7HOje8EjESDxdRIWGmO4KDUlb+hzpnILs+MjB/0VpG+TWoO7wMXp0fRk/dZ
-         ZLvg==
-X-Gm-Message-State: ACrzQf0wMmHfmz+wVSU4GATwa4PhtR7G0CJ6I6VwFsLAl8TTiBX+7ARH
-        pqffqcjY6mgegOA53mhPlWtXe3sAAyW5YQ==
-X-Google-Smtp-Source: AMsMyM605VOR6HMK7CjCsVkJqxtfwVeE8syTVS6wiDoJl7FR6ur1tCmC2CXMF8svi2SV5uQj5YtrnQ==
-X-Received: by 2002:ac8:5b0e:0:b0:399:cbf2:4acc with SMTP id m14-20020ac85b0e000000b00399cbf24accmr17353930qtw.208.1665668602728;
-        Thu, 13 Oct 2022 06:43:22 -0700 (PDT)
-Received: from [192.168.1.57] (cpe-72-225-192-120.nyc.res.rr.com. [72.225.192.120])
-        by smtp.gmail.com with ESMTPSA id x4-20020a05620a448400b006cebda00630sm19408696qkp.60.2022.10.13.06.43.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Oct 2022 06:43:22 -0700 (PDT)
-Message-ID: <99652775-8921-9d4a-193e-20d1487e6759@linaro.org>
-Date:   Thu, 13 Oct 2022 09:43:20 -0400
+        Thu, 13 Oct 2022 10:43:56 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84562B1DCA;
+        Thu, 13 Oct 2022 07:43:55 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BCD5E61806;
+        Thu, 13 Oct 2022 14:43:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4D2C433C1;
+        Thu, 13 Oct 2022 14:43:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1665672234;
+        bh=NvwyE1DUE80ntZaLJ5MtSrUAvFGAB1vF7A51Xc8PXhM=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=g9R9GJtTg7FFJe6055C6CXI223Xhi9OyC0wc4IfG8ju3WBbgExL1Y99c+NAPi5nZu
+         nLHQkx3d9C6lKkMPiOJBxsM4vEwpbY1ODj4KLv7z+VR2kAZ9npSM3/Q5yWP8e2wAcJ
+         2yb9ot6OFf1BkgRmt/PwVCD+V7URzOw4/n2n3FSEHk6QB0+vOpSACKOpS6BQT0bcz4
+         Ke5Im2DGZ6bMaSDE1dxCjK4e/ODNqTm6CeCkQop/vOWoSo9Ih1JZN9oB2TOabe5MKq
+         hWyWh0N8sXN769affI4Mr8+G6Z4g+cMF+91d5u1W6Go4+rr+uHnyqG4XlWbE78D55f
+         kr6M1X0C1OZQw==
+From:   Mark Brown <broonie@kernel.org>
+To:     devicetree@vger.kernel.org, quic_rohkumar@quicinc.com,
+        linux-kernel@vger.kernel.org, andersson@kernel.org,
+        swboyd@chromium.org, srinivas.kandagatla@linaro.org,
+        tiwai@suse.com, alsa-devel@alsa-project.org,
+        judyhsiao@chromium.org, lgirdwood@gmail.com, agross@kernel.org,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        quic_plai@quicinc.com, bgoswami@quicinc.com, perex@perex.cz,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     Srinivasa Rao Mandadapu 
+        <srivasam@qualcomm.corp-partner.google.com>
+In-Reply-To: <1665569560-28943-1-git-send-email-quic_srivasam@quicinc.com>
+References: <1665569560-28943-1-git-send-email-quic_srivasam@quicinc.com>
+Subject: Re: [PATCH] ASoC: qcom: lpass-cpu: mark HDMI TX registers as volatile
+Message-Id: <166567223036.170727.7011980883912234789.b4-ty@kernel.org>
+Date:   Thu, 13 Oct 2022 15:43:50 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH v3 1/2] dt-bindings: arm: add samsung,starqltechn board
- based on sdm845 chip
-Content-Language: en-US
-To:     Dzmitry Sankouski <dsankouski@gmail.com>,
-        linux-kernel@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-References: <20221012185411.1282838-1-dsankouski@gmail.com>
- <20221012185411.1282838-2-dsankouski@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221012185411.1282838-2-dsankouski@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.10.0-dev-fc921
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/10/2022 14:54, Dzmitry Sankouski wrote:
-> Add samsung,starqltechn board (Samsung Galaxy S9) binding.
+On Wed, 12 Oct 2022 15:42:40 +0530, Srinivasa Rao Mandadapu wrote:
+> From: Srinivasa Rao Mandadapu <srivasam@qualcomm.corp-partner.google.com>
 > 
-> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-> ---
-> Changes for v2,v3: none
+> Update HDMI volatile registers list as DMA, Channel Selection registers
+> , vbit control registers are being reflected by hardware DP port
+> disconnection.
+> This update is required to fix no display and no sound issue
+> observed after reconnecting TAMA/SANWA DP cables.
+> Once DP cable is unplugged, DMA control registers are being reset by
+> hardware, however at second plugin, new dma control values does not
+> updated to the dma hardware registers since new register value and
+> cached values at the time of first plugin are same.
+> 
+> [...]
 
-Where is v2 and v3 of this?
+Applied to
 
-Best regards,
-Krzysztof
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
+Thanks!
+
+[1/1] ASoC: qcom: lpass-cpu: mark HDMI TX registers as volatile
+      commit: c9a3545b1d771fb7b06a487796c40288c02c41c5
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
