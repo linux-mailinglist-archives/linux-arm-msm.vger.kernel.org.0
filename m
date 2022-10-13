@@ -2,178 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C3475FE54D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Oct 2022 00:33:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7E695FE5A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Oct 2022 00:55:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229653AbiJMWcz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Oct 2022 18:32:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60392 "EHLO
+        id S229799AbiJMWzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Oct 2022 18:55:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229733AbiJMWcy (ORCPT
+        with ESMTP id S229764AbiJMWzV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Oct 2022 18:32:54 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAF3118DA8C;
-        Thu, 13 Oct 2022 15:32:52 -0700 (PDT)
+        Thu, 13 Oct 2022 18:55:21 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98ABE27FD7;
+        Thu, 13 Oct 2022 15:55:12 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id y191so3283928pfb.2;
+        Thu, 13 Oct 2022 15:55:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1665700372; x=1697236372;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=RTXxWrdpwELUsNpFPvvKmLA3EGeoXnl65V4asrrMENg=;
-  b=WS/+Bb7/5vCqjyFN2SmWjoLDcijA9FWqKTNj9mh9Ovf4x9eSMMTLowxm
-   flQpejBLasBqGR7+IfgaYrIzaV2XUJ6hWibzhaKZ/8gLBhMfKzCLFS0Fl
-   ImalCyWM+b9iv+qhVZg97pdSnpXFf9PkQ78sFNnaRir9ElxdERlDO4D4w
-   g=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 13 Oct 2022 15:32:51 -0700
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2022 15:32:50 -0700
-Received: from [10.110.38.147] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 13 Oct
- 2022 15:32:49 -0700
-Message-ID: <c6c32b15-e32e-4362-00fc-e6710dca2546@quicinc.com>
-Date:   Thu, 13 Oct 2022 15:32:48 -0700
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3mIhMnGoIlAKBRI/Lq6fsfZ+LtCgVnYV3UGZC28tNso=;
+        b=paHg6qwWqBLQ5noiDCzwYHUpJLZ7es1HEAUGwJugYi/CxbiOs7YkC0rGO1cU/y+3Bl
+         foWUZYr4kJjhbkD1tHtpB4EcAKb/ott4/yu5bxqoYnIuEOpaMJJIjF0OqnQpA00cCwEk
+         Jyu0qHTLeVvVDJqrGj8l3mfwGTDpnXAoOCoe16xzs8c+VmOdcrRv/v0dVSlGBG3NUjU1
+         H+gUjvBuDB/HIYPZZQ+p8bS7jVx48J6e8CY2BU5BRYSm5hbj5+XQTty5dzqT/N6+Ytwa
+         2VltE5F4M2cf6hvFf394fcNJKL4GmXQCBxTZboqkuc3Qfr5dKQkn35IJBfcgZohi5/we
+         fwCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3mIhMnGoIlAKBRI/Lq6fsfZ+LtCgVnYV3UGZC28tNso=;
+        b=OWH8h7whw+15qTQJoQuY3eKbnoOxDOgTksL/Bcz2kIQquzn5/8CHUDucJbazrc4WHh
+         vcj1owr2yJO1ZjTSDAZMsmKYffZR3XG8AIvyCYZPW/S0rITsouJ3zYDIyaL1Oi2HonJ7
+         IsMRXAIM41p88qzhzwhCjpMm23w3nT3ONl4XghY51qJijiCZeEE8Eg3hiLBfbk1I685d
+         ftuK3mRPd4OWGwVa398yxWiFoB00N4zjd3pWaX+uUQiQn1egdvn+5UwXirfmvlVAFsL2
+         SXkt7HVIOAA9Ev+xDc44yw42fIjv42JZrSl1f4uhZNHdzBUULbhLVkgVuHvxC422TrO+
+         FtMA==
+X-Gm-Message-State: ACrzQf3p3wYviG6PPUfCc3d+wKhdWnjll8f9Uinlme8yl9ScTRpEkhwh
+        WPz8WSdox/EkbMNHuCj+ce4=
+X-Google-Smtp-Source: AMsMyM7SuFGVIsozC9eBZ2vZFWzV3HmleEVAV4yaykXpE0yjaBLytU8NySHH2qRaB+L31oLUIFoOQw==
+X-Received: by 2002:a05:6a00:8d0:b0:53b:2cbd:fab6 with SMTP id s16-20020a056a0008d000b0053b2cbdfab6mr1890998pfu.3.1665701711666;
+        Thu, 13 Oct 2022 15:55:11 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
+        by smtp.gmail.com with ESMTPSA id i15-20020a62870f000000b00562adeac326sm213368pfe.102.2022.10.13.15.55.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Oct 2022 15:55:11 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Emma Anholt <emma@anholt.net>,
+        linux-kernel@vger.kernel.org (open list),
+        Sean Paul <sean@poorly.run>
+Subject: [PATCH 0/3] drm/msm/a6xx: devcore dump fixes
+Date:   Thu, 13 Oct 2022 15:55:12 -0700
+Message-Id: <20221013225520.371226-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v5 09/13] mailbox: Add Gunyah message queue mailbox
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>
-CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        "Will Deacon" <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        "Arnd Bergmann" <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <devicetree@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20221011000840.289033-1-quic_eberman@quicinc.com>
- <20221011000840.289033-10-quic_eberman@quicinc.com>
- <38a62751-799d-67ff-68d8-2946f2308e59@linaro.org>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <38a62751-799d-67ff-68d8-2946f2308e59@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Rob Clark <robdclark@chromium.org>
 
+First patch fixes a recently introduced memory corruption, the remaining
+two are cleanups.
 
-On 10/12/2022 2:47 PM, Dmitry Baryshkov wrote:
-> On 11/10/2022 03:08, Elliot Berman wrote:
->> +
->> +static irqreturn_t gh_msgq_tx_irq_handler(int irq, void *data)
->> +{
->> +    struct gunyah_msgq *msgq = data;
->> +
->> +    mbox_chan_txdone(gunyah_msgq_chan(msgq), 0);
->> +
->> +    return IRQ_HANDLED;
->> +}
->> +
->> +static void gh_msgq_txdone_tasklet(unsigned long data)
->> +{
->> +    struct gunyah_msgq *msgq = (struct gunyah_msgq *)data;
->> +
->> +    mbox_chan_txdone(gunyah_msgq_chan(msgq), msgq->last_status);
-> 
-> I don't quite get this. Why do you need both an IRQ and a tasklet?
-> 
+Rob Clark (3):
+  drm/msm/a6xx: Fix kvzalloc vs state_kcalloc usage
+  drm/msm/a6xx: Skip snapshotting unused GMU buffers
+  drm/msm/a6xx: Remove state objects from list before freeing
 
-I've now tweaked the code comments now as well to explain a bit better.
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 18 ++++++++++++++++--
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c     |  7 ++++++-
+ 2 files changed, 22 insertions(+), 3 deletions(-)
 
-Gunyah tells us in the hypercall itself whether the message queue is 
-full. Once the the message queue is full, Gunyah will let us know when 
-reader starts draining the queue and we can start adding more messages 
-via the tx_irq.
+-- 
+2.37.3
 
-One point to note: the last message to be sent into the message queue 
-that makes the queue full can be detected. The hypercall reports that 
-the message was sent (GH_ERROR_OK) and the "ready" return value is 
-false. In its current form, the msgq mailbox driver should never make a 
-send hypercall and get GH_ERROR_MSGQUEUE_FULL because the driver 
-properly track when the message queue is full.
-
-When mailbox driver reports txdone, the implication is that more 
-messages can be sent (not just that the message was transmitted). In 
-typical operation, the msgq mailbox driver can immediately report that 
-the message was sent and no tx_irq happens because the hypercall returns 
-GH_ERROR_OK and ready=true. The mailbox framework doesn't allow txdone 
-directly from the send_data callback. To work around that, Jassi 
-recommended we use tasklet [1]. In the "atypical" case where message 
-queue becomes full, we get GH_ERROR_OK and ready=false. In that case, we 
-don't report txdone right away with the tasklet and instead wait for the 
-tx_irq to know when more messages can be sent.
-
-[1]: Tasklet works because send_data is called from mailbox framework 
-with interrupts disabled. Once interrupts are re-enabled, the txdone is 
-allowed to happen which is also when tasklet runs.
-
->> +
->> +    /**
->> +     * EAGAIN: message didn't send.
->> +     * ret = 1: message sent, but now the message queue is full and 
->> we can't send any more msgs.
->> +     * Either way, don't report that this message is done.
->> +     */
->> +    if (ret == -EAGAIN || ret == 1)
->> +        return ret;
-> 
-> '1' doesn't seem to be a valid return code for _send_data.
-> 
-> Also it would be logical to return any error here, not just -EAGAIN.
-> 
-
-
-If I return error to mailbox framework, then the message is stuck: 
-clients don't know that there was some underlying transport failure. It 
-would be retried if the client sends another message, but there is no 
-guarantee that either retrying later would work (what would have 
-changed?) nor that client would send another message to trigger retry. 
-If the message is malformed or message queue not correctly set up, 
-client would never know. Client should be told that the message wasn't sent.
-
-
->> +int gunyah_msgq_init(struct device *parent, struct gunyah_msgq *msgq, 
->> struct mbox_client *cl,
->> +             struct gunyah_resource *tx_ghrsc, struct gunyah_resource 
->> *rx_ghrsc)
-> 
-> Are the message queues allocated/created dynamically or statically? If 
-> the later is true, please use devm_request(_threaded)_irq and devm_kzalloc.
-> 
-
-With the exception of resource manager, message queues are created 
-dynamically.
-
-P.S. Thanks for all the other suggestions in this and the other patches, 
-I've applied them.
-
-Thanks,
-Elliot
