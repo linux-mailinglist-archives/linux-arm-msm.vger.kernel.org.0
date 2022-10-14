@@ -2,114 +2,225 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4178F5FE65C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Oct 2022 02:37:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEBCD5FE88A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Oct 2022 08:01:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229742AbiJNAhx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Oct 2022 20:37:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36612 "EHLO
+        id S229672AbiJNGBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Oct 2022 02:01:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229735AbiJNAhv (ORCPT
+        with ESMTP id S229673AbiJNGBo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Oct 2022 20:37:51 -0400
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD8611905E4;
-        Thu, 13 Oct 2022 17:37:50 -0700 (PDT)
-Received: by mail-io1-xd2d.google.com with SMTP id h203so2776351iof.1;
-        Thu, 13 Oct 2022 17:37:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DgPEys1VCx1K7kqM8PPoq2y4bBaRnFBAQZvggl7CXEo=;
-        b=BZ8antzv7XPgQvBEuJhXDhAUOetSSnd51IVdfCMStcWebn/oe6F6z0ba5Z4s3Um9/x
-         tV1f9T2A+0eXFLkTItk+SSpUaQOsmeh816pPGkLdIrWzTwt+Z717g2LY3rQjHYnBCJfx
-         4xis8UQpAiyo3u/UGMl6kMCgGwrq9eQNtl2K2FajBETiRaQJQ0x0r6UWkiXkN48gS4Ds
-         iSkHoCn96U+Ybs12C3v6yxbnnsTheUCbvwiBh2zVa70fAMj42XKC2K+cgO1ZGluqnrm0
-         +izmWKS96+FujbSctc8XzwJV/Gf9B9AAnctcPAcjjpqcdMyCXQf10x+Lpn41WhA2h1Y5
-         MHbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DgPEys1VCx1K7kqM8PPoq2y4bBaRnFBAQZvggl7CXEo=;
-        b=yHT6G4WUf/pVfP6aCrdq90vFl9lHyWIISjqMr7CA+xKZ6PPaHzCUhYaFsKLt86qgHP
-         9ipfZWV4zCXaDZ+xFbShrwxL31gVpqV2afvjMnrP3iq5Yp/afkV2RRfmdtIU447elZim
-         bCjEYTzmpcLprqJak+JVPH/Sw0Jxt+ldZIIdFQoSxRRIYg3CxLj1YKQplzW88T9B27r+
-         6q8jNPQq1Pkd9U4iw3HKW9mzp7PLWK9laYXTtr2BNiA/+rJHm5J9nvb1yZWxYe68y8qj
-         1lq2NuP3OUGBCmcFSUXJ4fox2lGW+SCZ9dsSxhOI/nWv+MPRCtNmGJlJePpQSOT15jBb
-         JpvQ==
-X-Gm-Message-State: ACrzQf11opt3pMZeEUB5iWglfb1UGg9Xu80iwjs8qQa9KkesvH90qDig
-        TOQ7ccaJL9h5pGsFuoUv6t8=
-X-Google-Smtp-Source: AMsMyM6+zjQjHrJM7xb4doRmBa/MhhGmNjI8G+UJVi0TCsRNUDWYbQ7dT6OEvJ4oh9MiyCT6kVF01w==
-X-Received: by 2002:a05:6638:438a:b0:363:abe5:9c8 with SMTP id bo10-20020a056638438a00b00363abe509c8mr1422099jab.301.1665707870309;
-        Thu, 13 Oct 2022 17:37:50 -0700 (PDT)
-Received: from localhost ([2607:fea8:a2e2:2d00::3fc2])
-        by smtp.gmail.com with UTF8SMTPSA id d13-20020a92680d000000b002eb3b43cd63sm404160ilc.18.2022.10.13.17.37.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Oct 2022 17:37:49 -0700 (PDT)
-From:   Richard Acayan <mailingradian@gmail.com>
-To:     Sasha Levin <sashal@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>, agross@kernel.org,
-        andersson@kernel.org, adrian.hunter@intel.com,
-        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.0 39/44] mmc: sdhci-msm: add compatible string check for sdm670
-Date:   Thu, 13 Oct 2022 20:37:44 -0400
-Message-Id: <20221014003744.6437-1-mailingradian@gmail.com>
-X-Mailer: git-send-email 2.38.0
-In-Reply-To: <Y0hSFl3Vqo1LCpNg@sashalap>
-References: <20221009234932.1230196-1-sashal@kernel.org> <20221009234932.1230196-39-sashal@kernel.org> <20221010234353.228833-1-mailingradian@gmail.com> <Y0hSFl3Vqo1LCpNg@sashalap>
+        Fri, 14 Oct 2022 02:01:44 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 808181A0C3D;
+        Thu, 13 Oct 2022 23:01:42 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29E4jZBs014975;
+        Fri, 14 Oct 2022 06:01:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=8es16hMyfAxnsFTs7vxIEnsQZcZTq4F7aW7vEPNX+Ws=;
+ b=Zo5MbsliDN7/jtKoAYoSU/JPtcRjOaN19Y8DGk7jfN0BekwUtb8mZN7jguvYI0WqmdFP
+ JFyaiVWbe84FizHXzLP1PysKnhNB444UhfXkN9WlOOQlk7qYb1fchzZKYyKGeX4Zk1g1
+ kd0dMHYvPOYfhLDcEbLyDlQlkSialvFwyH0JpOuCc5WatejpaOFvsIxnlNehUkAcRN3n
+ /7N6hvhqmBpSgjxbxCQTWeDdFZMxEQMozlvPbqkJXK69IurAqhlJ1mk11dMmVqABOFXE
+ Xs525t74R7wNxYJiZ7ibOEMxQKF9IDQaRKZBjLf9AdH4/nvq9pz+dxBCBSUzq/SxnvnP 5Q== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k66xjvc0h-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 14 Oct 2022 06:01:25 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29E61Ops020981
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 14 Oct 2022 06:01:24 GMT
+Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Thu, 13 Oct 2022 23:01:19 -0700
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Alex Elder <elder@ieee.org>
+CC:     <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, <vkoul@kernel.org>,
+        "Souradeep Chowdhury" <quic_schowdhu@quicinc.com>
+Subject: [PATCH V17 0/7] soc: qcom: dcc: Add driver support for Data Capture and Compare unit(DCC)
+Date:   Fri, 14 Oct 2022 11:30:26 +0530
+Message-ID: <cover.1665549527.git.quic_schowdhu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: vOsGnB-keS21othvzdGQ06sBAbdEP4Q9
+X-Proofpoint-ORIG-GUID: vOsGnB-keS21othvzdGQ06sBAbdEP4Q9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-14_02,2022-10-13_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=999 spamscore=0 clxscore=1011 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 adultscore=0 malwarescore=0 suspectscore=0 mlxscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210140034
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> On Mon, Oct 10, 2022 at 07:43:53PM -0400, Richard Acayan wrote:
->>> From: Richard Acayan <mailingradian@gmail.com>
->>>
->>> [ Upstream commit 4de95950d970c71a9e82a24573bb7a44fd95baa1 ]
->>>
->>> The Snapdragon 670 has the same quirk as Snapdragon 845 (needing to
->>> restore the dll config). Add a compatible string check to detect the need
->>> for this.
->>>
->>> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
->>> Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> Link: https://lore.kernel.org/r/20220923014322.33620-3-mailingradian@gmail.com
->>> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
->>> Signed-off-by: Sasha Levin <sashal@kernel.org>
->>> ---
->>>  drivers/mmc/host/sdhci-msm.c | 1 +
->>>  1 file changed, 1 insertion(+)
->>>
->>> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
->>> index dc2991422a87..3a091a387ecb 100644
->>> --- a/drivers/mmc/host/sdhci-msm.c
->>> +++ b/drivers/mmc/host/sdhci-msm.c
->>> @@ -2441,6 +2441,7 @@ static const struct of_device_id sdhci_msm_dt_match[] = {
->>>  	 */
->>>  	{.compatible = "qcom,sdhci-msm-v4", .data = &sdhci_msm_mci_var},
->>>  	{.compatible = "qcom,sdhci-msm-v5", .data = &sdhci_msm_v5_var},
->>> +	{.compatible = "qcom,sdm670-sdhci", .data = &sdm845_sdhci_var},
->>
->>Supporting device trees which are invalid under 6.0 schema? It's not a bug fix,
->>it's a feature.
-> 
-> Does this not enable hardware to work properly? We take quirks/device
-> enablement into stable tree as well.
+DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.
+In case of a system crash or manual software triggers by the user the DCC hardware
+stores the value at the register addresses which can be used for debugging purposes.
+The DCC driver provides the user with debugfs interface to configure the register
+addresses. The options that the DCC hardware provides include reading from registers,
+writing to registers, first reading and then writing to registers and looping
+through the values of the same register.
 
-It does, given that there are no device tree dependency issues. Thanks for the
-clarification.
+In certain cases a register write needs to be executed for accessing the rest of the
+registers, also the user might want to record the changing values of a register with
+time for which he has the option to use the loop feature.
+
+The options mentioned above are exposed to the user by debugfs files once the driver
+is probed. The details and usage of this debugfs files are documented in
+Documentation/ABI/testing/debugfs-driver-dcc.
+
+As an example let us consider a couple of debug scenarios where DCC has been proved to be
+effective for debugging purposes:-
+
+i)TimeStamp Related Issue
+
+On SC7180, there was a coresight timestamp issue where it would occasionally be all 0
+instead of proper timestamp values.
+
+Proper timestamp:
+Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
+
+Zero timestamp:
+Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
+
+Now this is a non-fatal issue and doesn't need a system reset, but still needs
+to be rootcaused and fixed for those who do care about coresight etm traces.
+Since this is a timestamp issue, we would be looking for any timestamp related
+clocks and such.
+
+We get all the clk register details from IP documentation and configure it
+via DCC config_read debugfs node. Before that we set the current linked list.
+
+/* Program the linked list with the addresses */
+echo R 0x10c004 > /sys/kernel/debug/dcc/../3/config
+echo R 0x10c008 > /sys/kernel/debug/dcc/../3/config
+echo R 0x10c00c > /sys/kernel/debug/dcc/../3/config
+echo R 0x10c010 > /sys/kernel/debug/dcc/../3/config
+..... and so on for other timestamp related clk registers
+
+/* Other way of specifying is in "addr len" pair, in below case it
+specifies to capture 4 words starting 0x10C004 */
+
+echo R 0x10C004 4 > /sys/kernel/debug/dcc/../3/config_read
+
+/* Enable DCC */
+echo 1 > /sys/kernel/debug/dcc/../3/enable
+
+/* Run the timestamp test for working case */
+
+/* Send SW trigger */
+echo 1 > /sys/kernel/debug/dcc/../trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram1.bin
+
+/* Run the timestamp test for non-working case */
+
+/* Send SW trigger */
+echo 1 > /sys/kernel/debug/dcc/../trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram2.bin
+
+Get the parser from [1] and checkout the latest branch.
+
+/* Parse the SRAM bin */
+python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
+python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
+
+Sample parsed output of dcc_sram1.bin:
+
+<hwioDump version="1">
+        <timestamp>03/14/21</timestamp>
+            <generator>Linux DCC Parser</generator>
+                <chip name="None" version="None">
+                <register address="0x0010c004" value="0x80000000" />
+                <register address="0x0010c008" value="0x00000008" />
+                <register address="0x0010c00c" value="0x80004220" />
+                <register address="0x0010c010" value="0x80000000" />
+            </chip>
+    <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
+</hwioDump>
+
+ii)NOC register errors
+
+A particular class of registers called NOC which are functional registers was reporting
+errors while logging the values.To trace these errors the DCC has been used effectively.
+The steps followed were similar to the ones mentioned above.
+In addition to NOC registers a few other dependent registers were configured in DCC to
+monitor it's values during a crash. A look at the dependent register values revealed that
+the crash was happening due to a secured access to one of these dependent registers.
+All these debugging activity and finding the root cause was achieved using DCC.
+
+DCC parser is available at the following open source location
+
+https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
+
+Changes in V17
+
+*Corrected the mailing list from V16
+
+*Corrected the commit statement for the maintainer file
+
+Souradeep Chowdhury (7):
+  dt-bindings: Added the yaml bindings for DCC
+  soc: qcom: dcc: Add driver support for Data Capture and Compare
+    unit(DCC)
+  MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
+    support
+  arm64: dts: qcom: sm8150: Add Data Capture and Compare(DCC) support
+    node
+  arm64: dts: qcom: sc7280: Add Data Capture and Compare(DCC) support
+    node
+  arm64: dts: qcom: sc7180: Add Data Capture and Compare(DCC) support
+    node
+  arm64: dts: qcom: sdm845: Add Data Capture and Compare(DCC) support
+    node
+
+ Documentation/ABI/testing/debugfs-driver-dcc       |   98 ++
+ .../devicetree/bindings/soc/qcom/qcom,dcc.yaml     |   44 +
+ MAINTAINERS                                        |    8 +
+ arch/arm64/boot/dts/qcom/sc7180.dtsi               |    6 +
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |    6 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |    6 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |    6 +
+ drivers/soc/qcom/Kconfig                           |    8 +
+ drivers/soc/qcom/Makefile                          |    1 +
+ drivers/soc/qcom/dcc.c                             | 1355 ++++++++++++++++++++
+ 10 files changed, 1538 insertions(+)
+ create mode 100644 Documentation/ABI/testing/debugfs-driver-dcc
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml
+ create mode 100644 drivers/soc/qcom/dcc.c
+
+-- 
+2.7.4
+
