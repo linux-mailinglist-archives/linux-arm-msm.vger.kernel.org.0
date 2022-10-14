@@ -2,68 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6DB45FEA01
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Oct 2022 10:02:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBEFB5FEAA3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Oct 2022 10:37:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230049AbiJNIC3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Oct 2022 04:02:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40878 "EHLO
+        id S229872AbiJNIhH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Oct 2022 04:37:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230053AbiJNICS (ORCPT
+        with ESMTP id S229895AbiJNIhB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Oct 2022 04:02:18 -0400
-Received: from mail.fadrush.pl (mail.fadrush.pl [54.37.225.211])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E50291BB96E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Oct 2022 01:02:15 -0700 (PDT)
-Received: by mail.fadrush.pl (Postfix, from userid 1002)
-        id 765972315B; Fri, 14 Oct 2022 08:01:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fadrush.pl; s=mail;
-        t=1665734524; bh=bD6j9gIFU6CLTaCGl0Ow9oeIxtirvTfMeNZSfLEZQ+I=;
-        h=Date:From:To:Subject:From;
-        b=Ri+z0HUtNmBW0/AT9IO+OqM54rtLkORZaYZ3l+9LhruhkH2IhEJjkn9pRapcgD0XX
-         4LZX57fRMTYAyhvNmtHTNT8KBf/uj6jykShlotw0qVpZig+Xmb6PdqUYHlTMFfFRXd
-         x6nBpKsIc9Y10sT4UoqWBzQFYDYAkT9F+lJqgTlZZAjZNZjHBoZrDvoyFO1lKNquKi
-         YXjxlkCE2Py9iDNRvwG+pPlLGAYpSbFvrIMBa1uD3JNf9VzZB5HTZZMpgfftbEpBrz
-         4oqXGV4q/iXJpGdisE7qAxnM72Cc4wltjCJFBZFoHJqMdVVykmfdF3uiVKxcNt8sDE
-         mslZWJIa7esTg==
-Received: by mail.fadrush.pl for <linux-arm-msm@vger.kernel.org>; Fri, 14 Oct 2022 08:00:54 GMT
-Message-ID: <20221014064500-0.1.28.m7ws.0.5lpy1ce8ix@fadrush.pl>
-Date:   Fri, 14 Oct 2022 08:00:54 GMT
-From:   "Jakub Olejniczak" <jakub.olejniczak@fadrush.pl>
-To:     <linux-arm-msm@vger.kernel.org>
-Subject: =?UTF-8?Q?Zwi=C4=99kszenie_p=C5=82ynno=C5=9Bci_finansowej?=
-X-Mailer: mail.fadrush.pl
+        Fri, 14 Oct 2022 04:37:01 -0400
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46FD51C39C3;
+        Fri, 14 Oct 2022 01:36:57 -0700 (PDT)
+Received: from [192.168.1.101] (95.49.31.41.neoplus.adsl.tpnet.pl [95.49.31.41])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 7F3BA1FFBD;
+        Fri, 14 Oct 2022 10:36:54 +0200 (CEST)
+Message-ID: <430edaff-2562-0283-d70c-3d26995c56d6@somainline.org>
+Date:   Fri, 14 Oct 2022 10:36:53 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_VALIDITY_RPBL,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH v3 2/4] arm64: dts: qcom: msm8998-oneplus-cheeseburger:
+ fix backlight pin function
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221013210612.95994-1-krzysztof.kozlowski@linaro.org>
+ <20221013210612.95994-2-krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20221013210612.95994-2-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dzie=C5=84 dobry,
-
-kontaktuj=C4=99 si=C4=99 z Pa=C5=84stwem, poniewa=C5=BC chcia=C5=82bym za=
-proponowa=C4=87 wygodne rozwi=C4=85zanie, kt=C3=B3re umo=C5=BCliwi Pa=C5=84=
-stwa firmie stabilny rozw=C3=B3j.=20
-
-Konkurencyjne otoczenie wymaga ci=C4=85g=C5=82ego ulepszania i poszerzeni=
-a oferty, co z kolei wi=C4=85=C5=BCe si=C4=99 z konieczno=C5=9Bci=C4=85 i=
-nwestowania. Brak odpowiedniego kapita=C5=82u powa=C5=BCnie ogranicza tem=
-po rozwoju firmy.
-
-Od wielu lat z powodzeniem pomagam firmom w uzyskaniu najlepszej formy fi=
-nansowania z banku oraz UE. Mam sta=C5=82ych Klient=C3=B3w, kt=C3=B3rzy n=
-adal ch=C4=99tnie korzystaj=C4=85 z moich us=C5=82ug, a tak=C5=BCe poleca=
-j=C4=85 je innym.
-
-Czy chcieliby Pa=C5=84stwo skorzysta=C4=87 z pomocy wykwalifikowanego i d=
-o=C5=9Bwiadczonego doradcy finansowego?
 
 
-Pozdrawiam
-Jakub Olejniczak
+On 13.10.2022 23:06, Krzysztof Kozlowski wrote:
+> There is no "normal" function, so use "gpio" for backlight button pin
+> configuration.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+
+Konrad
+> 
+> Changes since v2:
+> 1. None
+> ---
+>  arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts b/arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts
+> index ef2a88a64d32..122f6c25220e 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts
+> +++ b/arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts
+> @@ -35,7 +35,7 @@ &pmi8998_gpio {
+>  	button_backlight_default: button-backlight-state {
+>  		pinconf {
+>  			pins = "gpio5";
+> -			function = "normal";
+> +			function = "gpio";
+>  			bias-pull-down;
+>  			qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
+>  		};
