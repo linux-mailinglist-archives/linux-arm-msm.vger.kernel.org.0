@@ -2,118 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 791835FF0DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Oct 2022 17:11:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98B325FF1EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Oct 2022 18:01:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229867AbiJNPLp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Oct 2022 11:11:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38002 "EHLO
+        id S230343AbiJNQBT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Oct 2022 12:01:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229942AbiJNPLn (ORCPT
+        with ESMTP id S230143AbiJNQBR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Oct 2022 11:11:43 -0400
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54C871CF54B;
-        Fri, 14 Oct 2022 08:11:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1665760302; x=1697296302;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=N/njfTWM92urhDh1tc8kt06mInCQV3hTHb5sdf7xqk0=;
-  b=bYM9g6tVvtVxav3WaIrakhmyROkTIIboxfH+Snti7Ci8xFZNO4FolujL
-   thOBhsuC2TfFHL04DoRxG5S2eUY/pAV0ZXb0LWpYmunDj/ubmUPdfkPSY
-   lNHnGkeaZMzKLb684jH0zXNvWWJdgTnh0v0EcW4qCAjgpfJ+TBq5lwWg2
-   1euRJ0TRDrJx5ddSw44StElwH8iUvgQNGC6z3xIaZe9/ef+zoNkL0R21m
-   AGZv/jOUPRKHS0+dy0loDJ4uj3Bzkmpsh04Qo5X4rRcPoI2vhFmADfEF4
-   D/1eSZezcYNv2aMlKCnX02TtPb5jFtE3vkhoYLsQg15GaZf6PSNlwT/Er
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10500"; a="369587630"
-X-IronPort-AV: E=Sophos;i="5.95,184,1661842800"; 
-   d="scan'208";a="369587630"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2022 08:11:41 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10500"; a="660758830"
-X-IronPort-AV: E=Sophos;i="5.95,184,1661842800"; 
-   d="scan'208";a="660758830"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orsmga001.jf.intel.com with ESMTP; 14 Oct 2022 08:11:36 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.96)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1ojMLW-006yCQ-0e;
-        Fri, 14 Oct 2022 18:11:34 +0300
-Date:   Fri, 14 Oct 2022 18:11:33 +0300
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Florian Fainelli <f.fainelli@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>
-Cc:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Kent Gibson <warthog618@gmail.com>, linux-gpio@vger.kernel.org,
-        linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
-        linux-actions@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
-        openbmc@lists.ozlabs.org, linux-rpi-kernel@lists.infradead.org,
-        alsa-devel@alsa-project.org, patches@opensource.cirrus.com,
-        linux-mediatek@lists.infradead.org, linux-mips@vger.kernel.org,
-        linux-riscv@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: Re: [rft, PATCH v2 00/36] pinctrl: Clean up and add missed headers
-Message-ID: <Y0l8JTQQvLzRejk1@smile.fi.intel.com>
-References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
- <0684f480-2092-d520-2c8e-bd9a2dca47e3@gmail.com>
- <CAHp75VdDjyUAZBTaoPOe5oA3f_5xRznAooq08=Eff4F1AZyVOQ@mail.gmail.com>
+        Fri, 14 Oct 2022 12:01:17 -0400
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04FBC14EC42
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Oct 2022 09:01:13 -0700 (PDT)
+Received: by mail-qt1-x831.google.com with SMTP id w3so3924108qtv.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Oct 2022 09:01:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CkC/MGqITsH4ItvGl9rSsBp9Fg2z5jG2MWsc8Iemckw=;
+        b=Fr5ayiTWxddqFsx5wxbR4O7/MzrPceGCim5Bu0T3ZNdH+eeFpd+WW9DBm67SYsd7+4
+         mmzc+e7wLneSvWfIVHZWqpE05QB9p7mTRtSZuieAIghZgoGUSYx9rCZNwdru2jltw57w
+         Nby7nk1gjpE8AysVdtUOEa/qs+RkzVNLiPaSho4yb5EM8nchwkQ1R9G+i6V/hS28CgvG
+         OEL5gNgAC4FOp2g5q6KxoYvJdkJt7nVsbdPffTS0ECrbYePn976vDxCQLh6siJXxeNdV
+         TkuG9It2RIPs/biTcebqBC2RgsdMmQvfwHMexQ+dssKtDEgA13di+KqS03w95zY+m8wa
+         SAHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CkC/MGqITsH4ItvGl9rSsBp9Fg2z5jG2MWsc8Iemckw=;
+        b=2MXVdlhmhoVHvKb70F6o3VLzMWRGUDBuxOb6sSVgSDvJGY6iEQisr5sWTa6CRoF700
+         3pBtRD809H0BuNsBlkiKAq8NpU6Rt+Pr/a79MG7C2lUUBHOgSwVdpVjXgS2vEY92in0F
+         vwyG6C19Hqax/ePAVFaTesUwCw9xRGpkSblXAVXtQHLzvF2qH98YEO7HIvXjrNubtWL6
+         /TsVwj9UepPCuI37aXllZ7S/fvxfvxg5ltYnMQEYvqXTxt98DxGFxsUva5cILPz9Kwvv
+         CoKK+0HNrU68o+hO01HSEGltFW2XxiREVHXX33LWheTcTcx7EFd2/IpkkXB/L3Q7JvFn
+         VWaw==
+X-Gm-Message-State: ACrzQf2ecTCAAcBac4YCFdkTz5VzNeu1aIfFFmwGlfJgIzl/9Dhtzoyh
+        z+9on8g/itciBxt4ieySm6CucA==
+X-Google-Smtp-Source: AMsMyM7CLKUeBtX1XegI5DUhv6wTLsUYKd53nK0+892VZERVqDOsE6ABLVGZyQ0DrZ6RmVBxMvoc3Q==
+X-Received: by 2002:ac8:5f51:0:b0:35d:1a4c:9eaa with SMTP id y17-20020ac85f51000000b0035d1a4c9eaamr4685049qta.198.1665763272437;
+        Fri, 14 Oct 2022 09:01:12 -0700 (PDT)
+Received: from [192.168.48.77] ([172.58.235.135])
+        by smtp.gmail.com with ESMTPSA id v17-20020a05620a441100b006ce813bb306sm3095238qkp.125.2022.10.14.09.01.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Oct 2022 09:01:11 -0700 (PDT)
+Message-ID: <cc7289ac-b75a-62e3-4b58-fc018715c068@linaro.org>
+Date:   Fri, 14 Oct 2022 12:01:09 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHp75VdDjyUAZBTaoPOe5oA3f_5xRznAooq08=Eff4F1AZyVOQ@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH v2 1/3] dt-bindings: mmc: arm,pl18x: Document
+ interrupt-names is ignored
+To:     Marek Vasut <marex@denx.de>, linux-arm-kernel@lists.infradead.org
+Cc:     Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Yann Gautier <yann.gautier@foss.st.com>,
+        devicetree@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com
+References: <20221013221242.218808-1-marex@denx.de>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221013221242.218808-1-marex@denx.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 12, 2022 at 01:04:10PM +0300, Andy Shevchenko wrote:
-> On Tue, Oct 11, 2022 at 11:56 PM Florian Fainelli <f.fainelli@gmail.com> wrote:
-> > On 10/10/2022 1:14 PM, Andy Shevchenko wrote:
-> > > Currently the header inclusion inside the pinctrl headers seems more arbitrary
-> > > than logical. This series is basically out of two parts:
-> > > - add missed headers to the pin control drivers / users
-> > > - clean up the headers of pin control subsystem
-> > >
-> > > The idea is to have this series to be pulled after -rc1 by the GPIO and
-> > > pin control subsystems, so all new drivers will utilize cleaned up headers
-> > > of the pin control.
-> > >
-> > > Please, review and comment.
-> >
-> > Did you really need to split this on a per-driver basis as opposed to
-> > just a treewide drivers/pinctrl, drivers/media and drivers/gpiolib patch
-> > set?
-> >
-> > 36 patches seems needlessly high when 4 patches could have achieve the
-> > same outcome.
+On 13/10/2022 18:12, Marek Vasut wrote:
+> Due to inconsistency of existing DTs regarding the content of this IP
+> interrupt-names DT property, document this such that interrupt-names
+> is not used by this IP bindings.
 > 
-> I can combine them if maintainers ask for that, nevertheless for Intel
-> pin control and GPIO drivers, which I care more about, I would like to
-> leave as separate changes (easy to see in history what was done).
+> Signed-off-by: Marek Vasut <marex@denx.de>
+> ---
+> Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: Ulf Hansson <ulf.hansson@linaro.org>
+> Cc: Yann Gautier <yann.gautier@foss.st.com>
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-mmc@vger.kernel.org
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-stm32@st-md-mailman.stormreply.com
+> To: linux-arm-kernel@lists.infradead.org
+> ---
+> V2: Add deprecated:false to interrupts: description
+> ---
+>  Documentation/devicetree/bindings/mmc/arm,pl18x.yaml | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/mmc/arm,pl18x.yaml b/Documentation/devicetree/bindings/mmc/arm,pl18x.yaml
+> index 1e69a5a42439b..1c96da04f0e53 100644
+> --- a/Documentation/devicetree/bindings/mmc/arm,pl18x.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/arm,pl18x.yaml
+> @@ -95,7 +95,9 @@ properties:
+>        PIO (polled I/O) interrupt and occurs when the FIFO needs to be
+>        emptied as part of a bulk read from the card. Some variants have these
+>        two interrupts wired into the same line (logic OR) and in that case
+> -      only one interrupt may be provided.
+> +      only one interrupt may be provided. The interrupt-names property is
+> +      not used due to inconsistency of existing DTs regarding its content.
+> +    deprecated: false
 
-I can now tell why I don't like to combine. While doing a revert (it's not
-related to GPIO nor to pin control), it appears that I reverted extra bits
-as merge conflict resolution. This is per se is not an issue, but when
-I tried to find and reapply that missed piece I can't, because the patch
-is combined and Git simply ignores to have
-`git cherry-pick _something in the past_` done.
+Why do you add deprecated false? All properties are not deprecated by
+default. Did any other referenced schema make it deprecated?
 
-But again, up to maintainers.
 
--- 
-With Best Regards,
-Andy Shevchenko
-
+Best regards,
+Krzysztof
 
