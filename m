@@ -2,77 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F31F75FFA2A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Oct 2022 15:10:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D26265FFA37
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Oct 2022 15:19:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229608AbiJONJ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Oct 2022 09:09:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35012 "EHLO
+        id S229684AbiJONTh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Oct 2022 09:19:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229594AbiJONJ6 (ORCPT
+        with ESMTP id S229607AbiJONTg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Oct 2022 09:09:58 -0400
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E49431CFE5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 06:09:52 -0700 (PDT)
-Received: by mail-qv1-xf29.google.com with SMTP id y10so4894817qvo.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 06:09:52 -0700 (PDT)
+        Sat, 15 Oct 2022 09:19:36 -0400
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E45F817A97
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 06:19:34 -0700 (PDT)
+Received: by mail-qt1-x834.google.com with SMTP id l28so5309295qtv.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 06:19:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=r1/cUmV6R/jHFslafG7oDUe3cJlRn0gYx9gwOcGAp+Y=;
-        b=fj84iPYvS3dKrBv12CBz4D6819U6wie8wKBahSWA+ynUe6yK2jjofeCDJ/GnewkGtE
-         y4sRbqj1kCUCpqlwOu68puxWFhR0WY5lhcfBJ33FwTMeBQCD39P/uJQl+m9T49VTjzR0
-         Lu4jaVkcm9NHhEepAUNxd0RMO6MicIUkjF2gL4XY/mpYe8Yy5vpZZJFb9mOZuC3BUlgM
-         Oj2v1HSfOZyZ5adYk6V4shFtc4K7/iE3UOo6w5Y2xvSZsgYaZ/gCDtqqEOxARVMj3D45
-         qF/0EJqMQhAPc8QMaHxtnO8VVYmk0Dt0gkgaxjYVFu619ytgn507zs0sSR5mjqlKbUe5
-         87LA==
+        bh=nCSwBkwZXdfMuWsk1P1u/17KwJcVR/Zaj8waJZyviMA=;
+        b=gE19VCZPTc1WzOZvTW/RwwowIeLE19BpAVizDq1z042x9ClQTwMdU4vUO6iz8l/tFO
+         WCqOQWpVRZZNUohu5DSbS2ds60Lfwa3zy+NNtFufMCBSjVO6JUKuzezomXeseqJwZeg4
+         MlBdFevqY8qb5n+C6gU5MBzzp1KUcjk9ws8bxhhfKN2rY13nPkw8rYgrKecqzb9uH9DA
+         YGrhZAysjoh9YWJlfu9KSbQDYeInPdusBDHAUUdgs0DEShSAAADOcIJp0ommS3ZhAvdH
+         ie4057izyck/v6SA8k8zhosrMOXCkI/DPb/5y1F5jrPXRpy7Lh6cQIXteahspVn8tbqy
+         WFAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=r1/cUmV6R/jHFslafG7oDUe3cJlRn0gYx9gwOcGAp+Y=;
-        b=29rxbg9zDVrgO5eJO1YycJgBOXQAnAbLKZ5ZtgBF5+Yz44y2De9mQDLn4by14vLXc0
-         d19JKDkvBVFwC8FTvepOADxpxhTn7Zb2dRVWj8wRrtkAWEtwgfXsIHry6eGjVxdxsKF+
-         9821RoqtS3uNpo5R5UA3uFQ5pxjudLzzJQ3lX4sFWahJvpNRTTCBtRJJnVbx64vA8W1G
-         PL0BnzstNRwyxR7MU1E7PRUIlKP7n8vrrqwFIBM+vCgto2RJwzOXSK8KgrUefVBV4qRg
-         OlOhdVGWvuIkzcRX+KTYQkbyjWQSQCSrrpqsQ67yPiEj6fTSsQZUXDT50GIzIRbWHq7B
-         nHcA==
-X-Gm-Message-State: ACrzQf0j0w/7Pmn28sMHN4HSjKiAAGIQTLHDSDW1dMwWW620DgaNC8lF
-        EqZvsAZyTwabN4rVU/gmTIvpkw==
-X-Google-Smtp-Source: AMsMyM7V+DRZfXsN62gpOeoEpyHzJ57IvuVBRG337kIHMMObXw2LDT1j7njm1fzu7TKAaNaW2dExnw==
-X-Received: by 2002:a0c:a711:0:b0:4b1:8816:4168 with SMTP id u17-20020a0ca711000000b004b188164168mr1872868qva.46.1665839391985;
-        Sat, 15 Oct 2022 06:09:51 -0700 (PDT)
+        bh=nCSwBkwZXdfMuWsk1P1u/17KwJcVR/Zaj8waJZyviMA=;
+        b=JDZoWQoXpAFhXDhK23+IAXZAJJPso+QbM+nVkuO2CUcPGcIPzAL7icx9XeifsJXOMU
+         rd8/r8TmJ6ZdfuLiF4fFUI76zuhS+8NkszAtp3ZrShOdMNYc3JDEktFjyWgHbZGXJa0a
+         AIb1JlMfd54s6xMqHeCarAdKMalALf0kZLNpTWqJAW+LnwCmKf0GDFl/Ddkkf57Q9ofZ
+         6PjS11OM3jl28FQDCMNyineqDrtODvtieC+xPKahfkrVbFgvXvgnLJO/zNL4X0mLkPh/
+         eao9+BkYKtO8O5DTUxkf0u6KkOCoUxKdMVzdDuAA0tEj2MwEPyROksEIqOakTSw/ck3m
+         vZLA==
+X-Gm-Message-State: ACrzQf0gdQ77G/hwpfNyVGINh9ZgOyn6kvA0qpVgUSmzAtna4v6m12Kx
+        pR68yfFjeGyedbVYsomh7ZuFFg==
+X-Google-Smtp-Source: AMsMyM4kq7rQa7ljXuMMZTYKm/dBZMYoq01Eq1Y/RbRArMT13cL8p/kHh5EbvBTFyGn/SgktmacgFg==
+X-Received: by 2002:a05:622a:54:b0:399:5b6c:654b with SMTP id y20-20020a05622a005400b003995b6c654bmr1882983qtw.362.1665839973816;
+        Sat, 15 Oct 2022 06:19:33 -0700 (PDT)
 Received: from ?IPV6:2601:42:0:3450:161:5720:79e9:9739? ([2601:42:0:3450:161:5720:79e9:9739])
-        by smtp.gmail.com with ESMTPSA id d3-20020a05620a240300b006cfc01b4461sm4841906qkn.118.2022.10.15.06.09.50
+        by smtp.gmail.com with ESMTPSA id y11-20020ac8524b000000b0039bde72b14asm3817450qtn.92.2022.10.15.06.19.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 15 Oct 2022 06:09:51 -0700 (PDT)
-Message-ID: <871aeaa1-5c57-4958-cf93-b51da1d71cd1@linaro.org>
-Date:   Sat, 15 Oct 2022 09:09:49 -0400
+        Sat, 15 Oct 2022 06:19:32 -0700 (PDT)
+Message-ID: <bcd3e840-ea25-51fd-6bca-683fd7680ab5@linaro.org>
+Date:   Sat, 15 Oct 2022 09:19:31 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.2
-Subject: Re: [PATCH v2] dt-bindings: firmware: document Qualcomm SM6375 SCM
+Subject: Re: [PATCH v2 1/3] dt-bindings: arm: qcom: Document QDU1000/QRU1000
+ SoCs and boards
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+To:     Melody Olvera <quic_molvera@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Das Srinagesh <quic_gurus@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20221015115535.150037-1-konrad.dybcio@somainline.org>
+References: <20221014221138.7552-1-quic_molvera@quicinc.com>
+ <20221014221138.7552-2-quic_molvera@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221015115535.150037-1-konrad.dybcio@somainline.org>
+In-Reply-To: <20221014221138.7552-2-quic_molvera@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,23 +81,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/10/2022 07:55, Konrad Dybcio wrote:
-> Document the compatible for Qualcomm SM6375 SCM.
+On 14/10/2022 18:11, Melody Olvera wrote:
+> Document the QDU1000 and QRU1000 SoC bindings and the boards that use
+> them.
 > 
-> SCM consumes a single clock (core / RPM_SMD_CE1_CLK), though it does
-> not matter whether Linux enables it, as one of the billion levels of
-> firmware ensures it's on anyway. Still, mark it as used for the sake
-> of correctness.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 > ---
-> Changes since v1:
-> - Add the compatible to allOf to indicate core clock is used
-> - Rewrite the commit description to match changes
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index 1b5ac6b02bc5..3370a50644a6 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -40,6 +40,8 @@ description: |
+>          msm8996
+>          msm8998
+>          qcs404
+> +        qdu1000
+> +        qru1000
+>          sa8155p
+>          sa8540p
+>          sc7180
+> @@ -76,6 +78,7 @@ description: |
+>          mtp
+>          qrd
+>          sbc
+> +        x100
+>  
+>    The 'soc_version' and 'board_version' elements take the form of v<Major>.<Minor>
+>    where the minor number may be omitted when it's zero, i.e.  v1.0 is the same
+> @@ -493,6 +496,19 @@ properties:
+>            - const: google,pompom-sku0
+>            - const: qcom,sc7180
+>  
+> +      - description: Qualcomm Technologies, Inc. Distributed Unit 1000 platform
+> +          - items:
+> +              - enum:
+> +                  - qcom,qdu1000-idp
+> +                  - qcom,qdu1000-x100
+> +              - const: qcom,qdu1000
+> +
+> +      - description: Qualcomm Technologies, Inc. Radio Unit 1000 platform
+> +          - items:
+> +              - enum:
+> +                  -qcom,qru1000-idp
+> +              - const: qcom,qru1000
 
+This is still wrong order. All entries are ordered by SoC compatible. So
+this should go before sc7180, not after.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> +
+>        - description: Google Quackingstick (newest rev)
+>          items:
+>            - const: google,quackingstick-sku1537
 
 Best regards,
 Krzysztof
