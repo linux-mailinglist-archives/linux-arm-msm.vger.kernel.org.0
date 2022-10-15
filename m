@@ -2,69 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 44F6F5FFA1D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Oct 2022 15:04:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9ED8A5FFA24
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Oct 2022 15:06:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229594AbiJONEs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Oct 2022 09:04:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48574 "EHLO
+        id S229810AbiJONGR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Oct 2022 09:06:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229793AbiJONEp (ORCPT
+        with ESMTP id S229793AbiJONGQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Oct 2022 09:04:45 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 489A315FF6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 06:04:44 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id n16-20020a05600c4f9000b003c17bf8ddecso6724167wmq.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 06:04:44 -0700 (PDT)
+        Sat, 15 Oct 2022 09:06:16 -0400
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D03840E2E
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 06:06:14 -0700 (PDT)
+Received: by mail-qt1-x835.google.com with SMTP id z8so5301033qtv.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 06:06:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vmXoNNLDLDLD0P7pKCj+BHy21pHCA1aEV+oXYAOW2vk=;
-        b=KD1l/z5JxEtz6VLtNyfLQRz5xjiZkc3OHsZofFSBtslzVUOZsPgvt54LTkB4AcV/Co
-         7FnwYPJZxbnr/X3zoZcyV6GfZsbe1YZW88yyP/8uo064uQOH2NFMgXpiUCSTvNP5Iauf
-         huN/oS9EO3pzWUQszcvZ1MODVNLMifR6DnN9AbluASxv1LMFA2wCxHp1taXME2PZYK6g
-         Tf9SPdrLDzB74Adtj1pzy4IdnTp0DdJqc4MwuBzvoV6e6Jy8pFfnZFL4MGDD6sKRNtXi
-         ofEmwPH7vhWHtAUTB63a9HnIkY8owgyWpvLxLw22djEpRsvqE1MzoMenTxAp1XqflmrX
-         Yo2g==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TBNDWb/PUcfIBjVY7nryISHx24x9THNIcQMhnCQu8a0=;
+        b=psYq027JfEzzbK4E60x4LX4q7Vhlj2I1XUKQAilBWc+ExEOX+Zwp5+IksHLho0owp3
+         mb+leoQnlfmj+GZuwy6Ju444R43BH2cCaiwPHJJ7ddBvMxkCbSFEM4KMHuVygaVBVzGw
+         FFPdK72zr8DgmsR0B99ka8AItcsp9GI7/Qlcjh0hRPgWDDkyWn9as7+SneS2ZdIrnCMZ
+         SeLe1/k3r55lkFwSZNFjQrWhDZCGy2ptjn+AgfcGgmaCCSZ3ERNdVLvNEBt0HFSANG1u
+         AwqZABH/VnA9Q4WBKXfsWqQTwwntiIQRZcOBVgcb6uT3zE59w5qNU+Rirg5xDdXpk8dW
+         a3AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vmXoNNLDLDLD0P7pKCj+BHy21pHCA1aEV+oXYAOW2vk=;
-        b=cg9mSQ1tXSd/NEws7b+QYVsiJ+jfZmGMwofkwZWmu5DuXPuXAkdR/A8SlcZO4tmYMW
-         KvYu3k4duimNRF0MP4m2+8OOPgfCtgRg+6XBYUP8+FNZRoNoVwNr81Rred4JTfDonAiA
-         UT64yn/kfXEOOCjokOa7WC/9Y5UcNJERWgnJP8XUM01A8is+/TnsLXrNkOp1c/JRhkhK
-         2d/8J0kc3CaPH7M2p7i7tt+mgpWAlBciphFpJazeahfdsObs7pqkyUnHivOwb/jErRvx
-         EH3VZ0Vsd32m6AdFjdjPbfI1MauA0x22zQyduTZYstk0zteT90pvfqKXU8fEVnYFOdGS
-         QmLQ==
-X-Gm-Message-State: ACrzQf1B9Vcv5UN1+6vtljue2Jnjm1EnQ+PphWOj+Ie8szm7bYnTl+/p
-        X9EpGyhG9kMDbE9wWtVGfo0xRg==
-X-Google-Smtp-Source: AMsMyM4D5O9gG9NOK+MSIiq2FONa1R7rk2mB1cW3AfzmQcENV/AmukHCqN+JdEhhPePrcvFp62wJUg==
-X-Received: by 2002:a05:600c:3844:b0:3b4:becc:e43 with SMTP id s4-20020a05600c384400b003b4becc0e43mr13653476wmr.33.1665839082742;
-        Sat, 15 Oct 2022 06:04:42 -0700 (PDT)
-Received: from radium.lan ([88.160.162.107])
-        by smtp.gmail.com with ESMTPSA id r12-20020adff10c000000b00225239d9265sm4151282wro.74.2022.10.15.06.04.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Oct 2022 06:04:42 -0700 (PDT)
-From:   Fabien Parent <fabien.parent@linaro.org>
-To:     ilia.lin@kernel.org, agross@kernel.org, andersson@kernel.org,
-        rafael@kernel.org, viresh.kumar@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, Fabien Parent <fabien.parent@linaro.org>
-Subject: [PATCH v2 3/3] cpufreq: qcom: remove unused parameter in function definition
-Date:   Sat, 15 Oct 2022 15:04:24 +0200
-Message-Id: <20221015130424.1923706-3-fabien.parent@linaro.org>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <20221015130424.1923706-1-fabien.parent@linaro.org>
-References: <20221015130424.1923706-1-fabien.parent@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TBNDWb/PUcfIBjVY7nryISHx24x9THNIcQMhnCQu8a0=;
+        b=LQmroql9OshwDivNk+n6zTI/1IrQyuEXUF20T/263XhO1M7aGI/t5IayXGumDwI0YL
+         tMwTi7xekbryi2ghnmlyYTblUTvMuxV/kgJpJAT3Gkl+XAIfx4ParU2rmcvo6MQBvlCL
+         lWRcodcdpUNxpwYc7w7n3FKTphn9kQorGulHoGyWpyYsS2lZZ/C28Zb7p/9sqoqlB4W/
+         cvAyfVWRDoXz5Xfckwmw2A+89mSe8bZj3F0pJZz2wNaD5UiF3879kchYo7JKWr0miBvM
+         Ipub9JIF8WrWAYJlMTW45a/XB01yo6PZPZpJZRA5HuVrb01K5jwpEpw28bazD/qS5qJW
+         I2FA==
+X-Gm-Message-State: ACrzQf0hVxHRry1jve9UGzaSidX+JeIz0tJMhU4ofrdaU0+HCTqXeNKp
+        Y0k8+R4RPjVbpi5l+iimGvJIvw==
+X-Google-Smtp-Source: AMsMyM68XCtlhc18qhR76sv5R8jMSEOf9gyOaszHbt0cP995dakcvcmIUwSNr07yseUpSAV9CGhYtQ==
+X-Received: by 2002:ac8:4d4a:0:b0:39c:d99c:dbce with SMTP id x10-20020ac84d4a000000b0039cd99cdbcemr1774966qtv.511.1665839173409;
+        Sat, 15 Oct 2022 06:06:13 -0700 (PDT)
+Received: from ?IPV6:2601:42:0:3450:161:5720:79e9:9739? ([2601:42:0:3450:161:5720:79e9:9739])
+        by smtp.gmail.com with ESMTPSA id fe13-20020a05622a4d4d00b003994bbe91bdsm3897889qtb.60.2022.10.15.06.06.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 15 Oct 2022 06:06:12 -0700 (PDT)
+Message-ID: <c8f33e83-1329-e549-d739-24b33f8633ba@linaro.org>
+Date:   Sat, 15 Oct 2022 09:06:11 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH] dt-bindings: clock: Convert qcom,lcc to DT schema
+Content-Language: en-US
+To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221015090946.448820-1-luca@z3ntu.xyz>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221015090946.448820-1-luca@z3ntu.xyz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,54 +83,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The speedbin_nvmem parameter is not used for
-get_krait_bin_format_{a,b}. Let's remove the parameter to make the code
-cleaner.
+On 15/10/2022 05:09, Luca Weiss wrote:
+> Convert the text bindings for the lcc to yaml format. Doing this showed
+> that clocks and clock-names were not documented, so fix that now.
+> 
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+>  .../devicetree/bindings/clock/qcom,lcc.txt    | 22 -----
+>  .../devicetree/bindings/clock/qcom,lcc.yaml   | 88 +++++++++++++++++++
+>  2 files changed, 88 insertions(+), 22 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/clock/qcom,lcc.txt
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,lcc.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,lcc.txt b/Documentation/devicetree/bindings/clock/qcom,lcc.txt
+> deleted file mode 100644
+> index a3c78aa88038..000000000000
+> --- a/Documentation/devicetree/bindings/clock/qcom,lcc.txt
+> +++ /dev/null
+> @@ -1,22 +0,0 @@
+> -Qualcomm LPASS Clock & Reset Controller Binding
+> -------------------------------------------------
+> -
+> -Required properties :
+> -- compatible : shall contain only one of the following:
+> -
+> -			"qcom,lcc-msm8960"
+> -			"qcom,lcc-apq8064"
+> -			"qcom,lcc-ipq8064"
+> -			"qcom,lcc-mdm9615"
+> -
+> -- reg : shall contain base register location and length
+> -- #clock-cells : shall contain 1
+> -- #reset-cells : shall contain 1
+> -
+> -Example:
+> -	clock-controller@28000000 {
+> -		compatible = "qcom,lcc-ipq8064";
+> -		reg = <0x28000000 0x1000>;
+> -		#clock-cells = <1>;
+> -		#reset-cells = <1>;
+> -	};
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,lcc.yaml b/Documentation/devicetree/bindings/clock/qcom,lcc.yaml
+> new file mode 100644
+> index 000000000000..03c99435d342
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,lcc.yaml
+> @@ -0,0 +1,88 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,lcc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm LPASS Clock & Reset Controller Binding
 
-Signed-off-by: Fabien Parent <fabien.parent@linaro.org>
----
+Drop "Binding"
 
-V2: New patch
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,lcc-apq8064
+> +      - qcom,lcc-ipq8064
+> +      - qcom,lcc-mdm9615
+> +      - qcom,lcc-msm8960
+> +
+> +  clocks:
+> +    minItems: 8
 
- drivers/cpufreq/qcom-cpufreq-nvmem.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Drop minItems
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-index 82e0339d7722..a154f03666fd 100644
---- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-+++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-@@ -64,7 +64,7 @@ static struct platform_device *cpufreq_dt_pdev, *cpufreq_pdev;
- 
- static void get_krait_bin_format_a(struct device *cpu_dev,
- 					  int *speed, int *pvs, int *pvs_ver,
--					  struct nvmem_cell *pvs_nvmem, u8 *buf)
-+					  u8 *buf)
- {
- 	u32 pte_efuse;
- 
-@@ -95,7 +95,7 @@ static void get_krait_bin_format_a(struct device *cpu_dev,
- 
- static void get_krait_bin_format_b(struct device *cpu_dev,
- 					  int *speed, int *pvs, int *pvs_ver,
--					  struct nvmem_cell *pvs_nvmem, u8 *buf)
-+					  u8 *buf)
- {
- 	u32 pte_efuse, redundant_sel;
- 
-@@ -223,11 +223,11 @@ static int qcom_cpufreq_krait_name_version(struct device *cpu_dev,
- 	switch (len) {
- 	case 4:
- 		get_krait_bin_format_a(cpu_dev, &speed, &pvs, &pvs_ver,
--				       speedbin_nvmem, speedbin);
-+				       speedbin);
- 		break;
- 	case 8:
- 		get_krait_bin_format_b(cpu_dev, &speed, &pvs, &pvs_ver,
--				       speedbin_nvmem, speedbin);
-+				       speedbin);
- 		break;
- 	default:
- 		dev_err(cpu_dev, "Unable to read nvmem data. Defaulting to 0!\n");
--- 
-2.37.2
+> +    maxItems: 8
+> +
+> +  clock-names:
+> +    minItems: 8
+
+Drop minItems
+
+Best regards,
+Krzysztof
 
