@@ -2,76 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96C6A5FFA7A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Oct 2022 16:05:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CDAD5FFAA7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Oct 2022 17:02:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229794AbiJOOFp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Oct 2022 10:05:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51078 "EHLO
+        id S229699AbiJOPCU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Oct 2022 11:02:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229791AbiJOOFe (ORCPT
+        with ESMTP id S229683AbiJOPCS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Oct 2022 10:05:34 -0400
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57ED433349
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 07:05:28 -0700 (PDT)
-Received: by mail-qv1-xf2c.google.com with SMTP id h10so4960434qvq.7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 07:05:27 -0700 (PDT)
+        Sat, 15 Oct 2022 11:02:18 -0400
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB28052E49
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 08:02:16 -0700 (PDT)
+Received: by mail-qt1-x834.google.com with SMTP id z8so5412765qtv.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 08:02:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wRQiXvhJZIJmjGHaRfJj0NmdABZ2+jRov1EykwXk/aY=;
-        b=bgACONZ9H602AmqtfdwdaoOLeTQDeDloXCevf6CzGeghcBsSvzSV0FS1AuDHN8PlPu
-         yKMRvfc6SrG8hfjXCNzcGnv2OV6F89hskxh8qDSkILB4EodwCdoEmsCZkoqyk1Rb+aJD
-         e6LOLtjEClATYkyQmRoVHlFJJFJfCUNU5R71J9y6J4jZ7PLE0JT6b1bwdz8JYAnByg+r
-         /tmPZwn0dSSIMN/e8TqXbkThgvboCn+zs2qR8lijRFjLB/WhOJJloM2+jnAC8vIHJRM0
-         IPRqXQwYLUBGg2OGQKE8QIRoDhdBnT9ggzbbtAshIr4JWwHc2byUuqgmDRQA+hzZNOAK
-         4pIQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6Ur3jsO+Ea30Hw7rO/35aci3iOoKWMoNPKYsW0lUBM0=;
+        b=yeD64SW78+M0+NSoS4kDlBmjtklL7UKAUOpb+fFHtEyCBYg6evtBICocG8OuJqatui
+         9ZKGf1LBBD9aEXlI2HjCWnDtSh4GgRlZxmbCGB1T1hfhGKrvuWLoFioC2maXtgtFq1WC
+         bymHNHA82cdf0/X+ZM8Y6WrauOZI4kXxPZ4BWIPX+fzQdkFe9CwM0lJy/Vn/EU3/xk5y
+         ACuG9cGReaIUsgDfvXg2l6ZuR4xQSCMz+eSsAa1K80qQr8n6ONyGm2FbAFkyLDQjerTN
+         htpXUO2d24SaQ41HzfalrtIdGli4xloRT/MxjCjw77psFAwmw1M+pS+iGGs6fl58e18Z
+         Qo+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wRQiXvhJZIJmjGHaRfJj0NmdABZ2+jRov1EykwXk/aY=;
-        b=WE6OkhjEJnIVv7sHdRX8M64sRs+MegqXswXJ2dgZtXwIdc5DhyeemxSiGsNDbNgbZt
-         m2JOd+qJ5ThV3jQ7SQn6hS+r1kSgRXiKa4SrG9uA9vLIPHw7xgfGWRbFGGQTENMVEWKs
-         S3p2XPDo2lMa3T+XFF40AzSnlWxYs4lq1mkE/NE7l7P2YbH5O7y5u4Ty+J8hlP4lz1CI
-         SozsqjpkJ73S51bllJiyKmnNZlcjeJAHI6HR3a4lCkun+LINuv7Qny9+ABWoUzJSk29G
-         Ss8WeX4f01SQEfqdA3kb7/et6MkmTDz9YX/aPjwc9usVYAIj4sCFVAbVT3PUnbF3XtNX
-         gc3A==
-X-Gm-Message-State: ACrzQf1R/FFJjDGo5/cAuQ5fARk6y9Fg32u3UdeUAUj4alTfbjQbM7J+
-        6YxRJLMtfR8LxKPbh7R1gKV8iw==
-X-Google-Smtp-Source: AMsMyM4FiRDfw8auZQ76tRz9ZxY3JsftlXOzfAhvZV/TOc8ID7uPCiF7OqGEMnqDTzKPi6ZA6GpJbA==
-X-Received: by 2002:a05:6214:21cc:b0:4b3:ee7d:e9ab with SMTP id d12-20020a05621421cc00b004b3ee7de9abmr1852222qvh.60.1665842726776;
-        Sat, 15 Oct 2022 07:05:26 -0700 (PDT)
-Received: from krzk-bin.hsd1.pa.comcast.net ([2601:42:0:3450:161:5720:79e9:9739])
-        by smtp.gmail.com with ESMTPSA id s21-20020a05620a29d500b006bb78d095c5sm4958022qkp.79.2022.10.15.07.05.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Oct 2022 07:05:26 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6Ur3jsO+Ea30Hw7rO/35aci3iOoKWMoNPKYsW0lUBM0=;
+        b=IUvpGDMaVXDclLoE1Zl2BrqBTiIxHIjy3yS/OjT3bNsoQa3LKgYrDEAWL5h+KizuXe
+         cBch32jyIwDOl7BsjAaDMcCF4WHS19iBZb6fim1dIDfuO83GE047skaFWqM+HT3mdHic
+         yOQLbn9TGQzccBZsFCxqw2kEYQ/PjKUg4PxVV/Hle83qMJV2Gsl6MoYgPhvjs1n6QLWa
+         BimU5VtYPLPepj/oPMPcwnZ0T0tXOLvTe9I+5vV6gefSHg8KP6ZLUcPARmXfLCJy0irG
+         AAK4AZg3cIXdFZky40msYv6ZErsEeU627umIBCrncLLzBsihUVhQjnJngQD3FuCUN+ig
+         AtjQ==
+X-Gm-Message-State: ACrzQf1nXcJQSoCJtkpoYCrdtepUdvhx0atTcCnQKuloVvtVLpLJH3+r
+        Z+jRBWatQeSHQHEd+FKevIfbHA==
+X-Google-Smtp-Source: AMsMyM6hPLoLcMAjPo2jkgKKjksiug8abEIOWvkuO4YgmYwanp5zrth37zq7NoHU7zsaaNPyNnSgXA==
+X-Received: by 2002:ac8:57c2:0:b0:39c:dbec:9488 with SMTP id w2-20020ac857c2000000b0039cdbec9488mr2258374qta.580.1665846136024;
+        Sat, 15 Oct 2022 08:02:16 -0700 (PDT)
+Received: from ?IPV6:2601:42:0:3450:9477:c2f0:ddea:ea08? ([2601:42:0:3450:9477:c2f0:ddea:ea08])
+        by smtp.gmail.com with ESMTPSA id y11-20020ac8524b000000b0039bde72b14asm3955078qtn.92.2022.10.15.08.02.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 15 Oct 2022 08:02:15 -0700 (PDT)
+Message-ID: <432a24ba-5472-20c8-397f-387e5a1ad9d2@linaro.org>
+Date:   Sat, 15 Oct 2022 11:02:13 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH v2 1/6] dt-bindings: clock: Add QDU1000 and QRU1000 GCC
+ clock bindings
+Content-Language: en-US
+To:     Melody Olvera <quic_molvera@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Richard Acayan <mailingradian@gmail.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5/5] arm64: dts: qcom: sm8450: Add GPI DMA compatible fallback
-Date:   Sat, 15 Oct 2022 10:04:47 -0400
-Message-Id: <20221015140447.55221-6-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221015140447.55221-1-krzysztof.kozlowski@linaro.org>
-References: <20221015140447.55221-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+References: <20221014221011.7360-1-quic_molvera@quicinc.com>
+ <20221014221011.7360-2-quic_molvera@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221014221011.7360-2-quic_molvera@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,45 +85,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use SM6350 as fallback for GPI DMA, to indicate devices are compatible
-and that drivers can bind with only one compatible.
+On 14/10/2022 18:10, Melody Olvera wrote:
+> Add device tree bindings for global clock controller on QDU1000 and
+> QRU1000 SoCs.
+> 
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> ---
+>  .../bindings/clock/qcom,gcc-qdu1000.yaml      |  70 ++++++++
+>  include/dt-bindings/clock/qcom,gcc-qdu1000.h  | 170 ++++++++++++++++++
+>  2 files changed, 240 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-qdu1000.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,gcc-qdu1000.h
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-qdu1000.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-qdu1000.yaml
+> new file mode 100644
+> index 000000000000..b0746669e2ad
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-qdu1000.yaml
+> @@ -0,0 +1,70 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,gcc-qdu1000.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Global Clock & Reset Controller for QDU1000 and QRU1000
+> +
+> +maintainers:
+> +  - Melody Olvera <quic_molvera@quicinc.com>
+> +
+> +description: |
+> +  Qualcomm global clock control module which supports the clocks, resets and
+> +  power domains on QDU1000 and QRU1000
+> +
+> +  See also:
+> +  - include/dt-bindings/clock/qcom,gcc-qdu1000.h
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,gcc-qdu1000
+> +      - qcom,gcc-qru1000
+> +
+> +  clocks:
+> +    items:
+> +      - description: Board XO source
+> +      - description: Sleep clock source
+> +      - description: PCIE 0 Pipe clock source
+> +      - description: PCIE 0 Phy Auxiliary clock source
+> +      - description: USB3 Phy wrapper pipe clock source
+> +    minItems: 2
+> +
+> +  clock-names:
+> +    items:
+> +      - const: bi_tcxo
+> +      - const: sleep_clk
+> +      - const: pcie_0_pipe_clk
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+This does not match your clocks, please test your bindings. I thought
+you understood my comment when you confirmed misunderstanding...
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index d32f08df743d..e01a019d8b23 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -730,7 +730,7 @@ gcc: clock-controller@100000 {
- 		};
- 
- 		gpi_dma2: dma-controller@800000 {
--			compatible = "qcom,sm8450-gpi-dma";
-+			compatible = "qcom,sm8450-gpi-dma", "qcom,sm6350-gpi-dma";
- 			#dma-cells = <3>;
- 			reg = <0 0x800000 0 0x60000>;
- 			interrupts = <GIC_SPI 588 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1058,7 +1058,7 @@ spi21: spi@898000 {
- 		};
- 
- 		gpi_dma0: dma-controller@900000 {
--			compatible = "qcom,sm8450-gpi-dma";
-+			compatible = "qcom,sm8450-gpi-dma", "qcom,sm6350-gpi-dma";
- 			#dma-cells = <3>;
- 			reg = <0 0x900000 0 0x60000>;
- 			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1394,7 +1394,7 @@ uart7: serial@99c000 {
- 		};
- 
- 		gpi_dma1: dma-controller@a00000 {
--			compatible = "qcom,sm8450-gpi-dma";
-+			compatible = "qcom,sm8450-gpi-dma", "qcom,sm6350-gpi-dma";
- 			#dma-cells = <3>;
- 			reg = <0 0xa00000 0 0x60000>;
- 			interrupts = <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>,
--- 
-2.34.1
+
+Best regards,
+Krzysztof
 
