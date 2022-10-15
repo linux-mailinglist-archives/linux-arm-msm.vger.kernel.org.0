@@ -2,109 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41C7E5FFADF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Oct 2022 17:15:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 673A65FFB79
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Oct 2022 19:30:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229763AbiJOPPi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Oct 2022 11:15:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52698 "EHLO
+        id S229616AbiJORac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Oct 2022 13:30:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229712AbiJOPPh (ORCPT
+        with ESMTP id S229579AbiJORab (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Oct 2022 11:15:37 -0400
-Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14CD22DA99
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 08:15:36 -0700 (PDT)
-Received: by mail-qv1-xf32.google.com with SMTP id o67so5016285qvo.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 08:15:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/oMrOTbUd3cbdsiML3nv2+rJ1KxLtOIUzPm5C1zEHGY=;
-        b=SX7g5cHeayW/KtT6diblULbooFsbwiTJedYfjCwfM4UCnWTZUKxVfMqG8RX5n+iIx1
-         a37yUV6S/lB41sqI9ecs8E1Lb185XWLP/mL2Gys4KmCUL7YqPLH8o2/WyQvK9amwdywd
-         mrlDakEqUIGp7frhPnOCUVDtM3ybjP2kdfCOgVPVT7MrdXiV8ZQ+DMoN5kCgmVArIDdG
-         nvc/ji598P8qVEL9X9VLLUypmmgK6QIS9dQv1KzJ/Cc8pvla5XB0IiVLHg+cN92IoVTo
-         ZHzUCHI3wpTrEi5eXsyXy56tqHdnOqMxCJBbR4CrneMfLiWuYb3xi3LbLbRHjKE+WIec
-         /BVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/oMrOTbUd3cbdsiML3nv2+rJ1KxLtOIUzPm5C1zEHGY=;
-        b=gx373oXjGIjmA9tHBBJLh2kDIaWKE6EOTNmODEcKc64zXXwJIdrvHAAGFtXNRP/2qx
-         wnfJnSGaqGqxDxVWj4M8xlBUKt4kf3kPPgbe+y5GbZg8Bag599rPNmNW81gRETSwMEX8
-         GkjBECxo4FNfiS/YgYohkmyZYLS0eghQ+OnKiX7gVSOWrT/Q8TN6+xVFJhcTflkNFiLN
-         tWt2E43qPRo9Cj8L/1gIwxZ7UdDjC74SibcOzN3bXKQHD8EuhQXiXqjKbdOCWKn2fm9q
-         vtJ3EJwKxZm8Bg9ouc2CdSRZ2gRIUJL8U6mydcHcilWi3du1F4TLnznbUXHFwCYwsucs
-         /jOw==
-X-Gm-Message-State: ACrzQf1wo1rzZeqjoIUvo3Lo+3SZ6xNyF3qjz0OwnLqMB6+gzLzH1uwc
-        9ahl7YqMUm+9PDsAt+EwkpyKAvp+GxiTXA==
-X-Google-Smtp-Source: AMsMyM5w93pwRpeupaaVj0b7ISuHi4qyZKLxOuU2c5bjnJYaWopZTwqcM3xGgr3SEIgSzVcrBFG5zg==
-X-Received: by 2002:a05:6214:21a9:b0:4b3:99ff:8794 with SMTP id t9-20020a05621421a900b004b399ff8794mr2116002qvc.68.1665846935149;
-        Sat, 15 Oct 2022 08:15:35 -0700 (PDT)
-Received: from ?IPV6:2601:42:0:3450:9477:c2f0:ddea:ea08? ([2601:42:0:3450:9477:c2f0:ddea:ea08])
-        by smtp.gmail.com with ESMTPSA id p14-20020ac8740e000000b003992448029esm4095819qtq.19.2022.10.15.08.15.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 15 Oct 2022 08:15:34 -0700 (PDT)
-Message-ID: <16c192b3-b05f-8f24-30f7-82aeced6badd@linaro.org>
-Date:   Sat, 15 Oct 2022 11:15:32 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH v2 2/6] dt-bindings: clock: Add RPMHCC bindings for
- QDU1000 and QRU1000
-Content-Language: en-US
-To:     Melody Olvera <quic_molvera@quicinc.com>,
+        Sat, 15 Oct 2022 13:30:31 -0400
+Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62EDD25599;
+        Sat, 15 Oct 2022 10:30:28 -0700 (PDT)
+Date:   Sat, 15 Oct 2022 17:30:13 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1665855025; x=1666114225;
+        bh=DkDUqYsIo4WD6IeoCvcUlhuchiJ68MTUFWYeBqoljY4=;
+        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+         Subject:Reply-To:Feedback-ID:Message-ID;
+        b=Sw/PwmuQCDhWwZXq8NvwyUot9fBwp5Y6usJuOMs9v147/fLo+mUb1xDf1TCPusCv2
+         ruD9+xzlnNAgyXJOE+ubRWXf5jB6ujp1ZkvC7p/y0u458hgs19v/L3q4am7/A9aZPR
+         JCbfowjoJSzw8uOZwJUuEIFZ26EWbUpffIgs1U3I=
+To:     caleb@connolly.tech
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     krzysztof.kozlowski@linaro.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        devicetree@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Jeff LaBundy <jeff@labundy.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221014221011.7360-1-quic_molvera@quicinc.com>
- <20221014221011.7360-3-quic_molvera@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221014221011.7360-3-quic_molvera@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
+        linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Rob Herring <robh+dt@kernel.org>, Tom Rix <trix@redhat.com>
+Subject: [PATCH v7 0/2] input: introduce support for Qualcomm SPMI haptics
+Message-ID: <20221015172915.1436236-1-caleb@connolly.tech>
+Feedback-ID: 10753939:user:proton
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,
+        SPF_PASS,TO_EQ_FM_DIRECT_MX autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/10/2022 18:10, Melody Olvera wrote:
-> Add compatible strings for RPMHCC for QDU1000 and QRU1000.
-> 
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
-> index 437a34b930e3..7cacbfe745a5 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
-> @@ -17,6 +17,8 @@ description: |
->  properties:
->    compatible:
->      enum:
-> +      - qcom,qdu1000-rpmh-clk
-> +      - qcom,qru1000-rpmh-clk
+This series introduces a driver for the SPMI haptics hardware block
+found in Qualcomm PMICs. SPMI haptics support LRA (Linear Resonant
+Actuator) style haptics, as well as ERM (Eccentric Rotating Mass).
+It also supports several modes of driving the haptics, e.g. by loading
+the pattern to play into an internal buffer, or using PWM.
 
-Nope, you sent something entirely else.
+More information about the hardware can be found here:
+        https://gitlab.com/sdm845-mainline/linux/-/wikis/PMI8998-QPNP-Hapti=
+cs
 
-Best regards,
-Krzysztof
+This driver has been written based on downstream sources as no public
+documentation is available. It includes initial support for LRA haptics
+in buffer mode, this combination seems to be the most common and will
+enable haptics on the OnePlus 6 and 6T, PocoPhone F1, OnePlus 5 and
+several other Qualcomm devices with mainline kernel support.
+
+The driver is implemented using the ff-memless (forcefeedback) input
+framework and makes an attempt to control the strength of vibration relativ=
+e
+to the magnitude set from userspace.
+
+Changes since v6:
+ - Apply Krzysztof's dt-bindings suggestions
+ - Rename qcom,wave-play-rate-us to qcom,wave-play-duration-us and
+   add a comment explaining the name change compared to downstream.
+ - Add COMPILE_TEST to kconfig
+
+Changes since v5:
+ - Fix dt schema errors
+ - Fix typo (thanks Vincent)
+
+Changes since v4:
+ - Significant rewrite and cleanup
+ - switch to dev_err_probe()
+ - Run through clang-format
+
+Changes since v3:
+ - Adjust example DTS to avoid creating new warnings in dt_binding_check
+ - Address warnings from kernel test robot.
+
+Changes since v2:
+ - Addressed Rob's comments on dt-bindings (I'm not sure what to do
+   about the pmic compatible?)
+ - Fixed some typos
+
+Changes since v1:
+ - Replace old QPNP naming with SPMI
+ - Address Bjorn's comments on the driver, various style and code cleanups
+ - Address Bjorn's comments on the DT bindings and DTS
+ - Pickup patches from Joel and Jami to enable haptics on the OnePlus 5
+   and Poco F1.
+
+Caleb Connolly (2):
+  dt-bindings: input: document Qualcomm PMI8998 haptics driver
+  input: add Qualcomm SPMI haptics driver
+
+ .../bindings/input/qcom,pmi8998-haptics.yaml  |  73 ++
+ drivers/input/misc/Kconfig                    |  15 +
+ drivers/input/misc/Makefile                   |   1 +
+ drivers/input/misc/qcom-pmi8998-haptics.c     | 690 ++++++++++++++++++
+ 4 files changed, 779 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/input/qcom,pmi8998-ha=
+ptics.yaml
+ create mode 100644 drivers/input/misc/qcom-pmi8998-haptics.c
+
+--
+2.38.0
+
 
