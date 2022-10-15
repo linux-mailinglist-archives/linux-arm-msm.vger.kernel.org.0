@@ -2,77 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02DBA5FFA41
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Oct 2022 15:29:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4885C5FFA47
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Oct 2022 15:34:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229618AbiJON3x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Oct 2022 09:29:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43852 "EHLO
+        id S229583AbiJONeo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Oct 2022 09:34:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229512AbiJON3w (ORCPT
+        with ESMTP id S229572AbiJONen (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Oct 2022 09:29:52 -0400
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9C6026AF5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 06:29:48 -0700 (PDT)
-Received: by mail-qk1-x72c.google.com with SMTP id a5so4173251qkl.6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 06:29:48 -0700 (PDT)
+        Sat, 15 Oct 2022 09:34:43 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06D9A1A207
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 06:34:39 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id g9so4905957qvo.12
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 06:34:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=MkW2CXLArWU6UYz1PeNN9+TpW/vu7L7d5airtAAW634=;
-        b=WKSQiT0T8o9i+EGL2uC2lPocGSjZwOkzFvVSsTLRNMfnRFQ7c5y9ngmtxIxD3M+jyM
-         /RpxerKVSjbMTOwyJBKtKF2VEXF6EJZlaByzaw2AyMoGKlXL1CYrdKPRCFWzUV9x48LK
-         JlAB5vLxrMlh4Qgdgrb7zOXVbfrFKKqY05Ykkm5kiKsMAAuqqG/0Z+0ve6BxubCbXI6G
-         gcK5KEXrncwr3QbeVDxvS9eYYjeh1Q6AStLdpLFa6NZl46o8++DFqHTqhGFTVjetCrp3
-         wwerLIfyOlh+2JCC8nsH03pN6ujk7i/2XYMnoTKYFgXhgCGEVAKapz7lPFlScJ2+1+/h
-         tt/w==
+        bh=5jbC/dTgT9zwc4R7yvMOOqEeEKsSGXBD2PJzao5ApGA=;
+        b=tyaPqt5f0ie3qyNAMa9G0VHvX8adDYBbLR250C1W1+aiR03eMIPP8M5POeMPLgbmNa
+         AvnSDW+tqCFxhw4zQGEbEkb3xs23d8Irxomrgm9h7v4IbxTsoOBtzhUL+40BT1SQAVL8
+         fwa4NLHsv/Q+HPAqyWmmGF4hWYuEcNHqT0NyyFfRv1L77xiU2AhYrMMY7my5YLU9XWll
+         MRaIw25u7bIiDQTH3Fxx9cLMbVFn5MF3LyG6l3QGNyHUvb4gxjO9u+i24sgDPd43LXjY
+         IJnZBU/tJ368wk6AXZwKHewZiwx/i1r37XtZSJLHgf7abx5V9oG1Vktt4Kbd9vKQs6Gf
+         CTeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MkW2CXLArWU6UYz1PeNN9+TpW/vu7L7d5airtAAW634=;
-        b=KDkPAWiKCBt62DqrEHQNBC91WmGQhfJPLct75NTNsvQ1doXJqolK9l69IcMlk9r1ok
-         sDNWgQdui4HwsKAE75E95cxIMHOs8AA7mHD2dAsOlsu0VZKzKE+L+k1rCwSic2u5eW1T
-         tJFliGCXfX3nHbWuTt2g6Jym5KTBKn0eTmCu9gR5v2tJ3aID+nnfQOeoWFDWgm5lWnZF
-         FaoFMuLgh8WbvRvSGSlRLMrtMmNlsi7VtfHkqy5FxL4COOsVa1wX7MWyyzp683f5dVmm
-         ofP82zYn7TWQcqpyT9dkk6YHw9EFp01G3IkGe2rVugIOUzJuw1K0fwSotJvTw/mW4o4y
-         drnQ==
-X-Gm-Message-State: ACrzQf1RkYmNMqHSCWYGkIx6gOYvpfpwoL9VvpFs/3TzHqgeCJC0HMBj
-        qjXP6PnOHl3im9vvVMfLS0zUyA==
-X-Google-Smtp-Source: AMsMyM6nyVyEkwe09IbCrfSIE97qDXKrDnpKLAxbEyF3FVbBpJZZIMaM86MfHDBgVBzu44zNvqg2wQ==
-X-Received: by 2002:ae9:e848:0:b0:6ee:92d5:94e4 with SMTP id a69-20020ae9e848000000b006ee92d594e4mr1708017qkg.404.1665840587903;
-        Sat, 15 Oct 2022 06:29:47 -0700 (PDT)
+        bh=5jbC/dTgT9zwc4R7yvMOOqEeEKsSGXBD2PJzao5ApGA=;
+        b=qFWymTX6I/zOUtvRjDNub5nq0yZ4XW/K7imKBgei6ukU500eDFG6oK1jhSKls0KGL9
+         JXUy0T7vk0Vg9uwczGPudZkTRbb2sM6ILpDHvMPMSePKo1SpEuHOKQzYztYFEqBlWqKf
+         pc/M3yIS2zQP4NcBD98zrek9dTZR1xUCFhRmXpuaK/abpoxC26EaNG5I+SHE8xYdMtUN
+         69iKdPYJMyXlhredfzQMmlCSFQSoZ1JUGrui1aDCtcx6zXf7FT+69lG1meRxExAKvLCG
+         lMkNRkXoEhZYFhVc/868KJRnFJrsUAWqydFvIaYbBb2TvO9zORlP0dfiACfwQ4qBMcm7
+         HNhA==
+X-Gm-Message-State: ACrzQf2Wb1nkpnOpoclsFOL/V5KYqvJkvKfVk3a6FtcS/G+Dqo2w5sBg
+        PNbZpPooLWl4YW8BrlzNkIgkAA==
+X-Google-Smtp-Source: AMsMyM7eSzYYXuFh8rXP+SNAVdND4Jdbr0FGlfuGsLZ/CRHHbmrKIVAFYohc2QGFSP3eHvxfWSO/ZA==
+X-Received: by 2002:a0c:8086:0:b0:4b1:cfa1:3c35 with SMTP id 6-20020a0c8086000000b004b1cfa13c35mr1950948qvb.47.1665840879112;
+        Sat, 15 Oct 2022 06:34:39 -0700 (PDT)
 Received: from ?IPV6:2601:42:0:3450:161:5720:79e9:9739? ([2601:42:0:3450:161:5720:79e9:9739])
-        by smtp.gmail.com with ESMTPSA id fc26-20020a05622a489a00b003434d3b5938sm4119358qtb.2.2022.10.15.06.29.46
+        by smtp.gmail.com with ESMTPSA id d11-20020ac8544b000000b0039a3df76a26sm3920750qtq.18.2022.10.15.06.34.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 15 Oct 2022 06:29:46 -0700 (PDT)
-Message-ID: <e94d9029-e0aa-574f-62d2-632e2c5d70d2@linaro.org>
-Date:   Sat, 15 Oct 2022 09:29:45 -0400
+        Sat, 15 Oct 2022 06:34:38 -0700 (PDT)
+Message-ID: <55d026c0-9c54-f5d6-bf5e-da71856f0698@linaro.org>
+Date:   Sat, 15 Oct 2022 09:34:37 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.2
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: Add base QDU1000/QRU1000 IDP DTs
+Subject: Re: [PATCH v2 1/4] dt-bindings: firmware: scm: Add QDU1000/QRU1000
+ compatibles
 Content-Language: en-US
 To:     Melody Olvera <quic_molvera@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+Cc:     Robert Marko <robimarko@gmail.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20221014221138.7552-1-quic_molvera@quicinc.com>
- <20221014221138.7552-4-quic_molvera@quicinc.com>
+References: <20221014221121.7497-1-quic_molvera@quicinc.com>
+ <20221014221121.7497-2-quic_molvera@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221014221138.7552-4-quic_molvera@quicinc.com>
+In-Reply-To: <20221014221121.7497-2-quic_molvera@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -80,325 +84,30 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 14/10/2022 18:11, Melody Olvera wrote:
-> Add DTs for Qualcomm IDP platforms using the QDU1000 and QRU1000
-> SoCs.
+> Add compatibles for scm driver for QDU1000 and QRU1000 platforms.
 > 
 > Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile        |   2 +
->  arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 230 +++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/qru1000-idp.dts | 230 +++++++++++++++++++++++
->  3 files changed, 462 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/qru1000-idp.dts
+>  .../devicetree/bindings/firmware/qcom,scm.yaml   | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index d7669a7cee9f..8417295adfeb 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -51,7 +51,9 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-maple.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-poplar.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= qru1000-idp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-> new file mode 100644
-> index 000000000000..47a8eaf4fda2
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-> @@ -0,0 +1,230 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include "qdu1000.dtsi"
-> +#include "pm8150.dtsi"
-> +
-> +/ {
-> +	model = "Qualcomm Technologies, Inc. QDU1000 IDP";
-> +	compatible = "qcom,qdu1000-idp", "qcom,qdu1000";
-> +
-> +	aliases {
-> +		serial0 = &uart7;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +
-> +	ppvar_sys: ppvar-sys-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "ppvar_sys";
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +
-> +	vph_pwr: vph-pwr-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-min-microvolt = <3700000>;
-> +		regulator-max-microvolt = <3700000>;
-> +
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +
-> +		vin-supply = <&ppvar_sys>;
-> +	};
-> +};
-> +
-> +&apps_rsc {
-> +	pm8150-regulators {
+> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> index c5b76c9f7ad0..47083f47f109 100644
+> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> @@ -38,6 +38,8 @@ properties:
+>            - qcom,scm-msm8994
+>            - qcom,scm-msm8996
+>            - qcom,scm-msm8998
+> +          - qcom,scm-qdu1000
+> +          - qcom,scm-qru1000
 
-regulators
+Why exactly we are no using qdu1000 as fallback? That was the
+recommendation in previous discussion.
 
-> +		compatible = "qcom,pm8150-rpmh-regulators";
-> +		qcom,pmic-id = "a";
-> +
-> +		vdd-s1-supply = <&vph_pwr>;
-> +		vdd-s2-supply = <&vph_pwr>;
-> +		vdd-s3-supply = <&vph_pwr>;
-> +		vdd-s4-supply = <&vph_pwr>;
-> +		vdd-s5-supply = <&vph_pwr>;
-> +		vdd-s6-supply = <&vph_pwr>;
-> +		vdd-s7-supply = <&vph_pwr>;
-> +		vdd-s8-supply = <&vph_pwr>;
-> +		vdd-s9-supply = <&vph_pwr>;
-> +		vdd-s10-supply = <&vph_pwr>;
-> +
-> +		vdd-l1-l8-l11-supply = <&vreg_s6a_0p9>;
-> +		vdd-l2-l10-supply = <&vph_pwr>;
-> +		vdd-l3-l4-l5-l18-supply = <&vreg_s5a_2p0>;
-> +		vdd-l6-l9-supply = <&vreg_s6a_0p9>;
-> +		vdd-l7-l12-l14-l15-supply = <&vreg_s4a_1p8>;
-> +		vdd-l13-l16-l17-supply = <&vph_pwr>;
-> +
-> +		vreg_s2a_0p5: smps2 {
-> +			regulator-name = "vreg_s2a_0p5";
-> +			regulator-min-microvolt = <320000>;
-> +			regulator-max-microvolt = <570000>;
-> +		};
-> +
-> +		vreg_s3a_1p05: smps3 {
-> +			regulator-name = "vreg_s3a_1p05";
-> +			regulator-min-microvolt = <950000>;
-> +			regulator-max-microvolt = <1170000>;
-> +		};
-> +
-> +		vreg_s4a_1p8: smps4 {
-> +			regulator-name = "vreg_s4a_1p8";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +		};
-> +
-> +		vreg_s5a_2p0: smps5 {
-> +			regulator-name = "vreg_s5a_2p0";
-> +			regulator-min-microvolt = <1904000>;
-> +			regulator-max-microvolt = <2000000>;
-> +		};
-> +
-> +		vreg_s6a_0p9: smps6 {
-> +			regulator-name = "vreg_s6a_0p9";
-> +			regulator-min-microvolt = <920000>;
-> +			regulator-max-microvolt = <1128000>;
-> +		};
-> +
-> +		vreg_s7a_1p2: smps7 {
-> +			regulator-name = "vreg_s7a_1p2";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +		};
-> +
-> +		vreg_s8a_1p3: smps8 {
-> +			regulator-name = "vreg_s8a_1p3";
-> +			regulator-min-microvolt = <1352000>;
-> +			regulator-max-microvolt = <1352000>;
-> +		};
-> +
-> +		vreg_l1a_0p91: ldo1 {
-> +			regulator-name = "vreg_l1a_0p91";
-> +			regulator-min-microvolt = <312000>;
-> +			regulator-max-microvolt = <1304000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> +		};
-> +
-> +		vreg_l2a_2p3: ldo2 {
-> +			regulator-name = "vreg_l2a_2p3";
-> +			regulator-min-microvolt = <2970000>;
-> +			regulator-max-microvolt = <3300000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> +		};
-> +
-> +		vreg_l3a_1p2: ldo3 {
-> +			regulator-name = "vreg_l3a_1p2";
-> +			regulator-min-microvolt = <920000>;
-> +			regulator-max-microvolt = <1260000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> +		};
-> +
-> +		vreg_l5a_0p8: ldo5 {
-> +			regulator-name = "vreg_l5a_0p8";
-> +			regulator-min-microvolt = <312000>;
-> +			regulator-max-microvolt = <1304000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> +		};
-> +
-> +		vreg_l6a_0p91: ldo6 {
-> +			regulator-name = "vreg_l6a_0p91";
-> +			regulator-min-microvolt = <880000>;
-> +			regulator-max-microvolt = <950000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> +		};
-> +
-> +		vreg_l7a_1p8: ldo7 {
-> +			regulator-name = "vreg_l7a_1p8";
-> +			regulator-min-microvolt = <1650000>;
-> +			regulator-max-microvolt = <2000000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> +
-> +		};
-> +
-> +		vreg_l8a_0p91: ldo8 {
-> +			regulator-name = "vreg_l8a_0p91";
-> +			regulator-min-microvolt = <888000>;
-> +			regulator-max-microvolt = <925000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> +		};
-> +
-> +		vreg_l9a_0p91: ldo9 {
-> +			regulator-name = "vreg_l8a_0p91";
-> +			regulator-min-microvolt = <312000>;
-> +			regulator-max-microvolt = <1304000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> +		};
-> +
-> +		vreg_l10a_2p95: ldo10 {
-> +			regulator-name = "vreg_l10a_2p95";
-> +			regulator-min-microvolt = <2700000>;
-> +			regulator-max-microvolt = <3544000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> +		};
-> +
-> +		vreg_l11a_0p91: ldo11 {
-> +			regulator-name = "vreg_l11a_0p91";
-> +			regulator-min-microvolt = <800000>;
-> +			regulator-max-microvolt = <1000000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> +		};
-> +
-> +		vreg_l12a_1p8: ldo12 {
-> +			regulator-name = "vreg_l12a_1p8";
-> +			regulator-min-microvolt = <1504000>;
-> +			regulator-max-microvolt = <1504000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> +		};
-> +
-> +		vreg_l14a_1p8: ldo14 {
-> +			regulator-name = "vreg_l14a_1p8";
-> +			regulator-min-microvolt = <1650000>;
-> +			regulator-max-microvolt = <1950000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> +		};
-> +
-> +		vreg_l15a_1p8: ldo15 {
-> +			regulator-name = "vreg_l15a_1p8";
-> +			regulator-min-microvolt = <1504000>;
-> +			regulator-max-microvolt = <2000000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> +		};
-> +
-> +		vreg_l16a_1p8: ldo16 {
-> +			regulator-name = "vreg_l16a_1p8";
-> +			regulator-min-microvolt = <1710000>;
-> +			regulator-max-microvolt = <1890000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> +		};
-> +
-> +		vreg_l17a_3p3: ldo17 {
-> +			regulator-name = "vreg_l17a_3p3";
-> +			regulator-min-microvolt = <3000000>;
-> +			regulator-max-microvolt = <3544000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> +		};
-> +
-> +		vreg_l18a_1p2: ldo18 {
-> +			regulator-name = "vreg_l18a_1p2";
-> +			regulator-min-microvolt = <312000>;
-> +			regulator-max-microvolt = <1304000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-> +		};
-> +	};
-> +};
-> +
-> +&qupv3_id_0 {
-> +	status = "okay";
-> +};
-> +
-> +&uart7 {
-> +	status = "okay";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/qru1000-idp.dts b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-> new file mode 100644
-> index 000000000000..54770c697db8
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-> @@ -0,0 +1,230 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include "qru1000.dtsi"
-> +#include "pm8150.dtsi"
-> +
-> +/ {
-> +	model = "Qualcomm Technologies, Inc. QRU1000 IDP";
-> +	compatible = "qcom,qru1000-idp", "qcom,qru1000";
-> +
-> +	aliases {
-> +		serial0 = &uart7;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +
-> +	ppvar_sys: ppvar-sys-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "ppvar_sys";
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +
-> +	vph_pwr: vph-pwr-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-min-microvolt = <3700000>;
-> +		regulator-max-microvolt = <3700000>;
-> +
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +
-> +		vin-supply = <&ppvar_sys>;
-> +	};
-> +};
-> +
-> +&apps_rsc {
-> +	pm8150-regulators {
-
-regulators
-
+Patch is still incomplete - you still do no have proper changes in allOf
+for the clocks. If you want to say that this SoC does not take any
+clocks as input, then they should not be allowed.
 
 Best regards,
 Krzysztof
