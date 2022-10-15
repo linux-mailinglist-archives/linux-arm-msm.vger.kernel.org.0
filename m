@@ -2,81 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 721FB5FFA11
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Oct 2022 14:57:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8C5F5FFA16
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Oct 2022 15:00:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229764AbiJOM55 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Oct 2022 08:57:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35042 "EHLO
+        id S229749AbiJONAZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Oct 2022 09:00:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229754AbiJOM5y (ORCPT
+        with ESMTP id S229722AbiJONAY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Oct 2022 08:57:54 -0400
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D16A3F30A
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 05:57:52 -0700 (PDT)
-Received: by mail-pg1-x529.google.com with SMTP id 78so6595667pgb.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 05:57:52 -0700 (PDT)
+        Sat, 15 Oct 2022 09:00:24 -0400
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADA582D74D
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 06:00:21 -0700 (PDT)
+Received: by mail-qt1-x834.google.com with SMTP id r19so5292144qtx.6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Oct 2022 06:00:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:in-reply-to:references:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=N3/h+H1MFE4DJWa6SQPVF/UUmeIpSTtWx78clITVlSs=;
-        b=LtnUc+dWYQSsI3Opi8iItvicki34Z21Q42I8uaYXxalxvQTbvbvRifUW86C5yfYb77
-         XhMOq/h0lDymBxkD+ShabJ6m1QnfpuY6kUKD9fUbkzhnh9pctPBGKT5qZ0WOP2qzZVX1
-         IRa1BsxDbiUnj1Gb2X6XDxilytI4n287R5vddCS0CahqEG5ulrPNCJbrypVg3w3p8/US
-         Qekkw/j8ZEuS6tb5fDcRC2NtXEEOjt771gVG7dBk5jEc86mditNxrEGB1dHRe+4PrBb4
-         rK3iV+yzlfziIEn6dmmJn1vGXIFGskxyAHK303cRFvpnYKE3SJXbETWoNxXdNvayMpa3
-         yukA==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YzVFvoqPA8otoKfTTkSzo5O42ejeTslaNX3VpWD2aaU=;
+        b=mLJCU69JHPINYeqEIAPtNr/qK1R54Q8SlRSUn7VGflw6i+u0BIdsTyCfyaaPMWvAL4
+         ZA9xcVjh1/MUMBfXirJeSbVlbfBrsOUR0W7Ohv1jOLDMSlR6+vKp2JnMZTYAT0ZOuxNl
+         akI5RcgwyxC8YloMc5rr40LYJDgbrxYkvAzk5GY7S8GVK3hkOy3wD6Udep/e12hapyDi
+         Gvk+OB4yx3gDLxsgBFybo9WIbktw0O1EGYZwtocop6tI7MxRG61AP8QfSjBVegi/x5h+
+         POKPUaYAjp78Iy6dDzRuPJhsUSLavftefrqrMypVFqIegE6wrbukKVrpuoXH2KcEmJwL
+         9ujw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:in-reply-to:references:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=N3/h+H1MFE4DJWa6SQPVF/UUmeIpSTtWx78clITVlSs=;
-        b=Qt2cWYpG3FC+0rS0wz87fd7RTbhlX79u8PZaNINz0QgfDhBrmnVXXIhO4pdvtjjGPV
-         R+rPhIIZZTOSAq7NXHx8kyk5HpfF5ki4f+qFupZe12fKYlDmzGXbQv80c5N+H5cl06q6
-         rd1XvFiwkBU7RXrXHb6jY+Qj5x4V6JYo1Cr9EkPyFUahC4C42CgCbmEorC+SQ9s0Z3nB
-         HryEQrzQ0bJ5bYs+Jbqa9TQ25C8+HmaCpi/h+HrA+XTPAg/XMv1zTE3+Hm6iEo55mAbY
-         hozUTHLR5mmMKnLkQ5cKcEcaDCVkARJGwTY83g/vt+t4xtfszVPkOd0fQyqnnPqdzq0S
-         0RBw==
-X-Gm-Message-State: ACrzQf2YOXcAx3EUU8gwZY5lscYvJg0X0WMDHhk/glsRgKOoJjP9gOom
-        ynzd3AxAmG+vX8Jeb55Ec8ISQzk2SJA7IiSX+J2B9g==
-X-Google-Smtp-Source: AMsMyM4Jrwmtqk3BdWxj8QVpKhXP88Fbe535tPjA+ApCcC6PNhRIxEwGrr08nTsVInEiMhkuNo8o+B0sUdLiaR4axyE=
-X-Received: by 2002:a63:a06:0:b0:458:2853:45e4 with SMTP id
- 6-20020a630a06000000b00458285345e4mr2496376pgk.20.1665838671587; Sat, 15 Oct
- 2022 05:57:51 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 15 Oct 2022 05:57:50 -0700
-Mime-Version: 1.0
-From:   Fabien Parent <fabien.parent@linaro.org>
-X-Mailer: aerc 0.12.0
-References: <20221001171027.2101923-1-fabien.parent@linaro.org>
- <20221010055530.2mf6lq4mn6zfdkzt@vireshk-i7> <20221010060225.bglyfnr274ivu23i@vireshk-i7>
-In-Reply-To: <20221010060225.bglyfnr274ivu23i@vireshk-i7>
-Date:   Sat, 15 Oct 2022 05:57:50 -0700
-Message-ID: <CAPFo5V+5Surbn3jjybTKAVJHhV_5M88Gg2W0-2amwoVKTpie6g@mail.gmail.com>
-Subject: Re: [PATCH 1/3] cpufreq: qcom: fix memory leak in error path
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     ilia.lin@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
-        rafael@kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YzVFvoqPA8otoKfTTkSzo5O42ejeTslaNX3VpWD2aaU=;
+        b=1ylMcJrS7V30OeMBh27ZVdAyvncOw+zXeTaeeQeKIlyY78oa+5IWD4AX47ozJMozEQ
+         ENpVOJbME8o5Y1y3O4JeO+G/j+7YaTvGKQt15zBrQcH6nqKAcG0wT+Z3PcbUkVte+PQi
+         4a6ie+7ogbVjobcpKBwWRgyAVLUaZ4xMXnZX9HBL8fiutaoSK8QAO2Bqdc2zrieAzfnM
+         5QXx+WNEsRuKQ1VwK+ssa1a7rvrk02qCeP5d2YDBnGCaMpY37LXrzmToUYdLHj/2ahqk
+         DkcRe+qSOJNkSFbp0zRDrKE2Q2scbind2CkxfjaU7uzccsQP/bJy8ZVvPh250Au43sn6
+         +KDA==
+X-Gm-Message-State: ACrzQf0WhwxB1gLQUJpvTODFNki3Ci3gVl1OToS8Zq2gCjFzC/tNFEnG
+        7SIa/2OROodhd7aVOuSEPJYpiw==
+X-Google-Smtp-Source: AMsMyM4MtkHVxQ/H6J+XcEyuC7jT+IeuyzzKHfpCjoFk7oA3Kb0GQocOfHKfvZta4G6dPITaxdmWqA==
+X-Received: by 2002:a05:622a:1829:b0:35b:b542:b593 with SMTP id t41-20020a05622a182900b0035bb542b593mr1779181qtc.471.1665838820432;
+        Sat, 15 Oct 2022 06:00:20 -0700 (PDT)
+Received: from ?IPV6:2601:42:0:3450:161:5720:79e9:9739? ([2601:42:0:3450:161:5720:79e9:9739])
+        by smtp.gmail.com with ESMTPSA id u18-20020a05620a085200b006ce580c2663sm4609123qku.35.2022.10.15.06.00.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 15 Oct 2022 06:00:19 -0700 (PDT)
+Message-ID: <cd5fdffa-3408-3270-59d2-728fd67891ad@linaro.org>
+Date:   Sat, 15 Oct 2022 09:00:17 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH v2 1/3] dt-bindings: mmc: arm,pl18x: Document
+ interrupt-names is ignored
+To:     Marek Vasut <marex@denx.de>, linux-arm-kernel@lists.infradead.org
+Cc:     Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Yann Gautier <yann.gautier@foss.st.com>,
+        devicetree@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com
+References: <20221013221242.218808-1-marex@denx.de>
+ <cc7289ac-b75a-62e3-4b58-fc018715c068@linaro.org>
+ <09cb3000-14c4-e94f-70e8-36e0ef8ce3fc@denx.de>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <09cb3000-14c4-e94f-70e8-36e0ef8ce3fc@denx.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Viresh,
+On 14/10/2022 12:02, Marek Vasut wrote:
+>>> ---
+>>>   Documentation/devicetree/bindings/mmc/arm,pl18x.yaml | 4 +++-
+>>>   1 file changed, 3 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/mmc/arm,pl18x.yaml b/Documentation/devicetree/bindings/mmc/arm,pl18x.yaml
+>>> index 1e69a5a42439b..1c96da04f0e53 100644
+>>> --- a/Documentation/devicetree/bindings/mmc/arm,pl18x.yaml
+>>> +++ b/Documentation/devicetree/bindings/mmc/arm,pl18x.yaml
+>>> @@ -95,7 +95,9 @@ properties:
+>>>         PIO (polled I/O) interrupt and occurs when the FIFO needs to be
+>>>         emptied as part of a bulk read from the card. Some variants have these
+>>>         two interrupts wired into the same line (logic OR) and in that case
+>>> -      only one interrupt may be provided.
+>>> +      only one interrupt may be provided. The interrupt-names property is
+>>> +      not used due to inconsistency of existing DTs regarding its content.
+>>> +    deprecated: false
+>>
+>> Why do you add deprecated false? All properties are not deprecated by
+>> default. Did any other referenced schema make it deprecated?
+> 
+> Rob asked me to add it in V1 .
 
-> > Applied. Thanks.
->
-> Btw, it will be good to have a Fixes or Cc:Stable for this patch too.
-> I can directly add the lines myself, just let me know what you want.
+Indeed, thanks.
 
-I will send the patch with the "Fixes" tag in v2.
+Best regards,
+Krzysztof
+
