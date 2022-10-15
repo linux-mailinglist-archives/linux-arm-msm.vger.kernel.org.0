@@ -2,823 +2,349 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FCB65FFB80
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Oct 2022 19:31:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FF095FFC2F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Oct 2022 00:00:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229691AbiJORbQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Oct 2022 13:31:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40208 "EHLO
+        id S229693AbiJOWA1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Oct 2022 18:00:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbiJORbP (ORCPT
+        with ESMTP id S229594AbiJOWA0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Oct 2022 13:31:15 -0400
-Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08A193AB1C;
-        Sat, 15 Oct 2022 10:31:11 -0700 (PDT)
-Date:   Sat, 15 Oct 2022 17:30:56 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1665855069; x=1666114269;
-        bh=v/dYh1TObv2Mc65vmbkjPbIpqNn1ni6stj7nuU4mFRg=;
-        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-         Subject:Reply-To:Feedback-ID:Message-ID;
-        b=JhP99IhxyMhw5WOwOsxd4tja/pU2t+cfG3Fu0U/zNpMxtRYrjpXCp/eUWHQAIALf6
-         I5mTzkMxGwKI+xGwhRqlYKZzC+VzNQTH8GCDzSvBxI+i2mjZjNZ8hWsvss+FJzcbxO
-         /Jq7TzKgbEGZzYJ5JTAm8Avkgasab0388LWFMjdQ=
-To:     caleb@connolly.tech
-From:   Caleb Connolly <caleb@connolly.tech>
-Cc:     krzysztof.kozlowski@linaro.org, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        devicetree@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Jeff LaBundy <jeff@labundy.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
-        linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Rob Herring <robh+dt@kernel.org>, Tom Rix <trix@redhat.com>
-Subject: [PATCH v7 2/2] input: add Qualcomm SPMI haptics driver
-Message-ID: <20221015172915.1436236-3-caleb@connolly.tech>
-Feedback-ID: 10753939:user:proton
+        Sat, 15 Oct 2022 18:00:26 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E0652ED44;
+        Sat, 15 Oct 2022 15:00:24 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id fy4so17431504ejc.5;
+        Sat, 15 Oct 2022 15:00:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=PQJYXHbTSUtNdbFyMXASJ14+jd3pL38gXIUjRlOeZqI=;
+        b=b2Dpx2XkjzSw4Lq7hvzIhLnXuaamFJOp2fYeWFH2YGy9AYM9cXOD/rtyyaw6ZKopce
+         HffEHPM3NBJ4G1gK78gGJf7UCA5dX0zixwfliSuqftfHbp5gr614g89XFdDnj1UHYAzi
+         ozCBpKVDx63WcGCPbWb0om7vcht9On+AOjs/7Iagb8MbpCcRFvXxWrCf3GfBSpiyuV4R
+         VJY3kcaCjSmPN5EzLxD5ckrFBsjEjSFMDrt80PwnVtPZj1E9y7WSNzfAMIx+3xs1GVJK
+         LQoesR76+a0vpPse6q0FoUST+/8ZSRcBbHL4MPjuRBC5/ZCg+HSnrmXCE4eRydl1lXJG
+         3mdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PQJYXHbTSUtNdbFyMXASJ14+jd3pL38gXIUjRlOeZqI=;
+        b=6drgWhCfglj+yVQmK6sQId0aCxFjPF8vNR0uOibqxkQIxo0jOPscIqnaSCCAZ6XSY4
+         BXz2jSd5a7ayGmH+mgSdnbNw9+fj5k49a62gItBYkhPvqRQFBIdeflpxkruPuZpbVQFp
+         CacfsDpwS6o2MAy9A3fm/2O/hKRqFc3HMwgpQhW9e0B+uUTp0ge74PVdrFyehCMw33qq
+         Pr/6nylAECgaLVnb/jDcMqK+X0p84HCw80M9PcOv3rTNnKsbIGVhTEOAcjLcP4nvgSuk
+         9PwZ765ovXdkdL153mDjIOLlFqJmMZjQbv1BX7MAr3riJPVkibDIe7wFXzFvqZzdGVix
+         6vCg==
+X-Gm-Message-State: ACrzQf13H5FZYLzUxx41DPceLKEl5ErgtZlrpbxb1fiIturznsYZxhF9
+        2XzzLtLHs2pSToEOM9n5K346DGNroNk4J9E4tQg=
+X-Google-Smtp-Source: AMsMyM7fTiML2BfNqz+mU+BamVf1KMemDD6QnQ8xN57qsQGcWJn2Keowu67D9zZ5bTAXjxvfe1c0M442qjADUh/P0nI=
+X-Received: by 2002:a17:907:b01:b0:78d:ce3d:905d with SMTP id
+ h1-20020a1709070b0100b0078dce3d905dmr3290464ejl.45.1665871222709; Sat, 15 Oct
+ 2022 15:00:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,
-        SPF_PASS,TO_EQ_FM_DIRECT_MX autolearn=no autolearn_force=no
-        version=3.4.6
+References: <20221013175712.7539-1-vidyas@nvidia.com> <20221013175712.7539-2-vidyas@nvidia.com>
+In-Reply-To: <20221013175712.7539-2-vidyas@nvidia.com>
+From:   Han Jingoo <jingoohan1@gmail.com>
+Date:   Sat, 15 Oct 2022 15:00:11 -0700
+Message-ID: <CAPOBaE5Oee9qKgyKgoT0qNr+L41BZm1cfjZ1xMQ5gs2r40ZWCA@mail.gmail.com>
+Subject: Re: [PATCH V5 1/3] PCI: designware-ep: Fix DBI access before core init
+To:     Vidya Sagar <vidyas@nvidia.com>
+Cc:     gustavo.pimentel@synopsys.com, lpieralisi@kernel.org,
+        robh@kernel.org, kw@linux.com, bhelgaas@google.com,
+        Sergey.Semin@baikalelectronics.ru, dmitry.baryshkov@linaro.org,
+        linmq006@gmail.com, ffclaire1224@gmail.com,
+        thierry.reding@gmail.com, jonathanh@nvidia.com, mani@kernel.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kthota@nvidia.com,
+        mmaddireddy@nvidia.com, sagar.tv@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the haptics found in pmi8998 and related PMICs.
-Based on the ff-memless interface. Currently this driver provides
-a partial implementation of hardware features.
+On Thu, Oct 13, 2022 Vidya Sagar <vidyas@nvidia.com> wrote:
+>
+> Platforms that cannot support their core initialization without the
+> reference clock from the host, implement the feature 'core_init_notifier'
+> to indicate the DesignWare sub-system about when their core is getting
+> initialized. Any accesses to the core (Ex:- DBI) would the core being
+> ready result in system hang in such systems (Ex:- tegra194).
+> This patch moves any access to the core to dw_pcie_ep_init_complete() API
+> which is effectively called only after the core initialization.
+> It also introduces .ep_init_late() ops hook to be used for any post init
+> work that platform drivers may have to do.
+>
+> Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+> ---
+> V5:
+> * Changed dw_pcie_ep_init_complete() to dw_pcie_ep_init_late()
+> * Skipped memory allocation if done already. This is to avoid freeing and then
+>   allocating again during PERST# toggles from the host.
+>
+> V4:
+> * Addressed review comments from Bjorn and Manivannan
+> * Moved dw_pcie_ep_init_complete() inside dw_pcie_ep_init_notify()
+> * Added .ep_init_late() ops to perform late init tasks
+>
+>  .../pci/controller/dwc/pcie-designware-ep.c   | 125 +++++++++++-------
+>  drivers/pci/controller/dwc/pcie-designware.h  |  10 +-
+>  2 files changed, 80 insertions(+), 55 deletions(-)
 
-This driver only supports LRAs (Linear Resonant Actuators) in the "buffer"
-mode with a single wave pattern.
+Acked-by: Jingoo Han <jingoohan1@gmail.com>
 
-Signed-off-by: Caleb Connolly <caleb@connolly.tech>
----
- drivers/input/misc/Kconfig                |  15 +
- drivers/input/misc/Makefile               |   1 +
- drivers/input/misc/qcom-pmi8998-haptics.c | 690 ++++++++++++++++++++++
- 3 files changed, 706 insertions(+)
- create mode 100644 drivers/input/misc/qcom-pmi8998-haptics.c
+The function name 'dw_pcie_ep_init_late' looks clear to me. Also,
+commit messages
+and comments are understandable. So, I am ok with the patches, but I also think
+that we need to wait for Manivannan's Tested-by on qcom platforms.
 
-diff --git a/drivers/input/misc/Kconfig b/drivers/input/misc/Kconfig
-index a18ab7358d8f..608a64fa7914 100644
---- a/drivers/input/misc/Kconfig
-+++ b/drivers/input/misc/Kconfig
-@@ -186,6 +186,21 @@ config INPUT_PMIC8XXX_PWRKEY
- =09  To compile this driver as a module, choose M here: the
- =09  module will be called pmic8xxx-pwrkey.
+Best regards,
+Jingoo Han
 
-+config INPUT_QCOM_PMI8998_HAPTICS
-+=09tristate "Qualcomm SPMI HAPTICS"
-+=09depends on ARCH_QCOM || COMPILE_TEST
-+=09depends on MFD_PM8XXX || MFD_SPMI_PMIC || COMPILE_TEST
-+=09select INPUT_FF_MEMLESS
-+=09help
-+=09  This option enables support for the haptics found in pmi8998 and
-+=09  related PMICs. Based on the ff-memless interface.
-+
-+=09  This driver is for hardware too new for the INPUT_PM8XXX_VIBRATOR
-+=09  driver.
-+
-+=09  To compile this driver as module, choose M here: the
-+=09  module will be called qcom_pmi8998_haptics.
-+
- config INPUT_SPARCSPKR
- =09tristate "SPARC Speaker support"
- =09depends on PCI && SPARC64
-diff --git a/drivers/input/misc/Makefile b/drivers/input/misc/Makefile
-index 28dfc444f0a9..039d0a97f2f4 100644
---- a/drivers/input/misc/Makefile
-+++ b/drivers/input/misc/Makefile
-@@ -65,6 +65,7 @@ obj-$(CONFIG_INPUT_PMIC8XXX_PWRKEY)=09+=3D pmic8xxx-pwrke=
-y.o
- obj-$(CONFIG_INPUT_POWERMATE)=09=09+=3D powermate.o
- obj-$(CONFIG_INPUT_PWM_BEEPER)=09=09+=3D pwm-beeper.o
- obj-$(CONFIG_INPUT_PWM_VIBRA)=09=09+=3D pwm-vibra.o
-+obj-$(CONFIG_INPUT_QCOM_PMI8998_HAPTICS)+=3D qcom-pmi8998-haptics.o
- obj-$(CONFIG_INPUT_RAVE_SP_PWRBUTTON)=09+=3D rave-sp-pwrbutton.o
- obj-$(CONFIG_INPUT_RB532_BUTTON)=09+=3D rb532_button.o
- obj-$(CONFIG_INPUT_REGULATOR_HAPTIC)=09+=3D regulator-haptic.o
-diff --git a/drivers/input/misc/qcom-pmi8998-haptics.c b/drivers/input/misc=
-/qcom-pmi8998-haptics.c
-new file mode 100644
-index 000000000000..e9eec2d9de2d
---- /dev/null
-+++ b/drivers/input/misc/qcom-pmi8998-haptics.c
-@@ -0,0 +1,690 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2022, Caleb Connolly <caleb@connolly.tech>
-+ * Qualcomm QPMI haptics driver for pmi8998 and related PMICs.
-+ */
-+
-+#include <linux/bits.h>
-+#include <linux/bitfield.h>
-+#include <linux/errno.h>
-+#include <linux/input.h>
-+#include <linux/interrupt.h>
-+#include <linux/kernel.h>
-+#include <linux/log2.h>
-+#include <linux/minmax.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/of_device.h>
-+#include <linux/platform_device.h>
-+#include <linux/regmap.h>
-+#include <linux/time.h>
-+#include <linux/types.h>
-+
-+// clang-format off
-+#define HAP_STATUS_1_REG=09=090x0A
-+#define HAP_BUSY_BIT=09=09=09BIT(1)
-+#define SC_FLAG_BIT=09=09=09BIT(3)
-+#define AUTO_RES_ERROR_BIT=09=09BIT(4)
-+
-+#define HAP_LRA_AUTO_RES_LO_REG=09=090x0B
-+#define HAP_LRA_AUTO_RES_HI_REG=09=090x0C
-+
-+#define HAP_EN_CTL_REG=09=09=090x46
-+#define HAP_EN_BIT=09=09=09BIT(7)
-+
-+#define HAP_EN_CTL2_REG=09=09=090x48
-+#define BRAKE_EN_BIT=09=09=09BIT(0)
-+
-+#define HAP_AUTO_RES_CTRL_REG=09=090x4B
-+#define AUTO_RES_EN_BIT=09=09=09BIT(7)
-+#define AUTO_RES_ERR_RECOVERY_BIT=09BIT(3)
-+#define AUTO_RES_EN_FLAG_BIT=09=09BIT(0)
-+
-+#define HAP_CFG1_REG=09=09=090x4C
-+#define HAP_ACT_TYPE_MASK=09=09BIT(0)
-+
-+#define HAP_CFG2_REG=09=09=090x4D
-+#define HAP_LRA_RES_TYPE_MASK=09=09BIT(0)
-+
-+#define HAP_SEL_REG=09=09=090x4E
-+#define HAP_WF_SOURCE_MASK=09=09GENMASK(5, 4)
-+#define HAP_WF_SOURCE_SHIFT=09=094
-+
-+#define HAP_LRA_AUTO_RES_REG=09=090x4F
-+#define LRA_AUTO_RES_MODE_MASK=09=09GENMASK(6, 4)
-+#define LRA_AUTO_RES_MODE_SHIFT=09=094
-+#define LRA_HIGH_Z_MASK=09=09=09GENMASK(3, 2)
-+#define LRA_HIGH_Z_SHIFT=09=092
-+#define LRA_RES_CAL_MASK=09=09GENMASK(1, 0)
-+#define HAP_RES_CAL_PERIOD_MIN=09=094
-+#define HAP_RES_CAL_PERIOD_MAX=09=0932
-+
-+#define HAP_VMAX_CFG_REG=09=090x51
-+#define HAP_VMAX_OVD_BIT=09=09BIT(6)
-+#define HAP_VMAX_MASK=09=09=09GENMASK(5, 1)
-+#define HAP_VMAX_SHIFT=09=09=091
-+
-+#define HAP_ILIM_CFG_REG=09=090x52
-+#define HAP_ILIM_SEL_MASK=09=09BIT(0)
-+#define HAP_ILIM_400_MA=09=09=090
-+#define HAP_ILIM_800_MA=09=09=091
-+
-+#define HAP_SC_DEB_REG=09=09=090x53
-+#define HAP_SC_DEB_MASK=09=09=09GENMASK(2, 0)
-+#define HAP_SC_DEB_CYCLES_MIN=09=090
-+#define HAP_DEF_SC_DEB_CYCLES=09=098
-+#define HAP_SC_DEB_CYCLES_MAX=09=0932
-+
-+#define HAP_RATE_CFG1_REG=09=090x54
-+#define HAP_RATE_CFG1_MASK=09=09GENMASK(7, 0)
-+#define HAP_RATE_CFG2_SHIFT=09=098 // As CFG2 is the most significant byte
-+
-+#define HAP_RATE_CFG2_REG=09=090x55
-+#define HAP_RATE_CFG2_MASK=09=09GENMASK(3, 0)
-+
-+#define HAP_SC_CLR_REG=09=09=090x59
-+#define SC_CLR_BIT=09=09=09BIT(0)
-+
-+#define HAP_BRAKE_REG=09=09=090x5C
-+#define HAP_BRAKE_PAT_MASK=09=090x3
-+
-+#define HAP_WF_REPEAT_REG=09=090x5E
-+#define WF_REPEAT_MASK=09=09=09GENMASK(6, 4)
-+#define WF_REPEAT_SHIFT=09=09=094
-+#define WF_REPEAT_MIN=09=09=091
-+#define WF_REPEAT_MAX=09=09=09128
-+#define WF_S_REPEAT_MASK=09=09GENMASK(1, 0)
-+#define WF_S_REPEAT_MIN=09=09=091
-+#define WF_S_REPEAT_MAX=09=09=098
-+
-+#define HAP_WF_S1_REG=09=09=090x60
-+#define HAP_WF_SIGN_BIT=09=09=09BIT(7)
-+#define HAP_WF_OVD_BIT=09=09=09BIT(6)
-+#define HAP_WF_SAMP_MAX=09=09=09GENMASK(5, 1)
-+#define HAP_WF_SAMPLE_LEN=09=098
-+
-+#define HAP_PLAY_REG=09=09=090x70
-+#define HAP_PLAY_BIT=09=09=09BIT(7)
-+#define HAP_PAUSE_BIT=09=09=09BIT(0)
-+
-+#define HAP_SEC_ACCESS_REG=09=090xD0
-+#define HAP_SEC_ACCESS_UNLOCK=09=090xA5
-+
-+#define HAP_TEST2_REG=09=09=090xE3
-+
-+
-+#define HAP_VMAX_MIN_MV=09=09=09116
-+#define HAP_VMAX_MAX_MV=09=09=093596
-+#define HAP_VMAX_MAX_MV_STRONG=09=093596
-+
-+#define HAP_WAVE_PLAY_RATE_MIN_US=090
-+#define HAP_WAVE_PLAY_RATE_MAX_US=0920475
-+#define HAP_WAVE_PLAY_TIME_MAX_MS=0915000
-+
-+#define AUTO_RES_ERR_POLL_TIME_NS=09(20 * NSEC_PER_MSEC)
-+#define HAPTICS_BACK_EMF_DELAY_US=0920000
-+
-+#define HAP_BRAKE_PAT_LEN=09=094
-+#define HAP_WAVE_SAMP_LEN=09=098
-+#define NUM_WF_SET=09=09=094
-+#define HAP_WAVE_SAMP_SET_LEN=09=09(HAP_WAVE_SAMP_LEN * NUM_WF_SET)
-+#define HAP_RATE_CFG_STEP_US=09=095
-+
-+#define SC_MAX_COUNT=09=09=095
-+#define SC_COUNT_RST_DELAY_US=09=091000000
-+
-+// Actuator types
-+#define HAP_TYPE_LRA=09=09=090
-+#define HAP_TYPE_ERM=09=09=091
-+
-+// LRA Wave type
-+#define HAP_WAVE_SINE=09=09=090
-+#define HAP_WAVE_SQUARE=09=09=091
-+
-+// Play modes
-+#define HAP_PLAY_DIRECT=09=09=090
-+#define HAP_PLAY_BUFFER=09=09=091
-+#define HAP_PLAY_AUDIO=09=09=092
-+#define HAP_PLAY_PWM=09=09=093
-+
-+#define HAP_PLAY_MAX=09=09=09HAP_PLAY_PWM
-+
-+// Auto resonance type
-+#define HAP_AUTO_RES_NONE=09=090
-+#define HAP_AUTO_RES_ZXD=09=091
-+#define HAP_AUTO_RES_QWD=09=092
-+#define HAP_AUTO_RES_MAX_QWD=09=093
-+#define HAP_AUTO_RES_ZXD_EOP=09=094
-+// clang-format on
-+
-+static const uint8_t default_brake_pattern[] =3D {
-+=090x3, 0x3, 0x3, 0x3, 0x3,
-+};
-+
-+static const uint8_t wave_sample_pattern[] =3D {
-+=090x7e, 0x7e, 0x28, 0x28, 0x28, 0x28, 0x28, 0x28,
-+};
-+
-+/**
-+ * struct spmi_haptics - struct for spmi haptics data.
-+ *
-+ * @dev: Our device parent.
-+ * @regmap: Register map for the hardware block.
-+ * @input: The input device used to receive events.
-+ * @work: Work struct to play effects.
-+ * @base: Base address of the regmap.
-+ * @play_irq: Fired to load the next wave pattern.
-+ * @sc_irq: Short circuit irq.
-+ * @last_sc_time: Time since the short circuit IRQ last fired.
-+ * @sc_count: Number of times the short circuit IRQ has fired in this inte=
-rval.
-+ * @actuator_type: The type of actuator in use.
-+ * @wave_shape: The shape of the waves to use (sine or square).
-+ * @play_mode: The play mode to use (direct, buffer, pwm, audio).
-+ * @vmax: Max voltage to use when playing.
-+ * @current_limit: The current limit for this hardware (400mA or 800mA).
-+ * @play_wave_rate: The wave rate to use for this hardware.
-+ * @play_lock: Lock to be held when updating the hardware state.
-+ */
-+struct spmi_haptics {
-+=09struct device *dev;
-+=09struct regmap *regmap;
-+=09struct input_dev *input;
-+=09struct work_struct work;
-+=09uint32_t base;
-+
-+=09int play_irq;
-+=09int sc_irq;
-+=09ktime_t last_sc_time;
-+=09uint8_t sc_count;
-+
-+=09uint8_t actuator_type;
-+=09uint8_t wave_shape;
-+=09uint8_t play_mode;
-+=09uint32_t vmax;
-+=09uint32_t current_limit;
-+=09uint32_t play_wave_rate;
-+=09struct mutex play_lock;
-+};
-+
-+static int haptics_write_vmax(struct spmi_haptics *haptics)
-+{
-+=09uint8_t val =3D 0;
-+=09uint32_t vmax_mv =3D haptics->vmax;
-+
-+=09vmax_mv =3D clamp_t(uint32_t, vmax_mv, HAP_VMAX_MIN_MV, HAP_VMAX_MAX_MV=
-);
-+=09vmax_mv =3D DIV_ROUND_CLOSEST(vmax_mv, HAP_VMAX_MIN_MV);
-+
-+=09val =3D FIELD_PREP(HAP_VMAX_MASK, vmax_mv);
-+
-+=09return regmap_update_bits(haptics->regmap,
-+=09=09=09=09  haptics->base + HAP_VMAX_CFG_REG,
-+=09=09=09=09  HAP_VMAX_MASK | HAP_WF_OVD_BIT, val);
-+}
-+
-+static int haptics_module_enable(struct spmi_haptics *haptics, bool enable=
-)
-+{
-+=09return regmap_update_bits(haptics->regmap,
-+=09=09=09=09  haptics->base + HAP_EN_CTL_REG, HAP_EN_BIT,
-+=09=09=09=09  enable ? HAP_EN_BIT : 0);
-+}
-+
-+static int haptics_play(struct spmi_haptics *haptics, bool play)
-+{
-+=09return regmap_update_bits(haptics->regmap, haptics->base + HAP_PLAY_REG=
-,
-+=09=09=09=09  HAP_PLAY_BIT | HAP_PAUSE_BIT,
-+=09=09=09=09  play ? HAP_PLAY_BIT : 0);
-+}
-+
-+static bool is_haptics_module_enabled(struct spmi_haptics *haptics)
-+{
-+=09uint32_t val;
-+
-+=09regmap_read(haptics->regmap, haptics->base + HAP_EN_CTL_REG, &val);
-+=09return !!val;
-+}
-+
-+/*
-+ * This IRQ is fired to tell us to load the next wave sample set.
-+ * As we only currently support a single sample set, it's unused.
-+ */
-+static irqreturn_t haptics_play_irq(int irq, void *data)
-+{
-+=09struct spmi_haptics *haptics =3D data;
-+
-+=09dev_dbg(haptics->dev, "play_irq triggered");
-+
-+=09return IRQ_HANDLED;
-+}
-+
-+/*
-+ * Fires every ~50ms whilst the haptics are active.
-+ * If the SC_FLAG_BIT is set then that means there isn't a short circuit
-+ * and we just need to clear the IRQ to indicate that the device should
-+ * keep vibrating.
-+ *
-+ * Otherwise, it means a short circuit situation has occurred.
-+ */
-+static irqreturn_t haptics_sc_irq(int irq, void *data)
-+{
-+=09struct spmi_haptics *haptics =3D data;
-+=09int ret;
-+=09uint32_t val;
-+=09long sc_delta_time_us;
-+=09ktime_t temp;
-+
-+=09mutex_lock(&haptics->play_lock);
-+
-+=09ret =3D regmap_read(haptics->regmap, haptics->base + HAP_STATUS_1_REG,
-+=09=09=09  &val);
-+=09if (ret)
-+=09=09goto out;
-+
-+=09if (!(val & SC_FLAG_BIT)) {
-+=09=09haptics->sc_count =3D 0;
-+=09=09goto out;
-+=09}
-+
-+=09temp =3D ktime_get();
-+=09sc_delta_time_us =3D ktime_us_delta(temp, haptics->last_sc_time);
-+=09haptics->last_sc_time =3D temp;
-+
-+=09if (sc_delta_time_us > SC_COUNT_RST_DELAY_US)
-+=09=09haptics->sc_count =3D 0;
-+=09else
-+=09=09haptics->sc_count++;
-+
-+=09ret =3D regmap_update_bits(haptics->regmap,
-+=09=09=09=09 haptics->base + HAP_SC_CLR_REG, SC_CLR_BIT,
-+=09=09=09=09 SC_CLR_BIT);
-+=09if (ret)
-+=09=09goto out;
-+
-+=09if (haptics->sc_count > SC_MAX_COUNT) {
-+=09=09cancel_work_sync(&haptics->work);
-+=09=09dev_err(haptics->dev,
-+=09=09=09"Short circuit persists, disabling haptics\n");
-+=09=09ret =3D haptics_module_enable(haptics, false);
-+=09=09if (ret)
-+=09=09=09dev_err(haptics->dev, "Error disabling module, rc=3D%d\n",
-+=09=09=09=09ret);
-+=09}
-+
-+out:
-+=09mutex_unlock(&haptics->play_lock);
-+=09return IRQ_HANDLED;
-+}
-+
-+static int haptics_vibrate(struct spmi_haptics *haptics)
-+{
-+=09int ret;
-+
-+=09if (haptics->sc_count > SC_MAX_COUNT) {
-+=09=09dev_err(haptics->dev, "Can't play while in short circuit");
-+=09=09return -EINVAL;
-+=09}
-+
-+=09ret =3D haptics_write_vmax(haptics);
-+=09if (ret)
-+=09=09return ret;
-+
-+=09ret =3D haptics_module_enable(haptics, true);
-+=09if (ret) {
-+=09=09dev_err(haptics->dev, "Error enabling module, ret=3D%d\n", ret);
-+=09=09return ret;
-+=09}
-+
-+=09ret =3D haptics_play(haptics, true);
-+=09if (ret) {
-+=09=09dev_err(haptics->dev, "Error enabling play, ret=3D%d\n", ret);
-+=09=09return ret;
-+=09}
-+
-+=09return ret;
-+}
-+
-+static int haptics_stop_vibrate(struct spmi_haptics *haptics)
-+{
-+=09int ret;
-+
-+=09ret =3D haptics_play(haptics, false);
-+=09if (ret) {
-+=09=09dev_err(haptics->dev, "Error disabling play, ret=3D%d\n", ret);
-+=09=09return ret;
-+=09}
-+
-+=09ret =3D haptics_module_enable(haptics, false);
-+=09if (ret) {
-+=09=09dev_err(haptics->dev, "Error disabling module, ret=3D%d\n", ret);
-+=09=09return ret;
-+=09}
-+
-+=09return ret;
-+}
-+
-+static void haptics_play_stop_work(struct work_struct *work)
-+{
-+=09struct spmi_haptics *haptics =3D
-+=09=09container_of(work, struct spmi_haptics, work);
-+
-+=09int ret;
-+
-+=09mutex_lock(&haptics->play_lock);
-+
-+=09if (!is_haptics_module_enabled(haptics) && haptics->vmax)
-+=09=09ret =3D haptics_vibrate(haptics);
-+=09else
-+=09=09ret =3D haptics_stop_vibrate(haptics);
-+=09if (ret)
-+=09=09dev_err(haptics->dev, "Error setting haptics, ret=3D%d", ret);
-+
-+=09mutex_unlock(&haptics->play_lock);
-+}
-+
-+static int spmi_haptics_play_effect(struct input_dev *dev, void *data,
-+=09=09=09=09    struct ff_effect *effect)
-+{
-+=09struct spmi_haptics *haptics =3D input_get_drvdata(dev);
-+=09uint32_t magnitude;
-+
-+=09dev_dbg(haptics->dev, "%s: Rumbling with strong: %d and weak: %d",
-+=09=09 __func__, effect->u.rumble.strong_magnitude,
-+=09=09 effect->u.rumble.weak_magnitude);
-+
-+=09magnitude =3D effect->u.rumble.strong_magnitude >> 8;
-+=09if (!magnitude)
-+=09=09magnitude =3D effect->u.rumble.weak_magnitude >> 10;
-+
-+=09if (!magnitude)
-+=09=09haptics->vmax =3D 0;
-+=09else
-+=09=09haptics->vmax =3D
-+=09=09=09((HAP_VMAX_MAX_MV - HAP_VMAX_MIN_MV) * magnitude) /
-+=09=09=09=09100 +
-+=09=09=09HAP_VMAX_MIN_MV;
-+
-+=09schedule_work(&haptics->work);
-+
-+=09return 0;
-+}
-+
-+/**
-+ * spmi_haptics_close - callback for input device close
-+ * @dev: input device pointer
-+ *
-+ * Turns off the vibrator.
-+ */
-+static void spmi_haptics_close(struct input_dev *dev)
-+{
-+=09struct spmi_haptics *haptics =3D input_get_drvdata(dev);
-+
-+=09cancel_work_sync(&haptics->work);
-+=09haptics->vmax =3D 0;
-+
-+=09if (is_haptics_module_enabled(haptics))
-+=09=09haptics_stop_vibrate(haptics);
-+}
-+
-+static int haptics_write_brake_pattern(struct spmi_haptics *haptics,
-+=09=09=09=09       const uint8_t *brake_pattern)
-+{
-+=09int ret, i;
-+=09uint8_t val =3D 0;
-+
-+=09for (i =3D HAP_BRAKE_PAT_LEN - 1; i >=3D 0; i--)
-+=09=09val |=3D FIELD_PREP(HAP_BRAKE_PAT_MASK, brake_pattern[i])
-+=09=09       << (i * 2);
-+
-+=09ret =3D regmap_update_bits(haptics->regmap, haptics->base + HAP_BRAKE_R=
-EG,
-+=09=09=09=09 0xff, val);
-+
-+=09return ret   ?:
-+=09=09       regmap_update_bits(haptics->regmap,
-+=09=09=09=09=09  haptics->base + HAP_EN_CTL2_REG,
-+=09=09=09=09=09  BRAKE_EN_BIT, BRAKE_EN_BIT);
-+}
-+
-+static int haptics_init(struct spmi_haptics *haptics)
-+{
-+=09int ret;
-+=09uint8_t val, mask;
-+=09uint16_t play_rate;
-+
-+=09ret =3D regmap_update_bits(haptics->regmap, haptics->base + HAP_CFG1_RE=
-G,
-+=09=09=09=09 HAP_ACT_TYPE_MASK, haptics->actuator_type);
-+=09if (ret)
-+=09=09return ret;
-+
-+=09/*
-+=09 * Configure auto resonance
-+=09 * see qpnp_haptics_lra_auto_res_config downstream
-+=09 * This is greatly simplified.
-+=09 */
-+=09val =3D FIELD_PREP(LRA_RES_CAL_MASK, ilog2(32 / HAP_RES_CAL_PERIOD_MIN)=
-) |
-+=09      FIELD_PREP(LRA_AUTO_RES_MODE_MASK, HAP_AUTO_RES_ZXD_EOP) |
-+=09      FIELD_PREP(LRA_HIGH_Z_MASK, 1);
-+=09mask =3D LRA_AUTO_RES_MODE_MASK | LRA_HIGH_Z_MASK | LRA_RES_CAL_MASK;
-+
-+=09ret =3D regmap_update_bits(haptics->regmap,
-+=09=09=09=09 haptics->base + HAP_LRA_AUTO_RES_REG, mask,
-+=09=09=09=09 val);
-+=09if (ret)
-+=09=09return ret;
-+
-+=09val =3D FIELD_PREP(HAP_WF_SOURCE_MASK, haptics->play_mode);
-+=09ret =3D regmap_update_bits(haptics->regmap, haptics->base + HAP_SEL_REG=
-,
-+=09=09=09=09 HAP_WF_SOURCE_MASK, val);
-+=09if (ret)
-+=09=09return ret;
-+
-+=09ret =3D regmap_update_bits(haptics->regmap,
-+=09=09=09=09 haptics->base + HAP_ILIM_CFG_REG,
-+=09=09=09=09 HAP_ILIM_SEL_MASK, haptics->current_limit);
-+=09if (ret)
-+=09=09return ret;
-+
-+=09/* Configure the debounce for short-circuit detection. */
-+=09ret =3D regmap_update_bits(haptics->regmap,
-+=09=09=09=09 haptics->base + HAP_SC_DEB_REG,
-+=09=09=09=09 HAP_SC_DEB_MASK, HAP_SC_DEB_CYCLES_MAX);
-+=09if (ret)
-+=09=09return ret;
-+
-+=09ret =3D regmap_update_bits(haptics->regmap, haptics->base + HAP_CFG2_RE=
-G,
-+=09=09=09=09 HAP_LRA_RES_TYPE_MASK, haptics->wave_shape);
-+=09if (ret)
-+=09=09return ret;
-+
-+=09/*
-+=09 * Configure RATE_CFG1 and RATE_CFG2 registers.
-+=09 * Note: For ERM (unsupported) these registers act as play rate and
-+=09 * for LRA these represent resonance period
-+=09 */
-+=09play_rate =3D haptics->play_wave_rate / HAP_RATE_CFG_STEP_US;
-+=09val =3D FIELD_PREP(HAP_RATE_CFG1_MASK, play_rate);
-+=09ret =3D regmap_update_bits(haptics->regmap,
-+=09=09=09=09 haptics->base + HAP_RATE_CFG1_REG,
-+=09=09=09=09 HAP_RATE_CFG1_MASK, val);
-+=09val =3D FIELD_PREP(HAP_RATE_CFG2_MASK, play_rate >> 8);
-+=09ret =3D ret   ?:
-+=09=09      regmap_update_bits(haptics->regmap,
-+=09=09=09=09=09 haptics->base + HAP_RATE_CFG2_REG,
-+=09=09=09=09=09 HAP_RATE_CFG1_MASK, val);
-+=09if (ret)
-+=09=09return ret;
-+
-+=09ret =3D haptics_write_brake_pattern(haptics, default_brake_pattern);
-+=09if (ret)
-+=09=09return ret;
-+
-+=09/* Currently this is the only supported play mode */
-+=09if (haptics->play_mode =3D=3D HAP_PLAY_BUFFER) {
-+=09=09/* zero repeats and zero sample repeats */
-+=09=09val =3D FIELD_PREP(WF_REPEAT_MASK, 0) |
-+=09=09      FIELD_PREP(WF_S_REPEAT_MASK, 0);
-+=09=09ret =3D regmap_update_bits(haptics->regmap,
-+=09=09=09=09=09 haptics->base + HAP_WF_REPEAT_REG,
-+=09=09=09=09=09 WF_REPEAT_MASK | WF_S_REPEAT_MASK,
-+=09=09=09=09=09 val);
-+=09=09if (ret)
-+=09=09=09return ret;
-+
-+=09=09ret =3D regmap_bulk_write(haptics->regmap,
-+=09=09=09=09=09haptics->base + HAP_WF_S1_REG,
-+=09=09=09=09=09wave_sample_pattern, HAP_WAVE_SAMP_LEN);
-+=09=09if (ret)
-+=09=09=09return ret;
-+=09}
-+
-+=09return 0;
-+}
-+
-+static int spmi_haptics_probe(struct platform_device *pdev)
-+{
-+=09struct spmi_haptics *haptics;
-+=09struct input_dev *input_dev;
-+=09int ret, irq;
-+
-+=09haptics =3D devm_kzalloc(&pdev->dev, sizeof(*haptics), GFP_KERNEL);
-+=09if (!haptics)
-+=09=09return -ENOMEM;
-+
-+=09haptics->regmap =3D dev_get_regmap(pdev->dev.parent, NULL);
-+=09if (!haptics->regmap)
-+=09=09return -ENODEV;
-+
-+=09haptics->dev =3D &pdev->dev;
-+
-+=09platform_set_drvdata(pdev, haptics);
-+
-+=09ret =3D device_property_read_u32(haptics->dev, "reg", &haptics->base);
-+=09if (ret)
-+=09=09return dev_err_probe(haptics->dev, ret,
-+=09=09=09=09     "Couldn't read base address");
-+
-+=09/* This is the only currently supported configuration, these values
-+=09 * are left to allow future additions
-+=09 */
-+=09haptics->actuator_type =3D HAP_TYPE_LRA;
-+=09haptics->play_mode =3D HAP_PLAY_BUFFER;
-+=09haptics->wave_shape =3D HAP_WAVE_SINE;
-+=09haptics->current_limit =3D HAP_ILIM_400_MA;
-+
-+=09ret =3D device_property_read_u32(haptics->dev, "qcom,wave-play-rate-us"=
-,
-+=09=09=09=09       &haptics->play_wave_rate);
-+=09if (ret)
-+=09=09return dev_err_probe(haptics->dev, ret,
-+=09=09=09=09     "qcom,wave-play-rate-us is required\n");
-+
-+=09INIT_WORK(&haptics->work, haptics_play_stop_work);
-+
-+=09ret =3D haptics_init(haptics);
-+=09if (ret)
-+=09=09return ret;
-+
-+=09input_dev =3D devm_input_allocate_device(&pdev->dev);
-+=09if (!input_dev)
-+=09=09return -ENOMEM;
-+
-+=09input_dev->name =3D "spmi_haptics";
-+=09input_dev->id.version =3D 1;
-+=09input_dev->close =3D spmi_haptics_close;
-+=09input_set_drvdata(input_dev, haptics);
-+
-+=09haptics->input =3D input_dev;
-+
-+=09/* In the future this should become FF_PERIODIC */
-+=09input_set_capability(haptics->input, EV_FF, FF_RUMBLE);
-+
-+=09ret =3D input_ff_create_memless(input_dev, NULL,
-+=09=09=09=09      spmi_haptics_play_effect);
-+=09if (ret)
-+=09=09return dev_err_probe(
-+=09=09=09&pdev->dev, ret,
-+=09=09=09"Couldn't register haptics as EV_FF device\n");
-+
-+=09ret =3D input_register_device(input_dev);
-+=09if (ret)
-+=09=09return dev_err_probe(&pdev->dev, ret,
-+=09=09=09=09     "Couldn't register input device\n");
-+
-+=09/* NOTE: the play IRQ is only used for buffer mode */
-+=09irq =3D platform_get_irq_byname(pdev, "play");
-+=09if (irq < 0) {
-+=09=09return dev_err_probe(&pdev->dev, irq,
-+=09=09=09=09     "Unable to get play irq\n");
-+=09}
-+=09ret =3D devm_request_threaded_irq(haptics->dev, irq, NULL,
-+=09=09=09=09=09haptics_play_irq, IRQF_ONESHOT,
-+=09=09=09=09=09"haptics_play_irq", haptics);
-+=09if (ret)
-+=09=09return dev_err_probe(haptics->dev, ret,
-+=09=09=09=09     "Couldn't request play irq\n");
-+
-+=09irq =3D platform_get_irq_byname(pdev, "short");
-+=09if (irq < 0)
-+=09=09return dev_err_probe(&pdev->dev, irq,
-+=09=09=09=09     "Unable to get short circut irq\n");
-+=09ret =3D devm_request_threaded_irq(haptics->dev, irq, NULL, haptics_sc_i=
-rq,
-+=09=09=09=09=09IRQF_ONESHOT, "haptics_short_irq",
-+=09=09=09=09=09haptics);
-+=09if (ret)
-+=09=09return dev_err_probe(haptics->dev, ret,
-+=09=09=09=09     "Couldn't request short circuit irq\n");
-+
-+=09mutex_init(&haptics->play_lock);
-+
-+=09return 0;
-+}
-+
-+static int __maybe_unused spmi_haptics_suspend(struct device *dev)
-+{
-+=09struct spmi_haptics *haptics =3D dev_get_drvdata(dev);
-+
-+=09cancel_work_sync(&haptics->work);
-+=09haptics_stop_vibrate(haptics);
-+
-+=09return 0;
-+}
-+
-+static SIMPLE_DEV_PM_OPS(spmi_haptics_pm_ops, spmi_haptics_suspend, NULL);
-+
-+static int spmi_haptics_remove(struct platform_device *pdev)
-+{
-+=09struct spmi_haptics *haptics =3D dev_get_drvdata(&pdev->dev);
-+
-+=09cancel_work_sync(&haptics->work);
-+=09mutex_destroy(&haptics->play_lock);
-+=09input_unregister_device(haptics->input);
-+
-+=09return 0;
-+}
-+
-+static void spmi_haptics_shutdown(struct platform_device *pdev)
-+{
-+=09struct spmi_haptics *haptics =3D dev_get_drvdata(&pdev->dev);
-+
-+=09cancel_work_sync(&haptics->work);
-+=09haptics_stop_vibrate(haptics);
-+}
-+
-+static const struct of_device_id spmi_haptics_match_table[] =3D {
-+=09{ .compatible =3D "qcom,pmi8998-haptics" },
-+=09{}
-+};
-+MODULE_DEVICE_TABLE(of, spmi_haptics_match_table);
-+
-+static struct platform_driver spmi_haptics_driver =3D {
-+=09.probe=09=09=3D spmi_haptics_probe,
-+=09.remove=09=09=3D spmi_haptics_remove,
-+=09.shutdown=09=3D spmi_haptics_shutdown,
-+=09.driver=09=09=3D {
-+=09=09.name=09=3D "spmi-haptics",
-+=09=09.pm=09=3D &spmi_haptics_pm_ops,
-+=09=09.of_match_table =3D spmi_haptics_match_table,
-+=09},
-+};
-+module_platform_driver(spmi_haptics_driver);
-+
-+MODULE_DESCRIPTION("spmi haptics driver using ff-memless framework");
-+MODULE_LICENSE("GPL");
-+MODULE_AUTHOR("Caleb Connolly <caleb@connolly.tech>");
---
-2.38.0
-
-
+>
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> index 83ddb190292e..f300ea2f7bf7 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> @@ -23,14 +23,6 @@ void dw_pcie_ep_linkup(struct dw_pcie_ep *ep)
+>  }
+>  EXPORT_SYMBOL_GPL(dw_pcie_ep_linkup);
+>
+> -void dw_pcie_ep_init_notify(struct dw_pcie_ep *ep)
+> -{
+> -       struct pci_epc *epc = ep->epc;
+> -
+> -       pci_epc_init_notify(epc);
+> -}
+> -EXPORT_SYMBOL_GPL(dw_pcie_ep_init_notify);
+> -
+>  struct dw_pcie_ep_func *
+>  dw_pcie_ep_get_func_from_ep(struct dw_pcie_ep *ep, u8 func_no)
+>  {
+> @@ -640,12 +632,17 @@ static unsigned int dw_pcie_ep_find_ext_capability(struct dw_pcie *pci, int cap)
+>         return 0;
+>  }
+>
+> -int dw_pcie_ep_init_complete(struct dw_pcie_ep *ep)
+> +static int dw_pcie_ep_init_late(struct dw_pcie_ep *ep)
+>  {
+>         struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+> +       struct dw_pcie_ep_func *ep_func;
+> +       struct device *dev = pci->dev;
+> +       struct pci_epc *epc = ep->epc;
+>         unsigned int offset;
+>         unsigned int nbars;
+>         u8 hdr_type;
+> +       u8 func_no;
+> +       void *addr;
+>         u32 reg;
+>         int i;
+>
+> @@ -658,6 +655,51 @@ int dw_pcie_ep_init_complete(struct dw_pcie_ep *ep)
+>                 return -EIO;
+>         }
+>
+> +       dw_pcie_version_detect(pci);
+> +
+> +       dw_pcie_iatu_detect(pci);
+> +
+> +       if (!ep->ib_window_map) {
+> +               ep->ib_window_map = devm_bitmap_zalloc(dev, pci->num_ib_windows,
+> +                                                      GFP_KERNEL);
+> +               if (!ep->ib_window_map)
+> +                       return -ENOMEM;
+> +       }
+> +
+> +       if (!ep->ob_window_map) {
+> +               ep->ob_window_map = devm_bitmap_zalloc(dev, pci->num_ob_windows,
+> +                                                      GFP_KERNEL);
+> +               if (!ep->ob_window_map)
+> +                       return -ENOMEM;
+> +       }
+> +
+> +       if (!ep->outbound_addr) {
+> +               addr = devm_kcalloc(dev, pci->num_ob_windows, sizeof(phys_addr_t),
+> +                                   GFP_KERNEL);
+> +               if (!addr)
+> +                       return -ENOMEM;
+> +               ep->outbound_addr = addr;
+> +       }
+> +
+> +       for (func_no = 0; func_no < epc->max_functions; func_no++) {
+> +
+> +               ep_func = dw_pcie_ep_get_func_from_ep(ep, func_no);
+> +               if (ep_func)
+> +                       continue;
+> +
+> +               ep_func = devm_kzalloc(dev, sizeof(*ep_func), GFP_KERNEL);
+> +               if (!ep_func)
+> +                       return -ENOMEM;
+> +
+> +               ep_func->func_no = func_no;
+> +               ep_func->msi_cap = dw_pcie_ep_find_capability(ep, func_no,
+> +                                                             PCI_CAP_ID_MSI);
+> +               ep_func->msix_cap = dw_pcie_ep_find_capability(ep, func_no,
+> +                                                              PCI_CAP_ID_MSIX);
+> +
+> +               list_add_tail(&ep_func->list, &ep->func_list);
+> +       }
+> +
+>         offset = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_REBAR);
+>
+>         dw_pcie_dbi_ro_wr_en(pci);
+> @@ -676,13 +718,28 @@ int dw_pcie_ep_init_complete(struct dw_pcie_ep *ep)
+>
+>         return 0;
+>  }
+> -EXPORT_SYMBOL_GPL(dw_pcie_ep_init_complete);
+> +
+> +int dw_pcie_ep_init_notify(struct dw_pcie_ep *ep)
+> +{
+> +       struct pci_epc *epc = ep->epc;
+> +       int ret;
+> +
+> +       ret = dw_pcie_ep_init_late(ep);
+> +       if (ret)
+> +               return ret;
+> +
+> +       if (ep->ops->ep_init_late)
+> +               ep->ops->ep_init_late(ep);
+> +
+> +       pci_epc_init_notify(epc);
+> +
+> +       return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(dw_pcie_ep_init_notify);
+>
+>  int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+>  {
+>         int ret;
+> -       void *addr;
+> -       u8 func_no;
+>         struct resource *res;
+>         struct pci_epc *epc;
+>         struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+> @@ -690,7 +747,6 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+>         struct platform_device *pdev = to_platform_device(dev);
+>         struct device_node *np = dev->of_node;
+>         const struct pci_epc_features *epc_features;
+> -       struct dw_pcie_ep_func *ep_func;
+>
+>         INIT_LIST_HEAD(&ep->func_list);
+>
+> @@ -719,26 +775,6 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+>         ep->phys_base = res->start;
+>         ep->addr_size = resource_size(res);
+>
+> -       dw_pcie_version_detect(pci);
+> -
+> -       dw_pcie_iatu_detect(pci);
+> -
+> -       ep->ib_window_map = devm_bitmap_zalloc(dev, pci->num_ib_windows,
+> -                                              GFP_KERNEL);
+> -       if (!ep->ib_window_map)
+> -               return -ENOMEM;
+> -
+> -       ep->ob_window_map = devm_bitmap_zalloc(dev, pci->num_ob_windows,
+> -                                              GFP_KERNEL);
+> -       if (!ep->ob_window_map)
+> -               return -ENOMEM;
+> -
+> -       addr = devm_kcalloc(dev, pci->num_ob_windows, sizeof(phys_addr_t),
+> -                           GFP_KERNEL);
+> -       if (!addr)
+> -               return -ENOMEM;
+> -       ep->outbound_addr = addr;
+> -
+>         if (pci->link_gen < 1)
+>                 pci->link_gen = of_pci_get_max_link_speed(np);
+>
+> @@ -755,20 +791,6 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+>         if (ret < 0)
+>                 epc->max_functions = 1;
+>
+> -       for (func_no = 0; func_no < epc->max_functions; func_no++) {
+> -               ep_func = devm_kzalloc(dev, sizeof(*ep_func), GFP_KERNEL);
+> -               if (!ep_func)
+> -                       return -ENOMEM;
+> -
+> -               ep_func->func_no = func_no;
+> -               ep_func->msi_cap = dw_pcie_ep_find_capability(ep, func_no,
+> -                                                             PCI_CAP_ID_MSI);
+> -               ep_func->msix_cap = dw_pcie_ep_find_capability(ep, func_no,
+> -                                                              PCI_CAP_ID_MSIX);
+> -
+> -               list_add_tail(&ep_func->list, &ep->func_list);
+> -       }
+> -
+>         if (ep->ops->ep_init)
+>                 ep->ops->ep_init(ep);
+>
+> @@ -793,7 +815,14 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+>                         return 0;
+>         }
+>
+> -       ret = dw_pcie_ep_init_complete(ep);
+> +       /*
+> +        * NOTE:- Avoid accessing the hardware (Ex:- DBI space) before this
+> +        * step as platforms that implement 'core_init_notifier' feature may
+> +        * not have the hardware ready (i.e. core initialized) for access
+> +        * (Ex: tegra194). Any hardware access on such platforms result
+> +        * in system hard hang.
+> +        */
+> +       ret = dw_pcie_ep_init_late(ep);
+>         if (ret)
+>                 goto err_free_epc_mem;
+>
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> index 45fcdfc8c035..7252513956b7 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> @@ -253,6 +253,7 @@ struct dw_pcie_rp {
+>
+>  struct dw_pcie_ep_ops {
+>         void    (*ep_init)(struct dw_pcie_ep *ep);
+> +       void    (*ep_init_late)(struct dw_pcie_ep *ep);
+>         int     (*raise_irq)(struct dw_pcie_ep *ep, u8 func_no,
+>                              enum pci_epc_irq_type type, u16 interrupt_num);
+>         const struct pci_epc_features* (*get_features)(struct dw_pcie_ep *ep);
+> @@ -467,8 +468,7 @@ static inline void __iomem *dw_pcie_own_conf_map_bus(struct pci_bus *bus,
+>  #ifdef CONFIG_PCIE_DW_EP
+>  void dw_pcie_ep_linkup(struct dw_pcie_ep *ep);
+>  int dw_pcie_ep_init(struct dw_pcie_ep *ep);
+> -int dw_pcie_ep_init_complete(struct dw_pcie_ep *ep);
+> -void dw_pcie_ep_init_notify(struct dw_pcie_ep *ep);
+> +int dw_pcie_ep_init_notify(struct dw_pcie_ep *ep);
+>  void dw_pcie_ep_exit(struct dw_pcie_ep *ep);
+>  int dw_pcie_ep_raise_legacy_irq(struct dw_pcie_ep *ep, u8 func_no);
+>  int dw_pcie_ep_raise_msi_irq(struct dw_pcie_ep *ep, u8 func_no,
+> @@ -490,15 +490,11 @@ static inline int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+>         return 0;
+>  }
+>
+> -static inline int dw_pcie_ep_init_complete(struct dw_pcie_ep *ep)
+> +static inline int dw_pcie_ep_init_notify(struct dw_pcie_ep *ep)
+>  {
+>         return 0;
+>  }
+>
+> -static inline void dw_pcie_ep_init_notify(struct dw_pcie_ep *ep)
+> -{
+> -}
+> -
+>  static inline void dw_pcie_ep_exit(struct dw_pcie_ep *ep)
+>  {
+>  }
+> --
+> 2.17.1
+>
