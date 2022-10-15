@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 167175FF777
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Oct 2022 02:04:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 315945FF797
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Oct 2022 02:20:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229607AbiJOAED (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Oct 2022 20:04:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43590 "EHLO
+        id S229720AbiJOAUO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Oct 2022 20:20:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbiJOAEC (ORCPT
+        with ESMTP id S229600AbiJOAUM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Oct 2022 20:04:02 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE1DF4F3A4;
-        Fri, 14 Oct 2022 17:04:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1665792242; x=1697328242;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=5SDFFFA/FLhrANZV8QudiOYr7nwieAS8bXuy11w3Jeo=;
-  b=gxZQre4yUF/sN8vBmJr9VFgwvi5ABYzc9FKC2LGpZJFsxPWkzwvya4RB
-   WL0Dv8c5IURhvsPD8XI6Kdw6MSM8HV1Ce/OLJXtCzgnFfgV8e3xB1Z4u3
-   Td4P2GlxhjWtJBDfrQH3xMJnAf5WfFurDtL/l//aH2Knb2jXGpYdhlS24
-   o=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 14 Oct 2022 17:04:01 -0700
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2022 17:04:01 -0700
-Received: from [10.110.77.177] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Fri, 14 Oct
- 2022 17:04:01 -0700
-Message-ID: <3ff4d91d-3f85-12bb-e826-f053db662e17@quicinc.com>
-Date:   Fri, 14 Oct 2022 17:04:00 -0700
+        Fri, 14 Oct 2022 20:20:12 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85F9D2ED75;
+        Fri, 14 Oct 2022 17:20:10 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3D639B82454;
+        Sat, 15 Oct 2022 00:20:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3815C433D7;
+        Sat, 15 Oct 2022 00:20:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1665793208;
+        bh=DLWGZUFypnQ4qJlqqqtH3Qnp1z+7q42ZDrSIyieCc8g=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=mllW1ZnrQ4EDhPWJhgVvnsWecaadIuLz2ioGthtSsax+ri6AaDEEh+OLQiuK7MeFW
+         novruXrSMi1zh0pwTh2rAkMB8fQderiZGYwv6fMNtLqBngOITkIqjuE8d5k0Ir/6n8
+         TLJrc5UuW2+eF31iy2+AAtNNVM7c+j/eQqrXDObnIo6ay+LVdK2/ft/NIV23V6rwP0
+         WrLNtcqguxV4exUt3ViT3T2q+Qw1I+Ao6xdKX9YJp5YKzTzUEKd9Nv+cvmKZ8kyp/6
+         CKO4A9/zFSjLgB4VgVrHXnFwnpTusO6ah8AxDe8graqUOMcdess4xk4XM6HVLVubT1
+         Hi6TMK1Lka/2A==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v2 0/3] Add base device tree files for QDU1000/QRU1000
-Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20221014221011.7360-4-quic_molvera@quicinc.com>
+References: <20221014221011.7360-1-quic_molvera@quicinc.com> <20221014221011.7360-4-quic_molvera@quicinc.com>
+Subject: Re: [PATCH v2 3/6] clk: qcom: branch: Add BRANCH_HALT_INVERT flag support for branch clocks
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Marc Zyngier <maz@kernel.org>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20221014221138.7552-1-quic_molvera@quicinc.com>
-From:   Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <20221014221138.7552-1-quic_molvera@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        Thomas Gleixner <tglx@linutronix.de>
+Date:   Fri, 14 Oct 2022 17:20:06 -0700
+User-Agent: alot/0.10
+Message-Id: <20221015002007.E3815C433D7@smtp.kernel.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,49 +63,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Quoting Melody Olvera (2022-10-14 15:10:08)
+> diff --git a/drivers/clk/qcom/clk-branch.c b/drivers/clk/qcom/clk-branch.c
+> index f869fc6aaed6..b5dc1f4ef277 100644
+> --- a/drivers/clk/qcom/clk-branch.c
+> +++ b/drivers/clk/qcom/clk-branch.c
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  /*
+>   * Copyright (c) 2013, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reser=
+ved.
+>   */
+> =20
+>  #include <linux/kernel.h>
+> @@ -56,6 +57,10 @@ static bool clk_branch2_check_halt(const struct clk_br=
+anch *br, bool enabling)
+> =20
+>         if (enabling) {
+>                 val &=3D mask;
+> +
+> +               if (br->halt_check =3D=3D BRANCH_HALT_INVERT)
+> +                       return (val & BRANCH_CLK_OFF) =3D=3D BRANCH_CLK_O=
+FF;
+> +
+>                 return (val & BRANCH_CLK_OFF) =3D=3D 0 ||
+>                         val =3D=3D BRANCH_NOC_FSM_STATUS_ON;
+>         } else {
+> diff --git a/drivers/clk/qcom/clk-branch.h b/drivers/clk/qcom/clk-branch.h
+> index 17a58119165e..4ac1debeb91e 100644
+> --- a/drivers/clk/qcom/clk-branch.h
+> +++ b/drivers/clk/qcom/clk-branch.h
+> @@ -1,5 +1,6 @@
+>  /* SPDX-License-Identifier: GPL-2.0 */
+>  /* Copyright (c) 2013, The Linux Foundation. All rights reserved. */
+> +/* Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reser=
+ved. */
+> =20
+>  #ifndef __QCOM_CLK_BRANCH_H__
+>  #define __QCOM_CLK_BRANCH_H__
+> @@ -33,6 +34,7 @@ struct clk_branch {
+>  #define BRANCH_HALT_ENABLE_VOTED       (BRANCH_HALT_ENABLE | BRANCH_VOTE=
+D)
+>  #define BRANCH_HALT_DELAY              2 /* No bit to check; just delay =
+*/
+>  #define BRANCH_HALT_SKIP               3 /* Don't check halt bit */
+> +#define BRANCH_HALT_INVERT             4 /* Invert logic for halt bit */
 
-
-On 10/14/2022 3:11 PM, Melody Olvera wrote:
-> This series adds the base device tree files and DTS support for the
-> Qualcomm QDU1000 and QRU1000 IDP SoCs, including the clocks, tlmm, smmu,
-> regulators, mmc, interconnects, cpufreq, and qup. 
->
-> This patchset is based off of [1] which adds support for the PMIC arb used
-> on these SoCs.
->
-> The Qualcomm Technologies, Inc. Distributed Unit 1000 and Radio Unit
-> 1000 are new SoCs meant for enabling Open RAN solutions. See more at
-> https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/documents/qualcomm_5g_ran_platforms_product_brief.pdf
->
-> [1] https://lore.kernel.org/all/20220914165212.3705892-3-vkoul@kernel.org/
-Changes from v1:
-- squashed dtsi changes and dts changes into one commit each
-- changed qdru to qdu and used qru dtsi file for changes from qdu
-- removed underscores from node names
-- revised idle states and domain idle states
-- sorted devices by addr
-- removed undocumented fields
-- fixed pin functions
-- revised regulator node names
->
-> Melody Olvera (3):
->   dt-bindings: arm: qcom: Document QDU1000/QRU1000 SoCs and boards
->   arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
->   arm64: dts: qcom: Add base QDU1000/QRU1000 IDP DTs
->
->  .../devicetree/bindings/arm/qcom.yaml         |   16 +
->  arch/arm64/boot/dts/qcom/Makefile             |    2 +
->  arch/arm64/boot/dts/qcom/qdu1000-idp.dts      |  230 +++
->  arch/arm64/boot/dts/qcom/qdu1000.dtsi         | 1646 +++++++++++++++++
->  arch/arm64/boot/dts/qcom/qru1000-idp.dts      |  230 +++
->  arch/arm64/boot/dts/qcom/qru1000.dtsi         |   27 +
->  6 files changed, 2151 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/qru1000-idp.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/qru1000.dtsi
->
->
-> base-commit: dca0a0385a4963145593ba417e1417af88a7c18d
-> prerequisite-patch-id: 5e7a02607aecd3f5346a2f450982601cf6935e54
-
+How is it different from BRANCH_HALT vs. BRANCH_HALT_ENABLE?
