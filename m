@@ -2,126 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B141F60026E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Oct 2022 19:30:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AB7960027D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Oct 2022 19:36:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229979AbiJPRaT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Oct 2022 13:30:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44388 "EHLO
+        id S229970AbiJPRgb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Oct 2022 13:36:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229944AbiJPRaR (ORCPT
+        with ESMTP id S230049AbiJPRgb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Oct 2022 13:30:17 -0400
-Received: from proxmox1.postmarketos.org (proxmox1.postmarketos.org [213.239.216.189])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 1AEA12408D;
-        Sun, 16 Oct 2022 10:30:17 -0700 (PDT)
-Received: from localhost.localdomain (cpc76482-cwma10-2-0-cust629.7-3.cable.virginm.net [86.14.22.118])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by proxmox1.postmarketos.org (Postfix) with ESMTPSA id 1A3D01402C8;
-        Sun, 16 Oct 2022 17:30:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-        s=donut; t=1665941416; h=from:from:reply-to:reply-to:subject:subject:date:date:
-         message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=vLIoAuk5Ni3RxK9d6sJqHBNqJqsK4ckapijd/uqW65Q=;
-        b=i8Ilo4hwcW4IvTuYvbiwaJs+IWdrZvzWjjiuMzCfZbLHGiZd+GHB6TU78gyTKaQbRq0S7B
-        1bonmIoYKPNvqiHWPBLTJ9d4J2ltbA1GxmZLy9vGDERkYBPRJvo6BwlBZrj/AGygusz+mz
-        K4ju3uF805qTcGMQ82UJ166a9NtHC34=
-From:   Caleb Connolly <kc@postmarketos.org>
-To:     caleb@connolly.tech
-Cc:     Andy Gross <agross@kernel.org>,
+        Sun, 16 Oct 2022 13:36:31 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBF792EF3D
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Oct 2022 10:36:28 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id l19so6277520qvu.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Oct 2022 10:36:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=33yORBvP8CyROZDGO3XsviIiyoyghI9p2jQ7nrsYpb0=;
+        b=vX4xk5pz42QKRJCls5ByhGA2iaXQPvuj1jjpnKX6lGa/PPSKPmuGuI5rkG2RcezTuz
+         UxoJ86ntFosaMdxRFnec3Zv9TQV1GcnHhUqNQ/uTCA67JjMDlLdoCOmgWfb38VRhDMAo
+         3njgwLbq1hQqBMH1ECqqm2mskKyJKp9hkxFh9eqdD5ZNa6K+dNjlwEt4lh7uXxeAo0sf
+         Bw26fHoP9jgEkIfCmRNDFF04f06zwxZKnFZH7FGuXVLMtu+vZByu/rg9Sy3TPFRka08M
+         PKtDKfH6Z2SY1TiVJojJj/8eDJjk21fG/zNWnVncDxUwL1y7bg38u3Doyii1cVpmQm0N
+         /LZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=33yORBvP8CyROZDGO3XsviIiyoyghI9p2jQ7nrsYpb0=;
+        b=hezFcku89Mz14Nzh7b05nP7h+EIEHComoXtAEKxUa9q3eauswwhpOBoDpiC2lK3XtU
+         13uHelfJCiJZxY6Uz/xxJz4cx1nPXQvKL1xqdgCz5wL02m68znXXewj+tviz24EHW26s
+         ELCH18IdHw9cVVC6cjChYS/I8y/gt5C+6lmFWrI0ANDGE97I4QSfuTv2q9hicQZpfQ1f
+         PV/ITzvMZzsa/HQ1GV2YZab0MkE15YwjkdIFQIvF0OwrYjx+52Pb/EF8qIUIsK/NIvV3
+         kgdc5oYDLs5/n1PLRyZ6m5cjMdJYwipnCk0RlYX4X6vx97JGQPx1Vg/hGu1XTgXh6FUd
+         8rBg==
+X-Gm-Message-State: ACrzQf1SK05z/Y7JDC/UFc3LQxUskHoepWrx7otCeHNk6tAFpFHjYzsl
+        nN3KV8QIuSC8QBCPbxbt55FXgA==
+X-Google-Smtp-Source: AMsMyM4MPWCtFWj364OqCk4Za8oFnohWBlCXHg9o98iEqt4JY41nuGriJ+NdhbHOSISDSCx6gVuUaA==
+X-Received: by 2002:a05:6214:501e:b0:4b3:d08f:b58c with SMTP id jo30-20020a056214501e00b004b3d08fb58cmr5901540qvb.90.1665941788178;
+        Sun, 16 Oct 2022 10:36:28 -0700 (PDT)
+Received: from krzk-bin.hsd1.pa.comcast.net ([2601:42:0:3450:9b13:d679:7b5b:6921])
+        by smtp.gmail.com with ESMTPSA id u14-20020a05620a0c4e00b006cfc4744589sm7640259qki.128.2022.10.16.10.36.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 Oct 2022 10:36:27 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        devicetree@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>
-Subject: [PATCH v2 3/3] arm64: dts: qcom: sdm845-*: fix uart6 aliases
-Date:   Sun, 16 Oct 2022 18:29:43 +0100
-Message-Id: <20221016172944.1892206-4-kc@postmarketos.org>
-X-Mailer: git-send-email 2.38.0
-In-Reply-To: <20221016172944.1892206-1-kc@postmarketos.org>
-References: <20221016172944.1892206-1-kc@postmarketos.org>
-Reply-To: Caleb Connolly <caleb@connolly.tech>
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] dt-bindings: pinctrl: qcom: drop minItems equal to maxItems
+Date:   Sun, 16 Oct 2022 13:36:25 -0400
+Message-Id: <20221016173625.53769-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Caleb Connolly <caleb@connolly.tech>
+If minItems are missing, they are implicitly equal to maxItems.
+Dropping redundant minItems simplifies a bit the binding.
 
-Some devices have been using hsuart0 as an alias for the bluetooth UART,
-rename this to serial1
-
-Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi           | 2 +-
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts           | 2 +-
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi  | 2 +-
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ .../bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml          | 1 -
+ Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml  | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-index 923d5d681daa..a8ae6de51af4 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-@@ -16,7 +16,7 @@
- / {
- 	aliases {
- 		bluetooth0 = &bluetooth;
--		hsuart0 = &uart6;
-+		serial1 = &uart6;
- 		serial0 = &uart9;
- 		wifi0 = &wifi;
- 	};
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index f87b1e2025b6..215dd8098a44 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -22,7 +22,7 @@ / {
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
+index 8270debd4f25..f7ec8a4f664f 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
+@@ -23,7 +23,6 @@ properties:
+     type: boolean
  
- 	aliases {
- 		serial0 = &uart9;
--		hsuart0 = &uart6;
-+		serial1 = &uart6;
- 	};
+   reg:
+-    minItems: 2
+     maxItems: 2
  
- 	chosen {
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 02ec0fa4e5f0..5d99908d4628 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -19,7 +19,7 @@
- / {
- 	aliases {
- 		serial0 = &uart9;
--		hsuart0 = &uart6;
-+		serial1 = &uart6;
- 	};
+   gpio-controller: true
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml
+index 51bae1d3f150..164f24db8b2b 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml
+@@ -18,7 +18,6 @@ properties:
+     const: qcom,sm6115-tlmm
  
- 	chosen {
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-index 5dde27b7daf2..1646db2328d4 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-@@ -35,7 +35,7 @@ / {
- 	qcom,msm-id = <321 0x20001>;
+   reg:
+-    minItems: 3
+     maxItems: 3
  
- 	aliases {
--		hsuart0 = &uart6;
-+		serial1 = &uart6;
- 	};
- 
- 	gpio-keys {
+   reg-names:
 -- 
-2.38.0
+2.34.1
 
