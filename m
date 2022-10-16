@@ -2,192 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 540305FFFDE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Oct 2022 16:36:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 186195FFFE8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Oct 2022 16:48:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229661AbiJPOgg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Oct 2022 10:36:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35518 "EHLO
+        id S229687AbiJPOsF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Oct 2022 10:48:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229577AbiJPOgf (ORCPT
+        with ESMTP id S229608AbiJPOsE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Oct 2022 10:36:35 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4F081A04A;
-        Sun, 16 Oct 2022 07:36:33 -0700 (PDT)
-Received: from g550jk.arnhem.chello.nl (31-151-115-246.dynamic.upc.nl [31.151.115.246])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 85E1FC78D1;
-        Sun, 16 Oct 2022 14:36:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1665930960; bh=FxEdVcMBYUuVeXSvY5pDonQ9Ob7oMZManOuvVk91svE=;
-        h=From:To:Cc:Subject:Date;
-        b=MMI3FMcgS0YvC7HS/awU8O3r/VpdW9MjCW++Fuza6o7aPNbgG5bquc7lDRA25ChAk
-         n/YFi5sxNQT5LW+fhTWO8E2dM1kviBa+iO+kvr4wBva1vVhapy2wxbXdRRxG61Aj8d
-         MRLMC23oGQNpAKsd+CVjVpQKMMrn//hOZ5c9+w7I=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+        Sun, 16 Oct 2022 10:48:04 -0400
+Received: from proxmox1.postmarketos.org (proxmox1.postmarketos.org [213.239.216.189])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 698662AC62;
+        Sun, 16 Oct 2022 07:48:03 -0700 (PDT)
+Received: from localhost.localdomain (cpc76482-cwma10-2-0-cust629.7-3.cable.virginm.net [86.14.22.118])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by proxmox1.postmarketos.org (Postfix) with ESMTPSA id 078351401FE;
+        Sun, 16 Oct 2022 14:47:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+        s=donut; t=1665931680;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=hEmvd+bLXZkxs7tcafb47/EuNnXtF1xF7FdoA1UFwEg=;
+        b=cCEbjqP0ukPYqrd/2k/4yAWSjVrV+PmyqbpczV5rLaEaEbIV4AovGSKL1SYAe+qD5ByWZ6
+        QebMENFawCPWPp6/Z+1mQgPLitj1tSbjFq3qNLettPg3TdCDmt/cXGzeOH+ffLmVMbNpH7
+        hWYPTAig7KamU8YT7Z0j2+B65oZfT8A=
+From:   Caleb Connolly <kc@postmarketos.org>
+To:     caleb@connolly.tech
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        devicetree@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] dt-bindings: clock: Convert qcom,lcc to DT schema
-Date:   Sun, 16 Oct 2022 16:35:13 +0200
-Message-Id: <20221016143514.612851-1-luca@z3ntu.xyz>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>
+Subject: [RESEND PATCH 0/7] arm64: dts: qcom: sdm845: commonize bluetooth pinconf
+Date:   Sun, 16 Oct 2022 15:47:06 +0100
+Message-Id: <20221016144714.1742824-1-kc@postmarketos.org>
 X-Mailer: git-send-email 2.38.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        FROM_SUSPICIOUS_NTLD_FP,PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: *
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the text bindings for the lcc to yaml format. Doing this showed
-that clocks and clock-names were not documented, so fix that now.
+From: Caleb Connolly <caleb@connolly.tech>
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
-Changes in v2:
-- drop minItems for clocks (as it equals maxItems)
-- drop "binding" word from title
+[resending from a different address as protonmail keeps deleting In-Reply-To headers]
 
- .../devicetree/bindings/clock/qcom,lcc.txt    | 22 -----
- .../devicetree/bindings/clock/qcom,lcc.yaml   | 86 +++++++++++++++++++
- 2 files changed, 86 insertions(+), 22 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/clock/qcom,lcc.txt
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,lcc.yaml
+This series commonises the 4-pin pinconf used by almost all devices which have have
+Bluetooth on uart6 and removes the node from individual device DTS files.
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,lcc.txt b/Documentation/devicetree/bindings/clock/qcom,lcc.txt
-deleted file mode 100644
-index a3c78aa88038..000000000000
---- a/Documentation/devicetree/bindings/clock/qcom,lcc.txt
-+++ /dev/null
-@@ -1,22 +0,0 @@
--Qualcomm LPASS Clock & Reset Controller Binding
--------------------------------------------------
--
--Required properties :
--- compatible : shall contain only one of the following:
--
--			"qcom,lcc-msm8960"
--			"qcom,lcc-apq8064"
--			"qcom,lcc-ipq8064"
--			"qcom,lcc-mdm9615"
--
--- reg : shall contain base register location and length
--- #clock-cells : shall contain 1
--- #reset-cells : shall contain 1
--
--Example:
--	clock-controller@28000000 {
--		compatible = "qcom,lcc-ipq8064";
--		reg = <0x28000000 0x1000>;
--		#clock-cells = <1>;
--		#reset-cells = <1>;
--	};
-diff --git a/Documentation/devicetree/bindings/clock/qcom,lcc.yaml b/Documentation/devicetree/bindings/clock/qcom,lcc.yaml
-new file mode 100644
-index 000000000000..8c783823e93c
---- /dev/null
-+++ b/Documentation/devicetree/bindings/clock/qcom,lcc.yaml
-@@ -0,0 +1,86 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/clock/qcom,lcc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm LPASS Clock & Reset Controller
-+
-+maintainers:
-+  - Bjorn Andersson <andersson@kernel.org>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,lcc-apq8064
-+      - qcom,lcc-ipq8064
-+      - qcom,lcc-mdm9615
-+      - qcom,lcc-msm8960
-+
-+  clocks:
-+    maxItems: 8
-+
-+  clock-names:
-+    maxItems: 8
-+
-+  '#clock-cells':
-+    const: 1
-+
-+  '#reset-cells':
-+    const: 1
-+
-+  reg:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - '#clock-cells'
-+  - '#reset-cells'
-+
-+additionalProperties: false
-+
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,lcc-apq8064
-+              - qcom,lcc-msm8960
-+    then:
-+      properties:
-+        clocks:
-+          items:
-+            - description: Board PXO source
-+            - description: PLL 4 Vote clock
-+            - description: MI2S codec clock
-+            - description: Mic I2S codec clock
-+            - description: Mic I2S spare clock
-+            - description: Speaker I2S codec clock
-+            - description: Speaker I2S spare clock
-+            - description: PCM codec clock
-+
-+        clock-names:
-+          items:
-+            - const: pxo
-+            - const: pll4_vote
-+            - const: mi2s_codec_clk
-+            - const: codec_i2s_mic_codec_clk
-+            - const: spare_i2s_mic_codec_clk
-+            - const: codec_i2s_spkr_codec_clk
-+            - const: spare_i2s_spkr_codec_clk
-+            - const: pcm_codec_clk
-+
-+      required:
-+        - clocks
-+        - clock-names
-+
-+examples:
-+  - |
-+    clock-controller@28000000 {
-+        compatible = "qcom,lcc-ipq8064";
-+        reg = <0x28000000 0x1000>;
-+        #clock-cells = <1>;
-+        #reset-cells = <1>;
-+    };
+It also updates the old hsuart alias definitions to serial1. I'm happy to drop this if it
+may causes issues with userspace, but it seemed to make sense to throw in while we're at it.
+
+This is a followup to Dmitry's suggestion on an earlier patch:
+https://lore.kernel.org/all/CAA8EJpqz32_LxmBVbcLt0sV=e1JzGtWEmMsKsQNoZzuGgLWbBQ@mail.gmail.com/
+
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Caleb Connolly (6):
+  arm64: dts: qcom: sdm845: commonize bluetooth UART pinmux
+  arm64: dts: qcom: sdm845-cheza: commonize uart6 pinconf
+  arm64: dts: qcom: sdm845-db845c: commonize uart6 pinconf
+  arm64: dts: qcom: sdm845-oneplus-common: commonize uart6 pinconf
+  arm64: dts: qcom: sdm845-xiaomi-beryllium: commonize uart6 pinconf
+  arm64: dts: qcom: sdm845-xiaomi-polaris: commonize uart6 pinconf
+
+Dylan Van Assche (1):
+  arm64: dts: qcom: sdm845-shift-axolotl: fix Bluetooth firmware loading
+
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi    | 39 ++-----------------
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts    | 27 ++-----------
+ .../boot/dts/qcom/sdm845-oneplus-common.dtsi  | 30 ++------------
+ .../boot/dts/qcom/sdm845-shift-axolotl.dts    |  9 +++++
+ .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 29 ++------------
+ .../boot/dts/qcom/sdm845-xiaomi-polaris.dts   | 27 +------------
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 23 +++++++++++
+ 7 files changed, 46 insertions(+), 138 deletions(-)
+
 -- 
 2.38.0
 
