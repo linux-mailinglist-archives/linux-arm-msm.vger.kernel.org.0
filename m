@@ -2,290 +2,227 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E796600123
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Oct 2022 18:16:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96D85600135
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Oct 2022 18:23:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229845AbiJPQQK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Oct 2022 12:16:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45452 "EHLO
+        id S229942AbiJPQXj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Oct 2022 12:23:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229763AbiJPQQI (ORCPT
+        with ESMTP id S229891AbiJPQXd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Oct 2022 12:16:08 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1AF8624F;
-        Sun, 16 Oct 2022 09:16:06 -0700 (PDT)
-Received: from g550jk.arnhem.chello.nl (31-151-115-246.dynamic.upc.nl [31.151.115.246])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 16617CE594;
-        Sun, 16 Oct 2022 16:16:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1665936965; bh=/o6J0l5x0I1EKZzlMMKLf+DDJOoiSCtcgUSlTGCz/oE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=yXzvf4FmCslYJsLyaK+DwCcpDCzPJsdDaUdAtp7ExfRwlohzzVQ1eg78nTa+fM3oN
-         /pnyV0gKhwgT5GSANAk6CklVClQLbzxA+IwZ+nF66j1nNKoeQnbAX/VvYasHwBZNl8
-         F6XEJ+2vDCZ1JlG6s9nvk7BfGMiBpSnlx/KO24hQ=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+        Sun, 16 Oct 2022 12:23:33 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4EBE36DDC
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Oct 2022 09:23:31 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id b25so5403689qkk.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Oct 2022 09:23:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MX65gOaIT08XY4M5cn1g7cbmh/RnvIq8wli6SwXMtBg=;
+        b=p66SBm+jxcoSdZGKJv7ohAq+81+Wn8YhnMz8iueTmtobse4/DkXueovkEUAUaCkUu6
+         WVm/9HPU515u6TG0YAJiCNF1ofIRPqDK8Q9CyDVKliN69cgHRFabsOCxYaeuk4+rLYMz
+         Uh6IwFRMQQakirGwlhoxDQ8k5+w4YxLuaaHMs+zwPgBjDY5+lUr7nUiNuGJIgAyK7KSO
+         k9XhPBuImxFy62joLKYvUVC8icWt2L6w4AK/jqbKNg8a0V52eod7KTVCgYXp5rYKKWQ3
+         z/+kWcCPQg/y2JNutjffp7bFIhMhUNHM0GhPHh4vsLeRMaMCaF3eyGrcM+Qh0rztXVP2
+         q0rQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MX65gOaIT08XY4M5cn1g7cbmh/RnvIq8wli6SwXMtBg=;
+        b=3GI7y9XcRwkXd6ssnt7TilrxbBi2D3dBiHJ1G41+sbIiWhhmu6fZaOuHw6hy0pZKQb
+         OS8yFvJnAN+ZCRB0GQUZzd+dq1OpMD2eX1+bYMjka7iSN9/tw/cLnF9Ws9NACr64HL4N
+         2PZipwhFUrcK7ygLL63fkThviuFu5jp86wI9cUU8yXg4SBrRPjUkTBw6juNvKJMQ4GQ9
+         26It4zDSVAeyQ07p9Sb1XfMMkhY+KvVQFo3JKzZGw8pwglHCp+JKXwPH55m/BB7ubvjC
+         N+sBFYw9caFxoD5bRlVstDMbuHrf2WnU7px89HtsQpW4J74Uq4IblaoJ1QjNcP7aKY/d
+         pakA==
+X-Gm-Message-State: ACrzQf0al/HTiu81RxL8v9V5R7fjlqcaGhGFFdMXVRyj5jYaKz2p6ZDt
+        az5E9Gp7tUgZE7mN9iGUccegUg==
+X-Google-Smtp-Source: AMsMyM7Fe2XdLHMwVi3SxpUC+8uRYLyaZr1loOQzqOHB/PYzX8BlQ7wQ8d2rt0Y1ba72gdby5qnCjw==
+X-Received: by 2002:a37:2d04:0:b0:6e7:4f3f:140e with SMTP id t4-20020a372d04000000b006e74f3f140emr4930915qkh.187.1665937410874;
+        Sun, 16 Oct 2022 09:23:30 -0700 (PDT)
+Received: from ?IPV6:2601:42:0:3450:9b13:d679:7b5b:6921? ([2601:42:0:3450:9b13:d679:7b5b:6921])
+        by smtp.gmail.com with ESMTPSA id bb33-20020a05622a1b2100b00399fe4aac3esm6042064qtb.50.2022.10.16.09.23.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 16 Oct 2022 09:23:29 -0700 (PDT)
+Message-ID: <fe7a6720-1bf6-bc66-22d2-225cb6e575ff@linaro.org>
+Date:   Sun, 16 Oct 2022 12:23:28 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sc7180: align TLMM pin
+ configuration with DT schema
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v4 3/3] arm64: dts: qcom: msm8953: add MDSS
-Date:   Sun, 16 Oct 2022 18:15:53 +0200
-Message-Id: <20221016161554.673006-4-luca@z3ntu.xyz>
-X-Mailer: git-send-email 2.38.0
-In-Reply-To: <20221016161554.673006-1-luca@z3ntu.xyz>
-References: <20221016161554.673006-1-luca@z3ntu.xyz>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+References: <20221013184700.87260-1-krzysztof.kozlowski@linaro.org>
+ <20221013184700.87260-2-krzysztof.kozlowski@linaro.org>
+ <CAD=FV=VyrCA4jNkfVGwRw2Zf-sCwJe21dRHidtZnJyb73i_UrQ@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAD=FV=VyrCA4jNkfVGwRw2Zf-sCwJe21dRHidtZnJyb73i_UrQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vladimir Lypak <vladimir.lypak@gmail.com>
+On 14/10/2022 13:50, Doug Anderson wrote:
+> Hi,
+> 
+> On Thu, Oct 13, 2022 at 11:49 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>> index eae22e6e97c1..37abe131951c 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> 
+> [ ... cut ... ]
+> 
+>>  &spi0 {
+>> -       pinctrl-0 = <&qup_spi0_cs_gpio_init_high>, <&qup_spi0_cs_gpio>;
+>> +       pinctrl-0 = <&qup_spi0_cs_gpio_init_high>, <&qup_spi0_spi>;
+>>         cs-gpios = <&tlmm 37 GPIO_ACTIVE_LOW>;
+>>  };
+> 
+> Something still looks wrong with the above. I would have expected:
+> 
+>   <&qup_spi0_cs_gpio_init_high>, <&qup_spi0_spi>, <&qup_spi0_cs_gpio>;
 
-Add the MDSS, MDP and DSI nodes that are found on msm8953 SoC.
+Yes, you're right.
 
-Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
-Changes since v3:
-- rename dsi-phy@ to phy@
-- drop phy-names
-- use double compatible for qcom,mdp5
+> 
+> Specifically the old commit e440e30e26dd ("arm64: dts: qcom: sc7180:
+> Avoid glitching SPI CS at bootup on trogdor") only worked correctly
+> because "qup_spi0_cs_gpio_init_high" didn't specify a "function".
+> That meant it was guaranteed to _just_ set the GPIO output to be
+> high without changing the mux. Then later we'd change the mux and
+> the output would already be high and we'd have no glitch.
+> 
+> As I mentioned earlier, I didn't love that solution but I didn't
+> see a better way. Specifically, I don't think that the properties
+> within a device tree node are ordered. Thus with your new definition:
+> 
+>   qup_spi0_cs_gpio_init_high: qup-spi0-cs-gpio-init-high-state {
+>     pins = "gpio37";
+>     function = "gpio";
+>     output-high;
+>   };
+> 
+> Nothing tells the pinctrl subsystem whether it should apply the
+> 'output-high' before the 'function = "gpio"' or vice versa. From
+> my previous investigation it seemed to set the function first
+> and then the output to be high. Maybe that's because I happened
+> to list the function first, but I wouldn't have thought it was
+> legal to rely on the ordering of properties.
+> 
+> On the other hand, values within a property _are_ ordered. That
+> means that when we specify:
+> 
+>  <&qup_spi0_cs_gpio_init_high>, <&qup_spi0_spi>, <&qup_spi0_cs_gpio>;
+> 
+> The pinctrl subsystem can see that we want "init_high" done first,
+> then the SPI pins setup, and then the GPIO setup.
+> 
+> I confirmed that with your patches applied that the EC was reporting
+> a glitch, though I haven't (yet) managed to reproduce the cros-ec
+> probe failure that we were seeing in the past.
+> 
+> Unfortunately, I then reverted your patches and the EC was _still_
+> glitching. :( It looks like things broke in commit b991f8c3622c ("pinctrl:
+> core: Handling pinmux and pinconf separately"). :( Sure enough,
+> reverting that patch fixes the glitching.
 
- arch/arm64/boot/dts/qcom/msm8953.dtsi | 208 ++++++++++++++++++++++++++
- 1 file changed, 208 insertions(+)
+Regardless of this issue, binding requiring a function does not allow to
+keep the pin in previous state. Your glitch-workaround was actually an
+use-case for such keep-old-function feature.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-index 6d9a2a34737d..707477e4254c 100644
---- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-@@ -726,6 +726,214 @@ tcsr_phy_clk_scheme_sel: syscon@193f044 {
- 			reg = <0x193f044 0x4>;
- 		};
- 
-+		mdss: mdss@1a00000 {
-+			compatible = "qcom,mdss";
-+
-+			reg = <0x1a00000 0x1000>,
-+			      <0x1ab0000 0x1040>;
-+			reg-names = "mdss_phys",
-+				    "vbif_phys";
-+
-+			power-domains = <&gcc MDSS_GDSC>;
-+			interrupts = <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			interrupt-controller;
-+			#interrupt-cells = <1>;
-+
-+			clocks = <&gcc GCC_MDSS_AHB_CLK>,
-+				 <&gcc GCC_MDSS_AXI_CLK>,
-+				 <&gcc GCC_MDSS_VSYNC_CLK>,
-+				 <&gcc GCC_MDSS_MDP_CLK>;
-+			clock-names = "iface",
-+				      "bus",
-+				      "vsync",
-+				      "core";
-+
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges;
-+
-+			status = "disabled";
-+
-+			mdp: mdp@1a01000 {
-+				compatible = "qcom,msm8953-mdp5", "qcom,mdp5";
-+				reg = <0x1a01000 0x89000>;
-+				reg-names = "mdp_phys";
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <0>;
-+
-+				power-domains = <&gcc MDSS_GDSC>;
-+
-+				clocks = <&gcc GCC_MDSS_AHB_CLK>,
-+					 <&gcc GCC_MDSS_AXI_CLK>,
-+					 <&gcc GCC_MDSS_MDP_CLK>,
-+					 <&gcc GCC_MDSS_VSYNC_CLK>;
-+				clock-names = "iface",
-+					      "bus",
-+					      "core",
-+					      "vsync";
-+
-+				iommus = <&apps_iommu 0x15>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						mdp5_intf1_out: endpoint {
-+							remote-endpoint = <&dsi0_in>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						mdp5_intf2_out: endpoint {
-+							remote-endpoint = <&dsi1_in>;
-+						};
-+					};
-+				};
-+			};
-+
-+			dsi0: dsi@1a94000 {
-+				compatible = "qcom,mdss-dsi-ctrl";
-+				reg = <0x1a94000 0x400>;
-+				reg-names = "dsi_ctrl";
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <4>;
-+
-+				assigned-clocks = <&gcc BYTE0_CLK_SRC>,
-+						  <&gcc PCLK0_CLK_SRC>;
-+				assigned-clock-parents = <&dsi0_phy 0>,
-+							 <&dsi0_phy 1>;
-+
-+				clocks = <&gcc GCC_MDSS_MDP_CLK>,
-+					 <&gcc GCC_MDSS_AHB_CLK>,
-+					 <&gcc GCC_MDSS_AXI_CLK>,
-+					 <&gcc GCC_MDSS_BYTE0_CLK>,
-+					 <&gcc GCC_MDSS_PCLK0_CLK>,
-+					 <&gcc GCC_MDSS_ESC0_CLK>;
-+				clock-names = "mdp_core",
-+					      "iface",
-+					      "bus",
-+					      "byte",
-+					      "pixel",
-+					      "core";
-+
-+				phys = <&dsi0_phy>;
-+
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				status = "disabled";
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						dsi0_in: endpoint {
-+							remote-endpoint = <&mdp5_intf1_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						dsi0_out: endpoint {
-+						};
-+					};
-+				};
-+			};
-+
-+			dsi0_phy: phy@1a94400 {
-+				compatible = "qcom,dsi-phy-14nm-8953";
-+				reg = <0x1a94400 0x100>,
-+				      <0x1a94500 0x300>,
-+				      <0x1a94800 0x188>;
-+				reg-names = "dsi_phy",
-+					    "dsi_phy_lane",
-+					    "dsi_pll";
-+
-+				#clock-cells = <1>;
-+				#phy-cells = <0>;
-+
-+				clocks = <&gcc GCC_MDSS_AHB_CLK>, <&xo_board>;
-+				clock-names = "iface", "ref";
-+
-+				status = "disabled";
-+			};
-+
-+			dsi1: dsi@1a96000 {
-+				compatible = "qcom,mdss-dsi-ctrl";
-+				reg = <0x1a96000 0x400>;
-+				reg-names = "dsi_ctrl";
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <5>;
-+
-+				assigned-clocks = <&gcc BYTE1_CLK_SRC>,
-+						  <&gcc PCLK1_CLK_SRC>;
-+				assigned-clock-parents = <&dsi1_phy 0>,
-+							 <&dsi1_phy 1>;
-+
-+				clocks = <&gcc GCC_MDSS_MDP_CLK>,
-+					 <&gcc GCC_MDSS_AHB_CLK>,
-+					 <&gcc GCC_MDSS_AXI_CLK>,
-+					 <&gcc GCC_MDSS_BYTE1_CLK>,
-+					 <&gcc GCC_MDSS_PCLK1_CLK>,
-+					 <&gcc GCC_MDSS_ESC1_CLK>;
-+				clock-names = "mdp_core",
-+					      "iface",
-+					      "bus",
-+					      "byte",
-+					      "pixel",
-+					      "core";
-+
-+				phys = <&dsi1_phy>;
-+
-+				status = "disabled";
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						dsi1_in: endpoint {
-+							remote-endpoint = <&mdp5_intf2_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						dsi1_out: endpoint {
-+						};
-+					};
-+				};
-+			};
-+
-+			dsi1_phy: phy@1a96400 {
-+				compatible = "qcom,dsi-phy-14nm-8953";
-+				reg = <0x1a96400 0x100>,
-+				      <0x1a96500 0x300>,
-+				      <0x1a96800 0x188>;
-+				reg-names = "dsi_phy",
-+					    "dsi_phy_lane",
-+					    "dsi_pll";
-+
-+				#clock-cells = <1>;
-+				#phy-cells = <0>;
-+
-+				clocks = <&gcc GCC_MDSS_AHB_CLK>, <&xo_board>;
-+				clock-names = "iface", "ref";
-+
-+				status = "disabled";
-+			};
-+		};
-+
- 		apps_iommu: iommu@1e00000 {
- 			compatible = "qcom,msm8953-iommu", "qcom,msm-iommu-v1";
- 			ranges  = <0 0x1e20000 0x20000>;
--- 
-2.38.0
+Yet, I am not sure if we should keep such ability. The firmware could
+configure the pin to whatever. Firmware behavior could also change it
+making the OS behavior non-predictable.
+
+> 
+> OK, several hours later and I've come up with a proposed solution [1].
+> Assuming that solution lands, then I think the answer is:
+> 
+> a) Totally get rid of the '_init_high' entries.
+> b) trogdor should just specify:
+>    <&qup_spi0_spi>, <&qup_spi0_cs_gpio>;
+
+Yes.
+
+> 
+> [ ... cut ... ]
+> 
+>> +&qup_spi0_spi {
+>> +       drive-strength = <2>;
+>> +       bias-disable;
+>>  };
+>>
+>>  &qup_spi0_cs_gpio {
+>> -       pinconf {
+>> -               pins = "gpio34", "gpio35", "gpio36", "gpio37";
+>> -               drive-strength = <2>;
+>> -               bias-disable;
+>> -       };
+>> +       drive-strength = <2>;
+>> +       bias-disable;
+>> +};
+>> +
+>> +&qup_spi6_spi {
+>> +       drive-strength = <2>;
+>> +       bias-disable;
+>>  };
+>>
+>>  &qup_spi6_cs_gpio {
+>> -       pinconf {
+>> -               pins = "gpio59", "gpio60", "gpio61", "gpio62";
+>> -               drive-strength = <2>;
+>> -               bias-disable;
+>> -       };
+>> +       drive-strength = <2>;
+>> +       bias-disable;
+>> +};
+>> +
+>> +&qup_spi10_spi {
+>> +       drive-strength = <2>;
+>> +       bias-disable;
+>>  };
+>>
+>>  &qup_spi10_cs_gpio {
+>> -       pinconf {
+>> -               pins = "gpio86", "gpio87", "gpio88", "gpio89";
+>> -               drive-strength = <2>;
+>> -               bias-disable;
+>> -       };
+>> +       drive-strength = <2>;
+>> +       bias-disable;
+>>  };
+> 
+> Mostly addressed by the above, but it should be noted that in your
+> patch you were specifying settings in the trogdor.dtsi file for
+> "qup_spi#_cs_gpio" but then never using it (it used the _init_high
+> versions).
+> 
+> [1] https://lore.kernel.org/r/20221014103217.1.I656bb2c976ed626e5d37294eb252c1cf3be769dc@changeid
+
+Best regards,
+Krzysztof
 
