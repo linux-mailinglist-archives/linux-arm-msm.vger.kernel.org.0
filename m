@@ -2,69 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AB7960027D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Oct 2022 19:36:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 570E9600292
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Oct 2022 19:58:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229970AbiJPRgb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Oct 2022 13:36:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55642 "EHLO
+        id S229764AbiJPR6v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Oct 2022 13:58:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230049AbiJPRgb (ORCPT
+        with ESMTP id S229597AbiJPR6u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Oct 2022 13:36:31 -0400
-Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBF792EF3D
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Oct 2022 10:36:28 -0700 (PDT)
-Received: by mail-qv1-xf30.google.com with SMTP id l19so6277520qvu.4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Oct 2022 10:36:28 -0700 (PDT)
+        Sun, 16 Oct 2022 13:58:50 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CFDF29355
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Oct 2022 10:58:48 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id az22-20020a05600c601600b003c6b72797fdso8207220wmb.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Oct 2022 10:58:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=33yORBvP8CyROZDGO3XsviIiyoyghI9p2jQ7nrsYpb0=;
-        b=vX4xk5pz42QKRJCls5ByhGA2iaXQPvuj1jjpnKX6lGa/PPSKPmuGuI5rkG2RcezTuz
-         UxoJ86ntFosaMdxRFnec3Zv9TQV1GcnHhUqNQ/uTCA67JjMDlLdoCOmgWfb38VRhDMAo
-         3njgwLbq1hQqBMH1ECqqm2mskKyJKp9hkxFh9eqdD5ZNa6K+dNjlwEt4lh7uXxeAo0sf
-         Bw26fHoP9jgEkIfCmRNDFF04f06zwxZKnFZH7FGuXVLMtu+vZByu/rg9Sy3TPFRka08M
-         PKtDKfH6Z2SY1TiVJojJj/8eDJjk21fG/zNWnVncDxUwL1y7bg38u3Doyii1cVpmQm0N
-         /LZg==
+        bh=inHqJMeb2eEi15CeXM8hxUEa9+fOAmjhPmMj86FNlH4=;
+        b=FLBlIV98RjiuFB3okQgYY1NdF4LKCCe/h4qJ5u/sKQs3WzY6L/WxRnv452yUgasoCT
+         4aBg/+EC9CkqE1dYK+BsgnYlAHO1uIj7jP8DhnmPdaznwBvehseM6gt0D1Plcngq3Fto
+         QeuWYtg7yzTQw3tkvbx46zGRT5lWN0QwakRAgV3WYy3bdUbSJnDReNRwf/XRTSiUoiUr
+         mmEOSEJCeCW+0dSbBUVCEjDrZ+YFRaFehA+HQVWdSXzcsa4EWuAvoWRimXDVGgjmxj5x
+         ixon/FcZPSC/I6cFF4c9qO4oKG0iYHryekNeUJ7ze8fEVeRPu37L9gdisK+lViUy0pK7
+         i2zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=33yORBvP8CyROZDGO3XsviIiyoyghI9p2jQ7nrsYpb0=;
-        b=hezFcku89Mz14Nzh7b05nP7h+EIEHComoXtAEKxUa9q3eauswwhpOBoDpiC2lK3XtU
-         13uHelfJCiJZxY6Uz/xxJz4cx1nPXQvKL1xqdgCz5wL02m68znXXewj+tviz24EHW26s
-         ELCH18IdHw9cVVC6cjChYS/I8y/gt5C+6lmFWrI0ANDGE97I4QSfuTv2q9hicQZpfQ1f
-         PV/ITzvMZzsa/HQ1GV2YZab0MkE15YwjkdIFQIvF0OwrYjx+52Pb/EF8qIUIsK/NIvV3
-         kgdc5oYDLs5/n1PLRyZ6m5cjMdJYwipnCk0RlYX4X6vx97JGQPx1Vg/hGu1XTgXh6FUd
-         8rBg==
-X-Gm-Message-State: ACrzQf1SK05z/Y7JDC/UFc3LQxUskHoepWrx7otCeHNk6tAFpFHjYzsl
-        nN3KV8QIuSC8QBCPbxbt55FXgA==
-X-Google-Smtp-Source: AMsMyM4MPWCtFWj364OqCk4Za8oFnohWBlCXHg9o98iEqt4JY41nuGriJ+NdhbHOSISDSCx6gVuUaA==
-X-Received: by 2002:a05:6214:501e:b0:4b3:d08f:b58c with SMTP id jo30-20020a056214501e00b004b3d08fb58cmr5901540qvb.90.1665941788178;
-        Sun, 16 Oct 2022 10:36:28 -0700 (PDT)
-Received: from krzk-bin.hsd1.pa.comcast.net ([2601:42:0:3450:9b13:d679:7b5b:6921])
-        by smtp.gmail.com with ESMTPSA id u14-20020a05620a0c4e00b006cfc4744589sm7640259qki.128.2022.10.16.10.36.26
+        bh=inHqJMeb2eEi15CeXM8hxUEa9+fOAmjhPmMj86FNlH4=;
+        b=c5KkDeTUuXphVUkVD6liaOpDvT9l1OApbvSyA7jJ7aWo/gvnEpJf2t1AFVqVoEFGBO
+         MljVRFfQcEMiY61TmlOufbNx8ywgPg4QjdmD82LzdpeP4EvhhqMRcbd1kLiQtOzQD8eV
+         vd9u4StkOh9mvQOcDJ6cLdjfaF736LiqiR9JpBf5RdMwvK1BqTwB2+TWvbBFzZNT4YAQ
+         COKV36ECQHqyDCkIyp2le83DeP22+/3JdxZz4QNn9HRaEIehwze2Q3yheH3IvR50deY9
+         qpWSVxyf6h/3HyrHOth6Te8/itpO2uoZqVavvSLJAmfGeYlnJ1Y9/Hu0enNGMKORfKXt
+         Fp+A==
+X-Gm-Message-State: ACrzQf2hPVZbC+yePBWwnMtQpSFhL9b/cgiwwmZg+molApFM7ZPIHLqy
+        nb8w+ELKT4dbcljTnSv34G1fBg==
+X-Google-Smtp-Source: AMsMyM431LFQ1Iv5/30swx1zHXOZ8BKqg5dayG2AA+J3f/4e2MKG28IT27EWO+HMs54d5BvoVuqVhg==
+X-Received: by 2002:a1c:2743:0:b0:3b3:4066:fa61 with SMTP id n64-20020a1c2743000000b003b34066fa61mr17221591wmn.79.1665943126905;
+        Sun, 16 Oct 2022 10:58:46 -0700 (PDT)
+Received: from localhost.localdomain (cpc76482-cwma10-2-0-cust629.7-3.cable.virginm.net. [86.14.22.118])
+        by smtp.gmail.com with ESMTPSA id m6-20020a1c2606000000b003c452678025sm13217786wmm.4.2022.10.16.10.58.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Oct 2022 10:36:27 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Sun, 16 Oct 2022 10:58:46 -0700 (PDT)
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+To:     caleb.connolly@linaro.org
+Cc:     Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        devicetree@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Iskren Chernev <iskren.chernev@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindings: pinctrl: qcom: drop minItems equal to maxItems
-Date:   Sun, 16 Oct 2022 13:36:25 -0400
-Message-Id: <20221016173625.53769-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Lee Jones <lee@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH] dt-bindings: mfd: qcom,spmi-pmic: support rradc type
+Date:   Sun, 16 Oct 2022 18:57:57 +0100
+Message-Id: <20221016175757.1911016-1-caleb.connolly@linaro.org>
+X-Mailer: git-send-email 2.38.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -77,39 +75,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If minItems are missing, they are implicitly equal to maxItems.
-Dropping redundant minItems simplifies a bit the binding.
+'adc@' nodes can also be the rradc.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 ---
- .../bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml          | 1 -
- Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml  | 1 -
- 2 files changed, 2 deletions(-)
+This patch is based on Luca's series:
+https://lore.kernel.org/linux-arm-msm/20220925211744.133947-2-luca@z3ntu.xyz/
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
-index 8270debd4f25..f7ec8a4f664f 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
-@@ -23,7 +23,6 @@ properties:
-     type: boolean
+Luca: feel free to apply this as a fixup if you re-send
+---
+ Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+index b5a06c1b67bb..cba25562e1da 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+@@ -102,6 +102,7 @@ patternProperties:
+     oneOf:
+       - $ref: /schemas/iio/adc/qcom,spmi-iadc.yaml#
+       - $ref: /schemas/iio/adc/qcom,spmi-vadc.yaml#
++      - $ref: /schemas/iio/adc/qcom,spmi-rradc.yaml#
  
-   reg:
--    minItems: 2
-     maxItems: 2
- 
-   gpio-controller: true
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml
-index 51bae1d3f150..164f24db8b2b 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml
-@@ -18,7 +18,6 @@ properties:
-     const: qcom,sm6115-tlmm
- 
-   reg:
--    minItems: 3
-     maxItems: 3
- 
-   reg-names:
+   "^adc-tm@[0-9a-f]+$":
+     type: object
 -- 
-2.34.1
+2.38.0
 
