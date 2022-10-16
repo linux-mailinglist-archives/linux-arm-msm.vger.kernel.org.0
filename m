@@ -2,62 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EDAD60040F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 00:58:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8E2260040C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 00:58:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229803AbiJPW61 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Oct 2022 18:58:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39548 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229802AbiJPW6Z (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S229805AbiJPW6Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sun, 16 Oct 2022 18:58:25 -0400
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5253532D8D;
-        Sun, 16 Oct 2022 15:58:24 -0700 (PDT)
-Received: by mail-oi1-f180.google.com with SMTP id w196so10473562oiw.8;
-        Sun, 16 Oct 2022 15:58:24 -0700 (PDT)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39528 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229792AbiJPW6Y (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 16 Oct 2022 18:58:24 -0400
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02EE832B9B;
+        Sun, 16 Oct 2022 15:58:23 -0700 (PDT)
+Received: by mail-oi1-f170.google.com with SMTP id n130so10472865oia.6;
+        Sun, 16 Oct 2022 15:58:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=date:subject:message-id:references:in-reply-to:cc:to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JbWnEAg2SsNDRgsWcVmOmhtdqCGa97ZPW4mtEP7xswI=;
-        b=Z7wCrbACL8CIrlNvIBRAmaajuDRPNPs9+vpaZDUUxco8asE0BBnwzM4tKU0KHZ/VS6
-         Qs0ebR0aeDyHB/DQIiPCcMdxq/zrLtphIwCJFgfgtnqRsTl9yK2Dz0x/iLczY0lfGV0l
-         CF/nMyPzAQap5gxW35MYPW+mnTPLNgYph0V7X48hc4kFUkrjVojw9sNDbQ/idhb+EUI4
-         YjWgfCB+955KYSZO+bnctDj2NQA522gc5Qjr9aXrHtZkt3gz2Su5H9mG6wMEI2qjYhcQ
-         ftAC7j3xZucBoYj4PV+sUAxoMHKqp+O29yDjUEnWoHS5jpuT6x2m4R9DSy+g1AOjQkHR
-         wcPA==
-X-Gm-Message-State: ACrzQf0nSSlbhvBB+jXDusjHyL4YYu9rcPs0zX7cwjEbTIEMQZyF8j37
-        J4L82brwdwpL/bA1FmRNwg==
-X-Google-Smtp-Source: AMsMyM5DZEcLmoIsH9mR3NcXBcaWogJ6YxxwoyjU1pdlK/LhDADAEonvdWGthzXuvxjU3uP3KayFtQ==
-X-Received: by 2002:a05:6808:2107:b0:354:6fd3:af02 with SMTP id r7-20020a056808210700b003546fd3af02mr3738887oiw.176.1665961103599;
-        Sun, 16 Oct 2022 15:58:23 -0700 (PDT)
+        bh=A22Jauy7LNRDNuhvPuiWffS/7WEdlZGpv0lUu6wktOU=;
+        b=tjl0DNXyZXseuxcBezm7x0qbft7x1v7zGCfP5jvbJ/lYrZdhqMQwtpCWOWXHrs4hwf
+         XFhYmmSKNkdQu9xUW+7yJ06MO3w4BnrFhjGQyC/RGhQsvgNo7xlMyv9YaawfWfg6CHeJ
+         asUxyrSAeWjZX1VR8yMVgakolNRXFJ+F7dliLzddsVB6yfGAkMkMTvjacphBpqOD7tup
+         Py5zCfiTj2bwUWwIMMLODEMpjwnqr7YZH6nhFVL31WzGunr0HfNxmMbueGvc0aljSJDe
+         V+1CXs6RgZQlp/hDdNv20gMbT9CvAIsWLln6MqO3KEtWDuiorKz01V626/iy5EuKZJ+9
+         A6Bw==
+X-Gm-Message-State: ACrzQf3s0UgsLhZC7dK0zLqfGFX9iC1t9raBsxPd4mBgxjUZ8uBlgPhr
+        mEdLR7Z3TdA5Dx5Pa/HMSQ==
+X-Google-Smtp-Source: AMsMyM7/JNd+JtwlZy7i5d/Z+UtIZM/Wkab6jBp3h69lrLIVsSh+Oi/U3tK6BY8sFZHjRxSU8yW+LA==
+X-Received: by 2002:a05:6808:219a:b0:354:daec:53cb with SMTP id be26-20020a056808219a00b00354daec53cbmr3503273oib.2.1665961102216;
+        Sun, 16 Oct 2022 15:58:22 -0700 (PDT)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id bh19-20020a056808181300b0035468f2d410sm3662748oib.55.2022.10.16.15.58.22
+        by smtp.gmail.com with ESMTPSA id 64-20020a9d04c6000000b00661cc94f035sm4165401otm.41.2022.10.16.15.58.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Oct 2022 15:58:23 -0700 (PDT)
-Received: (nullmailer pid 3904630 invoked by uid 1000);
+        Sun, 16 Oct 2022 15:58:21 -0700 (PDT)
+Received: (nullmailer pid 3904626 invoked by uid 1000);
         Sun, 16 Oct 2022 22:58:18 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Caleb Connolly <caleb@connolly.tech>
-Cc:     linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
-        krzysztof.kozlowski@linaro.org, devicetree@vger.kernel.org,
-        Tom Rix <trix@redhat.com>, linux-input@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Jeff LaBundy <jeff@labundy.com>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Nathan Chancellor <nathan@kernel.org>,
+To:     Melody Olvera <quic_molvera@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        llvm@lists.linux.dev, Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20221015172915.1436236-2-caleb@connolly.tech>
-References: <20221015172915.1436236-1-caleb@connolly.tech> <20221015172915.1436236-2-caleb@connolly.tech>
-Message-Id: <166596080545.3896335.8438401170127513761.robh@kernel.org>
-Subject: Re: [PATCH v7 1/2] dt-bindings: input: document Qualcomm PMI8998 haptics driver
+        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+In-Reply-To: <20221014221138.7552-2-quic_molvera@quicinc.com>
+References: <20221014221138.7552-1-quic_molvera@quicinc.com> <20221014221138.7552-2-quic_molvera@quicinc.com>
+Message-Id: <166596080339.3896245.9931514726714981073.robh@kernel.org>
+Subject: Re: [PATCH v2 1/3] dt-bindings: arm: qcom: Document QDU1000/QRU1000 SoCs and boards
 Date:   Sun, 16 Oct 2022 17:58:18 -0500
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
@@ -69,24 +61,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 15 Oct 2022 17:30:35 +0000, Caleb Connolly wrote:
-> Add bindings for qcom PMIC PMI8998 haptics driver.
+On Fri, 14 Oct 2022 15:11:36 -0700, Melody Olvera wrote:
+> Document the QDU1000 and QRU1000 SoC bindings and the boards that use
+> them.
 > 
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 > ---
->  .../bindings/input/qcom,pmi8998-haptics.yaml  | 73 +++++++++++++++++++
->  1 file changed, 73 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/input/qcom,pmi8998-haptics.yaml
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
 on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
 yamllint warnings/errors:
+./Documentation/devicetree/bindings/arm/qcom.yaml:496:18: [error] syntax error: mapping values are not allowed here (syntax)
 
 dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/input/qcom,pmi8998-haptics.example.dtb: haptics@c000: 'qcom,wave-play-rate-us' does not match any of the regexes: 'pinctrl-[0-9]+'
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/input/qcom,pmi8998-haptics.yaml
+make[1]: *** Deleting file 'Documentation/devicetree/bindings/arm/qcom.example.dts'
+Documentation/devicetree/bindings/arm/qcom.yaml:496:18: mapping values are not allowed in this context
+make[1]: *** [Documentation/devicetree/bindings/Makefile:26: Documentation/devicetree/bindings/arm/qcom.example.dts] Error 1
+make[1]: *** Waiting for unfinished jobs....
+./Documentation/devicetree/bindings/arm/qcom.yaml:496:18: mapping values are not allowed in this context
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/arm/qcom.yaml: ignoring, error parsing file
+make: *** [Makefile:1420: dt_binding_check] Error 2
 
 doc reference errors (make refcheckdocs):
 
