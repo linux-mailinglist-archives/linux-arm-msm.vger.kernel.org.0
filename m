@@ -2,80 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A3BD5FFE56
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Oct 2022 11:01:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B7A95FFE9E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Oct 2022 12:36:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbiJPJBc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Oct 2022 05:01:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45872 "EHLO
+        id S229661AbiJPKgC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Oct 2022 06:36:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229572AbiJPJB1 (ORCPT
+        with ESMTP id S229687AbiJPKf7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Oct 2022 05:01:27 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B082236BDC;
-        Sun, 16 Oct 2022 02:01:23 -0700 (PDT)
-Received: from g550jk.arnhem.chello.nl (31-151-115-246.dynamic.upc.nl [31.151.115.246])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 01C92CE595;
-        Sun, 16 Oct 2022 09:01:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1665910882; bh=+LC0nQ/rmVa9aJgBr3/Wzl+B6dflfpHLFO4lmvsYrYs=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=TZTD7JjgyVbh2p5vn4+OjdSChltTlFRs7ti0z8LbtVQlHILoUXCmCJ76qvuoJ9ZLA
-         ITFhmkXBcRBZo/ZV4YGgvMy87a5cJ8lfG5g3qrj3bAxSUzF2NppRxXFj+3SaP48iEf
-         anjJerOqt/Z6Mfz9jc9XKf2pLHKpH0w1c0cZQM/E=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
+        Sun, 16 Oct 2022 06:35:59 -0400
+X-Greylist: delayed 439 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 16 Oct 2022 03:35:54 PDT
+Received: from mout-y-209.mailbox.org (mout-y-209.mailbox.org [IPv6:2001:67c:2050:103:465::209])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E7F13A162;
+        Sun, 16 Oct 2022 03:35:54 -0700 (PDT)
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mout-y-209.mailbox.org (Postfix) with ESMTPS id 4MqxDD3tsQz9td7;
+        Sun, 16 Oct 2022 12:28:28 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=noorman.info;
+        s=MBO0001; t=1665916108;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=SOmvazYlegZ4LyhI1lnP3c7B4CLLHK3pQ+YSzG3ZBS4=;
+        b=Ui7d9hsffYYPGsApD0q4wze6+Y21q4caGV0s/k8d0xruIaIWx3n+KMgos/lNdobP7Cp8fB
+        x2h1WmMFmr0TMiibwQrBgGUS50GU80B6cJi9uCIbLl7DAjgadHYZx1Xu/Wp3B8KvW/M4XD
+        u090SzrWPoeO8ZhlXepEjOfUMlgweDF+bvoS25hforSFdE8nxGw7oLh3HNOOPZbjbxG8Ml
+        vRSApZhlUwfGSKA1QKT5CkgMvFOCo1NrLsfqUxAsZfwAIQv40CcZfm1oYZf0OO+nDuYnkD
+        ca8cUCgycuPHNmDeuYcVRQ4cE6A7hzh7e6tH2hV1n9SwsYXJxGbxSx6dRM2Raw==
+From:   Job Noorman <job@noorman.info>
+To:     Job Noorman <job@noorman.info>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 5/5] dt-bindings: thermal: tsens: Add sm8450 compatible
-Date:   Sun, 16 Oct 2022 11:00:34 +0200
-Message-Id: <20221016090035.565350-5-luca@z3ntu.xyz>
-X-Mailer: git-send-email 2.38.0
-In-Reply-To: <20221016090035.565350-1-luca@z3ntu.xyz>
-References: <20221016090035.565350-1-luca@z3ntu.xyz>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Henrik Rydberg <rydberg@bitmath.org>
+Cc:     Luca Weiss <luca@z3ntu.xyz>, linux-input@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v3 0/3] Add Himax hx83112b touchscreen driver
+Date:   Sun, 16 Oct 2022 12:27:52 +0200
+Message-Id: <20221016102756.40345-1-job@noorman.info>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+X-Rspamd-Queue-Id: 4MqxDD3tsQz9td7
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the tsens-v2 compatible for sm8450 SoC.
+Hi all,
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
- 1 file changed, 1 insertion(+)
+This series adds support for the Himax hx83112b. The hx83112b supports 10
+point multitouch with hardware tracking of touch points. It is the
+touchschreen used by the Fairphone 3.
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-index 038d81338fcf..7db905c1d555 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-@@ -57,6 +57,7 @@ properties:
-               - qcom,sm8150-tsens
-               - qcom,sm8250-tsens
-               - qcom,sm8350-tsens
-+              - qcom,sm8450-tsens
-           - const: qcom,tsens-v2
- 
-   reg:
+Note that a datasheet was unavailable for this device, so it was built
+based on the Android driver that was tagged as GPLv2. This series is a
+complete rewrite, though, and the code bears no resemblence to the original
+implementation.
+
+It is expected that this driver can be made to work on other hx83xxx
+devices, especially the hx83112a used in the Fairphone 4. However, since we
+have been unable to verify this, this driver only declares compatibility
+with the hx83112b and uses very specific file names.
+
+Changes since v2 (based on Jeff LaBundy's comments):
+- Kconfig: depend on REGMAP_I2C instead of I2C
+- Don't use dev_err_probe()
+- Return IRQ_NONE on failed register reads to prevent possible interrupt
+  storm
+- Add small delay after de-asserting reset pin
+- Some minor coding style updates
+- dt-bindings: make touchscreen-size-{x,y} required
+
+Changes since v1:
+- Fix sparse warnings. Reported-by: kernel test robot <lkp@intel.com>.
+- Fix dt_binding_check.
+
+Best regards,
+Job
+
+Previous versions:
+- v2: https://lore.kernel.org/lkml/20221012202341.295351-1-job@noorman.info/
+- v1: https://lore.kernel.org/lkml/20221011190729.14747-1-job@noorman.info/
+
+Job Noorman (3):
+  dt-bindings: touchscreen: add Himax hx83112b bindings
+  Input: add driver for Himax hx83112b touchscreen devices
+  arm64: dts: qcom: sdm632: fairphone-fp3: add touchscreen
+
+ .../input/touchscreen/himax,hx83112b.yaml     |  63 +++
+ MAINTAINERS                                   |   7 +
+ .../boot/dts/qcom/sdm632-fairphone-fp3.dts    |  14 +
+ drivers/input/touchscreen/Kconfig             |  11 +
+ drivers/input/touchscreen/Makefile            |   1 +
+ drivers/input/touchscreen/himax_hx83112b.c    | 382 ++++++++++++++++++
+ 6 files changed, 478 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/input/touchscreen/himax,hx83112b.yaml
+ create mode 100644 drivers/input/touchscreen/himax_hx83112b.c
+
+
+base-commit: d4a596eddb90114f5f5f32a440057a175517b090
 -- 
 2.38.0
 
