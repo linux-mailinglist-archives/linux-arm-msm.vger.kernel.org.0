@@ -2,116 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A4BE600F14
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 14:20:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34058600F91
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 14:54:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230173AbiJQMU1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 08:20:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42122 "EHLO
+        id S229738AbiJQMy2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 08:54:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230460AbiJQMUW (ORCPT
+        with ESMTP id S230374AbiJQMyZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 08:20:22 -0400
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D9F22A72C;
-        Mon, 17 Oct 2022 05:20:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1666009208; x=1697545208;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=RmYFEN28phqSp8mG6aCLWFWEADNDyPYb/TiMHr0QPNc=;
-  b=bVrtCfRzZZIwP1YbPM3XmRuzNXEqz+fQAYCNhezuppRKF/9rPVJRZf/i
-   GHi6Cg5886LJa+CG4OPtuG4EZe+nzoLzYAswlVoEwKGx23DvxQ3X3MXye
-   sYcZOxYsrbIPYTwXOddhqDu+Jo5zOzIqC1skO9k74UDSlhvKcBIqmEnWz
-   5xQrfHmwi8bXZL4Wo6TZV+kLE1EDjNpCAOkhFbW6TqlZLqLdoW7xDiQFc
-   gNFWxuP/2BxjKj/BeUQQtWmhtvg7d5+t9Y+3BL+Xwxfg3199PbuP7b18p
-   gcBOjG2N4j+oTWx2HNZz936uYkf0PshtHGwCdzUBhZK1BLzyYjB4gB3Ve
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10502"; a="332320293"
-X-IronPort-AV: E=Sophos;i="5.95,191,1661842800"; 
-   d="scan'208";a="332320293"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Oct 2022 05:18:25 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10502"; a="623207818"
-X-IronPort-AV: E=Sophos;i="5.95,191,1661842800"; 
-   d="scan'208";a="623207818"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orsmga007.jf.intel.com with ESMTP; 17 Oct 2022 05:18:20 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.96)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1okP4U-008mkH-2E;
-        Mon, 17 Oct 2022 15:18:18 +0300
-Date:   Mon, 17 Oct 2022 15:18:18 +0300
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Kent Gibson <warthog618@gmail.com>, linux-gpio@vger.kernel.org,
-        linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
-        linux-actions@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
-        openbmc@lists.ozlabs.org, linux-rpi-kernel@lists.infradead.org,
-        alsa-devel@alsa-project.org, patches@opensource.cirrus.com,
-        linux-mediatek@lists.infradead.org, linux-mips@vger.kernel.org,
-        linux-riscv@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: Re: [rft, PATCH v2 00/36] pinctrl: Clean up and add missed headers
-Message-ID: <Y01ICtqd8uy/4/Mb@smile.fi.intel.com>
-References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
- <CACRpkdZ1M3ckw+jFgvMqG4jvR-t_44GPoZ6ZDXszwZCJr-cDpg@mail.gmail.com>
- <Y00f5exY2fM6IwZ+@smile.fi.intel.com>
- <CACRpkdYmSOGtFz8W_RRkDqMXRRBOSB9jqSn65Sah90bf3Gm59g@mail.gmail.com>
+        Mon, 17 Oct 2022 08:54:25 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13DAC5595;
+        Mon, 17 Oct 2022 05:54:24 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29H8U0RZ018431;
+        Mon, 17 Oct 2022 12:54:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=5dge2FmJuSbt5xrC1gt2OdSj60f2BgLhPz7YkrDZ//4=;
+ b=NeeOslZRoMa29N5invaBV7UQyRB47oyHhU9W9wdwiAuJcVaYKM4Ed8cyzzU947T7H/vv
+ FPveNi/V0OUoT5oQRTvYcxGo2LXGh/4tzW8nwuuwocAo22uW8pAX4vpISCWKhxwCQZDE
+ Vutn0/0H/tgVtUib2HH3TbEejP2NmppScK1eW+YTNgBDbOdgH91TsflwwDsnzfx1ojh1
+ 4VcX8nUjWt6fE+0hsrBS3h1E9YEHoFm7kRtihc+Znpv5rO3OrOR5QReGyQK13tinUK0s
+ N8gmeCdAzb77m414qKeIdPDC051HsKCllwvj2z/Rj9rOoyC0tlXiki7VweMGToiyU4Yk xg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k7nmqvxx2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Oct 2022 12:54:12 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29HCs5it031055
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Oct 2022 12:54:05 GMT
+Received: from mpubbise-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Mon, 17 Oct 2022 05:54:02 -0700
+From:   Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@somainline.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        "Manikanta Pubbisetty" <quic_mpubbise@quicinc.com>
+Subject: [PATCH v3 0/2] arm64: dts: qcom: sc7280: Add nodes to support WoW on WCN6750
+Date:   Mon, 17 Oct 2022 18:23:44 +0530
+Message-ID: <20221017125346.3691-1-quic_mpubbise@quicinc.com>
+X-Mailer: git-send-email 2.38.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACRpkdYmSOGtFz8W_RRkDqMXRRBOSB9jqSn65Sah90bf3Gm59g@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        SUSPICIOUS_RECIPS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: b6PEurxxIsjdztOaSxnCM24lLSz9XKiW
+X-Proofpoint-ORIG-GUID: b6PEurxxIsjdztOaSxnCM24lLSz9XKiW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-17_10,2022-10-17_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ mlxscore=0 mlxlogscore=385 impostorscore=0 malwarescore=0 suspectscore=0
+ priorityscore=1501 clxscore=1015 adultscore=0 lowpriorityscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210170075
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 17, 2022 at 11:58:03AM +0200, Linus Walleij wrote:
-> On Mon, Oct 17, 2022 at 11:27 AM Andy Shevchenko
-> <andriy.shevchenko@linux.intel.com> wrote:
-> > On Mon, Oct 17, 2022 at 11:02:09AM +0200, Linus Walleij wrote:
-> > > On Mon, Oct 10, 2022 at 10:15 PM Andy Shevchenko
-> > > <andriy.shevchenko@linux.intel.com> wrote:
-> > >
-> > > > Currently the header inclusion inside the pinctrl headers seems more arbitrary
-> > > > than logical. This series is basically out of two parts:
-> > > > - add missed headers to the pin control drivers / users
-> > > > - clean up the headers of pin control subsystem
-> > > >
-> > > > The idea is to have this series to be pulled after -rc1 by the GPIO and
-> > > > pin control subsystems, so all new drivers will utilize cleaned up headers
-> > > > of the pin control.
-> > >
-> > > Aha I see you want to send a pull request so I backed out the applied patches
-> > > from the series for now.
-> >
-> > Can I consider all that you answered to as Rb tag?
-> 
-> Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Add DT nodes to support WoW (Wake on Wireless) feature on WCN6750
+WiFi hardware on SC7280 SoC.
 
-Thank you!
+Manikanta Pubbisetty (2):
+  dt-bindings: qcom: smp2p: Add WPSS node names to pattern property
+  arm64: dts: qcom: sc7280: Add nodes to support WoW on WCN6750
+---
+Changes from V2:
+- Added a pre-requisite binding patch to support WPSS sub nodes in the SMP2P node
+- Rebased on ToT
 
-> I haven't reviewed in detail but I fully trust you to do the right thing
-> and fix any fallout so will happily pull this.
+Changes from V1:
+- Rebased on ToT
 
-The plan is to push this to Linux Next for a couple of days and then I'll send
-PR to you and Bart.
+ .../devicetree/bindings/soc/qcom/qcom,smp2p.yaml    |  2 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi                | 13 +++++++++++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
 -- 
-With Best Regards,
-Andy Shevchenko
-
+2.38.0
 
