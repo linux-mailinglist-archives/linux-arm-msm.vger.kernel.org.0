@@ -2,56 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C5A5B6006E2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 08:50:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0028360071B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 08:56:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230008AbiJQGuw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 02:50:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50842 "EHLO
+        id S229993AbiJQG42 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 02:56:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229905AbiJQGuq (ORCPT
+        with ESMTP id S230202AbiJQG4Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 02:50:46 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B1954A137;
-        Sun, 16 Oct 2022 23:50:45 -0700 (PDT)
+        Mon, 17 Oct 2022 02:56:16 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71BA257BD5;
+        Sun, 16 Oct 2022 23:55:52 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 67EDBB80F93;
-        Mon, 17 Oct 2022 06:50:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645C2C4FEBC;
-        Mon, 17 Oct 2022 06:50:41 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6A53F60F31;
+        Mon, 17 Oct 2022 06:55:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1097C433D7;
+        Mon, 17 Oct 2022 06:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1665989441;
-        bh=TcypivBfk2W9WTPaCElq2ehES8rUnpTli45iHdyD1GI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=npDf3EA2kME9CIke9xlNkjp1Ez0kSmsEHigY7UIbCKvoRFnyvAOt6qFLhHAMgDKzz
-         QL0vi4KpA6R2XEL5Tzcgtgd5rP7lA/oBx4H3OpRCcYN6FzQKHuSWzvaklqfWsNzidr
-         xwvaGZHHXOkGdgtS7lLLBoGbIRr0T9/OXKaLNOQjAklU2f/rUAOtzmg0SK9hleBwe7
-         kF5/KrSEQSvQmZIXa+Rk9F1+seAAR2Qs8chvu7yn+Zpp55duLBEdHY2BOpItSOevKq
-         mPvvSQdHI0KvQ+he/UipGN0HSjTBlgsd1tersKIhhY5ckjWy/cdVZLWVy1SS5eWc2F
-         dqHdSgzKpjZ7Q==
+        s=k20201202; t=1665989719;
+        bh=PNnJGOyQxGlF6kxJP9vN4ecaF/KlHCOIeam3mAgZbNE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=a3kxCqOZfArXCq6cer8xlXYc+oB2CcUQ71hSXKx4Osyc5icd+QXlsO4ZfjN7R/Zou
+         yyfuY9PGYzZkuVlRYAy2PtPB+QmmxFsdRUFnaYo2XehR3DEzxddcOv1dH3DrINlz3G
+         ZoRKWSEj+havq+Ohwxz/o5worCL8zUwy17vLKUY7S2ih0tcvQ5/Hn7+sDLv0i7iHhw
+         sG6PgMzZy28BLPgnmDrcDZlzwLaeeFzUb9C/eMTMH+qKvsrAkBOFkBcmPRJz0VwOmF
+         2nlx5b3sgXM7a4DmLlVhzZ3oIrs7PKA3vWDBaj1rJd1S9Jg3gWpyF2aps71l9ekWJh
+         fMab9kAqwjTBA==
 Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1okJxH-00057y-4V; Mon, 17 Oct 2022 08:50:31 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        (envelope-from <johan@kernel.org>)
+        id 1okK1l-0005CX-2V; Mon, 17 Oct 2022 08:55:09 +0200
+Date:   Mon, 17 Oct 2022 08:55:09 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v3 11/11] phy: qcom-qmp-pcie: drop bogus register update
-Date:   Mon, 17 Oct 2022 08:50:13 +0200
-Message-Id: <20221017065013.19647-12-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20221017065013.19647-1-johan+linaro@kernel.org>
-References: <20221017065013.19647-1-johan+linaro@kernel.org>
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 08/20] phy: qcom-qmp-combo: clean up status polling
+Message-ID: <Y0z8TWt/AA4Oh9ww@hovoldconsulting.com>
+References: <20221012084846.24003-1-johan+linaro@kernel.org>
+ <20221012085002.24099-1-johan+linaro@kernel.org>
+ <20221012085002.24099-8-johan+linaro@kernel.org>
+ <ca4eef6a-dedd-1823-9525-67d695ac3e58@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ca4eef6a-dedd-1823-9525-67d695ac3e58@linaro.org>
 X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -61,44 +64,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since commit 0d58280cf1e6 ("phy: Update PHY power control sequence") the
-PHY is powered on before configuring the registers and only the MSM8996
-PCIe PHY, which includes the POWER_DOWN_CONTROL register in its PCS
-initialisation table, may possibly require a second update afterwards.
+On Thu, Oct 13, 2022 at 12:14:17AM +0300, Dmitry Baryshkov wrote:
+> On 12/10/2022 11:49, Johan Hovold wrote:
+> > Clean up the PHY status polling by dropping the configuration mask which
+> > is no longer needed since the QMP driver split.
+> > 
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> 
+> This comes in expectation that 4.20 / 5.20 PHYs will be limited to PCIe. 
+> I'd add this to the commit message.
 
-To make things worse, the POWER_DOWN_CONTROL register lies at a
-different offset on more recent SoCs so that the second update, which
-still used a hard-coded offset, would write to an unrelated register
-(e.g. a revision-id register on SC8280XP).
+I don't think that's needed. The commit message is correct as it stands,
+and the fact that we may need to change code in case we add support for
+new devices that may need it is quite natural.
 
-As the MSM8996 PCIe PHY is now handled by a separate driver, simply drop
-the bogus register update.
+Also note that the vendor drivers (5.4) only have such a provision for
+PCIe PHYs and not for the combo and USB PHY drivers.
 
-Fixes: e4d8b05ad5f9 ("phy: qcom-qmp: Use proper PWRDOWN offset for sm8150 USB") added support
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> #RB3
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 6 ------
- 1 file changed, 6 deletions(-)
+> With that fixed:
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index cb2128e5a78d..30838ae8f027 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -2061,12 +2061,6 @@ static int qmp_pcie_power_on(struct phy *phy)
- 	qmp_pcie_pcs_init(qphy, &cfg->tables);
- 	qmp_pcie_pcs_init(qphy, mode_tables);
- 
--	/*
--	 * Pull out PHY from POWER DOWN state.
--	 * This is active low enable signal to power-down PHY.
--	 */
--	qphy_setbits(pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL, cfg->pwrdn_ctrl);
--
- 	if (cfg->has_pwrdn_delay)
- 		usleep_range(cfg->pwrdn_delay_min, cfg->pwrdn_delay_max);
- 
--- 
-2.37.3
-
+Johan
