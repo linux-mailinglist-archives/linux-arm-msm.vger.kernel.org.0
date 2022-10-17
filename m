@@ -2,134 +2,213 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E90D1601056
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 15:37:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D058601102
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 16:22:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229992AbiJQNhY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 09:37:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52284 "EHLO
+        id S230303AbiJQOWQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 10:22:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229627AbiJQNhX (ORCPT
+        with ESMTP id S229716AbiJQOWP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 09:37:23 -0400
-Received: from mail-4022.proton.ch (mail-4022.proton.ch [185.70.40.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20ABA638EC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 06:37:21 -0700 (PDT)
-Date:   Mon, 17 Oct 2022 13:37:11 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1666013838; x=1666273038;
-        bh=O8U0/rSJcp6Znld+LgNmARLp2ZlKY3y+428lcdHw/Ck=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID;
-        b=FP9YI0LpS3NtMj7aU54Mch6ZnaBxrpwwrUPWiZeYoMw0G3T3yqCAT/tciY5CEYWi7
-         rYyKgglMC+Jhl0jZMYKR6qHzuoUuah1oeWr7SZ+x39iKu8jJPoV5diyyp+FCOa4pQN
-         TKuVBN2XwYw1mVYNNGfa5hDUCz9MQcLtLOx8yApg=
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-From:   Caleb Connolly <caleb@connolly.tech>
-Cc:     phone-devel@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        linux-arm-msm@vger.kernel.org,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        dri-devel@lists.freedesktop.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Martin Botka <martin.botka@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Daniel Vetter <daniel@ffwll.ch>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
-        linux-kernel@vger.kernel.org, Newbyte <newbie13xd@gmail.com>
-Subject: Re: [Freedreno] [PATCH v3 06/10] drm/msm/dsi: Migrate to drm_dsc_compute_rc_parameters()
-Message-ID: <0642a664-3eed-21b7-a417-c6c607908f51@connolly.tech>
-In-Reply-To: <20221017085944.2r24uqg73irmziqm@SoMainline.org>
-References: <20221009184824.457416-1-marijn.suijten@somainline.org> <20221009185058.460688-1-marijn.suijten@somainline.org> <5c178d7e-5022-f5e5-791d-d3800114b42b@quicinc.com> <20221013093646.c65mbjc6oekd7gha@SoMainline.org> <32af4444-9c88-eb0f-eda7-24fa0418aff6@quicinc.com> <20221017085944.2r24uqg73irmziqm@SoMainline.org>
-Feedback-ID: 10753939:user:proton
+        Mon, 17 Oct 2022 10:22:15 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D397350075
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 07:22:13 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id j7so18717788wrr.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 07:22:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TuOMl3iT0yyNJ+0dzGqfmuaNm/ol+M26qoUuhqpcYfk=;
+        b=DC4nCcnDdyHi5kJ5tIjaAAHoVhtdOgolEGfdfypoRv+Yn9htV7bhLNcZRt8oPphBaA
+         d29dVNuVRDpw9usB08oNYmOQxpoTgFKDgobVYegn4PXITiITPzRhyrZmxyL2M5WPUkiq
+         pQY3LvoJ+pFDi+DrR43UbQcgMTyqpOXULqRFeiUdv9La0Qe/+Diwkcqkc7lQGbNzOJWz
+         6FIRRddUluOvDg4AJ60fcBAgKjfS0FwfJHkrffctCXAWhP6wNQSgge9k5RJAyY8veeAG
+         xKdfQo/fMGMLvvOQ9u/6yXanq1Zl9VC8G1/QuRTCnGxgCzJ0ACeYreJ8QO6cT6XJ0VhV
+         9v/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TuOMl3iT0yyNJ+0dzGqfmuaNm/ol+M26qoUuhqpcYfk=;
+        b=a/QvdBES7Ci+eKDTwfrTnF/VbcUttHiyeIEfCskyhRfStYwxn3fJ7Xn2L3I0u1h7I5
+         T697/zGnMwe4ZBpNJSaxPk9Q/cVNw1ClDs7wZPsRpCZU3tcFSkF3eZbCxyqpWvDlFBYv
+         Z8AC2OgqNCjfBuguK4j43jWRYlBgS+gJM1YtiDQwQT0LBV/3iNN/UB115YUqMdySPeR5
+         IhWqElh6RFTpjf1k7rnGZULWygFskT52MAYSAYflz+XlERCexAUZBeNnJXWaZbTRaxBW
+         RDpSackSPNdVZOaGnSad2++2/cuEWzEivLJq7KsDxhWfsrNuU2k8AUrK9SmVGP5uYSAL
+         Y6Ig==
+X-Gm-Message-State: ACrzQf1B203oCNfI0YCUFZbg6U+AKSUvW6oLZ96fInVa0ESSI928+xrG
+        1Vyc0JExu7OiXpAZT3Ba/H3POw==
+X-Google-Smtp-Source: AMsMyM6VdbLnrsRYaMWBmueogmtwKtHU7EAurWG76b8EBxq9HrxDAgCDdbwwdVXl5moBKswGY2TO5Q==
+X-Received: by 2002:a5d:526d:0:b0:22e:4f4d:2546 with SMTP id l13-20020a5d526d000000b0022e4f4d2546mr6410119wrc.464.1666016532297;
+        Mon, 17 Oct 2022 07:22:12 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id o5-20020a5d62c5000000b00228cbac7a25sm8590928wrv.64.2022.10.17.07.22.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Oct 2022 07:22:11 -0700 (PDT)
+Message-ID: <89dcd314-37bb-b944-b7e6-b6c71a3514fc@linaro.org>
+Date:   Mon, 17 Oct 2022 15:22:10 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH v4 0/4] media: camss: sm8250: Virtual channels support for
+ SM8250
+Content-Language: en-US
+To:     Kieran Bingham <kieran.bingham@ideasonboard.com>,
+        akapatra@quicinc.com, jzala@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        quic_mmitkov@quicinc.com, robert.foss@linaro.org,
+        todor.too@gmail.com
+Cc:     agross@kernel.org, konrad.dybcio@somainline.org,
+        mchehab@kernel.org, cgera@qti.qualcomm.com, gchinnab@quicinc.com,
+        ayasan@qti.qualcomm.com, laurent.pinchart@ideasonboard.com,
+        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+References: <20221013121255.1977-1-quic_mmitkov@quicinc.com>
+ <1a7ab9da-e7fb-9077-5d6e-705629bb2b10@linaro.org>
+ <166601200198.3760285.1520904024668899853@Monstersaurus>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <166601200198.3760285.1520904024668899853@Monstersaurus>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 17/10/2022 09:59, Marijn Suijten wrote:
-> On 2022-10-13 09:02:44, Abhinav Kumar wrote:
->> On 10/13/2022 2:36 AM, Marijn Suijten wrote:
->>> On 2022-10-12 16:03:06, Abhinav Kumar wrote:
->>>> [..]
->>>> But I would like to hold back this change till Vinod clarifies because
->>>> Vinod had mentioned that with drm_dsc_compute_rc_parameters() he was
->>>> seeing a mismatch in the computation of two values.
->>>>
->>>> slice_bpg_offset and the final_offset.
+On 17/10/2022 14:06, Kieran Bingham wrote:
+> Quoting Bryan O'Donoghue (2022-10-17 01:16:05)
+>> On 13/10/2022 13:12, quic_mmitkov@quicinc.com wrote:
+>>> From: Milen Mitkov <quic_mmitkov@quicinc.com>
 >>>
->>> Unsurprisingly so because final_offset, and slice_bpg_offset through
->>> initial_offset depend directly on bits_per_pixel.  The main takeaway of
->>> this series is that Vinod was interpreting this field as integer instea=
-d
->>> of containing 4 fractional bits.  If he updates his the panel driver [1=
-]
->>> to set bits_per_pixel =3D 8 << 4 instead of just 8 to account for this,
->>> the values should check out once again.
+>>> For v4:
+>>> - fixes the warning reported by the kernel test robot
+>>> - tiny code change to enable the vc functionality with the partially-applied
+>>>     multistream patches on linux-next (tested on tag:next-20221010)
 >>>
->>> [1]: https://git.linaro.org/people/vinod.koul/kernel.git/commit/?h=3Dto=
-pic/pixel3_5.18-rc1&id=3D1d7d98ad564f1ec69e7525e07418918d90f247a1
+>>> For v3:
+>>> - setting the sink pad format on the CSID entity will now propagate the
+>>>     format to the source pads to keep the subdev in a valid internal state.
+>>> - code syntax improvements
 >>>
->>> Once Vinod (or someone else in the posession of a Pixel 3) confirms
->>> this, I can respin this series and more explicitly explain why the FIXM=
-E
->>> was put in place, instead of being resolved outright?
+>>> For v2:
+>>> - code syntax improvements
+>>> - The info print for the enabled VCs was demoted to a dbg print. Can be
+>>>     enabled with dynamic debug, e.g.:
+>>> echo "file drivers/media/platform/qcom/camss/* +p" > /sys/kernel/debug/dynamic_debug/control
 >>>
->>> - Marijn
+>>> NOTE: These changes depend on the multistream series, that as of yet
+>>> is still not merged upstream. However, part of the
+>>> multistream patches are merged in linux-next (tested on
+>>> tag:next-20221010), including the patch that introduces the
+>>> video_device_pipeline_alloc_start() functionality. This allows
+>>> applying and using this series on linux-next without applying the
+>>> complete multistream set.
+>>>
+>>> The CSID hardware on SM8250 can demux the input data stream into
+>>> maximum of 4 multiple streams depending on virtual channel (vc)
+>>> or data type (dt) configuration.
+>>>
+>>> Situations in which demuxing is useful:
+>>> - HDR sensors that produce a 2-frame HDR output, e.g. a light and a dark frame
+>>>     (the setup we used for testing, with the imx412 sensor),
+>>>     or a 3-frame HDR output - light, medium-lit, dark frame.
+>>> - sensors with additional metadata that is streamed over a different
+>>>     virtual channel/datatype.
+>>> - sensors that produce frames with multiple resolutions in the same pixel
+>>>     data stream
+>>>
+>>> With these changes, the CSID entity has, as it did previously, a single
+>>> sink port (0), and always exposes 4 source ports (1, 2,3, 4). The
+>>> virtual channel configuration is determined by which of the source ports
+>>> are linked to an output VFE line. For example, the link below will
+>>> configure the CSID driver to enable vc 0 and vc 1:
+>>>
+>>> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+>>> media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
+>>>
+>>> which will be demuxed and propagated into /dev/video0
+>>> and /dev/video1 respectively. With this, the userspace can use
+>>> any normal V4L2 client app to start/stop/queue/dequeue from these
+>>> video nodes. Tested with the yavta app.
+>>>
+>>> The format of each RDI channel of the used VFE(s) (msm_vfe0_rdi0,
+>>> msm_vfe0_rdi1,...) must also be configured explicitly.
+>>>
+>>> Note that in order to keep a valid internal subdevice state,
+>>> setting the sink pad format of the CSID subdevice will propagate
+>>> this format to the source pads. However, since the CSID hardware
+>>> can demux the input stream into several streams each of which can
+>>> be a different format, in that case each source pad's
+>>> format must be set individually, e.g.:
+>>>
+>>> media-ctl -V '"msm_csid0":1[fmt:SRGGB10/3840x2160]'
+>>> media-ctl -V '"msm_csid0":2[fmt:SRGGB10/960x540]'
+>>>
+>>> Milen Mitkov (4):
+>>>     media: camss: sm8250: Virtual channels for CSID
+>>>     media: camss: vfe: Reserve VFE lines on stream start and link to CSID
+>>>     media: camss: vfe-480: Multiple outputs support for SM8250
+>>>     media: camss: sm8250: Pipeline starting and stopping for multiple
+>>>       virtual channels
+>>>
+>>>    .../platform/qcom/camss/camss-csid-gen2.c     | 54 ++++++++++------
+>>>    .../media/platform/qcom/camss/camss-csid.c    | 44 +++++++++----
+>>>    .../media/platform/qcom/camss/camss-csid.h    | 11 +++-
+>>>    .../media/platform/qcom/camss/camss-vfe-480.c | 61 ++++++++++++-------
+>>>    drivers/media/platform/qcom/camss/camss-vfe.c |  7 +++
+>>>    .../media/platform/qcom/camss/camss-video.c   | 21 ++++++-
+>>>    drivers/media/platform/qcom/camss/camss.c     |  2 +-
+>>>    7 files changed, 140 insertions(+), 60 deletions(-)
+>>>
 >>
->> Makes perfect sense to me.
+>> Hi Milen
 >>
->> Will just wait for Vinod's tested-by.
->
-> Unfortunately Vinod doesn't have access to this device anymore, but
-> Caleb recently sent the support series including display driver for
-> Pixel 3 and is picking up the testing.  User "Newbyte" from #linux-msm
-> promised to test on the LG G7 to have even more input samples.
+>> The set applies to next-20221013 including patch#4.
+>>
+>> I can confirm it doesn't break anything for me - though my sensor is a
+>> bog-standard imx577 so it doesn't have any VC support.
+> 
+> Interesting though - the IMX477 has the ability to convey metadata on a
+> separate VC... That's actually the thing holding back the RPi IMX477
+> driver from mainline, as the way it was anticipated to support multiple
+> data streams is with the new multiplexed streams API.
+> 
+> And I think we inferred that the IMX577 and IMX477 are closely related,
+> so should have similar capabilities for obtaining metadata channels?
 
-Hi,
+Hmm I was not aware of that.
 
-I'm hoping to pick the Pixel 3 stuff back up at some point, but right now t=
-here
-seem to be quite a few issues outside of DSC which make testing it a bit of=
- a pain.
+If we could import the rpi/imx477.c code into upstrea/imx412.c it might 
+be possible
 
-I gave Marijn's series [1] a go but wasn't able to get anything usable out =
-of the
-panel, however I doubt this is a DSC issue as I've always needed some hacks=
- to
-get the panel working - I've never had any success with it without skipping=
- both
-the initial panel reset and sending the PPS payload.
+The core init is very similar
 
-I think if Marijn has managed to initialise a panel properly then the lack =
-of
-Pixel 3 for validation shouldn't be a blocker to merge these fixes.
+https://github.com/raspberrypi/linux/blob/rpi-5.19.y/drivers/media/i2c/imx477.c#L167
 
-[1]:
-https://lore.kernel.org/linux-arm-msm/20221009184824.457416-1-marijn.suijte=
-n@somainline.org/
+https://github.com/raspberrypi/linux/blob/rpi-5.19.y/drivers/media/i2c/imx412.c#L160
 
->
-> - Marijn
+Maybe it would be possible to apply the rest of the imx477 config on-top 
+as a POC
 
---
-Kind Regards,
-Caleb
+https://github.com/raspberrypi/linux/blob/rpi-5.19.y/drivers/media/i2c/imx477.c#L479
 
+The similary is born out by the shared init code I can see in Leopard 
+imaging's driver, I'm not sure if it supports virtual-channels - I'll 
+have a look, though.
+
+What's in the imx477 meta-data ?
+
+@Milen if you have the imx577 datasheet - I don't - perhaps we could 
+cherry-pick some of the code from imx477 and get the imx412.c->imx577 
+dumping VC data out with the RB5 camera mezzanine.
+
+---
+bod
