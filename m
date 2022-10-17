@@ -2,213 +2,532 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D058601102
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 16:22:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5B33601132
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 16:35:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230303AbiJQOWQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 10:22:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40314 "EHLO
+        id S230320AbiJQOfa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 10:35:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229716AbiJQOWP (ORCPT
+        with ESMTP id S229981AbiJQOf3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 10:22:15 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D397350075
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 07:22:13 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id j7so18717788wrr.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 07:22:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TuOMl3iT0yyNJ+0dzGqfmuaNm/ol+M26qoUuhqpcYfk=;
-        b=DC4nCcnDdyHi5kJ5tIjaAAHoVhtdOgolEGfdfypoRv+Yn9htV7bhLNcZRt8oPphBaA
-         d29dVNuVRDpw9usB08oNYmOQxpoTgFKDgobVYegn4PXITiITPzRhyrZmxyL2M5WPUkiq
-         pQY3LvoJ+pFDi+DrR43UbQcgMTyqpOXULqRFeiUdv9La0Qe/+Diwkcqkc7lQGbNzOJWz
-         6FIRRddUluOvDg4AJ60fcBAgKjfS0FwfJHkrffctCXAWhP6wNQSgge9k5RJAyY8veeAG
-         xKdfQo/fMGMLvvOQ9u/6yXanq1Zl9VC8G1/QuRTCnGxgCzJ0ACeYreJ8QO6cT6XJ0VhV
-         9v/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TuOMl3iT0yyNJ+0dzGqfmuaNm/ol+M26qoUuhqpcYfk=;
-        b=a/QvdBES7Ci+eKDTwfrTnF/VbcUttHiyeIEfCskyhRfStYwxn3fJ7Xn2L3I0u1h7I5
-         T697/zGnMwe4ZBpNJSaxPk9Q/cVNw1ClDs7wZPsRpCZU3tcFSkF3eZbCxyqpWvDlFBYv
-         Z8AC2OgqNCjfBuguK4j43jWRYlBgS+gJM1YtiDQwQT0LBV/3iNN/UB115YUqMdySPeR5
-         IhWqElh6RFTpjf1k7rnGZULWygFskT52MAYSAYflz+XlERCexAUZBeNnJXWaZbTRaxBW
-         RDpSackSPNdVZOaGnSad2++2/cuEWzEivLJq7KsDxhWfsrNuU2k8AUrK9SmVGP5uYSAL
-         Y6Ig==
-X-Gm-Message-State: ACrzQf1B203oCNfI0YCUFZbg6U+AKSUvW6oLZ96fInVa0ESSI928+xrG
-        1Vyc0JExu7OiXpAZT3Ba/H3POw==
-X-Google-Smtp-Source: AMsMyM6VdbLnrsRYaMWBmueogmtwKtHU7EAurWG76b8EBxq9HrxDAgCDdbwwdVXl5moBKswGY2TO5Q==
-X-Received: by 2002:a5d:526d:0:b0:22e:4f4d:2546 with SMTP id l13-20020a5d526d000000b0022e4f4d2546mr6410119wrc.464.1666016532297;
-        Mon, 17 Oct 2022 07:22:12 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id o5-20020a5d62c5000000b00228cbac7a25sm8590928wrv.64.2022.10.17.07.22.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Oct 2022 07:22:11 -0700 (PDT)
-Message-ID: <89dcd314-37bb-b944-b7e6-b6c71a3514fc@linaro.org>
-Date:   Mon, 17 Oct 2022 15:22:10 +0100
+        Mon, 17 Oct 2022 10:35:29 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 617C060CB4;
+        Mon, 17 Oct 2022 07:35:24 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29H8TjJR004305;
+        Mon, 17 Oct 2022 14:35:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=FtyycUyuhKYBmGn7UTv66U5oqNOHt1B89jo+XcBIFQA=;
+ b=RprYx8Yt1s/ZPcnYQImPi3YchV1STq+lWLl1n4wsSl9KZlNQda91pKxg9bKodxLuFwey
+ W+k+BsxJ1Aj18SRFDv6kvB/UnZ2vtL8Jh13togrAOJaYIhnpycK8cIcoobOFXP3dOlyw
+ Qemo5fIqnSJkjQeh3JHyS7svm7acoHC0DIrCHduj3ilLB5hVVFCGJ0BMwgwXqvKe5Eiv
+ m3ey3VdqgEFPlPwLJS5TVzAehOPveX75INDXQR1uD00hWzrIzQBlcqBWs/2ovCeyxMX0
+ KB5jlknPJjW2kRin2vloOkYKD5URcmXg17eE+Y3sV9mbgbNf5dzxBGiGbLqzr9E73MCR LA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k7ku0e0dx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Oct 2022 14:35:09 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29HEZ8e8016139
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Oct 2022 14:35:08 GMT
+Received: from blr-ubuntu-253.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Mon, 17 Oct 2022 07:35:05 -0700
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+To:     Arnd Bergmann <arnd@arndb.de>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Masami Hiramatsu <mhiramat@kernel.org>
+CC:     <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arch@vger.kernel.org>, <quic_satyap@quicinc.com>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Subject: [PATCH] asm-generic/io: Add _RET_IP_ to MMIO trace for more accurate debug info
+Date:   Mon, 17 Oct 2022 20:04:50 +0530
+Message-ID: <20221017143450.9161-1-quic_saipraka@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH v4 0/4] media: camss: sm8250: Virtual channels support for
- SM8250
-Content-Language: en-US
-To:     Kieran Bingham <kieran.bingham@ideasonboard.com>,
-        akapatra@quicinc.com, jzala@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        quic_mmitkov@quicinc.com, robert.foss@linaro.org,
-        todor.too@gmail.com
-Cc:     agross@kernel.org, konrad.dybcio@somainline.org,
-        mchehab@kernel.org, cgera@qti.qualcomm.com, gchinnab@quicinc.com,
-        ayasan@qti.qualcomm.com, laurent.pinchart@ideasonboard.com,
-        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-References: <20221013121255.1977-1-quic_mmitkov@quicinc.com>
- <1a7ab9da-e7fb-9077-5d6e-705629bb2b10@linaro.org>
- <166601200198.3760285.1520904024668899853@Monstersaurus>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <166601200198.3760285.1520904024668899853@Monstersaurus>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Y7-gMlcWk6-UNhRYZtTDNsGML83d-YC8
+X-Proofpoint-ORIG-GUID: Y7-gMlcWk6-UNhRYZtTDNsGML83d-YC8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-17_11,2022-10-17_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=974
+ lowpriorityscore=0 impostorscore=0 clxscore=1011 priorityscore=1501
+ adultscore=0 malwarescore=0 spamscore=0 suspectscore=0 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210170084
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/10/2022 14:06, Kieran Bingham wrote:
-> Quoting Bryan O'Donoghue (2022-10-17 01:16:05)
->> On 13/10/2022 13:12, quic_mmitkov@quicinc.com wrote:
->>> From: Milen Mitkov <quic_mmitkov@quicinc.com>
->>>
->>> For v4:
->>> - fixes the warning reported by the kernel test robot
->>> - tiny code change to enable the vc functionality with the partially-applied
->>>     multistream patches on linux-next (tested on tag:next-20221010)
->>>
->>> For v3:
->>> - setting the sink pad format on the CSID entity will now propagate the
->>>     format to the source pads to keep the subdev in a valid internal state.
->>> - code syntax improvements
->>>
->>> For v2:
->>> - code syntax improvements
->>> - The info print for the enabled VCs was demoted to a dbg print. Can be
->>>     enabled with dynamic debug, e.g.:
->>> echo "file drivers/media/platform/qcom/camss/* +p" > /sys/kernel/debug/dynamic_debug/control
->>>
->>> NOTE: These changes depend on the multistream series, that as of yet
->>> is still not merged upstream. However, part of the
->>> multistream patches are merged in linux-next (tested on
->>> tag:next-20221010), including the patch that introduces the
->>> video_device_pipeline_alloc_start() functionality. This allows
->>> applying and using this series on linux-next without applying the
->>> complete multistream set.
->>>
->>> The CSID hardware on SM8250 can demux the input data stream into
->>> maximum of 4 multiple streams depending on virtual channel (vc)
->>> or data type (dt) configuration.
->>>
->>> Situations in which demuxing is useful:
->>> - HDR sensors that produce a 2-frame HDR output, e.g. a light and a dark frame
->>>     (the setup we used for testing, with the imx412 sensor),
->>>     or a 3-frame HDR output - light, medium-lit, dark frame.
->>> - sensors with additional metadata that is streamed over a different
->>>     virtual channel/datatype.
->>> - sensors that produce frames with multiple resolutions in the same pixel
->>>     data stream
->>>
->>> With these changes, the CSID entity has, as it did previously, a single
->>> sink port (0), and always exposes 4 source ports (1, 2,3, 4). The
->>> virtual channel configuration is determined by which of the source ports
->>> are linked to an output VFE line. For example, the link below will
->>> configure the CSID driver to enable vc 0 and vc 1:
->>>
->>> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
->>> media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
->>>
->>> which will be demuxed and propagated into /dev/video0
->>> and /dev/video1 respectively. With this, the userspace can use
->>> any normal V4L2 client app to start/stop/queue/dequeue from these
->>> video nodes. Tested with the yavta app.
->>>
->>> The format of each RDI channel of the used VFE(s) (msm_vfe0_rdi0,
->>> msm_vfe0_rdi1,...) must also be configured explicitly.
->>>
->>> Note that in order to keep a valid internal subdevice state,
->>> setting the sink pad format of the CSID subdevice will propagate
->>> this format to the source pads. However, since the CSID hardware
->>> can demux the input stream into several streams each of which can
->>> be a different format, in that case each source pad's
->>> format must be set individually, e.g.:
->>>
->>> media-ctl -V '"msm_csid0":1[fmt:SRGGB10/3840x2160]'
->>> media-ctl -V '"msm_csid0":2[fmt:SRGGB10/960x540]'
->>>
->>> Milen Mitkov (4):
->>>     media: camss: sm8250: Virtual channels for CSID
->>>     media: camss: vfe: Reserve VFE lines on stream start and link to CSID
->>>     media: camss: vfe-480: Multiple outputs support for SM8250
->>>     media: camss: sm8250: Pipeline starting and stopping for multiple
->>>       virtual channels
->>>
->>>    .../platform/qcom/camss/camss-csid-gen2.c     | 54 ++++++++++------
->>>    .../media/platform/qcom/camss/camss-csid.c    | 44 +++++++++----
->>>    .../media/platform/qcom/camss/camss-csid.h    | 11 +++-
->>>    .../media/platform/qcom/camss/camss-vfe-480.c | 61 ++++++++++++-------
->>>    drivers/media/platform/qcom/camss/camss-vfe.c |  7 +++
->>>    .../media/platform/qcom/camss/camss-video.c   | 21 ++++++-
->>>    drivers/media/platform/qcom/camss/camss.c     |  2 +-
->>>    7 files changed, 140 insertions(+), 60 deletions(-)
->>>
->>
->> Hi Milen
->>
->> The set applies to next-20221013 including patch#4.
->>
->> I can confirm it doesn't break anything for me - though my sensor is a
->> bog-standard imx577 so it doesn't have any VC support.
-> 
-> Interesting though - the IMX477 has the ability to convey metadata on a
-> separate VC... That's actually the thing holding back the RPi IMX477
-> driver from mainline, as the way it was anticipated to support multiple
-> data streams is with the new multiplexed streams API.
-> 
-> And I think we inferred that the IMX577 and IMX477 are closely related,
-> so should have similar capabilities for obtaining metadata channels?
+Due to compiler optimizations like inlining, there are cases where
+MMIO traces using _THIS_IP_ for caller information might not be
+sufficient to provide accurate debug traces.
 
-Hmm I was not aware of that.
+1) With optimizations (Seen with GCC):
 
-If we could import the rpi/imx477.c code into upstrea/imx412.c it might 
-be possible
+In this case, _THIS_IP_ works fine and prints the caller information
+since it will be inlined into the caller and we get the debug traces
+on who made the MMIO access, for ex:
 
-The core init is very similar
+rwmmio_read: qcom_smmu_tlb_sync+0xe0/0x1b0 width=32 addr=0xffff8000087447f4
+rwmmio_post_read: qcom_smmu_tlb_sync+0xe0/0x1b0 width=32 val=0x0 addr=0xffff8000087447f4
 
-https://github.com/raspberrypi/linux/blob/rpi-5.19.y/drivers/media/i2c/imx477.c#L167
+2) Without optimizations (Seen with Clang):
 
-https://github.com/raspberrypi/linux/blob/rpi-5.19.y/drivers/media/i2c/imx412.c#L160
+_THIS_IP_ will not be sufficient in this case as it will print only
+the MMIO accessors itself which is of not much use since it is not
+inlined as below for example:
 
-Maybe it would be possible to apply the rest of the imx477 config on-top 
-as a POC
+rwmmio_read: readl+0x4/0x80 width=32 addr=0xffff8000087447f4
+rwmmio_post_read: readl+0x48/0x80 width=32 val=0x4 addr=0xffff8000087447f4
 
-https://github.com/raspberrypi/linux/blob/rpi-5.19.y/drivers/media/i2c/imx477.c#L479
+So in order to handle this second case as well irrespective of the compiler
+optimizations, add _RET_IP_ to MMIO trace to make it provide more accurate
+debug information in all these scenarios.
 
-The similary is born out by the shared init code I can see in Leopard 
-imaging's driver, I'm not sure if it supports virtual-channels - I'll 
-have a look, though.
+Before:
 
-What's in the imx477 meta-data ?
+rwmmio_read: readl+0x4/0x80 width=32 addr=0xffff8000087447f4
+rwmmio_post_read: readl+0x48/0x80 width=32 val=0x4 addr=0xffff8000087447f4
 
-@Milen if you have the imx577 datasheet - I don't - perhaps we could 
-cherry-pick some of the code from imx477 and get the imx412.c->imx577 
-dumping VC data out with the RB5 camera mezzanine.
+After:
 
+rwmmio_read: qcom_smmu_tlb_sync+0xe0/0x1b0 -> readl+0x4/0x80 width=32 addr=0xffff8000087447f4
+rwmmio_post_read: qcom_smmu_tlb_sync+0xe0/0x1b0 -> readl+0x4/0x80 width=32 val=0x0 addr=0xffff8000087447f4
+
+Fixes: 210031971cdd ("asm-generic/io: Add logging support for MMIO accessors")
+Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 ---
-bod
+ include/asm-generic/io.h      | 80 +++++++++++++++++------------------
+ include/trace/events/rwmmio.h | 43 ++++++++++++-------
+ lib/trace_readwrite.c         | 16 +++----
+ 3 files changed, 75 insertions(+), 64 deletions(-)
+
+diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
+index a68f8fbf423b..4c44a29b5e8e 100644
+--- a/include/asm-generic/io.h
++++ b/include/asm-generic/io.h
+@@ -80,24 +80,24 @@ DECLARE_TRACEPOINT(rwmmio_read);
+ DECLARE_TRACEPOINT(rwmmio_post_read);
+ 
+ void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+-		    unsigned long caller_addr);
++		    unsigned long caller_addr, unsigned long caller_addr0);
+ void log_post_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+-			 unsigned long caller_addr);
++			 unsigned long caller_addr, unsigned long caller_addr0);
+ void log_read_mmio(u8 width, const volatile void __iomem *addr,
+-		   unsigned long caller_addr);
++		   unsigned long caller_addr, unsigned long caller_addr0);
+ void log_post_read_mmio(u64 val, u8 width, const volatile void __iomem *addr,
+-			unsigned long caller_addr);
++			unsigned long caller_addr, unsigned long caller_addr0);
+ 
+ #else
+ 
+ static inline void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+-				  unsigned long caller_addr) {}
++				  unsigned long caller_addr, unsigned long caller_addr0) {}
+ static inline void log_post_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+-				       unsigned long caller_addr) {}
++				       unsigned long caller_addr, unsigned long caller_addr0) {}
+ static inline void log_read_mmio(u8 width, const volatile void __iomem *addr,
+-				 unsigned long caller_addr) {}
++				 unsigned long caller_addr, unsigned long caller_addr0) {}
+ static inline void log_post_read_mmio(u64 val, u8 width, const volatile void __iomem *addr,
+-				      unsigned long caller_addr) {}
++				      unsigned long caller_addr, unsigned long caller_addr0) {}
+ 
+ #endif /* CONFIG_TRACE_MMIO_ACCESS */
+ 
+@@ -188,11 +188,11 @@ static inline u8 readb(const volatile void __iomem *addr)
+ {
+ 	u8 val;
+ 
+-	log_read_mmio(8, addr, _THIS_IP_);
++	log_read_mmio(8, addr, _THIS_IP_, _RET_IP_);
+ 	__io_br();
+ 	val = __raw_readb(addr);
+ 	__io_ar(val);
+-	log_post_read_mmio(val, 8, addr, _THIS_IP_);
++	log_post_read_mmio(val, 8, addr, _THIS_IP_, _RET_IP_);
+ 	return val;
+ }
+ #endif
+@@ -203,11 +203,11 @@ static inline u16 readw(const volatile void __iomem *addr)
+ {
+ 	u16 val;
+ 
+-	log_read_mmio(16, addr, _THIS_IP_);
++	log_read_mmio(16, addr, _THIS_IP_, _RET_IP_);
+ 	__io_br();
+ 	val = __le16_to_cpu((__le16 __force)__raw_readw(addr));
+ 	__io_ar(val);
+-	log_post_read_mmio(val, 16, addr, _THIS_IP_);
++	log_post_read_mmio(val, 16, addr, _THIS_IP_, _RET_IP_);
+ 	return val;
+ }
+ #endif
+@@ -218,11 +218,11 @@ static inline u32 readl(const volatile void __iomem *addr)
+ {
+ 	u32 val;
+ 
+-	log_read_mmio(32, addr, _THIS_IP_);
++	log_read_mmio(32, addr, _THIS_IP_, _RET_IP_);
+ 	__io_br();
+ 	val = __le32_to_cpu((__le32 __force)__raw_readl(addr));
+ 	__io_ar(val);
+-	log_post_read_mmio(val, 32, addr, _THIS_IP_);
++	log_post_read_mmio(val, 32, addr, _THIS_IP_, _RET_IP_);
+ 	return val;
+ }
+ #endif
+@@ -234,11 +234,11 @@ static inline u64 readq(const volatile void __iomem *addr)
+ {
+ 	u64 val;
+ 
+-	log_read_mmio(64, addr, _THIS_IP_);
++	log_read_mmio(64, addr, _THIS_IP_, _RET_IP_);
+ 	__io_br();
+ 	val = __le64_to_cpu(__raw_readq(addr));
+ 	__io_ar(val);
+-	log_post_read_mmio(val, 64, addr, _THIS_IP_);
++	log_post_read_mmio(val, 64, addr, _THIS_IP_, _RET_IP_);
+ 	return val;
+ }
+ #endif
+@@ -248,11 +248,11 @@ static inline u64 readq(const volatile void __iomem *addr)
+ #define writeb writeb
+ static inline void writeb(u8 value, volatile void __iomem *addr)
+ {
+-	log_write_mmio(value, 8, addr, _THIS_IP_);
++	log_write_mmio(value, 8, addr, _THIS_IP_, _RET_IP_);
+ 	__io_bw();
+ 	__raw_writeb(value, addr);
+ 	__io_aw();
+-	log_post_write_mmio(value, 8, addr, _THIS_IP_);
++	log_post_write_mmio(value, 8, addr, _THIS_IP_, _RET_IP_);
+ }
+ #endif
+ 
+@@ -260,11 +260,11 @@ static inline void writeb(u8 value, volatile void __iomem *addr)
+ #define writew writew
+ static inline void writew(u16 value, volatile void __iomem *addr)
+ {
+-	log_write_mmio(value, 16, addr, _THIS_IP_);
++	log_write_mmio(value, 16, addr, _THIS_IP_, _RET_IP_);
+ 	__io_bw();
+ 	__raw_writew((u16 __force)cpu_to_le16(value), addr);
+ 	__io_aw();
+-	log_post_write_mmio(value, 16, addr, _THIS_IP_);
++	log_post_write_mmio(value, 16, addr, _THIS_IP_, _RET_IP_);
+ }
+ #endif
+ 
+@@ -272,11 +272,11 @@ static inline void writew(u16 value, volatile void __iomem *addr)
+ #define writel writel
+ static inline void writel(u32 value, volatile void __iomem *addr)
+ {
+-	log_write_mmio(value, 32, addr, _THIS_IP_);
++	log_write_mmio(value, 32, addr, _THIS_IP_, _RET_IP_);
+ 	__io_bw();
+ 	__raw_writel((u32 __force)__cpu_to_le32(value), addr);
+ 	__io_aw();
+-	log_post_write_mmio(value, 32, addr, _THIS_IP_);
++	log_post_write_mmio(value, 32, addr, _THIS_IP_, _RET_IP_);
+ }
+ #endif
+ 
+@@ -285,11 +285,11 @@ static inline void writel(u32 value, volatile void __iomem *addr)
+ #define writeq writeq
+ static inline void writeq(u64 value, volatile void __iomem *addr)
+ {
+-	log_write_mmio(value, 64, addr, _THIS_IP_);
++	log_write_mmio(value, 64, addr, _THIS_IP_, _RET_IP_);
+ 	__io_bw();
+ 	__raw_writeq(__cpu_to_le64(value), addr);
+ 	__io_aw();
+-	log_post_write_mmio(value, 64, addr, _THIS_IP_);
++	log_post_write_mmio(value, 64, addr, _THIS_IP_, _RET_IP_);
+ }
+ #endif
+ #endif /* CONFIG_64BIT */
+@@ -305,9 +305,9 @@ static inline u8 readb_relaxed(const volatile void __iomem *addr)
+ {
+ 	u8 val;
+ 
+-	log_read_mmio(8, addr, _THIS_IP_);
++	log_read_mmio(8, addr, _THIS_IP_, _RET_IP_);
+ 	val = __raw_readb(addr);
+-	log_post_read_mmio(val, 8, addr, _THIS_IP_);
++	log_post_read_mmio(val, 8, addr, _THIS_IP_, _RET_IP_);
+ 	return val;
+ }
+ #endif
+@@ -318,9 +318,9 @@ static inline u16 readw_relaxed(const volatile void __iomem *addr)
+ {
+ 	u16 val;
+ 
+-	log_read_mmio(16, addr, _THIS_IP_);
++	log_read_mmio(16, addr, _THIS_IP_, _RET_IP_);
+ 	val = __le16_to_cpu(__raw_readw(addr));
+-	log_post_read_mmio(val, 16, addr, _THIS_IP_);
++	log_post_read_mmio(val, 16, addr, _THIS_IP_, _RET_IP_);
+ 	return val;
+ }
+ #endif
+@@ -331,9 +331,9 @@ static inline u32 readl_relaxed(const volatile void __iomem *addr)
+ {
+ 	u32 val;
+ 
+-	log_read_mmio(32, addr, _THIS_IP_);
++	log_read_mmio(32, addr, _THIS_IP_, _RET_IP_);
+ 	val = __le32_to_cpu(__raw_readl(addr));
+-	log_post_read_mmio(val, 32, addr, _THIS_IP_);
++	log_post_read_mmio(val, 32, addr, _THIS_IP_, _RET_IP_);
+ 	return val;
+ }
+ #endif
+@@ -344,9 +344,9 @@ static inline u64 readq_relaxed(const volatile void __iomem *addr)
+ {
+ 	u64 val;
+ 
+-	log_read_mmio(64, addr, _THIS_IP_);
++	log_read_mmio(64, addr, _THIS_IP_, _RET_IP_);
+ 	val = __le64_to_cpu(__raw_readq(addr));
+-	log_post_read_mmio(val, 64, addr, _THIS_IP_);
++	log_post_read_mmio(val, 64, addr, _THIS_IP_, _RET_IP_);
+ 	return val;
+ }
+ #endif
+@@ -355,9 +355,9 @@ static inline u64 readq_relaxed(const volatile void __iomem *addr)
+ #define writeb_relaxed writeb_relaxed
+ static inline void writeb_relaxed(u8 value, volatile void __iomem *addr)
+ {
+-	log_write_mmio(value, 8, addr, _THIS_IP_);
++	log_write_mmio(value, 8, addr, _THIS_IP_, _RET_IP_);
+ 	__raw_writeb(value, addr);
+-	log_post_write_mmio(value, 8, addr, _THIS_IP_);
++	log_post_write_mmio(value, 8, addr, _THIS_IP_, _RET_IP_);
+ }
+ #endif
+ 
+@@ -365,9 +365,9 @@ static inline void writeb_relaxed(u8 value, volatile void __iomem *addr)
+ #define writew_relaxed writew_relaxed
+ static inline void writew_relaxed(u16 value, volatile void __iomem *addr)
+ {
+-	log_write_mmio(value, 16, addr, _THIS_IP_);
++	log_write_mmio(value, 16, addr, _THIS_IP_, _RET_IP_);
+ 	__raw_writew(cpu_to_le16(value), addr);
+-	log_post_write_mmio(value, 16, addr, _THIS_IP_);
++	log_post_write_mmio(value, 16, addr, _THIS_IP_, _RET_IP_);
+ }
+ #endif
+ 
+@@ -375,9 +375,9 @@ static inline void writew_relaxed(u16 value, volatile void __iomem *addr)
+ #define writel_relaxed writel_relaxed
+ static inline void writel_relaxed(u32 value, volatile void __iomem *addr)
+ {
+-	log_write_mmio(value, 32, addr, _THIS_IP_);
++	log_write_mmio(value, 32, addr, _THIS_IP_, _RET_IP_);
+ 	__raw_writel(__cpu_to_le32(value), addr);
+-	log_post_write_mmio(value, 32, addr, _THIS_IP_);
++	log_post_write_mmio(value, 32, addr, _THIS_IP_, _RET_IP_);
+ }
+ #endif
+ 
+@@ -385,9 +385,9 @@ static inline void writel_relaxed(u32 value, volatile void __iomem *addr)
+ #define writeq_relaxed writeq_relaxed
+ static inline void writeq_relaxed(u64 value, volatile void __iomem *addr)
+ {
+-	log_write_mmio(value, 64, addr, _THIS_IP_);
++	log_write_mmio(value, 64, addr, _THIS_IP_, _RET_IP_);
+ 	__raw_writeq(__cpu_to_le64(value), addr);
+-	log_post_write_mmio(value, 64, addr, _THIS_IP_);
++	log_post_write_mmio(value, 64, addr, _THIS_IP_, _RET_IP_);
+ }
+ #endif
+ 
+diff --git a/include/trace/events/rwmmio.h b/include/trace/events/rwmmio.h
+index de41159216c1..a43e5dd7436b 100644
+--- a/include/trace/events/rwmmio.h
++++ b/include/trace/events/rwmmio.h
+@@ -12,12 +12,14 @@
+ 
+ DECLARE_EVENT_CLASS(rwmmio_rw_template,
+ 
+-	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
++	TP_PROTO(unsigned long caller, unsigned long caller0, u64 val, u8 width,
++		 volatile void __iomem *addr),
+ 
+-	TP_ARGS(caller, val, width, addr),
++	TP_ARGS(caller, caller0, val, width, addr),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(unsigned long, caller)
++		__field(unsigned long, caller0)
+ 		__field(unsigned long, addr)
+ 		__field(u64, val)
+ 		__field(u8, width)
+@@ -25,56 +27,64 @@ DECLARE_EVENT_CLASS(rwmmio_rw_template,
+ 
+ 	TP_fast_assign(
+ 		__entry->caller = caller;
++		__entry->caller0 = caller0;
+ 		__entry->val = val;
+ 		__entry->addr = (unsigned long)addr;
+ 		__entry->width = width;
+ 	),
+ 
+-	TP_printk("%pS width=%d val=%#llx addr=%#lx",
+-		(void *)__entry->caller, __entry->width,
++	TP_printk("%pS -> %pS width=%d val=%#llx addr=%#lx",
++		(void *)__entry->caller0, (void *)__entry->caller, __entry->width,
+ 		__entry->val, __entry->addr)
+ );
+ 
+ DEFINE_EVENT(rwmmio_rw_template, rwmmio_write,
+-	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
+-	TP_ARGS(caller, val, width, addr)
++	TP_PROTO(unsigned long caller, unsigned long caller0, u64 val, u8 width,
++		 volatile void __iomem *addr),
++	TP_ARGS(caller, caller0, val, width, addr)
+ );
+ 
+ DEFINE_EVENT(rwmmio_rw_template, rwmmio_post_write,
+-	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
+-	TP_ARGS(caller, val, width, addr)
++	TP_PROTO(unsigned long caller, unsigned long caller0, u64 val, u8 width,
++		 volatile void __iomem *addr),
++	TP_ARGS(caller, caller0, val, width, addr)
+ );
+ 
+ TRACE_EVENT(rwmmio_read,
+ 
+-	TP_PROTO(unsigned long caller, u8 width, const volatile void __iomem *addr),
++	TP_PROTO(unsigned long caller, unsigned long caller0, u8 width,
++		 const volatile void __iomem *addr),
+ 
+-	TP_ARGS(caller, width, addr),
++	TP_ARGS(caller, caller0, width, addr),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(unsigned long, caller)
++		__field(unsigned long, caller0)
+ 		__field(unsigned long, addr)
+ 		__field(u8, width)
+ 	),
+ 
+ 	TP_fast_assign(
+ 		__entry->caller = caller;
++		__entry->caller0 = caller0;
+ 		__entry->addr = (unsigned long)addr;
+ 		__entry->width = width;
+ 	),
+ 
+-	TP_printk("%pS width=%d addr=%#lx",
+-		 (void *)__entry->caller, __entry->width, __entry->addr)
++	TP_printk("%pS -> %pS width=%d addr=%#lx",
++		 (void *)__entry->caller0, (void *)__entry->caller, __entry->width, __entry->addr)
+ );
+ 
+ TRACE_EVENT(rwmmio_post_read,
+ 
+-	TP_PROTO(unsigned long caller, u64 val, u8 width, const volatile void __iomem *addr),
++	TP_PROTO(unsigned long caller, unsigned long caller0, u64 val, u8 width,
++		 const volatile void __iomem *addr),
+ 
+-	TP_ARGS(caller, val, width, addr),
++	TP_ARGS(caller, caller0, val, width, addr),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(unsigned long, caller)
++		__field(unsigned long, caller0)
+ 		__field(unsigned long, addr)
+ 		__field(u64, val)
+ 		__field(u8, width)
+@@ -82,13 +92,14 @@ TRACE_EVENT(rwmmio_post_read,
+ 
+ 	TP_fast_assign(
+ 		__entry->caller = caller;
++		__entry->caller0 = caller0;
+ 		__entry->val = val;
+ 		__entry->addr = (unsigned long)addr;
+ 		__entry->width = width;
+ 	),
+ 
+-	TP_printk("%pS width=%d val=%#llx addr=%#lx",
+-		 (void *)__entry->caller, __entry->width,
++	TP_printk("%pS -> %pS width=%d val=%#llx addr=%#lx",
++		 (void *)__entry->caller0, (void *)__entry->caller, __entry->width,
+ 		 __entry->val, __entry->addr)
+ );
+ 
+diff --git a/lib/trace_readwrite.c b/lib/trace_readwrite.c
+index 88637038b30c..62b4e8b3c733 100644
+--- a/lib/trace_readwrite.c
++++ b/lib/trace_readwrite.c
+@@ -14,33 +14,33 @@
+ 
+ #ifdef CONFIG_TRACE_MMIO_ACCESS
+ void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+-		    unsigned long caller_addr)
++		    unsigned long caller_addr, unsigned long caller_addr0)
+ {
+-	trace_rwmmio_write(caller_addr, val, width, addr);
++	trace_rwmmio_write(caller_addr, caller_addr0, val, width, addr);
+ }
+ EXPORT_SYMBOL_GPL(log_write_mmio);
+ EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_write);
+ 
+ void log_post_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+-			 unsigned long caller_addr)
++			 unsigned long caller_addr, unsigned long caller_addr0)
+ {
+-	trace_rwmmio_post_write(caller_addr, val, width, addr);
++	trace_rwmmio_post_write(caller_addr, caller_addr0, val, width, addr);
+ }
+ EXPORT_SYMBOL_GPL(log_post_write_mmio);
+ EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_post_write);
+ 
+ void log_read_mmio(u8 width, const volatile void __iomem *addr,
+-		   unsigned long caller_addr)
++		   unsigned long caller_addr, unsigned long caller_addr0)
+ {
+-	trace_rwmmio_read(caller_addr, width, addr);
++	trace_rwmmio_read(caller_addr, caller_addr0, width, addr);
+ }
+ EXPORT_SYMBOL_GPL(log_read_mmio);
+ EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_read);
+ 
+ void log_post_read_mmio(u64 val, u8 width, const volatile void __iomem *addr,
+-			unsigned long caller_addr)
++			unsigned long caller_addr, unsigned long caller_addr0)
+ {
+-	trace_rwmmio_post_read(caller_addr, val, width, addr);
++	trace_rwmmio_post_read(caller_addr, caller_addr0, val, width, addr);
+ }
+ EXPORT_SYMBOL_GPL(log_post_read_mmio);
+ EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_post_read);
+
+base-commit: dca0a0385a4963145593ba417e1417af88a7c18d
+-- 
+2.17.1
+
