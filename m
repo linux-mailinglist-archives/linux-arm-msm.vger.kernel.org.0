@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FABC60147E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 19:16:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8BA86014A8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 19:20:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229901AbiJQRQB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 13:16:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34288 "EHLO
+        id S230162AbiJQRU5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 13:20:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230055AbiJQRQA (ORCPT
+        with ESMTP id S230012AbiJQRU4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 13:16:00 -0400
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 697366E2CF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 10:15:59 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id j21so7039051qkk.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 10:15:59 -0700 (PDT)
+        Mon, 17 Oct 2022 13:20:56 -0400
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4E586F57B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 10:20:53 -0700 (PDT)
+Received: by mail-qv1-xf32.google.com with SMTP id o67so7795011qvo.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 10:20:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=4ZecDoFZ2FP/kx+KdceBdgeFczEPpStIKFSrAh+N6jU=;
-        b=LXDJSdcdeLuJYxtyhdZsAI0SNOP4m46trXhDeGqAl1V4CXsnADHkT0hIDME8MnMKpI
-         XBRruyzZYQU82Ll4/zEH84hcvRlJ5p0pM24FEdi5Trj7CTeEI1d8RPsKNT7QdSC9Kk7j
-         FUS7JzlCBQn62wGI4XV7Zpvnrd+X8g6r3HyWyrjajvVTkywCowHWSf0/u/g+UB71GKVG
-         ZpVr4VlhfALLqJaTazVk01O8UnzXNlTtBo5yQ3Tsze986io4/+j+sr6ysWbXSR/GHd6b
-         NJNjvUQnYN1Nh7QE2Hx/xz1HWrS+egDBtsPwtlDO59O0zmebeJERkOTe9SqTbp4xeFXd
-         dXoA==
+        bh=d8KFvXWXk+yHpFJT0KTXsfMVjC6a7dZVFBnEd/ZjfUI=;
+        b=wf/PwgJ+34F7/B0pCzFjaKHZmmo9BpTXsHL/cr3KMWfaitH5BdFvQnDtuQJn8txoHT
+         J0m4i7BCubMwdI8Sb8A8D/kWG4s5Gr66h1DeBNFd8NU3UCHm0N21AMI/nczPyaaPmizi
+         v2Ger7sY7Bks0BYMqmBl0gWu+UYdbcKA2xB9e6ze+eNLcElnazUc7foBOURKeeIZPHO7
+         4AYmUj1SmNorM8nI1dG9t7z1ZSQnpfcge2nZYjS4UZc0mds6hIUy3+49uQzG7TXIRsFS
+         5ZTp/KB18Qe1dy6g62cTgPwbGMwFD7dc1xyQFagDirmlVJdOpEPiRie2a6vsl6mpxp5q
+         k7NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4ZecDoFZ2FP/kx+KdceBdgeFczEPpStIKFSrAh+N6jU=;
-        b=XT1I5ZEYDsxgQIVLzBxWJO62NQspKxFwi5Lyh3U4OFe+Lem4iGkpBW0E881H0nh1De
-         r7NgpD0dyZwARs9ojqCVNIeKdFetB1x284DDuypRPIt60u44nBD1XbjDcpoyLqtm4+rn
-         XejK0dS+kX41HIfZkQcLlylcP3SbdHZEI2ARMi9oQu9kT29uHYDiDzYQzV/rFQlHwoid
-         P4p0u/WjaMivPJNXoNRhgb3jfdjPCef73NE+YCo4lbT1thjYizAvHQzsT4xzJ1FdHOIs
-         Uo9FNQk2hUN+kborKuSdbB6WGVijH0MQvf6rmY0rjw6aDTVdH4SkELmVlyNYyNu4WqeS
-         Cu/A==
-X-Gm-Message-State: ACrzQf0yizdo3O743KKTF/tg1wld+T+mJYqhaa8AnS/P6Q+uumINQHtT
-        BKYIa1vnQ4qSC/nj+c3Vt6uiag==
-X-Google-Smtp-Source: AMsMyM78cEACn7q29/KOCzKKbKrK66y2E/xmtRkYp6XmajqupdFIvn1kcwfKZf54KpEbLcIXuiHOEQ==
-X-Received: by 2002:a05:620a:46a7:b0:6ee:dea7:cc1c with SMTP id bq39-20020a05620a46a700b006eedea7cc1cmr6200325qkb.506.1666026958537;
-        Mon, 17 Oct 2022 10:15:58 -0700 (PDT)
+        bh=d8KFvXWXk+yHpFJT0KTXsfMVjC6a7dZVFBnEd/ZjfUI=;
+        b=OQ9I/Esi6S/G5IQ1qJ/5K6ei/uGk7lO5i82pHWUKVnviFA0fAXRCeNYnMd5gSzrNgt
+         XIYGyKgEu1Xu6XOaliP6v80LfJpBAsE87BfHmbDli7ae7iOmGZX0SqOOMkc/LeQDxCwX
+         YOJl4xggJiu+G1LScREyN8NlXt1yrSlIqY38f1tRKTU3mFIId8ueAZI4uj4DjJyKovsW
+         +tL5vAd1EFu0Q5UW6A2sjLkbhW4dfaZZQK4YITCGzHb6BMpLAhD2svG4VcQk5YUUNUoa
+         AQa23j6Nu/ZL85gzgLOHO/qgP2w5Ow5BcoeQKvBNwSs1EpVspIr9H9apt6c5vqSVXgnX
+         DY2Q==
+X-Gm-Message-State: ACrzQf2uJ/0uypBDlrlyUIv+Pvm57xaVtvN7X+nzgDt63ez0QVwmCCgH
+        ymYxeob0EcgTab8AXAlV5s6GjQ==
+X-Google-Smtp-Source: AMsMyM6/3ZjXIrE4Qn/bdGiyrsjypB6R/Ooht83aXja1DRa3oM95NXtfLHU3Qi+LnuCL5VdxoSK15Q==
+X-Received: by 2002:a0c:9a4c:0:b0:4b1:d3ef:85cc with SMTP id q12-20020a0c9a4c000000b004b1d3ef85ccmr9242276qvd.105.1666027252384;
+        Mon, 17 Oct 2022 10:20:52 -0700 (PDT)
 Received: from [10.101.5.247] ([148.59.24.28])
-        by smtp.gmail.com with ESMTPSA id c25-20020ac81119000000b003996aa171b9sm169442qtj.97.2022.10.17.10.15.53
+        by smtp.gmail.com with ESMTPSA id bv8-20020a05622a0a0800b0038b684a1642sm246319qtb.32.2022.10.17.10.20.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Oct 2022 10:15:57 -0700 (PDT)
-Message-ID: <5e153119-f853-ff57-8277-2d782e255be2@linaro.org>
-Date:   Mon, 17 Oct 2022 13:15:45 -0400
+        Mon, 17 Oct 2022 10:20:51 -0700 (PDT)
+Message-ID: <d6642028-3fb9-4e39-a349-666625dabb9d@linaro.org>
+Date:   Mon, 17 Oct 2022 13:20:49 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.2
-Subject: Re: [PATCH 09/15] dt-bindings: phy: qcom,qmp-pcie: mark current
- bindings as legacy
+Subject: Re: [PATCH 10/15] dt-bindings: phy: qcom,qmp-pcie: add sc8280xp
+ bindings
+Content-Language: en-US
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -68,15 +69,15 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20221017145328.22090-1-johan+linaro@kernel.org>
- <20221017145328.22090-10-johan+linaro@kernel.org>
-Content-Language: en-US
+ <20221017145328.22090-11-johan+linaro@kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221017145328.22090-10-johan+linaro@kernel.org>
+In-Reply-To: <20221017145328.22090-11-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -84,36 +85,107 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 17/10/2022 10:53, Johan Hovold wrote:
-> The current QMP PCIe PHY bindings are based on the original MSM8996
-> binding which provided multiple PHYs per IP block and these in turn were
-> described by child nodes.
+> Add bindings for the PCIe QMP PHYs found on SC8280XP.
 > 
-> Later QMP PCIe PHY blocks only provide a single PHY and the remnant
-> child node does not really reflect the hardware.
+> The PCIe2 and PCIe3 controllers and PHYs on SC8280XP can be used in
+> 4-lane mode or as separate controllers and PHYs in 2-lane mode (e.g. as
+> PCIe2A and PCIe2B).
 > 
-> The original MSM8996 binding also ended up describing the individual
-> register blocks as belonging to either the wrapper node or the PHY child
-> nodes.
-> 
-> This is an unnecessary level of detail which has lead to problems when
-> later IP blocks using different register layouts have been forced to fit
-> the original mould rather than updating the binding. The bindings are
-> arguable also incomplete as they only the describe register blocks used
-> by the current Linux drivers (e.g. does not include the per lane PCS
-> registers).
-> 
-> In preparation for adding new bindings for SC8280XP which further
-> bindings can be based on, mark the current bindings as "legacy".
+> The configuration for a specific system can be read from a TCSR register.
 > 
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->  .../{qcom,qmp-pcie-phy.yaml => qcom,qmp-pcie-phy-legacy.yaml} | 4 ++--
+>  .../bindings/phy/qcom,qmp-pcie-phy.yaml       | 163 ++++++++++++++++++
+>  1 file changed, 163 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
+> new file mode 100644
+> index 000000000000..82da95eaa9d6
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
 
-I don't think we should rename anything as legacy. These are "normal"
-platforms, not legacy ones. SM8450 is not even that old.
+Filename based on compatible, so for example:
 
-The recommendation is to keep names matching the compatibles, not adding
-some legacy/newer/newest suffixes.
+qcom,sc8280xp-qmp-pcie-phy.yaml
+
+
+> @@ -0,0 +1,163 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/qcom,qmp-pcie-phy.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm QMP PHY controller (PCIe)
+> +
+> +maintainers:
+> +  - Vinod Koul <vkoul@kernel.org>
+> +
+> +description:
+> +  QMP PHY controller supports physical layer functionality for a number of
+> +  controllers on Qualcomm chipsets, such as, PCIe, UFS, and USB.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sc8280xp-qmp-gen3x1-pcie-phy
+> +      - qcom,sc8280xp-qmp-gen3x2-pcie-phy
+> +      - qcom,sc8280xp-qmp-gen3x4-pcie-phy
+> +
+> +  reg:
+> +    minItems: 1
+> +    maxItems: 2
+> +
+> +  clocks:
+> +    maxItems: 6
+> +
+> +  clock-names:
+> +    items:
+> +      - const: aux
+> +      - const: cfg_ahb
+> +      - const: ref
+> +      - const: rchng
+> +      - const: pipe
+> +      - const: pipediv2
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  resets:
+> +    maxItems: 1
+> +
+> +  reset-names:
+> +    items:
+> +      - const: phy
+> +
+> +  vdda-phy-supply: true
+> +
+> +  vdda-pll-supply: true
+> +
+> +  qcom,4ln-config-sel:
+> +    description: 4-lane configuration as TCSR syscon phandle, register offset
+> +                 and bit number
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    items:
+> +      maxItems: 3
+
+You have only one phandle, so you need to describe the items and limit
+their number, like here:
+
+https://elixir.bootlin.com/linux/v5.18-rc1/source/Documentation/devicetree/bindings/soc/samsung/exynos-usi.yaml#L42
+
+This allows you to skip most of property description.
+
+> +
+> +  "#clock-cells":
+> +    const: 0
+> +
+> +  clock-output-names:
+> +    maxItems: 1
+> +
+> +  "#phy-cells":
+> +    const: 0
 
 Best regards,
 Krzysztof
