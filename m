@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C6A806006A8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 08:25:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60DDA6006D5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 08:50:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230035AbiJQGZq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 02:25:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34330 "EHLO
+        id S229760AbiJQGup (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 02:50:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229828AbiJQGZp (ORCPT
+        with ESMTP id S229815AbiJQGun (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 02:25:45 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C2B15282A;
-        Sun, 16 Oct 2022 23:25:45 -0700 (PDT)
+        Mon, 17 Oct 2022 02:50:43 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF68B543FA;
+        Sun, 16 Oct 2022 23:50:41 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id ACB7860EFC;
-        Mon, 17 Oct 2022 06:25:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A56C433D6;
-        Mon, 17 Oct 2022 06:25:44 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5E08160A48;
+        Mon, 17 Oct 2022 06:50:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7160C433D7;
+        Mon, 17 Oct 2022 06:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1665987944;
-        bh=r/qtiRQSzBRuWHx4CJJv3HpvlT6NVIUzeaBeeHmIZG8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Hcp97rWBRX/WgBigojhm+05r8ogVbW0GdnMcQ3ZnP0doK2xfx9QJPC1cDmJS/gbmX
-         OzmOAOkjEF3YdDhSXW/R2bBOxuvRk7nWbdV7nzuWMxI/gUrgN2jocJyASmfy76WxHa
-         v5EXM7zMludWfyys8cA2gySRBnhqaWh3DBQPb5PobshAktEQKcR2lx06tHyjammGvg
-         4Ko602g1gAftiBgBNuoJXz26Y51Im0RSq65g9jVGVNxiN0qseP1MgS+vNqAFCw0Vfp
-         P88foPby74DRmGxkYBUrzXLKS9A3CjrEsT/QTOrGOrBSq3wMYdpKb82crJfugswn0e
-         tFlJ3mQdfYn0g==
+        s=k20201202; t=1665989440;
+        bh=umU0smwpPoIhb97gIHRTbuFSz5PUSAh+Qs2wU0wsLvg=;
+        h=From:To:Cc:Subject:Date:From;
+        b=IWYHiCEZZKo+5781AsZfUm0qWSjBcNWuv6Z+R2mihZ1GvUGBU7NWDpiNtyDZ7+g7X
+         8OIFTiL6EdgoMfbo5LmINyURAeNgd44Gfj0cn3+/BbEFJawpJPamfE4R/bIn/pNm3m
+         52CmeNmNkoWn3MCe/3skvzr5L5e3opSNW8xxgQy+wfkiZzGbpAwSbB2Z+D5O54Q2ez
+         nsqplWZ0gL0CftpfwE2dCYP5GMRoqQMt3Tj5Rym6/sh8s1nIK+CkmB106QF+rlhmLj
+         me78MVKIVZCgEvTMLJ5nd0WQ1M5RlF4yAmfTrIW9bdKq6cFHbuR7LmqX/t30mpeyTp
+         erzbdYmO7P0Mg==
 Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1okJZ7-0004qj-0B; Mon, 17 Oct 2022 08:25:33 +0200
-Date:   Mon, 17 Oct 2022 08:25:32 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Sasha Levin <sashal@kernel.org>, Vinod Koul <vkoul@kernel.org>
-Cc:     stable-commits@vger.kernel.org, johan+linaro@kernel.org,
-        Kishon Vijay Abraham I <kishon@ti.com>,
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1okJxG-00057T-35; Mon, 17 Oct 2022 08:50:30 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: Patch "phy: qcom-qmp-combo: disable runtime PM on unbind" has
- been added to the 5.15-stable tree
-Message-ID: <Y0z1XFHN2Ax9AD27@hovoldconsulting.com>
-References: <20221017031601.2437904-1-sashal@kernel.org>
+        linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v3 00/11] phy: qcom-qmp: more fixes and cleanups (set 1)
+Date:   Mon, 17 Oct 2022 08:50:02 +0200
+Message-Id: <20221017065013.19647-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221017031601.2437904-1-sashal@kernel.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -59,77 +59,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[ Resending with Vinod and the lists on CC. You forgot to CC the
-maintainer. ]
+Here's the next batch of QMP driver fixes and cleanups.
 
-On Sun, Oct 16, 2022 at 11:16:01PM -0400, Sasha Levin wrote:
-> This is a note to let you know that I've just added the patch titled
-> 
->     phy: qcom-qmp-combo: disable runtime PM on unbind
-> 
-> to the 5.15-stable tree which can be found at:
->     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
-> 
-> The filename of the patch is:
->      phy-qcom-qmp-combo-disable-runtime-pm-on-unbind.patch
-> and it can be found in the queue-5.15 subdirectory.
-> 
-> If you, or anyone else, feels it should not be added to the stable tree,
-> please let <stable@vger.kernel.org> know about it.
-> 
-> 
-> 
-> commit f3aca84b69977d7c024d9fbf52163de4b852df22
-> Author: Johan Hovold <johan+linaro@kernel.org>
-> Date:   Wed Sep 7 13:07:13 2022 +0200
-> 
->     phy: qcom-qmp-combo: disable runtime PM on unbind
->     
->     [ Upstream commit 4382d518d1887e62234560ea08a0203d11d28cc1 ]
->     
->     Make sure to disable runtime PM also on driver unbind.
->     
->     Fixes: ac0d239936bd ("phy: qcom-qmp: Add support for runtime PM").
->     Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
->     Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->     Link: https://lore.kernel.org/r/20220907110728.19092-2-johan+linaro@kernel.org
->     Signed-off-by: Vinod Koul <vkoul@kernel.org>
->     Signed-off-by: Sasha Levin <sashal@kernel.org>
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> index c7309e981bfb..dcf8a8764e17 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+Dmitry suggested that the register layout structs could all be using
+per-IP version defines, which in principle sounds like a good idea. It
+is a separate change though, and one which would require some more work
+as it is not always clear which IP version a specific SoC uses (e.g.
+some of the IPQ platforms appear to mix and match currently).
 
-This driver did not exist in 5.15. Please don't tell me you're
-backporting the QMP driver split and all the follow up cleanups?
+As such a change shouldn't block these clean ups, I've dropped the
+merging of the IPQ SDM845 PCIe layout structs in v2.
 
-Note that hardly any of these QMP fixes had a stable tag for a reason.
+Note that v3 has been rebased on the PCIe EP/RC-mode series to avoid two
+minor conflicts:
 
-> @@ -6273,7 +6273,9 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
->  		return -ENOMEM;
->  
->  	pm_runtime_set_active(dev);
-> -	pm_runtime_enable(dev);
-> +	ret = devm_pm_runtime_enable(dev);
-> +	if (ret)
-> +		return ret;
->  	/*
->  	 * Prevent runtime pm from being ON by default. Users can enable
->  	 * it using power/control in sysfs.
-> @@ -6323,13 +6325,10 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
->  	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
->  	if (!IS_ERR(phy_provider))
->  		dev_info(dev, "Registered Qcom-QMP phy\n");
-> -	else
-> -		pm_runtime_disable(dev);
->  
->  	return PTR_ERR_OR_ZERO(phy_provider);
->  
->  err_node_put:
-> -	pm_runtime_disable(dev);
->  	of_node_put(child);
->  	return ret;
->  }
+	https://lore.kernel.org/linux-phy/20220927092207.161501-1-dmitry.baryshkov@linaro.org/
 
 Johan
+
+
+Changes in v3
+ - rebase on "[PATCH v6 0/5] PCI: qcom: Support using the same PHY for
+   both RC and EP" to avoid two minor conflicts
+
+Changes in v2
+ - drop the two patches that dropped the IPC and SDM845 PCIe layout
+   structs
+ - move the bogus register fix last in case this one needs some more
+   discussion
+
+Johan Hovold (11):
+  phy: qcom-qmp: fix obsolete lane comments
+  phy: qcom-qmp-combo: drop unused UFS reset
+  phy: qcom-qmp-pcie: drop unused common-block registers
+  phy: qcom-qmp-pcie: clean up power-down handling
+  phy: qcom-qmp-pcie: move power-down update
+  phy: qcom-qmp-pcie-msm8996: clean up power-down handling
+  phy: qcom-qmp-combo: clean up power-down handling
+  phy: qcom-qmp-ufs: clean up power-down handling
+  phy: qcom-qmp-usb: clean up power-down handling
+  phy: qcom-qmp-pcie: clean up clock lists
+  phy: qcom-qmp-pcie: drop bogus register update
+
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 30 +++---------
+ .../phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c  | 12 ++---
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 49 +++++--------------
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       | 24 ++++-----
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 22 +++------
+ 5 files changed, 38 insertions(+), 99 deletions(-)
+
+-- 
+2.37.3
+
