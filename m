@@ -2,117 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 586746016B4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 20:56:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65E0F6016C3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 20:59:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230439AbiJQS4b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 14:56:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50888 "EHLO
+        id S229833AbiJQS7E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 14:59:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230345AbiJQS43 (ORCPT
+        with ESMTP id S229739AbiJQS7D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 14:56:29 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E3DF754B1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 11:56:25 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id a3so19968810wrt.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 11:56:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=n4wSIX+vtaaHqF9t1ZyOTlO/WaEXmbWXEH6gsVeqv78=;
-        b=NRAPXUqh9seuxTIJOEeyb7dSRfcSf5qZpejer29HdPtVV84CSBFEnO6t9yaMlyRBrO
-         kQ2un9wYYHrG+7Go7fzIiWmlplYqbpC0p3yhNQhLGeqShZZuU0IJMJkKyACUPtUu+ldt
-         3FplUQGZ152Dw6VPaSE6nGhlqzaBJ8SnEE9XIQUcsh+xieqCmvmv6n+P/Do+Tas17ToA
-         to/KckSD6RrNlvRZ06rPbXTIRwvkscbSufC6suuOHsr1+xvy4xUxzC3u2/HDhRLqM6Yp
-         srpg37dVr6TTa3sMXcaW3yA1CwT4Yfjw+WfgfG91czmk3Ak+WcODigOkZWRsQ6ZCbRaf
-         hv6g==
+        Mon, 17 Oct 2022 14:59:03 -0400
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0425A753BE;
+        Mon, 17 Oct 2022 11:59:03 -0700 (PDT)
+Received: by mail-oi1-f174.google.com with SMTP id g130so13144415oia.13;
+        Mon, 17 Oct 2022 11:59:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=n4wSIX+vtaaHqF9t1ZyOTlO/WaEXmbWXEH6gsVeqv78=;
-        b=4yj25LfQ9fUDvzMv5JXbJaa4FjOb3FmaPFMh7gdIS0lIsw+iLgW3sSxHkxNtC6+WPR
-         yFVhbs8gxCM4SRiyDGeWrPshhrl4S1ROsMyhw0YdpoBA7pyrq6SIfmVNboWYqOpalS5G
-         mUogIZ4kIAbW1j0EmSDtDS/AGpF8WeAyYSCEFXyOkgsyi5fLIkLFU1Cgd9F4O9XWRVq7
-         0cyfIdWSr/tTiXxkBA92wvCuuRxnl8P08KYHHRYV7fk//rvi/Cq4aTCmUeGVm+vHq4U/
-         mFX0yu0oIxuNSbHMK4e2nWVYAeQIhwdM1UU/1TZHys3spOrOY7OIPhpNx0x0TuJsoywz
-         D1ow==
-X-Gm-Message-State: ACrzQf2tiIfeW1cqa6it9WCh6KCS5hpDINZOc7DTC50/iVRgYwlh/um1
-        b1fMUJO/EjenKXdQv8kjTHxbuw==
-X-Google-Smtp-Source: AMsMyM6BMkpei8gG+IwXYyMpXoJFcfNCC5HOsx6/e5OX5mu9Osi30LsyqNPXLkzNWN/uZewPVKJAuw==
-X-Received: by 2002:adf:d1cc:0:b0:22e:6359:f999 with SMTP id b12-20020adfd1cc000000b0022e6359f999mr6883201wrd.667.1666032984133;
-        Mon, 17 Oct 2022 11:56:24 -0700 (PDT)
-Received: from localhost.localdomain (cpc76482-cwma10-2-0-cust629.7-3.cable.virginm.net. [86.14.22.118])
-        by smtp.gmail.com with ESMTPSA id v16-20020a5d43d0000000b00228d67db06esm9151714wrr.21.2022.10.17.11.56.22
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/vV32roC8QGzARBYQiz3s/fUjLlQrlAPOTqGTgJcRG4=;
+        b=d1+yBoxs/xuM+ZIIbuSKyliYF8meQFOcpMd7axTtcV4+zfzUalszC9xSOA+tsieeaE
+         PgTFXdtX1AU6/Zq7lNgajV/TT8BMTEnm6YvJa5e/b5hlOOrj6SJC1Y4S/R4A0kZSSp+2
+         Y1sXpSXQhIov8DDQqS8GoxUs0APPxnS+dLHoQ9HbpD/FGTK/2Y76vKVv0Ps0ymoumsfT
+         WiGVur5jNvkUvyLpi/g5C/dtxOE1wQCRLFuG+/C2F+VSHm46qQmXnWY/MDE7vEgADacN
+         1p2d3YQpvfHuQMzo/zhr5rG9E93epfK9wTL9ZNLc9kPscxeYNP9aqnV6OKwd9acmd6sA
+         u/1A==
+X-Gm-Message-State: ACrzQf2jkQACdj2zc5AeiS+fj7LCvzh4OscCWUeyVn9DT01PnNXtwbBG
+        kabBHLt3MRgQCuo0OrphTA==
+X-Google-Smtp-Source: AMsMyM6m6CDm9Jv8erVCI2tz7eaLMcp3RE9hGAbUtR1C5H5Cl07JUE9GjF1ijTBqyJVp9cwZ6N0spA==
+X-Received: by 2002:a05:6808:11c7:b0:345:7251:7276 with SMTP id p7-20020a05680811c700b0034572517276mr5615625oiv.5.1666033142273;
+        Mon, 17 Oct 2022 11:59:02 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id e18-20020a9d6e12000000b00661b46cc26bsm5028071otr.9.2022.10.17.11.59.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Oct 2022 11:56:23 -0700 (PDT)
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-To:     caleb.connolly@linaro.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Mon, 17 Oct 2022 11:59:01 -0700 (PDT)
+Received: (nullmailer pid 2281284 invoked by uid 1000);
+        Mon, 17 Oct 2022 18:59:02 -0000
+Date:   Mon, 17 Oct 2022 13:59:02 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
         devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lee Jones <lee@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH v2] arm64: dts: qcom: pmi8998: add rradc node
-Date:   Mon, 17 Oct 2022 19:56:09 +0100
-Message-Id: <20221017185609.2280067-1-caleb.connolly@linaro.org>
-X-Mailer: git-send-email 2.38.0
+        linux-kernel@vger.kernel.org,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Lee Jones <lee@kernel.org>, linux-rtc@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v3 05/11] dt-bindings: mfd: qcom-pm8xxx: document
+ qcom,pm8921 as fallback of qcom,pm8018
+Message-ID: <166603314201.2281230.8294091560079145147.robh@kernel.org>
+References: <20220928-mdm9615-dt-schema-fixes-v3-0-531da552c354@linaro.org>
+ <20220928-mdm9615-dt-schema-fixes-v3-5-531da552c354@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220928-mdm9615-dt-schema-fixes-v3-5-531da552c354@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a DT node for the Round Robin ADC found in the PMI8998 PMIC.
+On Mon, 17 Oct 2022 11:45:30 +0200, Neil Armstrong wrote:
+> The PM8018 is used as compatible with PM8921 on the MDM9615, document this situation,
+> and an example section to validate this change.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  .../devicetree/bindings/mfd/qcom-pm8xxx.yaml       | 33 ++++++++++++++++++----
+>  1 file changed, 28 insertions(+), 5 deletions(-)
+> 
 
-The RRADC reports PMIC die and skin temperatures, as well as
-battery/charger thermals. It also reports USB and DC charger voltage and
-current measurements.
-
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
----
-This patch introduces a new dtbs_check warning which will be fixed by
-https://lore.kernel.org/linux-arm-msm/20221017185105.2279129-1-caleb.connolly@linaro.org/
-
-V1: https://lore.kernel.org/linux-arm-msm/20221016180330.1912214-1-caleb.connolly@linaro.org/
-Changes since v1:
- * Change node name from adc@ to rradc@, see linked patch
- * Enable the RRADC by default, rather than per-device
----
- arch/arm64/boot/dts/qcom/pmi8998.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/pmi8998.dtsi b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
-index 6d3d212560c1..95c74d88eb93 100644
---- a/arch/arm64/boot/dts/qcom/pmi8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
-@@ -18,6 +18,14 @@ pmi8998_gpio: gpios@c000 {
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
- 		};
-+
-+		pmi8998_rradc: rradc@4500 {
-+			compatible = "qcom,pmi8998-rradc";
-+			reg = <0x4500>;
-+			#io-channel-cells = <1>;
-+
-+			status = "okay";
-+		};
- 	};
- 
- 	pmi8998_lsid1: pmic@3 {
--- 
-2.38.0
-
+Reviewed-by: Rob Herring <robh@kernel.org>
