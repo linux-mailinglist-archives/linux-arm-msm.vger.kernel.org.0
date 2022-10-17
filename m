@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E3ED601D3C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 01:04:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD244601D40
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 01:04:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231466AbiJQXEW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 19:04:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43258 "EHLO
+        id S231475AbiJQXEZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 19:04:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231473AbiJQXD5 (ORCPT
+        with ESMTP id S231289AbiJQXEA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 19:03:57 -0400
-Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC48684E65
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 16:03:02 -0700 (PDT)
-Received: by mail-qv1-xf36.google.com with SMTP id g9so8294423qvo.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 16:03:02 -0700 (PDT)
+        Mon, 17 Oct 2022 19:04:00 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12681844F8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 16:03:11 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id mg6so8311298qvb.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 16:03:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=y0C1L6kOIdb7uBBS651widzpOjAhyGK+kNAfE8fg7HE=;
-        b=bTV54Ur/0BheFKTpOpmcB5X7K6BbR02j59Q8gHbJPtz49tPQc2RsTUMZfNekgcv3jV
-         RtktqPmv37cOaVbzkNbgV/mwenG6MjFZzA6USXolDGvGtCLvUo0jnpyAPQTVhK1NFFV8
-         nK6nRBQItiVmLu1AhoCHphETS6zH8O7FejRqq487/gWhnm+tTlXA82p4EgVCAigcLzwn
-         NFH1NRD3kDXrkhp1/wTSdGA8/DpEW3JJF46XmI48MyoCi60RqinIls/Ieh5PJeUmeN12
-         505ZdHjyXjJz7omyMXibXTBzfYFVdye9HA7uMy0uU0PPcPOFlT3wQM+cBxZ25xwQZN1m
-         FWrA==
+        bh=iVC3ghBKeR0GAUNqyIpEEaoUzp0peyvvuM658LrOc7c=;
+        b=A1Dwq2eHGqSxuSokp6paAN4PzX0JQKNbDkcc6zuogZyUqpVqMv6hgSmYwEh8ojRmBH
+         ysB3GMhs4GDK7bTnxy1hNCkqgkMhm0MB7U+IuMTyJAiFJzm4zgdgFHCgoFgcG3JpM3qp
+         dGpdb4y/IQkkRdpRvQqsUoqp9v/Zd8btqhE1amypPDfoL0OdpvN1tn4z0Fu/bSwlINJp
+         bTsTkpAmfMU7XRHT0g8DuyuYT1wMVxGuIw0cOH1SIl9JjlACjlOKS7790a1Cyjs8zeWv
+         YzlofUrYynGwVTqctGoDDEEgxBDKhaGwbTzBc9iiJ8M6WdPzqeqAX5J4A7VT5nl9GUpR
+         9iAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=y0C1L6kOIdb7uBBS651widzpOjAhyGK+kNAfE8fg7HE=;
-        b=qDufITXn1AHSF/TgBQj91lkIuN/UvJ261MUu8WwQCyBr/SkKPGYQa7nf+ShmYXP9ap
-         RvXBZ0B+VbPSO8UGSGdtkhZNYNijEEun8GO8tyu1EKwwbtxSF8LZgtpbBIus8Zea5J0T
-         Vlgw6muGV/xZtwbSeWIuZRCXHXXEgYSXr1Ka34OcllwFUlg5evF693HxSTWGtpFTL3Xx
-         Qk+mH1YLll2yMnudRGyisUZobslGOYU0Y210sNht4Os6swi7FQQ1yL5iu2knnEamoXY/
-         FhWN5p4OEIHo2GWnpPAYQZP8HzKKIZK+7tcG8MQBgFOA8/flMPID0P8fC6UxHaTvEGUT
-         RO4g==
-X-Gm-Message-State: ACrzQf21Tz7RFfd5SqUD23ylj3NII/Dsm4aH/IVHOyeQIhUL7ewF3Gjt
-        la1Dc5LsFOI2Ze6awFCOW8DIAw==
-X-Google-Smtp-Source: AMsMyM6iQ/9ARfuPLgRqzDtyIVBMQoJfG02L1718PtgYn2I1xx6/HJQeUbpzU0UUtS7vfwciYpiKxA==
-X-Received: by 2002:ad4:5be6:0:b0:4b3:ff39:7ad4 with SMTP id k6-20020ad45be6000000b004b3ff397ad4mr10197951qvc.126.1666047690650;
-        Mon, 17 Oct 2022 16:01:30 -0700 (PDT)
+        bh=iVC3ghBKeR0GAUNqyIpEEaoUzp0peyvvuM658LrOc7c=;
+        b=zE9Mlzlq5ra0QgaoP0qti6BC/mx3okOjPLQpSbwAIGO++Junowdu9vP2heeCAwHl9+
+         CWzB9dHXqYorEN5cqrAY231JR8KHB94mZHT17KVSOPTZolsmrasK6FAo+H2z1sUZBXKX
+         PyHvriitpnBv0aoB5/kH8MesnMD9hRsDKC+BctBZ7hR+7J/v0y++L6cs9pK667EA5BWN
+         IcmgP9OI4qHyudYNC+Po/33eKBEjalWuMjlBpn/BJNoSKeVnqfyvKcJshsolvrhb0/wO
+         k9PZ1AqJdE7Vy96mP/mTt3cvtzqXp1GVaRjKDw2nQGmZtGYoAjDRmpS/sCO8hn+9/F/+
+         uLRQ==
+X-Gm-Message-State: ACrzQf0gkdQnQBKjlQWq5rDgsJ0NhQk3E066n6Qkb/gX4dL+IYi1/LCC
+        2Cuy2pjgMap78HyAYmEv7r1t1A==
+X-Google-Smtp-Source: AMsMyM4M9yTz+qEWvxVZ/9FZg2wDwXIsV3BpOaX2FDHe3VnNdD2ZDIFhku7yRpmbMEEE+TEMfIWqxA==
+X-Received: by 2002:ad4:5962:0:b0:4b1:d684:f726 with SMTP id eq2-20020ad45962000000b004b1d684f726mr10083552qvb.31.1666047692166;
+        Mon, 17 Oct 2022 16:01:32 -0700 (PDT)
 Received: from localhost.localdomain (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
-        by smtp.gmail.com with ESMTPSA id fg11-20020a05622a580b00b0039cb9b6c390sm729670qtb.79.2022.10.17.16.01.29
+        by smtp.gmail.com with ESMTPSA id fg11-20020a05622a580b00b0039cb9b6c390sm729670qtb.79.2022.10.17.16.01.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Oct 2022 16:01:30 -0700 (PDT)
+        Mon, 17 Oct 2022 16:01:31 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -68,9 +68,9 @@ To:     Andy Gross <agross@kernel.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Rob Herring <robh@kernel.org>
-Subject: [PATCH v3 29/33] dt-bindings: pinctrl: qcom,sc7280-lpass-lpi: minor style cleanups
-Date:   Mon, 17 Oct 2022 19:00:08 -0400
-Message-Id: <20221017230012.47878-30-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 30/33] dt-bindings: pinctrl: qcom,sc8280xp-lpass-lpi: minor style cleanups
+Date:   Mon, 17 Oct 2022 19:00:09 -0400
+Message-Id: <20221017230012.47878-31-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221017230012.47878-1-krzysztof.kozlowski@linaro.org>
 References: <20221017230012.47878-1-krzysztof.kozlowski@linaro.org>
@@ -93,20 +93,20 @@ quotes.
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Acked-by: Rob Herring <robh@kernel.org>
 ---
- .../pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml      | 13 ++++++-------
+ .../pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml    | 13 ++++++-------
  1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
-index bd54c92287d6..8270debd4f25 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml
+index edf38c774514..7d2589387e1a 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml
 @@ -4,15 +4,14 @@
- $id: http://devicetree.org/schemas/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml#
+ $id: http://devicetree.org/schemas/pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml#
  $schema: http://devicetree.org/meta-schemas/core.yaml#
  
 -title: Qualcomm Technologies, Inc. Low Power Audio SubSystem (LPASS)
 -  Low Power Island (LPI) TLMM block
-+title: Qualcomm SC7280 SoC LPASS LPI TLMM
++title: Qualcomm SC8280XP SoC LPASS LPI TLMM
  
  maintainers:
    - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
@@ -116,11 +116,11 @@ index bd54c92287d6..8270debd4f25 100644
 -  LPASS LPI IP on most Qualcomm SoCs
 +description:
 +  Top Level Mode Multiplexer pin controller in the Low Power Audio SubSystem
-+  (LPASS) Low Power Island (LPI) of Qualcomm SC7280 SoC.
++  (LPASS) Low Power Island (LPI) of Qualcomm SC8280XP SoC.
  
  properties:
    compatible:
-@@ -29,7 +28,7 @@ properties:
+@@ -35,7 +34,7 @@ properties:
  
    gpio-controller: true
  
@@ -129,9 +129,9 @@ index bd54c92287d6..8270debd4f25 100644
      description: Specifying the pin number and flags, as defined in
        include/dt-bindings/gpio/gpio.h
      const: 2
-@@ -107,7 +106,7 @@ required:
-   - compatible
-   - reg
+@@ -120,7 +119,7 @@ required:
+   - clocks
+   - clock-names
    - gpio-controller
 -  - '#gpio-cells'
 +  - "#gpio-cells"
