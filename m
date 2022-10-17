@@ -2,309 +2,238 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D1304601253
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 17:02:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F4836012AD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 17:24:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231701AbiJQPCE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 11:02:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49348 "EHLO
+        id S230421AbiJQPX6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 11:23:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231236AbiJQPBs (ORCPT
+        with ESMTP id S230498AbiJQPX5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 11:01:48 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FC6B6716F;
-        Mon, 17 Oct 2022 08:00:05 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 319E1611C2;
-        Mon, 17 Oct 2022 14:54:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC93C4FF6D;
-        Mon, 17 Oct 2022 14:54:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666018479;
-        bh=pZz6W3qt7Z8aEc7Y/CcnxS3JGIvgJnfxnWaHsyB+7Gc=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=iH+wRhiUgQsjsi4Uhr89CzpCoEvI9zFToio6dgMifkedqs/9Z+iCpGVPjulWTpoU6
-         cGoXdEf7y5+H8hpqQtvofmXvQr+a5xOlrVZuCE1phYLkqyUoXc8BY0onINlZOzmCZY
-         DpYiWwG29IcXUTuq4oWGQj7d/sYpbV+w6liFwXNK9pbGA8VPfvGXthh81SDGJmgcu2
-         9U/BFKtI9KFYLu9fhIbkNvMgmsVDU6OXLGaYhq+4LPYFtnlk6rYSVRdGiqoR/m8z84
-         qfMhJUSgVZPDda1WzPmLC00RdTUcklIzKoJIPopjmAtuiaU8qh30HD+c3h2uVFK6si
-         1OcvTlSg9bI1w==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1okRVd-0005mc-P1; Mon, 17 Oct 2022 16:54:29 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 15/15] phy: qcom-qmp-pcie: add support for sc8280xp 4-lane PHYs
-Date:   Mon, 17 Oct 2022 16:53:28 +0200
-Message-Id: <20221017145328.22090-16-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20221017145328.22090-1-johan+linaro@kernel.org>
-References: <20221017145328.22090-1-johan+linaro@kernel.org>
+        Mon, 17 Oct 2022 11:23:57 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D05622295;
+        Mon, 17 Oct 2022 08:23:56 -0700 (PDT)
+Received: from pendragon.ideasonboard.com (cpc89244-aztw30-2-0-cust3082.18-1.cable.virginm.net [86.31.172.11])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 4FAF3CCF;
+        Mon, 17 Oct 2022 17:23:54 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1666020234;
+        bh=DltY8pcDH0JhjbrZrMewyQKbVIkGbFx73kY1D/dIVjA=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=I5NDZm17aYF0F/75KzT2rsv9VRkgElBVkcXJd7TtXjCZDhY1DTgqkutVO+Lzn/mrf
+         LPfXHmWUOJYtFI09Ew2NmcV7PGS5oslP3P626feBLVm/hzXcfpJSoPfUo9T2YIc1ns
+         5l7l97jDebAY5gTf0lqqDLk8fVGTRBNQwm0GITQI=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <89dcd314-37bb-b944-b7e6-b6c71a3514fc@linaro.org>
+References: <20221013121255.1977-1-quic_mmitkov@quicinc.com> <1a7ab9da-e7fb-9077-5d6e-705629bb2b10@linaro.org> <166601200198.3760285.1520904024668899853@Monstersaurus> <89dcd314-37bb-b944-b7e6-b6c71a3514fc@linaro.org>
+Subject: Re: [PATCH v4 0/4] media: camss: sm8250: Virtual channels support for SM8250
+From:   Kieran Bingham <kieran.bingham@ideasonboard.com>
+Cc:     agross@kernel.org, konrad.dybcio@somainline.org,
+        mchehab@kernel.org, cgera@qti.qualcomm.com, gchinnab@quicinc.com,
+        ayasan@qti.qualcomm.com, laurent.pinchart@ideasonboard.com,
+        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        akapatra@quicinc.com, jzala@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        quic_mmitkov@quicinc.com, robert.foss@linaro.org,
+        todor.too@gmail.com
+Date:   Mon, 17 Oct 2022 16:23:51 +0100
+Message-ID: <166602023184.2677993.9915646081546526687@Monstersaurus>
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The PCIe2 and PCIe3 controllers and PHYs on SC8280XP can be used in
-4-lane mode or as separate controllers and PHYs in 2-lane mode (e.g. as
-PCIe2A and PCIe2B).
+Quoting Bryan O'Donoghue (2022-10-17 15:22:10)
+> On 17/10/2022 14:06, Kieran Bingham wrote:
+> > Quoting Bryan O'Donoghue (2022-10-17 01:16:05)
+> >> On 13/10/2022 13:12, quic_mmitkov@quicinc.com wrote:
+> >>> From: Milen Mitkov <quic_mmitkov@quicinc.com>
+> >>>
+> >>> For v4:
+> >>> - fixes the warning reported by the kernel test robot
+> >>> - tiny code change to enable the vc functionality with the partially-=
+applied
+> >>>     multistream patches on linux-next (tested on tag:next-20221010)
+> >>>
+> >>> For v3:
+> >>> - setting the sink pad format on the CSID entity will now propagate t=
+he
+> >>>     format to the source pads to keep the subdev in a valid internal =
+state.
+> >>> - code syntax improvements
+> >>>
+> >>> For v2:
+> >>> - code syntax improvements
+> >>> - The info print for the enabled VCs was demoted to a dbg print. Can =
+be
+> >>>     enabled with dynamic debug, e.g.:
+> >>> echo "file drivers/media/platform/qcom/camss/* +p" > /sys/kernel/debu=
+g/dynamic_debug/control
+> >>>
+> >>> NOTE: These changes depend on the multistream series, that as of yet
+> >>> is still not merged upstream. However, part of the
+> >>> multistream patches are merged in linux-next (tested on
+> >>> tag:next-20221010), including the patch that introduces the
+> >>> video_device_pipeline_alloc_start() functionality. This allows
+> >>> applying and using this series on linux-next without applying the
+> >>> complete multistream set.
+> >>>
+> >>> The CSID hardware on SM8250 can demux the input data stream into
+> >>> maximum of 4 multiple streams depending on virtual channel (vc)
+> >>> or data type (dt) configuration.
+> >>>
+> >>> Situations in which demuxing is useful:
+> >>> - HDR sensors that produce a 2-frame HDR output, e.g. a light and a d=
+ark frame
+> >>>     (the setup we used for testing, with the imx412 sensor),
+> >>>     or a 3-frame HDR output - light, medium-lit, dark frame.
+> >>> - sensors with additional metadata that is streamed over a different
+> >>>     virtual channel/datatype.
+> >>> - sensors that produce frames with multiple resolutions in the same p=
+ixel
+> >>>     data stream
+> >>>
+> >>> With these changes, the CSID entity has, as it did previously, a sing=
+le
+> >>> sink port (0), and always exposes 4 source ports (1, 2,3, 4). The
+> >>> virtual channel configuration is determined by which of the source po=
+rts
+> >>> are linked to an output VFE line. For example, the link below will
+> >>> configure the CSID driver to enable vc 0 and vc 1:
+> >>>
+> >>> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> >>> media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
+> >>>
+> >>> which will be demuxed and propagated into /dev/video0
+> >>> and /dev/video1 respectively. With this, the userspace can use
+> >>> any normal V4L2 client app to start/stop/queue/dequeue from these
+> >>> video nodes. Tested with the yavta app.
+> >>>
+> >>> The format of each RDI channel of the used VFE(s) (msm_vfe0_rdi0,
+> >>> msm_vfe0_rdi1,...) must also be configured explicitly.
+> >>>
+> >>> Note that in order to keep a valid internal subdevice state,
+> >>> setting the sink pad format of the CSID subdevice will propagate
+> >>> this format to the source pads. However, since the CSID hardware
+> >>> can demux the input stream into several streams each of which can
+> >>> be a different format, in that case each source pad's
+> >>> format must be set individually, e.g.:
+> >>>
+> >>> media-ctl -V '"msm_csid0":1[fmt:SRGGB10/3840x2160]'
+> >>> media-ctl -V '"msm_csid0":2[fmt:SRGGB10/960x540]'
+> >>>
+> >>> Milen Mitkov (4):
+> >>>     media: camss: sm8250: Virtual channels for CSID
+> >>>     media: camss: vfe: Reserve VFE lines on stream start and link to =
+CSID
+> >>>     media: camss: vfe-480: Multiple outputs support for SM8250
+> >>>     media: camss: sm8250: Pipeline starting and stopping for multiple
+> >>>       virtual channels
+> >>>
+> >>>    .../platform/qcom/camss/camss-csid-gen2.c     | 54 ++++++++++------
+> >>>    .../media/platform/qcom/camss/camss-csid.c    | 44 +++++++++----
+> >>>    .../media/platform/qcom/camss/camss-csid.h    | 11 +++-
+> >>>    .../media/platform/qcom/camss/camss-vfe-480.c | 61 ++++++++++++---=
+----
+> >>>    drivers/media/platform/qcom/camss/camss-vfe.c |  7 +++
+> >>>    .../media/platform/qcom/camss/camss-video.c   | 21 ++++++-
+> >>>    drivers/media/platform/qcom/camss/camss.c     |  2 +-
+> >>>    7 files changed, 140 insertions(+), 60 deletions(-)
+> >>>
+> >>
+> >> Hi Milen
+> >>
+> >> The set applies to next-20221013 including patch#4.
+> >>
+> >> I can confirm it doesn't break anything for me - though my sensor is a
+> >> bog-standard imx577 so it doesn't have any VC support.
+> >=20
+> > Interesting though - the IMX477 has the ability to convey metadata on a
+> > separate VC... That's actually the thing holding back the RPi IMX477
+> > driver from mainline, as the way it was anticipated to support multiple
+> > data streams is with the new multiplexed streams API.
+> >=20
+> > And I think we inferred that the IMX577 and IMX477 are closely related,
+> > so should have similar capabilities for obtaining metadata channels?
+>=20
+> Hmm I was not aware of that.
+>=20
+> If we could import the rpi/imx477.c code into upstrea/imx412.c it might=20
+> be possible
+>=20
+> The core init is very similar
+>=20
+> https://github.com/raspberrypi/linux/blob/rpi-5.19.y/drivers/media/i2c/im=
+x477.c#L167
+>=20
+> https://github.com/raspberrypi/linux/blob/rpi-5.19.y/drivers/media/i2c/im=
+x412.c#L160
+>=20
+> Maybe it would be possible to apply the rest of the imx477 config on-top =
 
-Add support for fetching the 4-lane configuration from the TCSR and
-programming the lane registers of the second port when in 4-lane mode.
+> as a POC
+>=20
+> https://github.com/raspberrypi/linux/blob/rpi-5.19.y/drivers/media/i2c/im=
+x477.c#L479
+>=20
+> The similary is born out by the shared init code I can see in Leopard=20
+> imaging's driver, I'm not sure if it supports virtual-channels - I'll=20
+> have a look, though.
+>=20
+> What's in the imx477 meta-data ?
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/phy/qualcomm/Kconfig             |   1 +
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 118 +++++++++++++++++++++++
- 2 files changed, 119 insertions(+)
+The exact exposure of the captured frame, exact gain, and frame length,
+and even the temperature of the sensor at the time of capture (not sure
+at /which/ time if this is a long exposure).
 
-diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
-index 5c98850f5a36..eb9ddc685b38 100644
---- a/drivers/phy/qualcomm/Kconfig
-+++ b/drivers/phy/qualcomm/Kconfig
-@@ -54,6 +54,7 @@ config PHY_QCOM_QMP
- 	tristate "Qualcomm QMP PHY Driver"
- 	depends on OF && COMMON_CLK && (ARCH_QCOM || COMPILE_TEST)
- 	select GENERIC_PHY
-+	select MFD_SYSCON
- 	help
- 	  Enable this to support the QMP PHY transceiver that is used
- 	  with controllers such as PCIe, UFS, and USB on Qualcomm chips.
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index ea5228bd9ecc..e5bce4810bb5 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -10,6 +10,7 @@
- #include <linux/io.h>
- #include <linux/iopoll.h>
- #include <linux/kernel.h>
-+#include <linux/mfd/syscon.h>
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_device.h>
-@@ -17,6 +18,7 @@
- #include <linux/phy/pcie.h>
- #include <linux/phy/phy.h>
- #include <linux/platform_device.h>
-+#include <linux/regmap.h>
- #include <linux/regulator/consumer.h>
- #include <linux/reset.h>
- #include <linux/slab.h>
-@@ -886,6 +888,10 @@ static const struct qmp_phy_init_tbl sc8280xp_qmp_gen3x2_pcie_rc_serdes_tbl[] =
- 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN, 0x14),
- };
- 
-+static const struct qmp_phy_init_tbl sc8280xp_qmp_gen3x4_pcie_serdes_4ln_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN, 0x1c),
-+};
-+
- static const struct qmp_phy_init_tbl sc8280xp_qmp_gen3x1_pcie_tx_tbl[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V5_TX_PI_QEC_CTRL, 0x20),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_1, 0x75),
-@@ -1491,6 +1497,9 @@ struct qmp_phy_cfg {
- 	const struct qmp_phy_cfg_tables *tables_rc;
- 	const struct qmp_phy_cfg_tables *tables_ep;
- 
-+	const struct qmp_phy_init_tbl *serdes_4ln_tbl;
-+	int serdes_4ln_num;
-+
- 	/* clock ids to be requested */
- 	const char * const *clk_list;
- 	int num_clks;
-@@ -1518,6 +1527,7 @@ struct qmp_pcie {
- 	struct device *dev;
- 
- 	const struct qmp_phy_cfg *cfg;
-+	bool tcsr_4ln_config;
- 
- 	void __iomem *serdes;
- 	void __iomem *pcs;
-@@ -1527,6 +1537,8 @@ struct qmp_pcie {
- 	void __iomem *tx2;
- 	void __iomem *rx2;
- 
-+	void __iomem *port_b;
-+
- 	struct clk *pipe_clk;
- 	struct clk *pipediv2_clk;
- 	struct clk_bulk_data *clks;
-@@ -1932,6 +1944,44 @@ static const struct qmp_phy_cfg sc8280xp_qmp_gen3x2_pciephy_cfg = {
- 	.phy_status		= PHYSTATUS,
- };
- 
-+static const struct qmp_phy_cfg sc8280xp_qmp_gen3x4_pciephy_cfg = {
-+	.lanes			= 4,
-+
-+	.offsets		= &qmp_pcie_offsets_v5,
-+
-+	.tables = {
-+		.serdes		= sc8280xp_qmp_pcie_serdes_tbl,
-+		.serdes_num	= ARRAY_SIZE(sc8280xp_qmp_pcie_serdes_tbl),
-+		.tx		= sc8280xp_qmp_gen3x2_pcie_tx_tbl,
-+		.tx_num		= ARRAY_SIZE(sc8280xp_qmp_gen3x2_pcie_tx_tbl),
-+		.rx		= sc8280xp_qmp_gen3x2_pcie_rx_tbl,
-+		.rx_num		= ARRAY_SIZE(sc8280xp_qmp_gen3x2_pcie_rx_tbl),
-+		.pcs		= sc8280xp_qmp_gen3x2_pcie_pcs_tbl,
-+		.pcs_num	= ARRAY_SIZE(sc8280xp_qmp_gen3x2_pcie_pcs_tbl),
-+		.pcs_misc	= sc8280xp_qmp_gen3x2_pcie_pcs_misc_tbl,
-+		.pcs_misc_num	= ARRAY_SIZE(sc8280xp_qmp_gen3x2_pcie_pcs_misc_tbl),
-+	},
-+
-+	.tables_rc = &(const struct qmp_phy_cfg_tables) {
-+		.serdes		= sc8280xp_qmp_gen3x2_pcie_rc_serdes_tbl,
-+		.serdes_num	= ARRAY_SIZE(sc8280xp_qmp_gen3x2_pcie_rc_serdes_tbl),
-+	},
-+
-+	.serdes_4ln_tbl		= sc8280xp_qmp_gen3x4_pcie_serdes_4ln_tbl,
-+	.serdes_4ln_num		= ARRAY_SIZE(sc8280xp_qmp_gen3x4_pcie_serdes_4ln_tbl),
-+
-+	.clk_list		= sc8280xp_pciephy_clk_l,
-+	.num_clks		= ARRAY_SIZE(sc8280xp_pciephy_clk_l),
-+	.reset_list		= sdm845_pciephy_reset_l,
-+	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
-+	.vreg_list		= qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.regs			= sm8250_pcie_regs_layout,
-+
-+	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-+	.phy_status		= PHYSTATUS,
-+};
-+
- static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
- 	.lanes			= 2,
- 
-@@ -2054,6 +2104,24 @@ static void qmp_pcie_configure(void __iomem *base,
- 	qmp_pcie_configure_lane(base, tbl, num, 0xff);
- }
- 
-+static void qmp_pcie_init_port_b(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tbls)
-+{
-+	const struct qmp_phy_cfg *cfg = qmp->cfg;
-+	const struct qmp_pcie_offsets *offs = cfg->offsets;
-+	void __iomem *tx3, *rx3, *tx4, *rx4;
-+
-+	tx3 = qmp->port_b + offs->tx;
-+	rx3 = qmp->port_b + offs->rx;
-+	tx4 = qmp->port_b + offs->tx2;
-+	rx4 = qmp->port_b + offs->rx2;
-+
-+	qmp_pcie_configure_lane(tx3, tbls->tx, tbls->tx_num, 1);
-+	qmp_pcie_configure_lane(rx3, tbls->rx, tbls->rx_num, 1);
-+
-+	qmp_pcie_configure_lane(tx4, tbls->tx, tbls->tx_num, 2);
-+	qmp_pcie_configure_lane(rx4, tbls->rx, tbls->rx_num, 2);
-+}
-+
- static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tbls)
- {
- 	const struct qmp_phy_cfg *cfg = qmp->cfg;
-@@ -2080,6 +2148,11 @@ static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_c
- 
- 	qmp_pcie_configure(pcs, tbls->pcs, tbls->pcs_num);
- 	qmp_pcie_configure(pcs_misc, tbls->pcs_misc, tbls->pcs_misc_num);
-+
-+	if (cfg->lanes >= 4 && qmp->tcsr_4ln_config) {
-+		qmp_pcie_configure(serdes, cfg->serdes_4ln_tbl, cfg->serdes_4ln_num);
-+		qmp_pcie_init_port_b(qmp, tbls);
-+	}
- }
- 
- static int qmp_pcie_init(struct phy *phy)
-@@ -2477,6 +2550,37 @@ static int qmp_pcie_parse_dt_legacy(struct qmp_pcie *qmp, struct device_node *np
- 	return 0;
- }
- 
-+static int qmp_pcie_get_4ln_config(struct qmp_pcie *qmp)
-+{
-+	struct regmap *tcsr;
-+	unsigned int args[2];
-+	int ret;
-+
-+	tcsr = syscon_regmap_lookup_by_phandle_args(qmp->dev->of_node,
-+						    "qcom,4ln-config-sel",
-+						    ARRAY_SIZE(args), args);
-+	if (IS_ERR(tcsr)) {
-+		ret = PTR_ERR(tcsr);
-+		if (ret == -ENOENT)
-+			return 0;
-+
-+		dev_err(qmp->dev, "failed to lookup syscon: %d\n", ret);
-+		return ret;
-+	}
-+
-+	ret = regmap_test_bits(tcsr, args[0], BIT(args[1]));
-+	if (ret < 0) {
-+		dev_err(qmp->dev, "failed to read tcsr: %d\n", ret);
-+		return ret;
-+	}
-+
-+	qmp->tcsr_4ln_config = ret;
-+
-+	dev_dbg(qmp->dev, "4ln_config_sel = %d\n", qmp->tcsr_4ln_config);
-+
-+	return 0;
-+}
-+
- static int qmp_pcie_parse_dt(struct qmp_pcie *qmp)
- {
- 	struct platform_device *pdev = to_platform_device(qmp->dev);
-@@ -2484,10 +2588,15 @@ static int qmp_pcie_parse_dt(struct qmp_pcie *qmp)
- 	const struct qmp_pcie_offsets *offs = cfg->offsets;
- 	struct device *dev = qmp->dev;
- 	void __iomem *base;
-+	int ret;
- 
- 	if (!offs)
- 		return -EINVAL;
- 
-+	ret = qmp_pcie_get_4ln_config(qmp);
-+	if (ret)
-+		return ret;
-+
- 	base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
-@@ -2503,6 +2612,12 @@ static int qmp_pcie_parse_dt(struct qmp_pcie *qmp)
- 		qmp->rx2 = base + offs->rx2;
- 	}
- 
-+	if (qmp->cfg->lanes >= 4 && qmp->tcsr_4ln_config) {
-+		qmp->port_b = devm_platform_ioremap_resource(pdev, 1);
-+		if (IS_ERR(qmp->port_b))
-+			return PTR_ERR(qmp->port_b);
-+	}
-+
- 	qmp->pipe_clk = devm_clk_get(dev, "pipe");
- 	if (IS_ERR(qmp->pipe_clk)) {
- 		return dev_err_probe(dev, PTR_ERR(qmp->pipe_clk),
-@@ -2610,6 +2725,9 @@ static const struct of_device_id qmp_pcie_of_match_table[] = {
- 	}, {
- 		.compatible = "qcom,sc8280xp-qmp-gen3x2-pcie-phy",
- 		.data = &sc8280xp_qmp_gen3x2_pciephy_cfg,
-+	}, {
-+		.compatible = "qcom,sc8280xp-qmp-gen3x4-pcie-phy",
-+		.data = &sc8280xp_qmp_gen3x4_pciephy_cfg,
- 	}, {
- 		.compatible = "qcom,sdm845-qhp-pcie-phy",
- 		.data = &sdm845_qhp_pciephy_cfg,
--- 
-2.37.3
 
+https://git.libcamera.org/libcamera/libcamera.git/tree/src/ipa/raspberrypi/=
+cam_helper_imx477.cpp#n168
+
+"""
+void CamHelperImx477::populateMetadata(const MdParser::RegisterMap &registe=
+rs,
+				       Metadata &metadata) const
+{
+	DeviceStatus deviceStatus;
+
+	deviceStatus.shutterSpeed =3D exposure(registers.at(expHiReg) * 256 + regi=
+sters.at(expLoReg));
+	deviceStatus.analogueGain =3D gain(registers.at(gainHiReg) * 256 + registe=
+rs.at(gainLoReg));
+	deviceStatus.frameLength =3D registers.at(frameLengthHiReg) * 256 + regist=
+ers.at(frameLengthLoReg);
+	deviceStatus.sensorTemperature =3D std::clamp<int8_t>(registers.at(tempera=
+tureReg), -20, 80);
+
+	metadata.set("device.status", deviceStatus);
+}
+
+"""
+
+Having the embedded metadata from the sensor helps to ensure accurate
+handling in the control loops, so I believe we would always prefer to
+reference this when available, rather than what we 'think' we have
+programmed. (Which due to timing, or any other error - might not be as
+accurate as what the metadata will report).
+--
+Kieran
+
+
+>=20
+> @Milen if you have the imx577 datasheet - I don't - perhaps we could=20
+> cherry-pick some of the code from imx477 and get the imx412.c->imx577=20
+> dumping VC data out with the RB5 camera mezzanine.
+>=20
+> ---
+> bod
