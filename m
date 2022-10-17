@@ -2,95 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA01D600BED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 12:05:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 46DC1600C40
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 12:23:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230473AbiJQKFD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 06:05:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55114 "EHLO
+        id S229562AbiJQKXO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 06:23:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230505AbiJQKE6 (ORCPT
+        with ESMTP id S229739AbiJQKXO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 06:04:58 -0400
-Received: from mout-y-209.mailbox.org (mout-y-209.mailbox.org [91.198.250.237])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68E7E11C31;
-        Mon, 17 Oct 2022 03:04:48 -0700 (PDT)
-Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mout-y-209.mailbox.org (Postfix) with ESMTPS id 4MrXfN1mHtz9tdD;
-        Mon, 17 Oct 2022 12:04:44 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=noorman.info;
-        s=MBO0001; t=1666001084;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=S9dcsqJ0RaWCdCguljfpy7EPjfO3aVZqXfHBh2syRzs=;
-        b=yZTCTWvdLGN4BsYOh3C0a7UJh5dTHrIWyvQVAlb3hXKjWlfUUzhmwW1GYMUA77AzHjdhND
-        eeAwUcwsQnJQZQHIVRXGan6WZRD0c7CiRkQUXAy/ehI2xDK7/8ySjrUZdGi6p9a7VRKsa9
-        t3xDI6myDB4usaILamMbnaPr1N+hoNrCzLnNSK0pHjUfwNdA0lD/FbzTomZm890OJj5lhn
-        wywc1HINnuu4MvO4fTcSmWE6DFNCfMxtto8OvspRJYKpmJhXOdoXWg8lQ6JIxIOwF+l2um
-        TeIfzKlZn7sBbCRtOz77N0C7eXFW/TePk+PUXi/ZJJK+d1mkCxjvsAPdmNLYkA==
-From:   Job Noorman <job@noorman.info>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Luca Weiss <luca@z3ntu.xyz>, Job Noorman <job@noorman.info>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v4 3/3] arm64: dts: qcom: sdm632: fairphone-fp3: add touchscreen
-Date:   Mon, 17 Oct 2022 12:04:08 +0200
-Message-Id: <20221017100409.189293-4-job@noorman.info>
-In-Reply-To: <20221017100409.189293-1-job@noorman.info>
-References: <20221017100409.189293-1-job@noorman.info>
+        Mon, 17 Oct 2022 06:23:14 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C45BE5FDD1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 03:23:11 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id u10so17762485wrq.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 03:23:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:from:to:cc:subject:date:message-id:reply-to;
+        bh=2tBc5BJTUK0yJeikdsN9lehq8jKJ6hu9VScPZU4a2kI=;
+        b=bdMMl9zH0j03ibTEKy/zCqWIwlETzDUo9ooO5EvQAFnx3iYPS7HdIgwALI5bam0aqB
+         oQigPd/nYpgC6M+zBK7std6ZLqh0IMHxfvfD3xsD8Cy2AwY2f+OeiAenUJkm/q/GT4T4
+         9yN6Z/Cx1MEG2N27/Y0mUbcE9WEOk0KOHAyCSIpPeg/4Oukpt4Qs73+o1e0nPKbL8f4w
+         r0wIsQog9ltsUwx9mWhTTYcW1cfalMKdBDX57UH1jyb3eE8HlCNB/au0hlw5J8p17nvd
+         YcWDoD85oh0zwnWHDofdDICQbN3JmeekfkKGVLMdXfjQalQNGM1e51Yb0yD2RSJAeWGu
+         pivw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2tBc5BJTUK0yJeikdsN9lehq8jKJ6hu9VScPZU4a2kI=;
+        b=j+JlapJgGa8jWP/MOG1n0AuozPYTfZWIAzsFiM42jySm9++vj4aqozJdhbD4ymTi9d
+         Wd+aBZPzvtjtAWm2L+5+ZHTOT1Ih/zA777l1a3vLzcdUrw9EftvBLu/Jczhq+0b7hqdv
+         3yzYEzTmPJevj7FUEo4XeW5LdOwPiI+nHlhbkNPFeYTMUND4yORl3qXB6Y242gBcZbKW
+         4WZyrJkbfw+50PNfXafUNcLpmfycY+W9TTEsyKEu/HIfL/UPMsE4yslhyDDsjaiR/9Tu
+         X5PfUlACbSli22MY6Mo5jjROOp5/CCveNYwpZQOQ8PuDrZJKrxf+uhl1OI9Ycbe3VMOw
+         0ozA==
+X-Gm-Message-State: ACrzQf0SUj4q3bR0AOfh0nAfIKxIw+2+fWq7qocvrMZ7W1dn2lAkzfut
+        AIY7rTvfQtgYsK82Wn//4vq5GdwCphC9WKDv
+X-Google-Smtp-Source: AMsMyM4Z0GGBbYxrURvlW1Ga67cbnXc5JvAoUjdO9dpW/aCtJK2zoDhG4xwgBxeVvDxyl5t3Z0wVAg==
+X-Received: by 2002:adf:9dd0:0:b0:22c:d6cc:b387 with SMTP id q16-20020adf9dd0000000b0022cd6ccb387mr6109316wre.353.1666002190182;
+        Mon, 17 Oct 2022 03:23:10 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id t9-20020a05600c198900b003b4fe03c881sm15590707wmq.48.2022.10.17.03.23.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Oct 2022 03:23:09 -0700 (PDT)
+Subject: [PATCH v2 0/5] arm: qcom: mdm9615: second round of bindings and DT fixes
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 4MrXfN1mHtz9tdD
+X-b4-tracking: H4sIAAgtTWMC/4WNQQqDMBBFryKz7pRJrNJ21XuULsaY6kBMZGIFEe/e0At09Xkf3v87ZK/iM9yrHd
+ SvkiXFAvZUgRs5Dh6lLwyWrDVEDU79dGtNg7NEt2jAjaeApn43zlz50tcMRe04e+yUoxuLHD8hlHKU
+ vCTdflerKfH8s7oaJCTXOaLWW67pESSypnPSAV7HcXwBdEbIaL4AAAA=
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Mon, 17 Oct 2022 12:23:04 +0200
+Message-Id: <20221005-mdm9615-pinctrl-yaml-v2-0-639fe67a04be@linaro.org>
+To:     Lee Jones <lee@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        devicetree@vger.kernel.org
+X-Mailer: b4 0.10.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add Himax hx83112b touchscreen to the FP3 DT.
+This is a second round of bindings & DT fixes for the MDM9615 platform.
 
-Signed-off-by: Job Noorman <job@noorman.info>
+This second round focuses on less trivial changes like pinctrl & regulators bindings,
+the remaining work will mainly be fixing the qcom,kpss-timer/qcom,msm-timer situation and
+add bindings for qcom,lcc-mdm9615, qcom,kpss-gcc & swir,mangoh-iotport-spi.
+
+Dependencies:
+- patch 1-2, 4-5: None
+- patch 3: bindings dependency on 20221005-mdm9615-sx1509q-yaml-v2-0-a4a5b8eecc7b@linaro.org
+
+To: Bjorn Andersson <andersson@kernel.org>
+To: Andy Gross <agross@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@somainline.org>
+To: Linus Walleij <linus.walleij@linaro.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Lee Jones <lee@kernel.org>
+To: Liam Girdwood <lgirdwood@gmail.com>
+To: Mark Brown <broonie@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-gpio@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+
 ---
- arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+Changes in v2:
+- Rebased on v6.1-rc1
+- Patch 1: Fixed bindings and aligned with Krysztof's series
+- Patch 2: Rewrote patch title and added reviewed-by tag
+- Patch 3: Added reviewed-by tag
+- Patch 4: Moved to end, added support for (regulators|-regulators) sudnode
+- Patch 5: Fixed schema description and added missing unevaluatedProperties in patternProperties
+- Patch 6: Dropped & squashed with patch 4
+- Link to v1: https://lore.kernel.org/r/20221005-mdm9615-pinctrl-yaml-v1-0-0cbc006e2a30@linaro.org
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-index 891e314bc782..2920504461d3 100644
---- a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-@@ -49,6 +49,20 @@ &hsusb_phy {
- 	vdda-phy-dpdm-supply = <&pm8953_l13>;
- };
- 
-+&i2c_3 {
-+	status = "okay";
-+
-+	touchscreen@48 {
-+		compatible = "himax,hx83112b";
-+		reg = <0x48>;
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <65 IRQ_TYPE_LEVEL_LOW>;
-+		touchscreen-size-x = <1080>;
-+		touchscreen-size-y = <2160>;
-+		reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
-+	};
-+};
-+
- &pm8953_resin {
- 	status = "okay";
- 	linux,code = <KEY_VOLUMEDOWN>;
+---
+Neil Armstrong (5):
+      dt-bindings: pinctrl: convert qcom,mdm9615-pinctrl.txt to dt-schema
+      arm: dts: qcom: mdm9615: align pinctrl subnodes with dt-schema bindings
+      arm: dts: qcom: mdm9615: wp8548-mangoh-green: fix sx150xq node names and probe-reset property
+      dt-bindings: regulators: convert non-smd RPM Regulators bindings to dt-schema
+      dt-bindings: soc: qcom: convert non-smd RPM bindings to dt-schema
+
+ Documentation/devicetree/bindings/mfd/qcom-rpm.txt | 283 ---------------------
+ .../bindings/pinctrl/qcom,mdm9615-pinctrl.txt      | 161 ------------
+ .../bindings/pinctrl/qcom,mdm9615-pinctrl.yaml     | 120 +++++++++
+ .../bindings/regulator/qcom,ipc-rpm-regulator.yaml | 127 +++++++++
+ .../devicetree/bindings/soc/qcom/qcom,ipc-rpm.yaml |  99 +++++++
+ .../boot/dts/qcom-mdm9615-wp8548-mangoh-green.dts  |  20 +-
+ arch/arm/boot/dts/qcom-mdm9615-wp8548.dtsi         |  22 +-
+ 7 files changed, 367 insertions(+), 465 deletions(-)
+---
+base-commit: 19d64985796125c5e3820c3db995c5df6d13d6dc
+change-id: 20221005-mdm9615-pinctrl-yaml-13f5c18a4d3a
+
+Best regards,
 -- 
-2.38.0
-
+Neil Armstrong <neil.armstrong@linaro.org>
