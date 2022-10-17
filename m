@@ -2,123 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DED78601AD3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 23:00:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA217601AE0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 23:03:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230135AbiJQVAE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 17:00:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52742 "EHLO
+        id S230360AbiJQVDn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 17:03:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229921AbiJQVAC (ORCPT
+        with ESMTP id S229606AbiJQVD1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 17:00:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44A303057E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 14:00:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1666040400;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=EygDVGyay5MzWnFDMTM7oi65lBsQCrO0TQPy2+eMMZk=;
-        b=bcaOtOXWiPSC36r8d6I06h+N8tMmJ7iiI+IW2D9IprRwQmyhk0sMfjWwlQXuQuXOlBQd8s
-        qX3o3ZvHP+QAF16GzemqupW2/rHMpFrc8cG/TciBHIss/w+0FKtZFIp9qWVoSrGx9ZYeIZ
-        GrVr1wP9dfXW6sut4YkxXOPQ6ZfvtOg=
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
- [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-638-VI2UVeytOYuyxTxK9E-0Dg-1; Mon, 17 Oct 2022 16:59:59 -0400
-X-MC-Unique: VI2UVeytOYuyxTxK9E-0Dg-1
-Received: by mail-oo1-f70.google.com with SMTP id t10-20020a4a760a000000b004809c721ac0so5187612ooc.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 13:59:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EygDVGyay5MzWnFDMTM7oi65lBsQCrO0TQPy2+eMMZk=;
-        b=el9h/1AnLh/VlgEVxDEnPHYD75n8a+fdIkBpeldO23ydCb5W5XF1lV+Du32hdo77PU
-         CZbrZKHzXmJG7eoj0pFWm4rTGvFACdyARzLNvpjhuWigE8ReIacXJWVb0aLuExEh6wg4
-         mKl7abHBJgvei4Rqe6+hwIjdziFc5fRrJ51H+bxdxM6Rw01P+0q6OfySwWIxjUFEOVp0
-         q6N3mvfaMQn2N2SWqilYQ7TXlhKbVSzckDSxXFJJCrzYvGYStpXjsLHuRwwSjsS9/UmD
-         0epHqS7uTL/faw0sEewV+nYbzMPvhX3uGafGYhEaCkq0jgHGQakQwzwVJGsUF3kJVKyl
-         Zhlg==
-X-Gm-Message-State: ACrzQf1l2h1GykrU6kBqVqD6qq+r188kWlLI9YMGzxZnQRLg3obcnm3Q
-        QModp38NRv0F5Y+P2lmFwkLj9co5kms32z9hJsxjPuvwmjUZ6yRVRkeF+yuA8vQH45yixvpN/O1
-        KQGxia0J43b67Ol8EM1Ut9qZIPg==
-X-Received: by 2002:a05:6870:5713:b0:132:3552:43a2 with SMTP id k19-20020a056870571300b00132355243a2mr15953720oap.127.1666040398302;
-        Mon, 17 Oct 2022 13:59:58 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM6qh8GidqlmLIKsDCWTocvg6pBnU5dI+vEBmJGQGPA04e3wF/KsmRD2Mxs6+gOrSq54kDlekQ==
-X-Received: by 2002:a05:6870:5713:b0:132:3552:43a2 with SMTP id k19-20020a056870571300b00132355243a2mr15953706oap.127.1666040398080;
-        Mon, 17 Oct 2022 13:59:58 -0700 (PDT)
-Received: from halaney-x13s ([2600:1700:1ff0:d0e0::21])
-        by smtp.gmail.com with ESMTPSA id s4-20020a056870248400b00136cfb02a94sm5208998oaq.7.2022.10.17.13.59.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Oct 2022 13:59:57 -0700 (PDT)
-Date:   Mon, 17 Oct 2022 15:59:55 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc8280xp: fix USB PHY PCS registers
-Message-ID: <20221017205955.7sd7zs6rr3rngwtt@halaney-x13s>
-References: <20220919094454.1574-1-johan+linaro@kernel.org>
- <20220919094454.1574-4-johan+linaro@kernel.org>
+        Mon, 17 Oct 2022 17:03:27 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EC8A1DA73;
+        Mon, 17 Oct 2022 14:03:27 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29HG3dOX032147;
+        Mon, 17 Oct 2022 21:03:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ content-transfer-encoding : in-reply-to; s=qcppdkim1;
+ bh=yT6MYHOo7+ion5T0YeyzHCUULtCOAbAyVqB4Z6gIP58=;
+ b=RX4jPADzrOd4ruK2WviNE+vI9TT/6sevD+YnC0KLY/f/3nh/nPUPzfds8MV9fCEcWsKC
+ 8bg+0HHKhkGduasdK5P5/36vRtJkgEDMEYQO5EbBbi/pq7NqeJmNRvwKAU8c+8jtc3Fr
+ u8YiVc7AwjkrafjGG/A16ZUYfPqiG7mv4wrjDq20lXamwzd3yj79YI0sywcxHfabK+Z0
+ NFp63f91Ud3SqmD94kaLABcyZFLO1s5z89b9Gn03/2PTDRN30PVsU/jefonwenIVnaKP
+ T/iG6Zq7wlDr4knpzhzg33dG/lqXqyubALTcbtg2NMjHW2oi8q3QC7KUS2H8W/c9ibUr gw== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k7n8dvx12-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Oct 2022 21:03:14 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29HL3Dt2016522
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Oct 2022 21:03:13 GMT
+Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Mon, 17 Oct 2022 14:03:12 -0700
+Date:   Mon, 17 Oct 2022 14:03:12 -0700
+From:   Asutosh Das <quic_asutoshd@quicinc.com>
+To:     Daejun Park <daejun7.park@samsung.com>
+CC:     "quic_cang@quicinc.com" <quic_cang@quicinc.com>,
+        "quic_nitirawa@quicinc.com" <quic_nitirawa@quicinc.com>,
+        "quic_rampraka@quicinc.com" <quic_rampraka@quicinc.com>,
+        "quic_bhaskarv@quicinc.com" <quic_bhaskarv@quicinc.com>,
+        "quic_richardp@quicinc.com" <quic_richardp@quicinc.com>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "quic_nguyenb@quicinc.com" <quic_nguyenb@quicinc.com>,
+        "quic_xiaosenh@quicinc.com" <quic_xiaosenh@quicinc.com>,
+        "bvanassche@acm.org" <bvanassche@acm.org>,
+        "avri.altman@wdc.com" <avri.altman@wdc.com>,
+        "mani@kernel.org" <mani@kernel.org>,
+        "beanhuo@micron.com" <beanhuo@micron.com>
+Subject: Re: (2) [PATCH v2 06/17] ufs: core: mcq: Configure resource regions
+Message-ID: <20221017210312.GB10252@asutoshd-linux1.qualcomm.com>
+References: <20221007024138epcms2p729595abf03da8402618c4803b20a4d13@epcms2p7>
+ <271ed77a0ff46390c90fdcde71890d8cec83b8c9.1665017636.git.quic_asutoshd@quicinc.com>
+ <cover.1665017636.git.quic_asutoshd@quicinc.com>
+ <CGME20221006010745epcas2p38b37890b7e1fefb45b8fbb0e14ab0a82@epcms2p8>
+ <20221007034419epcms2p84f51fef929459cef230c34c1dbfbff1d@epcms2p8>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20220919094454.1574-4-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221007034419epcms2p84f51fef929459cef230c34c1dbfbff1d@epcms2p8>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: njWNTaveACBOm3l8ri6gUqxVIGsct9jz
+X-Proofpoint-GUID: njWNTaveACBOm3l8ri6gUqxVIGsct9jz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-17_13,2022-10-17_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
+ suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
+ priorityscore=1501 impostorscore=0 mlxlogscore=999 mlxscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
+ definitions=main-2210170120
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 19, 2022 at 11:44:53AM +0200, Johan Hovold wrote:
-> With the current binding, the PCS register block (0x1400) needs to
-> include the PCS_USB registers (0x1700).
-> 
-> Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+On Fri, Oct 07 2022 at 20:44 -0700, Daejun Park wrote:
+>Hi Asutosh Das,
+>
+[...]
+>>+        res = &hba->res[RES_MCQ];
+>>+        /* Bail if NCQ resource is provided */
+>Maybe MCQ?
+Thanks, will fix it.
 
-Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+>
+>>+        if (res->base)
+>>+                goto out;
+>>+
+>>+        /* Manually allocate MCQ resource from ufs_mem */
+>>+        res_mcq = res->resource;
+>Why we assign the value to res_mcq?
+>
+Hmm, good point, will fix it.
 
-> ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index 9667eb1b7c61..c734cac84719 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -1181,7 +1181,7 @@ usb_0_qmpphy: phy-wrapper@88ec000 {
->  			usb_0_ssphy: usb3-phy@88eb400 {
->  				reg = <0 0x088eb400 0 0x100>,
->  				      <0 0x088eb600 0 0x3ec>,
-> -				      <0 0x088ec400 0 0x1f0>,
-> +				      <0 0x088ec400 0 0x364>,
->  				      <0 0x088eba00 0 0x100>,
->  				      <0 0x088ebc00 0 0x3ec>,
->  				      <0 0x088ec200 0 0x18>;
-> @@ -1243,7 +1243,7 @@ usb_1_qmpphy: phy-wrapper@8904000 {
->  			usb_1_ssphy: usb3-phy@8903400 {
->  				reg = <0 0x08903400 0 0x100>,
->  				      <0 0x08903600 0 0x3ec>,
-> -				      <0 0x08904400 0 0x1f0>,
-> +				      <0 0x08904400 0 0x364>,
->  				      <0 0x08903a00 0 0x100>,
->  				      <0 0x08903c00 0 0x3ec>,
->  				      <0 0x08904200 0 0x18>;
-> -- 
-> 2.35.1
-> 
+>>+        res_mcq = devm_kzalloc(hba->dev, sizeof(*res_mcq), GFP_KERNEL);
+>>+        if (!res_mcq) {
+>>+                dev_err(hba->dev, "Failed to allocate MCQ resource\n");
+>>+                return ret;
+>>+        }
+>>+
+>>+        res_mcq->start = res_mem->start +
+>>+                         MCQ_SQATTR_OFFSET(hba->mcq_capabilities);
+>>+        res_mcq->end = res_mcq->start + hba->nr_hw_queues * MCQ_QCFG_SIZE - 1;
+>>+        res_mcq->flags = res_mem->flags;
+>>+        res_mcq->name = "mcq";
+>>+
+>>+        ret = insert_resource(&iomem_resource, res_mcq);
+>>+        if (ret) {
+>>+                dev_err(hba->dev, "Failed to insert MCQ resource, err=%d\n", ret);
+>Should we free the res_mcq?
+>
+yes, will add it. Thanks.
 
+>>+                return ret;
+>>+        }
+>>+
+>>+        res->base = devm_ioremap_resource(hba->dev, res_mcq);
+>>+        if (IS_ERR(res->base)) {
+>>+                dev_err(hba->dev, "MCQ registers mapping failed, err=%d\n",
+>>+                        (int)PTR_ERR(res->base));
+>Should we call remove_resource and free the res_mcq?
+>
+I'll add the cleanup here.
+>Thanks,
+>Daejun
