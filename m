@@ -2,175 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68B2C600AEF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 11:35:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2E0B600B3D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 11:45:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230305AbiJQJfv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 05:35:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57174 "EHLO
+        id S231424AbiJQJpi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 05:45:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230455AbiJQJfj (ORCPT
+        with ESMTP id S230354AbiJQJph (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 05:35:39 -0400
-Received: from mail-vk1-xa2d.google.com (mail-vk1-xa2d.google.com [IPv6:2607:f8b0:4864:20::a2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F28A5BC19
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 02:35:30 -0700 (PDT)
-Received: by mail-vk1-xa2d.google.com with SMTP id bj23so4978063vkb.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 02:35:30 -0700 (PDT)
+        Mon, 17 Oct 2022 05:45:37 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2C8319C32
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 02:45:30 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id bk15so17545597wrb.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 02:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=E/piL+Cl5bNZ+cdgdtRq8tdPhqA168X72rjKGIcj1h4=;
-        b=frJwpnQ1m5aYZphVeeBe7Gk3obDQDvbUlm04wfHh9QiSL/PMF9tB/Oqsh+0kEGhfNO
-         IO0xDniqeVyzfdD+JQ/zRq4D21vh7ik7Um8ee3cn8CBCOToSaQ1ZGpd/a2Gve9yyVF34
-         ITfWo51grHozApCr0PrB6Bwe0SOYlzp6onCsTl/dTI9MCc6vgY4Nu541uAo++YYBs5A4
-         a0vKPtblJ4z5wLnNbmGOx+MINPdJQQEqi1diMlwjfz7XnWKZTtJr/JKwgIM6sTm2WKvz
-         GFI/MxIIypmMB3ZgmlItW4/UaPbdgeUgb5Ga5LgkDThgRnOzk/BQFLxn/5jf7fmdM9uK
-         /Naw==
+        d=linaro.org; s=google;
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:from:to:cc:subject:date:message-id:reply-to;
+        bh=O+n1ShhbA3PkDMv6oI8//0dSStEO0rpZ1E2GZxrwNJ8=;
+        b=HzCBvEHKjBcVmbQFOvVkERzzPABe7O7NENhDfrw0HMRw6qyH06kygUDFtLeJyHm2Aq
+         QF1IQIiIZ3FXmdMUKUreeqV8oX4IJ4TGTvWOTxtuazqx8oqMWpjIdO97IVlcULLhwewT
+         k1prn+CrKXDt7xI9vPmBoru4G3jgBsJG0v0NCYX/XAGh7OCNUw4IVpncfcVhKohVVlMH
+         IBX+m4vqdjXEQ0Frt/bG+Zv1rUZpf5qHDS+xXWT0WcF6MRv6HABab0u7E+2a3Cn7GnM4
+         yaBDa+tv2183b0NJkoX2CEQgRB1brnBeOyxWDJGu3JmxODXPkHXnkT26aORgZVVlZy1+
+         12LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=E/piL+Cl5bNZ+cdgdtRq8tdPhqA168X72rjKGIcj1h4=;
-        b=3gnzSYOyDwI8Kh9gm0Capi/NjBzcvfFyRMKIFDU1B7S13EJkPzoivn/HiPCyMcxamV
-         r9cuu6+kygWDnsnxhhgHYp55W7yuL+L1xF8BCCV8SkRL29coWxHwivU5WvqyehApaBuO
-         bO0jRvpXACk/inSraygwvVvIwTFCDVzlqxyu0hhBtgzeo8lEzPREUgSH64WdoDaEOO5t
-         9YrUDlV50ZY5Xa48SyFakaLdxlSD865MJLj6RJpRZPAgVlxhd66pvl/xl6+MExVo0g8p
-         pl36cx9ZKpu5R0tf+tRY51Ylss9JJRTOtbXnN9ZUlm3MY20vZgM8nEo6PLIvTyGZmsGk
-         DiUw==
-X-Gm-Message-State: ACrzQf1VYX4ukB2wLUx2mK5e0pN+06KFFAqVNlPrwKcKuV0DSOSZ27tM
-        4CqsX2+gvXJCACXgUfcSdfzA5WSO4g+jvujj6jhZHw==
-X-Google-Smtp-Source: AMsMyM6Q6nrL8lOCi83NdWMY6wKW/FytxI2676zCB6+Z2xX8cVC67C12vEdkRnmssQAcscBm4uxHwhyfQkZ6/acn8wI=
-X-Received: by 2002:a1f:4843:0:b0:3ae:c4a3:d653 with SMTP id
- v64-20020a1f4843000000b003aec4a3d653mr3536302vka.1.1665999328063; Mon, 17 Oct
- 2022 02:35:28 -0700 (PDT)
+        bh=O+n1ShhbA3PkDMv6oI8//0dSStEO0rpZ1E2GZxrwNJ8=;
+        b=VEq0mvbK6Cl1O9s4pdGOEao/hSiawCLYWAe0o4YoQLvDgMUtneS+qyzBRkre0At5bD
+         6hzwgKsu37mT2zzi1XSwmwuCIASjgPZOMfTiCLp+Ey4DOvqKQVGtupJaoWOv6Ev707Vz
+         eOC0hLSQAFN5MZ+OTxVbPkCjcUjBC1umqXwttLjfVYmUeJASnGoWIuCkOAywVaB2iCzf
+         9JgtL+F6SE+lH/owg3+oMGzwD8MqS6ys/Y8ig0nJi2gbZdYjblH8hdsIVPrd6Yx4PyAo
+         cyKxTPh2gO906ExzkjZn2PtqJYsf8EA7K8M0nDWpHxP1JlZcYfdx/HoGWvxBKEyKq531
+         CH8A==
+X-Gm-Message-State: ACrzQf2Z0o3Ev82WEww6HrSs9gh/Jjd4yJGALsTcB+DTodWntf3z4e/h
+        Toj2QQE4wiiK22CN3//O37+rgA==
+X-Google-Smtp-Source: AMsMyM7YAZPUOp3/N4bb1ClCSRlKmQTiZXyMsVlV7C8McCl56kkVkE6PGiXgXZnx+PnQ8yoCFcTByA==
+X-Received: by 2002:a5d:408e:0:b0:22e:650a:ec4b with SMTP id o14-20020a5d408e000000b0022e650aec4bmr5866330wrp.212.1665999929194;
+        Mon, 17 Oct 2022 02:45:29 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id d12-20020adfa40c000000b0022ca921dc67sm7824305wra.88.2022.10.17.02.45.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Oct 2022 02:45:28 -0700 (PDT)
+Subject: [PATCH v3 00/11] arm: qcom: mdm9615: first round of bindings and DT fixes
 MIME-Version: 1.0
-References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
- <20221010201453.77401-2-andriy.shevchenko@linux.intel.com> <CACRpkdbdzFR-a_xh8EjLMAshTeesOYhD3-_Bkc=vi7iK72ZKtA@mail.gmail.com>
-In-Reply-To: <CACRpkdbdzFR-a_xh8EjLMAshTeesOYhD3-_Bkc=vi7iK72ZKtA@mail.gmail.com>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Mon, 17 Oct 2022 11:35:16 +0200
-Message-ID: <CAMRc=MexjuQw+hUDDfCVxiBEJ573jNb3Ko9SyOU-xJ03wOe8cQ@mail.gmail.com>
-Subject: Re: [PATCH v2 01/36] gpiolib: tegra186: Add missed header(s)
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Kent Gibson <warthog618@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Billy Tsai <billy_tsai@aspeedtech.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Chen-Yu Tsai <wenst@chromium.org>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Horatiu Vultur <horatiu.vultur@microchip.com>,
-        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Phil Edworthy <phil.edworthy@renesas.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Fabien Dessenne <fabien.dessenne@foss.st.com>,
-        Prathamesh Shete <pshete@nvidia.com>,
-        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-media@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org, alsa-devel@alsa-project.org,
-        patches@opensource.cirrus.com, linux-mediatek@lists.infradead.org,
-        linux-mips@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-omap@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Joel Stanley <joel@jms.id.au>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Charles Keepax <ckeepax@opensource.cirrus.com>,
-        Richard Fitzgerald <rf@opensource.cirrus.com>,
-        Dong Aisheng <aisheng.dong@nxp.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Shevchenko <andy@kernel.org>,
-        Sean Wang <sean.wang@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Patrick Venture <venture@google.com>,
-        Nancy Yuen <yuenn@google.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-b4-tracking: H4sIADUkTWMC/43NTQrDIBAF4KsE152iJtGkq96jdOHPJAqJgqbSEnL3SnddtavhPXjf7CRj8pjJpd
+ lJwuKzj6GG9tQQ41SYEbytmXDKOR35AKtdR8F6sBtk43BVMPknZhDCdpYao6WRpK61ygg6qWBc3YfH
+ stTS+bzF9Pp8K6ye22+4MKCgBYpWSTsxHK6LDyrFc0wzuVe08D8hXqFBThp1p5D27Rd0HMcbg3sd4A 0BAAA=
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Mon, 17 Oct 2022 11:45:25 +0200
+Message-Id: <20220928-mdm9615-dt-schema-fixes-v3-0-531da552c354@linaro.org>
+To:     Alessandro Zummo <a.zummo@towertech.it>,
         Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Damien Le Moal <damien.lemoal@wdc.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Haojian Zhuang <haojian.zhuang@linaro.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Michal Simek <michal.simek@xilinx.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Lee Jones <lee@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Emil Renner Berthing <kernel@esmil.dk>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-rtc@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-kernel@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-input@vger.kernel.org
+X-Mailer: b4 0.10.1
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 17, 2022 at 10:52 AM Linus Walleij <linus.walleij@linaro.org> wrote:
->
-> On Mon, Oct 10, 2022 at 10:15 PM Andy Shevchenko
-> <andriy.shevchenko@linux.intel.com> wrote:
->
-> > Do not imply that some of the generic headers may be always included.
-> > Instead, include explicitly what we are direct user of.
-> >
-> > While at it, sort headers alphabetically.
-> >
-> > Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
->
-> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
->
-> Yours,
-> Linus Walleij
+This is a first round of trivial bindings & DT fixes for the MDM9615 platform.
 
-Andy: are you going to send it together with the corresponding pinctrl
-changes in a separate PR?
+This first round focuses on trivial changes, the remaining work will
+mainly be .txt to .yaml transition of old qcom pmic & co device bindings.
 
-Bart
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <bjorn.andersson@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@somainline.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Lee Jones <lee@kernel.org>
+To: Satya Priya <quic_c_skakit@quicinc.com>
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Alessandro Zummo <a.zummo@towertech.it>
+To: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: linux-input@vger.kernel.org
+Cc: linux-rtc@vger.kernel.org
+Dependencies: None
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v3:
+- Rebased on v6.1-rc1
+- patch 1: Added reviewed-by tag
+- patch 2: Fixes typo in commit msg and added precision about why MIT was selected
+- patch 3: Added reviewed-by tag
+- patch 4: None
+- patch 5: Drop second example node
+- patch 6: Drop Andy, fix interrupts desc and fix example indentation
+- patch 7: Fix commit msg wrap & add reviewed-by tag
+- patch 8: Reword commit msg & add reviewed-by tag
+- patch 9: Reword commit msg & add reviewed-by tag
+- patch 10: None
+- patch 11: Added reviewed-by tag
+- Link to v2: https://lore.kernel.org/r/20220928-mdm9615-dt-schema-fixes-v2-0-87fbeb4ae053@linaro.org
+
+Changes in v2:
+- patch 1: switch to move from swir.txt to qcom.yaml
+- patch 2: use MIT licence instead of X11 licence
+- patch 3: move reg after compatible
+- patch 4: added Krzysztof's review
+- patch 5: split into 5 changes:
+  - document qcom,pm8921 as fallback of qcom,pm8018
+  - convert qcom,pm8921-pwrkey to dt-schema
+  - document qcom,pm8921-rtc as fallback of qcom,pm8018-rtc
+  - drop unused PM8018 compatible
+  - drop unused pm8018 RTC compatible
+- patch 6: None
+- patch 7: Reworded commit log based on Dmitry's wording on similar patches
+- Link to v1: https://lore.kernel.org/r/20220928-mdm9615-dt-schema-fixes-v1-0-b6e63a7df1e8@linaro.org
+
+---
+Neil Armstrong (11):
+      dt-bindings: arm: qcom: move swir,mangoh-green-wp8548 board documentation to qcom.yaml
+      arm: dts: qcom: mdm9615*: add SPDX-License-Identifier
+      arm: dts: qcom: mdm9615: add missing reg in cpu@0 node
+      arm: dts: qcom: mdm9615: remove invalid spi-max-frequency gsbi3_spi node
+      dt-bindings: mfd: qcom-pm8xxx: document qcom,pm8921 as fallback of qcom,pm8018
+      dt-bindings: input: qcom,pm8921-pwrkey: convert to dt-schema
+      dt-bindings: rtc: qcom-pm8xxx: document qcom,pm8921-rtc as fallback of qcom,pm8018-rtc
+      mfd: qcom-pm8xxx: drop unused PM8018 compatible
+      rtc: pm8xxx: drop unused pm8018 compatible
+      arm: dts: qcom: mdm9615: remove invalid interrupt-names from pl18x mmc nodes
+      arm: dts: qcom: mdm9615: remove useless amba subnode
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   6 +
+ Documentation/devicetree/bindings/arm/swir.txt     |  12 --
+ .../bindings/input/qcom,pm8921-pwrkey.yaml         |  75 +++++++++++++
+ .../bindings/input/qcom,pm8xxx-pwrkey.txt          |  46 --------
+ .../devicetree/bindings/mfd/qcom-pm8xxx.yaml       |  33 +++++-
+ .../devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml   |  16 ++-
+ .../boot/dts/qcom-mdm9615-wp8548-mangoh-green.dts  |  39 +------
+ arch/arm/boot/dts/qcom-mdm9615-wp8548.dtsi         |  39 +------
+ arch/arm/boot/dts/qcom-mdm9615.dtsi                | 121 +++++++--------------
+ drivers/mfd/qcom-pm8xxx.c                          |   1 -
+ drivers/rtc/rtc-pm8xxx.c                           |   1 -
+ 11 files changed, 159 insertions(+), 230 deletions(-)
+---
+base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
+change-id: 20220928-mdm9615-dt-schema-fixes-66d4d0ccb7c7
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
