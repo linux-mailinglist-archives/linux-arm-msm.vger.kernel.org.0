@@ -2,75 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83726601B6C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 23:44:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EE25601B64
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 23:44:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230119AbiJQVos (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 17:44:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37592 "EHLO
+        id S229914AbiJQVo3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 17:44:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229971AbiJQVoc (ORCPT
+        with ESMTP id S229673AbiJQVo1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 17:44:32 -0400
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8146280505
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 14:37:29 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id f8so7561211qkg.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 14:37:29 -0700 (PDT)
+        Mon, 17 Oct 2022 17:44:27 -0400
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B2EF8051C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 14:38:10 -0700 (PDT)
+Received: by mail-qt1-x832.google.com with SMTP id l28so8611782qtv.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 14:38:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=35URIFUA0QlEjx+bYH8KEH0hehoTBL1Y1MvYu0561w0=;
-        b=ALkZoIBGSbbgToNxOeTOkHIwIXBZSnWKxcGugZsfsfiDwxyn1gyxs7HESM+v0jQWFh
-         ymq5JE2P7cGJdRrdQ7vdesKH3o6UShSSe2+koO8Fv7wb0tERmze3ewPjBfja4a6Xqrft
-         odNaWfdNDqan0OkeSWda1unB4cLz0KUEpbbEVI3qEtMYy6OObsSHM0sBDpPaz0Lj2ZES
-         Gn+kAvMmsW8P1JWNNNYG6PAv7mfj4SRa5b4GNNed7rjouzIACpRRhAwpHM62L2MrUm3F
-         R/ubFqyMHO2dRgGKZlG9fo9FEOPLVbZI0GVdzXM3XaR9LBc31hfwXMkKBaV5f1cOIMSV
-         OzDg==
+        bh=AmBtQkpZL1ZyXNynloFB66YiMCVWHSl2tHXuTV/q/48=;
+        b=oxkGSUyFpNdlwjcIGDuiex6N8kAdmKI3heOoor9CqmRM/LVqO/g643mCYsr0kJ7i/T
+         MiHcQ0QlruRR9hWeOw64xs6OZRIT+otmgoTjbApOEdoNuItSwu7NGt5VNuhvZWaFUx6Q
+         a4S9XEkLKZCCZOuv9xldUI0+/qi/Umr2RGs/HXdm7Ss1zjoUE4/HidOX5Gc7QY2Nttpk
+         ucultbe8A02vywIiqjVRPgrzdrhESjvLnERnTXST8L0ll7p/5jEIKrS5Q762VQY5fcMK
+         JWf2pOoHchQPZxZAkbWbH9Zn3Jfuj9B+iGW6ypb8xYTVe4lSfUPAek/jw0F0nHRB+vhT
+         cLbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=35URIFUA0QlEjx+bYH8KEH0hehoTBL1Y1MvYu0561w0=;
-        b=PTszF3h9uHsO6GJEjp0yMl6cGgTH5tMvbJmTWordFMO56Xsga1bggwc+l5+Lt5xpi0
-         952H9bzVgS+e7d7+cc9eBv/UP7/+h4jMeyRkpbl4/f0OYS+Kgs8L9pGgkD0kU8flx4iT
-         D3Sk/7lRgxW9u0HJqy23O2ZMHoYpc9kDhTfGtfT56Ust26pvL07NQsDsTMYJGpVPDAKZ
-         k+bwplFzd7bo0MxwhVbL35N6XAwTPE/3M6qCap0NdStbFbpZ9Yu3Q0mo4hCN9Hg7hdhn
-         HSt648u5GyqWO0TlKtvZBxnvudy/8pGTilHHpTGO99JfeCyHRqYtFrLJi9im6gPiVfcE
-         WtPw==
-X-Gm-Message-State: ACrzQf0yI8tehZRkPRMGftuEBd2PRk7y9RGAuYben9fIu8okwsDrNEpe
-        VXLz66UNndQ9S1QFfel0HdqaCA==
-X-Google-Smtp-Source: AMsMyM6IxEBaJFiDyOfSUudaNpu0aO7zN16YE1XLQ6btlmGI41k9o93UaRCwgXI/JIMUQi+fB7RdIQ==
-X-Received: by 2002:ae9:e315:0:b0:6ee:761d:4b8b with SMTP id v21-20020ae9e315000000b006ee761d4b8bmr9216782qkf.748.1666042648678;
-        Mon, 17 Oct 2022 14:37:28 -0700 (PDT)
+        bh=AmBtQkpZL1ZyXNynloFB66YiMCVWHSl2tHXuTV/q/48=;
+        b=hmTVwD8HKbthnMt4YRbB0dBbiQnhr3Z6jGnzpMuODP+ITVW1NDAHyR5mlT8JDHXdPw
+         F8+vQah2n1Dor3DES47OEARZxfycBEpVcYPY5ta1qFaXHW6H8MYgKPIUJqfHGhk+F96r
+         eRfTfOh15Oy6Tm1rrZv6UNAy6zhdKL02D8EnoCGd9AJTwSfDktpj6BLcOnLvKoOzl3TR
+         BVDF7k0rasKeZis+uyGU6wd1fPg+Zxfdlt17FfHjsyIV1HC2g9XTidZg1ZDx+QGaF2gc
+         lssOPXDOCr7g7zngwOSU9uIlxR5FL0UNfh94bt2fKpcaUeMqb97L4DaRw2i/wC8A27dG
+         YvdQ==
+X-Gm-Message-State: ACrzQf2Yyco8UpXZG3DGx/hZzVrIn/Hr8UF21rjMSjIGbJZARBHtNwGf
+        5PkK5YFTw1qtLBzqQ+QkBSJVbQ==
+X-Google-Smtp-Source: AMsMyM4o8q1eVeUbEESXsCu714aA/qZ8nq3N38eug1cql8CTVsbRHplNcIcv64V81tEcts8rU0QchQ==
+X-Received: by 2002:a05:622a:138e:b0:39c:e87e:3d07 with SMTP id o14-20020a05622a138e00b0039ce87e3d07mr6874752qtk.624.1666042689276;
+        Mon, 17 Oct 2022 14:38:09 -0700 (PDT)
 Received: from [192.168.10.124] (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
-        by smtp.gmail.com with ESMTPSA id t12-20020ac8530c000000b0039a55f78792sm562481qtn.89.2022.10.17.14.37.27
+        by smtp.gmail.com with ESMTPSA id o14-20020a05620a2a0e00b006cbc00db595sm785051qkp.23.2022.10.17.14.38.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Oct 2022 14:37:28 -0700 (PDT)
-Message-ID: <98c595dc-0dfb-e87d-aa1e-38198f942525@linaro.org>
-Date:   Mon, 17 Oct 2022 17:37:26 -0400
+        Mon, 17 Oct 2022 14:38:08 -0700 (PDT)
+Message-ID: <f61be2e8-32f6-7759-1069-e03a70b4f849@linaro.org>
+Date:   Mon, 17 Oct 2022 17:38:07 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.2
-Subject: Re: [PATCH v5 1/3] dt-bindings: dma: qcom: gpi: add fallback
- compatible
+Subject: Re: [PATCH v2 1/5] dt-bindings: pinctrl: convert
+ qcom,mdm9615-pinctrl.txt to dt-schema
 Content-Language: en-US
-To:     Richard Acayan <mailingradian@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Linus Walleij <linus.walleij@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Lee Jones <lee@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org
-References: <20221007213640.85469-1-mailingradian@gmail.com>
- <20221007213640.85469-2-mailingradian@gmail.com>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org
+References: <20221005-mdm9615-pinctrl-yaml-v2-0-639fe67a04be@linaro.org>
+ <20221005-mdm9615-pinctrl-yaml-v2-1-639fe67a04be@linaro.org>
+ <CACRpkdbaZRNV56+x=gnN7kKnesaf03hN4nr35qjT9eV=_dKkew@mail.gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221007213640.85469-2-mailingradian@gmail.com>
+In-Reply-To: <CACRpkdbaZRNV56+x=gnN7kKnesaf03hN4nr35qjT9eV=_dKkew@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,44 +87,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/10/2022 17:36, Richard Acayan wrote:
-> The drivers are transitioning from matching against lists of specific
-> compatible strings to matching against smaller lists of more generic
-> compatible strings. Use the SDM845 compatible string as a fallback in
-> the schema to support this change.
+On 17/10/2022 06:41, Linus Walleij wrote:
+> On Mon, Oct 17, 2022 at 12:23 PM Neil Armstrong
+> <neil.armstrong@linaro.org> wrote:
 > 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../devicetree/bindings/dma/qcom,gpi.yaml     | 21 ++++++++++++-------
->  1 file changed, 13 insertions(+), 8 deletions(-)
+>> Convert the MDM9515 pinctrl bindings to dt-schema.
+>> Keep the parsing of pin configuration subnodes consistent with other Qualcomm
+>> schemas (children named with '-state' suffix, optional children with '-pins').
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > 
-> diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> index eabf8a76d3a0..081b8a2d393d 100644
-> --- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> +++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> @@ -18,14 +18,19 @@ allOf:
->  
->  properties:
->    compatible:
-> -    enum:
-> -      - qcom,sc7280-gpi-dma
-> -      - qcom,sdm845-gpi-dma
-> -      - qcom,sm6350-gpi-dma
-> -      - qcom,sm8150-gpi-dma
-> -      - qcom,sm8250-gpi-dma
-> -      - qcom,sm8350-gpi-dma
-> -      - qcom,sm8450-gpi-dma
-> +    oneOf:
-> +      - enum:
-> +          - qcom,sc7280-gpi-dma
-> +          - qcom,sdm845-gpi-dma
-> +          - qcom,sm6350-gpi-dma
-> +          - qcom,sm8350-gpi-dma
-> +          - qcom,sm8450-gpi-dma
-> +
+> Acked-by: Linus Walleij <linus.walleij@linaro.org>
+> 
+> Could Krzysztof include this with the rest of his massive DTS and schema
+> cleanups and just pass me a pull request with all the qcom stuff in?
 
-Drop the empty line, please.
+I'll do that.
 
 Best regards,
 Krzysztof
