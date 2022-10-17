@@ -2,191 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51D52600B6F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 11:46:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB492600BB5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 11:58:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231455AbiJQJqL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 05:46:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58684 "EHLO
+        id S231486AbiJQJ6T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 05:58:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230010AbiJQJps (ORCPT
+        with ESMTP id S230141AbiJQJ6S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 05:45:48 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8F0E558D7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 02:45:41 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id c7-20020a05600c0ac700b003c6cad86f38so12305105wmr.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 02:45:41 -0700 (PDT)
+        Mon, 17 Oct 2022 05:58:18 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80E705D120
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 02:58:16 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id q9so23783098ejd.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 02:58:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Z8zoiO3HcCMOhvwnFbJarwF7HI12ZyCQT2wJzcSF7bw=;
-        b=GR4c68TFIOTAZIvU08PAVG4mtAT+VuNoAuABm7Au91I+lHasYucr4NVEvo7NOvgx/P
-         W7NxAGL2fkmY7+TAhhP/A3ZVFaQ4V+RSYhK03M4PWrO3+gOhEExsC+IW3RG7U7QUTqG2
-         0n9N6Vc7GAEBPvMjnw6/w2SSfvrFh5BJFqlk+DKpUKv7De+8usdS7fjLmlyROkdVSWAf
-         6QICvtqpGdS6JbRxqaAkK2ZffVrUSg8/UeRFdmvOU3vaR8ivh7P/KG4NJ2RW7rdKrysx
-         9K2fVTGhKcoL41qIq6bmxC884RptBzdRmnUxdMrVXIG0BavLFa5b82MmqGF1zPgNZYI6
-         /PtQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=B/Byge+Vue4J7Z80ANz5rsyrsoG83IPzp3UARO7F6/s=;
+        b=MUHWuYJag6UdIGNJWiJWxn8WAAZ42CXEFTnECn+6skOIqg/uauJYEVg974vMd9sMEk
+         zE6zI7z18arTxzgN6sTudVQN0HH06/PzZJ+4X18m75Vy/bF7X3X+fEqiRAyn7cwpLeMe
+         1S3Gkx8o3vO463r4qBmru/5P+HeV+QtYD7XFaMKTFQkBKEINKik6GSXOIGd4TakIzo/y
+         22NV5ZvkVpf1kqoQWmMXugwEs+G3K/F00qz0J2gsZD0tyQrxzJVUb1Rv0OE2tl8BfDdT
+         1Thx86QUb3Eo9BPHEOAqRcLadLrkm9xIrIOP9q0Nx+T+iVZxfi/eZSxmcD7GZQwM5l3C
+         f6SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Z8zoiO3HcCMOhvwnFbJarwF7HI12ZyCQT2wJzcSF7bw=;
-        b=WxGuwSWzID//O+8amqNr2eBpXUksxbJdkPwZFB4TQVM8ZNYBht+4Hhaghec5S6e/Gd
-         4m3F77UaM4irN/DXJevSmltHdFyepQVQByoqvhJNvg5Z54jrIIWifkgDFYjQCGBksrpr
-         o42Q3YBVWTcDbZS1woenVdldm+ADdTfupCqWPAaFrI4Gv+CVrKMnuS+ILtg/mIfvLVbY
-         Llikb9Mr658eFhB8cO9e5CJQ1PdOevAMUjvhjMTBlhMPePpIn1U58RzKIjV+Djenyu/G
-         1mYuRruLzr2iPHGuSrDKKJNcQjYz2NMqa82mfk6+pMfJlAZr+yl/eB2GpP4VuqQcRspx
-         TLMQ==
-X-Gm-Message-State: ACrzQf25jY9v/Eh+6GKrAlgm98rC70WqHapvdUf+6wgi6clvFRWsxM7a
-        +xlvkemj7teVl8WsUlzKWAjgrw==
-X-Google-Smtp-Source: AMsMyM7miHaeiw3gyM4DJ6PGKX8iiVKBSM+zRGn8fwoBsQ53nGa5TdISBJmFgARL0G+Y3e694y72WA==
-X-Received: by 2002:a05:600c:1d0f:b0:3c6:bfa9:9ef6 with SMTP id l15-20020a05600c1d0f00b003c6bfa99ef6mr18773703wms.136.1665999939629;
-        Mon, 17 Oct 2022 02:45:39 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id d12-20020adfa40c000000b0022ca921dc67sm7824305wra.88.2022.10.17.02.45.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Oct 2022 02:45:39 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 17 Oct 2022 11:45:36 +0200
-Subject: [PATCH v3 11/11] arm: dts: qcom: mdm9615: remove useless amba subnode
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B/Byge+Vue4J7Z80ANz5rsyrsoG83IPzp3UARO7F6/s=;
+        b=iN1bWF4429P91691XNmBWKOGnmXiiLuZazbU6q9cPa/O9Btx1jNkldwHMkN/4L1H7Y
+         hT6E/ag9JlB0Wmnb8ifFTBAf8cEj4HgHZK3hY7CyjCE9mrmzAhz8g+9QNgZ6SItkPO0G
+         vddrsF6hZeVcdTugcJOAmjLAQSanX6bA2v/nEfkEWljTXAG8VRJhiPUSFsRNtimY2yhy
+         0o/Ire3/wqBQoB1aEgUs1wvxJxUUpiWov+T4sB29XOjhtlqsaUZ1HTCwhTTuz66Da1Cx
+         KS4s8U82V1IFVJnCGOE7sDgRt0hNMXo6il6hqH3x7sJnvpzfGkul9S4zZXeI3p9SRwWE
+         PyWw==
+X-Gm-Message-State: ACrzQf0I5QMZqQl3BaYFwApSq4c/FzkLzQGd5dIinMTBBV49nQ8xKd0D
+        i8l+erFOG8QqzTYsasIt7hhBQnuPD5aHKQooob7Cpw==
+X-Google-Smtp-Source: AMsMyM4L0M6bcj2Wvh4KRdD8EKd7M4z6+eLVjZHPl1MFPGYp6JqekMO0KaAEpqZ8kDbWIS4EMUIR8qxcTy8qHdB2D/8=
+X-Received: by 2002:a17:907:7606:b0:78e:61d:757e with SMTP id
+ jx6-20020a170907760600b0078e061d757emr7556783ejc.690.1666000695069; Mon, 17
+ Oct 2022 02:58:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20220928-mdm9615-dt-schema-fixes-v3-11-531da552c354@linaro.org>
-References: <20220928-mdm9615-dt-schema-fixes-v3-0-531da552c354@linaro.org>
-In-Reply-To: <20220928-mdm9615-dt-schema-fixes-v3-0-531da552c354@linaro.org>
-To:     Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        Lee Jones <lee@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     linux-rtc@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        linux-kernel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-input@vger.kernel.org
-X-Mailer: b4 0.10.1
+References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
+ <CACRpkdZ1M3ckw+jFgvMqG4jvR-t_44GPoZ6ZDXszwZCJr-cDpg@mail.gmail.com> <Y00f5exY2fM6IwZ+@smile.fi.intel.com>
+In-Reply-To: <Y00f5exY2fM6IwZ+@smile.fi.intel.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 17 Oct 2022 11:58:03 +0200
+Message-ID: <CACRpkdYmSOGtFz8W_RRkDqMXRRBOSB9jqSn65Sah90bf3Gm59g@mail.gmail.com>
+Subject: Re: [rft, PATCH v2 00/36] pinctrl: Clean up and add missed headers
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        Kent Gibson <warthog618@gmail.com>, linux-gpio@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
+        linux-actions@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+        openbmc@lists.ozlabs.org, linux-rpi-kernel@lists.infradead.org,
+        alsa-devel@alsa-project.org, patches@opensource.cirrus.com,
+        linux-mediatek@lists.infradead.org, linux-mips@vger.kernel.org,
+        linux-riscv@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The separate amba device node doesn't add anything significant to the
-DT. The OF parsing code already creates amba_device or platform_device
-depending on the compatibility lists.
+On Mon, Oct 17, 2022 at 11:27 AM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
+> On Mon, Oct 17, 2022 at 11:02:09AM +0200, Linus Walleij wrote:
+> > On Mon, Oct 10, 2022 at 10:15 PM Andy Shevchenko
+> > <andriy.shevchenko@linux.intel.com> wrote:
+> >
+> > > Currently the header inclusion inside the pinctrl headers seems more arbitrary
+> > > than logical. This series is basically out of two parts:
+> > > - add missed headers to the pin control drivers / users
+> > > - clean up the headers of pin control subsystem
+> > >
+> > > The idea is to have this series to be pulled after -rc1 by the GPIO and
+> > > pin control subsystems, so all new drivers will utilize cleaned up headers
+> > > of the pin control.
+> >
+> > Aha I see you want to send a pull request so I backed out the applied patches
+> > from the series for now.
+>
+> Can I consider all that you answered to as Rb tag?
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm/boot/dts/qcom-mdm9615.dtsi | 78 +++++++++++++++++--------------------
- 1 file changed, 36 insertions(+), 42 deletions(-)
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
 
-diff --git a/arch/arm/boot/dts/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom-mdm9615.dtsi
-index 9d950f96280d..482fd246321c 100644
---- a/arch/arm/boot/dts/qcom-mdm9615.dtsi
-+++ b/arch/arm/boot/dts/qcom-mdm9615.dtsi
-@@ -314,49 +314,43 @@ sdcc2bam: dma-controller@12142000{
- 			qcom,ee = <0>;
- 		};
- 
--		amba {
--			compatible = "simple-bus";
--			#address-cells = <1>;
--			#size-cells = <1>;
--			ranges;
--			sdcc1: mmc@12180000 {
--				status = "disabled";
--				compatible = "arm,pl18x", "arm,primecell";
--				arm,primecell-periphid = <0x00051180>;
--				reg = <0x12180000 0x2000>;
--				interrupts = <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>;
--				clocks = <&gcc SDC1_CLK>, <&gcc SDC1_H_CLK>;
--				clock-names = "mclk", "apb_pclk";
--				bus-width = <8>;
--				max-frequency = <48000000>;
--				cap-sd-highspeed;
--				cap-mmc-highspeed;
--				vmmc-supply = <&vsdcc_fixed>;
--				dmas = <&sdcc1bam 2>, <&sdcc1bam 1>;
--				dma-names = "tx", "rx";
--				assigned-clocks = <&gcc SDC1_CLK>;
--				assigned-clock-rates = <400000>;
--			};
-+		sdcc1: mmc@12180000 {
-+			status = "disabled";
-+			compatible = "arm,pl18x", "arm,primecell";
-+			arm,primecell-periphid = <0x00051180>;
-+			reg = <0x12180000 0x2000>;
-+			interrupts = <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc SDC1_CLK>, <&gcc SDC1_H_CLK>;
-+			clock-names = "mclk", "apb_pclk";
-+			bus-width = <8>;
-+			max-frequency = <48000000>;
-+			cap-sd-highspeed;
-+			cap-mmc-highspeed;
-+			vmmc-supply = <&vsdcc_fixed>;
-+			dmas = <&sdcc1bam 2>, <&sdcc1bam 1>;
-+			dma-names = "tx", "rx";
-+			assigned-clocks = <&gcc SDC1_CLK>;
-+			assigned-clock-rates = <400000>;
-+		};
- 
--			sdcc2: mmc@12140000 {
--				compatible = "arm,pl18x", "arm,primecell";
--				arm,primecell-periphid = <0x00051180>;
--				status = "disabled";
--				reg = <0x12140000 0x2000>;
--				interrupts = <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>;
--				clocks = <&gcc SDC2_CLK>, <&gcc SDC2_H_CLK>;
--				clock-names = "mclk", "apb_pclk";
--				bus-width = <4>;
--				cap-sd-highspeed;
--				cap-mmc-highspeed;
--				max-frequency = <48000000>;
--				no-1-8-v;
--				vmmc-supply = <&vsdcc_fixed>;
--				dmas = <&sdcc2bam 2>, <&sdcc2bam 1>;
--				dma-names = "tx", "rx";
--				assigned-clocks = <&gcc SDC2_CLK>;
--				assigned-clock-rates = <400000>;
--			};
-+		sdcc2: mmc@12140000 {
-+			compatible = "arm,pl18x", "arm,primecell";
-+			arm,primecell-periphid = <0x00051180>;
-+			status = "disabled";
-+			reg = <0x12140000 0x2000>;
-+			interrupts = <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc SDC2_CLK>, <&gcc SDC2_H_CLK>;
-+			clock-names = "mclk", "apb_pclk";
-+			bus-width = <4>;
-+			cap-sd-highspeed;
-+			cap-mmc-highspeed;
-+			max-frequency = <48000000>;
-+			no-1-8-v;
-+			vmmc-supply = <&vsdcc_fixed>;
-+			dmas = <&sdcc2bam 2>, <&sdcc2bam 1>;
-+			dma-names = "tx", "rx";
-+			assigned-clocks = <&gcc SDC2_CLK>;
-+			assigned-clock-rates = <400000>;
- 		};
- 
- 		tcsr: syscon@1a400000 {
+I haven't reviewed in detail but I fully trust you to do the right thing
+and fix any fallout so will happily pull this.
 
--- 
-b4 0.10.1
+Yours,
+Linus Walleij
