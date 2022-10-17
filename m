@@ -2,112 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF4F4601AE2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 23:04:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19E12601AF5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 23:07:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230195AbiJQVEC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 17:04:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59168 "EHLO
+        id S230500AbiJQVGv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 17:06:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230181AbiJQVEB (ORCPT
+        with ESMTP id S231219AbiJQVGf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 17:04:01 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF2BC1DA73;
-        Mon, 17 Oct 2022 14:04:00 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29HIMWfd026841;
-        Mon, 17 Oct 2022 21:03:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- content-transfer-encoding : in-reply-to; s=qcppdkim1;
- bh=4fDuTy7YIX14S7FuWt7UDi/41fVxZ3I88Pazd3o+0n4=;
- b=iErUhQfqEsetuksM0jhaRabGaJU680szvJWpINwBK3neunpHnh1QWcL7y8dK59W2XEaH
- ySQRVMmSIZsI8Y9gX4dTQqJukZ0LE9XK/l4stxoOn4pzivcH2+c2MFoaKuLivI4k5PJ2
- oQqL9Ra5kwznAfW9BhgMqzu56e3IYzYnfPW38mpp6BMN0As/3mUbJYg6x91m6EVo595F
- GqodVrGmymWy2Vn8Q1JrRHBWC/dAtvcUlIPZ9/wZP0U6aQFiEqjGB8gar+KIajAPmDgA
- MHYmUp5WR7ItfPIi/sFGVJn0nu63hAPze8sRrpdwqqCYd+DtABlBPuAMuJ2DGhNAh/Z+ XA== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k7p1sxtq1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 17 Oct 2022 21:03:54 +0000
-Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29HL3rrk004722
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 17 Oct 2022 21:03:53 GMT
-Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Mon, 17 Oct 2022 14:03:53 -0700
-Date:   Mon, 17 Oct 2022 14:03:53 -0700
-From:   Asutosh Das <quic_asutoshd@quicinc.com>
-To:     Daejun Park <daejun7.park@samsung.com>
-CC:     "quic_cang@quicinc.com" <quic_cang@quicinc.com>,
-        "quic_nitirawa@quicinc.com" <quic_nitirawa@quicinc.com>,
-        "quic_rampraka@quicinc.com" <quic_rampraka@quicinc.com>,
-        "quic_bhaskarv@quicinc.com" <quic_bhaskarv@quicinc.com>,
-        "quic_richardp@quicinc.com" <quic_richardp@quicinc.com>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
-        cpgsproxy3 <cpgsproxy3@samsung.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "quic_nguyenb@quicinc.com" <quic_nguyenb@quicinc.com>,
-        "quic_xiaosenh@quicinc.com" <quic_xiaosenh@quicinc.com>,
-        "bvanassche@acm.org" <bvanassche@acm.org>,
-        "avri.altman@wdc.com" <avri.altman@wdc.com>,
-        "mani@kernel.org" <mani@kernel.org>,
-        "beanhuo@micron.com" <beanhuo@micron.com>
-Subject: Re: [PATCH v2 01/17] ufs: core: Probe for ext_iid support
-Message-ID: <20221017210353.GC10252@asutoshd-linux1.qualcomm.com>
-References: <1d21e634e86f26e3a22be3c380a85bd4dd17f1ae.1665017636.git.quic_asutoshd@quicinc.com>
- <cover.1665017636.git.quic_asutoshd@quicinc.com>
- <CGME20221006010736epcas2p20777225a537d4f2124e9a7264b2fffcf@epcms2p3>
- <20221006035037epcms2p3053f17ec4b42f48657803b98345d843a@epcms2p3>
+        Mon, 17 Oct 2022 17:06:35 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C3737CE3A;
+        Mon, 17 Oct 2022 14:06:28 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id 187so10176603iov.10;
+        Mon, 17 Oct 2022 14:06:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Zb5dCJMmbifAmMeWE+WOg/Who9dgBV1R0nSBBi0FI+c=;
+        b=c+2OFtZ4fUb5M/hJZPOc98r1Xc82kZF/wvHJTHld6CoxuR0Eq4B9k8R/pHbaRfpR/W
+         ZOZg7f8LgoAsyGQM/Xv55u1uIzGIBcbDQ/uBSMAbNszEhKEwuJi7i+a973ezEQ8WLxrU
+         CzYSpo3DH3NlrcsuKKUnKmfcxzxyouDru8RJ/ljmoWWKKdUPVT5yZl1xJr422hJ84LDH
+         YrDtL1xCkwzc0L+d+ZisVz6y8eY/ojSiH4gEbt0ugUMRUuYZ85SyvD6OdUPcaXwMndmo
+         wWS61ZlB3RVhqOb48X+VSzG8Nb3LhVrNbr4EZLTwepWBTrUL4kb8kEWb9VlNOC8kPTH7
+         qreQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Zb5dCJMmbifAmMeWE+WOg/Who9dgBV1R0nSBBi0FI+c=;
+        b=AFbIp3oR5OSKUfecN7DP81mvPXy/dvd4V9Uu9Hh+zctr59tPgWj2rYc2PyKRwy+iDO
+         Bv1MVPGwT5bBwzoh3sqH+jV6u0L3UbQKYrqu/wpmvR8FmelRgjHXOLOBY8bhdbDaHgs0
+         mZ/HP6ZaW7RJ5C556W55clErMk2iIQv/qUU3pRx3fPYhtLB/4XxGbRO4WTtQ96SagW13
+         WG0fZazvKEBdA1wMBfwpM9bMa9cSUETNEYO7UMunZBsSKtcn0d+lcGWZx9N5OMG7eabx
+         7I+QTwx2P9rdfsLIuNng03c8eyiYeqANITlc9X8KasKH4qgw2YyMm2uniEeTyHu6suE1
+         +MjA==
+X-Gm-Message-State: ACrzQf3MI55EKtzMtBbQT807AKfJOPCjNF9ySpHvGyxWbg+cFAjj9rBA
+        Niqmgejj9Lvw+wHwQQeZcc48eJ4exeH/KA==
+X-Google-Smtp-Source: AMsMyM6Y8BHaTxpKC3+y7aNMMafxwUeuPTV+1RsXNTbJ5WRdyKZ1SEUEI2x/iSmivD4aQQsPUabBFA==
+X-Received: by 2002:a6b:5f16:0:b0:6bc:132:5b60 with SMTP id t22-20020a6b5f16000000b006bc01325b60mr5264501iob.65.1666040787338;
+        Mon, 17 Oct 2022 14:06:27 -0700 (PDT)
+Received: from localhost ([2607:fea8:a2e2:2d00::4a89])
+        by smtp.gmail.com with UTF8SMTPSA id t69-20020a025448000000b00363455b779csm314118jaa.159.2022.10.17.14.06.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Oct 2022 14:06:26 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        Richard Acayan <mailingradian@gmail.com>
+Subject: Re: [PATCH v5 0/3] SDM670 GPI DMA support
+Date:   Mon, 17 Oct 2022 17:06:22 -0400
+Message-Id: <20221017210622.3498-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.38.0
+In-Reply-To: <20221007213640.85469-1-mailingradian@gmail.com>
+References: 
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221006035037epcms2p3053f17ec4b42f48657803b98345d843a@epcms2p3>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 3qqA3ZOhYHQUcvTLHPsl9XdiXerRTo7o
-X-Proofpoint-GUID: 3qqA3ZOhYHQUcvTLHPsl9XdiXerRTo7o
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-17_13,2022-10-17_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
- spamscore=0 clxscore=1011 priorityscore=1501 phishscore=0
- lowpriorityscore=0 impostorscore=0 malwarescore=0 mlxlogscore=999
- bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210170120
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 06 2022 at 20:50 -0700, Daejun Park wrote:
->Hi Asutosh Das,
->
->>diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
->>index 7fe1a92..da1eb8a 100644
->>--- a/include/ufs/ufshcd.h
->>+++ b/include/ufs/ufshcd.h
->>@@ -737,6 +737,7 @@ struct ufs_hba_monitor {
->>  * @outstanding_lock: Protects @outstanding_reqs.
->>  * @outstanding_reqs: Bits representing outstanding transfer requests
->>  * @capabilities: UFS Controller Capabilities
->>+ * @mcq_capabilities: UFS Multi Command Queue capabilities
->
->Maybe UFS Multi Circular Queue?
->
-Will change it. Thanks.
->Thanks,
->Daejun
->
+> Changes since v4:
+>  - drop dts patch (to be sent separately)
+
+Hmm, [1] still includes it. Maybe it doesn't make sense to do this, and maybe
+I should split the dts patch.
+
+[1] https://lore.kernel.org/linux-arm-msm/20221015140447.55221-1-krzysztof.kozlowski@linaro.org/T/
+
+>  - accumulate review tags
+> 
+> Changes since v3:
+>  - keep other compatible strings in driver and add comment
+>  - accumulate review tags
+> 
+> Changes since v2:
+>  - change fallback to sdm845 compat string (and keep compat string in
+>    driver)
+>  - fallback now only affects two SoCs + SDM670
+> 
+> Changes since v1:
+>  - add fallback compatible
+> 
+> This patch series adds the compatible string for GPI DMA, needed for the
+> GENI interface, on Snapdragon 670.
+> 
+> Richard Acayan (3):
+>   dt-bindings: dma: qcom: gpi: add fallback compatible
+>   dt-bindings: dma: qcom: gpi: add compatible for sdm670
+>   dmaengine: qcom: deprecate redundant of_device_id entries
+> 
+>  .../devicetree/bindings/dma/qcom,gpi.yaml     | 22 ++++++++++++-------
+>  drivers/dma/qcom/gpi.c                        |  4 ++++
+>  2 files changed, 18 insertions(+), 8 deletions(-)
+> 
+> -- 
+> 2.38.0
+> 
