@@ -2,100 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 500E360193C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 22:19:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62CAA60192F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 22:16:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229999AbiJQUTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 16:19:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38154 "EHLO
+        id S230076AbiJQUQp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 16:16:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231374AbiJQUSa (ORCPT
+        with ESMTP id S231429AbiJQUQU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 16:18:30 -0400
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AD3D12AC2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 13:18:17 -0700 (PDT)
-Received: by mail-qk1-f177.google.com with SMTP id s17so6220389qkj.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 13:18:17 -0700 (PDT)
+        Mon, 17 Oct 2022 16:16:20 -0400
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E00FA17E0A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 13:15:28 -0700 (PDT)
+Received: by mail-qk1-x733.google.com with SMTP id z30so7388846qkz.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 13:15:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=AJNYfqxtZnChw9cbOfNCDV05T7F1NoqGmT3O3gZzEBM=;
-        b=VfJr3OlRU13ehHMlkxPfDyfREWIYoxHXSKik6aOMvOcvPIw/0IOmWCv04ArbYSCBgX
-         gjCWQ27fY/UUfgK5FAoGirDZpg6Yfcah0UB+2Idf5V5HHrzhNI5tAq8rlqhA/kdznWeL
-         guBj2o4XMZ63T9/P8pTshLuniEEAIRwqCSv8xsgNdlJz+gsL/9zpI40eDVibOWal2QvB
-         wRR3ZCodiBADpKHKF0fU1fxv34l7JV1tR3xmEC9oxDfAbQOPxmkHHdgQm6s4Q4SUBOil
-         3uDBSw9AbMBrJhjJkP47Gtf91PIhOaIN79/jX9so3PFdJeq0qoktVrGT9ULI4T7+W0lj
-         nIPg==
+        bh=3hFR/JKuZ224C1tzOZjwuzfHyBFmtfdzMfvcxSPRjbQ=;
+        b=VE7guqGIMqTuXk335bohHdtRCqXAbmWg+6R4hdeueCxnywSVbiaUbTt3HiU0yZd98T
+         aYU5U+Ou88iOou8HVpEB9gzROMfdf1JkSJJBSv9p1+/ZX9sJcZV7XvG/7oSflTjTWxQj
+         KR07CkK5BHfsc/1TXEsBCeo4WrJNEImWo1byP8IwTGQx3w6WO5Yo7IXLlCE6Ct2LUhHM
+         R/HGLlUpNUmA849i8BnYbN+q24XSbogzIGps2H6yn2gT7KoxcSxvTEoh6gmN/dlbWAUa
+         svyCF5cmNx4J2QJ2kWZJb8wn3vLJKhU1FQWlFIwhtZwTvhujuts7Ev/I7PwJKOBe/QwI
+         9fmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AJNYfqxtZnChw9cbOfNCDV05T7F1NoqGmT3O3gZzEBM=;
-        b=uFKSIqFmhy679L14wqFGgoCA/Tq4fdg+6/QO6VxPZY1Hdbq6VBDWsp842Jd4hVtPyS
-         paDjabV/t9kumSgbsqObNAsXulFPJVT1KPoqu3gVwndJ3vzjZvibu68gUyUYXDVO162y
-         gmR5kzfNZgPFZFhboTv6XkmHTZKnnz0GsMjLEyEQ6dUKJkFkUcgM+WoMoUjv7S3cYcZc
-         lm+RQqGiZlXEuiu+OW77MYZPsBsGaPVteE6i1+t1lMzbDr5WC8TehCD9u481anByubYv
-         TtDalYBT4FoHWArpBKMuW6mwRvKbf4I77X0dvvpHorMGXAxmCjHtXV3rTcTbeB5xo8y5
-         /5pQ==
-X-Gm-Message-State: ACrzQf1WYxNqsz2rfQPC2/L3XZJFhBluHD5lu8RADA0aXyU2obXQhD8r
-        2gyXs8sKS8c5+1E02+Nu7683Lw==
-X-Google-Smtp-Source: AMsMyM6nbM3QyrJQkf2xsIjrCZ17eCwlmopsJMFJeXQXdnYELAZ/yXqmTnhCtFDRYPk0U3iHfdmd7Q==
-X-Received: by 2002:a05:620a:d8c:b0:6a7:91a4:2669 with SMTP id q12-20020a05620a0d8c00b006a791a42669mr9007086qkl.269.1666037596372;
-        Mon, 17 Oct 2022 13:13:16 -0700 (PDT)
+        bh=3hFR/JKuZ224C1tzOZjwuzfHyBFmtfdzMfvcxSPRjbQ=;
+        b=KST4lk1Vdv0j/YAny2EDnTD9u01HX5krpeqWGOucRtSWr1YXGD10H7uY6PWgq6hDEV
+         8qc0t1niBI0UPGX96PN59NBKGrTLcw/1maG2LyyyX3K9W9CBkBFZzZsvu/qb4DUP9UpN
+         YcioeqiZGCwJlyQbovXBAMT5GNGEHDa8QQxXooS/Z8cUr57THILfTfjctxlC6yiuzmFy
+         29jlgflvfI9XoYYX7eIYbg8/i3x2wRSjRmDaHxz3/XttHsG4KNcWv97ACi01ydO35oXn
+         /nb5ge69eAJNziI4APDBaMJIOmsayjsh8lVlQaCn6YnkYW1DAsrzDC3lrGh1iJgsQbDi
+         yNfA==
+X-Gm-Message-State: ACrzQf3gAJ6RGaZJwh7nTWsJm7PqKfZ6jhoIowS7PpHN5PAYZJ6pd8Zj
+        MZYclpXn6kT9saAzrxmt/EXYrg==
+X-Google-Smtp-Source: AMsMyM6hKTj8N78SpstCP8ItrkFlrR+UIDFZexsd8+/YfceyQ65yGg4jBiZVbiTxImsak4+Kij5bxA==
+X-Received: by 2002:ae9:ea03:0:b0:6e0:ca9c:e795 with SMTP id f3-20020ae9ea03000000b006e0ca9ce795mr8923285qkg.168.1666037681995;
+        Mon, 17 Oct 2022 13:14:41 -0700 (PDT)
 Received: from [192.168.10.124] (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
-        by smtp.gmail.com with ESMTPSA id x7-20020ac85387000000b0039cc944ebdasm489188qtp.54.2022.10.17.13.13.15
+        by smtp.gmail.com with ESMTPSA id u24-20020a37ab18000000b006bb83c2be40sm556712qke.59.2022.10.17.13.14.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Oct 2022 13:13:15 -0700 (PDT)
-Message-ID: <3e7e6b3d-1ba7-ca89-60a9-e63d9856e497@linaro.org>
-Date:   Mon, 17 Oct 2022 16:13:14 -0400
+        Mon, 17 Oct 2022 13:14:41 -0700 (PDT)
+Message-ID: <279324eb-fc1f-4d1a-b1c2-d8cf64809e1f@linaro.org>
+Date:   Mon, 17 Oct 2022 16:14:39 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.2
-Subject: Re: [PATCH v2] dt-bindings: mfd: qcom,spmi-pmic: document rradc node
+Subject: Re: [PATCH v3] arm64: dts: qcom: pmi8998: add rradc node
+Content-Language: en-US
 To:     Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         devicetree@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lee Jones <lee@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-References: <20221017185105.2279129-1-caleb.connolly@linaro.org>
-Content-Language: en-US
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>
+References: <20221017190902.2282899-1-caleb.connolly@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221017185105.2279129-1-caleb.connolly@linaro.org>
+In-Reply-To: <20221017190902.2282899-1-caleb.connolly@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/10/2022 14:51, Caleb Connolly wrote:
-> Document the rradc node name, like adc-tm it's only used on a few
-> platforms, so differentiate it from the standard adc node.
+On 17/10/2022 15:09, Caleb Connolly wrote:
+> Add a DT node for the Round Robin ADC found in the PMI8998 PMIC.
+> 
+> The RRADC reports PMIC die and skin temperatures, as well as
+> battery/charger thermals. It also reports USB and DC charger voltage and
+> current measurements.
 > 
 > Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 > ---
+> This patch introduces a new dtbs_check warning which will be fixed by
+> https://lore.kernel.org/linux-arm-msm/20221017185105.2279129-1-caleb.connolly@linaro.org/
 > 
-> V1: https://lore.kernel.org/linux-arm-msm/20221016175757.1911016-1-caleb.connolly@linaro.org/
+> V2: https://lore.kernel.org/linux-arm-msm/20221017185609.2280067-1-caleb.connolly@linaro.org/
+> Changes since v2:
+>  * Remove 'status = "okay";'
+> 
+> V1:
+> https://lore.kernel.org/linux-arm-msm/20221016180330.1912214-1-caleb.connolly@linaro.org/
 > Changes since v1:
->  * Add a new node instead of using the adc@ node
->  * no longer depend on Luca's patch
+>  * Change node name from adc@ to rradc@, see linked patch
+>  * Enable the RRADC by default, rather than per-device 
+> ---
+>  arch/arm64/boot/dts/qcom/pmi8998.dtsi | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/pmi8998.dtsi b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> index 6d3d212560c1..08c9ec2cafa6 100644
+> --- a/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> @@ -18,6 +18,12 @@ pmi8998_gpio: gpios@c000 {
+>  			interrupt-controller;
+>  			#interrupt-cells = <2>;
+>  		};
+> +
+> +		pmi8998_rradc: rradc@4500 {
 
-This is not what I proposed. The node name should stay adc as it is
-generic. I propose to do it the same way as in
-f4b632da13cf0ee39cdbd4ff08d1961ed50e3c14
+No, generic node names so adc. Please do not send DTS patches separate
+from the bindings.
 
 Best regards,
 Krzysztof
