@@ -2,207 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D4596008EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 10:43:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17B5360094A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 10:53:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229990AbiJQInq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 04:43:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36502 "EHLO
+        id S230335AbiJQIxM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 04:53:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbiJQInq (ORCPT
+        with ESMTP id S230378AbiJQIw6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 04:43:46 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAC102B25B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 01:43:43 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id b18so13054552ljr.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 01:43:43 -0700 (PDT)
+        Mon, 17 Oct 2022 04:52:58 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A21C4D83C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 01:52:37 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id fy4so23296510ejc.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 01:52:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=p23jnQNQ6JC6/vxi7zw6GQkHOBG7ZpOlqxBcqeLSsBY=;
-        b=erUNPQmYvqeKh2VbLgBzmizyrnnZC2uQQTGooV4d9SzFHe9PhjXSJP+wx5Q4CsmwAL
-         +L5CkOJnS3sj/u3GC/TAuVjX6bahwzPV/EBPP6DWTEG0zccaEgZHk6uVyfiv8AKjeM/q
-         vdSySjT5io0djVS8dfVGbB5+8ySG2LPhe8zTlFl/nX7UqcqmrUnqM7cImm5BIfSxyaj+
-         OvVBpsAruCn5QZRqcU4h6vQ2cZp/kpoHmDRKodWilfkX6yEuk3Q37L5ILLLKk1GlbBSA
-         dRlEliqqiKHeoLj/BV0q3AnXs2w44pDtYeBV+THjAuYw7phP9D+b7apSaYStTEEjKwsB
-         AxMw==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=RSHN6l2+g+4OGMRyyb272PZL53GFhvSEXhliSYcOFd8=;
+        b=X6igH+Jie1S0VzS+zWZR6N7qO4+ZzW3su1dA/ypmDVJf0+sLibI/eRdvYybkZNB8Fx
+         tRph14UQHSGL+gvGfpqalTHJJwJDMkweJLXyu+ihhEn44rt6Z1pH1cskikX2WSNqbaZC
+         eShz98OUWT/q7B0kNz7WoRHxGEoZ5MnMFQ5RxlSov34h3ToWZQ8qMXG0lZb28Bu3LY9e
+         vVssMEHBwniESvUS5h1nw5HmNA8myx5ybU2ZB6tz1y8UFYLXqoJHtbIT5KwF4Z3nG1wB
+         hZ6XEUAiFUtt4VlyKNAroIKcIhJkuwaxi7YNrvbPMud5aqref871a8W8oOBGPBf0anja
+         e9gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p23jnQNQ6JC6/vxi7zw6GQkHOBG7ZpOlqxBcqeLSsBY=;
-        b=XZYpx2S0GYcrpH0CTx8Po/xFZ7+EbKIZP/Sp0pl5172XmoAJ9mJFdZ5c5ljAQ3k8ll
-         cPrIyb3pkAvYvrWoBPKRkGXEkC1IuH1rzbe+/9KjNCsp1XMcZh1SmXVCWt12SC6gdRc9
-         MWWbvT5RHCzi/WoMfNJub/FjfwgXuxtms5lV6kTkl1xoX3rTk2ZT/yUwhvZS6IIbbK0B
-         SwxiERQXkjRbydho79XERiyaDmCQzECv7J8NqO6LdvSoge2v8eQDBLB/GL4tw13vfpN+
-         OeAp+O0OGKna/mO3eUxM+aaDuXz7v4EtakXNf7pXuWGbnteiQHTqNMFn36EdblfWCBKR
-         ckBA==
-X-Gm-Message-State: ACrzQf13AFoY8weKdzxnwaNkittaNTyzDkSUit+kQtGA4TcJtBWTTV3Y
-        +p5HDRv4OQtls5nFWBdJcE4sbQ==
-X-Google-Smtp-Source: AMsMyM4+l6WqvfUjCX8XWsHsk6YAn7bdpDsUTToKjUg99qgXfKxK1XzYx4rgrLg29QGkKJDql77plw==
-X-Received: by 2002:a05:651c:983:b0:26c:1c6b:8473 with SMTP id b3-20020a05651c098300b0026c1c6b8473mr3478239ljq.341.1665996222210;
-        Mon, 17 Oct 2022 01:43:42 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id r3-20020a2ea383000000b0026faf7bfa62sm1404744lje.76.2022.10.17.01.43.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Oct 2022 01:43:41 -0700 (PDT)
-Message-ID: <a4a8557e-3fe7-356c-9434-01263f6d9771@linaro.org>
-Date:   Mon, 17 Oct 2022 11:43:41 +0300
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RSHN6l2+g+4OGMRyyb272PZL53GFhvSEXhliSYcOFd8=;
+        b=xjREh92CG06g3nGC5uWod+//eylLmV0ZCe6YN3ZafOrR93XBXzwx9cTfkbkC11rIhB
+         Ay2kQqckSj8hNRuSqIrz4tPqQRZy48xG2x1nOd4ccbwNAyKQQb6UoCFLG9nPwrKQSDV0
+         0qiRGuid8xUU/97n5rPBTE2AiSJbGaOpnZCNIFzM9mwDzpGyKegTfROrA9y7qbj3P+kk
+         3FaXmDwRzwnL9qHGhPaqWFSbCkvgearNMAXBEoEH+AXclPhZV5JoVThEvv16/kcIoZMi
+         qOa+idj9VcBYEYbqgG1aNxkk9BMiAUu8zEBjwPrG6uSCR1WDayHtGJOrdxoPzzJvUS53
+         D0kw==
+X-Gm-Message-State: ACrzQf220/WfSzU+4A68xYtrp50Zq+VKgCmenvPy2JFkSq28Ec6tqTrT
+        BeRY7FezltnRVD6v3ppP0mLIKAa7OBLR4hH1HM8jOQ==
+X-Google-Smtp-Source: AMsMyM4xXsX24thv22hzdvInSfyg/7yTP/iUIEUiXEmAdaX/1vHBYb0+Be/bfRhSQyyTc1ooPZanlVL4emxNWtmN+mY=
+X-Received: by 2002:a17:907:a06b:b0:78d:d25f:b726 with SMTP id
+ ia11-20020a170907a06b00b0078dd25fb726mr7837040ejc.203.1665996755146; Mon, 17
+ Oct 2022 01:52:35 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH v5 09/13] mailbox: Add Gunyah message queue mailbox
-Content-Language: en-GB
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com> <20221010201453.77401-2-andriy.shevchenko@linux.intel.com>
+In-Reply-To: <20221010201453.77401-2-andriy.shevchenko@linux.intel.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 17 Oct 2022 10:52:24 +0200
+Message-ID: <CACRpkdbdzFR-a_xh8EjLMAshTeesOYhD3-_Bkc=vi7iK72ZKtA@mail.gmail.com>
+Subject: Re: [PATCH v2 01/36] gpiolib: tegra186: Add missed header(s)
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc:     Marc Zyngier <maz@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>,
+        Kent Gibson <warthog618@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Billy Tsai <billy_tsai@aspeedtech.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Chen-Yu Tsai <wenst@chromium.org>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Horatiu Vultur <horatiu.vultur@microchip.com>,
+        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Phil Edworthy <phil.edworthy@renesas.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Fabien Dessenne <fabien.dessenne@foss.st.com>,
+        Prathamesh Shete <pshete@nvidia.com>,
+        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-media@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org, alsa-devel@alsa-project.org,
+        patches@opensource.cirrus.com, linux-mediatek@lists.infradead.org,
+        linux-mips@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-omap@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Joel Stanley <joel@jms.id.au>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Charles Keepax <ckeepax@opensource.cirrus.com>,
+        Richard Fitzgerald <rf@opensource.cirrus.com>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andy Shevchenko <andy@kernel.org>,
+        Sean Wang <sean.wang@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Patrick Venture <venture@google.com>,
+        Nancy Yuen <yuenn@google.com>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Damien Le Moal <damien.lemoal@wdc.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Haojian Zhuang <haojian.zhuang@linaro.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Michal Simek <michal.simek@xilinx.com>,
         Andy Gross <agross@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221011000840.289033-1-quic_eberman@quicinc.com>
- <20221011000840.289033-10-quic_eberman@quicinc.com>
- <38a62751-799d-67ff-68d8-2946f2308e59@linaro.org>
- <c6c32b15-e32e-4362-00fc-e6710dca2546@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <c6c32b15-e32e-4362-00fc-e6710dca2546@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Tomasz Figa <tomasz.figa@gmail.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Emil Renner Berthing <kernel@esmil.dk>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/10/2022 01:32, Elliot Berman wrote:
-> 
-> 
-> On 10/12/2022 2:47 PM, Dmitry Baryshkov wrote:
->> On 11/10/2022 03:08, Elliot Berman wrote:
->>> +
->>> +static irqreturn_t gh_msgq_tx_irq_handler(int irq, void *data)
->>> +{
->>> +    struct gunyah_msgq *msgq = data;
->>> +
->>> +    mbox_chan_txdone(gunyah_msgq_chan(msgq), 0);
->>> +
->>> +    return IRQ_HANDLED;
->>> +}
->>> +
->>> +static void gh_msgq_txdone_tasklet(unsigned long data)
->>> +{
->>> +    struct gunyah_msgq *msgq = (struct gunyah_msgq *)data;
->>> +
->>> +    mbox_chan_txdone(gunyah_msgq_chan(msgq), msgq->last_status);
->>
->> I don't quite get this. Why do you need both an IRQ and a tasklet?
->>
-> 
-> I've now tweaked the code comments now as well to explain a bit better.
-> 
-> Gunyah tells us in the hypercall itself whether the message queue is 
-> full. Once the the message queue is full, Gunyah will let us know when 
-> reader starts draining the queue and we can start adding more messages 
-> via the tx_irq.
-> 
-> One point to note: the last message to be sent into the message queue 
-> that makes the queue full can be detected. The hypercall reports that 
-> the message was sent (GH_ERROR_OK) and the "ready" return value is 
-> false. In its current form, the msgq mailbox driver should never make a 
-> send hypercall and get GH_ERROR_MSGQUEUE_FULL because the driver 
-> properly track when the message queue is full.
-> 
-> When mailbox driver reports txdone, the implication is that more 
-> messages can be sent (not just that the message was transmitted). In 
-> typical operation, the msgq mailbox driver can immediately report that 
-> the message was sent and no tx_irq happens because the hypercall returns 
-> GH_ERROR_OK and ready=true. The mailbox framework doesn't allow txdone 
-> directly from the send_data callback. To work around that, Jassi 
-> recommended we use tasklet [1]. In the "atypical" case where message 
-> queue becomes full, we get GH_ERROR_OK and ready=false. In that case, we 
-> don't report txdone right away with the tasklet and instead wait for the 
-> tx_irq to know when more messages can be sent.
+On Mon, Oct 10, 2022 at 10:15 PM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
 
-Can we please get some sort of this information into the comments in the 
-source file?
+> Do not imply that some of the generic headers may be always included.
+> Instead, include explicitly what we are direct user of.
+>
+> While at it, sort headers alphabetically.
+>
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-> 
-> [1]: Tasklet works because send_data is called from mailbox framework 
-> with interrupts disabled. Once interrupts are re-enabled, the txdone is 
-> allowed to happen which is also when tasklet runs.
-> 
->>> +
->>> +    /**
->>> +     * EAGAIN: message didn't send.
->>> +     * ret = 1: message sent, but now the message queue is full and 
->>> we can't send any more msgs.
->>> +     * Either way, don't report that this message is done.
->>> +     */
->>> +    if (ret == -EAGAIN || ret == 1)
->>> +        return ret;
->>
->> '1' doesn't seem to be a valid return code for _send_data.
->>
->> Also it would be logical to return any error here, not just -EAGAIN.
->>
-> 
-> 
-> If I return error to mailbox framework, then the message is stuck: 
-> clients don't know that there was some underlying transport failure. It 
-> would be retried if the client sends another message, but there is no 
-> guarantee that either retrying later would work (what would have 
-> changed?) nor that client would send another message to trigger retry. 
-> If the message is malformed or message queue not correctly set up, 
-> client would never know. Client should be told that the message wasn't 
-> sent.
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-I see. msg_submit() doesn't propagate the error.
-
-> 
-> 
->>> +int gunyah_msgq_init(struct device *parent, struct gunyah_msgq 
->>> *msgq, struct mbox_client *cl,
->>> +             struct gunyah_resource *tx_ghrsc, struct 
->>> gunyah_resource *rx_ghrsc)
->>
->> Are the message queues allocated/created dynamically or statically? If 
->> the later is true, please use devm_request(_threaded)_irq and 
->> devm_kzalloc.
->>
-> 
-> With the exception of resource manager, message queues are created 
-> dynamically.
-> 
-> P.S. Thanks for all the other suggestions in this and the other patches, 
-> I've applied them.
-> 
-> Thanks,
-> Elliot
-
--- 
-With best wishes
-Dmitry
-
+Yours,
+Linus Walleij
