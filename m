@@ -2,80 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 153BA60167F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 20:39:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E5806016C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 20:58:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230223AbiJQSjN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 14:39:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60960 "EHLO
+        id S229691AbiJQS6V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 14:58:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230509AbiJQSjL (ORCPT
+        with ESMTP id S229808AbiJQS6V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 14:39:11 -0400
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A496175397;
-        Mon, 17 Oct 2022 11:39:00 -0700 (PDT)
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-1321a1e94b3so14280677fac.1;
-        Mon, 17 Oct 2022 11:39:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HVjkColzLJkhV5CmuDI7LfNZ/MBGdI9xHtDT0GRnfH0=;
-        b=bP3YZerwzTc/3MXOGi577uI8nFp7zW+aByBdJ93CgoAGNbepHy31bvNbLmyMdDsYsQ
-         o3jZJbZkijSFRfBqu0SW9ilnrM6eq8uyTXjcGz7EYXC+C1HTxFaLO4bJXShMt+Sdlheq
-         FXhBBJLqFpuHer6B5tcZ9UKOfKsAYgIn3My3SzmE+ZzHkTc0h9h7VtGlyXtEY0BqcSXR
-         J0cDBxMtuEwsIbgNNdXpKjwzrekwlmzlOPRW6ViETxzFw3oUrxfB3o0NRZ+0HF4j4zqI
-         GtQ+f++5qvJGMVGsVkz/xpwiK1KoZ0q14CJH4sz7jiUKIFJRFAz3SS2uyxRTrfw8/VxF
-         kd7A==
-X-Gm-Message-State: ACrzQf158K2c4I2ODG8GQAvYi+vLCbzS6ECOYMDIVRmkrD5pDaha5qRi
-        y1GsEKWziAlqHGclr/4uIg==
-X-Google-Smtp-Source: AMsMyM4Owgl4KxiTfWIlsubQR4f1tMkCAZKWNxRtPZW0O7HZFOpOhemPP2xpPZFlq8U7oV9H2x3aGQ==
-X-Received: by 2002:a05:6870:390b:b0:132:9ca3:8dc1 with SMTP id b11-20020a056870390b00b001329ca38dc1mr6373660oap.106.1666031934466;
-        Mon, 17 Oct 2022 11:38:54 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id r41-20020a056808212900b0034fd36e95bfsm4702748oiw.31.2022.10.17.11.38.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Oct 2022 11:38:53 -0700 (PDT)
-Received: (nullmailer pid 2260004 invoked by uid 1000);
-        Mon, 17 Oct 2022 18:38:54 -0000
-Date:   Mon, 17 Oct 2022 13:38:54 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: document Mikrotik RB3011
- board
-Message-ID: <166603193400.2259949.9596015282136077583.robh@kernel.org>
-References: <20221017014653.12970-1-krzysztof.kozlowski@linaro.org>
+        Mon, 17 Oct 2022 14:58:21 -0400
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEF7A753B4;
+        Mon, 17 Oct 2022 11:58:19 -0700 (PDT)
+Received: from cp.tophost.it (vm1054.cs12.seeweb.it [217.64.195.253])
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 9D05E1F999;
+        Mon, 17 Oct 2022 20:58:16 +0200 (CEST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221017014653.12970-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Date:   Mon, 17 Oct 2022 20:43:44 +0200
+From:   konrad.dybcio@somainline.org
+To:     Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Lee Jones <lee@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH v2] arm64: dts: qcom: pmi8998: add rradc node
+In-Reply-To: <20221017185609.2280067-1-caleb.connolly@linaro.org>
+References: <20221017185609.2280067-1-caleb.connolly@linaro.org>
+User-Agent: Roundcube Webmail/1.4.6
+Message-ID: <bcfd8f7e86c74c369e40a091b11cc7d1@somainline.org>
+X-Sender: konrad.dybcio@somainline.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 16 Oct 2022 21:46:52 -0400, Krzysztof Kozlowski wrote:
-> Add compatible for existing Mikrotik RB3011 board.
+On 2022-10-17 20:56, Caleb Connolly wrote:
+> Add a DT node for the Round Robin ADC found in the PMI8998 PMIC.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> The RRADC reports PMIC die and skin temperatures, as well as
+> battery/charger thermals. It also reports USB and DC charger voltage 
+> and
+> current measurements.
+> 
+> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> This patch introduces a new dtbs_check warning which will be fixed by
+> https://lore.kernel.org/linux-arm-msm/20221017185105.2279129-1-caleb.connolly@linaro.org/
 > 
+> V1:
+> https://lore.kernel.org/linux-arm-msm/20221016180330.1912214-1-caleb.connolly@linaro.org/
+> Changes since v1:
+>  * Change node name from adc@ to rradc@, see linked patch
+>  * Enable the RRADC by default, rather than per-device
+> ---
+>  arch/arm64/boot/dts/qcom/pmi8998.dtsi | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> index 6d3d212560c1..95c74d88eb93 100644
+> --- a/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> @@ -18,6 +18,14 @@ pmi8998_gpio: gpios@c000 {
+>  			interrupt-controller;
+>  			#interrupt-cells = <2>;
+>  		};
+> +
+> +		pmi8998_rradc: rradc@4500 {
+> +			compatible = "qcom,pmi8998-rradc";
+> +			reg = <0x4500>;
+> +			#io-channel-cells = <1>;
+> +
+> +			status = "okay";
+No need to, it's enabled by default when you define it.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Konrad
+> +		};
+>  	};
+> 
+>  	pmi8998_lsid1: pmic@3 {
