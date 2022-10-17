@@ -2,105 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB492600BB5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 11:58:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 710E4600BEF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 12:05:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231486AbiJQJ6T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 05:58:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35022 "EHLO
+        id S231286AbiJQKFE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 06:05:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230141AbiJQJ6S (ORCPT
+        with ESMTP id S231166AbiJQKE6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 05:58:18 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80E705D120
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 02:58:16 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id q9so23783098ejd.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 02:58:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=B/Byge+Vue4J7Z80ANz5rsyrsoG83IPzp3UARO7F6/s=;
-        b=MUHWuYJag6UdIGNJWiJWxn8WAAZ42CXEFTnECn+6skOIqg/uauJYEVg974vMd9sMEk
-         zE6zI7z18arTxzgN6sTudVQN0HH06/PzZJ+4X18m75Vy/bF7X3X+fEqiRAyn7cwpLeMe
-         1S3Gkx8o3vO463r4qBmru/5P+HeV+QtYD7XFaMKTFQkBKEINKik6GSXOIGd4TakIzo/y
-         22NV5ZvkVpf1kqoQWmMXugwEs+G3K/F00qz0J2gsZD0tyQrxzJVUb1Rv0OE2tl8BfDdT
-         1Thx86QUb3Eo9BPHEOAqRcLadLrkm9xIrIOP9q0Nx+T+iVZxfi/eZSxmcD7GZQwM5l3C
-         f6SA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=B/Byge+Vue4J7Z80ANz5rsyrsoG83IPzp3UARO7F6/s=;
-        b=iN1bWF4429P91691XNmBWKOGnmXiiLuZazbU6q9cPa/O9Btx1jNkldwHMkN/4L1H7Y
-         hT6E/ag9JlB0Wmnb8ifFTBAf8cEj4HgHZK3hY7CyjCE9mrmzAhz8g+9QNgZ6SItkPO0G
-         vddrsF6hZeVcdTugcJOAmjLAQSanX6bA2v/nEfkEWljTXAG8VRJhiPUSFsRNtimY2yhy
-         0o/Ire3/wqBQoB1aEgUs1wvxJxUUpiWov+T4sB29XOjhtlqsaUZ1HTCwhTTuz66Da1Cx
-         KS4s8U82V1IFVJnCGOE7sDgRt0hNMXo6il6hqH3x7sJnvpzfGkul9S4zZXeI3p9SRwWE
-         PyWw==
-X-Gm-Message-State: ACrzQf0I5QMZqQl3BaYFwApSq4c/FzkLzQGd5dIinMTBBV49nQ8xKd0D
-        i8l+erFOG8QqzTYsasIt7hhBQnuPD5aHKQooob7Cpw==
-X-Google-Smtp-Source: AMsMyM4L0M6bcj2Wvh4KRdD8EKd7M4z6+eLVjZHPl1MFPGYp6JqekMO0KaAEpqZ8kDbWIS4EMUIR8qxcTy8qHdB2D/8=
-X-Received: by 2002:a17:907:7606:b0:78e:61d:757e with SMTP id
- jx6-20020a170907760600b0078e061d757emr7556783ejc.690.1666000695069; Mon, 17
- Oct 2022 02:58:15 -0700 (PDT)
+        Mon, 17 Oct 2022 06:04:58 -0400
+Received: from mout-y-111.mailbox.org (mout-y-111.mailbox.org [IPv6:2001:67c:2050:103:465::111])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E6A717E02;
+        Mon, 17 Oct 2022 03:04:43 -0700 (PDT)
+Received: from smtp202.mailbox.org (unknown [91.198.250.118])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mout-y-111.mailbox.org (Postfix) with ESMTPS id 4MrXfH1wd4z9sw2;
+        Mon, 17 Oct 2022 12:04:39 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=noorman.info;
+        s=MBO0001; t=1666001079;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=yD1PXqIGNkSTqSi7oBhvoiT99KJVHANh6ErPt8Janf0=;
+        b=XJwM3sKil5yfymDmcUrnIH71HuaT9otsUs64e9Cpap3FoeonhZSOU9Dri8EmXuOFIsBfci
+        myyF2WE9qjtFkeb2eOG+iUMNG0VkjYi+/gOKZia9VcxRcqhX+3mjgjA3E1x7qbRWir45eg
+        ZSF2Dn4DSZk4cuywC9OXzc+no9ZKD/SSL7cPzFirnl2zplckmZ2Exj0kahrJfU7kR/2gCW
+        1c1K0oKJram4e8tYkA+xEopQNdBzTC15+OGXa0QwcyraqfyXHkyRvFWjeqY8Gx7+Sk3udb
+        f35cG2g+z0tWioMq4p4MyZ001lOPAoez9wCpgKE1M99SV8uBvuKRIAlTRGei2w==
+From:   Job Noorman <job@noorman.info>
+To:     Job Noorman <job@noorman.info>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Henrik Rydberg <rydberg@bitmath.org>
+Cc:     Luca Weiss <luca@z3ntu.xyz>, linux-input@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v4 0/3] Add Himax hx83112b touchscreen driver
+Date:   Mon, 17 Oct 2022 12:04:05 +0200
+Message-Id: <20221017100409.189293-1-job@noorman.info>
 MIME-Version: 1.0
-References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
- <CACRpkdZ1M3ckw+jFgvMqG4jvR-t_44GPoZ6ZDXszwZCJr-cDpg@mail.gmail.com> <Y00f5exY2fM6IwZ+@smile.fi.intel.com>
-In-Reply-To: <Y00f5exY2fM6IwZ+@smile.fi.intel.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 17 Oct 2022 11:58:03 +0200
-Message-ID: <CACRpkdYmSOGtFz8W_RRkDqMXRRBOSB9jqSn65Sah90bf3Gm59g@mail.gmail.com>
-Subject: Re: [rft, PATCH v2 00/36] pinctrl: Clean up and add missed headers
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Kent Gibson <warthog618@gmail.com>, linux-gpio@vger.kernel.org,
-        linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
-        linux-actions@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
-        openbmc@lists.ozlabs.org, linux-rpi-kernel@lists.infradead.org,
-        alsa-devel@alsa-project.org, patches@opensource.cirrus.com,
-        linux-mediatek@lists.infradead.org, linux-mips@vger.kernel.org,
-        linux-riscv@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 4MrXfH1wd4z9sw2
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 17, 2022 at 11:27 AM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
-> On Mon, Oct 17, 2022 at 11:02:09AM +0200, Linus Walleij wrote:
-> > On Mon, Oct 10, 2022 at 10:15 PM Andy Shevchenko
-> > <andriy.shevchenko@linux.intel.com> wrote:
-> >
-> > > Currently the header inclusion inside the pinctrl headers seems more arbitrary
-> > > than logical. This series is basically out of two parts:
-> > > - add missed headers to the pin control drivers / users
-> > > - clean up the headers of pin control subsystem
-> > >
-> > > The idea is to have this series to be pulled after -rc1 by the GPIO and
-> > > pin control subsystems, so all new drivers will utilize cleaned up headers
-> > > of the pin control.
-> >
-> > Aha I see you want to send a pull request so I backed out the applied patches
-> > from the series for now.
->
-> Can I consider all that you answered to as Rb tag?
+Hi all,
 
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
+This series adds support for the Himax hx83112b. The hx83112b supports 10
+point multitouch with hardware tracking of touch points. It is the
+touchschreen used by the Fairphone 3.
 
-I haven't reviewed in detail but I fully trust you to do the right thing
-and fix any fallout so will happily pull this.
+Note that a datasheet was unavailable for this device, so it was built
+based on the Android driver that was tagged as GPLv2. This series is a
+complete rewrite, though, and the code bears no resemblence to the original
+implementation.
 
-Yours,
-Linus Walleij
+It is expected that this driver can be made to work on other hx83xxx
+devices, especially the hx83112a used in the Fairphone 4. However, since we
+have been unable to verify this, this driver only declares compatibility
+with the hx83112b and uses very specific file names.
+
+Changes since v3 (based on Dmitry Torokhov's comments):
+- Use gpiod_set_value_cansleep (instead of gpiod_set_value) during probe
+- Inline some small helper functions
+- Use DEFINE_SIMPLE_DEV_PM_OPS() and pm_sleep_ptr()
+- Use PTR_ERR_OR_ZERO instead of IS_ERR+PTR_ERR
+- Some minor coding style updates (e.g., use C-style comments)
+
+Changes since v2 (based on Jeff LaBundy's comments):
+- Kconfig: depend on REGMAP_I2C instead of I2C
+- Don't use dev_err_probe()
+- Return IRQ_NONE on failed register reads to prevent possible interrupt
+  storm
+- Add small delay after de-asserting reset pin
+- Some minor coding style updates
+- dt-bindings: make touchscreen-size-{x,y} required
+
+Changes since v1:
+- Fix sparse warnings. Reported-by: kernel test robot <lkp@intel.com>.
+- Fix dt_binding_check.
+
+Best regards,
+Job
+
+Previous versions:
+- v3: https://lore.kernel.org/lkml/20221016102756.40345-1-job@noorman.info/
+- v2: https://lore.kernel.org/lkml/20221012202341.295351-1-job@noorman.info/
+- v1: https://lore.kernel.org/lkml/20221011190729.14747-1-job@noorman.info/
+
+Job Noorman (3):
+  dt-bindings: touchscreen: add Himax hx83112b bindings
+  Input: add driver for Himax hx83112b touchscreen devices
+  arm64: dts: qcom: sdm632: fairphone-fp3: add touchscreen
+
+ .../input/touchscreen/himax,hx83112b.yaml     |  63 +++
+ MAINTAINERS                                   |   7 +
+ .../boot/dts/qcom/sdm632-fairphone-fp3.dts    |  14 +
+ drivers/input/touchscreen/Kconfig             |  11 +
+ drivers/input/touchscreen/Makefile            |   1 +
+ drivers/input/touchscreen/himax_hx83112b.c    | 367 ++++++++++++++++++
+ 6 files changed, 463 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/input/touchscreen/himax,hx83112b.yaml
+ create mode 100644 drivers/input/touchscreen/himax_hx83112b.c
+
+
+base-commit: d4a596eddb90114f5f5f32a440057a175517b090
+-- 
+2.38.0
+
