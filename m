@@ -2,104 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E421600C8E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 12:37:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38E94600CA2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 12:41:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230298AbiJQKh0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 06:37:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50322 "EHLO
+        id S229916AbiJQKlf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 06:41:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230341AbiJQKhX (ORCPT
+        with ESMTP id S229792AbiJQKld (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 06:37:23 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEE935A153;
-        Mon, 17 Oct 2022 03:37:19 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5A5646103E;
-        Mon, 17 Oct 2022 10:37:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013F0C433D6;
-        Mon, 17 Oct 2022 10:37:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666003038;
-        bh=FBKf1CEFw8tgRd9w+dSok9gUwWvLjYtA3njAcXxZBVg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Ml9KqCi8fveMR9333IA+KjaXZMJrZ9dkMz0cpbeqCMp2tVSU+3ciBrONCI0thkTMh
-         0+ys9sSBWhZgSJULrYdNPa+pXkgIu9vG/D1LUS6TvYi6ehnt58P0vyN/sD4WCImR/x
-         C1m0YX6C8Vs6mGZF+pXSZuqbpUd0NoO+cO7GAX+HzqspbKYXonixIMFKEdqDiygRb4
-         5ipLfK0aadDJKqqnuhV37te8KAUAEZCSy3JYa+SOhnFtvU5c58cmfV60kxVdisI/lr
-         h0bLc6VKouGUkPmX9JTmuAf1U+PXYWGiT3D7hTzVRhE/F/GMMXX7zh0vDEefeFbN3K
-         K1y7JHlofuU7w==
-Date:   Mon, 17 Oct 2022 16:07:14 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Richard Acayan <mailingradian@gmail.com>,
-        Melody Olvera <quic_molvera@quicinc.com>
-Subject: Re: [PATCH 1/5] dt-bindings: dma: qcom: gpi: use sm6350 fallback
-Message-ID: <Y00wWnkcLKaticjl@matsya>
-References: <20221015140447.55221-1-krzysztof.kozlowski@linaro.org>
- <20221015140447.55221-2-krzysztof.kozlowski@linaro.org>
+        Mon, 17 Oct 2022 06:41:33 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9DEA5FDE7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 03:41:31 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id m16so15414519edc.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 03:41:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=PeSS07urWbJknYYh9S+Gl4VbusNvBxc8aZgJjcWaYwM=;
+        b=jbz8oO0MSnhcz7V3riKIDTx28bHo7jGJor97Ann8KB3oQ7/HG8Wm8ViogwV2Flyy5M
+         Vhbd2UGdEiNiwj9QpoBFocX6Ar17DOlEobw3hhFApYRAcvJhM+stRrRNJ9buTTHjyjL+
+         202HjJJpHad/2XMmhKAYvDix7XKTcs4s4EFaXhstUrBQa99eZh9QCM6f0O2k8cmWYuEx
+         9E0JjCL+SfmL5YnUdvuljTOWQh9ZwVRRSLUQFndvKag8JKpJ9MGa4Np5D79ezZ2yg6Yd
+         Uk/alRMp/F5daiQ+AJ7GwQCeoFb2dpZe/F9hbwGXyZ4+C/Gz6cJPal4RBuRDpyNzEQDi
+         xxVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PeSS07urWbJknYYh9S+Gl4VbusNvBxc8aZgJjcWaYwM=;
+        b=t/uSsxFuuOsLm6DaoVADe2Z9Laa4czZV+hmPWCU9+tIUcZgqZNEdsGwbIoizu3MoAm
+         ubewYNsMo7Ww5TsMqLN+Mrwe7SDwR1t8XPORkW6iu+msyzO0gwf6Rq3k068QFPtfM46r
+         9MtB9cvXCT1+7EZCEsGOZ+8bYM1Gbz91LbbKbry4IGnUZgv1iHrS9M6opByZ8yHyFtF7
+         fehLByqUga1MdaxuECcjYt7R6Rn51/ovtB8SWxhEQiUb3K6WqEltUATjZAtvQg9tOTM6
+         ev/Vof+W59pU2+oH0Xcj4787bAVJeVordqMA1Tpido2wZAD64w5Tj9wQLDq0vjecZEIl
+         0HXg==
+X-Gm-Message-State: ACrzQf0AlI3x802Tj4heq1pAij38OmBkSJ2k2sMwHNJXKkMy5N5CHdRy
+        yAhZ4HRPYSMO5MEWmLTtVjJ7WfyZNgNk8QEiMbgUtg==
+X-Google-Smtp-Source: AMsMyM4EEw92nZBT5I6DpZjlbdQWMniiwOciFjHygmdcSTosLYxzKpoImxJrkXzUoP6U+g7wmaqlaY+zc6+IwSqdrg4=
+X-Received: by 2002:a05:6402:448:b0:45c:8de5:4fc with SMTP id
+ p8-20020a056402044800b0045c8de504fcmr9673748edw.133.1666003290510; Mon, 17
+ Oct 2022 03:41:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221015140447.55221-2-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20221005-mdm9615-pinctrl-yaml-v2-0-639fe67a04be@linaro.org> <20221005-mdm9615-pinctrl-yaml-v2-1-639fe67a04be@linaro.org>
+In-Reply-To: <20221005-mdm9615-pinctrl-yaml-v2-1-639fe67a04be@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 17 Oct 2022 12:41:19 +0200
+Message-ID: <CACRpkdbaZRNV56+x=gnN7kKnesaf03hN4nr35qjT9eV=_dKkew@mail.gmail.com>
+Subject: Re: [PATCH v2 1/5] dt-bindings: pinctrl: convert qcom,mdm9615-pinctrl.txt
+ to dt-schema
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Lee Jones <lee@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15-10-22, 10:04, Krzysztof Kozlowski wrote:
-> Several devices like SM6350, SM8150 and SC7280 are actually compatible,
-> so use one compatible fallback for all of them.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> index 750b40c32213..0c2894498845 100644
-> --- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> +++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> @@ -20,12 +20,14 @@ properties:
->    compatible:
->      oneOf:
->        - enum:
-> -          - qcom,sc7280-gpi-dma
->            - qcom,sdm845-gpi-dma
->            - qcom,sm6350-gpi-dma
-> -          - qcom,sm8350-gpi-dma
-> -          - qcom,sm8450-gpi-dma
-> -
-> +      - items:
-> +          - enum:
-> +              - qcom,sc7280-gpi-dma
-> +              - qcom,sm8350-gpi-dma
-> +              - qcom,sm8450-gpi-dma
-> +          - const: qcom,sm6350-gpi-dma
+On Mon, Oct 17, 2022 at 12:23 PM Neil Armstrong
+<neil.armstrong@linaro.org> wrote:
 
-I think it makes sense but can we document this in binding as well that
-why people should use these two compatibles. I am fine with this being
-comments here..
+> Convert the MDM9515 pinctrl bindings to dt-schema.
+> Keep the parsing of pin configuration subnodes consistent with other Qualcomm
+> schemas (children named with '-state' suffix, optional children with '-pins').
+>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
->        - items:
->            - enum:
->                - qcom,sdm670-gpi-dma
-> -- 
-> 2.34.1
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
 
--- 
-~Vinod
+Could Krzysztof include this with the rest of his massive DTS and schema
+cleanups and just pass me a pull request with all the qcom stuff in?
+
+Yours,
+Linus Walleij
