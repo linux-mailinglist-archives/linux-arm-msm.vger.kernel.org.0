@@ -2,95 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE3F8601012
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 15:19:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B376601042
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Oct 2022 15:32:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229924AbiJQNTC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 09:19:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39472 "EHLO
+        id S229832AbiJQNcQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 09:32:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230147AbiJQNS5 (ORCPT
+        with ESMTP id S229453AbiJQNcP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 09:18:57 -0400
-Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::225])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAC9B61D9B;
-        Mon, 17 Oct 2022 06:18:54 -0700 (PDT)
-Received: (Authenticated sender: alexandre.belloni@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id 584C51C0018;
-        Mon, 17 Oct 2022 13:18:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1666012732;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=AR6gsO3KItGs+h4qoIrNM9fVvOyOHbuFkGe+loBQDqo=;
-        b=HIIwvvT6IvL65SaDL4XZUfSSG0BhY5o4T9I33GNOgwRebSOvDwbgUfICTQLT4iSNd4X1NJ
-        a4u6ypmSh4TRYTykVfoJJ7x9qKK9y3mrM4Zt+uLofma3isuticm0CXdpkPlfVDGNRf9N/1
-        GrvTfpWkQoiAuSjxOFFDUrWaYWV26rkqb+ObpvGeuRIaUrMkw+iXmu/4xFBXefQmhQ1ksa
-        4cmHCKPWdUmQ25nrOwNBRY2GhBIrYP8dcfw79kRfFrCn2N4gFNFf/H1uAGWZRU6crlTwWp
-        EcFcjOvLoYr/LseCzCHL8pVxmdWAgh7Xat0mmgdjYOBpQDbY4mCqDJ84gMI0eQ==
-Date:   Mon, 17 Oct 2022 15:18:51 +0200
-From:   Alexandre Belloni <alexandre.belloni@bootlin.com>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Alessandro Zummo <a.zummo@towertech.it>,
-        Rob Herring <robh+dt@kernel.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        Lee Jones <lee@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-rtc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-input@vger.kernel.org
-Subject: Re: [PATCH v3 09/11] rtc: pm8xxx: drop unused pm8018 compatible
-Message-ID: <Y01WO7IoSmPLgcfe@mail.local>
-References: <20220928-mdm9615-dt-schema-fixes-v3-0-531da552c354@linaro.org>
- <20220928-mdm9615-dt-schema-fixes-v3-9-531da552c354@linaro.org>
+        Mon, 17 Oct 2022 09:32:15 -0400
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C87B649B66;
+        Mon, 17 Oct 2022 06:32:11 -0700 (PDT)
+Received: from fraeml705-chm.china.huawei.com (unknown [172.18.147.201])
+        by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4MrdB34gj5z686tl;
+        Mon, 17 Oct 2022 21:28:59 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (7.191.163.240) by
+ fraeml705-chm.china.huawei.com (10.206.15.54) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
+ 15.1.2375.31; Mon, 17 Oct 2022 15:32:04 +0200
+Received: from localhost (10.202.226.42) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Mon, 17 Oct
+ 2022 14:32:03 +0100
+Date:   Mon, 17 Oct 2022 14:32:02 +0100
+From:   Jonathan Cameron <Jonathan.Cameron@huawei.com>
+To:     Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
+CC:     <broonie@kernel.org>, <sanju.mehta@amd.com>,
+        <chin-ting_kuo@aspeedtech.com>, <clg@kaod.org>,
+        <kdasu.kdev@gmail.com>, <f.fainelli@gmail.com>,
+        <rjui@broadcom.com>, <sbranden@broadcom.com>,
+        <eajames@linux.ibm.com>, <olteanv@gmail.com>, <han.xu@nxp.com>,
+        <john.garry@huawei.com>, <shawnguo@kernel.org>,
+        <s.hauer@pengutronix.de>, <narmstrong@baylibre.com>,
+        <khilman@baylibre.com>, <matthias.bgg@gmail.com>,
+        <haibo.chen@nxp.com>, <linus.walleij@linaro.org>,
+        <daniel@zonque.org>, <haojian.zhuang@gmail.com>,
+        <robert.jarzmik@free.fr>, <agross@kernel.org>,
+        <bjorn.andersson@linaro.org>, <heiko@sntech.de>,
+        <krzysztof.kozlowski@linaro.org>, <andi@etezian.org>,
+        <mcoquelin.stm32@gmail.com>, <alexandre.torgue@foss.st.com>,
+        <wens@csie.org>, <jernej.skrabec@gmail.com>, <samuel@sholland.org>,
+        <masahisa.kojima@linaro.org>, <jaswinder.singh@linaro.org>,
+        <rostedt@goodmis.org>, <mingo@redhat.com>,
+        <l.stelmach@samsung.com>, <davem@davemloft.net>,
+        <edumazet@google.com>, <kuba@kernel.org>, <pabeni@redhat.com>,
+        <alex.aring@gmail.com>, <stefan@datenfreihafen.org>,
+        <kvalo@kernel.org>, <miquel.raynal@bootlin.com>, <richard@nod.at>,
+        <vigneshr@ti.com>, <jic23@kernel.org>,
+        <tudor.ambarus@microchip.com>, <pratyush@kernel.org>,
+        <git@amd.com>, <linux-spi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <joel@jms.id.au>,
+        <andrew@aj.id.au>, <radu_nicolae.pirea@upb.ro>,
+        <nicolas.ferre@microchip.com>, <alexandre.belloni@bootlin.com>,
+        <claudiu.beznea@microchip.com>,
+        <bcm-kernel-feedback-list@broadcom.com>, <fancer.lancer@gmail.com>,
+        <kernel@pengutronix.de>, <festevam@gmail.com>, <linux-imx@nxp.com>,
+        <jbrunet@baylibre.com>, <martin.blumenstingl@googlemail.com>,
+        <avifishman70@gmail.com>, <tmaimon77@gmail.com>,
+        <tali.perry1@gmail.com>, <venture@google.com>, <yuenn@google.com>,
+        <benjaminfair@google.com>, <yogeshgaur.83@gmail.com>,
+        <konrad.dybcio@somainline.org>, <alim.akhtar@samsung.com>,
+        <ldewangan@nvidia.com>, <thierry.reding@gmail.com>,
+        <jonathanh@nvidia.com>, <michal.simek@amd.com>,
+        <linux-aspeed@lists.ozlabs.org>, <openbmc@lists.ozlabs.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-rpi-kernel@lists.infradead.org>,
+        <linux-amlogic@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-rockchip@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-sunxi@lists.linux.dev>, <linux-tegra@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <linux-wpan@vger.kernel.org>,
+        <libertas-dev@lists.infradead.org>,
+        <linux-wireless@vger.kernel.org>, <linux-mtd@lists.infradead.org>,
+        <lars@metafoo.de>, <Michael.Hennerich@analog.com>,
+        <linux-iio@vger.kernel.org>, <michael@walle.cc>,
+        <akumarma@amd.com>, <amitrkcian2002@gmail.com>
+Subject: Re: [PATCH 05/10] iio: imu: Replace spi->chip_select references to
+ spi->chip_select[0]
+Message-ID: <20221017143202.00003b1d@huawei.com>
+In-Reply-To: <20221017121249.19061-6-amit.kumar-mahapatra@amd.com>
+References: <20221017121249.19061-1-amit.kumar-mahapatra@amd.com>
+        <20221017121249.19061-6-amit.kumar-mahapatra@amd.com>
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; i686-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220928-mdm9615-dt-schema-fixes-v3-9-531da552c354@linaro.org>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.226.42]
+X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/10/2022 11:45:34+0200, Neil Armstrong wrote:
-> The PM8018 compatible is always used with PM8921 fallback, so PM8018
-> compatible can be safely removed from device ID table
+On Mon, 17 Oct 2022 17:42:44 +0530
+Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com> wrote:
+
+> For adding multi CS support & to prevent any existing driver from
+> breaking, replaced all spi->chip_select references to spi->chip_slect[0].
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+> Signed-off-by: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
+
+Hmm. No particular reason why that print should exist at all.
+The warning above it covers the case where there is a mismatch
+in IDs so this adds nothing useful.
+
+So patch is fine, but I'd be equally happy with just dropping the
+print.
+
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
 > ---
->  drivers/rtc/rtc-pm8xxx.c | 1 -
->  1 file changed, 1 deletion(-)
+>  drivers/iio/imu/adis16400.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/rtc/rtc-pm8xxx.c b/drivers/rtc/rtc-pm8xxx.c
-> index dc6d1476baa5..716e5d9ad74d 100644
-> --- a/drivers/rtc/rtc-pm8xxx.c
-> +++ b/drivers/rtc/rtc-pm8xxx.c
-> @@ -461,7 +461,6 @@ static const struct pm8xxx_rtc_regs pmk8350_regs = {
->   */
->  static const struct of_device_id pm8xxx_id_table[] = {
->  	{ .compatible = "qcom,pm8921-rtc", .data = &pm8921_regs },
-> -	{ .compatible = "qcom,pm8018-rtc", .data = &pm8921_regs },
->  	{ .compatible = "qcom,pm8058-rtc", .data = &pm8058_regs },
->  	{ .compatible = "qcom,pm8941-rtc", .data = &pm8941_regs },
->  	{ .compatible = "qcom,pmk8350-rtc", .data = &pmk8350_regs },
-> 
-> -- 
-> b4 0.10.1
+> diff --git a/drivers/iio/imu/adis16400.c b/drivers/iio/imu/adis16400.c
+> index 17bb0c40a149..aa7bfcee3510 100644
+> --- a/drivers/iio/imu/adis16400.c
+> +++ b/drivers/iio/imu/adis16400.c
+> @@ -466,7 +466,7 @@ static int adis16400_initial_setup(struct iio_dev *indio_dev)
+>  
+>  		dev_info(&indio_dev->dev, "%s: prod_id 0x%04x at CS%d (irq %d)\n",
+>  			indio_dev->name, prod_id,
+> -			st->adis.spi->chip_select, st->adis.spi->irq);
+> +			st->adis.spi->chip_select[0], st->adis.spi->irq);
+>  	}
+>  	/* use high spi speed if possible */
+>  	if (st->variant->flags & ADIS16400_HAS_SLOW_MODE) {
 
--- 
-Alexandre Belloni, co-owner and COO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
