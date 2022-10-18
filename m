@@ -2,516 +2,331 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8B5F602A10
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 13:25:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BB04602A4D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 13:35:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229834AbiJRLZR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Oct 2022 07:25:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34698 "EHLO
+        id S230163AbiJRLfw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Oct 2022 07:35:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229660AbiJRLZQ (ORCPT
+        with ESMTP id S229936AbiJRLf3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Oct 2022 07:25:16 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65E686C770;
-        Tue, 18 Oct 2022 04:25:14 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29I757eh004993;
-        Tue, 18 Oct 2022 11:24:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=vfZj02XSWa0s8n6A6x2+DBWB6pqqoccrOlqwXknVXYM=;
- b=PAA1I+KpqE7WoUXm7p25GMSAVxVVenwb2BfTEQ0NiVB3MCTkIXNLQuVtsCQeFZM4m6yW
- LISOO18AHYQVHf5JL22USt+YU8Zaf3uBEwtgH90z0YsWkmrLV/Zv+l86UfcFXdzfvpVA
- pPhmwra1/fP+XDe92KhebbFRIiKd9QtQYpfVTmp+h7ApdMlLxFMNnlmlIZ6JO+81N0Ul
- GqS7hxRrNEJqSTy3GFAMn91x4dTs7lP7pvhPdZcJJ/f/KINxo3MdsUWVKEzJOOF+lYfp
- EoXmssOSpx5+W1cQEbhWFS/jXRGzmqTgK8KAjNMX0iFZlfVjnK4BLIovCM2RJsUcW4D+ xQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k9bjvaaya-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Oct 2022 11:24:21 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29IBOK4S026934
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Oct 2022 11:24:20 GMT
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Tue, 18 Oct 2022 04:24:14 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <vkoul@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Ratna Deepthi Kudaravalli" <quic_rkudarav@quicinc.com>
-Subject: [PATCH v2] dt-bindings: soundwire: Convert text file to yaml format
-Date:   Tue, 18 Oct 2022 16:54:00 +0530
-Message-ID: <1666092240-22008-1-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Tue, 18 Oct 2022 07:35:29 -0400
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2079.outbound.protection.outlook.com [40.107.94.79])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7B4177550;
+        Tue, 18 Oct 2022 04:35:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=btgfvf4PypcK6USPCAngPmntT74fJASLccN/II8MNLlv6kFBYIsBsFsYMiM0qMrTqH8WlFpjWlQnPy/bwz3Rs0Swj/FYG1VRhCKaLSYkFYcEwKHn32Mwn4PtVkMz0Tvge8jH2oGTQuYIVwroyMcZDi7SrWyrWDv21nOSIivyH6FuO2UDoB+bwWI/mXKePpqqRJ8m0urJcYBzJdHESPUu4U7tHZ7IRv9kujUWfpOvKpm9McgXRawm65IR3sW1OYK0MmURHxtPDbcKbfq+PgucSL6SlYAhtHbQwdZ6WDUsGhdKElrsgrxGawntLlW34vmBq2Og4eI8F4043tlO6Dq66Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=13uRgY/D7XlDTKeQPSz4XAAFNNCKoGyW++2oyD1gRQs=;
+ b=hPctN/UsSFmphzQE+L/3lCqWQNRQMlUsu2ZNCqimJLhT27WwYjhBmKHpXLCR/TH1QY/EqoTdAaNw/IjQDxcz+WuUD06YKsepWelQBzhiNg+BOGbuzITS3dHWcuEWqUelI22OVPTTHuLunNatAYYRYCB6JJF8uKtZy873FXBEa7CSR5LlOIb8jWACgSJXlH8Zpma/YvgLfHE82oLqzqbsv6h2h4YDrUr7hHKjkejaiz1mciH4rYNIdnTycEyb+xuSrFv9m0j635BxgVZJ0ao2t3pqhO6b0UdbcMr5gBAAKKSpM3RQcqsVbP93NiG+vmkGZ00z+8RfY5T33no80haazQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=13uRgY/D7XlDTKeQPSz4XAAFNNCKoGyW++2oyD1gRQs=;
+ b=wLNK0lzU9Fo4DAcivArOtiIoqnmRCQP1RSDXZ8t/erdLu9Y7/CAtBs4Pfi1oW9Ak5NeNG9xlbRF/cY4CYGvZJm3F8koFcE48sdhL4S6jl+UfEGcF467MKrDgbLR56ewkE1JQsBz+STl6NvkZ5oRoZMrlErKvpz3MolQ4Us3s8GA=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com (2603:10b6:408:43::13)
+ by SA1PR12MB7245.namprd12.prod.outlook.com (2603:10b6:806:2bf::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5723.33; Tue, 18 Oct
+ 2022 11:34:25 +0000
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::805b:58b6:1f27:d644]) by BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::805b:58b6:1f27:d644%6]) with mapi id 15.20.5723.033; Tue, 18 Oct 2022
+ 11:34:25 +0000
+Message-ID: <ce1927b4-d6c5-0649-5ae4-270045aa319f@amd.com>
+Date:   Tue, 18 Oct 2022 13:34:14 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v7 00/21] Move all drivers to a common dma-buf locking
+ convention
+Content-Language: en-US
+To:     Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+        David Airlie <airlied@linux.ie>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Daniel Almeida <daniel.almeida@collabora.com>,
+        Gert Wollny <gert.wollny@collabora.com>,
+        Gustavo Padovan <gustavo.padovan@collabora.com>,
+        Daniel Stone <daniel@fooishbar.org>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Clark <robdclark@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        =?UTF-8?Q?Thomas_Hellstr=c3=b6m?= <thomas_os@shipmail.org>,
+        Qiang Yu <yuq825@gmail.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>,
+        Leon Romanovsky <leon@kernel.org>,
+        Juergen Gross <jgross@suse.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        Ruhl Michael J <michael.j.ruhl@intel.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Dmitry Osipenko <digetx@gmail.com>,
+        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
+        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        kernel@collabora.com, virtualization@lists.linux-foundation.org,
+        linux-rdma@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20221017172229.42269-1-dmitry.osipenko@collabora.com>
+ <d943fec8-a1ef-faa5-4132-c7618acb891f@collabora.com>
+From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
+In-Reply-To: <d943fec8-a1ef-faa5-4132-c7618acb891f@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: FR3P281CA0172.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:a0::10) To BN8PR12MB3587.namprd12.prod.outlook.com
+ (2603:10b6:408:43::13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: jI3-73_C-JF9CmZ55kSQmDeSoba3ruZm
-X-Proofpoint-ORIG-GUID: jI3-73_C-JF9CmZ55kSQmDeSoba3ruZm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-18_03,2022-10-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- impostorscore=0 spamscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999
- phishscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210180065
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN8PR12MB3587:EE_|SA1PR12MB7245:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4682a26f-30b3-4504-4dd2-08dab0fcb558
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: smren2V6AYejFy4U2PmVkpNNRLm+h1yS/f9r4JXcVfxfqGCm/FDGdTugxtvaDDiQzl0qTJXxZz63NCIecZkyeCVJa+kGW0Im4orNOXzolOI4qNuu3ZZKENXzNIHRMC0wOwxgdB2Wa7B6cEavCL25/DHZbzwCA9og88YKKUQyCbI8nCPKMN6PzUC/XlnSysQzOCtqMpAxdTmYFToRHXEh+piGUtnPVBmngP9ntqpHjBEKQ6skq8a+/gBB6MwWlsFEQuAxwOSRcvI6DfWZaWo9CajT/r6QYlVTA0urfhi6OwtaghJOEjbmL8RzgwBXSNIUBFXGxu1vJQ5tJMs11Uv2etcw82f3EdCzcEdBhSlzGu/EUX2aOdrsPavIx6MWJMzCtKY+qYugtL2bxenjy2jBt7d9Lnj65UkUtfBP2noQEYD7YIQh29p3yLVaIlIYS/mZx5Dq5AaxESo4nP6Xr6XZVSbeS847GPtweQ5USPfje+RZCXISxiOmDSt35tj5MitEQOvZHpUTL0HKz40XYue+zpKN3Dggw6uradIg1cqJ9xiZe6DD8702kL5FNoibu8XuKOjP1NyT7fg/UPu7KFn4/Y/ooE+YQGjjebqIrY5LMoUdVkRafXnq2zD0o6mMEWf+C5WxP4xD/LJcNSzZfaI52pxLzuMPhKeE18+B1U8lzYhAB1iattsVxTgGr0arADO+ShzDGCx5dStdGqSMxkkNBzPkPJ+o6zahUDIW1air+tIUPFepOHJyg+CKRiM4PEoqHpAQl9zfBiGLn3Hcp3LWYQZONzb4jZ5qOBX4JmEhimIfC508OrzfP6FHwMDfiw9s
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3587.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(376002)(39860400002)(346002)(136003)(366004)(396003)(451199015)(110136005)(31696002)(921005)(83380400001)(38100700002)(19627235002)(86362001)(316002)(41300700001)(8936002)(53546011)(6486002)(6512007)(6506007)(2906002)(6666004)(186003)(66574015)(478600001)(7406005)(2616005)(5660300002)(36756003)(7416002)(31686004)(66946007)(66476007)(66556008)(8676002)(4326008)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VG9nVGFtaEExRnkvV09FVVZlQ3QyQktKZTNieHlYSkJ6aHdTdkxhS2ZYeksv?=
+ =?utf-8?B?VXp2cmxzZUN0TXRDeEFQUmE4ZE8zWnBtcm9zMFN6dUhBUW9YTWlQR3FLUG01?=
+ =?utf-8?B?anF1SFJSSnJ3VGdTdTZ3aVJPUDE4MC8reFNieGk3aVBScThtTjVibG5maTRm?=
+ =?utf-8?B?THowYnBoM2s4aEIxZGVacEZ0UlZOdzA4YXpwdDdhVEk5eFZxblBya2FVUjFB?=
+ =?utf-8?B?YkVPMjBVVGNXWW45Zno4T2R6Y3FwT1JZZjgwNXFsT1ZXZ2dnSUUvSnFBdHB4?=
+ =?utf-8?B?bWp2bzBkc3NFTlRmUTBNSGpSeno4Rjlnd3Q5L1VpZVdlaFg3b29KT2xZMkhh?=
+ =?utf-8?B?K1dCME5aQlZTZUJPQnZnOFFrVGVOVlVheVZwOEo1aUxnU3kwTGRDSFZnVFVH?=
+ =?utf-8?B?KytQb3p3bGxOajlmd3I4Qk9NTG9FSFhOYzVmM2hBRGVqTUhFSlYxVWhxc2wx?=
+ =?utf-8?B?NzJ4ZUZ4Z2VLRk5lWUhRSXF6STJXRjlNb3IzV3hWazgrSGphaUZ3YkhqMUVJ?=
+ =?utf-8?B?OFBaSEloS1JLZjVDWXlYN2FJSFEzRXZFUTFwenliMDdsYWFORE0zVEpuMUZl?=
+ =?utf-8?B?cGprSkZhMm5veitQc1J5OGJyUk5vZzdHdjM5ZlB1VkdFdk9kWnBkVTVVQmYz?=
+ =?utf-8?B?NEI1Q2lXRFZ3cGRGV2pTcnVzN3ZXMFNmbUxxdFBSRGduNnFWRXJuZ3VURXRz?=
+ =?utf-8?B?RzVxR1AzYXdBMWlDZ0hDUGlYcTAxR2ZpMkoxck1RRU5wbGg0cFNxWmFuSXBm?=
+ =?utf-8?B?QW96QTg4SnVhcnJ3NGxjMFBvVWVUeXNvMmpvam8rdHV6S1JSSiszVUVQOGcv?=
+ =?utf-8?B?VEpaTEUwa1hDSDhZaVhtYStiMVYvRlBZTW1pdk5mVXluM1Btc3pKd0wrNXBq?=
+ =?utf-8?B?WlVTM2VKZnJhL3VPQXJRT1BPQ0p1WnFmQkR3VHRTVlZpSzh3RCs1OWo0U1FV?=
+ =?utf-8?B?eDJ1VE5tRFd3VjUrY00xamVNak1wTkRyaFlrcGhnZ3lNcDFLR2hwWHN1VDJh?=
+ =?utf-8?B?Z3puQUR6RksweVpPZGE4dTZBd1QzNVIyYld0dDFQdmZCSlJCNWYwVDBSR25r?=
+ =?utf-8?B?c29uaWtrZHlhKzJ3cmNDd3QrUTdoOEJMN2NlQ2dTTkdrN3N2M21scGxpc2Nn?=
+ =?utf-8?B?WURITjhKQlMxSGpzNkUwTmV4dWtYQ3VnMzVYVURBSUVDZHo1RXc2NXNJa1Vj?=
+ =?utf-8?B?MXhMd1FTUTMvUFNDODZURGdhVWNqZktkSk9CdS83U2Q0RWNRYW4xb3hRN2Fh?=
+ =?utf-8?B?NTdTVUUveW10UVVRUVZmc0FJaytNRWxDOExub2hzMkxtcG9MQ3NNZFpVNzNB?=
+ =?utf-8?B?dnZhSEUxRmhLbE5mWW1MM256WG9xZkgwZXpIMUFxTk1sNHhhcFJGTFVMT3Y0?=
+ =?utf-8?B?eDV0U1Q1bExKVzRiRnI3MG5NR0U3MEtCZ0kzcXJaOWJpUWRVaDEzSEdqMWZZ?=
+ =?utf-8?B?bEJnTk90cHBsREJISmZ5RHpBRStaYkplSjkzeCs3T1hEVW5qZjR2a0NDSkIw?=
+ =?utf-8?B?cTJHYmtyMUlVM3JTNU9ZV0VVODY1akRvTXRvYy9oemdEejZaK0pRUjV4ZFQx?=
+ =?utf-8?B?b1hIMzVDVzdiU1hjV0FEK2JxK0tYTjVxbURTSUx4cnhEYzVialB3STJodjND?=
+ =?utf-8?B?RmN1WWNkRXYrNWpscXBqWWE3eHR0RXNrZ3cyTkRDczVnSnp1Y2M3eTVsK3ZX?=
+ =?utf-8?B?ZWJ5WE5sbkhXVnlWKzh5dXg2L2JvTVhYVWlrdHJZZnlSVHdlVGIvVDh3V1Nn?=
+ =?utf-8?B?NFRjME1jZFMwREE3RzZ6U2FvcXhOcWVZY2h4YjltQmFvL1ZhWnJmRkh2eElF?=
+ =?utf-8?B?cUtMNHVLd2xDcVBLTmZEdXRoWjcwdDdvZlgwd2c0YkJndGpoOWxOeVZTTkVR?=
+ =?utf-8?B?Z3VPSUxSWlNjNmIwaGtRaWt5MWMyVnJjR1IrK3J0VzJjQVY2Q2d6a3JHbFU2?=
+ =?utf-8?B?RDhEUzdwRDdRbEcrRVRxSlVmWC9MeG9xQndNdGE5bGVOS2F6TldwOEpGY0Yx?=
+ =?utf-8?B?bGFMaUJjRWdZNnI3MEtFTnI4YUR1dXJaWHJJRTV4MmlHaFdpM2dvd0twVFJp?=
+ =?utf-8?B?d3dGaWRyWE5mSFJyS1BJWHpzNTFLTUdQV3B0UGRNV2l5RTk3L2JkN1cyb0hr?=
+ =?utf-8?B?ekxsN3cxREsrZ09nbzR5YnhzZWtwNVNnK1BFZ2FsaW9iTjRWMC9xVEs5QzND?=
+ =?utf-8?Q?1cDTCla2z5g/T+Bzuj5SzCK9R+0BkXnWKjtT65qrqwgw?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4682a26f-30b3-4504-4dd2-08dab0fcb558
+X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3587.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Oct 2022 11:34:24.9244
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: jOYxdd3sJc9dkMTMTHC2+G6cGYD0shaYm1rJBGNooWitS8/2n3QnPL0azmwwnsvq
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7245
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update soundwire bindings with yaml formats.
+Am 18.10.22 um 01:07 schrieb Dmitry Osipenko:
+> On 10/17/22 20:22, Dmitry Osipenko wrote:
+>> Hello,
+>>
+>> This series moves all drivers to a dynamic dma-buf locking specification.
+>>  From now on all dma-buf importers are made responsible for holding
+>> dma-buf's reservation lock around all operations performed over dma-bufs
+>> in accordance to the locking specification. This allows us to utilize
+>> reservation lock more broadly around kernel without fearing of a potential
+>> deadlocks.
+>>
+>> This patchset passes all i915 selftests. It was also tested using VirtIO,
+>> Panfrost, Lima, Tegra, udmabuf, AMDGPU and Nouveau drivers. I tested cases
+>> of display+GPU, display+V4L and GPU+V4L dma-buf sharing (where appropriate),
+>> which covers majority of kernel drivers since rest of the drivers share
+>> same or similar code paths.
+>>
+>> Changelog:
+>>
+>> v7: - Rebased on top of recent drm-misc-next.
+>>
+>>      - Added ack from Jason Gunthorpe to the RDMA patch.
+>>
+>>      - Added iosys_map_clear() to dma_buf_vmap_unlocked(), making it fully
+>>        consistent with dma_buf_vmap().
+>>
+>> v6: - Added r-b from Michael Ruhl to the i915 patch.
+>>
+>>      - Added acks from Sumit Semwal and updated commit message of the
+>>        "Move dma_buf_vmap() to dynamic locking specification" patch like
+>>        was suggested by Sumit.
+>>
+>>      - Added "!dmabuf" check to dma_buf_vmap_unlocked() to match the locked
+>>        variant of the function, for consistency.
+>>
+>> v5: - Added acks and r-bs that were given to v4.
+>>
+>>      - Changed i915 preparation patch like was suggested by Michael Ruhl.
+>>        The scope of reservation locking is smaller now.
+>>
+>> v4: - Added dma_buf_mmap() to the "locking convention" documentation,
+>>        which was missed by accident in v3.
+>>
+>>      - Added acks from Christian König, Tomasz Figa and Hans Verkuil that
+>>        they gave to couple v3 patches.
+>>
+>>      - Dropped the "_unlocked" postfix from function names that don't have
+>>        the locked variant, as was requested by Christian König.
+>>
+>>      - Factored out the per-driver preparations into separate patches
+>>        to ease reviewing of the changes, which is now doable without the
+>>        global dma-buf functions renaming.
+>>
+>>      - Factored out the dynamic locking convention enforcements into separate
+>>        patches which add the final dma_resv_assert_held(dmabuf->resv) to the
+>>        dma-buf API functions.
+>>
+>> v3: - Factored out dma_buf_mmap_unlocked() and attachment functions
+>>        into aseparate patches, like was suggested by Christian König.
+>>
+>>      - Corrected and factored out dma-buf locking documentation into
+>>        a separate patch, like was suggested by Christian König.
+>>
+>>      - Intel driver dropped the reservation locking fews days ago from
+>>        its BO-release code path, but we need that locking for the imported
+>>        GEMs because in the end that code path unmaps the imported GEM.
+>>        So I added back the locking needed by the imported GEMs, updating
+>>        the "dma-buf attachment locking specification" patch appropriately.
+>>
+>>      - Tested Nouveau+Intel dma-buf import/export combo.
+>>
+>>      - Tested udmabuf import to i915/Nouveau/AMDGPU.
+>>
+>>      - Fixed few places in Etnaviv, Panfrost and Lima drivers that I missed
+>>        to switch to locked dma-buf vmapping in the drm/gem: Take reservation
+>>        lock for vmap/vunmap operations" patch. In a result invalidated the
+>>        Christian's r-b that he gave to v2.
+>>
+>>      - Added locked dma-buf vmap/vunmap functions that are needed for fixing
+>>        vmappping of Etnaviv, Panfrost and Lima drivers mentioned above.
+>>        I actually had this change stashed for the drm-shmem shrinker patchset,
+>>        but then realized that it's already needed by the dma-buf patches.
+>>        Also improved my tests to better cover these code paths.
+>>
+>> v2: - Changed locking specification to avoid problems with a cross-driver
+>>        ww locking, like was suggested by Christian König. Now the attach/detach
+>>        callbacks are invoked without the held lock and exporter should take the
+>>        lock.
+>>
+>>      - Added "locking convention" documentation that explains which dma-buf
+>>        functions and callbacks are locked/unlocked for importers and exporters,
+>>        which was requested by Christian König.
+>>
+>>      - Added ack from Tomasz Figa to the V4L patches that he gave to v1.
+>>
+>> Dmitry Osipenko (21):
+>>    dma-buf: Add unlocked variant of vmapping functions
+>>    dma-buf: Add unlocked variant of attachment-mapping functions
+>>    drm/gem: Take reservation lock for vmap/vunmap operations
+>>    drm/prime: Prepare to dynamic dma-buf locking specification
+>>    drm/armada: Prepare to dynamic dma-buf locking specification
+>>    drm/i915: Prepare to dynamic dma-buf locking specification
+>>    drm/omapdrm: Prepare to dynamic dma-buf locking specification
+>>    drm/tegra: Prepare to dynamic dma-buf locking specification
+>>    drm/etnaviv: Prepare to dynamic dma-buf locking specification
+>>    RDMA/umem: Prepare to dynamic dma-buf locking specification
+>>    misc: fastrpc: Prepare to dynamic dma-buf locking specification
+>>    xen/gntdev: Prepare to dynamic dma-buf locking specification
+>>    media: videobuf2: Prepare to dynamic dma-buf locking specification
+>>    media: tegra-vde: Prepare to dynamic dma-buf locking specification
+>>    dma-buf: Move dma_buf_vmap() to dynamic locking specification
+>>    dma-buf: Move dma_buf_attach() to dynamic locking specification
+>>    dma-buf: Move dma_buf_map_attachment() to dynamic locking
+>>      specification
+>>    dma-buf: Move dma_buf_mmap() to dynamic locking specification
+>>    dma-buf: Document dynamic locking convention
+>>    media: videobuf2: Stop using internal dma-buf lock
+>>    dma-buf: Remove obsoleted internal lock
+>>
+>>   Documentation/driver-api/dma-buf.rst          |   6 +
+>>   drivers/dma-buf/dma-buf.c                     | 216 +++++++++++++++---
+>>   drivers/gpu/drm/armada/armada_gem.c           |   8 +-
+>>   drivers/gpu/drm/drm_client.c                  |   4 +-
+>>   drivers/gpu/drm/drm_gem.c                     |  24 ++
+>>   drivers/gpu/drm/drm_gem_dma_helper.c          |   6 +-
+>>   drivers/gpu/drm/drm_gem_framebuffer_helper.c  |   6 +-
+>>   drivers/gpu/drm/drm_gem_ttm_helper.c          |   9 +-
+>>   drivers/gpu/drm/drm_prime.c                   |   6 +-
+>>   drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c   |   2 +-
+>>   drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c    |   2 +-
+>>   drivers/gpu/drm/i915/gem/i915_gem_object.c    |  14 ++
+>>   .../drm/i915/gem/selftests/i915_gem_dmabuf.c  |  16 +-
+>>   drivers/gpu/drm/lima/lima_sched.c             |   4 +-
+>>   drivers/gpu/drm/omapdrm/omap_gem_dmabuf.c     |   4 +-
+>>   drivers/gpu/drm/panfrost/panfrost_dump.c      |   4 +-
+>>   drivers/gpu/drm/panfrost/panfrost_perfcnt.c   |   6 +-
+>>   drivers/gpu/drm/qxl/qxl_object.c              |  17 +-
+>>   drivers/gpu/drm/qxl/qxl_prime.c               |   4 +-
+>>   drivers/gpu/drm/tegra/gem.c                   |  17 +-
+>>   drivers/infiniband/core/umem_dmabuf.c         |   7 +-
+>>   .../common/videobuf2/videobuf2-dma-contig.c   |  22 +-
+>>   .../media/common/videobuf2/videobuf2-dma-sg.c |  19 +-
+>>   .../common/videobuf2/videobuf2-vmalloc.c      |  17 +-
+>>   .../platform/nvidia/tegra-vde/dmabuf-cache.c  |   6 +-
+>>   drivers/misc/fastrpc.c                        |   6 +-
+>>   drivers/xen/gntdev-dmabuf.c                   |   8 +-
+>>   include/drm/drm_gem.h                         |   3 +
+>>   include/linux/dma-buf.h                       |  17 +-
+>>   29 files changed, 325 insertions(+), 155 deletions(-)
+>>
+> Applied to drm-misc-next
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
-Signed-off-by: Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
----
+Finally! Fingers crossed that all corner cases where fixed during the 
+review.
 
-This patch depends on:
-    https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=42801e6185290d63691bd39cf8a3bba6cd5fe520
+But if anything shows up feel free to loop me in to help fixing things.
 
-Changes since V1:
-  -- Remove the status field in example.
-  -- Remove interrupt-names property in the required list.
-  -- Add the wakeup-source property.	
- 
- .../devicetree/bindings/soundwire/qcom,sdw.txt     | 214 ---------------------
- .../devicetree/bindings/soundwire/qcom,sdw.yaml    | 186 ++++++++++++++++++
- 2 files changed, 186 insertions(+), 214 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
- create mode 100644 Documentation/devicetree/bindings/soundwire/qcom,sdw.yaml
+Thanks a lot for doing this,
+Christian.
 
-diff --git a/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt b/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
-deleted file mode 100644
-index c85c257..0000000
---- a/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
-+++ /dev/null
-@@ -1,214 +0,0 @@
--Qualcomm SoundWire Controller Bindings
--
--
--This binding describes the Qualcomm SoundWire Controller along with its
--board specific bus parameters.
--
--- compatible:
--	Usage: required
--	Value type: <stringlist>
--	Definition: must be "qcom,soundwire-v<MAJOR>.<MINOR>.<STEP>",
--		    Example:
--			"qcom,soundwire-v1.3.0"
--			"qcom,soundwire-v1.5.0"
--			"qcom,soundwire-v1.5.1"
--			"qcom,soundwire-v1.6.0"
--- reg:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: the base address and size of SoundWire controller
--		    address space.
--
--- interrupts:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: should specify the SoundWire Controller core and optional
--		    wake IRQ
--
--- interrupt-names:
--	Usage: Optional
--	Value type: boolean
--	Value type: <stringlist>
--	Definition: should be "core" for core and "wakeup" for wake interrupt.
--
--- wakeup-source:
--	Usage: Optional
--	Value type: boolean
--	Definition: should specify if SoundWire Controller is wake up capable.
--
--- clock-names:
--	Usage: required
--	Value type: <stringlist>
--	Definition: should be "iface" for SoundWire Controller interface clock
--
--- clocks:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: should specify the SoundWire Controller interface clock
--
--- #sound-dai-cells:
--	Usage: required
--	Value type: <u32>
--	Definition: must be 1 for digital audio interfaces on the controller.
--
--- qcom,dout-ports:
--	Usage: required
--	Value type: <u32>
--	Definition: must be count of data out ports
--
--- qcom,din-ports:
--	Usage: required
--	Value type: <u32>
--	Definition: must be count of data in ports
--
--- qcom,ports-offset1:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: should specify payload transport window offset1 of each
--		    data port. Out ports followed by In ports.
--		    Value of 0xFF indicates that this option is not implemented
--		    or applicable for the respective data port.
--		    More info in MIPI Alliance SoundWire 1.0 Specifications.
--
--- qcom,ports-offset2:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: should specify payload transport window offset2 of each
--		    data port. Out ports followed by In ports.
--		    Value of 0xFF indicates that this option is not implemented
--		    or applicable for the respective data port.
--		    More info in MIPI Alliance SoundWire 1.0 Specifications.
--
--- qcom,ports-sinterval-low:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: should be sample interval low of each data port.
--		    Out ports followed by In ports. Used for Sample Interval
--		    calculation.
--		    Value of 0xFF indicates that this option is not implemented
--		    or applicable for the respective data port.
--		    More info in MIPI Alliance SoundWire 1.0 Specifications.
--
--- qcom,ports-word-length:
--	Usage: optional
--	Value type: <prop-encoded-array>
--	Definition: should be size of payload channel sample.
--		    Value of 0xFF indicates that this option is not implemented
--		    or applicable for the respective data port.
--		    More info in MIPI Alliance SoundWire 1.0 Specifications.
--
--- qcom,ports-block-pack-mode:
--	Usage: optional
--	Value type: <prop-encoded-array>
--	Definition: should be 0 or 1 to indicate the block packing mode.
--		    0 to indicate Blocks are per Channel
--		    1 to indicate Blocks are per Port.
--		    Out ports followed by In ports.
--		    Value of 0xFF indicates that this option is not implemented
--		    or applicable for the respective data port.
--		    More info in MIPI Alliance SoundWire 1.0 Specifications.
--
--- qcom,ports-block-group-count:
--	Usage: optional
--	Value type: <prop-encoded-array>
--	Definition: should be in range 1 to 4 to indicate how many sample
--		    intervals are combined into a payload.
--		    Out ports followed by In ports.
--		    Value of 0xFF indicates that this option is not implemented
--		    or applicable for the respective data port.
--		    More info in MIPI Alliance SoundWire 1.0 Specifications.
--
--- qcom,ports-lane-control:
--	Usage: optional
--	Value type: <prop-encoded-array>
--	Definition: should be in range 0 to 7 to identify which	data lane
--		    the data port uses.
--		    Out ports followed by In ports.
--		    Value of 0xFF indicates that this option is not implemented
--		    or applicable for the respective data port.
--		    More info in MIPI Alliance SoundWire 1.0 Specifications.
--
--- qcom,ports-hstart:
--	Usage: optional
--	Value type: <prop-encoded-array>
--	Definition: should be number identifying lowerst numbered coloum in
--		    SoundWire Frame, i.e. left edge of the Transport sub-frame
--		    for each port. Values between 0 and 15 are valid.
--		    Out ports followed by In ports.
--		    Value of 0xFF indicates that this option is not implemented
--		    or applicable for the respective data port.
--		    More info in MIPI Alliance SoundWire 1.0 Specifications.
--
--- qcom,ports-hstop:
--	Usage: optional
--	Value type: <prop-encoded-array>
--	Definition: should be number identifying highest numbered coloum in
--		    SoundWire Frame, i.e. the right edge of the Transport
--		    sub-frame for each port. Values between 0 and 15 are valid.
--		    Out ports followed by In ports.
--		    Value of 0xFF indicates that this option is not implemented
--		    or applicable for the respective data port.
--		    More info in MIPI Alliance SoundWire 1.0 Specifications.
--
--- qcom,dports-type:
--	Usage: optional
--	Value type: <prop-encoded-array>
--	Definition: should be one of the following types
--		    0 for reduced port
--		    1 for simple ports
--		    2 for full port
--		    Out ports followed by In ports.
--		    Value of 0xFF indicates that this option is not implemented
--		    or applicable for the respective data port.
--		    More info in MIPI Alliance SoundWire 1.0 Specifications.
--
--- reset:
--	Usage: optional
--	Value type: <prop-encoded-array>
--	Definition: Should specify the SoundWire audio CSR reset controller interface,
--		    which is required for SoundWire version 1.6.0 and above.
--
--- reset-names:
--	Usage: optional
--	Value type: <stringlist>
--	Definition: should be "swr_audio_cgcr" for SoundWire audio CSR reset
--		    controller interface.
--
--Note:
--	More Information on detail of encoding of these fields can be
--found in MIPI Alliance SoundWire 1.0 Specifications.
--
--= SoundWire devices
--Each subnode of the bus represents SoundWire device attached to it.
--The properties of these nodes are defined by the individual bindings.
--
--= EXAMPLE
--The following example represents a SoundWire controller on DB845c board
--which has controller integrated inside WCD934x codec on SDM845 SoC.
--
--soundwire: soundwire@c85 {
--	compatible = "qcom,soundwire-v1.3.0";
--	reg = <0xc85 0x20>;
--	interrupts = <20 IRQ_TYPE_EDGE_RISING>;
--	clocks = <&wcc>;
--	clock-names = "iface";
--	resets = <&lpass_audiocc LPASS_AUDIO_SWR_TX_CGCR>;
--	reset-names = "swr_audio_cgcr";
--	#sound-dai-cells = <1>;
--	qcom,dports-type = <0>;
--	qcom,dout-ports	= <6>;
--	qcom,din-ports	= <2>;
--	qcom,ports-sinterval-low = /bits/ 8  <0x07 0x1F 0x3F 0x7 0x1F 0x3F 0x0F 0x0F>;
--	qcom,ports-offset1 = /bits/ 8 <0x01 0x02 0x0C 0x6 0x12 0x0D 0x07 0x0A >;
--	qcom,ports-offset2 = /bits/ 8 <0x00 0x00 0x1F 0x00 0x00 0x1F 0x00 0x00>;
--
--	/* Left Speaker */
--	left{
--		....
--	};
--
--	/* Right Speaker */
--	right{
--		....
--	};
--};
-diff --git a/Documentation/devicetree/bindings/soundwire/qcom,sdw.yaml b/Documentation/devicetree/bindings/soundwire/qcom,sdw.yaml
-new file mode 100644
-index 0000000..65bff91
---- /dev/null
-+++ b/Documentation/devicetree/bindings/soundwire/qcom,sdw.yaml
-@@ -0,0 +1,186 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/soundwire/qcom,sdw.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SoundWire Controller
-+
-+maintainers:
-+  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+  - Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-+
-+description:
-+  This binding describes the Qualcomm SoundWire controller along with its
-+  board specific bus parameters.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,soundwire-v1.3.0
-+      - qcom,soundwire-v1.5.0
-+      - qcom,soundwire-v1.5.1
-+      - qcom,soundwire-v1.6.0
-+
-+  reg:
-+    items:
-+      - description: the base address and size of SoundWire controller
-+                   address space.
-+
-+  interrupts:
-+    items:
-+      - description: specify the SoundWire controller core and optional
-+                   wake IRQ.
-+
-+  interrupt-names:
-+    items:
-+      - const: wakeup
-+
-+  clocks:
-+    items:
-+      - description: iface clock
-+
-+  clock-names:
-+    items:
-+      - const: iface
-+
-+  resets:
-+    items:
-+      - description: SWR_AUDIO_CGCR RESET
-+
-+  reset-names:
-+    items:
-+      - const: swr_audio_cgcr
-+
-+  '#sound-dai-cells':
-+    const: 1
-+
-+  '#address-cells':
-+    const: 2
-+
-+  '#size-cells':
-+    const: 0
-+
-+  wakeup-source:
-+    description: specify the Soundwire Controller is wakeup Capable.
-+    type: boolean
-+
-+  qcom,din-ports:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description: count of data in ports
-+
-+  qcom,dout-ports:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description: count of data out ports
-+
-+  qcom,ports-word-length:
-+    $ref: /schemas/types.yaml#/definitions/uint8-array
-+    description: size of payload channel sample.
-+    minItems: 5
-+    maxItems: 5
-+
-+  qcom,ports-sinterval-low:
-+    $ref: /schemas/types.yaml#/definitions/uint8-array
-+    description: sample interval low of each data port.
-+    minItems: 5
-+    maxItems: 5
-+
-+  qcom,ports-offset1:
-+    $ref: /schemas/types.yaml#/definitions/uint8-array
-+    description: payload transport window offset1 of each data port.
-+    minItems: 5
-+    maxItems: 5
-+
-+  qcom,ports-offset2:
-+    $ref: /schemas/types.yaml#/definitions/uint8-array
-+    description: payload transport window offset2 of each data port.
-+    minItems: 5
-+    maxItems: 5
-+
-+  qcom,ports-lane-control:
-+    $ref: /schemas/types.yaml#/definitions/uint8-array
-+    description: identify which data lane the data port uses.
-+    minItems: 5
-+    maxItems: 5
-+
-+  qcom,ports-block-pack-mode:
-+    $ref: /schemas/types.yaml#/definitions/uint8-array
-+    description: indicate the block packing mode.
-+    minItems: 5
-+    maxItems: 5
-+
-+  qcom,ports-hstart:
-+    $ref: /schemas/types.yaml#/definitions/uint8-array
-+    description: identifying lowerst numbered coloum in SoundWire frame.
-+    minItems: 5
-+    maxItems: 5
-+
-+  qcom,ports-hstop:
-+    $ref: /schemas/types.yaml#/definitions/uint8-array
-+    description: identifying highest numbered coloum in SoundWire frame.
-+    minItems: 5
-+    maxItems: 5
-+
-+  qcom,ports-block-group-count:
-+    $ref: /schemas/types.yaml#/definitions/uint8-array
-+    description: indicate how many sample intervals are combined into a payload.
-+    minItems: 5
-+    maxItems: 5
-+
-+required:
-+  - reg
-+  - interrupts
-+  - clocks
-+  - clock-names
-+  - resets
-+  - reset-names
-+  - '#sound-dai-cells'
-+  - '#address-cells'
-+  - '#size-cells'
-+  - qcom,dout-ports
-+  - qcom,din-ports
-+  - qcom,ports-word-length
-+  - qcom,ports-sinterval-low
-+  - qcom,ports-offset1
-+  - qcom,ports-offset2
-+  - qcom,ports-lane-control
-+  - qcom,ports-block-pack-mode
-+  - qcom,ports-hstart
-+  - qcom,ports-block-group-count
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
-+
-+    soundwire@3210000 {
-+        compatible = "qcom,soundwire-v1.6.0";
-+        reg = <0x03210000 0x2000>;
-+
-+        interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
-+        clocks = <&lpass_rx_macro>;
-+        clock-names = "iface";
-+
-+        qcom,din-ports = <0>;
-+        qcom,dout-ports = <5>;
-+
-+        resets = <&lpass_audiocc LPASS_AUDIO_SWR_RX_CGCR>;
-+        reset-names = "swr_audio_cgcr";
-+
-+        qcom,ports-word-length =        /bits/ 8 <0x01 0x07 0x04 0xff 0xff>;
-+        qcom,ports-sinterval-low =      /bits/ 8 <0x03 0x3f 0x1f 0x03 0x03>;
-+        qcom,ports-offset1 =            /bits/ 8 <0x00 0x00 0x0b 0x01 0x01>;
-+        qcom,ports-offset2 =            /bits/ 8 <0x00 0x00 0x0b 0x00 0x00>;
-+        qcom,ports-lane-control =       /bits/ 8 <0x01 0x00 0x00 0x00 0x00>;
-+        qcom,ports-block-pack-mode =    /bits/ 8 <0xff 0x00 0x01 0xff 0xff>;
-+        qcom,ports-hstart =             /bits/ 8 <0xff 0x03 0xff 0xff 0xff>;
-+        qcom,ports-hstop =              /bits/ 8 <0xff 0x06 0xff 0xff 0xff>;
-+        qcom,ports-block-group-count =  /bits/ 8 <0xff 0xff 0xff 0xff 0x00>;
-+
-+        #sound-dai-cells = <1>;
-+        #address-cells = <2>;
-+        #size-cells = <0>;
-+    };
--- 
-2.7.4
 
