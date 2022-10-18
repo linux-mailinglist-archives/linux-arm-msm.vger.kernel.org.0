@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BDCFF601E20
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 02:07:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A31BC601E9D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 02:11:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229848AbiJRAHi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 20:07:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35892 "EHLO
+        id S230215AbiJRALl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 20:11:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230238AbiJRAHg (ORCPT
+        with ESMTP id S230291AbiJRAKp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 20:07:36 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 244498277F;
-        Mon, 17 Oct 2022 17:07:33 -0700 (PDT)
+        Mon, 17 Oct 2022 20:10:45 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B829895E0;
+        Mon, 17 Oct 2022 17:08:45 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8038D61302;
-        Tue, 18 Oct 2022 00:07:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F5BC433C1;
-        Tue, 18 Oct 2022 00:07:31 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 52338B81BF5;
+        Tue, 18 Oct 2022 00:08:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11ADC433C1;
+        Tue, 18 Oct 2022 00:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666051652;
+        s=k20201202; t=1666051722;
         bh=RSGgGtk0YTsjWbz6ye3C8AS4eZR6iyFcHaLNzhOaBv8=;
         h=From:To:Cc:Subject:Date:From;
-        b=WVD6r/2lFp4PV9t0FEYU38lztEjBLgAzTQ5kTZ0M8LIoarinebKhXWUxbbqngMfGC
-         IhrmhlszUgwrtbmByCA7TLcZzXCq04nqrXOGZbAyk8DGr9hlmAhpTLKvpyNLqHcZgK
-         1M6SmfzuLf0d6VqFVxFKLraJM5OgP6n3crw4t5okWSDT9C981bp9WmJxIS9ypKl2jt
-         XHoJjcd2f0qr/yVIOatFUGCnRtxhlzvzpA3rgg6EwNnvxwQ/RUuygBx/NtR5q1tkDb
-         6Zzsn0Via3aR2XnbXQXsnGleb7vD6Jl9HGtFr4nJLMS08GAVgIFLnPsv79r3XiXdq6
-         GAkijSCIAcQDw==
+        b=TyJRSoWF4T9r8H7WIjbynD45RTdziVaLMhJT0atKIk5Zf0BKedKojaVKzZUqbElw7
+         UQsS5/9UeE2kJu4tsZIuZRISpiuV704lsgFtUSm9fFmknNAPWNq4W6bBsoF7H45s2s
+         4LahkGE+ZrqpYP3QlRHH1945498IhMgC5XrNd0RpQtBYufJPH3d3SCB1ofgu1lTmmi
+         FJ63Wc64z+tjFNycRJhsP8R+woZDVHWtE040M+cwrIN697hfuDo6fhuJeWIfzB3daC
+         IxdAkqSouvSgbSaUPjop2D4jV34eJ+2pzYsROpMuHEr3cNp0TmDC/MB9gjpyGqHT5T
+         VWZ9GmlP0tV0g==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Herbert Xu <herbert@gondor.apana.org.au>,
@@ -39,9 +39,9 @@ Cc:     Herbert Xu <herbert@gondor.apana.org.au>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         agross@kernel.org, andersson@kernel.org, davem@davemloft.net,
         linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.0 01/32] crypto: qcom-rng - Fix qcom_rng_of_match unused warning
-Date:   Mon, 17 Oct 2022 20:06:58 -0400
-Message-Id: <20221018000729.2730519-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.19 01/29] crypto: qcom-rng - Fix qcom_rng_of_match unused warning
+Date:   Mon, 17 Oct 2022 20:08:10 -0400
+Message-Id: <20221018000839.2730954-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 X-stable: review
