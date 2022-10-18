@@ -2,476 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0510360306E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 18:01:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32CE660307B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 18:04:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229717AbiJRQBi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Oct 2022 12:01:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33144 "EHLO
+        id S230008AbiJRQEe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Oct 2022 12:04:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229742AbiJRQBh (ORCPT
+        with ESMTP id S230442AbiJRQEc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Oct 2022 12:01:37 -0400
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A241D6C948
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 09:01:34 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id z18so9560993qvn.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 09:01:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NYSH+KPKLXF3i3ygsViuEOSPQEPRdZv4UiHjICkxwls=;
-        b=thGEcwbOeaF7eskjiVnpkNrilR4NHeY/TXyJUMbM1FWzRCG/44z+0Xfku4kJtYwGzi
-         NlX1YUygVwSp6xTZUE78TfNlQ8X7+N9AqeIlLqnYkB9yv0pMpkJRiCYR12f4Bcrly36Z
-         JZgxSu88t11k50JhBy0ZyPEh7Z1vF5Fk8SV3/I5zSYYpZU5qI6hPIJOOZCATexRG6ilX
-         fkd3d7mRytpfXvtZJsV688nLi7asAv4xnALA/bjQ+GkFgKnOlxX8hDy3beJ+S4VICBqQ
-         orkX0mlxGhl951laIrCMEJciweBSb8rvowOdCLqYHhdb2dWkgc3mpG06egn21VCTsueV
-         uQKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NYSH+KPKLXF3i3ygsViuEOSPQEPRdZv4UiHjICkxwls=;
-        b=hju/LthgZvxvIyOAWe3HDp09Kxo3bB9tFBPf7CWHkxs45IBgbKZm0uPQeuQXluhWUy
-         YHghXahrUNsUtamKZT5gqbUUISZa73QrWpu/w3XyhxXxMPzQYwbjjMJzf5dNTWMmwFVV
-         xA/BZn0V+8k6bpofNZGalaYguq3/nl5cpmtnPhv45HJOX11kiXNVeqGH9npQhwgd+U4T
-         qsLF+JPTsQAcAUttxPcBRwyWsf9JEF1KpjXhqOlu2RfrEoU1BglwAP+BGpW8wKKFSq3q
-         j6nUvAUBDyVWGwUaP5ogksLbL69LvQqTYQ9Daf3p4a9X8QzqYmIEV54m3yBt8g0RGKEK
-         DNIQ==
-X-Gm-Message-State: ACrzQf0NwcATflf75g73OmU6/hK4GR4zLhw9KcDeYRjuPWUo5dh40Fs7
-        eQ/HVkU8lw/8j5WyNaFpj2XQbQ==
-X-Google-Smtp-Source: AMsMyM4DkeSpsFPhzR6vZsewN0ZeqmsG+ToDtJDq5Y45ZvYuCUnUSeXEgCDvCo2G0CH+qnVsHITY4Q==
-X-Received: by 2002:a05:6214:20a6:b0:4b4:32a9:6c96 with SMTP id 6-20020a05621420a600b004b432a96c96mr2601091qvd.63.1666108893283;
-        Tue, 18 Oct 2022 09:01:33 -0700 (PDT)
-Received: from krzk-bin.MSRM (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
-        by smtp.gmail.com with ESMTPSA id y4-20020a37e304000000b006b5cc25535fsm2469389qki.99.2022.10.18.09.01.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Oct 2022 09:01:32 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 18 Oct 2022 12:04:32 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47F32634D;
+        Tue, 18 Oct 2022 09:04:29 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id C59AEB81FE7;
+        Tue, 18 Oct 2022 16:04:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E71CC433D6;
+        Tue, 18 Oct 2022 16:04:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1666109066;
+        bh=kwn/hWdH9/e8LfszuP6LsH+3JjR3b5A0pHJNAWEXDhU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=h0jlz5PaPhZ0U97fvM3qBLMgwAkRhqwijbu1o98DbDPy+DabB6V/ayEcy5iWYgctC
+         F+ihjARVSBGYqtd5prH/ipvWlYVUaZYueEMrmTKh7erHw4tmdZWfkvDXI2SoRkP56z
+         icbeVBKP5rz9SPCwBJdvmKL+4ZxewBs8/7fqVqRGwlQr2ROsRXC7gRgTj/6Q733lgK
+         bVHGoKFfX9SD+bR81VHCXpzhQnHxkgyBBm1WNdSfEUiqgrNDlgcGiQHcu+69Fu0dHl
+         LkZji6Mywv4X36Et+CNR8MNcs+8VAO3XYACU2hLJ1uMK6O2wn5sVom3BkAnXOL2LGh
+         JrGpLi6jvRrdQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1okp4g-0006F0-St; Tue, 18 Oct 2022 18:04:14 +0200
+Date:   Tue, 18 Oct 2022 18:04:14 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh@kernel.org>
-Subject: [PATCH v2] dt-bindings: pinctrl: qcom,sm8150: convert to dtschema
-Date:   Tue, 18 Oct 2022 12:01:28 -0400
-Message-Id: <20221018160128.51851-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+Subject: Re: [PATCH 09/15] dt-bindings: phy: qcom,qmp-pcie: mark current
+ bindings as legacy
+Message-ID: <Y07OfmfQgQWFzHZY@hovoldconsulting.com>
+References: <20221017145328.22090-1-johan+linaro@kernel.org>
+ <20221017145328.22090-10-johan+linaro@kernel.org>
+ <CAA8EJpqSWmy5Z4cmJnsdjMjkmACW7HSi-k5JxZ0gLCeUAWEnxQ@mail.gmail.com>
+ <Y05+E90tmlq2tNFa@hovoldconsulting.com>
+ <CAA8EJprwhEvUfUr-zDir4zFh_NAyr0qPbrHi6Hf8=2HC1dAhaw@mail.gmail.com>
+ <b0c1bdfb-4a31-9deb-1f0a-0ed813707464@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b0c1bdfb-4a31-9deb-1f0a-0ed813707464@linaro.org>
+X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert Qualcomm SM8150 pin controller bindings to DT schema.  Keep the
-parsing of pin configuration subnodes consistent with other Qualcomm
-schemas (children named with '-state' suffix, their children with
-'-pins').
+On Tue, Oct 18, 2022 at 11:32:07AM -0400, Krzysztof Kozlowski wrote:
+> On 18/10/2022 07:37, Dmitry Baryshkov wrote:
+> > 
+> >>> And yes, I think we should also upgrade
+> >>> older DTs, keeping drivers backwards compatible (for some time?).
+> >>
+> >> Possibly, but I'm not sure it's worth the dts churn. As I mentioned
+> >> elsewhere, supporting both the old and new binding in the driver is
+> >> mostly trivial, while encoding the deprecated bindings in DT schema
+> >> sounds like it would be painful.
+> > 
+> > This is probably the time where Krzysztof can advise us. I'm still not
+> > sure when it is expected to encode both old and new bindings in the
+> > schema and when we can update both the schema and the DT.
+> 
+> I do not follow what exactly the proposal is. Are you asking whether to:
+> 1. keep existing DTS compatible with old driver?
+> or
+> 2. update existing DTS so it is working only with new driver (and not
+> compatible with old driver thus having ABI break)?
+> 
+> If so, it is less question to bindings but more to the usage of DTS in
+> other projects (like bootloaders, firmware, BSD) and generic
+> recommendation is: do not break other users, if possible. It is however
+> up to the platform maintainer (Bjorn) to decide on this, not on me.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
+The question is whether to convert also the current bindings and DTS to
+the new (sc8280xp) scheme (e.g. drop the child nodes and register
+subregions).
 
----
+The driver can support both binding schemes using the same compatible
+strings for a transition period (or in theory forever) by checking for
+the existence of a child node.
 
-Changes since v1:
-1. Add tags.
-2. Drop drive-strength (included by common TLMM node).
----
- .../bindings/pinctrl/qcom,sm8150-pinctrl.txt  | 190 ------------------
- .../bindings/pinctrl/qcom,sm8150-pinctrl.yaml | 173 ++++++++++++++++
- 2 files changed, 173 insertions(+), 190 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.txt
- create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.yaml
+Converting the DTS to use the new bindings would obviously prevent using
+them with an old kernel (i.e. 2 above), but I don't think that's a
+problem (unlike backward compatibility during at least a transition
+period).
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.txt
-deleted file mode 100644
-index fa37733e5102..000000000000
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.txt
-+++ /dev/null
-@@ -1,190 +0,0 @@
--Qualcomm SM8150 TLMM block
--
--This binding describes the Top Level Mode Multiplexer block found in the
--QCS404 platform.
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: must be "qcom,sm8150-pinctrl"
--
--- reg:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: the base address and size of the north, south, west
--		    and east TLMM tiles.
--
--- reg-names:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Defintiion: names for the cells of reg, must contain "north", "south"
--		    "west" and "east".
--
--- interrupts:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: should specify the TLMM summary IRQ.
--
--- interrupt-controller:
--	Usage: required
--	Value type: <none>
--	Definition: identifies this node as an interrupt controller
--
--- #interrupt-cells:
--	Usage: required
--	Value type: <u32>
--	Definition: must be 2. Specifying the pin number and flags, as defined
--		    in <dt-bindings/interrupt-controller/irq.h>
--
--- gpio-controller:
--	Usage: required
--	Value type: <none>
--	Definition: identifies this node as a gpio controller
--
--- #gpio-cells:
--	Usage: required
--	Value type: <u32>
--	Definition: must be 2. Specifying the pin number and flags, as defined
--		    in <dt-bindings/gpio/gpio.h>
--
--- gpio-ranges:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition:  see ../gpio/gpio.txt
--
--- gpio-reserved-ranges:
--	Usage: optional
--	Value type: <prop-encoded-array>
--	Definition: see ../gpio/gpio.txt
--
--Please refer to ../gpio/gpio.txt and ../interrupt-controller/interrupts.txt for
--a general description of GPIO and interrupt bindings.
--
--Please refer to pinctrl-bindings.txt in this directory for details of the
--common pinctrl bindings used by client devices, including the meaning of the
--phrase "pin configuration node".
--
--The pin configuration nodes act as a container for an arbitrary number of
--subnodes. Each of these subnodes represents some desired configuration for a
--pin, a group, or a list of pins or groups. This configuration can include the
--mux function to select on those pin(s)/group(s), and various pin configuration
--parameters, such as pull-up, drive strength, etc.
--
--
--PIN CONFIGURATION NODES:
--
--The name of each subnode is not important; all subnodes should be enumerated
--and processed purely based on their content.
--
--Each subnode only affects those parameters that are explicitly listed. In
--other words, a subnode that lists a mux function but no pin configuration
--parameters implies no information about any pin configuration parameters.
--Similarly, a pin subnode that describes a pullup parameter implies no
--information about e.g. the mux function.
--
--
--The following generic properties as defined in pinctrl-bindings.txt are valid
--to specify in a pin configuration subnode:
--
--- pins:
--	Usage: required
--	Value type: <string-array>
--	Definition: List of gpio pins affected by the properties specified in
--		    this subnode.
--
--		    Valid pins are:
--		      gpio0-gpio149
--		        Supports mux, bias and drive-strength
--
--		      sdc1_clk, sdc1_cmd, sdc1_data sdc2_clk, sdc2_cmd,
--		      sdc2_data sdc1_rclk
--		        Supports bias and drive-strength
--
--		      ufs_reset
--		        Supports bias and drive-strength
--
--- function:
--	Usage: required
--	Value type: <string>
--	Definition: Specify the alternative function to be configured for the
--		    specified pins. Functions are only valid for gpio pins.
--		    Valid values are:
--
--		    adsp_ext, agera_pll, aoss_cti, ddr_pxi2, atest_char,
--		    atest_char0, atest_char1, atest_char2, atest_char3,
--		    audio_ref, atest_usb1, atest_usb2, atest_usb10,
--		    atest_usb11, atest_usb12, atest_usb13, atest_usb20,
--		    atest_usb21, atest_usb22, atest_usb2, atest_usb23,
--		    btfm_slimbus, cam_mclk, cci_async, cci_i2c, cci_timer0,
--		    cci_timer1, cci_timer2, cci_timer3, cci_timer4,
--		    cri_trng, cri_trng0, cri_trng1, dbg_out, ddr_bist,
--		    ddr_pxi0, ddr_pxi1, ddr_pxi3, edp_hot, edp_lcd,
--		    emac_phy, emac_pps, gcc_gp1, gcc_gp2, gcc_gp3, gpio,
--		    hs1_mi2s, hs2_mi2s, hs3_mi2s, jitter_bist,
--		    lpass_slimbus, mdp_vsync, mdp_vsync0, mdp_vsync1,
--		    mdp_vsync2, mdp_vsync3, mss_lte, m_voc, nav_pps,
--		    pa_indicator, pci_e0, phase_flag, pll_bypassnl,
--		    pll_bist, pci_e1, pll_reset, pri_mi2s, pri_mi2s_ws,
--		    prng_rosc, qdss, qdss_cti, qlink_request, qlink_enable,
--		    qspi0, qspi1, qspi2, qspi3, qspi_clk, qspi_cs, qua_mi2s,
--		    qup0, qup1, qup2, qup3, qup4, qup5, qup6, qup7, qup8,
--		    qup9, qup10, qup11, qup12, qup13, qup14, qup15, qup16,
--		    qup17, qup18, qup19, qup_l4, qup_l5, qup_l6, rgmii,
--		    sdc4, sd_write, sec_mi2s, spkr_i2s, sp_cmu, ter_mi2s,
--		    tgu_ch0, tgu_ch1, tgu_ch2, tgu_ch3, tsense_pwm1,
--		    tsense_pwm2, tsif1, tsif2, uim1, uim2, uim_batt,
--		    usb2phy_ac, usb_phy, vfr_1, vsense_trigger, wlan1_adc0,
--		    wlan1_adc1, wlan2_adc0, wlan2_adc1, wmss_reset
--
--- bias-disable:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configued as no pull.
--
--- bias-pull-down:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configued as pull down.
--
--- bias-pull-up:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configued as pull up.
--
--- output-high:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are configured in output mode, driven
--		    high.
--		    Not valid for sdc pins.
--
--- output-low:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are configured in output mode, driven
--		    low.
--		    Not valid for sdc pins.
--
--- drive-strength:
--	Usage: optional
--	Value type: <u32>
--	Definition: Selects the drive strength for the specified pins, in mA.
--		    Valid values are: 2, 4, 6, 8, 10, 12, 14 and 16
--
--Example:
--
--	tlmm: pinctrl@3000000 {
--		compatible = "qcom,sm8150-pinctrl";
--		reg = <0x03100000 0x300000>,
--		      <0x03500000 0x300000>,
--		      <0x03900000 0x300000>,
--		      <0x03D00000 0x300000>;
--		reg-names = "west", "east", "north", "south";
--		interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
--		gpio-controller;
--		#gpio-cells = <2>;
--		gpio-ranges = <&tlmm 0 0 175>;
--		gpio-reserved-ranges = <0 4>, <126 4>;
--		interrupt-controller;
--		#interrupt-cells = <2>;
--	};
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.yaml
-new file mode 100644
-index 000000000000..85adddbdee56
---- /dev/null
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.yaml
-@@ -0,0 +1,173 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/pinctrl/qcom,sm8150-pinctrl.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SM8150 TLMM pin controller
-+
-+maintainers:
-+  - Bjorn Andersson <andersson@kernel.org>
-+  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-+
-+description:
-+  Top Level Mode Multiplexer pin controller in Qualcomm SM8150 SoC.
-+
-+properties:
-+  compatible:
-+    const: qcom,sm8150-pinctrl
-+
-+  reg:
-+    maxItems: 4
-+
-+  reg-names:
-+    items:
-+      - const: west
-+      - const: east
-+      - const: north
-+      - const: south
-+
-+  interrupts: true
-+  interrupt-controller: true
-+  "#interrupt-cells": true
-+  gpio-controller: true
-+  "#gpio-cells": true
-+  gpio-ranges: true
-+  wakeup-parent: true
-+
-+  gpio-reserved-ranges:
-+    minItems: 1
-+    maxItems: 88
-+
-+  gpio-line-names:
-+    maxItems: 175
-+
-+patternProperties:
-+  "-state$":
-+    oneOf:
-+      - $ref: "#/$defs/qcom-sm8150-tlmm-state"
-+      - patternProperties:
-+          "-pins$":
-+            $ref: "#/$defs/qcom-sm8150-tlmm-state"
-+        additionalProperties: false
-+
-+$defs:
-+  qcom-sm8150-tlmm-state:
-+    type: object
-+    description:
-+      Pinctrl node's client devices use subnodes for desired pin configuration.
-+      Client device subnodes use below standard properties.
-+    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
-+
-+    properties:
-+      pins:
-+        description:
-+          List of gpio pins affected by the properties specified in this
-+          subnode.
-+        items:
-+          oneOf:
-+            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-6][0-9]|17[0-4])$"
-+            - enum: [ sdc2_clk, sdc2_cmd, sdc2_data, ufs_reset ]
-+        minItems: 1
-+        maxItems: 36
-+
-+      function:
-+        description:
-+          Specify the alternative function to be configured for the specified
-+          pins.
-+
-+        enum: [ adsp_ext, agera_pll, aoss_cti, ddr_pxi2, atest_char,
-+                atest_char0, atest_char1, atest_char2, atest_char3, audio_ref,
-+                atest_usb1, atest_usb2, atest_usb10, atest_usb11, atest_usb12,
-+                atest_usb13, atest_usb20, atest_usb21, atest_usb22, atest_usb2,
-+                atest_usb23, btfm_slimbus, cam_mclk, cci_async, cci_i2c,
-+                cci_timer0, cci_timer1, cci_timer2, cci_timer3, cci_timer4,
-+                cri_trng, cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0,
-+                ddr_pxi1, ddr_pxi3, edp_hot, edp_lcd, emac_phy, emac_pps,
-+                gcc_gp1, gcc_gp2, gcc_gp3, gpio, hs1_mi2s, hs2_mi2s, hs3_mi2s,
-+                jitter_bist, lpass_slimbus, mdp_vsync, mdp_vsync0, mdp_vsync1,
-+                mdp_vsync2, mdp_vsync3, mss_lte, m_voc, nav_pps, pa_indicator,
-+                pci_e0, phase_flag, pll_bypassnl, pll_bist, pci_e1, pll_reset,
-+                pri_mi2s, pri_mi2s_ws, prng_rosc, qdss, qdss_cti,
-+                qlink_request, qlink_enable, qspi0, qspi1, qspi2, qspi3,
-+                qspi_clk, qspi_cs, qua_mi2s, qup0, qup1, qup2, qup3, qup4,
-+                qup5, qup6, qup7, qup8, qup9, qup10, qup11, qup12, qup13,
-+                qup14, qup15, qup16, qup17, qup18, qup19, qup_l4, qup_l5,
-+                qup_l6, rgmii, sdc4, sd_write, sec_mi2s, spkr_i2s, sp_cmu,
-+                ter_mi2s, tgu_ch0, tgu_ch1, tgu_ch2, tgu_ch3, tsense_pwm1,
-+                tsense_pwm2, tsif1, tsif2, uim1, uim2, uim_batt, usb2phy_ac,
-+                usb_phy, vfr_1, vsense_trigger, wlan1_adc0, wlan1_adc1,
-+                wlan2_adc0, wlan2_adc1, wmss_reset ]
-+
-+      bias-pull-down: true
-+      bias-pull-up: true
-+      bias-disable: true
-+      drive-strength: true
-+      input-enable: true
-+      output-high: true
-+      output-low: true
-+
-+    required:
-+      - pins
-+
-+    additionalProperties: false
-+
-+allOf:
-+  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
-+
-+required:
-+  - compatible
-+  - reg
-+  - reg-names
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+    tlmm: pinctrl@3100000 {
-+        compatible = "qcom,sm8150-pinctrl";
-+        reg = <0x03100000 0x300000>,
-+              <0x03500000 0x300000>,
-+              <0x03900000 0x300000>,
-+              <0x03d00000 0x300000>;
-+        reg-names = "west", "east", "north", "south";
-+        interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-+        gpio-ranges = <&tlmm 0 0 176>;
-+        gpio-controller;
-+        #gpio-cells = <2>;
-+        interrupt-controller;
-+        #interrupt-cells = <2>;
-+        wakeup-parent = <&pdc>;
-+
-+        qup-spi0-default-state {
-+            pins = "gpio0", "gpio1", "gpio2", "gpio3";
-+            function = "qup0";
-+            drive-strength = <6>;
-+            bias-disable;
-+        };
-+
-+        pcie1-default-state {
-+            perst-pins {
-+                pins = "gpio102";
-+                function = "gpio";
-+                drive-strength = <2>;
-+                bias-pull-down;
-+            };
-+
-+            clkreq-pins {
-+                pins = "gpio103";
-+                function = "pci_e1";
-+                drive-strength = <2>;
-+                bias-pull-up;
-+            };
-+
-+            wake-pins {
-+                pins = "gpio104";
-+                function = "gpio";
-+                drive-strength = <2>;
-+                bias-pull-up;
-+            };
-+        };
-+    };
--- 
-2.34.1
+My concern was how to describe the deprecation in DT schema if we were
+convert them. By instead just keeping the old bindings as-is in a
+separate file and continuing to support them in the driver we can have a
+nice and clean description of the new bindings (sc8280xp) without the
+legacy cruft.
 
+If we were to start introducing conditionals on existence of child
+nodes, and marking the old bindings as deprecated in one large schema,
+then that sounds like it would be very messy and hard to read and
+maintain. But perhaps there is some way to do this without such
+downsides that I'm not aware of.
+
+Johan
