@@ -2,51 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E3EB6021BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 05:06:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 211886021BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 05:06:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230376AbiJRDGv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 23:06:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33896 "EHLO
+        id S230253AbiJRDGx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 23:06:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229974AbiJRDGe (ORCPT
+        with ESMTP id S230189AbiJRDGi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 23:06:34 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30CE172B58;
-        Mon, 17 Oct 2022 20:06:34 -0700 (PDT)
+        Mon, 17 Oct 2022 23:06:38 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B30DC73901;
+        Mon, 17 Oct 2022 20:06:36 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BE7156120C;
+        by ams.source.kernel.org (Postfix) with ESMTPS id 6596DB81C5C;
+        Tue, 18 Oct 2022 03:06:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65FB7C43141;
         Tue, 18 Oct 2022 03:06:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60363C433C1;
-        Tue, 18 Oct 2022 03:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666062393;
-        bh=MCPaHD1XR47XKulO53hDn82WBkySl3mI+YMPiYBC6ls=;
+        s=k20201202; t=1666062394;
+        bh=TgPmSxG73o1j43Hh1nLaVBRIR68zjBpA0IPJMPe2ikI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Wpv+FqKcuNOsAV2szJCGsxb2IZ1Yl4P95o9ZoCokt4+o7svJ37vGJoZ62K/D2mWd1
-         NoDw4Tl0xNtRtXz3y7FkrgG25zRWao2NwgTO/aIaufEfYHiM36FKCWc3uODsc43O70
-         hsIIuMgqm8qY/EXy+rXnZu8yKQvrDcWwyrrXnmW3umfz8vh5iSQUn6wR+UOuzuftDs
-         fZLQSF/TJTNoEvi1D0EqZhNfC5UijC5NjyguKIWHiWwbtYn9vGM4XikYEc5IZyXAfd
-         0yDs+lP761q1ktgJ+UwUMUaQzXlirQoGslnjZakcZUJc+OMg2xhv7IvxrJX6OXDq/X
-         gjjzi1D9Y0IXw==
+        b=kB6WuQC9TdG7ex1XbLonRWXCaE548TbuN4P80FnPNRF0nQaKFG/I+sZRPs656ttkU
+         rKAN4wdvOAc+cYEiWTP4+K+LRBngCA22vOsLepvigjV9WgIvapzV40y4moYHVwYXcQ
+         g2ByC/fM077viJKq1her6JuZirVXEYS8Ex1gzTSUIlPSPFyCZ3DpC/ItJf7tHcgfVk
+         Bp1gQZhjCfTHKuip16gzN88/7zZutGTOJ5sjodnPboODsHLGfRg/Uk1Y29DnLWuctz
+         KrDL7KDkoklmzw3yYstwvoqrrUHFKq3dywnRkyCPyZIIzkgN2aHX3YOQdh8dpVfp4U
+         NRwsqXXu0JQ6Q==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Michael Turquette <mturquette@baylibre.com>, quic_tdas@quicinc.com,
-        Stephen Boyd <sboyd@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        robh+dt@kernel.org, agross@kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: (subset) [PATCH v3 0/4] clk: qcom: add SM8450 Display clock controller support
-Date:   Mon, 17 Oct 2022 22:05:14 -0500
-Message-Id: <166606235853.3553294.15924373732172884011.b4-ty@kernel.org>
+To:     krzysztof.kozlowski@linaro.org, dmitry.torokhov@gmail.com
+Cc:     linux-arm-kernel@lists.infradead.org, alim.akhtar@samsung.com,
+        k.opasiak@samsung.com, linux-kernel@vger.kernel.org,
+        agross@kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: (subset) [PATCH 1/3] arm64: dts: exynos: fix polarity of "enable" line of NFC chip
+Date:   Mon, 17 Oct 2022 22:05:15 -0500
+Message-Id: <166606235860.3553294.4751927209979123286.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20220908222850.3552050-1-dmitry.baryshkov@linaro.org>
-References: <20220908222850.3552050-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220929011557.4165216-1-dmitry.torokhov@gmail.com>
+References: <20220929011557.4165216-1-dmitry.torokhov@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -59,26 +56,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 9 Sep 2022 01:28:46 +0300, Dmitry Baryshkov wrote:
-> Add support for the Display clock controller found on SM8450 platform.
+On Wed, 28 Sep 2022 18:15:55 -0700, Dmitry Torokhov wrote:
+> According to s3fwrn5 driver code the "enable" GPIO line is driven "high"
+> when chip is not in use (mode is S3FWRN5_MODE_COLD), and is driven "low"
+> when chip is in use.
 > 
-> Changes since v2:
->  - bindings: added missing gcc-sm8450.h include
+> s3fwrn5_phy_power_ctrl():
 > 
-> Changes since v1:
->  - Rebased on top of 6.0-rc
->  - Dropped clk-names in favour of using parent indices (Bjorn)
->  - Added GCC_DISP_AHB_CLK to dispcc node (Bjorn)
->  - Changed bindings licence to dual GPL+BSD (Bjorn)
->  - Removed zero clocks in dt bindings
->  - Fixed syntax issues
+> 	...
+> 	gpio_set_value(phy->gpio_en, 1);
+> 	...
+> 	if (mode != S3FWRN5_MODE_COLD) {
+> 		msleep(S3FWRN5_EN_WAIT_TIME);
+> 		gpio_set_value(phy->gpio_en, 0);
+> 		msleep(S3FWRN5_EN_WAIT_TIME);
+> 	}
 > 
 > [...]
 
 Applied, thanks!
 
-[4/4] arm64: dts: qcom: sm8450: add display clock controller
-      commit: 65b35e04d2656305320c453df2824c8413fe7150
+[2/3] arm64: dts: qcom: msm8916-samsung-a2015: fix polarity of "enable" line of NFC chip
+      commit: 978bc4c578a6d7baffc5646b0f327da036b3051b
 
 Best regards,
 -- 
