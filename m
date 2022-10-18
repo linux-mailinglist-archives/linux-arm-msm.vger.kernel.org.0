@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5985A60219F
+	by mail.lfdr.de (Postfix) with ESMTP id 84B956021A0
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 05:06:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230040AbiJRDGf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 23:06:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33852 "EHLO
+        id S230171AbiJRDGg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 23:06:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229945AbiJRDG2 (ORCPT
+        with ESMTP id S230160AbiJRDG3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 23:06:28 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE73D72FE0;
-        Mon, 17 Oct 2022 20:06:24 -0700 (PDT)
+        Mon, 17 Oct 2022 23:06:29 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA7FC8D0C2;
+        Mon, 17 Oct 2022 20:06:27 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 613016136D;
-        Tue, 18 Oct 2022 03:06:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1828C43140;
-        Tue, 18 Oct 2022 03:06:22 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 21516B81C60;
+        Tue, 18 Oct 2022 03:06:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05058C433D7;
+        Tue, 18 Oct 2022 03:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666062383;
-        bh=XKRjOQqBxVxL4uhfuktgUfjYnNmMRTMPndm8hO4kjHI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=PaEIivy/IzeXwHemo+3vHbI19X2FQpDHU8uLAlzABfagkaEYZlPgfsUSRUAZaXV4+
-         nWZOWiOBcKLRX2kv2I9rg/Bc01RyW4E4Pv8Z0UBEN/vcvQSCAeyQ9KuJthxI6Ofvon
-         QXcT06Hu0LwJfV9eG7h3TXgDvyheLEh0VG/Bhmu0yJlAvwPGgcSOYOLtNEmnL0yU/a
-         1Ts2byXs4QJ3vSSWbPA3uuyLGrUAlTcsvE//lMTrWUg9I50yBPPnNjAyXF5T9edfR9
-         XUBe0fHXYE2ydDtpe1PwhDIVzL1EZTA32DmxxyTJO7onP4BMH5FrECDt9xQer+Q+yB
-         /4w+SL0CtpzSQ==
+        s=k20201202; t=1666062384;
+        bh=aVsyh/Ic+kzwSkX6JrGCqLueEIQYpl2RcLSA4GCAMG8=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=IGqhUScNbAEVsdqjYsR5NQ1oxsjgulEW2HLgud+++2ySfqa+vmnuhSNA7frwFANZQ
+         KTm0KL1C3Jo2dqK38kXBF+HT9Xd339prCD0LsASoAhvR8QeHUeCxb+EmCJyUCxSW25
+         Ev6OjsXkcOlvoWivdjTgbKlF4V7PLXJg5SA49OAvCbB673iqRtcMibkSgWRKN5w5nQ
+         U55Ioau+SddCUMWWNekvQWlCt2HWFIh4AH/GeUNY0JPg0l+v1DBqrO/c9H8wbvEpKj
+         j7KgLgU4wAdtxt1SEW5HQastAmP1QM7JJdFyMLRAybki98iqhqAhcN+1v2VM0TqgAl
+         CB2ZrW5ih7O1w==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     bmasney@redhat.com
-Cc:     ahalaney@redhat.com, echanude@redhat.com,
-        konrad.dybcio@somainline.org, devicetree@vger.kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org,
-        agross@kernel.org, robh+dt@kernel.org, johan+linaro@kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4] arm64: dts: qcom: sc8280xp: correct ref clock for ufs_mem_phy
-Date:   Mon, 17 Oct 2022 22:05:05 -0500
-Message-Id: <166606235845.3553294.1368183713429983227.b4-ty@kernel.org>
+To:     dmitry.baryshkov@linaro.org, sean@poorly.run,
+        devicetree@vger.kernel.org, robdclark@gmail.com,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        quic_abhinavk@quicinc.com, robh+dt@kernel.org,
+        bryan.odonoghue@linaro.org, konrad.dybcio@somainline.org,
+        linux-arm-msm@vger.kernel.org, quic_mkrishn@quicinc.com
+Subject: Re: (subset) [PATCH 00/11] qcom,mdss-dsi-ctrl: Remove redundant phy-names from yaml and dtsi
+Date:   Mon, 17 Oct 2022 22:05:06 -0500
+Message-Id: <166606235852.3553294.1984189683102287059.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221006145529.755521-1-bmasney@redhat.com>
-References: <20221006145529.755521-1-bmasney@redhat.com>
+In-Reply-To: <20220907000105.786265-1-bryan.odonoghue@linaro.org>
+References: <20220907000105.786265-1-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -57,22 +57,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 6 Oct 2022 10:55:29 -0400, Brian Masney wrote:
-> The first UFS host controller fails to start on the SA8540P automotive
-> board (QDrive3) due to the following errors:
+On Wed, 7 Sep 2022 01:00:54 +0100, Bryan O'Donoghue wrote:
+> phy-names is both inconsistently used and not actually required by the driver.
 > 
->     ufshcd-qcom 1d84000.ufs: ufshcd_query_flag: Sending flag query for idn 18 failed, err = 253
->     ufshcd-qcom 1d84000.ufs: ufshcd_query_flag: Sending flag query for idn 18 failed, err = 253
->     ufshcd-qcom 1d84000.ufs: ufshcd_query_flag: Sending flag query for idn 18 failed, err = 253
->     ufshcd-qcom 1d84000.ufs: ufshcd_query_flag_retry: query attribute, opcode 5, idn 18, failed
->         with error 253 after 3 retries
+> Previous discussion with Krzysztof and Rob suggested to remove the property.
+> 
+> https://www.spinics.net/lists/linux-arm-msm/msg116525.html
+> 
+> - Mark as deprecated and not required in yaml
+> - Drop from associated dtsi files => grep -r mdss-dsi arch/arm* | grep qcom
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sc8280xp: correct ref clock for ufs_mem_phy
-      commit: f3aa975e230e060c07dcfdf3fe92b59809422c13
+[02/11] ARM: dts: qcom: apq8064: Drop redundant phy-names from DSI controller
+        commit: 645953bae8ae89e072af3b78bd648c0035d806c0
+[03/11] ARM: dts: qcom: msm8974: Drop redundant phy-names from DSI controller
+        commit: 0b01159afd5a0b782610fc113c4d8c0594b6e43d
 
 Best regards,
 -- 
