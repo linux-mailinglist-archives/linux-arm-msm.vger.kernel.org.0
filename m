@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C394601FB0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 02:38:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3344E601F0C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 02:15:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232177AbiJRAiJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 20:38:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47080 "EHLO
+        id S231821AbiJRAPb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 20:15:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229623AbiJRAhw (ORCPT
+        with ESMTP id S231819AbiJRAOZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 20:37:52 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32F848E9A3;
-        Mon, 17 Oct 2022 17:37:18 -0700 (PDT)
+        Mon, 17 Oct 2022 20:14:25 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FFA6895DA;
+        Mon, 17 Oct 2022 17:11:33 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 6257FB81620;
-        Tue, 18 Oct 2022 00:11:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E49C433D7;
-        Tue, 18 Oct 2022 00:11:03 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id BE838B81BEC;
+        Tue, 18 Oct 2022 00:11:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45886C433D6;
+        Tue, 18 Oct 2022 00:11:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666051865;
-        bh=NRxYzbakGYqdmEX9CLQwT6zIywJ3iuGNp/WtoYk+/GI=;
+        s=k20201202; t=1666051891;
+        bh=PD1K+pWxNhpjOyvmCxxSz5b5UmPBva7tpdmyrTCKoO8=;
         h=From:To:Cc:Subject:Date:From;
-        b=vCoOZxG8X9we+uHzSWN//b0TBnBg5ez8VDgH6mCHTfGt7ScbYHY5Naw+hrrNFXWh3
-         Gr5mDtMVoE3LrgFTPjRJ8AFtxZlKZU7s/b9W8FObsOML1A8F5hHwnhBeFjvYWx3Fq1
-         muj6KGWJ6Lx8q+DVua6cdwvYLrNFwG0sCe+ZAENSdPiKnCcTaz7b3T7ILTGBKIT/YS
-         VwAN9zIKCCMFZ6tug621IoobSY7wbkum3sJ1BSipUfr4lHr5WKdOWr+LNO1uNAZ5yZ
-         dGUkLDH0+Mcm7PFdx0ZwOhJnd+0CuHtmF1aBqUGqyD2GMk9/UCPeisiYqydJ6brwWS
-         tvWyKlyc7rfzg==
+        b=SIm+2y/XxtFqEB2fo6UxrMg66WHGYK8XgrnnZpybdNvor2Iai3vJJrLofldhfupMh
+         XjFrH4W44fYFhGWXfNblpMC9SjfrvAcZSrQj+vKXRn295/KJAgQRDStwgHyYuWuvzy
+         d9onv8S5AEpYFdqOv1zvnKQyZRNMhwAhG9h1DlEW9Jjhojrutqe9i5nxLFa9DcFgIv
+         LMgIU/Fy+MJ+HKYmkFtH2HaDQec7JHoZOEE+ud+VZV1SN6l0t71ygBGQaNmf8InRid
+         uQ1nQDUUGbdD2yYM1jV/IfMJrlazL8pdyQiqEg2Vc4MEhdb/l2/NnzlPR9nyH+9awD
+         La5rq0fXejplA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Herbert Xu <herbert@gondor.apana.org.au>,
@@ -39,9 +39,9 @@ Cc:     Herbert Xu <herbert@gondor.apana.org.au>,
         Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
         agross@kernel.org, andersson@kernel.org, davem@davemloft.net,
         linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 01/13] crypto: qcom-rng - Fix qcom_rng_of_match unused warning
-Date:   Mon, 17 Oct 2022 20:10:50 -0400
-Message-Id: <20221018001102.2731930-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 01/10] crypto: qcom-rng - Fix qcom_rng_of_match unused warning
+Date:   Mon, 17 Oct 2022 20:11:19 -0400
+Message-Id: <20221018001128.2732162-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 X-stable: review
@@ -77,7 +77,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/crypto/qcom-rng.c b/drivers/crypto/qcom-rng.c
-index 6cc4fd005fe0..648e3bc9c4e9 100644
+index 818e3e9479fe..51111aff3ed0 100644
 --- a/drivers/crypto/qcom-rng.c
 +++ b/drivers/crypto/qcom-rng.c
 @@ -8,6 +8,7 @@
@@ -88,7 +88,7 @@ index 6cc4fd005fe0..648e3bc9c4e9 100644
  #include <linux/module.h>
  #include <linux/of.h>
  #include <linux/platform_device.h>
-@@ -200,15 +201,13 @@ static int qcom_rng_remove(struct platform_device *pdev)
+@@ -202,15 +203,13 @@ static int qcom_rng_remove(struct platform_device *pdev)
  	return 0;
  }
  
