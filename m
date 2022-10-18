@@ -2,136 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0441D603029
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 17:50:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05B9E603042
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 17:55:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231297AbiJRPuo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Oct 2022 11:50:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53896 "EHLO
+        id S229977AbiJRPz0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Oct 2022 11:55:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231172AbiJRPuM (ORCPT
+        with ESMTP id S230417AbiJRPzP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Oct 2022 11:50:12 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDCDC1837E;
-        Tue, 18 Oct 2022 08:49:47 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 22B80B81FF9;
-        Tue, 18 Oct 2022 15:49:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD369C433D6;
-        Tue, 18 Oct 2022 15:49:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666108184;
-        bh=faiWi9Fv88r87TFCv9RWuPCZH2dQowLZP52ycV61wcM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=GXjx2sByRNEdhb9E81G9wveBcyZU5RAVWNT2tAg7ss4TCz5bSz3cAX56ZMzw7CjB+
-         l/bPMBR2EXaCaAEd1tqNoFCalHktyoFzuQrX9KNcAFiNBgTRpcHia6tNnYPnApkcll
-         5weOkIB0ZgvvOPHPWir4g8nUUS2Dmwr4fn4HIuQ5tIADRsdanC0uacof2qY4g43vd0
-         mDpLeqvSJJG3Z8engRbEeUfahReaAthQR7JpFHCf2qJKys8zgD9fh4hD8p2+9kk4R2
-         VF1I8iHvhxUbtmuhXjupw1Pt9sgCy0E3a7j2hFx9sIrf9YgGyF5vQXZFUa2gevJktL
-         rVIw9tTGyaelg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1okoqT-00065D-9n; Tue, 18 Oct 2022 17:49:33 +0200
-Date:   Tue, 18 Oct 2022 17:49:33 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Tue, 18 Oct 2022 11:55:15 -0400
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 907B94C607
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 08:55:05 -0700 (PDT)
+Received: by mail-qk1-x72b.google.com with SMTP id d13so8911558qko.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 08:55:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RPPgA437V1xE/Sd/6wbe4ql0dEwhrHdqREnKkzkmpZQ=;
+        b=VPc1HCsdnS+SKi+GJ7DfTCl2EUdnqI11sd486Qdd5bavBJW4Hy/gWqQNY8/ut8t60D
+         1MLFR7am1lPTixWOgjBRn3vxK+cR4HZzjcMHEUDE2HQOvF4aJhy0bH8a9hrbJoN3rmAJ
+         73/CrBXE0ZrI3o3Fhf0E/57Azx76r+jHuTGI1fxUsGWB9rTPgofvBOJH9qD+/BvK+/hz
+         SZDbMgxbnqKnF77HVhqxU0v8URoCGjh6QnqFClLezlxa1IlYOf+Rqcth+Gh3DHKKgCJI
+         ueLjWvxG1MQOqiD7afAl/9tmh3SkUlIJYVNhE/rQvG7EsbV6t6fBPpNHj77zCIh0trV+
+         asOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RPPgA437V1xE/Sd/6wbe4ql0dEwhrHdqREnKkzkmpZQ=;
+        b=VU5XgOed58Bcxaq7PZEqhF6n2BFzHUOxGPsCIE7+BWejJGNT+bIQfgFrfqXVmvwKop
+         kvyckn4Htg7RiYfamJsoj9+pyEBAV9HplkMiofyFXBpDBjsisc1eqiOwyP3NEeLg2UbB
+         1SgG0sp2uM+dM+s9PYZeZRBYtn6ZTD2IXtWLFPoW3cR5NTexRX09RJQ0CEC1W9TkgjFN
+         RhHeuXeOXtjgLPAIhHbc2r/8IqDLBsGSlm4nQXMD28Ndu/8NEms9XNEiouLFYFh66uAb
+         gwboPMY+loAFr3rnE4880VbdZ4QINynnc6lPL1kY++51cF4WLYYmGcqLCESjqyBIoj4B
+         W5WQ==
+X-Gm-Message-State: ACrzQf3wvbLmI2sEMKrn5tCnNEkjDSkHADWV8GXzsU5AVA2uHSUFTJEm
+        TtdXAstkSdu9nN2pfVkemeTxww==
+X-Google-Smtp-Source: AMsMyM66RyEtXOEltDnHK/mcH6KHBMw0PtMv9DFIvJALMpC9nwKuxfjKs2XHn74kMZwBL6dvY5zvyQ==
+X-Received: by 2002:a05:620a:1b9b:b0:6ed:35f0:9b56 with SMTP id dv27-20020a05620a1b9b00b006ed35f09b56mr2386303qkb.196.1666108504282;
+        Tue, 18 Oct 2022 08:55:04 -0700 (PDT)
+Received: from krzk-bin.MSRM (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
+        by smtp.gmail.com with ESMTPSA id do20-20020a05620a2b1400b006ec9f5e3396sm2694658qkb.72.2022.10.18.08.55.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Oct 2022 08:55:03 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 09/15] dt-bindings: phy: qcom,qmp-pcie: mark current
- bindings as legacy
-Message-ID: <Y07LDeMvAsiceOfO@hovoldconsulting.com>
-References: <20221017145328.22090-1-johan+linaro@kernel.org>
- <20221017145328.22090-10-johan+linaro@kernel.org>
- <5e153119-f853-ff57-8277-2d782e255be2@linaro.org>
- <Y05Qf2nDCIVg23Zh@hovoldconsulting.com>
- <39a7d2d1-06c2-4002-e222-54c24c5eb31f@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 1/3] arm64: dts: qcom: msm8994: Correct SPI10 CS pin
+Date:   Tue, 18 Oct 2022 11:54:48 -0400
+Message-Id: <20221018155450.39816-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <39a7d2d1-06c2-4002-e222-54c24c5eb31f@linaro.org>
-X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 18, 2022 at 11:27:35AM -0400, Krzysztof Kozlowski wrote:
-> On 18/10/2022 03:06, Johan Hovold wrote:
-> > On Mon, Oct 17, 2022 at 01:15:45PM -0400, Krzysztof Kozlowski wrote:
-> >> On 17/10/2022 10:53, Johan Hovold wrote:
-> >>> The current QMP PCIe PHY bindings are based on the original MSM8996
-> >>> binding which provided multiple PHYs per IP block and these in turn were
-> >>> described by child nodes.
+The GPIO55 is part of SPI10 pins, not its chip-select.  Probably the
+intention was to use one of dedicated chip-select GPIOs: 47 or 67.
+GPIO47 is used for UART2, so choose GPIO67.
 
-> >>> In preparation for adding new bindings for SC8280XP which further
-> >>> bindings can be based on, mark the current bindings as "legacy".
-> >>>
-> >>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> >>> ---
-> >>>  .../{qcom,qmp-pcie-phy.yaml => qcom,qmp-pcie-phy-legacy.yaml} | 4 ++--
-> >>
-> >> I don't think we should rename anything as legacy. These are "normal"
-> >> platforms, not legacy ones. SM8450 is not even that old.
-> > 
-> > I'm not really referring to the platforms as legacy, but the rather the
-> > format of the bindings. The intent is that by marking the current ones
-> > as such, people will not base new bindings on the old scheme.
-> > 
-> > There's no problem supporting both schemes in the driver also for the
-> > current compatibles, but expressing such a deprecation in DT schema
-> > sounds like it would be painful. We instead decided to simple draw the
-> > line at SC8280XP and have future bindings be based on its binding.
-> > 
-> >> The recommendation is to keep names matching the compatibles, not adding
-> >> some legacy/newer/newest suffixes.
-> > 
-> > Yeah, I know, but that's not what the current bindings do. And if we
-> > keep 
-> > 
-> > 	qcom,qmp-pcie-phy.yaml
-> > 
-> > and add
-> > 
-> > 	qcom,sc8280xp-qmp-pcie-phy.yaml
-> > 
-> > then I fear that people will base their bindings on the former rather
-> > than the latter.
-> 
-> Then how about renaming this file to something matching the oldest
-> supported SoC? Like: qcom,msm8998-qmp-pcie-phy.yaml
-> (I don't know which one is the oldest there)
-> 
-> Or ipq6018 as the first one appearing in the list.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Sounds good. :)
+---
 
-> > I could also rename the old schema file after one of the old platforms
-> > platforms therein (e.g. qcom,msm8998-qmp-pcie-phy) to make it sounds
-> > less like a generic schema for new bindings.
-> 
-> Oh, we thought about the same.
-> 
-> > 
-> > That is
-> > 
-> > 	qcom,msm8998-qmp-pcie-phy.yaml + comment (for current bindings)
-> > 	qcom,sc8280xp-qmp-pcie-phy.yaml (for new bindings)
-> 
-> Yes, please.
+Changes since v2:
+1. None
 
-I'll go with that then. Thanks!
+Changes since v1:
+1. None
 
-Johan
+Not tested on hardware.
+---
+ arch/arm64/boot/dts/qcom/msm8994.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+index ded5b7ceeaf9..7a582a5fe3a8 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+@@ -897,7 +897,7 @@ default {
+ 				};
+ 				cs {
+ 					function = "gpio";
+-					pins = "gpio55";
++					pins = "gpio67";
+ 					drive-strength = <2>;
+ 					bias-disable;
+ 				};
+-- 
+2.34.1
+
