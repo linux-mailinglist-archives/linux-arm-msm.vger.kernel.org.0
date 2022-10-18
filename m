@@ -2,49 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E25CC6021B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 05:06:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F8E16021B1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 05:06:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230160AbiJRDGt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 23:06:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33852 "EHLO
+        id S229770AbiJRDGp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 23:06:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230210AbiJRDGd (ORCPT
+        with ESMTP id S230230AbiJRDGd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 17 Oct 2022 23:06:33 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E36788A1E7;
-        Mon, 17 Oct 2022 20:06:31 -0700 (PDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2300B915F6;
+        Mon, 17 Oct 2022 20:06:32 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 91ADCB81C61;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9A4F76136C;
+        Tue, 18 Oct 2022 03:06:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AC32C43146;
         Tue, 18 Oct 2022 03:06:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931E5C43141;
-        Tue, 18 Oct 2022 03:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666062390;
-        bh=GM30AKOfgBsVJt+Xz++xg3ol19lpkzcYHVj0U+g1oPE=;
+        s=k20201202; t=1666062391;
+        bh=Qrbobw4FoO1SskfO2lGSpP8wqfkEA2UGv6GdRRtd6Ro=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=GWkPZW4GLQFUt1qr6pVFYsYFqwsV/H645X8RMqvc3IBXlPOinxmw8VA6CXGZ6KS4Q
-         5LYHZS/gXH3+thgm+1CZ2bHdtCpy25mXSwa6+GJ1pPo8XQ+tYV4FszzX8Z75S+XBsr
-         1jEYInXOQ+QfHOKF4ZEtfn1zigY289frvE4IkSTHxSG2DTziXwUW9UnTcOsRVS4S3R
-         xN9MxaTPTPhBkhnwtN+D7D3j6fezv/ky8rahe5df1EVbYipb0hbtDj4ZqPdd0bAtXp
-         lYUQBG1qSf5y0FayQb2xQUC30CEexvT/f+HswlnILgcmQPmSWCDT6ejT++aOnuDNkx
-         zvCPiTNl73/3A==
+        b=fqccnVZJjTDPjqyhkKmuczYznhYrRvoJM6W8/spZdSnWmCJtrAlu+XbUyRwOIHJMK
+         XKZjwv/P4l+p9qfsVIAR7og4zq7g0ZwKGZ0MVvhyBeFf5PClqaeR3z00e93phzbWER
+         7Iv1s8JCY0MlJnUt+Bk38ZXX9a9ZF1kAJ8enD3Go29Ob+CW/e7WDqMQgZRuQD405B6
+         bSMjNZurG2LJJQ7rrg9UFR7fBGzQRBMVxICLa4t9quCcXANoBFKBN0jGXGa+sl7JG9
+         iXM2NL16wS7KVDuy+sn2BhmUsBBNnoQC/pjC8L4UoSznVDs9nr7IqU8M8sMKDtO15y
+         5Pp9DdrnnxQCQ==
 From:   Bjorn Andersson <andersson@kernel.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, robh+dt@kernel.org,
         agross@kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     linux-arm-msm@vger.kernel.org, krzysztof.kozlowski@linaro.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH] Revert "arm64: dts: qcom: msm8996: add missing TCSR syscon compatible"
-Date:   Mon, 17 Oct 2022 22:05:11 -0500
-Message-Id: <166606235833.3553294.14010306999480993150.b4-ty@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v1 0/6] arm64: qcom: dts: correct firmware paths
+Date:   Mon, 17 Oct 2022 22:05:12 -0500
+Message-Id: <166606235855.3553294.11534953755926582478.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20220921095258.2332568-1-dmitry.baryshkov@linaro.org>
-References: <20220921095258.2332568-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220919190037.2122284-1-dmitry.baryshkov@linaro.org>
+References: <20220919190037.2122284-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -57,21 +56,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 21 Sep 2022 12:52:58 +0300, Dmitry Baryshkov wrote:
-> This reverts commit 8a99e0fc8bd3 ("arm64: dts: qcom: msm8996: add
-> missing TCSR syscon compatible").
+On Mon, 19 Sep 2022 22:00:31 +0300, Dmitry Baryshkov wrote:
+> This patchset corrects firmware paths for several Qualcomm-based devices
+> to include the SoC name.
 > 
-> This commit marked the saw3 (syscon@9a10000) node as compatible with
-> qcom,tcsr-msm8996. However the mentioned device is not not a TCSR
-> (system registers, hardware mutex). It is a CPU power
-> controller/regulator, which is currently being handled as a syscon.
+> Changes since RFC:
+>  - Fixed firmware paths for Sony devices according to the discussion
+>    with Konrad (added Sony, renamed pdx223 to nagara).
+>  - Changed ifc6560 to use SoC-generic firmware since the board doesn't
+>    seem to be fused to particular PKI.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] Revert "arm64: dts: qcom: msm8996: add missing TCSR syscon compatible"
-      commit: 20772f506fa4aab4d03035807f30eecee856e274
+[1/6] arm64: qcom: dts: w737: correct firmware paths
+      commit: 7d1473d7ba78ed15cfe7e08c1d8b5f2b21d60bbd
+[2/6] arm64: qcom: dts: miix-630: correct firmware paths
+      commit: 6fa1fb7814f556a630b219033cd5de72e978537c
+[3/6] arm64: qcom: dts: ifc6560: correct firmware paths
+      commit: 6dae44d91e42da017d12b3dfeb546cbe2b9c9306
+[4/6] arm64: qcom: dts: sagami: correct firmware paths
+      commit: f0a577c3a80790f4249be76a6b9712003deb93a5
+[5/6] arm64: qcom: dts: pdx223: correct firmware paths
+      commit: c53532f7825c98ede6f80f9549e33443465aaf6a
+[6/6] arm64: qcom: dts: nile: correct firmware paths
+      commit: 151d6e9cc22a8a5e9bd47a99723aa4ab60821faf
 
 Best regards,
 -- 
