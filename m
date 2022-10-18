@@ -2,48 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BFA02602242
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 05:11:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15D0260223A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 05:11:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231499AbiJRDLy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 23:11:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35624 "EHLO
+        id S229707AbiJRDLb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 23:11:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229822AbiJRDJw (ORCPT
+        with ESMTP id S231176AbiJRDJm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 23:09:52 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EC189AFF0;
-        Mon, 17 Oct 2022 20:07:25 -0700 (PDT)
+        Mon, 17 Oct 2022 23:09:42 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 957969B842;
+        Mon, 17 Oct 2022 20:07:27 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2B21C61369;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5B25861370;
+        Tue, 18 Oct 2022 03:07:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 333C5C43140;
         Tue, 18 Oct 2022 03:07:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44ACFC43147;
-        Tue, 18 Oct 2022 03:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1666062445;
-        bh=RuQ0qyzLyCZ8UbmT38wc6p1T9N+BAk8sE8gaFRQ32Kc=;
+        bh=RWK5Jt6x6t6Aflhbksqnm8KcBzIAiFiCHz7ec9/zo2M=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Jg4K+bucB7CfGN/2s5IRFsjY8sGjKSIrodw1Eu1qMJ4Tj1LG5tdmw4a+jTDexUHyl
-         0D7J/eG7EqUlhsSevd/1Tp3KL2S7W7d2D2Xat40z8uPClCsyGOAxn1S6231Yb0lsWM
-         CGS3ChCcjqUJbjtH6846pLoVhE1bGKmmR4r+qzwH5cYA7PwBlB/vy0MG7PNZTtgcQX
-         DZ3nU5Lf7Go0/IaFJ57VI7zr00kwDFr6AfeOnEgKaAOPoIuJiNItWoVZS5jh3mGIST
-         NjKaESoc1INArVF6LrDyNgYCiWOmxfRnkm5B6MxUw54jiIXLzaxvine1lkIfmbvEsy
-         ePcF3WsxuXnVg==
+        b=JGVBxn981NqSPRdpBGnZ7gan1blU3mzAnoACE75ABmnPAt2rz9x/X1oTXgAr+/rR/
+         w1ceNDr7h7WfrkSiz5Oor/+XWx2/6tB1MnPrw4nY0U5U/0bY5MskwZkSYrAo17VO03
+         m5tcXGpk1V5iNThQVcGIf0ZENohEhf6E0TwA+cd28lD8IS6sv1G27zjKRhlkePVMgx
+         w9NR4vHzWEaInuhNvtgYVuk/6elzgOaulE6eEHk5qVqNY17yMlYxD+sLbLmidW1hGQ
+         bT7D199fesafXtwCRbYepfHlJ4njAGQLQlflGttFQ30HnvWB1tVBETArDOsZU18/dn
+         zqGPucuGbGQMw==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     luca@z3ntu.xyz, linux-arm-msm@vger.kernel.org
-Cc:     robin.murphy@arm.com, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
+To:     linux-arm-msm@vger.kernel.org, mailingradian@gmail.com
+Cc:     devicetree@vger.kernel.org, robh+dt@kernel.org, agross@kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: (subset) [PATCH v4 0/3] MDSS support for MSM8953
-Date:   Mon, 17 Oct 2022 22:05:57 -0500
-Message-Id: <166606235863.3553294.17596125386082772765.b4-ty@kernel.org>
+Subject: Re: [PATCH v2 0/2] SDM670 Power Domains
+Date:   Mon, 17 Oct 2022 22:05:58 -0500
+Message-Id: <166606235837.3553294.2518659755188451529.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221016161554.673006-1-luca@z3ntu.xyz>
-References: <20221016161554.673006-1-luca@z3ntu.xyz>
+In-Reply-To: <20221004221130.14076-1-mailingradian@gmail.com>
+References: <20221004221130.14076-1-mailingradian@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -56,25 +55,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 16 Oct 2022 18:15:50 +0200, Luca Weiss wrote:
-> This series adds the APPS IOMMU and the MDSS block for display that is
-> found on msm8953 SoCs.
+On Tue, 4 Oct 2022 18:11:28 -0400, Richard Acayan wrote:
+> Changes since v1:
+>  - accumulate review tags (reviewers are probably not the maintainers
+>    who are meant to apply this)
+>  - remove minor grammatical error in the cover letter
 > 
-> Luca Weiss (1):
->   dt-bindings: qcom-iommu: Add Qualcomm MSM8953 compatible
-> 
-> Vladimir Lypak (2):
->   arm64: dts: qcom: msm8953: add APPS IOMMU
->   arm64: dts: qcom: msm8953: add MDSS
+> These are the power domains for the Qualcomm Snapdragon 670. I haven't
+> tried to turn on EBI with pd_ignore_unused but it is not present in
+> Google's msm-4.9 vendor kernel.
 > 
 > [...]
 
 Applied, thanks!
 
-[2/3] arm64: dts: qcom: msm8953: add APPS IOMMU
-      commit: c0b9575a36069f52f09fbe9b8f7a9db940cb952c
-[3/3] arm64: dts: qcom: msm8953: add MDSS
-      commit: cf6c35d1bc89e0942c379f841e1d9095fc66d642
+[1/2] dt-bindings: power: rpmpd: add sdm670 power domains
+      commit: 9ba5080e688d0e37a0d93bb63d83199d464debf4
+[2/2] soc: qcom: rpmhpd: add sdm670 power domains
+      commit: 5faeae4eac74685c3eda3e55bc3725a331ecd09d
 
 Best regards,
 -- 
