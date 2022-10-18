@@ -2,163 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DAC36030ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 18:44:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C78D960315E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 19:11:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229922AbiJRQoi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Oct 2022 12:44:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49092 "EHLO
+        id S229711AbiJRRLR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Oct 2022 13:11:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229924AbiJRQo3 (ORCPT
+        with ESMTP id S229597AbiJRRLQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Oct 2022 12:44:29 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3518A55AF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 09:44:26 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id hh9so10008561qtb.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 09:44:26 -0700 (PDT)
+        Tue, 18 Oct 2022 13:11:16 -0400
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87BFBC1DAF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 10:11:15 -0700 (PDT)
+Received: by mail-qt1-x835.google.com with SMTP id c23so10075854qtw.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 10:11:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8Tbu2eJEYFjyO0ej5IfoFmf0gdEZqmFzh3CLJlNQxzw=;
-        b=Hah9Indmain6Q3j8MTL7qJDfMpsNsnS3XJcTan9bQ9Fc+dNLiT9H+PQ0q4MlSJZO4P
-         uD0JxDcLWYwQ7s4yTP99/LbnLAAKPOXxKFGvraeuh8S/9Yaiukr63doI9fjqroADX8Tc
-         kcjF6I/okYhO482Egc/N8MT0JPHMCDDE9iRwrql3bnnWDrtDoyh4mAGfr8hbRmkREmns
-         1prvsXGljY08AFIOrsXq/rSCWbTdYjIPQKIMrmI34EnZIswfW2QC1OiKsghmjRgWUF0m
-         HPRPtPc4CtLUOKlRmYKmVtzjEamjBRBtL8YkRptfKxneTxofqArshuRiqH31DJxNw11f
-         w8yQ==
+        bh=AtZtFlWaxDzp4p+zyoaTuOJhPmtR/rXSVbDgcVsy++M=;
+        b=tnIPN01nJpr5rusLud3hXjIo2aDkZ+LjkWepVdHkW95LxlFnX4zXSYGAv0cpxkN2PY
+         xrTi47GvozItMnZUJX1J73I8rs7f4JKXTW4TD8wg6nWWqsXPlfWnv8sgSEeS1EvHhhiB
+         BE6eEB12x97rxWtUqK3JigC7BcdOp/TsmYmoFjnvh9FeGSypTAaEba5DX3lmvjpzPmai
+         CM+1lfLcVt2cGAJhQKiCBNHrL3x5qlsBIoKqDF+M5xts/0VeCUPKaE4RZg1UyYsxZTc/
+         52Qz5AkPADMoEL6TN75vTc3ds2tV5c9eMfb1NXjWgXfyuKEab+Vw1iGL72LIsfcPm+XF
+         avgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8Tbu2eJEYFjyO0ej5IfoFmf0gdEZqmFzh3CLJlNQxzw=;
-        b=sO5g2VqbeC8Ew09f54VSjzZ93rrjo61DSghCWk9huIb6lols4TYnNGqLSOiw3kHUqX
-         Hj+aNT0renDc7RUNSnv3duXq/H2aqyeTOSlQxnp5PyGwcoRQyOSQrJ+PCtvJmHo43Vp+
-         rvbZ7csI6jDItYrt1D8b4cqHbymUnolzxGsVCXNNeggdcjbHGo8lrbNWqFQcYfrnrzs/
-         hTKT5z7zLZ5mXMTJMhMIfdj46FpBBOgWyy5Pn3vhLsawZzjRszNCl25XcUi2fCX+psT0
-         nwbVhQG9DI4TMO/CkbRgDD0un9By5IQeUb7MfghqUl3LM2wai0Ds8BZ0Kf9aRiGfXQK+
-         +EvA==
-X-Gm-Message-State: ACrzQf0E+6l0LR2LAfQQRSvhDdqcOeN2hzRNWULj9LrQhEl72g7snd4S
-        CVa7g+DJsLz6Dhyrw870z3/BFQ==
-X-Google-Smtp-Source: AMsMyM5Dd8///qAFR9rKWcH8IQOs/how2BLHQqSSuEXBHTCVT2Lyylgatw9LASPWVZL8YIG80OYPNw==
-X-Received: by 2002:a05:622a:1a9d:b0:39c:d634:be42 with SMTP id s29-20020a05622a1a9d00b0039cd634be42mr2878001qtc.476.1666111464968;
-        Tue, 18 Oct 2022 09:44:24 -0700 (PDT)
+        bh=AtZtFlWaxDzp4p+zyoaTuOJhPmtR/rXSVbDgcVsy++M=;
+        b=U1oGs8TUtllgDUvlcVj1Dvnp3tWlTzf3n0A2DG3b5VC3jDITOZeCNnZEZjB2XIjyUP
+         2lASBvOFE1GuwOL5duLfW2PG5mR52BOFM6v3Ay7cXlSBh85t63jT3pgfydM/eQ/irZi9
+         mzusSgKlcmKzUYPYehLuMV5XTdhchCRccvXpmJiVajqxHjrlcrrKHfeOJvqFMJcuG8bf
+         mqYzLjP8Rp5DYGJdQlEMrR/Q+7Du0+T3KbQH8AzyTHvZDX7IrJpF7h9pPszqdxBdg6mv
+         7a/Aoh4pvoxGvRaKoHNziHBN4F5BTySnKOYy5y0XLBR3l26SemZFrH0SCY42E0xCYGsq
+         QgQQ==
+X-Gm-Message-State: ACrzQf0RbxT47bARGKdU5jrkmowuDqYH8OF+70/yVen505f4xj2BpMWN
+        gQODBccrlICMDR57uOjvgpwhfw==
+X-Google-Smtp-Source: AMsMyM6SadXRdagzOt9c1T8+N4cXX7UyAxOLgO26HDrO47PED7/ad9lu195FTu+7QvB61W4FUzMg5g==
+X-Received: by 2002:ac8:5cc6:0:b0:398:10b4:8fff with SMTP id s6-20020ac85cc6000000b0039810b48fffmr2933621qta.602.1666113074679;
+        Tue, 18 Oct 2022 10:11:14 -0700 (PDT)
 Received: from [192.168.10.124] (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
-        by smtp.gmail.com with ESMTPSA id dt5-20020a05620a478500b006ee94c5bf26sm2782237qkb.91.2022.10.18.09.44.23
+        by smtp.gmail.com with ESMTPSA id g5-20020ac80705000000b00398ed306034sm2203461qth.81.2022.10.18.10.11.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Oct 2022 09:44:24 -0700 (PDT)
-Message-ID: <e334e265-fde0-29df-d905-c3ec4941f152@linaro.org>
-Date:   Tue, 18 Oct 2022 12:44:22 -0400
+        Tue, 18 Oct 2022 10:11:13 -0700 (PDT)
+Message-ID: <12d79669-6e8c-6cf8-2e32-d4e0e2e42f3d@linaro.org>
+Date:   Tue, 18 Oct 2022 13:11:12 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.0
-Subject: Re: [PATCH 09/15] dt-bindings: phy: qcom,qmp-pcie: mark current
- bindings as legacy
+Subject: Re: [PATCH V3 1/2] dt-bindings: firmware: qcom-scm: Add optional
+ interrupt
 Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221017145328.22090-1-johan+linaro@kernel.org>
- <20221017145328.22090-10-johan+linaro@kernel.org>
- <CAA8EJpqSWmy5Z4cmJnsdjMjkmACW7HSi-k5JxZ0gLCeUAWEnxQ@mail.gmail.com>
- <Y05+E90tmlq2tNFa@hovoldconsulting.com>
- <CAA8EJprwhEvUfUr-zDir4zFh_NAyr0qPbrHi6Hf8=2HC1dAhaw@mail.gmail.com>
- <b0c1bdfb-4a31-9deb-1f0a-0ed813707464@linaro.org>
- <Y07OfmfQgQWFzHZY@hovoldconsulting.com>
+To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        konrad.dybcio@somainline.org, robimarko@gmail.com,
+        quic_gurus@quicinc.com, quic_rjendra@quicinc.com
+References: <1666086406-5452-1-git-send-email-quic_sibis@quicinc.com>
+ <1666086406-5452-2-git-send-email-quic_sibis@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <Y07OfmfQgQWFzHZY@hovoldconsulting.com>
+In-Reply-To: <1666086406-5452-2-git-send-email-quic_sibis@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/10/2022 12:04, Johan Hovold wrote:
-> On Tue, Oct 18, 2022 at 11:32:07AM -0400, Krzysztof Kozlowski wrote:
->> On 18/10/2022 07:37, Dmitry Baryshkov wrote:
->>>
->>>>> And yes, I think we should also upgrade
->>>>> older DTs, keeping drivers backwards compatible (for some time?).
->>>>
->>>> Possibly, but I'm not sure it's worth the dts churn. As I mentioned
->>>> elsewhere, supporting both the old and new binding in the driver is
->>>> mostly trivial, while encoding the deprecated bindings in DT schema
->>>> sounds like it would be painful.
->>>
->>> This is probably the time where Krzysztof can advise us. I'm still not
->>> sure when it is expected to encode both old and new bindings in the
->>> schema and when we can update both the schema and the DT.
->>
->> I do not follow what exactly the proposal is. Are you asking whether to:
->> 1. keep existing DTS compatible with old driver?
->> or
->> 2. update existing DTS so it is working only with new driver (and not
->> compatible with old driver thus having ABI break)?
->>
->> If so, it is less question to bindings but more to the usage of DTS in
->> other projects (like bootloaders, firmware, BSD) and generic
->> recommendation is: do not break other users, if possible. It is however
->> up to the platform maintainer (Bjorn) to decide on this, not on me.
+On 18/10/2022 05:46, Sibi Sankar wrote:
+> From: Guru Das Srinagesh <quic_gurus@quicinc.com>
 > 
-> The question is whether to convert also the current bindings and DTS to
-> the new (sc8280xp) scheme (e.g. drop the child nodes and register
-> subregions).
+> Add an interrupt specification to the bindings to support the wait-queue
+> feature.
 > 
-> The driver can support both binding schemes using the same compatible
-> strings for a transition period (or in theory forever) by checking for
-> the existence of a child node.
+> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
 > 
-> Converting the DTS to use the new bindings would obviously prevent using
-> them with an old kernel (i.e. 2 above), but I don't think that's a
-> problem (unlike backward compatibility during at least a transition
-> period).
-
-It is still not nice towards any other users of DTS, because this will
-break all of them. I agree this won't be ABI type of break. It is
-discouraged though, unless there are clear benefits from this or one
-totally does not care about other DTS users...
-
-As I said it is up to platform maintainer.
-
+> The interrupt property for scm firmware from a binding perspective is
+> completely optional i.e. not all tz fw running in the wild on sm8450
+> devices support this feature. The bootloader does the interrupt property
+> addition on sm8450 devices with wait-queue support.
 > 
-> My concern was how to describe the deprecation in DT schema if we were
-> convert them. By instead just keeping the old bindings as-is in a
-> separate file and continuing to support them in the driver we can have a
-> nice and clean description of the new bindings (sc8280xp) without the
-> legacy cruft.
-
-You cannot have one compatible in two schemas, so for old bindings (and
-DTS):
-1. Don't convert them,
-2. Convert with keeping old properties - as you pointed this might be
-full of conditionals/allOf, so difficult to maintain and read,
-3. Convert dropping old stuff.
-
-For the option 3. for sure Rob will ask why. :)
-
+>  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
-> If we were to start introducing conditionals on existence of child
-> nodes, and marking the old bindings as deprecated in one large schema,
-> then that sounds like it would be very messy and hard to read and
-> maintain. But perhaps there is some way to do this without such
-> downsides that I'm not aware of.
+> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> index c5b76c9f7ad0..6483d76b2371 100644
+> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> @@ -71,6 +71,11 @@ properties:
+>    '#reset-cells':
+>      const: 1
+>  
+> +  interrupts:
+> +    description:
+> +      The wait-queue interrupt that firmware raises as part of handshake
+> +      protocol to handle sleeping SCM calls.
 
+You still miss here constraints... nothing improved. Just look at other
+properties in this file.
+
+maxItems:1
 
 Best regards,
 Krzysztof
