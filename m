@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E35B8602FB2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 17:29:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA45F602FB3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 17:29:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230319AbiJRP3L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Oct 2022 11:29:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38052 "EHLO
+        id S230321AbiJRP3M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Oct 2022 11:29:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230455AbiJRP3G (ORCPT
+        with ESMTP id S230484AbiJRP3H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Oct 2022 11:29:06 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 057FDBC614
+        Tue, 18 Oct 2022 11:29:07 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7942C8200
         for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 08:29:05 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id c20so18398356ljj.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 08:29:04 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id m23so18398347lji.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 08:29:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UPjX8YygxtCcRrbYn3FxymvJ8EWixkz9W2za1oHEXVo=;
-        b=wHWBloqiiwx1jqX9ysI/sEnSimM+LufKG+jyIximgCy4KFyv9/5FcYTEmQqzYo+BtF
-         I7iAYnHfUOHyxFQJHD8JnD0vtZHDXCZuI7bMNPz9hzlE1zhXONBPzoZxS0SSW2h79IfV
-         CG4uuKU90clSzh0UOUBaRoRQIkgovBbeqIc7ONuqcm8cfQLl1cOc4onShQdMWeLXvyK/
-         xr3mbBOVG1XS0UrP+vtSuy003lxBekgP8qUpJpmgG0SZ4d8+tStH0MqLqIRUhpc2JVlf
-         +HyAs2qFzkyYoiatPzCjN5fGZisvRDzdpSo2WGqgp93USKxPoJuhcD8Abn3uVlJAVswo
-         9QKA==
+        bh=eICgBxGNGKtE/hLPDQo1kEkz5yh4bfsSzqIE+62FuGc=;
+        b=j6s/UUFbfhlBYCdMnWA56JZ+mwYLJIEgwXMq32ZQS1GcetQZ+NJTTy1Aj1+LLmDgB3
+         GEOhnN1Y6hIMvy4XhvzVzpYUDDn4/BbsB3kb4jeIiJfwUsDhNZ7+2ze8DwPOFohEHrr8
+         lncpiqcR6imDPWMC3S8/Rj0dbcYGw4y4lpv7fn0+ayfHy4mDUEE14aIzLXHH7TjSf0+U
+         z/xy8ddv/dCz7VR+LIjWh2HtKFN8R5DOdbCJuEUFtL/x8YjQXVp3aLF0H/YI+QsJC8qT
+         xEohCYEaRTC0JuhfrXqB+oXYVypynotGxAvo/o0/yhKGCTimVGCkN75okRTM4UxkE1R5
+         Jjng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UPjX8YygxtCcRrbYn3FxymvJ8EWixkz9W2za1oHEXVo=;
-        b=EMXvuIzhTDAyaK6SiRVHuXMXHw4QdQQAlcQeIgQyWUZY1yVy7DoV/VjIFJ1NDoCvuk
-         +MeSh+7Lh7PXgJUJX6fAKjccMKW/x9lT1x3heEb6SsnM5K5TE3NrYf//zNEHtBM9DqqH
-         UMkHubQqIVT+5F9b2OpbfiTK5SFTv7WeDoveTgzsemwKd1WrSJdh0NBE0iFpYTroCC+R
-         dhX7r0dpsWmWGpwBFqoX+0DKqxoDNA0VkMJU8vmiOoxoFMx+ZHWJ0GE6Scgv2gMzVEuG
-         YDoyFAK4e7uTVe7gIJ8C6t9qByH8nNUAwdn5JC2596bCF1a2wWLnRWzZ+gHblIJyE8b0
-         bE4Q==
-X-Gm-Message-State: ACrzQf1ktKIG1vkMpmgQ7WKdExe6YFs1XOrqC7xpbXtdhmq0bH4ZgqN0
-        HAOdeuvnBvEMrHlAJ6tePXJb1g==
-X-Google-Smtp-Source: AMsMyM52trZr4FJMtWZGitOXzfgzOVv49rz01lrNXx/LS1mXYApz1KWw1IBEEeRhZ35OioJQYDBLuQ==
-X-Received: by 2002:a05:651c:98a:b0:26d:fd1f:10 with SMTP id b10-20020a05651c098a00b0026dfd1f0010mr1287534ljq.323.1666106943060;
-        Tue, 18 Oct 2022 08:29:03 -0700 (PDT)
+        bh=eICgBxGNGKtE/hLPDQo1kEkz5yh4bfsSzqIE+62FuGc=;
+        b=Sa0yOXzvNAxP5sLQu3R8u2STxziCOlY03uUFFHCQuSjICxrtCix3Diy77RBqNgMaq6
+         wsESIwmIqlUGGd60Y72Wk33ZRKLSFY1FGC1q0/5ngO7/CLko0RvScYq1BmRYFdxnyyfx
+         8Ouw5PLN9/wYvn3aVp2kpoQbA2R4TVzP6oOejrq8LsabxFihVH0HjsKBX5tzingIftAQ
+         2VF5p26VDy5Yg6xAoNEqGDHzu2KZINtP1/V77pexwxVHtmHVw2wTxK5lygUtA5b3Dywp
+         cYa1IzVMJcvwJrzTPGWagebNLqaw6drvRxqhCRND1BoyUe00aVyPWKqA0dbzcroYnMuS
+         7yiA==
+X-Gm-Message-State: ACrzQf0CJqJ1E9b0xE5e7yXCV/VTxSjKXfaunaxrUF2pbyCdcM/+U9vh
+        r2c12mxr70Ozoo6URWdZK6CbHg==
+X-Google-Smtp-Source: AMsMyM5qhaVBssZvOHRNlLw80I2tI7dTKVHV+IiYnqI+ykB7zJd2VTKRq2WEJFEzjNDnR7jMsGtqxg==
+X-Received: by 2002:a2e:a589:0:b0:26f:d394:dbe2 with SMTP id m9-20020a2ea589000000b0026fd394dbe2mr1327724ljp.485.1666106945164;
+        Tue, 18 Oct 2022 08:29:05 -0700 (PDT)
 Received: from uffe-XPS13.. (h-94-254-63-18.NA.cust.bahnhof.se. [94.254.63.18])
-        by smtp.gmail.com with ESMTPSA id a9-20020a05651c030900b0026ddd41aecasm1998617ljp.135.2022.10.18.08.29.01
+        by smtp.gmail.com with ESMTPSA id a9-20020a05651c030900b0026ddd41aecasm1998617ljp.135.2022.10.18.08.29.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Oct 2022 08:29:02 -0700 (PDT)
+        Tue, 18 Oct 2022 08:29:04 -0700 (PDT)
 From:   Ulf Hansson <ulf.hansson@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -62,9 +62,9 @@ Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Ulf Hansson <ulf.hansson@linaro.org>,
         linux-arm-msm@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 5/6] soc: qcom: rpmh-rsc: Save base address of drv
-Date:   Tue, 18 Oct 2022 17:28:36 +0200
-Message-Id: <20221018152837.619426-6-ulf.hansson@linaro.org>
+Subject: [PATCH v3 6/6] soc: qcom: rpmh-rsc: Write CONTROL_TCS with next timer wakeup
+Date:   Tue, 18 Oct 2022 17:28:37 +0200
+Message-Id: <20221018152837.619426-7-ulf.hansson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221018152837.619426-1-ulf.hansson@linaro.org>
 References: <20221018152837.619426-1-ulf.hansson@linaro.org>
@@ -72,8 +72,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,97 +81,180 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Maulik Shah <quic_mkshah@quicinc.com>
 
-Add changes to save drv's base address for rsc. This is
-used to read drv's configuration such as solver mode is
-supported or to write into CONTROL_TCS registers.
+The next wakeup timer value needs to be set in always on domain timer
+as the arch timer interrupt can not wakeup the SoC if after the deepest
+CPUidle states the SoC also enters deepest low power state.
+
+To wakeup the SoC in such scenarios the earliest wakeup time is set in
+CONTROL_TCS and the firmware takes care of setting up its own timer in
+always on domain with next wakeup time. The timer wakes up the RSC and
+sets resources back to wake state.
 
 Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
 Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # SM8450
 ---
- drivers/soc/qcom/rpmh-internal.h |  2 ++
- drivers/soc/qcom/rpmh-rsc.c      | 18 ++++++++----------
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ drivers/soc/qcom/rpmh-internal.h |  3 ++
+ drivers/soc/qcom/rpmh-rsc.c      | 61 ++++++++++++++++++++++++++++++++
+ drivers/soc/qcom/rpmh.c          |  4 ++-
+ 3 files changed, 67 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/soc/qcom/rpmh-internal.h b/drivers/soc/qcom/rpmh-internal.h
-index cd3d6ce137e3..7866bb1e5361 100644
+index 7866bb1e5361..39f53586f724 100644
 --- a/drivers/soc/qcom/rpmh-internal.h
 +++ b/drivers/soc/qcom/rpmh-internal.h
-@@ -91,6 +91,7 @@ struct rpmh_ctrlr {
-  * Resource State Coordinator controller (RSC)
-  *
-  * @name:               Controller identifier.
-+ * @base:               Start address of the DRV registers in this controller.
-  * @tcs_base:           Start address of the TCS registers in this controller.
-  * @id:                 Instance id in the controller (Direct Resource Voter).
-  * @num_tcs:            Number of TCSes in this DRV.
-@@ -114,6 +115,7 @@ struct rpmh_ctrlr {
+@@ -112,6 +112,7 @@ struct rpmh_ctrlr {
+  * @tcs_wait:           Wait queue used to wait for @tcs_in_use to free up a
+  *                      slot
+  * @client:             Handle to the DRV's client.
++ * @dev:                RSC device.
   */
  struct rsc_drv {
  	const char *name;
-+	void __iomem *base;
- 	void __iomem *tcs_base;
- 	int id;
- 	int num_tcs;
+@@ -127,12 +128,14 @@ struct rsc_drv {
+ 	spinlock_t lock;
+ 	wait_queue_head_t tcs_wait;
+ 	struct rpmh_ctrlr client;
++	struct device *dev;
+ };
+ 
+ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg);
+ int rpmh_rsc_write_ctrl_data(struct rsc_drv *drv,
+ 			     const struct tcs_request *msg);
+ void rpmh_rsc_invalidate(struct rsc_drv *drv);
++void rpmh_rsc_write_next_wakeup(struct rsc_drv *drv);
+ 
+ void rpmh_tx_done(const struct tcs_request *msg, int r);
+ int rpmh_flush(struct rpmh_ctrlr *ctrlr);
 diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index 050b5f5c9f62..8e01697f59af 100644
+index 8e01697f59af..25b838bf9078 100644
 --- a/drivers/soc/qcom/rpmh-rsc.c
 +++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -881,8 +881,7 @@ static int rpmh_rsc_pd_attach(struct rsc_drv *drv, struct device *dev)
- 	return ret;
+@@ -12,6 +12,7 @@
+ #include <linux/io.h>
+ #include <linux/iopoll.h>
+ #include <linux/kernel.h>
++#include <linux/ktime.h>
+ #include <linux/list.h>
+ #include <linux/module.h>
+ #include <linux/notifier.h>
+@@ -25,6 +26,7 @@
+ #include <linux/spinlock.h>
+ #include <linux/wait.h>
+ 
++#include <clocksource/arm_arch_timer.h>
+ #include <soc/qcom/cmd-db.h>
+ #include <soc/qcom/tcs.h>
+ #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+@@ -49,6 +51,14 @@
+ #define DRV_NCPT_MASK			0x1F
+ #define DRV_NCPT_SHIFT			27
+ 
++/* Offsets for CONTROL TCS Registers */
++#define RSC_DRV_CTL_TCS_DATA_HI		0x38
++#define RSC_DRV_CTL_TCS_DATA_HI_MASK	0xFFFFFF
++#define RSC_DRV_CTL_TCS_DATA_HI_VALID	BIT(31)
++#define RSC_DRV_CTL_TCS_DATA_LO		0x40
++#define RSC_DRV_CTL_TCS_DATA_LO_MASK	0xFFFFFFFF
++#define RSC_DRV_CTL_TCS_DATA_SIZE	32
++
+ /* Offsets for common TCS Registers, one bit per TCS */
+ #define RSC_DRV_IRQ_ENABLE		0x00
+ #define RSC_DRV_IRQ_STATUS		0x04
+@@ -142,6 +152,14 @@
+  *  +---------------------------------------------------+
+  */
+ 
++#define USECS_TO_CYCLES(time_usecs)			\
++	xloops_to_cycles((time_usecs) * 0x10C7UL)
++
++static inline unsigned long xloops_to_cycles(unsigned long xloops)
++{
++	return (xloops * loops_per_jiffy * HZ) >> 32;
++}
++
+ static inline void __iomem *
+ tcs_reg_addr(const struct rsc_drv *drv, int reg, int tcs_id)
+ {
+@@ -756,6 +774,48 @@ static bool rpmh_rsc_ctrlr_is_busy(struct rsc_drv *drv)
+ 	return set < max;
  }
  
--static int rpmh_probe_tcs_config(struct platform_device *pdev,
--				 struct rsc_drv *drv, void __iomem *base)
-+static int rpmh_probe_tcs_config(struct platform_device *pdev, struct rsc_drv *drv)
- {
- 	struct tcs_type_config {
- 		u32 type;
-@@ -896,9 +895,9 @@ static int rpmh_probe_tcs_config(struct platform_device *pdev,
- 	ret = of_property_read_u32(dn, "qcom,tcs-offset", &offset);
- 	if (ret)
- 		return ret;
--	drv->tcs_base = base + offset;
-+	drv->tcs_base = drv->base + offset;
++/**
++ * rpmh_rsc_write_next_wakeup() - Write next wakeup in CONTROL_TCS.
++ * @drv: The controller
++ *
++ * Writes maximum wakeup cycles when called from suspend.
++ * Writes earliest hrtimer wakeup when called from idle.
++ */
++void rpmh_rsc_write_next_wakeup(struct rsc_drv *drv)
++{
++	ktime_t now, wakeup;
++	u64 wakeup_us, wakeup_cycles = ~0;
++	u32 lo, hi;
++
++	if (!drv->tcs[CONTROL_TCS].num_tcs || !drv->genpd_nb.notifier_call)
++		return;
++
++	/* Set highest time when system (timekeeping) is suspended */
++	if (system_state == SYSTEM_SUSPEND)
++		goto exit;
++
++	/* Find the earliest hrtimer wakeup from online cpus */
++	wakeup = dev_pm_genpd_get_next_hrtimer(drv->dev);
++
++	/* Find the relative wakeup in kernel time scale */
++	now = ktime_get();
++	wakeup = ktime_sub(wakeup, now);
++	wakeup_us = ktime_to_us(wakeup);
++
++	/* Convert the wakeup to arch timer scale */
++	wakeup_cycles = USECS_TO_CYCLES(wakeup_us);
++	wakeup_cycles += arch_timer_read_counter();
++
++exit:
++	lo = wakeup_cycles & RSC_DRV_CTL_TCS_DATA_LO_MASK;
++	hi = wakeup_cycles >> RSC_DRV_CTL_TCS_DATA_SIZE;
++	hi &= RSC_DRV_CTL_TCS_DATA_HI_MASK;
++	hi |= RSC_DRV_CTL_TCS_DATA_HI_VALID;
++
++	writel_relaxed(lo, drv->base + RSC_DRV_CTL_TCS_DATA_LO);
++	writel_relaxed(hi, drv->base + RSC_DRV_CTL_TCS_DATA_HI);
++}
++
+ /**
+  * rpmh_rsc_cpu_pm_callback() - Check if any of the AMCs are busy.
+  * @nfb:    Pointer to the notifier block in struct rsc_drv.
+@@ -1035,6 +1095,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+ 	INIT_LIST_HEAD(&drv->client.batch_cache);
  
--	config = readl_relaxed(base + DRV_PRNT_CHLD_CONFIG);
-+	config = readl_relaxed(drv->base + DRV_PRNT_CHLD_CONFIG);
+ 	dev_set_drvdata(&pdev->dev, drv);
++	drv->dev = &pdev->dev;
  
- 	max_tcs = config;
- 	max_tcs &= DRV_NUM_TCS_MASK << (DRV_NUM_TCS_SHIFT * drv->id);
-@@ -960,7 +959,6 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
- 	char drv_id[10] = {0};
- 	int ret, irq;
- 	u32 solver_config;
--	void __iomem *base;
+ 	ret = devm_of_platform_populate(&pdev->dev);
+ 	if (ret && pdev->dev.pm_domain) {
+diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
+index 01765ee9cdfb..3a53ed99d03c 100644
+--- a/drivers/soc/qcom/rpmh.c
++++ b/drivers/soc/qcom/rpmh.c
+@@ -450,7 +450,7 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
  
- 	/*
- 	 * Even though RPMh doesn't directly use cmd-db, all of its children
-@@ -987,11 +985,11 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
- 		drv->name = dev_name(&pdev->dev);
+ 	if (!ctrlr->dirty) {
+ 		pr_debug("Skipping flush, TCS has latest data.\n");
+-		goto exit;
++		goto write_next_wakeup;
+ 	}
  
- 	snprintf(drv_id, ARRAY_SIZE(drv_id), "drv-%d", drv->id);
--	base = devm_platform_ioremap_resource_byname(pdev, drv_id);
--	if (IS_ERR(base))
--		return PTR_ERR(base);
-+	drv->base = devm_platform_ioremap_resource_byname(pdev, drv_id);
-+	if (IS_ERR(drv->base))
-+		return PTR_ERR(drv->base);
+ 	/* Invalidate the TCSes first to avoid stale data */
+@@ -479,6 +479,8 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
  
--	ret = rpmh_probe_tcs_config(pdev, drv, base);
-+	ret = rpmh_probe_tcs_config(pdev, drv);
- 	if (ret)
- 		return ret;
+ 	ctrlr->dirty = false;
  
-@@ -1014,7 +1012,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
- 	 * 'HW solver' mode where they can be in autonomous mode executing low
- 	 * power mode to power down.
- 	 */
--	solver_config = readl_relaxed(base + DRV_SOLVER_CONFIG);
-+	solver_config = readl_relaxed(drv->base + DRV_SOLVER_CONFIG);
- 	solver_config &= DRV_HW_SOLVER_MASK << DRV_HW_SOLVER_SHIFT;
- 	solver_config = solver_config >> DRV_HW_SOLVER_SHIFT;
- 	if (!solver_config) {
++write_next_wakeup:
++	rpmh_rsc_write_next_wakeup(ctrlr_to_drv(ctrlr));
+ exit:
+ 	spin_unlock(&ctrlr->cache_lock);
+ 	return ret;
 -- 
 2.34.1
 
