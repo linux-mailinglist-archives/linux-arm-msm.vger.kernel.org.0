@@ -2,85 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58672602409
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 07:56:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 000246024FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 09:06:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230337AbiJRF4V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Oct 2022 01:56:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43420 "EHLO
+        id S229972AbiJRHG6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Oct 2022 03:06:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229711AbiJRF4U (ORCPT
+        with ESMTP id S230019AbiJRHG4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Oct 2022 01:56:20 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CBD27A75E;
-        Mon, 17 Oct 2022 22:56:20 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29I5ma46004214;
-        Tue, 18 Oct 2022 05:56:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=iBYrOM6D+B3y1YMpOUSDbglLMKT4a9SUo60Ak3nsuCE=;
- b=YiH6tmfKcCJaM4ZGaEku1BZc99TKmJMeRstqWWqs6d9QFL7VIv7FS3YVP2sZfHGEX8YI
- oL8ir9zThIR/qgmzVLqHt9CF+OeiOydncX7NtY9hOv9lODzlhdk6+BRNAS/T0v+4mnaN
- cotJ11AQuRO+Qoe9V3dPWAcOy3OVwl5eJDPINZY7gGVY15iu8ng0EjR/iyMP33Z2ip4P
- H3OpG1QC9/a6Iqv8R0hmn9Tu1jS/4xNd+xk0gkZj/yCzC+v+zYDgJB4vfSqdqaFzcJoN
- TCbTTNvkL449qaZeVPVzu8TkHVzZx2sPoBEsLAUGJ8jVBtILgEFY/NsqWP6wwwlvhsXT Iw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k9n2p07p0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Oct 2022 05:56:08 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29I5u833030166
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Oct 2022 05:56:08 GMT
-Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 17 Oct
- 2022 22:56:04 -0700
-Subject: Re: [RESEND PATCH v2 1/5] dt-bindings: firmware: qcom-scm: Add
- "allow-multi-call" property
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 18 Oct 2022 03:06:56 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C555796BE;
+        Tue, 18 Oct 2022 00:06:54 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 534FEB81D54;
+        Tue, 18 Oct 2022 07:06:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F5DC433C1;
+        Tue, 18 Oct 2022 07:06:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1666076812;
+        bh=J6RF9tAF1MFuLDPx06GDwAxd0NEPV+odgtOEQ0YfJ6o=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=TFlu84wEFmVYCt3vicjR1mwSQZMw6t4ueg5GUCGDs6IeJ9+DfDwF+d/o9dYGa0eJw
+         iNhajrl0/Wt54Umujt/dQO38lbfpY+xvDC/kUC/udc/blXrTzryivgKN1CY2RZ04OW
+         S5X2zeh+sqeiUaglZwEmezMumwDNgAmONTxVXwTOD1mEiC2WNZ4sQSmGE+tS3f8l8/
+         9orcu7ygx23yqqKgAlWuZ+iDhO/UivnkVT19bV2mCVID7tmaKyFg+wgLFD7zLwGZJC
+         5KUokhVirYgdHkG1e3xIr/MSTdA0UM7xhbf/K5/jgaI8arpzTV5jKtv7led7xjivMv
+         th6urGmmC0jZA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1okggR-0007jp-1q; Tue, 18 Oct 2022 09:06:39 +0200
+Date:   Tue, 18 Oct 2022 09:06:39 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     David Heidelberg <david@ixit.cz>,
-        Robert Marko <robimarko@gmail.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>
-References: <1661898311-30126-1-git-send-email-quic_gurus@quicinc.com>
- <1661898311-30126-2-git-send-email-quic_gurus@quicinc.com>
- <453bce1e-e2d3-bf26-9954-774e1e267d82@linaro.org>
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-Message-ID: <2713bacb-922d-475c-e700-3107d4ebac90@quicinc.com>
-Date:   Tue, 18 Oct 2022 11:26:02 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 09/15] dt-bindings: phy: qcom,qmp-pcie: mark current
+ bindings as legacy
+Message-ID: <Y05Qf2nDCIVg23Zh@hovoldconsulting.com>
+References: <20221017145328.22090-1-johan+linaro@kernel.org>
+ <20221017145328.22090-10-johan+linaro@kernel.org>
+ <5e153119-f853-ff57-8277-2d782e255be2@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <453bce1e-e2d3-bf26-9954-774e1e267d82@linaro.org>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: yEuMQUEGEApoljnrXPFep3iJTod9UN-U
-X-Proofpoint-GUID: yEuMQUEGEApoljnrXPFep3iJTod9UN-U
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-18_01,2022-10-17_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- mlxscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 malwarescore=0
- priorityscore=1501 phishscore=0 mlxlogscore=999 adultscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
- definitions=main-2210180033
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5e153119-f853-ff57-8277-2d782e255be2@linaro.org>
+X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,58 +66,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Krzysztof,
-Thanks for taking time to review the series.
+On Mon, Oct 17, 2022 at 01:15:45PM -0400, Krzysztof Kozlowski wrote:
+> On 17/10/2022 10:53, Johan Hovold wrote:
+> > The current QMP PCIe PHY bindings are based on the original MSM8996
+> > binding which provided multiple PHYs per IP block and these in turn were
+> > described by child nodes.
+> > 
+> > Later QMP PCIe PHY blocks only provide a single PHY and the remnant
+> > child node does not really reflect the hardware.
+> > 
+> > The original MSM8996 binding also ended up describing the individual
+> > register blocks as belonging to either the wrapper node or the PHY child
+> > nodes.
+> > 
+> > This is an unnecessary level of detail which has lead to problems when
+> > later IP blocks using different register layouts have been forced to fit
+> > the original mould rather than updating the binding. The bindings are
+> > arguable also incomplete as they only the describe register blocks used
+> > by the current Linux drivers (e.g. does not include the per lane PCS
+> > registers).
+> > 
+> > In preparation for adding new bindings for SC8280XP which further
+> > bindings can be based on, mark the current bindings as "legacy".
+> > 
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> >  .../{qcom,qmp-pcie-phy.yaml => qcom,qmp-pcie-phy-legacy.yaml} | 4 ++--
+> 
+> I don't think we should rename anything as legacy. These are "normal"
+> platforms, not legacy ones. SM8450 is not even that old.
 
+I'm not really referring to the platforms as legacy, but the rather the
+format of the bindings. The intent is that by marking the current ones
+as such, people will not base new bindings on the old scheme.
 
-On 8/31/22 1:30 PM, Krzysztof Kozlowski wrote:
-> On 31/08/2022 01:25, Guru Das Srinagesh wrote:
->> For firmware that supports it, allow multiple SCM calls to be passed
->> down to it by removing the serialization lock in the SCM driver.
->>
->> This patch is based on this YAML conversion patch [1] that is in-flight
->> currently.
->>
->> [1] https://lore.kernel.org/lkml/20220708090431.30437-1-david@ixit.cz/
->>
->> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
-> 
-> Thank you for your patch. There is something to discuss/improve.
-> 
-> If you make a resend, at least be sure you Cc proper people. Use
-> scripts/get_maintainers.pl to CC all maintainers and relevant mailing lists.
-> 
-> This was not Cced to device tree maintainers, therefore it has to be NAK-ed.
-> 
-> 
->> ---
->>   Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 5 +++++
->>   1 file changed, 5 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
->> index 9fdeee0..e279fd2 100644
->> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
->> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
->> @@ -70,6 +70,11 @@ properties:
->>     '#reset-cells':
->>       const: 1
->>   
->> +  allow-multi-call:
->> +    description:
->> +      Specify this flag to remove SCM call serialization. Need to ensure that
->> +      the firmware being used supports this feature first.
-> 
-> Missing vendor prefix, missing type.
+There's no problem supporting both schemes in the driver also for the
+current compatibles, but expressing such a deprecation in DT schema
+sounds like it would be painful. We instead decided to simple draw the
+line at SC8280XP and have future bindings be based on its binding.
 
-Ack
+> The recommendation is to keep names matching the compatibles, not adding
+> some legacy/newer/newest suffixes.
 
-> 
-> Isn't support for this obvious from compatible?\
+Yeah, I know, but that's not what the current bindings do. And if we
+keep 
 
-On further testing it looks like the property can't be truly enabled on
-sm8450 yet so I'll drop the patch in the next re-spin.
+	qcom,qmp-pcie-phy.yaml
 
-> 
-> Best regards,
-> Krzysztof
-> 
+and add
+
+	qcom,sc8280xp-qmp-pcie-phy.yaml
+
+then I fear that people will base their bindings on the former rather
+than the latter.
+
+I guess I can just add a comment in the old schema file with a reference
+to the sc8280xp bindings to try to prevent people from adding new ones
+in the wrong place.
+
+If I understand you correctly this is what you are suggesting? And that
+the new file should still be named "qcom,sc8280xp-qmp-pcie-phy.yaml"
+also as new bindings are added to that file?
+
+I could also rename the old schema file after one of the old platforms
+platforms therein (e.g. qcom,msm8998-qmp-pcie-phy) to make it sounds
+less like a generic schema for new bindings.
+
+That is
+
+	qcom,msm8998-qmp-pcie-phy.yaml + comment (for current bindings)
+	qcom,sc8280xp-qmp-pcie-phy.yaml (for new bindings)
+
+Johan
