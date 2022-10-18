@@ -2,74 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B849A602E86
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 16:32:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D76CE602EDF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 16:53:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231299AbiJROch (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Oct 2022 10:32:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53864 "EHLO
+        id S229509AbiJROxf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Oct 2022 10:53:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231297AbiJROcg (ORCPT
+        with ESMTP id S229900AbiJROxb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Oct 2022 10:32:36 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97887C8947
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 07:32:33 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id c24so14028873plo.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 07:32:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=DQuHOwGUgODqyp9uJkpdCpkTdVxYtxWYGviiFxTGCBA=;
-        b=F2o7bAmT144UUSkHvQdH+P7SpUWbv2xkaIHPTBcNOmJC6duvr6e7P8RgCAeAiucL1X
-         9xS3rlCNpqjUR/uPD4VjNEnJaMVlU1o7WOd4ESG15FsHPtk1yGPLZX78nq2KgJQLBxOl
-         F/rUVt2rBozLhB0q9ujix/wjuWthbmyJB9fZYpE5ybYJKbsPQQxaIDPEa2BvxAKBYQ6A
-         Kmm1aT3BgJFrp6WP0XRHF+8CkVTU0vO/ATAMTRdde/aMxE33ngH+/92FmXbKXBNY00Sg
-         G5pMuKoTyKUwpY+lMpkN3W9EtwSxxdVpY4Qzc54QPTUeRmc/g3n/WBXaUvx3EoCZUK1Y
-         EKDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DQuHOwGUgODqyp9uJkpdCpkTdVxYtxWYGviiFxTGCBA=;
-        b=KM/8itLlNpbGFFQytbBkpyM/uHTb1aA0UcW8AP4LPv3vaFCJe42unqatmKbAkxIvNM
-         ZcfUZWKXTDFRvqbeuagz+qXxFu+Jcwg7nIghvnyhS79vDjwIvaLSlkNT83ALxJJ/ar8B
-         Meygvc9YO14Zb1IZfWwdjoQ+FnaRQhge+KdmJlRv/tHTV8NJTEJuqsyFboGjtLU/ffcv
-         ddTQ/x5aE0oHm24nMb6qiV1qe/DzTtHh4546wr6hbrHcUk3/mqm16Mmzs2tbU7DQzInl
-         d6BrPzVWRPMtq8PUMzX5+8sUp16RLY9dqzp9AHimynhRMF5+l95V4DyKbF/rPe6rQRkc
-         Wh2A==
-X-Gm-Message-State: ACrzQf08B/WjB0RTV0WWeMGGZmzRQWKVqFhpdGWPUwWFLSmf1fFW+doj
-        fTjAH/6e59tvUdxpWpWemfagOdwiaqmG8g8MS93z4w==
-X-Google-Smtp-Source: AMsMyM4hhSUblMcqeKW8A7EDGCzwT7igUrRu1ViuflM+b+udxJSxIpx2FL7YdWE1fpY7tFN98OXiydI9QtnbhnKDhxA=
-X-Received: by 2002:a17:902:d714:b0:17f:5813:1df4 with SMTP id
- w20-20020a170902d71400b0017f58131df4mr3450619ply.148.1666103551620; Tue, 18
- Oct 2022 07:32:31 -0700 (PDT)
-MIME-Version: 1.0
-References: <20221017164005.2622934-1-amit.pundir@linaro.org>
- <20221017201654.u7x5vrjsad653kma@bogus> <CAPDyKFqMLHhzFzYZ5wB5xTSaHkesp9pxX3QEhT+8XZictUnUaQ@mail.gmail.com>
- <CAMi1Hd2Ds3-wZ8sUvSFF0ew1WVsj0vrJAQSpV9WG7YrZcRJh1A@mail.gmail.com>
-In-Reply-To: <CAMi1Hd2Ds3-wZ8sUvSFF0ew1WVsj0vrJAQSpV9WG7YrZcRJh1A@mail.gmail.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 18 Oct 2022 16:31:53 +0200
-Message-ID: <CAPDyKFqRU8pdgDWa-o6c3gkeKu8AZ=Zkypd7eUF0qUAkOndCxQ@mail.gmail.com>
-Subject: Re: [PATCH] Revert "arm64: dts: qcom: sm8250: Add cpuidle states"
-To:     Amit Pundir <amit.pundir@linaro.org>
-Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Tue, 18 Oct 2022 10:53:31 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A0F1D8ED0;
+        Tue, 18 Oct 2022 07:53:29 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id A26CBB81F93;
+        Tue, 18 Oct 2022 14:53:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A5D2C433C1;
+        Tue, 18 Oct 2022 14:53:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1666104807;
+        bh=xY5BiZ6ZbFe5aQcbT010/8Bqi/0eo2aMR4dgD1EpzfU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=rUgMVV9DSN9+yoHM5MgMrkQQONs+hY1gEWW+7cJbZVyHPbjco8CWfe8vLRSgIsym4
+         a2IV3Q21K/+ueczi8NKy1UBUcAgokU1o44xTHLOnPZyafZ3AZQhRTsB0QFPsQ7GVaa
+         KVn0GVhCMNP1ZIPbxxJnrnoijMDzZprdTbx/X7Pfn1kziCLcpujms5VaARjvzxfbsJ
+         uipcbXsvoXGjtb9SBhFmZ2hNFhnahe+sjrt5iVv80vd5xufA7VtUoSDiYtKgyTQz0b
+         kdW0yEXO7xM4f83RI2UgmdXC2YtUii7fLBYfrFtZR3vHOTs/wUtL0NC8PSUcAjIDZ2
+         VqsBvE1nLOF5w==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oknxy-0005SJ-PV; Tue, 18 Oct 2022 16:53:15 +0200
+Date:   Tue, 18 Oct 2022 16:53:14 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 13/15] phy: qcom-qmp-pcie: add support for pipediv2 clock
+Message-ID: <Y0692mW6MJneljrP@hovoldconsulting.com>
+References: <20221017145328.22090-1-johan+linaro@kernel.org>
+ <20221017145328.22090-14-johan+linaro@kernel.org>
+ <2cf670a0-59bd-31b0-8816-496c1e13165d@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2cf670a0-59bd-31b0-8816-496c1e13165d@linaro.org>
+X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,161 +64,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 18 Oct 2022 at 16:09, Amit Pundir <amit.pundir@linaro.org> wrote:
->
-> On Tue, 18 Oct 2022 at 16:00, Ulf Hansson <ulf.hansson@linaro.org> wrote:
-> >
-> > On Mon, 17 Oct 2022 at 22:17, Sudeep Holla <sudeep.holla@arm.com> wrote:
-> > >
-> > > On Mon, Oct 17, 2022 at 10:10:05PM +0530, Amit Pundir wrote:
-> > > > This reverts commit 32bc936d732171d48c9c8f96c4fa25ac3ed7e1c7.
-> > > >
-> > > > This patch was part of a patch series to add APSS RSC to
-> > > > Cluster power domain
-> > > > https://patchwork.kernel.org/project/linux-pm/cover/1641749107-31979-1-git-send-email-quic_mkshah@quicinc.com/
-> > > > but the rest of the patches in this series got NACKed and didn't land.
-> > > >
-> > > > These cpuidle states made RB5 (sm8250) highly unstable and I run into
-> > > > following crash every now and then:
-> > > >
-> > > > [    T1] vreg_l11c_3p3: failed to enable: -ETIMEDOUT
-> > > > [    T1] qcom-rpmh-regulator 18200000.rsc:pm8150l-rpmh-regulators: ldo11: devm_regulator_register() failed, ret=-110
-> > > > [    T1] qcom-rpmh-regulator: probe of 18200000.rsc:pm8150l-rpmh-regulators failed with error -110
-> > > >
-> > > > I reported this breakage earlier this year as well:
-> > > > https://lore.kernel.org/all/CAMi1Hd2Sngya_2m2odkjq4fdV8OiiXsFMEX1bb807cWMC7H-sg@mail.gmail.com/
-> > > > I can confirm that if I cherry-pick the rest of the patches from the
-> > > > series then I can't reproduce this crash, but I'm not sure when the rest
-> > > > of the patches are going to land though.
-> >
-> > I have been talking to Maulik (offlist) about re-posting the series,
-> > but apparently she has been too busy to move this forward.
-> >
-> > I assume a better option, than reverting, is to get the above series
-> > merged. If I recall, there were only a few minor comments from me on
-> > the genpd patch [1]. That said, let me help out and refresh the
-> > series, I will do it asap!
-> >
-> > > >
-> > > > Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
-> > > > ---
-> > > >  arch/arm64/boot/dts/qcom/sm8250.dtsi | 105 ---------------------------
-> > > >  1 file changed, 105 deletions(-)
-> > > >
-> > > > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > > index a5b62cadb129..a2c15da1a450 100644
-> > > > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > > @@ -101,8 +101,6 @@ CPU0: cpu@0 {
-> > > >                       capacity-dmips-mhz = <448>;
-> > > >                       dynamic-power-coefficient = <205>;
-> > > >                       next-level-cache = <&L2_0>;
-> > > > -                     power-domains = <&CPU_PD0>;
-> > > > -                     power-domain-names = "psci";
-> > > >                       qcom,freq-domain = <&cpufreq_hw 0>;
-> > > >                       operating-points-v2 = <&cpu0_opp_table>;
-> > > >                       interconnects = <&gem_noc MASTER_AMPSS_M0 &mc_virt SLAVE_EBI_CH0>,
-> > > > @@ -125,8 +123,6 @@ CPU1: cpu@100 {
-> > > >                       capacity-dmips-mhz = <448>;
-> > > >                       dynamic-power-coefficient = <205>;
-> > > >                       next-level-cache = <&L2_100>;
-> > > > -                     power-domains = <&CPU_PD1>;
-> > > > -                     power-domain-names = "psci";
-> > > >                       qcom,freq-domain = <&cpufreq_hw 0>;
-> > > >                       operating-points-v2 = <&cpu0_opp_table>;
-> > > >                       interconnects = <&gem_noc MASTER_AMPSS_M0 &mc_virt SLAVE_EBI_CH0>,
-> > > > @@ -146,8 +142,6 @@ CPU2: cpu@200 {
-> > > >                       capacity-dmips-mhz = <448>;
-> > > >                       dynamic-power-coefficient = <205>;
-> > > >                       next-level-cache = <&L2_200>;
-> > > > -                     power-domains = <&CPU_PD2>;
-> > > > -                     power-domain-names = "psci";
-> > > >                       qcom,freq-domain = <&cpufreq_hw 0>;
-> > > >                       operating-points-v2 = <&cpu0_opp_table>;
-> > > >                       interconnects = <&gem_noc MASTER_AMPSS_M0 &mc_virt SLAVE_EBI_CH0>,
-> > > > @@ -167,8 +161,6 @@ CPU3: cpu@300 {
-> > > >                       capacity-dmips-mhz = <448>;
-> > > >                       dynamic-power-coefficient = <205>;
-> > > >                       next-level-cache = <&L2_300>;
-> > > > -                     power-domains = <&CPU_PD3>;
-> > > > -                     power-domain-names = "psci";
-> > > >                       qcom,freq-domain = <&cpufreq_hw 0>;
-> > > >                       operating-points-v2 = <&cpu0_opp_table>;
-> > > >                       interconnects = <&gem_noc MASTER_AMPSS_M0 &mc_virt SLAVE_EBI_CH0>,
-> > > > @@ -188,8 +180,6 @@ CPU4: cpu@400 {
-> > > >                       capacity-dmips-mhz = <1024>;
-> > > >                       dynamic-power-coefficient = <379>;
-> > > >                       next-level-cache = <&L2_400>;
-> > > > -                     power-domains = <&CPU_PD4>;
-> > > > -                     power-domain-names = "psci";
-> > > >                       qcom,freq-domain = <&cpufreq_hw 1>;
-> > > >                       operating-points-v2 = <&cpu4_opp_table>;
-> > > >                       interconnects = <&gem_noc MASTER_AMPSS_M0 &mc_virt SLAVE_EBI_CH0>,
-> > > > @@ -209,8 +199,6 @@ CPU5: cpu@500 {
-> > > >                       capacity-dmips-mhz = <1024>;
-> > > >                       dynamic-power-coefficient = <379>;
-> > > >                       next-level-cache = <&L2_500>;
-> > > > -                     power-domains = <&CPU_PD5>;
-> > > > -                     power-domain-names = "psci";
-> > > >                       qcom,freq-domain = <&cpufreq_hw 1>;
-> > > >                       operating-points-v2 = <&cpu4_opp_table>;
-> > > >                       interconnects = <&gem_noc MASTER_AMPSS_M0 &mc_virt SLAVE_EBI_CH0>,
-> > > > @@ -231,8 +219,6 @@ CPU6: cpu@600 {
-> > > >                       capacity-dmips-mhz = <1024>;
-> > > >                       dynamic-power-coefficient = <379>;
-> > > >                       next-level-cache = <&L2_600>;
-> > > > -                     power-domains = <&CPU_PD6>;
-> > > > -                     power-domain-names = "psci";
-> > > >                       qcom,freq-domain = <&cpufreq_hw 1>;
-> > > >                       operating-points-v2 = <&cpu4_opp_table>;
-> > > >                       interconnects = <&gem_noc MASTER_AMPSS_M0 &mc_virt SLAVE_EBI_CH0>,
-> > > > @@ -252,8 +238,6 @@ CPU7: cpu@700 {
-> > > >                       capacity-dmips-mhz = <1024>;
-> > > >                       dynamic-power-coefficient = <444>;
-> > > >                       next-level-cache = <&L2_700>;
-> > > > -                     power-domains = <&CPU_PD7>;
-> > > > -                     power-domain-names = "psci";
-> > > >                       qcom,freq-domain = <&cpufreq_hw 2>;
-> > > >                       operating-points-v2 = <&cpu7_opp_table>;
-> > > >                       interconnects = <&gem_noc MASTER_AMPSS_M0 &mc_virt SLAVE_EBI_CH0>,
-> > > > @@ -300,42 +284,6 @@ core7 {
-> > > >                               };
-> > > >                       };
-> > > >               };
-> > > > -
-> > > > -             idle-states {
-> > > > -                     entry-method = "psci";
-> > > > -
-> > > > -                     LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
-> > > > -                             compatible = "arm,idle-state";
-> > > > -                             idle-state-name = "silver-rail-power-collapse";
-> > > > -                             arm,psci-suspend-param = <0x40000004>;
-> > > > -                             entry-latency-us = <360>;
-> > > > -                             exit-latency-us = <531>;
-> > > > -                             min-residency-us = <3934>;
-> > > > -                             local-timer-stop;
-> > >
-> > > If this is temporary fix for some broke firmware or setup, I suggest to
-> > > just add status = "disabled" for these states. Also worth checking if keeping
-> > > the cpu states is okay and only cluster state is the issue or everything
-> > > needs to be disabled. That way it would avoid the churn when re-enabling it.
-> >
-> > That's a good option, unless we can get the other series (that fixes
-> > this issue) merged soon. As stated, I will help to re-spin it and then
-> > we can take it from there.
->
-> Hi Ulf, I just verified over multiple reboots that disabling the
-> cpuidle states, as suggested by Sudeep, does the trick and I no longer
-> see the crash.
->
-> Do you suggest we wait for the re-spin of the other series or should I
-> go ahead and submit that RB5 workaround for the time being?
+On Tue, Oct 18, 2022 at 04:05:29PM +0300, Dmitry Baryshkov wrote:
+> On 17/10/2022 17:53, Johan Hovold wrote:
+> > Some QMP PHYs have a second fixed-divider pipe clock that needs to be
+> > enabled along with the pipe clock.
+> > 
+> > Add support for an optional "pipediv2" clock.
+> > 
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> >   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 42 ++++++++++++++++++++----
+> >   1 file changed, 36 insertions(+), 6 deletions(-)
+> > 
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > index 9c8e009033f1..c1d74c06fad1 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > @@ -1379,7 +1379,9 @@ struct qmp_pcie {
+> >   	void __iomem *rx2;
+> >   
+> >   	struct clk *pipe_clk;
+> > +	struct clk *pipediv2_clk;
+> >   	struct clk_bulk_data *clks;
+> > +
+> >   	struct reset_control_bulk_data *resets;
+> >   	struct regulator_bulk_data *vregs;
+> >   
+> > @@ -1902,6 +1904,36 @@ static int qmp_pcie_exit(struct phy *phy)
+> >   	return 0;
+> >   }
+> >   
+> > +static int pipe_clk_enable(struct qmp_pcie *qmp)
+> > +{
+> > +	int ret;
+> > +
+> > +	ret = clk_prepare_enable(qmp->pipe_clk);
+> > +	if (ret) {
+> > +		dev_err(qmp->dev, "failed to enable pipe clock: %d\n", ret);
+> > +		return ret;
+> > +	}
+> > +
+> > +	ret = clk_prepare_enable(qmp->pipediv2_clk);
+> > +	if (ret) {
+> > +		dev_err(qmp->dev, "failed to enable pipediv2 clock: %d\n", ret);
+> > +		goto err_disable_pipe_clk;
+> > +	}
+> 
+> Do they have to be enabled in sequence? If not, I'd use a bulk clocks 
+> here for the pipe clocks. While it can look like an overkill, it would 
+> be a safe net for the possible future changes, which might include 
+> additional clocks.
 
-Yes, that seems like a good idea as the problem needs an easy fix for
-6.1 and earlier. Please keep me posted.
+I don't believe the bulk API is a good fit here as we need to support
+both the new and old bindings, and for the latter the pipe_clk is looked
+up by index rather than name (and that's from the child node too which
+limits which APIs you can use further).
 
-In the meantime, I will re-spin and submit the series that fixes the
-problem correctly, but let's target that series for 6.2.
+The code is clear enough as it stands, and I don't think we need to take
+height for a hypothetical third pipe clock just yet.
 
-Kind regards
-Uffe
+Johan
