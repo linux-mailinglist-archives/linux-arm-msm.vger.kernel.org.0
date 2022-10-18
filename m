@@ -2,154 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A0FB602006
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 02:58:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9041E602013
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 03:02:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230394AbiJRA6D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 20:58:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34114 "EHLO
+        id S230480AbiJRBCh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 21:02:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230413AbiJRA57 (ORCPT
+        with ESMTP id S230483AbiJRBCf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 20:57:59 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A68E1F2E4;
-        Mon, 17 Oct 2022 17:57:57 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id i65so10621157ioa.0;
-        Mon, 17 Oct 2022 17:57:57 -0700 (PDT)
+        Mon, 17 Oct 2022 21:02:35 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9945679A66
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 18:02:33 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id f8so7812675qkg.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 18:02:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aHb659dRKjS34iRpN5S8qZLZW/bi4pJGRDjrLJdy9vk=;
-        b=VjW7wk4V3SledJo6tEBA2pMqF7mJc6ceo/2UI/f2HIWEk69GtoFBWrRTW+LqlidubS
-         uACP/gsGI9rFljsBg1atTvhDN8tdSQ1Iw7BAvzOU5gZ/oKQ+9OpkV5Fjv8NYU8BbPRuM
-         7ZFfCtU296/VXi5cNalxql9l4BkqjSj47ViwrsvB+f7W03z9r9MwbbBn8Rls7vqNPphU
-         TAmJsi4HGpQf7/IQabmh8rie6IgWSnRBz9+pglKHmi7mx8quDBhHxIC40sIMIum0+A0b
-         Cuf8TVsl839lsvYq4CapDIqT+pOY5trF8N9gbTe7y5lQKDZXqIw8XD4BSeCG49Vpnf0+
-         KyDA==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=orFSqE2BEwIkJmytrqiupr4Ypb+zklxtz9GR5dOGZmQ=;
+        b=aTnXXdxYPx1sRm6BnUdhvTTcYSj2rnidRY1jY422VxRv+ju+i5PvJhvC7aU4LuS97S
+         GhnlLAPkozGf77rnwSXRmEl/yWM9ZRqpZ+vAxWEjR5dAtH1uyqSMSc11hwcpJrN2Y6u5
+         bwOxesqYiQYSiMId2oo8GoKKu55lUoAKWMRLLxM4mnTXYCYhOOwSkn/U8mVei5iJW32s
+         DHUj+zkWoW6mOWi/Fq6BtAnYmOkgwxxw2gCYgr/YlbE7+l7HAqHcx75ED0/lc3k4DGiU
+         3GQaEeCtFeHrnnea6HqOiwZae4AN55tkKyxYudvnLHnepQ9Yu/nPPx4xAJEDd4OrOEZq
+         haYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aHb659dRKjS34iRpN5S8qZLZW/bi4pJGRDjrLJdy9vk=;
-        b=r6X79Lqck5+NmKx+IwBF2Db9sxgfB54+aQnXlvIZAiQpf85jqIYlJWQZRK/QGuUgwo
-         YQy0NT7xaSu8yvJveEW6BuH6408bo763Nga6k4aYi5Hm/DO4VuAN4HtHwXNCUnlMG/Cv
-         apaIOxVlNI0t7qlTqpwfP8NWaeviSlcDhCVevljHSKBDyui+gKjz45BHDcLsAP5H5iii
-         v4oo61hXs0DptAuF/RbrCIAENQDqguaCUoeLMgp5beuHF3DkSIoH+WOh+2O0JE6yiM4/
-         WgjXVMRAlH0SKMryPRPlNNX6ry9Ew5i//ENutXVg5gMFwRUr5Xa4z8MX/KtLWUk55lXD
-         Ke/g==
-X-Gm-Message-State: ACrzQf38xcch7aC0FMfPCj/g/sTU/pA7PII6Y5rqWqia01ONKCh87O6V
-        WyUu2lHx+ittfDarkjJhSI8xwFNMHP8RPg==
-X-Google-Smtp-Source: AMsMyM4PZIvevqllKuvN+/G0+w9IG1UsFQbK9f1L4BQ1h1y2Rm3yL6ySEf/iCRXR8UQqtzKLgsyI/w==
-X-Received: by 2002:a05:6602:2b06:b0:67f:fdf6:ffc2 with SMTP id p6-20020a0566022b0600b0067ffdf6ffc2mr527019iov.111.1666054676328;
-        Mon, 17 Oct 2022 17:57:56 -0700 (PDT)
-Received: from localhost ([2607:fea8:a2e2:2d00::4a89])
-        by smtp.gmail.com with UTF8SMTPSA id x95-20020a0294e8000000b00363b5d4e701sm497480jah.167.2022.10.17.17.57.55
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=orFSqE2BEwIkJmytrqiupr4Ypb+zklxtz9GR5dOGZmQ=;
+        b=qF3Yhh6ifef4QkeQezBi9Shp+a0g8BGJvGakQDSrBZZ6/ub7lVLLtDM0//xnEP4X17
+         frYXR1pshF2HXkywFiznGbxG7KWK1F7Evbud5DFg84gHRqTqIFBIzM7jFCYTuEC9Qh21
+         eUAS9VQukwDXm/ni9YyFjCwqIDyqW65+yKtlIpfyBxKtOH/EkyoAbwlaWk4ocfSEu34V
+         xLmWN9FZg1yBmULb68KvAsuHjgv5JI9739tcEZCVqbu11aUvC1ED00CE9QsMIrZ+MH8h
+         uC0OfFDPVRQw5E40DmB0Tz640K3qYGEeBg5yHp69uHXl0AzaJtFK4JJuLxfiNGEg3jKG
+         wH5g==
+X-Gm-Message-State: ACrzQf06bgcgAaCb2/vyT+Di1CSkAuNq5rThjLJlh+yLEX5D2+wD7sRr
+        SeeeNKZ4iFDsDTQUNBipsBKUyJeU1Y8peg==
+X-Google-Smtp-Source: AMsMyM6eRS8wZHL6RHm2zlZvUxxzBYUanEWE+zoFfrmAR2ebdTHaD+w8Xc9EJYj4McYsAAJUD9ENcQ==
+X-Received: by 2002:a05:620a:244e:b0:6ee:d8f2:6d56 with SMTP id h14-20020a05620a244e00b006eed8f26d56mr267023qkn.380.1666054952664;
+        Mon, 17 Oct 2022 18:02:32 -0700 (PDT)
+Received: from [192.168.10.124] (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
+        by smtp.gmail.com with ESMTPSA id s6-20020a05620a0bc600b006e6a7c2a269sm1224306qki.22.2022.10.17.18.02.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Oct 2022 17:57:55 -0700 (PDT)
-From:   Richard Acayan <mailingradian@gmail.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 17 Oct 2022 18:02:31 -0700 (PDT)
+Message-ID: <c2aacd7c-1773-2ca7-415e-0b3ec7b5ef02@linaro.org>
+Date:   Mon, 17 Oct 2022 21:02:30 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Subject: Re: [PATCH v2 2/2] clk: qcom: Add SC8280XP display clock controller
+Content-Language: en-US
+To:     Steev Klimaszewski <steev@kali.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v6 4/4] arm64: dts: qcom: add gpi-dma fallback compatible
-Date:   Mon, 17 Oct 2022 20:57:40 -0400
-Message-Id: <20221018005740.23952-5-mailingradian@gmail.com>
-X-Mailer: git-send-email 2.38.0
-In-Reply-To: <20221018005740.23952-1-mailingradian@gmail.com>
-References: <20221018005740.23952-1-mailingradian@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220926203800.16771-1-quic_bjorande@quicinc.com>
+ <20220926203800.16771-3-quic_bjorande@quicinc.com>
+ <a8bf3887-b4fb-1f60-14e4-998f71b84181@kali.org>
+ <bc96324f-c560-3baf-a771-beef6955a537@kali.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <bc96324f-c560-3baf-a771-beef6955a537@kali.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The dt schema for gpi-dma has been updated with a new fallback
-compatible string. Add the compatible strings to existing device trees.
+On 17/10/2022 20:51, Steev Klimaszewski wrote:
+> Round 2 because the patch is too long for the mailing lists, I hope it 
+> is okay to strip out a bit of the patch
 
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
----
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 6 +++---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+Yes, it is okay, actually expected and much better way. There is no need
+to scroll a lot of message looking for a tag.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index cef8c4f4f0ff..281d5109ac3b 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -887,7 +887,7 @@ gcc: clock-controller@100000 {
- 		};
- 
- 		gpi_dma0: dma-controller@800000 {
--			compatible = "qcom,sm8150-gpi-dma";
-+			compatible = "qcom,sm8150-gpi-dma", "qcom,sdm845-gpi-dma";
- 			reg = <0 0x800000 0 0x60000>;
- 			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1222,7 +1222,7 @@ spi7: spi@89c000 {
- 		};
- 
- 		gpi_dma1: dma-controller@a00000 {
--			compatible = "qcom,sm8150-gpi-dma";
-+			compatible = "qcom,sm8150-gpi-dma", "qcom,sdm845-gpi-dma";
- 			reg = <0 0xa00000 0 0x60000>;
- 			interrupts = <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 280 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1471,7 +1471,7 @@ spi16: spi@a94000 {
- 		};
- 
- 		gpi_dma2: dma-controller@c00000 {
--			compatible = "qcom,sm8150-gpi-dma";
-+			compatible = "qcom,sm8150-gpi-dma", "qcom,sdm845-gpi-dma";
- 			reg = <0 0xc00000 0 0x60000>;
- 			interrupts = <GIC_SPI 588 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 589 IRQ_TYPE_LEVEL_HIGH>,
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index a5b62cadb129..5d5de7eead08 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -936,7 +936,7 @@ rng: rng@793000 {
- 		};
- 
- 		gpi_dma2: dma-controller@800000 {
--			compatible = "qcom,sm8250-gpi-dma";
-+			compatible = "qcom,sm8250-gpi-dma", "qcom,sdm845-gpi-dma";
- 			reg = <0 0x00800000 0 0x70000>;
- 			interrupts = <GIC_SPI 588 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 589 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1187,7 +1187,7 @@ spi19: spi@894000 {
- 		};
- 
- 		gpi_dma0: dma-controller@900000 {
--			compatible = "qcom,sm8250-gpi-dma";
-+			compatible = "qcom,sm8250-gpi-dma", "qcom,sdm845-gpi-dma";
- 			reg = <0 0x00900000 0 0x70000>;
- 			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1505,7 +1505,7 @@ spi7: spi@99c000 {
- 		};
- 
- 		gpi_dma1: dma-controller@a00000 {
--			compatible = "qcom,sm8250-gpi-dma";
-+			compatible = "qcom,sm8250-gpi-dma", "qcom,sdm845-gpi-dma";
- 			reg = <0 0x00a00000 0 0x70000>;
- 			interrupts = <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 280 IRQ_TYPE_LEVEL_HIGH>,
--- 
-2.38.0
+Thank you!
+
+Best regards,
+Krzysztof
 
