@@ -2,103 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5781E6020E1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 04:08:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F78460210A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 04:19:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231167AbiJRCIp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Oct 2022 22:08:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60704 "EHLO
+        id S230044AbiJRCTe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Oct 2022 22:19:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231235AbiJRCIa (ORCPT
+        with ESMTP id S229896AbiJRCTc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Oct 2022 22:08:30 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BCEA7436D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 19:08:19 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id a5so7866200qkl.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 19:08:19 -0700 (PDT)
+        Mon, 17 Oct 2022 22:19:32 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D485A19A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 19:19:30 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id f11so21260713wrm.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Oct 2022 19:19:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BZ0/NnZ4eRh7FEd+hu9myA28IkggkeFAlGJ/8G5KLbA=;
-        b=iBSfeHwX0cYihSQlFme+7TQ7NDTPCJQr+D0RDlMLYZarBR2XREvSzjH+Oj5xOotmWs
-         fQPj7yGzNxt9f7UkvY+bls5CkPQ2wsSrncHeIqj9JSgtqDwNpSd5+34JAn7EJDPrCY1t
-         lr22DRsBN4L2/4ZeDNyOX60idfpSPtXSNLQKLrCNhKb4//9GkynBF9OUBOmViy+qhniW
-         ZRHjtEaLcgxe+XY7yv76NmUbdCIdzid854IeY9xbFilD5QbSyjD49UIenO1yfZnJBz41
-         AHFdwO3rNVfa5K5CB+knhzTdyOCOvCXy3E5kyVuOZmBqrwsgROVuGDkqVhBTCJxMEQuF
-         qQ5w==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uFKD5RqTZ7BNvrU1inlhYnVlXGpq45w67fX3oH7/4Vs=;
+        b=U1gICspd/FT0wEzrdZ5t6ekwT415iR1wO5LLHsJR8zaZtJitjJLQQ/aLOB21/KIxY+
+         ZI9Hc7IAeYo643OrYBkhUFA0JomYRkza4crCbtAOgVZCpa4/JpIWNzQB8yLAUTnsIAto
+         09BaLZreKJWBSYZ0gV+EbEc4yHia0NtlDo8pHUppLSKbh83tWLktdL49y7IiubvXopcB
+         nP1jUfT0dk3jx/m7w6Bk+Vecba1Bu9jBEKlAhqSQko45rCtfBe9RyVfzkIVLkd+HRp2O
+         nSv5Y6ZDO2LO+iJJb0RoJmz/Tzr+FkU1VpeCiN/6PrsRkxKCuWcp4KIiTUR9IrvJyz/L
+         ikFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BZ0/NnZ4eRh7FEd+hu9myA28IkggkeFAlGJ/8G5KLbA=;
-        b=5S2KO4+Q6ynK+OEHJ7m3ojk/ZWAopP4kBelT1Nhfza3MryGXYkooJz/GR01CmYlfbl
-         cxp3a4eNw6jEW5YmswKNi8UFsePY2UY7hFUQcGaTciVvLQMWYB7K8gcEEyf9t4Lwypnx
-         qCqOkIiZI988l6BvVgf09n3urePC7f7R7phwZmrq083qiaMUj2Ab6SPWwl8TITA6poAb
-         QcqK3BrIjpvZNXmrY/6psByQ9jy4oCg35zJpuI1iB/OTmNpOXPKDhkRngeDYGz6QvK2A
-         hq0Wa8AY0YL5lnuFiAHWEX0Xjavp6xA7ZWAqCGiYQaArXhcfsiVaB+BfFSu2MwlXVYfC
-         hnog==
-X-Gm-Message-State: ACrzQf3oYCqnOTDzrytWJXvFhx+eExWoblFbwr9DKWVyCr5iLHbfp/23
-        aDgn2ZydndU+hxTUYVFEbSt5Bg==
-X-Google-Smtp-Source: AMsMyM4ufgjSTFobBJ3ukrxW4y+rVVxuE+aEL6G4TrT3959jzeLWgCAjO+Hl/uFfpyNgoiz0EdYgTg==
-X-Received: by 2002:a37:6905:0:b0:6ec:a669:2802 with SMTP id e5-20020a376905000000b006eca6692802mr388324qkc.740.1666058863638;
-        Mon, 17 Oct 2022 19:07:43 -0700 (PDT)
-Received: from [192.168.10.124] (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
-        by smtp.gmail.com with ESMTPSA id bs6-20020a05620a470600b006eee3a09ff3sm1300491qkb.69.2022.10.17.19.07.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Oct 2022 19:07:43 -0700 (PDT)
-Message-ID: <fb57676e-749e-985c-9ada-596323227f87@linaro.org>
-Date:   Mon, 17 Oct 2022 22:07:38 -0400
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uFKD5RqTZ7BNvrU1inlhYnVlXGpq45w67fX3oH7/4Vs=;
+        b=DP7bgA2EAxfhcPhePyhiBcjlaec9qCwFn/R5MkvL5hJ+CheK5y7weczEYmdb0+gouA
+         ZxAsOW40mmjny1uCFNdthGyyoaCNi88JijG1rqkUWoj6Nm50WJgYWPDXLTtJfVelEfEr
+         6XLn5wzhxydK5hB0/0mnGd2Oz5dECztgD5IkrStmurkDIdQpMcQ4/9yMl5U4pTZmi7/B
+         u21+wXtCeRFq+SW4F92otk4MhBT8KtoKkKGHwSGidxksNGS2yjqQarle3d7/23UqlgbC
+         TTDNPZGHdMOgHezyJhCSyOtoE7u5p2GlYIQusweAltHRmxZr/718Nmvemw1+lkpDC8Nu
+         7JPg==
+X-Gm-Message-State: ACrzQf2sHLfo36CNY2qYXSEXBOiRPaUWhNgRuoUMyhK4mnIIJXkxcZNH
+        VeE7jM7gu60CG9KTQSwAnG04jw==
+X-Google-Smtp-Source: AMsMyM4bYHv45Ga5+YpT5hIohGaxvX8IoOfVy2lF4HoQDn0SLYZXH3rfiiuTboc69KtSd2cc3eftFg==
+X-Received: by 2002:a5d:4889:0:b0:22b:214:38dd with SMTP id g9-20020a5d4889000000b0022b021438ddmr396313wrq.32.1666059569184;
+        Mon, 17 Oct 2022 19:19:29 -0700 (PDT)
+Received: from planet9.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id y6-20020a1c4b06000000b003a83ca67f73sm11921533wma.3.2022.10.17.19.19.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Oct 2022 19:19:28 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     loic.poulain@linaro.org, robert.foss@linaro.org, wsa@kernel.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     vladimir.zapolskiy@linaro.org, bryan.odonoghue@linaro.org
+Subject: [PATCH v3 0/1] i2c: qcom-cci: pm runtime ordering fix
+Date:   Tue, 18 Oct 2022 03:19:19 +0100
+Message-Id: <20221018021920.3747344-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH v3 1/2] dt-bindings: qcom: smp2p: Add WPSS node names to
- pattern property
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Manikanta Pubbisetty <quic_mpubbise@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20221017125346.3691-1-quic_mpubbise@quicinc.com>
- <20221017125346.3691-2-quic_mpubbise@quicinc.com>
- <b6f62f0b-1280-0ac1-e00d-7bd5618571dc@linaro.org>
-In-Reply-To: <b6f62f0b-1280-0ac1-e00d-7bd5618571dc@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/10/2022 22:06, Krzysztof Kozlowski wrote:
-> On 17/10/2022 08:53, Manikanta Pubbisetty wrote:
->> WLAN firmware uses SMP2P protocol in order to talk to the application
->> processor (AP) in certain cases like WoW (Wake on Wireless). WLAN
->> firmware runs on the WPSS Q6 processor (Wireless Processor SubSystem).
->> Therefore it is required to have sub nodes pertaining to the WPSS Q6
->> processor and the application processor in the SMP2P node.
->>
->> Add WPSS Q6 (Wireless Processor SubSystem) node names to the pattern
->> property required for WPSS Q6 processor to communicate to the
->> application processor and vice versa over SMP2P protocol.
->>
->> Signed-off-by: Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
-> 
-> 
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+v3:
 
-Ah and I almost forgot: thank you for detailed explanation in the commit
-msg. Much appreciated!
+- Drops pm_runtime_put, adds Valdimir Rb/Tb - Vladimir Zapolskiy
+- This patch was previously part of a series for enabling CAMSS on
+  sm8250/rb5. There's no reason to bind this fix up with the enabling
+  series since it is an applicable fix for all CAMSS platforms.
 
-Best regards,
-Krzysztof
+https://patchwork.kernel.org/project/linux-media/patch/20220524140207.2758605-2-bryan.odonoghue@linaro.org/
+
+Bryan O'Donoghue (1):
+  i2c: qcom-cci: Fix ordering of pm_runtime_xx and i2c_add_adapter
+
+ drivers/i2c/busses/i2c-qcom-cci.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
+
+-- 
+2.34.1
 
