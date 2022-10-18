@@ -2,182 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BA96602FA1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 17:27:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D85A6602FAC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 17:29:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229903AbiJRP1m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Oct 2022 11:27:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36772 "EHLO
+        id S230229AbiJRP3H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Oct 2022 11:29:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230108AbiJRP1l (ORCPT
+        with ESMTP id S230331AbiJRP3A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Oct 2022 11:27:41 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2857BC612
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 08:27:38 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id d13so8847811qko.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 08:27:38 -0700 (PDT)
+        Tue, 18 Oct 2022 11:29:00 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6056BB05C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 08:28:55 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id s20so23116103lfi.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 08:28:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WlrRdSiBc3+5x9el6+WiPvB5GSvm3lz/xveRGeJez/Y=;
-        b=EG4Jn93JA7AM0w+NYd6U5tSunzgTzsLPJB6RjP4zYCZU9YHf1M0jKzBPVe27OL136x
-         MyKkdfB2RKkeJ21qM2W8EIkOq99xdz8GYOH1phybCn/G3EHufIgmp3UoJMOCFs/8giKr
-         vxm5yZcYMM441WpCJSKIfKCy2c36eX2ddb7N4X4Zpm/EPI6WzKBY5QumEHJyKO9EnZuI
-         qOJY4mDirk6vZ6bSZldRzeY2UjHOE2LVs0nCcHvdoLHAT17synotSEmp68cI0tl+gYRI
-         z/ioOlQDknuVnOveAKcJI0eeRX2k3Q9zCs8Y3i/bhFNCB9rsVncWP+jvt1+WKrbn2aiT
-         3mxg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=UIeALh8fZBeYzvBT8RoZsVBwMsxQV7EeSc9KIgaLlgw=;
+        b=kpeH0bz9eRnfvvtktOE/T2E70VrhjVcvAeYSRRVAuMs3K+90aVYoqiuQ59jrW+LdFd
+         i+UTvad4xLM5mVmwSn7MDZNhcJPxw3fbU8NExMK10+tKhX2dOvuE5CcR9brexP/Q1rpK
+         IHuFiq5n+Qs0GVgMQn6VFHxwa4AyZ3vVrCphDa1It0LOL5ZbZSJe0HNIPXVF3d1N3m/o
+         1yLr9kAiA+pWpTmMBthXUADD1UFkfp6UbPG+Ll2CxZZ8qjhcrJR0i1SEnl983IXnr5Fr
+         7nVuFKGJuTotJ0b5JrQQhbc2rRZOM/K/hPgudVsiDUR2zZItUhhnkIgqLx69gXv8KIOG
+         Be+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WlrRdSiBc3+5x9el6+WiPvB5GSvm3lz/xveRGeJez/Y=;
-        b=y/kdxJEmnT2djL03Doj3D5ODjSQxiVBUwOeAN5bJe66SSvpXv2JtKnEq5+aMIxrmJN
-         zAOdyh4DC2AIcUZXWxea8vzbDsFp2VKJIUOZXxi7CUjnU83t8vKcvM5xqMGzFj7H02Gn
-         BKQ2p4pPEy0KAAjdjlfA19g2GpU4IJA+c4LTw0L13RgqgVV8/8IVShJhc+7LWw1XiQpt
-         F/c0HGuwowHOXdQTGxxkmk+iA8FFiODJsdiZpxaxgu8nv1BvtR2QcCIP4u06Yp7N8E3g
-         XCI9J+nJoc/GrpBmZl5rz8xxnePjsqIVfh5rHDAX8Cx61pf9JjvteX7D5WMdRgy+0UWz
-         2F9g==
-X-Gm-Message-State: ACrzQf3cU0BTLhM7vaQdyK36TuCaTVuvnVBK956oh9H2dVgVF+rXB8uN
-        7j2R+xICHeld0JZajYgrvWbyhw==
-X-Google-Smtp-Source: AMsMyM5iD16RwRypyXJlH9TWM1p1s0lQhnKdXXOoxUFalUOI9aplDm8h+1FMPxcIpbk+rdSjCD1iuw==
-X-Received: by 2002:a05:620a:bc9:b0:6be:9d56:78dc with SMTP id s9-20020a05620a0bc900b006be9d5678dcmr2165897qki.365.1666106857366;
-        Tue, 18 Oct 2022 08:27:37 -0700 (PDT)
-Received: from [192.168.10.124] (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
-        by smtp.gmail.com with ESMTPSA id b14-20020ac844ce000000b003434d3b5938sm2107848qto.2.2022.10.18.08.27.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Oct 2022 08:27:36 -0700 (PDT)
-Message-ID: <39a7d2d1-06c2-4002-e222-54c24c5eb31f@linaro.org>
-Date:   Tue, 18 Oct 2022 11:27:35 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH 09/15] dt-bindings: phy: qcom,qmp-pcie: mark current
- bindings as legacy
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UIeALh8fZBeYzvBT8RoZsVBwMsxQV7EeSc9KIgaLlgw=;
+        b=k+m/gxjQWLc5jEN4RDPbLZTH1/3Lsx59rnQzJG2OQROd3RV6FkClhwo0OyArllsg5h
+         FkpEYaw5gc2Txuqr22+7zl1JlOF1vcviO1OUkz+DHpnwwMBaaoBJ32r7tdacd7ghLlmZ
+         Cxxr5qs89VdjJ8BL1X/1e7u5NZpCtu/fihfouaDaH4BTmev6UfJulGuWSDxtZX/7aEin
+         yrJhzg+3L6pSYA3HafoMcQEO9wOdWzRWcWLXImP2WjWfM3S3rWEizSNSjOTLB/Jn6h/h
+         deGIvCJeLdyRkZ2lQOpFwy5z+hoxJ0qMH17qrCxRZZvhysr32Ld8+KrNu4tPlFsvL1/p
+         0/Xg==
+X-Gm-Message-State: ACrzQf2QBqoxm42mqeMK1B+YsFAmLe4ZV5uzbPsG9PYa+A7xB/qlOWE2
+        F3rsCB+XdsODzkgjxEMt+l5GOQ==
+X-Google-Smtp-Source: AMsMyM60LIozWQYCRb+12A7XPwe4sg4aiqTqYnKiIOle1SX8YxcVPpsrIV+Humq3U19eHlORKp3lew==
+X-Received: by 2002:a19:f80c:0:b0:4a4:5923:5174 with SMTP id a12-20020a19f80c000000b004a459235174mr1250336lff.151.1666106933561;
+        Tue, 18 Oct 2022 08:28:53 -0700 (PDT)
+Received: from uffe-XPS13.. (h-94-254-63-18.NA.cust.bahnhof.se. [94.254.63.18])
+        by smtp.gmail.com with ESMTPSA id a9-20020a05651c030900b0026ddd41aecasm1998617ljp.135.2022.10.18.08.28.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Oct 2022 08:28:52 -0700 (PDT)
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221017145328.22090-1-johan+linaro@kernel.org>
- <20221017145328.22090-10-johan+linaro@kernel.org>
- <5e153119-f853-ff57-8277-2d782e255be2@linaro.org>
- <Y05Qf2nDCIVg23Zh@hovoldconsulting.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <Y05Qf2nDCIVg23Zh@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 0/6] soc: qcom: Add APSS RSC to the CPU cluster PM domain
+Date:   Tue, 18 Oct 2022 17:28:31 +0200
+Message-Id: <20221018152837.619426-1-ulf.hansson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/10/2022 03:06, Johan Hovold wrote:
-> On Mon, Oct 17, 2022 at 01:15:45PM -0400, Krzysztof Kozlowski wrote:
->> On 17/10/2022 10:53, Johan Hovold wrote:
->>> The current QMP PCIe PHY bindings are based on the original MSM8996
->>> binding which provided multiple PHYs per IP block and these in turn were
->>> described by child nodes.
->>>
->>> Later QMP PCIe PHY blocks only provide a single PHY and the remnant
->>> child node does not really reflect the hardware.
->>>
->>> The original MSM8996 binding also ended up describing the individual
->>> register blocks as belonging to either the wrapper node or the PHY child
->>> nodes.
->>>
->>> This is an unnecessary level of detail which has lead to problems when
->>> later IP blocks using different register layouts have been forced to fit
->>> the original mould rather than updating the binding. The bindings are
->>> arguable also incomplete as they only the describe register blocks used
->>> by the current Linux drivers (e.g. does not include the per lane PCS
->>> registers).
->>>
->>> In preparation for adding new bindings for SC8280XP which further
->>> bindings can be based on, mark the current bindings as "legacy".
->>>
->>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
->>> ---
->>>  .../{qcom,qmp-pcie-phy.yaml => qcom,qmp-pcie-phy-legacy.yaml} | 4 ++--
->>
->> I don't think we should rename anything as legacy. These are "normal"
->> platforms, not legacy ones. SM8450 is not even that old.
-> 
-> I'm not really referring to the platforms as legacy, but the rather the
-> format of the bindings. The intent is that by marking the current ones
-> as such, people will not base new bindings on the old scheme.
-> 
-> There's no problem supporting both schemes in the driver also for the
-> current compatibles, but expressing such a deprecation in DT schema
-> sounds like it would be painful. We instead decided to simple draw the
-> line at SC8280XP and have future bindings be based on its binding.
-> 
->> The recommendation is to keep names matching the compatibles, not adding
->> some legacy/newer/newest suffixes.
-> 
-> Yeah, I know, but that's not what the current bindings do. And if we
-> keep 
-> 
-> 	qcom,qmp-pcie-phy.yaml
-> 
-> and add
-> 
-> 	qcom,sc8280xp-qmp-pcie-phy.yaml
-> 
-> then I fear that people will base their bindings on the former rather
-> than the latter.
+Changes in v3:
+	- Re-worked the genpd patch (patch4) and updated the commit-msg.
+	- No other changes.
 
-Then how about renaming this file to something matching the oldest
-supported SoC? Like: qcom,msm8998-qmp-pcie-phy.yaml
-(I don't know which one is the oldest there)
+The APSS RSC is a part of the CPU cluster PM domain and it's responsible for
+flushing 'sleep' and 'wake' votes to avoid wasting energy. In particular, this
+needs to be done when last CPU in the cluster enters a deeper idlestate.
 
-Or ipq6018 as the first one appearing in the list.
+To make this work, this series makes the APSS RSC device to become attached to
+its corresponding CPU cluster PM domain, which are being managed by the
+cpuidle-psci-domain through genpd.
 
-> 
-> I guess I can just add a comment in the old schema file with a reference
-> to the sc8280xp bindings to try to prevent people from adding new ones
-> in the wrong place.
+More details are available in the commit messages for each patch.
 
-Yes, that's also works for me. You can change the description part to
-have something like:
-"QMP PHY controller on SoCs like sc8180x and older. For newer SoCs,
-please look at xxxxx.yaml"
+Assuming there is an agreement to apply this, I suggest Bjorn to funnel this via
+his qcom tree for v6.2.
 
-> If I understand you correctly this is what you are suggesting? And that
-> the new file should still be named "qcom,sc8280xp-qmp-pcie-phy.yaml"
-> also as new bindings are added to that file?
+Note that, there is also a related error report [1], [2], that this series
+should be fixing. Although, as $subject series seems a bit too heavy for stable
+kernels there's another minor workarounds in pipe [2] for 6.1-rc back to v5.18.
 
-Yes.
+That said, we may then need to make a revert of [2] for v6.2, assuming it gets
+merged for v6.1-rc[n].
 
-> 
-> I could also rename the old schema file after one of the old platforms
-> platforms therein (e.g. qcom,msm8998-qmp-pcie-phy) to make it sounds
-> less like a generic schema for new bindings.
+Kind regards
+Ulf Hansson
 
-Oh, we thought about the same.
+[1]
+https://lore.kernel.org/linux-pm/07c29682-41d7-5624-b08a-35dd0c223d1e@linaro.org/
 
-> 
-> That is
-> 
-> 	qcom,msm8998-qmp-pcie-phy.yaml + comment (for current bindings)
-> 	qcom,sc8280xp-qmp-pcie-phy.yaml (for new bindings)
+[2]
+https://lore.kernel.org/linux-arm-msm/20221018145348.4051809-1-amit.pundir@linaro.org/
 
-Yes, please.
 
-Best regards,
-Krzysztof
+Lina Iyer (1):
+  soc: qcom: rpmh-rsc: Attach RSC to cluster PM domain
+
+Maulik Shah (5):
+  dt-bindings: soc: qcom: Update devicetree binding document for
+    rpmh-rsc
+  arm64: dts: qcom: Add power-domains property for apps_rsc
+  PM: domains: Store the next hrtimer wakeup in genpd
+  soc: qcom: rpmh-rsc: Save base address of drv
+  soc: qcom: rpmh-rsc: Write CONTROL_TCS with next timer wakeup
+
+ .../bindings/soc/qcom/qcom,rpmh-rsc.yaml      |   5 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |   1 +
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |   1 +
+ arch/arm64/boot/dts/qcom/sm8350.dtsi          |   1 +
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |   1 +
+ drivers/base/power/domain.c                   |  26 ++++
+ drivers/base/power/domain_governor.c          |   3 +
+ drivers/soc/qcom/rpmh-internal.h              |   9 +-
+ drivers/soc/qcom/rpmh-rsc.c                   | 146 ++++++++++++++++--
+ drivers/soc/qcom/rpmh.c                       |   4 +-
+ include/linux/pm_domain.h                     |   7 +
+ 11 files changed, 188 insertions(+), 16 deletions(-)
+
+-- 
+2.34.1
 
