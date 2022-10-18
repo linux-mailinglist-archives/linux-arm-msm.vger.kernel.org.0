@@ -2,64 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 32CE660307B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 18:04:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55CC0603084
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Oct 2022 18:09:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230008AbiJRQEe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Oct 2022 12:04:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36122 "EHLO
+        id S230131AbiJRQJH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Oct 2022 12:09:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230442AbiJRQEc (ORCPT
+        with ESMTP id S229852AbiJRQJE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Oct 2022 12:04:32 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47F32634D;
-        Tue, 18 Oct 2022 09:04:29 -0700 (PDT)
+        Tue, 18 Oct 2022 12:09:04 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14B53AA3CD;
+        Tue, 18 Oct 2022 09:09:03 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C59AEB81FE7;
-        Tue, 18 Oct 2022 16:04:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E71CC433D6;
-        Tue, 18 Oct 2022 16:04:26 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 97716615FF;
+        Tue, 18 Oct 2022 16:09:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B37D0C433C1;
+        Tue, 18 Oct 2022 16:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666109066;
-        bh=kwn/hWdH9/e8LfszuP6LsH+3JjR3b5A0pHJNAWEXDhU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=h0jlz5PaPhZ0U97fvM3qBLMgwAkRhqwijbu1o98DbDPy+DabB6V/ayEcy5iWYgctC
-         F+ihjARVSBGYqtd5prH/ipvWlYVUaZYueEMrmTKh7erHw4tmdZWfkvDXI2SoRkP56z
-         icbeVBKP5rz9SPCwBJdvmKL+4ZxewBs8/7fqVqRGwlQr2ROsRXC7gRgTj/6Q733lgK
-         bVHGoKFfX9SD+bR81VHCXpzhQnHxkgyBBm1WNdSfEUiqgrNDlgcGiQHcu+69Fu0dHl
-         LkZji6Mywv4X36Et+CNR8MNcs+8VAO3XYACU2hLJ1uMK6O2wn5sVom3BkAnXOL2LGh
-         JrGpLi6jvRrdQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1okp4g-0006F0-St; Tue, 18 Oct 2022 18:04:14 +0200
-Date:   Tue, 18 Oct 2022 18:04:14 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        s=k20201202; t=1666109342;
+        bh=GM6MSYEr926mJXjI6RLujQbUK1lPFH8a6M91n4+Nf+0=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=qKKvld+uoC2djWFzFuyPcWZBEda3UQIIR3gfS2YnjIncpcRBsEPANnOWC+F2Jhe7R
+         YUM5Ex1zpgY79zIW5DEApHHdi5Ipq4UH+l9ipp5vfII1XpkPu/Rc5VilAc2r3QtX62
+         lew5v0kCCQsHMInMtaQmhXUmUe3mG2yuhP2EmBt83O+QLO/Jowg9KtQ4u87F4gmGL8
+         tXWR2oArseCaV9qzf+h/0SBBnUlBntPf2YH2tH4/vaZg3nBSoMPOykvLv9LSqfxkm3
+         3Q3rZSxWclvn6phWaI8dOHxB2M6JaTri71EJjRVgySreTCafAwBIjOvq5Lipga64l/
+         fo0LEJWxzpfSA==
+Date:   Tue, 18 Oct 2022 11:08:59 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 09/15] dt-bindings: phy: qcom,qmp-pcie: mark current
- bindings as legacy
-Message-ID: <Y07OfmfQgQWFzHZY@hovoldconsulting.com>
-References: <20221017145328.22090-1-johan+linaro@kernel.org>
- <20221017145328.22090-10-johan+linaro@kernel.org>
- <CAA8EJpqSWmy5Z4cmJnsdjMjkmACW7HSi-k5JxZ0gLCeUAWEnxQ@mail.gmail.com>
- <Y05+E90tmlq2tNFa@hovoldconsulting.com>
- <CAA8EJprwhEvUfUr-zDir4zFh_NAyr0qPbrHi6Hf8=2HC1dAhaw@mail.gmail.com>
- <b0c1bdfb-4a31-9deb-1f0a-0ed813707464@linaro.org>
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rob Herring <robh@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH v3 2/2] PCI: qcom: Add support for modular builds
+Message-ID: <20221018160859.GA3805344@bhelgaas>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b0c1bdfb-4a31-9deb-1f0a-0ed813707464@linaro.org>
+In-Reply-To: <Y07B/cHkyvw3M4NV@hovoldconsulting.com>
 X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -69,55 +64,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 18, 2022 at 11:32:07AM -0400, Krzysztof Kozlowski wrote:
-> On 18/10/2022 07:37, Dmitry Baryshkov wrote:
+On Tue, Oct 18, 2022 at 05:10:53PM +0200, Johan Hovold wrote:
+> On Mon, Oct 17, 2022 at 12:34:22PM -0500, Bjorn Helgaas wrote:
+> > On Mon, Oct 17, 2022 at 01:47:05PM +0200, Johan Hovold wrote:
+> > > Allow the Qualcomm PCIe controller driver to be built as a module, which
+> > > is useful for multi-platform kernels as well as during development.
 > > 
-> >>> And yes, I think we should also upgrade
-> >>> older DTs, keeping drivers backwards compatible (for some time?).
-> >>
-> >> Possibly, but I'm not sure it's worth the dts churn. As I mentioned
-> >> elsewhere, supporting both the old and new binding in the driver is
-> >> mostly trivial, while encoding the deprecated bindings in DT schema
-> >> sounds like it would be painful.
+> > There are two different goals here, and there's no real reason to
+> > bundle them together:
 > > 
-> > This is probably the time where Krzysztof can advise us. I'm still not
-> > sure when it is expected to encode both old and new bindings in the
-> > schema and when we can update both the schema and the DT.
+> >   1) Make qcom a loadable module.  This is a hard requirement so
+> >      multi-platform kernels don't need to build in all drivers
+> >      statically.
+> > 
+> >   2) Make qcom unloadable.  This is a high want, possibly even a
+> >      requirement for developers, but is not really a big issue for
+> >      users.
+> > 
+> > There are different changes required: 1) requires the Kconfig change;
+> > 2) requires .remove() to be implemented.  Since there's no requirement
+> > that these be done together, let's split them into separate patches.
+> > 
+> > Then we can make sure that at least 1) gets done, and if for any
+> > reason 2) isn't safe or breaks something, we can at least bisect and
+> > if necessary revert it without losing 1).
 > 
-> I do not follow what exactly the proposal is. Are you asking whether to:
-> 1. keep existing DTS compatible with old driver?
-> or
-> 2. update existing DTS so it is working only with new driver (and not
-> compatible with old driver thus having ABI break)?
-> 
-> If so, it is less question to bindings but more to the usage of DTS in
-> other projects (like bootloaders, firmware, BSD) and generic
-> recommendation is: do not break other users, if possible. It is however
-> up to the platform maintainer (Bjorn) to decide on this, not on me.
+> Implementing 1) in itself requires more than simply splitting this
+> patch. And I don't think we should be making life harder for developers,
+> as well as users assisting during debugging, by going in that direction.
 
-The question is whether to convert also the current bindings and DTS to
-the new (sc8280xp) scheme (e.g. drop the child nodes and register
-subregions).
+If you're saying this patch can't be split, can you elaborate on the
+details of *why* it can't be split?
 
-The driver can support both binding schemes using the same compatible
-strings for a transition period (or in theory forever) by checking for
-the existence of a child node.
+> We have tons of modules in the kernel and very few that cannot be
+> unloaded. Anyone who doesn't trust root to not unload modules can
+> always disable unloading completely using CONFIG_MODULE_UNLOAD.
 
-Converting the DTS to use the new bindings would obviously prevent using
-them with an old kernel (i.e. 2 above), but I don't think that's a
-problem (unlike backward compatibility during at least a transition
-period).
+This is all true, but IIUC, the issue is about unloading IRQ
+controller drivers, and this doesn't address that.  I don't have a
+clear understanding of the issue, and it would be nice if a patch that
+specifically added unloadability could elaborate on that.  Then we can
+decide that "yes, this is a risk, and we're willing to accept it." An
+argument that "tons of modules do this" totally avoids the issues of
+this particular case.
 
-My concern was how to describe the deprecation in DT schema if we were
-convert them. By instead just keeping the old bindings as-is in a
-separate file and continuing to support them in the driver we can have a
-nice and clean description of the new bindings (sc8280xp) without the
-legacy cruft.
-
-If we were to start introducing conditionals on existence of child
-nodes, and marking the old bindings as deprecated in one large schema,
-then that sounds like it would be very messy and hard to read and
-maintain. But perhaps there is some way to do this without such
-downsides that I'm not aware of.
-
-Johan
+Bjorn
