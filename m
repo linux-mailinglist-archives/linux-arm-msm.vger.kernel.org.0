@@ -2,66 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95439604F8E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 20:22:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3E9B604FFE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 20:56:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230124AbiJSSW4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Oct 2022 14:22:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48932 "EHLO
+        id S229491AbiJSS4Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Oct 2022 14:56:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229714AbiJSSW4 (ORCPT
+        with ESMTP id S230253AbiJSS4P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Oct 2022 14:22:56 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A17D1BBEF0;
-        Wed, 19 Oct 2022 11:22:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1666203774; x=1697739774;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=TMpxtyP3Z/4Q9i7TSn8VljPk4WqZmZ356B09v3/00MU=;
-  b=pL6wpvZQZCiTNw+Y3/1/XQtP9YmT16wIBnqe8HCNty2K7PtivX0nu+we
-   PUYCVQI3aaxN/sGYMCWVZMeoxnIouEc5xZd9r5WxIxIYRRXN63lvphYtC
-   MEsO7mzL08z1fFN17M6r6h18ij8eF2XVZWNw8Pf9aEdnilT3GGVE86z91
-   0=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 19 Oct 2022 11:22:54 -0700
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2022 11:22:53 -0700
+        Wed, 19 Oct 2022 14:56:15 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AFD5194221;
+        Wed, 19 Oct 2022 11:56:14 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29JC0paM017623;
+        Wed, 19 Oct 2022 18:56:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=pry4w3Kp43NaKn2WBenanTlyw3GHWVveMdrjLYD30KA=;
+ b=Vpl/jcDTa/iinHn+ZyIa97LOdb5McGq7hA9/Gjyu4Q2P86f0SZE0mmdh8OzCP/6tTttK
+ P7OuZGI06BC3CN7ZUcG2B3MNA9A5TDaKa1xFsEJXtDozMGCz1qJ11qSVf7t538GXEV7r
+ nhHb7GVccdHHDWXpxXMhIJ++mrl7VpltPACV3vYXztiSXv379nhuf4oooH8eEsld2cQo
+ pwD8R22jfP5afPvDWSgCuy+54eJwLuHo/G0dcSsKw/zuQPc3H9OeoQ0vW9BaFSP052tE
+ FOwiBvUIL3nJQ8nN8wDfCswqCLEEAGuTeP/WZmrtysZwF7Gxv4Vo9vIbLou//Bcp6jRd Xg== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kaed8tj1q-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Oct 2022 18:56:10 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29JIu90B001016
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Oct 2022 18:56:09 GMT
 Received: from [10.134.66.255] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 19 Oct
- 2022 11:22:53 -0700
-Message-ID: <32c48147-be2f-9e32-b6df-29fef1e33fbc@quicinc.com>
-Date:   Wed, 19 Oct 2022 11:22:53 -0700
+ 2022 11:56:09 -0700
+Message-ID: <83721f08-c935-4d9d-237e-a25bc8f277b7@quicinc.com>
+Date:   Wed, 19 Oct 2022 11:56:09 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.2
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add QDU1000 and
- QRU1000 pinctrl bindings
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20221014221025.7372-1-quic_molvera@quicinc.com>
- <20221014221025.7372-2-quic_molvera@quicinc.com>
- <199530e8-2e84-3b82-3d9a-265d38fd6fab@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20221014221138.7552-1-quic_molvera@quicinc.com>
+ <20221014221138.7552-3-quic_molvera@quicinc.com>
+ <d4158329-5a7a-c622-a8f8-ea2508b663c6@linaro.org>
 From:   Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <199530e8-2e84-3b82-3d9a-265d38fd6fab@linaro.org>
+In-Reply-To: <d4158329-5a7a-c622-a8f8-ea2508b663c6@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: CkPqNnO_R_qVmncLNrrUQnMppcCnaDmL
+X-Proofpoint-GUID: CkPqNnO_R_qVmncLNrrUQnMppcCnaDmL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-19_11,2022-10-19_04,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 lowpriorityscore=0 malwarescore=0 mlxscore=0 phishscore=0
+ mlxlogscore=835 spamscore=0 impostorscore=0 bulkscore=0 suspectscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210190107
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,174 +86,42 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/15/2022 6:38 AM, Krzysztof Kozlowski wrote:
-> On 14/10/2022 18:10, Melody Olvera wrote:
->> Add documentation details for device tree bindings for QDU1000 and QRU1000
->> TLMM devices.
+On 10/18/2022 3:15 PM, Krzysztof Kozlowski wrote:
+> On 14/10/2022 18:11, Melody Olvera wrote:
+>> Add the base DTSI files for QDU1000 and QRU1000 SoCs, including base
+>> descriptions of CPUs, GCC, RPMHCC, QUP, TLMM, and interrupt-controller
+>> to boot to shell with console on these SoCs.
 >>
 >> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 >> ---
->>  .../pinctrl/qcom,qdu1000-pinctrl.yaml         | 159 ++++++++++++++++++
->>  1 file changed, 159 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-pinctrl.yaml
+>>  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 1646 +++++++++++++++++++++++++
+>>  arch/arm64/boot/dts/qcom/qru1000.dtsi |   27 +
+>>  2 files changed, 1673 insertions(+)
+>>  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>>  create mode 100644 arch/arm64/boot/dts/qcom/qru1000.dtsi
 >>
->> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-pinctrl.yaml
+>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
 >> new file mode 100644
->> index 000000000000..2ec661e5e1e0
+>> index 000000000000..777734b30f56
 >> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-pinctrl.yaml
-> Filename matching compatible, so qcom,qdu1000-tlmm.yaml
-Got it.
->> @@ -0,0 +1,159 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/pinctrl/qcom,qdu1000-pinctrl.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>> @@ -0,0 +1,1646 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +/*
+>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
 >> +
->> +title: Qualcomm Technologies, Inc. QDU1000/QRU1000 TLMM block
->> +
->> +maintainers:
->> +  - Melody Olvera <quic_molvera@quicinc.com>
->> +
->> +description: |
->> +  This binding describes the Top Level Mode Multiplexer block (TLMM) found
->> +  in the QDU1000 and QRU1000 platforms.
->> +
->> +allOf:
->> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
->> +
->> +properties:
->> +  compatible:
->> +    items:
->> +      - const: qcom,qdu1000-tlmm
->> +      - const: qcom,qru1000-tlmm
->> +
->> +  reg:
->> +    maxItems: 1
-> Blank line
-Sure.
->
->> +  interrupts: true
->> +  interrupt-controller: true
->> +  "#interrupt-cells": true
->> +  gpio-controller: true
->> +
->> +  gpio-reserved-ranges:
->> +    minItems: 1
->> +    maxItems: 75
->> +
->> +  gpio-line-names:
->> +    maxItems: 150
->> +
->> +  "#gpio-cells": true
->> +  gpio-ranges: true
->> +  wakeup-parent: true
->> +
->> +patternProperties:
->> +  "-state$":
->> +    oneOf:
->> +      - $ref: "#/$defs/qcom-qdu1000-tlmm-state"
->> +      - patternProperties:
->> +          "-pins$":
->> +            $ref: "#/$defs/qcom-qdu1000-tlmm-state"
->> +        additionalProperties: false
->> +
->> +$defs:
->> +  qcom-qdu1000-tlmm-state:
->> +    type: object
->> +    description:
->> +      Pinctrl node's client devices use subnodes for desired pin configuration.
->> +      Client device subnodes use below standard properties.
->> +    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
->> +
->> +    properties:
->> +      pins:
->> +        description:
->> +          List of gpio pins affected by the properties specified in this
->> +          subnode.
->> +        items:
->> +          oneOf:
->> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-4][0-9])$"
->> +            - enum: [ ufs_reset, sdc2_clk, sdc2_cmd, sdc2_data ]
->> +        minItems: 1
->> +        maxItems: 36
->> +
->> +      function:
->> +        description:
->> +          Specify the alternative function to be configured for the specified
->> +          pins.
->> +        enum: [ adsp_ext, agera_pll, atest_char, atest_tsens, atest_tsens2,
->> +                atest_usb1, atest_usb10, atest_usb11, atest_usb12, atest_usb13,
->> +                atest_usb2, atest_usb20, atest_usb21, atest_usb22, atest_usb23,
->> +                audio_ref, btfm_slimbus, cam_mclk, cci_async, cci_i2c,
->> +                cci_timer0, cci_timer1, cci_timer2, cci_timer3, cci_timer4,
->> +                cri_trng, cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0,
->> +                ddr_pxi1, ddr_pxi2, ddr_pxi3, edp_hot, edp_lcd, gcc_gp1,
->> +                gcc_gp2, gcc_gp3, gpio, jitter_bist, ldo_en, ldo_update,
->> +                lpass_slimbus, mdp_vsync, mdp_vsync0, mdp_vsync1, mdp_vsync2,
->> +                mdp_vsync3, mss_lte, m_voc, nav_pps, pa_indicator, pci_e0,
->> +                pci_e1, phase_flag, pll_bist, pll_bypassnl, pll_reset,
->> +                pri_mi2s, pri_mi2s_ws, prng_rosc, qdss, qdss_cti, qlink_enable,
->> +                qlink_request, qspi_clk, qspi_cs, qspi_data, qua_mi2s, qup0,
->> +                qup1, qup10, qup11, qup12, qup13, qup14, qup15, qup2, qup3,
->> +                qup4, qup5, qup6, qup7, qup8, qup9, qup_l4, qup_l5, qup_l6,
->> +                sdc4_clk, sdc4_cmd, sdc4_data, sd_write, sec_mi2s, sp_cmu,
->> +                spkr_i2s, ter_mi2s, tgu_ch0, tgu_ch1, tgu_ch2, tgu_ch3,
->> +                tsense_pwm1, tsense_pwm2, tsif1_clk, tsif1_data, tsif1_en,
->> +                tsif1_error, tsif1_sync, tsif2_clk, tsif2_data, tsif2_en,
->> +                tsif2_error, tsif2_sync, uim1_clk, uim1_data, uim1_present,
->> +                uim1_reset, uim2_clk, uim2_data, uim2_present, uim2_reset,
->> +                uim_batt, usb_phy, vfr_1, vsense_trigger, wlan1_adc0,
->> +                wlan1_adc1, wlan2_adc0, wlan2_adc1]
->> +
->> +      bias-disable: true
->> +      bias-pull-down: true
->> +      bias-pull-up: true
->> +      drive-strength: true
->> +      input-enable: true
->> +      output-high: true
->> +      output-low: true
->> +
->> +    required:
->> +      - pins
->> +
->> +    additionalProperties: false
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->> +
->> +    pinctrl@03000000 {
->> +        compatible = "qcom,qdu1000-pinctrl";
->> +        reg = <0x03000000 0xdc2000>;
->> +        interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
->> +        gpio-controller;
->> +        #gpio-cells = <2>;
->> +        interrupt-controller;
->> +        #interrupt-cells = <2>;
->> +        gpio-ranges = <&tlmm 0 0 151>;
->> +        wakeup-parent = <&pdc_intc>;
->> +
->> +        cci0-default-state {
-> You have now bindings for your new SoC and you still did not run them
-> against your own DTS... The purpose of DT schema is not only to have
-> them, but actually to use them.
->
-> There is no point for us to do manual review if automated tools can do
-> the work, right?
->
-> So please test your DTS.
-Yes this is very fair. Apologies; I'm new to this process so I'm still learning about the
-tools at my disposal. I believe I've figured out running dt_bindings_check and dtbs_check;
-future patchsets will have these run prior to submitting.
+>> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +#include <dt-bindings/clock/qcom,gcc-qdu1000.h>
+>> +#include <dt-bindings/clock/qcom,rpmh.h>
+>> +#include <dt-bindings/dma/qcom-gpi.h>
+>> +#include <dt-bindings/interconnect/qcom,qdu1000.h>
+>> +#include <dt-bindings/power/qcom-rpmpd.h>
+>> +#include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> As pointed out by kernel test robot, your patchset is unbuildable and
+> unmerge'able, so automated tools cannot test it.
+I saw. I will be more explicit about the dependencies on previous patches
+in the next patchset.
 
 Thanks,
 Melody
-
