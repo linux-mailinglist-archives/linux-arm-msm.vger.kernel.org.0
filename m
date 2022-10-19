@@ -2,98 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1468604EA6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 19:31:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96C73604E45
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 19:13:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230226AbiJSRbS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Oct 2022 13:31:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56540 "EHLO
+        id S229836AbiJSRNq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Oct 2022 13:13:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229552AbiJSRbR (ORCPT
+        with ESMTP id S229497AbiJSRNp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Oct 2022 13:31:17 -0400
-X-Greylist: delayed 1226 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 19 Oct 2022 10:31:16 PDT
-Received: from msg-2.mailo.com (msg-2.mailo.com [213.182.54.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88D4925C55;
-        Wed, 19 Oct 2022 10:31:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mailoo.org; s=mailo;
-        t=1666199435; bh=fiH8/vrSyWzjJXKim+s93q4OhgioJqgJk6uvtBkqYH4=;
-        h=X-EA-Auth:From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:
-         References:MIME-Version:Content-Transfer-Encoding;
-        b=TQJcgpM+S5tAdRstd32dH3+aeBacBcLfhn1cRFJaoW/48UcB77zEpvDptDQPCj/xm
-         A8scgCskoE0EjwrT2QStOEDouUfOfDeT8IkRk4TJFb2IEzuY2hxYO+y1S2WHdRiYaQ
-         Wzfv8ZtGfLQjbDDAw16B0Lgf3lym9iiweiZGVmyc=
-Received: by b-2.in.mailobj.net [192.168.90.12] with ESMTP
-        via [213.182.55.207]
-        Wed, 19 Oct 2022 19:10:35 +0200 (CEST)
-X-EA-Auth: Cd0Ai1B4yfPsr25S8xGnZTRMHsnbsGm6LBkX5tA4skP0zeZIlyWHFa8P24/PvElxhrF9DbtRM3OJZ8ZMhBOcWW/7yMLsDqpXeNdjbAgAvuI=
-From:   Vincent Knecht <vincent.knecht@mailoo.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Vincent Knecht <vincent.knecht@mailoo.org>
-Subject: [PATCH 2/2] soc: qcom: spm: Add MSM8939 SPM register data
-Date:   Wed, 19 Oct 2022 19:10:03 +0200
-Message-Id: <20221019171004.1080911-2-vincent.knecht@mailoo.org>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20221019171004.1080911-1-vincent.knecht@mailoo.org>
-References: <20221019171004.1080911-1-vincent.knecht@mailoo.org>
+        Wed, 19 Oct 2022 13:13:45 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87F0B1BE932;
+        Wed, 19 Oct 2022 10:13:44 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 4341AB82571;
+        Wed, 19 Oct 2022 17:13:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF6B1C433C1;
+        Wed, 19 Oct 2022 17:13:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1666199622;
+        bh=NyNZ+inQk271m+JIba1TXYMkNOx6yVUC2InlpmkUhuw=;
+        h=From:To:In-Reply-To:References:Subject:Date:From;
+        b=rytKq5vvUUyE8N8WZpL8iJdwJIevzOag8iHOLHERt4UdcmgEFyf+H/s9hkM7k2QUr
+         3r79IG9Brh31vXxj+jupWhf3dDZTZMWzryGltHKNAH+8NZXlI1V4vqKw6QWsftLfVp
+         +iLqUmHDnOP86FGJH1JcITGZDqwhtYtsoQTD99U4QG+cOxa1r7eJiDGWmp78wJiYjL
+         mjYPeY154KNQVchRPInrM1TKq27rKr/WeaxPoe9lovc4WU+lN9D1D6gBnCxCbcGQXg
+         R3YOOEGLQhlzSHgjUxkF7AZbveFF5vRuPEDvtbhHuiwCBVjHext3ryNzQNw3GO0eWN
+         TFf4Sy7F+dCyQ==
+From:   Mark Brown <broonie@kernel.org>
+To:     devicetree@vger.kernel.org, swboyd@chromium.org,
+        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+        linux-arm-msm@vger.kernel.org, bgoswami@quicinc.com,
+        judyhsiao@chromium.org, alsa-devel@alsa-project.org,
+        andersson@kernel.org, srinivas.kandagatla@linaro.org,
+        lgirdwood@gmail.com, quic_plai@quicinc.com, agross@kernel.org,
+        tiwai@suse.com, robh+dt@kernel.org,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        perex@perex.cz
+In-Reply-To: <1665825530-7593-1-git-send-email-quic_srivasam@quicinc.com>
+References: <1665825530-7593-1-git-send-email-quic_srivasam@quicinc.com>
+Subject: Re: [RESEND] Asoc: qcom: lpass-cpu: Mark HDMI TX parity register as volatile
+Message-Id: <166619961841.1416660.6646939908532904224.b4-ty@kernel.org>
+Date:   Wed, 19 Oct 2022 18:13:38 +0100
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Mailer: b4 0.10.0-dev-fc921
+X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add SPM register information and initialization values for
-QCOM MSM8939 SoC.
+On Sat, 15 Oct 2022 14:48:50 +0530, Srinivasa Rao Mandadapu wrote:
+> Update LPASS_HDMI_TX_PARITY_ADDR register as volatile, to fix
+> dp audio failures observed with some of external monitors.
+> 
+> Fixes: 7cb37b7bd0d3 ("ASoC: qcom: Add support for lpass hdmi driver")
+> 
+> 
 
-Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
----
- drivers/soc/qcom/spm.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+Applied to
 
-diff --git a/drivers/soc/qcom/spm.c b/drivers/soc/qcom/spm.c
-index 484b42b7454e..670775e43f07 100644
---- a/drivers/soc/qcom/spm.c
-+++ b/drivers/soc/qcom/spm.c
-@@ -98,6 +98,17 @@ static const struct spm_reg_data spm_reg_8916_cpu = {
- 	.start_index[PM_SLEEP_MODE_SPC] = 5,
- };
- 
-+static const struct spm_reg_data spm_reg_8939_cpu = {
-+	.reg_offset = spm_reg_offset_v3_0,
-+	.spm_cfg = 0x1,
-+	.spm_dly = 0x3C102800,
-+	.seq = { 0x60, 0x03, 0x60, 0x0B, 0x0F, 0x20, 0x50, 0x1B, 0x10, 0x80,
-+		0x30, 0x90, 0x5B, 0x60, 0x50, 0x03, 0x60, 0x76, 0x76, 0x0B,
-+		0x50, 0x1B, 0x94, 0x5B, 0x80, 0x10, 0x26, 0x30, 0x50, 0x0F },
-+	.start_index[PM_SLEEP_MODE_STBY] = 0,
-+	.start_index[PM_SLEEP_MODE_SPC] = 5,
-+};
-+
- static const u16 spm_reg_offset_v2_1[SPM_REG_NR] = {
- 	[SPM_REG_CFG]		= 0x08,
- 	[SPM_REG_SPM_CTL]	= 0x30,
-@@ -211,6 +222,8 @@ static const struct of_device_id spm_match_table[] = {
- 	  .data = &spm_reg_8909_cpu },
- 	{ .compatible = "qcom,msm8916-saw2-v3.0-cpu",
- 	  .data = &spm_reg_8916_cpu },
-+	{ .compatible = "qcom,msm8939-saw2-v3.0-cpu",
-+	  .data = &spm_reg_8939_cpu },
- 	{ .compatible = "qcom,msm8974-saw2-v2.1-cpu",
- 	  .data = &spm_reg_8974_8084_cpu },
- 	{ .compatible = "qcom,msm8998-gold-saw2-v4.1-l2",
--- 
-2.37.3
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
+Thanks!
 
+[1/1] Asoc: qcom: lpass-cpu: Mark HDMI TX parity register as volatile
+      commit: 1dd5166102e7ca91e8c5d833110333835e147ddb
 
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
