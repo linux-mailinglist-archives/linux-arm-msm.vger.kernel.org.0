@@ -2,123 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CA91603653
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 01:04:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90A776036F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 02:15:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230076AbiJRXEL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Oct 2022 19:04:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54240 "EHLO
+        id S230037AbiJSAPQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Oct 2022 20:15:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229904AbiJRXEI (ORCPT
+        with ESMTP id S229889AbiJSAPA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Oct 2022 19:04:08 -0400
+        Tue, 18 Oct 2022 20:15:00 -0400
 Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBD79D2CFC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 16:04:03 -0700 (PDT)
-Received: by mail-qv1-xf2d.google.com with SMTP id mg6so10300581qvb.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 16:04:03 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC960DD8A4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 17:14:16 -0700 (PDT)
+Received: by mail-qv1-xf2d.google.com with SMTP id i9so10420425qvu.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 17:14:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=j5onxALWPECvEQDbcc1fJ7WbhZUDY/4v0hgNP7t4FyY=;
-        b=uuC5cdGZPruoYSQCrJao34nCJk7xGMr5lItBdzuAKncJM5qZFaEtPqF9dAVEuDckDu
-         p6yHAcJbD7ufXcArqgAFJbe65sgJywCblw1tuPel3OWZt3sE+CdoEW4MrQMbGGBHL++A
-         C7oP/UDmLY3zXMid9PROm0ctwsMvm3LuFtsNUSnsrktdmj0p0GsCi23sNn1mIaA8KIGK
-         gmruarPDwwdQPR/EVQ5/m07KMv6tG6OYc3wYCLMUSDBUGgX5uACGL8pJVntjuW853bNv
-         duX1VNKrjvEpydcptjRQWN200asq7DOPoAEAFWhhiqm8NFRrPm6bIEnndBWiXrDHiZsP
-         PlDg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qk1Lk7K7X9zbqdIsTyGxp50kAio2yo1LV6scf4TNeLM=;
+        b=l9vtW+GMcNZtK6k2yNVypl8dLO3IHkP4YJijha02yjP6OKRBUW0LE8z8EzX3T80pDr
+         /2UKaB7RP2Bdkhj9FxVIR/cJHmhtmNZi+zHd0UTy3MfTU1YgtCiRaRh3+IWJi2rKVHv2
+         9DhCEtEHLaYTHlwnWKHp5K6cCpMJbc+KnqiVHkKo3VhP9aB8O2+Q8DcWZno5v3uaiDJo
+         BIKpTpoNgTO5LdQvyrlCCONNRsCmUT0mS3wkUpCWLug+ToJZ0+IzIon/Ax15N3XbexHH
+         3Zl2FqxjQe9KJEtdy29Wh4Mkk0Lv5N2k4wnS9EoVR1lqBTrn+pklm8nXmoZSgArBBVY5
+         I2nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=j5onxALWPECvEQDbcc1fJ7WbhZUDY/4v0hgNP7t4FyY=;
-        b=dA7lIxlmigD9IDajVo3tkZtLhv8cWYxrJKlqnOtwx4Plx+gW3/eW3W/yZCEpgYEdxQ
-         o3lVyEhT57r7GFCpbQiNzv1SumqHqRjro+vFovBmvISpd/zmwrhlBeR+/RrlkBu4A3iw
-         7rwb2baKNycqRqnEzQ+OVMU//Tni3zJKpst/OMYwU5vQwOKO/sFNPhHCeU1aqi9S61Vw
-         EoCesEHTq5yxmw3EmSlTbw16/CuRYEm/cYAwsjphTBHh9rrqg8fBneRR+mrCSO6+ql6G
-         6T53d8ucbT/v1TjvKOdy/IZu36QCby0sbIpKVZVfN+AYG6bFJ4I6oTxT4bMqCRhamJhi
-         VnUg==
-X-Gm-Message-State: ACrzQf1XTaRy/BT7trKUmcq8gTz9Qo/kKJY87t3feu6jZ4EkS0wQDCCo
-        bujOS3ERJgBAH6TgwaC3/HS17g==
-X-Google-Smtp-Source: AMsMyM6Q3AYdLg49yo6eXDgSEVL7g3/Syin8kl9+zJaWS0odmGgUQ5IYHT0z3rqloxzxIYSrTeTqeg==
-X-Received: by 2002:a05:6214:e49:b0:4b3:f24e:91ac with SMTP id o9-20020a0562140e4900b004b3f24e91acmr4064637qvc.41.1666134242891;
-        Tue, 18 Oct 2022 16:04:02 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qk1Lk7K7X9zbqdIsTyGxp50kAio2yo1LV6scf4TNeLM=;
+        b=BFxvvEI36egoYT9/GMgaeOMGuLQ2M58eLlZPnTqgQSll856oNib041Blsrk2LaLfgS
+         uFcB10CwzBvXZfppOSl10XQgENj53lK08qvo21N9Bryu5YHWhh4n05IXqWdjC5100oQN
+         /FBgG2S5TtxzwnXHiDo3jSt3fgoPAGrxej8YV3tb4MXs+I6oIu0E4ohWz/XVKGc5tvxn
+         sJOPl3HKdxCauj68C9YGy92hUG25kiYc2DZ0yBpMGkILiNPUeM1iGYdIoCRDVH3DUhOp
+         XYQYMz2z9ifBByfaGBBnPjhrv2Y/6r8UXJSdors7f1QhT261C1QEoxeyHulmU4toH1jN
+         dLng==
+X-Gm-Message-State: ACrzQf0SaYZzVRcIAZWXN35aLYAir2cKxLUMABy3rJH0oqOl5zkvWxBK
+        dq0fJZJDLcQWL8etdFdbW/q3NQ==
+X-Google-Smtp-Source: AMsMyM4CyuLLUb9WmRTKux2ZEH0203deqdUJhdEf+LBXl1nOMuojN7Ja89jOCr60TDNlRCrbUqTJig==
+X-Received: by 2002:a05:6214:c67:b0:4b3:fe6c:9042 with SMTP id t7-20020a0562140c6700b004b3fe6c9042mr4616042qvj.76.1666138440851;
+        Tue, 18 Oct 2022 17:14:00 -0700 (PDT)
 Received: from krzk-bin.MSRM (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
-        by smtp.gmail.com with ESMTPSA id 134-20020a370a8c000000b006cbcdc6efedsm3279010qkk.41.2022.10.18.16.04.00
+        by smtp.gmail.com with ESMTPSA id ay40-20020a05620a17a800b006bb78d095c5sm3381240qkb.79.2022.10.18.17.13.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Oct 2022 16:04:02 -0700 (PDT)
+        Tue, 18 Oct 2022 17:14:00 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH v2 5/5] arm64: dts: qcom: sm8450: Add GPI DMA compatible fallback
-Date:   Tue, 18 Oct 2022 19:03:52 -0400
-Message-Id: <20221018230352.1238479-6-krzysztof.kozlowski@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 0/4] arm64/pinctrl: dt-bindings: qcom: sc7180: convert to dtschema
+Date:   Tue, 18 Oct 2022 20:13:47 -0400
+Message-Id: <20221019001351.1630089-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221018230352.1238479-1-krzysztof.kozlowski@linaro.org>
-References: <20221018230352.1238479-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use SM6350 as fallback for GPI DMA, to indicate devices are compatible
-and that drivers can bind with only one compatible.
+Hi,
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Changes since v2
+================
+1. New patch: revert of glitch SPI CS workaround
+2. dt-bindings: Drop entire drive-strength (not needed, brought by common TLMM
+   schema).
+3. Add tags.
+v2: https://lore.kernel.org/all/20221013184700.87260-1-krzysztof.kozlowski@linaro.org/
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index d32f08df743d..e01a019d8b23 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -730,7 +730,7 @@ gcc: clock-controller@100000 {
- 		};
- 
- 		gpi_dma2: dma-controller@800000 {
--			compatible = "qcom,sm8450-gpi-dma";
-+			compatible = "qcom,sm8450-gpi-dma", "qcom,sm6350-gpi-dma";
- 			#dma-cells = <3>;
- 			reg = <0 0x800000 0 0x60000>;
- 			interrupts = <GIC_SPI 588 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1058,7 +1058,7 @@ spi21: spi@898000 {
- 		};
- 
- 		gpi_dma0: dma-controller@900000 {
--			compatible = "qcom,sm8450-gpi-dma";
-+			compatible = "qcom,sm8450-gpi-dma", "qcom,sm6350-gpi-dma";
- 			#dma-cells = <3>;
- 			reg = <0 0x900000 0 0x60000>;
- 			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1394,7 +1394,7 @@ uart7: serial@99c000 {
- 		};
- 
- 		gpi_dma1: dma-controller@a00000 {
--			compatible = "qcom,sm8450-gpi-dma";
-+			compatible = "qcom,sm8450-gpi-dma", "qcom,sm6350-gpi-dma";
- 			#dma-cells = <3>;
- 			reg = <0 0xa00000 0 0x60000>;
- 			interrupts = <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>,
+Best regards,
+Krzysztof
+
+Krzysztof Kozlowski (4):
+  arm64: dts: qcom: sc7180-trogdor-homestar: fully configure secondary
+    I2S pins
+  arm64: dts: qcom: sc7180: revert "arm64: dts: qcom: sc7180: Avoid
+    glitching SPI CS at bootup on trogdor"
+  arm64: dts: qcom: sc7180: align TLMM pin configuration with DT schema
+  dt-bindings: pinctrl: qcom,sc7180: convert to dtschema
+
+ .../bindings/pinctrl/qcom,sc7180-pinctrl.txt  | 187 -----
+ .../bindings/pinctrl/qcom,sc7180-pinctrl.yaml | 158 +++++
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts       | 236 +++----
+ .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  36 +-
+ .../dts/qcom/sc7180-trogdor-homestar.dtsi     |  41 +-
+ .../dts/qcom/sc7180-trogdor-kingoftown-r0.dts |  16 +-
+ .../dts/qcom/sc7180-trogdor-kingoftown.dtsi   |   8 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  16 +-
+ .../dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi |  25 +-
+ .../boot/dts/qcom/sc7180-trogdor-mrbland.dtsi |  72 +-
+ .../qcom/sc7180-trogdor-parade-ps8640.dtsi    |  32 +-
+ .../boot/dts/qcom/sc7180-trogdor-pazquel.dtsi |   8 +-
+ .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |  14 +-
+ .../qcom/sc7180-trogdor-quackingstick.dtsi    |  56 +-
+ .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |   8 +-
+ .../dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi |  16 +-
+ .../qcom/sc7180-trogdor-wormdingler-rev0.dtsi |  25 +-
+ .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  |  72 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 650 +++++++-----------
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          | 597 ++++++++--------
+ 20 files changed, 934 insertions(+), 1339 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.txt
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.yaml
+
 -- 
 2.34.1
 
