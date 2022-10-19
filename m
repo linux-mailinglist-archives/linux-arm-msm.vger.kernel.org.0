@@ -2,81 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3E9B604FFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 20:56:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A734605098
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 21:38:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229491AbiJSS4Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Oct 2022 14:56:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44530 "EHLO
+        id S230139AbiJSTiM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Oct 2022 15:38:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230253AbiJSS4P (ORCPT
+        with ESMTP id S231238AbiJSTiC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Oct 2022 14:56:15 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AFD5194221;
-        Wed, 19 Oct 2022 11:56:14 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29JC0paM017623;
-        Wed, 19 Oct 2022 18:56:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=pry4w3Kp43NaKn2WBenanTlyw3GHWVveMdrjLYD30KA=;
- b=Vpl/jcDTa/iinHn+ZyIa97LOdb5McGq7hA9/Gjyu4Q2P86f0SZE0mmdh8OzCP/6tTttK
- P7OuZGI06BC3CN7ZUcG2B3MNA9A5TDaKa1xFsEJXtDozMGCz1qJ11qSVf7t538GXEV7r
- nhHb7GVccdHHDWXpxXMhIJ++mrl7VpltPACV3vYXztiSXv379nhuf4oooH8eEsld2cQo
- pwD8R22jfP5afPvDWSgCuy+54eJwLuHo/G0dcSsKw/zuQPc3H9OeoQ0vW9BaFSP052tE
- FOwiBvUIL3nJQ8nN8wDfCswqCLEEAGuTeP/WZmrtysZwF7Gxv4Vo9vIbLou//Bcp6jRd Xg== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kaed8tj1q-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Oct 2022 18:56:10 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29JIu90B001016
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Oct 2022 18:56:09 GMT
-Received: from [10.134.66.255] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 19 Oct
- 2022 11:56:09 -0700
-Message-ID: <83721f08-c935-4d9d-237e-a25bc8f277b7@quicinc.com>
-Date:   Wed, 19 Oct 2022 11:56:09 -0700
+        Wed, 19 Oct 2022 15:38:02 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F19D1CBAAE;
+        Wed, 19 Oct 2022 12:38:00 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BB5666199B;
+        Wed, 19 Oct 2022 19:37:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0B15C433C1;
+        Wed, 19 Oct 2022 19:37:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1666208279;
+        bh=pYGwlKtIvtEUPHvL5dQFOXwsod/jU89jA0iPylkzLh4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=I82iLEraoMvA5Gns4bG9X+tOTAqmXWBm5PV6TB/HPICGZ7vnOirozDPxUXgvZuzOP
+         VZU7QeW7QVLxjMWuADjoR4BWRb4Ey6dOIAXjy/tyLK6FGVcG918YlRoEZqpR85wXTr
+         546A9NIG7habHoBfb1X0nlDD4DWYe5Gd0BLjy+uy4JXwXD+SfvMCC5aZUXGg/eN430
+         m/b+Iyhf9SKjGu2nW+OLg8jSYDfm2E0prOSnbFqSh1jWE4JgXcQ+c3XgNIMO40nLgJ
+         N+UmkihJ2t2RTIiYPVXTb7YOxThh7eYBI5PqIBe8gKonBnoaerHqbUMtQYi14yzyJh
+         kvhqqVL9spPKg==
+Date:   Wed, 19 Oct 2022 21:37:56 +0200
+From:   Wolfram Sang <wsa@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     loic.poulain@linaro.org, robert.foss@linaro.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, vladimir.zapolskiy@linaro.org,
+        stable@vger.kernel.org
+Subject: Re: [PATCH v3 1/1] i2c: qcom-cci: Fix ordering of pm_runtime_xx and
+ i2c_add_adapter
+Message-ID: <Y1BSFBshaMjt6ECG@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        loic.poulain@linaro.org, robert.foss@linaro.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, vladimir.zapolskiy@linaro.org,
+        stable@vger.kernel.org
+References: <20221018021920.3747344-1-bryan.odonoghue@linaro.org>
+ <20221018021920.3747344-2-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20221014221138.7552-1-quic_molvera@quicinc.com>
- <20221014221138.7552-3-quic_molvera@quicinc.com>
- <d4158329-5a7a-c622-a8f8-ea2508b663c6@linaro.org>
-From:   Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <d4158329-5a7a-c622-a8f8-ea2508b663c6@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: CkPqNnO_R_qVmncLNrrUQnMppcCnaDmL
-X-Proofpoint-GUID: CkPqNnO_R_qVmncLNrrUQnMppcCnaDmL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-19_11,2022-10-19_04,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 lowpriorityscore=0 malwarescore=0 mlxscore=0 phishscore=0
- mlxlogscore=835 spamscore=0 impostorscore=0 bulkscore=0 suspectscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210190107
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="VISfz4IeabZvLQ+p"
+Content-Disposition: inline
+In-Reply-To: <20221018021920.3747344-2-bryan.odonoghue@linaro.org>
+X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,43 +65,52 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--VISfz4IeabZvLQ+p
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 10/18/2022 3:15 PM, Krzysztof Kozlowski wrote:
-> On 14/10/2022 18:11, Melody Olvera wrote:
->> Add the base DTSI files for QDU1000 and QRU1000 SoCs, including base
->> descriptions of CPUs, GCC, RPMHCC, QUP, TLMM, and interrupt-controller
->> to boot to shell with console on these SoCs.
->>
->> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
->> ---
->>  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 1646 +++++++++++++++++++++++++
->>  arch/arm64/boot/dts/qcom/qru1000.dtsi |   27 +
->>  2 files changed, 1673 insertions(+)
->>  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000.dtsi
->>  create mode 100644 arch/arm64/boot/dts/qcom/qru1000.dtsi
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
->> new file mode 100644
->> index 000000000000..777734b30f56
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
->> @@ -0,0 +1,1646 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +/*
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +#include <dt-bindings/interrupt-controller/arm-gic.h>
->> +#include <dt-bindings/clock/qcom,gcc-qdu1000.h>
->> +#include <dt-bindings/clock/qcom,rpmh.h>
->> +#include <dt-bindings/dma/qcom-gpi.h>
->> +#include <dt-bindings/interconnect/qcom,qdu1000.h>
->> +#include <dt-bindings/power/qcom-rpmpd.h>
->> +#include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> As pointed out by kernel test robot, your patchset is unbuildable and
-> unmerge'able, so automated tools cannot test it.
-I saw. I will be more explicit about the dependencies on previous patches
-in the next patchset.
+On Tue, Oct 18, 2022 at 03:19:20AM +0100, Bryan O'Donoghue wrote:
+> When we compile-in the CCI along with the imx412 driver and run on the RB5
+> we see that i2c_add_adapter() causes the probe of the imx412 driver to
+> happen.
+>=20
+> This probe tries to perform an i2c xfer() and the xfer() in i2c-qcom-cci.c
+> fails on pm_runtime_get() because the i2c-qcom-cci.c::probe() function has
+> not completed to pm_runtime_enable(dev).
+>=20
+> Fix this sequence by ensuring pm_runtime_xxx() calls happen prior to addi=
+ng
+> the i2c adapter.
+>=20
+> Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
+> Reported-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Tested-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Cc: <stable@vger.kernel.org>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-Thanks,
-Melody
+Applied to for-current, thanks!
+
+
+--VISfz4IeabZvLQ+p
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmNQUhQACgkQFA3kzBSg
+KbYWZBAAky1ib17XA9gxloboUy3qGaybcaYZsd1mzt6PWKSNYwVBtKkZZ+wiZYi4
+2YxEU+0us6M8aLRSrscKgDcKiZI43r0PwMLOY79dOMIRDlhET5s2uBW9Tp/vIwCR
+j7pFLBGR6+++llARQZoyUyjddH3Pd5XyzXaJxQNHrIYe6DQAo/CGScaIEN68hZov
+u+9BGEwn1ZfAppbikhmj3kqAVq5XFQrn2bll3yL0PLfGJo8+g/R/lN53ukyIk3RN
+U/0ng2tOi775qhTBdYUhYUNOgKp67aO6T06a51uMLZfQHlm0KokI32+0xjuBg9pi
+LVHQlXx1ybXKrMaiCH8IOU8UDjIdVEvLSoqDXyAfaVMxdU729iwCjIoEwk35k/Iw
+OtowtXucRtffEx4c7mQlBawTGTGMych9riqSr9Plilw20hsGCshW5ar+lkM55OtD
+nhVyq8miNXGQbU5UcPgp4yQq9psFrUUlC/HHukwSfr11YqMPAW1WvUPMVxMOUtjK
+f9GUHHYBx5dK3YTl4N3j9/Sq82/CyWzhzQbxexRCe1Ed/I2jrDATevOJRIYX+PVu
+KqMkukAhimmuZD1cforPmM3sApFZAWNtZzKyKdHd1iK82vX9t9cpG86QRqXLoRqf
+eh4j9NUEZdD704p3F0B8TE6iUfZ+HVXgFGF7PNIVP9kOz352l3w=
+=KhQP
+-----END PGP SIGNATURE-----
+
+--VISfz4IeabZvLQ+p--
