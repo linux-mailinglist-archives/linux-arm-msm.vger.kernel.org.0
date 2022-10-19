@@ -2,80 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC23F604C75
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 17:56:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 747F6604C71
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 17:56:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232270AbiJSP4y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Oct 2022 11:56:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50128 "EHLO
+        id S231710AbiJSP4C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Oct 2022 11:56:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232248AbiJSP4h (ORCPT
+        with ESMTP id S230094AbiJSPzk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Oct 2022 11:56:37 -0400
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29EC16554
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 08:54:20 -0700 (PDT)
-Received: by mail-ed1-f52.google.com with SMTP id e18so25893086edj.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 08:54:20 -0700 (PDT)
+        Wed, 19 Oct 2022 11:55:40 -0400
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA2CE32D9D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 08:53:11 -0700 (PDT)
+Received: by mail-qk1-x733.google.com with SMTP id o22so10961881qkl.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 08:53:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=oCxur44GiGn0KEf47+NGc2flFZLTxOPMJcgB85rch6w=;
-        b=Af1ORI7qLHGJw4ifz/2FBCp+Nq0eizmGhWVnbLOtKaMLO9xPtn7WgrxQFzTVHlGfI1
-         2lFZJu+P2cn2W4CKzeUJnS3n2wUNZDghZrIxPpbENfO1w+DMF4ypDyyfQGvc9uuprFoe
-         GBgp+bgwLUw6X0CUrZCNNCVIWXh2uD4Y7879s=
+        bh=wBHWHRYZIKVyYQXTQ0xEuNFskPCPX2MZMQbHpxS/OLw=;
+        b=bnNIO5I0OlMiKJf5z2xhhpzl5PbYKjmyHD+j7K9oW4gfqXism/Cz6GnrsY51PozL4Z
+         a+D6hzhEoVNQ0qcRjWqeZD49ar4VVKy2HXfELJm6MQii0dPfVJC27GvqZlQLwLWaVk4q
+         e7+LAzkAO6A7EBvfNcSmRgNVWFU9AjFIuHPiZ+k8Tyvh8IlpBEG29+tb+fJ+vGXAGLEJ
+         vC8AyDPwHtWrr6wPqPgeIM1qNB0fn6TLnIL4NC63SLJgc5vBEYEVe68UQXX3K1odCAvC
+         ZZmCp/2wcic6I75xami/SRdUK5GpverRf0bsCKgJlHSbb3NqJNbo8JJ4CCZGM0rnO570
+         8Udw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=oCxur44GiGn0KEf47+NGc2flFZLTxOPMJcgB85rch6w=;
-        b=EboPyF9U8ePuGV8TgEii73gxFIOqGPlA+urrFTwbiaAFi7WHGV6xA0ElvSY7lrcrgX
-         zSoJjhv5WfS93N+5nMx29voRXfwt0wiaZTcNOna7bT/EeI9kspL4O545GdGFXSLAw/b2
-         hE+jXc32K7H5Ig2RUxLQPWtiXzDXmRWdgmlmY8LcvMBKxVoQe3YmW6d6rUQIZEngBDhs
-         rdNS0BUMEerUuO5khD8oNkuY/NopBl44ig1sh3f5MAnhXfaKFeeGAal+fWoHIxvZRn8t
-         OerQg/vfATWrHSURaidT7wRoZJF+Qe0KgXMFSmyx7ukW6QZelmXvkveiZj6n4Z1JAlpN
-         ED8Q==
-X-Gm-Message-State: ACrzQf1CqWnRIsZ2Got+ctQeODgeySfpQAIimHFPSWGXKzt3jkInfvis
-        crhL2hSQLzHeaPi5KYUUrVvX3sQcs3xG6QQC
-X-Google-Smtp-Source: AMsMyM5kfrHbe6ic5KBKi2ITyI4zLjPoOqU/IkuIY83F34RDGezOVOSeMH+r9sQQc14z4VKOa1TYZQ==
-X-Received: by 2002:a05:6402:350f:b0:45d:1d86:9ec9 with SMTP id b15-20020a056402350f00b0045d1d869ec9mr8264062edd.266.1666194528702;
-        Wed, 19 Oct 2022 08:48:48 -0700 (PDT)
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com. [209.85.128.49])
-        by smtp.gmail.com with ESMTPSA id kw15-20020a170907770f00b00741383c1c5bsm8970010ejc.196.2022.10.19.08.48.48
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Oct 2022 08:48:48 -0700 (PDT)
-Received: by mail-wm1-f49.google.com with SMTP id c3-20020a1c3503000000b003bd21e3dd7aso313168wma.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 08:48:48 -0700 (PDT)
-X-Received: by 2002:a05:600c:19c9:b0:3c2:7fff:a689 with SMTP id
- u9-20020a05600c19c900b003c27fffa689mr27767365wmq.85.1666194527713; Wed, 19
- Oct 2022 08:48:47 -0700 (PDT)
+        bh=wBHWHRYZIKVyYQXTQ0xEuNFskPCPX2MZMQbHpxS/OLw=;
+        b=AMFhP8PH/mNO28puOpO7KhhtCcQxRw85/1U3zzgE0OgcO4IwbFQDZySNj723jpF0ZH
+         BuWcrpChbjFYL1pQZtjNZPoswwiCVtM35lQoATWQZpVwHE0FP9V4lln8F+o/8eQOlbcb
+         GX7HPCao3Hgf+eqzX6y9zJ0DbhlYuWK1LkeCzLv4o6gdWXfjwwDGP0pa3aCqRXUlRf7U
+         8otpZr4eBoWBizvGC58VkUvrX+zbAIxmqZyCYyT1TAAc2BScDq7FI7DXYWvkBIKUylcR
+         XeOHLKuUblT6bV8fF3H/7zIDbH1TwmR0Gut9nJGKWJ21z5wW2VGivCmgzlpVjOviaqgA
+         scWw==
+X-Gm-Message-State: ACrzQf2pNVf4Pfl9P3uanUOM2GUB870R/W3iR69eSwa8Ae5OrNt4pRsg
+        3HCZqVM6ps0tB6mmGz/1tfbK6V2LyVBgNei9dqo=
+X-Google-Smtp-Source: AMsMyM71zhSyKXPPYv4FP4cbpVvsaMgpEqOZFzRlIMCRpHEICbbxcqJL9DC3Jprnlg9lkpTJkxJr98zN+bmG+HxmUYA=
+X-Received: by 2002:a37:bd47:0:b0:6e1:be21:e6e1 with SMTP id
+ n68-20020a37bd47000000b006e1be21e6e1mr5888896qkf.473.1666194790468; Wed, 19
+ Oct 2022 08:53:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20221019001351.1630089-1-krzysztof.kozlowski@linaro.org> <20221019001351.1630089-4-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221019001351.1630089-4-krzysztof.kozlowski@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 19 Oct 2022 08:48:35 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VsFbei4h_cwhJhReUi8Pk_C-qHu_8iDqfzf_e=C8QnXg@mail.gmail.com>
-Message-ID: <CAD=FV=VsFbei4h_cwhJhReUi8Pk_C-qHu_8iDqfzf_e=C8QnXg@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: sc7180: align TLMM pin
- configuration with DT schema
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <CANHAJhG-aoOBgTzirGu-1uqCFUJd+AnenMSkoUqnG3mhraCRfw@mail.gmail.com>
+In-Reply-To: <CANHAJhG-aoOBgTzirGu-1uqCFUJd+AnenMSkoUqnG3mhraCRfw@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 19 Oct 2022 08:52:58 -0700
+Message-ID: <CAF6AEGvvsx+6OSxOaqjoUO=J4tO_J5ZSidenx9EXdz34_myBqQ@mail.gmail.com>
+Subject: Re: [PULL]: qcom: SC7180 and SC7280 venus firmware updates
+To:     Nathan Hebert <nhebert@chromium.org>
+Cc:     linux-firmware@kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_vgarodia@quicinc.com, Fritz Koenig <frkoenig@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,68 +67,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hmm, does venus not support the combined firmware yet?  Elsewhere
+we've moved away from split fw to using a single ELF file..
 
-On Tue, Oct 18, 2022 at 5:14 PM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> DT schema expects TLMM pin configuration nodes to be named with
-> '-state' suffix and their optional children with '-pins' suffix.
->
-> Merge subnodes named 'pinconf' and 'pinmux' into one entry, add function
-> where missing (required by bindings for GPIOs) and reorganize overriding
-> pins by boards.
->
-> Split the SPI and UART configuration into separate nodes
-> 1. SPI (MOSI, MISO, SCLK), SPI chip-select, SPI chip-select via GPIO,
-> 2. UART per each pin: TX, RX and optional CTS/RTS.
->
-> This allows each board to customize them easily without adding any new
-> nodes.
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->
-> ---
->
-> Changes since v2:
-> 1. Rebase on reverted SPI CS glitch patch.
->
-> Changes since v1:
-> 1. Split SPI and UART nodes, after discussion with Doug.
->
-> Not tested on hardware.
->
-> Cc: Doug Anderson <dianders@chromium.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-idp.dts       | 236 +++----
->  .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  36 +-
->  .../dts/qcom/sc7180-trogdor-homestar.dtsi     |  47 +-
->  .../dts/qcom/sc7180-trogdor-kingoftown-r0.dts |  16 +-
->  .../dts/qcom/sc7180-trogdor-kingoftown.dtsi   |   8 +-
->  .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  16 +-
->  .../dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi |  25 +-
->  .../boot/dts/qcom/sc7180-trogdor-mrbland.dtsi |  72 +-
->  .../qcom/sc7180-trogdor-parade-ps8640.dtsi    |  32 +-
->  .../boot/dts/qcom/sc7180-trogdor-pazquel.dtsi |   8 +-
->  .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |  14 +-
->  .../qcom/sc7180-trogdor-quackingstick.dtsi    |  56 +-
->  .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |   8 +-
->  .../dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi |  16 +-
->  .../qcom/sc7180-trogdor-wormdingler-rev0.dtsi |  25 +-
->  .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  |  72 +-
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 629 +++++++-----------
->  arch/arm64/boot/dts/qcom/sc7180.dtsi          | 597 +++++++++--------
->  18 files changed, 776 insertions(+), 1137 deletions(-)
+BR,
+-R
 
-You probably should send a v4 since this now conflicts with commit
-c24c9d53e001 ("arm64: dts: qcom: correct white-space before {"), which
-has landed.
-
-In any case, this looks nice to me.
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-
-FWIW I put this on a sc7180-trogdor-coachz and the device booted up to
-the browser. I didn't do massive amounts of tests, but I'm OK with:
-
-Tested-by: Douglas Anderson <dianders@chromium.org>
+On Tue, Oct 18, 2022 at 2:18 PM Nathan Hebert <nhebert@chromium.org> wrote:
+>
+> The following changes since commit 48407ffd7adb9511701547068b1e6f0956bd1c94:
+>
+>   cnm: update chips&media wave521c firmware. (2022-10-17 10:20:43 -0400)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/nathan-google/linux-firmware.git
+> update_sc7180_and_sc7280_firmwares
+>
+> for you to fetch changes up to 76e160366a28010fa06ddc965659c38a44d159d9:
+>
+>   qcom: update venus firmware files for VPU-2.0 (2022-10-18 13:42:58 -0700)
+>
+> ----------------------------------------------------------------
+> Nathan Hebert (2):
+>       qcom: update venus firmware files for v5.4
+>       qcom: update venus firmware files for VPU-2.0
+>
+>  qcom/venus-5.4/venus.b00 | Bin 212 -> 212 bytes
+>  qcom/venus-5.4/venus.b01 | Bin 6808 -> 6808 bytes
+>  qcom/venus-5.4/venus.b02 | Bin 873596 -> 875020 bytes
+>  qcom/venus-5.4/venus.b03 | Bin 33792 -> 33896 bytes
+>  qcom/venus-5.4/venus.mbn | Bin 919708 -> 921236 bytes
+>  qcom/venus-5.4/venus.mdt | Bin 7020 -> 7020 bytes
+>  qcom/vpu-2.0/venus.b00   | Bin 692 -> 692 bytes
+>  qcom/vpu-2.0/venus.b01   | Bin 7376 -> 7376 bytes
+>  qcom/vpu-2.0/venus.b02   | Bin 300 -> 300 bytes
+>  qcom/vpu-2.0/venus.b04   | Bin 20 -> 20 bytes
+>  qcom/vpu-2.0/venus.b09   | Bin 939184 -> 939472 bytes
+>  qcom/vpu-2.0/venus.b10   | Bin 42976 -> 43120 bytes
+>  qcom/vpu-2.0/venus.mbn   | Bin 2031188 -> 2031620 bytes
+>  qcom/vpu-2.0/venus.mdt   | Bin 8068 -> 8068 bytes
+>  14 files changed, 0 insertions(+), 0 deletions(-)
