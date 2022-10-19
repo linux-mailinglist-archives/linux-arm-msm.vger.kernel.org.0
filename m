@@ -2,109 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C65946050BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 21:51:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D40DC6050DD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 21:56:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229989AbiJSTvO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Oct 2022 15:51:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40422 "EHLO
+        id S229964AbiJST4F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Oct 2022 15:56:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229714AbiJSTvN (ORCPT
+        with ESMTP id S229497AbiJST4F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Oct 2022 15:51:13 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99FAE191D73;
-        Wed, 19 Oct 2022 12:51:10 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29JFBBNx017232;
-        Wed, 19 Oct 2022 19:50:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=fFr0GShiMig/xf6dk+t3jNtTP04VZwguanfX8yv7+YM=;
- b=OaXLhJrKaX8/p0vT0rEdghn1E7jH0GzbsoXLDBc/UgEmFHeRDF1q/II5DUTIaZV+3azX
- ngFXYAyR5xGW8S3HOw2NyKOIoLPDMgI6rt8rmxg0m+u+qxU6hu1/OGJr38tFMgwmYQrg
- lJ7FHwxFWso460xHryrzHlkfFQ7VwSzO9vBFCh5t7aKx9GqS4mX14+skyjkf5KaHhYCE
- O7jhc/L0jwo7ejVV2xH+LJEp8rIbGiUIFbP6+pngO+rAF5Yyf65ci2+ES1mO/sFlPWNr
- LNdNIaLdc5Dpp83SVsMZqbQn4jDnq8kx5qJLScumGuAGVe59IVomGFy26gdFcwdJ41Eh +w== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kaknjgxpa-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Oct 2022 19:50:48 +0000
-Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29JJolj7011858
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Oct 2022 19:50:47 GMT
-Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Wed, 19 Oct 2022 12:50:47 -0700
-Date:   Wed, 19 Oct 2022 12:50:40 -0700
-From:   Asutosh Das <quic_asutoshd@quicinc.com>
-To:     Eddie Huang <eddie.huang@mediatek.com>
-CC:     Can Guo <quic_cang@quicinc.com>, <quic_nitirawa@quicinc.com>,
-        <quic_rampraka@quicinc.com>, <quic_bhaskarv@quicinc.com>,
-        <quic_richardp@quicinc.com>, <linux-scsi@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_nguyenb@quicinc.com>,
-        <quic_xiaosenh@quicinc.com>, <bvanassche@acm.org>,
-        <avri.altman@wdc.com>, <mani@kernel.org>, <beanhuo@micron.com>,
-        <stanley.chu@mediatek.com>, <liang-yen.wang@mediatek.com>
-Subject: Re: Fwd: [PATCH v2 06/17] ufs: core: mcq: Configure resource regions
-Message-ID: <20221019195040.GA18511@asutoshd-linux1.qualcomm.com>
-References: <11530912-36fd-8c69-4beb-de955eaae529@quicinc.com>
- <6592c7fe-0828-6bb3-17a8-9db53aac1873@quicinc.com>
- <83fe64628b6d44f28637a6a8ba6b21eb0848caaa.camel@mediatek.com>
- <20221018014754.GE10252@asutoshd-linux1.qualcomm.com>
- <12ab65aed221dec23451e9b60c0e00a4d9ef0df2.camel@mediatek.com>
+        Wed, 19 Oct 2022 15:56:05 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CFFE1C77D5;
+        Wed, 19 Oct 2022 12:56:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1666209358;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=DuBwiKRIvj7T5mmoZzD245yvbt96nMJn+teE4jbpZGk=;
+    b=lTHJRbdZyDAEhK9Q0UzcBMikOogkkxSTOfq/fFEpRwPqNUW4PyVswgHcHaYWDqEHYj
+    7IpjHWMk+2tBT4HyfSGj4+4c+gjMUHUjOSK4W84lzpDCNdO6MurBvc3CfpmOLoPrU9cx
+    E5TyxbktYKMzO9YypOz6EQQiRf7Xv3rPZoFu1zmphC17mobPkDDcGdyg5FNUHKQnt+S1
+    DMV6NkW03AZCrs3xAhQEZ5HQnEn5LIRDxbPr5Cbmvg7LU8nFAB5ymGVJhccQ+YdGhCZ4
+    uYd8eAEPjyPIFC0Wn1ce4qZ1Mp7ehXkioiHbUSJuf8RZdlt07fL7sb45+NJlUVz1WU7N
+    7G8w==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJAhdlWwvWmtQ=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 48.2.0 DYNA|AUTH)
+    with ESMTPSA id f6c614y9JJtwVku
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Wed, 19 Oct 2022 21:55:58 +0200 (CEST)
+Date:   Wed, 19 Oct 2022 21:55:49 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Vincent Knecht <vincent.knecht@mailoo.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH 2/2] soc: qcom: spm: Add MSM8939 SPM register data
+Message-ID: <Y1BWRUEEeMQIjLkp@gerhold.net>
+References: <20221019171004.1080911-1-vincent.knecht@mailoo.org>
+ <20221019171004.1080911-2-vincent.knecht@mailoo.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <12ab65aed221dec23451e9b60c0e00a4d9ef0df2.camel@mediatek.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NPcinRf2BL_8H8mR1Kx-fmJ9571d1o1f
-X-Proofpoint-ORIG-GUID: NPcinRf2BL_8H8mR1Kx-fmJ9571d1o1f
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-19_11,2022-10-19_04,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- mlxscore=0 adultscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999
- impostorscore=0 priorityscore=1501 clxscore=1015 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210190111
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20221019171004.1080911-2-vincent.knecht@mailoo.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 18 2022 at 19:57 -0700, Eddie Huang wrote:
->Hi Asutosh,
->
-[...]
->>
->> How about we add a vops to ufshcd_mcq_config_resource().
->> SoC vendors should make sure that the vops populates the mcq_base.
->>
->
->It is good to add vops to ufshcd_mcq_config_resource() let SoC vendors
->populate mcq_base
->
-While adding the vops it occurred to me that it'd remain empty because ufs-qcom
-doesn't need it. And I'm not sure how MTK register space is laid out.
-So please can you help add a vops in the next version?
-I can address the other comment and push the series.
++ Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-Please let me know.
->
->Thanks,
->Eddie Huang
->
--asd
->
+On Wed, Oct 19, 2022 at 07:10:03PM +0200, Vincent Knecht wrote:
+> Add SPM register information and initialization values for
+> QCOM MSM8939 SoC.
+> 
+> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
+
+Thanks!
+
+Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
+
+> ---
+>  drivers/soc/qcom/spm.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git a/drivers/soc/qcom/spm.c b/drivers/soc/qcom/spm.c
+> index 484b42b7454e..670775e43f07 100644
+> --- a/drivers/soc/qcom/spm.c
+> +++ b/drivers/soc/qcom/spm.c
+> @@ -98,6 +98,17 @@ static const struct spm_reg_data spm_reg_8916_cpu = {
+>  	.start_index[PM_SLEEP_MODE_SPC] = 5,
+>  };
+>  
+> +static const struct spm_reg_data spm_reg_8939_cpu = {
+> +	.reg_offset = spm_reg_offset_v3_0,
+> +	.spm_cfg = 0x1,
+> +	.spm_dly = 0x3C102800,
+> +	.seq = { 0x60, 0x03, 0x60, 0x0B, 0x0F, 0x20, 0x50, 0x1B, 0x10, 0x80,
+> +		0x30, 0x90, 0x5B, 0x60, 0x50, 0x03, 0x60, 0x76, 0x76, 0x0B,
+> +		0x50, 0x1B, 0x94, 0x5B, 0x80, 0x10, 0x26, 0x30, 0x50, 0x0F },
+> +	.start_index[PM_SLEEP_MODE_STBY] = 0,
+> +	.start_index[PM_SLEEP_MODE_SPC] = 5,
+> +};
+> +
+>  static const u16 spm_reg_offset_v2_1[SPM_REG_NR] = {
+>  	[SPM_REG_CFG]		= 0x08,
+>  	[SPM_REG_SPM_CTL]	= 0x30,
+> @@ -211,6 +222,8 @@ static const struct of_device_id spm_match_table[] = {
+>  	  .data = &spm_reg_8909_cpu },
+>  	{ .compatible = "qcom,msm8916-saw2-v3.0-cpu",
+>  	  .data = &spm_reg_8916_cpu },
+> +	{ .compatible = "qcom,msm8939-saw2-v3.0-cpu",
+> +	  .data = &spm_reg_8939_cpu },
+>  	{ .compatible = "qcom,msm8974-saw2-v2.1-cpu",
+>  	  .data = &spm_reg_8974_8084_cpu },
+>  	{ .compatible = "qcom,msm8998-gold-saw2-v4.1-l2",
+> -- 
+> 2.37.3
+> 
+> 
+> 
