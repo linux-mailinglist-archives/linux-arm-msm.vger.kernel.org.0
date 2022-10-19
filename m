@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89AB8604921
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 16:22:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A6A860490E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 16:20:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233355AbiJSOWm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Oct 2022 10:22:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33418 "EHLO
+        id S233431AbiJSOUi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Oct 2022 10:20:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232129AbiJSOWZ (ORCPT
+        with ESMTP id S230387AbiJSOUM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Oct 2022 10:22:25 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF9152F028
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 07:05:44 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id g1so28262962lfu.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 07:05:44 -0700 (PDT)
+        Wed, 19 Oct 2022 10:20:12 -0400
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4274D10A2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 07:03:32 -0700 (PDT)
+Received: by mail-ej1-f48.google.com with SMTP id bj12so40121851ejb.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 07:03:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=w5+gyODwoHFKNypGT6uh/ysXTrRRHFbyILu1kotDzM4=;
-        b=ZZrpWJr0JokM3BK2PpwWz7MaqS/A7K1EC66XS8ZizSz4zzmpa+PCvXIKtltBzs/reZ
-         sVxov/MPI1hg5hu1I4N3B7mre2Ac8Q65gCcYCGT1pjRRu6G/5ULnx1msljvsp4+Ui4Va
-         ZVumpBC5+ZAtg7DpovO1Xs7RCRcOqeiqxmPcYyZ8QhxOPZRmH8N99FG3CiaHbdyc/SkX
-         ENnedz5T0tuARHVKT4qND9XHLrMMVz5tWH1u+WMU4PmQn2oWZT9AkgcMSZvPRbR9VQtq
-         44rvFZk4AlKfaijtdvuEfVmcMJm21smZqNUbFbmDOisSk33aNfDbqzvOQyLVfEgwLSmK
-         aZYw==
+        bh=RknYa2NABgYYHyJknMjUhYiHTu2aqnADkUkC2x00Z/k=;
+        b=yVyYhg2zBMm+7w3lS+wQf7QQB6OxkvKhhDBuAPYoaZ7jD0KpwgQm287TcPFHMwTTkE
+         jryok8brz3+crpof1k38RGlYAy8EknTf68wgzwJcnn3FBydmHK77NIq8gst0QpljcDnr
+         lEQvShh77tEZtVCe8fl0GZnP2mCH81by5zLhTlqbuLfUx0UpnWcovEmz96yWNOv810Mr
+         lQfdoKcRbsxklj6SU8zBtJVkDk9ttPpnKVB3WgOpCeAy6PAWmY19KZnVd68/6dOt51tZ
+         ZrVbOIMPqosRKsDK0eA3b5vgFTfilJ2lUvoaaulDneOt2wSZ4l6ggS6O4BHZOrnDLQIo
+         1jyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w5+gyODwoHFKNypGT6uh/ysXTrRRHFbyILu1kotDzM4=;
-        b=N1lsIvon1XfgRp9tz6PVjJOQb5Dv/2qLGyNT9EarArzhYiyMRiLsDQk8gj4zVjZeW5
-         0DzIHIuI6X+XUbvD8zTkJpskncilwoGaVeKpr3Zj4C5YnC+tIIFhSbOG41pAaCcurTml
-         okUKJCUhnZleuDXlrY81A5B1XRjnzb560ywC5KmXvKFHU03NQVXp1MnWeIHYGmJNtcJq
-         kz0OM8z69GEpdZVMt+YtjJCRnXhym8xxbmDaUN1xKWGtbNehi0GhA7ZxZmOTboyf+FcJ
-         WFmmtZl6MauKAKcAgDvyJ5VtGUdwToIL3+ZNUTwG+ho/FhYFKJmN3C27kjPYK/zvKOus
-         xLtQ==
-X-Gm-Message-State: ACrzQf3r+2JiRct9T1Qhxz+1zL3AR9yfA6tGAW3T3KsIojqeCmK98paL
-        p3lbE5mBha+J2Q+CJ6jYt8PakZOReBg7sg==
-X-Google-Smtp-Source: AMsMyM6Wz4e6pH5YTXalvM3jqNkmWpZ+07QEhZ29oRNNSkpxIXajymXLgZHoHSMNHYwLDMt5DvO4bQ==
-X-Received: by 2002:a2e:a602:0:b0:264:5132:f59 with SMTP id v2-20020a2ea602000000b0026451320f59mr3065213ljp.0.1666187513443;
-        Wed, 19 Oct 2022 06:51:53 -0700 (PDT)
+        bh=RknYa2NABgYYHyJknMjUhYiHTu2aqnADkUkC2x00Z/k=;
+        b=grkylsXIkCcNMYkBYESHjHXy9lScBpBf94TNsNX/ueF7L6wOe8+ZIudoZwNIehae3z
+         yH1DB2WlYHkLs0NKwmyO2vbgo+bPS5f315y7DKX6NVyLJ3Am0h5GLbw2tTM2Sf7vYeyS
+         K0bzsFU+/AdjEtTwECvUAoOs5xSWafcI2lQ4DKvtX+uG5Qk/krEXvNblG2SexsPIvPUl
+         CDNH/+UehcprWPdRnodrGJAiFmWD/tCwP1MDen8dBHDILVpAZBQx80NLeimZqBUX+rxS
+         5BLjWHbx4nImGAp1dOfuK36PaIckd/rC0EK+N7Oc9+xXrMlSlgoPynB7PnZo6vHJt1vf
+         s4iA==
+X-Gm-Message-State: ACrzQf1IxoCrK2yzLgTtLokn34zjLX9il6Un6EBS/OYVvqlDzt0GwGrS
+        5A1EbgLE2hWjHobJvaiZsTxlaK+cX6h+NA==
+X-Google-Smtp-Source: AMsMyM7XIZU0I24cerZGyqqlXQ/1nBl3l4sFmHTpzgGVDmR0GJjUQ91snFjYNIxrUZWHEFwuHqEW5w==
+X-Received: by 2002:a2e:bc0f:0:b0:26e:15f:51dd with SMTP id b15-20020a2ebc0f000000b0026e015f51ddmr3021059ljf.118.1666187550011;
+        Wed, 19 Oct 2022 06:52:30 -0700 (PDT)
 Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id l29-20020ac2555d000000b00498fd423cc3sm2288264lfk.295.2022.10.19.06.51.52
+        by smtp.gmail.com with ESMTPSA id t17-20020a056512209100b004996fbfd75esm2298842lfr.71.2022.10.19.06.52.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Oct 2022 06:51:53 -0700 (PDT)
-Message-ID: <22640161-0b28-d91c-5af8-ca9fa36954f1@linaro.org>
-Date:   Wed, 19 Oct 2022 16:51:52 +0300
+        Wed, 19 Oct 2022 06:52:29 -0700 (PDT)
+Message-ID: <02a879d4-cc7a-ca8e-7334-755873baa3e7@linaro.org>
+Date:   Wed, 19 Oct 2022 16:52:29 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.3
@@ -74,8 +74,8 @@ Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -95,8 +95,24 @@ On 19/10/2022 14:35, Johan Hovold wrote:
 > ---
 >   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 2 ++
 >   1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index 2f4bdef73395..9c8e009033f1 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -1866,6 +1866,8 @@ static int qmp_pcie_init(struct phy *phy)
+>   		goto err_disable_regulators;
+>   	}
+>   
+> +	usleep_range(200, 300);
+> +
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+If there is a v3, I'd kindly ask to add a comment about vendor using 1ms 
+here.
+
+>   	ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
+>   	if (ret) {
+>   		dev_err(qmp->dev, "reset deassert failed\n");
 
 -- 
 With best wishes
