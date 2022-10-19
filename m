@@ -2,82 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D56316040DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 12:26:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C454B604288
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 13:06:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231367AbiJSK0E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Oct 2022 06:26:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33184 "EHLO
+        id S232095AbiJSLGM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Oct 2022 07:06:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230432AbiJSKZY (ORCPT
+        with ESMTP id S233375AbiJSLFY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Oct 2022 06:25:24 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AFAB50FBE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 03:04:59 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id r14so24460612edc.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 03:04:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cfXARYLAPAKPU+ts0JPN6WSMDNf2tPgtkDo7YOo0RzE=;
-        b=aC1Rq9oRQvkYFkj/zSMB3cGfJmPvgA3ym7b0Aldx4sTYZ7nbJfYecv1+jCaryzsIpE
-         gMs5WaFiZLV2+WGy07yI1VIZCPVdLMVCywN4zg3f0kObS8JlnY37PgSw6uGPex55FxqZ
-         C8HCDRMyjI9KWk9y4dZYE/l4HDEYZUFbe9mnFxiN03LOJAxCRO+AJEOJwxUIFdDuoGH/
-         NlQYKbfoOIYpXEWTaYHEQ9sX/KHuBRiKgdIrbdFfQJcr0F08HGt0TjE4J4pkshliHydO
-         k2+6fJytl8F7e0TBpGD5N4O3Par23nLOl9lS/vM/pHW/y19v85vLlGhOuF8+fdLMUxaZ
-         F8Dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cfXARYLAPAKPU+ts0JPN6WSMDNf2tPgtkDo7YOo0RzE=;
-        b=urXqPiTJ91PFjwbwy+CRjWqeO60ZvmfTpp/12FjOCCx11Hi2WKqjRBeE9skOSmaMCg
-         PKMaIvHEnHZIMRsEBalMivChyhytfolh1ZanjbkNmN2DkpAOa01jM6u3FYHUNBR+dL5G
-         oWSPBmv708aHd/uPnlCdatwaIFXyXbZB+4zR6CecX9d33XyFSPLd4k/cNvfPB+oEu6Sn
-         EdVLjr0kyknEcX3/QjpzqTQ0Ix+qt1Kc7pIUHrgcPvRHyPAvfuQXIn/57um+XSzmhgjK
-         1d+P7sYoO/oM+huaP7NMUzdrO0lbaFmM/h6ELrI7oxp8c7V/MmCiyoPQghONAAlwcDgh
-         pwjg==
-X-Gm-Message-State: ACrzQf1FjlNiJ455h9QqWB3lmGiIryMNuvssZuP89pY5wXN0DSRkymeh
-        vPCMta2IkHry9ohnXinsZO60q6ebPJ7CRA==
-X-Google-Smtp-Source: AMsMyM4whuxT7+AoBpdG68cpyGwsuxGExvwb5YnVAEngbIbOYk7MlxvP+3mfP7XiBru3VnVLBrTyNA==
-X-Received: by 2002:a05:651c:1786:b0:26d:aaec:1487 with SMTP id bn6-20020a05651c178600b0026daaec1487mr2528273ljb.287.1666171643259;
-        Wed, 19 Oct 2022 02:27:23 -0700 (PDT)
-Received: from [10.27.10.248] ([195.165.23.90])
-        by smtp.gmail.com with ESMTPSA id u13-20020a05651220cd00b0049f5358062dsm2218639lfr.98.2022.10.19.02.27.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Oct 2022 02:27:22 -0700 (PDT)
-Message-ID: <09e82b02-dffd-8ec9-4851-11715a16b67b@linaro.org>
-Date:   Wed, 19 Oct 2022 12:27:21 +0300
+        Wed, 19 Oct 2022 07:05:24 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEAC51A20D;
+        Wed, 19 Oct 2022 03:34:42 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7643961800;
+        Wed, 19 Oct 2022 09:34:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98CDC433D7;
+        Wed, 19 Oct 2022 09:34:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1666172044;
+        bh=+XJ4KA8dllr0ByMjgUh1Y3S/fQ8SIHjq3TDCIyLLrNo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=T7Uch+ZhgMxzh633BHSOdQxgxOqQowc35/YWFAWeeU2s0E+SioG0sAWiRyAQRnsGN
+         0mXBcQtpiF2kOYrwuWgc4SJnQZsDBoFGsW8JvtPwpY6O8uiibCtq3L726zsubk+UWG
+         8j9rsryp/cG7gZydanqhizZLgUtQQ5H0t7mYjnPlKn62L/KB5r3+p3esvvbTejHnNz
+         8oH+xKXDWfh0w5qUuu+S9D7Z7ggNqLH+rGfZpwZXQjZ03Ssa2uO/EhPzBD2hPHkSF2
+         uX0uoTZbcVItVSQjtyPhNnndaLD6L9gEP95UYVf3GiCDPHFzNRKGwjsnOw0aNaVVXs
+         pYOkC+u9eiivA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1ol5SS-0005JG-2I; Wed, 19 Oct 2022 11:33:52 +0200
+Date:   Wed, 19 Oct 2022 11:33:52 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 09/15] dt-bindings: phy: qcom,qmp-pcie: mark current
+ bindings as legacy
+Message-ID: <Y0/EgN78YdQ9Mg23@hovoldconsulting.com>
+References: <20221017145328.22090-1-johan+linaro@kernel.org>
+ <20221017145328.22090-10-johan+linaro@kernel.org>
+ <CAA8EJpqSWmy5Z4cmJnsdjMjkmACW7HSi-k5JxZ0gLCeUAWEnxQ@mail.gmail.com>
+ <Y05+E90tmlq2tNFa@hovoldconsulting.com>
+ <CAA8EJprwhEvUfUr-zDir4zFh_NAyr0qPbrHi6Hf8=2HC1dAhaw@mail.gmail.com>
+ <b0c1bdfb-4a31-9deb-1f0a-0ed813707464@linaro.org>
+ <Y07OfmfQgQWFzHZY@hovoldconsulting.com>
+ <e334e265-fde0-29df-d905-c3ec4941f152@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [RFC PATCH] drm/msm: lookup the ICC paths in both mdp5/dpu and
- mdss devices
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Yassine Oudjana <y.oudjana@protonmail.com>
-References: <20220805115630.506391-1-dmitry.baryshkov@linaro.org>
- <20220805122406.x7xxywofeaquhfxg@SoMainline.org>
- <9e040bdb-4fc5-3c95-fcea-b6ac7fd8224b@linaro.org>
- <20221019091341.bqkro3zmnojcqvnu@SoMainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221019091341.bqkro3zmnojcqvnu@SoMainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e334e265-fde0-29df-d905-c3ec4941f152@linaro.org>
+X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,49 +71,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/10/2022 12:13, Marijn Suijten wrote:
-> On 2022-08-26 12:16:40, Dmitry Baryshkov wrote:
->> On 05/08/2022 15:24, Marijn Suijten wrote:
->>> On 2022-08-05 14:56:30, Dmitry Baryshkov wrote:
->>>> The commit 6874f48bb8b0 ("drm/msm: make mdp5/dpu devices master
->>>> components") changed the MDP5 driver to look for the interconnect paths
->>>> in the MDSS device rather than in the MDP5 device itself. This was left
->>>> unnoticed since on my testing devices the interconnects probably didn't
->>>> reach the sync state.
->>>>
->>>> Rather than just using the MDP5 device for ICC path lookups for the MDP5
->>>> devices, introduce an additional helper to check both MDP5/DPU and MDSS
->>>> nodes. This will be helpful for the MDP5->DPU conversion, since the
->>>> driver will have to check both nodes.
->>>>
->>>> Fixes: 6874f48bb8b0 ("drm/msm: make mdp5/dpu devices master components")
->>>> Reported-by: Marijn Suijten <marijn.suijten@somainline.org>
->>>> Reported-by: Yassine Oudjana <y.oudjana@protonmail.com>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>
->>> Tested-by: Marijn Suijten <marijn.suijten@somainline.org> # On sdm630
->>>
->>> But I'm not sure about giving my Reviewed-by to this, as I'd rather
->>> *correct* the DT bindings for sdm630 and msm8996 to provide
->>> interconnects in the MDSS node unless there are strong reasons not to
->>> (and I don't consider "backwards compatibility" to be one, this binding
->>> "never even existed" if mdp5.txt is to be believed).
->>
->> As a kind of a joke, I'd prefer to have interconnects in the mdp/dpu
->> device node. In the end, the interconnects describe the path between the
->> display controller and the DDR, not the path between the whole MDSS and DDR.
->>
->> So, for next chipsets I'd vote to move icc to dpu/mdp node (and maybe
->> even move existing inerconnects to the dpu node).
+On Tue, Oct 18, 2022 at 12:44:22PM -0400, Krzysztof Kozlowski wrote:
+> On 18/10/2022 12:04, Johan Hovold wrote:
+
+> > The question is whether to convert also the current bindings and DTS to
+> > the new (sc8280xp) scheme (e.g. drop the child nodes and register
+> > subregions).
+> > 
+> > The driver can support both binding schemes using the same compatible
+> > strings for a transition period (or in theory forever) by checking for
+> > the existence of a child node.
+> > 
+> > Converting the DTS to use the new bindings would obviously prevent using
+> > them with an old kernel (i.e. 2 above), but I don't think that's a
+> > problem (unlike backward compatibility during at least a transition
+> > period).
 > 
-> Sure.  In that case, do you want to rework this patch / code again to
-> only look in the DPU/MDP, and not at MDSS at all?  (Or is that another
-> DT API break we'd rather not make?)
+> It is still not nice towards any other users of DTS, because this will
+> break all of them. I agree this won't be ABI type of break. It is
+> discouraged though, unless there are clear benefits from this or one
+> totally does not care about other DTS users...
+> 
+> As I said it is up to platform maintainer.
 
-I'd rather not make this break. Let's keep backwards compatibility at 
-least for now.
+Yeah. When time I spoke to Bjorn about this, we agreed to draw the line
+at SC8280XP.
 
--- 
-With best wishes
-Dmitry
+But if it turns out converting older platforms is needed to fix bugs or
+add features (e.g. due to the incomplete register descriptions), we may
+later have to reconsider this.
 
+> > My concern was how to describe the deprecation in DT schema if we were
+> > convert them. By instead just keeping the old bindings as-is in a
+> > separate file and continuing to support them in the driver we can have a
+> > nice and clean description of the new bindings (sc8280xp) without the
+> > legacy cruft.
+> 
+> You cannot have one compatible in two schemas, so for old bindings (and
+> DTS):
+> 1. Don't convert them,
+> 2. Convert with keeping old properties - as you pointed this might be
+> full of conditionals/allOf, so difficult to maintain and read,
+> 3. Convert dropping old stuff.
+> 
+> For the option 3. for sure Rob will ask why. :)
+
+Thanks for confirming.
+
+So I guess we start with keeping the old bindings as they are (1) and if
+later needed (or desired) we should simply drop the old bindings (3)
+from the schema (we can still have the driver support the old bindings
+during a transition period).
+
+> > If we were to start introducing conditionals on existence of child
+> > nodes, and marking the old bindings as deprecated in one large schema,
+> > then that sounds like it would be very messy and hard to read and
+> > maintain. But perhaps there is some way to do this without such
+> > downsides that I'm not aware of.
+
+Johan
