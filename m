@@ -2,142 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 069A460397C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 08:03:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23A3760398C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 08:05:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229971AbiJSGDm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Oct 2022 02:03:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40526 "EHLO
+        id S229622AbiJSGFy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Oct 2022 02:05:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229956AbiJSGDg (ORCPT
+        with ESMTP id S229558AbiJSGFx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Oct 2022 02:03:36 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A82015C36D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 23:03:34 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-357208765adso157906247b3.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Oct 2022 23:03:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=s5DB7EnWinUCVvHnFkWiifLYJ7ZYVSrywNKSXQZJdFI=;
-        b=zVYtNmW6565ZCEXxTkDChTvQvHXVZBJgGadsGALKU3QKMGV7PrXldFeksaQiPFFwos
-         gOa5LHUXC9ENeji5ixZomlslrjXs7gRNn5sa4/rC/7oX9vcohhS7XlO8sDMJLXWscr+q
-         bF06XsYuYWzUbcYRDjzfQO7njw5hC0lUkvvqRBtzHG+VCf+kO0dojSk2HwepiWXgSYBP
-         78G6I41n+j4b5oQ86dSQb0agTuBmkZQLAXpLW2ShZuHRDidswcSNmuHVA4Q/JlRHChj1
-         CVLKFFo1MbwWbp2VHMZdc2bMjhHGPyCYYpL8L1H7itzUSN66IyZ5++j9CAcdb550Y7AK
-         nt/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=s5DB7EnWinUCVvHnFkWiifLYJ7ZYVSrywNKSXQZJdFI=;
-        b=qLDpSKcbapvEzkejSRBhbrqCmyVM8ye2NuB3tNPBmhdHB7ygLGSgqGRS7BYYU1bem+
-         1R/cC4lJvZnU/qBcHKiUqDOKA7v1tUuI9GjWMuoX5a8yXWFe2nF0pwXoyTRVcaZ+WcSJ
-         GGgngd9eX+/dssKzmLiwR8ysQHUR5fsBUSKHEQGDpSWPRGnqzazDzLdS5/+LHVTj0V9O
-         tZjITorpTvRUG6qcEGzS+uXHb6a8gHOrq1XgCXgKHC3dEj4UC1A+PDjeF9oI6yxGfwW6
-         JLiYTyJeS4HkFa+LMOnCvn5pMDvnjSni7a2p77oLv+fbYgZcyrmCm0TNac59leAgxO+m
-         TK8g==
-X-Gm-Message-State: ACrzQf2LzexoiF9ssC436xeqk1LERlc+rEGMEWOTeOa89PO165Pp+mWd
-        GMh60jGprnTLtQ03g+T5m6Hs02cVxSxL2DIxy++sxw==
-X-Google-Smtp-Source: AMsMyM6pJW+QkixNplXOsyqax6puLF7anBgDILMTra0UqNAILCFqM+RlWPnUCA7ntqHj/xXFKBs5j8LsVWWer2PZbHY=
-X-Received: by 2002:a81:4881:0:b0:361:5080:91fe with SMTP id
- v123-20020a814881000000b00361508091femr5409889ywa.485.1666159413839; Tue, 18
- Oct 2022 23:03:33 -0700 (PDT)
+        Wed, 19 Oct 2022 02:05:53 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 835A265268;
+        Tue, 18 Oct 2022 23:05:52 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29J3Zvrw018588;
+        Wed, 19 Oct 2022 06:05:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=5NfVmVQqCcsqOCHrXdcWbol610SDLeE/U6J5P9uZ/NE=;
+ b=d9ulX5GW4h5ZUQCIrw9I3Pc7Z7Gz3aSpgLXJ8TvNBZOSGJ0cKl6TRaAzVBVlAWsR9Oou
+ YBEe+F1KoYh9EV47UssMvBtcgeGNE/+Zevuxcw9yhSHb1N94O2FjM/6xfBrP34914/6o
+ M89SLvYs7Mg3cIDeRGz9piRiR+1dIe0l8KoqgVMGSJuv9n3MIc6gTetMgKF7ukCak84s
+ /an+C+MDmeGHF7W4qKguHEJavhDX6bSnbeJW80OzrIHbwQjFrmxSh9xVh0Prq2Z9wX+d
+ bZee60RJtYfY138JxRwNq2etcyx1Lc/cIpOcJNv6UQuMXOm1MMeVPgLqMHBjIoPaYIwa lg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ka4250y72-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Oct 2022 06:05:49 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29J65mIV005769
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Oct 2022 06:05:48 GMT
+Received: from c-skakit-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Tue, 18 Oct 2022 23:05:45 -0700
+From:   Satya Priya <quic_c_skakit@quicinc.com>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>
+CC:     Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_tdas@quicinc.com>, <quic_c_skakit@quicinc.com>,
+        <linux-clk@vger.kernel.org>
+Subject: [PATCH] clk: qcom: Update the force mem core bit for GPU clocks
+Date:   Wed, 19 Oct 2022 11:35:35 +0530
+Message-ID: <1666159535-6447-1-git-send-email-quic_c_skakit@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-References: <20211006035407.1147909-1-dmitry.baryshkov@linaro.org> <Y0hr9XTGAg8Q6K6y@google.com>
-In-Reply-To: <Y0hr9XTGAg8Q6K6y@google.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 19 Oct 2022 09:03:22 +0300
-Message-ID: <CAA8EJppuGbDGb1D-yf2WL77U1bqx1QQStQeDArWmGFCUiOtnww@mail.gmail.com>
-Subject: Re: [PATCH v1 00/15] create power sequencing subsystem
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: HJLP6w6wFHlUYmlmOI9mFywuucD1InV_
+X-Proofpoint-ORIG-GUID: HJLP6w6wFHlUYmlmOI9mFywuucD1InV_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-19_02,2022-10-19_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ bulkscore=0 malwarescore=0 priorityscore=1501 clxscore=1011 spamscore=0
+ mlxlogscore=863 suspectscore=0 lowpriorityscore=0 phishscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210190033
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Ho,
+From: Taniya Das <quic_tdas@quicinc.com>
 
-On Thu, 13 Oct 2022 at 22:50, Matthias Kaehlcke <mka@chromium.org> wrote:
-> Do you still plan to refresh this series?
->
-> I know there have been multiple attempts to get something similar
-> landed in the past 10 year or so. Your series didn't seem to get
-> much pushback from maintainers, might be worth sending a refresh :)
+There are few GPU clocks which are powering up the memories
+and thus enable the FORCE_MEM_PERIPH always for these clocks
+to force the periph_on signal to remain active during halt
+state of the clock.
 
-Yes, I hope to return to it eventually. I just had no time for it lately.
+Fixes: a3cc092196ef ("clk: qcom: Add Global Clock controller (GCC) driver for SC7280")
+Fixes: 3e0f01d6c7e7 ("clk: qcom: Add graphics clock controller driver for SC7280")
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+---
+ drivers/clk/qcom/gcc-sc7280.c   | 1 +
+ drivers/clk/qcom/gpucc-sc7280.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-> On Wed, Oct 06, 2021 at 06:53:52AM +0300, Dmitry Baryshkov wrote:
-> > This is a proposed power sequencer subsystem. This is a
-> > generification of the MMC pwrseq code. The subsystem tries to abstract
-> > the idea of complex power-up/power-down/reset of the devices.
-> >
-> > The primary set of devices that promted me to create this patchset is
-> > the Qualcomm BT+WiFi family of chips. They reside on serial+platform
-> > or serial + SDIO interfaces (older generations) or on serial+PCIe (newer
-> > generations).  They require a set of external voltage regulators to be
-> > powered on and (some of them) have separate WiFi and Bluetooth enable
-> > GPIOs.
-> >
-> > The major drawback for now is the lack of proper PCIe integration
-> > At this moment support for PCIe is hacked up to be able to test the
-> > PCIe part of qca6390. Proper PCIe support would require automatically
-> > powering up the devices before the scan basing on the proper device
-> > structure in the device tree. This two last patches are noted as WIP and
-> > are included into the patchset for the purpose of testing WiFi on newer
-> > chips (like qca6390/qca6391).
-> >
-> > Changes since RFC v2:
-> >  - Add documentation for the pwrseq code. Document data structures,
-> >    macros and exported functions.
-> >  - Export of_pwrseq_xlate_onecell()
-> >  - Add separate pwrseq_set_drvdata() function to follow the typical API
-> >    design
-> >  - Remove pwrseq_get_optional()/devm_pwrseq_get_optional()
-> >  - Moved code to handle old mmc-pwrseq binding to the MMC patch
-> >  - Split of_pwrseq_xlate_onecell() support to a separate patch
-> >
-> > Changes since RFC v1:
-> >  - Provider pwrseq fallback support
-> >  - Implement fallback support in pwrseq_qca.
-> >  - Mmove susclk handling to pwrseq_qca.
-> >  - Significantly simplify hci_qca.c changes, by dropping all legacy
-> >    code. Now hci_qca uses only pwrseq calls to power up/down bluetooth
-> >    parts of the chip.
-> >
-> >
-> >
-> >
-> > _______________________________________________
-> > ath10k mailing list
-> > ath10k@lists.infradead.org
-> > http://lists.infradead.org/mailman/listinfo/ath10k
-
-
-
+diff --git a/drivers/clk/qcom/gcc-sc7280.c b/drivers/clk/qcom/gcc-sc7280.c
+index 8afb757..46d41eb 100644
+--- a/drivers/clk/qcom/gcc-sc7280.c
++++ b/drivers/clk/qcom/gcc-sc7280.c
+@@ -3467,6 +3467,7 @@ static int gcc_sc7280_probe(struct platform_device *pdev)
+ 	regmap_update_bits(regmap, 0x28004, BIT(0), BIT(0));
+ 	regmap_update_bits(regmap, 0x28014, BIT(0), BIT(0));
+ 	regmap_update_bits(regmap, 0x71004, BIT(0), BIT(0));
++	regmap_update_bits(regmap, 0x7100C, BIT(13), BIT(13));
+ 
+ 	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
+ 			ARRAY_SIZE(gcc_dfs_clocks));
+diff --git a/drivers/clk/qcom/gpucc-sc7280.c b/drivers/clk/qcom/gpucc-sc7280.c
+index 9a832f2..1490cd4 100644
+--- a/drivers/clk/qcom/gpucc-sc7280.c
++++ b/drivers/clk/qcom/gpucc-sc7280.c
+@@ -463,6 +463,7 @@ static int gpu_cc_sc7280_probe(struct platform_device *pdev)
+ 	 */
+ 	regmap_update_bits(regmap, 0x1170, BIT(0), BIT(0));
+ 	regmap_update_bits(regmap, 0x1098, BIT(0), BIT(0));
++	regmap_update_bits(regmap, 0x1098, BIT(13), BIT(13));
+ 
+ 	return qcom_cc_really_probe(pdev, &gpu_cc_sc7280_desc, regmap);
+ }
 -- 
-With best wishes
-Dmitry
+2.7.4
+
