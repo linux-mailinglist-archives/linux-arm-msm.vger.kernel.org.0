@@ -2,68 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C454B604288
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 13:06:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B46F60414C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 12:42:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232095AbiJSLGM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Oct 2022 07:06:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54044 "EHLO
+        id S232470AbiJSKmM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Oct 2022 06:42:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233375AbiJSLFY (ORCPT
+        with ESMTP id S232180AbiJSKlP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Oct 2022 07:05:24 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEAC51A20D;
-        Wed, 19 Oct 2022 03:34:42 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7643961800;
-        Wed, 19 Oct 2022 09:34:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98CDC433D7;
-        Wed, 19 Oct 2022 09:34:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666172044;
-        bh=+XJ4KA8dllr0ByMjgUh1Y3S/fQ8SIHjq3TDCIyLLrNo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=T7Uch+ZhgMxzh633BHSOdQxgxOqQowc35/YWFAWeeU2s0E+SioG0sAWiRyAQRnsGN
-         0mXBcQtpiF2kOYrwuWgc4SJnQZsDBoFGsW8JvtPwpY6O8uiibCtq3L726zsubk+UWG
-         8j9rsryp/cG7gZydanqhizZLgUtQQ5H0t7mYjnPlKn62L/KB5r3+p3esvvbTejHnNz
-         8oH+xKXDWfh0w5qUuu+S9D7Z7ggNqLH+rGfZpwZXQjZ03Ssa2uO/EhPzBD2hPHkSF2
-         uX0uoTZbcVItVSQjtyPhNnndaLD6L9gEP95UYVf3GiCDPHFzNRKGwjsnOw0aNaVVXs
-         pYOkC+u9eiivA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ol5SS-0005JG-2I; Wed, 19 Oct 2022 11:33:52 +0200
-Date:   Wed, 19 Oct 2022 11:33:52 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 09/15] dt-bindings: phy: qcom,qmp-pcie: mark current
- bindings as legacy
-Message-ID: <Y0/EgN78YdQ9Mg23@hovoldconsulting.com>
-References: <20221017145328.22090-1-johan+linaro@kernel.org>
- <20221017145328.22090-10-johan+linaro@kernel.org>
- <CAA8EJpqSWmy5Z4cmJnsdjMjkmACW7HSi-k5JxZ0gLCeUAWEnxQ@mail.gmail.com>
- <Y05+E90tmlq2tNFa@hovoldconsulting.com>
- <CAA8EJprwhEvUfUr-zDir4zFh_NAyr0qPbrHi6Hf8=2HC1dAhaw@mail.gmail.com>
- <b0c1bdfb-4a31-9deb-1f0a-0ed813707464@linaro.org>
- <Y07OfmfQgQWFzHZY@hovoldconsulting.com>
- <e334e265-fde0-29df-d905-c3ec4941f152@linaro.org>
+        Wed, 19 Oct 2022 06:41:15 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FE6E5FCB;
+        Wed, 19 Oct 2022 03:19:27 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29J8JVb6008813;
+        Wed, 19 Oct 2022 10:17:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=0uBWXpcUu6GK+gkxHOG4A7UL9k/FeUaumNYxBXEQc/g=;
+ b=Tbbo8XyJBMAaZvPmonEjVONB8bGajBFUM1UjgncjOgOBhvIhRCVEJapSmG9y13hM12ca
+ gV9zb8/3GL1ex7TIuDwEcig6KNvPTqswCmPgyfGQj5T21BOZ5Lk/BIzIxcjigqLeYac0
+ TqWNAr6JAJqTVCfpK1IXM8alnab1iRZh5xN2Ifa5MPqveDMDjGmfSvjovnkAg4srgn/Z
+ VTYfqqtn22EVSN37puSwjPRmgHxWnVrv5GfAcUNRY11mNgbbKWX/PqEinfii9BgQmns1
+ 4rR0q56XM9XQzawPQPH2Srenqep6uQ6SXHtfECxORr9vaz5F7nLMyTIPTER/g+P7Hyx7 SA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ka5emhhe5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Oct 2022 10:17:44 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29JAHiZH023414
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Oct 2022 10:17:44 GMT
+Received: from [10.253.8.223] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 19 Oct
+ 2022 03:17:42 -0700
+Message-ID: <fbae8ec2-a645-6141-8308-3122c2ca9fab@quicinc.com>
+Date:   Wed, 19 Oct 2022 18:17:39 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e334e265-fde0-29df-d905-c3ec4941f152@linaro.org>
-X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH v3 0/2] Add LED driver for flash module in QCOM PMICs
+Content-Language: en-US
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <krzysztof.kozlowski@linaro.org>
+CC:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>
+References: <20221018014024.948731-1-quic_fenglinw@quicinc.com>
+ <CNPPXFMBHOPK.2XSBJT5M1TNVP@otso>
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+In-Reply-To: <CNPPXFMBHOPK.2XSBJT5M1TNVP@otso>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: O9ApRDCYgI_KUhvlNefCO8N8dAGLBiY-
+X-Proofpoint-GUID: O9ApRDCYgI_KUhvlNefCO8N8dAGLBiY-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-19_06,2022-10-19_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 suspectscore=0 mlxlogscore=999 spamscore=0
+ malwarescore=0 clxscore=1011 phishscore=0 mlxscore=0 bulkscore=0
+ impostorscore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2209130000 definitions=main-2210190057
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,62 +80,106 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 18, 2022 at 12:44:22PM -0400, Krzysztof Kozlowski wrote:
-> On 18/10/2022 12:04, Johan Hovold wrote:
 
-> > The question is whether to convert also the current bindings and DTS to
-> > the new (sc8280xp) scheme (e.g. drop the child nodes and register
-> > subregions).
-> > 
-> > The driver can support both binding schemes using the same compatible
-> > strings for a transition period (or in theory forever) by checking for
-> > the existence of a child node.
-> > 
-> > Converting the DTS to use the new bindings would obviously prevent using
-> > them with an old kernel (i.e. 2 above), but I don't think that's a
-> > problem (unlike backward compatibility during at least a transition
-> > period).
+
+On 2022/10/19 15:23, Luca Weiss wrote:
+> Hi Fenglin,
 > 
-> It is still not nice towards any other users of DTS, because this will
-> break all of them. I agree this won't be ABI type of break. It is
-> discouraged though, unless there are clear benefits from this or one
-> totally does not care about other DTS users...
+> On Tue Oct 18, 2022 at 3:40 AM CEST, Fenglin Wu wrote:
+>> Initial driver and binding document changes for supporting flash LED
+>> module in Qualcomm Technologies, Inc. PMICs.
+>>
 > 
-> As I said it is up to platform maintainer.
-
-Yeah. When time I spoke to Bjorn about this, we agreed to draw the line
-at SC8280XP.
-
-But if it turns out converting older platforms is needed to fix bugs or
-add features (e.g. due to the incomplete register descriptions), we may
-later have to reconsider this.
-
-> > My concern was how to describe the deprecation in DT schema if we were
-> > convert them. By instead just keeping the old bindings as-is in a
-> > separate file and continuing to support them in the driver we can have a
-> > nice and clean description of the new bindings (sc8280xp) without the
-> > legacy cruft.
+> Thanks for these patches, it's really nice to see drivers like this
+> being sent upstream!
 > 
-> You cannot have one compatible in two schemas, so for old bindings (and
-> DTS):
-> 1. Don't convert them,
-> 2. Convert with keeping old properties - as you pointed this might be
-> full of conditionals/allOf, so difficult to maintain and read,
-> 3. Convert dropping old stuff.
+> I've just tried these patches on pm6150l which also is compatible with
+> this driver (and used on sm7225-fairphone-fp4).
 > 
-> For the option 3. for sure Rob will ask why. :)
+> The two different flash LEDs on the device I could adjust as expected
+> using sysfs:
+> 
+> $ echo 255 > /sys/class/leds/yellow:flash-0/brightness
+> $ echo 255 > /sys/class/leds/white:flash-0/brightness
+> 
+> Also lower brightness values resulted in lower brightness on the LED, so
+> all is good here!
+> 
+> But for flash usage, I couldn't figure out how to use it, doing the
+> following resulted in no change on the LED.
+> 
+> $ cat /sys/class/leds/white:flash-0/max_flash_brightness
+> 1000000
+> $ echo 1000000 > /sys/class/leds/white:flash-0/flash_brightness
+> 
+> Here's my LED definition:
+> 
+>    led-0 {
+>      function = LED_FUNCTION_FLASH;
+>      color = <LED_COLOR_ID_YELLOW>;
+>      led-sources = <1>;
+>      led-max-microamp = <180000>;
+>      flash-max-microamp = <1000000>;
+>      flash-max-timeout-us = <1280000>;
+>    };
+> 
+>  From values are from msm-4.19 kernel:
+> 
+>    qcom,flash_0 {
+>      qcom,current-ma = <1000>; // => flash-max-microamp
+>      qcom,duration-ms = <1280>; // => flash-max-timeout-us
+>      qcom,id = <0>; // => led-sources?
+>    };
+> 
+>    qcom,torch_0 {
+>      qcom,current-ma = <180>; // => led-max-microamp
+>      qcom,id = <0>; // => led-sources?
+>    };
+> 
+> Could you please let me know how flash is supposed to work or if I
+> maybe have messed up some setting here?
+> 
+> Regards
+> Luca
 
-Thanks for confirming.
+Hi Luca,
 
-So I guess we start with keeping the old bindings as they are (1) and if
-later needed (or desired) we should simply drop the old bindings (3)
-from the schema (we can still have the driver support the old bindings
-during a transition period).
+Thanks for testing the driver at your end.
+The "brightness" node is for enabling/disable/adjusting brightness when 
+the LED is working in torch mode, the nodes for enabling/adjusting the 
+LED behavior in flash mode are "flash_brightness" "flash_timeout" 
+"flash_strobe".
+You can strobe the flash by "echo 1 > flash_strobe" directly and the 
+default brightness/timeout value will be used, or you can update the 
+settings with "echo xxx > flash_brightness; echo xxx > flash_timeout" 
+then strobe the LED with "echo 1 > flash_strobe". Please remember you 
+always need to "echo 0 > flash_strobe" 1st if you want to enable it again.
+Thanks
 
-> > If we were to start introducing conditionals on existence of child
-> > nodes, and marking the old bindings as deprecated in one large schema,
-> > then that sounds like it would be very messy and hard to read and
-> > maintain. But perhaps there is some way to do this without such
-> > downsides that I'm not aware of.
-
-Johan
+Fenglin
+> 
+>> Changes in V3:
+>>    1. Updated the driver to use regmap_field for register access.
+>>    2. Adressed the review comments in binding document change.
+>>
+>> Changes in V2:
+>>    1. Addressed review comments in binding change, thanks Krzysztof!
+>>    2. Updated driver to address the compilation issue reported by
+>>       kernel test robot.
+>>
+>>
+>> Fenglin Wu (2):
+>>    leds: flash: add driver to support flash LED module in QCOM PMICs
+>>    dt-bindings: add bindings for QCOM flash LED
+>>
+>>   .../bindings/leds/qcom,spmi-flash-led.yaml    | 116 +++
+>>   drivers/leds/flash/Kconfig                    |  15 +
+>>   drivers/leds/flash/Makefile                   |   1 +
+>>   drivers/leds/flash/leds-qcom-flash.c          | 700 ++++++++++++++++++
+>>   4 files changed, 832 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
+>>   create mode 100644 drivers/leds/flash/leds-qcom-flash.c
+>>
+>> -- 
+>> 2.25.1
+> 
