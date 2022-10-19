@@ -2,139 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 48354604C82
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 17:59:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3ACE8604CB5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 18:04:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229680AbiJSP73 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Oct 2022 11:59:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44592 "EHLO
+        id S229687AbiJSQEw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Oct 2022 12:04:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231629AbiJSP6u (ORCPT
+        with ESMTP id S232287AbiJSQDk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Oct 2022 11:58:50 -0400
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14EB1153E10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 08:57:47 -0700 (PDT)
-Received: by mail-qk1-x732.google.com with SMTP id o2so10959973qkk.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 08:57:47 -0700 (PDT)
+        Wed, 19 Oct 2022 12:03:40 -0400
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73763197F95
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 09:02:23 -0700 (PDT)
+Received: by mail-qk1-x729.google.com with SMTP id d13so10988418qko.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 09:02:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XuH1cwGYuoIXuHDHrxmGsjJyFHpkABDYVCIkLmAK2bw=;
-        b=ghdwkgoTZX+EiHmt/h6EJyEpxc3hSgg79jAPidHTEO5U7Oacb2f7aV9dA16+K2MI+2
-         ZzRKn6SblRwL+Rux3tzWlTKKK0E+pXdghGvOqIUCGWlsFEqRDdMrL3lJvy/xM9Jm/J8i
-         RRa9s8ygIFflpnEI7Oafv9LZ+seAPhNZ0bpscvw5Yk0pUNTAgLlOCdBvKHWaC+TKSBEN
-         /xlpUA+2rL7MD4soWBynVfAodBYwZDxgDAvIr/lbs3fW72ukn33S338xKxaC+S1OptCh
-         hBSPFsIFUsKwTeGOzyu+tPtH7BasQmSIyETOFf+XPtp2krHM8NbAy1mN78PRPba3v0gl
-         yIow==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=cXEg5LXhNr6g4o3GCgJPPoDv0cCzaMCnarb4y16JcsY=;
+        b=RAroKaRpfurWTvdxCuUh8np+UlQQDNQ6hBpvoFSPm0fTBhVT/dA5guQBjs7SUBydth
+         +3IKvpvLg/wjYbkIR6rexQtdqizcuPcHZDA3kQDEXFs30wzynVs2kDSu9/qKRurQ3M03
+         72Yncp8YmtQJnt67CQ23xVaGYKwA3/S2ha4z3RZoH9lXA5Pf9t8TdjbcS/9n2UL7XVE7
+         hDnbDot1+25UMESk3RQ68mxmpoktDbGTVLzuXj4tjMjTsX11WiIeBiymhFgofg2Aw/LY
+         MJfprLSyTunx+IWVFqOBAT5drMePt+caneSsNcjxC3FYEw2JnUUn3RIRHfxtoTP+BCak
+         KWtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XuH1cwGYuoIXuHDHrxmGsjJyFHpkABDYVCIkLmAK2bw=;
-        b=RMsCzpFCHGedmvmgKe0QRZXj3JQQ0swKKRKmAD10a+v++csQJLjtc9oI/Tg5ayuxZO
-         wuj8q6fEPnPu/DNG0D2Is87x0rOK26/DAZmKDRbNoFF4aere6xohzieC3yXPUojaoddQ
-         RAkdB1nrW26nQsHPsVmH383nwZa3rul3hfn9GNYGOsQ/y4E2Ua+QjSGt/3MZjL9ZuGLI
-         fDmQjx/NvRmOezZSCksd9bBj7FcAbJd+HJHAKHP/y3s5vzCU6gQiyY4Lxp9pball+Af8
-         7xTOQP3CkQrB9ERwRQtMWepta9T9DwKoP1/D7uJLpovcba118Cu+qdezBipsSRtSIHms
-         G8CQ==
-X-Gm-Message-State: ACrzQf3f+s3H9BsR9pY/SmK3qBYxgStvY/c0fCElplPC+dX/Eu41l8ZG
-        Pw/lH3lVVvVbwE0VEFP9l340/Q==
-X-Google-Smtp-Source: AMsMyM4eCXdcxPYYjqQ4LMC6OlOLsmYWjCS81HiLMFGL1eq8MVPxt363n9uh3cA7kLDZL6Qos11S6g==
-X-Received: by 2002:a05:620a:30b:b0:6e4:6de2:7f38 with SMTP id s11-20020a05620a030b00b006e46de27f38mr6179989qkm.520.1666195060953;
-        Wed, 19 Oct 2022 08:57:40 -0700 (PDT)
-Received: from [192.168.10.124] (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
-        by smtp.gmail.com with ESMTPSA id i23-20020ac84897000000b0039853b7b771sm4218488qtq.80.2022.10.19.08.57.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Oct 2022 08:57:40 -0700 (PDT)
-Message-ID: <6b71bc77-b168-282b-9318-1640bba4e946@linaro.org>
-Date:   Wed, 19 Oct 2022 11:57:37 -0400
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cXEg5LXhNr6g4o3GCgJPPoDv0cCzaMCnarb4y16JcsY=;
+        b=CccOqG2RJi0gLYl3T9ena1smRowXvt4DX+VaYnJ7S8EnIAeMJillMDQkUyZunFvTG9
+         vb9BuEtP9G/MAIt38GgveMcoPVpcnMAKeY4xsoXJIqquVJtpKvO0/MQxmzVhaYsMcrtu
+         /MCEB3YdncqpP6RQTedrcIb9iJTu6WdY9NBoHl4CJ+df6uubYR6YtHo/HE751D4NySOJ
+         5Iydlb5WhiE2PGtXoKTO9LBMRkIrHEE67Nz2sf4DLmBKIrE5td6Md2RqcImnyOD6m/6S
+         5vHe7Q8jJDbYJHTO0T+2fux/oeshThmtPj7SIOHI5j+3dmB0IGPiEyu2Y9o2DhS5F5Sb
+         m9aQ==
+X-Gm-Message-State: ACrzQf2rrcbphiodr9+ZMjkr7hvEBP/5L4P3Yv0+KuxgW0RGBJvjM/hW
+        q0is+x69cOzHPX7bWdO82wDzCIwld8jj8fCl4Xg=
+X-Google-Smtp-Source: AMsMyM6TEo4hDub8A4ZbQ/NFeTrObyoOtGeqB0ezEVBW6LzWaQsU9/zwd1KSDsuucdd55cJAlAut2BNOLEXJ57PbZ28=
+X-Received: by 2002:ae9:e002:0:b0:6eb:adfb:5e03 with SMTP id
+ m2-20020ae9e002000000b006ebadfb5e03mr5941174qkk.243.1666195342071; Wed, 19
+ Oct 2022 09:02:22 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH v3 4/4] dt-bindings: pinctrl: qcom,sc7180: convert to
- dtschema
-Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rob Herring <robh@kernel.org>
-References: <20221019001351.1630089-1-krzysztof.kozlowski@linaro.org>
- <20221019001351.1630089-5-krzysztof.kozlowski@linaro.org>
- <CAD=FV=U0WR-a7d4p5eoCFMRer5yhX8AcEPdUaJag4KpGB9kp+A@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=U0WR-a7d4p5eoCFMRer5yhX8AcEPdUaJag4KpGB9kp+A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <CANHAJhG-aoOBgTzirGu-1uqCFUJd+AnenMSkoUqnG3mhraCRfw@mail.gmail.com>
+ <CAF6AEGvvsx+6OSxOaqjoUO=J4tO_J5ZSidenx9EXdz34_myBqQ@mail.gmail.com>
+In-Reply-To: <CAF6AEGvvsx+6OSxOaqjoUO=J4tO_J5ZSidenx9EXdz34_myBqQ@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 19 Oct 2022 09:02:10 -0700
+Message-ID: <CAF6AEGtsw5GTB+MzvA7mE8y=m6qDFtQNFnnAVtuFSxnDAT0YuA@mail.gmail.com>
+Subject: Re: [PULL]: qcom: SC7180 and SC7280 venus firmware updates
+To:     Nathan Hebert <nhebert@chromium.org>
+Cc:     linux-firmware@kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_vgarodia@quicinc.com, Fritz Koenig <frkoenig@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/10/2022 11:48, Doug Anderson wrote:
-> Hi,
-> 
-> On Tue, Oct 18, 2022 at 5:14 PM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> Convert Qualcomm SC7180 pin controller bindings to DT schema.  Keep the
->> parsing of pin configuration subnodes consistent with other Qualcomm
->> schemas (children named with '-state' suffix, their children with
->> '-pins').
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Reviewed-by: Rob Herring <robh@kernel.org>
->>
->> ---
->>
->> Changes since v2:
->> 1. Drop entire drive-strength (not needed, brought by common TLMM
->>    schema).
->>
->> Changes since v1:
->> 1. Drop default:2 for drive strength
->> 2. Add Rb tag.
->>
->> Cc: Doug Anderson <dianders@chromium.org>
->> ---
->>  .../bindings/pinctrl/qcom,sc7180-pinctrl.txt  | 187 ------------------
->>  .../bindings/pinctrl/qcom,sc7180-pinctrl.yaml | 158 +++++++++++++++
->>  2 files changed, 158 insertions(+), 187 deletions(-)
-> 
-> Looks great now.
-> 
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Actually, isn't the .mbn the joined fw?  If so all you need to do is
+remove the other files?
 
-Thanks
-
-> 
-> Will you also send out separate patches to fix up the "drive strength"
-> for all the other Qualcomm boards. They all have the same problem. The
-> drive strength never defaults to 2 and always gets left at whatever
-> the BIOS leaves it at unless it's specified.
-
-If you mean - other bindings for Qualcomm - then answer is yes. Several
-things are already applied and will pop-up in tomorrow's next:
-https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux-dt.git/log/?h=next/qcom-pinctrl
-
-I'll go in spare time with rest of bindings.
-
-Best regards,
-Krzysztof
-
+On Wed, Oct 19, 2022 at 8:52 AM Rob Clark <robdclark@gmail.com> wrote:
+>
+> Hmm, does venus not support the combined firmware yet?  Elsewhere
+> we've moved away from split fw to using a single ELF file..
+>
+> BR,
+> -R
+>
+> On Tue, Oct 18, 2022 at 2:18 PM Nathan Hebert <nhebert@chromium.org> wrote:
+> >
+> > The following changes since commit 48407ffd7adb9511701547068b1e6f0956bd1c94:
+> >
+> >   cnm: update chips&media wave521c firmware. (2022-10-17 10:20:43 -0400)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://github.com/nathan-google/linux-firmware.git
+> > update_sc7180_and_sc7280_firmwares
+> >
+> > for you to fetch changes up to 76e160366a28010fa06ddc965659c38a44d159d9:
+> >
+> >   qcom: update venus firmware files for VPU-2.0 (2022-10-18 13:42:58 -0700)
+> >
+> > ----------------------------------------------------------------
+> > Nathan Hebert (2):
+> >       qcom: update venus firmware files for v5.4
+> >       qcom: update venus firmware files for VPU-2.0
+> >
+> >  qcom/venus-5.4/venus.b00 | Bin 212 -> 212 bytes
+> >  qcom/venus-5.4/venus.b01 | Bin 6808 -> 6808 bytes
+> >  qcom/venus-5.4/venus.b02 | Bin 873596 -> 875020 bytes
+> >  qcom/venus-5.4/venus.b03 | Bin 33792 -> 33896 bytes
+> >  qcom/venus-5.4/venus.mbn | Bin 919708 -> 921236 bytes
+> >  qcom/venus-5.4/venus.mdt | Bin 7020 -> 7020 bytes
+> >  qcom/vpu-2.0/venus.b00   | Bin 692 -> 692 bytes
+> >  qcom/vpu-2.0/venus.b01   | Bin 7376 -> 7376 bytes
+> >  qcom/vpu-2.0/venus.b02   | Bin 300 -> 300 bytes
+> >  qcom/vpu-2.0/venus.b04   | Bin 20 -> 20 bytes
+> >  qcom/vpu-2.0/venus.b09   | Bin 939184 -> 939472 bytes
+> >  qcom/vpu-2.0/venus.b10   | Bin 42976 -> 43120 bytes
+> >  qcom/vpu-2.0/venus.mbn   | Bin 2031188 -> 2031620 bytes
+> >  qcom/vpu-2.0/venus.mdt   | Bin 8068 -> 8068 bytes
+> >  14 files changed, 0 insertions(+), 0 deletions(-)
