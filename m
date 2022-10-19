@@ -2,169 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06F27604855
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 15:56:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F3FD6048AB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 16:05:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231803AbiJSN4G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Oct 2022 09:56:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45568 "EHLO
+        id S231854AbiJSOFU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Oct 2022 10:05:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233685AbiJSNxN (ORCPT
+        with ESMTP id S234026AbiJSOES (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Oct 2022 09:53:13 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FADE1C8112
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 06:36:31 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id z30so10645600qkz.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 06:36:31 -0700 (PDT)
+        Wed, 19 Oct 2022 10:04:18 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1057143A41
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 06:45:42 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id d6so28165960lfs.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 06:45:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=spOHuMkUzxNQDF31ZQ14bo2Slaj0LH2xXCN8rwJWrnI=;
-        b=w+CMYrks958c8ml3PmlfBooj70tDMnLmjJmSQ7i5gkstqLRFgYVvEj4aNS4tX2afCi
-         KuYAkUXp8mTQ6lM1dnCZFg1Uvepgbs5c9hw81imvk3Tg5Q6JRw5SM4CKE7uE2wlRlbDO
-         3bglyUheaLDRyGmGCGgf0t9tUyqyX+W8Vn+6e6fA57MekTOVvqR8W/faGWEx15EM71LX
-         ilmjv2dZ8Yh6IfLlrNkW1hMEXmJCiF+YXGIBe7S/PQpQ2qvgekGFjjaSxDTmXTqrsJSX
-         8XBwueSqOpqKy5h/oBJIzKsByESd00LhMrJ3vZ6vY2SGo1wLocFxESEJu+NPTun2/TOQ
-         6Jlw==
+        bh=h9WfAq9GlhRokXPelqeWHthsmCpycJCohpwOtcymBXs=;
+        b=pj/UffD41G8Iag/bxmsJ7mApxGuCCO4sUpnc87OpLKIYy6sgo/WL3srjmgGC7rWdyG
+         qg6U+PYe5I5uvsWHe0IkyropCNcU+DQM8+xZLhOZqN1sUvA1S8bwF3ZX2/K7P/bdin2E
+         WSpeDtyJmLFSVE/JKVOKGtkkes9Y2C8XzeBOpGN3zn1paIj9b8uWH4FTj3NhDVcr6Nml
+         +Jp5J6KYzqIuuY27Hw/9m7L6yNuXH+UCtQDjaig5wzr/QvBqlHwEmjNTW2YdeF0Dqki4
+         AJFg8EeWW831/VgwDIWPAgyvvRkMHiZFlgaePg1pl5LnwXcUYBtXbGKt0rFyyNTjbnEo
+         ayVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=spOHuMkUzxNQDF31ZQ14bo2Slaj0LH2xXCN8rwJWrnI=;
-        b=z3fnb4RFgxBS2S4JpHHnOcyKh29c53S6UyLRC0RSLX9tEvgLyfCSpudPrZSv/4xY31
-         teb9OoYau+Re8j9dJ0diJiXGALIpIPaBG7UU2MEoDJGBVzGx+NUsNi3Fs5H1J/2V6U7d
-         IQWLg/A0noXmMBhWCDSXSQFt/uyaGmShU2r7xDAqgs2KAS1vVRzimHd+XU7U844tnnXp
-         7Qms7NTIayz960qa6YD3sNuqTcoNPFTWNBPu+yvHEh7beg05aamIMCXLxBfbgwyS0EqK
-         Q7hklA+aod9/JLMhxOc+KIfKzGIC8Juh47l+9hDzjZ31LAJzvrl1JRHSgOxcgmaNU72V
-         roLA==
-X-Gm-Message-State: ACrzQf1wEsdqDbFq5bwP3RS7c0wPBy/7Eqr2mIuP3OYIrt7ai5OOREq2
-        RwqpXJnkH6cM1h34jQJgZlpNYA==
-X-Google-Smtp-Source: AMsMyM4YZyJwWnHgYffvrOP+BQyLg9L1WUxQQbV6BkIOfB1dOifPywxyt/QXAnfCIv35UpoMV3cqLg==
-X-Received: by 2002:a05:620a:2697:b0:6cf:33cd:2bd2 with SMTP id c23-20020a05620a269700b006cf33cd2bd2mr5404994qkp.341.1666186586436;
-        Wed, 19 Oct 2022 06:36:26 -0700 (PDT)
-Received: from [192.168.10.124] (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
-        by smtp.gmail.com with ESMTPSA id ca27-20020a05622a1f1b00b003436103df40sm4052757qtb.8.2022.10.19.06.36.25
+        bh=h9WfAq9GlhRokXPelqeWHthsmCpycJCohpwOtcymBXs=;
+        b=j0gpwuRAV65cdK7Hj2f9tGOlJzA4a5BPuQEEQIyhFl892brwQlATIpGJcEPYKVMG6p
+         PYxzD7wJYXDxt9TYDz7Vk3pdiRANE9T00y4ZRUDsbZ65xBIxyh8hPfkdLK+tVkOhHYEo
+         bw7cnNCjYvhC3QXk9DtT5sMAqez2uBeuHkd1OWH95+0fSYqDXrHokUUJ0QqZiS+hBRwu
+         4Gnun5hVk++UyewzXEAo/ePEnttmBeFtZ0Fc+xZMZ9cnFLgxYhxuGDOad5Mn8eUxsKdh
+         TAWkHjSZrR2si83a7HeAfqtjgepEVntomnGstri8F2sUiIVbn+4Bes8XvjBSmgMa8XLX
+         Twfg==
+X-Gm-Message-State: ACrzQf3RrlHGCcxlg7zl0jgqbT1uvj9JJClCVr5Zi4nUraNt3ySc7Eeq
+        4v30s55vF+xVJp8queDBm3QtjA==
+X-Google-Smtp-Source: AMsMyM5b2vyYPLDgUf0s1Uyw3+sPCvqEqEGYyKzYINQDUoDWiJvmGUVKOD0SEyhCvSuLsjUYLXbifA==
+X-Received: by 2002:a05:6512:110c:b0:4a2:4119:f5c4 with SMTP id l12-20020a056512110c00b004a24119f5c4mr2784433lfg.606.1666187074664;
+        Wed, 19 Oct 2022 06:44:34 -0700 (PDT)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id s28-20020a2eb63c000000b0026dcf238c50sm2450177ljn.127.2022.10.19.06.44.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Oct 2022 06:36:25 -0700 (PDT)
-Message-ID: <b335e842-0dd9-851a-9876-8ee4711609c0@linaro.org>
-Date:   Wed, 19 Oct 2022 09:36:24 -0400
+        Wed, 19 Oct 2022 06:44:34 -0700 (PDT)
+Message-ID: <0b0c752c-1f3d-bf5a-ade7-e2f8acac92a4@linaro.org>
+Date:   Wed, 19 Oct 2022 16:44:33 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH v3 2/2] dt-bindings: add bindings for QCOM flash LED
-Content-Language: en-US
-To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+ Thunderbird/102.3.3
+Subject: Re: [PATCH v2 08/15] phy: qcom-qmp-pcie: add register init helper
+Content-Language: en-GB
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     quic_collinsd@quicinc.com, quic_subbaram@quicinc.com
-References: <20221018014024.948731-1-quic_fenglinw@quicinc.com>
- <20221018014024.948731-3-quic_fenglinw@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221018014024.948731-3-quic_fenglinw@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221019113552.22353-1-johan+linaro@kernel.org>
+ <20221019113552.22353-9-johan+linaro@kernel.org>
+ <0f1fff20-772f-c4d1-f803-f1824ef23780@linaro.org>
+ <Y0/63eH82t2zXFi5@hovoldconsulting.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <Y0/63eH82t2zXFi5@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/10/2022 21:40, Fenglin Wu wrote:
-> Add binding document for flash LED module inside Qualcomm Technologies,
-> Inc. PMICs.
-
-Use subject prefixes matching the subsystem (git log --oneline -- ...).
-
-This means:
-1. you miss subsystem prefix
-2. drop redundant second "bindings"
-
+On 19/10/2022 16:25, Johan Hovold wrote:
+> On Wed, Oct 19, 2022 at 04:12:02PM +0300, Dmitry Baryshkov wrote:
+>> On 19/10/2022 14:35, Johan Hovold wrote:
+>>> Generalise the serdes initialisation helper so that it can be used to
+>>> initialise all the PHY registers (e.g. serdes, tx, rx, pcs).
+>>>
+>>> Note that this defers the ungating of the PIPE clock somewhat, which is
+>>> fine as it isn't needed until starting the PHY.
+>>>
+>>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>>> ---
+>>>    drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 51 +++++++-----------------
+>>>    1 file changed, 15 insertions(+), 36 deletions(-)
+>>>
+>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>> index dd7e72424fc0..f57d10f20277 100644
+>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>> @@ -1820,46 +1820,32 @@ static void qmp_pcie_configure(void __iomem *base,
+>>>    	qmp_pcie_configure_lane(base, tbl, num, 0xff);
+>>>    }
+>>>    
+>>> -static void qmp_pcie_serdes_init(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tables)
+>>> -{
+>>> -	void __iomem *serdes = qmp->serdes;
+>>> -
+>>> -	if (!tables)
+>>> -		return;
+>>> -
+>>> -	qmp_pcie_configure(serdes, tables->serdes, tables->serdes_num);
+>>> -}
+>>> -
+>>> -static void qmp_pcie_lanes_init(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tables)
+>>> +static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tbls)
+>>>    {
+>>>    	const struct qmp_phy_cfg *cfg = qmp->cfg;
+>>> +	void __iomem *serdes = qmp->serdes;
+>>>    	void __iomem *tx = qmp->tx;
+>>>    	void __iomem *rx = qmp->rx;
+>>>    	void __iomem *tx2 = qmp->tx2;
+>>>    	void __iomem *rx2 = qmp->rx2;
+>>> +	void __iomem *pcs = qmp->pcs;
+>>> +	void __iomem *pcs_misc = qmp->pcs_misc;
+>>>    
+>>> -	if (!tables)
+>>> +	if (!tbls)
+>>>    		return;
+>>>    
+>>> -	qmp_pcie_configure_lane(tx, tables->tx, tables->tx_num, 1);
+>>> -	qmp_pcie_configure_lane(rx, tables->rx, tables->rx_num, 1);
+>>> +	qmp_pcie_configure(serdes, tbls->serdes, tbls->serdes_num);
+>>> +
+>>> +	qmp_pcie_configure_lane(tx, tbls->tx, tbls->tx_num, 1);
+>>> +	qmp_pcie_configure_lane(rx, tbls->rx, tbls->rx_num, 1);
+>>>    
+>>>    	if (cfg->lanes >= 2) {
+>>> -		qmp_pcie_configure_lane(tx2, tables->tx, tables->tx_num, 2);
+>>> -		qmp_pcie_configure_lane(rx2, tables->rx, tables->rx_num, 2);
+>>> +		qmp_pcie_configure_lane(tx2, tbls->tx, tbls->tx_num, 2);
+>>> +		qmp_pcie_configure_lane(rx2, tbls->rx, tbls->rx_num, 2);
+>>>    	}
+>>> -}
+>>> -
+>>> -static void qmp_pcie_pcs_init(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tables)
+>>> -{
+>>> -	void __iomem *pcs = qmp->pcs;
+>>> -	void __iomem *pcs_misc = qmp->pcs_misc;
+>>> -
+>>> -	if (!tables)
+>>> -		return;
+>>>    
+>>> -	qmp_pcie_configure(pcs, tables->pcs, tables->pcs_num);
+>>> -	qmp_pcie_configure(pcs_misc, tables->pcs_misc, tables->pcs_misc_num);
+>>> +	qmp_pcie_configure(pcs, tbls->pcs, tbls->pcs_num);
+>>> +	qmp_pcie_configure(pcs_misc, tbls->pcs_misc, tbls->pcs_misc_num);
+>>
+>> Nit: could we please keep it as `tables'?
 > 
-> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
-> ---
->  .../bindings/leds/qcom,spmi-flash-led.yaml    | 116 ++++++++++++++++++
->  1 file changed, 116 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
+> I considered that but found that the longer identifier hurt
+> readability so I prefer to use "tbls" here.
 > 
-> diff --git a/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml b/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
-> new file mode 100644
-> index 000000000000..d8efde02db72
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
-> @@ -0,0 +1,116 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/leds/qcom,spmi-flash-led.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Flash LED device inside Qualcomm Technologies, Inc. PMICs
-> +
-> +maintainers:
-> +  - Fenglin Wu <quic_fenglinw@quicinc.com>
-> +
-> +description: |
-> +  Flash LED controller is present inside some Qualcomm Technologies, Inc. PMICs.
-> +  The flash LED module can have different number of LED channels supported
-> +  e.g. 3 or 4. There are some different registers between them but they can
-> +  both support maximum current up to 1.5 A per channel and they can also support
-> +  ganging 2 channels together to supply maximum current up to 2 A. The current
-> +  will be split symmetrically on each channel and they will be enabled and
-> +  disabled at the same time.
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - enum:
-> +          - qcom,pm8150c-flash-led
-> +          - qcom,pm8150l-flash-led
-> +          - qcom,pm8350c-flash-led
-> +      - const: qcom,spmi-flash-led
+> Compare
+> 
+> 	qmp_pcie_configure(serdes, tbls->serdes, tbls->serdes_num);
+> 
+> 	qmp_pcie_configure_lane(tx, tbls->tx, tbls->tx_num, 1);
+> 	qmp_pcie_configure_lane(rx, tbls->rx, tbls->rx_num, 1);
+> 
+> 	if (cfg->lanes >= 2) {
+> 		qmp_pcie_configure_lane(tx2, tbls->tx, tbls->tx_num, 2);
+> 		qmp_pcie_configure_lane(rx2, tbls->rx, tbls->rx_num, 2);
+> 	}
+> 
+> 	qmp_pcie_configure(pcs, tbls->pcs, tbls->pcs_num);
+> 	qmp_pcie_configure(pcs_misc, tbls->pcs_misc, tbls->pcs_misc_num);
+> 
+> with
+> 
+> 	qmp_pcie_configure(serdes, tables->serdes, tables->serdes_num);
+> 
+> 	qmp_pcie_configure_lane(tx, tables->tx, tables->tx_num, 1);
+> 	qmp_pcie_configure_lane(rx, tables->rx, tables->rx_num, 1);
+> 
+> 	if (cfg->lanes >= 2) {
+> 		qmp_pcie_configure_lane(tx2, tables->tx, tables->tx_num, 2);
+> 		qmp_pcie_configure_lane(rx2, tables->rx, tables->rx_num, 2);
+> 	}
+> 
+> 	qmp_pcie_configure(pcs, tables->pcs, tables->pcs_num);
+> 	qmp_pcie_configure(pcs_misc, tables->pcs_misc, tables->pcs_misc_num);
 
-Blank line
+I'd say, it's up to Vinod. I'd prefer the second version.
 
-> +  reg:
-> +    description: address offset of the flash LED controller
 
-Drop description, it's obvious.
-
-> +    maxItems: 1
-> +
-> +patternProperties:
-> +  "^led-[0-3]$":
-> +    type: object
-> +    $ref: common.yaml#
-> +    unevaluatedProperties: false
-> +    description: |
-
-No need for |
-
-> +      Represents the physical LED components which are connected to the
-> +      flash LED channels' output.
-> +
-> +    properties:
-> +      led-sources:
-> +        description: |
-
-No need for |
-
-Rest looks good:
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
 
