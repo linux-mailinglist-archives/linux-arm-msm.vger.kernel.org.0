@@ -2,64 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45805604C3F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 17:53:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC23F604C75
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 17:56:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232717AbiJSPxO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Oct 2022 11:53:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56698 "EHLO
+        id S232270AbiJSP4y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Oct 2022 11:56:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232688AbiJSPw7 (ORCPT
+        with ESMTP id S232248AbiJSP4h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Oct 2022 11:52:59 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 579A7FBCE2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 08:49:54 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id ot12so41048084ejb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 08:49:53 -0700 (PDT)
+        Wed, 19 Oct 2022 11:56:37 -0400
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29EC16554
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 08:54:20 -0700 (PDT)
+Received: by mail-ed1-f52.google.com with SMTP id e18so25893086edj.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 08:54:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=GYZSbQZP6Xh4e4kFk7TUEEgkZvZ475vyRePbBKOiGu4=;
-        b=VmvNLbu6AaNr25QIZqpnPieIkLgzWqhpfhsSj1S4bSEMKws3PWsuB3ORl1S0qUY/zX
-         uaGp4SwY4L27LJ5A/6B59RK6hnxpjt4dfu6oxy9X+7+eDAa8XX3fnpU+x3KzAEeJ74It
-         HZ+aU/PotiS94Pvu5mCCWKXWZd1BqnBnjD6xM=
+        bh=oCxur44GiGn0KEf47+NGc2flFZLTxOPMJcgB85rch6w=;
+        b=Af1ORI7qLHGJw4ifz/2FBCp+Nq0eizmGhWVnbLOtKaMLO9xPtn7WgrxQFzTVHlGfI1
+         2lFZJu+P2cn2W4CKzeUJnS3n2wUNZDghZrIxPpbENfO1w+DMF4ypDyyfQGvc9uuprFoe
+         GBgp+bgwLUw6X0CUrZCNNCVIWXh2uD4Y7879s=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=GYZSbQZP6Xh4e4kFk7TUEEgkZvZ475vyRePbBKOiGu4=;
-        b=N/vwZkw26pxtbZXH0yMN5lnP3sb96fQs+/XbRwgHNYGArOeuJSl9FAOOyj/OMb+uiF
-         CWYSOkx3/j53qwtgN8QNbyOyFM8jv8v288M9+Z/V1QLlprw9Jl8F5edteTVDIIpEp/sS
-         9aq8Gim4UU9205uZCJMRU36+YMLRdjGb0aiw/eoEIM4AW4J8HPWOOtcLOEtLBxQ7klk9
-         98KEdkYPt1UH57f6kNO7GOuKGT3/CDIDdCkQeaw+QyN67FgOdynsythF/GGvU5Ce8zms
-         tMvWblBlr7/kcojxF7lkIU1UMp/tjk/WRgMn5ED61WmssTUGGPEmyGS4ERCeCUOBoTHL
-         iL3A==
-X-Gm-Message-State: ACrzQf3ChS74IBD9jnW8dyBewEgfkIPYH3eNUkf5qfjEGpgaf5tKTbr3
-        NHxgcT1gB6knXUqecwaZjbdrsQbZsDBv9ydu
-X-Google-Smtp-Source: AMsMyM5fmG9C8AC38/FDe/Njtm1MSk5rzbXYB6uRUR1f8oyMMzva4+sQepohF4lIZjw4sLRzbXjNow==
-X-Received: by 2002:a17:907:3206:b0:780:a882:a9ac with SMTP id xg6-20020a170907320600b00780a882a9acmr7161918ejb.765.1666194506099;
-        Wed, 19 Oct 2022 08:48:26 -0700 (PDT)
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com. [209.85.221.43])
-        by smtp.gmail.com with ESMTPSA id nb36-20020a1709071ca400b0073ddb2eff27sm9175226ejc.167.2022.10.19.08.48.25
+        bh=oCxur44GiGn0KEf47+NGc2flFZLTxOPMJcgB85rch6w=;
+        b=EboPyF9U8ePuGV8TgEii73gxFIOqGPlA+urrFTwbiaAFi7WHGV6xA0ElvSY7lrcrgX
+         zSoJjhv5WfS93N+5nMx29voRXfwt0wiaZTcNOna7bT/EeI9kspL4O545GdGFXSLAw/b2
+         hE+jXc32K7H5Ig2RUxLQPWtiXzDXmRWdgmlmY8LcvMBKxVoQe3YmW6d6rUQIZEngBDhs
+         rdNS0BUMEerUuO5khD8oNkuY/NopBl44ig1sh3f5MAnhXfaKFeeGAal+fWoHIxvZRn8t
+         OerQg/vfATWrHSURaidT7wRoZJF+Qe0KgXMFSmyx7ukW6QZelmXvkveiZj6n4Z1JAlpN
+         ED8Q==
+X-Gm-Message-State: ACrzQf1CqWnRIsZ2Got+ctQeODgeySfpQAIimHFPSWGXKzt3jkInfvis
+        crhL2hSQLzHeaPi5KYUUrVvX3sQcs3xG6QQC
+X-Google-Smtp-Source: AMsMyM5kfrHbe6ic5KBKi2ITyI4zLjPoOqU/IkuIY83F34RDGezOVOSeMH+r9sQQc14z4VKOa1TYZQ==
+X-Received: by 2002:a05:6402:350f:b0:45d:1d86:9ec9 with SMTP id b15-20020a056402350f00b0045d1d869ec9mr8264062edd.266.1666194528702;
+        Wed, 19 Oct 2022 08:48:48 -0700 (PDT)
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com. [209.85.128.49])
+        by smtp.gmail.com with ESMTPSA id kw15-20020a170907770f00b00741383c1c5bsm8970010ejc.196.2022.10.19.08.48.48
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Oct 2022 08:48:25 -0700 (PDT)
-Received: by mail-wr1-f43.google.com with SMTP id n12so29637924wrp.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 08:48:25 -0700 (PDT)
-X-Received: by 2002:adf:9d8a:0:b0:230:5212:d358 with SMTP id
- p10-20020adf9d8a000000b002305212d358mr5692508wre.405.1666194505138; Wed, 19
- Oct 2022 08:48:25 -0700 (PDT)
+        Wed, 19 Oct 2022 08:48:48 -0700 (PDT)
+Received: by mail-wm1-f49.google.com with SMTP id c3-20020a1c3503000000b003bd21e3dd7aso313168wma.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 08:48:48 -0700 (PDT)
+X-Received: by 2002:a05:600c:19c9:b0:3c2:7fff:a689 with SMTP id
+ u9-20020a05600c19c900b003c27fffa689mr27767365wmq.85.1666194527713; Wed, 19
+ Oct 2022 08:48:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <20221019001351.1630089-1-krzysztof.kozlowski@linaro.org> <20221019001351.1630089-5-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221019001351.1630089-5-krzysztof.kozlowski@linaro.org>
+References: <20221019001351.1630089-1-krzysztof.kozlowski@linaro.org> <20221019001351.1630089-4-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221019001351.1630089-4-krzysztof.kozlowski@linaro.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 19 Oct 2022 08:48:13 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=U0WR-a7d4p5eoCFMRer5yhX8AcEPdUaJag4KpGB9kp+A@mail.gmail.com>
-Message-ID: <CAD=FV=U0WR-a7d4p5eoCFMRer5yhX8AcEPdUaJag4KpGB9kp+A@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] dt-bindings: pinctrl: qcom,sc7180: convert to dtschema
+Date:   Wed, 19 Oct 2022 08:48:35 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VsFbei4h_cwhJhReUi8Pk_C-qHu_8iDqfzf_e=C8QnXg@mail.gmail.com>
+Message-ID: <CAD=FV=VsFbei4h_cwhJhReUi8Pk_C-qHu_8iDqfzf_e=C8QnXg@mail.gmail.com>
+Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: sc7180: align TLMM pin
+ configuration with DT schema
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
@@ -70,13 +71,12 @@ Cc:     Bjorn Andersson <andersson@kernel.org>,
         Matthias Kaehlcke <mka@chromium.org>,
         Stephen Boyd <swboyd@chromium.org>,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rob Herring <robh@kernel.org>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,35 +88,63 @@ Hi,
 On Tue, Oct 18, 2022 at 5:14 PM Krzysztof Kozlowski
 <krzysztof.kozlowski@linaro.org> wrote:
 >
-> Convert Qualcomm SC7180 pin controller bindings to DT schema.  Keep the
-> parsing of pin configuration subnodes consistent with other Qualcomm
-> schemas (children named with '-state' suffix, their children with
-> '-pins').
+> DT schema expects TLMM pin configuration nodes to be named with
+> '-state' suffix and their optional children with '-pins' suffix.
+>
+> Merge subnodes named 'pinconf' and 'pinmux' into one entry, add function
+> where missing (required by bindings for GPIOs) and reorganize overriding
+> pins by boards.
+>
+> Split the SPI and UART configuration into separate nodes
+> 1. SPI (MOSI, MISO, SCLK), SPI chip-select, SPI chip-select via GPIO,
+> 2. UART per each pin: TX, RX and optional CTS/RTS.
+>
+> This allows each board to customize them easily without adding any new
+> nodes.
 >
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
 >
 > ---
 >
 > Changes since v2:
-> 1. Drop entire drive-strength (not needed, brought by common TLMM
->    schema).
+> 1. Rebase on reverted SPI CS glitch patch.
 >
 > Changes since v1:
-> 1. Drop default:2 for drive strength
-> 2. Add Rb tag.
+> 1. Split SPI and UART nodes, after discussion with Doug.
+>
+> Not tested on hardware.
 >
 > Cc: Doug Anderson <dianders@chromium.org>
 > ---
->  .../bindings/pinctrl/qcom,sc7180-pinctrl.txt  | 187 ------------------
->  .../bindings/pinctrl/qcom,sc7180-pinctrl.yaml | 158 +++++++++++++++
->  2 files changed, 158 insertions(+), 187 deletions(-)
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts       | 236 +++----
+>  .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  36 +-
+>  .../dts/qcom/sc7180-trogdor-homestar.dtsi     |  47 +-
+>  .../dts/qcom/sc7180-trogdor-kingoftown-r0.dts |  16 +-
+>  .../dts/qcom/sc7180-trogdor-kingoftown.dtsi   |   8 +-
+>  .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  16 +-
+>  .../dts/qcom/sc7180-trogdor-mrbland-rev0.dtsi |  25 +-
+>  .../boot/dts/qcom/sc7180-trogdor-mrbland.dtsi |  72 +-
+>  .../qcom/sc7180-trogdor-parade-ps8640.dtsi    |  32 +-
+>  .../boot/dts/qcom/sc7180-trogdor-pazquel.dtsi |   8 +-
+>  .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |  14 +-
+>  .../qcom/sc7180-trogdor-quackingstick.dtsi    |  56 +-
+>  .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |   8 +-
+>  .../dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi |  16 +-
+>  .../qcom/sc7180-trogdor-wormdingler-rev0.dtsi |  25 +-
+>  .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  |  72 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 629 +++++++-----------
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi          | 597 +++++++++--------
+>  18 files changed, 776 insertions(+), 1137 deletions(-)
 
-Looks great now.
+You probably should send a v4 since this now conflicts with commit
+c24c9d53e001 ("arm64: dts: qcom: correct white-space before {"), which
+has landed.
+
+In any case, this looks nice to me.
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
-Will you also send out separate patches to fix up the "drive strength"
-for all the other Qualcomm boards. They all have the same problem. The
-drive strength never defaults to 2 and always gets left at whatever
-the BIOS leaves it at unless it's specified.
+FWIW I put this on a sc7180-trogdor-coachz and the device booted up to
+the browser. I didn't do massive amounts of tests, but I'm OK with:
+
+Tested-by: Douglas Anderson <dianders@chromium.org>
