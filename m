@@ -2,91 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 755596047B1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 15:44:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06F27604855
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Oct 2022 15:56:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231371AbiJSNod (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Oct 2022 09:44:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40932 "EHLO
+        id S231803AbiJSN4G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Oct 2022 09:56:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233216AbiJSNoA (ORCPT
+        with ESMTP id S233685AbiJSNxN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Oct 2022 09:44:00 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 334291552F4;
-        Wed, 19 Oct 2022 06:31:00 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 8CD26B823B2;
-        Wed, 19 Oct 2022 13:30:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81588C433C1;
-        Wed, 19 Oct 2022 13:30:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666186216;
-        bh=2L2jeDsVN9w9kUdnBfgnFxJ5WxkNRtvWQ38M5+XfO/4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=IIUPHmMcZWYt3OvMmRU/6acc8WNrgwHI/j40NvGwvaPYH4m8M7uDA/nf1NNshtW6o
-         X6AyS/wMjWZ3X8M8vySGdL1wIoygXc5pzd+Ajjj0AQGU/C9PJ7p3qjs1CR1v8AlIYi
-         4nLuu238p59ZORrMzteTWOg5rk6oWVymepGYuSyjw4H0ZFaqe1wQM9GH7S13Nn/WiL
-         3QyuUYbVd+28HujNkqsBPEmkldVNCGPIc3gIsIrIBY/noy8118Ss0BaBKEO+emmRpq
-         WlQjwsrnw8wBQ90AntiNw6zz/h1/dBQcqlszpet03zZHaXuX5iLemoXhB76pswnE4l
-         ujVKLR0Fpba9A==
-Date:   Wed, 19 Oct 2022 19:00:12 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Melody Olvera <quic_molvera@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] dmaengine: qcom: gpi: Add compatible for QDU1000
- and QRU1000
-Message-ID: <Y0/75E7MqCpQml+I@matsya>
-References: <20221014221102.7445-1-quic_molvera@quicinc.com>
- <20221014221102.7445-3-quic_molvera@quicinc.com>
- <15b50b09-ba8c-c93c-a5f8-7b0d4d12f223@linaro.org>
+        Wed, 19 Oct 2022 09:53:13 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FADE1C8112
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 06:36:31 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id z30so10645600qkz.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 06:36:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=spOHuMkUzxNQDF31ZQ14bo2Slaj0LH2xXCN8rwJWrnI=;
+        b=w+CMYrks958c8ml3PmlfBooj70tDMnLmjJmSQ7i5gkstqLRFgYVvEj4aNS4tX2afCi
+         KuYAkUXp8mTQ6lM1dnCZFg1Uvepgbs5c9hw81imvk3Tg5Q6JRw5SM4CKE7uE2wlRlbDO
+         3bglyUheaLDRyGmGCGgf0t9tUyqyX+W8Vn+6e6fA57MekTOVvqR8W/faGWEx15EM71LX
+         ilmjv2dZ8Yh6IfLlrNkW1hMEXmJCiF+YXGIBe7S/PQpQ2qvgekGFjjaSxDTmXTqrsJSX
+         8XBwueSqOpqKy5h/oBJIzKsByESd00LhMrJ3vZ6vY2SGo1wLocFxESEJu+NPTun2/TOQ
+         6Jlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=spOHuMkUzxNQDF31ZQ14bo2Slaj0LH2xXCN8rwJWrnI=;
+        b=z3fnb4RFgxBS2S4JpHHnOcyKh29c53S6UyLRC0RSLX9tEvgLyfCSpudPrZSv/4xY31
+         teb9OoYau+Re8j9dJ0diJiXGALIpIPaBG7UU2MEoDJGBVzGx+NUsNi3Fs5H1J/2V6U7d
+         IQWLg/A0noXmMBhWCDSXSQFt/uyaGmShU2r7xDAqgs2KAS1vVRzimHd+XU7U844tnnXp
+         7Qms7NTIayz960qa6YD3sNuqTcoNPFTWNBPu+yvHEh7beg05aamIMCXLxBfbgwyS0EqK
+         Q7hklA+aod9/JLMhxOc+KIfKzGIC8Juh47l+9hDzjZ31LAJzvrl1JRHSgOxcgmaNU72V
+         roLA==
+X-Gm-Message-State: ACrzQf1wEsdqDbFq5bwP3RS7c0wPBy/7Eqr2mIuP3OYIrt7ai5OOREq2
+        RwqpXJnkH6cM1h34jQJgZlpNYA==
+X-Google-Smtp-Source: AMsMyM4YZyJwWnHgYffvrOP+BQyLg9L1WUxQQbV6BkIOfB1dOifPywxyt/QXAnfCIv35UpoMV3cqLg==
+X-Received: by 2002:a05:620a:2697:b0:6cf:33cd:2bd2 with SMTP id c23-20020a05620a269700b006cf33cd2bd2mr5404994qkp.341.1666186586436;
+        Wed, 19 Oct 2022 06:36:26 -0700 (PDT)
+Received: from [192.168.10.124] (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
+        by smtp.gmail.com with ESMTPSA id ca27-20020a05622a1f1b00b003436103df40sm4052757qtb.8.2022.10.19.06.36.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Oct 2022 06:36:25 -0700 (PDT)
+Message-ID: <b335e842-0dd9-851a-9876-8ee4711609c0@linaro.org>
+Date:   Wed, 19 Oct 2022 09:36:24 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <15b50b09-ba8c-c93c-a5f8-7b0d4d12f223@linaro.org>
-X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Subject: Re: [PATCH v3 2/2] dt-bindings: add bindings for QCOM flash LED
+Content-Language: en-US
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     quic_collinsd@quicinc.com, quic_subbaram@quicinc.com
+References: <20221018014024.948731-1-quic_fenglinw@quicinc.com>
+ <20221018014024.948731-3-quic_fenglinw@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221018014024.948731-3-quic_fenglinw@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15-10-22, 09:42, Krzysztof Kozlowski wrote:
-> On 14/10/2022 18:11, Melody Olvera wrote:
-> > Add compatible fields for the Qualcomm QDU1000 and QRU1000 SoCs.
-> > 
-> > Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> > ---
-> >  drivers/dma/qcom/gpi.c | 2 ++
-> >  1 file changed, 2 insertions(+)
-> > 
-> > diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> > index cc938a31dc2d..02438735e92b 100644
-> > --- a/drivers/dma/qcom/gpi.c
-> > +++ b/drivers/dma/qcom/gpi.c
-> > @@ -2286,6 +2286,8 @@ static int gpi_probe(struct platform_device *pdev)
-> >  }
-> >  
-> >  static const struct of_device_id gpi_of_match[] = {
-> > +	{ .compatible = "qcom,qdu1000-gpi-dma", .data = (void *)0x10000 },
-> > +	{ .compatible = "qcom,qru1000-gpi-dma", .data = (void *)0x10000 },
-> 
-> The feedback was: drop entire patch.
-> 
-> There is really no need for this pattern to keep growing.
+On 17/10/2022 21:40, Fenglin Wu wrote:
+> Add binding document for flash LED module inside Qualcomm Technologies,
+> Inc. PMICs.
 
-Right, I have picked the patches so you dont need to add yours to driver
-file, please check dmaengine/next
+Use subject prefixes matching the subsystem (git log --oneline -- ...).
 
--- 
-~Vinod
+This means:
+1. you miss subsystem prefix
+2. drop redundant second "bindings"
+
+> 
+> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> ---
+>  .../bindings/leds/qcom,spmi-flash-led.yaml    | 116 ++++++++++++++++++
+>  1 file changed, 116 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml b/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
+> new file mode 100644
+> index 000000000000..d8efde02db72
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
+> @@ -0,0 +1,116 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/leds/qcom,spmi-flash-led.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Flash LED device inside Qualcomm Technologies, Inc. PMICs
+> +
+> +maintainers:
+> +  - Fenglin Wu <quic_fenglinw@quicinc.com>
+> +
+> +description: |
+> +  Flash LED controller is present inside some Qualcomm Technologies, Inc. PMICs.
+> +  The flash LED module can have different number of LED channels supported
+> +  e.g. 3 or 4. There are some different registers between them but they can
+> +  both support maximum current up to 1.5 A per channel and they can also support
+> +  ganging 2 channels together to supply maximum current up to 2 A. The current
+> +  will be split symmetrically on each channel and they will be enabled and
+> +  disabled at the same time.
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,pm8150c-flash-led
+> +          - qcom,pm8150l-flash-led
+> +          - qcom,pm8350c-flash-led
+> +      - const: qcom,spmi-flash-led
+
+Blank line
+
+> +  reg:
+> +    description: address offset of the flash LED controller
+
+Drop description, it's obvious.
+
+> +    maxItems: 1
+> +
+> +patternProperties:
+> +  "^led-[0-3]$":
+> +    type: object
+> +    $ref: common.yaml#
+> +    unevaluatedProperties: false
+> +    description: |
+
+No need for |
+
+> +      Represents the physical LED components which are connected to the
+> +      flash LED channels' output.
+> +
+> +    properties:
+> +      led-sources:
+> +        description: |
+
+No need for |
+
+Rest looks good:
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
