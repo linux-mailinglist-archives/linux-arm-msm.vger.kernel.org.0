@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2208606B6D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 00:44:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 873D8606B74
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 00:45:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230099AbiJTWo4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 18:44:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37538 "EHLO
+        id S230148AbiJTWpP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 18:45:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230152AbiJTWol (ORCPT
+        with ESMTP id S229823AbiJTWou (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 18:44:41 -0400
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64CE6CE2A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 15:44:23 -0700 (PDT)
-Received: by mail-qv1-xf35.google.com with SMTP id x15so712443qvp.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 15:44:22 -0700 (PDT)
+        Thu, 20 Oct 2022 18:44:50 -0400
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 494E050192
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 15:44:49 -0700 (PDT)
+Received: by mail-qk1-x72f.google.com with SMTP id j21so937243qkk.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 15:44:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=QUNEnkUVOtrIsNl0Nn0NKbwDCPKMSvaAN/1K8+cyLSY=;
-        b=r2d2QkHovGMl1Zem1CpccoVHttUcwvFlTg0rirAmDiVERKbjrrgzo4/UfSzYprr9Kk
-         PW0hUb7ntj65mtKNnz65qkJ4i/VBYdwwA+ZaFCoyRPGvN6/yKGRmTDZNNlHjfIxX8LSK
-         XAyapw2XJcjeH57uFDTkRx7rnLSZwiyArnTkKipxfdrCSwf90tRfi3OSo6pNv73LVJ4H
-         3qZS4kGUdgX9VVVjQTN8umKghN8OiG38BFVYRvprmAslCnrkBMbIKNSsnFyQ1k92q7Ee
-         iD2GaHrVmWb1BAY7Pag8Yg6ChA3vibFLwZ5KAW/XKSdAlMdmK2CVCDhTo/3r79pVXKgq
-         ddVQ==
+        bh=FPT7tBybriHsBPmnhq33KI/WJRugk0kzMNukS0fuXHg=;
+        b=uWOLgWr2PeyCt4D7XtXlrGfikGUHkSh3nw2aJht3Fm8d+PilSBG3qKuSXLSU5rOA9/
+         FxDjZk9hSapHSiE1Wd40jsgqd+Ynp5uvDaTbcgn8E5xQ4xBGLyacL+So1pyYrvZal4gn
+         ijYOVaz+FefBJoHzVwlkHmnxQhSRyywRsyeeRVnfkSfEE/Kvn5C2GUHNhMKuex4xxPiY
+         qyMT+m/A/aURsO1P70gSk+pDraRffQ051g2vhB/pNfJOBtazwOJQIoh4Qz3X78jVmK59
+         SRdLfq9I8mDSIAazXCo/Gd0t/PU1Yy5w5nmjnX3DCOHFqBQHDFvWnHVBH3lhxYrZTT4Z
+         1pQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QUNEnkUVOtrIsNl0Nn0NKbwDCPKMSvaAN/1K8+cyLSY=;
-        b=WgaKOaaxO+MFhtFgBEI8j5m3VKFWNKa+IpnWAXSZulSXPc7cg4Mw5GnDKsAWnWHBmR
-         ZlSmUObQcZ71Ud3Z7KWT/9ORsGRquM6ArPSD95rtiSMuxEIDNyYevitvrjPtRpF9KQkd
-         pyTjCKauGqKWAZhoEYcwKNoCPkmlgllx8C1RUclyW5AA8/GsZihRx2mcX0dyrX80xJuv
-         YOWGxWObcPCYMcl6u9meu0qWB/7sfrGXl2xw2ZprSiFeSnvMw2akRD4OhKa3On+Uk4gx
-         +1GvTqn2/L+CjZyqB3FCe2az8XOgu2YLk04b26hwzPG9tVGmCeSatKhwseVLBOg6ee4g
-         FN1w==
-X-Gm-Message-State: ACrzQf297Fib10Zysr/OA/De087ylCLxs8oUN9rxWtwg1mv/3BAfax/y
-        +MzMRlqaNL98/vKvyf/fUkSOaA==
-X-Google-Smtp-Source: AMsMyM5nSoTED+lWd7YlYhQDXH09NsprD8SDwk/FXfeSS5sTtNCuOPFK21N2b1/JUvVl1ah0z3kQ1g==
-X-Received: by 2002:a05:6214:212e:b0:4b8:56d2:d0f5 with SMTP id r14-20020a056214212e00b004b856d2d0f5mr4805771qvc.4.1666305861749;
-        Thu, 20 Oct 2022 15:44:21 -0700 (PDT)
+        bh=FPT7tBybriHsBPmnhq33KI/WJRugk0kzMNukS0fuXHg=;
+        b=qOqZDG3TjlA+y9oCo0lcSOHfVp2kRGqYqaziTxb12EtEh3oaYSnVD1Bj2TR98Ak9tJ
+         DF0rRXQcygpzL8Ka5UgkfPNgmoQ4YRmPedUZGRazIGD8kkeNH/NE3U34rzHJnjuDDq+p
+         VQMZzdNUou9LO6PHfF4J7xYryD8ys/a7ap3X9JygFSf3NIohOQucZCWZBSvK4hZkETYk
+         nZF2UUpsapIrgvDgyQuKbBfFbKMBiSyZz3+6J1Hhj/k7YrnvCcKbbRL/+O4SsOdnCt2G
+         vkrTtQMhP1+CTlgJix5CBaEDNKFwcbO+knwCDsopTB/z+CeHRIhmFd/MVq+hL1SxbZrZ
+         65+w==
+X-Gm-Message-State: ACrzQf2XW4FVZjXXpv5IdQwqwhBtbm9qJ9YxAVkYIpKNHlGTH0deTqyA
+        O2w6HHXDq+P9PkPvxgMgaiCofA==
+X-Google-Smtp-Source: AMsMyM7amq+IROYBz05TXTIlsKX/VhkjUV8sy7t8Ci0hzqT/ojdNJYJCpiCQ2T4CYVQDZzFb7ldt3g==
+X-Received: by 2002:a05:620a:440d:b0:6ee:b5eb:a0c6 with SMTP id v13-20020a05620a440d00b006eeb5eba0c6mr11478881qkp.356.1666305888366;
+        Thu, 20 Oct 2022 15:44:48 -0700 (PDT)
 Received: from [192.168.10.124] (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
-        by smtp.gmail.com with ESMTPSA id do35-20020a05620a2b2300b006b95b0a714esm1280506qkb.17.2022.10.20.15.44.19
+        by smtp.gmail.com with ESMTPSA id f24-20020ac84658000000b0039cbb50951asm6775416qto.24.2022.10.20.15.44.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Oct 2022 15:44:20 -0700 (PDT)
-Message-ID: <d2f71dd3-bd0a-b85e-32d6-5bb6411442bb@linaro.org>
-Date:   Thu, 20 Oct 2022 18:44:18 -0400
+        Thu, 20 Oct 2022 15:44:47 -0700 (PDT)
+Message-ID: <f86806a2-7381-40fb-317c-7167933f24ed@linaro.org>
+Date:   Thu, 20 Oct 2022 18:44:45 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.0
-Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: sc7180: align TLMM pin
- configuration with DT schema
+Subject: Re: [PATCH v3 2/4] arm64: dts: qcom: sc7180: revert "arm64: dts:
+ qcom: sc7180: Avoid glitching SPI CS at bootup on trogdor"
+Content-Language: en-US
 To:     Doug Anderson <dianders@chromium.org>
 Cc:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
@@ -69,11 +70,10 @@ Cc:     Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20221019001351.1630089-1-krzysztof.kozlowski@linaro.org>
- <20221019001351.1630089-4-krzysztof.kozlowski@linaro.org>
- <CAD=FV=VsFbei4h_cwhJhReUi8Pk_C-qHu_8iDqfzf_e=C8QnXg@mail.gmail.com>
-Content-Language: en-US
+ <20221019001351.1630089-3-krzysztof.kozlowski@linaro.org>
+ <CAD=FV=UriVs4-=KCg5TkzCuQaS=LEZS=CDOH0=69GsYjhPcu_g@mail.gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=VsFbei4h_cwhJhReUi8Pk_C-qHu_8iDqfzf_e=C8QnXg@mail.gmail.com>
+In-Reply-To: <CAD=FV=UriVs4-=KCg5TkzCuQaS=LEZS=CDOH0=69GsYjhPcu_g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,28 +87,52 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 19/10/2022 11:48, Doug Anderson wrote:
->>  .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  |  72 +-
->>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 629 +++++++-----------
->>  arch/arm64/boot/dts/qcom/sc7180.dtsi          | 597 +++++++++--------
->>  18 files changed, 776 insertions(+), 1137 deletions(-)
+> Hi,
 > 
-> You probably should send a v4 since this now conflicts with commit
-> c24c9d53e001 ("arm64: dts: qcom: correct white-space before {"), which
-> has landed.
+> On Tue, Oct 18, 2022 at 5:14 PM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> This reverts commit e440e30e26dd6b0424002ad0ddcbbcea783efd85 because it
+>> is not a reliable way of fixing SPI CS glitch and it depends on specific
+>> Linux kernel pin controller driver behavior.
+>>
+>> This behavior of kernel driver was changed in commit b991f8c3622c
+>> ("pinctrl: core: Handling pinmux and pinconf separately") thus
+>> effectively the DTS fix stopped being effective.
+>>
+>> Proper solution for the glitching SPI chip select must be implemented in
+>> the drivers, not via ordering of entries in DTS.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+>> ---
+>>
+>> Changes since v2:
+>> 1. New patch
+>>
+>> Not tested on hardware.
+>>
+>> Cc: Doug Anderson <dianders@chromium.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 27 +++-----------------
+>>  1 file changed, 3 insertions(+), 24 deletions(-)
 > 
+> It would have been nice for the commit message to mention the fix in
+> the driver, which has already landed as commit d21f4b7ffc22 ("pinctrl:
+> qcom: Avoid glitching lines when we first mux to output").
 
-Indeed.
+I'll add it.
 
-> In any case, this looks nice to me.
+> 
+> In any case:
 > 
 > Reviewed-by: Douglas Anderson <dianders@chromium.org>
 > 
-> FWIW I put this on a sc7180-trogdor-coachz and the device booted up to
-> the browser. I didn't do massive amounts of tests, but I'm OK with:
+> I've confirmed that this patch is fine after taking the pinctrl fix.
 > 
 > Tested-by: Douglas Anderson <dianders@chromium.org>
 
-Thanks!
+Awesome!
 
 Best regards,
 Krzysztof
