@@ -2,226 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95724605B1E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 11:29:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1421B605B26
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 11:31:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230262AbiJTJ25 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 05:28:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45816 "EHLO
+        id S230132AbiJTJbE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 05:31:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230264AbiJTJ2S (ORCPT
+        with ESMTP id S229936AbiJTJbD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 05:28:18 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 518EE1C19FD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 02:28:17 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id b2so32526201lfp.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 02:28:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1Ewn4HhGslcazbRmLvsGRl3y97RhVhfkn6hwU61L66A=;
-        b=TecGvojYZ9NKrDOGAKWWzGAaSNS6hxRavZ9+eDJH2Y8N0S6fQfbROXCAnrmUGULfQG
-         i93HBAWQ68Tyh3pqiyE+vl3Y5kNqcRL62NsHcKhFQREF1WvcI6kX7aMefICtDvFTgflR
-         CO19cxjQ/G8PNbzIPgtI92d4YxKtCN3iNfMk64RvROr7k2lkLJxCZP+SidyfM2Km2zyg
-         MuGEnZgVkbBNxit7Tuk4I8tKP9uhf5C8SPmzyKEQcb7TT4WJmR3WzAIr3u4VFZUDcQC7
-         fSGSGUcn4FUKA9Xqv84s6OXL8bpvA3jyF95Nq30Egt3xkP7g9oi9EoOw+wXHAj2GdgvQ
-         7s1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1Ewn4HhGslcazbRmLvsGRl3y97RhVhfkn6hwU61L66A=;
-        b=n2/+tALLz/6MF/rTYHx5y91vdMKTgpwauNol/XkilaeUF261TlKUvQo8D9hHu/2AJf
-         dbQUZrZUKUnxZURx3/vrCv5y2jyI/KsRNTq4FhV3XnsZTa/2i/qtpIwtx9JLXlNBwOSo
-         hEbfH0+979fvMVrOHG2A1chSHoUZKg8bTPie/EjAmTnR/L8k9E797Yjs1jEe2pipp4ii
-         n6UFvY2v8dUZnO/RRNgpzbFq89V4T6fSSPzlkKC9P2CMGitHDR6m0s5DF/OYXOZ056Zw
-         URGNaC1YLXLitqOvQEwefVmYZ3pVN+a3guJruvm25fjU4+nu1xAJaqg8Yc5qiY4BJGTS
-         nmbQ==
-X-Gm-Message-State: ACrzQf0nN9JId9iUyHUoAIYpmPGzo5edMk2Hk6TJeIcN7qvM3qFscDgY
-        QbwvytHPO9jglDQRH85iHQrqpQ==
-X-Google-Smtp-Source: AMsMyM7bv9bGxciIiXjNDJB5vQAP1sSIqPeH3B8ClBGO1n1JwLDwakmvPLlFQ1Qb2gOXyRzYa1nIyg==
-X-Received: by 2002:a05:6512:31cd:b0:4a2:69d3:d009 with SMTP id j13-20020a05651231cd00b004a269d3d009mr4132905lfe.68.1666258095352;
-        Thu, 20 Oct 2022 02:28:15 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id s15-20020a19770f000000b0048b365176d9sm2644658lfc.286.2022.10.20.02.28.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Oct 2022 02:28:14 -0700 (PDT)
-Message-ID: <7eb3fb9a-ce4a-eee0-b6bc-cee6aa6bf37b@linaro.org>
-Date:   Thu, 20 Oct 2022 12:28:14 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH v2 13/15] phy: qcom-qmp-pcie: add support for pipediv2
- clock
-Content-Language: en-GB
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Thu, 20 Oct 2022 05:31:03 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 2434812977D;
+        Thu, 20 Oct 2022 02:31:02 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 28E53ED1;
+        Thu, 20 Oct 2022 02:31:08 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 458913F792;
+        Thu, 20 Oct 2022 02:31:00 -0700 (PDT)
+Date:   Thu, 20 Oct 2022 10:30:57 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Amit Pundir <amit.pundir@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221019113552.22353-1-johan+linaro@kernel.org>
- <20221019113552.22353-14-johan+linaro@kernel.org>
- <325d6c7b-ca96-df73-a792-4d156a710267@linaro.org>
- <Y1EPZBinv0tyZVqW@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <Y1EPZBinv0tyZVqW@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: qrb5165-rb5: Disable cpuidle states
+Message-ID: <20221020093057.zrrvxlgghn27bpes@bogus>
+References: <20221018145348.4051809-1-amit.pundir@linaro.org>
+ <CAPDyKFoBMB9OMUrcoPCV0of1fj2dimEwPyHGW=ydjJ2M0ubM8Q@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFoBMB9OMUrcoPCV0of1fj2dimEwPyHGW=ydjJ2M0ubM8Q@mail.gmail.com>
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/10/2022 12:05, Johan Hovold wrote:
-> On Thu, Oct 20, 2022 at 11:31:35AM +0300, Dmitry Baryshkov wrote:
->> On 19/10/2022 14:35, Johan Hovold wrote:
->>> Some QMP PHYs have a second fixed-divider pipe clock that needs to be
->>> enabled along with the pipe clock.
->>>
->>> Add support for an optional "pipediv2" clock.
->>>
->>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
->>> ---
->>>    drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 42 ++++++++++++++++++++----
->>>    1 file changed, 36 insertions(+), 6 deletions(-)
+On Wed, Oct 19, 2022 at 01:57:34PM +0200, Ulf Hansson wrote:
+> On Tue, 18 Oct 2022 at 16:53, Amit Pundir <amit.pundir@linaro.org> wrote:
+> >
+> > Disable cpuidle states for RB5. These cpuidle states
+> > made the device highly unstable and it runs into the
+> > following crash frequently:
+> >
+> > [    T1] vreg_l11c_3p3: failed to enable: -ETIMEDOUT
+> > [    T1] qcom-rpmh-regulator 18200000.rsc:pm8150l-rpmh-regulators: ldo11: devm_regulator_register() failed, ret=-110
+> > [    T1] qcom-rpmh-regulator: probe of 18200000.rsc:pm8150l-rpmh-regulators failed with error -110
+> >
+> > Fixes: 32bc936d7321 ("arm64: dts: qcom: sm8250: Add cpuidle states")
+> > Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > index cc003535a3c5..f936c41bfbea 100644
+> > --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > @@ -251,6 +251,14 @@ qca639x: qca639x {
+> >
+> >  };
+> >
+> > +&LITTLE_CPU_SLEEP_0 {
+> > +       status = "disabled";
+> > +};
+> > +
+> > +&BIG_CPU_SLEEP_0 {
+> > +       status = "disabled";
+> > +};
+> > +
+> >  &adsp {
+> >         status = "okay";
+> >         firmware-name = "qcom/sm8250/adsp.mbn";
+> > --
+> > 2.25.1
 > 
->> I still think that the attached patch is somewhat simpler. Diffstat
->> supports that idea:
->>
->> $ diffstat /tmp/pipe.diff
->>    phy-qcom-qmp-pcie.c |   26 ++++++++++++++++----------
->>    1 file changed, 16 insertions(+), 10 deletions(-)
+> Disabling the CPU idlestates, will revert us back to using only the WFI state.
 > 
-> It's not just about LoC.
->   
->> Yes, I'm speaking this after having cleaned up several open-coded
->> versions of clk_bulk_foo from the drm/msm code. It typically starts with
->> the 'just another clock' story, and then suddenly they are all over the
->> code.
-> 
-> But you don't start using the bulk API when you have one clock. Two,
-> maybe. Three, sure. It's a decision that needs to be done on a case-by
-> case basis, and pipe clocks for the QMP block is different from general
-> interface clocks (which are more likely to be extended). (And of course
-> the clocks would need to be independent in the first place.)
-> 
-> Here's your example diff inline:
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index 9c8e009033f1..a148b143dd90 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> @@ -1378,8 +1378,10 @@ struct qmp_pcie {
->   	void __iomem *tx2;
->   	void __iomem *rx2;
->   
-> -	struct clk *pipe_clk;
-> +	struct clk_bulk_data *pipe_clks;
-> +	int num_pipe_clks;
->   	struct clk_bulk_data *clks;
-> +
->   	struct reset_control_bulk_data *resets;
->   	struct regulator_bulk_data *vregs;
->   
-> @@ -1923,11 +1925,9 @@ static int qmp_pcie_power_on(struct phy *phy)
->   	qmp_pcie_init_registers(qmp, &cfg->tables);
->   	qmp_pcie_init_registers(qmp, mode_tables);
->   
-> -	ret = clk_prepare_enable(qmp->pipe_clk);
-> -	if (ret) {
-> -		dev_err(qmp->dev, "pipe_clk enable failed err=%d\n", ret);
-> +	ret = clk_bulk_prepare_enable(qmp->num_pipe_clks, qmp->pipe_clks);
-> +	if (ret)
->   		return ret;
-> -	}
->   
->   	/* Pull PHY out of reset state */
->   	qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
-> @@ -1950,7 +1950,7 @@ static int qmp_pcie_power_on(struct phy *phy)
->   	return 0;
->   
->   err_disable_pipe_clk:
-> -	clk_disable_unprepare(qmp->pipe_clk);
-> +	clk_bulk_disable_unprepare(qmp->num_pipe_clks, qmp->pipe_clks);
->   
->   	return ret;
->   }
-> @@ -1960,7 +1960,7 @@ static int qmp_pcie_power_off(struct phy *phy)
->   	struct qmp_pcie *qmp = phy_get_drvdata(phy);
->   	const struct qmp_phy_cfg *cfg = qmp->cfg;
->   
-> -	clk_disable_unprepare(qmp->pipe_clk);
-> +	clk_bulk_disable_unprepare(qmp->num_pipe_clks, qmp->pipe_clks);
->   
->   	/* PHY reset */
->   	qphy_setbits(qmp->pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
-> 
-> The above is pretty much identical, expect for using the bulk API
-> instead of the very straight-forward pipe-clock helpers.
-> 
-> @@ -2154,6 +2154,7 @@ static int qmp_pcie_parse_dt_legacy(struct qmp_pcie *qmp, struct device_node *np
->   	struct platform_device *pdev = to_platform_device(qmp->dev);
->   	const struct qmp_phy_cfg *cfg = qmp->cfg;
->   	struct device *dev = qmp->dev;
-> +	struct clk *clk;
->   
->   	qmp->serdes = devm_platform_ioremap_resource(pdev, 0);
->   	if (IS_ERR(qmp->serdes))
-> @@ -2206,12 +2207,17 @@ static int qmp_pcie_parse_dt_legacy(struct qmp_pcie *qmp, struct device_node *np
->   		}
->   	}
->   
-> -	qmp->pipe_clk = devm_get_clk_from_child(dev, np, NULL);
-> -	if (IS_ERR(qmp->pipe_clk)) {
-> -		return dev_err_probe(dev, PTR_ERR(qmp->pipe_clk),
-> +	clk = devm_get_clk_from_child(dev, np, NULL);
-> +	if (IS_ERR(clk)) {
-> +		return dev_err_probe(dev, PTR_ERR(clk),
->   				     "failed to get pipe clock\n");
->   	}
->   
-> +	qmp->num_pipe_clks = 1;
-> +	qmp->pipe_clks = devm_kcalloc(dev, qmp->num_pipe_clks,
-> +				      sizeof(*qmp->pipe_clks), GFP_KERNEL);
-> +	qmp->pipe_clks[0].clk = clk;
-> 
-> So here you're poking at bulk API internals and forgot to set the id
-> string, which the implementation uses.
+> An option that probably works too is to just drop the idlestate for
+> the CPU cluster. Would you mind trying the below and see if that works
+> too?
+>
 
-I didn't forget, I just skipped setting it. Hmm. I thought that it is 
-used only for clk_bulk_get. But after checking, it seems it's also used 
-for error messages. Mea culpa.
+Indeed this is was I suggested to check initially. But I was surprised to
+see IIUC, Amit just disabled CPU states with above change and got it working.
+So it is not cluster state alone causing the issue, is it somehow presence
+of both cpu and cluster states ? Am I missing something here.
 
-But it's not that I was poking into the internals. These items are in 
-the public header.
-
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index c32227ea40f9..c707a49e8001 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -700,7 +700,6 @@ CPU_PD7: cpu7 {
 > 
-> For reasons like this, and the fact that will likely never have a third
-> pipe clock, I'm reluctant to using the bulk API.
+>                 CLUSTER_PD: cpu-cluster0 {
+>                         #power-domain-cells = <0>;
+> -                       domain-idle-states = <&CLUSTER_SLEEP_0>;
 
-Let's resort to the maintainer opinion then.
-
-> 
-> +
->   	return 0;
->   }
->   
-> Johan
+How about just marking CLUSTER_SLEEP_0 state disabled ? That looks cleaner
+than deleting this domain-idle-states property here. Also not sure if DTS
+warnings will appear if you delete this ?
 
 -- 
-With best wishes
-Dmitry
-
+Regards,
+Sudeep
