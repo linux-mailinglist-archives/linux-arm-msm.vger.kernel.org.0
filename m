@@ -2,77 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F7E4606306
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 16:28:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19320606358
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 16:40:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230207AbiJTO2P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 10:28:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51828 "EHLO
+        id S229726AbiJTOk4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 10:40:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230029AbiJTO2M (ORCPT
+        with ESMTP id S230006AbiJTOkz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 10:28:12 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C48271DD8A6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 07:28:09 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id fy4so47785731ejc.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 07:28:09 -0700 (PDT)
+        Thu, 20 Oct 2022 10:40:55 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7052518E2BE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 07:40:53 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id p6-20020a17090a748600b002103d1ef63aso3285289pjk.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 07:40:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7QR1IqMPTQfafYMBcRZyO6+upzIaAEmghcFFaL+GXdY=;
-        b=vegGHfEDzAlS0VlymlKs1Ypplgljzlzyspn1r1KOwHstsAMU9QtfZ18RgALUIIPhrZ
-         yWprS/+oaZXitf5/ng9chHACmDYZusFYBdjlCm+SRcGUd6aBvlX+yCE1Qr0bzstWM9QF
-         0hOYwp5OOlmp4LNb8BEsmOWfMzexAfIjoEwuAXtK7vXZIjrj62Cqdm1dOTwrWeovIpnI
-         qLQzmLeAjdcbjJ7GMQEGdXmPZIyraOUd26r9u53Mq7uolJggmiH0L+A3Xn86t9Mqn2tR
-         XJReD5jrMuqINxnVCjQwZdyqKXhzmUq2kSSq24z6EJgyttB23Fi+INruZJw+dEQbHDRx
-         i6mg==
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=HnLorT9sOQVGySYbQtoiIKTRYgg4ni6wYU90wOW8GYI=;
+        b=lJGez5U5n1n3elBo96mfl/fPJ5GX+VRLWs8mTl8HdSedxuPAXXxO7MukmF9IYbTzdU
+         PD/lbs08uIOHwskVRvnoe3sFSh2MlEpL4bV6d3SLNiCljwSimJjVn4uLtHYdep5mcIcW
+         icXUbnJUJI2l0tY2Mplg+9ojhkywkkTa7bFCIWN9u7a/1SUO1+tlHhDlQL1RHrnO6a/g
+         hChhFXYj4OvoI69KiqyLGJbc/KhpriDjxTJRf3venDt0iO5vQwzYYh3/+FdAljum/vrM
+         VkvdgFlFt42LqI+PfLJJkUaaCUe9p5hxrHdiReLDHmL3JQT4gC6UVbx4ljyLZ2v/IY6G
+         k8Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=7QR1IqMPTQfafYMBcRZyO6+upzIaAEmghcFFaL+GXdY=;
-        b=n1D9udQ3vLOBTCcXx2Lw5TRpWUDvtSHYBlbJ+EiZvDf1qk/1QRSrU2591O1VFkuvkc
-         /xJzfHEwXLbCnOKQ/gsOXC+mfUE2BkfX1PP9VtrP/0FL1W2AK9rm2YiajapwZVWrtbL7
-         xBqJbBxRSyYZOrsMKmF3KsK3FRzu+BGAXkjLP6huVR+iVfdJfZAX8lSZqdyZl6k0g4nN
-         KaBs43VIGrOySgzeoQTSq4uvWmHCeQJZ+49TV6WdCiIoLcQD2gZZnj8GV3RDr0VHuCYn
-         JtOHyj8OBKatOUf/1cG6BP6yuu4JFqH1tVNnfYqqid5xAuYG1/XVEuMQm7+F+Z5kOc4f
-         PpzQ==
-X-Gm-Message-State: ACrzQf3D3iTixHfDh8q7rwDkJSM4NjeOkWwbdTwaj0Cpz8Q8xhvPurvr
-        W+2P1G01Cfa8Z2MSUlhq0pSr1A==
-X-Google-Smtp-Source: AMsMyM6c3vjC3h2UKyDABM7/Zth6iJYEdeiBBn9C/o6MJ8pVRnDGnQgdHus11l/HJYKNgBqDaxsozQ==
-X-Received: by 2002:a17:907:2e01:b0:78d:f24b:7330 with SMTP id ig1-20020a1709072e0100b0078df24b7330mr11097959ejc.604.1666276088208;
-        Thu, 20 Oct 2022 07:28:08 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id v1-20020a170906292100b0078116c361d9sm10614246ejd.10.2022.10.20.07.28.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Oct 2022 07:28:07 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Thu, 20 Oct 2022 16:28:07 +0200
-Message-Id: <CNQTKQWNZIH9.61TJWGH1K44F@otso>
-Cc:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: pm6350: add temp sensor and thermal
- zone config
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Matthias Kaehlcke" <mka@chromium.org>
-X-Mailer: aerc 0.12.0
-References: <20220812114421.1195044-1-luca.weiss@fairphone.com>
- <81ae6a31-1f37-a677-f8f8-2340e37d3a63@linaro.org>
- <CM43WTWNP8MM.3145TGVN4208B@otso> <YvaErMmLIQaDolKR@google.com>
-In-Reply-To: <YvaErMmLIQaDolKR@google.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HnLorT9sOQVGySYbQtoiIKTRYgg4ni6wYU90wOW8GYI=;
+        b=yruRr/5j+3hYJupTnsICJv4zC9em/MFp1UK6Mvs6Vf1u94JKuMJXf9AZcxevRCzlcz
+         Xmyt/KrMpJYArDgVlk8LvloeX4RZ79PdsfminTqziPM6fjySNouYOBA750FxMxvVpF5L
+         AnmoDPzsPS+/t0PN7aMVh5MWcq1rmXySdykcnWpdeRsnkxFgRXWm1wPMN0yk4SMASPOV
+         EKRLuAtHZK6JTqSR+BLs+vmfa7bkJ02Lr990mAr8jwM6jKTlevk1iq0XpVKhxYQ99Liz
+         9Ni7NZU5pIBf8TwrmSLd3iica7H2SCVUNMQsbfUwNTO0eB4m7Whce5wCdAWxKY0gyoMi
+         Xi+Q==
+X-Gm-Message-State: ACrzQf0iH5Ffx69oMcQnDuFuS43d8Apv+B6OQuNNQ9cxxfn963RLzugH
+        zM5WBSiNt7xpCm11YY6uZkPI37paSI+Dgygd94X+Ew==
+X-Google-Smtp-Source: AMsMyM5a7FU5KmKrYCS7NyITMK5hLN7jbu9zO7BNjotlJsvRWbq8xR+J4CuOkqqNPZliGMdXTgLbQ1dhQilpFE9P3f8=
+X-Received: by 2002:a17:903:246:b0:179:96b5:1ad2 with SMTP id
+ j6-20020a170903024600b0017996b51ad2mr14165530plh.37.1666276852874; Thu, 20
+ Oct 2022 07:40:52 -0700 (PDT)
+MIME-Version: 1.0
+References: <20221018145348.4051809-1-amit.pundir@linaro.org>
+ <CAPDyKFoBMB9OMUrcoPCV0of1fj2dimEwPyHGW=ydjJ2M0ubM8Q@mail.gmail.com>
+ <20221020093057.zrrvxlgghn27bpes@bogus> <CAMi1Hd05PkEJcHqHpQX-X6B2oR4250_pHPjkd2-54JWgKsYx0Q@mail.gmail.com>
+In-Reply-To: <CAMi1Hd05PkEJcHqHpQX-X6B2oR4250_pHPjkd2-54JWgKsYx0Q@mail.gmail.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 20 Oct 2022 16:40:15 +0200
+Message-ID: <CAPDyKFo=w-ET62c-B6=qSpkZm-V9LmBuVRy38GzX_UAjQhX6oA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: qrb5165-rb5: Disable cpuidle states
+To:     Sudeep Holla <sudeep.holla@arm.com>,
+        Amit Pundir <amit.pundir@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -83,96 +78,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
-
-sorry for the delay in getting back to you.
-
-On Fri Aug 12, 2022 at 6:49 PM CEST, Matthias Kaehlcke wrote:
-> On Fri, Aug 12, 2022 at 04:06:47PM +0200, Luca Weiss wrote:
-> > Hi Krzysztof,
-> >=20
-> > +CC Matthias Kaehlcke (author of patch mentioned further below)
-> >=20
-> > On Fri Aug 12, 2022 at 3:36 PM CEST, Krzysztof Kozlowski wrote:
-> > > On 12/08/2022 14:44, Luca Weiss wrote:
-> > > > Add temp-alarm device tree node and a default configuration for the
-> > > > corresponding thermal zone for this PMIC. Temperatures are based on
-> > > > downstream values.
-> > > >=20
-> > > > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+On Thu, 20 Oct 2022 at 16:09, Amit Pundir <amit.pundir@linaro.org> wrote:
+>
+> On Thu, 20 Oct 2022 at 15:01, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> >
+> > On Wed, Oct 19, 2022 at 01:57:34PM +0200, Ulf Hansson wrote:
+> > > On Tue, 18 Oct 2022 at 16:53, Amit Pundir <amit.pundir@linaro.org> wrote:
+> > > >
+> > > > Disable cpuidle states for RB5. These cpuidle states
+> > > > made the device highly unstable and it runs into the
+> > > > following crash frequently:
+> > > >
+> > > > [    T1] vreg_l11c_3p3: failed to enable: -ETIMEDOUT
+> > > > [    T1] qcom-rpmh-regulator 18200000.rsc:pm8150l-rpmh-regulators: ldo11: devm_regulator_register() failed, ret=-110
+> > > > [    T1] qcom-rpmh-regulator: probe of 18200000.rsc:pm8150l-rpmh-regulators failed with error -110
+> > > >
+> > > > Fixes: 32bc936d7321 ("arm64: dts: qcom: sm8250: Add cpuidle states")
+> > > > Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
 > > > > ---
-> > > > With this config I'm getting this in dmesg, not sure if it's a warn=
-ing
-> > > > that should be solved or just an informative warning.
-> > > >=20
-> > > > [    0.268256] spmi-temp-alarm c440000.spmi:pmic@0:temp-alarm@2400:=
- No ADC is configured and critical temperature is above the maximum stage 2=
- threshold of 140 C! Configuring stage 2 shutdown at 140 C.
-> > > >=20
-> > > > As far as I can tell, based on downstream dts this PMIC doesn't hav=
-e an
-> > > > ADC.
->
-> I don't seem to have access to the datasheet, in any case that the ADC is=
-n't
-> configured in the downstream dts doesn't necessarily mean the PMIC doesn'=
-t
-> have one. The PM6150 has one, and it is probably relatively close to the
-> PM6350.
-
-Too bad :(
-
->
-> > > You configure 145 and driver believes 140 is the limit, so it seems
-> > > warning should be addressed.
-> >=20
-> > Hm...
-> >=20
+> > > >  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 8 ++++++++
+> > > >  1 file changed, 8 insertions(+)
+> > > >
+> > > > diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > > > index cc003535a3c5..f936c41bfbea 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > > > +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > > > @@ -251,6 +251,14 @@ qca639x: qca639x {
+> > > >
+> > > >  };
+> > > >
+> > > > +&LITTLE_CPU_SLEEP_0 {
+> > > > +       status = "disabled";
+> > > > +};
+> > > > +
+> > > > +&BIG_CPU_SLEEP_0 {
+> > > > +       status = "disabled";
+> > > > +};
+> > > > +
+> > > >  &adsp {
+> > > >         status = "okay";
+> > > >         firmware-name = "qcom/sm8250/adsp.mbn";
+> > > > --
+> > > > 2.25.1
 > > >
-> > > From where did you get 145 degrees as limit? Downstream DTS?
-> >=20
-> > Yes, downstream dts[0].
-> >=20
-> > From what I can see in the downstream driver, it always disabled this
-> > "software override of stage 2 and 3 shutdowns"[1]
-> >=20
-> > In mainline only since f1599f9e4cd6 ("thermal: qcom-spmi: Use PMIC
-> > thermal stage 2 for critical trip points") this check exists, which is
-> > not part of downstream (wasn't in 4.19 yet), where this software
-> > override tries to get enabled so that thermal core can handle this.
-> >=20
-> > Any suggestion what I can do here? Maybe looking at msm-5.4 sources (an=
-d
-> > associated dts) might reveal something..?
+> > > Disabling the CPU idlestates, will revert us back to using only the WFI state.
+> > >
+> > > An option that probably works too is to just drop the idlestate for
+> > > the CPU cluster. Would you mind trying the below and see if that works
+> > > too?
+> > >
+> >
+> > Indeed this is was I suggested to check initially. But I was surprised to
+> > see IIUC, Amit just disabled CPU states with above change and got it working.
+> > So it is not cluster state alone causing the issue, is it somehow presence
+> > of both cpu and cluster states ? Am I missing something here.
+> >
+> > > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > index c32227ea40f9..c707a49e8001 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > @@ -700,7 +700,6 @@ CPU_PD7: cpu7 {
+> > >
+> > >                 CLUSTER_PD: cpu-cluster0 {
+> > >                         #power-domain-cells = <0>;
+> > > -                       domain-idle-states = <&CLUSTER_SLEEP_0>;
+> >
+> > How about just marking CLUSTER_SLEEP_0 state disabled ? That looks cleaner
+> > than deleting this domain-idle-states property here. Also not sure if DTS
+> > warnings will appear if you delete this ?
 >
-> I wouldn't necessarily consider QC downstream code as a reliable source o=
-f
-> truth ...
->
-> > Maybe newer SoCs/PMICs have a different config?
->
-> Commit aa92b3310c55 ("thermal/drivers/qcom-spmi-temp-alarm: Add support
-> for GEN2 rev 1 PMIC peripherals") added support for gen2 PMICs, which
-> actually have lower thresholds than gen1. From the log it seems that the
-> PM6350 is identified as gen1 device (max stage 2 threshold =3D 140 degC).
+> Hi, I did try disabling CLUSTER_SLEEP_0: cluster-sleep-0 {} in
+> domain-idle-states {} but that didn't help. That's why I end up
+> disabling individual cpu states in idle-states {}.
 
-PM6350 is detected as QPNP_TM_SUBTYPE_GEN2 so gen2 actually. Just the
-log message is hardcoded to 140 degC, the if above actually has
-stage2_threshold_max =3D 125000 (125degC) and stage2_threshold_min =3D
-110000 (110degC) so lower than 140 (basically like you said).
+Yep, this boils down to the fact that genpd doesn't check whether the
+domain-idle-state is disabled by using of_device_is_available(). See
+genpd_iterate_idle_states().
 
->
-> It seems setting the limit to 140 degC or one of the other stage 2
-> thresholds would be a reasonable course of action. stage 2 is the
-> threshold at which the PMIC is so hot that the system should shut
-> down, and 140 degC is the highest of the stage 2 thresholds. Even
-> if it was possible, what would be gained from setting the trip
-> point 5 degC higher?
+That said, I suggest we go with the above one-line change. It may not
+be as clean as it could be, but certainly easy to revert when the
+support for it has been added in a newer kernel.
 
-Based on this, do you think it's reasonable to just set the limit to
-125 degC and be done with it? Or some other way to resolve this? I'd of
-course mention in the commit message that I've decreased the value from
-145 (msm-4.19) to 125.
+Amit, do you want me to post a new patch or do you prefer to re-spin
+your patch? It doesn't matter to me.
 
-Regards
-Luca
+Kind regards
+Uffe
