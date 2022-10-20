@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 61D6E606063
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 14:39:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C384460606D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 14:41:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230049AbiJTMje (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 08:39:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60190 "EHLO
+        id S230172AbiJTMlU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 08:41:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229773AbiJTMjd (ORCPT
+        with ESMTP id S230152AbiJTMlT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 08:39:33 -0400
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46303175A5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 05:39:30 -0700 (PDT)
-Received: by mail-qv1-xf2f.google.com with SMTP id t16so114067qvm.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 05:39:30 -0700 (PDT)
+        Thu, 20 Oct 2022 08:41:19 -0400
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2829B18F0C9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 05:41:18 -0700 (PDT)
+Received: by mail-qk1-x72b.google.com with SMTP id a5so12636450qkl.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 05:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZfIr1cCYntMcg38k43BwnqiTczM7YPUsQyV6bjQhYTE=;
-        b=r6pXAkWN6tuBqy2WHCpX2Ylh5q4vUvyV6IgZRJl/uORfAKdVhV2Cyv2lNZpHNSwgst
-         jmu5yBPSoH3m/ift8eXLd3igqXilv+xG6ilL27uG3jP4ZvZYhEw5geRXQrvJev3Ds7vY
-         +8s3fAkg4RxL/U9m2By1Ghn+jH2n3S+SSjjuxEQgrobBpwlSs8cY9XE0Ae33UkO27CJu
-         XBa5vMMSDjq3dIr971x5v5yr1WnPWb9JRL6j6on3YE0AnbLRN6f/35FNpWAcuxdyauPE
-         bn+4yfDD5CnhZ0eL3PEeTsQ8ohiAoN4CzWvppN5wLM9mxpnHJxuJLZmhsuCkjumczFHQ
-         NMzg==
+        bh=+V635IJmuXVxEJb4QyeUj3oKwfgTzjuN6h0lmu+zlRM=;
+        b=h/DLkhVS0W4P6Wr0Fak+GRkFm7UrKy2rnp69cgXuz+9onLabpU+NKVGglwuNc2tjc0
+         wk8OxJST3ZkaPgX/GkE0FyxZ7VXt1evRRIphOB9G8adwQtoCAI8FC3rHSpx2nNqS+is6
+         jgb6GcNlxt+DXw4YTF4dneUaTd90bc3LrSgDCsPl1K+VphLuIhiHkEJXbyR2WuJBxvcQ
+         d0wK4AENSGbwylBSBfFL0Xk4BxzAn0OrCSQ4Ofje/EkBTMIz5g35XyZsDRYSB4JDXU1S
+         vF9RA5czLCjDa36fI2nPpkQfbVSCdUdzdft5kbF9MdJiQkRWlKKGkZo6TNzNLBX8ts+u
+         wKRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZfIr1cCYntMcg38k43BwnqiTczM7YPUsQyV6bjQhYTE=;
-        b=wnAZrgL/Ni+nKcBiLQXLG7cNhMOJDrILqZyyHgBXcDMtLLjkFEOIETy9ERCHNUptk+
-         giSuea33MoF2ejl7iGZcSyJfgUvnz7v+eklh567j8GBKqTYnPmBMtFcutH7AVsxCAnch
-         1L8TiCe/AE6aNlthp0XTNE9A/WxjdYZYKwv+YoczlOHnTsO9uUur4SA7DM3zuc5SVwaj
-         CW8eCuhHDqt3zGtaKrTbX6tWMS5ZmXSBl84xSsr2y7YEmVZTfv/70Brte5zvsTD2CAG2
-         s+I86DyRKHx4U4HgXVIVyEF3tEARF8zUp+xrr8r/4d6yEG3+WceMqoVTru2j893d27p5
-         vcIg==
-X-Gm-Message-State: ACrzQf1xeKpPDXtiK+9gEsF538nPEC34l+sih4fy+O0P7fGTFcBdVDv9
-        2riLfiY8tMyUAPz9LnFTDXy0ww==
-X-Google-Smtp-Source: AMsMyM5NvWIvyhkngdLjT+yTVpGAEH8tXDpGUA1sQOU5Jx9NKqwwLg3kIaFQl5e+SfbTuUcFSD6gHA==
-X-Received: by 2002:ad4:5d68:0:b0:4af:af07:580b with SMTP id fn8-20020ad45d68000000b004afaf07580bmr10575811qvb.14.1666269569384;
-        Thu, 20 Oct 2022 05:39:29 -0700 (PDT)
+        bh=+V635IJmuXVxEJb4QyeUj3oKwfgTzjuN6h0lmu+zlRM=;
+        b=EO52cervr6cWyVyes3o+5CiV/0v5WWru/OdzpSHG36xKrkxW+A6TJ97ZIuqxI28Xbi
+         1cDhPKkgyzdLTvpSq6Aq2biUrTf9Wnvuh5voY9gL6RSAjB+e7jC4VCu8ZW5R0zrtd1zP
+         JschpQtFnM1ShcZs0xVWZrCMB5jhY9iUpzSU4jeYpmKn7WS3HPPKPiqDjMX54KdLY0+C
+         rhYzXaj5n2drVNuforS5TZ4mKaXDu4tm70JuwU0q53BvPMYA6g5phFSAgauCZJdizleg
+         HQ5UFacMwjP8kjlPradVP9ZxWZQzfe0xGA5tWIwFB8Zx06hRDlKViGEMtfM7OmIkWi6b
+         Un8A==
+X-Gm-Message-State: ACrzQf3MkCTirPd/5JRZJa8goLMN+oDX1mYSGdae8Lv+lw0pXPYurhmU
+        g8q5xBLWWC5d8seEFVQPhtKFHA==
+X-Google-Smtp-Source: AMsMyM7RWwnxTCM8yFqwbiTYLsDxlA1UmPsmjEOT1YaNmu5V8d8JbJGdgihiOY9cGVWQAvZojt+89w==
+X-Received: by 2002:a05:620a:6ca:b0:6ec:553a:cf33 with SMTP id 10-20020a05620a06ca00b006ec553acf33mr8771885qky.132.1666269677250;
+        Thu, 20 Oct 2022 05:41:17 -0700 (PDT)
 Received: from [192.168.10.124] (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
-        by smtp.gmail.com with ESMTPSA id x6-20020ac86b46000000b0035ba48c032asm5869363qts.25.2022.10.20.05.39.28
+        by smtp.gmail.com with ESMTPSA id i15-20020a05620a404f00b006ee91ab3538sm7744602qko.36.2022.10.20.05.41.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Oct 2022 05:39:28 -0700 (PDT)
-Message-ID: <1b164c8a-1ace-125a-62ac-47dd77399f74@linaro.org>
-Date:   Thu, 20 Oct 2022 08:39:27 -0400
+        Thu, 20 Oct 2022 05:41:16 -0700 (PDT)
+Message-ID: <50372a15-56ce-6ad6-f622-00624b909db8@linaro.org>
+Date:   Thu, 20 Oct 2022 08:41:15 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.0
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: Add base QDU1000/QRU1000 IDP DTs
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
 Content-Language: en-US
 To:     Melody Olvera <quic_molvera@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -65,112 +65,81 @@ To:     Melody Olvera <quic_molvera@quicinc.com>,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20221014221138.7552-1-quic_molvera@quicinc.com>
- <20221014221138.7552-4-quic_molvera@quicinc.com>
- <e94d9029-e0aa-574f-62d2-632e2c5d70d2@linaro.org>
- <65f95226-f464-2e14-1f89-930ed26e0f38@quicinc.com>
+ <20221014221138.7552-3-quic_molvera@quicinc.com>
+ <56af2a04-1b21-000d-e3f9-86b6ac74aaf2@linaro.org>
+ <a0032338-482f-0de7-5952-c3c8b8423df6@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <65f95226-f464-2e14-1f89-930ed26e0f38@quicinc.com>
+In-Reply-To: <a0032338-482f-0de7-5952-c3c8b8423df6@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/10/2022 17:16, Melody Olvera wrote:
+On 19/10/2022 16:21, Melody Olvera wrote:
 > 
 > 
-> On 10/15/2022 6:29 AM, Krzysztof Kozlowski wrote:
+> On 10/15/2022 6:28 AM, Krzysztof Kozlowski wrote:
 >> On 14/10/2022 18:11, Melody Olvera wrote:
->>> Add DTs for Qualcomm IDP platforms using the QDU1000 and QRU1000
->>> SoCs.
+>>> Add the base DTSI files for QDU1000 and QRU1000 SoCs, including base
+>>> descriptions of CPUs, GCC, RPMHCC, QUP, TLMM, and interrupt-controller
+>>> to boot to shell with console on these SoCs.
 >>>
 >>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 >>> ---
->>>  arch/arm64/boot/dts/qcom/Makefile        |   2 +
->>>  arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 230 +++++++++++++++++++++++
->>>  arch/arm64/boot/dts/qcom/qru1000-idp.dts | 230 +++++++++++++++++++++++
->>>  3 files changed, 462 insertions(+)
->>>  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>>  create mode 100644 arch/arm64/boot/dts/qcom/qru1000-idp.dts
+>>>  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 1646 +++++++++++++++++++++++++
+>>>  arch/arm64/boot/dts/qcom/qru1000.dtsi |   27 +
+>>>  2 files changed, 1673 insertions(+)
+>>>  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>>>  create mode 100644 arch/arm64/boot/dts/qcom/qru1000.dtsi
 >>>
->>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->>> index d7669a7cee9f..8417295adfeb 100644
->>> --- a/arch/arm64/boot/dts/qcom/Makefile
->>> +++ b/arch/arm64/boot/dts/qcom/Makefile
->>> @@ -51,7 +51,9 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-maple.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-poplar.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
->>> +dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
->>> +dtb-$(CONFIG_ARCH_QCOM)	+= qru1000-idp.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
->>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+>>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
 >>> new file mode 100644
->>> index 000000000000..47a8eaf4fda2
+>>> index 000000000000..777734b30f56
 >>> --- /dev/null
->>> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>> @@ -0,0 +1,230 @@
+>>> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>>> @@ -0,0 +1,1646 @@
 >>> +// SPDX-License-Identifier: BSD-3-Clause
 >>> +/*
 >>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
 >>> + */
 >>> +
->>> +/dts-v1/;
->>> +
->>> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->>> +#include "qdu1000.dtsi"
->>> +#include "pm8150.dtsi"
+>>> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+>>> +#include <dt-bindings/clock/qcom,gcc-qdu1000.h>
+>>> +#include <dt-bindings/clock/qcom,rpmh.h>
+>>> +#include <dt-bindings/dma/qcom-gpi.h>
+>>> +#include <dt-bindings/interconnect/qcom,qdu1000.h>
+>>> +#include <dt-bindings/power/qcom-rpmpd.h>
+>>> +#include <dt-bindings/soc/qcom,rpmh-rsc.h>
 >>> +
 >>> +/ {
->>> +	model = "Qualcomm Technologies, Inc. QDU1000 IDP";
->>> +	compatible = "qcom,qdu1000-idp", "qcom,qdu1000";
+>>> +	interrupt-parent = <&intc>;
 >>> +
->>> +	aliases {
->>> +		serial0 = &uart7;
->>> +	};
+>>> +	#address-cells = <2>;
+>>> +	#size-cells = <2>;
 >>> +
->>> +	chosen {
->>> +		stdout-path = "serial0:115200n8";
->>> +	};
+>>> +	chosen: chosen { };
 >>> +
->>> +	ppvar_sys: ppvar-sys-regulator {
->>> +		compatible = "regulator-fixed";
->>> +		regulator-name = "ppvar_sys";
->>> +		regulator-always-on;
->>> +		regulator-boot-on;
->>> +	};
->>> +
->>> +	vph_pwr: vph-pwr-regulator {
->>> +		compatible = "regulator-fixed";
->>> +		regulator-name = "vph_pwr";
->>> +		regulator-min-microvolt = <3700000>;
->>> +		regulator-max-microvolt = <3700000>;
->>> +
->>> +		regulator-always-on;
->>> +		regulator-boot-on;
->>> +
->>> +		vin-supply = <&ppvar_sys>;
->>> +	};
->>> +};
->>> +
->>> +&apps_rsc {
->>> +	pm8150-regulators {
->> regulators
-> Just 'regulators' as the node name isn't compliant with the bindings for rpmh-rsc devices.
-> Do the bindings need to be updated or should I leave this as is?
+>>> +	clocks {
+>>> +		xo_board: xo-board {
+>>> +			compatible = "fixed-clock";
+>>> +			clock-frequency = <19200000>;
+>> Both clocks are not a property of a SoC. They are provided by the board,
+>> so they should either be defined by board DTS or at least their
+>> frequency must be provided by the board.
+> That doesn't seem in keeping with precedent.... the sm8* series all have the clocks in
+> the dtsi. These are common to the boards anyways.
 
-If bindings expect this, I propose to change them. Which schema is
-expecting this? I already fixed SMD RPM:
-https://lore.kernel.org/all/20220926092104.111449-1-krzysztof.kozlowski@linaro.org/
+Because people do not pay attention what is part of SoC, what is part of
+board. DTSI is for the SoC and these are inputs to the SoC.
+
+We had these talks and my recommendation is the same.
 
 Best regards,
 Krzysztof
