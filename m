@@ -2,64 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 32CBE60625D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 16:01:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38865606279
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 16:09:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229675AbiJTOA6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 10:00:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60580 "EHLO
+        id S229506AbiJTOJE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 10:09:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229661AbiJTOA5 (ORCPT
+        with ESMTP id S230102AbiJTOJC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 10:00:57 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03A431918BD;
-        Thu, 20 Oct 2022 07:00:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1666274092;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=+mgBMCBNsWwFZE81j7AWjxRLPZ+r53tvByijdyeHgpc=;
-    b=hAm9jsAcRSqWq0k1wHI5OIw5UFEu1cy87TRtt7G1igCJzQ8bkNthnA+7u6Tm8FkSH8
-    yG2ng66KAHxInB7K2OSp6Hc0PVhaI09GxLXDVPw6+3tuzEz3+oV8/JHZXrZ5rKKmMB2Y
-    OpzgX6hetF+aLttb6EtjHm8J7DN6WPQvkIrnCjMAnHY9HkeZ42UkSZS1JxmeCuf2UFUZ
-    phQ51lZAkFYKqTMP3XzE58d1t3bb0XY3GHvt1c9cSds19Sg0XtVvHIMEiGCo2L73LRr3
-    GnflH1LS0UL+CBtw0mQKDWtd8BmjU1678/KknIsuGOtG6EzEK21/FegQEqpsZdvgZGSK
-    I9Lw==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJAhd5WwPXI"
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 48.2.0 DYNA|AUTH)
-    with ESMTPSA id f6c614y9KDsqYnL
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 20 Oct 2022 15:54:52 +0200 (CEST)
-Date:   Thu, 20 Oct 2022 15:54:46 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Melody Olvera <quic_molvera@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
-Message-ID: <Y1FTJgloEi5ag2/j@gerhold.net>
-References: <20221014221138.7552-1-quic_molvera@quicinc.com>
- <20221014221138.7552-3-quic_molvera@quicinc.com>
- <56af2a04-1b21-000d-e3f9-86b6ac74aaf2@linaro.org>
- <a0032338-482f-0de7-5952-c3c8b8423df6@quicinc.com>
- <50372a15-56ce-6ad6-f622-00624b909db8@linaro.org>
+        Thu, 20 Oct 2022 10:09:02 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32164170B55
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 07:09:01 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id r13-20020a056830418d00b0065601df69c0so11474471otu.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 07:09:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=KmrrMOMdYJ6b8buOtE8wTwfyN1foDEi2s8Ex1cEpDfY=;
+        b=To+Qk0A3CM/eFhRAolkD4U6Tmg9JsHMThNENPRJNAC/8o31f3nqxxAoWnz8aornjNY
+         ZmjX9KtEBg56Di83mek3SSSKstfbmTv32ucyB2YEwNFQOfpZhrpHKLtzIz89q2S0VBB6
+         Nwl35WxoMpSkp6lBNMueuK5hUwiiQpuDlfU0nXhZlWgqYM+8f0r6pBkOv45hlWR74/rB
+         llB1M+pJJinTTHg1UV3/IA4VeEIdivuIdj7r/QInd0DKXs8veOu1DttyZMiDsaHAGJCs
+         g4CRjlw1PAPpqroyID3/q8GTDnu2qA6yuwgUnmzRW33+3ThPWS9uvrJQJyP6Uxkh2KCX
+         s5nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KmrrMOMdYJ6b8buOtE8wTwfyN1foDEi2s8Ex1cEpDfY=;
+        b=nfYuhtCKuSvlj5BW6MPzSrvrqB2kCXt4sAnUgg0RgomRpAh7KAOVYzDCTHTIwDnUq3
+         1Ys0n6TW3UmZTCAydgp7Vx9BuRF7La/qHw1kY/lyniPK2tnNUQ94s2gSlI3I8vdOa8T4
+         ZYGeB18kEhbO2EU9SDbF3A1swKVG6TpJzpCJQoqmLeNIQn9XBe/jRZ99sSO1kD1SbbCZ
+         aNwEB2Lduf2n5VlXKhWNpNUZ4P/3QhuAuXZTH1CdMVEG+m/xXX4zM0mVBqQHyev6HgAK
+         1Qntuw9HMU6x0lL1jbMNSIM13T59FK0AHpFYRSxL0sBIGXAeXLEqNwCB6MxA/8Lj85Lh
+         tznA==
+X-Gm-Message-State: ACrzQf3RDA5fYKWbBha/vsYMcrPGhmScsoAuSB2NkRkgTuxEPpR8Nv46
+        3NfS6lTZDGxVJGGFfo/utpq9DXnL+3zLFBnpMbGkjw==
+X-Google-Smtp-Source: AMsMyM7TnkHvlubvtysHFMD02cLjU/w/mTgkliIpDR7G2WAUuROhb7YuX7lLMg1AN6GBnVxu2mW0NzRsuihLAUrld5s=
+X-Received: by 2002:a05:6830:4119:b0:661:e687:1912 with SMTP id
+ w25-20020a056830411900b00661e6871912mr7160259ott.352.1666274940321; Thu, 20
+ Oct 2022 07:09:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <50372a15-56ce-6ad6-f622-00624b909db8@linaro.org>
+References: <20221018145348.4051809-1-amit.pundir@linaro.org>
+ <CAPDyKFoBMB9OMUrcoPCV0of1fj2dimEwPyHGW=ydjJ2M0ubM8Q@mail.gmail.com> <20221020093057.zrrvxlgghn27bpes@bogus>
+In-Reply-To: <20221020093057.zrrvxlgghn27bpes@bogus>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Thu, 20 Oct 2022 19:38:23 +0530
+Message-ID: <CAMi1Hd05PkEJcHqHpQX-X6B2oR4250_pHPjkd2-54JWgKsYx0Q@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: qrb5165-rb5: Disable cpuidle states
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,57 +77,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 20, 2022 at 08:41:15AM -0400, Krzysztof Kozlowski wrote:
-> On 19/10/2022 16:21, Melody Olvera wrote:
-> > On 10/15/2022 6:28 AM, Krzysztof Kozlowski wrote:
-> >> On 14/10/2022 18:11, Melody Olvera wrote:
-> >> [...]
-> >>> +	clocks {
-> >>> +		xo_board: xo-board {
-> >>> +			compatible = "fixed-clock";
-> >>> +			clock-frequency = <19200000>;
-> >> Both clocks are not a property of a SoC. They are provided by the board,
-> >> so they should either be defined by board DTS or at least their
-> >> frequency must be provided by the board.
-> > That doesn't seem in keeping with precedent.... the sm8* series all have the clocks in
-> > the dtsi. These are common to the boards anyways.
-> 
-> Because people do not pay attention what is part of SoC, what is part of
-> board. DTSI is for the SoC and these are inputs to the SoC.
-> 
+On Thu, 20 Oct 2022 at 15:01, Sudeep Holla <sudeep.holla@arm.com> wrote:
+>
+> On Wed, Oct 19, 2022 at 01:57:34PM +0200, Ulf Hansson wrote:
+> > On Tue, 18 Oct 2022 at 16:53, Amit Pundir <amit.pundir@linaro.org> wrote:
+> > >
+> > > Disable cpuidle states for RB5. These cpuidle states
+> > > made the device highly unstable and it runs into the
+> > > following crash frequently:
+> > >
+> > > [    T1] vreg_l11c_3p3: failed to enable: -ETIMEDOUT
+> > > [    T1] qcom-rpmh-regulator 18200000.rsc:pm8150l-rpmh-regulators: ldo11: devm_regulator_register() failed, ret=-110
+> > > [    T1] qcom-rpmh-regulator: probe of 18200000.rsc:pm8150l-rpmh-regulators failed with error -110
+> > >
+> > > Fixes: 32bc936d7321 ("arm64: dts: qcom: sm8250: Add cpuidle states")
+> > > Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 8 ++++++++
+> > >  1 file changed, 8 insertions(+)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > > index cc003535a3c5..f936c41bfbea 100644
+> > > --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > > @@ -251,6 +251,14 @@ qca639x: qca639x {
+> > >
+> > >  };
+> > >
+> > > +&LITTLE_CPU_SLEEP_0 {
+> > > +       status = "disabled";
+> > > +};
+> > > +
+> > > +&BIG_CPU_SLEEP_0 {
+> > > +       status = "disabled";
+> > > +};
+> > > +
+> > >  &adsp {
+> > >         status = "okay";
+> > >         firmware-name = "qcom/sm8250/adsp.mbn";
+> > > --
+> > > 2.25.1
+> >
+> > Disabling the CPU idlestates, will revert us back to using only the WFI state.
+> >
+> > An option that probably works too is to just drop the idlestate for
+> > the CPU cluster. Would you mind trying the below and see if that works
+> > too?
+> >
+>
+> Indeed this is was I suggested to check initially. But I was surprised to
+> see IIUC, Amit just disabled CPU states with above change and got it working.
+> So it is not cluster state alone causing the issue, is it somehow presence
+> of both cpu and cluster states ? Am I missing something here.
+>
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > index c32227ea40f9..c707a49e8001 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > @@ -700,7 +700,6 @@ CPU_PD7: cpu7 {
+> >
+> >                 CLUSTER_PD: cpu-cluster0 {
+> >                         #power-domain-cells = <0>;
+> > -                       domain-idle-states = <&CLUSTER_SLEEP_0>;
+>
+> How about just marking CLUSTER_SLEEP_0 state disabled ? That looks cleaner
+> than deleting this domain-idle-states property here. Also not sure if DTS
+> warnings will appear if you delete this ?
 
-(Just chiming in because I had this thought already a few times when you
- suggested moving the XO "clock-frequency" to the board DTS:)
+Hi, I did try disabling CLUSTER_SLEEP_0: cluster-sleep-0 {} in
+domain-idle-states {} but that didn't help. That's why I end up
+disabling individual cpu states in idle-states {}.
 
-I understand your reasoning for moving components of the board to the
-board DTS, but IMHO adding just the clock-frequency to the board DTS is
-even more misleading: It suggests that there are functional board
-designs where you would use a XO clock with a different clock-frequency.
-Is that really realistic though?
+Regards,
+Amit Pundir
 
-There are assumptions about the XO clock frequency in a lot of places:
-You would need to fully rewrite the gcc-<SoC>.c driver because it has
-fixed multipliers/dividers for one specific XO frequency. All firmware
-binaries would likely need changes. And does the hardware even support a
-different XO clock frequency? The APQ8016E datasheet for example
-strictly documents a XO clock input of 19.2 MHz and a sleep clock of
-32.768 kHz.
 
-IMHO the only realistic variation of the XO clock setup would be to have
-a physical "fixed-clock" with a higher frequency, followed by a
-"fixed-factor-clock" that brings it back to the expected frequency. To
-model that properly it is not enough to have just the "clock-frequency"
-in the board DTS. In this case you need two clock nodes, and the
-xo_board would be the "fixed-factor-clock".
-
-Therefore it should be all or nothing IMO: Either we move the full
-xo-board node to the board DTS (which allows alternatively defining the
-"fixed-factor-clock" or whatever). Or we assume that there will be
-always an input clock signal with the fixed frequency and keep it fully
-in the SoC .dtsi.
-
-Having just the "clock-frequency" in the board DTS puts the attention on
-the wrong detail, IMO. :)
-
-Thanks,
-Stephan
+>
+> --
+> Regards,
+> Sudeep
