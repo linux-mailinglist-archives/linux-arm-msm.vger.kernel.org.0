@@ -2,71 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 316296054B8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 03:13:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6BB360560F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 05:43:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229978AbiJTBNP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Oct 2022 21:13:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33798 "EHLO
+        id S229695AbiJTDnz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Oct 2022 23:43:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229912AbiJTBNO (ORCPT
+        with ESMTP id S229661AbiJTDnw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Oct 2022 21:13:14 -0400
-Received: from mailgw01.mediatek.com (unknown [60.244.123.138])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A10B7AF19D;
-        Wed, 19 Oct 2022 18:13:07 -0700 (PDT)
-X-UUID: 0fe5dc41e47847f08b84541e210c6aa5-20221020
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-        h=Content-Transfer-Encoding:MIME-Version:Content-Type:References:In-Reply-To:Date:CC:To:From:Subject:Message-ID; bh=IvDCujvhbE3aZo/FeMAVUwJ8JGX8m9vTb6KyE20WYMc=;
-        b=MofHsGkUTdp8zVuIcyxtUPiklJHfizh2Eu6uFJtxYtKKlXmtgoeWlmoi2hF3lf/VvXMYMlMT19bqOaIKiCb62EUxUWhrGiKgnm1eyeUI2zm6GVX3ocriieX+pOMs8bFCtkM7ccpwd9Tz3yoabFgbFieJR7QhDDahTvUETTb+urU=;
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.1.12,REQID:61494afe-e006-4fdf-8e2a-cc4a16a8744d,IP:0,U
-        RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-        release,TS:0
-X-CID-META: VersionHash:62cd327,CLOUDID:f53a59a4-ebb2-41a8-a87c-97702aaf2e20,B
-        ulkID:nil,BulkQuantity:0,Recheck:0,SF:102,TC:nil,Content:0,EDM:-3,IP:nil,U
-        RL:0,File:nil,Bulk:nil,QS:nil,BEC:nil,COL:0
-X-UUID: 0fe5dc41e47847f08b84541e210c6aa5-20221020
-Received: from mtkexhb01.mediatek.inc [(172.21.101.102)] by mailgw01.mediatek.com
-        (envelope-from <eddie.huang@mediatek.com>)
-        (Generic MTA with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
-        with ESMTP id 1414796285; Thu, 20 Oct 2022 09:13:01 +0800
-Received: from mtkcas10.mediatek.inc (172.21.101.39) by
- mtkmbs10n2.mediatek.inc (172.21.101.183) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.792.3;
- Thu, 20 Oct 2022 09:13:00 +0800
-Received: from mtksdccf07 (172.21.84.99) by mtkcas10.mediatek.inc
- (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Thu, 20 Oct 2022 09:13:00 +0800
-Message-ID: <f8c7d70727c1d60f3dfc0325b6ed83b937c16a5a.camel@mediatek.com>
-Subject: Re: Fwd: [PATCH v2 06/17] ufs: core: mcq: Configure resource regions
-From:   Eddie Huang <eddie.huang@mediatek.com>
-To:     Bart Van Assche <bvanassche@acm.org>,
-        Asutosh Das <quic_asutoshd@quicinc.com>
-CC:     Can Guo <quic_cang@quicinc.com>, <quic_nitirawa@quicinc.com>,
-        <quic_rampraka@quicinc.com>, <quic_bhaskarv@quicinc.com>,
-        <quic_richardp@quicinc.com>, <linux-scsi@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_nguyenb@quicinc.com>,
-        <quic_xiaosenh@quicinc.com>, <avri.altman@wdc.com>,
-        <mani@kernel.org>, <beanhuo@micron.com>,
-        <stanley.chu@mediatek.com>, <liang-yen.wang@mediatek.com>
-Date:   Thu, 20 Oct 2022 09:13:00 +0800
-In-Reply-To: <b11cb7b4-2f4a-c6a2-82a5-c4372ff23610@acm.org>
-References: <11530912-36fd-8c69-4beb-de955eaae529@quicinc.com>
-         <6592c7fe-0828-6bb3-17a8-9db53aac1873@quicinc.com>
-         <83fe64628b6d44f28637a6a8ba6b21eb0848caaa.camel@mediatek.com>
-         <20221018014754.GE10252@asutoshd-linux1.qualcomm.com>
-         <12ab65aed221dec23451e9b60c0e00a4d9ef0df2.camel@mediatek.com>
-         <20221019195040.GA18511@asutoshd-linux1.qualcomm.com>
-         <b11cb7b4-2f4a-c6a2-82a5-c4372ff23610@acm.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
+        Wed, 19 Oct 2022 23:43:52 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66CC092CD4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 20:43:50 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id d6so31393894lfs.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Oct 2022 20:43:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Mbb+ms7dDLns10UB111selnMgeoJrimy+PQGWTgS8os=;
+        b=GRtyKqUh+xv5psvLq7nIc/uv5P0r3/660TF9/kxeZxN52qyJUhRib44NzMiYTxaTEr
+         gt0lMlGyjzA2fjCTFjSW50BtLm0XQH2pKDal/noPsgy7J3PDU64LVzMWZpucBvLQho6M
+         zHAzs1fhiXK0EJH+/SYu13RkaENktAnPyvrHPHJ5XA5Lg85aDFJNuqc6MGxXU5yki90H
+         8fLy/lFuZNXgd+iJFajRLxxb0BpzC/EhocRwnh+WBeqX4yVD4kviu6GNaIivVLuHslp+
+         fM9/aVVU2yvR4xHnLv20NA8DnJfnCUEkTDSMO3XxFAUW50cU0CmyAloZtVExGDq1S6hF
+         97lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Mbb+ms7dDLns10UB111selnMgeoJrimy+PQGWTgS8os=;
+        b=bgGYa5GjiR2woV6/lbNPkV94pwHVzoQxHxX560QKzXa6sOadeNqikmBbQA1l1JhQuA
+         nvi2gvWt/TNHFqhAoyryYzxfoQLvXNbdIbyAgZCIFQEPEN/GSH20M0UUfzgoFyPA35tL
+         +9AfHm/Vty77aCWRdG2Rvvm6uSdmeiZjsdzmhZ7xoD3qyF5mocUdwBz4RkfMSRpHHV9r
+         d8OFk9fpygRBpg4sWSKp3jbjCMmApgjDgSKRF/jjs+1aUAQuUbJF84viQiGjq1zigyqR
+         ILkfKi+fESJ7lylsqwZUi/S6RJMjgC2RhR61hSyQiIz0v7p+a2ISj0ngsbh0dXcOZz22
+         tErQ==
+X-Gm-Message-State: ACrzQf1F1Fs/N0DFEVUwk43IVNH25hIOdf+RCPOCxVBrJ4e9IrcGNdTI
+        bgGzMogPzPW3k/fhyzP1UNwSyQ==
+X-Google-Smtp-Source: AMsMyM6MKUT7PHDVARV6rvHpxydEsT1vycmI5y9FVGzscxrHq1b3OZzmwF1HsCbazGeU+aREwzCNOQ==
+X-Received: by 2002:ac2:443a:0:b0:4a2:623d:6022 with SMTP id w26-20020ac2443a000000b004a2623d6022mr4379478lfl.372.1666237428674;
+        Wed, 19 Oct 2022 20:43:48 -0700 (PDT)
+Received: from [10.27.10.248] ([195.165.23.90])
+        by smtp.gmail.com with ESMTPSA id k3-20020a2eb743000000b0026fd3d906d7sm2725364ljo.133.2022.10.19.20.43.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Oct 2022 20:43:48 -0700 (PDT)
+Message-ID: <2902e7e8-eddf-149c-06fd-86b85d8af326@linaro.org>
+Date:   Thu, 20 Oct 2022 06:43:47 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Subject: Re: [PATCH v2 15/15] phy: qcom-qmp-pcie: add support for sc8280xp
+ 4-lane PHYs
+Content-Language: en-GB
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221019113552.22353-1-johan+linaro@kernel.org>
+ <20221019113552.22353-16-johan+linaro@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221019113552.22353-16-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-MTK:  N
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,
-        T_SPF_TEMPERROR,UNPARSEABLE_RELAY,URIBL_BLOCKED autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,29 +83,272 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2022-10-19 at 14:06 -0700, Bart Van Assche wrote:
-> On 10/19/22 12:50, Asutosh Das wrote:
-> > While adding the vops it occurred to me that it'd remain empty
-> > because 
-> > ufs-qcom
-> > doesn't need it. And I'm not sure how MTK register space is laid
-> > out.
-> > So please can you help add a vops in the next version?
-> > I can address the other comment and push the series.
+On 19/10/2022 14:35, Johan Hovold wrote:
+> The PCIe2 and PCIe3 controllers and PHYs on SC8280XP can be used in
+> 4-lane mode or as separate controllers and PHYs in 2-lane mode (e.g. as
+> PCIe2A and PCIe2B).
 > 
-> Please do not introduce new vops without adding at least one 
-> implementation of the vop in the same patch series. How about
-> letting 
-> MediaTek add more vops as necessary in a separate patch series and 
-> focusing in this patch series on UFSHCI 4.0 compliance?
+> Add support for fetching the 4-lane configuration from the TCSR and
+> programming the lane registers of the second port when in 4-lane mode.
 > 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>   drivers/phy/qualcomm/Kconfig             |   1 +
+>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 118 +++++++++++++++++++++++
+>   2 files changed, 119 insertions(+)
+> 
+> diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
+> index 5c98850f5a36..eb9ddc685b38 100644
+> --- a/drivers/phy/qualcomm/Kconfig
+> +++ b/drivers/phy/qualcomm/Kconfig
+> @@ -54,6 +54,7 @@ config PHY_QCOM_QMP
+>   	tristate "Qualcomm QMP PHY Driver"
+>   	depends on OF && COMMON_CLK && (ARCH_QCOM || COMPILE_TEST)
+>   	select GENERIC_PHY
+> +	select MFD_SYSCON
+>   	help
+>   	  Enable this to support the QMP PHY transceiver that is used
+>   	  with controllers such as PCIe, UFS, and USB on Qualcomm chips.
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index ea5228bd9ecc..e5bce4810bb5 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -10,6 +10,7 @@
+>   #include <linux/io.h>
+>   #include <linux/iopoll.h>
+>   #include <linux/kernel.h>
+> +#include <linux/mfd/syscon.h>
+>   #include <linux/module.h>
+>   #include <linux/of.h>
+>   #include <linux/of_device.h>
+> @@ -17,6 +18,7 @@
+>   #include <linux/phy/pcie.h>
+>   #include <linux/phy/phy.h>
+>   #include <linux/platform_device.h>
+> +#include <linux/regmap.h>
+>   #include <linux/regulator/consumer.h>
+>   #include <linux/reset.h>
+>   #include <linux/slab.h>
+> @@ -886,6 +888,10 @@ static const struct qmp_phy_init_tbl sc8280xp_qmp_gen3x2_pcie_rc_serdes_tbl[] =
+>   	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN, 0x14),
+>   };
+>   
+> +static const struct qmp_phy_init_tbl sc8280xp_qmp_gen3x4_pcie_serdes_4ln_tbl[] = {
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN, 0x1c),
+> +};
+> +
+>   static const struct qmp_phy_init_tbl sc8280xp_qmp_gen3x1_pcie_tx_tbl[] = {
+>   	QMP_PHY_INIT_CFG(QSERDES_V5_TX_PI_QEC_CTRL, 0x20),
+>   	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_1, 0x75),
+> @@ -1491,6 +1497,9 @@ struct qmp_phy_cfg {
+>   	const struct qmp_phy_cfg_tables *tables_rc;
+>   	const struct qmp_phy_cfg_tables *tables_ep;
+>   
+> +	const struct qmp_phy_init_tbl *serdes_4ln_tbl;
+> +	int serdes_4ln_num;
 
-I am not sure whether other SoC vendor's register definition follow
-this patch's arrangement or not. As I explain Mediatek treat UFS as a
-single IP and map whole UFS register address space one time.
-To speed up landing this series, please bypass this vops. I will send 
-a separate patch to add this vops
+Would it make more sense to change this into the proper 
+qmp_phy_cfg_tables entry and then use the existing API for programming 
+the table?
 
-Eddie
+> +
+>   	/* clock ids to be requested */
+>   	const char * const *clk_list;
+>   	int num_clks;
+> @@ -1518,6 +1527,7 @@ struct qmp_pcie {
+>   	struct device *dev;
+>   
+>   	const struct qmp_phy_cfg *cfg;
+> +	bool tcsr_4ln_config;
 
+As a matter of preference, this seems too specific. I'd rename it to 
+split_config or split_4ln_config.
+
+>   
+>   	void __iomem *serdes;
+>   	void __iomem *pcs;
+> @@ -1527,6 +1537,8 @@ struct qmp_pcie {
+>   	void __iomem *tx2;
+>   	void __iomem *rx2;
+>   
+> +	void __iomem *port_b;
+> +
+>   	struct clk *pipe_clk;
+>   	struct clk *pipediv2_clk;
+>   	struct clk_bulk_data *clks;
+> @@ -1932,6 +1944,44 @@ static const struct qmp_phy_cfg sc8280xp_qmp_gen3x2_pciephy_cfg = {
+>   	.phy_status		= PHYSTATUS,
+>   };
+>   
+> +static const struct qmp_phy_cfg sc8280xp_qmp_gen3x4_pciephy_cfg = {
+> +	.lanes			= 4,
+> +
+> +	.offsets		= &qmp_pcie_offsets_v5,
+> +
+> +	.tables = {
+> +		.serdes		= sc8280xp_qmp_pcie_serdes_tbl,
+> +		.serdes_num	= ARRAY_SIZE(sc8280xp_qmp_pcie_serdes_tbl),
+> +		.tx		= sc8280xp_qmp_gen3x2_pcie_tx_tbl,
+> +		.tx_num		= ARRAY_SIZE(sc8280xp_qmp_gen3x2_pcie_tx_tbl),
+> +		.rx		= sc8280xp_qmp_gen3x2_pcie_rx_tbl,
+> +		.rx_num		= ARRAY_SIZE(sc8280xp_qmp_gen3x2_pcie_rx_tbl),
+> +		.pcs		= sc8280xp_qmp_gen3x2_pcie_pcs_tbl,
+> +		.pcs_num	= ARRAY_SIZE(sc8280xp_qmp_gen3x2_pcie_pcs_tbl),
+> +		.pcs_misc	= sc8280xp_qmp_gen3x2_pcie_pcs_misc_tbl,
+> +		.pcs_misc_num	= ARRAY_SIZE(sc8280xp_qmp_gen3x2_pcie_pcs_misc_tbl),
+> +	},
+> +
+> +	.tables_rc = &(const struct qmp_phy_cfg_tables) {
+> +		.serdes		= sc8280xp_qmp_gen3x2_pcie_rc_serdes_tbl,
+> +		.serdes_num	= ARRAY_SIZE(sc8280xp_qmp_gen3x2_pcie_rc_serdes_tbl),
+> +	},
+> +
+> +	.serdes_4ln_tbl		= sc8280xp_qmp_gen3x4_pcie_serdes_4ln_tbl,
+> +	.serdes_4ln_num		= ARRAY_SIZE(sc8280xp_qmp_gen3x4_pcie_serdes_4ln_tbl),
+> +
+> +	.clk_list		= sc8280xp_pciephy_clk_l,
+> +	.num_clks		= ARRAY_SIZE(sc8280xp_pciephy_clk_l),
+> +	.reset_list		= sdm845_pciephy_reset_l,
+> +	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
+> +	.vreg_list		= qmp_phy_vreg_l,
+> +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> +	.regs			= sm8250_pcie_regs_layout,
+> +
+> +	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> +	.phy_status		= PHYSTATUS,
+> +};
+> +
+>   static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
+>   	.lanes			= 2,
+>   
+> @@ -2054,6 +2104,24 @@ static void qmp_pcie_configure(void __iomem *base,
+>   	qmp_pcie_configure_lane(base, tbl, num, 0xff);
+>   }
+>   
+> +static void qmp_pcie_init_port_b(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tbls)
+> +{
+> +	const struct qmp_phy_cfg *cfg = qmp->cfg;
+> +	const struct qmp_pcie_offsets *offs = cfg->offsets;
+> +	void __iomem *tx3, *rx3, *tx4, *rx4;
+> +
+> +	tx3 = qmp->port_b + offs->tx;
+> +	rx3 = qmp->port_b + offs->rx;
+> +	tx4 = qmp->port_b + offs->tx2;
+> +	rx4 = qmp->port_b + offs->rx2;
+> +
+> +	qmp_pcie_configure_lane(tx3, tbls->tx, tbls->tx_num, 1);
+> +	qmp_pcie_configure_lane(rx3, tbls->rx, tbls->rx_num, 1);
+> +
+> +	qmp_pcie_configure_lane(tx4, tbls->tx, tbls->tx_num, 2);
+> +	qmp_pcie_configure_lane(rx4, tbls->rx, tbls->rx_num, 2);
+
+I'd use BIT(2) and BIT(3) here. This would allow one to make a 
+difference between programming first pair of lanes and second pair of 
+lanes if necessary.
+
+
+> +}
+> +
+>   static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tbls)
+>   {
+>   	const struct qmp_phy_cfg *cfg = qmp->cfg;
+> @@ -2080,6 +2148,11 @@ static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_c
+>   
+>   	qmp_pcie_configure(pcs, tbls->pcs, tbls->pcs_num);
+>   	qmp_pcie_configure(pcs_misc, tbls->pcs_misc, tbls->pcs_misc_num);
+> +
+> +	if (cfg->lanes >= 4 && qmp->tcsr_4ln_config) {
+> +		qmp_pcie_configure(serdes, cfg->serdes_4ln_tbl, cfg->serdes_4ln_num);
+> +		qmp_pcie_init_port_b(qmp, tbls);
+> +	}
+
+As you have been refactoring this piece of code, maybe it would make 
+more sense to change qmp->tx/tx2 into an array of two elements? Then we 
+can extend it to 4 in this patch, and just always write the whole array 
+in a loop?
+
+>   }
+>   
+>   static int qmp_pcie_init(struct phy *phy)
+> @@ -2477,6 +2550,37 @@ static int qmp_pcie_parse_dt_legacy(struct qmp_pcie *qmp, struct device_node *np
+>   	return 0;
+>   }
+>   
+> +static int qmp_pcie_get_4ln_config(struct qmp_pcie *qmp)
+> +{
+> +	struct regmap *tcsr;
+> +	unsigned int args[2];
+> +	int ret;
+> +
+> +	tcsr = syscon_regmap_lookup_by_phandle_args(qmp->dev->of_node,
+> +						    "qcom,4ln-config-sel",
+> +						    ARRAY_SIZE(args), args);
+> +	if (IS_ERR(tcsr)) {
+> +		ret = PTR_ERR(tcsr);
+> +		if (ret == -ENOENT)
+> +			return 0;
+> +
+> +		dev_err(qmp->dev, "failed to lookup syscon: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	ret = regmap_test_bits(tcsr, args[0], BIT(args[1]));
+> +	if (ret < 0) {
+> +		dev_err(qmp->dev, "failed to read tcsr: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	qmp->tcsr_4ln_config = ret;
+> +
+> +	dev_dbg(qmp->dev, "4ln_config_sel = %d\n", qmp->tcsr_4ln_config);
+> +
+> +	return 0;
+> +}
+> +
+>   static int qmp_pcie_parse_dt(struct qmp_pcie *qmp)
+>   {
+>   	struct platform_device *pdev = to_platform_device(qmp->dev);
+> @@ -2484,10 +2588,15 @@ static int qmp_pcie_parse_dt(struct qmp_pcie *qmp)
+>   	const struct qmp_pcie_offsets *offs = cfg->offsets;
+>   	struct device *dev = qmp->dev;
+>   	void __iomem *base;
+> +	int ret;
+>   
+>   	if (!offs)
+>   		return -EINVAL;
+>   
+> +	ret = qmp_pcie_get_4ln_config(qmp);
+> +	if (ret)
+> +		return ret;
+> +
+>   	base = devm_platform_ioremap_resource(pdev, 0);
+>   	if (IS_ERR(base))
+>   		return PTR_ERR(base);
+> @@ -2503,6 +2612,12 @@ static int qmp_pcie_parse_dt(struct qmp_pcie *qmp)
+>   		qmp->rx2 = base + offs->rx2;
+>   	}
+>   
+> +	if (qmp->cfg->lanes >= 4 && qmp->tcsr_4ln_config) {
+> +		qmp->port_b = devm_platform_ioremap_resource(pdev, 1);
+> +		if (IS_ERR(qmp->port_b))
+> +			return PTR_ERR(qmp->port_b);
+> +	}
+> +
+>   	qmp->pipe_clk = devm_clk_get(dev, "pipe");
+>   	if (IS_ERR(qmp->pipe_clk)) {
+>   		return dev_err_probe(dev, PTR_ERR(qmp->pipe_clk),
+> @@ -2610,6 +2725,9 @@ static const struct of_device_id qmp_pcie_of_match_table[] = {
+>   	}, {
+>   		.compatible = "qcom,sc8280xp-qmp-gen3x2-pcie-phy",
+>   		.data = &sc8280xp_qmp_gen3x2_pciephy_cfg,
+> +	}, {
+> +		.compatible = "qcom,sc8280xp-qmp-gen3x4-pcie-phy",
+> +		.data = &sc8280xp_qmp_gen3x4_pciephy_cfg,
+>   	}, {
+>   		.compatible = "qcom,sdm845-qhp-pcie-phy",
+>   		.data = &sdm845_qhp_pciephy_cfg,
+
+-- 
+With best wishes
+Dmitry
 
