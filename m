@@ -2,98 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE1CF605497
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 02:51:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 316296054B8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 03:13:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229990AbiJTAvf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Oct 2022 20:51:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50190 "EHLO
+        id S229978AbiJTBNP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Oct 2022 21:13:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229896AbiJTAvf (ORCPT
+        with ESMTP id S229912AbiJTBNO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Oct 2022 20:51:35 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64F02140E7B;
-        Wed, 19 Oct 2022 17:51:34 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0143161846;
-        Thu, 20 Oct 2022 00:51:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC6EC433C1;
-        Thu, 20 Oct 2022 00:51:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666227093;
-        bh=+TEDTEQh8wfO5ZvO5TOR+gKPPLDgjveN6xby83dLwgY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ln+P9ANNtDhLdvHjiZsF4YPLsOfH3kYDNkdMiNnZ9z60VCuRxERbRNyaZfyjJ+gOX
-         7Uqkm6/o5HjCV1Ld3HJALGe3/FaHhlAQR6fcsmxyzhJMp3OruTs/QF03S+e4DnBJcZ
-         S1AS6OvvnWNhpoPYs8feBQnKy4Etphzl8JTVxdzAo1hFW3jDjg2j4CqiD4v9prDLmK
-         xtSLl634x0fpgg2HNEhJImALz54SJHLUPRaE90ALBko5aPHbc3A9T0kn+/+HN047E+
-         HpSXYgkbzu690CEFVnhYQWgDo+JzSqj64016gHtfF2iaHswrtFkGArHIyF89sBlOuE
-         iHCB+D/VPgABg==
-Date:   Wed, 19 Oct 2022 19:51:30 -0500
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>
-Subject: Re: [PATCH 1/2] venus: kconfig: Fix compile-testing on x86 platforms
-Message-ID: <20221020005130.w633hs5pnnwxxkpp@builder.lan>
-References: <20220713110351.827446-1-stanimir.varbanov@linaro.org>
- <20220713110351.827446-2-stanimir.varbanov@linaro.org>
+        Wed, 19 Oct 2022 21:13:14 -0400
+Received: from mailgw01.mediatek.com (unknown [60.244.123.138])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A10B7AF19D;
+        Wed, 19 Oct 2022 18:13:07 -0700 (PDT)
+X-UUID: 0fe5dc41e47847f08b84541e210c6aa5-20221020
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
+        h=Content-Transfer-Encoding:MIME-Version:Content-Type:References:In-Reply-To:Date:CC:To:From:Subject:Message-ID; bh=IvDCujvhbE3aZo/FeMAVUwJ8JGX8m9vTb6KyE20WYMc=;
+        b=MofHsGkUTdp8zVuIcyxtUPiklJHfizh2Eu6uFJtxYtKKlXmtgoeWlmoi2hF3lf/VvXMYMlMT19bqOaIKiCb62EUxUWhrGiKgnm1eyeUI2zm6GVX3ocriieX+pOMs8bFCtkM7ccpwd9Tz3yoabFgbFieJR7QhDDahTvUETTb+urU=;
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.12,REQID:61494afe-e006-4fdf-8e2a-cc4a16a8744d,IP:0,U
+        RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+        release,TS:0
+X-CID-META: VersionHash:62cd327,CLOUDID:f53a59a4-ebb2-41a8-a87c-97702aaf2e20,B
+        ulkID:nil,BulkQuantity:0,Recheck:0,SF:102,TC:nil,Content:0,EDM:-3,IP:nil,U
+        RL:0,File:nil,Bulk:nil,QS:nil,BEC:nil,COL:0
+X-UUID: 0fe5dc41e47847f08b84541e210c6aa5-20221020
+Received: from mtkexhb01.mediatek.inc [(172.21.101.102)] by mailgw01.mediatek.com
+        (envelope-from <eddie.huang@mediatek.com>)
+        (Generic MTA with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
+        with ESMTP id 1414796285; Thu, 20 Oct 2022 09:13:01 +0800
+Received: from mtkcas10.mediatek.inc (172.21.101.39) by
+ mtkmbs10n2.mediatek.inc (172.21.101.183) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.792.3;
+ Thu, 20 Oct 2022 09:13:00 +0800
+Received: from mtksdccf07 (172.21.84.99) by mtkcas10.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Thu, 20 Oct 2022 09:13:00 +0800
+Message-ID: <f8c7d70727c1d60f3dfc0325b6ed83b937c16a5a.camel@mediatek.com>
+Subject: Re: Fwd: [PATCH v2 06/17] ufs: core: mcq: Configure resource regions
+From:   Eddie Huang <eddie.huang@mediatek.com>
+To:     Bart Van Assche <bvanassche@acm.org>,
+        Asutosh Das <quic_asutoshd@quicinc.com>
+CC:     Can Guo <quic_cang@quicinc.com>, <quic_nitirawa@quicinc.com>,
+        <quic_rampraka@quicinc.com>, <quic_bhaskarv@quicinc.com>,
+        <quic_richardp@quicinc.com>, <linux-scsi@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_nguyenb@quicinc.com>,
+        <quic_xiaosenh@quicinc.com>, <avri.altman@wdc.com>,
+        <mani@kernel.org>, <beanhuo@micron.com>,
+        <stanley.chu@mediatek.com>, <liang-yen.wang@mediatek.com>
+Date:   Thu, 20 Oct 2022 09:13:00 +0800
+In-Reply-To: <b11cb7b4-2f4a-c6a2-82a5-c4372ff23610@acm.org>
+References: <11530912-36fd-8c69-4beb-de955eaae529@quicinc.com>
+         <6592c7fe-0828-6bb3-17a8-9db53aac1873@quicinc.com>
+         <83fe64628b6d44f28637a6a8ba6b21eb0848caaa.camel@mediatek.com>
+         <20221018014754.GE10252@asutoshd-linux1.qualcomm.com>
+         <12ab65aed221dec23451e9b60c0e00a4d9ef0df2.camel@mediatek.com>
+         <20221019195040.GA18511@asutoshd-linux1.qualcomm.com>
+         <b11cb7b4-2f4a-c6a2-82a5-c4372ff23610@acm.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220713110351.827446-2-stanimir.varbanov@linaro.org>
-X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-MTK:  N
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,
+        T_SPF_TEMPERROR,UNPARSEABLE_RELAY,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 13, 2022 at 02:03:50PM +0300, Stanimir Varbanov wrote:
-> Fix Venus driver COMPILE_TEST compilation on x86 platform by
-> adding a dependacy on V4L_PLATFORM_DRIVERS and select QCOM_SMEM
-> instead of depending on it.
+On Wed, 2022-10-19 at 14:06 -0700, Bart Van Assche wrote:
+> On 10/19/22 12:50, Asutosh Das wrote:
+> > While adding the vops it occurred to me that it'd remain empty
+> > because 
+> > ufs-qcom
+> > doesn't need it. And I'm not sure how MTK register space is laid
+> > out.
+> > So please can you help add a vops in the next version?
+> > I can address the other comment and push the series.
 > 
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> ---
->  drivers/media/platform/qcom/venus/Kconfig | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+> Please do not introduce new vops without adding at least one 
+> implementation of the vop in the same patch series. How about
+> letting 
+> MediaTek add more vops as necessary in a separate patch series and 
+> focusing in this patch series on UFSHCI 4.0 compliance?
 > 
-> diff --git a/drivers/media/platform/qcom/venus/Kconfig b/drivers/media/platform/qcom/venus/Kconfig
-> index bfd50e8f3421..95814b175c3e 100644
-> --- a/drivers/media/platform/qcom/venus/Kconfig
-> +++ b/drivers/media/platform/qcom/venus/Kconfig
-> @@ -1,12 +1,14 @@
->  config VIDEO_QCOM_VENUS
->  	tristate "Qualcomm Venus V4L2 encoder/decoder driver"
-> +	depends on V4L_PLATFORM_DRIVERS
->  	depends on V4L_MEM2MEM_DRIVERS
-> -	depends on VIDEO_DEV && QCOM_SMEM
-> +	depends on VIDEO_DEV
->  	depends on (ARCH_QCOM && IOMMU_DMA) || COMPILE_TEST
->  	select QCOM_MDT_LOADER if ARCH_QCOM
->  	select QCOM_SCM
->  	select VIDEOBUF2_DMA_CONTIG
->  	select V4L2_MEM2MEM_DEV
-> +	select QCOM_SMEM
 
-QCOM_SMEM is user selectable, and it's a fairly broadly used API. So I
-would prefer that we introduce stub functions in linux/soc/qcom/smem.h.
+I am not sure whether other SoC vendor's register definition follow
+this patch's arrangement or not. As I explain Mediatek treat UFS as a
+single IP and map whole UFS register address space one time.
+To speed up landing this series, please bypass this vops. I will send 
+a separate patch to add this vops
 
-Regards,
-Bjorn
+Eddie
 
->  	help
->  	  This is a V4L2 driver for Qualcomm Venus video accelerator
->  	  hardware. It accelerates encoding and decoding operations
-> -- 
-> 2.25.1
-> 
+
