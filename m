@@ -2,233 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C3EC3605782
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 08:43:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59F8D605897
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 09:31:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230182AbiJTGns (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 02:43:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34246 "EHLO
+        id S229931AbiJTHbQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 03:31:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230196AbiJTGnn (ORCPT
+        with ESMTP id S230058AbiJTHbP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 02:43:43 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7E501C1170;
-        Wed, 19 Oct 2022 23:43:35 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8899F619EE;
-        Thu, 20 Oct 2022 06:43:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE434C433C1;
-        Thu, 20 Oct 2022 06:43:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666248213;
-        bh=P98rue6EL+V6EJka1psQePQe1VwTN63BL+TzJqbRDKs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ISHlqu89GIBldf3hubnpjInbd0yT3HfVjtB4wq27T/1F9w1/EjGes5gvfy0CL7jwY
-         evODlNH1f62m7pL0Tdg/wqzz/K/hqHs7hcRqwOsnEHM6uD4GabRIGOu48+RG4a6/MR
-         PwBdthU+zUG3MWdLHejIZWXxjw/V7ARdvHTVz5Mz/peOGGYxSDQxI9eaVKOsDvUsUO
-         XuCFKsSlilDVtw2FuMVYXCMhEvF5+2UtziSGKHVx8UhcICrEcpdbQxrC77nblmRri4
-         Y7CxebnRRzr32eQEDJc2OfC9zHvtymQ9glN2/pBOh7RilJysnM3fEHfUgjDXDx3gyW
-         IiZlUJhisO24Q==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1olPGx-0005YY-5N; Thu, 20 Oct 2022 08:43:19 +0200
-Date:   Thu, 20 Oct 2022 08:43:19 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Thu, 20 Oct 2022 03:31:15 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59B6C6417;
+        Thu, 20 Oct 2022 00:31:11 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29K6rAga014100;
+        Thu, 20 Oct 2022 07:31:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=arzh7yQ8i1jTK4aVxl4RMW9/DlqhZBL6hjp6Z3CUfG8=;
+ b=O5DoE0F61Fv+GRrVRnA6nBOH02nNlt6F4c5p9HHqlRA1Q+IMYEberqlI+CJs+Pv620HV
+ ioLuFI0DYoyohTQx8kX4ztCkh3GhjaixsJOpby/NAdCJ6LO1npJTjmq4h5G0/Cr6sT6o
+ kUk/BHdXGT72lXTPo44CvW+X0pMDhz26qNaum5Bn45+Xg0JBeb3+iE0iBm/YGAZhuIFv
+ yh9UhWVZZDO46aDrKYuZlesTokMpiwOlma6C4MR+ef49EoAALuOSHQWOzHcX6yx7Dm6o
+ CGdUqncX7ekO15CokXfiinhab3LeceJepXXi8IPNr0iH3JinS1X5Ene1M03svNFOXGBy rw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3k9yq1mpys-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 20 Oct 2022 07:31:00 +0000
+Received: from pps.filterd (NALASPPMTA04.qualcomm.com [127.0.0.1])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 29K7QZu6011567;
+        Thu, 20 Oct 2022 07:30:59 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by NALASPPMTA04.qualcomm.com (PPS) with ESMTPS id 3k7nxky2n0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 20 Oct 2022 07:30:59 +0000
+Received: from NALASPPMTA04.qualcomm.com (NALASPPMTA04.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 29K7QrYf012112;
+        Thu, 20 Oct 2022 07:30:59 GMT
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (PPS) with ESMTPS id 29K7UwWX019032
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 20 Oct 2022 07:30:59 +0000
+Received: from hu-ppareek-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Thu, 20 Oct 2022 00:30:54 -0700
+From:   Parikshit Pareek <quic_ppareek@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 15/15] phy: qcom-qmp-pcie: add support for sc8280xp
- 4-lane PHYs
-Message-ID: <Y1DuB6hzb3V5Lqdy@hovoldconsulting.com>
-References: <20221019113552.22353-1-johan+linaro@kernel.org>
- <20221019113552.22353-16-johan+linaro@kernel.org>
- <2902e7e8-eddf-149c-06fd-86b85d8af326@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        "Shazad Hussain" <quic_shazhuss@quicinc.com>,
+        Brian Masney <bmasney@redhat.com>,
+        "Johan Hovold" <johan@kernel.org>,
+        Parikshit Pareek <quic_ppareek@quicinc.com>
+Subject: [PATCH v6 0/2] arm64: dts: qcom: add dts for sa8540p-ride board
+Date:   Thu, 20 Oct 2022 13:00:34 +0530
+Message-ID: <20221020073036.16656-1-quic_ppareek@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2902e7e8-eddf-149c-06fd-86b85d8af326@linaro.org>
-X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 74WTATU7Ehm2L8tX-ZcUlv1Bt9Ivr4TW
+X-Proofpoint-GUID: 74WTATU7Ehm2L8tX-ZcUlv1Bt9Ivr4TW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-20_01,2022-10-19_04,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1011 malwarescore=0 impostorscore=0 phishscore=0 spamscore=0
+ mlxlogscore=691 bulkscore=0 adultscore=0 mlxscore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210200043
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 20, 2022 at 06:43:47AM +0300, Dmitry Baryshkov wrote:
-> On 19/10/2022 14:35, Johan Hovold wrote:
-> > The PCIe2 and PCIe3 controllers and PHYs on SC8280XP can be used in
-> > 4-lane mode or as separate controllers and PHYs in 2-lane mode (e.g. as
-> > PCIe2A and PCIe2B).
-> > 
-> > Add support for fetching the 4-lane configuration from the TCSR and
-> > programming the lane registers of the second port when in 4-lane mode.
-> > 
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > ---
-> >   drivers/phy/qualcomm/Kconfig             |   1 +
-> >   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 118 +++++++++++++++++++++++
-> >   2 files changed, 119 insertions(+)
-> > 
-> > diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
-> > index 5c98850f5a36..eb9ddc685b38 100644
-> > --- a/drivers/phy/qualcomm/Kconfig
-> > +++ b/drivers/phy/qualcomm/Kconfig
-> > @@ -54,6 +54,7 @@ config PHY_QCOM_QMP
-> >   	tristate "Qualcomm QMP PHY Driver"
-> >   	depends on OF && COMMON_CLK && (ARCH_QCOM || COMPILE_TEST)
-> >   	select GENERIC_PHY
-> > +	select MFD_SYSCON
-> >   	help
-> >   	  Enable this to support the QMP PHY transceiver that is used
-> >   	  with controllers such as PCIe, UFS, and USB on Qualcomm chips.
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> > index ea5228bd9ecc..e5bce4810bb5 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> > @@ -10,6 +10,7 @@
-> >   #include <linux/io.h>
-> >   #include <linux/iopoll.h>
-> >   #include <linux/kernel.h>
-> > +#include <linux/mfd/syscon.h>
-> >   #include <linux/module.h>
-> >   #include <linux/of.h>
-> >   #include <linux/of_device.h>
-> > @@ -17,6 +18,7 @@
-> >   #include <linux/phy/pcie.h>
-> >   #include <linux/phy/phy.h>
-> >   #include <linux/platform_device.h>
-> > +#include <linux/regmap.h>
-> >   #include <linux/regulator/consumer.h>
-> >   #include <linux/reset.h>
-> >   #include <linux/slab.h>
-> > @@ -886,6 +888,10 @@ static const struct qmp_phy_init_tbl sc8280xp_qmp_gen3x2_pcie_rc_serdes_tbl[] =
-> >   	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN, 0x14),
-> >   };
-> >   
-> > +static const struct qmp_phy_init_tbl sc8280xp_qmp_gen3x4_pcie_serdes_4ln_tbl[] = {
-> > +	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN, 0x1c),
-> > +};
-> > +
-> >   static const struct qmp_phy_init_tbl sc8280xp_qmp_gen3x1_pcie_tx_tbl[] = {
-> >   	QMP_PHY_INIT_CFG(QSERDES_V5_TX_PI_QEC_CTRL, 0x20),
-> >   	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_1, 0x75),
-> > @@ -1491,6 +1497,9 @@ struct qmp_phy_cfg {
-> >   	const struct qmp_phy_cfg_tables *tables_rc;
-> >   	const struct qmp_phy_cfg_tables *tables_ep;
-> >   
-> > +	const struct qmp_phy_init_tbl *serdes_4ln_tbl;
-> > +	int serdes_4ln_num;
-> 
-> Would it make more sense to change this into the proper 
-> qmp_phy_cfg_tables entry and then use the existing API for programming 
-> the table?
+This series introduces the Qualcomm sa8540p-ride automotive development
+  board, also called as Qdrive-3 board.
 
-No, there is just one serdes register update needed when in 4-lane mode,
-besides programming tx/rx for the second port. Adding a third struct
-qmp_phy_cfg_tables for this seems like overkill and would lead to a more
-convoluted implementation of the programming sequence.
+  Change in v6:
+  - Introduced the new dts for the board, rather than moving common nodes
+    between this one and SA8295 ADP board into dtsi file(Bjorn)
+  - Drop 'adp' term to imply it being unrelated with ADP board(Internal
+    discussion with Bjorn)
+  - Removed Acked-by(Krzysztof) tag in dt-binding document, due to content
+    change.
+  - Not including Reviewed-by(Krzysztof), because of the content change.
 
-And you can't add it two one of the existing ones, as your comment seems
-to suggest.
+  Change in v5:
+  - Moved the usb and ufs nodes from sa8540p-adp.dtsi file to respective
+    board specific dts files: sa8295p-adp.dts and sa8540p-adp-ride.dts.
+    Took inputs from Shazad Hussain in this regard(John)
+  - Added more description of the board differences(John)
+  - Not including Reviewed-by for Krzysztof, because of the new changes to
+    be reviewed.
+  - Removed Reported-by tag(John).
 
-The gen3x4 PHYs can be in either 4-lane or 2-lane mode depending on the
-TCSR configuration. Port A is programmed identically in both cases
-except for this serdes register, and in 4-lane mode tx/rx also needs
-to be programmed for port B.
- 
-> > +
-> >   	/* clock ids to be requested */
-> >   	const char * const *clk_list;
-> >   	int num_clks;
-> > @@ -1518,6 +1527,7 @@ struct qmp_pcie {
-> >   	struct device *dev;
-> >   
-> >   	const struct qmp_phy_cfg *cfg;
-> > +	bool tcsr_4ln_config;
-> 
-> As a matter of preference, this seems too specific. I'd rename it to 
-> split_config or split_4ln_config.
+  Changes in v4:
+   - Removed the ufs_card_hc node, as it is not mounted on Qdrive-3 board.
+   - Removed usb_1 relared nodes, as usb1 doesn't have any port connected
+     on Qdrive3 board.
+   - Added Reported-by tag for Shazad(for ufs and usb_1 node removals)
 
-I'm afraid those names do not make much sense. This TCSR register
-controls whether the PHY is in 4-lane mode (instead of 2-lane mode).
+  Changes in v3:
+   - Added Acked-by tag (Krzysztof)
+   - Renamed dtsi to sa8540p-adp.dtsi (John)
+   - Removed copyright from sa8295-adp.dts and sa8295-adp.dtsi(John)
+   - Added cover letter
 
-> >   
-> >   	void __iomem *serdes;
-> >   	void __iomem *pcs;
-> > @@ -1527,6 +1537,8 @@ struct qmp_pcie {
-> >   	void __iomem *tx2;
-> >   	void __iomem *rx2;
-> >   
-> > +	void __iomem *port_b;
-> > +
-> >   	struct clk *pipe_clk;
-> >   	struct clk *pipediv2_clk;
-> >   	struct clk_bulk_data *clks;
-> > @@ -1932,6 +1944,44 @@ static const struct qmp_phy_cfg sc8280xp_qmp_gen3x2_pciephy_cfg = {
-> >   	.phy_status		= PHYSTATUS,
-> >   };
-  
-> > +static void qmp_pcie_init_port_b(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tbls)
-> > +{
-> > +	const struct qmp_phy_cfg *cfg = qmp->cfg;
-> > +	const struct qmp_pcie_offsets *offs = cfg->offsets;
-> > +	void __iomem *tx3, *rx3, *tx4, *rx4;
-> > +
-> > +	tx3 = qmp->port_b + offs->tx;
-> > +	rx3 = qmp->port_b + offs->rx;
-> > +	tx4 = qmp->port_b + offs->tx2;
-> > +	rx4 = qmp->port_b + offs->rx2;
-> > +
-> > +	qmp_pcie_configure_lane(tx3, tbls->tx, tbls->tx_num, 1);
-> > +	qmp_pcie_configure_lane(rx3, tbls->rx, tbls->rx_num, 1);
-> > +
-> > +	qmp_pcie_configure_lane(tx4, tbls->tx, tbls->tx_num, 2);
-> > +	qmp_pcie_configure_lane(rx4, tbls->rx, tbls->rx_num, 2);
-> 
-> I'd use BIT(2) and BIT(3) here. This would allow one to make a 
-> difference between programming first pair of lanes and second pair of 
-> lanes if necessary.
+  change in v2:
+  - Make dt-binding patch as the first one in the patch set
+  - Add , after year 2022, in the license header
 
-No, the tx and tx registers of the second port should be programmed
-identically to that of the first port.
+  Initial version:
+  - Move the common nodes to sa8540p-adp.dtsi, and create qrive-3 board
+    specific file sa8540p-adp-ride.dts.
 
-> > +}
-> > +
-> >   static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tbls)
-> >   {
-> >   	const struct qmp_phy_cfg *cfg = qmp->cfg;
-> > @@ -2080,6 +2148,11 @@ static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_c
-> >   
-> >   	qmp_pcie_configure(pcs, tbls->pcs, tbls->pcs_num);
-> >   	qmp_pcie_configure(pcs_misc, tbls->pcs_misc, tbls->pcs_misc_num);
-> > +
-> > +	if (cfg->lanes >= 4 && qmp->tcsr_4ln_config) {
-> > +		qmp_pcie_configure(serdes, cfg->serdes_4ln_tbl, cfg->serdes_4ln_num);
-> > +		qmp_pcie_init_port_b(qmp, tbls);
-> > +	}
-> 
-> As you have been refactoring this piece of code, maybe it would make 
-> more sense to change qmp->tx/tx2 into an array of two elements? Then we 
-> can extend it to 4 in this patch, and just always write the whole array 
-> in a loop?
 
-No, I don't think that would be an improvement and would obscure the
-fact that we're programming two otherwise identical ports (e.g. tx1 and
-tx2 of port B is used for the third and fourth lanes).
+Parikshit Pareek (2):
+  dt-bindings: arm: qcom: Document additional sa8540p device
+  arm64: dts: qcom: add SA8540P ride(Qdrive-3)
 
-Note that the above conditional encodes the difference in programming
-sequence between 4-lane and 2-lane mode I described above (one serdes
-register difference + tx/rx of port b).
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/sa8540p-ride.dts     | 309 ++++++++++++++++++
+ 3 files changed, 311 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sa8540p-ride.dts
 
-Johan
+-- 
+2.17.1
+
