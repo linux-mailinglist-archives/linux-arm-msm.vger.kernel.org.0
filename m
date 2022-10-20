@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43993606B99
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 00:51:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3839E606B9A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 00:51:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229894AbiJTWvm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 18:51:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39840 "EHLO
+        id S230133AbiJTWvo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 18:51:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230020AbiJTWvm (ORCPT
+        with ESMTP id S230111AbiJTWvn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 18:51:42 -0400
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4801A22D585
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 15:51:40 -0700 (PDT)
-Received: by mail-qv1-xf2f.google.com with SMTP id y10so685015qvo.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 15:51:40 -0700 (PDT)
+        Thu, 20 Oct 2022 18:51:43 -0400
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C145222C83F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 15:51:41 -0700 (PDT)
+Received: by mail-qt1-x82f.google.com with SMTP id l28so611811qtv.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 15:51:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ArlJ/v0OoUZQ/Kd5LoDRNejf0AwgsLsMBPFeV0K0yT8=;
-        b=s2muhp2jpEdajgL8hbdN5bSwuOkDtcTnc7UcjWCdWmQsZ1QXZcYKYhGAnFyrtl0ZGT
-         Ytucu2QvomjartNXcMa+7X+GwSKNhxcTpHyN/Rmzg5YgBWYsNk6OrYOFbQEVAoxN/WPv
-         B5OHfLErjEmGzBEsKmNba4FRyflq6nOYtUaVRAAZBIQ2JHw8p0JFSYGttQ4qo7SNOIY7
-         pwgmuDy7qsgEERgpcht3gyjZzOL0ALgw9DQkfEPSHVUZ4zfrYUab8tbgAA+2pNdTI1mL
-         bLQrOtqdXzzZqlf5T+ekk9Wc1YX99KFm5DIgEqRg2B7CJkj1q7xiGdPmvLxAPwSju6pb
-         DgqQ==
+        bh=+d0WBFX56sckxA0+6YMdtrdXnrPlYGDpcEgp9mhKEiY=;
+        b=vv1bq57sdTPx6QfN0/v613njWm0K6a4DKgxVJja8lkZeMx0Vt6GaA3fNCAXZhUb3t1
+         eEF18Re/UO6ytjevHLkxRcYRN4N2x+4LxBacxIHtCKVXpFmj0In0iqLAhVJgxd+TNG3a
+         mKhm3J+iuuVi+5N18TN/VNyOCbqsK2CQffu6J552wqzVI7cykT8puGaTyihiZTlKcbPE
+         yQhQngULjLo6al0uN+wuqNj6OXJh/fbbygTvqBf/LGJkSs1wZw/YhqaVXrB0LSox3iXk
+         mL4VE29knSMaGj8BKjkRN80pYDOBTUpHBqszQC1vDAABlqj3d6zbeP2uUqjmL/ybM7Iv
+         066A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ArlJ/v0OoUZQ/Kd5LoDRNejf0AwgsLsMBPFeV0K0yT8=;
-        b=WadprVqZNUugtQGTj2Ngd7UwsEiT+l44dj1UxqO11f/m5zWi68Oq6F3exYhT8PJO23
-         U2603+s9zIs0V2ExjltFsbVZO+h1pDzf86syjEe55V38f27VR417DqOmmqFHNVy8mY6E
-         +HsYLuVBz0LkmYre61MSqinbIqOI/KX/7nPdPlPVdDZ1yTAS0DgBaJHXlPNyM7eDX+7S
-         bIZ0wTdVNs5ktcKfMevUHRSBKi7HrhOx9r8mxAnLLBpstf4HcrYcjWGeqYQmD6hJWedY
-         4RCmCeaKgVXTaNjq2p2pE6AmTNo4kyA4oRQXgYrWr9mdUjkhl9Kzh52G9T8NrE4mG1Y7
-         tRuw==
-X-Gm-Message-State: ACrzQf2DLkUQF4xkKQO5Qx9AxlZ+CjXWXUAV8I9YhKn4pHmc2U8buVZA
-        GemVZj7u5ZOzZkusijU83X5XBg==
-X-Google-Smtp-Source: AMsMyM6r0WgMrzmuORUynOrL21SYXuqhkpq5t0qpOW6nEbsnb+C4TSEB8TJCCG90Hv1D9SRiqBOu/Q==
-X-Received: by 2002:ad4:5fc8:0:b0:4b7:6ca0:adb7 with SMTP id jq8-20020ad45fc8000000b004b76ca0adb7mr6592615qvb.111.1666306299444;
-        Thu, 20 Oct 2022 15:51:39 -0700 (PDT)
+        bh=+d0WBFX56sckxA0+6YMdtrdXnrPlYGDpcEgp9mhKEiY=;
+        b=JCMKSk60CikN5fjhUUs/56uj2YQ/ZV1WE3FnR7pQqx+oqJKD3bAiSm2VvPmd4goM2J
+         3EpBpmjpjSKb46x3/wsSy7fOCIS0B17ZI3HDHZHzRP+AccbqiTHdr/3N4CHSon+wM6Dv
+         KZZz94OtbdMRO2xA8qRyJx7+c673UomJdBm2i3VGyy+VzwEvUVWF/WJzLBiqGa/ZLfpo
+         2nFuxTU2r9B2gjok9y5vZ96SyXp9fnQk7r1YoHkcY5XlKW7MIB3NVOICp9jnxQ0J5Vnx
+         /SuuTQGVS06EuFoX6Cwr4Y15LjOcKcLEyYbi94RPv5VpRt/LXwWFb+BuVJ55OhaJKo3i
+         Ntcw==
+X-Gm-Message-State: ACrzQf09lz4pEboSPfrq92fSFNWtHl+P9E6jKthk0vctx1zPHDh4lVRJ
+        oE3oBK7NViEOP8vcdHwLt1FHZQ==
+X-Google-Smtp-Source: AMsMyM6DETQrkZmxclQrHqqT2YjHFveSLmkMum6CjJJVGLohI1vRFe6XzwPtawT3Y5T+956fSnxJyA==
+X-Received: by 2002:a05:622a:2cf:b0:39c:e120:4acc with SMTP id a15-20020a05622a02cf00b0039ce1204accmr13439784qtx.152.1666306300921;
+        Thu, 20 Oct 2022 15:51:40 -0700 (PDT)
 Received: from krzk-bin.MSRM (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
-        by smtp.gmail.com with ESMTPSA id ew5-20020a05622a514500b0039cc9d24843sm6903479qtb.66.2022.10.20.15.51.38
+        by smtp.gmail.com with ESMTPSA id ew5-20020a05622a514500b0039cc9d24843sm6903479qtb.66.2022.10.20.15.51.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Oct 2022 15:51:38 -0700 (PDT)
+        Thu, 20 Oct 2022 15:51:40 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -62,9 +62,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v4 1/3] arm64: dts: qcom: sc7180-trogdor-homestar: fully configure secondary I2S pins
-Date:   Thu, 20 Oct 2022 18:51:33 -0400
-Message-Id: <20221020225135.31750-2-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v4 2/3] arm64: dts: qcom: sc7180: revert "arm64: dts: qcom: sc7180: Avoid glitching SPI CS at bootup on trogdor"
+Date:   Thu, 20 Oct 2022 18:51:34 -0400
+Message-Id: <20221020225135.31750-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221020225135.31750-1-krzysztof.kozlowski@linaro.org>
 References: <20221020225135.31750-1-krzysztof.kozlowski@linaro.org>
@@ -80,53 +80,92 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Trogdor Homestar DTSI adds additional GPIO52 pin to secondary I2S pins
-("sec_mi2s_active") and configures it to "mi2s_1" function.
+This reverts commit e440e30e26dd6b0424002ad0ddcbbcea783efd85 because it
+is not a reliable way of fixing SPI CS glitch and it depends on specific
+Linux kernel pin controller driver behavior.
 
-The Trogdor DTSI (which is included by Homestar) configures drive
-strength and bias for all "sec_mi2s_active" pins, thus the intention was
-to apply this configuration also to GPIO52 on Homestar.
+This behavior of kernel driver was changed in commit b991f8c3622c
+("pinctrl: core: Handling pinmux and pinconf separately") thus
+effectively the DTS fix stopped being effective.
 
-Reported-by: Doug Anderson <dianders@chromium.org>
+Proper solution for the glitching SPI chip select must be implemented in
+the drivers, not via ordering of entries in DTS, and is already
+introduced in commit d21f4b7ffc22 ("pinctrl: qcom: Avoid glitching lines
+when we first mux to output").
+
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Fixes: be0416a3f917 ("arm64: dts: qcom: Add sc7180-trogdor-homestar")
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Douglas Anderson <dianders@chromium.org>
 
 ---
 
 Changes since v3:
-1. None
+1. Add tags.
+2. Update commig msg - mention pinctrl driver fix for glitch.
 
 Changes since v2:
-1. Add tags.
-
-Changes since v1:
 1. New patch
 
 Not tested on hardware.
 
 Cc: Doug Anderson <dianders@chromium.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 27 +++-----------------
+ 1 file changed, 3 insertions(+), 24 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-index 7fcff4eddd3a..8264b8d5e778 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-@@ -194,6 +194,12 @@ pinmux {
- 		pins = "gpio49", "gpio50", "gpio51", "gpio52";
- 		function = "mi2s_1";
- 	};
-+
-+	pinconf {
-+		pins = "gpio49", "gpio50", "gpio51", "gpio52";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 1a1c346d619c..33817358ebb0 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -880,17 +880,17 @@ &sdhc_2 {
  };
  
- &ts_reset_l {
+ &spi0 {
+-	pinctrl-0 = <&qup_spi0_cs_gpio_init_high>, <&qup_spi0_cs_gpio>;
++	pinctrl-0 = <&qup_spi0_cs_gpio>;
+ 	cs-gpios = <&tlmm 37 GPIO_ACTIVE_LOW>;
+ };
+ 
+ &spi6 {
+-	pinctrl-0 = <&qup_spi6_cs_gpio_init_high>, <&qup_spi6_cs_gpio>;
++	pinctrl-0 = <&qup_spi6_cs_gpio>;
+ 	cs-gpios = <&tlmm 62 GPIO_ACTIVE_LOW>;
+ };
+ 
+ ap_spi_fp: &spi10 {
+-	pinctrl-0 = <&qup_spi10_cs_gpio_init_high>, <&qup_spi10_cs_gpio>;
++	pinctrl-0 = <&qup_spi10_cs_gpio>;
+ 	cs-gpios = <&tlmm 89 GPIO_ACTIVE_LOW>;
+ 
+ 	cros_ec_fp: ec@0 {
+@@ -1422,27 +1422,6 @@ pinconf {
+ 		};
+ 	};
+ 
+-	qup_spi0_cs_gpio_init_high: qup-spi0-cs-gpio-init-high {
+-		pinconf {
+-			pins = "gpio37";
+-			output-high;
+-		};
+-	};
+-
+-	qup_spi6_cs_gpio_init_high: qup-spi6-cs-gpio-init-high {
+-		pinconf {
+-			pins = "gpio62";
+-			output-high;
+-		};
+-	};
+-
+-	qup_spi10_cs_gpio_init_high: qup-spi10-cs-gpio-init-high {
+-		pinconf {
+-			pins = "gpio89";
+-			output-high;
+-		};
+-	};
+-
+ 	qup_uart3_sleep: qup-uart3-sleep {
+ 		pinmux {
+ 			pins = "gpio38", "gpio39",
 -- 
 2.34.1
 
