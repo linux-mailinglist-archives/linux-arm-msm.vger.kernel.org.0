@@ -2,93 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58315605E43
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 12:56:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FE8B605E58
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 12:59:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229943AbiJTK4A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 06:56:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54576 "EHLO
+        id S229994AbiJTK7y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 06:59:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229514AbiJTKz7 (ORCPT
+        with ESMTP id S229722AbiJTK7w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 06:55:59 -0400
-Received: from mx01.omp.ru (mx01.omp.ru [90.154.21.10])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85A051DEC14;
-        Thu, 20 Oct 2022 03:55:56 -0700 (PDT)
-Received: from [192.168.1.103] (31.173.87.29) by msexch01.omp.ru (10.188.4.12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.986.14; Thu, 20 Oct
- 2022 13:55:44 +0300
-Subject: Re: [PATCH 03/21] drm/ingenic: Don't set struct drm_driver.lastclose
-To:     Thomas Zimmermann <tzimmermann@suse.de>, <daniel@ffwll.ch>,
-        <airlied@gmail.com>, <sam@ravnborg.org>, <javierm@redhat.com>,
-        <mripard@kernel.org>, <maarten.lankhorst@linux.intel.com>
-CC:     <dri-devel@lists.freedesktop.org>, <amd-gfx@lists.freedesktop.org>,
-        <linux-aspeed@lists.ozlabs.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <etnaviv@lists.freedesktop.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-hyperv@vger.kernel.org>, <intel-gfx@lists.freedesktop.org>,
-        <linux-mips@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
-        <linux-amlogic@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        <nouveau@lists.freedesktop.org>,
-        <virtualization@lists.linux-foundation.org>,
-        <spice-devel@lists.freedesktop.org>,
-        <linux-renesas-soc@vger.kernel.org>,
-        <linux-rockchip@lists.infradead.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-sunxi@lists.linux.dev>, <linux-tegra@vger.kernel.org>,
-        <xen-devel@lists.xenproject.org>
-References: <20221020103755.24058-1-tzimmermann@suse.de>
- <20221020103755.24058-4-tzimmermann@suse.de>
-From:   Sergey Shtylyov <s.shtylyov@omp.ru>
-Organization: Open Mobile Platform
-Message-ID: <013ea55b-3d51-c89c-eff8-b8d355ded352@omp.ru>
-Date:   Thu, 20 Oct 2022 13:55:44 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        Thu, 20 Oct 2022 06:59:52 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9521A2F001;
+        Thu, 20 Oct 2022 03:59:51 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 323A861AF6;
+        Thu, 20 Oct 2022 10:59:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3E6C433D6;
+        Thu, 20 Oct 2022 10:59:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1666263590;
+        bh=oNTahkkZ6EJ/BED5DDzmzj9s5hQoDekb/BIBiCvXL04=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=GAneG2oc8jEpfBXNZcINY8mPfqRun9rCjs2s+ctvZqqTjpqmE3wsnjWWsfjED+HJn
+         fTNMJN/ptqz9FAneZtb5g2EezpCVMhhG7w7rjqYBpT0VixHap1C/j27J8JSRAmRsVr
+         ijran+p0y7xHfvK/YC9dsgDe4lIjS7eidIEIWP5KybDUJ3kvdEsLILNDURjxZJwInc
+         NYlKw/yqMmr69gjxs8e5pQsh2Tdfd3ldFtqLs4QxQVuzNujrjj36T/dlnrWZyefFqn
+         vjlAtOQjbfBDoMaAfhq8Z5YBv2vLFNlU+MFD+Mz24blovOlCMDVlQkGNKFC1qUVm/i
+         dS+zgsDhjXyEQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1olTGy-0002Ib-EE; Thu, 20 Oct 2022 12:59:37 +0200
+Date:   Thu, 20 Oct 2022 12:59:36 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 15/15] phy: qcom-qmp-pcie: add support for sc8280xp
+ 4-lane PHYs
+Message-ID: <Y1EqGPc/UzZJmGcz@hovoldconsulting.com>
+References: <20221019113552.22353-1-johan+linaro@kernel.org>
+ <20221019113552.22353-16-johan+linaro@kernel.org>
+ <2902e7e8-eddf-149c-06fd-86b85d8af326@linaro.org>
+ <Y1DuB6hzb3V5Lqdy@hovoldconsulting.com>
+ <004a6ab9-690b-db13-08a9-c42d09368814@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20221020103755.24058-4-tzimmermann@suse.de>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [31.173.87.29]
-X-ClientProxiedBy: msexch01.omp.ru (10.188.4.12) To msexch01.omp.ru
- (10.188.4.12)
-X-KSE-ServerInfo: msexch01.omp.ru, 9
-X-KSE-AntiSpam-Interceptor-Info: scan successful
-X-KSE-AntiSpam-Version: 5.9.20, Database issued on: 10/20/2022 10:25:24
-X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
-X-KSE-AntiSpam-Method: none
-X-KSE-AntiSpam-Rate: 59
-X-KSE-AntiSpam-Info: Lua profiles 173210 [Oct 20 2022]
-X-KSE-AntiSpam-Info: Version: 5.9.20.0
-X-KSE-AntiSpam-Info: Envelope from: s.shtylyov@omp.ru
-X-KSE-AntiSpam-Info: LuaCore: 502 502 69dee8ef46717dd3cb3eeb129cb7cc8dab9e30f6
-X-KSE-AntiSpam-Info: {rep_avail}
-X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
-X-KSE-AntiSpam-Info: {relay has no DNS name}
-X-KSE-AntiSpam-Info: {SMTP from is not routable}
-X-KSE-AntiSpam-Info: {Found in DNSBL: 31.173.87.29 in (user)
- b.barracudacentral.org}
-X-KSE-AntiSpam-Info: omp.ru:7.1.1;127.0.0.199:7.1.2;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1
-X-KSE-AntiSpam-Info: ApMailHostAddress: 31.173.87.29
-X-KSE-AntiSpam-Info: {DNS response errors}
-X-KSE-AntiSpam-Info: Rate: 59
-X-KSE-AntiSpam-Info: Status: not_detected
-X-KSE-AntiSpam-Info: Method: none
-X-KSE-AntiSpam-Info: Auth:dmarc=temperror header.from=omp.ru;spf=temperror
- smtp.mailfrom=omp.ru;dkim=none
-X-KSE-Antiphishing-Info: Clean
-X-KSE-Antiphishing-ScanningType: Heuristic
-X-KSE-Antiphishing-Method: None
-X-KSE-Antiphishing-Bases: 10/20/2022 10:32:00
-X-KSE-AttachmentFiltering-Interceptor-Info: protection disabled
-X-KSE-Antivirus-Interceptor-Info: scan successful
-X-KSE-Antivirus-Info: Clean, bases: 10/20/2022 7:12:00 AM
-X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <004a6ab9-690b-db13-08a9-c42d09368814@linaro.org>
+X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -96,20 +67,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello!
+On Thu, Oct 20, 2022 at 12:32:13PM +0300, Dmitry Baryshkov wrote:
+> On 20/10/2022 09:43, Johan Hovold wrote:
+> > On Thu, Oct 20, 2022 at 06:43:47AM +0300, Dmitry Baryshkov wrote:
+> >> On 19/10/2022 14:35, Johan Hovold wrote:
+> >>> The PCIe2 and PCIe3 controllers and PHYs on SC8280XP can be used in
+> >>> 4-lane mode or as separate controllers and PHYs in 2-lane mode (e.g. as
+> >>> PCIe2A and PCIe2B).
+> >>>
+> >>> Add support for fetching the 4-lane configuration from the TCSR and
+> >>> programming the lane registers of the second port when in 4-lane mode.
+> >>>
+> >>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-On 10/20/22 1:37 PM, Thomas Zimmermann wrote:
-
-> Don't set struct drm_mode_config.output_poll_changed. It's used to
-> inform the fbdev console about conncetor changes. But as ingenic
-
-   Connector. :-)
-
-> uses generic fbdev emulation, the console is being informed by the
-> DRM client helpers already. See the calls to drm_client_dev_hotplug()
-> in drm_probe_helper.c.
+> > The gen3x4 PHYs can be in either 4-lane or 2-lane mode depending on the
+> > TCSR configuration. Port A is programmed identically in both cases
+> > except for this serdes register, and in 4-lane mode tx/rx also needs
+> > to be programmed for port B.
+> >   
+> >>> +
+> >>>    	/* clock ids to be requested */
+> >>>    	const char * const *clk_list;
+> >>>    	int num_clks;
+> >>> @@ -1518,6 +1527,7 @@ struct qmp_pcie {
+> >>>    	struct device *dev;
+> >>>    
+> >>>    	const struct qmp_phy_cfg *cfg;
+> >>> +	bool tcsr_4ln_config;
+> >>
+> >> As a matter of preference, this seems too specific. I'd rename it to
+> >> split_config or split_4ln_config.
+> > 
+> > I'm afraid those names do not make much sense. This TCSR register
+> > controls whether the PHY is in 4-lane mode (instead of 2-lane mode).
 > 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-[...]
+> Well, we just need the info that it's 4-lane. It doesn't really matter 
+> if this information comes from TCSR, DT or e.g. fuses. I'd say that TCSR 
+> is a platform detail. Thus I'm suggesting a more generic name.
 
-MBR, Sergey
+No, it's a specific configuration flag for this (and possibly coming
+platforms) to control whether the two PHY ports are used as individual x2
+PHYs or as a combined x4 PHY.
+
+It's not just about number of lanes and can definitely not come from DT
+or somewhere else as that TCSR bit drives a signal that's needed during
+programming.
+
+> >>> +static void qmp_pcie_init_port_b(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tbls)
+> >>> +{
+> >>> +	const struct qmp_phy_cfg *cfg = qmp->cfg;
+> >>> +	const struct qmp_pcie_offsets *offs = cfg->offsets;
+> >>> +	void __iomem *tx3, *rx3, *tx4, *rx4;
+> >>> +
+> >>> +	tx3 = qmp->port_b + offs->tx;
+> >>> +	rx3 = qmp->port_b + offs->rx;
+> >>> +	tx4 = qmp->port_b + offs->tx2;
+> >>> +	rx4 = qmp->port_b + offs->rx2;
+> >>> +
+> >>> +	qmp_pcie_configure_lane(tx3, tbls->tx, tbls->tx_num, 1);
+> >>> +	qmp_pcie_configure_lane(rx3, tbls->rx, tbls->rx_num, 1);
+> >>> +
+> >>> +	qmp_pcie_configure_lane(tx4, tbls->tx, tbls->tx_num, 2);
+> >>> +	qmp_pcie_configure_lane(rx4, tbls->rx, tbls->rx_num, 2);
+> >>
+> >> I'd use BIT(2) and BIT(3) here. This would allow one to make a
+> >> difference between programming first pair of lanes and second pair of
+> >> lanes if necessary.
+> > 
+> > No, the tx and tx registers of the second port should be programmed
+> > identically to that of the first port.
+> 
+> As you would prefer. As a matter of fact, we do not have CFG_LANES in 
+> the PCIe PHY. Thus I'm surprised that you didn't drop this. I think 
+> CFG_LANES usage is limited to sm8250 USB and combo PHY configurations.
+
+It's actually also used by SC8280XP so we cannot drop it (see
+sc8280xp_qmp_gen3x2_pcie_tx_tbl) here. Appears to be unused for UFS
+currently, though.
+
+Johan
