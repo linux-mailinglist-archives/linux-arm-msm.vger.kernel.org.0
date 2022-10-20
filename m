@@ -2,122 +2,277 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1421B605B26
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 11:31:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21A5D605B40
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 11:33:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230132AbiJTJbE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 05:31:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56200 "EHLO
+        id S229556AbiJTJdN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 05:33:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229936AbiJTJbD (ORCPT
+        with ESMTP id S231299AbiJTJcg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 05:31:03 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 2434812977D;
-        Thu, 20 Oct 2022 02:31:02 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 28E53ED1;
-        Thu, 20 Oct 2022 02:31:08 -0700 (PDT)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 458913F792;
-        Thu, 20 Oct 2022 02:31:00 -0700 (PDT)
-Date:   Thu, 20 Oct 2022 10:30:57 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Amit Pundir <amit.pundir@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: qrb5165-rb5: Disable cpuidle states
-Message-ID: <20221020093057.zrrvxlgghn27bpes@bogus>
-References: <20221018145348.4051809-1-amit.pundir@linaro.org>
- <CAPDyKFoBMB9OMUrcoPCV0of1fj2dimEwPyHGW=ydjJ2M0ubM8Q@mail.gmail.com>
+        Thu, 20 Oct 2022 05:32:36 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12816157F49
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 02:32:22 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id b2so32542920lfp.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 02:32:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Vbo5+yxCw1Loi5uLkMP1tDK1U+EA1+GCOOOHXa4CGGI=;
+        b=O6mDEx4dRLj/vAVzy2Aph7R6Z73vdf+VuLUUt1K+G+pPDM84CT5WF5NOwWOFOO+Gi6
+         wTE108TymB66vlnG4km+fef77IPNX6HUCwaLqrQuBHteIiV8koVOEjSxIaUaPbtJ5qY8
+         ahZCE1NLcVcgEi7IvRxFEGg6vv4VIxN8uSWLnQF5GkLmW1BRhkjEbeC3W76TUfDOcdVb
+         PfTBXDkz0YprUQdhngVHRU8DP7CCbuGntY3HaeiwgZg0j/Fg2dJSUenit49QbMMHttdd
+         mTzzxcmjdoeoNrto77RJHat+RBEFkI+z3K8V8aIAKyYOlXpQUSr1cJ804zY7c6IkVNX8
+         NtHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Vbo5+yxCw1Loi5uLkMP1tDK1U+EA1+GCOOOHXa4CGGI=;
+        b=5UcqyZxynAwPVtX9fB8QdROTJ+AaCh8PyH3kXOvaQ1adaWqWuM9uta142qLV4fUyPu
+         Nl09JKAhHjFaN0ZwjuI10J9x9Zttuxc15NR9k+rANfwFNNy12R+nteLKrVTlmoMa5zDC
+         fICVqPnB0tn1mm8XZm7pCaD7u5PmcxmjTKLMY1K9aVnyAmiMX8NshKM1sq3mANfeVrJm
+         JKT04vjsTRSAtI+sCoWRPvVAbhfYECtcCVJ2HQoa+SgRDkHH/7oDpTCIel+IJRCphhGV
+         Lb5yPcz403ota7HtAREeIrc0S9zcNWsOBLvE8/uWbi0e/iCJDUWhig551R243ew+pjoH
+         8vdQ==
+X-Gm-Message-State: ACrzQf1hMqSWwEoLJOhU6TRhRcavqSLAL5kjdMh/AObUXNvn9Q3e+xpw
+        LC4LX84LNn9r9OQ7T7GnAqOWow==
+X-Google-Smtp-Source: AMsMyM4ZRdhINz5QnYRn8AeaGxUG4k9Nojc8u1utaKccujFaIuR4oyR3qkdibyWqq9n8hAsHW19m+A==
+X-Received: by 2002:a05:6512:12c8:b0:4a2:cc28:cab8 with SMTP id p8-20020a05651212c800b004a2cc28cab8mr4123960lfg.205.1666258334516;
+        Thu, 20 Oct 2022 02:32:14 -0700 (PDT)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id k12-20020ac257cc000000b00494a1b242dasm2665017lfo.14.2022.10.20.02.32.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Oct 2022 02:32:14 -0700 (PDT)
+Message-ID: <004a6ab9-690b-db13-08a9-c42d09368814@linaro.org>
+Date:   Thu, 20 Oct 2022 12:32:13 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFoBMB9OMUrcoPCV0of1fj2dimEwPyHGW=ydjJ2M0ubM8Q@mail.gmail.com>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Subject: Re: [PATCH v2 15/15] phy: qcom-qmp-pcie: add support for sc8280xp
+ 4-lane PHYs
+Content-Language: en-GB
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221019113552.22353-1-johan+linaro@kernel.org>
+ <20221019113552.22353-16-johan+linaro@kernel.org>
+ <2902e7e8-eddf-149c-06fd-86b85d8af326@linaro.org>
+ <Y1DuB6hzb3V5Lqdy@hovoldconsulting.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <Y1DuB6hzb3V5Lqdy@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 19, 2022 at 01:57:34PM +0200, Ulf Hansson wrote:
-> On Tue, 18 Oct 2022 at 16:53, Amit Pundir <amit.pundir@linaro.org> wrote:
-> >
-> > Disable cpuidle states for RB5. These cpuidle states
-> > made the device highly unstable and it runs into the
-> > following crash frequently:
-> >
-> > [    T1] vreg_l11c_3p3: failed to enable: -ETIMEDOUT
-> > [    T1] qcom-rpmh-regulator 18200000.rsc:pm8150l-rpmh-regulators: ldo11: devm_regulator_register() failed, ret=-110
-> > [    T1] qcom-rpmh-regulator: probe of 18200000.rsc:pm8150l-rpmh-regulators failed with error -110
-> >
-> > Fixes: 32bc936d7321 ("arm64: dts: qcom: sm8250: Add cpuidle states")
-> > Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 8 ++++++++
-> >  1 file changed, 8 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> > index cc003535a3c5..f936c41bfbea 100644
-> > --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> > +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> > @@ -251,6 +251,14 @@ qca639x: qca639x {
-> >
-> >  };
-> >
-> > +&LITTLE_CPU_SLEEP_0 {
-> > +       status = "disabled";
-> > +};
-> > +
-> > +&BIG_CPU_SLEEP_0 {
-> > +       status = "disabled";
-> > +};
-> > +
-> >  &adsp {
-> >         status = "okay";
-> >         firmware-name = "qcom/sm8250/adsp.mbn";
-> > --
-> > 2.25.1
+On 20/10/2022 09:43, Johan Hovold wrote:
+> On Thu, Oct 20, 2022 at 06:43:47AM +0300, Dmitry Baryshkov wrote:
+>> On 19/10/2022 14:35, Johan Hovold wrote:
+>>> The PCIe2 and PCIe3 controllers and PHYs on SC8280XP can be used in
+>>> 4-lane mode or as separate controllers and PHYs in 2-lane mode (e.g. as
+>>> PCIe2A and PCIe2B).
+>>>
+>>> Add support for fetching the 4-lane configuration from the TCSR and
+>>> programming the lane registers of the second port when in 4-lane mode.
+>>>
+>>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>>> ---
+>>>    drivers/phy/qualcomm/Kconfig             |   1 +
+>>>    drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 118 +++++++++++++++++++++++
+>>>    2 files changed, 119 insertions(+)
+>>>
+>>> diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
+>>> index 5c98850f5a36..eb9ddc685b38 100644
+>>> --- a/drivers/phy/qualcomm/Kconfig
+>>> +++ b/drivers/phy/qualcomm/Kconfig
+>>> @@ -54,6 +54,7 @@ config PHY_QCOM_QMP
+>>>    	tristate "Qualcomm QMP PHY Driver"
+>>>    	depends on OF && COMMON_CLK && (ARCH_QCOM || COMPILE_TEST)
+>>>    	select GENERIC_PHY
+>>> +	select MFD_SYSCON
+>>>    	help
+>>>    	  Enable this to support the QMP PHY transceiver that is used
+>>>    	  with controllers such as PCIe, UFS, and USB on Qualcomm chips.
+>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>> index ea5228bd9ecc..e5bce4810bb5 100644
+>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>> @@ -10,6 +10,7 @@
+>>>    #include <linux/io.h>
+>>>    #include <linux/iopoll.h>
+>>>    #include <linux/kernel.h>
+>>> +#include <linux/mfd/syscon.h>
+>>>    #include <linux/module.h>
+>>>    #include <linux/of.h>
+>>>    #include <linux/of_device.h>
+>>> @@ -17,6 +18,7 @@
+>>>    #include <linux/phy/pcie.h>
+>>>    #include <linux/phy/phy.h>
+>>>    #include <linux/platform_device.h>
+>>> +#include <linux/regmap.h>
+>>>    #include <linux/regulator/consumer.h>
+>>>    #include <linux/reset.h>
+>>>    #include <linux/slab.h>
+>>> @@ -886,6 +888,10 @@ static const struct qmp_phy_init_tbl sc8280xp_qmp_gen3x2_pcie_rc_serdes_tbl[] =
+>>>    	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN, 0x14),
+>>>    };
+>>>    
+>>> +static const struct qmp_phy_init_tbl sc8280xp_qmp_gen3x4_pcie_serdes_4ln_tbl[] = {
+>>> +	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN, 0x1c),
+>>> +};
+>>> +
+>>>    static const struct qmp_phy_init_tbl sc8280xp_qmp_gen3x1_pcie_tx_tbl[] = {
+>>>    	QMP_PHY_INIT_CFG(QSERDES_V5_TX_PI_QEC_CTRL, 0x20),
+>>>    	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_1, 0x75),
+>>> @@ -1491,6 +1497,9 @@ struct qmp_phy_cfg {
+>>>    	const struct qmp_phy_cfg_tables *tables_rc;
+>>>    	const struct qmp_phy_cfg_tables *tables_ep;
+>>>    
+>>> +	const struct qmp_phy_init_tbl *serdes_4ln_tbl;
+>>> +	int serdes_4ln_num;
+>>
+>> Would it make more sense to change this into the proper
+>> qmp_phy_cfg_tables entry and then use the existing API for programming
+>> the table?
 > 
-> Disabling the CPU idlestates, will revert us back to using only the WFI state.
+> No, there is just one serdes register update needed when in 4-lane mode,
+> besides programming tx/rx for the second port. Adding a third struct
+> qmp_phy_cfg_tables for this seems like overkill and would lead to a more
+> convoluted implementation of the programming sequence.
+
+Ack. Let's have it this way and change it later if the need arises.
+
 > 
-> An option that probably works too is to just drop the idlestate for
-> the CPU cluster. Would you mind trying the below and see if that works
-> too?
->
+> And you can't add it two one of the existing ones, as your comment seems
+> to suggest.
 
-Indeed this is was I suggested to check initially. But I was surprised to
-see IIUC, Amit just disabled CPU states with above change and got it working.
-So it is not cluster state alone causing the issue, is it somehow presence
-of both cpu and cluster states ? Am I missing something here.
+Please excuse me if I didn't write it clear enough. I suggested adding 
+another cfg_tables, as you correctly commented above.
 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index c32227ea40f9..c707a49e8001 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -700,7 +700,6 @@ CPU_PD7: cpu7 {
 > 
->                 CLUSTER_PD: cpu-cluster0 {
->                         #power-domain-cells = <0>;
-> -                       domain-idle-states = <&CLUSTER_SLEEP_0>;
+> The gen3x4 PHYs can be in either 4-lane or 2-lane mode depending on the
+> TCSR configuration. Port A is programmed identically in both cases
+> except for this serdes register, and in 4-lane mode tx/rx also needs
+> to be programmed for port B.
+>   
+>>> +
+>>>    	/* clock ids to be requested */
+>>>    	const char * const *clk_list;
+>>>    	int num_clks;
+>>> @@ -1518,6 +1527,7 @@ struct qmp_pcie {
+>>>    	struct device *dev;
+>>>    
+>>>    	const struct qmp_phy_cfg *cfg;
+>>> +	bool tcsr_4ln_config;
+>>
+>> As a matter of preference, this seems too specific. I'd rename it to
+>> split_config or split_4ln_config.
+> 
+> I'm afraid those names do not make much sense. This TCSR register
+> controls whether the PHY is in 4-lane mode (instead of 2-lane mode).
 
-How about just marking CLUSTER_SLEEP_0 state disabled ? That looks cleaner
-than deleting this domain-idle-states property here. Also not sure if DTS
-warnings will appear if you delete this ?
+Well, we just need the info that it's 4-lane. It doesn't really matter 
+if this information comes from TCSR, DT or e.g. fuses. I'd say that TCSR 
+is a platform detail. Thus I'm suggesting a more generic name.
+
+> 
+>>>    
+>>>    	void __iomem *serdes;
+>>>    	void __iomem *pcs;
+>>> @@ -1527,6 +1537,8 @@ struct qmp_pcie {
+>>>    	void __iomem *tx2;
+>>>    	void __iomem *rx2;
+>>>    
+>>> +	void __iomem *port_b;
+>>> +
+>>>    	struct clk *pipe_clk;
+>>>    	struct clk *pipediv2_clk;
+>>>    	struct clk_bulk_data *clks;
+>>> @@ -1932,6 +1944,44 @@ static const struct qmp_phy_cfg sc8280xp_qmp_gen3x2_pciephy_cfg = {
+>>>    	.phy_status		= PHYSTATUS,
+>>>    };
+>    
+>>> +static void qmp_pcie_init_port_b(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tbls)
+>>> +{
+>>> +	const struct qmp_phy_cfg *cfg = qmp->cfg;
+>>> +	const struct qmp_pcie_offsets *offs = cfg->offsets;
+>>> +	void __iomem *tx3, *rx3, *tx4, *rx4;
+>>> +
+>>> +	tx3 = qmp->port_b + offs->tx;
+>>> +	rx3 = qmp->port_b + offs->rx;
+>>> +	tx4 = qmp->port_b + offs->tx2;
+>>> +	rx4 = qmp->port_b + offs->rx2;
+>>> +
+>>> +	qmp_pcie_configure_lane(tx3, tbls->tx, tbls->tx_num, 1);
+>>> +	qmp_pcie_configure_lane(rx3, tbls->rx, tbls->rx_num, 1);
+>>> +
+>>> +	qmp_pcie_configure_lane(tx4, tbls->tx, tbls->tx_num, 2);
+>>> +	qmp_pcie_configure_lane(rx4, tbls->rx, tbls->rx_num, 2);
+>>
+>> I'd use BIT(2) and BIT(3) here. This would allow one to make a
+>> difference between programming first pair of lanes and second pair of
+>> lanes if necessary.
+> 
+> No, the tx and tx registers of the second port should be programmed
+> identically to that of the first port.
+
+As you would prefer. As a matter of fact, we do not have CFG_LANES in 
+the PCIe PHY. Thus I'm surprised that you didn't drop this. I think 
+CFG_LANES usage is limited to sm8250 USB and combo PHY configurations.
+
+> 
+>>> +}
+>>> +
+>>>    static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tbls)
+>>>    {
+>>>    	const struct qmp_phy_cfg *cfg = qmp->cfg;
+>>> @@ -2080,6 +2148,11 @@ static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_c
+>>>    
+>>>    	qmp_pcie_configure(pcs, tbls->pcs, tbls->pcs_num);
+>>>    	qmp_pcie_configure(pcs_misc, tbls->pcs_misc, tbls->pcs_misc_num);
+>>> +
+>>> +	if (cfg->lanes >= 4 && qmp->tcsr_4ln_config) {
+>>> +		qmp_pcie_configure(serdes, cfg->serdes_4ln_tbl, cfg->serdes_4ln_num);
+>>> +		qmp_pcie_init_port_b(qmp, tbls);
+>>> +	}
+>>
+>> As you have been refactoring this piece of code, maybe it would make
+>> more sense to change qmp->tx/tx2 into an array of two elements? Then we
+>> can extend it to 4 in this patch, and just always write the whole array
+>> in a loop?
+> 
+> No, I don't think that would be an improvement and would obscure the
+> fact that we're programming two otherwise identical ports (e.g. tx1 and
+> tx2 of port B is used for the third and fourth lanes).
+> 
+> Note that the above conditional encodes the difference in programming
+> sequence between 4-lane and 2-lane mode I described above (one serdes
+> register difference + tx/rx of port b).
+
+Either way looks fine to me. So, let's leave this in a way you've 
+implemented it.
 
 -- 
-Regards,
-Sudeep
+With best wishes
+Dmitry
+
