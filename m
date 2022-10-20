@@ -2,179 +2,233 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C72C60575A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 08:33:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3EC3605782
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 08:43:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230089AbiJTGdh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 02:33:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38786 "EHLO
+        id S230182AbiJTGns (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 02:43:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229615AbiJTGdg (ORCPT
+        with ESMTP id S230196AbiJTGnn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 02:33:36 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AAB215B303;
-        Wed, 19 Oct 2022 23:33:34 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29K5oH7Z009106;
-        Thu, 20 Oct 2022 06:33:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=0UYnmYoL+d89Orz6iaNY/DjHRjYVyMl063fYMgg13s8=;
- b=fsIaTrsH3vzcn1Zowyt/TwOq4hYJYTTHafg/yS9Ai0l/tJ/wCGSaMKVMT/KSRO4k9vCw
- Yg1CgIqwQpM1+WmXI7eYj2KAbgwoO5NFxCZ0mojOm15Q6z+FrTOloqy4hFbi+/eZjwTy
- kvSfBMPqWCYHrcD7ydKDCcDrN+1Ok28pRU+zXKeNS32saij0t1AnBgNI9jprb6HTKuLk
- SzFFDW4hTXIZDowsBXGiW9CL9XDqp9aTSjX5D7R17L79CDw77A/yUjkk9HCKrxum0YJh
- rdx458Guk/7/6aeT3Rp3fmoGuVfSVnGtjmtGyxSA0yXvQP3tkwC6nCdjYNECXSpEPOWx iA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ka6brukhj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Oct 2022 06:33:24 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29K6XMR2011139
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Oct 2022 06:33:22 GMT
-Received: from [10.239.155.106] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 19 Oct
- 2022 23:33:19 -0700
-Message-ID: <f1ae1f37-ab94-d0ae-289f-08d8b1cae772@quicinc.com>
-Date:   Thu, 20 Oct 2022 14:33:16 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH v3 2/2] dt-bindings: add bindings for QCOM flash LED
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
-        Pavel Machek <pavel@ucw.cz>,
-        "Rob Herring" <robh+dt@kernel.org>,
+        Thu, 20 Oct 2022 02:43:43 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7E501C1170;
+        Wed, 19 Oct 2022 23:43:35 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8899F619EE;
+        Thu, 20 Oct 2022 06:43:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE434C433C1;
+        Thu, 20 Oct 2022 06:43:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1666248213;
+        bh=P98rue6EL+V6EJka1psQePQe1VwTN63BL+TzJqbRDKs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ISHlqu89GIBldf3hubnpjInbd0yT3HfVjtB4wq27T/1F9w1/EjGes5gvfy0CL7jwY
+         evODlNH1f62m7pL0Tdg/wqzz/K/hqHs7hcRqwOsnEHM6uD4GabRIGOu48+RG4a6/MR
+         PwBdthU+zUG3MWdLHejIZWXxjw/V7ARdvHTVz5Mz/peOGGYxSDQxI9eaVKOsDvUsUO
+         XuCFKsSlilDVtw2FuMVYXCMhEvF5+2UtziSGKHVx8UhcICrEcpdbQxrC77nblmRri4
+         Y7CxebnRRzr32eQEDJc2OfC9zHvtymQ9glN2/pBOh7RilJysnM3fEHfUgjDXDx3gyW
+         IiZlUJhisO24Q==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1olPGx-0005YY-5N; Thu, 20 Oct 2022 08:43:19 +0200
+Date:   Thu, 20 Oct 2022 08:43:19 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>
-CC:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>
-References: <20221018014024.948731-1-quic_fenglinw@quicinc.com>
- <20221018014024.948731-3-quic_fenglinw@quicinc.com>
- <b335e842-0dd9-851a-9876-8ee4711609c0@linaro.org>
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-In-Reply-To: <b335e842-0dd9-851a-9876-8ee4711609c0@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 5_GkBqJhkKvSeCvFarFHW0Z2lzvFH2rt
-X-Proofpoint-GUID: 5_GkBqJhkKvSeCvFarFHW0Z2lzvFH2rt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-20_01,2022-10-19_04,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- priorityscore=1501 bulkscore=0 malwarescore=0 mlxscore=0 spamscore=0
- suspectscore=0 clxscore=1015 mlxlogscore=999 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210200037
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 15/15] phy: qcom-qmp-pcie: add support for sc8280xp
+ 4-lane PHYs
+Message-ID: <Y1DuB6hzb3V5Lqdy@hovoldconsulting.com>
+References: <20221019113552.22353-1-johan+linaro@kernel.org>
+ <20221019113552.22353-16-johan+linaro@kernel.org>
+ <2902e7e8-eddf-149c-06fd-86b85d8af326@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2902e7e8-eddf-149c-06fd-86b85d8af326@linaro.org>
+X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Oct 20, 2022 at 06:43:47AM +0300, Dmitry Baryshkov wrote:
+> On 19/10/2022 14:35, Johan Hovold wrote:
+> > The PCIe2 and PCIe3 controllers and PHYs on SC8280XP can be used in
+> > 4-lane mode or as separate controllers and PHYs in 2-lane mode (e.g. as
+> > PCIe2A and PCIe2B).
+> > 
+> > Add support for fetching the 4-lane configuration from the TCSR and
+> > programming the lane registers of the second port when in 4-lane mode.
+> > 
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> >   drivers/phy/qualcomm/Kconfig             |   1 +
+> >   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 118 +++++++++++++++++++++++
+> >   2 files changed, 119 insertions(+)
+> > 
+> > diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
+> > index 5c98850f5a36..eb9ddc685b38 100644
+> > --- a/drivers/phy/qualcomm/Kconfig
+> > +++ b/drivers/phy/qualcomm/Kconfig
+> > @@ -54,6 +54,7 @@ config PHY_QCOM_QMP
+> >   	tristate "Qualcomm QMP PHY Driver"
+> >   	depends on OF && COMMON_CLK && (ARCH_QCOM || COMPILE_TEST)
+> >   	select GENERIC_PHY
+> > +	select MFD_SYSCON
+> >   	help
+> >   	  Enable this to support the QMP PHY transceiver that is used
+> >   	  with controllers such as PCIe, UFS, and USB on Qualcomm chips.
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > index ea5228bd9ecc..e5bce4810bb5 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > @@ -10,6 +10,7 @@
+> >   #include <linux/io.h>
+> >   #include <linux/iopoll.h>
+> >   #include <linux/kernel.h>
+> > +#include <linux/mfd/syscon.h>
+> >   #include <linux/module.h>
+> >   #include <linux/of.h>
+> >   #include <linux/of_device.h>
+> > @@ -17,6 +18,7 @@
+> >   #include <linux/phy/pcie.h>
+> >   #include <linux/phy/phy.h>
+> >   #include <linux/platform_device.h>
+> > +#include <linux/regmap.h>
+> >   #include <linux/regulator/consumer.h>
+> >   #include <linux/reset.h>
+> >   #include <linux/slab.h>
+> > @@ -886,6 +888,10 @@ static const struct qmp_phy_init_tbl sc8280xp_qmp_gen3x2_pcie_rc_serdes_tbl[] =
+> >   	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN, 0x14),
+> >   };
+> >   
+> > +static const struct qmp_phy_init_tbl sc8280xp_qmp_gen3x4_pcie_serdes_4ln_tbl[] = {
+> > +	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN, 0x1c),
+> > +};
+> > +
+> >   static const struct qmp_phy_init_tbl sc8280xp_qmp_gen3x1_pcie_tx_tbl[] = {
+> >   	QMP_PHY_INIT_CFG(QSERDES_V5_TX_PI_QEC_CTRL, 0x20),
+> >   	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_1, 0x75),
+> > @@ -1491,6 +1497,9 @@ struct qmp_phy_cfg {
+> >   	const struct qmp_phy_cfg_tables *tables_rc;
+> >   	const struct qmp_phy_cfg_tables *tables_ep;
+> >   
+> > +	const struct qmp_phy_init_tbl *serdes_4ln_tbl;
+> > +	int serdes_4ln_num;
+> 
+> Would it make more sense to change this into the proper 
+> qmp_phy_cfg_tables entry and then use the existing API for programming 
+> the table?
 
+No, there is just one serdes register update needed when in 4-lane mode,
+besides programming tx/rx for the second port. Adding a third struct
+qmp_phy_cfg_tables for this seems like overkill and would lead to a more
+convoluted implementation of the programming sequence.
 
-On 2022/10/19 21:36, Krzysztof Kozlowski wrote:
-> On 17/10/2022 21:40, Fenglin Wu wrote:
->> Add binding document for flash LED module inside Qualcomm Technologies,
->> Inc. PMICs.
+And you can't add it two one of the existing ones, as your comment seems
+to suggest.
+
+The gen3x4 PHYs can be in either 4-lane or 2-lane mode depending on the
+TCSR configuration. Port A is programmed identically in both cases
+except for this serdes register, and in 4-lane mode tx/rx also needs
+to be programmed for port B.
+ 
+> > +
+> >   	/* clock ids to be requested */
+> >   	const char * const *clk_list;
+> >   	int num_clks;
+> > @@ -1518,6 +1527,7 @@ struct qmp_pcie {
+> >   	struct device *dev;
+> >   
+> >   	const struct qmp_phy_cfg *cfg;
+> > +	bool tcsr_4ln_config;
 > 
-> Use subject prefixes matching the subsystem (git log --oneline -- ...).
+> As a matter of preference, this seems too specific. I'd rename it to 
+> split_config or split_4ln_config.
+
+I'm afraid those names do not make much sense. This TCSR register
+controls whether the PHY is in 4-lane mode (instead of 2-lane mode).
+
+> >   
+> >   	void __iomem *serdes;
+> >   	void __iomem *pcs;
+> > @@ -1527,6 +1537,8 @@ struct qmp_pcie {
+> >   	void __iomem *tx2;
+> >   	void __iomem *rx2;
+> >   
+> > +	void __iomem *port_b;
+> > +
+> >   	struct clk *pipe_clk;
+> >   	struct clk *pipediv2_clk;
+> >   	struct clk_bulk_data *clks;
+> > @@ -1932,6 +1944,44 @@ static const struct qmp_phy_cfg sc8280xp_qmp_gen3x2_pciephy_cfg = {
+> >   	.phy_status		= PHYSTATUS,
+> >   };
+  
+> > +static void qmp_pcie_init_port_b(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tbls)
+> > +{
+> > +	const struct qmp_phy_cfg *cfg = qmp->cfg;
+> > +	const struct qmp_pcie_offsets *offs = cfg->offsets;
+> > +	void __iomem *tx3, *rx3, *tx4, *rx4;
+> > +
+> > +	tx3 = qmp->port_b + offs->tx;
+> > +	rx3 = qmp->port_b + offs->rx;
+> > +	tx4 = qmp->port_b + offs->tx2;
+> > +	rx4 = qmp->port_b + offs->rx2;
+> > +
+> > +	qmp_pcie_configure_lane(tx3, tbls->tx, tbls->tx_num, 1);
+> > +	qmp_pcie_configure_lane(rx3, tbls->rx, tbls->rx_num, 1);
+> > +
+> > +	qmp_pcie_configure_lane(tx4, tbls->tx, tbls->tx_num, 2);
+> > +	qmp_pcie_configure_lane(rx4, tbls->rx, tbls->rx_num, 2);
 > 
-> This means:
-> 1. you miss subsystem prefix
-> 2. drop redundant second "bindings"
+> I'd use BIT(2) and BIT(3) here. This would allow one to make a 
+> difference between programming first pair of lanes and second pair of 
+> lanes if necessary.
+
+No, the tx and tx registers of the second port should be programmed
+identically to that of the first port.
+
+> > +}
+> > +
+> >   static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tbls)
+> >   {
+> >   	const struct qmp_phy_cfg *cfg = qmp->cfg;
+> > @@ -2080,6 +2148,11 @@ static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_c
+> >   
+> >   	qmp_pcie_configure(pcs, tbls->pcs, tbls->pcs_num);
+> >   	qmp_pcie_configure(pcs_misc, tbls->pcs_misc, tbls->pcs_misc_num);
+> > +
+> > +	if (cfg->lanes >= 4 && qmp->tcsr_4ln_config) {
+> > +		qmp_pcie_configure(serdes, cfg->serdes_4ln_tbl, cfg->serdes_4ln_num);
+> > +		qmp_pcie_init_port_b(qmp, tbls);
+> > +	}
 > 
->>
->> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
->> ---
->>   .../bindings/leds/qcom,spmi-flash-led.yaml    | 116 ++++++++++++++++++
->>   1 file changed, 116 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml b/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
->> new file mode 100644
->> index 000000000000..d8efde02db72
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
->> @@ -0,0 +1,116 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/leds/qcom,spmi-flash-led.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Flash LED device inside Qualcomm Technologies, Inc. PMICs
->> +
->> +maintainers:
->> +  - Fenglin Wu <quic_fenglinw@quicinc.com>
->> +
->> +description: |
->> +  Flash LED controller is present inside some Qualcomm Technologies, Inc. PMICs.
->> +  The flash LED module can have different number of LED channels supported
->> +  e.g. 3 or 4. There are some different registers between them but they can
->> +  both support maximum current up to 1.5 A per channel and they can also support
->> +  ganging 2 channels together to supply maximum current up to 2 A. The current
->> +  will be split symmetrically on each channel and they will be enabled and
->> +  disabled at the same time.
->> +
->> +properties:
->> +  compatible:
->> +    items:
->> +      - enum:
->> +          - qcom,pm8150c-flash-led
->> +          - qcom,pm8150l-flash-led
->> +          - qcom,pm8350c-flash-led
->> +      - const: qcom,spmi-flash-led
-> 
-> Blank line
-> 
->> +  reg:
->> +    description: address offset of the flash LED controller
-> 
-> Drop description, it's obvious.
-> 
->> +    maxItems: 1
->> +
->> +patternProperties:
->> +  "^led-[0-3]$":
->> +    type: object
->> +    $ref: common.yaml#
->> +    unevaluatedProperties: false
->> +    description: |
-> 
-> No need for |
-> 
->> +      Represents the physical LED components which are connected to the
->> +      flash LED channels' output.
->> +
->> +    properties:
->> +      led-sources:
->> +        description: |
-> 
-> No need for |
-> 
-> Rest looks good:
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> Best regards,
-> Krzysztof
-> 
-Thanks you Krzysztof! I will address them when pushing next patch.
+> As you have been refactoring this piece of code, maybe it would make 
+> more sense to change qmp->tx/tx2 into an array of two elements? Then we 
+> can extend it to 4 in this patch, and just always write the whole array 
+> in a loop?
+
+No, I don't think that would be an improvement and would obscure the
+fact that we're programming two otherwise identical ports (e.g. tx1 and
+tx2 of port B is used for the third and fourth lanes).
+
+Note that the above conditional encodes the difference in programming
+sequence between 4-lane and 2-lane mode I described above (one serdes
+register difference + tx/rx of port b).
+
+Johan
