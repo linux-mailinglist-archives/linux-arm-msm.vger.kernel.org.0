@@ -2,168 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB4DA606588
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 18:16:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78D8C6065C3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 18:27:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229808AbiJTQQf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 12:16:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39332 "EHLO
+        id S229753AbiJTQ1O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 12:27:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbiJTQQe (ORCPT
+        with ESMTP id S229988AbiJTQ1B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 12:16:34 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 056B0836E5;
-        Thu, 20 Oct 2022 09:16:32 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D333923A;
-        Thu, 20 Oct 2022 09:16:38 -0700 (PDT)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 15E9A3F792;
-        Thu, 20 Oct 2022 09:16:30 -0700 (PDT)
-Date:   Thu, 20 Oct 2022 17:16:28 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Amit Pundir <amit.pundir@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: qrb5165-rb5: Disable cpuidle states
-Message-ID: <20221020161628.nyimwuni4zboasjo@bogus>
-References: <20221018145348.4051809-1-amit.pundir@linaro.org>
- <CAPDyKFoBMB9OMUrcoPCV0of1fj2dimEwPyHGW=ydjJ2M0ubM8Q@mail.gmail.com>
- <20221020093057.zrrvxlgghn27bpes@bogus>
- <CAMi1Hd05PkEJcHqHpQX-X6B2oR4250_pHPjkd2-54JWgKsYx0Q@mail.gmail.com>
- <CAPDyKFo=w-ET62c-B6=qSpkZm-V9LmBuVRy38GzX_UAjQhX6oA@mail.gmail.com>
+        Thu, 20 Oct 2022 12:27:01 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3421183D94
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 09:26:51 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id r19so14025263qtx.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 09:26:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=i6dycCpajngbg2v0BxydQNe62PN7WGYYePMNofzYYVc=;
+        b=wfsRQlkpytgr4C7fZSjIUAV4biD/c9lsIrlikHQqE00AJ2/GOyHnnt3jxGWi294hGP
+         QCasoxV4e9jXqpbgbz31nNhvaFeADTamkq7h6sYVQF9mmlUYJ+sBia7pC/OsFXYi1um2
+         VImRxEcqOSlz9Nk+isbbctIsQUCMMdA7pBncg7CbtoR1hdzlAiZcYxadW4nbEnaESRok
+         PDbUyqeZ6XNiRSkuU+librfsphReuWoIFrib9SeleKjrKJHRFCnlYcBl9Co6vLMv5KS7
+         ohwXrDFxgwtMBDXIGsTpL9+CqwKrL8GCIsZRVI6bdsJykU7Kyypa+oCUM/OZ9+mm5hN5
+         hXkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=i6dycCpajngbg2v0BxydQNe62PN7WGYYePMNofzYYVc=;
+        b=u+Ofo3Xw0OntgG5x4/CwMrQPA6jmYGpmz7gCBA02F+GbQbOMOmVI6Nmwx2EfNKRVpN
+         TeLu4pITqYa5vSZ3gqOpYPi3L81AuuKXLQcydpSwGuPd6p658STp0hh/x6IN6CqANBDL
+         b2c/kbOH4prXFxffBNQxK8EKWWZCHDCVMLp5JVsrzTjln3RPmovEbG91i5V6AL4oICEK
+         uuaj/iCUUGNSoPIfpPr5O0lYRhfH4BNKmcKJEAsohWvT730RV0/X2EiKtsaU67DpKoSV
+         x31IcCeyYc7Tc16GkvwwivLO7+SaUzYrE9EswtE2WTWVsD0yejPXr1b0ahf7uY0Z0t1S
+         6BdQ==
+X-Gm-Message-State: ACrzQf0QwMBpq6hismw7w/I674ld2mJhDQDWCOUvGMhleB2ewicjTGi6
+        u6uPIraSu4nig0HyPArD8LFzhA==
+X-Google-Smtp-Source: AMsMyM6sQzBZV+ybT3krnybJ7F1Gg+NUMIA1BVdPlr14i0N9nM/yHMvtqFpBbCgFGENuju805QWTFA==
+X-Received: by 2002:ac8:5acf:0:b0:39c:d4d8:3f75 with SMTP id d15-20020ac85acf000000b0039cd4d83f75mr11661745qtd.579.1666283210197;
+        Thu, 20 Oct 2022 09:26:50 -0700 (PDT)
+Received: from [192.168.10.124] (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
+        by smtp.gmail.com with ESMTPSA id do20-20020a05620a2b1400b006ec9f5e3396sm7912806qkb.72.2022.10.20.09.26.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Oct 2022 09:26:49 -0700 (PDT)
+Message-ID: <d5e176b3-75e2-67bc-3fc6-b54fe685c9a0@linaro.org>
+Date:   Thu, 20 Oct 2022 12:26:48 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFo=w-ET62c-B6=qSpkZm-V9LmBuVRy38GzX_UAjQhX6oA@mail.gmail.com>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Melody Olvera <quic_molvera@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221014221138.7552-1-quic_molvera@quicinc.com>
+ <20221014221138.7552-3-quic_molvera@quicinc.com>
+ <56af2a04-1b21-000d-e3f9-86b6ac74aaf2@linaro.org>
+ <a0032338-482f-0de7-5952-c3c8b8423df6@quicinc.com>
+ <50372a15-56ce-6ad6-f622-00624b909db8@linaro.org>
+ <Y1FTJgloEi5ag2/j@gerhold.net>
+ <9fbe1bf5-a84d-c56b-1c0e-6848ee3d30fe@linaro.org>
+In-Reply-To: <9fbe1bf5-a84d-c56b-1c0e-6848ee3d30fe@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 20, 2022 at 04:40:15PM +0200, Ulf Hansson wrote:
-> On Thu, 20 Oct 2022 at 16:09, Amit Pundir <amit.pundir@linaro.org> wrote:
-> >
-> > On Thu, 20 Oct 2022 at 15:01, Sudeep Holla <sudeep.holla@arm.com> wrote:
-> > >
-> > > On Wed, Oct 19, 2022 at 01:57:34PM +0200, Ulf Hansson wrote:
-> > > > On Tue, 18 Oct 2022 at 16:53, Amit Pundir <amit.pundir@linaro.org> wrote:
-> > > > >
-> > > > > Disable cpuidle states for RB5. These cpuidle states
-> > > > > made the device highly unstable and it runs into the
-> > > > > following crash frequently:
-> > > > >
-> > > > > [    T1] vreg_l11c_3p3: failed to enable: -ETIMEDOUT
-> > > > > [    T1] qcom-rpmh-regulator 18200000.rsc:pm8150l-rpmh-regulators: ldo11: devm_regulator_register() failed, ret=-110
-> > > > > [    T1] qcom-rpmh-regulator: probe of 18200000.rsc:pm8150l-rpmh-regulators failed with error -110
-> > > > >
-> > > > > Fixes: 32bc936d7321 ("arm64: dts: qcom: sm8250: Add cpuidle states")
-> > > > > Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
-> > > > > ---
-> > > > >  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 8 ++++++++
-> > > > >  1 file changed, 8 insertions(+)
-> > > > >
-> > > > > diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> > > > > index cc003535a3c5..f936c41bfbea 100644
-> > > > > --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> > > > > +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> > > > > @@ -251,6 +251,14 @@ qca639x: qca639x {
-> > > > >
-> > > > >  };
-> > > > >
-> > > > > +&LITTLE_CPU_SLEEP_0 {
-> > > > > +       status = "disabled";
-> > > > > +};
-> > > > > +
-> > > > > +&BIG_CPU_SLEEP_0 {
-> > > > > +       status = "disabled";
-> > > > > +};
-> > > > > +
-> > > > >  &adsp {
-> > > > >         status = "okay";
-> > > > >         firmware-name = "qcom/sm8250/adsp.mbn";
-> > > > > --
-> > > > > 2.25.1
-> > > >
-> > > > Disabling the CPU idlestates, will revert us back to using only the WFI state.
-> > > >
-> > > > An option that probably works too is to just drop the idlestate for
-> > > > the CPU cluster. Would you mind trying the below and see if that works
-> > > > too?
-> > > >
-> > >
-> > > Indeed this is was I suggested to check initially. But I was surprised to
-> > > see IIUC, Amit just disabled CPU states with above change and got it working.
-> > > So it is not cluster state alone causing the issue, is it somehow presence
-> > > of both cpu and cluster states ? Am I missing something here.
-> > >
-> > > > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > > b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > > index c32227ea40f9..c707a49e8001 100644
-> > > > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > > @@ -700,7 +700,6 @@ CPU_PD7: cpu7 {
-> > > >
-> > > >                 CLUSTER_PD: cpu-cluster0 {
-> > > >                         #power-domain-cells = <0>;
-> > > > -                       domain-idle-states = <&CLUSTER_SLEEP_0>;
-> > >
-> > > How about just marking CLUSTER_SLEEP_0 state disabled ? That looks cleaner
-> > > than deleting this domain-idle-states property here. Also not sure if DTS
-> > > warnings will appear if you delete this ?
-> >
-> > Hi, I did try disabling CLUSTER_SLEEP_0: cluster-sleep-0 {} in
-> > domain-idle-states {} but that didn't help. That's why I end up
-> > disabling individual cpu states in idle-states {}.
+On 20/10/2022 12:08, Krzysztof Kozlowski wrote:
+> On 20/10/2022 09:54, Stephan Gerhold wrote:
+>> On Thu, Oct 20, 2022 at 08:41:15AM -0400, Krzysztof Kozlowski wrote:
+>>> On 19/10/2022 16:21, Melody Olvera wrote:
+>>>> On 10/15/2022 6:28 AM, Krzysztof Kozlowski wrote:
+>>>>> On 14/10/2022 18:11, Melody Olvera wrote:
+>>>>> [...]
+>>>>>> +	clocks {
+>>>>>> +		xo_board: xo-board {
+>>>>>> +			compatible = "fixed-clock";
+>>>>>> +			clock-frequency = <19200000>;
+>>>>> Both clocks are not a property of a SoC. They are provided by the board,
+>>>>> so they should either be defined by board DTS or at least their
+>>>>> frequency must be provided by the board.
+>>>> That doesn't seem in keeping with precedent.... the sm8* series all have the clocks in
+>>>> the dtsi. These are common to the boards anyways.
+>>>
+>>> Because people do not pay attention what is part of SoC, what is part of
+>>> board. DTSI is for the SoC and these are inputs to the SoC.
+>>>
+>>
+>> (Just chiming in because I had this thought already a few times when you
+>>  suggested moving the XO "clock-frequency" to the board DTS:)
+>>
+>> I understand your reasoning for moving components of the board to the
+>> board DTS, but IMHO adding just the clock-frequency to the board DTS is
+>> even more misleading: It suggests that there are functional board
+>> designs where you would use a XO clock with a different clock-frequency.
+>> Is that really realistic though?
 > 
-> Yep, this boils down to the fact that genpd doesn't check whether the
-> domain-idle-state is disabled by using of_device_is_available(). See
-> genpd_iterate_idle_states().
+> Keeping it in DTSI also suggests you could have some different frequency.
+> 
+>>
+>> There are assumptions about the XO clock frequency in a lot of places:
+>> You would need to fully rewrite the gcc-<SoC>.c driver because it has
+>> fixed multipliers/dividers for one specific XO frequency. All firmware
+>> binaries would likely need changes. And does the hardware even support a
+>> different XO clock frequency? The APQ8016E datasheet for example
+>> strictly documents a XO clock input of 19.2 MHz and a sleep clock of
+>> 32.768 kHz.
+> 
+> I know, the same with most of other platforms. Qualcomm is not special
+> here. Maybe the difference is that some other platforms have few
+> external clocks and not all of them are required.
+> 
+>> IMHO the only realistic variation of the XO clock setup would be to have
+>> a physical "fixed-clock" with a higher frequency, followed by a
+>> "fixed-factor-clock" that brings it back to the expected frequency. To
+>> model that properly it is not enough to have just the "clock-frequency"
+>> in the board DTS. In this case you need two clock nodes, and the
+>> xo_board would be the "fixed-factor-clock".
+> 
+> It's not about whether you can change it or not. It's about describing
+> hardware - SoC DTSI describes SoC. DTS describes the board (assuming
+> there is no SoM or other DTSI files). This clock is not in DTSI.
+> 
+>> Therefore it should be all or nothing IMO: Either we move the full
+>> xo-board node to the board DTS (which allows alternatively defining the
+>> "fixed-factor-clock" or whatever).
+> 
+> You can move entire clock to boards.
+> 
+>> Or we assume that there will be
+>> always an input clock signal with the fixed frequency and keep it fully
+>> in the SoC .dtsi.
+>>
+>> Having just the "clock-frequency" in the board DTS puts the attention on
+>> the wrong detail, IMO. :)
+> 
+> No, it puts attention to the board designer that he needs to provide the
+> clock in his design.
 > 
 
-Yes I found that but can't that be fixed with a simple patch like below ?
+Another solution which would satisfy me, would be to put these clocks to
+a dedicated, re-usable DTSI and include that DTSI in each board DTS.
 
-> That said, I suggest we go with the above one-line change. It may not
-> be as clean as it could be, but certainly easy to revert when the
-> support for it has been added in a newer kernel.
->
-
-I don't like removing the state. It means it doesn't have the state rather
-than i"it has state but is not working and hence disabled".
-
-Will handling the availability of the state cause any issues ?
-
-Regards,
-Sudeep
-
--->8
-
-diff --git i/drivers/base/power/domain.c w/drivers/base/power/domain.c
-index ead135c7044c..6471b559230e 100644
---- i/drivers/base/power/domain.c
-+++ w/drivers/base/power/domain.c
-@@ -2952,6 +2952,10 @@ static int genpd_iterate_idle_states(struct device_node *dn,
-                np = it.node;
-                if (!of_match_node(idle_state_match, np))
-                        continue;
-+
-+               if (!of_device_is_available(np))
-+                       continue;
-+
-                if (states) {
-                        ret = genpd_parse_state(&states[i], np);
-                        if (ret) {
+Best regards,
+Krzysztof
 
