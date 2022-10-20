@@ -2,66 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70207605BF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 12:16:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72743605C2F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 12:23:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229604AbiJTKQU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 06:16:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58676 "EHLO
+        id S230390AbiJTKXU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 06:23:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230378AbiJTKPx (ORCPT
+        with ESMTP id S230492AbiJTKVq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 06:15:53 -0400
+        Thu, 20 Oct 2022 06:21:46 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4FB4193EDF;
-        Thu, 20 Oct 2022 03:15:45 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29K9ipPb013805;
-        Thu, 20 Oct 2022 10:14:42 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5808C1DD89E;
+        Thu, 20 Oct 2022 03:21:01 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29K9BUKP008119;
+        Thu, 20 Oct 2022 10:20:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=nTNYrcQithhAAl/UW0ODlrLP6rXCtvMkX5kxHWuINes=;
- b=odyMKqy8DyyE6K6FVnl/X8O3Rya2t4aqW+3DOnpgLvo62PwasZNGx9QC5ia3dNNPGReo
- wSgnl5stlJx6Gc9h9myUY1bzhpXhjwVTwbAWEcztxi3Pe5jK9ZE9xS/zL0KhrxF+KjtY
- ZSssgj6uaPH1Vz+L02PAC0C2PNcQFawPAzB2nRbsG/sBH3Ct4xH/iBX6YuslJVjX3QIS
- 0SpIK5BIQEf8QZeXai8+sVvohTIXJbswnGLLv4ZR5mSVtT2YWW14IMx1lWyC/JXi5t/c
- ePaAU+hih3DztaF1likZ16dAGlwv3TlhPaV/ay7jzD0dLHgIDNAXwhDsr9hwY7pu2lLE WA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kaknjjmxy-1
+ bh=w9LOjt+T0OVa8yF81h2XN/ZRZu2ej9aA3xstuh+rbMI=;
+ b=dHBNzW6IYJ62CXYl+HGfQYFKkuwrHdQJ503uPtlyR0sxMlKlmk63Zl6NIlz3jFRmciDC
+ 6f7Z5SGplLaqPip8GBuHJvm35PLPH4J35ZAbY7XdSCivCYiN6FyQkJV/0H06Svr4C1hh
+ kxquaoDfz4/GndZ4xBCqFi7E7tVQVH0HxaQT1A8DzuZvcLD7Rv7inSihA5f3ymZ5iZ3o
+ t+SrMytRi0TU4n8nY4/SDjhFZEwXVg5HjIvAFabKGR2FghoGZmkN02T54lE7ThWUkk9m
+ qxwEec3PmJmrp03UW/lKon+plmVdK2B3TlY3UsfNWQ9qSSG8TFTNIPgYReDai3+mzcmZ Jg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kawde0ww6-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Oct 2022 10:14:41 +0000
+        Thu, 20 Oct 2022 10:20:15 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29KAEfcu017135
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29KAKELn025570
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Oct 2022 10:14:41 GMT
+        Thu, 20 Oct 2022 10:20:14 GMT
 Received: from [10.216.18.154] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 20 Oct
- 2022 03:14:32 -0700
-Message-ID: <4ff0aadd-289c-2d33-343e-f67e26d0ff38@quicinc.com>
-Date:   Thu, 20 Oct 2022 15:44:29 +0530
+ 2022 03:20:08 -0700
+Message-ID: <83e56c43-aa2f-1648-227d-957c4c40d093@quicinc.com>
+Date:   Thu, 20 Oct 2022 15:50:04 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
 Subject: Re: [PATCH v2] dt-bindings: soundwire: Convert text file to yaml
  format
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <vkoul@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+To:     Vinod Koul <vkoul@kernel.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
         <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
         <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
         <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
         <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>
-CC:     Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+        <judyhsiao@chromium.org>,
+        Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
 References: <1666092240-22008-1-git-send-email-quic_srivasam@quicinc.com>
- <abeb10da-9a29-437e-1351-3f61386dc6ad@linaro.org>
+ <Y0/wm2mOfzjtg4Kq@matsya>
 From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 Organization: Qualcomm
-In-Reply-To: <abeb10da-9a29-437e-1351-3f61386dc6ad@linaro.org>
+In-Reply-To: <Y0/wm2mOfzjtg4Kq@matsya>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -69,15 +69,15 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: YTw1SWp8UbYnWu2de1R8NVPnizzaqr62
-X-Proofpoint-ORIG-GUID: YTw1SWp8UbYnWu2de1R8NVPnizzaqr62
+X-Proofpoint-GUID: 2Twm5qEkKD_XipXcnN36Zcz29NlGB8ac
+X-Proofpoint-ORIG-GUID: 2Twm5qEkKD_XipXcnN36Zcz29NlGB8ac
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
  definitions=2022-10-20_03,2022-10-20_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- mlxscore=0 adultscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999
- impostorscore=0 priorityscore=1501 clxscore=1015 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=999 malwarescore=0 clxscore=1015 phishscore=0 mlxscore=0
+ spamscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0 adultscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2209130000 definitions=main-2210200060
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
@@ -90,29 +90,26 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 10/19/2022 7:35 AM, Krzysztof Kozlowski wrote:
-Thanks for Your Time Krzysztof!!!
-> On 18/10/2022 07:24, Srinivasa Rao Mandadapu wrote:
+On 10/19/2022 6:12 PM, Vinod Koul wrote:
+Thanks for your time Vinod!!!
+> On 18-10-22, 16:54, Srinivasa Rao Mandadapu wrote:
 >> Update soundwire bindings with yaml formats.
-> The commit title and body are not really accurate. YAML is just format,
-> you convert the bindings to DT schema.
-Okay Will change accordingly.
->
+>>
 >> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 >> Co-developed-by: Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
 >> Signed-off-by: Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
-> Please use scripts/get_maintainers.pl to get a list of necessary people
-> and lists to CC.  It might happen, that command when run on an older
-> kernel, gives you outdated entries.  Therefore please be sure you base
-> your patches on recent Linux kernel.
-Okay. will get new maintainers list and send accordingly.
->
->
 >> ---
 >>
 >> This patch depends on:
 >>      https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=42801e6185290d63691bd39cf8a3bba6cd5fe520
->>
+> why is this dependency for yaml conversion?
+
+Actually this patch is already landed, but getting bot error from Rob's 
+repo, due to clock binding macro missing.
+
+So mentioned here the same.
+
+>
 >> Changes since V1:
 >>    -- Remove the status field in example.
 >>    -- Remove interrupt-names property in the required list.
@@ -349,9 +346,6 @@ Okay. will get new maintainers list and send accordingly.
 >> index 0000000..65bff91
 >> --- /dev/null
 >> +++ b/Documentation/devicetree/bindings/soundwire/qcom,sdw.yaml
-> Filename based on compatible, so "qcom,soundwire.yaml"
-Okay.
->
 >> @@ -0,0 +1,186 @@
 >> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 >> +%YAML 1.2
@@ -368,9 +362,6 @@ Okay.
 >> +description:
 >> +  This binding describes the Qualcomm SoundWire controller along with its
 >> +  board specific bus parameters.
-> Drop "This binding describes"
-Okay.
->
 >> +
 >> +properties:
 >> +  compatible:
@@ -384,27 +375,15 @@ Okay.
 >> +    items:
 >> +      - description: the base address and size of SoundWire controller
 >> +                   address space.
-> Just maxItems: 1
-Okay.
->
 >> +
 >> +  interrupts:
 >> +    items:
 >> +      - description: specify the SoundWire controller core and optional
 >> +                   wake IRQ.
-> If there is optional IRQ then this is not correct. You need here two items.
->
-> The original bindings could be here not precise or not correct, so fix
-> them while converting and document the changes in commit msg.
-Okay. will modify accordingly.
->
 >> +
 >> +  interrupt-names:
 >> +    items:
 >> +      - const: wakeup
-> Where is the core?
-Will add it.
->
 >> +
 >> +  clocks:
 >> +    items:
@@ -430,18 +409,10 @@ Will add it.
 >> +
 >> +  '#size-cells':
 >> +    const: 0
-> Why? Old binding did not have them, I think. You do not have any children...
-There are child nodes of slave codec devices. Will update bindings and 
-example accordingly.
->
 >> +
 >> +  wakeup-source:
 >> +    description: specify the Soundwire Controller is wakeup Capable.
 >> +    type: boolean
-> Just:
-> wakeup-source: true
-Okay.
->
 >> +
 >> +  qcom,din-ports:
 >> +    $ref: /schemas/types.yaml#/definitions/uint32
@@ -455,19 +426,12 @@ Okay.
 >> +    $ref: /schemas/types.yaml#/definitions/uint8-array
 >> +    description: size of payload channel sample.
 >> +    minItems: 5
-> Drop minItems
-Okay.
->
 >> +    maxItems: 5
 >> +
 >> +  qcom,ports-sinterval-low:
 >> +    $ref: /schemas/types.yaml#/definitions/uint8-array
 >> +    description: sample interval low of each data port.
 >> +    minItems: 5
->
-> here and in other places as well
-Okay.
->
 >> +    maxItems: 5
 >> +
 >> +  qcom,ports-offset1:
@@ -532,10 +496,6 @@ Okay.
 >> +  - qcom,ports-block-pack-mode
 >> +  - qcom,ports-hstart
 >> +  - qcom,ports-block-group-count
-> These properties were optional. You need to explain any differences
-> against pure-conversion.
-Okay. Will modify as per base file.
->
 >> +
 >> +additionalProperties: false
 >> +
@@ -572,10 +532,6 @@ Okay. Will modify as per base file.
 >> +        #sound-dai-cells = <1>;
 >> +        #address-cells = <2>;
 >> +        #size-cells = <0>;
-> Where are the children?
-Will add it.
->
 >> +    };
-> Best regards,
-> Krzysztof
->
+>> -- 
+>> 2.7.4
