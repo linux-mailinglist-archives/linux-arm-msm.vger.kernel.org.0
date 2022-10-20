@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FE8B605E58
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 12:59:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3732605E75
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 13:09:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229994AbiJTK7y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 06:59:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59406 "EHLO
+        id S231264AbiJTLI7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 07:08:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229722AbiJTK7w (ORCPT
+        with ESMTP id S231202AbiJTLI5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 06:59:52 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9521A2F001;
-        Thu, 20 Oct 2022 03:59:51 -0700 (PDT)
+        Thu, 20 Oct 2022 07:08:57 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3179319DD9D;
+        Thu, 20 Oct 2022 04:08:56 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 323A861AF6;
-        Thu, 20 Oct 2022 10:59:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3E6C433D6;
-        Thu, 20 Oct 2022 10:59:50 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id DD3FDB82704;
+        Thu, 20 Oct 2022 11:08:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85FDFC433D6;
+        Thu, 20 Oct 2022 11:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666263590;
-        bh=oNTahkkZ6EJ/BED5DDzmzj9s5hQoDekb/BIBiCvXL04=;
+        s=k20201202; t=1666264133;
+        bh=u/LxgNBR5x9KIgosTs6iI0MM/JXQrrQX8bLHrmhodM8=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=GAneG2oc8jEpfBXNZcINY8mPfqRun9rCjs2s+ctvZqqTjpqmE3wsnjWWsfjED+HJn
-         fTNMJN/ptqz9FAneZtb5g2EezpCVMhhG7w7rjqYBpT0VixHap1C/j27J8JSRAmRsVr
-         ijran+p0y7xHfvK/YC9dsgDe4lIjS7eidIEIWP5KybDUJ3kvdEsLILNDURjxZJwInc
-         NYlKw/yqMmr69gjxs8e5pQsh2Tdfd3ldFtqLs4QxQVuzNujrjj36T/dlnrWZyefFqn
-         vjlAtOQjbfBDoMaAfhq8Z5YBv2vLFNlU+MFD+Mz24blovOlCMDVlQkGNKFC1qUVm/i
-         dS+zgsDhjXyEQ==
+        b=CeSo9dHN3UsoVe9fKmsCnXBrm44a3HATkzIUf8LPP5C6PknfR5TDmIq4K5KCiBZQg
+         WIiVhema9wUOtnfTTxv5UhxSgZBVTxJBx2m7RaM3W5W2/7atWbK/ilNu05WWmiYYi2
+         y9lv9bQyL0w+G6CeGBza1fjnugujjVwETQH9Pq3ysX32kexZSxoyjt06Ul0mohTvaN
+         Mn54J3AM9JCCqnE6TcwmexdAncFZTbxXK1boFhYDaNP0Mvpzu83J6/nXQvUtTHkMub
+         R5cJc1p/U0vWmFoQZYQycDZeU35hlo98kuJoBXxbJz94I7Lhi7c1cicaWziVJeHDtK
+         9oU8T1/cG4KzA==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1olTGy-0002Ib-EE; Thu, 20 Oct 2022 12:59:37 +0200
-Date:   Thu, 20 Oct 2022 12:59:36 +0200
+        id 1olTPk-0002OZ-40; Thu, 20 Oct 2022 13:08:40 +0200
+Date:   Thu, 20 Oct 2022 13:08:40 +0200
 From:   Johan Hovold <johan@kernel.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 15/15] phy: qcom-qmp-pcie: add support for sc8280xp
- 4-lane PHYs
-Message-ID: <Y1EqGPc/UzZJmGcz@hovoldconsulting.com>
-References: <20221019113552.22353-1-johan+linaro@kernel.org>
- <20221019113552.22353-16-johan+linaro@kernel.org>
- <2902e7e8-eddf-149c-06fd-86b85d8af326@linaro.org>
- <Y1DuB6hzb3V5Lqdy@hovoldconsulting.com>
- <004a6ab9-690b-db13-08a9-c42d09368814@linaro.org>
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH 2/4] PCI: qcom: Use clk_bulk_ API for 1.0.0 clocks
+ handling
+Message-ID: <Y1EsOGhEqNe9Cxo6@hovoldconsulting.com>
+References: <20221020103120.1541862-1-dmitry.baryshkov@linaro.org>
+ <20221020103120.1541862-3-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <004a6ab9-690b-db13-08a9-c42d09368814@linaro.org>
+In-Reply-To: <20221020103120.1541862-3-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -67,82 +66,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 20, 2022 at 12:32:13PM +0300, Dmitry Baryshkov wrote:
-> On 20/10/2022 09:43, Johan Hovold wrote:
-> > On Thu, Oct 20, 2022 at 06:43:47AM +0300, Dmitry Baryshkov wrote:
-> >> On 19/10/2022 14:35, Johan Hovold wrote:
-> >>> The PCIe2 and PCIe3 controllers and PHYs on SC8280XP can be used in
-> >>> 4-lane mode or as separate controllers and PHYs in 2-lane mode (e.g. as
-> >>> PCIe2A and PCIe2B).
-> >>>
-> >>> Add support for fetching the 4-lane configuration from the TCSR and
-> >>> programming the lane registers of the second port when in 4-lane mode.
-> >>>
-> >>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+On Thu, Oct 20, 2022 at 01:31:18PM +0300, Dmitry Baryshkov wrote:
+> Change hand-coded implementation of bulk clocks to use the existing
 
-> > The gen3x4 PHYs can be in either 4-lane or 2-lane mode depending on the
-> > TCSR configuration. Port A is programmed identically in both cases
-> > except for this serdes register, and in 4-lane mode tx/rx also needs
-> > to be programmed for port B.
-> >   
-> >>> +
-> >>>    	/* clock ids to be requested */
-> >>>    	const char * const *clk_list;
-> >>>    	int num_clks;
-> >>> @@ -1518,6 +1527,7 @@ struct qmp_pcie {
-> >>>    	struct device *dev;
-> >>>    
-> >>>    	const struct qmp_phy_cfg *cfg;
-> >>> +	bool tcsr_4ln_config;
-> >>
-> >> As a matter of preference, this seems too specific. I'd rename it to
-> >> split_config or split_4ln_config.
-> > 
-> > I'm afraid those names do not make much sense. This TCSR register
-> > controls whether the PHY is in 4-lane mode (instead of 2-lane mode).
+Let's hope everything is "hand-coded" at least for a few years still
+(job security). ;)
+
+Perhaps rephrase using "open-coded"?
+
+> clk_bulk_* API.
 > 
-> Well, we just need the info that it's 4-lane. It doesn't really matter 
-> if this information comes from TCSR, DT or e.g. fuses. I'd say that TCSR 
-> is a platform detail. Thus I'm suggesting a more generic name.
-
-No, it's a specific configuration flag for this (and possibly coming
-platforms) to control whether the two PHY ports are used as individual x2
-PHYs or as a combined x4 PHY.
-
-It's not just about number of lanes and can definitely not come from DT
-or somewhere else as that TCSR bit drives a signal that's needed during
-programming.
-
-> >>> +static void qmp_pcie_init_port_b(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tbls)
-> >>> +{
-> >>> +	const struct qmp_phy_cfg *cfg = qmp->cfg;
-> >>> +	const struct qmp_pcie_offsets *offs = cfg->offsets;
-> >>> +	void __iomem *tx3, *rx3, *tx4, *rx4;
-> >>> +
-> >>> +	tx3 = qmp->port_b + offs->tx;
-> >>> +	rx3 = qmp->port_b + offs->rx;
-> >>> +	tx4 = qmp->port_b + offs->tx2;
-> >>> +	rx4 = qmp->port_b + offs->rx2;
-> >>> +
-> >>> +	qmp_pcie_configure_lane(tx3, tbls->tx, tbls->tx_num, 1);
-> >>> +	qmp_pcie_configure_lane(rx3, tbls->rx, tbls->rx_num, 1);
-> >>> +
-> >>> +	qmp_pcie_configure_lane(tx4, tbls->tx, tbls->tx_num, 2);
-> >>> +	qmp_pcie_configure_lane(rx4, tbls->rx, tbls->rx_num, 2);
-> >>
-> >> I'd use BIT(2) and BIT(3) here. This would allow one to make a
-> >> difference between programming first pair of lanes and second pair of
-> >> lanes if necessary.
-> > 
-> > No, the tx and tx registers of the second port should be programmed
-> > identically to that of the first port.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 67 ++++++--------------------
+>  1 file changed, 16 insertions(+), 51 deletions(-)
 > 
-> As you would prefer. As a matter of fact, we do not have CFG_LANES in 
-> the PCIe PHY. Thus I'm surprised that you didn't drop this. I think 
-> CFG_LANES usage is limited to sm8250 USB and combo PHY configurations.
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 939f19241356..74588438db07 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -133,10 +133,7 @@ struct qcom_pcie_resources_2_1_0 {
+>  };
+>  
+>  struct qcom_pcie_resources_1_0_0 {
+> -	struct clk *iface;
+> -	struct clk *aux;
+> -	struct clk *master_bus;
+> -	struct clk *slave_bus;
+> +	struct clk_bulk_data clks[4];
+>  	struct reset_control *core;
+>  	struct regulator *vdda;
+>  };
+> @@ -472,26 +469,20 @@ static int qcom_pcie_get_resources_1_0_0(struct qcom_pcie *pcie)
+>  	struct qcom_pcie_resources_1_0_0 *res = &pcie->res.v1_0_0;
+>  	struct dw_pcie *pci = pcie->pci;
+>  	struct device *dev = pci->dev;
+> +	int ret;
+>  
+>  	res->vdda = devm_regulator_get(dev, "vdda");
+>  	if (IS_ERR(res->vdda))
+>  		return PTR_ERR(res->vdda);
+>  
+> -	res->iface = devm_clk_get(dev, "iface");
+> -	if (IS_ERR(res->iface))
+> -		return PTR_ERR(res->iface);
+> -
+> -	res->aux = devm_clk_get(dev, "aux");
+> -	if (IS_ERR(res->aux))
+> -		return PTR_ERR(res->aux);
+> -
+> -	res->master_bus = devm_clk_get(dev, "master_bus");
+> -	if (IS_ERR(res->master_bus))
+> -		return PTR_ERR(res->master_bus);
+> +	res->clks[0].id = "aux";
+> +	res->clks[1].id = "iface";
+> +	res->clks[2].id = "master_bus";
+> +	res->clks[3].id = "slave_bus";
+>  
+> -	res->slave_bus = devm_clk_get(dev, "slave_bus");
+> -	if (IS_ERR(res->slave_bus))
+> -		return PTR_ERR(res->slave_bus);
+> +	ret = devm_clk_bulk_get(dev, ARRAY_SIZE(res->clks), res->clks);
+> +	if (ret < 0)
+> +		return ret;
 
-It's actually also used by SC8280XP so we cannot drop it (see
-sc8280xp_qmp_gen3x2_pcie_tx_tbl) here. Appears to be unused for UFS
-currently, though.
+Are you sure there are no dependencies between these clocks and that
+they can be enabled and disabled in any order?
+
+Are you also convinced that they will always be enabled and disabled
+together (e.g. not controlled individually during suspend)?
+
+> -	ret = clk_prepare_enable(res->aux);
+> +	ret = clk_bulk_prepare_enable(ARRAY_SIZE(res->clks), res->clks);
+>  	if (ret) {
+> -		dev_err(dev, "cannot prepare/enable aux clock\n");
+> +		dev_err(dev, "cannot prepare/enable clocks\n");
+
+The bulk API already logs an error so you can drop the dev_err().
+
+These comments apply also to the other patches.
 
 Johan
