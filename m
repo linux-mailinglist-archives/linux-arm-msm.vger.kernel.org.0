@@ -2,142 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A64FE605E35
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 12:53:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58315605E43
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 12:56:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230327AbiJTKxI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 06:53:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44912 "EHLO
+        id S229943AbiJTK4A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 06:56:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229667AbiJTKxI (ORCPT
+        with ESMTP id S229514AbiJTKz7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 06:53:08 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD3B41DE3F7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 03:53:06 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id j4so32923460lfk.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 03:53:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ISfaqMEVOt5NqZEabZB8HqvfH97r0fX/dwv3Z1arI3k=;
-        b=XrsYM0iklTxLXZILvOg1PPVfUoCjJp8xeQHMrJz7StSbFgE4mtixPNAIUAQpQtkNIk
-         2zUilbpOZSD2UFSkKpLSyCcx74qLnyo9CuxjyWW1fHbpp9yXQki6QWznnRGEzQ/z7vH7
-         KLg/0V+gmqqpmITyg+u3lJPI4exFRkg4w3bRG3mQy6urIdVWU5Bf3xYpzJLvuFy4BmfS
-         MTFy5bRqg78PSBWqv5o3QR+zyn8/4f9KiQg+qQe5yW1TGv1utkLDkiXmoF8J9S1aXJ69
-         NSO3x12qyuVK6Npj9hte5slILYjO1GxIcmffctQ/DQ6IOIVb03i/f14otGrA2YNuxE1I
-         J4Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ISfaqMEVOt5NqZEabZB8HqvfH97r0fX/dwv3Z1arI3k=;
-        b=qQHUqp1Nbh0LGvkASI7+aKGz0b+O2EmtugH/muCLUbdzW8xnDvA1Jp6/E+hxk/uPI8
-         rn9j0plqVgByfrxJC5hsQu6aGZEGGFWUFDyMx7rl6aLk0bUoNLrekldVKGbYthzgQTNP
-         ex9i94QygSxQUhORAVvHgMKDwylpLNnctGvUqscbDjtVW3r2tiV+Yw9axTM19RAYU0JU
-         mpa0BseqxEWfHFMimcU28ks/FUmJ3bqpEgTb4FY61Vrx/F2vbAGlLVuxUzrseS48KYe4
-         XxES7sHE6hD1VHYHptK2Ume+DWoYBSkUJ9W65YWh0YSPDmKGPgvp1jyDwPVTd3by6yxS
-         C8TA==
-X-Gm-Message-State: ACrzQf2PM8lDUfpbE1pl76RvcaI2GsIxMAF0Wm86mgIn83dFxNs4/7MS
-        yFbgUnKA1+WcEPyP59vIttuVig==
-X-Google-Smtp-Source: AMsMyM6xi13XCb8wPT/fKx+LGwtxsuOWmheJ8Ywz9Lm/ngGNRFgqX7aiftxA0zyAVVJooR5s4uB4Yg==
-X-Received: by 2002:a05:6512:250c:b0:4a2:731e:ca1 with SMTP id be12-20020a056512250c00b004a2731e0ca1mr4869703lfb.357.1666263185032;
-        Thu, 20 Oct 2022 03:53:05 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id z15-20020a056512308f00b00492f0f66956sm2661106lfd.284.2022.10.20.03.53.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Oct 2022 03:53:04 -0700 (PDT)
-Message-ID: <f170d43e-f3b7-38f6-6376-2c9116413c1a@linaro.org>
-Date:   Thu, 20 Oct 2022 13:53:03 +0300
+        Thu, 20 Oct 2022 06:55:59 -0400
+Received: from mx01.omp.ru (mx01.omp.ru [90.154.21.10])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85A051DEC14;
+        Thu, 20 Oct 2022 03:55:56 -0700 (PDT)
+Received: from [192.168.1.103] (31.173.87.29) by msexch01.omp.ru (10.188.4.12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.986.14; Thu, 20 Oct
+ 2022 13:55:44 +0300
+Subject: Re: [PATCH 03/21] drm/ingenic: Don't set struct drm_driver.lastclose
+To:     Thomas Zimmermann <tzimmermann@suse.de>, <daniel@ffwll.ch>,
+        <airlied@gmail.com>, <sam@ravnborg.org>, <javierm@redhat.com>,
+        <mripard@kernel.org>, <maarten.lankhorst@linux.intel.com>
+CC:     <dri-devel@lists.freedesktop.org>, <amd-gfx@lists.freedesktop.org>,
+        <linux-aspeed@lists.ozlabs.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <etnaviv@lists.freedesktop.org>,
+        <linux-samsung-soc@vger.kernel.org>,
+        <linux-hyperv@vger.kernel.org>, <intel-gfx@lists.freedesktop.org>,
+        <linux-mips@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
+        <linux-amlogic@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+        <nouveau@lists.freedesktop.org>,
+        <virtualization@lists.linux-foundation.org>,
+        <spice-devel@lists.freedesktop.org>,
+        <linux-renesas-soc@vger.kernel.org>,
+        <linux-rockchip@lists.infradead.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-sunxi@lists.linux.dev>, <linux-tegra@vger.kernel.org>,
+        <xen-devel@lists.xenproject.org>
+References: <20221020103755.24058-1-tzimmermann@suse.de>
+ <20221020103755.24058-4-tzimmermann@suse.de>
+From:   Sergey Shtylyov <s.shtylyov@omp.ru>
+Organization: Open Mobile Platform
+Message-ID: <013ea55b-3d51-c89c-eff8-b8d355ded352@omp.ru>
+Date:   Thu, 20 Oct 2022 13:55:44 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH v2 13/15] phy: qcom-qmp-pcie: add support for pipediv2
- clock
-Content-Language: en-GB
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221019113552.22353-1-johan+linaro@kernel.org>
- <20221019113552.22353-14-johan+linaro@kernel.org>
- <325d6c7b-ca96-df73-a792-4d156a710267@linaro.org>
- <Y1EPZBinv0tyZVqW@hovoldconsulting.com>
- <7eb3fb9a-ce4a-eee0-b6bc-cee6aa6bf37b@linaro.org>
- <Y1EnsKMhoWo+cIWo@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <Y1EnsKMhoWo+cIWo@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20221020103755.24058-4-tzimmermann@suse.de>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [31.173.87.29]
+X-ClientProxiedBy: msexch01.omp.ru (10.188.4.12) To msexch01.omp.ru
+ (10.188.4.12)
+X-KSE-ServerInfo: msexch01.omp.ru, 9
+X-KSE-AntiSpam-Interceptor-Info: scan successful
+X-KSE-AntiSpam-Version: 5.9.20, Database issued on: 10/20/2022 10:25:24
+X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
+X-KSE-AntiSpam-Method: none
+X-KSE-AntiSpam-Rate: 59
+X-KSE-AntiSpam-Info: Lua profiles 173210 [Oct 20 2022]
+X-KSE-AntiSpam-Info: Version: 5.9.20.0
+X-KSE-AntiSpam-Info: Envelope from: s.shtylyov@omp.ru
+X-KSE-AntiSpam-Info: LuaCore: 502 502 69dee8ef46717dd3cb3eeb129cb7cc8dab9e30f6
+X-KSE-AntiSpam-Info: {rep_avail}
+X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
+X-KSE-AntiSpam-Info: {relay has no DNS name}
+X-KSE-AntiSpam-Info: {SMTP from is not routable}
+X-KSE-AntiSpam-Info: {Found in DNSBL: 31.173.87.29 in (user)
+ b.barracudacentral.org}
+X-KSE-AntiSpam-Info: omp.ru:7.1.1;127.0.0.199:7.1.2;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1
+X-KSE-AntiSpam-Info: ApMailHostAddress: 31.173.87.29
+X-KSE-AntiSpam-Info: {DNS response errors}
+X-KSE-AntiSpam-Info: Rate: 59
+X-KSE-AntiSpam-Info: Status: not_detected
+X-KSE-AntiSpam-Info: Method: none
+X-KSE-AntiSpam-Info: Auth:dmarc=temperror header.from=omp.ru;spf=temperror
+ smtp.mailfrom=omp.ru;dkim=none
+X-KSE-Antiphishing-Info: Clean
+X-KSE-Antiphishing-ScanningType: Heuristic
+X-KSE-Antiphishing-Method: None
+X-KSE-Antiphishing-Bases: 10/20/2022 10:32:00
+X-KSE-AttachmentFiltering-Interceptor-Info: protection disabled
+X-KSE-Antivirus-Interceptor-Info: scan successful
+X-KSE-Antivirus-Info: Clean, bases: 10/20/2022 7:12:00 AM
+X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/10/2022 13:49, Johan Hovold wrote:
-> On Thu, Oct 20, 2022 at 12:28:14PM +0300, Dmitry Baryshkov wrote:
->> On 20/10/2022 12:05, Johan Hovold wrote:
-> 
->>> Here's your example diff inline:
-> 
->>> @@ -2206,12 +2207,17 @@ static int qmp_pcie_parse_dt_legacy(struct qmp_pcie *qmp, struct device_node *np
->>>    		}
->>>    	}
->>>    
->>> -	qmp->pipe_clk = devm_get_clk_from_child(dev, np, NULL);
->>> -	if (IS_ERR(qmp->pipe_clk)) {
->>> -		return dev_err_probe(dev, PTR_ERR(qmp->pipe_clk),
->>> +	clk = devm_get_clk_from_child(dev, np, NULL);
->>> +	if (IS_ERR(clk)) {
->>> +		return dev_err_probe(dev, PTR_ERR(clk),
->>>    				     "failed to get pipe clock\n");
->>>    	}
->>>    
->>> +	qmp->num_pipe_clks = 1;
->>> +	qmp->pipe_clks = devm_kcalloc(dev, qmp->num_pipe_clks,
->>> +				      sizeof(*qmp->pipe_clks), GFP_KERNEL);
->>> +	qmp->pipe_clks[0].clk = clk;
->>>
->>> So here you're poking at bulk API internals and forgot to set the id
->>> string, which the implementation uses.
->>
->> I didn't forget, I just skipped setting it. Hmm. I thought that it is
->> used only for clk_bulk_get. But after checking, it seems it's also used
->> for error messages. Mea culpa.
->>
->> But it's not that I was poking into the internals. These items are in
->> the public header.
-> 
-> My point is that you're not using the bulk API as it was intended (e.g.
-> with clk_bulk_get()) and you risk running into issues like the above.
-> 
-> And looking up the actual clock name for this is overkill, even in the
-> case were it is provided, so we'd need to set it unconditionally to
-> "pipe" (which is fine).
-> 
->>> For reasons like this, and the fact that will likely never have a third
->>> pipe clock, I'm reluctant to using the bulk API.
->>
->> Let's resort to the maintainer opinion then.
-> 
-> I'll take another look at it too.
+Hello!
 
-Thanks!
+On 10/20/22 1:37 PM, Thomas Zimmermann wrote:
 
--- 
-With best wishes
-Dmitry
+> Don't set struct drm_mode_config.output_poll_changed. It's used to
+> inform the fbdev console about conncetor changes. But as ingenic
 
+   Connector. :-)
+
+> uses generic fbdev emulation, the console is being informed by the
+> DRM client helpers already. See the calls to drm_client_dev_hotplug()
+> in drm_probe_helper.c.
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+[...]
+
+MBR, Sergey
