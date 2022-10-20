@@ -2,107 +2,297 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C491C6067EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 20:08:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDCFF60683C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 20:35:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230055AbiJTSIh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 14:08:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57046 "EHLO
+        id S229648AbiJTSfD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 14:35:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230354AbiJTSIC (ORCPT
+        with ESMTP id S229576AbiJTSfC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 14:08:02 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32791132DF5;
-        Thu, 20 Oct 2022 11:07:42 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29KHU63x010876;
-        Thu, 20 Oct 2022 18:07:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=aayNG3H1C+iIeSaIKuwV8OaEYw5fWM3xjdAI9tCEGR4=;
- b=maCJNMy9CU74S7XDU9G6AoR+ikZqGKaDGgQ3PXvDssAwF3v9q8hC8hZCXsGPOoboIZy1
- JRldTFMjKEE1Albt8+j/5tC2eirF8BcmFSYwRBotM8vhQ2SsK2mIpnEhqSeQaIynfufh
- E9zzR1eJASf5GSDqDYD1VfIjAhE2Z5UnD50xrIam1/rQAdunQX4/BkzWcGblm9M+tIvj
- 6SC/EhyRJrjJ4LJtypGJNK05LCkaPXBxfV8alyXKTYarsrw/A0WlvSyJxGT9EsFj1kbm
- YHWfsjAL1aXCeFxFUdd7RH+DFJhMRRKn7HnypXIrMcyvCXJqNo5NZPkPz1QcaGlme43K gw== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kb2c615sa-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Oct 2022 18:07:25 +0000
-Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29KI7OYC002678
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Oct 2022 18:07:24 GMT
-Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Thu, 20 Oct 2022 11:07:23 -0700
-From:   Asutosh Das <quic_asutoshd@quicinc.com>
-To:     <quic_cang@quicinc.com>, <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>
-CC:     <quic_nguyenb@quicinc.com>, <quic_xiaosenh@quicinc.com>,
-        <stanley.chu@mediatek.com>, <eddie.huang@mediatek.com>,
-        <daejun7.park@samsung.com>, <bvanassche@acm.org>,
-        <avri.altman@wdc.com>, <mani@kernel.org>, <beanhuo@micron.com>,
-        <quic_richardp@quicinc.com>,
-        "Asutosh Das" <quic_asutoshd@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: [PATCH v3 17/17] ufs: qcom-host: Enable multi circular queue capability
-Date:   Thu, 20 Oct 2022 11:03:46 -0700
-Message-ID: <4d21c867708a9d37e53293510d81013088d01c39.1666288432.git.quic_asutoshd@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1666288432.git.quic_asutoshd@quicinc.com>
-References: <cover.1666288432.git.quic_asutoshd@quicinc.com>
+        Thu, 20 Oct 2022 14:35:02 -0400
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A78A35B704
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 11:34:56 -0700 (PDT)
+Received: by mail-qk1-x729.google.com with SMTP id a18so555539qko.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 11:34:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HY9CsyVy0myxvaLITwUS3Qt0lBRKhpdzPVxX3EBA/CY=;
+        b=pipBb0x+cr2R0D3fuF6NLkbPQDO0qI5bzzvLkE1sgy/MUEA7P6YiYSeCFkzr45wkyp
+         76YJPkPeQNs/Kg3itSirub4zm2GEh2NYUWsqKOHai15PQ1N6jFWHPXhRbw7VC60dsT2K
+         myD8HBZtN6L34bwnOnLzTYgH7EjRrxaPyvPHfQWf8g+pmsWPY5jGVtu6COzIOnYVFih3
+         YJU+geOvXw+G2zx/9MLP55wKP1I9dAPZPzb1NWdnww8gC5kkY7ZMeoBuDMbTK1t132k0
+         XzSKbAUg2qjY6iMTgJ8t4W2MgiYfFj0KZDte+9Xj3zgI3pOj5ICnGJLkhxaqfx9rYbfz
+         yRww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HY9CsyVy0myxvaLITwUS3Qt0lBRKhpdzPVxX3EBA/CY=;
+        b=j4D8iwsmejP3gtzugFbkkskHDGSNqJyoqKS/rXdcsDGzVBC233lKNzTtbXentn1IpP
+         DxIgHBVAuTgR45+gRdtpUHL4V79JTc7BPCvvLVR/vFSuJRis4thxK/jTyD+zzXlG8jo1
+         s9LPfjO+c+fl/rKgE1BT5MOBigFuJBYRAeAtLrPZBzBVknIn7wbE3EyqgYbuZUyf2nOH
+         CK2CbhFqCFGOV/3VMj1hjDKJmG97GS7pVTqeaf8ghR5dloRe8imDs5iKBw6VvthUcuOU
+         Lp8KUwi+c65g9hMIgJwJV8jerk8KCxNz1o3GPU+Xplnr8OaA1XoESJ0IfcrdEAA767gz
+         +mdw==
+X-Gm-Message-State: ACrzQf246XeDrYKKzeYm+iCqKjZhx2JNKxT8m6HrRM0XZP/vZMKp2gXd
+        ua0J+MuYeeikoQoFojmdA9khdA==
+X-Google-Smtp-Source: AMsMyM6/i6uGqja8uWjQHRC3kvF+iBiGDVTF7QSKqI8YynKmQZGi7xBdrUtDnUCwkHk0gZiKfL3PQA==
+X-Received: by 2002:a37:5d2:0:b0:6ee:7931:825a with SMTP id 201-20020a3705d2000000b006ee7931825amr10334659qkf.591.1666290895303;
+        Thu, 20 Oct 2022 11:34:55 -0700 (PDT)
+Received: from [192.168.10.124] (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
+        by smtp.gmail.com with ESMTPSA id s7-20020a05620a254700b006ec59941acasm7980520qko.11.2022.10.20.11.34.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Oct 2022 11:34:54 -0700 (PDT)
+Message-ID: <77087a4a-ac21-c622-59ec-1b308c37cc2c@linaro.org>
+Date:   Thu, 20 Oct 2022 14:34:52 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: FVo9cwELH1MTYTQRm78xxQwb9PTzD4dh
-X-Proofpoint-ORIG-GUID: FVo9cwELH1MTYTQRm78xxQwb9PTzD4dh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-20_09,2022-10-20_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- clxscore=1015 impostorscore=0 bulkscore=0 malwarescore=0
- lowpriorityscore=0 spamscore=0 priorityscore=1501 mlxlogscore=999
- phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210200108
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Subject: Re: [PATCH v3] dt-bindings: soundwire: Convert text bindings to DT
+ Schema
+Content-Language: en-US
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        vkoul@kernel.org, agross@kernel.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
+        bgoswami@quicinc.com, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, quic_rohkumar@quicinc.com,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, judyhsiao@chromium.org
+Cc:     Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+References: <1666271160-22424-1-git-send-email-quic_srivasam@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1666271160-22424-1-git-send-email-quic_srivasam@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable MCQ for Qualcomm UFS controllers
+On 20/10/2022 09:06, Srinivasa Rao Mandadapu wrote:
+> Convert soundwire text bindings to DT Schema format.
+> 
+> Update interrupt property items as per device tree,
+> as it is not appropriately described in text file.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+> Signed-off-by: Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+> ---
 
-Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+Thank you for your patch. There is something to discuss/improve.
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 36c40210..b740299 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -853,6 +853,7 @@ static void ufs_qcom_set_caps(struct ufs_hba *hba)
- 	hba->caps |= UFSHCD_CAP_CRYPTO;
- 	hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
- 	hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
-+	hba->caps |= UFSHCD_CAP_MCQ_EN;
- 
- 	if (host->hw_ver.major >= 0x2) {
- 		host->caps = UFS_QCOM_CAP_QUNIPRO |
--- 
-2.7.4
+> -};
+> diff --git a/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml b/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
+> new file mode 100644
+> index 0000000..12cd3c1
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
+> @@ -0,0 +1,184 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/soundwire/qcom,soundwire.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SoundWire Controller
+> +
+> +maintainers:
+> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> +  - Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> +
+> +description:
+> +  The Qualcomm SoundWire controller along with its board specific bus parameters.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,soundwire-v1.3.0
+> +      - qcom,soundwire-v1.5.0
+> +      - qcom,soundwire-v1.5.1
+> +      - qcom,soundwire-v1.6.0
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    items:
+> +      - description: specify the SoundWire controller core.
+> +      - description: specify the Soundwire controller wake IRQ.
+
+The second property was optional. You need to test DTS before sending
+the bindings. Please run `make dtbs_check` (see
+Documentation/devicetree/bindings/writing-schema.rst for instructions).
+
+IOW, you need here:
+  minItems: 1
+
+> +
+> +  interrupt-names:
+
+  minItems: 1
+
+> +    items:
+> +      - const: wakeup
+> +      - const: core
+
+That's definitely wrong order and should not pass any tests...
+
+> +
+> +  clocks:
+> +    items:
+> +      - description: iface clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: iface
+> +
+> +  resets:
+> +    items:
+> +      - description: SWR_AUDIO_CGCR RESET
+> +
+> +  reset-names:
+> +    items:
+> +      - const: swr_audio_cgcr
+> +
+> +  '#sound-dai-cells':
+> +    const: 1
+> +
+> +  '#address-cells':
+> +    const: 2
+> +
+> +  '#size-cells':
+> +    const: 0
+> +
+> +  wakeup-source: true
+> +
+> +  qcom,din-ports:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description: count of data in ports
+> +
+> +  qcom,dout-ports:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description: count of data out ports
+> +
+> +  qcom,ports-word-length:
+> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+> +    description: size of payload channel sample.
+> +    maxItems: 5
+> +
+> +  qcom,ports-sinterval-low:
+> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+> +    description: sample interval low of each data port.
+> +    maxItems: 5
+> +
+> +  qcom,ports-offset1:
+> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+> +    description: payload transport window offset1 of each data port.
+
+You miss here some pieces of original description,
+
+> +    maxItems: 5
+> +
+> +  qcom,ports-offset2:
+> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+> +    description: payload transport window offset2 of each data port.
+
+Ditto - and in other places.
+
+> +    maxItems: 5
+> +
+> +  qcom,ports-lane-control:
+> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+> +    description: identify which data lane the data port uses.
+> +    maxItems: 5
+> +
+> +  qcom,ports-block-pack-mode:
+> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+> +    description: indicate the block packing mode.
+> +    maxItems: 5
+> +
+> +  qcom,ports-hstart:
+> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+> +    description: identifying lowerst numbered coloum in SoundWire frame.
+> +    maxItems: 5
+> +
+> +  qcom,ports-hstop:
+> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+> +    description: identifying highest numbered coloum in SoundWire frame.
+> +    maxItems: 5
+> +
+> +  qcom,ports-block-group-count:
+> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+> +    description: indicate how many sample intervals are combined into a payload.
+> +    maxItems: 5
+> +
+> +  codec@4:
+
+It's too specific. What if different device uses different address?
+
+You need patternProperties "^codec@[0-9a-f]+$"
+
+
+> +    $ref: ../sound/qcom,wcd938x-sdw.yaml#
+
+Full path, so /schemas/sound/qcom,wcd.....
+
+Cannot we have other codecs attached? For example check SC7280 IDP,
+SM8250 MTP, RB5.
+
+
+> +    description:
+> +      Qualcomm WCD9380/WCD9385 Codec is a standalone Hi-Fi audio codec IC.
+> +      It has RX and TX Soundwire slave devices. This bindings is for the
+> +      slave devices.
+> +    type: object
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - clocks
+> +  - clock-names
+> +  - '#sound-dai-cells'
+> +  - '#address-cells'
+> +  - '#size-cells'
+> +  - qcom,dout-ports
+> +  - qcom,din-ports
+> +  - qcom,ports-sinterval-low
+> +  - qcom,ports-offset1
+> +  - qcom,ports-offset2
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    #include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
+> +
+> +    soundwire@3210000 {
+> +        compatible = "qcom,soundwire-v1.6.0";
+> +        reg = <0x03210000 0x2000>;
+> +
+> +        interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>,
+> +                     <&pdc 130 IRQ_TYPE_LEVEL_HIGH>;
+> +
+
+Missing interrupt names.
+
+Best regards,
+Krzysztof
 
