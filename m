@@ -2,114 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9E9B60663A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 18:50:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D812606647
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 18:52:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229738AbiJTQuG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 12:50:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54308 "EHLO
+        id S229661AbiJTQwW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 12:52:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbiJTQuE (ORCPT
+        with ESMTP id S229773AbiJTQwV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 12:50:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7BAA4E60D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 09:50:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1666284599;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=uoGto+gNH92mAm1Kdu+EjWKJigMkRDwEWaF/cwWxdwc=;
-        b=gz0vE6dkAS3kpRinzADQ8yzgu5Jjk3yD7qfY/xIwTwfKgLxdw7D+U7BEbBimaUFXRBqkUY
-        FZPFO+s46CgFODiBIhCHHy0yINGCxIa03k6tUH8i4U6oPeZg/C7Vy3UWrpeiuJIw60EhUH
-        apnL+ZZQ2QS5PH9L9OJigM5/7uuRNaE=
-Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
- [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-440-IF2XWwQ9NJ2oKJtPiMSOLQ-1; Thu, 20 Oct 2022 12:49:58 -0400
-X-MC-Unique: IF2XWwQ9NJ2oKJtPiMSOLQ-1
-Received: by mail-il1-f200.google.com with SMTP id n6-20020a056e021ba600b002fc99858e34so332143ili.14
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 09:49:58 -0700 (PDT)
+        Thu, 20 Oct 2022 12:52:21 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9D691B65D7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 09:52:19 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id b1so372674lfs.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 09:52:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=s/ZEXKDRDRj3WNNr3hTK31vGtN01dCNnxQgVkyZFvXk=;
+        b=MCAncbePD1KRjyATSdVpV/pz75l4UrRbEkvXPGcnW7sCexuHzPieoFtTxDHdZ6K7k0
+         A/KG1RH9os9yi5+X140BnoSuSIhIUzmHym/5Iw5Fnc6Z5twF/c3IUIpmBUdukBPwVPlf
+         9NKplRt0s6EFHLSYLfjDx3t4Sb/Ak0PgN2f9c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uoGto+gNH92mAm1Kdu+EjWKJigMkRDwEWaF/cwWxdwc=;
-        b=h4RuJmtqBiggPGJIa1tn1Br6yhQSi3qnTlpKIV7EIeYnqzcTMFjJL40wvf1BgGxY+Z
-         Imu2IduVMoDmJVMJTVY1g4MIo1Xls8YE7abdoeyZGfGYfHCIAZT3SKYCAuLvqwXMnkBs
-         qyffPoD5BHIAgTx+8NjY2qjmN5+g2cbM3qtNpbvbsm84idayVSFWsHHIEHFXZDikdIz1
-         VRFCqDfE4AFX/JqFfMUGe/LASP2+xUwYgawi0zj5iINhPmwtflDRoboYXka8VbfJkXbn
-         WHdUSrHqoKRKGFMJz9hHRw0dC4JSW7R1gkracHypSTZvRwkquBqST7RYnVBTUhYU3sG9
-         Vr1A==
-X-Gm-Message-State: ACrzQf1gTtyea4LOq6Ektn182r1snDUCqsh8gxU3pkuWtO3pf4gsHH/f
-        drK5nQDKeqxC7ll3CAbsAvcpj1ryDDC1aj57nBF0EG2aFFv6+xIBTM2HD+yfDZJF3bDfomKZk+N
-        zp7E8AnxDbF2zYlqvApz0XNXi1A==
-X-Received: by 2002:a05:6638:4987:b0:363:c403:28ff with SMTP id cv7-20020a056638498700b00363c40328ffmr10097988jab.235.1666284597638;
-        Thu, 20 Oct 2022 09:49:57 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM5f69+U/H3YHmxW+EIukcVAqLTXZEmABQS3o/TzzGrb3p1R4FOeCnxcVZxE631gJUxtqBzN1Q==
-X-Received: by 2002:a05:6638:4987:b0:363:c403:28ff with SMTP id cv7-20020a056638498700b00363c40328ffmr10097946jab.235.1666284597136;
-        Thu, 20 Oct 2022 09:49:57 -0700 (PDT)
-Received: from x1 (c-98-239-145-235.hsd1.wv.comcast.net. [98.239.145.235])
-        by smtp.gmail.com with ESMTPSA id y19-20020a056602121300b006bb5af55ddfsm3477224iot.19.2022.10.20.09.49.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Oct 2022 09:49:56 -0700 (PDT)
-Date:   Thu, 20 Oct 2022 12:49:54 -0400
-From:   Brian Masney <bmasney@redhat.com>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        quic_vbadigan@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] PCI: qcom: Add basic interconnect support
-Message-ID: <Y1F8MqeHxj5IaLtx@x1>
-References: <20221017112449.2146-1-johan+linaro@kernel.org>
- <20221017112449.2146-3-johan+linaro@kernel.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=s/ZEXKDRDRj3WNNr3hTK31vGtN01dCNnxQgVkyZFvXk=;
+        b=SrNkPu4HrX/pJwlT0VA1BgHyPpR0G7WfCZff+e/rmGDXpYP64j2ti18XmwDMdjKqgQ
+         Cl3RwsyIiuS2mi4RmoSiXDCVH5t2xNaY6JargqycrR7/Jxq5oefP3u+RaXE5Ad+GbVG/
+         fnDi3xoBj9pB4XikV0VmjpkFsJvFceC9jSHNXObwO4EU9KMubZhCrdEze6+Nrs5ROp7S
+         T4vzKROq7XEPRXYY5C4YnxhSdRMnEU2Bnp6XeOobLJytIObvLgd846IsGxK+Qy8ZlPZa
+         WaSCxNBVE/CsfOQM6ougiKFlPuqw4RqN4sQWC50wzPI2WFWIx3Q8mix59Jr97hpeP1fD
+         WNeg==
+X-Gm-Message-State: ACrzQf0SDe6Kn2Cl4wIhbgnpqeA9j4tl3VL9Ws+3jdRGVuK1zkEVeQZS
+        FLbETyO9d/wqhR1KueWtSPWFFFEP4OBqI96QvJONOQ==
+X-Google-Smtp-Source: AMsMyM6foqy60+V71r5PMJ0enkd1Nd/f7VvEQyYXSD/OhVePzreiswI+fR0A/ZowIhO2a4vFIoPAUwjMakApyrsmXCA=
+X-Received: by 2002:a05:6512:6d4:b0:4a2:f89:db7d with SMTP id
+ u20-20020a05651206d400b004a20f89db7dmr5048536lff.125.1666284737895; Thu, 20
+ Oct 2022 09:52:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221017112449.2146-3-johan+linaro@kernel.org>
-User-Agent: Mutt/2.2.7 (2022-08-07)
+References: <CANHAJhG-aoOBgTzirGu-1uqCFUJd+AnenMSkoUqnG3mhraCRfw@mail.gmail.com>
+ <CAF6AEGvvsx+6OSxOaqjoUO=J4tO_J5ZSidenx9EXdz34_myBqQ@mail.gmail.com>
+ <CAF6AEGtsw5GTB+MzvA7mE8y=m6qDFtQNFnnAVtuFSxnDAT0YuA@mail.gmail.com> <DM8PR02MB8169E5D5C972BE45207F70C2F32B9@DM8PR02MB8169.namprd02.prod.outlook.com>
+In-Reply-To: <DM8PR02MB8169E5D5C972BE45207F70C2F32B9@DM8PR02MB8169.namprd02.prod.outlook.com>
+From:   Nathan Hebert <nhebert@chromium.org>
+Date:   Thu, 20 Oct 2022 09:52:06 -0700
+Message-ID: <CANHAJhG2PM-KS9GVHOE0xh+5KpKy5qjFBqteRGqNONiasjprBg@mail.gmail.com>
+Subject: Re: [PULL]: qcom: SC7180 and SC7280 venus firmware updates
+To:     Vikash Garodia <vgarodia@qti.qualcomm.com>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        "linux-firmware@kernel.org" <linux-firmware@kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
+        Fritz Koenig <frkoenig@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 17, 2022 at 01:24:49PM +0200, Johan Hovold wrote:
-> On Qualcomm platforms like SC8280XP and SA8540P interconnect bandwidth
-> must be requested before enabling interconnect clocks.
-> 
-> Add basic support for managing an optional "pcie-mem" interconnect path
-> by setting a low constraint before enabling clocks and updating it after
-> the link is up.
-> 
-> Note that it is not possible for a controller driver to set anything but
-> a maximum peak bandwidth as expected average bandwidth will vary with
-> use case and actual use (and power policy?). This very much remains an
-> unresolved problem with the interconnect framework.
-> 
-> Also note that no constraint is set for the SC8280XP/SA8540P "cpu-pcie"
-> path for now as it is not clear what an appropriate constraint would be
-> (and the system does not crash when left unspecified currently).
-> 
-> Fixes: 70574511f3fc ("PCI: qcom: Add support for SC8280XP")
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+On Wed, Oct 19, 2022 at 10:09 AM Vikash Garodia
+<vgarodia@qti.qualcomm.com> wrote:
+>
+> Hi Rob,
+>
+> > -----Original Message-----
+> > From: Rob Clark <robdclark@gmail.com>
+> > Sent: Wednesday, October 19, 2022 9:32 PM
+> > To: Nathan Hebert <nhebert@chromium.org>
+> > Cc: linux-firmware@kernel.org; linux-arm-msm@vger.kernel.org; Vikash
+> > Garodia (QUIC) <quic_vgarodia@quicinc.com>; Fritz Koenig
+> > <frkoenig@chromium.org>; Bjorn Andersson <andersson@kernel.org>
+> > Subject: Re: [PULL]: qcom: SC7180 and SC7280 venus firmware updates
+> >
+> > WARNING: This email originated from outside of Qualcomm. Please be wary of
+> > any links or attachments, and do not enable macros.
+> >
+> > Actually, isn't the .mbn the joined fw?  If so all you need to do is remove the
+> > other files?
+> .mbn is the complete firmware image. We have migrated to .mbn for sc7280, while the
+> Initial days of sc7280 was with .mdt binaries (split ones). So to support the boards which
+> Have not upgraded the driver, we are retaining all binaries.
+>
 
-Reviewed-by: Brian Masney <bmasney@redhat.com>
+Thanks for the feedback (on and off-list). I will push a V2 of the pull request
+with the following changes:
 
+1. Update both split and non-split binaries for venus-5.4 (SC7180). Also,
+update the version in WHENCE. We can remove the legacy split images in a later
+commit if it is feasible to do so.
+2. Remove the split firmware images for vpu-2.0 (SC7280). There is no released
+device that uses the older firmware loader. I have tested to make sure the
+non-split image can be loaded and that the venus media functions work on a
+SC7280 device using a ChromeOS kernel based on 5.15.
+3. Update the VPU-2.0 non-split binaries to the latest version and update the
+version in the WHENCE file.
+
+> > On Wed, Oct 19, 2022 at 8:52 AM Rob Clark <robdclark@gmail.com> wrote:
+> > >
+> > > Hmm, does venus not support the combined firmware yet?  Elsewhere
+> > > we've moved away from split fw to using a single ELF file..
+> > >
+> > > BR,
+> > > -R
+> > >
+> > > On Tue, Oct 18, 2022 at 2:18 PM Nathan Hebert <nhebert@chromium.org>
+> > wrote:
+> > > >
+> > > > The following changes since commit
+> > 48407ffd7adb9511701547068b1e6f0956bd1c94:
+> > > >
+> > > >   cnm: update chips&media wave521c firmware. (2022-10-17 10:20:43
+> > > > -0400)
+> > > >
+> > > > are available in the Git repository at:
+> > > >
+> > > >   https://github.com/nathan-google/linux-firmware.git
+> > > > update_sc7180_and_sc7280_firmwares
+> > > >
+> > > > for you to fetch changes up to
+> > 76e160366a28010fa06ddc965659c38a44d159d9:
+> > > >
+> > > >   qcom: update venus firmware files for VPU-2.0 (2022-10-18 13:42:58
+> > > > -0700)
+> > > >
+> > > > ----------------------------------------------------------------
+> > > > Nathan Hebert (2):
+> > > >       qcom: update venus firmware files for v5.4
+> > > >       qcom: update venus firmware files for VPU-2.0
+> > > >
+> > > >  qcom/venus-5.4/venus.b00 | Bin 212 -> 212 bytes
+> > > >  qcom/venus-5.4/venus.b01 | Bin 6808 -> 6808 bytes
+> > > >  qcom/venus-5.4/venus.b02 | Bin 873596 -> 875020 bytes
+> > > >  qcom/venus-5.4/venus.b03 | Bin 33792 -> 33896 bytes
+> > > > qcom/venus-5.4/venus.mbn | Bin 919708 -> 921236 bytes
+> > > > qcom/venus-5.4/venus.mdt | Bin 7020 -> 7020 bytes
+> > > >  qcom/vpu-2.0/venus.b00   | Bin 692 -> 692 bytes
+> > > >  qcom/vpu-2.0/venus.b01   | Bin 7376 -> 7376 bytes
+> > > >  qcom/vpu-2.0/venus.b02   | Bin 300 -> 300 bytes
+> > > >  qcom/vpu-2.0/venus.b04   | Bin 20 -> 20 bytes
+> > > >  qcom/vpu-2.0/venus.b09   | Bin 939184 -> 939472 bytes
+> > > >  qcom/vpu-2.0/venus.b10   | Bin 42976 -> 43120 bytes
+> > > >  qcom/vpu-2.0/venus.mbn   | Bin 2031188 -> 2031620 bytes
+> > > >  qcom/vpu-2.0/venus.mdt   | Bin 8068 -> 8068 bytes
+> > > >  14 files changed, 0 insertions(+), 0 deletions(-)
+>
+> Thanks,
+> Vikash
