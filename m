@@ -2,60 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8CE86066BB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 19:08:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6451F6066E6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Oct 2022 19:18:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229975AbiJTRID (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 13:08:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45282 "EHLO
+        id S229565AbiJTRST (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 13:18:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229867AbiJTRIB (ORCPT
+        with ESMTP id S229720AbiJTRSQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 13:08:01 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 917DA1B4C78
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 10:07:58 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id j14so104564ljh.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 10:07:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=IybMlsJw1Yys6p7xGaPp2Y1xUUcDYRPKINWOHYDcdwc=;
-        b=ibmMQrzhrxmtZ/6A5mbyXJKFAvXn12OA0sQuE6UBFA0NmdpGznMXrdR7vmIamgYZRg
-         /x89uIj1e+1t5U8t6MS515XATn1Yk+tzIKFg8RWe/RFUK6ufnh7Lcry4rEoDy301aLUA
-         GpPt9au+HKaHTNJAEbkXrHgo4pJaH3Ho/a7Hc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IybMlsJw1Yys6p7xGaPp2Y1xUUcDYRPKINWOHYDcdwc=;
-        b=Doct6hea2pv3QYyB0RTmpQqUU1ty/dQ8CAXVqyL5DRtfB0urFTHJ5uLBHgmUFDJBNN
-         sPzW0CWkDDU0nV63QF9QoclRQD5jQc2ycUjlcEaaaZYJpT1YDhtvDQg7ucseyQ3DIgBY
-         V+Ep+Oeu5pfuTEp2OSO2B4q55LOPw1TbyqhxNmkQyCEXimvQ4eAskaoKQlhO0oWL1opW
-         pGh18Y4/pFlCB+GCHMshoGmeJOHi1xeMWEa2dD08NPFWAbKkuvvfDwh5v7/PD77XSGIh
-         BldHfYHt+8ZysxzW4xasPU1djw2mMhNPNf3X8nSjNTuw5gZ4owCzMAJVlBX0kaVMZDeO
-         uvng==
-X-Gm-Message-State: ACrzQf0PwLkqwkLd+kYMCKioAwXE143UOSztfscTi78Kz8N7HY73Xt9Y
-        6fMQpzQnd8pzbukfZzznfBk/FShC4GPqDSM56CLRlw==
-X-Google-Smtp-Source: AMsMyM5bZnvNjkE/0TBP4deiruJQxWvKQcODnmlc5+pOuYofdw95lEMHkRbBlWwSgh7s+ZB5/KH7gmu9IYqaNaAE9QI=
-X-Received: by 2002:a05:651c:907:b0:26f:bb25:f66c with SMTP id
- e7-20020a05651c090700b0026fbb25f66cmr5377618ljq.132.1666285676679; Thu, 20
- Oct 2022 10:07:56 -0700 (PDT)
-MIME-Version: 1.0
-From:   Nathan Hebert <nhebert@chromium.org>
-Date:   Thu, 20 Oct 2022 10:07:45 -0700
-Message-ID: <CANHAJhG7wCv4TwVCtWa2wqHzaG5ncbtfnVJtnQqqDSbEoPmoHw@mail.gmail.com>
-Subject: [PULL V2]: qcom: SC7180 and SC7280 venus firmware updates
-To:     linux-firmware@kernel.org
-Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
+        Thu, 20 Oct 2022 13:18:16 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE54B1DEC06;
+        Thu, 20 Oct 2022 10:18:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1666286291;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=AHjeMo+ip+LW4qeiu8MeiHhu4CY0K3tFEnRf7ZV1uNA=;
+    b=TtqW2jyQU9ez7vJZJjQjsPj239ZU08ZV5bpeVyYDG7C9zOY+7X5c2eH8sRgt+A9wVl
+    GwIrjRQ4uX98fTUvUACGQuzfeDC79q8XL0bAT7xB0jlcV/u+kbv+nzWB6z0L9naPWVuB
+    JRs6Bsn6HJtwc1c6Xt95S+Ku9yQGG8dZX93aE/yqRWp/pbv5MQ2R4slzCw92ASShEP9l
+    Y2BiohhjpVifFIaja5et7XLTJZdgr3wnI49aO+9jFP/NiYLatMGpmLczxwHLK/zFpTMI
+    g5RUEYX4FMrKspDyPDvcdG9lFEMLX+YXsfRLt1tlHr3+yPeVG2uf6S9N++rulZUPCkiC
+    4UIA==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJAhd5WwPXI"
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 48.2.0 DYNA|AUTH)
+    with ESMTPSA id f6c614y9KHIBZLz
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 20 Oct 2022 19:18:11 +0200 (CEST)
+Date:   Thu, 20 Oct 2022 19:18:00 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Melody Olvera <quic_molvera@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Fritz Koenig <frkoenig@chromium.org>,
-        Vikash Garodia <vgarodia@qti.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
+Message-ID: <Y1GCs6uCz5o9az+v@gerhold.net>
+References: <20221014221138.7552-1-quic_molvera@quicinc.com>
+ <20221014221138.7552-3-quic_molvera@quicinc.com>
+ <56af2a04-1b21-000d-e3f9-86b6ac74aaf2@linaro.org>
+ <a0032338-482f-0de7-5952-c3c8b8423df6@quicinc.com>
+ <50372a15-56ce-6ad6-f622-00624b909db8@linaro.org>
+ <Y1FTJgloEi5ag2/j@gerhold.net>
+ <9fbe1bf5-a84d-c56b-1c0e-6848ee3d30fe@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9fbe1bf5-a84d-c56b-1c0e-6848ee3d30fe@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,57 +69,115 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit 48407ffd7adb9511701547068b1e6f0956bd1c94:
+On Thu, Oct 20, 2022 at 12:08:36PM -0400, Krzysztof Kozlowski wrote:
+> On 20/10/2022 09:54, Stephan Gerhold wrote:
+> > On Thu, Oct 20, 2022 at 08:41:15AM -0400, Krzysztof Kozlowski wrote:
+> >> On 19/10/2022 16:21, Melody Olvera wrote:
+> >>> On 10/15/2022 6:28 AM, Krzysztof Kozlowski wrote:
+> >>>> On 14/10/2022 18:11, Melody Olvera wrote:
+> >>>> [...]
+> >>>>> +	clocks {
+> >>>>> +		xo_board: xo-board {
+> >>>>> +			compatible = "fixed-clock";
+> >>>>> +			clock-frequency = <19200000>;
+> >>>> Both clocks are not a property of a SoC. They are provided by the board,
+> >>>> so they should either be defined by board DTS or at least their
+> >>>> frequency must be provided by the board.
+> >>> That doesn't seem in keeping with precedent.... the sm8* series all have the clocks in
+> >>> the dtsi. These are common to the boards anyways.
+> >>
+> >> Because people do not pay attention what is part of SoC, what is part of
+> >> board. DTSI is for the SoC and these are inputs to the SoC.
+> >>
+> > 
+> > (Just chiming in because I had this thought already a few times when you
+> >  suggested moving the XO "clock-frequency" to the board DTS:)
+> > 
+> > I understand your reasoning for moving components of the board to the
+> > board DTS, but IMHO adding just the clock-frequency to the board DTS is
+> > even more misleading: It suggests that there are functional board
+> > designs where you would use a XO clock with a different clock-frequency.
+> > Is that really realistic though?
+> 
+> Keeping it in DTSI also suggests you could have some different frequency.
+> 
 
-  cnm: update chips&media wave521c firmware. (2022-10-17 10:20:43 -0400)
+If the fixed-clock was listed in the SoC DTSI I would personally
+consider it as fixed and would not try to modify it in the board DTS.
+The way I see it is that the board DTS mostly _extends_ the SoC DTSI
+(add peripherals/supplies/...) instead of _modifying_ it.
 
-are available in the Git repository at:
+Anyway this is likely subjective and was not my main point/question. :)
 
-  https://github.com/nathan-google/linux-firmware.git
-update_sc7180_and_sc7280_firmwares_v2
+> > 
+> > There are assumptions about the XO clock frequency in a lot of places:
+> > You would need to fully rewrite the gcc-<SoC>.c driver because it has
+> > fixed multipliers/dividers for one specific XO frequency. All firmware
+> > binaries would likely need changes. And does the hardware even support a
+> > different XO clock frequency? The APQ8016E datasheet for example
+> > strictly documents a XO clock input of 19.2 MHz and a sleep clock of
+> > 32.768 kHz.
+> 
+> I know, the same with most of other platforms. Qualcomm is not special
+> here. Maybe the difference is that some other platforms have few
+> external clocks and not all of them are required.
+> 
+> > IMHO the only realistic variation of the XO clock setup would be to have
+> > a physical "fixed-clock" with a higher frequency, followed by a
+> > "fixed-factor-clock" that brings it back to the expected frequency. To
+> > model that properly it is not enough to have just the "clock-frequency"
+> > in the board DTS. In this case you need two clock nodes, and the
+> > xo_board would be the "fixed-factor-clock".
+> 
+> It's not about whether you can change it or not. It's about describing
+> hardware - SoC DTSI describes SoC. DTS describes the board (assuming
+> there is no SoM or other DTSI files). This clock is not in DTSI.
+> 
+> > Therefore it should be all or nothing IMO: Either we move the full
+> > xo-board node to the board DTS (which allows alternatively defining the
+> > "fixed-factor-clock" or whatever).
+> 
+> You can move entire clock to boards.
+> 
+> > Or we assume that there will be
+> > always an input clock signal with the fixed frequency and keep it fully
+> > in the SoC .dtsi.
+> > 
+> > Having just the "clock-frequency" in the board DTS puts the attention on
+> > the wrong detail, IMO. :)
+> 
+> No, it puts attention to the board designer that he needs to provide the
+> clock in his design.
+> 
+> We had such talks about other platforms, although I do not have any
+> recent bookmarks. Something older:
+> 
+> https://lore.kernel.org/all/3382034.5ADO0F7naY@wuerfel/
+> 
+> https://lore.kernel.org/linux-samsung-soc/53DAB0A6.9030700@gmail.com/
+> 
 
-for you to fetch changes up to 054271e4164b6b4c069a3aaaeb9bfcde8c850339:
+If I understand you correctly your argument for having the clock in the
+board DTS instead of the SoC DTSI is:
 
-  qcom: update venus firmware files for VPU-2.0 (2022-10-20 09:37:35 -0700)
+The SoC DTSI describes the components of the SoC, while the board DTS
+describes the components of the board (built around the SoC). The clock
+is part of the board (and not the SoC) and therefore belongs into the
+board DTS and not the SoC DTSI. Having the SoC/board components clearly
+separated ensures people writing new board DTS pay attention to
+everything board-specific.
 
-----------------------------------------------------------------
-Nathan Hebert (3):
-      qcom: update venus firmware files for v5.4
-      qcom: remove split SC7280 venus firmware images
-      qcom: update venus firmware files for VPU-2.0
+Correct? This sounds reasonable to me.
 
- WHENCE                   |  17 ++---------------
- qcom/venus-5.4/venus.b00 | Bin 212 -> 212 bytes
- qcom/venus-5.4/venus.b01 | Bin 6808 -> 6808 bytes
- qcom/venus-5.4/venus.b02 | Bin 873596 -> 875020 bytes
- qcom/venus-5.4/venus.b03 | Bin 33792 -> 33896 bytes
- qcom/venus-5.4/venus.mbn | Bin 919708 -> 921236 bytes
- qcom/venus-5.4/venus.mdt | Bin 7020 -> 7020 bytes
- qcom/vpu-2.0/venus.b00   | Bin 692 -> 0 bytes
- qcom/vpu-2.0/venus.b01   | Bin 7376 -> 0 bytes
- qcom/vpu-2.0/venus.b02   | Bin 300 -> 0 bytes
- qcom/vpu-2.0/venus.b03   | Bin 20 -> 0 bytes
- qcom/vpu-2.0/venus.b04   | Bin 20 -> 0 bytes
- qcom/vpu-2.0/venus.b05   | Bin 20 -> 0 bytes
- qcom/vpu-2.0/venus.b06   | Bin 20 -> 0 bytes
- qcom/vpu-2.0/venus.b07   | Bin 24 -> 0 bytes
- qcom/vpu-2.0/venus.b08   | Bin 16 -> 0 bytes
- qcom/vpu-2.0/venus.b09   | Bin 939184 -> 0 bytes
- qcom/vpu-2.0/venus.b10   | Bin 42976 -> 0 bytes
- qcom/vpu-2.0/venus.b19   |   1 -
- qcom/vpu-2.0/venus.mbn   | Bin 2031188 -> 2031620 bytes
- qcom/vpu-2.0/venus.mdt   | Bin 8068 -> 0 bytes
- 21 files changed, 2 insertions(+), 16 deletions(-)
- delete mode 100644 qcom/vpu-2.0/venus.b00
- delete mode 100644 qcom/vpu-2.0/venus.b01
- delete mode 100644 qcom/vpu-2.0/venus.b02
- delete mode 100644 qcom/vpu-2.0/venus.b03
- delete mode 100644 qcom/vpu-2.0/venus.b04
- delete mode 100644 qcom/vpu-2.0/venus.b05
- delete mode 100644 qcom/vpu-2.0/venus.b06
- delete mode 100644 qcom/vpu-2.0/venus.b07
- delete mode 100644 qcom/vpu-2.0/venus.b08
- delete mode 100644 qcom/vpu-2.0/venus.b09
- delete mode 100644 qcom/vpu-2.0/venus.b10
- delete mode 100644 qcom/vpu-2.0/venus.b19
- delete mode 100644 qcom/vpu-2.0/venus.mdt
+However, the main question of my previous mail was: Why do you
+alternatively recommend to keep the clock defined in the SoC DTSI and to
+just put the clock-frequency into the board DTS? This sounds like a
+contradiction of the above to me: the clock is still (partially)
+described as part of the SoC, even though it belongs to the board.
+
+Someone writing a board DTS should not just put attention to the
+clock-frequency, but also if they have a single fixed-clock or
+maybe some kind of clock-fixed-factor setup, as I wrote.
+
+Thanks,
+Stephan
