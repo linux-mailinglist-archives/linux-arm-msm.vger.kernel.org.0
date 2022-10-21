@@ -2,74 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ACBF8606BAB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 00:53:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DFCBB606C61
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 02:07:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230091AbiJTWxT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 18:53:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41622 "EHLO
+        id S229843AbiJUAHU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 20:07:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230053AbiJTWxS (ORCPT
+        with ESMTP id S229679AbiJUAHT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 18:53:18 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D6AD21E113
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 15:53:15 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id cr19so654189qtb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 15:53:15 -0700 (PDT)
+        Thu, 20 Oct 2022 20:07:19 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F5FA22D5E2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 17:07:14 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id e15so1019159iof.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 17:07:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/Uy/wXHU2v3TB2N25Zn1d6ZJRAOgmvyxraPbI3vOF24=;
-        b=OJa0f0+AONVU3hjhiv1iVB835ReqHxPJ/VnrMj6VgXkDc9nEvrtmtwShe6FU7tBoSC
-         D/2+Ac6Kn37KprPfgLBVunD19OUxVAzbzTdEjmfzUIUbUzh3SKjK0Rk+c+y8W03egWfF
-         /GOb25xG5AG0NIybEZPYIR7T4O0AjDn84tau+PmZ4FMrLR66+T0qY7ANNq9XuZm8co0Y
-         TKexxA9gR/IDViPWeajRhCMS8J2rrLNTgz/5VwX1LL6q+qNCDIvTj6/EStnqrpa7+CkM
-         /yTeb/reMHUPisv3JJd4+Z77mB0muBjJ1xdKcnx3NqOkrIA7nGK2hDY/F35PJtIqIbIl
-         YtwA==
+        d=ieee.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=p39RyCfU+9mnwxBrSb4JyvVhF9Wi3aL1o4ywecMrOyc=;
+        b=SWOCieMfI9U9Z90WbjvYg+9QRoYIsxVxhlUdwqK4H9b0Q7Df7c1Mu1hsD0vdUIsiog
+         AADSkzODpvHYhYIrDsHYqMYxjbWkuB5eOoEOFwOaHwRdoz91jcr9Xrkq3TMuibDZWNGM
+         rGvAlZB8N1zwCgFH3d+76Q6hvWuVH986jfxD8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/Uy/wXHU2v3TB2N25Zn1d6ZJRAOgmvyxraPbI3vOF24=;
-        b=lZOZ2Im+K6lywYn7AtutkG7pIYcWkDzCsCZJ0Q3LPMR0Drkpxzn2rGLGOlq1YV9xwg
-         0klugvTWmzq/D/fQGbIQyRYIRKOUY/wfQscJoDqNNsMLga3cAqcjTTt/N1iGwoUrB6qA
-         qrX1hhLEsbeyvTHkm0Qa+lsFlrP85Co7RZqhIgbxlA9boHsM3XOP8KZnBBZGUzJQtHC+
-         /O/+4Xg8R+QXywmrOgzioD4fIEMyAaoN+nNpDqV1JdxPjR5EJOZqJQcfesiyZVLHYnHp
-         BXZVMK4l90cgdefaWIdTPF82trOh5tZJF0Tn2bT892uvkBD4YhkFII5WhJW68WcKBKbg
-         1+pw==
-X-Gm-Message-State: ACrzQf2PpdZgQmlKdQ+mc7dcbwAZXwivFPtsCK3fGdYxsk8+z8P24kB5
-        yB/F6ig+ZyJdV9qumKOxS12Hyg==
-X-Google-Smtp-Source: AMsMyM7qwZUpwlvdZ1V/Z25mX4hZF2VwKibWIJ+svW428ZEVt1MxfltjK0W3AEUmzfAN9W37kG0ZGA==
-X-Received: by 2002:a05:622a:40d:b0:397:bd61:ef1d with SMTP id n13-20020a05622a040d00b00397bd61ef1dmr13650756qtx.404.1666306394338;
-        Thu, 20 Oct 2022 15:53:14 -0700 (PDT)
-Received: from krzk-bin.MSRM (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
-        by smtp.gmail.com with ESMTPSA id h19-20020a05620a401300b006eed47a1a1esm8556773qko.134.2022.10.20.15.53.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Oct 2022 15:53:13 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=p39RyCfU+9mnwxBrSb4JyvVhF9Wi3aL1o4ywecMrOyc=;
+        b=nlxxkwBrJaXt8yrMLXhJdogq9Nzair7NQEhaUkHrxggkKix0rJd+3t38J5pvgKH3h5
+         UN0D1Hg9OJRK89wHQBv2kZQlMlgo8N/Ic4APICyeQXEDDwSQmDAnDsOQcXheB5XZIQpu
+         jp5fDzLK6+D8G/koxA0hR9bG2nGrJfG+ymHIjYt42ovFoETAVcirtuGsR7OroIZl+YHg
+         3jqIWDgh02yRfzoJP48gzHdLAY5BTd8oJx5yxmuTHvAIKjIXTueWSWDU+GetWYCUcwsi
+         FhiAmxTr0Mo6njoGCuZaM713APjSy3q2xRanCU2zWbavf1RE43Vq8v666tTJnwnLw0IE
+         EPwg==
+X-Gm-Message-State: ACrzQf3S+9B69HYZglkPdaoXyrf2/nU+GDlX3L5yst1/AKshC1SlSGKx
+        1QDfclc97bEP3TeX7ysuQRicBg==
+X-Google-Smtp-Source: AMsMyM4W5nYtSGIGD3YyWEXeDncgqsS/XJ+DNr6dIZpGYfabJdx5tiYmBcO9ZgAia9uo3CcQ2S+2JA==
+X-Received: by 2002:a05:6602:13c8:b0:68a:db5d:269d with SMTP id o8-20020a05660213c800b0068adb5d269dmr11305548iov.209.1666310832734;
+        Thu, 20 Oct 2022 17:07:12 -0700 (PDT)
+Received: from [172.22.22.4] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id a2-20020a056602148200b006bc3bf6e5b5sm3838978iow.55.2022.10.20.17.07.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Oct 2022 17:07:12 -0700 (PDT)
+Message-ID: <6693993c-bd81-c974-a903-52a62bfec606@ieee.org>
+Date:   Thu, 20 Oct 2022 19:07:10 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH V17 2/7] soc: qcom: dcc: Add driver support for Data
+ Capture and Compare unit(DCC)
+Content-Language: en-US
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v4 2/2] arm64: dts: qcom: msm8996: align TLMM pin configuration with DT schema
-Date:   Thu, 20 Oct 2022 18:53:09 -0400
-Message-Id: <20221020225309.32116-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221020225309.32116-1-krzysztof.kozlowski@linaro.org>
-References: <20221020225309.32116-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, vkoul@kernel.org
+References: <cover.1665549527.git.quic_schowdhu@quicinc.com>
+ <5fee939d0a238344c7db11cf322adcb6baa35724.1665549527.git.quic_schowdhu@quicinc.com>
+From:   Alex Elder <elder@ieee.org>
+In-Reply-To: <5fee939d0a238344c7db11cf322adcb6baa35724.1665549527.git.quic_schowdhu@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,1070 +82,1784 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DT schema expects TLMM pin configuration nodes to be named with
-'-state' suffix and their optional children with '-pins' suffix.
+On 10/14/22 1:00 AM, Souradeep Chowdhury wrote:
+> The DCC is a DMA Engine designed to capture and store data
+> during system crash or software triggers. The DCC operates
+> based on user inputs via the debugfs interface. The user gives
+> addresses as inputs and these addresses are stored in the
+> dcc sram. In case of a system crash or a manual software
+> trigger by the user through the debugfs interface,
+> the dcc captures and stores the values at these addresses.
+> This patch contains the driver which has all the methods
+> pertaining to the debugfs interface, auxiliary functions to
+> support all the four fundamental operations of dcc namely
+> read, write, read/modify/write and loop. The probe method
+> here instantiates all the resources necessary for dcc to
+> operate mainly the dedicated dcc sram where it stores the
+> values. The DCC driver can be used for debugging purposes
+> without going for a reboot since it can perform software
+> triggers as well based on user inputs.
+> 
+> Also added the documentation for debugfs entries and explained
+> the functionalities of each debugfs file that has been created
+> for dcc.
+> 
+> The following is the justification of using debugfs interface
+> over the other alternatives like sysfs/ioctls
+> 
+> i) As can be seen from the debugfs attribute descriptions,
+> some of the debugfs attribute files here contains multiple
+> arguments which needs to be accepted from the user. This goes
+> against the design style of sysfs.
+> 
+> ii) The user input patterns have been made simple and convenient
+> in this case with the use of debugfs interface as user doesn't
+> need to shuffle between different files to execute one instruction
+> as was the case on using other alternatives.
+> 
+> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+I haven't followed any review feedback you have received
+since verion 8 (which I reviewed), so if I say something
+that conflicts with other feedback I apologize.  I know
+Bjorn had some comments too, so you're already going to
+send another version.
 
----
+Unfortunately I have some more input, including some things
+that are basically bugs (because buffers could be overrun).
+I will plan to review again once you've had a chance to
+address my comments.
 
-Changes since v3:
-1. Rebased
+					-Alex
 
-Changes since v2:
-1. None
+> ---
+>   Documentation/ABI/testing/debugfs-driver-dcc |   98 ++
+>   drivers/soc/qcom/Kconfig                     |    8 +
+>   drivers/soc/qcom/Makefile                    |    1 +
+>   drivers/soc/qcom/dcc.c                       | 1355 ++++++++++++++++++++++++++
+>   4 files changed, 1462 insertions(+)
+>   create mode 100644 Documentation/ABI/testing/debugfs-driver-dcc
+>   create mode 100644 drivers/soc/qcom/dcc.c
+> 
+> diff --git a/Documentation/ABI/testing/debugfs-driver-dcc b/Documentation/ABI/testing/debugfs-driver-dcc
+> new file mode 100644
+> index 0000000..387f67e
+> --- /dev/null
+> +++ b/Documentation/ABI/testing/debugfs-driver-dcc
+> @@ -0,0 +1,98 @@
+> +What:           /sys/kernel/debug/dcc/.../ready
+> +Date:           September 2022
+> +Contact:        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> +Description:
+> +		This file is used to check the status of the dcc
+> +		hardware if it's ready to take the inputs. A 'Y'
+> +		here indicates dcc is in a ready condition.
+> +		Example:
+> +		cat /sys/kernel/debug/dcc/.../ready
+> +
+> +What:           /sys/kernel/debug/dcc/.../trigger
+> +Date:           September 2022
 
-Changes since v1:
-1. Add Rb tag.
----
- arch/arm64/boot/dts/qcom/apq8096-db820c.dts   |  96 ++++------
- arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts  |  68 ++------
- .../dts/qcom/msm8996-sony-xperia-tone.dtsi    |  26 +--
- .../boot/dts/qcom/msm8996-xiaomi-common.dtsi  |  10 +-
- .../boot/dts/qcom/msm8996-xiaomi-gemini.dts   |   8 +-
- arch/arm64/boot/dts/qcom/msm8996.dtsi         | 164 +++++++++---------
- .../dts/qcom/msm8996pro-xiaomi-natrium.dts    |   4 +-
- .../dts/qcom/msm8996pro-xiaomi-scorpio.dts    |   8 +-
- 8 files changed, 153 insertions(+), 231 deletions(-)
+Again, update these dates before the final version goes out,
+or...  each time you send a new version, update them.
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-index 7f10372178d6..1b0a01f1e237 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-@@ -422,82 +422,46 @@ &tlmm {
- 		"NC", /* GPIO_148 */
- 		"NC"; /* GPIO_149 */
- 
--	sdc2_cd_on: sdc2_cd_on {
--		mux {
--			pins = "gpio38";
--			function = "gpio";
--		};
--
--		config {
--			pins = "gpio38";
--			bias-pull-up;		/* pull up */
--			drive-strength = <16>;	/* 16 MA */
--		};
-+	sdc2_cd_on: sdc2-cd-on-state {
-+		pins = "gpio38";
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <16>;
- 	};
- 
--	sdc2_cd_off: sdc2_cd_off {
--		mux {
--			pins = "gpio38";
--			function = "gpio";
--		};
--
--		config {
--			pins = "gpio38";
--			bias-pull-up;		/* pull up */
--			drive-strength = <2>;	/* 2 MA */
--		};
-+	sdc2_cd_off: sdc2-cd-off-state {
-+		pins = "gpio38";
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <2>;
- 	};
- 
--	hdmi_hpd_active: hdmi_hpd_active {
--		mux {
--			pins = "gpio34";
--			function = "hdmi_hot";
--		};
--
--		config {
--			pins = "gpio34";
--			bias-pull-down;
--			drive-strength = <16>;
--		};
-+	hdmi_hpd_active: hdmi-hpd-active-state {
-+		pins = "gpio34";
-+		function = "hdmi_hot";
-+		bias-pull-down;
-+		drive-strength = <16>;
- 	};
- 
--	hdmi_hpd_suspend: hdmi_hpd_suspend {
--		mux {
--			pins = "gpio34";
--			function = "hdmi_hot";
--		};
--
--		config {
--			pins = "gpio34";
--			bias-pull-down;
--			drive-strength = <2>;
--		};
-+	hdmi_hpd_suspend: hdmi-hpd-suspend-state {
-+		pins = "gpio34";
-+		function = "hdmi_hot";
-+		bias-pull-down;
-+		drive-strength = <2>;
- 	};
- 
--	hdmi_ddc_active: hdmi_ddc_active {
--		mux {
--			pins = "gpio32", "gpio33";
--			function = "hdmi_ddc";
--		};
--
--		config {
--			pins = "gpio32", "gpio33";
--			drive-strength = <2>;
--			bias-pull-up;
--		};
-+	hdmi_ddc_active: hdmi-ddc-active-state {
-+		pins = "gpio32", "gpio33";
-+		function = "hdmi_ddc";
-+		drive-strength = <2>;
-+		bias-pull-up;
- 	};
- 
--	hdmi_ddc_suspend: hdmi_ddc_suspend {
--		mux {
--			pins = "gpio32", "gpio33";
--			function = "hdmi_ddc";
--		};
--
--		config {
--			pins = "gpio32", "gpio33";
--			drive-strength = <2>;
--			bias-pull-down;
--		};
-+	hdmi_ddc_suspend: hdmi-ddc-suspend-state {
-+		pins = "gpio32", "gpio33";
-+		function = "hdmi_ddc";
-+		drive-strength = <2>;
-+		bias-pull-down;
- 	};
- };
- 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-index 3ea793b20e7f..71e0a500599c 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-@@ -104,60 +104,22 @@ &mdss {
- 	status = "okay";
- };
- 
--&tlmm {
--	sdc2_pins_default: sdc2-pins-default {
--		clk {
--			pins = "sdc2_clk";
--			bias-disable;
--			drive-strength = <16>;
--		};
--
--		cmd {
--			pins = "sdc2_cmd";
--			bias-pull-up;
--			drive-strength = <10>;
--		};
--
--		data {
--			pins = "sdc2_data";
--			bias-pull-up;
--			drive-strength = <10>;
--		};
-+&sdc2_state_on {
-+	cd-pins {
-+		pins = "gpio38";
-+		function = "gpio";
- 
--		cd {
--			pins = "gpio38";
--			function = "gpio";
--
--			bias-pull-up;
--			drive-strength = <16>;
--		};
-+		bias-pull-up;
-+		drive-strength = <16>;
- 	};
-+};
- 
--	sdc2_pins_sleep: sdc2-pins-sleep {
--		clk {
--			pins = "sdc2_clk";
--			bias-disable;
--			drive-strength = <2>;
--		};
--
--		cmd {
--			pins = "sdc2_cmd";
--			bias-pull-up;
--			drive-strength = <2>;
--		};
--
--		data {
--			pins = "sdc2_data";
--			bias-pull-up;
--			drive-strength = <2>;
--		};
--
--		cd {
--			pins = "gpio38";
--			function = "gpio";
--			bias-pull-up;
--			drive-strength = <2>;
--		};
-+&sdc2_state_off {
-+	cd-pins {
-+		pins = "gpio38";
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <2>;
- 	};
- };
- 
-@@ -372,10 +334,6 @@ &sdhc2 {
- 
- 	vmmc-supply = <&vreg_l21a_2p95>;
- 	vqmmc-supply = <&vreg_l13a_2p95>;
--
--	pinctrl-names = "default", "sleep";
--	pinctrl-0 = <&sdc2_pins_default>;
--	pinctrl-1 = <&sdc2_pins_sleep>;
- };
- 
- &ufshc {
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-index cb9a169bb38b..dec361b93cce 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-@@ -847,28 +847,28 @@ &tlmm {
- 	pinctrl-0 = <&sw_service_gpio>;
- 	pinctrl-names = "default";
- 
--	disp_reset_n_gpio: disp-reset-n {
-+	disp_reset_n_gpio: disp-reset-n-state {
- 		pins = "gpio8";
- 		function = "gpio";
- 		drive-strength = <2>;
- 		bias-disable;
- 	};
- 
--	mdp_vsync_p_gpio: mdp-vsync-p {
-+	mdp_vsync_p_gpio: mdp-vsync-p-state {
- 		pins = "gpio10";
- 		function = "mdp_vsync";
- 		drive-strength = <2>;
- 		bias-disable;
- 	};
- 
--	sw_service_gpio: sw-service-gpio {
-+	sw_service_gpio: sw-service-gpio-state {
- 		pins = "gpio16";
- 		function = "gpio";
- 		drive-strength = <2>;
- 		bias-pull-up;
- 	};
- 
--	usb_detect: usb-detect {
-+	usb_detect: usb-detect-state {
- 		pins = "gpio25";
- 		function = "gpio";
- 		drive-strength = <2>;
-@@ -876,7 +876,7 @@ usb_detect: usb-detect {
- 		output-high;
- 	};
- 
--	uim_detect_en: uim-detect-en {
-+	uim_detect_en: uim-detect-en-state {
- 		pins = "gpio29";
- 		function = "gpio";
- 		drive-strength = <2>;
-@@ -884,14 +884,14 @@ uim_detect_en: uim-detect-en {
- 		output-high;
- 	};
- 
--	tray_det_pin: tray-det {
-+	tray_det_pin: tray-det-state {
- 		pins = "gpio40";
- 		function = "gpio";
- 		drive-strength = <2>;
- 		bias-disable;
- 	};
- 
--	tp_vddio_en: tp-vddio-en {
-+	tp_vddio_en: tp-vddio-en-state {
- 		pins = "gpio50";
- 		function = "gpio";
- 		drive-strength = <2>;
-@@ -899,7 +899,7 @@ tp_vddio_en: tp-vddio-en {
- 		output-high;
- 	};
- 
--	lcd_vddio_en: lcd-vddio-en {
-+	lcd_vddio_en: lcd-vddio-en-state {
- 		pins = "gpio51";
- 		function = "gpio";
- 		drive-strength = <2>;
-@@ -907,14 +907,14 @@ lcd_vddio_en: lcd-vddio-en {
- 		output-low;
- 	};
- 
--	wl_host_wake: wl-host-wake {
-+	wl_host_wake: wl-host-wake-state {
- 		pins = "gpio79";
- 		function = "gpio";
- 		drive-strength = <2>;
- 		bias-pull-down;
- 	};
- 
--	wl_reg_on: wl-reg-on {
-+	wl_reg_on: wl-reg-on-state {
- 		pins = "gpio84";
- 		function = "gpio";
- 		drive-strength = <2>;
-@@ -922,20 +922,20 @@ wl_reg_on: wl-reg-on {
- 		output-low;
- 	};
- 
--	ts_reset_n: ts-rst-n {
-+	ts_reset_n: ts-rst-n-state {
- 		pins = "gpio89";
- 		function = "gpio";
- 		drive-strength = <2>;
- 	};
- 
--	touch_int_n: touch-int-n {
-+	touch_int_n: touch-int-n-state {
- 		pins = "gpio125";
- 		function = "gpio";
- 		drive-strength = <2>;
- 		bias-pull-up;
- 	};
- 
--	touch_int_sleep: touch-int-sleep {
-+	touch_int_sleep: touch-int-sleep-state {
- 		pins = "gpio125";
- 		function = "gpio";
- 		drive-strength = <2>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
-index d2637909a356..5b47b8de69da 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
-@@ -691,35 +691,35 @@ divclk4_pin_a: divclk4-state {
- };
- 
- &tlmm {
--	mdss_dsi_default: mdss_dsi_default {
-+	mdss_dsi_default: mdss-dsi-default-state {
- 		pins = "gpio8";
- 		function = "gpio";
- 		drive-strength = <8>;
- 		bias-disable;
- 	};
- 
--	mdss_dsi_sleep: mdss_dsi_sleep {
-+	mdss_dsi_sleep: mdss-dsi-sleep-state {
- 		pins = "gpio8";
- 		function = "gpio";
- 		drive-strength = <2>;
- 		bias-pull-down;
- 	};
- 
--	mdss_te_default: mdss_te_default {
-+	mdss_te_default: mdss-te-default-state {
- 		pins = "gpio10";
- 		function = "mdp_vsync";
- 		drive-strength = <2>;
- 		bias-pull-down;
- 	};
- 
--	mdss_te_sleep: mdss_te_sleep {
-+	mdss_te_sleep: mdss-te-sleep-state {
- 		pins = "gpio10";
- 		function = "mdp_vsync";
- 		drive-strength = <2>;
- 		bias-pull-down;
- 	};
- 
--	nfc_default: nfc_default {
-+	nfc_default: nfc-default-state {
- 		pins = "gpio12", "gpio21";
- 		function = "gpio";
- 		drive-strength = <16>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-index 40f964ae80db..d8734913482f 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-@@ -446,28 +446,28 @@ &tlmm {
- 		"RFFE1_DATA",		/* GPIO_148 */
- 		"RFFE1_CLK";		/* GPIO_149 */
- 
--	touchscreen_default: touchscreen_default {
-+	touchscreen_default: touchscreen-default-state {
- 		pins = "gpio89", "gpio125";
- 		function = "gpio";
- 		drive-strength = <10>;
- 		bias-pull-up;
- 	};
- 
--	touchscreen_sleep: touchscreen_sleep {
-+	touchscreen_sleep: touchscreen-sleep-state {
- 		pins = "gpio89", "gpio125";
- 		function = "gpio";
- 		drive-strength = <2>;
- 		bias-disable;
- 	};
- 
--	vibrator_default: vibrator_default {
-+	vibrator_default: vibrator-default-state {
- 		pins = "gpio93";
- 		function = "gpio";
- 		drive-strength = <8>;
- 		bias-pull-up;
- 	};
- 
--	vibrator_sleep: vibrator_sleep {
-+	vibrator_sleep: vibrator-sleep-state {
- 		pins = "gpio93";
- 		function = "gpio";
- 		drive-strength = <2>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 5ff8de3e3de7..b558a9668b33 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1280,15 +1280,15 @@ tlmm: pinctrl@1010000 {
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
- 
--			blsp1_spi1_default: blsp1-spi1-default {
--				spi {
-+			blsp1_spi1_default: blsp1-spi1-default-state {
-+				spi-pins {
- 					pins = "gpio0", "gpio1", "gpio3";
- 					function = "blsp_spi1";
- 					drive-strength = <12>;
- 					bias-disable;
- 				};
- 
--				cs {
-+				cs-pins {
- 					pins = "gpio2";
- 					function = "gpio";
- 					drive-strength = <16>;
-@@ -1297,42 +1297,42 @@ cs {
- 				};
- 			};
- 
--			blsp1_spi1_sleep: blsp1-spi1-sleep {
-+			blsp1_spi1_sleep: blsp1-spi1-sleep-state {
- 				pins = "gpio0", "gpio1", "gpio2", "gpio3";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-pull-down;
- 			};
- 
--			blsp2_uart2_2pins_default: blsp2-uart1-2pins {
-+			blsp2_uart2_2pins_default: blsp2-uart1-2pins-state {
- 				pins = "gpio4", "gpio5";
- 				function = "blsp_uart8";
- 				drive-strength = <16>;
- 				bias-disable;
- 			};
- 
--			blsp2_uart2_2pins_sleep: blsp2-uart1-2pins-sleep {
-+			blsp2_uart2_2pins_sleep: blsp2-uart1-2pins-sleep-state {
- 				pins = "gpio4", "gpio5";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			blsp2_i2c2_default: blsp2-i2c2 {
-+			blsp2_i2c2_default: blsp2-i2c2-state {
- 				pins = "gpio6", "gpio7";
- 				function = "blsp_i2c8";
- 				drive-strength = <16>;
- 				bias-disable;
- 			};
- 
--			blsp2_i2c2_sleep: blsp2-i2c2-sleep {
-+			blsp2_i2c2_sleep: blsp2-i2c2-sleep-state {
- 				pins = "gpio6", "gpio7";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			cci0_default: cci0-default {
-+			cci0_default: cci0-default-state {
- 				pins = "gpio17", "gpio18";
- 				function = "cci_i2c";
- 				drive-strength = <16>;
-@@ -1340,22 +1340,22 @@ cci0_default: cci0-default {
- 			};
- 
- 			camera0_state_on:
--			camera_rear_default: camera-rear-default {
--				camera0_mclk: mclk0 {
-+			camera_rear_default: camera-rear-default-state {
-+				camera0_mclk: mclk0-pins {
- 					pins = "gpio13";
- 					function = "cam_mclk";
- 					drive-strength = <16>;
- 					bias-disable;
- 				};
- 
--				camera0_rst: rst {
-+				camera0_rst: rst-pins {
- 					pins = "gpio25";
- 					function = "gpio";
- 					drive-strength = <16>;
- 					bias-disable;
- 				};
- 
--				camera0_pwdn: pwdn {
-+				camera0_pwdn: pwdn-pins {
- 					pins = "gpio26";
- 					function = "gpio";
- 					drive-strength = <16>;
-@@ -1363,7 +1363,7 @@ camera0_pwdn: pwdn {
- 				};
- 			};
- 
--			cci1_default: cci1-default {
-+			cci1_default: cci1-default-state {
- 				pins = "gpio19", "gpio20";
- 				function = "cci_i2c";
- 				drive-strength = <16>;
-@@ -1371,22 +1371,22 @@ cci1_default: cci1-default {
- 			};
- 
- 			camera1_state_on:
--			camera_board_default: camera-board-default {
--				mclk1 {
-+			camera_board_default: camera-board-default-state {
-+				mclk1-pins {
- 					pins = "gpio14";
- 					function = "cam_mclk";
- 					drive-strength = <16>;
- 					bias-disable;
- 				};
- 
--				pwdn {
-+				pwdn-pins {
- 					pins = "gpio98";
- 					function = "gpio";
- 					drive-strength = <16>;
- 					bias-disable;
- 				};
- 
--				rst {
-+				rst-pins {
- 					pins = "gpio104";
- 					function = "gpio";
- 					drive-strength = <16>;
-@@ -1395,22 +1395,22 @@ rst {
- 			};
- 
- 			camera2_state_on:
--			camera_front_default: camera-front-default {
--				camera2_mclk: mclk2 {
-+			camera_front_default: camera-front-default-state {
-+				camera2_mclk: mclk2-pins {
- 					pins = "gpio15";
- 					function = "cam_mclk";
- 					drive-strength = <16>;
- 					bias-disable;
- 				};
- 
--				camera2_rst: rst {
-+				camera2_rst: rst-pins {
- 					pins = "gpio23";
- 					function = "gpio";
- 					drive-strength = <16>;
- 					bias-disable;
- 				};
- 
--				pwdn {
-+				pwdn-pins {
- 					pins = "gpio133";
- 					function = "gpio";
- 					drive-strength = <16>;
-@@ -1418,22 +1418,22 @@ pwdn {
- 				};
- 			};
- 
--			pcie0_state_on: pcie0-state-on {
--				perst {
-+			pcie0_state_on: pcie0-state-on-state {
-+				perst-pins {
- 					pins = "gpio35";
- 					function = "gpio";
- 					drive-strength = <2>;
- 					bias-pull-down;
- 				};
- 
--				clkreq {
-+				clkreq-pins {
- 					pins = "gpio36";
- 					function = "pci_e0";
- 					drive-strength = <2>;
- 					bias-pull-up;
- 				};
- 
--				wake {
-+				wake-pins {
- 					pins = "gpio37";
- 					function = "gpio";
- 					drive-strength = <2>;
-@@ -1441,22 +1441,22 @@ wake {
- 				};
- 			};
- 
--			pcie0_state_off: pcie0-state-off {
--				perst {
-+			pcie0_state_off: pcie0-state-off-state {
-+				perst-pins {
- 					pins = "gpio35";
- 					function = "gpio";
- 					drive-strength = <2>;
- 					bias-pull-down;
- 				};
- 
--				clkreq {
-+				clkreq-pins {
- 					pins = "gpio36";
- 					function = "gpio";
- 					drive-strength = <2>;
- 					bias-disable;
- 				};
- 
--				wake {
-+				wake-pins {
- 					pins = "gpio37";
- 					function = "gpio";
- 					drive-strength = <2>;
-@@ -1464,63 +1464,63 @@ wake {
- 				};
- 			};
- 
--			blsp1_uart2_default: blsp1-uart2-default {
-+			blsp1_uart2_default: blsp1-uart2-default-state {
- 				pins = "gpio41", "gpio42", "gpio43", "gpio44";
- 				function = "blsp_uart2";
- 				drive-strength = <16>;
- 				bias-disable;
- 			};
- 
--			blsp1_uart2_sleep: blsp1-uart2-sleep {
-+			blsp1_uart2_sleep: blsp1-uart2-sleep-state {
- 				pins = "gpio41", "gpio42", "gpio43", "gpio44";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			blsp1_i2c3_default: blsp1-i2c2-default {
-+			blsp1_i2c3_default: blsp1-i2c2-default-state {
- 				pins = "gpio47", "gpio48";
- 				function = "blsp_i2c3";
- 				drive-strength = <16>;
- 				bias-disable;
- 			};
- 
--			blsp1_i2c3_sleep: blsp1-i2c2-sleep {
-+			blsp1_i2c3_sleep: blsp1-i2c2-sleep-state {
- 				pins = "gpio47", "gpio48";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			blsp2_uart3_4pins_default: blsp2-uart2-4pins {
-+			blsp2_uart3_4pins_default: blsp2-uart2-4pins-state {
- 				pins = "gpio49", "gpio50", "gpio51", "gpio52";
- 				function = "blsp_uart9";
- 				drive-strength = <16>;
- 				bias-disable;
- 			};
- 
--			blsp2_uart3_4pins_sleep: blsp2-uart2-4pins-sleep {
-+			blsp2_uart3_4pins_sleep: blsp2-uart2-4pins-sleep-state {
- 				pins = "gpio49", "gpio50", "gpio51", "gpio52";
- 				function = "blsp_uart9";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			blsp2_i2c3_default: blsp2-i2c3 {
-+			blsp2_i2c3_default: blsp2-i2c3-state-state {
- 				pins = "gpio51", "gpio52";
- 				function = "blsp_i2c9";
- 				drive-strength = <16>;
- 				bias-disable;
- 			};
- 
--			blsp2_i2c3_sleep: blsp2-i2c3-sleep {
-+			blsp2_i2c3_sleep: blsp2-i2c3-sleep-state {
- 				pins = "gpio51", "gpio52";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			wcd_intr_default: wcd-intr-default {
-+			wcd_intr_default: wcd-intr-default-state {
- 				pins = "gpio54";
- 				function = "gpio";
- 				drive-strength = <2>;
-@@ -1528,21 +1528,21 @@ wcd_intr_default: wcd-intr-default {
- 				input-enable;
- 			};
- 
--			blsp2_i2c1_default: blsp2-i2c1 {
-+			blsp2_i2c1_default: blsp2-i2c1-state {
- 				pins = "gpio55", "gpio56";
- 				function = "blsp_i2c7";
- 				drive-strength = <16>;
- 				bias-disable;
- 			};
- 
--			blsp2_i2c1_sleep: blsp2-i2c0-sleep {
-+			blsp2_i2c1_sleep: blsp2-i2c0-sleep-state {
- 				pins = "gpio55", "gpio56";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			blsp2_i2c5_default: blsp2-i2c5 {
-+			blsp2_i2c5_default: blsp2-i2c5-state {
- 				pins = "gpio60", "gpio61";
- 				function = "blsp_i2c11";
- 				drive-strength = <2>;
-@@ -1551,7 +1551,7 @@ blsp2_i2c5_default: blsp2-i2c5 {
- 
- 			/* Sleep state for BLSP2_I2C5 is missing.. */
- 
--			cdc_reset_active: cdc-reset-active {
-+			cdc_reset_active: cdc-reset-active-state {
- 				pins = "gpio64";
- 				function = "gpio";
- 				drive-strength = <16>;
-@@ -1559,7 +1559,7 @@ cdc_reset_active: cdc-reset-active {
- 				output-high;
- 			};
- 
--			cdc_reset_sleep: cdc-reset-sleep {
-+			cdc_reset_sleep: cdc-reset-sleep-state {
- 				pins = "gpio64";
- 				function = "gpio";
- 				drive-strength = <16>;
-@@ -1567,15 +1567,15 @@ cdc_reset_sleep: cdc-reset-sleep {
- 				output-low;
- 			};
- 
--			blsp2_spi6_default: blsp2-spi5-default {
--				spi {
-+			blsp2_spi6_default: blsp2-spi5-default-state {
-+				spi-pins {
- 					pins = "gpio85", "gpio86", "gpio88";
- 					function = "blsp_spi12";
- 					drive-strength = <12>;
- 					bias-disable;
- 				};
- 
--				cs {
-+				cs-pins {
- 					pins = "gpio87";
- 					function = "gpio";
- 					drive-strength = <16>;
-@@ -1584,43 +1584,43 @@ cs {
- 				};
- 			};
- 
--			blsp2_spi6_sleep: blsp2-spi5-sleep {
-+			blsp2_spi6_sleep: blsp2-spi5-sleep-state {
- 				pins = "gpio85", "gpio86", "gpio87", "gpio88";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-pull-down;
- 			};
- 
--			blsp2_i2c6_default: blsp2-i2c6 {
-+			blsp2_i2c6_default: blsp2-i2c6-state {
- 				pins = "gpio87", "gpio88";
- 				function = "blsp_i2c12";
- 				drive-strength = <16>;
- 				bias-disable;
- 			};
- 
--			blsp2_i2c6_sleep: blsp2-i2c6-sleep {
-+			blsp2_i2c6_sleep: blsp2-i2c6-sleep-state {
- 				pins = "gpio87", "gpio88";
- 				function = "gpio";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
--			pcie1_state_on: pcie1-state-on {
--				perst {
-+			pcie1_state_on: pcie1-on-state {
-+				perst-pins {
- 					pins = "gpio130";
- 					function = "gpio";
- 					drive-strength = <2>;
- 					bias-pull-down;
- 				};
- 
--				clkreq {
-+				clkreq-pins {
- 					pins = "gpio131";
- 					function = "pci_e1";
- 					drive-strength = <2>;
- 					bias-pull-up;
- 				};
- 
--				wake {
-+				wake-pins {
- 					pins = "gpio132";
- 					function = "gpio";
- 					drive-strength = <2>;
-@@ -1628,16 +1628,16 @@ wake {
- 				};
- 			};
- 
--			pcie1_state_off: pcie1-state-off {
-+			pcie1_state_off: pcie1-off-state {
- 				/* Perst is missing? */
--				clkreq {
-+				clkreq-pins {
- 					pins = "gpio131";
- 					function = "gpio";
- 					drive-strength = <2>;
- 					bias-disable;
- 				};
- 
--				wake {
-+				wake-pins {
- 					pins = "gpio132";
- 					function = "gpio";
- 					drive-strength = <2>;
-@@ -1645,22 +1645,22 @@ wake {
- 				};
- 			};
- 
--			pcie2_state_on: pcie2-state-on {
--				perst {
-+			pcie2_state_on: pcie2-on-state {
-+				perst-pins {
- 					pins = "gpio114";
- 					function = "gpio";
- 					drive-strength = <2>;
- 					bias-pull-down;
- 				};
- 
--				clkreq {
-+				clkreq-pins {
- 					pins = "gpio115";
- 					function = "pci_e2";
- 					drive-strength = <2>;
- 					bias-pull-up;
- 				};
- 
--				wake {
-+				wake-pins {
- 					pins = "gpio116";
- 					function = "gpio";
- 					drive-strength = <2>;
-@@ -1668,16 +1668,16 @@ wake {
- 				};
- 			};
- 
--			pcie2_state_off: pcie2-state-off {
-+			pcie2_state_off: pcie2-off-state {
- 				/* Perst is missing? */
--				clkreq {
-+				clkreq-pins {
- 					pins = "gpio115";
- 					function = "gpio";
- 					drive-strength = <2>;
- 					bias-disable;
- 				};
- 
--				wake {
-+				wake-pins {
- 					pins = "gpio116";
- 					function = "gpio";
- 					drive-strength = <2>;
-@@ -1685,90 +1685,90 @@ wake {
- 				};
- 			};
- 
--			sdc1_state_on: sdc1-state-on {
--				clk {
-+			sdc1_state_on: sdc1-on-state {
-+				clk-pins {
- 					pins = "sdc1_clk";
- 					bias-disable;
- 					drive-strength = <16>;
- 				};
- 
--				cmd {
-+				cmd-pins {
- 					pins = "sdc1_cmd";
- 					bias-pull-up;
- 					drive-strength = <10>;
- 				};
- 
--				data {
-+				data-pins {
- 					pins = "sdc1_data";
- 					bias-pull-up;
- 					drive-strength = <10>;
- 				};
- 
--				rclk {
-+				rclk-pins {
- 					pins = "sdc1_rclk";
- 					bias-pull-down;
- 				};
- 			};
- 
--			sdc1_state_off: sdc1-state-off {
--				clk {
-+			sdc1_state_off: sdc1-off-state {
-+				clk-pins {
- 					pins = "sdc1_clk";
- 					bias-disable;
- 					drive-strength = <2>;
- 				};
- 
--				cmd {
-+				cmd-pins {
- 					pins = "sdc1_cmd";
- 					bias-pull-up;
- 					drive-strength = <2>;
- 				};
- 
--				data {
-+				data-pins {
- 					pins = "sdc1_data";
- 					bias-pull-up;
- 					drive-strength = <2>;
- 				};
- 
--				rclk {
-+				rclk-pins {
- 					pins = "sdc1_rclk";
- 					bias-pull-down;
- 				};
- 			};
- 
--			sdc2_state_on: sdc2-clk-on {
--				clk {
-+			sdc2_state_on: sdc2-on-state {
-+				clk-pins {
- 					pins = "sdc2_clk";
- 					bias-disable;
- 					drive-strength = <16>;
- 				};
- 
--				cmd {
-+				cmd-pins {
- 					pins = "sdc2_cmd";
- 					bias-pull-up;
- 					drive-strength = <10>;
- 				};
- 
--				data {
-+				data-pins {
- 					pins = "sdc2_data";
- 					bias-pull-up;
- 					drive-strength = <10>;
- 				};
- 			};
- 
--			sdc2_state_off: sdc2-clk-off {
--				clk {
-+			sdc2_state_off: sdc2-off-state {
-+				clk-pins {
- 					pins = "sdc2_clk";
- 					bias-disable;
- 					drive-strength = <2>;
- 				};
- 
--				cmd {
-+				cmd-pins {
- 					pins = "sdc2_cmd";
- 					bias-pull-up;
- 					drive-strength = <2>;
- 				};
- 
--				data {
-+				data-pins {
- 					pins = "sdc2_data";
- 					bias-pull-up;
- 					drive-strength = <2>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dts b/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dts
-index b18ee5c1f678..d18d0b0eda95 100644
---- a/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dts
-@@ -399,14 +399,14 @@ &tlmm {
- 		"RFFE1_DATA",		/* GPIO_148 */
- 		"RFFE1_CLK";		/* GPIO_149 */
- 
--	touchscreen_default: touchscreen-default {
-+	touchscreen_default: touchscreen-default-state {
- 		pins = "gpio89", "gpio125";
- 		function = "gpio";
- 		drive-strength = <10>;
- 		bias-pull-up;
- 	};
- 
--	touchscreen_sleep: touchscreen-sleep {
-+	touchscreen_sleep: touchscreen-sleep-state {
- 		pins = "gpio89", "gpio125";
- 		function = "gpio";
- 		drive-strength = <2>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts b/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts
-index 7bf6ad1a214b..5e3b9130e9c2 100644
---- a/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts
-@@ -469,28 +469,28 @@ &tlmm {
- 		"RFFE1_DATA",		/* GPIO_148 */
- 		"RFFE1_CLK";		/* GPIO_149 */
- 
--	touchkey_default: touchkey_default {
-+	touchkey_default: touchkey-default-state {
- 		pins = "gpio77";
- 		function = "gpio";
- 		drive-strength = <16>;
- 		bias-pull-up;
- 	};
- 
--	touchkey_sleep: touchkey_sleep {
-+	touchkey_sleep: touchkey-sleep-state {
- 		pins = "gpio77";
- 		function = "gpio";
- 		drive-strength = <2>;
- 		bias-disable;
- 	};
- 
--	touchscreen_default: touchscreen_default {
-+	touchscreen_default: touchscreen-default-state {
- 		pins = "gpio75", "gpio125";
- 		function = "gpio";
- 		drive-strength = <10>;
- 		bias-pull-up;
- 	};
- 
--	touchscreen_sleep: touchscreen_sleep {
-+	touchscreen_sleep: touchscreen-sleep-state {
- 		pins = "gpio75", "gpio125";
- 		function = "gpio";
- 		drive-strength = <2>;
--- 
-2.34.1
+> +Contact:        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> +Description:
+> +		This is the debugfs interface for manual software
+> +		triggers. The user can simply enter a 1 against
+> +		the debugfs file and enable a manual trigger.
+> +		Example:
+> +		echo  1 > /sys/kernel/debug/dcc/.../trigger
+> +
+> +What:           /sys/kernel/debug/dcc/.../config_reset
+> +Date:           September 2022
+> +Contact:        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> +Description:
+> +		This file is used to reset the configuration of
+> +		a dcc driver to the default configuration. This
+> +		means that all the previous addresses stored in
+> +		the driver gets removed and user needs to enter
+> +		the address values from the start.
+> +		Example:
+> +		echo  1 > /sys/kernel/debug/dcc/../config_reset
+> +
+> +What:           /sys/kernel/debug/dcc/.../[list-number]/config
+> +Date:           September 2022
+> +Contact:        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> +Description:
+> +		This stores the addresses of the registers which
+> +		should be read in case of a hardware crash or
+> +		manual software triggers. The addresses entered here
+> +		are considered under all the 4 types of dcc
+> +		instructions Read type, Write type, Read Modify Write
+> +		type and Loop type. The lists need to be configured
+> +		sequentially and not in a overlapping manner. As an
+> +		example user can jump to list x only after list y is
+> +		configured and enabled. The format for entering all
+> +		types of instructions are explained in examples as
+> +		follows.
+> +		Example:
+> +	         i)Read Type Instruction
+> +		   echo R <1> <2> <3> >/sys/kernel/debug/dcc/../[list-number]/config
+> +		   1->Address to be considered for reading the value.
+> +		   2->The word count of the addresses, read n words
+> +		      starting from address <1>. Each word is of 32 bits.
+> +		      If not entered 1 is considered.
+> +		   3->Can be 'apb' or 'ahb' which indicates if it is apb or ahb
+> +		      bus respectively. If not entered ahb is considered.
+> +		ii)Write Type Instruction
+> +		   echo W <1> <2> <3> > /sys/kernel/debug/dcc/../[list-number]/config
+> +		   1->Address to be considered for writing the value.
+> +		   2->The value that needs to be written at the location.
+> +		   3->Can be a 'apb' or 'ahb' which indicates if it is apb or ahb
+> +		      but respectively.
+> +	       iii)Read Modify Write type instruction
+> +		   echo RW <1> <2> <3> > /sys/kernel/debug/dcc/../[list-number]/config
+> +		   1->The address which needs to be considered for read then write.
+> +		   2->The value that needs to be written on the address.
+> +		   3->The mask of the value to be written.
+> +		iv)Loop Type Instruction
+> +		   echo L <1> <2> <3> > /sys/kernel/debug/dcc/../[list-number]/config
+> +		   1->The loop count, the number of times the value of the addresses will be
+> +		      captured.
+> +		   2->The address count, total number of addresses to be entered in this
+> +		      instruction.
+> +		   3->The series of addresses to be entered separated by a space like <addr1>
+> +		      <addr2>... and so on.
+> +
+> +What:           /sys/kernel/debug/dcc/.../[list-number]/enable
+> +Date:           September 2022
+> +Contact:        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> +Description:
+> +		This debugfs interface is used for enabling the
+> +		the dcc hardware. Enable file is kept under the
+> +		directory list number for which the user wants
+> +		to enable it. For example if the user wants to
+> +		enable list 1, then he should go for
+> +		echo 1 > /sys/kernel/debug/dcc/.../1/enable.
+> +		On enabling the dcc, all the addresses entered
+> +		by the user for the corresponding list is written
+> +		into dcc sram which is read by the dcc hardware
+> +		on manual or crash induced triggers. Lists should
+> +		be enabled sequentially.For example after configuring
+> +		addresses for list 1 and enabling it, a user can
+> +		proceed to enable list 2 or vice versa.
+> +		Example:
+> +		echo  0 > /sys/kernel/debug/dcc/.../[list-number]/enable
+> +		(disable dcc for the corresponding list number)
+> +		echo  1 > /sys/kernel/debug/dcc/.../[list-number]/enable
+> +		(enable dcc for the corresponding list number)
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index 024e420..d5730bf 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -69,6 +69,14 @@ config QCOM_LLCC
+>   	  SDM845. This provides interfaces to clients that use the LLCC.
+>   	  Say yes here to enable LLCC slice driver.
+> 
+> +config QCOM_DCC
+> +	tristate "Qualcomm Technologies, Inc. Data Capture and Compare(DCC) engine driver"
+> +	depends on ARCH_QCOM || COMPILE_TEST
+> +	help
+> +	  This option enables driver for Data Capture and Compare engine. DCC
+> +	  driver provides interface to configure DCC block and read back
+> +	  captured data from DCC's internal SRAM.
+> +
+>   config QCOM_KRYO_L2_ACCESSORS
+>   	bool
+>   	depends on ARCH_QCOM && ARM64 || COMPILE_TEST
+> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+> index d66604a..b1fe812 100644
+> --- a/drivers/soc/qcom/Makefile
+> +++ b/drivers/soc/qcom/Makefile
+> @@ -4,6 +4,7 @@ obj-$(CONFIG_QCOM_AOSS_QMP) +=	qcom_aoss.o
+>   obj-$(CONFIG_QCOM_GENI_SE) +=	qcom-geni-se.o
+>   obj-$(CONFIG_QCOM_COMMAND_DB) += cmd-db.o
+>   obj-$(CONFIG_QCOM_CPR)		+= cpr.o
+> +obj-$(CONFIG_QCOM_DCC) += dcc.o
+>   obj-$(CONFIG_QCOM_GSBI)	+=	qcom_gsbi.o
+>   obj-$(CONFIG_QCOM_MDT_LOADER)	+= mdt_loader.o
+>   obj-$(CONFIG_QCOM_OCMEM)	+= ocmem.o
+> diff --git a/drivers/soc/qcom/dcc.c b/drivers/soc/qcom/dcc.c
+> new file mode 100644
+> index 0000000..efad225
+> --- /dev/null
+> +++ b/drivers/soc/qcom/dcc.c
+> @@ -0,0 +1,1355 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/bitfield.h>
+> +#include <linux/bitops.h>
+> +#include <linux/debugfs.h>
+> +#include <linux/delay.h>
+> +#include <linux/fs.h>
+> +#include <linux/io.h>
+> +#include <linux/iopoll.h>
+> +#include <linux/miscdevice.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/of_device.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/slab.h>
+> +#include <linux/uaccess.h>
+> +
+> +#define STATUS_READY_TIMEOUT		5000  /*microseconds*/
+
+Comments normally have spaces next to the asterisk.
+I.e.:
+	/* microseconds */
+
+Maybe this isn't that critical.  But if you fix this, fix
+it throughout.
+
+> +
+> +#define DCC_SRAM_NODE "dcc_sram"
+> +
+> +/* DCC registers */
+> +#define DCC_HW_INFO			0x04
+> +#define DCC_LL_NUM_INFO			0x10
+> +#define DCC_STATUS(vers)		((vers) == 1 ? 0x0c : 0x1c)
+> +#define DCC_LL_LOCK			0x00
+> +#define DCC_LL_CFG			0x04
+> +#define DCC_LL_BASE			0x08
+> +#define DCC_FD_BASE			0x0c
+> +#define DCC_LL_TIMEOUT			0x10
+> +#define DCC_LL_INT_ENABLE		0x18
+> +#define DCC_LL_INT_STATUS		0x1c
+> +#define DCC_LL_SW_TRIGGER		0x2c
+> +#define DCC_LL_BUS_ACCESS_STATUS	0x30
+> +
+> +#define DCC_MAP_LEVEL1			0x18
+> +#define DCC_MAP_LEVEL2			0x34
+> +#define DCC_MAP_LEVEL3			0x4C
+> +
+> +#define DCC_MAP_OFFSET1			0x10
+> +#define DCC_MAP_OFFSET2			0x18
+> +#define DCC_MAP_OFFSET3			0x1C
+> +#define DCC_MAP_OFFSET4			0x8
+> +
+> +/*Default value used if a bit 6 in the HW_INFO register is set.*/
+> +#define DCC_FIX_LOOP_OFFSET		16
+> +
+> +/*Mask to find version info from HW_Info register*/
+> +#define DCC_VER_INFO_MASK		BIT(9)
+> +
+> +#define DCC_READ			0
+> +#define DCC_WRITE			1
+> +#define DCC_LOOP			2
+> +#define DCC_READ_WRITE			3
+> +
+> +#define MAX_DCC_OFFSET			GENMASK(9, 2)
+> +#define MAX_DCC_LEN			GENMASK(6, 0)
+> +#define MAX_LOOP_CNT			GENMASK(7, 0)
+> +#define MAX_LOOP_ADDR			10
+> +
+> +#define DCC_ADDR_DESCRIPTOR		0x00
+> +#define DCC_ADDR_LIMIT			27
+
+You appear to use DCC_ADDR_OFF_RANGE as the size of a
+"word" when a word count is supplied.  But if that's
+the case, I think it's supposed to be 4, or better,
+sizeof(u32).  If it is the word size, DCC_WORD_SIZE
+might be a better name (and defined it as sizeof(u32)).
+
+> +#define DCC_ADDR_OFF_RANGE		8
+
+Then you use DCC_ADDR_RANGE_MASK to truncate an address
+provided down to a multiple of 16 bytes.  Why is that?
+Is there a hardware limitation that makes 16 byte alignment
+necessary?  (A little more below, where they're used.)
+
+> +#define DCC_ADDR_RANGE_MASK		GENMASK(31, 4)
+> +#define DCC_LOOP_DESCRIPTOR		BIT(30)
+> +#define DCC_RD_MOD_WR_DESCRIPTOR	BIT(31)
+> +#define DCC_LINK_DESCRIPTOR		GENMASK(31, 30)
+> +#define DCC_STATUS_MASK		GENMASK(1, 0)
+
+You need one more tab before GENMASK() in the line above.
+
+> +#define DCC_LOCK_MASK                  BIT(0)
+
+The above line has a bunch of spaces before BIT(0), and
+it should just be tabs.
+
+> +#define DCC_LOOP_OFFSET_MASK		BIT(6)
+> +#define DCC_TRIGGER_MASK		BIT(9)
+> +
+> +#define DCC_WRITE_MASK			BIT(15)
+> +#define DCC_WRITE_OFF_MASK		GENMASK(7, 0)
+> +#define DCC_WRITE_LEN_MASK		GENMASK(14, 8)
+> +
+> +#define DCC_READ_IND			0x00
+> +#define DCC_WRITE_IND			(BIT(28))
+> +
+> +#define DCC_AHB_IND			0x00
+> +#define DCC_APB_IND			BIT(29)
+> +
+> +#define DCC_MAX_LINK_LIST		8
+> +#define DCC_INVALID_LINK_LIST		GENMASK(7, 0)
+> +
+> +#define DCC_VER_MASK1			GENMASK(6, 0)
+> +#define DCC_VER_MASK2			GENMASK(5, 0)
+> +
+> +#define DCC_SRAM_WORD_LENGTH		4
+> +
+> +#define DCC_RD_MOD_WR_ADDR              0xC105E
+> +
+> +/*DCC debugfs directory*/
+> +static struct dentry	*dcc_dbg;
+> +
+> +enum dcc_descriptor_type {
+> +	DCC_READ_TYPE,
+> +	DCC_LOOP_TYPE,
+> +	DCC_READ_WRITE_TYPE,
+> +	DCC_WRITE_TYPE
+> +};
+> +
+> +struct dcc_config_entry {
+> +	u32				base;
+> +	u32				offset;
+> +	u32				len;
+> +	u32				loop_cnt;
+> +	u32				write_val;
+> +	u32				mask;
+> +	bool				apb_bus;
+> +	enum dcc_descriptor_type	desc_type;
+> +	struct list_head		list;
+> +};
+> +
+> +/**
+> + * struct dcc_drvdata - configuration information related to a dcc device
+> + * @base:		Base Address of the dcc device
+> + * @dev:		The device attached to the driver data
+> + * @mutex:		Lock to protect access and manipulation of dcc_drvdata
+> + * @ram_base:		Base address for the SRAM dedicated for the dcc device
+> + * @ram_size:		Total size of the SRAM dedicated for the dcc device
+> + * @ram_offset:	Offset to the SRAM dedicated for dcc device
+> + * @mem_map_ver:	Memory map version of DCC hardware
+> + * @ram_cfg:		Used for address limit calculation for dcc
+> + * @ram_start:		Starting address of DCC SRAM
+> + * @sram_dev:		Miscellaneous device equivalent of dcc SRAM
+> + * @cfg_head:		Points to the head of the linked list of addresses
+> + * @dbg_dir:		The dcc debugfs directory under which all the debugfs files are placed
+> + * @nr_link_list:	Total number of linkedlists supported by the DCC configuration
+> + * @loopoff:		Loop offset bits range for the addresses
+> + * @enable_bitmap:	Bitmap to capture the enabled status of each linked list of addresses
+> + */
+> +struct dcc_drvdata {
+> +	void __iomem		*base;
+> +	void                    *ram_base;
+> +	struct device		*dev;
+> +	struct mutex		mutex;
+> +	size_t			ram_size;
+> +	size_t			ram_offset;
+> +	int			mem_map_ver;
+> +	phys_addr_t		ram_cfg;
+> +	phys_addr_t		ram_start;
+> +	struct miscdevice	sram_dev;
+> +	struct list_head	*cfg_head;
+> +	struct dentry		*dbg_dir;
+> +	size_t			nr_link_list;
+> +	u8			loopoff;
+> +	unsigned long		*enable_bitmap;
+> +};
+> +
+> +struct dcc_cfg_attr {
+> +	u32	addr;
+> +	u32	prev_addr;
+> +	u32	prev_off;
+> +	u32	link;
+> +	u32	sram_offset;
+> +};
+> +
+> +struct dcc_cfg_loop_attr {
+> +	u32	loop;
+> +	u32	loop_cnt;
+> +	u32	loop_len;
+> +	u32	loop_off;
+> +	bool    loop_start;
+> +};
+
+The entire dcc_offset_conv() function, along with all of the
+MAP_LEVEL and MAP_OFFSET definitions, can simply go away.
+
+The only place dcc_offset_conv() is called is from dcc_readl().
+And the only offset values passed to dcc_readl() are DCC_HW_INFO
+and DCC_LL_NUM_INFO.
+
+DCC_HW_INFO is actually read *before* drvdata->mem_map_ver is
+even set, but in any case its value is 0x4, meaning the return
+value of dcc_offset_conv(drvdata, DCC_HW_INFO) is simply 0x4
+(or DCC_HW_INFO).
+
+The value of DCC_LL_NUM_INFO is 0x10, which is less than
+DCC_MAP_LEVEL1=0x18 (for mem_map_ver == 1) and also less
+than DCC_MAP_LEVEL2=0x34 (for mem_map_ver == 2).  So here
+again, dcc_offset_conv(drvdata, DCC_LL_NUM_INFO) will always
+return 0x10 (or DCC_LL_NUM_INFO).
+
+Unless there is some reason to believe you need to read more
+than just these two registers, all this mapping code is just
+a distraction.
+
+> +static size_t dcc_offset_conv(struct dcc_drvdata *drvdata, size_t off)
+> +{
+> +	/* If the memory map version is 1, adjust the offset based on
+> +	 * the dcc version mask. If the memory map version is 2
+> +	 * adjust the offset if the dcc version mask is greater than
+> +	 * map level 2.For other conditions, just return the offset.
+> +	 */
+> +	if (drvdata->mem_map_ver == 1) {
+> +		if (FIELD_GET(DCC_VER_MASK1, off) >= DCC_MAP_LEVEL3)
+> +			return off - DCC_MAP_OFFSET3;
+> +		if (FIELD_GET(DCC_VER_MASK1, off) >= DCC_MAP_LEVEL2)
+> +			return off - DCC_MAP_OFFSET2;
+> +		else if (FIELD_GET(DCC_VER_MASK1, off) >= DCC_MAP_LEVEL1)
+> +			return off - DCC_MAP_OFFSET1;
+> +	} else if (drvdata->mem_map_ver == 2) {
+> +		if (FIELD_GET(DCC_VER_MASK1, off) >= DCC_MAP_LEVEL2)
+> +			return off - DCC_MAP_OFFSET4;
+> +	}
+> +
+> +	return off;
+> +}
+> +
+> +static inline u32 dcc_ll_offset(int version)
+> +{
+> +	return version == 1 ? 0x1c : (version == 2 ? 0x2c : 0x34);
+> +}
+> +
+> +static inline u32 dcc_readl(struct dcc_drvdata *drvdata, u32 off)
+> +{
+> +	return readl(drvdata->base + dcc_offset_conv(drvdata, off));
+> +}
+> +
+> +static inline void dcc_ll_writel(struct dcc_drvdata *drvdata,
+> +				 u32 ll, u32 val, u32 off)
+> +{
+> +	u32 offset = dcc_ll_offset(drvdata->mem_map_ver) + off;
+> +
+> +	writel(val, drvdata->base + ll * 0x80 + offset);
+> +}
+> +
+> +static inline u32 dcc_ll_readl(struct dcc_drvdata *drvdata, u32 ll, u32 off)
+> +{
+> +	u32 offset = dcc_ll_offset(drvdata->mem_map_ver) + off;
+> +
+> +	return readl(drvdata->base + ll * 0x80 + offset);
+> +}
+> +
+> +static void dcc_sram_write_auto(struct dcc_drvdata *drvdata,
+> +				u32 val, u32 *off)
+> +{
+> +	memset(drvdata->ram_base + *off, val, DCC_SRAM_WORD_LENGTH);
+> +
+> +	*off += 4;
+> +}
+> +
+> +static int dcc_read_and_clear(struct dcc_drvdata *drvdata)
+> +{
+> +	int i;
+> +	u32 status;
+> +	u32 ll_cfg;
+> +	u32 tmp_ll_cfg;
+> +
+> +	for (i = 0; i < drvdata->nr_link_list; i++) {
+> +		if (!test_bit(i, drvdata->enable_bitmap))
+> +			continue;
+> +
+> +		status = dcc_ll_readl(drvdata, i, DCC_LL_BUS_ACCESS_STATUS);
+> +		if (!status)
+> +			continue;
+> +
+> +		dev_err(drvdata->dev, "Read access error for list %d err: 0x%x\n",
+> +			i, status);
+> +		ll_cfg = dcc_ll_readl(drvdata, i, DCC_LL_CFG);
+> +		tmp_ll_cfg = ll_cfg & ~DCC_TRIGGER_MASK;
+> +		dcc_ll_writel(drvdata, tmp_ll_cfg, i, DCC_LL_CFG);
+> +		dcc_ll_writel(drvdata, DCC_STATUS_MASK, i, DCC_LL_BUS_ACCESS_STATUS);
+> +		dcc_ll_writel(drvdata, ll_cfg, i, DCC_LL_CFG);
+> +		return -ENODATA;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int dcc_sw_trigger(struct dcc_drvdata *drvdata)
+> +{
+> +	void __iomem *addr;
+> +	int ret;
+> +	int i;
+> +	u32 ll_cfg;
+> +	u32 tmp_ll_cfg;
+> +	u32 val;
+> +
+> +	mutex_lock(&drvdata->mutex);
+> +
+> +	for (i = 0; i < drvdata->nr_link_list; i++) {
+> +		if (!test_bit(i, drvdata->enable_bitmap))
+> +			continue;
+> +		ll_cfg = dcc_ll_readl(drvdata, i, DCC_LL_CFG);
+> +		tmp_ll_cfg = ll_cfg & ~DCC_TRIGGER_MASK;
+> +		dcc_ll_writel(drvdata, tmp_ll_cfg, i, DCC_LL_CFG);
+> +		dcc_ll_writel(drvdata, 1, i, DCC_LL_SW_TRIGGER);
+> +		dcc_ll_writel(drvdata, ll_cfg, i, DCC_LL_CFG);
+> +	}
+> +
+> +	addr = drvdata->base + DCC_STATUS(drvdata->mem_map_ver);
+> +	if (readl_poll_timeout(addr, val, (FIELD_GET(DCC_STATUS_MASK, val) == 0),
+
+Parentheses around (FIELD_GET(...) == 0) not needed here,
+and you could just do !FIELD_GET(...).
+
+> +			       1, STATUS_READY_TIMEOUT)) {
+> +		dev_err(drvdata->dev, "DCC is busy after receiving sw trigger\n");
+> +		ret = -EBUSY;
+> +		goto out_unlock;
+> +	}
+> +
+> +	ret = dcc_read_and_clear(drvdata);
+> +
+> +out_unlock:
+> +	mutex_unlock(&drvdata->mutex);
+> +	return ret;
+> +}
+> +
+> +static void _dcc_ll_cfg_reset_link(struct dcc_cfg_attr *cfg)
+> +{
+> +	cfg->addr = 0x00;
+> +	cfg->link = 0;
+> +	cfg->prev_off = 0;
+> +	cfg->prev_addr = cfg->addr;
+> +}
+> +
+> +static void _dcc_emit_read_write(struct dcc_drvdata *drvdata,
+> +				 struct dcc_config_entry *entry,
+> +				 struct dcc_cfg_attr *cfg)
+> +{
+> +	if (cfg->link) {
+> +		/*
+> +		 * write new offset = 1 to continue
+> +		 * processing the list
+> +		 */
+> +
+> +		dcc_sram_write_auto(drvdata, cfg->link, &cfg->sram_offset);
+> +
+> +		/* Reset link and prev_off */
+> +		_dcc_ll_cfg_reset_link(cfg);
+> +	}
+> +
+> +	cfg->addr = DCC_RD_MOD_WR_DESCRIPTOR;
+> +	dcc_sram_write_auto(drvdata, cfg->addr, &cfg->sram_offset);
+> +
+> +	dcc_sram_write_auto(drvdata, entry->mask, &cfg->sram_offset);
+> +
+> +	dcc_sram_write_auto(drvdata, entry->write_val, &cfg->sram_offset);
+> +
+> +	cfg->addr = 0;
+> +}
+> +
+> +static void _dcc_emit_loop(struct dcc_drvdata *drvdata, struct dcc_config_entry *entry,
+> +			   struct dcc_cfg_attr *cfg,
+> +			   struct dcc_cfg_loop_attr *cfg_loop,
+> +			   u32 *total_len)
+> +{
+> +	/* Check if we need to write link of prev entry */
+> +	if (cfg->link)
+> +		dcc_sram_write_auto(drvdata, cfg->link, &cfg->sram_offset);
+> +
+> +	if (cfg_loop->loop_start) {
+> +		cfg_loop->loop = (cfg->sram_offset - cfg_loop->loop_off) / 4;
+> +		cfg_loop->loop |= (cfg_loop->loop_cnt << drvdata->loopoff) &
+> +				   GENMASK(DCC_ADDR_LIMIT, drvdata->loopoff);
+> +		cfg_loop->loop |= DCC_LOOP_DESCRIPTOR;
+> +		*total_len += (*total_len - cfg_loop->loop_len) * cfg_loop->loop_cnt;
+> +
+> +		dcc_sram_write_auto(drvdata, cfg_loop->loop, &cfg->sram_offset);
+> +
+> +		cfg_loop->loop_start = false;
+> +		cfg_loop->loop_len = 0;
+> +		cfg_loop->loop_off = 0;
+> +	} else {
+> +		cfg_loop->loop_start = true;
+> +		cfg_loop->loop_cnt = entry->loop_cnt - 1;
+> +		cfg_loop->loop_len = *total_len;
+> +		cfg_loop->loop_off = cfg->sram_offset;
+> +	}
+> +
+> +	/* Reset link and prev_off */
+> +	_dcc_ll_cfg_reset_link(cfg);
+> +}
+> +
+> +static void _dcc_emit_write(struct dcc_drvdata *drvdata,
+> +			    struct dcc_config_entry *entry,
+> +			    struct dcc_cfg_attr *cfg,
+> +			    u32 *total_len)
+> +{
+> +	u32 off;
+> +
+> +	if (cfg->link) {
+> +		/*
+> +		 * write new offset = 1 to continue
+> +		 * processing the list
+> +		 */
+> +		dcc_sram_write_auto(drvdata, cfg->link, &cfg->sram_offset);
+> +
+> +		/* Reset link and prev_off */
+> +		cfg->addr = 0x00;
+> +		cfg->prev_off = 0;
+> +		cfg->prev_addr = cfg->addr;
+> +	}
+> +
+> +	off = entry->offset / 4;
+> +	/* write new offset-length pair to correct position */
+> +	cfg->link |= ((off & DCC_WRITE_OFF_MASK) | DCC_WRITE_MASK |
+> +		      FIELD_PREP(DCC_WRITE_LEN_MASK, entry->len));
+> +	cfg->link |= DCC_LINK_DESCRIPTOR;
+> +
+> +	/* Address type */
+> +	cfg->addr = (entry->base >> 4) & GENMASK(DCC_ADDR_LIMIT, 0);
+> +	if (entry->apb_bus)
+> +		cfg->addr |= DCC_ADDR_DESCRIPTOR | DCC_WRITE_IND | DCC_APB_IND;
+> +	else
+> +		cfg->addr |= DCC_ADDR_DESCRIPTOR | DCC_WRITE_IND | DCC_AHB_IND;
+> +	dcc_sram_write_auto(drvdata, cfg->addr, &cfg->sram_offset);
+> +
+> +	dcc_sram_write_auto(drvdata, cfg->link, &cfg->sram_offset);
+> +
+> +	dcc_sram_write_auto(drvdata, entry->write_val, &cfg->sram_offset);
+> +
+> +	cfg->addr = 0x00;
+> +	cfg->link = 0;
+> +}
+> +
+> +static int _dcc_emit_read(struct dcc_drvdata *drvdata,
+> +			  struct dcc_config_entry *entry,
+> +			  struct dcc_cfg_attr *cfg,
+> +			  u32 *pos, u32 *total_len)
+> +{
+> +	u32 off;
+> +	u32 temp_off;
+> +
+> +	cfg->addr = (entry->base >> 4) & GENMASK(27, 0);
+> +
+> +	if (entry->apb_bus)
+> +		cfg->addr |= DCC_ADDR_DESCRIPTOR | DCC_READ_IND | DCC_APB_IND;
+> +	else
+> +		cfg->addr |= DCC_ADDR_DESCRIPTOR | DCC_READ_IND | DCC_AHB_IND;
+> +
+> +	off = entry->offset / 4;
+> +
+> +	*total_len += entry->len * 4;
+> +
+> +	if (!cfg->prev_addr || cfg->prev_addr != cfg->addr || cfg->prev_off > off) {
+> +		/* Check if we need to write prev link entry */
+> +		if (cfg->link)
+> +			dcc_sram_write_auto(drvdata, cfg->link, &cfg->sram_offset);
+> +		dev_dbg(drvdata->dev, "DCC: sram address 0x%x\n", cfg->sram_offset);
+> +
+> +		/* Write address */
+> +		dcc_sram_write_auto(drvdata, cfg->addr, &cfg->sram_offset);
+> +
+> +		/* Reset link and prev_off */
+> +		cfg->link = 0;
+> +		cfg->prev_off = 0;
+> +	}
+> +
+> +	if ((off - cfg->prev_off) > 0xFF || entry->len > MAX_DCC_LEN) {
+> +		dev_err(drvdata->dev, "DCC: Programming error Base: 0x%x, offset 0x%x\n",
+> +			entry->base, entry->offset);
+> +		return -EINVAL;
+> +	}
+> +
+> +	if (cfg->link) {
+> +		/*
+> +		 * link already has one offset-length so new
+> +		 * offset-length needs to be placed at
+> +		 * bits [29:15]
+> +		 */
+> +		*pos = 15;
+> +
+> +		/* Clear bits [31:16] */
+> +		cfg->link &= GENMASK(14, 0);
+> +	} else {
+> +		/*
+> +		 * link is empty, so new offset-length needs
+> +		 * to be placed at bits [15:0]
+> +		 */
+> +		*pos = 0;
+> +		cfg->link = 1 << 15;
+> +	}
+> +
+> +	/* write new offset-length pair to correct position */
+> +	temp_off = (off - cfg->prev_off) & GENMASK(7, 0);
+> +	cfg->link |= temp_off | ((entry->len << 8) & GENMASK(14, 8)) << *pos;
+> +
+> +	cfg->link |= DCC_LINK_DESCRIPTOR;
+> +
+> +	if (*pos) {
+> +		dcc_sram_write_auto(drvdata, cfg->link, &cfg->sram_offset);
+> +		cfg->link = 0;
+> +	}
+> +
+> +	cfg->prev_off  = off + entry->len - 1;
+> +	cfg->prev_addr = cfg->addr;
+> +	return 0;
+> +}
+> +
+> +static int __dcc_emit_config(struct dcc_drvdata *drvdata, int curr_list)
+> +{
+> +	int ret;
+> +	u32 total_len, pos;
+> +	struct dcc_config_entry *entry;
+> +	struct dcc_cfg_attr cfg;
+> +	struct dcc_cfg_loop_attr cfg_loop;
+> +
+> +	memset(&cfg, 0, sizeof(cfg));
+> +	memset(&cfg_loop, 0, sizeof(cfg_loop));
+> +	cfg.sram_offset = drvdata->ram_cfg * 4;
+> +	total_len = 0;
+> +
+> +	list_for_each_entry(entry, &drvdata->cfg_head[curr_list], list) {
+> +		switch (entry->desc_type) {
+> +		case DCC_READ_WRITE_TYPE:
+> +			_dcc_emit_read_write(drvdata, entry, &cfg);
+> +			break;
+> +
+> +		case DCC_LOOP_TYPE:
+> +			_dcc_emit_loop(drvdata, entry, &cfg, &cfg_loop, &total_len);
+> +			break;
+> +
+> +		case DCC_WRITE_TYPE:
+> +			_dcc_emit_write(drvdata, entry, &cfg, &total_len);
+> +			break;
+> +
+> +		case DCC_READ_TYPE:
+> +			ret = _dcc_emit_read(drvdata, entry, &cfg, &pos, &total_len);
+> +			if (ret)
+> +				goto overstep;
+> +			break;
+> +		}
+> +	}
+> +
+> +	if (cfg.link)
+> +		dcc_sram_write_auto(drvdata, cfg.link, &cfg.sram_offset);
+> +
+> +	if (cfg_loop.loop_start) {
+> +		dev_err(drvdata->dev, "DCC: Programming error: Loop unterminated\n");
+> +		ret = -EINVAL;
+> +		goto err;
+> +	}
+> +
+> +	/* Handling special case of list ending with a rd_mod_wr */
+> +	if (cfg.addr == DCC_RD_MOD_WR_DESCRIPTOR) {
+> +		cfg.addr = (DCC_RD_MOD_WR_ADDR) & GENMASK(27, 0);
+> +		cfg.addr |= DCC_ADDR_DESCRIPTOR;
+> +		dcc_sram_write_auto(drvdata, cfg.addr, &cfg.sram_offset);
+> +	}
+> +
+> +	/* Setting zero to indicate end of the list */
+> +	cfg.link = DCC_LINK_DESCRIPTOR;
+> +	dcc_sram_write_auto(drvdata, cfg.link, &cfg.sram_offset);
+> +
+> +	/*Check if sram offset exceeds the ram size*/
+> +	if (cfg.sram_offset > drvdata->ram_size)
+> +		goto overstep;
+> +
+> +	/* Update ram_cfg and check if the data will overstep */
+> +	drvdata->ram_cfg = (cfg.sram_offset + total_len) / 4;
+> +
+> +	if (cfg.sram_offset + total_len > drvdata->ram_size) {
+> +		cfg.sram_offset += total_len;
+> +		goto overstep;
+> +	}
+> +
+> +	drvdata->ram_start = cfg.sram_offset / 4;
+> +	return 0;
+> +overstep:
+> +	ret = -EINVAL;
+> +	memset(drvdata->ram_base, 0, drvdata->ram_size);
+> +
+> +err:
+> +	return ret;
+> +}
+> +
+
+You could have dcc_valid_list() return Boolean and then it
+reads nicely:
+
+     if (!dcc_valid_list(drvdata, curr_list))
+         /* ... error, list is not valid */
+
+> +static int dcc_valid_list(struct dcc_drvdata *drvdata, int curr_list)
+> +{
+> +	u32 lock_reg;
+> +
+> +	if (list_empty(&drvdata->cfg_head[curr_list]))
+> +		return -EINVAL;
+> +
+> +	if (test_bit(curr_list, drvdata->enable_bitmap)) {
+> +		dev_err(drvdata->dev, "List %d is already enabled\n", curr_list);
+
+Maybe this seems picky, but...
+
+This error message doesn't belong in the validity check, it belongs
+in the caller.
+
+Actually, I feel like all of this just belongs in dcc_enable(),
+because it's doing more than just validity checking.
+
+> +		return -EINVAL;
+> +	}
+> +
+> +	lock_reg = dcc_ll_readl(drvdata, curr_list, DCC_LL_LOCK);
+> +	if (lock_reg & DCC_LOCK_MASK) {
+> +		dev_err(drvdata->dev, "List %d is already locked\n", curr_list);
+> +		return -EINVAL;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static bool is_dcc_enabled(struct dcc_drvdata *drvdata)
+> +{
+> +	int list;
+> +
+> +	for (list = 0; list < drvdata->nr_link_list; list++)
+> +		if (test_bit(list, drvdata->enable_bitmap))
+> +			return true;
+> +
+> +	return false;
+> +}
+> +
+> +static int dcc_enable(struct dcc_drvdata *drvdata, int curr_list)
+> +{
+> +	int ret;
+> +	u32 ram_cfg_base;
+> +
+> +	mutex_lock(&drvdata->mutex);
+> +
+> +	ret = dcc_valid_list(drvdata, curr_list);
+> +	if (ret)
+> +		goto out_unlock;
+> +
+> +	/* Fill dcc sram with the poison value.
+> +	 * This helps in understanding bus
+> +	 * hang from registers returning a zero
+> +	 */
+> +	if (!is_dcc_enabled(drvdata))
+> +		memset(drvdata->ram_base, 0xde, drvdata->ram_size);
+> +
+> +	/* 1. Take ownership of the list */
+> +	dcc_ll_writel(drvdata, DCC_LOCK_MASK, curr_list, DCC_LL_LOCK);
+> +
+> +	/* 2. Program linked-list in the SRAM */
+> +	ram_cfg_base = drvdata->ram_cfg;
+> +	ret = __dcc_emit_config(drvdata, curr_list);
+> +	if (ret) {
+> +		dcc_ll_writel(drvdata, 0, curr_list, DCC_LL_LOCK);
+> +		goto out_unlock;
+> +	}
+> +
+> +	/* 3. Program DCC_RAM_CFG reg */
+> +	dcc_ll_writel(drvdata, ram_cfg_base +
+> +			drvdata->ram_offset / 4, curr_list, DCC_LL_BASE);
+> +	dcc_ll_writel(drvdata, drvdata->ram_start +
+> +			drvdata->ram_offset / 4, curr_list, DCC_FD_BASE);
+> +	dcc_ll_writel(drvdata, 0xFFF, curr_list, DCC_LL_TIMEOUT);
+> +
+> +	/* 4. Clears interrupt status register */
+> +	dcc_ll_writel(drvdata, 0, curr_list, DCC_LL_INT_ENABLE);
+> +	dcc_ll_writel(drvdata, (BIT(0) | BIT(1) | BIT(2)),
+> +		      curr_list, DCC_LL_INT_STATUS);
+> +
+> +	set_bit(curr_list, drvdata->enable_bitmap);
+> +
+> +	/* 5. Configure trigger */
+> +	dcc_ll_writel(drvdata, DCC_TRIGGER_MASK,
+> +		      curr_list, DCC_LL_CFG);
+> +
+> +out_unlock:
+> +	mutex_unlock(&drvdata->mutex);
+> +	return ret;
+> +}
+> +
+> +static void dcc_disable(struct dcc_drvdata *drvdata, int curr_list)
+> +{
+> +	mutex_lock(&drvdata->mutex);
+> +
+> +	if (!test_bit(curr_list, drvdata->enable_bitmap))
+> +		goto out_unlock;
+> +	dcc_ll_writel(drvdata, 0, curr_list, DCC_LL_CFG);
+> +	dcc_ll_writel(drvdata, 0, curr_list, DCC_LL_BASE);
+> +	dcc_ll_writel(drvdata, 0, curr_list, DCC_FD_BASE);
+> +	dcc_ll_writel(drvdata, 0, curr_list, DCC_LL_LOCK);
+> +	clear_bit(curr_list, drvdata->enable_bitmap);
+> +out_unlock:
+> +	mutex_unlock(&drvdata->mutex);
+> +}
+> +
+> +static u32 dcc_filp_curr_list(const struct file *filp)
+> +{
+> +	struct dentry *dentry = file_dentry(filp);
+> +	int curr_list, ret;
+> +
+> +	ret = kstrtoint(dentry->d_parent->d_name.name, 0, &curr_list);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return curr_list;
+> +}
+> +
+> +static ssize_t enable_read(struct file *filp, char __user *userbuf,
+> +			   size_t count, loff_t *ppos)
+> +{
+> +	char *buf;
+> +	struct dcc_drvdata *drvdata = filp->private_data;
+> +
+> +	mutex_lock(&drvdata->mutex);
+> +
+> +	if (is_dcc_enabled(drvdata))
+> +		buf = "Y\n";
+> +	else
+> +		buf = "N\n";
+> +
+> +	mutex_unlock(&drvdata->mutex);
+> +
+> +	return simple_read_from_buffer(userbuf, count, ppos, buf, strlen(buf) + 1);
+> +}
+> +
+> +static ssize_t enable_write(struct file *filp, const char __user *userbuf,
+> +			    size_t count, loff_t *ppos)
+> +{
+> +	int ret = 0, curr_list;
+> +	bool val;
+> +	struct dcc_drvdata *drvdata = filp->private_data;
+> +
+> +	curr_list = dcc_filp_curr_list(filp);
+> +	if (curr_list < 0)
+> +		return curr_list;
+> +
+> +	ret = kstrtobool_from_user(userbuf, count, &val);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	if (val) {
+> +		ret = dcc_enable(drvdata, curr_list);
+> +		if (ret)
+> +			return ret;
+> +	} else {
+> +		dcc_disable(drvdata, curr_list);
+> +	}
+> +
+> +	return count;
+> +}
+> +
+> +static const struct file_operations enable_fops = {
+> +	.read = enable_read,
+> +	.write = enable_write,
+> +	.open = simple_open,
+> +	.llseek = generic_file_llseek,
+> +};
+> +
+> +static ssize_t trigger_write(struct file *filp,
+> +			     const char __user *user_buf, size_t count,
+> +			     loff_t *ppos)
+> +{
+> +	int ret;
+> +	unsigned int val;
+> +	struct dcc_drvdata *drvdata = filp->private_data;
+> +
+> +	ret = kstrtouint_from_user(user_buf, count, 0, &val);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	if (val != 1)
+> +		return -EINVAL;
+> +
+> +	ret = dcc_sw_trigger(drvdata);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	return count;
+> +}
+> +
+> +static const struct file_operations trigger_fops = {
+> +	.write = trigger_write,
+> +	.open = simple_open,
+> +	.llseek = generic_file_llseek,
+> +};
+> +
+> +static int dcc_config_add(struct dcc_drvdata *drvdata, unsigned int addr,
+> +			  unsigned int len, int apb_bus, int curr_list)
+> +{
+> +	int ret = 0;
+> +	struct dcc_config_entry *entry, *pentry;
+> +	unsigned int base, offset;
+> +
+> +	mutex_lock(&drvdata->mutex);
+> +
+
+I have some questions about the way memory regions
+are defined here.
+
+- You round down the address using DCC_ADDR_RANGE_MASK.
+   Is that because the address has an alignment requirement?
+- DCC_ADDR_RANGE_MASK is 0xfffffff0, meaning it's 16-byte
+   aligned.  Is that the required alignment?  (It is more
+   strict than the 32-bit word size.)
+- Is there any requirement on the size (in bytes)?  I.e.,
+   does it need to be 16-byte aligned?  (You multiply the
+   count by 4, which I presume is sizeof(u32), the word size.)
+- If the base address is affected by rounding down like
+   this, you aren't updating the length, which it seems
+   could omit a word at the end of the desired range.
+- You are checking to be sure the word count doesn't exceed
+   the RAM size.  But you're using DCC_ADDR_OFF_RANGE=8,
+   even though you said that a "word" is 32 bits.
+
+> +	if (!len || len > drvdata->ram_size / DCC_ADDR_OFF_RANGE) {
+> +		dev_err(drvdata->dev, "DCC: Invalid length\n");
+> +		ret = -EINVAL;
+> +		goto out_unlock;
+> +	}
+> +
+> +	base = addr & DCC_ADDR_RANGE_MASK;
+Maybe:
+	base = round_down(addr, DCC_WORD_SIZE);
+
+Then you don't even need DCC_ADDR_RANGE_MASK.
+
+And then:
+	len += base - addr;
+And if necessary:
+	len = round_up(addr, DCC_WORD_SIZE);
+And finally:
+	if (len > drvdata->ram_size / DCC_WORD_SIZE)
+		return -EINVAL;
+
+> +	if (!list_empty(&drvdata->cfg_head[curr_list])) {
+> +		pentry = list_last_entry(&drvdata->cfg_head[curr_list],
+> +					 struct dcc_config_entry, list);
+> +
+> +		if (pentry->desc_type == DCC_READ_TYPE &&
+> +		    addr >= (pentry->base + pentry->offset) &&
+> +		    addr <= (pentry->base + pentry->offset + MAX_DCC_OFFSET)) {
+> +			/* Re-use base address from last entry */
+> +			base = pentry->base;
+> +
+> +			if ((pentry->len * 4 + pentry->base + pentry->offset)
+> +					== addr) {
+> +				len += pentry->len;
+> +
+> +				if (len > MAX_DCC_LEN)
+> +					pentry->len = MAX_DCC_LEN;
+> +				else
+> +					pentry->len = len;
+> +
+> +				addr = pentry->base + pentry->offset +
+> +					pentry->len * 4;
+> +				len -= pentry->len;
+> +			}
+> +		}
+> +	}
+> +
+> +	offset = addr - base;
+> +
+> +	while (len) {
+> +		entry = devm_kzalloc(drvdata->dev, sizeof(*entry), GFP_KERNEL);
+> +		if (!entry) {
+> +			ret = -ENOMEM;
+> +			goto out_unlock;
+> +		}
+> +
+> +		entry->base = base;
+> +		entry->offset = offset;
+> +		entry->len = min_t(u32, len, MAX_DCC_LEN);
+> +		entry->desc_type = DCC_READ_TYPE;
+> +		entry->apb_bus = apb_bus;
+> +		INIT_LIST_HEAD(&entry->list);
+> +		list_add_tail(&entry->list,
+> +			      &drvdata->cfg_head[curr_list]);
+> +
+> +		len -= entry->len;
+> +		offset += MAX_DCC_LEN * 4;
+> +	}
+> +
+> +out_unlock:
+> +	mutex_unlock(&drvdata->mutex);
+> +	return ret;
+> +}
+> +
+> +static ssize_t dcc_config_add_read(struct dcc_drvdata *drvdata, char *buf, int curr_list)
+> +{
+> +	int len, nval, bus;
+> +	unsigned int base;
+> +	char apb_bus[4];
+> +
+> +	nval = sscanf(buf, "%x %i %s", &base, &len, apb_bus);
+
+This sscanf() is not safe; it can overrun apb_bus[].  I
+think you can fix that by using %3s (for apb_bus[4]).
+
+> +	if (nval <= 0 || nval > 3)
+> +		return -EINVAL;
+> +
+> +	if (nval == 1) {
+> +		len = 1;
+> +		bus = 0;
+> +	} else if (nval == 2) {
+> +		bus = 0;
+> +	} else if (!strcmp("apb", apb_bus)) {
+> +		bus = 1;
+> +	} else if (!strcmp("ahb", apb_bus)) {
+> +		bus = 0;
+> +	} else {
+> +		return -EINVAL;
+> +	}
+> +
+> +	return dcc_config_add(drvdata, base, len, bus, curr_list);
+> +}
+> +
+> +static void dcc_config_reset(struct dcc_drvdata *drvdata)
+> +{
+> +	struct dcc_config_entry *entry, *temp;
+> +	int curr_list;
+> +
+> +	mutex_lock(&drvdata->mutex);
+> +
+> +	for (curr_list = 0; curr_list < drvdata->nr_link_list; curr_list++) {
+> +		list_for_each_entry_safe(entry, temp,
+> +					 &drvdata->cfg_head[curr_list], list) {
+> +			list_del(&entry->list);
+> +		}
+> +	}
+> +	drvdata->ram_start = 0;
+> +	drvdata->ram_cfg = 0;
+> +	mutex_unlock(&drvdata->mutex);
+> +}
+> +
+> +static ssize_t config_reset_write(struct file *filp,
+> +				  const char __user *user_buf, size_t count,
+> +				  loff_t *ppos)
+> +{
+> +	unsigned int val, ret;
+> +	struct dcc_drvdata *drvdata = filp->private_data;
+> +
+> +	ret = kstrtouint_from_user(user_buf, count, 0, &val);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	if (val)
+> +		dcc_config_reset(drvdata);
+> +
+> +	return count;
+> +}
+> +
+> +static const struct file_operations config_reset_fops = {
+> +	.write = config_reset_write,
+> +	.open = simple_open,
+> +	.llseek = generic_file_llseek,
+> +};
+> +
+> +static ssize_t ready_read(struct file *filp, char __user *userbuf,
+> +			  size_t count, loff_t *ppos)
+> +{
+> +	int ret = 0;
+> +	char *buf;
+> +	struct dcc_drvdata *drvdata = filp->private_data;
+> +
+> +	mutex_lock(&drvdata->mutex);
+> +
+> +	if (!is_dcc_enabled(drvdata)) {
+> +		ret = -EINVAL;
+> +		goto out_unlock;
+> +	}
+> +
+> +	if (!FIELD_GET(BIT(1), readl(drvdata->base + DCC_STATUS(drvdata->mem_map_ver))))
+> +		buf = "Y\n";
+> +	else
+> +		buf = "N\n";
+> +out_unlock:
+> +	mutex_unlock(&drvdata->mutex);
+> +
+> +	if (ret < 0)
+> +		return -EINVAL;
+> +	else
+> +		return simple_read_from_buffer(userbuf, count, ppos, buf, strlen(buf) + 1);
+> +}
+> +
+> +static const struct file_operations ready_fops = {
+> +	.read = ready_read,
+> +	.open = simple_open,
+> +	.llseek = generic_file_llseek,
+> +};
+> +
+> +static int dcc_add_loop(struct dcc_drvdata *drvdata, unsigned long loop_cnt, int curr_list)
+> +{
+> +	struct dcc_config_entry *entry;
+> +
+> +	entry = devm_kzalloc(drvdata->dev, sizeof(*entry), GFP_KERNEL);
+> +	if (!entry)
+> +		return -ENOMEM;
+> +
+> +	entry->loop_cnt = min_t(u32, loop_cnt, MAX_LOOP_CNT);
+> +	entry->desc_type = DCC_LOOP_TYPE;
+> +	INIT_LIST_HEAD(&entry->list);
+> +	list_add_tail(&entry->list, &drvdata->cfg_head[curr_list]);
+> +
+> +	return 0;
+> +}
+> +
+> +static ssize_t dcc_config_add_loop(struct dcc_drvdata *drvdata, char *buf, int curr_list)
+> +{
+> +	int ret, cnt = 2, i = 0;
+> +	char *token, *input;
+> +	char delim[2] = " ";
+> +	unsigned int val[MAX_LOOP_ADDR];
+> +
+> +	input = buf;
+> +
+> +	token = strsep(&input, delim);
+> +	while (token) {
+> +		ret = kstrtoint(token, 0, &val[i++]);
+
+As I said last time I reviewed this, nothing prevents you from
+overrunning your val[] buffer here.
+
+> +		if (ret)
+> +			return ret;
+> +
+> +		token = strsep(&input, delim);
+> +	}
+> +
+> +	ret = dcc_add_loop(drvdata, val[0], curr_list);
+> +	if (ret)
+> +		return ret;
+> +
+> +	for (i = 0; i < val[1]; i++)
+> +		dcc_config_add(drvdata, val[cnt++], 1, 0, curr_list);
+> +
+> +	return dcc_add_loop(drvdata, 1, curr_list);
+> +}
+> +
+> +static int dcc_rd_mod_wr_add(struct dcc_drvdata *drvdata, unsigned int mask,
+> +			     unsigned int val, int curr_list)
+> +{
+> +	int ret = 0;
+> +	struct dcc_config_entry *entry;
+> +
+> +	mutex_lock(&drvdata->mutex);
+> +
+> +	if (list_empty(&drvdata->cfg_head[curr_list])) {
+> +		dev_err(drvdata->dev, "DCC: No read address programmed\n");
+> +		ret = -EPERM;
+> +		goto out_unlock;
+> +	}
+> +
+> +	entry = devm_kzalloc(drvdata->dev, sizeof(*entry), GFP_KERNEL);
+> +	if (!entry) {
+> +		ret = -ENOMEM;
+> +		goto out_unlock;
+> +	}
+> +
+> +	entry->desc_type = DCC_READ_WRITE_TYPE;
+> +	entry->mask = mask;
+> +	entry->write_val = val;
+> +	INIT_LIST_HEAD(&entry->list);
+> +	list_add_tail(&entry->list, &drvdata->cfg_head[curr_list]);
+> +out_unlock:
+> +	mutex_unlock(&drvdata->mutex);
+> +	return ret;
+> +}
+> +
+> +static ssize_t dcc_config_add_read_write(struct dcc_drvdata *drvdata, char *buf, int curr_list)
+> +{
+> +	int ret;
+> +	int nval;
+> +	unsigned int addr, mask, val;
+> +
+> +	nval = sscanf(buf, "%x %x %x", &addr, &mask, &val);
+> +
+> +	if (nval <= 1 || nval > 3)
+> +		return -EINVAL;
+> +
+> +	ret = dcc_config_add(drvdata, addr, 1, 0, curr_list);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return dcc_rd_mod_wr_add(drvdata, mask, val, curr_list);
+> +}
+> +
+> +static int dcc_add_write(struct dcc_drvdata *drvdata, unsigned int addr,
+> +			 unsigned int write_val, int apb_bus, int curr_list)
+> +{
+> +	struct dcc_config_entry *entry;
+> +
+> +	entry = devm_kzalloc(drvdata->dev, sizeof(*entry), GFP_KERNEL);
+> +	if (!entry)
+> +		return -ENOMEM;
+> +
+> +	entry->desc_type = DCC_WRITE_TYPE;
+> +	entry->base = addr & GENMASK(31, 4);
+> +	entry->offset = addr - entry->base;
+> +	entry->write_val = write_val;
+> +	entry->len = 1;
+> +	entry->apb_bus = apb_bus;
+> +	INIT_LIST_HEAD(&entry->list);
+
+There is no need to initialize the list pointers when you are
+adding an entry to an existing list.
+
+> +	list_add_tail(&entry->list, &drvdata->cfg_head[curr_list]);
+> +
+> +	return 0;
+> +}
+> +
+> +static ssize_t dcc_config_add_write(struct dcc_drvdata *drvdata, char *buf, int curr_list)
+> +{
+> +	int bus;
+> +	int nval;
+> +	unsigned int addr, write_val;
+> +	char apb_bus[4];
+> +
+> +	nval = sscanf(buf, "%x %x %s", &addr, &write_val, apb_bus);
+
+This sscanf() is not safe; it can overrun apb_bus[].
+
+> +
+> +	if (nval <= 1 || nval > 3)
+> +		return -EINVAL;
+> +
+> +	if (nval == 3) {
+> +		if (!strcmp("apb", apb_bus))
+> +			bus = 1;
+> +		else if (!strcmp("apb", apb_bus))
+> +			bus = 0;
+> +		else
+> +			return -EINVAL;
+> +	}
+
+If nval == 2, bus is uninitialized at this point, and then passed
+to dcc_add_write() below.  The compiler should have warned you
+about this.
+
+> +
+> +	return dcc_add_write(drvdata, addr, write_val, bus, curr_list);
+> +}
+> +
+> +static int config_show(struct seq_file *m, void *data)
+> +{
+> +	struct dcc_drvdata *drvdata = m->private;
+> +	struct dcc_config_entry *entry;
+> +	int index = 0, curr_list;
+> +
+> +	curr_list = dcc_filp_curr_list(m->file);
+> +	if (curr_list < 0)
+> +		return curr_list;
+> +
+> +	mutex_lock(&drvdata->mutex);
+> +
+> +	list_for_each_entry(entry,
+
+Please join the line above with the line below.
+
+> +			    &drvdata->cfg_head[curr_list], list) {
+> +		index++;
+> +		switch (entry->desc_type) {
+> +		case DCC_READ_WRITE_TYPE:
+> +			seq_printf(m, "RW mask: 0x%x, val: 0x%x\n index: 0x%x\n",
+> +				   entry->mask, entry->write_val, index);
+> +			break;
+> +		case DCC_LOOP_TYPE:
+> +			seq_printf(m, "L index: 0x%x Loop: %d\n", index, entry->loop_cnt);
+> +			break;
+> +		case DCC_WRITE_TYPE:
+> +			seq_printf(m, "W Base:0x%x, Offset: 0x%x, val: 0x%x, APB: %d\n, Index: 0x%x\n",
+> +				   entry->base, entry->offset, entry->write_val, entry->apb_bus,
+> +				   index);
+> +			break;
+> +		case DCC_READ_TYPE:
+> +			seq_printf(m, "R Base:0x%x, Offset: 0x%x, len: 0x%x, APB: %d\n, Index: 0x%x\n",
+> +				   entry->base, entry->offset, entry->len, entry->apb_bus, index);
+> +		}
+> +	}
+> +	mutex_unlock(&drvdata->mutex);
+> +	return 0;
+> +}
+> +
+> +static int config_open(struct inode *inode, struct file *file)
+> +{
+> +	struct dcc_drvdata *drvdata = inode->i_private;
+> +
+> +	return single_open(file, config_show, drvdata);
+> +}
+> +
+> +static ssize_t config_write(struct file *filp,
+> +			    const char __user *user_buf, size_t count,
+> +			    loff_t *ppos)
+> +{
+> +	int ret, curr_list;
+> +	char *token, buf[50];
+> +	char *delim = " ";
+> +	struct dcc_drvdata *drvdata = filp->private_data;
+> +
+> +	ret = copy_from_user(buf, user_buf, count);
+
+Nothing prevents the user from passing you more than sizeof(buf)
+bytes, which would overrun your buffer.
+
+> +	if (ret)
+> +		return -EFAULT;
+> +	if (count > sizeof(buf) || count == 0)
+> +		return -EINVAL;
+> +
+> +	curr_list = dcc_filp_curr_list(filp);
+> +	if (curr_list < 0)
+> +		return curr_list;
+> +
+> +	if (buf[count - 1] == '\n')
+> +		buf[count - 1] = '\0';
+> +	else
+> +		return -EINVAL;
+Why is it important for the input buffer to end in newline?
+
+> +
+> +	token = strsep((char **)&buf, delim);
+
+OK this is weird.  You should be passing the address
+of a pointer here, but you're passing the address of
+a character array.  Honestly I'm not sure what it means
+to increment the address of an array on the stack.  Maybe
+it's OK, but I suspect you're putting the cast in there
+because the compiler complained about what you were doing.
+
+Do this:
+	char buf[50];
+	char *bufp = buf;
+	/* ... */
+	token = strsep(&bufp, delim);
+
+But to be honest I'm not sure why you're using strsep()
+at all here.  (I guess it terminates the token with \0.)
+
+> +
+> +	if (!strcmp("R", token)) {
+> +		ret = dcc_config_add_read(drvdata, buf, curr_list);
+> +	} else if (!strcmp("W", token)) {
+> +		ret = dcc_config_add_write(drvdata, buf, curr_list);
+> +	} else if (!strcmp("RW", token)) {
+> +		ret = dcc_config_add_read_write(drvdata, buf, curr_list);
+> +	} else if (!strcmp("L", token)) {
+> +		ret = dcc_config_add_loop(drvdata, buf, curr_list);
+> +	} else {
+> +		dev_err(drvdata->dev, "%s is not a correct input\n", token);
+> +		return -EINVAL;
+> +	}
+> +
+> +	if (ret)
+> +		return ret;
+> +
+> +	return count;
+> +}
+> +
+> +static const struct file_operations config_fops = {
+> +	.open = config_open,
+> +	.read = seq_read,
+> +	.write = config_write,
+> +	.llseek = seq_lseek,
+> +	.release = single_release,
+> +};
+> +
+> +static void dcc_delete_debug_dir(struct dcc_drvdata *dcc)
+> +{
+> +	 debugfs_remove_recursive(dcc->dbg_dir);
+> +};
+> +
+> +static int dcc_create_debug_dir(struct dcc_drvdata *dcc)
+> +{
+> +	int i;
+> +	char list_num[10];
+> +	struct dentry *list;
+> +	struct device *dev = dcc->dev;
+> +
+> +	dcc_dbg = debugfs_create_dir(KBUILD_MODNAME, NULL);
+
+You never remove this dcc_dbg directory.  Why not?
+
+And since you don't, dcc_dbg could just be a local
+variable here rather than being a global.  But it
+seems to me this is the root directory you want to
+remove when you're done.
+
+> +	if (!dcc_dbg) {
+> +		pr_err("can't create debugfs dir\n");
+> +		return -1;
+> +	}
+> +
+> +	dcc->dbg_dir = debugfs_create_dir(dev_name(dev), dcc_dbg);
+> +	if (!dcc->dbg_dir)
+> +		return -1;
+> +	for (i = 0; i <= dcc->nr_link_list; i++) {
+> +		sprintf(list_num, "%d", i);
+> +		list = debugfs_create_dir(list_num, dcc->dbg_dir);
+
+Any of the debugfs_create_dir() calls could fail.
+
+> +		debugfs_create_file("enable", 0600, list, dcc, &enable_fops);
+> +		debugfs_create_file("config", 0600, list, dcc, &config_fops);
+
+And any of the debugfs_create_file() calls here and
+below could fail.
+
+I think if *any* of these fails, you might as well give
+up, because the entire interface for this functionality
+is via these debugfs files.
+
+> +	}
+> +
+> +	debugfs_create_file("trigger", 0200, dcc->dbg_dir, dcc, &trigger_fops);
+> +	debugfs_create_file("ready", 0400, dcc->dbg_dir, dcc, &ready_fops);
+> +	debugfs_create_file("config_reset", 0200, dcc->dbg_dir,
+> +			    dcc, &config_reset_fops);
+> +
+> +	return 0;
+> +}
+> +
+> +static ssize_t dcc_sram_read(struct file *file, char __user *data,
+> +			     size_t len, loff_t *ppos)
+> +{
+> +	unsigned char *buf;
+> +	struct dcc_drvdata *drvdata = container_of(file->private_data,
+> +		struct dcc_drvdata,
+> +		sram_dev);
+
+Indent the above arguments further.  And/or assign the
+local variable on a line by itself, separate from its
+declaration.
+
+> +	/* EOF check */
+> +	if (*ppos >= drvdata->ram_size)
+> +		return 0;
+> +
+> +	if ((*ppos + len) > drvdata->ram_size)
+> +		len = (drvdata->ram_size - *ppos);
+> +
+> +	buf = kzalloc(len, GFP_KERNEL);
+
+Now that you are using memremap() rather than ioremap()
+for the ram_base memory, I don't think you have any need
+to allocate a buffer here anymore.
+
+> +	if (!buf)
+> +		return -ENOMEM;
+> +
+> +	memcpy(buf, drvdata->ram_base + *ppos, len);
+
+That is, you can simply copy_to_user() into the (user)
+data pointer, from drvdata->ram_base + *ppos.  Maybe
+something like:
+
+	void *src;
+	/* ... */
+
+	src = drvdata->ram_base + *ppos;
+	if (copy_to_user(data, src, len))
+		return -EFAULT;
+
+> +	if (copy_to_user(data, buf, len)) {
+> +		kfree(buf);
+> +		return -EFAULT;
+> +	}
+> +
+> +	*ppos += len;
+> +
+> +	kfree(buf);
+> +
+> +	return len;
+> +}
+> +
+> +static const struct file_operations dcc_sram_fops = {
+> +	.owner		= THIS_MODULE,
+> +	.read		= dcc_sram_read,
+> +	.llseek		= no_llseek,
+> +};
+> +
+> +static int dcc_sram_dev_init(struct dcc_drvdata *drvdata)
+> +{
+> +	drvdata->sram_dev.minor = MISC_DYNAMIC_MINOR;
+> +	drvdata->sram_dev.name = DCC_SRAM_NODE;
+> +	drvdata->sram_dev.fops = &dcc_sram_fops;
+> +
+> +	return misc_register(&drvdata->sram_dev);
+> +}
+> +
+> +static void dcc_sram_dev_exit(struct dcc_drvdata *drvdata)
+> +{
+> +	misc_deregister(&drvdata->sram_dev);
+> +}
+> +
+> +static int dcc_probe(struct platform_device *pdev)
+> +{
+> +	u32 val;
+> +	int ret = 0, i;
+> +	struct device *dev = &pdev->dev;
+> +	struct dcc_drvdata *dcc;
+
+Why do you use "dcc" here and "drvdata" elsewhere?
+
+> +	struct resource *res;
+> +
+> +	dcc = devm_kzalloc(dev, sizeof(*dcc), GFP_KERNEL);
+> +	if (!dcc)
+> +		return -ENOMEM;
+> +
+> +	dcc->dev = &pdev->dev;
+> +	platform_set_drvdata(pdev, dcc);
+> +
+> +	dcc->base = devm_platform_ioremap_resource(pdev, 0);
+> +	if (IS_ERR(dcc->base))
+> +		return PTR_ERR(dcc->base);
+> +
+> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+> +	if (!res)
+> +		return -ENODEV;
+> +
+> +	dcc->ram_base = memremap(res->start, resource_size(res), MEMREMAP_WB);
+> +	if (!dcc->ram_base)
+> +		return -ENODEV;
+
+ From this point all, you need to memunmap(dcc->ram_base)
+if you return early...
+
+> +
+> +	dcc->ram_size = resource_size(res);
+> +
+> +	dcc->ram_offset = (size_t)of_device_get_match_data(&pdev->dev);
+> +
+> +	val = dcc_readl(dcc, DCC_HW_INFO);
+> +
+> +	if (FIELD_GET(DCC_VER_INFO_MASK, val)) {
+> +		dcc->mem_map_ver = 3;
+> +		dcc->nr_link_list = dcc_readl(dcc, DCC_LL_NUM_INFO);
+
+...so the test below needs to unmap dcc->ram_base before it
+returns the error.
+
+> +		if (dcc->nr_link_list == 0)
+> +			return	-EINVAL;
+
+You could check for zero list count below and not duplicate it.
+You could (should) also limit it to a fixed reasonable maximum.
+What if the hardware tells you you've got a million lists?
+
+> +	} else if ((val & DCC_VER_MASK2) == DCC_VER_MASK2) {
+> +		dcc->mem_map_ver = 2;
+> +		dcc->nr_link_list = dcc_readl(dcc, DCC_LL_NUM_INFO);
+> +		if (dcc->nr_link_list == 0)
+> +			return	-EINVAL;
+> +	} else {
+> +		dcc->mem_map_ver = 1;
+> +		dcc->nr_link_list = DCC_MAX_LINK_LIST;
+> +	}
+> +
+> +	/* Either set the fixed loop offset or calculate it
+> +	 * from ram_size. Max consecutive addresses the
+> +	 * dcc can loop is equivalent to the ram size
+> +	 */
+> +	if (val & DCC_LOOP_OFFSET_MASK)
+> +		dcc->loopoff = DCC_FIX_LOOP_OFFSET;
+> +	else
+> +		dcc->loopoff = get_bitmask_order((dcc->ram_size +
+> +				dcc->ram_offset) / 4 - 1);
+
+Here's what I said about the above last time:
+
+   This get_bitmask_order() call to determine the offset of a
+   register seems overly clever.  I think it warrants a little
+   explanation why it's determined by the size of SRAM.
+
+I think part of what confuses me is why you use the sum
+of ram_size and ram_offset.  I suppose 4 is DCC_WORD_SIZE
+but I just don't know.  The comment I was suggesting was
+something about what loopoff actually represents, and why
+it's calculated this way.
+
+
+> +
+> +	mutex_init(&dcc->mutex);
+> +
+> +	dcc->enable_bitmap = devm_kcalloc(dev, BITS_TO_LONGS(dcc->nr_link_list),
+> +					  sizeof(*dcc->enable_bitmap), GFP_KERNEL);
+> +	if (!dcc->enable_bitmap)
+> +		return -ENOMEM;
+> +
+> +	dcc->cfg_head = devm_kcalloc(dev, dcc->nr_link_list,
+> +				     sizeof(*dcc->cfg_head), GFP_KERNEL);
+> +	if (!dcc->cfg_head)
+> +		return -ENOMEM;
+> +
+> +	for (i = 0; i < dcc->nr_link_list; i++)
+> +		INIT_LIST_HEAD(&dcc->cfg_head[i]);
+> +
+> +	ret = dcc_sram_dev_init(dcc);
+> +	if (ret) {
+> +		dev_err(dcc->dev, "DCC: sram node not registered.\n");
+> +		return ret;
+> +	}
+> +
+> +	ret = dcc_create_debug_dir(dcc);
+> +	if (ret) {
+> +		dev_err(dcc->dev, "DCC: debugfs files not created.\n");
+> +		dcc_sram_dev_exit(dcc);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int dcc_remove(struct platform_device *pdev)
+> +{
+> +	struct dcc_drvdata *drvdata = platform_get_drvdata(pdev);
+> +
+> +	dcc_delete_debug_dir(drvdata);
+> +	dcc_sram_dev_exit(drvdata);
+> +	dcc_config_reset(drvdata);
+> +	memunmap(drvdata->ram_base);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id dcc_match_table[] = {
+> +	{ .compatible = "qcom,sm8150-dcc", .data = (void *)0x5000 },
+> +	{ .compatible = "qcom,sc7280-dcc", .data = (void *)0x12000 },
+> +	{ .compatible = "qcom,sc7180-dcc", .data = (void *)0x6000 },
+> +	{ .compatible = "qcom,sdm845-dcc", .data = (void *)0x6000 },
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(of, dcc_match_table);
+> +
+> +static struct platform_driver dcc_driver = {
+> +	.probe = dcc_probe,
+> +	.remove	= dcc_remove,
+> +	.driver	= {
+> +		.name = "qcom-dcc",
+> +		.of_match_table	= dcc_match_table,
+> +	},
+> +};
+> +
+> +module_platform_driver(dcc_driver);
+> +
+> +MODULE_LICENSE("GPL");
+> +MODULE_DESCRIPTION("Qualcomm Technologies Inc. DCC driver");
+> +
+> --
+> 2.7.4
+> 
+> 
+> 
 
