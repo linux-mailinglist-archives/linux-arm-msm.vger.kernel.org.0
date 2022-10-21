@@ -2,332 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 295DF6079D9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 16:44:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB2D4607AA7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 17:29:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229720AbiJUOoK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Oct 2022 10:44:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32880 "EHLO
+        id S229934AbiJUP3F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Oct 2022 11:29:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230488AbiJUOoH (ORCPT
+        with ESMTP id S230305AbiJUP2t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Oct 2022 10:44:07 -0400
-Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96B0A27FEBA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 07:44:04 -0700 (PDT)
-Received: by mail-qv1-xf2d.google.com with SMTP id i12so1962537qvs.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 07:44:04 -0700 (PDT)
+        Fri, 21 Oct 2022 11:28:49 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EE0727A323
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 08:27:57 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id a10so4920875wrm.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 08:27:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=L9E2Nh9JCh9Weq2el7EDwv+5jLkQ9cN8xA7BcV160IM=;
-        b=iSxVe63o7DZnZf0Yl4Vy6Gax+8aiMbkSTuAWZrlgTh8YnxJWfjvAfcOnai4R16sOw6
-         CeNXsJ49U5J2O3x1/bk4Ay2kLKMbQyM0b0+rmlv/Kx566DH1it1xnPE8/3e4/C3AF2SI
-         RpT5hXsfBQfzpN5B6riZ0QzU11Pg77m67noSqGmOMEC5pAJou/dbc1U0iks3dKnGUUnF
-         s/hGN66qPSrNVpoCZWxdNjSslkIO5j/v7wDJbARv9SZh7LRMRf/+d3qJvd9vCW+3xSKe
-         do6SVynmKbR6rGLwht97gAuu/fq+A0LfcstnOBIJ2PttNGS8Xnn/rr7MISgGefEdLpjU
-         SN/g==
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ykf9HWPkQddpY0wzWOTNMdHcI+0FLQ+ZFPIJCxSFMvY=;
+        b=wNU5j3vfnVig9JLrA+OOPWyaVwQi2WEInCO54P+B9TG66cgx5kHTonqdWyRC9hCEtR
+         SAAD2VAWWfwVOzprh1AgTPS278M3br03Zp3f8u8iMnLMy4EGEDlid3wjwdVKtFKwzL9B
+         cHkhdIWgM0Peh3/Ahj/1pH9uXXa4C7NMyQ6W4cSgwMLxYP1dF0x61t6nbtteqMBUXffR
+         BYVxIqMGgg4RhodL2dOL+/0pjtYenAwc5+ptbWFmbfxNXS1lSxMdc6WWrAwNKKzpz8oR
+         WJ4qvb3OkN8rPSfAzYmWcXUWMNYhLZXHb7EfVb9odwz2SpK4jDUxWcJkyLGI8QguY76l
+         pcvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=L9E2Nh9JCh9Weq2el7EDwv+5jLkQ9cN8xA7BcV160IM=;
-        b=WuEo9t7PipGmeLVU8p3zleABadHu3kg/r2hXpFGFH0cWM13Vxwn9U1tuqXp5oBMX/d
-         w6cqkLd95iqXV5x1sbCJMi2jbVZBgW/9QodCH5Z1tyVR4S8kbTdL1c2us5TYydBTrYu8
-         ulZNNIy/Y82DOwUIxP6aQxh5R+FZHRyPaPzzMjlPY5y3IrP+P0dK3L3ijRx3/p6k0LMq
-         o+ZTKG0ICB36qAKTtJpHvbW3rcB6wZJacE1nOgLKVp9MrUWaVp+MkL81WRysm119FtO1
-         ZHA38yzkQKxB94iVdBXKForlkvRWsGePW0RnrQ5s4+zmQZ2Uz6XdAZewJNqbeeNTYnnB
-         1VzQ==
-X-Gm-Message-State: ACrzQf0z1b1qjv6l+0/LTOMR6JVT2WugWmg89q5EcvINIbwLxtRiuK9V
-        DJ6EQwNz7uAAvD5lVdkQwta1uXV+qgON9g==
-X-Google-Smtp-Source: AMsMyM6L5F1z4Y8HkPth9is5INygwhuEOB8jOMMouzgClIT2ll0hlQx4rDa9KzC5W4+khrgkuqWhKA==
-X-Received: by 2002:a05:6214:508a:b0:4b4:13bc:ae8d with SMTP id kk10-20020a056214508a00b004b413bcae8dmr16905337qvb.87.1666363443197;
-        Fri, 21 Oct 2022 07:44:03 -0700 (PDT)
-Received: from [192.168.10.124] (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
-        by smtp.gmail.com with ESMTPSA id j12-20020a05620a288c00b006b640efe6dasm9710675qkp.132.2022.10.21.07.44.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Oct 2022 07:44:02 -0700 (PDT)
-Message-ID: <78a117d5-b4be-8389-c909-9f8525b151d8@linaro.org>
-Date:   Fri, 21 Oct 2022 10:44:01 -0400
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ykf9HWPkQddpY0wzWOTNMdHcI+0FLQ+ZFPIJCxSFMvY=;
+        b=d0raFQycNnKdGLt851UASmWJIa6kLou+RqqdLLyqVfVNLzWM+papMwMnptLvJlOb4d
+         W36tbnNkUAmDa5kh/EN2kvAromlulFNkQw7BA3ewO6/PPR0l7LAmhMMcFRZmwhg5nE1c
+         rz780aqeHQPJa/wG4Udrke+0Xeu1eiMneFYsLFO2cbEKJrf7kAwX02ohA5UsgNZC+jck
+         Wt6B4Wzim5i9WVFtYnezI6YLoIq2uIqH7qFTIES01vrIHW0ZRmhf8FWYM1V1KWyRZY1m
+         fyG8ZUywhHYS67iMPsgm6iVIMqjD+YXXu4tRAfpzd5IMe3g9AryqPWjbIHwOdk5Kap66
+         BQGQ==
+X-Gm-Message-State: ACrzQf2mEc+0JS2ctgj5AMAu9Uwy9Lpv9a/B5zB7vI0nqHhoYuXNh0re
+        PBOimwtlISLRUC1y5qjeuE8r9w==
+X-Google-Smtp-Source: AMsMyM43ZN0lBozH8SQQXg1i9ZhUI7Lb/oIHhMsRUEoatIC3ZMKV1RQf2rJHTbiqdgXkUHkH94EvlQ==
+X-Received: by 2002:a5d:47c7:0:b0:22e:37c6:3d7d with SMTP id o7-20020a5d47c7000000b0022e37c63d7dmr12548369wrc.163.1666366075694;
+        Fri, 21 Oct 2022 08:27:55 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id j8-20020a05600c1c0800b003c6b7f5567csm10706169wms.0.2022.10.21.08.27.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Oct 2022 08:27:55 -0700 (PDT)
+Subject: [PATCH v3 0/5] arm: qcom: mdm9615: second round of bindings and DT fixes
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: msm8996: add support for
- oneplus3(t)
-Content-Language: en-US
-To:     Harry Austen <hpausten@protonmail.com>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-b4-tracking: H4sIAHi6UmMC/43NQQ7CIBAF0KsY1o4ZoEXrynsYFwOlLQkFA5WkaXp3iTtXupr8n/w3G8s2OZvZ9b
+ CxZIvLLoYa5PHAzERhtOD6mplAIThiC3M/d4q38HTBLMnDSrMHLofW8As1vSRWp5qyBZ0omKmOw8v7
+ Wk4uLzGtn1eF13P/oRYOCGi0QVRWkMSbd4FSPMU0skcVi/hHEVVRshusOhM22n4p+76/ARRIk0AEAQ AA
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Fri, 21 Oct 2022 17:27:52 +0200
+Message-Id: <20221005-mdm9615-pinctrl-yaml-v3-0-e5e045644971@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Lee Jones <lee@kernel.org>, Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20221021142242.129276-1-hpausten@protonmail.com>
- <20221021142242.129276-5-hpausten@protonmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221021142242.129276-5-hpausten@protonmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-gpio@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+X-Mailer: b4 0.10.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/10/2022 10:24, Harry Austen wrote:
-> Add initial support for OnePlus 3 and 3T mobile phones. They are based
-> on the MSM8996 SoC.
-> 
-> Co-developed-by: Yassine Oudjana <y.oudjana@protonmail.com>
-> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-> Signed-off-by: Harry Austen <hpausten@protonmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |   2 +
->  .../boot/dts/qcom/msm8996-oneplus-common.dtsi | 794 ++++++++++++++++++
->  arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts |  44 +
->  .../arm64/boot/dts/qcom/msm8996-oneplus3t.dts |  45 +
->  4 files changed, 885 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-oneplus3.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index d7669a7cee9f..0380ac4fb196 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -33,6 +33,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-sony-xperia-kitakami-satsuki.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-sony-xperia-kitakami-sumire.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-sony-xperia-kitakami-suzuran.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-mtp.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-oneplus3.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-oneplus3t.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-sony-xperia-tone-dora.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-sony-xperia-tone-kagura.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-sony-xperia-tone-keyaki.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
-> new file mode 100644
-> index 000000000000..41eb6f28e9a4
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8996-oneplus-common.dtsi
-> @@ -0,0 +1,794 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
+This is a second round of bindings & DT fixes for the MDM9615 platform.
 
-Are you sure this is GPL-2.0 only? Didn't you derive it from downstream
-OnePlus DTS?
+This second round focuses on less trivial changes like pinctrl & regulators bindings,
+the remaining work will mainly be fixing the qcom,kpss-timer/qcom,msm-timer situation and
+add bindings for qcom,lcc-mdm9615, qcom,kpss-gcc & swir,mangoh-iotport-spi.
 
-> +/*
-> + * Copyright (c) 2022, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#include "msm8996.dtsi"
-> +#include "pm8994.dtsi"
-> +#include "pmi8994.dtsi"
-> +#include "pmi8996.dtsi"
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> +#include <dt-bindings/sound/qcom,q6afe.h>
-> +#include <dt-bindings/sound/qcom,q6asm.h>
-> +#include <dt-bindings/sound/qcom,wcd9335.h>
-> +
-> +/ {
-> +	aliases {
-> +		serial0 = &blsp1_uart2;
-> +		serial1 = &blsp2_uart2;
-> +	};
-> +
-> +	battery: battery {
-> +		compatible = "simple-battery";
-> +
-> +		constant-charge-current-max-microamp = <3000000>;
-> +		voltage-min-design-microvolt = <3400000>;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial1:115200n8";
-> +	};
-> +
-> +	clocks {
-> +		compatible = "simple-bus";
+Dependencies:
+- patch 1,3-4: None
+- patch 2: bindings dependency on 20221005-mdm9615-sx1509q-yaml-v2-0-a4a5b8eecc7b@linaro.org
 
-This is not a bus of clocks...
+To: Bjorn Andersson <andersson@kernel.org>
+To: Andy Gross <agross@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@somainline.org>
+To: Linus Walleij <linus.walleij@linaro.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Lee Jones <lee@kernel.org>
+To: Liam Girdwood <lgirdwood@gmail.com>
+To: Mark Brown <broonie@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-gpio@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-> +
-> +		divclk4: divclk4 {
+---
+Changes in v3:
+- Path 1: Removed from serie because applied
+- Path 2: None
+- Path 3: Added reviewed-by tag
+- Path 4: Fixed dt-schema title and added unevaluatedProperties
+- Path 5: Various schema fixes, uses same naming as other dt-schema for qcom regulators
+- New patch added changing regulators names of msm8660 to conform to bindings
+- Link to v2: https://lore.kernel.org/r/20221005-mdm9615-pinctrl-yaml-v2-0-639fe67a04be@linaro.org
 
-Use common suffix or prefix for node names and generic name.
+Changes in v2:
+- Rebased on v6.1-rc1
+- Patch 1: Fixed bindings and aligned with Krysztof's series
+- Patch 2: Rewrote patch title and added reviewed-by tag
+- Patch 3: Added reviewed-by tag
+- Patch 4: Moved to end, added support for (regulators|-regulators) sudnode
+- Patch 5: Fixed schema description and added missing unevaluatedProperties in patternProperties
+- Patch 6: Dropped & squashed with patch 4
+- Link to v1: https://lore.kernel.org/r/20221005-mdm9615-pinctrl-yaml-v1-0-0cbc006e2a30@linaro.org
 
-This clock is anyway a bit weird - same frequency as sleep clk.
+---
+Neil Armstrong (5):
+      arm: dts: qcom: mdm9615: align pinctrl subnodes with dt-schema bindings
+      arm: dts: qcom: mdm9615: wp8548-mangoh-green: fix sx150xq node names and probe-reset property
+      dt-bindings: regulators: convert non-smd RPM Regulators bindings to dt-schema
+      dt-bindings: soc: qcom: convert non-smd RPM bindings to dt-schema
+      arm: dts: qcom-msm8660: align RPM regulators node name with bindings
 
-
-> +			compatible = "fixed-clock";
-> +			pinctrl-names = "default";
-> +			pinctrl-0 = <&divclk4_pin_a>;
-
-This is a PMIC pin? So is it a PMIC clk?
-
-> +			#clock-cells = <0>;
-> +			clock-frequency = <32768>;
-> +			clock-output-names = "divclk4";
-> +		};
-> +
-> +		div1_mclk: divclk1 {
-> +			compatible = "gpio-gate-clock";
-> +			pinctrl-names = "default";
-> +			pinctrl-0 = <&audio_mclk>;
-> +			#clock-cells = <0>;
-> +			clocks = <&rpmcc RPM_SMD_DIV_CLK1>;
-> +			enable-gpios = <&pm8994_gpios 15 GPIO_ACTIVE_HIGH>;
-> +		};
-> +	};
-> +
-> +	reserved-memory {
-> +		ramoops@ac000000 {
-> +			compatible = "ramoops";
-> +			reg = <0 0xac000000 0 0x200000>;
-> +			record-size = <0x20000>;
-> +			console-size = <0x100000>;
-> +			pmsg-size = <0x80000>;
-> +		};
-> +	};
-> +
-> +	vph_pwr: vph-pwr-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-min-microvolt = <3700000>;
-> +		regulator-max-microvolt = <3700000>;
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +
-> +	wlan_en: wlan-en-1-8v {
-
-Use common suffix or prefix. You already used "-regulator" suffix before.
-
-> +		compatible = "regulator-fixed";
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&wlan_en_gpios>;
-> +		regulator-name = "wlan-en-regulator";
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +
-> +		gpio = <&pm8994_gpios 8 GPIO_ACTIVE_HIGH>;
-> +
-> +		/* WLAN card specific delay */
-> +		startup-delay-us = <70000>;
-> +		enable-active-high;
-> +	};
-> +};
-> +
-> +&adsp_pil {
-> +	status = "okay";
-> +};
-> +
-> +&blsp1_i2c3 {
-> +	status = "okay";
-> +
-> +	tfa9890_amp: audio-codec@36 {
-> +		compatible = "nxp,tfa9890";
-> +		reg = <0x36>;
-> +		#sound-dai-cells = <0>;
-> +	};
-> +};
-> +
-> +&blsp1_i2c6 {
-> +	status = "okay";
-> +
-> +	bq27541: fuel-gauge@55 {
-> +		compatible = "ti,bq27541";
-> +		reg = <0x55>;
-> +	};
-> +};
-> +
-> +&blsp1_uart2 {
-> +	label = "BT-UART";
-> +	status = "okay";
-
-Status is a last property.
-
-> +	uart-has-rtscts;
-> +
-> +	bluetooth {
-> +		compatible = "qcom,qca6174-bt";
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&bt_en_gpios>;
-> +		enable-gpios = <&pm8994_gpios 19 GPIO_ACTIVE_HIGH>;
-> +		clocks = <&divclk4>;
-> +	};
-> +};
-> +
-> +&blsp2_i2c1 {
-> +	status = "okay";
-> +};
-> +
-> +&blsp2_i2c6 {
-> +	status = "okay";
-> +
-> +	synaptics_rmi4_i2c: touchscreen@20 {
-> +		compatible = "syna,rmi4-i2c";
-> +		reg = <0x20>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +		interrupts-extended = <&tlmm 125 IRQ_TYPE_EDGE_FALLING>;
-> +		pinctrl-names = "default", "sleep";
-> +		pinctrl-0 = <&touch_default>;
-> +		pinctrl-1 = <&touch_suspend>;
-> +		vdd-supply = <&vreg_l22a_3p0>;
-> +		vio-supply = <&vreg_s4a_1p8>;
-> +		syna,reset-delay-ms = <200>;
-> +		syna,startup-delay-ms = <200>;
-> +
-> +		rmi4-f01@1 {
-> +			reg = <0x1>;
-> +			syna,nosleep-mode = <1>;
-> +		};
-> +
-> +		rmi4-f12@12 {
-> +			reg = <0x12>;
-> +			syna,sensor-type = <1>;
-> +			touchscreen-x-mm = <68>;
-> +			touchscreen-y-mm = <122>;
-> +		};
-> +	};
-> +};
-> +
-> +&blsp2_uart2 {
-> +	status = "okay";
-
-Status is last.
-
-> +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&blsp2_uart2_2pins_default>;
-> +	pinctrl-1 = <&blsp2_uart2_2pins_sleep>;
-> +};
-> +
-> +&camss {
-> +	vdda-supply = <&vreg_l2a_1p25>;
-> +};
-> +
-> +&dsi0 {
-> +	status = "okay";
-
-And so on...
-
-> +
-> +	vdda-supply = <&vreg_l2a_1p25>;
-> +	vcca-supply = <&vreg_l22a_3p0>;
-> +};
-
+ Documentation/devicetree/bindings/mfd/qcom-rpm.txt | 283 ---------------------
+ .../bindings/regulator/qcom,ipc-rpm-regulator.yaml | 128 ++++++++++
+ .../devicetree/bindings/soc/qcom/qcom,ipc-rpm.yaml | 101 ++++++++
+ .../boot/dts/qcom-mdm9615-wp8548-mangoh-green.dts  |  20 +-
+ arch/arm/boot/dts/qcom-mdm9615-wp8548.dtsi         |  22 +-
+ arch/arm/boot/dts/qcom-msm8660.dtsi                |   4 +-
+ 6 files changed, 252 insertions(+), 306 deletions(-)
+---
+base-commit: 19d64985796125c5e3820c3db995c5df6d13d6dc
+change-id: 20221005-mdm9615-pinctrl-yaml-13f5c18a4d3a
 
 Best regards,
-Krzysztof
-
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
