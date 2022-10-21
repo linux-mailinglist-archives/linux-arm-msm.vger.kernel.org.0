@@ -2,64 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30BF3607EF4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 21:19:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA074607F04
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 21:26:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229608AbiJUTTt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Oct 2022 15:19:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44650 "EHLO
+        id S229610AbiJUT0t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Oct 2022 15:26:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229998AbiJUTTs (ORCPT
+        with ESMTP id S229645AbiJUT0r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Oct 2022 15:19:48 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 914321208A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 12:19:43 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id b1so6813222lfs.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 12:19:43 -0700 (PDT)
+        Fri, 21 Oct 2022 15:26:47 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D1F726553E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 12:26:44 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id r22so5005583ljn.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 12:26:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=A6qrVW7szpWlABctHry/L+0EpnC89Tpj5bvIwAk95eE=;
-        b=lLnnsT0w4AoiJm92CNTUEtAWXAQoEtgyFFBO5xHVqKvIjJ2TxHcVTnnTD/8shypepc
-         LVzJBLfMrtFveIryhbT6HWK14+HSjXxTlpGWa0qbbaoCjQqVqEango0z7Sn6tPb+A+Rx
-         EWU0qngS5o56OwHzUPyAJIAXVsnqI1uK6YrO+VCU/IIJFSIcbhPywr5cZzv5+tagHDTT
-         IuFBAfpdaq9xCOtMubrMNK3IoycmLoCPvDJ/sKZQpkjErvHBttUzKnjMOE/DdaVUN/hX
-         gNyVashGyu9hbKwkNj9Oxn+y41eoX5RYpWYtc5+m7Dj3dvbJIwYkV/6Kfq+MsfGRH6AA
-         0Ulg==
+        bh=cwaXIne9/tESZg17OSM+CaHqqM5h7/O7wHnlJa8eBxQ=;
+        b=fRhXofGb9cOnPhQS9hLIzMl+L60HxccZ+eZsKCY+f1ulBEflyP7axwksg4YImuwdZG
+         2I2tm/a2749Ob92vwTjhmSGMhvxpkxWxzXBmA4e5hJrfDjqRaXesyBLCQeQPXAgKzOfm
+         oaLTHsvetaybCZ1HwULDh6o8q5Mex7KKeli6PE439Lll3mh+I+wXKpqIZLf22fsH4srr
+         7j/1dZGwmmj2WP7Thr3P7iS8htuSEO63KMJ67RRNzv+KSussjDS7sdlRc0HXeQXdxnKk
+         uS1D7V8kytITGW4Q23M126eKMRkqAb7maykTtPE0ocYEA9iog5e4IXnVUljTgR8zKL3A
+         z20A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=A6qrVW7szpWlABctHry/L+0EpnC89Tpj5bvIwAk95eE=;
-        b=yabuFggLkABzboIhCgm8SAIC7HTSfQ8jAVHFRzbB5O0rpn7wSHmcnB0BKcFOIIc3nZ
-         0/gBlUGyEvRncMRYa6Y8WLu62JR+JsTxBz5etEehJ08YTaEW/WkinX2pt20NpHy+0tgX
-         F3DLLZhE7ITSaFXSEyuEcQV5kf5ZRRPNvjQIjBzT8uBrkcHiJPAh8yVStYV3TYTJStF3
-         Bv2eU3zlh5b6bPS5gs5QpfpbhgXmGPiGD6QVwSm8DLB9sCUlVif3uMBVvTIx2AklxqGC
-         sn8VD54NMTNgxZ8nMFoPAQrXPRD1tdEllIUmFAQexLTV23LflsLsP7FNJKKqfjcBOxKG
-         xD2w==
-X-Gm-Message-State: ACrzQf2Tb8QH+Su5KcYiVV3kUvGEsvUB1W/cMJlOHd9Wghb1XBI8J0w+
-        ek+hyIgTjmkCKhNQ49UCCwJVAw==
-X-Google-Smtp-Source: AMsMyM6Ojiyh1OkDvuDhHZjKXFu9XN0xeygEEMuNyGLTj4Y0dxhg82nUX17KwPwlqGIDH3mV4+Yjpg==
-X-Received: by 2002:a05:6512:3a4:b0:4a4:6db7:2d6b with SMTP id v4-20020a05651203a400b004a46db72d6bmr6955419lfp.403.1666379981935;
-        Fri, 21 Oct 2022 12:19:41 -0700 (PDT)
+        bh=cwaXIne9/tESZg17OSM+CaHqqM5h7/O7wHnlJa8eBxQ=;
+        b=gKHUHGlX0yRi6HOkh3BHUwZdBhvNpIDwhMwiEMkIVl3fMh3smrZZRFXsKkCWaHlAzs
+         QnobY6ZK3xUUwxudP/BWCS32ctQu/RIx6wrSbGU9zuTZ1+T52efoS/D97GOzIV34CaQQ
+         +eLN2Y9A38ckHEUrh52i7u9w3dBqBomvX1sYm1rbnEY5WjLvhC0SBLJmFnaPJRrPtph9
+         JWF2T/minLBSwpKCtT/TyTAgGqkjsBghyw7lVv7okOKByH5TJFBFvKLO6fBQpSB1WC3z
+         eGo9SouM8nILluVssM+lOT5B4BzC4ufkZ4FVoPSnal882OfTtD7z+9YNHe0jIGxTxRJs
+         9gnw==
+X-Gm-Message-State: ACrzQf3aq4mD+SGxL8r9JuybXOWHs3yeb60kUdNJt2dCQRe/qmaWNkMc
+        hrf0YCvgorSFicHiH1FUjMOKQA==
+X-Google-Smtp-Source: AMsMyM4URcKjhKDfjJeEk40K9eZOqmBNKS2DZOrzlHrnPBm/rYl5u6eIXMDc4mYJ0b1qm9YdbduYqQ==
+X-Received: by 2002:a2e:b8c9:0:b0:26f:e171:1bf with SMTP id s9-20020a2eb8c9000000b0026fe17101bfmr7063691ljp.460.1666380402545;
+        Fri, 21 Oct 2022 12:26:42 -0700 (PDT)
 Received: from eriador.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id d25-20020a2eb059000000b0026e00df2ed0sm3518337ljl.30.2022.10.21.12.19.41
+        by smtp.gmail.com with ESMTPSA id d12-20020a056512368c00b00497a41b3a42sm3278341lfs.88.2022.10.21.12.26.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 12:19:41 -0700 (PDT)
+        Fri, 21 Oct 2022 12:26:42 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Pavel Machek <pavel@ucw.cz>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
-        linux-pwm@vger.kernel.org
-Subject: [PATCH] led: qcom-lpg: Fix sleeping in atomic
-Date:   Fri, 21 Oct 2022 22:19:40 +0300
-Message-Id: <20221021191940.2422408-1-dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v2] drm/msm/mdp5: stop overriding drvdata
+Date:   Fri, 21 Oct 2022 22:26:41 +0300
+Message-Id: <20221021192641.2423237-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -73,120 +74,147 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-lpg_brighness_set() function can sleep, while led's brightness_set()
-callback must be non-blocking. Change LPG driver to use
-brightness_set_blocking() instead.
+The rest of the code expects that master's device drvdata is the
+struct msm_drm_private instance. Do not override the mdp5's drvdata.
 
-BUG: sleeping function called from invalid context at kernel/locking/mutex.c:580
-in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 0, name: swapper/0
-preempt_count: 101, expected: 0
-INFO: lockdep is turned off.
-CPU: 0 PID: 0 Comm: swapper/0 Tainted: G        W          6.1.0-rc1-00014-gbe99b089c6fc-dirty #85
-Hardware name: Qualcomm Technologies, Inc. DB820c (DT)
-Call trace:
- dump_backtrace.part.0+0xe4/0xf0
- show_stack+0x18/0x40
- dump_stack_lvl+0x88/0xb4
- dump_stack+0x18/0x34
- __might_resched+0x170/0x254
- __might_sleep+0x48/0x9c
- __mutex_lock+0x4c/0x400
- mutex_lock_nested+0x2c/0x40
- lpg_brightness_single_set+0x40/0x90
- led_set_brightness_nosleep+0x34/0x60
- led_heartbeat_function+0x80/0x170
- call_timer_fn+0xb8/0x340
- __run_timers.part.0+0x20c/0x254
- run_timer_softirq+0x3c/0x7c
- _stext+0x14c/0x578
- ____do_softirq+0x10/0x20
- call_on_irq_stack+0x2c/0x5c
- do_softirq_own_stack+0x1c/0x30
- __irq_exit_rcu+0x164/0x170
- irq_exit_rcu+0x10/0x40
- el1_interrupt+0x38/0x50
- el1h_64_irq_handler+0x18/0x2c
- el1h_64_irq+0x64/0x68
- cpuidle_enter_state+0xc8/0x380
- cpuidle_enter+0x38/0x50
- do_idle+0x244/0x2d0
- cpu_startup_entry+0x24/0x30
- rest_init+0x128/0x1a0
- arch_post_acpi_subsys_init+0x0/0x18
- start_kernel+0x6f4/0x734
- __primary_switched+0xbc/0xc4
-
-Fixes: 24e2d05d1b68 ("leds: Add driver for Qualcomm LPG")
+Fixes: 6874f48bb8b0 ("drm/msm: make mdp5/dpu devices master components")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 ---
- drivers/leds/rgb/leds-qcom-lpg.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+Abhinav, Rob, please pick this for -fixes.
 
-diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
-index 02f51cc61837..c1a56259226f 100644
---- a/drivers/leds/rgb/leds-qcom-lpg.c
-+++ b/drivers/leds/rgb/leds-qcom-lpg.c
-@@ -602,8 +602,8 @@ static void lpg_brightness_set(struct lpg_led *led, struct led_classdev *cdev,
- 		lpg_lut_sync(lpg, lut_mask);
+This is an updated version of [1]. Fixed the read_mdp_hw_revision()
+function. PM runtime isn't available at the moment, as priv->kms is not
+set.
+
+[1] https://patchwork.freedesktop.org/patch/490326/?series=105392&rev=1
+
+---
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 37 ++++++++++++++----------
+ 1 file changed, 22 insertions(+), 15 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index b0d21838a134..506c64940972 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -203,7 +203,7 @@ static int mdp5_set_split_display(struct msm_kms *kms,
+ 							  slave_encoder);
  }
  
--static void lpg_brightness_single_set(struct led_classdev *cdev,
--				      enum led_brightness value)
-+static int lpg_brightness_single_set(struct led_classdev *cdev,
-+				     enum led_brightness value)
+-static void mdp5_destroy(struct platform_device *pdev);
++static void mdp5_destroy(struct mdp5_kms *mdp5_kms);
+ 
+ static void mdp5_kms_destroy(struct msm_kms *kms)
  {
- 	struct lpg_led *led = container_of(cdev, struct lpg_led, cdev);
- 	struct mc_subled info;
-@@ -614,10 +614,12 @@ static void lpg_brightness_single_set(struct led_classdev *cdev,
- 	lpg_brightness_set(led, cdev, &info);
+@@ -223,7 +223,7 @@ static void mdp5_kms_destroy(struct msm_kms *kms)
+ 	}
  
- 	mutex_unlock(&led->lpg->lock);
-+
-+	return 0;
+ 	mdp_kms_destroy(&mdp5_kms->base);
+-	mdp5_destroy(mdp5_kms->pdev);
++	mdp5_destroy(mdp5_kms);
  }
  
--static void lpg_brightness_mc_set(struct led_classdev *cdev,
--				  enum led_brightness value)
-+static int lpg_brightness_mc_set(struct led_classdev *cdev,
-+				 enum led_brightness value)
+ #ifdef CONFIG_DEBUG_FS
+@@ -519,9 +519,15 @@ static void read_mdp_hw_revision(struct mdp5_kms *mdp5_kms,
+ 	struct device *dev = &mdp5_kms->pdev->dev;
+ 	u32 version;
+ 
+-	pm_runtime_get_sync(dev);
++	/* Manually enable the MDP5, as pm runtime isn't usable yet */
++	if (mdp5_enable(mdp5_kms)) {
++		*major = 0;
++		*minor = 0;
++		return;
++	}
++
+ 	version = mdp5_read(mdp5_kms, REG_MDP5_HW_VERSION);
+-	pm_runtime_put_sync(dev);
++	mdp5_disable(mdp5_kms);
+ 
+ 	*major = FIELD(version, MDP5_HW_VERSION_MAJOR);
+ 	*minor = FIELD(version, MDP5_HW_VERSION_MINOR);
+@@ -559,6 +565,8 @@ static int mdp5_kms_init(struct drm_device *dev)
+ 	int irq, i, ret;
+ 
+ 	ret = mdp5_init(to_platform_device(dev->dev), dev);
++	if (ret)
++		return ret;
+ 
+ 	/* priv->kms would have been populated by the MDP5 driver */
+ 	kms = priv->kms;
+@@ -632,9 +640,8 @@ static int mdp5_kms_init(struct drm_device *dev)
+ 	return ret;
+ }
+ 
+-static void mdp5_destroy(struct platform_device *pdev)
++static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
  {
- 	struct led_classdev_mc *mc = lcdev_to_mccdev(cdev);
- 	struct lpg_led *led = container_of(mc, struct lpg_led, mcdev);
-@@ -628,6 +630,8 @@ static void lpg_brightness_mc_set(struct led_classdev *cdev,
- 	lpg_brightness_set(led, cdev, mc->subled_info);
+-	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
+ 	int i;
  
- 	mutex_unlock(&led->lpg->lock);
+ 	if (mdp5_kms->ctlm)
+@@ -648,7 +655,7 @@ static void mdp5_destroy(struct platform_device *pdev)
+ 		kfree(mdp5_kms->intfs[i]);
+ 
+ 	if (mdp5_kms->rpm_enabled)
+-		pm_runtime_disable(&pdev->dev);
++		pm_runtime_disable(&mdp5_kms->pdev->dev);
+ 
+ 	drm_atomic_private_obj_fini(&mdp5_kms->glob_state);
+ 	drm_modeset_lock_fini(&mdp5_kms->glob_state_lock);
+@@ -797,8 +804,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+ 		goto fail;
+ 	}
+ 
+-	platform_set_drvdata(pdev, mdp5_kms);
+-
+ 	spin_lock_init(&mdp5_kms->resource_lock);
+ 
+ 	mdp5_kms->dev = dev;
+@@ -839,9 +844,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+ 	 */
+ 	clk_set_rate(mdp5_kms->core_clk, 200000000);
+ 
+-	pm_runtime_enable(&pdev->dev);
+-	mdp5_kms->rpm_enabled = true;
+-
+ 	read_mdp_hw_revision(mdp5_kms, &major, &minor);
+ 
+ 	mdp5_kms->cfg = mdp5_cfg_init(mdp5_kms, major, minor);
+@@ -893,10 +895,13 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+ 	/* set uninit-ed kms */
+ 	priv->kms = &mdp5_kms->base.base;
+ 
++	pm_runtime_enable(&pdev->dev);
++	mdp5_kms->rpm_enabled = true;
 +
-+	return 0;
+ 	return 0;
+ fail:
+ 	if (mdp5_kms)
+-		mdp5_destroy(pdev);
++		mdp5_destroy(mdp5_kms);
+ 	return ret;
  }
  
- static int lpg_blink_set(struct lpg_led *led,
-@@ -1118,7 +1122,7 @@ static int lpg_add_led(struct lpg *lpg, struct device_node *np)
- 		led->mcdev.num_colors = num_channels;
+@@ -953,7 +958,8 @@ static int mdp5_dev_remove(struct platform_device *pdev)
+ static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
+ {
+ 	struct platform_device *pdev = to_platform_device(dev);
+-	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
++	struct msm_drm_private *priv = platform_get_drvdata(pdev);
++	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
  
- 		cdev = &led->mcdev.led_cdev;
--		cdev->brightness_set = lpg_brightness_mc_set;
-+		cdev->brightness_set_blocking = lpg_brightness_mc_set;
- 		cdev->blink_set = lpg_blink_mc_set;
+ 	DBG("");
  
- 		/* Register pattern accessors only if we have a LUT block */
-@@ -1132,7 +1136,7 @@ static int lpg_add_led(struct lpg *lpg, struct device_node *np)
- 			return ret;
+@@ -963,7 +969,8 @@ static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
+ static __maybe_unused int mdp5_runtime_resume(struct device *dev)
+ {
+ 	struct platform_device *pdev = to_platform_device(dev);
+-	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
++	struct msm_drm_private *priv = platform_get_drvdata(pdev);
++	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
  
- 		cdev = &led->cdev;
--		cdev->brightness_set = lpg_brightness_single_set;
-+		cdev->brightness_set_blocking = lpg_brightness_single_set;
- 		cdev->blink_set = lpg_blink_single_set;
- 
- 		/* Register pattern accessors only if we have a LUT block */
-@@ -1151,7 +1155,7 @@ static int lpg_add_led(struct lpg *lpg, struct device_node *np)
- 	else
- 		cdev->brightness = LED_OFF;
- 
--	cdev->brightness_set(cdev, cdev->brightness);
-+	cdev->brightness_set_blocking(cdev, cdev->brightness);
- 
- 	init_data.fwnode = of_fwnode_handle(np);
+ 	DBG("");
  
 -- 
 2.35.1
