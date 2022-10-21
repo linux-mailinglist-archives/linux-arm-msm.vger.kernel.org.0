@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09F156080E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 23:45:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 295B76080F8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 23:55:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229587AbiJUVpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Oct 2022 17:45:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59738 "EHLO
+        id S229776AbiJUVzW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Oct 2022 17:55:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbiJUVpM (ORCPT
+        with ESMTP id S229576AbiJUVzU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Oct 2022 17:45:12 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BF71115411
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 14:45:09 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id w8so8382435edc.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 14:45:09 -0700 (PDT)
+        Fri, 21 Oct 2022 17:55:20 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87CF5125036;
+        Fri, 21 Oct 2022 14:55:18 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id a3so7149208wrt.0;
+        Fri, 21 Oct 2022 14:55:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=UVGxZi/73hO8MviVC4xecUHqVr/lDVcqvkrd/RkFDOM=;
-        b=XAqbnqMkGFyZ1dNtMr0xbzqRv5qrPObhvClel/8VmUw3yCBqJcr0sQ37vQc1AsN9hm
-         Uz3/YLQhUV6A0ERXzG86G1TGMYkbKlDqdx5N5bO6cJQ51BYhABIF1rtP+ngkJ3glljOx
-         7pJ0EmnFYclQb/FqOBa/o727WjSGcAOP9Z+lLJdiTKKB2FFrMFzaMKXHKM/TUg7jOExi
-         kW8+fXa52V2KNARe/X78iVZ6pDxYg4XR5BYbVx99c/qEA5TU5Yb6RBOPMU2Ac+Kfokjv
-         9rqsvASTdtZxDHFhOdR7AfRGSu+M5guh2i1cFHzflwOrcwW+nkHjtVHsjlQ69N5Aesd3
-         HRJw==
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=uywRKkGBOBzaRpAeKnVzx5xH6NmY5amHDeoPWUqrzj4=;
+        b=obZPWL4hwjCx5D18OHcuK4+/lvgCkHJOTkz7r2RXH1oV+8ut6II7Dl8Ih48l7WzHtE
+         2FqsaH+FBrdORZ8E/hQC9qDozE92aWbtncThnynxxzCCd62XnRS9a/TnECJBzKNdVu6n
+         M8Due3bQKWefFH5YkkyjB7Z9P2PhEgbmXpPJ6o7Dmg9JjNjCj46+E1Bb1oo1CQ7XShgh
+         kphPLzJ/iIBiEuNOLfu1whjwuuB0DaazLRhfkZSEUvu+VKfwFTSlCDY8TttZFxKG4xsZ
+         71PATjaDxtUslEVEY0r/gdNR7sa8jsJfQp9kzUDeRxBlGrh//8j6Wn+/6C8YOIxSSHD8
+         dtWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UVGxZi/73hO8MviVC4xecUHqVr/lDVcqvkrd/RkFDOM=;
-        b=HDYsmuO9pugX6hJeqEGGze0h4jEOdCRxODP9xehfRr8W1Rx1pQAQhfNLcd73m+QC7u
-         /lzG4rXMzW7x9NGvZDihAxgrnbEJyGMnkzuPQdm6bVBJ4899643DdFvnLTXcENxzxF0p
-         0YLV9agOeVZ2Kj1vI0mSM82lTMqQ3mqTBAjJ/IUb8ZATEAwBNPnQ9d8u+LbfVMRT2KYo
-         CTF7kEAhAieqR6V/OgRtxSfdLrYWqCZzpl7H73YIzkmPrmcx9DtdYqFPYtfUyHHT1YXN
-         VHo7p5LKjWnRWN2dsDgwJDQGRj089+I12RJQBUrlRJ9CUQs5+6Vg/kLCLzHwMDE1YGjg
-         oXlw==
-X-Gm-Message-State: ACrzQf0tXlM23gng/lnLt3tt3m6+exut5YrOwD+65dl5iMxS2G4YdYAh
-        547fXe7PXyUC7LJkyWpLxda0M9NtafC7QKt5ocJlz2/+QANzqg==
-X-Google-Smtp-Source: AMsMyM58sC/dRsbG5dQfbcm0YyZpAHD0OGEwhgXByal7ylWgj09hZdhOOLQ3rgWC3L6116CvNENpg3ryPZdyEkW2+iU=
-X-Received: by 2002:a17:906:5d04:b0:77f:ca9f:33d1 with SMTP id
- g4-20020a1709065d0400b0077fca9f33d1mr17428124ejt.526.1666388708026; Fri, 21
- Oct 2022 14:45:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <20221021181016.14740-1-ansuelsmth@gmail.com>
-In-Reply-To: <20221021181016.14740-1-ansuelsmth@gmail.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 21 Oct 2022 23:44:56 +0200
-Message-ID: <CACRpkdbfvr1pkVb3XhBZLnmn7vy3XyzavwVjW_VmFKTdh3LABQ@mail.gmail.com>
-Subject: Re: [PATCH] ARM: mach-qcom: fix support for ipq806x
-To:     Christian Marangi <ansuelsmth@gmail.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>
-Cc:     Russell King <linux@armlinux.org.uk>,
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uywRKkGBOBzaRpAeKnVzx5xH6NmY5amHDeoPWUqrzj4=;
+        b=KaNM34wZYLaoSxVp1ejcTf7Kba+oyfN5czDLmzC6SCYIRvU0KVbFd9DT/dEUBD7DXn
+         tvkEAc1cwsELTEyXOfsaRW6yOW9RE8noOUa19DA0PD7XHRAdhaHe7WbG0Apzg2cwG8UT
+         A+vcB2GNA03RtlrxLrCruj6Saz1aRRb9PbQEAVVpiszPwaPK//c6fnNShg71rDGJ6fUL
+         xy1MBCzcUjSSuR9qf0ty8vKxg7DRdFk4qt5PCUI2GjA9iFIBi8FlSbV0DHAQJnGKMw1d
+         AzDomwpKYC7q2TNhtEF0alspdey/qvGsXzgZAE36qLWPuL49iCiaASIrbu0AtXhrQHrq
+         cEDA==
+X-Gm-Message-State: ACrzQf3P7pfLjQg2d1tJUJBK4+KLpNPOdDc/XgBny4QkUbOOl2LjeGjV
+        XJjRTREcUsjtjUrDsxWZrSE=
+X-Google-Smtp-Source: AMsMyM5uO/Cq/xpoxJsZqWshH6/XzN1MINSem+X1Eg/d08U/P7gOiM/jicaRCqTzSbJaTlGTOEy32Q==
+X-Received: by 2002:a5d:6c62:0:b0:230:55fc:748a with SMTP id r2-20020a5d6c62000000b0023055fc748amr14091890wrz.15.1666389315677;
+        Fri, 21 Oct 2022 14:55:15 -0700 (PDT)
+Received: from Ansuel-xps. (93-42-70-134.ip85.fastwebnet.it. [93.42.70.134])
+        by smtp.gmail.com with ESMTPSA id p16-20020a05600c359000b003b4ac05a8a4sm897677wmq.27.2022.10.21.14.55.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Oct 2022 14:55:15 -0700 (PDT)
+Message-ID: <63531543.050a0220.b6bf5.284d@mx.google.com>
+X-Google-Original-Message-ID: <Y1MVO0Z+StlGDrIR@Ansuel-xps.>
+Date:   Fri, 21 Oct 2022 23:55:07 +0200
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
+        Russell King <linux@armlinux.org.uk>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
@@ -66,37 +66,62 @@ Cc:     Russell King <linux@armlinux.org.uk>,
         John Crispin <john@phrozen.org>,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] ARM: mach-qcom: fix support for ipq806x
+References: <20221021181016.14740-1-ansuelsmth@gmail.com>
+ <CACRpkdbfvr1pkVb3XhBZLnmn7vy3XyzavwVjW_VmFKTdh3LABQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACRpkdbfvr1pkVb3XhBZLnmn7vy3XyzavwVjW_VmFKTdh3LABQ@mail.gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 21, 2022 at 8:10 PM Christian Marangi <ansuelsmth@gmail.com> wrote:
+On Fri, Oct 21, 2022 at 11:44:56PM +0200, Linus Walleij wrote:
+> On Fri, Oct 21, 2022 at 8:10 PM Christian Marangi <ansuelsmth@gmail.com> wrote:
+> 
+> > Add a specific config flag for Qcom IPQ806x as this SoC can't use
+> > AUTO_ZRELADDR and require the PHYS_OFFSET set to 0x42000000.
+> >
+> > This is needed as some legacy board (or some wrongly configured
+> > bootloader) pass the wrong memory map and doesn't exclude the first
+> > ~20MB of RAM reserved for the hardware network accellerators.
+> >
+> > With this change we can correctly support each board and prevent any
+> > kind of misconfiguration done by the OEM.
+> >
+> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> 
+> I had exactly this problem with the APQ8060 as well, then my problem
+> went away. I was under the impression that this was solved.
+> 
+> Is it not possible to use Geert's linux,usable-memory-range in
+> the chosen node to make the kernel stay off the memory?
+> (See examples by grep usable-memory in the kernel.)
+> 
 
-> Add a specific config flag for Qcom IPQ806x as this SoC can't use
-> AUTO_ZRELADDR and require the PHYS_OFFSET set to 0x42000000.
->
-> This is needed as some legacy board (or some wrongly configured
-> bootloader) pass the wrong memory map and doesn't exclude the first
-> ~20MB of RAM reserved for the hardware network accellerators.
->
-> With this change we can correctly support each board and prevent any
-> kind of misconfiguration done by the OEM.
->
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Hi,
+just to confirm this is one of the example you are suggesting?
 
-I had exactly this problem with the APQ8060 as well, then my problem
-went away. I was under the impression that this was solved.
+chosen {
+		bootargs = "console=ttyS0,115200 earlycon";
+		stdout-path = "serial0:115200n8";
+		linux,usable-memory-range = <0x80200000 0x1fe00000>;
+	};
 
-Is it not possible to use Geert's linux,usable-memory-range in
-the chosen node to make the kernel stay off the memory?
-(See examples by grep usable-memory in the kernel.)
+Main problem here is that uboot in some case doesn't support dt and pass
+wrong ATAGS (with the memory not reserved) and AUTO_ZRELADDR calculate
+the wrong addr I assume?
 
-Yours,
-Linus Walleij
+I will test the usable-memory-range but isn't the same of declaring
+reserved space in the dts? Or the zimage decompressor checks
+linux,usable-memory-range bypassing atags?
+
+-- 
+	Ansuel
