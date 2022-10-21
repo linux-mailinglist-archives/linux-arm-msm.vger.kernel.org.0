@@ -2,68 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F55D607EE2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 21:14:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30BF3607EF4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 21:19:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230388AbiJUTOI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Oct 2022 15:14:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48898 "EHLO
+        id S229608AbiJUTTt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Oct 2022 15:19:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230390AbiJUTN7 (ORCPT
+        with ESMTP id S229998AbiJUTTs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Oct 2022 15:13:59 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B146295B15
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 12:13:55 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id 187so3102490iov.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 12:13:55 -0700 (PDT)
+        Fri, 21 Oct 2022 15:19:48 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 914321208A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 12:19:43 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id b1so6813222lfs.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 12:19:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YuA9mKyzPMTQB96gOrAuldDGglDRxOANAMQpmF9JcZ0=;
-        b=ZYGLvXfJXfOMImi9z8M402ao5MOo2atA26a8WtkT2ElDHxDj9qZwZJzhTS84cJWfgw
-         MlaG8sgrcqNt8Wy6DqScoGjY95+B61HAHyxFIPeHm3+jzUUq3QrQDnQ+QF2rk8NzorO8
-         76qfH7T+OZTx2/by5CdMlS2nSIa+YGMvMY24mGu3qJP3WtfQ9MwGkrJTESrvCg5Q09oV
-         ofp+qHQMdyOdInjdsMWJd2i45AsHtCn3Pq/hRt+OorVtY+ixUvMBBncTSCl6FZhiXWjq
-         Qr4z0Uf2ByE/bNTyU8cQ5YEdrpwgq+VNBl/2uZ49tidRenZR9+5H09lNuhje0hIPoObW
-         /7wA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=A6qrVW7szpWlABctHry/L+0EpnC89Tpj5bvIwAk95eE=;
+        b=lLnnsT0w4AoiJm92CNTUEtAWXAQoEtgyFFBO5xHVqKvIjJ2TxHcVTnnTD/8shypepc
+         LVzJBLfMrtFveIryhbT6HWK14+HSjXxTlpGWa0qbbaoCjQqVqEango0z7Sn6tPb+A+Rx
+         EWU0qngS5o56OwHzUPyAJIAXVsnqI1uK6YrO+VCU/IIJFSIcbhPywr5cZzv5+tagHDTT
+         IuFBAfpdaq9xCOtMubrMNK3IoycmLoCPvDJ/sKZQpkjErvHBttUzKnjMOE/DdaVUN/hX
+         gNyVashGyu9hbKwkNj9Oxn+y41eoX5RYpWYtc5+m7Dj3dvbJIwYkV/6Kfq+MsfGRH6AA
+         0Ulg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YuA9mKyzPMTQB96gOrAuldDGglDRxOANAMQpmF9JcZ0=;
-        b=Z8WLfU6rOP7zZOy898IjnmL7/VuyAxzc6r+zlYFojT8FzvwaMw0vWSuEANv+IiP7pa
-         NDcSCfZm5wwIf6Ba0F6xyY3htuDmyjrXDvPzIRwFCTolKPCIrlg0MY4VJKRlXFg6djin
-         FRldmSJCXfGJRLO3tXH+7E/u0AQZu2Wc8oQEGrjiG10u7Xzx0kOjntJCRUo1dQ38hH1F
-         qE+8vbwyz3gfOzEVKssOjwwG6a9gzCNMoTcZmzH26y87TiycgYsKolWrFH+o5Q1vS3I4
-         vOMpYX2/lyI+RpQDdvshuVRNtB/ORJAkECPDQJu7noGITUR4Cx7bXgZkHsI2cULiAFWK
-         Y+xw==
-X-Gm-Message-State: ACrzQf00sKlOymjAqS3vQOUi//Lb6p0lhEHT8bVyO2PYVdFS10kYJCpS
-        Uzzqkk7MuJyfmllVxTdI/lXGCA==
-X-Google-Smtp-Source: AMsMyM4Mr38vbojIFmyHatZs5zCpt3+1MD2Si7V/jLApdu/VwpoCGIaHzAtD0YgXms6fJHqcPTyJMA==
-X-Received: by 2002:a05:6602:2c4b:b0:6bc:ab20:2c28 with SMTP id x11-20020a0566022c4b00b006bcab202c28mr14765936iov.70.1666379635622;
-        Fri, 21 Oct 2022 12:13:55 -0700 (PDT)
-Received: from presto.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id e3-20020a022103000000b00363c68aa348sm4439362jaa.72.2022.10.21.12.13.54
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A6qrVW7szpWlABctHry/L+0EpnC89Tpj5bvIwAk95eE=;
+        b=yabuFggLkABzboIhCgm8SAIC7HTSfQ8jAVHFRzbB5O0rpn7wSHmcnB0BKcFOIIc3nZ
+         0/gBlUGyEvRncMRYa6Y8WLu62JR+JsTxBz5etEehJ08YTaEW/WkinX2pt20NpHy+0tgX
+         F3DLLZhE7ITSaFXSEyuEcQV5kf5ZRRPNvjQIjBzT8uBrkcHiJPAh8yVStYV3TYTJStF3
+         Bv2eU3zlh5b6bPS5gs5QpfpbhgXmGPiGD6QVwSm8DLB9sCUlVif3uMBVvTIx2AklxqGC
+         sn8VD54NMTNgxZ8nMFoPAQrXPRD1tdEllIUmFAQexLTV23LflsLsP7FNJKKqfjcBOxKG
+         xD2w==
+X-Gm-Message-State: ACrzQf2Tb8QH+Su5KcYiVV3kUvGEsvUB1W/cMJlOHd9Wghb1XBI8J0w+
+        ek+hyIgTjmkCKhNQ49UCCwJVAw==
+X-Google-Smtp-Source: AMsMyM6Ojiyh1OkDvuDhHZjKXFu9XN0xeygEEMuNyGLTj4Y0dxhg82nUX17KwPwlqGIDH3mV4+Yjpg==
+X-Received: by 2002:a05:6512:3a4:b0:4a4:6db7:2d6b with SMTP id v4-20020a05651203a400b004a46db72d6bmr6955419lfp.403.1666379981935;
+        Fri, 21 Oct 2022 12:19:41 -0700 (PDT)
+Received: from eriador.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id d25-20020a2eb059000000b0026e00df2ed0sm3518337ljl.30.2022.10.21.12.19.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 12:13:55 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 7/7] net: ipa: check table memory regions earlier
-Date:   Fri, 21 Oct 2022 14:13:40 -0500
-Message-Id: <20221021191340.4187935-8-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221021191340.4187935-1-elder@linaro.org>
-References: <20221021191340.4187935-1-elder@linaro.org>
+        Fri, 21 Oct 2022 12:19:41 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Pavel Machek <pavel@ucw.cz>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
+        linux-pwm@vger.kernel.org
+Subject: [PATCH] led: qcom-lpg: Fix sleeping in atomic
+Date:   Fri, 21 Oct 2022 22:19:40 +0300
+Message-Id: <20221021191940.2422408-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -76,78 +73,121 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Verify that the sizes of the routing and filter table memory regions
-are valid as part of memory initialization, rather than waiting for
-table initialization.  The main reason to do this is that upcoming
-patches use these memory region sizes to determine the number of
-entries in these tables, and we'll want to know these sizes are good
-sooner.
+lpg_brighness_set() function can sleep, while led's brightness_set()
+callback must be non-blocking. Change LPG driver to use
+brightness_set_blocking() instead.
 
-Signed-off-by: Alex Elder <elder@linaro.org>
+BUG: sleeping function called from invalid context at kernel/locking/mutex.c:580
+in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 0, name: swapper/0
+preempt_count: 101, expected: 0
+INFO: lockdep is turned off.
+CPU: 0 PID: 0 Comm: swapper/0 Tainted: G        W          6.1.0-rc1-00014-gbe99b089c6fc-dirty #85
+Hardware name: Qualcomm Technologies, Inc. DB820c (DT)
+Call trace:
+ dump_backtrace.part.0+0xe4/0xf0
+ show_stack+0x18/0x40
+ dump_stack_lvl+0x88/0xb4
+ dump_stack+0x18/0x34
+ __might_resched+0x170/0x254
+ __might_sleep+0x48/0x9c
+ __mutex_lock+0x4c/0x400
+ mutex_lock_nested+0x2c/0x40
+ lpg_brightness_single_set+0x40/0x90
+ led_set_brightness_nosleep+0x34/0x60
+ led_heartbeat_function+0x80/0x170
+ call_timer_fn+0xb8/0x340
+ __run_timers.part.0+0x20c/0x254
+ run_timer_softirq+0x3c/0x7c
+ _stext+0x14c/0x578
+ ____do_softirq+0x10/0x20
+ call_on_irq_stack+0x2c/0x5c
+ do_softirq_own_stack+0x1c/0x30
+ __irq_exit_rcu+0x164/0x170
+ irq_exit_rcu+0x10/0x40
+ el1_interrupt+0x38/0x50
+ el1h_64_irq_handler+0x18/0x2c
+ el1h_64_irq+0x64/0x68
+ cpuidle_enter_state+0xc8/0x380
+ cpuidle_enter+0x38/0x50
+ do_idle+0x244/0x2d0
+ cpu_startup_entry+0x24/0x30
+ rest_init+0x128/0x1a0
+ arch_post_acpi_subsys_init+0x0/0x18
+ start_kernel+0x6f4/0x734
+ __primary_switched+0xbc/0xc4
+
+Fixes: 24e2d05d1b68 ("leds: Add driver for Qualcomm LPG")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/net/ipa/ipa_mem.c   | 6 ++++++
- drivers/net/ipa/ipa_table.c | 7 +------
- drivers/net/ipa/ipa_table.h | 7 +++++++
- 3 files changed, 14 insertions(+), 6 deletions(-)
+ drivers/leds/rgb/leds-qcom-lpg.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ipa/ipa_mem.c b/drivers/net/ipa/ipa_mem.c
-index 4022ae01a1319..a3d2317452ac6 100644
---- a/drivers/net/ipa/ipa_mem.c
-+++ b/drivers/net/ipa/ipa_mem.c
-@@ -617,6 +617,12 @@ int ipa_mem_init(struct ipa *ipa, const struct ipa_mem_data *mem_data)
- 	ipa->mem_count = mem_data->local_count;
- 	ipa->mem = mem_data->local;
- 
-+	/* Check the route and filter table memory regions */
-+	if (!ipa_table_mem_valid(ipa, 0))
-+		return -EINVAL;
-+	if (!ipa_table_mem_valid(ipa, IPA_ROUTE_MODEM_COUNT))
-+		return -EINVAL;
-+
- 	ret = dma_set_mask_and_coherent(&ipa->pdev->dev, DMA_BIT_MASK(64));
- 	if (ret) {
- 		dev_err(dev, "error %d setting DMA mask\n", ret);
-diff --git a/drivers/net/ipa/ipa_table.c b/drivers/net/ipa/ipa_table.c
-index 7a60f2867de92..58a1a9da3133e 100644
---- a/drivers/net/ipa/ipa_table.c
-+++ b/drivers/net/ipa/ipa_table.c
-@@ -567,7 +567,7 @@ void ipa_table_config(struct ipa *ipa)
+diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+index 02f51cc61837..c1a56259226f 100644
+--- a/drivers/leds/rgb/leds-qcom-lpg.c
++++ b/drivers/leds/rgb/leds-qcom-lpg.c
+@@ -602,8 +602,8 @@ static void lpg_brightness_set(struct lpg_led *led, struct led_classdev *cdev,
+ 		lpg_lut_sync(lpg, lut_mask);
  }
  
- /* Zero modem_route_count means filter table memory check */
--static bool ipa_table_mem_valid(struct ipa *ipa, bool modem_route_count)
-+bool ipa_table_mem_valid(struct ipa *ipa, bool modem_route_count)
+-static void lpg_brightness_single_set(struct led_classdev *cdev,
+-				      enum led_brightness value)
++static int lpg_brightness_single_set(struct led_classdev *cdev,
++				     enum led_brightness value)
  {
- 	bool hash_support = ipa_table_hash_support(ipa);
- 	bool filter = !modem_route_count;
-@@ -688,11 +688,6 @@ int ipa_table_init(struct ipa *ipa)
+ 	struct lpg_led *led = container_of(cdev, struct lpg_led, cdev);
+ 	struct mc_subled info;
+@@ -614,10 +614,12 @@ static void lpg_brightness_single_set(struct led_classdev *cdev,
+ 	lpg_brightness_set(led, cdev, &info);
  
- 	ipa_table_validate_build();
- 
--	if (!ipa_table_mem_valid(ipa, 0))
--		return -EINVAL;
--	if (!ipa_table_mem_valid(ipa, IPA_ROUTE_MODEM_COUNT))
--		return -EINVAL;
--
- 	/* The IPA hardware requires route and filter table rules to be
- 	 * aligned on a 128-byte boundary.  We put the "zero rule" at the
- 	 * base of the table area allocated here.  The DMA address returned
-diff --git a/drivers/net/ipa/ipa_table.h b/drivers/net/ipa/ipa_table.h
-index 73ca8369c6352..65d96debd3917 100644
---- a/drivers/net/ipa/ipa_table.h
-+++ b/drivers/net/ipa/ipa_table.h
-@@ -78,4 +78,11 @@ int ipa_table_init(struct ipa *ipa);
-  */
- void ipa_table_exit(struct ipa *ipa);
- 
-+/**
-+ * ipa_table_mem_valid() - Validate sizes of table memory regions
-+ * @ipa:	IPA pointer
-+ * @modem_route_count:	Number of modem route table entries
-+ */
-+bool ipa_table_mem_valid(struct ipa *ipa, bool modem_route_count);
+ 	mutex_unlock(&led->lpg->lock);
 +
- #endif /* _IPA_TABLE_H_ */
++	return 0;
+ }
+ 
+-static void lpg_brightness_mc_set(struct led_classdev *cdev,
+-				  enum led_brightness value)
++static int lpg_brightness_mc_set(struct led_classdev *cdev,
++				 enum led_brightness value)
+ {
+ 	struct led_classdev_mc *mc = lcdev_to_mccdev(cdev);
+ 	struct lpg_led *led = container_of(mc, struct lpg_led, mcdev);
+@@ -628,6 +630,8 @@ static void lpg_brightness_mc_set(struct led_classdev *cdev,
+ 	lpg_brightness_set(led, cdev, mc->subled_info);
+ 
+ 	mutex_unlock(&led->lpg->lock);
++
++	return 0;
+ }
+ 
+ static int lpg_blink_set(struct lpg_led *led,
+@@ -1118,7 +1122,7 @@ static int lpg_add_led(struct lpg *lpg, struct device_node *np)
+ 		led->mcdev.num_colors = num_channels;
+ 
+ 		cdev = &led->mcdev.led_cdev;
+-		cdev->brightness_set = lpg_brightness_mc_set;
++		cdev->brightness_set_blocking = lpg_brightness_mc_set;
+ 		cdev->blink_set = lpg_blink_mc_set;
+ 
+ 		/* Register pattern accessors only if we have a LUT block */
+@@ -1132,7 +1136,7 @@ static int lpg_add_led(struct lpg *lpg, struct device_node *np)
+ 			return ret;
+ 
+ 		cdev = &led->cdev;
+-		cdev->brightness_set = lpg_brightness_single_set;
++		cdev->brightness_set_blocking = lpg_brightness_single_set;
+ 		cdev->blink_set = lpg_blink_single_set;
+ 
+ 		/* Register pattern accessors only if we have a LUT block */
+@@ -1151,7 +1155,7 @@ static int lpg_add_led(struct lpg *lpg, struct device_node *np)
+ 	else
+ 		cdev->brightness = LED_OFF;
+ 
+-	cdev->brightness_set(cdev, cdev->brightness);
++	cdev->brightness_set_blocking(cdev, cdev->brightness);
+ 
+ 	init_data.fwnode = of_fwnode_handle(np);
+ 
 -- 
-2.34.1
+2.35.1
 
