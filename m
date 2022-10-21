@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CF29607362
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 11:09:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B03CA607369
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 11:09:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230501AbiJUJJI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Oct 2022 05:09:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35594 "EHLO
+        id S231209AbiJUJJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Oct 2022 05:09:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231147AbiJUJI7 (ORCPT
+        with ESMTP id S231154AbiJUJI7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 21 Oct 2022 05:08:59 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E8431A3E0A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 02:08:57 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id e18so1752447wmq.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 02:08:57 -0700 (PDT)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C5661A3E0B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 02:08:58 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id j7so3877469wrr.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 02:08:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=BCCT8tgaqG5OldHtlkklSVmkDx8WUdXNiCaVQRja2yA=;
-        b=dZuUPjkXDyO+JwX9iQ1/T+pcgE0GMJPiQc5s7Bc2JsIlkHOdiST3HXo13hVM01+Ms/
-         aVZkKVK4BWd8QBk5/Z/rm52gMHY6bC8EDOzjz4b9huS/6G8Bg+bP+/eWD0FCEnK5OKYy
-         dKSxmXX5cr1jsGyY6k6CL0EZkHjD5EVQcmV0aWLjji+gsJTPvF0zqvM3wf0r35NbQo3Q
-         hWpkeXnA7ZyyQYLBh9X3asjuZr8031Izd01DblMbLIA2L9yZTkCqfN3Xj8hq+Huy62Q0
-         l694WIL9vudrKRXoKV7wnVRVJMN9XBjj+phNPZWAIv0ZEEbD3fvWih8RuWi4FmmffiCE
-         5Rig==
+        bh=s2dHjCbjXW/wRyX5RnrOPDvSbncypen+BqayjwLtgH0=;
+        b=BU5GmauMtsJbxzoW3M8HF62Q7USBINYhrQ/egAo+/CMIP61fhSf3FXUMjyVSa2WBHf
+         /Z4PSiX8Xd2LX1WvsFq28WsS4NeInp94H8nMYbEoyqo3CsGilMXyp0BLuG67ON5Yl6jA
+         BXpRk5f8ERR64ZlctzLNkyf15csMfMS4E/axdBE5wsr5RGg7VB1k0v15MSHJIX1vFcBH
+         8MYKuet44iMzdgqvU1gXl/i4wqanCCuXQ9v768QOOS8s2/pHu99rk9B5HhHPoZeDExx2
+         ubfnNxhGHUTrAs82eDdt13qz+lkgGzmspxCUMQ8gWpJ2tb1lUvX0zPvuiHw4oNdT3chn
+         oXQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BCCT8tgaqG5OldHtlkklSVmkDx8WUdXNiCaVQRja2yA=;
-        b=q2h5dahGmjf0beJNKxcGCZ+UW8/hOEKShMLO+3Gfu0i0Ii1R7XdfYKHPo3P8alQBVF
-         qB5DNHrpgyQdCET8IneQIZFd14e75QCgBDdc+0cSva8ep3ZQkxiL8MS6hSVe/9MtIO3X
-         PCXrcEWhX50z6rOsMJwHbBexClG7yra57sDlu1A3NUyKg9fiZwgAhcj9bbtBbxkv2p2J
-         WBF/QEbtA/BukBI/DIpAt3wUaYnHadADgelHwzyI9mibr/zYZ36PwNQiBIORPMLvBR8G
-         PnjijlOwjSIOZixWf5lbJ+qwmoy7pk+oYSys8ALweMbI0slFs102ZJO9gw4BjZbjvhGq
-         Ubjg==
-X-Gm-Message-State: ACrzQf069O6G1NoepMsaqFhU18DCCGB4qJkSLAuzzNnKNsgKoGsJgZrC
-        q++ylk9Dc//XakeZSUPJRk3chQ==
-X-Google-Smtp-Source: AMsMyM65oSY3CowVzCTi0eRv8Brn1m3ghjqcq9cwWETRiYmKlJkcqTRSHLPpChf5SnPq8XWs6VfwBg==
-X-Received: by 2002:a05:600c:5c4:b0:3c5:9a14:e5f6 with SMTP id p4-20020a05600c05c400b003c59a14e5f6mr12729629wmd.153.1666343335526;
-        Fri, 21 Oct 2022 02:08:55 -0700 (PDT)
+        bh=s2dHjCbjXW/wRyX5RnrOPDvSbncypen+BqayjwLtgH0=;
+        b=O/vPSNWHSr03L4tBwbMnJntUCH8RnzeVolt+1YsBNWuHTMJRB1wHksx/hBQmlvEy1h
+         LRHnUwsnieTPdlyYY5ty/wGUOl+Eah/CHn58yUrxF07jCROTp9EffVq4WmDcxCPoUmFL
+         qWDu/P6JheYjwsT4MAzDxIdaPsRS5H/PWwCN8SjMX23Cw3I9lNN3u3JLhHdbxbyZudXS
+         UMEr5phi+f2Edz9iWpMXDKBYvPHfDQD1JKQysln/ej8k59ohvLNqQcihpGArzcABEbj0
+         peCDKSm6xzINNNqy7twYcaTnwtsHzmamFwZ5mPKX9bngvyOtg05veOdQSHOHTw7PrwlX
+         mmHA==
+X-Gm-Message-State: ACrzQf0jy20/dA8qeoE7Hx10nBYMbJv5y4EsaG0Hnclry+VUsiu4DjRG
+        5awAgRFwpl9s/oS7C1iUg3wJHrOL0vmD0a5+
+X-Google-Smtp-Source: AMsMyM4vO0yNr28tbHpM8g1MSlGVGP7Vj5xzvPmdhEoMPgTUDOfA9SeFrlyVcnh1b4YCh9ibtT/C2A==
+X-Received: by 2002:a5d:63d1:0:b0:235:9aeb:e365 with SMTP id c17-20020a5d63d1000000b002359aebe365mr5572793wrw.77.1666343336475;
+        Fri, 21 Oct 2022 02:08:56 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id v10-20020a05600c444a00b003c6f27d275dsm2230286wmn.33.2022.10.21.02.08.54
+        by smtp.gmail.com with ESMTPSA id v10-20020a05600c444a00b003c6f27d275dsm2230286wmn.33.2022.10.21.02.08.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 02:08:55 -0700 (PDT)
+        Fri, 21 Oct 2022 02:08:56 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Fri, 21 Oct 2022 11:06:43 +0200
-Subject: [PATCH v4 07/11] dt-bindings: rtc: qcom-pm8xxx: document qcom,pm8921-rtc as
- fallback of qcom,pm8018-rtc
+Date:   Fri, 21 Oct 2022 11:06:44 +0200
+Subject: [PATCH v4 08/11] mfd: qcom-pm8xxx: drop unused PM8018 compatible
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20220928-mdm9615-dt-schema-fixes-v4-7-dac2dfaac703@linaro.org>
+Message-Id: <20220928-mdm9615-dt-schema-fixes-v4-8-dac2dfaac703@linaro.org>
 References: <20220928-mdm9615-dt-schema-fixes-v4-0-dac2dfaac703@linaro.org>
 In-Reply-To: <20220928-mdm9615-dt-schema-fixes-v4-0-dac2dfaac703@linaro.org>
 To:     Bjorn Andersson <andersson@kernel.org>,
@@ -88,42 +87,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The PM8018 RTC is used as compatible with PM8921 RTC on the MDM9615,
-document this situation.
+The PM8018 compatible is always used with PM8921 fallback, so PM8018
+compatible can be safely removed from device ID table
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- .../devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml         | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/mfd/qcom-pm8xxx.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml b/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-index 23ab5bb4f395..0a7aa29563c1 100644
---- a/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-+++ b/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-@@ -11,12 +11,16 @@ maintainers:
+diff --git a/drivers/mfd/qcom-pm8xxx.c b/drivers/mfd/qcom-pm8xxx.c
+index 2f2734ba5273..601106580e2e 100644
+--- a/drivers/mfd/qcom-pm8xxx.c
++++ b/drivers/mfd/qcom-pm8xxx.c
+@@ -497,7 +497,6 @@ static const struct pm_irq_data pm8821_data = {
+ };
  
- properties:
-   compatible:
--    enum:
--      - qcom,pm8058-rtc
--      - qcom,pm8921-rtc
--      - qcom,pm8941-rtc
--      - qcom,pm8018-rtc
--      - qcom,pmk8350-rtc
-+    oneOf:
-+      - enum:
-+          - qcom,pm8058-rtc
-+          - qcom,pm8921-rtc
-+          - qcom,pm8941-rtc
-+          - qcom,pmk8350-rtc
-+      - items:
-+          - enum:
-+              - qcom,pm8018-rtc
-+          - const: qcom,pm8921-rtc
- 
-   reg:
-     minItems: 1
+ static const struct of_device_id pm8xxx_id_table[] = {
+-	{ .compatible = "qcom,pm8018", .data = &pm8xxx_data},
+ 	{ .compatible = "qcom,pm8058", .data = &pm8xxx_data},
+ 	{ .compatible = "qcom,pm8821", .data = &pm8821_data},
+ 	{ .compatible = "qcom,pm8921", .data = &pm8xxx_data},
 
 -- 
 b4 0.10.1
