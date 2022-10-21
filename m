@@ -2,220 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA074607F04
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 21:26:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF812607F16
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 21:35:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229610AbiJUT0t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Oct 2022 15:26:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37250 "EHLO
+        id S229952AbiJUTfM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Oct 2022 15:35:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229645AbiJUT0r (ORCPT
+        with ESMTP id S229933AbiJUTfL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Oct 2022 15:26:47 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D1F726553E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 12:26:44 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id r22so5005583ljn.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 12:26:44 -0700 (PDT)
+        Fri, 21 Oct 2022 15:35:11 -0400
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B8D27AB0C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 12:35:06 -0700 (PDT)
+Received: by mail-il1-x130.google.com with SMTP id y17so2179679ilq.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 12:35:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cwaXIne9/tESZg17OSM+CaHqqM5h7/O7wHnlJa8eBxQ=;
-        b=fRhXofGb9cOnPhQS9hLIzMl+L60HxccZ+eZsKCY+f1ulBEflyP7axwksg4YImuwdZG
-         2I2tm/a2749Ob92vwTjhmSGMhvxpkxWxzXBmA4e5hJrfDjqRaXesyBLCQeQPXAgKzOfm
-         oaLTHsvetaybCZ1HwULDh6o8q5Mex7KKeli6PE439Lll3mh+I+wXKpqIZLf22fsH4srr
-         7j/1dZGwmmj2WP7Thr3P7iS8htuSEO63KMJ67RRNzv+KSussjDS7sdlRc0HXeQXdxnKk
-         uS1D7V8kytITGW4Q23M126eKMRkqAb7maykTtPE0ocYEA9iog5e4IXnVUljTgR8zKL3A
-         z20A==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ep8tCByFfUT/Tv/jGz8MVhMNgYEEnAHcpfl6q9bgIZA=;
+        b=PA0uXBeYg2xBYb490syGqLONmfChuiet5JBStCvpgW6ZCQfH18WDugcBgNE01slET4
+         2XYRENSoGcVK1snsnLZOs92zRLz1su6j9BfMLQfB9ps1gqKJSBtGuwFX0yWulUwLL67W
+         jn68uvFI0hnZYontatqIDy+nNcbcWqWZv0x+/S/edZK9bXEXmN/LpOfL1iYE21TRwWQ+
+         phCp1E1FUGniz5NrMHwQiCPo+5zcsv0UxQiW5QmvO+WzsKg50F+DGFqMZ1+ArO7tHehI
+         bqYer/T+rpJgSwQWwJjeOsAw8cn8QWz931haFSQXYb0WbpExAP4DmEbJcAwDXySNKt6r
+         6yvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=cwaXIne9/tESZg17OSM+CaHqqM5h7/O7wHnlJa8eBxQ=;
-        b=gKHUHGlX0yRi6HOkh3BHUwZdBhvNpIDwhMwiEMkIVl3fMh3smrZZRFXsKkCWaHlAzs
-         QnobY6ZK3xUUwxudP/BWCS32ctQu/RIx6wrSbGU9zuTZ1+T52efoS/D97GOzIV34CaQQ
-         +eLN2Y9A38ckHEUrh52i7u9w3dBqBomvX1sYm1rbnEY5WjLvhC0SBLJmFnaPJRrPtph9
-         JWF2T/minLBSwpKCtT/TyTAgGqkjsBghyw7lVv7okOKByH5TJFBFvKLO6fBQpSB1WC3z
-         eGo9SouM8nILluVssM+lOT5B4BzC4ufkZ4FVoPSnal882OfTtD7z+9YNHe0jIGxTxRJs
-         9gnw==
-X-Gm-Message-State: ACrzQf3aq4mD+SGxL8r9JuybXOWHs3yeb60kUdNJt2dCQRe/qmaWNkMc
-        hrf0YCvgorSFicHiH1FUjMOKQA==
-X-Google-Smtp-Source: AMsMyM4URcKjhKDfjJeEk40K9eZOqmBNKS2DZOrzlHrnPBm/rYl5u6eIXMDc4mYJ0b1qm9YdbduYqQ==
-X-Received: by 2002:a2e:b8c9:0:b0:26f:e171:1bf with SMTP id s9-20020a2eb8c9000000b0026fe17101bfmr7063691ljp.460.1666380402545;
-        Fri, 21 Oct 2022 12:26:42 -0700 (PDT)
-Received: from eriador.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id d12-20020a056512368c00b00497a41b3a42sm3278341lfs.88.2022.10.21.12.26.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 12:26:42 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v2] drm/msm/mdp5: stop overriding drvdata
-Date:   Fri, 21 Oct 2022 22:26:41 +0300
-Message-Id: <20221021192641.2423237-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
+        bh=ep8tCByFfUT/Tv/jGz8MVhMNgYEEnAHcpfl6q9bgIZA=;
+        b=lbLCr4cShLWCwcKnD8JaV15vabskM8iWSlnLhQ2EZY1OvfeNn/+gFZrtv20aWkKjxi
+         mHuckw5VSOv2I+qxmOpBqOzd0WFQgIhEf8M2TvY3i8zT0JI/64eRaJxXsctINEwtk7VV
+         SIKzyhelEIke8DMqhWi+hU0LN4fdzMuHekFmMb7U6yDtQKjLUgoAv+QWZPP5U4ebdgeT
+         WP3wgfq7Lt0XIpKSb0iFxj64FFilwkZEuvPAP+Ksz5dpaJEnmq670E58peP2ZMbyTjlE
+         aPaHejKY+MYiozgDcRjNAwIOYpE6BDQn3LH/5rWn//YaxilLUxj+Ji3bwTHlaOG6MLdv
+         IDVQ==
+X-Gm-Message-State: ACrzQf3KRWgxwC7Ym9dLi/vAJCVv0xoHsKLGgjGLcOTsoIWaec1EpHUU
+        ZK02mZ8BMmt8ykCLQFviVqQeX4G80K2q9LTxa007SNZwM4s=
+X-Google-Smtp-Source: AMsMyM7vQBW0f5ImtIKiiwTQqhNzMj7P4Hpvoujud9vD2xFA5kKWxBDQkvmb8bQ8jHt8zHuhNTeDPnzASWbfcFPdxPo=
+X-Received: by 2002:a05:6e02:1aaa:b0:2fa:542c:7538 with SMTP id
+ l10-20020a056e021aaa00b002fa542c7538mr15170376ilv.260.1666380905474; Fri, 21
+ Oct 2022 12:35:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <128dc161-8949-1146-bf8b-310aa33c06a8@quicinc.com>
+ <1663312351-28476-1-git-send-email-quic_aiquny@quicinc.com>
+ <20221012204344.GA1178915@p14s> <792f05fc-995e-9a87-ab7d-bee03f15bc79@quicinc.com>
+ <20221013173442.GA1279972@p14s> <20221013180334.GB1279972@p14s> <8807a9a6-d93d-aef5-15f4-88648a6ecbe2@quicinc.com>
+In-Reply-To: <8807a9a6-d93d-aef5-15f4-88648a6ecbe2@quicinc.com>
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+Date:   Fri, 21 Oct 2022 13:34:54 -0600
+Message-ID: <CANLsYkx8Vcha9FpfRvJEkq2pd+mSYFeZQBXj65YoiSBv+WEY4A@mail.gmail.com>
+Subject: Re: [PATCH v4] remoteproc: core: do pm relax when in RPROC_OFFLINE
+To:     "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>,
+        Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
+Cc:     linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_clew@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The rest of the code expects that master's device drvdata is the
-struct msm_drm_private instance. Do not override the mdp5's drvdata.
+On Wed, 19 Oct 2022 at 23:52, Aiqun(Maria) Yu <quic_aiquny@quicinc.com> wrote:
+>
+> On 10/14/2022 2:03 AM, Mathieu Poirier wrote:
+> > On Thu, Oct 13, 2022 at 11:34:42AM -0600, Mathieu Poirier wrote:
+> >> On Thu, Oct 13, 2022 at 09:40:09AM +0800, Aiqun(Maria) Yu wrote:
+> >>> Hi Mathieu,
+> >>>
+> >>> On 10/13/2022 4:43 AM, Mathieu Poirier wrote:
+> >>>> Please add what has changed from one version to another, either in a cover
+> >>>> letter or after the "Signed-off-by".  There are many examples on how to do that
+> >>>> on the mailing list.
+> >>>>
+> >>> Thx for the information, will take a note and benefit for next time.
+> >>>
+> >>>> On Fri, Sep 16, 2022 at 03:12:31PM +0800, Maria Yu wrote:
+> >>>>> RPROC_OFFLINE state indicate there is no recovery process
+> >>>>> is in progress and no chance to do the pm_relax.
+> >>>>> Because when recovering from crash, rproc->lock is held and
+> >>>>> state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
+> >>>>> and then unlock rproc->lock.
+> >>>>
+> >>>> You are correct - because the lock is held rproc->state should be set to RPROC_RUNNING
+> >>>> when rproc_trigger_recovery() returns.  If that is not the case then something
+> >>>> went wrong.
+> >>>>
+> >>>> Function rproc_stop() sets rproc->state to RPROC_OFFLINE just before returning,
+> >>>> so we know the remote processor was stopped.  Therefore if rproc->state is set
+> >>>> to RPROC_OFFLINE something went wrong in either request_firmware() or
+> >>>> rproc_start().  Either way the remote processor is offline and the system probably
+> >>>> in an unknown/unstable.  As such I don't see how calling pm_relax() can help
+> >>>> things along.
+> >>>>
+> >>> PROC_OFFLINE is possible that rproc_shutdown is triggered and successfully
+> >>> finished.
+> >>> Even if it is multi crash rproc_crash_handler_work contention issue, and
+> >>> last rproc_trigger_recovery bailed out with only
+> >>> rproc->state==RPROC_OFFLINE, it is still worth to do pm_relax in pair.
+> >>> Since the subsystem may still can be recovered with customer's next trigger
+> >>> of rproc_start, and we can make each error out path clean with pm resources.
+> >>>
+> >>>> I suggest spending time understanding what leads to the failure when recovering
+> >>>> from a crash and address that problem(s).
+> >>>>
+> >>> In current case, the customer's information is that the issue happened when
+> >>> rproc_shutdown is triggered at similar time. So not an issue from error out
+> >>> of rproc_trigger_recovery.
+> >>
+> >> That is a very important element to consider and should have been mentioned from
+> >> the beginning.  What I see happening is the following:
+> >>
+> >> rproc_report_crash()
+> >>          pm_stay_awake()
+> >>          queue_work() // current thread is suspended
+> >>
+> >> rproc_shutdown()
+> >>          rproc_stop()
+> >>                  rproc->state = RPROC_OFFLINE;
+> >>
+> >> rproc_crash_handler_work()
+> >>          if (rproc->state == RPROC_OFFLINE)
+> >>                  return // pm_relax() is not called
+> >>
+> >> The right way to fix this is to add a pm_relax() in rproc_shutdown() and
+> >> rproc_detach(), along with a very descriptive comment as to why it is needed.
+> >
+> > Thinking about this further there are more ramifications to consider.  Please
+> > confirm the above scenario is what you are facing.  I will advise on how to move
+> > forward if that is the case.
+> >
+> Not sure if the situation is clear or not. So resend the email again.
+>
+> The above senario is what customer is facing. crash hanppened while at
+> the same time shutdown is triggered.
 
-Fixes: 6874f48bb8b0 ("drm/msm: make mdp5/dpu devices master components")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
----
-Abhinav, Rob, please pick this for -fixes.
+Unfortunately this is not enough details to address a problem as
+complex as this one.
 
-This is an updated version of [1]. Fixed the read_mdp_hw_revision()
-function. PM runtime isn't available at the moment, as priv->kms is not
-set.
+> And the device cannto goes to suspend state after that.
+> the subsystem can still be start normally after this.
 
-[1] https://patchwork.freedesktop.org/patch/490326/?series=105392&rev=1
+If the code flow I pasted above reflects the problem at hand, the
+current patch will not be sufficient to address the issue.  If Arnaud
+confirms my suspicions we will have to think about a better solution.
 
----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 37 ++++++++++++++----------
- 1 file changed, 22 insertions(+), 15 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index b0d21838a134..506c64940972 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -203,7 +203,7 @@ static int mdp5_set_split_display(struct msm_kms *kms,
- 							  slave_encoder);
- }
- 
--static void mdp5_destroy(struct platform_device *pdev);
-+static void mdp5_destroy(struct mdp5_kms *mdp5_kms);
- 
- static void mdp5_kms_destroy(struct msm_kms *kms)
- {
-@@ -223,7 +223,7 @@ static void mdp5_kms_destroy(struct msm_kms *kms)
- 	}
- 
- 	mdp_kms_destroy(&mdp5_kms->base);
--	mdp5_destroy(mdp5_kms->pdev);
-+	mdp5_destroy(mdp5_kms);
- }
- 
- #ifdef CONFIG_DEBUG_FS
-@@ -519,9 +519,15 @@ static void read_mdp_hw_revision(struct mdp5_kms *mdp5_kms,
- 	struct device *dev = &mdp5_kms->pdev->dev;
- 	u32 version;
- 
--	pm_runtime_get_sync(dev);
-+	/* Manually enable the MDP5, as pm runtime isn't usable yet */
-+	if (mdp5_enable(mdp5_kms)) {
-+		*major = 0;
-+		*minor = 0;
-+		return;
-+	}
-+
- 	version = mdp5_read(mdp5_kms, REG_MDP5_HW_VERSION);
--	pm_runtime_put_sync(dev);
-+	mdp5_disable(mdp5_kms);
- 
- 	*major = FIELD(version, MDP5_HW_VERSION_MAJOR);
- 	*minor = FIELD(version, MDP5_HW_VERSION_MINOR);
-@@ -559,6 +565,8 @@ static int mdp5_kms_init(struct drm_device *dev)
- 	int irq, i, ret;
- 
- 	ret = mdp5_init(to_platform_device(dev->dev), dev);
-+	if (ret)
-+		return ret;
- 
- 	/* priv->kms would have been populated by the MDP5 driver */
- 	kms = priv->kms;
-@@ -632,9 +640,8 @@ static int mdp5_kms_init(struct drm_device *dev)
- 	return ret;
- }
- 
--static void mdp5_destroy(struct platform_device *pdev)
-+static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
- {
--	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
- 	int i;
- 
- 	if (mdp5_kms->ctlm)
-@@ -648,7 +655,7 @@ static void mdp5_destroy(struct platform_device *pdev)
- 		kfree(mdp5_kms->intfs[i]);
- 
- 	if (mdp5_kms->rpm_enabled)
--		pm_runtime_disable(&pdev->dev);
-+		pm_runtime_disable(&mdp5_kms->pdev->dev);
- 
- 	drm_atomic_private_obj_fini(&mdp5_kms->glob_state);
- 	drm_modeset_lock_fini(&mdp5_kms->glob_state_lock);
-@@ -797,8 +804,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- 		goto fail;
- 	}
- 
--	platform_set_drvdata(pdev, mdp5_kms);
--
- 	spin_lock_init(&mdp5_kms->resource_lock);
- 
- 	mdp5_kms->dev = dev;
-@@ -839,9 +844,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- 	 */
- 	clk_set_rate(mdp5_kms->core_clk, 200000000);
- 
--	pm_runtime_enable(&pdev->dev);
--	mdp5_kms->rpm_enabled = true;
--
- 	read_mdp_hw_revision(mdp5_kms, &major, &minor);
- 
- 	mdp5_kms->cfg = mdp5_cfg_init(mdp5_kms, major, minor);
-@@ -893,10 +895,13 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- 	/* set uninit-ed kms */
- 	priv->kms = &mdp5_kms->base.base;
- 
-+	pm_runtime_enable(&pdev->dev);
-+	mdp5_kms->rpm_enabled = true;
-+
- 	return 0;
- fail:
- 	if (mdp5_kms)
--		mdp5_destroy(pdev);
-+		mdp5_destroy(mdp5_kms);
- 	return ret;
- }
- 
-@@ -953,7 +958,8 @@ static int mdp5_dev_remove(struct platform_device *pdev)
- static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
- {
- 	struct platform_device *pdev = to_platform_device(dev);
--	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
-+	struct msm_drm_private *priv = platform_get_drvdata(pdev);
-+	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
- 
- 	DBG("");
- 
-@@ -963,7 +969,8 @@ static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
- static __maybe_unused int mdp5_runtime_resume(struct device *dev)
- {
- 	struct platform_device *pdev = to_platform_device(dev);
--	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
-+	struct msm_drm_private *priv = platform_get_drvdata(pdev);
-+	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
- 
- 	DBG("");
- 
--- 
-2.35.1
-
+>
+> >>
+> >>
+> >>>> Thanks,
+> >>>> Mathieu
+> >>>>
+> >>>>
+> >>>>> When the state is in RPROC_OFFLINE it means separate request
+> >>>>> of rproc_stop was done and no need to hold the wakeup source
+> >>>>> in crash handler to recover any more.
+> >>>>>
+> >>>>> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+> >>>>> ---
+> >>>>>    drivers/remoteproc/remoteproc_core.c | 11 +++++++++++
+> >>>>>    1 file changed, 11 insertions(+)
+> >>>>>
+> >>>>> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+> >>>>> index e5279ed9a8d7..6bc7b8b7d01e 100644
+> >>>>> --- a/drivers/remoteproc/remoteproc_core.c
+> >>>>> +++ b/drivers/remoteproc/remoteproc_core.c
+> >>>>> @@ -1956,6 +1956,17 @@ static void rproc_crash_handler_work(struct work_struct *work)
+> >>>>>           if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
+> >>>>>                   /* handle only the first crash detected */
+> >>>>>                   mutex_unlock(&rproc->lock);
+> >>>>> +         /*
+> >>>>> +          * RPROC_OFFLINE state indicate there is no recovery process
+> >>>>> +          * is in progress and no chance to have pm_relax in place.
+> >>>>> +          * Because when recovering from crash, rproc->lock is held and
+> >>>>> +          * state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
+> >>>>> +          * and then unlock rproc->lock.
+> >>>>> +          * RPROC_OFFLINE is only an intermediate state in recovery
+> >>>>> +          * process.
+> >>>>> +          */
+> >>>>> +         if (rproc->state == RPROC_OFFLINE)
+> >>>>> +                 pm_relax(rproc->dev.parent);
+> >>>>>                   return;
+> >>>>>           }
+> >>>>> --
+> >>>>> 2.7.4
+> >>>>>
+> >>>
+> >>>
+> >>> --
+> >>> Thx and BRs,
+> >>> Aiqun(Maria) Yu
+>
+>
+> --
+> Thx and BRs,
+> Aiqun(Maria) Yu
