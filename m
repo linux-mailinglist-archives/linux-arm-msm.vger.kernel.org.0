@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FD93607584
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 12:57:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED7DF607588
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 12:57:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230254AbiJUK5I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Oct 2022 06:57:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42040 "EHLO
+        id S230244AbiJUK5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Oct 2022 06:57:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230233AbiJUK5E (ORCPT
+        with ESMTP id S230208AbiJUK5N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Oct 2022 06:57:04 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04C6B25CDBB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 03:57:02 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id g8-20020a17090a128800b0020c79f987ceso6315853pja.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 03:57:01 -0700 (PDT)
+        Fri, 21 Oct 2022 06:57:13 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 257813C8E4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 03:57:12 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id i3so2221724pfk.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 03:57:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=quanta-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rN5pIXYHIPWnZBzWC0xE3jiOY/tjCziNvlEjCF/QMuE=;
-        b=23EVJAQXXgP7zNOeGds8+aBr9OrJV59j4UwfrYPw2QpnO+ifUe5BdmsaVKJct/kWrk
-         gnQLyuAcYq5n+cjBObsZ8V1+HpMlMZU1ZEI5Tl95WT1h4o1t3EWCHjvz3JEYm1IjPLhW
-         Ymuo0ouHaK3+sVfvXoJMqU58/D1cK8JdyIN4wgR/c4fL4U3BRXtjVEhnZCcBN/vsHRGm
-         3MloS4H2Z/FYh2VDh2BGS0c7MjBr2MxFh3V3rqNTQ0zUtT8tWrjn4sVudShWUdHR5chG
-         4PtkRNctKWKtSi333wAcewmbQKTVHxpxcM+rF1cUoZKv+VYaClotLHYjXssnJm65RDmL
-         CYvA==
+        bh=XwU1VZF8+6iJFAuGjdLVREmySRqI+EDvo5yioZX/3UI=;
+        b=r5gBS2fsD1++YH1wNtzJF0AfDCDUK8gEMTDVom6HPOh/pvqX5sUCNbZ1HyZlqe+6MM
+         apUZcZjl7ZtVfiaB1t6hMXBuT0lAKGxk825LQobHHEPJ3AFS9IIUL6Hn6W5ivEh7EqFw
+         mVDGMXStqzjE86yuuih8gxFp+/fek+ErLAh1JQtmAkYPY3AkCW2MlcBEGZ4vA/Zzn+af
+         7oCISJaln5kHqnMsNqhMKdbNmXnNxjutQHVWNo5l0iidgauh2j5eUEMCc7VV+f3h/1Kf
+         3PIwFl5quethxgr7OOQ8XHDjqwNsBjPC6N2LqYqpjgtFL/hOz75m3lq339CHqbaqE6Pb
+         CWdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rN5pIXYHIPWnZBzWC0xE3jiOY/tjCziNvlEjCF/QMuE=;
-        b=L771bZqqmctEr4hGiohYH5gQ0BI1u4uv6ljBYUiefQCkXeobQNYYCP7l/c2CNXTf73
-         8tbTMlAKqbgY3WT8P4l0ojGg5oxa1P6Y7hVEoW1FXPFNaEu9CcbjxXGebrxSBvpLy3d4
-         LmgqC0UKJXQD1yxGVWOBi0Z40kU2oFQ2o0Atta01UhGzE+GN/td5Ff8MeQfqUNT20pzC
-         zznoAp9zHrnOTcZZDNoNptjziOzZvB2Km6oXexyHsj6l21X5aBffQKMU6IvTMsY+1/yq
-         2mSvBgvaUdNd0oBaL7oXcOWxM6focw+NthJh89qpKT47Ltgj697z2V+pVt9PmTg1MQEu
-         JJYg==
-X-Gm-Message-State: ACrzQf0V2WcpYsZJxC0Sm2gYWCCDKP6wBEJovTJmFKLYu9khgi0QgoZt
-        t9QY4+ASFEDzQyPd8t7IQ+jI2QhWj/CVSQ==
-X-Google-Smtp-Source: AMsMyM5ONEMr84qUqj9VUX2+x+riff/fxrqdHfWtnTRiUBleQxCQHOGDsA/djTh7vT+nsH9g1VwOxw==
-X-Received: by 2002:a17:902:e5d1:b0:183:6e51:4ff with SMTP id u17-20020a170902e5d100b001836e5104ffmr18324760plf.151.1666349810808;
-        Fri, 21 Oct 2022 03:56:50 -0700 (PDT)
+        bh=XwU1VZF8+6iJFAuGjdLVREmySRqI+EDvo5yioZX/3UI=;
+        b=DYzgoYu3DjVKS7oNYOn/g4AIIZMtO0X59kDAlfwWQIlJkiR1KrPxRucJZd3JCaTgG8
+         M8X7T4uOOycCYW5q78bNJe63ze6NRCRR6p3IJ1xrFxYXR1egUrfFGF+2h6FGzAsfmHo/
+         p/6YebFtMtn4clMqktxNQZv88OY5UbAxxaZ19gDbdOhWpjEhvUAVEGCvCqZ1CXUSCfxe
+         khcdbBMewsLqYqN1or6VU8oI3j4fUeoUHHcOFNFdXVC43jnFIwjPwM6VQWgu81l4p2ST
+         L4xzWFpEXnozja9oH1COE4bLlnoCmKe662aReMDuXFDYLQ1G4smGqfZQBFdqFgNifrps
+         4Gvg==
+X-Gm-Message-State: ACrzQf3Ydtf8PA1ynp0t8ctlZCiTpumOTF9fYj18Bm6nIAMeLJNQFuDH
+        7aL6NJ6m/ZAOj6ohwlTJhIVocUjpfe27Mg==
+X-Google-Smtp-Source: AMsMyM7zq0aOY+XkV/Cu34hN7J81Ec6TfMM4pUZSyDrHgcSBRtQsInt2EprzBx8nsAJqT6FDjEZC5A==
+X-Received: by 2002:a62:5252:0:b0:562:eef6:402f with SMTP id g79-20020a625252000000b00562eef6402fmr18739943pfb.79.1666349831597;
+        Fri, 21 Oct 2022 03:57:11 -0700 (PDT)
 Received: from liang-Predator-PH517-52.. (2001-b400-e339-bb7d-a809-3af0-ee98-4fc4.emome-ip6.hinet.net. [2001:b400:e339:bb7d:a809:3af0:ee98:4fc4])
-        by smtp.gmail.com with ESMTPSA id 2-20020a620602000000b0052d4cb47339sm14822957pfg.151.2022.10.21.03.56.47
+        by smtp.gmail.com with ESMTPSA id 2-20020a620602000000b0052d4cb47339sm14822957pfg.151.2022.10.21.03.57.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 03:56:50 -0700 (PDT)
+        Fri, 21 Oct 2022 03:57:11 -0700 (PDT)
 From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
 To:     LKML <linux-kernel@vger.kernel.org>
 Cc:     dianders@chromium.org,
@@ -60,9 +60,9 @@ Cc:     dianders@chromium.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH v8 2/4] arm64: dts: qcom: sc7280: Add LTE SKU for sc7280-evoker family
-Date:   Fri, 21 Oct 2022 18:56:21 +0800
-Message-Id: <20221021185331.v8.2.If03e9e85e63ece4b1599db841c90ed785c47a4be@changeid>
+Subject: [PATCH v8 4/4] arm64: dts: qcom: sc7280: Add touchscreen and touchpad support for evoker
+Date:   Fri, 21 Oct 2022 18:56:23 +0800
+Message-Id: <20221021185331.v8.4.I3ac715e729f6f9b5a3e3001b155df4f9d14e6186@changeid>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221021105623.3520859-1-sheng-liang.pan@quanta.corp-partner.google.com>
 References: <20221021105623.3520859-1-sheng-liang.pan@quanta.corp-partner.google.com>
@@ -77,7 +77,9 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-evoker have wifi/lte sku, add different dts for each sku.
+Change touchpad and touchscreen node for evoker
+Touchpad: SA461D-1011
+Touchscreen: GT7986U
 
 Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
@@ -86,99 +88,64 @@ Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Changes in v8:
 - updated patch subjects
 
+Changes in v7:
+- add compiatable for gt7986
+
+Changes in v6:
+- add removed pinctrl and align touchscreen label with herobrine board
+
 Changes in v5:
-- recover whitespace change
+- new patch for Touchscreen/trackpad in v5
 
-Changes in v4:
-- recover change for trackpad and touchscreen
+ .../boot/dts/qcom/sc7280-herobrine-evoker.dtsi    | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
- arch/arm64/boot/dts/qcom/Makefile                 |  3 ++-
- .../boot/dts/qcom/sc7280-herobrine-evoker-lte.dts | 14 ++++++++++++++
- .../boot/dts/qcom/sc7280-herobrine-evoker.dts     | 15 +++++++++++++++
- ...evoker-r0.dts => sc7280-herobrine-evoker.dtsi} |  7 -------
- 4 files changed, 31 insertions(+), 8 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
- rename arch/arm64/boot/dts/qcom/{sc7280-herobrine-evoker-r0.dts => sc7280-herobrine-evoker.dtsi} (98%)
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index b0558d3389e5a..6f234995284b2 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -106,7 +106,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-crd.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-evoker-r0.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-evoker.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-evoker-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r0.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r1.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dts
-new file mode 100644
-index 0000000000000..3af9224a7492e
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dts
-@@ -0,0 +1,14 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Evoker board device tree source
-+ *
-+ * Copyright 2022 Google LLC.
-+ */
-+
-+#include "sc7280-herobrine-evoker.dts"
-+#include "sc7280-herobrine-lte-sku.dtsi"
-+
-+/ {
-+	model = "Google Evoker with LTE";
-+	compatible = "google,evoker-sku512", "qcom,sc7280";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
-new file mode 100644
-index 0000000000000..dcdd4eecfe670
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
-@@ -0,0 +1,15 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Evoker board device tree source
-+ *
-+ * Copyright 2022 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7280-herobrine-evoker.dtsi"
-+
-+/ {
-+	model = "Google Evoker";
-+	compatible = "google,evoker", "qcom,sc7280";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-similarity index 98%
-rename from arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
-rename to arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-index 739e81bd6d689..a6015491c6082 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
+index a6015491c6082..706dd82a70138 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-@@ -5,15 +5,8 @@
-  * Copyright 2022 Google LLC.
-  */
+@@ -23,16 +23,15 @@ ap_tp_i2c: &i2c0 {
+ 	status = "okay";
+ 	clock-frequency = <400000>;
  
--/dts-v1/;
--
- #include "sc7280-herobrine.dtsi"
+-	trackpad: trackpad@2c {
+-		compatible = "hid-over-i2c";
+-		reg = <0x2c>;
++	trackpad: trackpad@15 {
++		compatible = "elan,ekth3000";
++		reg = <0x15>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&tp_int_odl>;
  
--/ {
--	model = "Google Evoker";
--	compatible = "google,evoker", "qcom,sc7280";
--};
--
- /*
-  * ADDITIONS TO FIXED REGULATORS DEFINED IN PARENT DEVICE TREE FILES
-  *
+ 		interrupt-parent = <&tlmm>;
+ 		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
+ 
+-		hid-descr-addr = <0x20>;
+ 		vcc-supply = <&pp3300_z1>;
+ 
+ 		wakeup-source;
+@@ -43,9 +42,9 @@ ts_i2c: &i2c13 {
+ 	status = "okay";
+ 	clock-frequency = <400000>;
+ 
+-	ap_ts: touchscreen@10 {
+-		compatible = "elan,ekth6915";
+-		reg = <0x10>;
++	ap_ts: touchscreen@5d {
++		compatible = "goodix,gt7986u", "goodix,gt7375p";
++		reg = <0x5d>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&ts_int_conn>, <&ts_rst_conn>;
+ 
+@@ -54,7 +53,7 @@ ap_ts: touchscreen@10 {
+ 
+ 		reset-gpios = <&tlmm 54 GPIO_ACTIVE_LOW>;
+ 
+-		vcc33-supply = <&ts_avdd>;
++		vdd-supply = <&ts_avdd>;
+ 	};
+ };
+ 
 -- 
 2.34.1
 
