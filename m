@@ -2,116 +2,279 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16A3B607D0D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 18:56:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4ED50607E12
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 20:07:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229795AbiJUQ4l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Oct 2022 12:56:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55324 "EHLO
+        id S229867AbiJUSHP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Oct 2022 14:07:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230076AbiJUQ4Z (ORCPT
+        with ESMTP id S229506AbiJUSHO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Oct 2022 12:56:25 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0088812792A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 09:56:01 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id j23so4514740lji.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 09:56:01 -0700 (PDT)
+        Fri, 21 Oct 2022 14:07:14 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9212545074;
+        Fri, 21 Oct 2022 11:07:13 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 186-20020a1c02c3000000b003c6c154d528so5639982wmc.4;
+        Fri, 21 Oct 2022 11:07:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZT9p+O8jS1617W9ayV/G2VKwq2HucMY9DBAQPNerHK4=;
-        b=rJ0DwSGCkEIE25pd95phrfcMNfbybXvcvh4bDPLhBClsVFB1kJpdbY9ZXdeqI79FaF
-         Mji8bX6GF893adMySxKCv20TEpdIH+G1UbtWU48em/BNNZ/GZAZoT5QG72X6+zIDo8lY
-         sdc4jWx06elCJfG/o6UMB4Dyk+1+5i2QTvWx4L4j58QEDHZU3ExKddPnXhoJigwHkSpK
-         wPSVgBpj8Dp2pZutXokdwh7d5VCOoiSWCOjIZmUR4pnfKTkI0JOACnpeuF/frwI1vveG
-         Po6ZGlFKoSKU7CMLJgqZTMjUawtVPzcgMD4lBOr5G9gWBpZUjrVZqNQWwlRaxlWyVssW
-         PRMA==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CyBu08uMqErM+zzJyPRDJRWX5ryfOT/RoKB9om6pnjA=;
+        b=A/BU/jZiRtB32rNRZ3uk42wlCkZ0q5PYCdjXNM5anDN7uP4ZkMc+gHIYVpSLGiJujW
+         +AgImTmEJnNvDv1Jpx8EZ/FhjCSNge/11n3AJFH/izDKCZq18pYny4VBmWNqv/y+gLhD
+         vrqAoskm8yozPhHQwjqkv3GoMUFNYOUoS16Ezwe8z1V/VRI6pExhvduSLI8uqoeYCK9a
+         WgcqCMSlOK/OtG5twSUk7+tVoAwU4W4EntifuFzEnL9cbU4K2oR2YwokH1gFAb9RCDQH
+         XhG8edIbwb4dz0pStwGxHzbNC9bf4ZqExq1f/k9u5dYcvJfmf8TGogKvPMzCs0AvBH5u
+         6H7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZT9p+O8jS1617W9ayV/G2VKwq2HucMY9DBAQPNerHK4=;
-        b=H6vCdIpbFAyLKSFFNNN7f1gfF8XjpgtLcovFayk8m1dHhT7TV9hItm0vnNhwH3M05V
-         mK1bEPINl6ewGxNI2k2YUExN0sHebbHGsnnAIGnkTYSUGrxW8XUWKoQoMqSpixhnjMP1
-         GyAe21fCAUJhX77eKU8cRyZbJUljop9bIzatJXTiTqDl8ZsHf0Lge/J8hG+fUmwDfi/G
-         oq3XxzsP3fygYoYegfbg2FXT1+sp+MsU9ATS+/VJYHk3FVkUyUJvpV/9NwcUxOogV4o/
-         2MnfFg7CGeifSDmN7SVQo9AkG4wMwPVWboX+hL9yBpa08PwTRSPOWr3iEucIrUzJaR7k
-         bf+Q==
-X-Gm-Message-State: ACrzQf0AlDxIaJSY8H4ij2oPsiIWTcAlJ23FZdvbYicq7HEvXjFO5smu
-        PNQAXaXeu1pkwsJPIJ0WxAD2fQ==
-X-Google-Smtp-Source: AMsMyM5DmLJ5rXTRgNdC7K58SnCb2aZlbYqY0kpaUJgU2Dzp2Oflwl8kkPrI4UQ6QWTOn0THOh0ktg==
-X-Received: by 2002:a2e:549:0:b0:26d:ff5f:53c1 with SMTP id 70-20020a2e0549000000b0026dff5f53c1mr7415424ljf.450.1666371349092;
-        Fri, 21 Oct 2022 09:55:49 -0700 (PDT)
-Received: from eriador.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id x4-20020a056512078400b004946e72711bsm3218532lfr.76.2022.10.21.09.55.48
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CyBu08uMqErM+zzJyPRDJRWX5ryfOT/RoKB9om6pnjA=;
+        b=XmwEsjkGy4vHGxotgOw/c+/NC6iBZcMYsZv4+SZkNHXoovYmGaESM9j1tWfqUy7tZH
+         fDmnecmFMlZFvuYp7IZdVtxhj1FLdRZ9HzjAFNnhkWD74FOPl7hroyZtQSd9BjRQaAjg
+         6AjiIPIhWjsYxWcpVyKs91MYXhQRgb6qb1sJ6eveVTtqJoWMxH+dc/rJlepA48iaFXn3
+         ntPQOZWOaYdAbtlls1ArLlq+sqQmriHHzCsFsEafiKEdkJ1uoqqGcjvAk1g8LkDJxt0x
+         nD/qNWaal+daGCzrwJiAd99Yc4vuaMv6mU4pRhUdIibQ86/vw+M/d+ipVDf1cjeHsbr4
+         FptQ==
+X-Gm-Message-State: ACrzQf1sHJ5b7OKZowmVJZ6j/0H74VYgcnIXJFaoOjiHj+PiIkYxmA6t
+        Gisi+dtZ6dkujt7ab/D61y5MtA5p8us=
+X-Google-Smtp-Source: AMsMyM5WhLtocC+yqXsOASdbkJzn/8S+bFisKIB4l0D32Ur31PZ/gg5U5fyjHf8YDgMdeLIkEPu+wA==
+X-Received: by 2002:a05:600c:4449:b0:3c6:fb65:2463 with SMTP id v9-20020a05600c444900b003c6fb652463mr14122585wmn.128.1666375631691;
+        Fri, 21 Oct 2022 11:07:11 -0700 (PDT)
+Received: from localhost.localdomain (93-42-70-134.ip85.fastwebnet.it. [93.42.70.134])
+        by smtp.googlemail.com with ESMTPSA id n4-20020a1ca404000000b003c41144b3cfsm280348wme.20.2022.10.21.11.07.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 09:55:48 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Fri, 21 Oct 2022 11:07:11 -0700 (PDT)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: [RFC PATCH 9/9] iommu/arm-smmu-qcom: Add generic qcom,smmu-500 match entry
-Date:   Fri, 21 Oct 2022 19:55:34 +0300
-Message-Id: <20221021165534.2334329-10-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221021165534.2334329-1-dmitry.baryshkov@linaro.org>
-References: <20221021165534.2334329-1-dmitry.baryshkov@linaro.org>
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Christian Marangi <ansuelsmth@gmail.com>,
+        Robert Marko <robimarko@gmail.com>
+Subject: [RFC PATCH 1/2] clk: qcom: clk-rcg2: introduce support for multiple conf for same freq
+Date:   Fri, 21 Oct 2022 20:06:56 +0200
+Message-Id: <20221021180657.13474-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add generic qcom,smmu-500 compatibility string. Newer platforms should
-use this generic entry rather than declaring per-SoC entries.
+Some RCG frequency can be reached by multiple configuration.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+We currently declare multiple configuration for the same frequency but
+that is not supported and always the first configuration will be taken.
+
+These multiple configuration are needed as based on the current parent
+configuration, it may be needed to use a different configuration to
+reach the same frequency.
+
+To handle this introduce 2 new macro, FM and C.
+
+- FM is used to declare an empty freq_tbl with just the frequency and an
+  array of confs to insert all the config for the provided frequency.
+
+- C is used to declare a fre_conf where src, pre_div, m and n are
+  provided.
+
+The driver is changed to handle this special freq_tbl and select the
+correct config by calculating the final rate and deciding based on the
+one that is less different than the requested one.
+
+Tested-by: Robert Marko <robimarko@gmail.com>
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/clk/qcom/clk-rcg.h  | 14 ++++++-
+ drivers/clk/qcom/clk-rcg2.c | 84 +++++++++++++++++++++++++++++++++----
+ 2 files changed, 88 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 9abc40c00f3e..3be81338a25b 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -493,6 +493,10 @@ static const struct qcom_smmu_match_data qcom_smmu_500_impl0_data = {
- 	.cfg = &qcom_smmu_impl0_cfg,
+diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
+index 01581f4d2c39..18f4f7b59f36 100644
+--- a/drivers/clk/qcom/clk-rcg.h
++++ b/drivers/clk/qcom/clk-rcg.h
+@@ -7,7 +7,17 @@
+ #include <linux/clk-provider.h>
+ #include "clk-regmap.h"
+ 
+-#define F(f, s, h, m, n) { (f), (s), (2 * (h) - 1), (m), (n) }
++#define F(f, s, h, m, n) { (f), (s), (2 * (h) - 1), (m), (n), 0, NULL }
++
++#define FM(_f, _confs) { .freq = (_f), .confs_num = ARRAY_SIZE(_confs), .confs = (_confs) }
++#define C(s, h, m, n) { (s), (2 * (h) - 1), (m), (n) }
++
++struct freq_conf {
++	u8 src;
++	u8 pre_div;
++	u16 m;
++	u16 n;
++};
+ 
+ struct freq_tbl {
+ 	unsigned long freq;
+@@ -15,6 +25,8 @@ struct freq_tbl {
+ 	u8 pre_div;
+ 	u16 m;
+ 	u16 n;
++	int confs_num;
++	const struct freq_conf *confs;
  };
  
-+/*
-+ * Do not add any more qcom,SOC-smmu-500 entries to this list, unless they need
-+ * special handling and can not be covered by the qcom,smmu-500 entry.
-+ */
- static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
- 	{ .compatible = "qcom,msm8996-smmu-v2", .data = &msm8996_smmu_data },
- 	{ .compatible = "qcom,msm8998-smmu-v2", .data = &qcom_smmu_v2_data },
-@@ -511,6 +515,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
- 	{ .compatible = "qcom,sm8250-smmu-500", .data = &qcom_smmu_500_impl0_data },
- 	{ .compatible = "qcom,sm8350-smmu-500", .data = &qcom_smmu_500_impl0_data },
- 	{ .compatible = "qcom,sm8450-smmu-500", .data = &qcom_smmu_500_impl0_data },
-+	{ .compatible = "qcom,smmu-500", .data = &qcom_smmu_500_impl0_data },
- 	{ }
- };
+ /**
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index 76551534f10d..7d3b59ec2b50 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -209,11 +209,60 @@ clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ 	return __clk_rcg2_recalc_rate(hw, parent_rate, cfg);
+ }
  
++static void
++clk_rcg2_select_conf(struct clk_hw *hw, struct freq_tbl *f_tbl,
++		     const struct freq_tbl *f, unsigned long req_rate)
++{
++	unsigned long best_rate = 0, parent_rate, rate;
++	const struct freq_conf *conf, *best_conf;
++	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
++	struct clk_hw *p;
++	int index, i;
++
++	/* Search in each provided config the one that is near the wanted rate */
++	for (i = 0, conf = f->confs; i < f->confs_num; i++, conf++) {
++		index = qcom_find_src_index(hw, rcg->parent_map, conf->src);
++		if (index < 0)
++			continue;
++
++		p = clk_hw_get_parent_by_index(hw, index);
++		if (!p)
++			continue;
++
++		parent_rate =  clk_hw_get_rate(p);
++		rate = calc_rate(parent_rate, conf->n, conf->m, conf->n, conf->pre_div);
++
++		if (rate == req_rate) {
++			best_conf = conf;
++			break;
++		}
++
++		if (abs(req_rate - rate) < abs(best_rate - rate)) {
++			best_rate = rate;
++			best_conf = conf;
++		}
++	}
++
++	/*
++	 * Very unlikely.
++	 * Force the first conf if we can't find a correct config.
++	 */
++	if (unlikely(i == f->confs_num))
++		best_conf = f->confs;
++
++	/* Apply the config */
++	f_tbl->src = best_conf->src;
++	f_tbl->pre_div = best_conf->pre_div;
++	f_tbl->m = best_conf->m;
++	f_tbl->n = best_conf->n;
++}
++
+ static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
+ 				    struct clk_rate_request *req,
+ 				    enum freq_policy policy)
+ {
+ 	unsigned long clk_flags, rate = req->rate;
++	struct freq_tbl f_tbl;
+ 	struct clk_hw *p;
+ 	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+ 	int index;
+@@ -232,7 +281,15 @@ static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
+ 	if (!f)
+ 		return -EINVAL;
+ 
+-	index = qcom_find_src_index(hw, rcg->parent_map, f->src);
++	f_tbl = *f;
++	/*
++	 * A single freq may be reached by multiple configuration.
++	 * Try to find the bast one if we have this kind of freq_table.
++	 */
++	if (f->confs)
++		clk_rcg2_select_conf(hw, &f_tbl, f, rate);
++
++	index = qcom_find_src_index(hw, rcg->parent_map, f_tbl.src);
+ 	if (index < 0)
+ 		return index;
+ 
+@@ -242,18 +299,18 @@ static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
+ 		return -EINVAL;
+ 
+ 	if (clk_flags & CLK_SET_RATE_PARENT) {
+-		rate = f->freq;
+-		if (f->pre_div) {
++		rate = f_tbl.freq;
++		if (f_tbl.pre_div) {
+ 			if (!rate)
+ 				rate = req->rate;
+ 			rate /= 2;
+-			rate *= f->pre_div + 1;
++			rate *= f_tbl.pre_div + 1;
+ 		}
+ 
+-		if (f->n) {
++		if (f_tbl.n) {
+ 			u64 tmp = rate;
+-			tmp = tmp * f->n;
+-			do_div(tmp, f->m);
++			tmp = tmp * f_tbl.n;
++			do_div(tmp, f_tbl.m);
+ 			rate = tmp;
+ 		}
+ 	} else {
+@@ -261,7 +318,7 @@ static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
+ 	}
+ 	req->best_parent_hw = p;
+ 	req->best_parent_rate = rate;
+-	req->rate = f->freq;
++	req->rate = f_tbl.freq;
+ 
+ 	return 0;
+ }
+@@ -357,6 +414,7 @@ static int __clk_rcg2_set_rate(struct clk_hw *hw, unsigned long rate,
+ {
+ 	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+ 	const struct freq_tbl *f;
++	struct freq_tbl f_tbl;
+ 
+ 	switch (policy) {
+ 	case FLOOR:
+@@ -372,7 +430,15 @@ static int __clk_rcg2_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	if (!f)
+ 		return -EINVAL;
+ 
+-	return clk_rcg2_configure(rcg, f);
++	f_tbl = *f;
++	/*
++	 * A single freq may be reached by multiple configuration.
++	 * Try to find the best one if we have this kind of freq_table.
++	 */
++	if (f->confs)
++		clk_rcg2_select_conf(hw, &f_tbl, f, rate);
++
++	return clk_rcg2_configure(rcg, &f_tbl);
+ }
+ 
+ static int clk_rcg2_set_rate(struct clk_hw *hw, unsigned long rate,
 -- 
-2.35.1
+2.37.2
 
