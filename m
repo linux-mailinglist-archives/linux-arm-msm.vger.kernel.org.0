@@ -2,161 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38D2A607CD0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 18:53:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1760607CE5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 18:54:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230313AbiJUQx2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Oct 2022 12:53:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51144 "EHLO
+        id S229765AbiJUQyV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Oct 2022 12:54:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231236AbiJUQxX (ORCPT
+        with ESMTP id S231222AbiJUQxx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Oct 2022 12:53:23 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4577628F273
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 09:53:18 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id j7so5947142wrr.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 09:53:18 -0700 (PDT)
+        Fri, 21 Oct 2022 12:53:53 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F336DB560;
+        Fri, 21 Oct 2022 09:53:44 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id l16-20020a05600c4f1000b003c6c0d2a445so2429997wmq.4;
+        Fri, 21 Oct 2022 09:53:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P38kTBSJr/DRXyh4Je0XkAOEtRTZS4roS95ylRUlbWA=;
-        b=v2L7/MLQEM62vRMDJl2OvRagyQDMvI9Nymr91iGl6SCFtRwreusq9eArbalmCitKmw
-         +hhaFtS/OnHIn+5Xf6nwDNqdfoUMc7HgHUiF2pUGEE3DwN7QEYkAcxb4cK4TRHIDHee5
-         qtcn/Zh7JexBtSjqDnAv3pzmWv3BQM8oepnsMsqkgFsgD7GAXqIIdx6gyUhxyW1yZf0a
-         jJ9asdZ03lPN3bVlMf+Jf6yZGUdf3sE3aPcWLKN0O7T8ZGPUQl3+gJSbTImklJ8iGhlu
-         wGxVv2oHVoc11MJe/Ebl0h3dBwVu89Zv+HwtG2xPUafiph0CvZLyUJXmP5rEAerNZreA
-         6mJA==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=D7USE7AcSD2YljcS61kNBptWjf/iLrS8g55c3sCGb5Y=;
+        b=NWnooMotQFthGKv372Qu9SJBLRm/oAX/AuviKEsNRI2p2YWt6j8yleyRgwYR+BDmeE
+         rVCZB05mibw5nfAH86+caUccRaOoRmYEe6fi4xonykx886oXK+MtgZpjqrGwO8c4j705
+         IxVhP4NhYarzG+1/JE61XIvTMNKpllqwqu3S/Ji4p8fEYX1h2ExzeW4j1/qo/9zqy3zM
+         J9rIKE26g2w4eCSDk519lzzmX4fUiiBrXRkL6kwLrn93BEotZZDrKQ8OiOZmHIqULddp
+         DfEYIareszj9xkET2HCbMBDljv60wn7pYZO/Wn4DAFvMfs4/ImN44xK3xAWipZ18/h67
+         OYww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=P38kTBSJr/DRXyh4Je0XkAOEtRTZS4roS95ylRUlbWA=;
-        b=YRNJ1hcr80L0IvvL4RLTpwtmgI9lmsfEJ9Zse8gb2THSSwSuMtYFkpttYv4tNuHQia
-         p+phGpRV/RRpgSEhxsSBs2ys15azcmdGQNI2867R3lMnPSSMyDbF70kswLQ0TT8/DmrV
-         KuL2b6AV2zE14d1PfvxvlxiuJM4l5+sWklS8q8k+FDzLMmWV7sBuzaMRwg2sA11sWlYm
-         C8WVIPF6JJfrt1KFOq+x1c39CuuKnUzMNDFsXUIpQezLb6OfCcS94SOp8nmL+3Gw8ReJ
-         1+PesKjpFoPkSQn58WUpsfJozRXlVw+9OrHQsF2IF8m8hNQJrMxW5PQ0cOgcAVKPaDiW
-         eiOQ==
-X-Gm-Message-State: ACrzQf0waTxcr3I6VtPv5Twf20UnUW3k8jdRUwDUOP/lfAFHt17jwKNU
-        nN6yl450NrihTT8MFLF8eNZs/A==
-X-Google-Smtp-Source: AMsMyM6zQoWParlSxvfB2HUAFHKdeQhoLVug903b1NjXtgJhHefeJargZB0bYfSyjxfnLy/MCiC+Eg==
-X-Received: by 2002:a5d:598d:0:b0:230:f238:a485 with SMTP id n13-20020a5d598d000000b00230f238a485mr13533983wri.71.1666371196492;
-        Fri, 21 Oct 2022 09:53:16 -0700 (PDT)
-Received: from localhost.localdomain ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id n14-20020a5d400e000000b0022ae401e9e0sm19541773wrp.78.2022.10.21.09.53.15
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=D7USE7AcSD2YljcS61kNBptWjf/iLrS8g55c3sCGb5Y=;
+        b=Y+vqkHzja5d+ZTyvw2kiQxQwNhW4K1fzRZNP7p254vjN+aBnnuSG8CmZKNN+8WFpoH
+         yV2uztPQmK6qXb386Al5f1pT8hTw8iO63d9euk5+wK5AWCniUM/qKY2qydN2DBnZJ9vu
+         FFLbaRDjTckLfZJIsmaxRUovumATghkT9H+3BDEwURuLt/m2fphrSGwaD4ez3UZqhJWg
+         t8vI0HE/j7tglyhaYqbtOy4dg+4wSjQZi3ewuaa6GQCrDUqM5FpED2fCVS1iCkgp8/CR
+         ecl7pZ1YcC39x0HNuFshfsGHKkEaTg9nOfSe3/JeaS3OWTsH32VrObG5Cez4OmXCJYio
+         gyaQ==
+X-Gm-Message-State: ACrzQf3p331GErNpVq9pGcT4bIGIWBwX8hIQBIJlEkTWm6hnQzGZi/+P
+        oMlS9lPzSIjCG4IXBde936vNZ9aEzCM=
+X-Google-Smtp-Source: AMsMyM6/Nq4vjgilkRSoMe2QbfspmZeCAOdOstO79QV0k7bIX7XPsVdCW2Mw0iZJ3zw6btCR6hNVFA==
+X-Received: by 2002:a05:600c:3108:b0:3c6:ff0a:c22 with SMTP id g8-20020a05600c310800b003c6ff0a0c22mr13609539wmo.25.1666371221909;
+        Fri, 21 Oct 2022 09:53:41 -0700 (PDT)
+Received: from localhost.localdomain (93-42-70-134.ip85.fastwebnet.it. [93.42.70.134])
+        by smtp.googlemail.com with ESMTPSA id a15-20020adfeecf000000b00228692033dcsm18663234wrp.91.2022.10.21.09.53.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 09:53:15 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     broonie@kernel.org
-Cc:     lgirdwood@gmail.com, bgoswami@quicinc.com, perex@perex.cz,
-        tiwai@suse.com, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v2 9/9] ASoC: qdsp6: audioreach: add support to enable module command
-Date:   Fri, 21 Oct 2022 17:52:07 +0100
-Message-Id: <20221021165207.13220-10-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20221021165207.13220-1-srinivas.kandagatla@linaro.org>
-References: <20221021165207.13220-1-srinivas.kandagatla@linaro.org>
+        Fri, 21 Oct 2022 09:53:41 -0700 (PDT)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     stable@vger.kernel.org
+Subject: [PATCH] mtd: nand: raw: qcom_nandc: handle ret from parse with codeword_fixup
+Date:   Fri, 21 Oct 2022 18:53:04 +0200
+Message-Id: <20221021165304.19991-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support to enable Module command which is required for logging
-module to be able to debug.
+With use_codeword_fixup enabled, any return from
+mtd_device_parse_register gets overwritten. Aside from the clear bug, this
+is also problematic as a parser can EPROBE_DEFER and because this is not
+correctly handled, the nand is never rescanned later in the bootup
+process.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+An example of this problem is when smem requires additional time to be
+probed and nandc use qcomsmempart as parser. Parser will return
+EPROBE_DEFER but in the current code this ret gets overwritten by
+qcom_nand_host_parse_boot_partitions and qcom_nand_host_init_and_register
+return 0.
+
+Correctly handle the return code from mtd_device_parse_register so that
+any error from this function is not ignored.
+
+Fixes: 862bdedd7f4b ("mtd: nand: raw: qcom_nandc: add support for unprotected spare data pages")
+Cc: stable@vger.kernel.org # v6.0+
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 ---
- sound/soc/qcom/qdsp6/audioreach.c | 40 ++++++++++++++++++++++++++++++-
- sound/soc/qcom/qdsp6/audioreach.h |  5 ++++
- 2 files changed, 44 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/qcom_nandc.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/audioreach.c b/sound/soc/qcom/qdsp6/audioreach.c
-index 1338b99f37e1..1e0c918eb576 100644
---- a/sound/soc/qcom/qdsp6/audioreach.c
-+++ b/sound/soc/qcom/qdsp6/audioreach.c
-@@ -731,6 +731,42 @@ static int audioreach_sal_set_media_format(struct q6apm_graph *graph,
- 	return rc;
+diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+index 8f80019a9f01..198a44794d2d 100644
+--- a/drivers/mtd/nand/raw/qcom_nandc.c
++++ b/drivers/mtd/nand/raw/qcom_nandc.c
+@@ -3167,16 +3167,18 @@ static int qcom_nand_host_init_and_register(struct qcom_nand_controller *nandc,
+ 
+ 	ret = mtd_device_parse_register(mtd, probes, NULL, NULL, 0);
+ 	if (ret)
+-		nand_cleanup(chip);
++		goto err;
+ 
+ 	if (nandc->props->use_codeword_fixup) {
+ 		ret = qcom_nand_host_parse_boot_partitions(nandc, host, dn);
+-		if (ret) {
+-			nand_cleanup(chip);
+-			return ret;
+-		}
++		if (ret)
++			goto err;
+ 	}
+ 
++	return 0;
++
++err:
++	nand_cleanup(chip);
+ 	return ret;
  }
  
-+static int audioreach_module_enable(struct q6apm_graph *graph,
-+				    struct audioreach_module *module,
-+				    bool enable)
-+{
-+	struct apm_module_param_data *param_data;
-+	struct param_id_module_enable *param;
-+	int payload_size;
-+	struct gpr_pkt *pkt;
-+	int rc;
-+	void *p;
-+
-+	payload_size = sizeof(*param) + APM_MODULE_PARAM_DATA_SIZE;
-+
-+	pkt = audioreach_alloc_apm_cmd_pkt(payload_size, APM_CMD_SET_CFG, 0);
-+	if (IS_ERR(pkt))
-+		return PTR_ERR(pkt);
-+
-+	p = (void *)pkt + GPR_HDR_SIZE + APM_CMD_HDR_SIZE;
-+
-+	param_data = p;
-+	param_data->module_instance_id = module->instance_id;
-+	param_data->error_code = 0;
-+	param_data->param_id = PARAM_ID_MODULE_ENABLE;
-+	param_data->param_size = sizeof(*param);
-+	p = p + APM_MODULE_PARAM_DATA_SIZE;
-+	param = p;
-+
-+	param->enable = enable;
-+
-+	rc = q6apm_send_cmd_sync(graph->apm, pkt, 0);
-+
-+	kfree(pkt);
-+
-+	return rc;
-+}
-+
- static int audioreach_mfc_set_media_format(struct q6apm_graph *graph,
- 					   struct audioreach_module *module,
- 					   struct audioreach_module_config *cfg)
-@@ -1077,7 +1113,9 @@ int audioreach_set_media_format(struct q6apm_graph *graph, struct audioreach_mod
- 
- 	switch (module->module_id) {
- 	case MODULE_ID_DATA_LOGGING:
--		rc = audioreach_logging_set_media_format(graph, module);
-+		rc = audioreach_module_enable(graph, module, true);
-+		if (!rc)
-+			rc = audioreach_logging_set_media_format(graph, module);
- 		break;
- 	case MODULE_ID_PCM_DEC:
- 	case MODULE_ID_PCM_ENC:
-diff --git a/sound/soc/qcom/qdsp6/audioreach.h b/sound/soc/qcom/qdsp6/audioreach.h
-index 707dfbdbc156..1d1d47d47d40 100644
---- a/sound/soc/qcom/qdsp6/audioreach.h
-+++ b/sound/soc/qcom/qdsp6/audioreach.h
-@@ -537,6 +537,11 @@ struct payload_media_fmt_pcm {
- 	uint8_t channel_mapping[];
- } __packed;
- 
-+#define PARAM_ID_MODULE_ENABLE			0x08001026
-+struct param_id_module_enable {
-+	uint32_t enable;
-+} __packed;
-+
- #define PARAM_ID_CODEC_DMA_INTF_CFG		0x08001063
- 
- struct param_id_codec_dma_intf_cfg {
 -- 
-2.21.0
+2.37.2
 
