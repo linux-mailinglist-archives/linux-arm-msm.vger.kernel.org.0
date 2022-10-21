@@ -2,85 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EED0A606D3F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 03:54:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E170606E4F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 05:27:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229789AbiJUByM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Oct 2022 21:54:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47590 "EHLO
+        id S230005AbiJUD1S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Oct 2022 23:27:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229747AbiJUByL (ORCPT
+        with ESMTP id S229998AbiJUD1Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Oct 2022 21:54:11 -0400
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D339158181;
-        Thu, 20 Oct 2022 18:54:10 -0700 (PDT)
-Received: by mail-oi1-f177.google.com with SMTP id x188so1694092oig.5;
-        Thu, 20 Oct 2022 18:54:10 -0700 (PDT)
+        Thu, 20 Oct 2022 23:27:16 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD7311EB575
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 20:27:14 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id o8so1045485qvw.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Oct 2022 20:27:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=DXaILJA4sqV2bnElPXbGxqwviK1afldiXClOy9rIblI=;
+        b=dAoHlAIA4reTZbRWZozQ9MpL036uremOzIP4o6Q0nHoppXoNYGg1S0dJ+Ua9OpsWxj
+         tz0xUiaumbnos7PcCUBBQvA6bMOJGw91riQ8xYKxPONGG/+c9tAGK4M5feM5Azxbxlx8
+         PK5yl7KbO0C+EbyQpGuJWtmEhl5JLS6G1+xkDqwwZ10vcnBz2MoQ4LNf4WtCdpYA7PZQ
+         rytFjUWtMg9nOTQQRPq+QQi9tEcPlzfXuid88MvT7mPwG6WuWkEWCE3NvciliQITmd+7
+         2ZhSVmIHcY2PEQP9L9OzsD9oqxFOd3Jps3tSH5zeWjhS5aTd2XLrO1XwBlK5rn8m4svL
+         V4LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=50G7i/VlfV6g3TEgkiDJrPM7pGNq9cJ5IVshh1NyIl8=;
-        b=WlHlbCI3lcnp3an7Ql4RwOkReic9LzDlZksDmuf2qE4yHc3o3boOjht4Ztbq7PqNYv
-         rR6+IMg/p6XsomI2ELajlhA4B4kOoh4jM1/F9GSjW2IeJmyrxyerMYTWVnr51a1cQAEv
-         tTr5kIqtXYaKjtppN9tdRjn+I71CBo0LrbCLWfygUxKVSFEwqAz6F5lwQGF3zzsT6G6g
-         EXs0gbPy3kSh9lJoVSKj/TvVmfY+6Ws8ZT9C2BHO6YSwxOlrhxg1kUDa25V1cc2R0fDE
-         rkJ1q9kzJlIO0YarCNc9S0O23lV155Z1BSH+Vn3JnYM9YfNBvCz+RgCepzmM9BPR1BZi
-         EWvg==
-X-Gm-Message-State: ACrzQf1T0CMr0gnBeNvXmdl21bb+kTwSfxfQH0FD0YuDva1lkv74O3q0
-        5gCcX4mZQnHqkICr8V5sIvQs9af2TQ==
-X-Google-Smtp-Source: AMsMyM6FYQPGkJtjJ4yIdF1gZq3keLCLJfvptvRw+9kSDjrA4k6PhW7tEtGJYtouyGkJqxwUpbXDdQ==
-X-Received: by 2002:a05:6808:ecd:b0:34d:8ab0:912 with SMTP id q13-20020a0568080ecd00b0034d8ab00912mr22293238oiv.89.1666317239605;
-        Thu, 20 Oct 2022 18:53:59 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id 33-20020a9d0c24000000b00660d73c8bdesm565568otr.50.2022.10.20.18.53.58
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DXaILJA4sqV2bnElPXbGxqwviK1afldiXClOy9rIblI=;
+        b=Hp0WnrKhDf8e+mgQ1nxFP+4Jkrhbxoj5W/FFilqPcfeh6dIuD47tUGEubujoa7ON26
+         qLEDXO83Wr9sjEDg1vPJig86LgUbIMnF5gD2m+GMCjnTpJ8zTaSt17zt/Hi5WHX49O9X
+         WeW/Xg8vIDiXukhYXEMk2BQLRzIdy0arUFwrRtISyaTLWqmvMne3G6reDANpghEzMRXL
+         UkpY+GVwUYABfKh3zcLNsXixQ8VtBelJZYbQ8KjuyXthDUKuhLlYXUZ+vBIiNR72K8wW
+         fUoQXUNM8AOWl4sagf8TlQL+rfGV+5kz21CVAHH4pNsw0ijDMqu41aW1uU8SqczcTcf2
+         0B3Q==
+X-Gm-Message-State: ACrzQf0Z0EjBmWnjPNs0ONiD3oZ0wHe00xEJTGCzoNWn10pBokq9Nor+
+        DLHMkcFGjWVRO+zUDRkGAyaacw==
+X-Google-Smtp-Source: AMsMyM7T52UkbN7NE1B397WdN8cNM3VSPuUUf6497wUYSL/kzduK+VF63+tF662zHBsdQRB7nbUuDw==
+X-Received: by 2002:a0c:f54f:0:b0:4b1:872e:102 with SMTP id p15-20020a0cf54f000000b004b1872e0102mr14926844qvm.123.1666322833490;
+        Thu, 20 Oct 2022 20:27:13 -0700 (PDT)
+Received: from krzk-bin.MSRM (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
+        by smtp.gmail.com with ESMTPSA id y21-20020a37e315000000b006ecb3694163sm8368172qki.95.2022.10.20.20.27.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Oct 2022 18:53:59 -0700 (PDT)
-Received: (nullmailer pid 2154135 invoked by uid 1000);
-        Fri, 21 Oct 2022 01:54:00 -0000
-Date:   Thu, 20 Oct 2022 20:54:00 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, rafael@kernel.org,
-        johan@kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, viresh.kumar@linaro.org,
-        robh+dt@kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/4] dt-bindings: cpufreq: cpufreq-qcom-hw: Add cpufreq
- clock provider
-Message-ID: <166631723974.2154081.10911150649507151378.robh@kernel.org>
-References: <20221019135925.366162-1-manivannan.sadhasivam@linaro.org>
- <20221019135925.366162-3-manivannan.sadhasivam@linaro.org>
+        Thu, 20 Oct 2022 20:27:12 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] arm64: defconfig: build-in Qualcomm SC7180 and SM8450 interconnects
+Date:   Thu, 20 Oct 2022 23:27:02 -0400
+Message-Id: <20221021032702.1340963-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221019135925.366162-3-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 19 Oct 2022 19:29:23 +0530, Manivannan Sadhasivam wrote:
-> Qualcomm platforms making use of CPUFreq HW Engine (EPSS/OSM) supply clocks
-> to the CPU cores. Document the same in the binding to reflect the actual
-> implementation.
-> 
-> CPUFreq HW will become the clock provider and CPU cores will become the
-> clock consumers.
-> 
-> The clock index for each CPU core is based on the frequency domain index.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  .../devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
-> 
+On Qualcomm SC7180 and SM8450 SocS, the typical debug console serial
+port is part of GENI Serial Engine QUP Wrapper Controller which uses
+interconnects.  This means that without interconnect drivers, the serial
+might not probe.  Without serial console, the root might not be mounted
+by initramfs:
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+  + REASON=No init found. Try passing init= bootarg. PS1=(initramfs
+  ...
+  (initramfs) run-init -c /dev/console -n /root /sbin/init
+  run-init: opening console: No such file or directory
+
+This means that interconnect drivers on these Qualcomm SoCs cannot be
+modules and must be built-in to mount rootfs.
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm64/configs/defconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 2af94d3c1c11..c1b7fb44e381 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1301,7 +1301,7 @@ CONFIG_INTERCONNECT_QCOM_MSM8916=m
+ CONFIG_INTERCONNECT_QCOM_MSM8996=m
+ CONFIG_INTERCONNECT_QCOM_OSM_L3=m
+ CONFIG_INTERCONNECT_QCOM_QCS404=m
+-CONFIG_INTERCONNECT_QCOM_SC7180=m
++CONFIG_INTERCONNECT_QCOM_SC7180=y
+ CONFIG_INTERCONNECT_QCOM_SC7280=y
+ CONFIG_INTERCONNECT_QCOM_SC8180X=y
+ CONFIG_INTERCONNECT_QCOM_SC8280XP=y
+@@ -1309,7 +1309,7 @@ CONFIG_INTERCONNECT_QCOM_SDM845=y
+ CONFIG_INTERCONNECT_QCOM_SM8150=m
+ CONFIG_INTERCONNECT_QCOM_SM8250=m
+ CONFIG_INTERCONNECT_QCOM_SM8350=m
+-CONFIG_INTERCONNECT_QCOM_SM8450=m
++CONFIG_INTERCONNECT_QCOM_SM8450=y
+ CONFIG_EXT2_FS=y
+ CONFIG_EXT3_FS=y
+ CONFIG_EXT4_FS_POSIX_ACL=y
+-- 
+2.34.1
+
