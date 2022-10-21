@@ -2,150 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED7DF607588
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 12:57:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C16C6075A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 13:10:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230244AbiJUK5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Oct 2022 06:57:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42136 "EHLO
+        id S229864AbiJULKr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Oct 2022 07:10:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230208AbiJUK5N (ORCPT
+        with ESMTP id S229574AbiJULKq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Oct 2022 06:57:13 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 257813C8E4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 03:57:12 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id i3so2221724pfk.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 03:57:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=quanta-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XwU1VZF8+6iJFAuGjdLVREmySRqI+EDvo5yioZX/3UI=;
-        b=r5gBS2fsD1++YH1wNtzJF0AfDCDUK8gEMTDVom6HPOh/pvqX5sUCNbZ1HyZlqe+6MM
-         apUZcZjl7ZtVfiaB1t6hMXBuT0lAKGxk825LQobHHEPJ3AFS9IIUL6Hn6W5ivEh7EqFw
-         mVDGMXStqzjE86yuuih8gxFp+/fek+ErLAh1JQtmAkYPY3AkCW2MlcBEGZ4vA/Zzn+af
-         7oCISJaln5kHqnMsNqhMKdbNmXnNxjutQHVWNo5l0iidgauh2j5eUEMCc7VV+f3h/1Kf
-         3PIwFl5quethxgr7OOQ8XHDjqwNsBjPC6N2LqYqpjgtFL/hOz75m3lq339CHqbaqE6Pb
-         CWdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XwU1VZF8+6iJFAuGjdLVREmySRqI+EDvo5yioZX/3UI=;
-        b=DYzgoYu3DjVKS7oNYOn/g4AIIZMtO0X59kDAlfwWQIlJkiR1KrPxRucJZd3JCaTgG8
-         M8X7T4uOOycCYW5q78bNJe63ze6NRCRR6p3IJ1xrFxYXR1egUrfFGF+2h6FGzAsfmHo/
-         p/6YebFtMtn4clMqktxNQZv88OY5UbAxxaZ19gDbdOhWpjEhvUAVEGCvCqZ1CXUSCfxe
-         khcdbBMewsLqYqN1or6VU8oI3j4fUeoUHHcOFNFdXVC43jnFIwjPwM6VQWgu81l4p2ST
-         L4xzWFpEXnozja9oH1COE4bLlnoCmKe662aReMDuXFDYLQ1G4smGqfZQBFdqFgNifrps
-         4Gvg==
-X-Gm-Message-State: ACrzQf3Ydtf8PA1ynp0t8ctlZCiTpumOTF9fYj18Bm6nIAMeLJNQFuDH
-        7aL6NJ6m/ZAOj6ohwlTJhIVocUjpfe27Mg==
-X-Google-Smtp-Source: AMsMyM7zq0aOY+XkV/Cu34hN7J81Ec6TfMM4pUZSyDrHgcSBRtQsInt2EprzBx8nsAJqT6FDjEZC5A==
-X-Received: by 2002:a62:5252:0:b0:562:eef6:402f with SMTP id g79-20020a625252000000b00562eef6402fmr18739943pfb.79.1666349831597;
-        Fri, 21 Oct 2022 03:57:11 -0700 (PDT)
-Received: from liang-Predator-PH517-52.. (2001-b400-e339-bb7d-a809-3af0-ee98-4fc4.emome-ip6.hinet.net. [2001:b400:e339:bb7d:a809:3af0:ee98:4fc4])
-        by smtp.gmail.com with ESMTPSA id 2-20020a620602000000b0052d4cb47339sm14822957pfg.151.2022.10.21.03.57.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 03:57:11 -0700 (PDT)
-From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     dianders@chromium.org,
-        Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
-        Andy Gross <agross@kernel.org>,
+        Fri, 21 Oct 2022 07:10:46 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99B4E172509;
+        Fri, 21 Oct 2022 04:10:44 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 24BA761E63;
+        Fri, 21 Oct 2022 11:10:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC07C433D7;
+        Fri, 21 Oct 2022 11:10:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1666350643;
+        bh=DWAifErFWoOZm3KXJ7C5WfdvDrTHXU8ehmXjnEMpk9c=;
+        h=From:To:Cc:Subject:Date:From;
+        b=QgNFhYv8G/Asx+lSdBReO86jSAJEjxgSWMogrbsT6YOtT6jUHTfv5oVl2O/0+Qo+m
+         /tNVIUygthIrO1Rdq6ngwc29Lr0kCwuddqQdtTimhDrBNucgtQ1EiW9JZUrdVoma6t
+         pSKABao6T6G603SZRiWqeBwVotIv+Wigh938lM3pXqTzqQsWBNLeVokv/jYPy5mXte
+         XjvX87LGEOaPDQWzP1+TLnH3ydtU4Rdsd3NNolNaOhR1J813G/UeDNlymg2y/1QoXQ
+         ovGuLVSNz1NFOFivgJFsAeM/hwWru1HD/d1XGMgmZzpa7Kc3GXFygRSTa50Ht1sYQw
+         MsFdyPhc8Algg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1olpv4-0007KS-9d; Fri, 21 Oct 2022 13:10:30 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v8 4/4] arm64: dts: qcom: sc7280: Add touchscreen and touchpad support for evoker
-Date:   Fri, 21 Oct 2022 18:56:23 +0800
-Message-Id: <20221021185331.v8.4.I3ac715e729f6f9b5a3e3001b155df4f9d14e6186@changeid>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221021105623.3520859-1-sheng-liang.pan@quanta.corp-partner.google.com>
-References: <20221021105623.3520859-1-sheng-liang.pan@quanta.corp-partner.google.com>
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v3 00/15] phy: qcom-qmp-pcie: add support for sc8280xp
+Date:   Fri, 21 Oct 2022 13:09:32 +0200
+Message-Id: <20221021110947.28103-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Change touchpad and touchscreen node for evoker
-Touchpad: SA461D-1011
-Touchscreen: GT7986U
+This series adds support for the PCIe PHYs on SC8280XP including its
+four-lane PHYs.
 
-Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
----
+The first half of the series clean up the driver in preparation for
+supporting SC8280XP and its new devicetree bindings that drops the
+legacy child node and the (incomplete) description of register
+subregions.
 
-Changes in v8:
-- updated patch subjects
+The other QMP bindings suffer from similar problems and follow-on series
+will do corresponding changes to the UFS, USB and combo QMP bindings and
+drivers.
 
-Changes in v7:
-- add compiatable for gt7986
+Note that these patches depend on the linux-phy next branch of today and
+the following two series:
 
-Changes in v6:
-- add removed pinctrl and align touchscreen label with herobrine board
+ 1. [PATCH v2 00/14] phy: qcom-qmp: further prep cleanups
 
-Changes in v5:
-- new patch for Touchscreen/trackpad in v5
+    https://lore.kernel.org/lkml/20221012081241.18273-1-johan+linaro@kernel.org
 
- .../boot/dts/qcom/sc7280-herobrine-evoker.dtsi    | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ 2. [PATCH 00/20] phy: qcom-qmp: further prep fixes and cleanups (set 3)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-index a6015491c6082..706dd82a70138 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-@@ -23,16 +23,15 @@ ap_tp_i2c: &i2c0 {
- 	status = "okay";
- 	clock-frequency = <400000>;
- 
--	trackpad: trackpad@2c {
--		compatible = "hid-over-i2c";
--		reg = <0x2c>;
-+	trackpad: trackpad@15 {
-+		compatible = "elan,ekth3000";
-+		reg = <0x15>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&tp_int_odl>;
- 
- 		interrupt-parent = <&tlmm>;
- 		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
- 
--		hid-descr-addr = <0x20>;
- 		vcc-supply = <&pp3300_z1>;
- 
- 		wakeup-source;
-@@ -43,9 +42,9 @@ ts_i2c: &i2c13 {
- 	status = "okay";
- 	clock-frequency = <400000>;
- 
--	ap_ts: touchscreen@10 {
--		compatible = "elan,ekth6915";
--		reg = <0x10>;
-+	ap_ts: touchscreen@5d {
-+		compatible = "goodix,gt7986u", "goodix,gt7375p";
-+		reg = <0x5d>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&ts_int_conn>, <&ts_rst_conn>;
- 
-@@ -54,7 +53,7 @@ ap_ts: touchscreen@10 {
- 
- 		reset-gpios = <&tlmm 54 GPIO_ACTIVE_LOW>;
- 
--		vcc33-supply = <&ts_avdd>;
-+		vdd-supply = <&ts_avdd>;
- 	};
- };
- 
+    https://lore.kernel.org/lkml/20221012084846.24003-1-johan+linaro@kernel.org
+
+Johan
+
+
+Changes in v3
+ - use bulk clk API for pipe clocks (Dmitry)
+
+Changes in v2
+ - rename current DT schema after first SoC added to the original
+   bindings (IPQ8074) and add a reference to the new SC8280XP bindings
+   instead of marking the current bindings as "legacy" (Krzysztof)
+
+ - add "sc8280xp" infix to the new DT schema filename (Krzysztof)
+
+ - tighten description of the 'qcom,4ln-config-sel' phandle array
+   (Krzysztof)
+
+
+Johan Hovold (15):
+  phy: qcom-qmp-pcie: sort device-id table
+  phy: qcom-qmp-pcie: move device-id table
+  phy: qcom-qmp-pcie: merge driver data
+  phy: qcom-qmp-pcie: clean up device-tree parsing
+  phy: qcom-qmp-pcie: clean up probe initialisation
+  phy: qcom-qmp-pcie: rename PHY ops structure
+  phy: qcom-qmp-pcie: clean up PHY lane init
+  phy: qcom-qmp-pcie: add register init helper
+  dt-bindings: phy: qcom,qmp-pcie: rename current bindings
+  dt-bindings: phy: qcom,qmp-pcie: add sc8280xp bindings
+  phy: qcom-qmp-pcie: restructure PHY creation
+  phy: qcom-qmp-pcie: fix initialisation reset
+  phy: qcom-qmp-pcie: add support for pipediv2 clock
+  phy: qcom-qmp-pcie: add support for sc8280xp
+  phy: qcom-qmp-pcie: add support for sc8280xp 4-lane PHYs
+
+ ...hy.yaml => qcom,ipq8074-qmp-pcie-phy.yaml} |   7 +-
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       | 165 ++++
+ drivers/phy/qualcomm/Kconfig                  |   1 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 824 ++++++++++++------
+ .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h   |   2 +
+ 5 files changed, 745 insertions(+), 254 deletions(-)
+ rename Documentation/devicetree/bindings/phy/{qcom,qmp-pcie-phy.yaml => qcom,ipq8074-qmp-pcie-phy.yaml} (96%)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+
 -- 
-2.34.1
+2.37.3
 
