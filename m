@@ -2,67 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC94360700B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 08:28:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DC11607031
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 08:40:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230055AbiJUG2R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Oct 2022 02:28:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58354 "EHLO
+        id S230048AbiJUGk1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Oct 2022 02:40:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230134AbiJUG2O (ORCPT
+        with ESMTP id S229515AbiJUGkZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Oct 2022 02:28:14 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 649B423B692;
-        Thu, 20 Oct 2022 23:28:12 -0700 (PDT)
+        Fri, 21 Oct 2022 02:40:25 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A070112A96;
+        Thu, 20 Oct 2022 23:40:22 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 06D5761DB4;
-        Fri, 21 Oct 2022 06:28:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50FB5C433B5;
-        Fri, 21 Oct 2022 06:28:11 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id E688EB82ADA;
+        Fri, 21 Oct 2022 06:40:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B59C433D6;
+        Fri, 21 Oct 2022 06:40:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666333691;
-        bh=vki3SV9SSyngMAmDw2B3Z/Wta7lXrBwkYK2vC4dHXsE=;
+        s=k20201202; t=1666334419;
+        bh=sSDsv8sNrV4MWlFb62YOB+RVifnK0tCFSxdozhi2KE4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=XejgPAxhO/ZnuUjU7V4eEv8ZNsIq5EHgiZwVRaQg7SqALQHSOvn1pbEX1kK7Wl5nu
-         MGEapxwGWcGFJrgPZ7Iuw78CLtoChPKaiP/lMrUFVDd3rncHXnFKFCbOB8O7sXTbYl
-         xkuxrAie2iu9GeckYRe1o9gdhPQdfpZ99E6GVsNjXUwiRl9y2wHvPSz9FqetXSqkWm
-         Vng1In4qGW2AkZFbrAXz7Ys9Ae+Px8E2gfRSAiTaL6nu7gPtMNgEeujdkSDeJfyZNX
-         3gkEKFh5qiMCoxHjBVB7e2tDpnnCRN4b6CQ0XYSsySd9WSFr/C+OZS1ECHqr+Tnplp
-         fspZK3lJ2y3Ag==
+        b=aksXMaxXMeRvPuoZU14QDKDiGuGGTwPIhJul2Z60muawg8b7ekV6ZDVQQeeJ9+9cq
+         9R1szce+/cZdhvcZx9xGVe2M2/qKnpBPIy02FrsDgUVNxkqeiU+/yoAgTxITqBhbNz
+         N1FOsikN0SJHBXA4OrLaFSQyGl48X1X2whKpKnGrTO5vj4dnUe/jr4Z7tpbos4L3Lo
+         UpYBe483uJYXHFYQXFVD2YE2J5Mm3nbPnTYEuP9nNoKLFdEKxyf5xwfZegEfkmJi73
+         m92DLrkkhhk2/SQT+Hoe7aWlqUhnNvcvbD+dreLWEfwXP5gPFldV0fsEQzYsYnWcGT
+         YiurHGZvac48Q==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1ollVc-0000lm-HY; Fri, 21 Oct 2022 08:27:57 +0200
-Date:   Fri, 21 Oct 2022 08:27:56 +0200
+        id 1ollhN-0001Z7-Ju; Fri, 21 Oct 2022 08:40:05 +0200
+Date:   Fri, 21 Oct 2022 08:40:05 +0200
 From:   Johan Hovold <johan@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 00/10] drm/msm: probe deferral fixes
-Message-ID: <Y1I77HYeOkx1fz1E@hovoldconsulting.com>
-References: <20220913085320.8577-1-johan+linaro@kernel.org>
- <YymCll02tRIMb+9Z@hovoldconsulting.com>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        quic_vbadigan@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: PCI: qcom: Add SC8280XP/SA8540P
+ interconnects
+Message-ID: <Y1I+xQDpvedLXNHf@hovoldconsulting.com>
+References: <20221017112449.2146-1-johan+linaro@kernel.org>
+ <20221017112449.2146-2-johan+linaro@kernel.org>
+ <010b6de2-5df6-77c9-2f04-43f2edc89ff2@linaro.org>
+ <Y1D/Vaa/3zKP4Cxj@hovoldconsulting.com>
+ <972db8bd-e45a-47b1-c2c4-008c279c6b59@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YymCll02tRIMb+9Z@hovoldconsulting.com>
+In-Reply-To: <972db8bd-e45a-47b1-c2c4-008c279c6b59@linaro.org>
 X-Spam-Status: No, score=-7.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -72,49 +74,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 20, 2022 at 11:06:30AM +0200, Johan Hovold wrote:
-> On Tue, Sep 13, 2022 at 10:53:10AM +0200, Johan Hovold wrote:
-> > The MSM DRM driver is currently broken in multiple ways with respect to
-> > probe deferral. Not only does the driver currently fail to probe again
-> > after a late deferral, but due to a related use-after-free bug this also
-> > triggers NULL-pointer dereferences.
-> > 
-> > These bugs are not new but have become critical with the release of
-> > 5.19 where probe is deferred in case the aux-bus EP panel driver has not
-> > yet been loaded.
-> > 
-> > The underlying problem is lifetime issues due to careless use of
-> > device-managed resources.
-> 
-> Any chance of getting this merged for 6.1?
+On Thu, Oct 20, 2022 at 08:29:02AM -0400, Krzysztof Kozlowski wrote:
+> On 20/10/2022 03:57, Johan Hovold wrote:
+> > On Wed, Oct 19, 2022 at 10:37:31AM -0400, Krzysztof Kozlowski wrote:
+> >> On 17/10/2022 07:24, Johan Hovold wrote:
+> >>> Add the missing SC8280XP/SA8540P "pcie-mem" and "cpu-pcie" interconnect
+> >>> paths to the bindings.
+> >>>
+> >>> Fixes: 76d777ae045e ("dt-bindings: PCI: qcom: Add SC8280XP to binding")
+> >>> Fixes: 76c4207f4085 ("dt-bindings: PCI: qcom: Add SA8540P to binding")
+> >>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> >>> ---
+> >>>  .../devicetree/bindings/pci/qcom,pcie.yaml    | 25 +++++++++++++++++++
+> >>>  1 file changed, 25 insertions(+)
+> >>>
+> >>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> >>> index 22a2aac4c23f..a55434f95edd 100644
+> >>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> >>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
 
-Is anyone picking these up as fixes for 6.1-rc as we discussed?
+> > Are you suggesting something like moving the names to the common
+> > constraints for now:
+> > 
+> >   interconnects:
+> >     maxItems: 2
+> > 
+> >   interconnect-names:
+> >     items:
+> >       - const: pcie-mem
+> >       - const: cpu-pcie
+> > 
+> > and then in the allOf:
+> > 
+> >   - if:
+> >       properties:
+> >         compatible:
+> >           contains:
+> >             enum:
+> >               - qcom,pcie-sa8540p
+> >               - qcom,pcie-sc8280xp
+> >     then:
+> >       required:
+> >         - interconnects
+> >         - interconnect-names
+> >     else:
+> >       properties:
+> >         interconnects: false
+> >         interconnect-names: false
+> > 
+> > This way we'd catch anyone adding interconnects to a DTS without first
+> > updating the bindings, but it also seems to go against the idea of
+> > bindings fully describing the hardware by saying that no other platforms
+> > have interconnects (when they actually do even if we don't describe it
+> > just yet).
+> 
+> You can add a comment to the else like "TODO: Not described yet". I
+> would prefer to have specific but incomplete bindings, instead of loose
+> one which later might cause people adding whatever names they like.
+> 
+> > Or should we do the above but without the else clause to have some
+> > constraints in place on the names at least?
+> 
+> This would work as well if you think the names are applicable for other
+> devices.
+
+I think that's a reasonable assumption so I'll go with this alternative.
+
+Thanks!
 
 Johan
- 
-> > Changes in v2
-> >  - use a custom devres action instead of amending the AUX bus interface
-> >    (Doug)
-> >  - split sanity check fixes and cleanups per bridge type (Dmitry)
-> >  - add another Fixes tag for the missing bridge counter reset (Dmitry)
-> > 
-> > 
-> > Johan Hovold (10):
-> >   drm/msm: fix use-after-free on probe deferral
-> >   drm/msm/dp: fix memory corruption with too many bridges
-> >   drm/msm/dsi: fix memory corruption with too many bridges
-> >   drm/msm/hdmi: fix memory corruption with too many bridges
-> >   drm/msm/dp: fix IRQ lifetime
-> >   drm/msm/dp: fix aux-bus EP lifetime
-> >   drm/msm/dp: fix bridge lifetime
-> >   drm/msm/hdmi: fix IRQ lifetime
-> >   drm/msm/dp: drop modeset sanity checks
-> >   drm/msm/dsi: drop modeset sanity checks
-> > 
-> >  drivers/gpu/drm/msm/dp/dp_display.c | 26 +++++++++++++++++++-------
-> >  drivers/gpu/drm/msm/dp/dp_parser.c  |  6 +++---
-> >  drivers/gpu/drm/msm/dp/dp_parser.h  |  5 +++--
-> >  drivers/gpu/drm/msm/dsi/dsi.c       |  9 +++++----
-> >  drivers/gpu/drm/msm/hdmi/hdmi.c     |  7 ++++++-
-> >  drivers/gpu/drm/msm/msm_drv.c       |  1 +
-> >  6 files changed, 37 insertions(+), 17 deletions(-)
