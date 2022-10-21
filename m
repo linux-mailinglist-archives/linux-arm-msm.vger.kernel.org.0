@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C87F607374
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 11:09:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44759607370
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Oct 2022 11:09:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230498AbiJUJJL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Oct 2022 05:09:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35584 "EHLO
+        id S231154AbiJUJJN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Oct 2022 05:09:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231162AbiJUJJA (ORCPT
+        with ESMTP id S231177AbiJUJJE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Oct 2022 05:09:00 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05E5F1A3E1D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 02:08:57 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id az22-20020a05600c601600b003c6b72797fdso1540996wmb.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 02:08:57 -0700 (PDT)
+        Fri, 21 Oct 2022 05:09:04 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55C6E1A3E0A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 02:09:00 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id bk15so3761465wrb.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 02:09:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=34uELl7iSr0KkNMrPbDK0p3kOxj5Rp7IXkKhGBvUSAg=;
-        b=b2wq9WhYIa+n2Svd4ZNxWXCgZgh3pA+aqFnF8UTGuDJyJpptoDbai4UEAiCWELixwq
-         c0Gl/iHXhoC2wLFtVjyHvngC2ZmEUEb24fFSi8WCR93aB1YUqHpXEbwNslMuBpl+Qqt6
-         wLRVPgzzOtNxO53p/e31HuD2USrK0TMYAAPSe7N0EF68jPPJklxwi/luiiVfQQDHLWA1
-         pOjc4+w7zYrw9WPEHceSf0fMkavum+v8F84zt6EayZOgXfwRgywsJejzKY1othmIyb8d
-         3Ca1MdHYhF0riCGlMDVUMSVcheq2lG2tRhA36O5IbSS+7f6xjuNEQt9F+wirTvHRbKn8
-         64Bg==
+        bh=CyWYYyXZ9YYnbw9nEI1oSUAVddSBrod4dJsXHXySnM4=;
+        b=zVpaKKrmBTCzHmbZ7qra04yPk4E85uPIphnT+3SQwEc/selYL30bjCWDFKS/Fsi8Zj
+         b8k62vmd80/1dMEIQcAeyQr4HxhRYXHPhi+UeTIPq3Ez7er2NBDh4dANVqLJpi26UFf/
+         +bzmB2uzmn0ayoO2jMztEEOhAS0aCEqswG93ow2T17PBlZWxiVs4Knityp9CW6zFQKod
+         inkoO9jmFA2kTaspWBVnd82pmIJCZKRC4HNhB8X2L7DHXhgB32Mi4HB2SzO8xIijnWwZ
+         BFJKpsxefyHk+K3qsvU+ha9aD+Uzw1+76Z/JATATm2WTcVgwwdA0waSDKmlBcK0tx1Cg
+         qpbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=34uELl7iSr0KkNMrPbDK0p3kOxj5Rp7IXkKhGBvUSAg=;
-        b=OCu0g2ps450DOMZGJnRXAtH+UqwZpUsqBYM2bW7ttCnsqraRFenfqtt0QlOUX4CZml
-         ol/wxbQqhJC7JbTHEJ6oR1nssnOcD3oatGSX8gNf4XQ8uDYNl0hGbSHwbCrU2T0cF85d
-         KEWwPsKBTwPII2xmT3xRrGb0csIa3vutd8OG6qODfpU5SAH9xzRhP5+ZXPMEVBNsv145
-         QdDGVC9LycRmgXktdUVTgAj5Fjm7/2z38QrgUwUivd8CxBc/E/7CJzPApDOsVvDKYVCc
-         +GMGlBfabsxDxp73QEWjP9k+fNE5+yyetP2qLhGVCxwrl8tu4yjJCh3XEB444ONiooyJ
-         ltWw==
-X-Gm-Message-State: ACrzQf2ZlrSUVVLPN6g4hc7iCfSb18Yy+dCZKwncJQsjLjqIZF0OMPVP
-        Yx08PfDjToQeABzC74SzR0xnKw==
-X-Google-Smtp-Source: AMsMyM7xlc+L/NLeMFdBWutpcPjs3wRebr8BpyfT0fJSmeu6Ux/O+DEwnqBD2KshvcpYBNjd/6Xh4g==
-X-Received: by 2002:a05:600c:4448:b0:3c6:fb65:2497 with SMTP id v8-20020a05600c444800b003c6fb652497mr14606066wmn.124.1666343337379;
-        Fri, 21 Oct 2022 02:08:57 -0700 (PDT)
+        bh=CyWYYyXZ9YYnbw9nEI1oSUAVddSBrod4dJsXHXySnM4=;
+        b=Q3EwkAcNDC0u964RCSYcBp+8zGmliS+vNZgJiss33UH76XopfpGd0HdphrZmqnwtGV
+         D5yarwdAwvVUShDiLNqTtmgd2N0b7KtKOjZdPwvJy7N3AmxNirY8BD+vQFxiJbSqomHE
+         TenFPSlL83mu8rbaFCNNiHUzEjEUKTqNS7s4/dJ/sLxHerPEQlhJU8skeJtyaAevjnZA
+         ves1MBBsKR9qiUd7Mwaqym+ddsJc5jeSE8rnHCKeovXboBZ4jC1f/bIDE7hezB9s6EHZ
+         AjlSyqQvElofkohvRrLvYVFWU8+yHdOZ3EcrhnK61tDWVGUd340lvsqOLGmKvU0DRpy6
+         u6Uw==
+X-Gm-Message-State: ACrzQf0oZsTu9Nkso9HEOxIixpEBpaThbDA5fzTj2bpmq4zz1lTGafRK
+        w6+OShoEWS/6PgdtpwjcoVSXjw==
+X-Google-Smtp-Source: AMsMyM7ioCHIMym+8Lhdwt5hnOFZoiqNCtHBJubLwYlaemy1/k5E1lFyNOcos7zW+PfczzATD57fDA==
+X-Received: by 2002:a5d:6d0a:0:b0:22e:3f3a:5cdf with SMTP id e10-20020a5d6d0a000000b0022e3f3a5cdfmr10949674wrq.156.1666343338301;
+        Fri, 21 Oct 2022 02:08:58 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id v10-20020a05600c444a00b003c6f27d275dsm2230286wmn.33.2022.10.21.02.08.56
+        by smtp.gmail.com with ESMTPSA id v10-20020a05600c444a00b003c6f27d275dsm2230286wmn.33.2022.10.21.02.08.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 02:08:57 -0700 (PDT)
+        Fri, 21 Oct 2022 02:08:58 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Fri, 21 Oct 2022 11:06:45 +0200
-Subject: [PATCH v4 09/11] rtc: pm8xxx: drop unused pm8018 compatible
+Date:   Fri, 21 Oct 2022 11:06:46 +0200
+Subject: [PATCH v4 10/11] arm: dts: qcom: mdm9615: remove invalid interrupt-names from
+ pl18x mmc nodes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20220928-mdm9615-dt-schema-fixes-v4-9-dac2dfaac703@linaro.org>
+Message-Id: <20220928-mdm9615-dt-schema-fixes-v4-10-dac2dfaac703@linaro.org>
 References: <20220928-mdm9615-dt-schema-fixes-v4-0-dac2dfaac703@linaro.org>
 In-Reply-To: <20220928-mdm9615-dt-schema-fixes-v4-0-dac2dfaac703@linaro.org>
 To:     Bjorn Andersson <andersson@kernel.org>,
@@ -87,28 +88,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The PM8018 compatible is always used with PM8921 fallback, so PM8018
-compatible can be safely removed from device ID table
+This solves the 'interrupt-names' was unexpected dtbs check error.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/rtc/rtc-pm8xxx.c | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm/boot/dts/qcom-mdm9615.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-pm8xxx.c b/drivers/rtc/rtc-pm8xxx.c
-index dc6d1476baa5..716e5d9ad74d 100644
---- a/drivers/rtc/rtc-pm8xxx.c
-+++ b/drivers/rtc/rtc-pm8xxx.c
-@@ -461,7 +461,6 @@ static const struct pm8xxx_rtc_regs pmk8350_regs = {
-  */
- static const struct of_device_id pm8xxx_id_table[] = {
- 	{ .compatible = "qcom,pm8921-rtc", .data = &pm8921_regs },
--	{ .compatible = "qcom,pm8018-rtc", .data = &pm8921_regs },
- 	{ .compatible = "qcom,pm8058-rtc", .data = &pm8058_regs },
- 	{ .compatible = "qcom,pm8941-rtc", .data = &pm8941_regs },
- 	{ .compatible = "qcom,pmk8350-rtc", .data = &pmk8350_regs },
+diff --git a/arch/arm/boot/dts/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom-mdm9615.dtsi
+index 366241dee522..9d950f96280d 100644
+--- a/arch/arm/boot/dts/qcom-mdm9615.dtsi
++++ b/arch/arm/boot/dts/qcom-mdm9615.dtsi
+@@ -325,7 +325,6 @@ sdcc1: mmc@12180000 {
+ 				arm,primecell-periphid = <0x00051180>;
+ 				reg = <0x12180000 0x2000>;
+ 				interrupts = <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>;
+-				interrupt-names = "cmd_irq";
+ 				clocks = <&gcc SDC1_CLK>, <&gcc SDC1_H_CLK>;
+ 				clock-names = "mclk", "apb_pclk";
+ 				bus-width = <8>;
+@@ -345,7 +344,6 @@ sdcc2: mmc@12140000 {
+ 				status = "disabled";
+ 				reg = <0x12140000 0x2000>;
+ 				interrupts = <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>;
+-				interrupt-names = "cmd_irq";
+ 				clocks = <&gcc SDC2_CLK>, <&gcc SDC2_H_CLK>;
+ 				clock-names = "mclk", "apb_pclk";
+ 				bus-width = <4>;
 
 -- 
 b4 0.10.1
