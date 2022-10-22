@@ -2,151 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 879B4608D58
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Oct 2022 15:10:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43034608DA3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Oct 2022 16:21:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229588AbiJVNKs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Oct 2022 09:10:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38574 "EHLO
+        id S229765AbiJVOVp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Oct 2022 10:21:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbiJVNKs (ORCPT
+        with ESMTP id S229718AbiJVOVn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Oct 2022 09:10:48 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B20A4253ED4;
-        Sat, 22 Oct 2022 06:10:43 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id e18so15430062edj.3;
-        Sat, 22 Oct 2022 06:10:43 -0700 (PDT)
+        Sat, 22 Oct 2022 10:21:43 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6439829E5B0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Oct 2022 07:21:41 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id z97so15803353ede.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Oct 2022 07:21:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:subject:cc:to:from:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=DWxqQb3pJCcHfHLbrY0SnKRqWah2jt07DVxlX1RC15Q=;
-        b=LU544rhD/8aW9X28J01TZtgJMQFfls6teFuuyKVhO7/g/eg8rKuG0gdUuqAO0N3LG6
-         K3HG/iAegJG13Y8EvqI5K5UNlwFFGBToRsJaqq+65UYxeLXMrFMWCg5VYyyrNIFFtMtV
-         e/M0ZBfUR5YO+tITz4qpnTzk2HJorrqSi0Q35gao59J5kPpej9AZHkTULjiWqoWp7LY0
-         AOQfcBA+DG18x/st63v8rhwsOE1e1sAZXe43qbV1QCB+jUqLIBj3nToyRYniQjrEOdNZ
-         9NhxEoPbXhfKgy/b7wlp8T2gFDDtHy0jNrJcUNmdNU8wHTPtKhnMdExGUynTNfid13LS
-         a71A==
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=3y5NneVGSVHM3d4TxVK3DB/B/isDhSM9Gf6zlSsh6og=;
+        b=fEYjzegl5no7TevDLOfHUBkm7rzl0qSt9KpunP6BMmHiN8kUy9GbodQAok8mD0UmDV
+         wEw30+ospvHDZHn0EKinrLqjyUUm/bLG/pX10LHdXhqKCMlvbErPevVIYQwfY7i3LHPu
+         ZRJRlIgra1wPEjLBdQqmAV+v6SVo+Ygsix4upYoPRPykuCLI//wlpNu7uv/q9JswYMEP
+         24kyKfsD73+vSEmU6ecqkGGdTARi5ZfDnu3RKx2aOH4nvTZTmwGcYEWcFGdcM4Yh7FRx
+         ZhlTgxqHt8kDNJUY2eiRetE1yuS7N1QBsDrcKn7Bt4k6JHjpGm0l9y9scyomloVsdMbu
+         yB4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:subject:cc:to:from:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DWxqQb3pJCcHfHLbrY0SnKRqWah2jt07DVxlX1RC15Q=;
-        b=rEGv8GLhZrSkuCVEnCpayQlXpg0fkB2I1phzAi14VFU7fFkTpLvHjLe8aSA5let6hC
-         zZHJZske7V/eRfPo3aO77hPhvzsObOKM538HNFkLIXJ3gb6tYFG5oTi5dPTWSDL6X3J9
-         9HiIhPqp3vJtmbr89q5WjIDlphHNBTE/S1vWzy9iyJdm/6yn6rMvoKAJRJQlrMOkareF
-         XvP4cfReovldpQn+YQBQCwXbtx8OFaXnHNto6Ic5aGBNQSRJnLdvsetnval5qUzSUOSW
-         N15N1BbSIjixr/tue4xFXdVFNbG5JglTEVF5fHqrICHsRTfIHLlg77vAs50QfeC+ToJD
-         aBDQ==
-X-Gm-Message-State: ACrzQf2jiHZxfNuZqKKbJyPkImZWzKRYhJB/JM0zbMVurIu/qpNPFNko
-        b9S3br+DKATzAxU0vwX3Bug=
-X-Google-Smtp-Source: AMsMyM6dCpj3wjpMtwzjGOP46+DRGb2A5PRc4PNj927PdfRV6G+pDmrePX26iL7ahW5qL58/pJkgXw==
-X-Received: by 2002:a17:907:80b:b0:77a:86a1:db52 with SMTP id wv11-20020a170907080b00b0077a86a1db52mr20599778ejb.294.1666444242121;
-        Sat, 22 Oct 2022 06:10:42 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-134.ip85.fastwebnet.it. [93.42.70.134])
-        by smtp.gmail.com with ESMTPSA id r9-20020a170906280900b0077b523d309asm12840797ejc.185.2022.10.22.06.10.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 Oct 2022 06:10:41 -0700 (PDT)
-Message-ID: <6353ebd1.170a0220.e607e.711a@mx.google.com>
-X-Google-Original-Message-ID: <Y1Pryo4btyRLfKGP@Ansuel-xps.>
-Date:   Sat, 22 Oct 2022 15:10:34 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3y5NneVGSVHM3d4TxVK3DB/B/isDhSM9Gf6zlSsh6og=;
+        b=Tkltzn+I7qGCq+n+mq4lC6POaU7kCfTx97OIwjdiqUpeh27+qnNl6XqFJxBXkuSTgb
+         2yMHSMT3F/sPDgXyXMZsejTCwzoR+A33ZDCZVBSLaqW4gKefEs0h1NS68mxOfo3pg2xD
+         PsTIFwC038yZIyWRpgiAYX0+ZGwQh3ULoCu7+nEfAYgA8uGj5elsp/TgfKGx9bNxDzwU
+         xJm7/LxneApaiAnT7rgToT3oLFcfAtinIJG6apU6j9Pg/YVCaNJOT0KlyhgX/hmFjsgY
+         yob72PerNvImAnfiz9c6LtBPqmTHy23XnkJ+hgO4eSGwFGPwvaXFxN9/DwnTQNxinV1I
+         Aigg==
+X-Gm-Message-State: ACrzQf1HZMfuLWw9q8M2qgDjM1ygTnXQ1hCo5yfo2nukV7Yp87nqYbrX
+        SBGHVz5Y4D1q4zPCNZSH7NUUrY5oCsRuBCtlYIJwNw==
+X-Google-Smtp-Source: AMsMyM4X9zWrTzirAffhGB0WOX1DKzqBAFxwop6hJIJPvSwv25uxB4GP44x770IP/27iBsXBuJcOHtsaauk3b4N1BCw=
+X-Received: by 2002:a05:6402:4029:b0:45b:d50c:b9b0 with SMTP id
+ d41-20020a056402402900b0045bd50cb9b0mr22267578eda.126.1666448500471; Sat, 22
+ Oct 2022 07:21:40 -0700 (PDT)
+MIME-Version: 1.0
+References: <20221021181016.14740-1-ansuelsmth@gmail.com> <CACRpkdbfvr1pkVb3XhBZLnmn7vy3XyzavwVjW_VmFKTdh3LABQ@mail.gmail.com>
+ <63531543.050a0220.b6bf5.284d@mx.google.com>
+In-Reply-To: <63531543.050a0220.b6bf5.284d@mx.google.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Sat, 22 Oct 2022 16:21:28 +0200
+Message-ID: <CACRpkdbOQq9hUT=d1QBDMmgLaJ1wZ=hd44ciMnjFVgpLCnK8Wg@mail.gmail.com>
+Subject: Re: [PATCH] ARM: mach-qcom: fix support for ipq806x
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
+        Russell King <linux@armlinux.org.uk>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 3/3] thermal: qcom: tsens: rework debugfs file
- structure
-References: <20221022125657.22530-1-ansuelsmth@gmail.com>
- <20221022125657.22530-4-ansuelsmth@gmail.com>
- <591f7038-81ed-1850-b525-d02a4e082903@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <591f7038-81ed-1850-b525-d02a4e082903@linaro.org>
+        Arnd Bergmann <arnd@arndb.de>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+        Nick Hawkins <nick.hawkins@hpe.com>,
+        John Crispin <john@phrozen.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Oct 22, 2022 at 03:08:46PM +0200, Daniel Lezcano wrote:
-> On 22/10/2022 14:56, Christian Marangi wrote:
-> > The current tsens debugfs structure is composed by:
-> > - a tsens dir in debugfs with a version file
-> > - a directory for each tsens istance with sensors file to dump all the
-> >    sensors value.
-> 
-> s/istance/instance/
-> 
-> The patch looks good to me, no need to resend, I'll fix the typos
+On Fri, Oct 21, 2022 at 11:55 PM Christian Marangi <ansuelsmth@gmail.com> wrote:
+> On Fri, Oct 21, 2022 at 11:44:56PM +0200, Linus Walleij wrote:
+
+> > Is it not possible to use Geert's linux,usable-memory-range in
+> > the chosen node to make the kernel stay off the memory?
+> > (See examples by grep usable-memory in the kernel.)
+> >
 >
+> Hi,
+> just to confirm this is one of the example you are suggesting?
+>
+> chosen {
+>                 bootargs = "console=ttyS0,115200 earlycon";
+>                 stdout-path = "serial0:115200n8";
+>                 linux,usable-memory-range = <0x80200000 0x1fe00000>;
+>         };
 
-Thanks for picking this, np for fixing typos.
+Yep that thing!
 
-> > This works on the assumption that we have the same version for each
-> > istance but this assumption seems fragile and with more than one tsens
-> > istance results in the version file not tracking each of them.
-> > 
-> > A better approach is to just create a subdirectory for each tsens
-> > istance and put there version and sensors debugfs file.
-> > 
-> > Using this new implementation results in less code since debugfs entry
-> > are created only on successful tsens probe.
-> > 
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > ---
-> >   drivers/thermal/qcom/tsens.c | 13 +++----------
-> >   1 file changed, 3 insertions(+), 10 deletions(-)
-> > 
-> > diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> > index 467585c45d34..fc12d7c07de4 100644
-> > --- a/drivers/thermal/qcom/tsens.c
-> > +++ b/drivers/thermal/qcom/tsens.c
-> > @@ -704,21 +704,14 @@ DEFINE_SHOW_ATTRIBUTE(dbg_sensors);
-> >   static void tsens_debug_init(struct platform_device *pdev)
-> >   {
-> >   	struct tsens_priv *priv = platform_get_drvdata(pdev);
-> > -	struct dentry *root, *file;
-> > -	root = debugfs_lookup("tsens", NULL);
-> > -	if (!root)
-> > +	priv->debug_root = debugfs_lookup("tsens", NULL);
-> > +	if (!priv->debug_root)
-> >   		priv->debug_root = debugfs_create_dir("tsens", NULL);
-> > -	else
-> > -		priv->debug_root = root;
-> > -
-> > -	file = debugfs_lookup("version", priv->debug_root);
-> > -	if (!file)
-> > -		debugfs_create_file("version", 0444, priv->debug_root,
-> > -				    pdev, &dbg_version_fops);
-> >   	/* A directory for each instance of the TSENS IP */
-> >   	priv->debug = debugfs_create_dir(dev_name(&pdev->dev), priv->debug_root);
-> > +	debugfs_create_file("version", 0444, priv->debug, pdev, &dbg_version_fops);
-> >   	debugfs_create_file("sensors", 0444, priv->debug, pdev, &dbg_sensors_fops);
-> >   }
-> >   #else
-> 
-> 
-> -- 
-> <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-> 
-> Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-> <http://twitter.com/#!/linaroorg> Twitter |
-> <http://www.linaro.org/linaro-blog/> Blog
+> Main problem here is that uboot in some case doesn't support dt and pass
+> wrong ATAGS (with the memory not reserved) and AUTO_ZRELADDR calculate
+> the wrong addr I assume?
 
--- 
-	Ansuel
+You do have a DTB right, just that it is attached, and then the kernel
+uses the ATAGs to augment the memory?
+
+In that case what about disabling ARM_ATAG_DTB_COMPAT
+and adding the actual valid memory to the top-level DTS
+file? Just like that:
+
+      memory {
+                device_type = "memory";
+                reg = <0x42000000 0xnnnnnnnn>;
+        };
+
+
+> I will test the usable-memory-range but isn't the same of declaring
+> reserved space in the dts? Or the zimage decompressor checks
+> linux,usable-memory-range bypassing atags?
+
+As long as it just pass "too much" memory it should do the job,
+I *think*.
+
+Since I wrote this article:
+https://people.kernel.org/linusw/how-the-arm32-linux-kernel-decompresses
+Geert introduced some very elaborate low-level OF code and I
+do think it kicks in and makes sure to reserve this memory even
+before the decompressor goes to work (in difference from e.g.
+"reserved memory nodes" that are not inspected until later).
+
+See:
+commit 48342ae751c797ac73ac9c894b3f312df18ffd21
+"ARM: 9124/1: uncompress: Parse "linux,usable-memory-range" DT property"
+
+Then if the memory node is in the DTB originally or patched in
+by U-Boot shouldn't really matter, usable-memory-range should
+kick in in either case.
+
+It is described as used for kexec (which I never use) but I think it can
+solve your problem too.
+
+The DT property is (by agreement) an undocumented Linux extension,
+so Geert knows the intended usecases better :)
+
+Yours,
+Linus Walleij
