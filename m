@@ -2,109 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1352608E27
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Oct 2022 17:45:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2A51608E79
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Oct 2022 18:26:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229658AbiJVPpl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Oct 2022 11:45:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56796 "EHLO
+        id S229714AbiJVQ0m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Oct 2022 12:26:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbiJVPpl (ORCPT
+        with ESMTP id S229556AbiJVQ0k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Oct 2022 11:45:41 -0400
-Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32B4318B769
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Oct 2022 08:45:37 -0700 (PDT)
-Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-12c8312131fso7147617fac.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Oct 2022 08:45:37 -0700 (PDT)
+        Sat, 22 Oct 2022 12:26:40 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36D4C1057E5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Oct 2022 09:26:39 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id w8so14284643edc.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Oct 2022 09:26:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=BVu4XTuwWJr/YwyXL2uAxp+NUft8bZEEOp2Ycu+REmM=;
-        b=Q2BgzvRzkSWli269QFsGDIojuLbvHjW9Ea9ghjGGwo9WYK/D5Zc/5LR6oX+WqsTm9h
-         3qIFiH0EjPeHTaRzTVYOltZfC/N/gMElNtdN2chpi3/EnA4SI64k6yyz1YCV67fowdkX
-         EeM9cv2WXkn4oD/ILMPrnLBDlBNi5UU0OX6QmqZtCRvjRnO4oBiWewkxqUUhEvgngpxv
-         XJU7/5njXfWqo5I1VEJBrX+6Z862mRWNc2AMYPantnfpIlwM8L0FQlzvx977dDD/zPHO
-         zEiVnP4fxO9Bo4d9s6onoAP7anRFDgTEYa+ZuEfLcV1YYckzHVc38nYkCh5+hb7zKkO0
-         zzjg==
+        bh=CQq1ftIfCawIcZ71Z4vpkzLEmtpaBABYme45VEwy43c=;
+        b=l6VzlaOfRk+1vaUxRuG4Y3nWEtyo1rhBSa+uU9NJZP6+BYMRNndbHe4M3uIOYBg4Ql
+         NFQSzX+EYfvdnizWUS/j0OXDQQ0Oo+Eoemz/uYypR1gIz7uJ6m39/RGqeWmFQF95q6HT
+         SxOUPWD3tHIIWRJhOdI0PhuNHVHRpIJUUOo2k5y/9czjVGBhanlPSmVoiMwwJh/EJxTM
+         2iWt91QG9olNOWFMtIaWT2jdrflob8g5f5fivtaOVlsiSoEhBobzor9VzKdEq7GaN/mm
+         eLHq0HU2yfCf3vLDTazgktvD1HindtVNZe+ok8b9BuuLtatyHSTFqLk2xjnUOMP7Et2d
+         6XGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BVu4XTuwWJr/YwyXL2uAxp+NUft8bZEEOp2Ycu+REmM=;
-        b=4iyugMEI6HJ+q2I6dVJerRRRsDXoEC1SvGhs29ZuIR/KX9filMbOGu2oLAWfCNb2k2
-         JK5gv96IZqHiXpTbJ9I5RGS/VGLE0Bll1f65U4qpdrtjhQLSu+wzfawOJy8YPHTBqaxn
-         2t/ajyHZ1/MYSAIEtZjaA40ehQdu1qcIOX9qOyNIIGi18iNIe7WeQFdRcKE5n+fAAUAB
-         YAdh+RoEuIlVQb5BEx9BAX8lkMmUYyR6jVaiz+/vYW6s+Tg8EZVWJP7de35PUqg8WNNH
-         EQbAWzCfvAAzc3dRQBPEoogtXlYDUA2bdDdoAYOPFeFYGRM1fnHSuJcguy8UXNnSEbl1
-         cOSw==
-X-Gm-Message-State: ACrzQf1GXaSwbuLP2JP0cZicauPUpo5tgG3FUY6lTWwWVpuJcuR+ZcMx
-        zlJX8kYCVA7p8opWeUmdE1zyqg==
-X-Google-Smtp-Source: AMsMyM54Jr40A+CvqVTyLVkSLJxKugf4BweTxa+vKcieHD0b/jTZxNFDPAfxieTiJOd6kzA5D45GJg==
-X-Received: by 2002:a05:6870:b4ac:b0:13b:151c:d1b5 with SMTP id y44-20020a056870b4ac00b0013b151cd1b5mr7328351oap.205.1666453536789;
-        Sat, 22 Oct 2022 08:45:36 -0700 (PDT)
-Received: from [10.203.8.70] ([205.153.95.177])
-        by smtp.gmail.com with ESMTPSA id x5-20020a9d2085000000b00661c0747545sm2404098ota.44.2022.10.22.08.45.33
+        bh=CQq1ftIfCawIcZ71Z4vpkzLEmtpaBABYme45VEwy43c=;
+        b=i3GdRXH1JtSAiVNVKbWwiUCdUpPbO4OQ6J1G8pNlOFZU29q7t/okwJV3B2KH+YZdd+
+         NI2aAt/Cv70twd0IMgVeEarOI8yTHstd0Hb5BbK6Yy5exYgvxsSF3aFMVleidZg/VJce
+         SdwGXpqjl47VwSeQHhtPxsnpFNqR3oIH9mSMqsDUC/jPP5Bk8Yub2AtYWDpX38GnnLC+
+         SX88eeIWTnFn48GblHFZ3jAzDBzUlgUYe6AI7XbCVnkbkNNJnqHjR39acFC0sVJajj2P
+         E9b8GOMyoervNHh8PL7Q/dz9fjucm//yiFDPBaLplAing/zFP55mG18BwcRF3x9PHQ6V
+         cdJQ==
+X-Gm-Message-State: ACrzQf0N/6CAjD7miZ4plKVloOGr6AJ3la/iT739FJq6NmokroYfHB1H
+        6l/l3qe1s/qy8ZpYWI4s61Zegw==
+X-Google-Smtp-Source: AMsMyM7a8uKW10yr4l06GQ3zKCGujmDoYBAOWchkmdpiQajQGty+HAC/UK/YbNYGmz+DCscgm/oDhw==
+X-Received: by 2002:a05:6402:2813:b0:461:970e:2ad9 with SMTP id h19-20020a056402281300b00461970e2ad9mr880468ede.405.1666455997697;
+        Sat, 22 Oct 2022 09:26:37 -0700 (PDT)
+Received: from ?IPV6:2a05:6e02:1041:c10:7b1d:c5f2:c85:8976? ([2a05:6e02:1041:c10:7b1d:c5f2:c85:8976])
+        by smtp.googlemail.com with ESMTPSA id 16-20020a170906309000b0078d22b0bcf2sm13156619ejv.168.2022.10.22.09.26.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Oct 2022 08:45:36 -0700 (PDT)
-Message-ID: <0fa65ec4-b735-4859-401b-da14899ed921@linaro.org>
-Date:   Sat, 22 Oct 2022 11:45:33 -0400
+        Sat, 22 Oct 2022 09:26:37 -0700 (PDT)
+Message-ID: <373309fd-4931-5850-775a-4e4f04b86cff@linaro.org>
+Date:   Sat, 22 Oct 2022 18:26:35 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [RFC PATCH 3/9] dt-bindings: arm-smmu: Add generic qcom,smmu-500
- bindings
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v3 0/3] thermal: qcom: tsens: small fixup for debugfs
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To:     Christian Marangi <ansuelsmth@gmail.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20221021165534.2334329-1-dmitry.baryshkov@linaro.org>
- <20221021165534.2334329-4-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221021165534.2334329-4-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221022125657.22530-1-ansuelsmth@gmail.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <20221022125657.22530-1-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: *
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/10/2022 12:55, Dmitry Baryshkov wrote:
-> Add generic bindings for the Qualcomm variant of the ARM MMU-500. It is
-> expected that all future platforms will use the generic qcom,smmu-500
-> compat string in addition to SoC-specific and the generic arm,mmu-500
-> ones. Older bindings are now described as deprecated.
+On 22/10/2022 14:56, Christian Marangi wrote:
+> This is a small series to fixup some bug in how tsens init debufs.
 > 
-> Note: I have split the sdx55 and sdx65 from the legacy bindings. They
-> are not supported by the qcom SMMU implementation. I can suppose that
-> they are using the generic implementation rather than the
-> Qualcomm-speicific one.
+> The first patch just handle situation where tsens fails to register and
+> debugfs are getting registred anyway. When tsens is tried to reprobe
+> debugs will print a warning as the directory are already there.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> The second patch is a fixup for wrong version when the ancient VER_0 is
+> used.
+> 
+> The third patch is a rework of debugfs structure moving version in the
+> tsens istance instead of ignoring any other tsens istance if it will
+> ever be the case in the future of having multiple tsens instance with
+> different version. It's just futureproof on it's own and also removed
+> one additional check.
+> 
+> changes v3:
+> - remove extra space from patch 1
+> - split patch 2 to 2 different patch
+> - patch 3 rework wrong debugfs structure
+> changes v2:
+> - Changed sob name to new one.
+> 
+> (the resend was actually v2 but i totally forgot that I sent it as v2 with
+> the sob name fixed... but everything should be good now...)
+> 
+> Christian Marangi (3):
+>    thermal: qcom: tsens: init debugfs only with successful probe
+>    thermal: qcom: tsens: fix wrong version id dbg_version_show
+>    thermal: qcom: tsens: rework debugfs file structure
+> 
+>   drivers/thermal/qcom/tsens.c | 23 +++++++++--------------
+>   1 file changed, 9 insertions(+), 14 deletions(-)
+
+Applied thanks
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
-Best regards,
-Krzysztof
-
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
