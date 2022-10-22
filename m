@@ -2,118 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BE696083AA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Oct 2022 04:40:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0E9D6085CB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Oct 2022 09:39:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229834AbiJVCkt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Oct 2022 22:40:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60138 "EHLO
+        id S230216AbiJVHjQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Oct 2022 03:39:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229760AbiJVCkt (ORCPT
+        with ESMTP id S230455AbiJVHin (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Oct 2022 22:40:49 -0400
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6062A19C204;
-        Fri, 21 Oct 2022 19:40:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1666406447; x=1697942447;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=kF/xdr28uQrpRA72AFf0G6ObdUEgtJJsF4mCHOi/eWk=;
-  b=bm+0eJXIdIOogKgl1DP6gRrPiHi5dUFOZhUuh4tTwqzYpzoPTDbmoiWU
-   L8QlbV6mUp3cSH8gMT9/XjowH65RVzoeduG8MmnUNJWBrpERMBAKPb+z9
-   JRUWKjNVOOXUFMlmxC8M1WGMacV9JL8zuTeaRE9UJh1T0C6VlDgAd5KzW
-   i1vbHyw2PWVu6uaemBDyq77LrH/ZbdWMeF7Bq4rN9yIp2+uaEL4FcCASO
-   9WjBne1+SXuO43zGZbwQGRheQBBmEkfYx2SZXvIR2d22gJU0fphEkd4lz
-   5IHLSh6H+hPhIHoOCna7xIpEE1toIqe57SpK0HrhWmCdJ/tsqZ5a1ExTN
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10507"; a="393461693"
-X-IronPort-AV: E=Sophos;i="5.95,203,1661842800"; 
-   d="scan'208";a="393461693"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Oct 2022 19:40:47 -0700
-X-IronPort-AV: E=McAfee;i="6500,9779,10507"; a="773273982"
-X-IronPort-AV: E=Sophos;i="5.95,203,1661842800"; 
-   d="scan'208";a="773273982"
-Received: from kerendel-mobl1.amr.corp.intel.com (HELO [10.212.96.240]) ([10.212.96.240])
-  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Oct 2022 19:40:46 -0700
-Message-ID: <5528f5e7-86fe-f53e-d8db-db91cdd25adb@linux.intel.com>
-Date:   Fri, 21 Oct 2022 12:13:07 -0500
+        Sat, 22 Oct 2022 03:38:43 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5701A29B89B;
+        Sat, 22 Oct 2022 00:36:07 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A601560ADA;
+        Sat, 22 Oct 2022 07:36:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE175C433D7;
+        Sat, 22 Oct 2022 07:36:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1666424165;
+        bh=beAhWKXvQm9GjdNfxG+/MZqHkyVEr24AhaspX2hWJsw=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=HuaWQZEMPqrpPB8WGKJBiNv6XZqXhz1dsXG9OzDhH3L5wL/MK2qVkWtLl5jQjkiR5
+         eojBel5C6jA02a+r4/CYVJ4aQs+H46hY5VRZ3f1+A9Hn+7r8V5yn5H5znTMZg6j1HP
+         vUiGm0oSHKt66JIU0DYAovNjOe7yqEqYEIQS1xU8=
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        stable@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.19 048/717] regulator: qcom_rpm: Fix circular deferral regression
+Date:   Sat, 22 Oct 2022 09:18:47 +0200
+Message-Id: <20221022072423.637828474@linuxfoundation.org>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221022072415.034382448@linuxfoundation.org>
+References: <20221022072415.034382448@linuxfoundation.org>
+User-Agent: quilt/0.67
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.2.2
-Subject: Re: [PATCH v2 5/9] ASoC: qdsp6: audioreach: simplify module_list sz
- calculation
-Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        broonie@kernel.org
-Cc:     alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        tiwai@suse.com, lgirdwood@gmail.com, bgoswami@quicinc.com,
-        linux-kernel@vger.kernel.org
-References: <20221021165207.13220-1-srinivas.kandagatla@linaro.org>
- <20221021165207.13220-6-srinivas.kandagatla@linaro.org>
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <20221021165207.13220-6-srinivas.kandagatla@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,DATE_IN_PAST_06_12,
-        DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Linus Walleij <linus.walleij@linaro.org>
+
+commit 8478ed5844588703a1a4c96a004b1525fbdbdd5e upstream.
+
+On recent kernels, the PM8058 L16 (or any other PM8058 LDO-regulator)
+does not come up if they are supplied by an SMPS-regulator. This
+is not very strange since the regulators are registered in a long
+array and the L-regulators are registered before the S-regulators,
+and if an L-regulator defers, it will never get around to registering
+the S-regulator that it needs.
+
+See arch/arm/boot/dts/qcom-apq8060-dragonboard.dts:
+
+pm8058-regulators {
+    (...)
+    vdd_l13_l16-supply = <&pm8058_s4>;
+    (...)
+
+Ooops.
+
+Fix this by moving the PM8058 S-regulators first in the array.
+
+Do the same for the PM8901 S-regulators (though this is currently
+not causing any problems with out device trees) so that the pattern
+of registration order is the same on all PMnnnn chips.
+
+Fixes: 087a1b5cdd55 ("regulator: qcom: Rework to single platform device")
+Cc: stable@vger.kernel.org
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc: linux-arm-msm@vger.kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20220909112529.239143-1-linus.walleij@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/regulator/qcom_rpm-regulator.c |   24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
+
+--- a/drivers/regulator/qcom_rpm-regulator.c
++++ b/drivers/regulator/qcom_rpm-regulator.c
+@@ -802,6 +802,12 @@ static const struct rpm_regulator_data r
+ };
+ 
+ static const struct rpm_regulator_data rpm_pm8058_regulators[] = {
++	{ "s0",   QCOM_RPM_PM8058_SMPS0,  &pm8058_smps, "vdd_s0" },
++	{ "s1",   QCOM_RPM_PM8058_SMPS1,  &pm8058_smps, "vdd_s1" },
++	{ "s2",   QCOM_RPM_PM8058_SMPS2,  &pm8058_smps, "vdd_s2" },
++	{ "s3",   QCOM_RPM_PM8058_SMPS3,  &pm8058_smps, "vdd_s3" },
++	{ "s4",   QCOM_RPM_PM8058_SMPS4,  &pm8058_smps, "vdd_s4" },
++
+ 	{ "l0",   QCOM_RPM_PM8058_LDO0,   &pm8058_nldo, "vdd_l0_l1_lvs"	},
+ 	{ "l1",   QCOM_RPM_PM8058_LDO1,   &pm8058_nldo, "vdd_l0_l1_lvs" },
+ 	{ "l2",   QCOM_RPM_PM8058_LDO2,   &pm8058_pldo, "vdd_l2_l11_l12" },
+@@ -829,12 +835,6 @@ static const struct rpm_regulator_data r
+ 	{ "l24",  QCOM_RPM_PM8058_LDO24,  &pm8058_nldo, "vdd_l23_l24_l25" },
+ 	{ "l25",  QCOM_RPM_PM8058_LDO25,  &pm8058_nldo, "vdd_l23_l24_l25" },
+ 
+-	{ "s0",   QCOM_RPM_PM8058_SMPS0,  &pm8058_smps, "vdd_s0" },
+-	{ "s1",   QCOM_RPM_PM8058_SMPS1,  &pm8058_smps, "vdd_s1" },
+-	{ "s2",   QCOM_RPM_PM8058_SMPS2,  &pm8058_smps, "vdd_s2" },
+-	{ "s3",   QCOM_RPM_PM8058_SMPS3,  &pm8058_smps, "vdd_s3" },
+-	{ "s4",   QCOM_RPM_PM8058_SMPS4,  &pm8058_smps, "vdd_s4" },
+-
+ 	{ "lvs0", QCOM_RPM_PM8058_LVS0, &pm8058_switch, "vdd_l0_l1_lvs" },
+ 	{ "lvs1", QCOM_RPM_PM8058_LVS1, &pm8058_switch, "vdd_l0_l1_lvs" },
+ 
+@@ -843,6 +843,12 @@ static const struct rpm_regulator_data r
+ };
+ 
+ static const struct rpm_regulator_data rpm_pm8901_regulators[] = {
++	{ "s0",   QCOM_RPM_PM8901_SMPS0, &pm8901_ftsmps, "vdd_s0" },
++	{ "s1",   QCOM_RPM_PM8901_SMPS1, &pm8901_ftsmps, "vdd_s1" },
++	{ "s2",   QCOM_RPM_PM8901_SMPS2, &pm8901_ftsmps, "vdd_s2" },
++	{ "s3",   QCOM_RPM_PM8901_SMPS3, &pm8901_ftsmps, "vdd_s3" },
++	{ "s4",   QCOM_RPM_PM8901_SMPS4, &pm8901_ftsmps, "vdd_s4" },
++
+ 	{ "l0",   QCOM_RPM_PM8901_LDO0, &pm8901_nldo, "vdd_l0" },
+ 	{ "l1",   QCOM_RPM_PM8901_LDO1, &pm8901_pldo, "vdd_l1" },
+ 	{ "l2",   QCOM_RPM_PM8901_LDO2, &pm8901_pldo, "vdd_l2" },
+@@ -851,12 +857,6 @@ static const struct rpm_regulator_data r
+ 	{ "l5",   QCOM_RPM_PM8901_LDO5, &pm8901_pldo, "vdd_l5" },
+ 	{ "l6",   QCOM_RPM_PM8901_LDO6, &pm8901_pldo, "vdd_l6" },
+ 
+-	{ "s0",   QCOM_RPM_PM8901_SMPS0, &pm8901_ftsmps, "vdd_s0" },
+-	{ "s1",   QCOM_RPM_PM8901_SMPS1, &pm8901_ftsmps, "vdd_s1" },
+-	{ "s2",   QCOM_RPM_PM8901_SMPS2, &pm8901_ftsmps, "vdd_s2" },
+-	{ "s3",   QCOM_RPM_PM8901_SMPS3, &pm8901_ftsmps, "vdd_s3" },
+-	{ "s4",   QCOM_RPM_PM8901_SMPS4, &pm8901_ftsmps, "vdd_s4" },
+-
+ 	{ "lvs0", QCOM_RPM_PM8901_LVS0, &pm8901_switch, "lvs0_in" },
+ 	{ "lvs1", QCOM_RPM_PM8901_LVS1, &pm8901_switch, "lvs1_in" },
+ 	{ "lvs2", QCOM_RPM_PM8901_LVS2, &pm8901_switch, "lvs2_in" },
 
 
-On 10/21/22 11:52, Srinivas Kandagatla wrote:
-> Simplify module_list size calcuation by doing inside modules loop.
-
-typo: calculation.
-
-> 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
->  sound/soc/qcom/qdsp6/audioreach.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/sound/soc/qcom/qdsp6/audioreach.c b/sound/soc/qcom/qdsp6/audioreach.c
-> index 0015ec89d90b..87a3fd1f8107 100644
-> --- a/sound/soc/qcom/qdsp6/audioreach.c
-> +++ b/sound/soc/qcom/qdsp6/audioreach.c
-> @@ -430,7 +430,6 @@ void *audioreach_alloc_graph_pkt(struct q6apm *apm, struct audioreach_graph_info
->  	struct audioreach_sub_graph *sgs;
->  	struct apm_mod_list_obj *mlobj;
->  	struct list_head *sg_list;
-> -	int num_modules_per_list;
->  	int num_connections = 0;
->  	int num_containers = 0;
->  	int num_sub_graphs = 0;
-> @@ -451,6 +450,9 @@ void *audioreach_alloc_graph_pkt(struct q6apm *apm, struct audioreach_graph_info
->  		list_for_each_entry(container, &sgs->container_list, node) {
->  			num_containers++;
->  			num_modules += container->num_modules;
-> +			ml_sz = ml_sz + sizeof(struct apm_module_list_params) +
-> +				APM_MOD_LIST_OBJ_PSIZE(mlobj, container->num_modules);
-> +
->  			list_for_each_entry(module, &container->modules_list, node) {
->  				if (module->src_mod_inst_id)
->  					num_connections++;
-> @@ -459,11 +461,11 @@ void *audioreach_alloc_graph_pkt(struct q6apm *apm, struct audioreach_graph_info
->  	}
->  
->  	num_modules_list = num_containers;
-> -	num_modules_per_list = num_modules/num_containers;
->  	sg_sz = APM_SUB_GRAPH_PSIZE(sg_params, num_sub_graphs);
->  	cont_sz = APM_CONTAINER_PSIZE(cont_params, num_containers);
-> -	ml_sz =	ALIGN(sizeof(struct apm_module_list_params) +
-> -		num_modules_list * APM_MOD_LIST_OBJ_PSIZE(mlobj,  num_modules_per_list), 8);
-> +
-> +	ml_sz = ALIGN(ml_sz, 8);
-> +
->  	mp_sz = APM_MOD_PROP_PSIZE(mprop, num_modules);
->  	mc_sz =	APM_MOD_CONN_PSIZE(mcon, num_connections);
->  
