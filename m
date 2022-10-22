@@ -2,86 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37CB1608183
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Oct 2022 00:29:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1E06608264
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Oct 2022 02:01:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229476AbiJUW3f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Oct 2022 18:29:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32856 "EHLO
+        id S229973AbiJVABf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Oct 2022 20:01:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229717AbiJUW3d (ORCPT
+        with ESMTP id S229491AbiJVABe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Oct 2022 18:29:33 -0400
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 662B7CFF;
-        Fri, 21 Oct 2022 15:29:29 -0700 (PDT)
-Received: by mail-oi1-f177.google.com with SMTP id j188so4815641oih.4;
-        Fri, 21 Oct 2022 15:29:29 -0700 (PDT)
+        Fri, 21 Oct 2022 20:01:34 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A88FC23641C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 17:01:32 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id z30so3031365qkz.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Oct 2022 17:01:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GXvPkVCw8FRFmA8ySfXC7nejZPHHphE93ffpATw2tRY=;
+        b=TfXedZrCGFSna9xyPTV/xvgw7TKxSngElCFlu4JbD3CLtC6IdwAYHrQoBpqvKV00sA
+         JvPIs5jyXU11AGgXgY3a7dEH5r6/IJP1hMYcjpd/Pac4mvcHpCMo0fdUmKGLfbjeEZ2u
+         Qd6lnaxRDQLfq0zPrkcybd6qJ4KF8sMcyfXGsACxl5lP9ZR59tFHzTn13l61cMqHd4W0
+         kqTCRiE3X8aM/JpY7XCf7ahCcbLpj8ju6WvC935Lk8dCaiqFQ16zICG/S/XDGhyHeQ55
+         h+cskEIfg6nuSL9XLMhcJJiJ3Z1soe2mCEKpUQq03/T5+Rn0FAEuaUFb52V/f/OH3W1U
+         bPlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/9X+aTnQzNMOvVqKjqOkGjpdO/OoOq6DmYNhUNkClWk=;
-        b=6rjps0Hbzt/Le4XxO3sQyMpudmNzKeqF57zU9S9P16UTDaIdf689E0mFMEC90QgFyl
-         dJXZG77FM17a6OMg5GLfDhyN6Ofua/oPuGhh1MK6TaowwsZG2UGC7D2drW9LKfAWpOuY
-         KDXD81WTn0nodBpNeccb0Tz1e2j+FNBN7g2QkJQQHt/amYg4mg7OPvohNezz23m1Ui4n
-         1q2vfdlZT4K31xmMS5ih/IAYANZIVPuE3eKeM+UthCZNOBEIogQTu7bh7B5PwaOJu4w3
-         txGFY4uo5nehhSNJNKnGrXmEX3mB2p2so6Rydyvey5GmmclUm5hZsrkGwMs4RQKZN3op
-         3VRw==
-X-Gm-Message-State: ACrzQf0Ez78CedGMi+NHO3iSEGU8jbCsUUhyTbBWXn+sH0ClYo0r0q3k
-        DARAGMbD+SZuICNwjUmcjg==
-X-Google-Smtp-Source: AMsMyM6aYTG/3z+sa/ToyklHJ4yxsV/5Eg3CDKSGCT76AvUVKi7sah5Tr2etsvIrBLGNGJiFZVNDvQ==
-X-Received: by 2002:a05:6808:1187:b0:353:a617:6acd with SMTP id j7-20020a056808118700b00353a6176acdmr11657778oil.105.1666391368697;
-        Fri, 21 Oct 2022 15:29:28 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id a4-20020a544e04000000b003539686cb7bsm743310oiy.53.2022.10.21.15.29.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 15:29:27 -0700 (PDT)
-Received: (nullmailer pid 573944 invoked by uid 1000);
-        Fri, 21 Oct 2022 22:29:28 -0000
-Date:   Fri, 21 Oct 2022 17:29:28 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        Mark Brown <broonie@kernel.org>, Lee Jones <lee@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
-        devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: Re: [PATCH v3 4/5] dt-bindings: soc: qcom: convert non-smd RPM
- bindings to dt-schema
-Message-ID: <166639136837.573897.7269501715676439706.robh@kernel.org>
-References: <20221005-mdm9615-pinctrl-yaml-v3-0-e5e045644971@linaro.org>
- <20221005-mdm9615-pinctrl-yaml-v3-4-e5e045644971@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GXvPkVCw8FRFmA8ySfXC7nejZPHHphE93ffpATw2tRY=;
+        b=Gpgo4JiS9GvV3FiWcTgX1bLFvGROoRNkuSlndnpEtUCefU53Ms2QVdSStqkRjwNJNB
+         F1ey0MlaLF6PWSGT61KM2Ai8vp9eBnCV0tOFnf9PxCMZu9mYxyfuQ+6zfp8SGKT4QK7n
+         QBFjOoXb7Rg7ahoE8tmg1AM2wZh9fyxk3zuIvMHEVyUwAnJI01tMkLTS42uyElMc67jc
+         pzPuPu7GrJGrOEiLA1hue2OmLk5AVaRPKSp2IpSISjXawOYFYSkbXvyxREO69Af337hL
+         L94jsuuBCqU9tolXezAe6uyu11X2RTGUHjale9cL9uOeaAwOyYKbxVo3xafOlYB+cA9m
+         ZFmQ==
+X-Gm-Message-State: ACrzQf0bN1Nne3o5UuolU1Dha33/GlF49ILF7QyDPnJl8bbeIicHdkNF
+        U/WFmBQhdNtIa8mZq/G2j+DomA==
+X-Google-Smtp-Source: AMsMyM6J4oBE7EMIcpdcRXotHEo1gC0gFNjHI7KVnii0fQSaj2GCJBXKMqu/I44iaEs6U500Ld379w==
+X-Received: by 2002:a37:a42:0:b0:6ea:f8ec:1648 with SMTP id 63-20020a370a42000000b006eaf8ec1648mr15741126qkk.231.1666396891836;
+        Fri, 21 Oct 2022 17:01:31 -0700 (PDT)
+Received: from [192.168.10.124] (pool-72-83-177-149.washdc.east.verizon.net. [72.83.177.149])
+        by smtp.gmail.com with ESMTPSA id m10-20020ac8444a000000b0039b03ac2f72sm8870882qtn.46.2022.10.21.17.01.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Oct 2022 17:01:31 -0700 (PDT)
+Message-ID: <f732a81a-3dad-8519-9830-57a602bb8c9f@linaro.org>
+Date:   Fri, 21 Oct 2022 20:01:30 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221005-mdm9615-pinctrl-yaml-v3-4-e5e045644971@linaro.org>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Subject: Re: [PATCH v3 5/5] arm: dts: qcom-msm8660: align RPM regulators node
+ name with bindings
+Content-Language: en-US
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Lee Jones <lee@kernel.org>, Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20221005-mdm9615-pinctrl-yaml-v3-0-e5e045644971@linaro.org>
+ <20221005-mdm9615-pinctrl-yaml-v3-5-e5e045644971@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221005-mdm9615-pinctrl-yaml-v3-5-e5e045644971@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 21 Oct 2022 17:27:56 +0200, Neil Armstrong wrote:
-> Convert the non-SMD RPM node bindings to dt-schema, the old txt bindings
-> are now removed since all bindings were converted.
+On 21/10/2022 11:27, Neil Armstrong wrote:
+> Node names should be generic and new DT schema expects RPM regulators
+> node to be just "regulators".
 > 
 > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  Documentation/devicetree/bindings/mfd/qcom-rpm.txt | 283 ---------------------
->  .../devicetree/bindings/soc/qcom/qcom,ipc-rpm.yaml | 101 ++++++++
->  2 files changed, 101 insertions(+), 283 deletions(-)
-> 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
