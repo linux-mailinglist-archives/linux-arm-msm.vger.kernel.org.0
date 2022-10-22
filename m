@@ -2,124 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2A51608E79
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Oct 2022 18:26:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7774F608F44
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Oct 2022 21:42:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229714AbiJVQ0m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Oct 2022 12:26:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53446 "EHLO
+        id S229782AbiJVTmw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Oct 2022 15:42:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229556AbiJVQ0k (ORCPT
+        with ESMTP id S229756AbiJVTmv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Oct 2022 12:26:40 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36D4C1057E5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Oct 2022 09:26:39 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id w8so14284643edc.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Oct 2022 09:26:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CQq1ftIfCawIcZ71Z4vpkzLEmtpaBABYme45VEwy43c=;
-        b=l6VzlaOfRk+1vaUxRuG4Y3nWEtyo1rhBSa+uU9NJZP6+BYMRNndbHe4M3uIOYBg4Ql
-         NFQSzX+EYfvdnizWUS/j0OXDQQ0Oo+Eoemz/uYypR1gIz7uJ6m39/RGqeWmFQF95q6HT
-         SxOUPWD3tHIIWRJhOdI0PhuNHVHRpIJUUOo2k5y/9czjVGBhanlPSmVoiMwwJh/EJxTM
-         2iWt91QG9olNOWFMtIaWT2jdrflob8g5f5fivtaOVlsiSoEhBobzor9VzKdEq7GaN/mm
-         eLHq0HU2yfCf3vLDTazgktvD1HindtVNZe+ok8b9BuuLtatyHSTFqLk2xjnUOMP7Et2d
-         6XGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CQq1ftIfCawIcZ71Z4vpkzLEmtpaBABYme45VEwy43c=;
-        b=i3GdRXH1JtSAiVNVKbWwiUCdUpPbO4OQ6J1G8pNlOFZU29q7t/okwJV3B2KH+YZdd+
-         NI2aAt/Cv70twd0IMgVeEarOI8yTHstd0Hb5BbK6Yy5exYgvxsSF3aFMVleidZg/VJce
-         SdwGXpqjl47VwSeQHhtPxsnpFNqR3oIH9mSMqsDUC/jPP5Bk8Yub2AtYWDpX38GnnLC+
-         SX88eeIWTnFn48GblHFZ3jAzDBzUlgUYe6AI7XbCVnkbkNNJnqHjR39acFC0sVJajj2P
-         E9b8GOMyoervNHh8PL7Q/dz9fjucm//yiFDPBaLplAing/zFP55mG18BwcRF3x9PHQ6V
-         cdJQ==
-X-Gm-Message-State: ACrzQf0N/6CAjD7miZ4plKVloOGr6AJ3la/iT739FJq6NmokroYfHB1H
-        6l/l3qe1s/qy8ZpYWI4s61Zegw==
-X-Google-Smtp-Source: AMsMyM7a8uKW10yr4l06GQ3zKCGujmDoYBAOWchkmdpiQajQGty+HAC/UK/YbNYGmz+DCscgm/oDhw==
-X-Received: by 2002:a05:6402:2813:b0:461:970e:2ad9 with SMTP id h19-20020a056402281300b00461970e2ad9mr880468ede.405.1666455997697;
-        Sat, 22 Oct 2022 09:26:37 -0700 (PDT)
-Received: from ?IPV6:2a05:6e02:1041:c10:7b1d:c5f2:c85:8976? ([2a05:6e02:1041:c10:7b1d:c5f2:c85:8976])
-        by smtp.googlemail.com with ESMTPSA id 16-20020a170906309000b0078d22b0bcf2sm13156619ejv.168.2022.10.22.09.26.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Oct 2022 09:26:37 -0700 (PDT)
-Message-ID: <373309fd-4931-5850-775a-4e4f04b86cff@linaro.org>
-Date:   Sat, 22 Oct 2022 18:26:35 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v3 0/3] thermal: qcom: tsens: small fixup for debugfs
-Content-Language: en-US
-To:     Christian Marangi <ansuelsmth@gmail.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
+        Sat, 22 Oct 2022 15:42:51 -0400
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 173341217C4;
+        Sat, 22 Oct 2022 12:42:46 -0700 (PDT)
+Received: from localhost.localdomain (95.49.32.126.neoplus.adsl.tpnet.pl [95.49.32.126])
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id F1D391F5E9;
+        Sat, 22 Oct 2022 21:42:43 +0200 (CEST)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221022125657.22530-1-ansuelsmth@gmail.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20221022125657.22530-1-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 2/4] dt-bindings: arm: qcom: Document SM6375 & Xperia 10 IV
+Date:   Sat, 22 Oct 2022 21:42:15 +0200
+Message-Id: <20221022194218.210941-2-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221022194218.210941-1-konrad.dybcio@somainline.org>
+References: <20221022194218.210941-1-konrad.dybcio@somainline.org>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/10/2022 14:56, Christian Marangi wrote:
-> This is a small series to fixup some bug in how tsens init debufs.
-> 
-> The first patch just handle situation where tsens fails to register and
-> debugfs are getting registred anyway. When tsens is tried to reprobe
-> debugs will print a warning as the directory are already there.
-> 
-> The second patch is a fixup for wrong version when the ancient VER_0 is
-> used.
-> 
-> The third patch is a rework of debugfs structure moving version in the
-> tsens istance instead of ignoring any other tsens istance if it will
-> ever be the case in the future of having multiple tsens instance with
-> different version. It's just futureproof on it's own and also removed
-> one additional check.
-> 
-> changes v3:
-> - remove extra space from patch 1
-> - split patch 2 to 2 different patch
-> - patch 3 rework wrong debugfs structure
-> changes v2:
-> - Changed sob name to new one.
-> 
-> (the resend was actually v2 but i totally forgot that I sent it as v2 with
-> the sob name fixed... but everything should be good now...)
-> 
-> Christian Marangi (3):
->    thermal: qcom: tsens: init debugfs only with successful probe
->    thermal: qcom: tsens: fix wrong version id dbg_version_show
->    thermal: qcom: tsens: rework debugfs file structure
-> 
->   drivers/thermal/qcom/tsens.c | 23 +++++++++--------------
->   1 file changed, 9 insertions(+), 14 deletions(-)
+Add compatibles for Sony Xperia 10 IV (PDX225) and the SM6375 SoC
+it's based on.
 
-Applied thanks
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 207e28260206..35e22cf15f9f 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -56,6 +56,7 @@ description: |
+         sdx65
+         sm6125
+         sm6350
++        sm6375
+         sm7225
+         sm8150
+         sm8250
+@@ -718,6 +719,11 @@ properties:
+               - sony,pdx213
+           - const: qcom,sm6350
+ 
++      - items:
++          - enum:
++              - sony,pdx225
++          - const: qcom,sm6375
++
+       - items:
+           - enum:
+               - fairphone,fp4
 -- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+2.38.1
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
