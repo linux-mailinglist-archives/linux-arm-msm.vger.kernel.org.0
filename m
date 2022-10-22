@@ -2,60 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43034608DA3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Oct 2022 16:21:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4FC5608E19
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Oct 2022 17:35:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229765AbiJVOVp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Oct 2022 10:21:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43784 "EHLO
+        id S229760AbiJVPfG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Oct 2022 11:35:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229718AbiJVOVn (ORCPT
+        with ESMTP id S229786AbiJVPfE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Oct 2022 10:21:43 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6439829E5B0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Oct 2022 07:21:41 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id z97so15803353ede.8
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Oct 2022 07:21:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3y5NneVGSVHM3d4TxVK3DB/B/isDhSM9Gf6zlSsh6og=;
-        b=fEYjzegl5no7TevDLOfHUBkm7rzl0qSt9KpunP6BMmHiN8kUy9GbodQAok8mD0UmDV
-         wEw30+ospvHDZHn0EKinrLqjyUUm/bLG/pX10LHdXhqKCMlvbErPevVIYQwfY7i3LHPu
-         ZRJRlIgra1wPEjLBdQqmAV+v6SVo+Ygsix4upYoPRPykuCLI//wlpNu7uv/q9JswYMEP
-         24kyKfsD73+vSEmU6ecqkGGdTARi5ZfDnu3RKx2aOH4nvTZTmwGcYEWcFGdcM4Yh7FRx
-         ZhlTgxqHt8kDNJUY2eiRetE1yuS7N1QBsDrcKn7Bt4k6JHjpGm0l9y9scyomloVsdMbu
-         yB4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3y5NneVGSVHM3d4TxVK3DB/B/isDhSM9Gf6zlSsh6og=;
-        b=Tkltzn+I7qGCq+n+mq4lC6POaU7kCfTx97OIwjdiqUpeh27+qnNl6XqFJxBXkuSTgb
-         2yMHSMT3F/sPDgXyXMZsejTCwzoR+A33ZDCZVBSLaqW4gKefEs0h1NS68mxOfo3pg2xD
-         PsTIFwC038yZIyWRpgiAYX0+ZGwQh3ULoCu7+nEfAYgA8uGj5elsp/TgfKGx9bNxDzwU
-         xJm7/LxneApaiAnT7rgToT3oLFcfAtinIJG6apU6j9Pg/YVCaNJOT0KlyhgX/hmFjsgY
-         yob72PerNvImAnfiz9c6LtBPqmTHy23XnkJ+hgO4eSGwFGPwvaXFxN9/DwnTQNxinV1I
-         Aigg==
-X-Gm-Message-State: ACrzQf1HZMfuLWw9q8M2qgDjM1ygTnXQ1hCo5yfo2nukV7Yp87nqYbrX
-        SBGHVz5Y4D1q4zPCNZSH7NUUrY5oCsRuBCtlYIJwNw==
-X-Google-Smtp-Source: AMsMyM4X9zWrTzirAffhGB0WOX1DKzqBAFxwop6hJIJPvSwv25uxB4GP44x770IP/27iBsXBuJcOHtsaauk3b4N1BCw=
-X-Received: by 2002:a05:6402:4029:b0:45b:d50c:b9b0 with SMTP id
- d41-20020a056402402900b0045bd50cb9b0mr22267578eda.126.1666448500471; Sat, 22
- Oct 2022 07:21:40 -0700 (PDT)
-MIME-Version: 1.0
-References: <20221021181016.14740-1-ansuelsmth@gmail.com> <CACRpkdbfvr1pkVb3XhBZLnmn7vy3XyzavwVjW_VmFKTdh3LABQ@mail.gmail.com>
- <63531543.050a0220.b6bf5.284d@mx.google.com>
-In-Reply-To: <63531543.050a0220.b6bf5.284d@mx.google.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Sat, 22 Oct 2022 16:21:28 +0200
-Message-ID: <CACRpkdbOQq9hUT=d1QBDMmgLaJ1wZ=hd44ciMnjFVgpLCnK8Wg@mail.gmail.com>
-Subject: Re: [PATCH] ARM: mach-qcom: fix support for ipq806x
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
+        Sat, 22 Oct 2022 11:35:04 -0400
+X-Greylist: delayed 2597 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 22 Oct 2022 08:35:00 PDT
+Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20E483846D
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Oct 2022 08:34:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
+        s=the; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:
+        Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=zK3GK745Rpekd0W3RMt4rPJA0uSmGOJkehdAfC4Sz4o=; b=kbSUpYYVx5Er7Y4ja6jOBUNuis
+        UDYrfrLiM/JaU5yEfa1SgddD98KIhlH3oj5pPfe6gwz+Rf/zTcv0vImd7ArwOHRw47clBM/Ijvhv+
+        PQlwv89fSn1NUWER5gEHdTFLU0Z3JJhJxassuJZd6IuuazfKPPXteOhtR32x62hiiN9ISkn+TOLxD
+        WmCxppr5R6OvjRXLryiBcym+ASw0JoKftM6tHZM6eywnDXnwAsE5/hYZTcXYeEwRV5j1BbN4yuuMh
+        8HGdtg+3ZrbORGfL8L1OmPjyyUfS0YdQScNR/nq84HTv05Dszp00O4UST9+ctc6BtWYqhZ35lUTmh
+        aTNfl+DQ==;
+Received: from noodles by the.earth.li with local (Exim 4.94.2)
+        (envelope-from <noodles@earth.li>)
+        id 1omFqG-004Bfl-Kz; Sat, 22 Oct 2022 15:51:16 +0100
+Date:   Sat, 22 Oct 2022 15:51:16 +0100
+From:   Jonathan McDowell <noodles@earth.li>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Christian Marangi <ansuelsmth@gmail.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
         Russell King <linux@armlinux.org.uk>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -67,79 +47,67 @@ Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
         John Crispin <john@phrozen.org>,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] ARM: mach-qcom: fix support for ipq806x
+Message-ID: <Y1QDZMoCeYAfeO6j@earth.li>
+References: <20221021181016.14740-1-ansuelsmth@gmail.com>
+ <CACRpkdbfvr1pkVb3XhBZLnmn7vy3XyzavwVjW_VmFKTdh3LABQ@mail.gmail.com>
+ <63531543.050a0220.b6bf5.284d@mx.google.com>
+ <CACRpkdbOQq9hUT=d1QBDMmgLaJ1wZ=hd44ciMnjFVgpLCnK8Wg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACRpkdbOQq9hUT=d1QBDMmgLaJ1wZ=hd44ciMnjFVgpLCnK8Wg@mail.gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,T_SPF_TEMPERROR
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 21, 2022 at 11:55 PM Christian Marangi <ansuelsmth@gmail.com> wrote:
-> On Fri, Oct 21, 2022 at 11:44:56PM +0200, Linus Walleij wrote:
-
-> > Is it not possible to use Geert's linux,usable-memory-range in
-> > the chosen node to make the kernel stay off the memory?
-> > (See examples by grep usable-memory in the kernel.)
+On Sat, Oct 22, 2022 at 04:21:28PM +0200, Linus Walleij wrote:
+> On Fri, Oct 21, 2022 at 11:55 PM Christian Marangi <ansuelsmth@gmail.com> wrote:
+> > On Fri, Oct 21, 2022 at 11:44:56PM +0200, Linus Walleij wrote:
+> 
+> > > Is it not possible to use Geert's linux,usable-memory-range in
+> > > the chosen node to make the kernel stay off the memory?
+> > > (See examples by grep usable-memory in the kernel.)
+> > >
+> > just to confirm this is one of the example you are suggesting?
 > >
->
-> Hi,
-> just to confirm this is one of the example you are suggesting?
->
-> chosen {
->                 bootargs = "console=ttyS0,115200 earlycon";
->                 stdout-path = "serial0:115200n8";
->                 linux,usable-memory-range = <0x80200000 0x1fe00000>;
+> > chosen {
+> >                 bootargs = "console=ttyS0,115200 earlycon";
+> >                 stdout-path = "serial0:115200n8";
+> >                 linux,usable-memory-range = <0x80200000 0x1fe00000>;
+> >         };
+> 
+> Yep that thing!
+> 
+> > Main problem here is that uboot in some case doesn't support dt and pass
+> > wrong ATAGS (with the memory not reserved) and AUTO_ZRELADDR calculate
+> > the wrong addr I assume?
+> 
+> You do have a DTB right, just that it is attached, and then the kernel
+> uses the ATAGs to augment the memory?
+> 
+> In that case what about disabling ARM_ATAG_DTB_COMPAT
+> and adding the actual valid memory to the top-level DTS
+> file? Just like that:
+> 
+>       memory {
+>                 device_type = "memory";
+>                 reg = <0x42000000 0xnnnnnnnn>;
 >         };
 
-Yep that thing!
+The RB3011 (arch/arm/boot/dts/qcom-ipq8064-rb3011.dts) does this and has
+been working fine with AUTO_ZRELADDR (and no ATAGS support enabled) - I
+have a recollection it didn't used to, but it's certainly worked since
+the 5.15 timeframe.
 
-> Main problem here is that uboot in some case doesn't support dt and pass
-> wrong ATAGS (with the memory not reserved) and AUTO_ZRELADDR calculate
-> the wrong addr I assume?
+J.
 
-You do have a DTB right, just that it is attached, and then the kernel
-uses the ATAGs to augment the memory?
-
-In that case what about disabling ARM_ATAG_DTB_COMPAT
-and adding the actual valid memory to the top-level DTS
-file? Just like that:
-
-      memory {
-                device_type = "memory";
-                reg = <0x42000000 0xnnnnnnnn>;
-        };
-
-
-> I will test the usable-memory-range but isn't the same of declaring
-> reserved space in the dts? Or the zimage decompressor checks
-> linux,usable-memory-range bypassing atags?
-
-As long as it just pass "too much" memory it should do the job,
-I *think*.
-
-Since I wrote this article:
-https://people.kernel.org/linusw/how-the-arm32-linux-kernel-decompresses
-Geert introduced some very elaborate low-level OF code and I
-do think it kicks in and makes sure to reserve this memory even
-before the decompressor goes to work (in difference from e.g.
-"reserved memory nodes" that are not inspected until later).
-
-See:
-commit 48342ae751c797ac73ac9c894b3f312df18ffd21
-"ARM: 9124/1: uncompress: Parse "linux,usable-memory-range" DT property"
-
-Then if the memory node is in the DTB originally or patched in
-by U-Boot shouldn't really matter, usable-memory-range should
-kick in in either case.
-
-It is described as used for kexec (which I never use) but I think it can
-solve your problem too.
-
-The DT property is (by agreement) an undocumented Linux extension,
-so Geert knows the intended usecases better :)
-
-Yours,
-Linus Walleij
+-- 
+Generally, all generalizations are false..
+This .sig brought to you by the letter M and the number 44
+Product of the Republic of HuggieTag
