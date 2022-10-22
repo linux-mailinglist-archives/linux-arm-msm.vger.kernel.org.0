@@ -2,154 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0E9D6085CB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Oct 2022 09:39:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95135608BBB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Oct 2022 12:39:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230216AbiJVHjQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Oct 2022 03:39:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51668 "EHLO
+        id S230003AbiJVKjZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Oct 2022 06:39:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230455AbiJVHin (ORCPT
+        with ESMTP id S230062AbiJVKjH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Oct 2022 03:38:43 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5701A29B89B;
-        Sat, 22 Oct 2022 00:36:07 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A601560ADA;
-        Sat, 22 Oct 2022 07:36:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE175C433D7;
-        Sat, 22 Oct 2022 07:36:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1666424165;
-        bh=beAhWKXvQm9GjdNfxG+/MZqHkyVEr24AhaspX2hWJsw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=HuaWQZEMPqrpPB8WGKJBiNv6XZqXhz1dsXG9OzDhH3L5wL/MK2qVkWtLl5jQjkiR5
-         eojBel5C6jA02a+r4/CYVJ4aQs+H46hY5VRZ3f1+A9Hn+7r8V5yn5H5znTMZg6j1HP
-         vUiGm0oSHKt66JIU0DYAovNjOe7yqEqYEIQS1xU8=
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     linux-kernel@vger.kernel.org
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        stable@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Sat, 22 Oct 2022 06:39:07 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96AFB2EBB96
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Oct 2022 02:56:33 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id q19so14324644edd.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Oct 2022 02:56:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KV5T4Ds36Pn5JJ9LvcyOc5p1G5ob4lljxOKtNSKGmMI=;
+        b=SmS4Dp2bjzHIDfgevSzTDT8N9t7g25MnT2uUBAQ9QLZiE7y7RAxBRrrD+QrDp/8OcE
+         1qLojZGCYk1TmHD47+QZ5QRxKUVFsiFhryvAiY0PLrcWWZ7b3S9CvUD66igkBINAElc8
+         XE8g10/JjAnoDJ8pvM2eWg8yPQ6rE35JA5K2GE46lb7Hn6aome44rrwg6ZVf3A6F01on
+         DYIzONRkjyTmEmo3rWTUnItfFRilXcz0ZEJvIxDfJyIGnP68pxNEa/0Hv27AkZpCZH1z
+         BF2AIxyfuC+3pMTC6vIDAzBpP+Fp7ZZVVe7VkEonK4Z5vM4wACjQljpaWU3Ig+FbsKui
+         3nMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KV5T4Ds36Pn5JJ9LvcyOc5p1G5ob4lljxOKtNSKGmMI=;
+        b=i8h/zhRaoQmvnohaH4M4fYUeSgv8JR/jZ+YzMoQpFF2933YpDTmk96zAgsrStyRMxa
+         iYqRS8e6t4HyI+wsNdhJin3nF5AQLOj0gXaHtoGO8eg9lVRZirGfDYEWf1ZmpIrjVqN1
+         euSRA0vvY+0pDMccdSzQ13ZGaQVHEu0/NdazzBaMyCgvLldB0/MIwwK2SmnrsjR5durS
+         N/lVjL2/sLAfc6BAKaktloEFg1MjDFYCpXAVCv1yz8c57ajiLxp61ZHPlyQvweSJ7BoE
+         pV9wpbDVugN3b+utq6K3aquIuwKu7Xgs3/YSwK8oDKMRzwTL7h1/IRqHC20P/obK+6HN
+         ldVg==
+X-Gm-Message-State: ACrzQf0X9DdKbD0b/b2H1ayzSO2KmVhqCjfcU39E7Hp26qlKh61gsC28
+        8NSj4EeSY92VT/ka0S29jOCB4CEOcdppx0qm
+X-Google-Smtp-Source: AMsMyM6gqIWCG3vTlrW4YgHYo9wuugLZiy0KoowKh2MbcU1t+un3BouhWEM72DvnvW3vQf9yB/0rtA==
+X-Received: by 2002:a05:651c:883:b0:26d:d4ce:befa with SMTP id d3-20020a05651c088300b0026dd4cebefamr8091211ljq.180.1666430256014;
+        Sat, 22 Oct 2022 02:17:36 -0700 (PDT)
+Received: from [10.27.10.248] ([195.165.23.90])
+        by smtp.gmail.com with ESMTPSA id f28-20020a05651c03dc00b0026dced9840dsm3669537ljp.61.2022.10.22.02.17.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 22 Oct 2022 02:17:35 -0700 (PDT)
+Message-ID: <48e13203-2588-618b-4fde-3004b2472783@linaro.org>
+Date:   Sat, 22 Oct 2022 12:17:34 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Subject: Re: [RFC PATCH 1/9] dt-bindings: arm-smmu: Add missing Qualcomm SMMU
+ compatibles
+Content-Language: en-GB
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.19 048/717] regulator: qcom_rpm: Fix circular deferral regression
-Date:   Sat, 22 Oct 2022 09:18:47 +0200
-Message-Id: <20221022072423.637828474@linuxfoundation.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221022072415.034382448@linuxfoundation.org>
-References: <20221022072415.034382448@linuxfoundation.org>
-User-Agent: quilt/0.67
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Rob Clark <robdclark@gmail.com>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, freedreno@lists.freedesktop.org
+References: <20221021165534.2334329-1-dmitry.baryshkov@linaro.org>
+ <20221021165534.2334329-2-dmitry.baryshkov@linaro.org>
+ <a36ca97e-5e64-54a8-a571-e9b7f6da76e5@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <a36ca97e-5e64-54a8-a571-e9b7f6da76e5@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Linus Walleij <linus.walleij@linaro.org>
+On 22/10/2022 03:59, Krzysztof Kozlowski wrote:
+> On 21/10/2022 12:55, Dmitry Baryshkov wrote:
+>> Add missing compatibles used for Adreno SMMU on sc7280 and sm8450
+>> platforms and for the Qualcomm v2 SMMU used on SDM630 platform.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 11 +++++++++++
+>>   1 file changed, 11 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>> index 9066e6df1ba1..34ee33a62ba5 100644
+>> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>> @@ -28,6 +28,7 @@ properties:
+>>             - enum:
+>>                 - qcom,msm8996-smmu-v2
+>>                 - qcom,msm8998-smmu-v2
+>> +              - qcom,sdm630-smmu-v2
+> 
+> So qcom,adreno-smmu is not compatible with Adreno? See below.
+> 
+>>             - const: qcom,smmu-v2
+>>   
+>>         - description: Qcom SoCs implementing "arm,mmu-500"
+>> @@ -48,10 +49,20 @@ properties:
+>>                 - qcom,sm8350-smmu-500
+>>                 - qcom,sm8450-smmu-500
+>>             - const: arm,mmu-500
+>> +
+>> +      - description: Qcom Adreno GPUs implementing "arm,smmu-500"
+>> +        items:
+>> +          - enum:
+>> +              - qcom,sc7280-smmu-500
+>> +              - qcom,sm8250-smmu-500
+>> +          - const: qcom,adreno-smmu
+>> +          - const: arm,mmu-500
+>>         - description: Qcom Adreno GPUs implementing "arm,smmu-v2"
+>>           items:
+>>             - enum:
+>> +              - qcom,msm8996-smmu-v2
+>>                 - qcom,sc7180-smmu-v2
+>> +              - qcom,sdm630-smmu-v2
+> 
+> This does not look correct. The same compatible should not be present in
+> two different setups.
+> 
+> If qcom,msm8996-smmu-v2 is compatible with qcom,adreno-smmu, then your
+> first hunk is not correct.
 
-commit 8478ed5844588703a1a4c96a004b1525fbdbdd5e upstream.
+Currently the qcom,adreno-smmu compat string is used as a flag, telling 
+the kernel that this SMMU instance needs some special setup to work with 
+Adreno GPU driver
 
-On recent kernels, the PM8058 L16 (or any other PM8058 LDO-regulator)
-does not come up if they are supplied by an SMPS-regulator. This
-is not very strange since the regulators are registered in a long
-array and the L-regulators are registered before the S-regulators,
-and if an L-regulator defers, it will never get around to registering
-the S-regulator that it needs.
+For example, we have the following compat lists in the existing DT files:
+- "qcom,msm8996-smmu-v2", "qcom,adreno-smmu", "qcom,smmu-v2"
+- "qcom,msm8996-smmu-v2", "qcom,smmu-v2" // not handled by arm-qcom-smmu
 
-See arch/arm/boot/dts/qcom-apq8060-dragonboard.dts:
+- "qcom,sdm630-smmu-v2", "qcom,adreno-smmu", "qcom,smmu-v2"
+- "qcom,sdm630-smmu-v2", "qcom,smmu-v2"
 
-pm8058-regulators {
-    (...)
-    vdd_l13_l16-supply = <&pm8058_s4>;
-    (...)
+- "qcom,sdm845-smmu-v2", "qcom,adreno-smmu", "qcom,smmu-v2"
+- "qcom,sdm845-smmu-500", "arm,mmu-500"
+- "qcom,sdm845-smmu-v2", "qcom,smmu-v2" // special setup used on Cheza
 
-Ooops.
+- "qcom,sm8250-smmu-500", "qcom,adreno-smmu", "arm,mmu-500"
+- "qcom,sm8250-smmu-500", "arm,mmu-500"
 
-Fix this by moving the PM8058 S-regulators first in the array.
 
-Do the same for the PM8901 S-regulators (though this is currently
-not causing any problems with out device trees) so that the pattern
-of registration order is the same on all PMnnnn chips.
+As we are trying to refactor the IOMMU bindings, what would be your 
+recommendation?
 
-Fixes: 087a1b5cdd55 ("regulator: qcom: Rework to single platform device")
-Cc: stable@vger.kernel.org
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc: linux-arm-msm@vger.kernel.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20220909112529.239143-1-linus.walleij@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/regulator/qcom_rpm-regulator.c |   24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+To introduce minimal changes, I wanted to have the following lists:
+- "qcom,SOC-smmu-500", "qcom,adreno-smmu", "qcom,smmu-500", "arm,mmu-500"
 
---- a/drivers/regulator/qcom_rpm-regulator.c
-+++ b/drivers/regulator/qcom_rpm-regulator.c
-@@ -802,6 +802,12 @@ static const struct rpm_regulator_data r
- };
- 
- static const struct rpm_regulator_data rpm_pm8058_regulators[] = {
-+	{ "s0",   QCOM_RPM_PM8058_SMPS0,  &pm8058_smps, "vdd_s0" },
-+	{ "s1",   QCOM_RPM_PM8058_SMPS1,  &pm8058_smps, "vdd_s1" },
-+	{ "s2",   QCOM_RPM_PM8058_SMPS2,  &pm8058_smps, "vdd_s2" },
-+	{ "s3",   QCOM_RPM_PM8058_SMPS3,  &pm8058_smps, "vdd_s3" },
-+	{ "s4",   QCOM_RPM_PM8058_SMPS4,  &pm8058_smps, "vdd_s4" },
-+
- 	{ "l0",   QCOM_RPM_PM8058_LDO0,   &pm8058_nldo, "vdd_l0_l1_lvs"	},
- 	{ "l1",   QCOM_RPM_PM8058_LDO1,   &pm8058_nldo, "vdd_l0_l1_lvs" },
- 	{ "l2",   QCOM_RPM_PM8058_LDO2,   &pm8058_pldo, "vdd_l2_l11_l12" },
-@@ -829,12 +835,6 @@ static const struct rpm_regulator_data r
- 	{ "l24",  QCOM_RPM_PM8058_LDO24,  &pm8058_nldo, "vdd_l23_l24_l25" },
- 	{ "l25",  QCOM_RPM_PM8058_LDO25,  &pm8058_nldo, "vdd_l23_l24_l25" },
- 
--	{ "s0",   QCOM_RPM_PM8058_SMPS0,  &pm8058_smps, "vdd_s0" },
--	{ "s1",   QCOM_RPM_PM8058_SMPS1,  &pm8058_smps, "vdd_s1" },
--	{ "s2",   QCOM_RPM_PM8058_SMPS2,  &pm8058_smps, "vdd_s2" },
--	{ "s3",   QCOM_RPM_PM8058_SMPS3,  &pm8058_smps, "vdd_s3" },
--	{ "s4",   QCOM_RPM_PM8058_SMPS4,  &pm8058_smps, "vdd_s4" },
--
- 	{ "lvs0", QCOM_RPM_PM8058_LVS0, &pm8058_switch, "vdd_l0_l1_lvs" },
- 	{ "lvs1", QCOM_RPM_PM8058_LVS1, &pm8058_switch, "vdd_l0_l1_lvs" },
- 
-@@ -843,6 +843,12 @@ static const struct rpm_regulator_data r
- };
- 
- static const struct rpm_regulator_data rpm_pm8901_regulators[] = {
-+	{ "s0",   QCOM_RPM_PM8901_SMPS0, &pm8901_ftsmps, "vdd_s0" },
-+	{ "s1",   QCOM_RPM_PM8901_SMPS1, &pm8901_ftsmps, "vdd_s1" },
-+	{ "s2",   QCOM_RPM_PM8901_SMPS2, &pm8901_ftsmps, "vdd_s2" },
-+	{ "s3",   QCOM_RPM_PM8901_SMPS3, &pm8901_ftsmps, "vdd_s3" },
-+	{ "s4",   QCOM_RPM_PM8901_SMPS4, &pm8901_ftsmps, "vdd_s4" },
-+
- 	{ "l0",   QCOM_RPM_PM8901_LDO0, &pm8901_nldo, "vdd_l0" },
- 	{ "l1",   QCOM_RPM_PM8901_LDO1, &pm8901_pldo, "vdd_l1" },
- 	{ "l2",   QCOM_RPM_PM8901_LDO2, &pm8901_pldo, "vdd_l2" },
-@@ -851,12 +857,6 @@ static const struct rpm_regulator_data r
- 	{ "l5",   QCOM_RPM_PM8901_LDO5, &pm8901_pldo, "vdd_l5" },
- 	{ "l6",   QCOM_RPM_PM8901_LDO6, &pm8901_pldo, "vdd_l6" },
- 
--	{ "s0",   QCOM_RPM_PM8901_SMPS0, &pm8901_ftsmps, "vdd_s0" },
--	{ "s1",   QCOM_RPM_PM8901_SMPS1, &pm8901_ftsmps, "vdd_s1" },
--	{ "s2",   QCOM_RPM_PM8901_SMPS2, &pm8901_ftsmps, "vdd_s2" },
--	{ "s3",   QCOM_RPM_PM8901_SMPS3, &pm8901_ftsmps, "vdd_s3" },
--	{ "s4",   QCOM_RPM_PM8901_SMPS4, &pm8901_ftsmps, "vdd_s4" },
--
- 	{ "lvs0", QCOM_RPM_PM8901_LVS0, &pm8901_switch, "lvs0_in" },
- 	{ "lvs1", QCOM_RPM_PM8901_LVS1, &pm8901_switch, "lvs1_in" },
- 	{ "lvs2", QCOM_RPM_PM8901_LVS2, &pm8901_switch, "lvs2_in" },
+- "qcom,SOC-smmu-500", "qcom,smmu-500", "arm,mmu-500"
 
+However maybe you would prefer the following model:
+
+- "qcom,SOC-adreno-smmu-500", "qcom,adreno-smmu-500", "arm,mmu-500"
+- "qcom,SOC-smmu-500", "qcom,smmu-500", "arm,mmu-500"
+
+
+Or:
+- "qcom,SOC-smmu-500", "qcom,smmu-500", "arm,mmu-500" + 
+'qcom,adreno-smmu' flag/property?
+
+
+> 
+>>                 - qcom,sdm845-smmu-v2
+>>             - const: qcom,adreno-smmu
+>>             - const: qcom,smmu-v2
+> 
+> Best regards,
+> Krzysztof
+> 
+
+-- 
+With best wishes
+Dmitry
 
