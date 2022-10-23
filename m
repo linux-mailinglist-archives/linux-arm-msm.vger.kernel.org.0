@@ -2,105 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72272609334
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Oct 2022 15:03:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17CF86094B3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Oct 2022 18:31:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230270AbiJWNDQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 Oct 2022 09:03:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54678 "EHLO
+        id S230230AbiJWQbZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Oct 2022 12:31:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230149AbiJWNDP (ORCPT
+        with ESMTP id S229618AbiJWQbY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 Oct 2022 09:03:15 -0400
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3937A6FA24
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Oct 2022 06:03:14 -0700 (PDT)
-Received: by mail-qk1-x732.google.com with SMTP id o2so4736222qkk.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Oct 2022 06:03:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qCqTq1pPm7I1xT+HP3x7Se2GkYTdlef4gn4o/9jUS4M=;
-        b=YNsmxiEW05f7vureKtD3GIu/M0sQYQdaMrrwIf6mnF/z7x9n0vLKEyZow5ISH3fLw0
-         qimM6ZMB4mr8xtx7Joc6bYavH2aov1Ou/6r3/uEH8LQ2JQuxn8JDysYgXLgn00ZoTjaY
-         0NwNsTc12HXmFOtnZrIZwp/FY1uyPczqnhgsz03aLWyeXz312oGl/temG0bia+uOjEng
-         0tiOngCOa9GofYuU/OxCqKCWbzwEiVPlAMpiGgCuEpej9c4vaduS//hwRmKmf8LM4rSE
-         UIr+xpBs8PN+traIS+2eXmu6449j8VOJxbFh02q2A2Ce/e4EIjw1isdN3gPJSgNezOTs
-         RSIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qCqTq1pPm7I1xT+HP3x7Se2GkYTdlef4gn4o/9jUS4M=;
-        b=PDCOTPwQK6z60APz0uWAVoGsnMR/o7KCLlFAMm8nlwsLF6Dj42UM2IoNtl/CvbD5Fo
-         rTU3CDqSwTe+cglCIqZaJwFVNLRV8+qoHY6Ir85MancPteSMOmYcSpGrZR/kwRrbyJZb
-         g60ZWP5ERYIJ/N/EXH9k0fr6shEPiGK/WG+JKKy2OYr2lvFKg9acNnytBSYRf417a9u6
-         NLBlm8GmiPQ0KZvGC3YuGQbGDofVC+RBm7JamWHqgvs3dS4gbVE8IqMHdDznFCCdhZ/U
-         El4bFLkqllZHzY+zZf4AMMsW62TOWz9N/RZu61bSOyzCSOwg3EsCwzaMyTLQlhhbUUbD
-         SnPA==
-X-Gm-Message-State: ACrzQf092jCZdiicIYqvdiBrdh2jpMMfdzuBsltS1br7zOR+0LucY9IN
-        P8FC9L2hb/2rYOQPXS7vWrqrFw==
-X-Google-Smtp-Source: AMsMyM40XDGsIZJWzkb5SuUumlq4zOOEJ8g8fTWMm8cwssRfGiZ+jCoN9I4BStll1vbKizur0c8WCA==
-X-Received: by 2002:a05:620a:448c:b0:6ce:a013:7fa3 with SMTP id x12-20020a05620a448c00b006cea0137fa3mr19244655qkp.532.1666530193368;
-        Sun, 23 Oct 2022 06:03:13 -0700 (PDT)
-Received: from [192.168.1.8] ([64.57.193.93])
-        by smtp.gmail.com with ESMTPSA id cf17-20020a05622a401100b0039c7b9522ecsm11288064qtb.35.2022.10.23.06.03.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 23 Oct 2022 06:03:12 -0700 (PDT)
-Message-ID: <29dfeb9c-0bca-4550-1cfc-7a044f92bd87@linaro.org>
-Date:   Sun, 23 Oct 2022 09:03:10 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: Add device tree for Sony Xperia 10
- IV
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Sun, 23 Oct 2022 12:31:24 -0400
+Received: from mout-y-111.mailbox.org (mout-y-111.mailbox.org [91.198.250.236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08B9D4F6BD;
+        Sun, 23 Oct 2022 09:31:23 -0700 (PDT)
+Received: from smtp102.mailbox.org (unknown [91.198.250.119])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mout-y-111.mailbox.org (Postfix) with ESMTPS id 4MwNxg2NDkz9sl2;
+        Sun, 23 Oct 2022 18:31:19 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=noorman.info;
+        s=MBO0001; t=1666542679;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=L+Uu5fNN1Fu4LDg47Qgq7aw/zK13Z4KSJrDen1AI+eY=;
+        b=kfzHDgQQoAexT2MbOdTVEnjZfDXMGUB1Tfa2m05iz/3MvlUYD8GIcPhlfQ2DPzxLhiqBrH
+        d3y32fDfQGjxln1G+lumoSf0IdxP2ul0VuXdqMhSAvgUt7rGeneeuVcL2xSUej1IO5KviP
+        zTJn4JCLGe9h5DcPqIR4su+JzgV/kFSoeIV1l9OxzRhGng5IN+Ax4f7vUWZpmmFPM6Dw1V
+        4Y6reDuHBzA6aJr3Lq9JVS1zOIOVu5kGV+xDwQuvXxcpqstFO84FsjMAP6MhIROAGG8/Dv
+        Ju1VSfz8ieFsBEQBvSOZ5wNYsud1OecUg2lBdk9q9AcNcjMd3gmh2TY3NyRZvw==
+From:   Job Noorman <job@noorman.info>
+To:     Job Noorman <job@noorman.info>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-References: <20221022194218.210941-1-konrad.dybcio@somainline.org>
- <20221022194218.210941-4-konrad.dybcio@somainline.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221022194218.210941-4-konrad.dybcio@somainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Henrik Rydberg <rydberg@bitmath.org>
+Cc:     Luca Weiss <luca@z3ntu.xyz>, linux-input@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v5 0/3] Add Himax hx83112b touchscreen driver
+Date:   Sun, 23 Oct 2022 18:30:28 +0200
+Message-Id: <20221023163032.144150-1-job@noorman.info>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 4MwNxg2NDkz9sl2
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/10/2022 15:42, Konrad Dybcio wrote:
-> Add support for Sony Xperia 10 IV, a.k.a PDX225. This device is a part
-> of the SoMC SM6375 Murray platform and currently it is the only
-> device based on that board, so no -common DTSI is created until (if?)
-> other Murray devices appear.
-> 
-> This commit brings support for:
-> * USB (only USB2 for now)
-> * Display via simplefb
+Hi all,
 
+This series adds support for the Himax hx83112b. The hx83112b supports 10
+point multitouch with hardware tracking of touch points. It is the
+touchschreen used by the Fairphone 3.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Note that a datasheet was unavailable for this device, so it was built
+based on the Android driver that was tagged as GPLv2. This series is a
+complete rewrite, though, and the code bears no resemblence to the original
+implementation.
 
+It is expected that this driver can be made to work on other hx83xxx
+devices, especially the hx83112a used in the Fairphone 4. However, since we
+have been unable to verify this, this driver only declares compatibility
+with the hx83112b and uses very specific file names.
+
+Changes since v4 (based on Jeff LaBundy's 2nd round of comments):
+- Kconfig: depend on I2C and select REGMAP_I2C
+- Don't suppress dev_err() on EPROBE_DEFER
+- Some minor coding style updates
+
+Changes since v3 (based on Dmitry Torokhov's comments):
+- Use gpiod_set_value_cansleep (instead of gpiod_set_value) during probe
+- Inline some small helper functions
+- Use DEFINE_SIMPLE_DEV_PM_OPS() and pm_sleep_ptr()
+- Use PTR_ERR_OR_ZERO instead of IS_ERR+PTR_ERR
+- Some minor coding style updates (e.g., use C-style comments)
+
+Changes since v2 (based on Jeff LaBundy's comments):
+- Kconfig: depend on REGMAP_I2C instead of I2C
+- Don't use dev_err_probe()
+- Return IRQ_NONE on failed register reads to prevent possible interrupt
+  storm
+- Add small delay after de-asserting reset pin
+- Some minor coding style updates
+- dt-bindings: make touchscreen-size-{x,y} required
+
+Changes since v1:
+- Fix sparse warnings. Reported-by: kernel test robot <lkp@intel.com>.
+- Fix dt_binding_check.
 
 Best regards,
-Krzysztof
+Job
+
+Previous versions:
+- v4: https://lore.kernel.org/lkml/20221017100409.189293-1-job@noorman.info/
+- v3: https://lore.kernel.org/lkml/20221016102756.40345-1-job@noorman.info/
+- v2: https://lore.kernel.org/lkml/20221012202341.295351-1-job@noorman.info/
+- v1: https://lore.kernel.org/lkml/20221011190729.14747-1-job@noorman.info/
+
+Job Noorman (3):
+  dt-bindings: touchscreen: add Himax hx83112b bindings
+  Input: add driver for Himax hx83112b touchscreen devices
+  arm64: dts: qcom: sdm632: fairphone-fp3: add touchscreen
+
+ .../input/touchscreen/himax,hx83112b.yaml     |  63 +++
+ MAINTAINERS                                   |   7 +
+ .../boot/dts/qcom/sdm632-fairphone-fp3.dts    |  14 +
+ drivers/input/touchscreen/Kconfig             |  12 +
+ drivers/input/touchscreen/Makefile            |   1 +
+ drivers/input/touchscreen/himax_hx83112b.c    | 364 ++++++++++++++++++
+ 6 files changed, 461 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/input/touchscreen/himax,hx83112b.yaml
+ create mode 100644 drivers/input/touchscreen/himax_hx83112b.c
+
+
+base-commit: d4a596eddb90114f5f5f32a440057a175517b090
+-- 
+2.38.1
 
