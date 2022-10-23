@@ -2,239 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C018D608F4A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Oct 2022 21:42:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EC5660932B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Oct 2022 14:58:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229738AbiJVTmx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Oct 2022 15:42:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53682 "EHLO
+        id S230038AbiJWM6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Oct 2022 08:58:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229817AbiJVTmw (ORCPT
+        with ESMTP id S230373AbiJWM6k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Oct 2022 15:42:52 -0400
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70AB11213D9;
-        Sat, 22 Oct 2022 12:42:51 -0700 (PDT)
-Received: from localhost.localdomain (95.49.32.126.neoplus.adsl.tpnet.pl [95.49.32.126])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 3A20C1F9CF;
-        Sat, 22 Oct 2022 21:42:48 +0200 (CEST)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     ~postmarketos/upstreaming@lists.sr.ht
+        Sun, 23 Oct 2022 08:58:40 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21676631CE
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Oct 2022 05:58:26 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id s17so4723990qkj.12
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Oct 2022 05:58:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0z3soCr06Zq0kPYXvNfFb6hXYXBXXKTaiiag2YWRGu8=;
+        b=IsJoNIMWKUhHLeCPBiRmDtFQwAxA4AhLGG+zemw3FJVDpIOd3QWebMHcv1S2SEGZBE
+         elx5HMv1e9SnTfNnIQrqmq1WEI/XE+97ONJXVav82ANWXgT6Q/qkLMZ6Nh4OM2e1SLw4
+         4edM2uPeN94OKhdyPW3ohF/Eud0oytVfkZR2VD13W3SR4uaYPOXQRUNbpjXIX6i20tcK
+         XBcvLcOl8euZ/TMi7L82JObYUhPOYuzj1rB5QkNq3dGTyPV7hAGqqF0zs/4poDdxCbpC
+         mJdVymaXvLj29YFmxmSLHUSGRgWJnAQDaHciidKCRbYw8S8tZuP82pFGDM36v4F4CRqL
+         avJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0z3soCr06Zq0kPYXvNfFb6hXYXBXXKTaiiag2YWRGu8=;
+        b=bpVQ7hs3vdwup2TZzIoG14/OlI9H6GoDuMDM8j6YUPY2Ifn1RolEAcu2ddB7PULJdN
+         S7o395D64Fv6XrvzYpcet9MK6yaodEmz6gSAWJzASwJc8SaPcgl9wq2kM4inIrvQi3Mg
+         WDsYGn/87PDH1z4IYyyXC4dcBZ+SWvNcLpMp8/RBMw0Zr4ti4fYaxbRDiRAUsdu941o2
+         KH+LxT5Fk0XxSmRz8se6VKYQXI3YVSRDd/rVuYiDMXb5nO0rGWuIzzFq/d2us1E3w1Zr
+         ugIG48HxJ5jK8nS+Dh+0u8edtCltV7lzlRa977Y6vwjmrU96LeOt1KKersWI80nbTOf8
+         ovzw==
+X-Gm-Message-State: ACrzQf0xTndSFYodjogPsrX+GOGJL61n96mAusvRjLcUACJ5YyIcBpD8
+        pNGdJaVEwlNY4CQMAiRq+aCrE8ojdukgDA==
+X-Google-Smtp-Source: AMsMyM6zx60rvjPqJhJZ+Ib1C4hVgCQITXAutUU09g8oy0D32Wpre37Ff9xf83MQAM+x5h45lV/GHg==
+X-Received: by 2002:a05:620a:490d:b0:6e6:b1ad:7a81 with SMTP id ed13-20020a05620a490d00b006e6b1ad7a81mr18167276qkb.695.1666529863105;
+        Sun, 23 Oct 2022 05:57:43 -0700 (PDT)
+Received: from [192.168.1.8] ([64.57.193.93])
+        by smtp.gmail.com with ESMTPSA id r17-20020ac87951000000b0039cb9ef50b5sm11098932qtt.26.2022.10.23.05.57.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 23 Oct 2022 05:57:42 -0700 (PDT)
+Message-ID: <8522ae69-26c4-9764-7701-6e977540374e@linaro.org>
+Date:   Sun, 23 Oct 2022 08:57:40 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Subject: Re: [PATCH 2/4] dt-bindings: arm: qcom: Document SM6375 & Xperia 10
+ IV
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
         angelogioacchino.delregno@somainline.org,
         marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-Subject: [PATCH 4/4] arm64: dts: qcom: Add device tree for Sony Xperia 10 IV
-Date:   Sat, 22 Oct 2022 21:42:17 +0200
-Message-Id: <20221022194218.210941-4-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221022194218.210941-1-konrad.dybcio@somainline.org>
+        linux-kernel@vger.kernel.org
 References: <20221022194218.210941-1-konrad.dybcio@somainline.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+ <20221022194218.210941-2-konrad.dybcio@somainline.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221022194218.210941-2-konrad.dybcio@somainline.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for Sony Xperia 10 IV, a.k.a PDX225. This device is a part
-of the SoMC SM6375 Murray platform and currently it is the only
-device based on that board, so no -common DTSI is created until (if?)
-other Murray devices appear.
+On 22/10/2022 15:42, Konrad Dybcio wrote:
+> Add compatibles for Sony Xperia 10 IV (PDX225) and the SM6375 SoC
+> it's based on.
 
-This commit brings support for:
-* USB (only USB2 for now)
-* Display via simplefb
 
-To create a working boot image, you need to run:
-cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/sm6375-sony-xperia-\
-murray-pdx225.dtb > .Image.gz-dtb
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-mkbootimg \
---kernel .Image.gz-dtb \
---ramdisk some_initrd.img \
---pagesize 4096 \
---base 0x0 \
---kernel_offset 0x8000 \
---ramdisk_offset 0x1000000 \
---tags_offset 0x100 \
---cmdline "SOME_CMDLINE" \
---dtb_offset 0x1f00000 \
---header_version 1 \
---os_version 12 \
---os_patch_level 2022-04 \ # or newer
--o boot.img-sony-xperia-pdx225
-
-Then, you need to flash it on the device and get rid of all the
-vendor_boot/dtbo mess:
-
-First, you need to get rid of vendor_boot. However, the bootloader
-is utterly retarded and it will not let you neither flash nor erase it.
-There are a couple ways to handle this: you can either dd /dev/zero to
-it from Android (if you have root) or a custom recovery or from fastbootd
-(fastboot/adb reboot fastboot). You will not be able to boot Android
-images on your phone unless you lock the bootloader (fastboot oem lock)
-and restore the factory image with Xperia Companion
-Windows-and-macOS-only software.
-
-The best way so far is probably to use the second (_b) slot and flash
-mainline there. This will however require you to flash some partitions
-manually, as they are not populated from factory:
-
-(boot_b, dtbo_b, vendor_boot_b, vbmeta_b, vbmeta_system_b) - these we
-don't really care about as we nuke/replace them
-
-(dsp_b, imagefv_b, modem_b, oem_b, rdimage_b) - these you NEED to populate
-to get a successful boot on slot B, otherwise you will have limited / no
-functionality.
-
-To switch slots, simply run:
-
-fastboot --set-active=a //or =b
-
-The rest assumes you are on slot A.
-
-// You have to either pull vbmeta{"","_system"} from
-// /dev/block/bootdevice/by-name/ or build one as a part of AOSP
-fastboot --disable-verity --disable-verification flash vbmeta_b vbmeta.img
-fastboot --disable-verity --disable-verification flash vbmeta_system_b \
-vbmeta_system.img
-
-fastboot flash boot_b boot.img-sony-xperia-pdx225
-fastboot reboot fastboot // entering fastbootd
-fastboot flash vendor_boot_b emptything.img
-fastboot flash dtbo_b emptything.img
-fastboot reboot bootloader // entering bootloader fastboot
-fastboot --set-active=b
-fastboot reboot // mainline time!
-
-Where emptything.img is a tiny file that consists of 2 bytes (all zeroes),
-doing a "fastboot erase" won't cut it, the bootloader will go crazy and
-things will fall apart when it tries to overlay random bytes from an empty
-partition onto a perfectly good appended DTB.
-
-From there on you can flash new mainline builds by simply flashing
-boot.img that you create after each kernel rebuild.
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
----
- arch/arm64/boot/dts/qcom/Makefile             |  1 +
- .../qcom/sm6375-sony-xperia-murray-pdx225.dts | 82 +++++++++++++++++++
- 2 files changed, 83 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index b0558d3389e5..0292d116c25b 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -144,6 +144,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6350-sony-xperia-lena-pdx213.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm6375-sony-xperia-murray-pdx225.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm7225-fairphone-fp4.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-microsoft-surface-duo.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-new file mode 100644
-index 000000000000..24f9e71688ff
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-@@ -0,0 +1,82 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2022, Konrad Dybcio <konrad.dybcio@somainline.org>
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include "sm6375.dtsi"
-+#include "pmr735a.dtsi"
-+
-+/ {
-+	model = "Sony Xperia 10 IV";
-+	compatible = "sony,pdx225", "qcom,sm6375";
-+	chassis-type = "handset";
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		framebuffer: framebuffer@85200000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0 0x85200000 0 0xc00000>;
-+
-+			width = <1080>;
-+			height = <2520>;
-+			stride = <(1080 * 4)>;
-+			format = "a8r8g8b8";
-+			/*
-+			 * That's (going to be) a lot of clocks, but it's necessary due
-+			 * to unused clk cleanup & no panel driver yet
-+			 */
-+			clocks = <&gcc GCC_DISP_AHB_CLK>,
-+				 <&gcc GCC_DISP_HF_AXI_CLK>,
-+				 <&gcc GCC_DISP_THROTTLE_CORE_CLK>,
-+				 <&gcc GCC_DISP_GPLL0_DIV_CLK_SRC>;
-+		};
-+	};
-+
-+	reserved-memory {
-+		cont_splash_mem: memory@85200000 {
-+			reg = <0 0x85200000 0 0xc00000>;
-+			no-map;
-+		};
-+
-+		ramoops@ffc40000 {
-+			compatible = "ramoops";
-+			reg = <0 0xffc40000 0 0xb0000>;
-+			record-size = <0x10000>;
-+			console-size = <0x60000>;
-+			ftrace-size = <0x10000>;
-+			pmsg-size = <0x20000>;
-+			ecc-size = <16>;
-+		};
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <13 4>;
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "peripheral";
-+};
-+
-+&usb_1_hsphy {
-+	status = "okay";
-+};
--- 
-2.38.1
+Best regards,
+Krzysztof
 
