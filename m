@@ -2,98 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2963A60973E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 01:24:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55E22609743
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 01:27:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229874AbiJWXYf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 Oct 2022 19:24:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45442 "EHLO
+        id S229618AbiJWX10 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Oct 2022 19:27:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229596AbiJWXYd (ORCPT
+        with ESMTP id S229455AbiJWX1Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 Oct 2022 19:24:33 -0400
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5663E34
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Oct 2022 16:24:26 -0700 (PDT)
-Received: by mail-qk1-x72c.google.com with SMTP id o2so5239543qkk.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Oct 2022 16:24:26 -0700 (PDT)
+        Sun, 23 Oct 2022 19:27:25 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DE8961713;
+        Sun, 23 Oct 2022 16:27:20 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id a13so25481245edj.0;
+        Sun, 23 Oct 2022 16:27:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ahbto9hiV9DffAtJRguQMo7E8rSARJFBBr4lwTw/uw8=;
-        b=CHfvOfKpo/gdYMTeeZ5mNmTlLTt0rMRfln8s/3Td1zRge+JB3liabgSkwoB2GhKW1W
-         nqAsww9KCqXgMh2ZZUxrrwEu0yCmbDRaTztovxnbL6KL60haIO+Y12UM7Uorzijg2ZpG
-         C0TjAUpVj7TOURzv4XLp/dOoQjhBxoUP/No798zq61Vevf1B0ggx6Vw0ATq2VbI/delR
-         ePVX+TqbBBuTZb1Z2q7wyYEQqIj3CSttO4Afmekvp96YhtsHys5UXGkdExJwv6D+SPy4
-         8g6Y4pqDAO8ZTGvoEwjRz4RkDK9Ec2zAGtW6t3km8D3qSdrFt8jhBzVFuHLsuqetLICo
-         bxFQ==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=r7iyv6pLHUBbgESpB7JB72bYJbis0tyU09CNwJiXEDM=;
+        b=CoFo213eBE00ntw45QBY1gNGx5qi3iC2DSNkjPXd3LI7XAgYBRV/Ko2ip5kF4x74pq
+         SQEFw0CJfk8JpUg24Q0cUGqUQxVEIkwelYK/h6tUdpaJC08UmxARrbMGjF9iQohV9thG
+         Rr5YKSkrgfJ+CAN6SQv4kQLOkd1So000EWUQNi5h7w/dgQg2J5AbEEKkh9z22NLBWDss
+         bb877kfyTTmNmWNNElrv1A+aRXJuIPP4HY7LVEAT0Nc9eXXCoO3PXYoq+J6CsaRAR2uC
+         1wUAeHt9EvixTb4cg2rNT6qaYiA486XYZv7wr13//uQ5yXF+qzpYs9CZ8/b1gEBdeEQ0
+         YIew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ahbto9hiV9DffAtJRguQMo7E8rSARJFBBr4lwTw/uw8=;
-        b=VjkVYpEqzZ1Bbwvk25nbmY4L4onBiBNdqfF89I9BntNzOl8XD2+v0Ao2inayQnovoS
-         /A8ZgbqTIYbfl2M6tBX8Hh8WJgY0JFpQMyj1GY1Dq/pL3oS2365Mbk6p47IAjQVYvri1
-         pq74s3kOVIkeCY5ufzN2GMLsYeZ/QkL81U3WPopDkBXM6cHlMGQXEVtuacumltOHaJhS
-         qHYGlhPP6RSOp4YtYA1KkwWs+ugOPCATE06urWEbX2vB7NgUsGHt1GpUp/22wCDW6JoM
-         Djt/7O+NAce2iIxWH2Pn1x2EyFSFSSMkovJP7zdjbmLQs2mMdiAZ7bf3x/DKx+nkt3aT
-         REKw==
-X-Gm-Message-State: ACrzQf2nbXjKlSTjJg5xt3MiUrCobbjRBvB80WK7bMfP3guamqfDObtH
-        F9toiciRN8plEvBQZ9VHG0OKf9SThizsmg==
-X-Google-Smtp-Source: AMsMyM73i80zxzKyyDyppmLCguJnb6z08mtxOFwC8dcSTb8UT/1wJloo52SIwFfG44502LmnyPP5Qw==
-X-Received: by 2002:a05:620a:430b:b0:6d2:5b2:a70e with SMTP id u11-20020a05620a430b00b006d205b2a70emr21577599qko.26.1666567465433;
-        Sun, 23 Oct 2022 16:24:25 -0700 (PDT)
-Received: from [192.168.1.8] ([64.57.193.93])
-        by smtp.gmail.com with ESMTPSA id bq8-20020a05622a1c0800b00394fce5fa64sm11876283qtb.9.2022.10.23.16.24.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 23 Oct 2022 16:24:24 -0700 (PDT)
-Message-ID: <507744ea-1c45-03a3-e8cb-13a87bda89d8@linaro.org>
-Date:   Sun, 23 Oct 2022 19:24:23 -0400
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=r7iyv6pLHUBbgESpB7JB72bYJbis0tyU09CNwJiXEDM=;
+        b=my9JtlJhbQLJ/n8SCXXyTiwNVXsAwVnek5IeSHFc8USGF0TMYy9J5hyHcGMcxtLuDN
+         0FdQ8MC/vwlymAUK9orR3BAklADXHmHJFWSoOSsm6HoTcIaX2jl0lseMK1AINW7nymXq
+         9qmkPpQGyy7xPd7/MA3znuNf+8VnnVHZsreES/T+Oo4lDZ99YB7GzYpX9hzLoFlsOk20
+         ApEKwGU4ylL+iIPUSACGkk9sx+IaeRcYZD38N1FmDV7rNGhI2rifWrECdnSgd5MrZucl
+         TpEnUGPIOTFFqImWEXxzS6oJA9OYGKfqrSGG7Qom0IffdkwuTLqx9/BNbN4dZZwiCH3V
+         ZEow==
+X-Gm-Message-State: ACrzQf0V1yZpv7ECuZo4SitHEgoQ62rnu42gTdliiJ2jV8Kk3P9x+mjP
+        1bffiH7lyqQCaHHl+Is/jQi9YLPDXRtnwWweC6U=
+X-Google-Smtp-Source: AMsMyM7XeZUFA2THcAbqqTH0GuKnXsqwRj2Ff97GJP5fJ5EYSZwPC8nc4rLfVdhgst/1bRna3ZqCeK5oJyfxIgFuOrI=
+X-Received: by 2002:a17:907:2c4a:b0:78d:f5c2:70d1 with SMTP id
+ hf10-20020a1709072c4a00b0078df5c270d1mr25514305ejc.198.1666567638547; Sun, 23
+ Oct 2022 16:27:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH v2 2/4] arm64: boot: dts: msm8996: add blsp1_i2c6 node
-Content-Language: en-US
-To:     Harry Austen <hpausten@protonmail.com>,
+References: <20221020103120.1541862-1-dmitry.baryshkov@linaro.org> <20221020103120.1541862-4-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221020103120.1541862-4-dmitry.baryshkov@linaro.org>
+From:   Han Jingoo <jingoohan1@gmail.com>
+Date:   Sun, 23 Oct 2022 16:27:07 -0700
+Message-ID: <CAPOBaE5Zg+r0F35MvKWAozFa9x4xvym1LbA_UHvUSmnLbTpqzA@mail.gmail.com>
+Subject: Re: [PATCH 3/4] PCI: qcom: Use clk_bulk_ API for 2.3.2 clocks handling
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20221023204505.115141-1-hpausten@protonmail.com>
- <20221023204505.115141-3-hpausten@protonmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221023204505.115141-3-hpausten@protonmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        Johan Hovold <johan@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/10/2022 16:45, Harry Austen wrote:
-> Add support for the sixth I2C interface on the MSM8996 SoC.
-> 
-> Signed-off-by: Harry Austen <hpausten@protonmail.com>
+On Thu, Oct 20, 2022 Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+>
+> Change hand-coded implementation of bulk clocks to use the existing
+> clk_bulk_* API.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-> v1 -> v2: use hyphens and add "-state" pinctrl node name suffix
-> 
+>  drivers/pci/controller/dwc/pcie-qcom.c | 68 ++++++--------------------
+>  1 file changed, 15 insertions(+), 53 deletions(-)
+>
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 74588438db07..eee4d2179e90 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -139,11 +139,9 @@ struct qcom_pcie_resources_1_0_0 {
+>  };
+>
+>  #define QCOM_PCIE_2_3_2_MAX_SUPPLY     2
+> +#define QCOM_PCIE_2_3_2_MAX_CLOCKS     4
+>  struct qcom_pcie_resources_2_3_2 {
+> -       struct clk *aux_clk;
+> -       struct clk *master_clk;
+> -       struct clk *slave_clk;
+> -       struct clk *cfg_clk;
+> +       struct clk_bulk_data clks[QCOM_PCIE_2_3_2_MAX_CLOCKS];
+>         struct regulator_bulk_data supplies[QCOM_PCIE_2_3_2_MAX_SUPPLY];
+>  };
+>
+> @@ -571,21 +569,14 @@ static int qcom_pcie_get_resources_2_3_2(struct qcom_pcie *pcie)
+>         if (ret)
+>                 return ret;
+>
+> -       res->aux_clk = devm_clk_get(dev, "aux");
+> -       if (IS_ERR(res->aux_clk))
+> -               return PTR_ERR(res->aux_clk);
+> -
+> -       res->cfg_clk = devm_clk_get(dev, "cfg");
+> -       if (IS_ERR(res->cfg_clk))
+> -               return PTR_ERR(res->cfg_clk);
+> -
+> -       res->master_clk = devm_clk_get(dev, "bus_master");
+> -       if (IS_ERR(res->master_clk))
+> -               return PTR_ERR(res->master_clk);
+> +       res->clks[0].id = "aux";
+> +       res->clks[1].id = "cfg";
+> +       res->clks[2].id = "master";
 
+Hi Dmitry,
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+I just have a simple question on clock names. The original clock name
+is 'bus_master', while your patch uses just 'master' as the clock name.
+As far as I know, the clock names are defined by clock side, not device
+driver side. Is it intentional? If so, would you please explain why it is ok?
+
+> +       res->clks[3].id = "slave";
+
+Ditto.
+
+Thank you.
 
 Best regards,
-Krzysztof
+Jingoo Han
 
+>
+> -       res->slave_clk = devm_clk_get(dev, "bus_slave");
+> -       if (IS_ERR(res->slave_clk))
+> -               return PTR_ERR(res->slave_clk);
+> +       ret = devm_clk_bulk_get(dev, ARRAY_SIZE(res->clks), res->clks);
+> +       if (ret < 0)
+> +               return ret;
+>
+>         return 0;
+>  }
+> @@ -594,11 +585,7 @@ static void qcom_pcie_deinit_2_3_2(struct qcom_pcie *pcie)
+>  {
+>         struct qcom_pcie_resources_2_3_2 *res = &pcie->res.v2_3_2;
+>
+> -       clk_disable_unprepare(res->slave_clk);
+> -       clk_disable_unprepare(res->master_clk);
+> -       clk_disable_unprepare(res->cfg_clk);
+> -       clk_disable_unprepare(res->aux_clk);
+> -
+> +       clk_bulk_disable_unprepare(ARRAY_SIZE(res->clks), res->clks);
+>         regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
+>  }
+>
+> @@ -615,40 +602,15 @@ static int qcom_pcie_init_2_3_2(struct qcom_pcie *pcie)
+>                 return ret;
+>         }
+>
+> -       ret = clk_prepare_enable(res->aux_clk);
+> -       if (ret) {
+> -               dev_err(dev, "cannot prepare/enable aux clock\n");
+> -               goto err_aux_clk;
+> -       }
+> -
+> -       ret = clk_prepare_enable(res->cfg_clk);
+> -       if (ret) {
+> -               dev_err(dev, "cannot prepare/enable cfg clock\n");
+> -               goto err_cfg_clk;
+> -       }
+> -
+> -       ret = clk_prepare_enable(res->master_clk);
+> -       if (ret) {
+> -               dev_err(dev, "cannot prepare/enable master clock\n");
+> -               goto err_master_clk;
+> -       }
+> -
+> -       ret = clk_prepare_enable(res->slave_clk);
+> -       if (ret) {
+> -               dev_err(dev, "cannot prepare/enable slave clock\n");
+> -               goto err_slave_clk;
+> +       ret = clk_bulk_prepare_enable(ARRAY_SIZE(res->clks), res->clks);
+> +       if (ret < 0) {
+> +               dev_err(dev, "cannot prepare/enable clocks\n");
+> +               goto err_clks;
+>         }
+>
+>         return 0;
+>
+> -err_slave_clk:
+> -       clk_disable_unprepare(res->master_clk);
+> -err_master_clk:
+> -       clk_disable_unprepare(res->cfg_clk);
+> -err_cfg_clk:
+> -       clk_disable_unprepare(res->aux_clk);
+> -
+> -err_aux_clk:
+> +err_clks:
+>         regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
+>
+>         return ret;
+> --
+> 2.35.1
+>
