@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C73FF60B7CF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 21:33:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D42FF60B7E5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 21:36:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233325AbiJXTdu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Oct 2022 15:33:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49622 "EHLO
+        id S233362AbiJXTgb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Oct 2022 15:36:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230006AbiJXTdd (ORCPT
+        with ESMTP id S233375AbiJXTgC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Oct 2022 15:33:33 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BD3B15DB2D;
-        Mon, 24 Oct 2022 11:04:09 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id t25so6571471qkm.2;
-        Mon, 24 Oct 2022 11:04:08 -0700 (PDT)
+        Mon, 24 Oct 2022 15:36:02 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB1AB20B109;
+        Mon, 24 Oct 2022 11:06:38 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id z30so6533639qkz.13;
+        Mon, 24 Oct 2022 11:06:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xOnwiqhqmU2vuKfV5AqO+B/jD6mXaGSnSjTuitBAuvo=;
-        b=lPOnS0Z0o1/InyYteCksInxAewCB3O5So3PMkBbconv36tRyL58HtDW96uSm/L01y2
-         TDdPXgJdcqBBleAbVlIhmFk1UOciCbdSznUNWbRIykz590c89N9Qvn9jGi+8xwGaZ64Z
-         jCKAUwQcOArzKqKaiJd55heLKIhht+Bk1Cgu2dGcVZ6Izpo2xuIcje7fmoOj4P+iQPX5
-         lrOKTEH+FslD0dCZkNam8VEoZq5cv0NCtS9hub5+ZlX0/QSyA8pztXnvZ3K7ENLa8ltm
-         Ru7R5yiOPY2hoq3mCKN1qcUY/d9NZf2NaGfezNhdlsmcAORlnid+YeOa/bWaHCgDA6yj
-         6ciA==
+        bh=8uZ3VwfktP6MlXqcTSmXnIQiEYTG6oe41z15jnyDxAg=;
+        b=hUQNLA+Bt+iC3EXWYW6u4ZiXQN+8gSkbnmx8T2s8gwIyjYMlb9xie2OOJHwqqdlE6g
+         TPMX8YiSGrjcgbVnTCnFsXG5p9TyBfNZW9cG8k8CcqbzN2bmQnheWRACOBZ/d0Ypyji3
+         rAeT3VRnZNw4YbeuVXZ3vEOKtNVMeNwXu/MjHy95n+2bxkdGNTOtyJszmv75cO39QUVX
+         3tMEuxZT7eSOq8Es/EwqZssEHzAuhydL/i7aK2CmAmpvk3RmjxlZZXCchdX4A7oDcSBj
+         OT7wE6byf63cJL5bI9VHwdG17EIHCSUqDNg2p48fauR7p1cAjQNOcc/NytgEWglrxAdz
+         RDuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xOnwiqhqmU2vuKfV5AqO+B/jD6mXaGSnSjTuitBAuvo=;
-        b=NMdsdtpSbe721GjLmxqmH7L7vDzkhItrW3/0dLdnJhIa7keKW9GvjvhSuHYxie0+6f
-         DL2xb0a9ARkSP4U12RSgtvHTbwg/MXK3H5flLdAaXWlMocr3lo30zm8nFP+/7W9ee/zN
-         O2X0sCnSygVimecYKyxzrOWmP25r/T40mGVosKxGJlXgeibXeCBifMOUqS4m4Kbv1xfv
-         8mSFm880aJr63gjEjDvIik87y1XbQPnF6/ugYy+afcxeN9e0yj5F9PKAGJx8MiUpR5SX
-         0LmrwYdHT9DIXawGyjuOzTd7sBchQM1wGM4moskbiHb4fi/29UXfrX0DPvU2T8GGwA1E
-         YFOA==
-X-Gm-Message-State: ACrzQf0TFHvDw4SgiI+BiQw1Ln7OV1ys23l9n9IKR6G5p5Q8kQw/wbNc
-        AtrRO3XnRCPnDBIExhB5YjA=
-X-Google-Smtp-Source: AMsMyM7NTxTI6fxf+uJ3Zu/TRzMRiYlJsU7z+Bv7BrBwx4ABlI2yLTPDNY6xtZxLHuk90IksZUs/XA==
-X-Received: by 2002:a05:620a:490d:b0:6e6:b1ad:7a81 with SMTP id ed13-20020a05620a490d00b006e6b1ad7a81mr22216331qkb.695.1666634575332;
-        Mon, 24 Oct 2022 11:02:55 -0700 (PDT)
+        bh=8uZ3VwfktP6MlXqcTSmXnIQiEYTG6oe41z15jnyDxAg=;
+        b=bUP25NxnLhhgdkAEChATBRfSvbrFj+ptOJAywytSQ8l1vQfyP3dXWWybikCuk3DzqU
+         i3WF41K8z/odAVa8QowcLt6aT1NhAvu+eVb2uc/QivF3FHB4dQjYXbC+OIu9r+2j31VF
+         SBHOa90obRFXG71PYCOlTFPUkELB5EmAX5Q1bbp5vta9m3pP3I6HiemJgTxop1dT8ndV
+         fywFPkaaOq+I4QB6RRgKVkB/EFKXZZusJUhFJhbzNlEJv8INeCJPcqiE06LiylGpInko
+         nUm0+Q6gVo9kh1rkpngkKj9685txVp5aCuMfnGqOVNdUKqocIS8DFV9b1askCBLRn/Fr
+         rUPg==
+X-Gm-Message-State: ACrzQf2ddP56skGqBg9VG0k5XKDMnXCdC/2qXJqiQV8QZ7B2VyAyoRTV
+        QWHBIO2MJSaQDIELVpp4WG4=
+X-Google-Smtp-Source: AMsMyM6VD3e4iOCRwH+WEfJk7Le9i9P05UDL6cK9G/xPqVkJKTVIOyBY4IzI1tu67LqNtF/xB4eU0A==
+X-Received: by 2002:a05:620a:24d5:b0:6ee:d4bb:e5ba with SMTP id m21-20020a05620a24d500b006eed4bbe5bamr23818286qkn.457.1666634695655;
+        Mon, 24 Oct 2022 11:04:55 -0700 (PDT)
 Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id e10-20020a05622a110a00b0039cb9ef50b5sm332196qty.26.2022.10.24.11.02.44
+        by smtp.googlemail.com with ESMTPSA id e10-20020a05622a110a00b0039cb9ef50b5sm335003qty.26.2022.10.24.11.04.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Oct 2022 11:02:54 -0700 (PDT)
-Message-ID: <709b3a2e-4dfa-52e1-a75e-f72d73bd97a8@gmail.com>
-Date:   Mon, 24 Oct 2022 11:02:40 -0700
+        Mon, 24 Oct 2022 11:04:55 -0700 (PDT)
+Message-ID: <9e15ffc5-fda9-b2c2-97f1-866c51bde113@gmail.com>
+Date:   Mon, 24 Oct 2022 11:04:42 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.2
-Subject: Re: [PATCH v3 1/7] mmc: cqhci: Provide helper for resetting both
- SDHCI and CQHCI
+Subject: Re: [PATCH v3 3/7] mmc: sdhci-brcmstb: Fix SDHCI_RESET_ALL for CQHCI
 Content-Language: en-US
 To:     Brian Norris <briannorris@chromium.org>,
         Ulf Hansson <ulf.hansson@linaro.org>
@@ -80,11 +79,11 @@ Cc:     Shawn Lin <shawn.lin@rock-chips.com>, linux-mmc@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         linux-arm-kernel@lists.infradead.org,
         Faiz Abbas <faiz_abbas@ti.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>, stable@vger.kernel.org
+        Jonathan Hunter <jonathanh@nvidia.com>
 References: <20221024175501.2265400-1-briannorris@chromium.org>
- <20221024105229.v3.1.Ie85faa09432bfe1b0890d8c24ff95e17f3097317@changeid>
+ <20221024105229.v3.3.I6a715feab6d01f760455865e968ecf0d85036018@changeid>
 From:   Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20221024105229.v3.1.Ie85faa09432bfe1b0890d8c24ff95e17f3097317@changeid>
+In-Reply-To: <20221024105229.v3.3.I6a715feab6d01f760455865e968ecf0d85036018@changeid>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -98,28 +97,23 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 10/24/22 10:54, Brian Norris wrote:
-> Several SDHCI drivers need to deactivate command queueing in their reset
-> hook (see sdhci_cqhci_reset() / sdhci-pci-core.c, for example), and
-> several more are coming.
+>   [[ NOTE: this is completely untested by the author, but included solely
+>      because, as noted in commit df57d73276b8 ("mmc: sdhci-pci: Fix
+>      SDHCI_RESET_ALL for CQHCI for Intel GLK-based controllers"), "other
+>      drivers using CQHCI might benefit from a similar change, if they
+>      also have CQHCI reset by SDHCI_RESET_ALL." We've now seen the same
+>      bug on at least MSM, Arasan, and Intel hardware. ]]
 > 
-> Those reset implementations have some small subtleties (e.g., ordering
-> of initialization of SDHCI vs. CQHCI might leave us resetting with a
-> NULL ->cqe_private), and are often identical across different host
-> drivers.
+> SDHCI_RESET_ALL resets will reset the hardware CQE state, but we aren't
+> tracking that properly in software. When out of sync, we may trigger
+> various timeouts.
 > 
-> We also don't want to force a dependency between SDHCI and CQHCI, or
-> vice versa; non-SDHCI drivers use CQHCI, and SDHCI drivers might support
-> command queueing through some other means.
+> It's not typical to perform resets while CQE is enabled, but this may
+> occur in some suspend or error recovery scenarios.
 > 
-> So, implement a small helper, to avoid repeating the same mistakes in
-> different drivers. Simply stick it in a header, because it's so small it
-> doesn't deserve its own module right now, and inlining to each driver is
-> pretty reasonable.
+> Include this fix by way of the new sdhci_and_cqhci_reset() helper.
 > 
-> This is marked for -stable, as it is an important prerequisite patch for
-> several SDHCI controller bugfixes that follow.
-> 
-> Cc: <stable@vger.kernel.org>
+> Fixes: d46ba2d17f90 ("mmc: sdhci-brcmstb: Add support for Command Queuing (CQE)")
 > Signed-off-by: Brian Norris <briannorris@chromium.org>
 
 Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
