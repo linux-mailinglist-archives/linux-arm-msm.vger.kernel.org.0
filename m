@@ -2,226 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E95EC609DDC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 11:19:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D207609E75
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 12:02:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229907AbiJXJTy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Oct 2022 05:19:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39710 "EHLO
+        id S230233AbiJXKCd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Oct 2022 06:02:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229983AbiJXJTs (ORCPT
+        with ESMTP id S230342AbiJXKCX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Oct 2022 05:19:48 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59B1310FDC;
-        Mon, 24 Oct 2022 02:19:36 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 119F76112D;
-        Mon, 24 Oct 2022 09:19:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8BE8C433C1;
-        Mon, 24 Oct 2022 09:19:26 +0000 (UTC)
-Message-ID: <76dc6599-3b24-918c-ba08-77c3192c5c04@xs4all.nl>
-Date:   Mon, 24 Oct 2022 11:19:25 +0200
+        Mon, 24 Oct 2022 06:02:23 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 2729058DD2;
+        Mon, 24 Oct 2022 03:02:18 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1AD331042;
+        Mon, 24 Oct 2022 03:02:24 -0700 (PDT)
+Received: from [10.57.68.77] (unknown [10.57.68.77])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5DE6A3F7B4;
+        Mon, 24 Oct 2022 03:02:15 -0700 (PDT)
+Message-ID: <aa2b93f2-9916-bcf1-4d5f-dc749fe2944e@arm.com>
+Date:   Mon, 24 Oct 2022 11:02:13 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH v7 13/21] media: videobuf2: Prepare to dynamic dma-buf
- locking specification
-Content-Language: en-US
-To:     Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-        David Airlie <airlied@linux.ie>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Daniel Almeida <daniel.almeida@collabora.com>,
-        Gert Wollny <gert.wollny@collabora.com>,
-        Gustavo Padovan <gustavo.padovan@collabora.com>,
-        Daniel Stone <daniel@fooishbar.org>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Rob Clark <robdclark@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        =?UTF-8?Q?Thomas_Hellstr=c3=b6m?= <thomas_os@shipmail.org>,
-        Qiang Yu <yuq825@gmail.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Jason Gunthorpe <jgg@ziepe.ca>,
-        Leon Romanovsky <leon@kernel.org>,
-        Juergen Gross <jgross@suse.com>,
-        Stefano Stabellini <sstabellini@kernel.org>,
-        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Christian Gmeiner <christian.gmeiner@gmail.com>,
-        Ruhl Michael J <michael.j.ruhl@intel.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Dmitry Osipenko <digetx@gmail.com>,
-        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
-        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        kernel@collabora.com, virtualization@lists.linux-foundation.org,
-        linux-rdma@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20221017172229.42269-1-dmitry.osipenko@collabora.com>
- <20221017172229.42269-14-dmitry.osipenko@collabora.com>
-From:   Hans Verkuil <hverkuil@xs4all.nl>
-In-Reply-To: <20221017172229.42269-14-dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,NICE_REPLY_A,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.0
+Subject: Re: [PATCH 3/9] coresight-tpdm: Initialize DSB subunit configuration
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
+References: <1662626705-13097-1-git-send-email-quic_taozha@quicinc.com>
+ <1662626705-13097-4-git-send-email-quic_taozha@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1662626705-13097-4-git-send-email-quic_taozha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi
 
-
-On 10/17/22 19:22, Dmitry Osipenko wrote:
-> Prepare V4L2 memory allocators to the common dynamic dma-buf locking
-> convention by starting to use the unlocked versions of dma-buf API
-> functions.
+On 08/09/2022 09:44, Tao Zhang wrote:
+> DSB subunit need to be configured in enablement and disablement.
+> A struct that specifics associated to dsb dataset is needed. It
+> saves the configuration and parameters of the dsb datasets. This
+> change is to add this struct and initialize the configuration of
+> DSB subunit.
 > 
-> Acked-by: Tomasz Figa <tfiga@chromium.org>
-
-Acked-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-
-Thanks!
-
-	Hans
-
-> Acked-by: Christian König <christian.koenig@amd.com>
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
 > ---
->  drivers/media/common/videobuf2/videobuf2-dma-contig.c | 11 ++++++-----
->  drivers/media/common/videobuf2/videobuf2-dma-sg.c     |  8 ++++----
->  drivers/media/common/videobuf2/videobuf2-vmalloc.c    |  6 +++---
->  3 files changed, 13 insertions(+), 12 deletions(-)
+>   drivers/hwtracing/coresight/coresight-tpdm.c | 44 ++++++++++++++++++++++++++--
+>   drivers/hwtracing/coresight/coresight-tpdm.h | 17 +++++++++++
+>   2 files changed, 58 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/media/common/videobuf2/videobuf2-dma-contig.c b/drivers/media/common/videobuf2/videobuf2-dma-contig.c
-> index 678b359717c4..79f4d8301fbb 100644
-> --- a/drivers/media/common/videobuf2/videobuf2-dma-contig.c
-> +++ b/drivers/media/common/videobuf2/videobuf2-dma-contig.c
-> @@ -101,7 +101,7 @@ static void *vb2_dc_vaddr(struct vb2_buffer *vb, void *buf_priv)
->  	if (buf->db_attach) {
->  		struct iosys_map map;
->  
-> -		if (!dma_buf_vmap(buf->db_attach->dmabuf, &map))
-> +		if (!dma_buf_vmap_unlocked(buf->db_attach->dmabuf, &map))
->  			buf->vaddr = map.vaddr;
->  
->  		return buf->vaddr;
-> @@ -711,7 +711,7 @@ static int vb2_dc_map_dmabuf(void *mem_priv)
->  	}
->  
->  	/* get the associated scatterlist for this buffer */
-> -	sgt = dma_buf_map_attachment(buf->db_attach, buf->dma_dir);
-> +	sgt = dma_buf_map_attachment_unlocked(buf->db_attach, buf->dma_dir);
->  	if (IS_ERR(sgt)) {
->  		pr_err("Error getting dmabuf scatterlist\n");
->  		return -EINVAL;
-> @@ -722,7 +722,8 @@ static int vb2_dc_map_dmabuf(void *mem_priv)
->  	if (contig_size < buf->size) {
->  		pr_err("contiguous chunk is too small %lu/%lu\n",
->  		       contig_size, buf->size);
-> -		dma_buf_unmap_attachment(buf->db_attach, sgt, buf->dma_dir);
-> +		dma_buf_unmap_attachment_unlocked(buf->db_attach, sgt,
-> +						  buf->dma_dir);
->  		return -EFAULT;
->  	}
->  
-> @@ -750,10 +751,10 @@ static void vb2_dc_unmap_dmabuf(void *mem_priv)
->  	}
->  
->  	if (buf->vaddr) {
-> -		dma_buf_vunmap(buf->db_attach->dmabuf, &map);
-> +		dma_buf_vunmap_unlocked(buf->db_attach->dmabuf, &map);
->  		buf->vaddr = NULL;
->  	}
-> -	dma_buf_unmap_attachment(buf->db_attach, sgt, buf->dma_dir);
-> +	dma_buf_unmap_attachment_unlocked(buf->db_attach, sgt, buf->dma_dir);
->  
->  	buf->dma_addr = 0;
->  	buf->dma_sgt = NULL;
-> diff --git a/drivers/media/common/videobuf2/videobuf2-dma-sg.c b/drivers/media/common/videobuf2/videobuf2-dma-sg.c
-> index fa69158a65b1..36ecdea8d707 100644
-> --- a/drivers/media/common/videobuf2/videobuf2-dma-sg.c
-> +++ b/drivers/media/common/videobuf2/videobuf2-dma-sg.c
-> @@ -309,7 +309,7 @@ static void *vb2_dma_sg_vaddr(struct vb2_buffer *vb, void *buf_priv)
->  
->  	if (!buf->vaddr) {
->  		if (buf->db_attach) {
-> -			ret = dma_buf_vmap(buf->db_attach->dmabuf, &map);
-> +			ret = dma_buf_vmap_unlocked(buf->db_attach->dmabuf, &map);
->  			buf->vaddr = ret ? NULL : map.vaddr;
->  		} else {
->  			buf->vaddr = vm_map_ram(buf->pages, buf->num_pages, -1);
-> @@ -565,7 +565,7 @@ static int vb2_dma_sg_map_dmabuf(void *mem_priv)
->  	}
->  
->  	/* get the associated scatterlist for this buffer */
-> -	sgt = dma_buf_map_attachment(buf->db_attach, buf->dma_dir);
-> +	sgt = dma_buf_map_attachment_unlocked(buf->db_attach, buf->dma_dir);
->  	if (IS_ERR(sgt)) {
->  		pr_err("Error getting dmabuf scatterlist\n");
->  		return -EINVAL;
-> @@ -594,10 +594,10 @@ static void vb2_dma_sg_unmap_dmabuf(void *mem_priv)
->  	}
->  
->  	if (buf->vaddr) {
-> -		dma_buf_vunmap(buf->db_attach->dmabuf, &map);
-> +		dma_buf_vunmap_unlocked(buf->db_attach->dmabuf, &map);
->  		buf->vaddr = NULL;
->  	}
-> -	dma_buf_unmap_attachment(buf->db_attach, sgt, buf->dma_dir);
-> +	dma_buf_unmap_attachment_unlocked(buf->db_attach, sgt, buf->dma_dir);
->  
->  	buf->dma_sgt = NULL;
->  }
-> diff --git a/drivers/media/common/videobuf2/videobuf2-vmalloc.c b/drivers/media/common/videobuf2/videobuf2-vmalloc.c
-> index 948152f1596b..7831bf545874 100644
-> --- a/drivers/media/common/videobuf2/videobuf2-vmalloc.c
-> +++ b/drivers/media/common/videobuf2/videobuf2-vmalloc.c
-> @@ -376,7 +376,7 @@ static int vb2_vmalloc_map_dmabuf(void *mem_priv)
->  	struct iosys_map map;
->  	int ret;
->  
-> -	ret = dma_buf_vmap(buf->dbuf, &map);
-> +	ret = dma_buf_vmap_unlocked(buf->dbuf, &map);
->  	if (ret)
->  		return -EFAULT;
->  	buf->vaddr = map.vaddr;
-> @@ -389,7 +389,7 @@ static void vb2_vmalloc_unmap_dmabuf(void *mem_priv)
->  	struct vb2_vmalloc_buf *buf = mem_priv;
->  	struct iosys_map map = IOSYS_MAP_INIT_VADDR(buf->vaddr);
->  
-> -	dma_buf_vunmap(buf->dbuf, &map);
-> +	dma_buf_vunmap_unlocked(buf->dbuf, &map);
->  	buf->vaddr = NULL;
->  }
->  
-> @@ -399,7 +399,7 @@ static void vb2_vmalloc_detach_dmabuf(void *mem_priv)
->  	struct iosys_map map = IOSYS_MAP_INIT_VADDR(buf->vaddr);
->  
->  	if (buf->vaddr)
-> -		dma_buf_vunmap(buf->dbuf, &map);
-> +		dma_buf_vunmap_unlocked(buf->dbuf, &map);
->  
->  	kfree(buf);
->  }
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+> index 88df3e6..69ea453 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+> @@ -24,6 +24,22 @@ static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
+>   {
+>   	u32 val;
+>   
+> +	val = readl_relaxed(drvdata->base + TPDM_DSB_TIER);
+> +	/* Set trigger timestamp */
+> +	if (drvdata->dsb->trig_ts)
+
+What happens if this instance doesn't have a DSB set ? Have
+you tested this on a system without the DSB ?
+
+Suzuki
