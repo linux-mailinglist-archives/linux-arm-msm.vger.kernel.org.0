@@ -2,101 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DAB060C891
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 11:41:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A26EF60C950
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 12:04:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231161AbiJYJlY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Oct 2022 05:41:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47786 "EHLO
+        id S230360AbiJYKEC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Oct 2022 06:04:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231704AbiJYJlH (ORCPT
+        with ESMTP id S232036AbiJYKDX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Oct 2022 05:41:07 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07C6112751;
-        Tue, 25 Oct 2022 02:40:19 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 992BB61862;
-        Tue, 25 Oct 2022 09:40:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D9C98C433D7;
-        Tue, 25 Oct 2022 09:40:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666690817;
-        bh=LRA27RkuI+pQtw9QEZ9eFS+Prw+Y3GfxxqHqaNMByEk=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=EAbEVQMxfYj3F5fzRPfJ6CSoV3EsNZfkP7oiWxpmY1BmUoE5b/Eo3JfohEwyRDltb
-         lfr+zhKxAdtFytw/YQK6l/WW4zsb1pqzoYcFwlQcuLRnUZjIhdHSRx15dxoOZwkbjB
-         aa2dHOtFLwHqdgwco+GXshj7gQ/RPVny+7gBdUDSWuQRiiWoEv8FS/mKCp4qHvCjSr
-         SgdWfSBDbUQ9BlFiG4WdGJPapNxEkCsgqSmoKsrCx8SBwDYbGvpy2nNU3N/qW96Rbx
-         pZb0v5EXaI4ExJedmWuQAqOEKbBz0eUeR0zTi9zWEvZ0rkjW0f3vHNt9EGVvqj2v8R
-         e/LAFOuIYRMSg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B705AE29F32;
-        Tue, 25 Oct 2022 09:40:17 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Tue, 25 Oct 2022 06:03:23 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DF7AE0700;
+        Tue, 25 Oct 2022 02:57:04 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id sc25so11026411ejc.12;
+        Tue, 25 Oct 2022 02:57:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pAx8zlaUjVsueyFoH8eMRt9jigq+pALMNIu5jqg4QQk=;
+        b=caqsOQSSaJt6WVgqnE0PzdRddPlCI356oy1U3jxlLWpBUYqRRkyHnbeo3TVeSyE/xS
+         yow8Tm1a4Q120tCowFm1SPiQmDCDKssc7IHFMuu3WIbCOkKph1Y3hhYhyfFbubPYljdA
+         H8Mi6Tm9zrzhogu0rHhqo1FtWfZGyxrJdm6eodT0mpFEXuxz58OWyQwB6hi+l+NdF9pU
+         XnM2LYK9JK+vsul3zDoiPF9KEOXR9rN3brb8Pkdo0zPE6GhUEgjKdoyRlJE/kuwZJDP9
+         kOarcXka3e4hF3U+iseGpeanxLZfC7fPMJNukfPbogqShc7RVukPN/aKwiTZ9TQDRMJj
+         8Iog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pAx8zlaUjVsueyFoH8eMRt9jigq+pALMNIu5jqg4QQk=;
+        b=amlfJ64Js2uC62bUVGltg7R6fzc3soPZ/M7BNPf8+yoc+t80QTgfpsxMzpnH9AkB0W
+         x9EQtYzmmxuduzKY/NKqT3OS7S8ZyLAHlEE7Ub9eXFqnXySvQ6Yaev+z84DJxn7ekAnu
+         uJy82hWvBf+BBk/GHMfYaotAP4AhavirNOJP9aDpstdnBl5j49gDAiFSKpxsmGVGyBHB
+         hnGPIOPiywYUmV41bRAAFtpJagL2UMi045KLa2T2dRAPlIoEHYdleaCNssCjpp++U8jO
+         tYFfvcdW14GiSO6qfYlPntvPlmBybFuedvf8St4gMQXL8nbtMBDb4sMy9aUJ1RZQEcaw
+         uUEA==
+X-Gm-Message-State: ACrzQf0QmfcY20bNwnDnYNFRkm+wiCYJXXyi1Ss/WGqJV9uXP+x18dt4
+        ymtlabOhx5anvRezgeGbmsM=
+X-Google-Smtp-Source: AMsMyM7cHA0V5Del2vqlPCtRjYe2tHkw0XMTTjub7z1QGzqHP12iMAPDu7z4estQ6N4tnoYOHneR5g==
+X-Received: by 2002:a17:907:983:b0:77b:6e40:8435 with SMTP id bf3-20020a170907098300b0077b6e408435mr30162199ejc.570.1666691822807;
+        Tue, 25 Oct 2022 02:57:02 -0700 (PDT)
+Received: from localhost.localdomain (93-42-71-18.ip85.fastwebnet.it. [93.42.71.18])
+        by smtp.googlemail.com with ESMTPSA id j10-20020a17090686ca00b007789e7b47besm1130827ejy.25.2022.10.25.02.57.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Oct 2022 02:57:02 -0700 (PDT)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Christian Marangi <ansuelsmth@gmail.com>,
+        Hendrik Koerner <koerhen@web.de>
+Subject: [PATCH] ARM: dts: qcom: ipq8064: disable mmc-ddr-1_8v for sdcc1
+Date:   Tue, 25 Oct 2022 01:38:17 +0200
+Message-Id: <20221024233817.27410-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next 0/7] net: ipa: validation cleanup
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <166669081774.5792.12091336300542106637.git-patchwork-notify@kernel.org>
-Date:   Tue, 25 Oct 2022 09:40:17 +0000
-References: <20221021191340.4187935-1-elder@linaro.org>
-In-Reply-To: <20221021191340.4187935-1-elder@linaro.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, mka@chromium.org, evgreen@chromium.org,
-        andersson@kernel.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DATE_IN_PAST_06_12,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
+It was reported non working mmc with this option enabled.
+Both mmc for ipq8064 are supplied by a fixed 3.3v regulator so mmc can't
+be run at 1.8v.
+Disable it to restore correct functionality of this SoC feature.
 
-This series was applied to netdev/net-next.git (master)
-by Paolo Abeni <pabeni@redhat.com>:
+Tested-by: Hendrik Koerner <koerhen@web.de>
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+---
+ arch/arm/boot/dts/qcom-ipq8064.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-On Fri, 21 Oct 2022 14:13:33 -0500 you wrote:
-> This series gathers a set of IPA driver cleanups, mostly involving
-> code that ensures certain things are known to be correct *early*
-> (either at build or initializatin time), so they can be assumed good
-> during normal operation.
-> 
-> The first removes three constant symbols, by making a (reasonable)
-> assumption that a routing table consists of entries for the modem
-> followed by entries for the AP, with no unused entries between them.
-> 
-> [...]
-
-Here is the summary with links:
-  - [net-next,1/7] net: ipa: kill two constant symbols
-    https://git.kernel.org/netdev/net-next/c/fb4014ac76b8
-  - [net-next,2/7] net: ipa: remove two memory region checks
-    https://git.kernel.org/netdev/net-next/c/2554322b3199
-  - [net-next,3/7] net: ipa: validate IPA table memory earlier
-    https://git.kernel.org/netdev/net-next/c/cf13919654d5
-  - [net-next,4/7] net: ipa: verify table sizes fit in commands early
-    https://git.kernel.org/netdev/net-next/c/5444b0ea9915
-  - [net-next,5/7] net: ipa: introduce ipa_cmd_init()
-    https://git.kernel.org/netdev/net-next/c/7fd10a2aca6a
-  - [net-next,6/7] net: ipa: kill ipa_table_valid()
-    https://git.kernel.org/netdev/net-next/c/39ad815244ac
-  - [net-next,7/7] net: ipa: check table memory regions earlier
-    https://git.kernel.org/netdev/net-next/c/73da9cac517c
-
-You are awesome, thank you!
+diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+index 90c08b51680a..01ff24560ee6 100644
+--- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+@@ -756,7 +756,6 @@ sdcc1: mmc@12400000 {
+ 				non-removable;
+ 				cap-sd-highspeed;
+ 				cap-mmc-highspeed;
+-				mmc-ddr-1_8v;
+ 				vmmc-supply = <&vsdcc_fixed>;
+ 				dmas = <&sdcc1bam 2>, <&sdcc1bam 1>;
+ 				dma-names = "tx", "rx";
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.37.2
 
