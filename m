@@ -2,119 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68985609CE0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 10:36:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45A86609D42
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 11:01:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229871AbiJXIgl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Oct 2022 04:36:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33388 "EHLO
+        id S230139AbiJXJBn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Oct 2022 05:01:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229933AbiJXIgk (ORCPT
+        with ESMTP id S229905AbiJXJBj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Oct 2022 04:36:40 -0400
-Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 239B860500;
-        Mon, 24 Oct 2022 01:36:31 -0700 (PDT)
-Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29O7WQx4032750;
-        Mon, 24 Oct 2022 10:36:09 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=selector1;
- bh=ykLzKEUdSBnu1ViK9+reJrmjgCeEvaT2J8wFmcU66mw=;
- b=Gf6OqbX16TFbFtVfgRbUsDbwegpzBhH1L/tt/zaHjcyhrq5Bn4SoXgmWFdAah8+KgDCN
- 0zH0KSNYDpjx7jDsz8iEyL+RHxj+oCfXh9qworc5xGSpz0LuIIcvLoxIcnK7ouzemHjs
- oNz+UihDjw44keA0K6ZlBcEBPxDyqtTZxyKtiqLL9kDCOGgdfaK5aJFQ5UtWVo6OFzSi
- if6wcB+bznYTwnyHeGjOcM/IHYT0DmUCGnCJWeVuqyBQjmGiGdYZ1Yc3WF5+yMYqdX/q
- NFyFnw/SXS/M4cya56pMm4b/fUU2Mzh46B/2EJJn6xxl3RpG0yA7c5Ma8HH6VHnVQ0jh 3g== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3kc7dk1vyg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 24 Oct 2022 10:36:09 +0200
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 62E6310002A;
-        Mon, 24 Oct 2022 10:36:03 +0200 (CEST)
-Received: from Webmail-eu.st.com (shfdag1node1.st.com [10.75.129.69])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 439F5216ECE;
-        Mon, 24 Oct 2022 10:36:03 +0200 (CEST)
-Received: from [10.201.21.93] (10.201.21.93) by SHFDAG1NODE1.st.com
- (10.75.129.69) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Mon, 24 Oct
- 2022 10:36:01 +0200
-Message-ID: <776917d2-bb09-1175-1457-dc929e871e5f@foss.st.com>
-Date:   Mon, 24 Oct 2022 10:36:00 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v2 3/3] ARM: dts: stm32: Drop MMCI interrupt-names
-Content-Language: en-US
-To:     Marek Vasut <marex@denx.de>, <linux-arm-kernel@lists.infradead.org>
-CC:     Linus Walleij <linus.walleij@linaro.org>,
-        Yann Gautier <yann.gautier@foss.st.com>,
-        Andy Gross <agross@kernel.org>,
+        Mon, 24 Oct 2022 05:01:39 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D89A54D4FD;
+        Mon, 24 Oct 2022 02:01:38 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6E35E6108C;
+        Mon, 24 Oct 2022 09:01:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCF56C43470;
+        Mon, 24 Oct 2022 09:01:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1666602097;
+        bh=SLoNuE0wOlAn/sJQ6E07BFsAXMng8qt1Wiq6RyuB1MM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=FMawn2Mi0AT5p/8QuvcGgd/YzYtdDQZPjTLr6yGd8153qHmn343LfNOTLwJPZxe5L
+         qF3+Eo0CITPjdi3k9xfW2T6I3k26x2EBA7BKjZqvdwo6GCHVNlsXgJl95yKzOgMaoc
+         TVWpo9BjLq4k8alB8Kp+Ydrz5kQtLO/lUamJpIaD8aMR6mPOAD1IiWVwpIlwOBrwiw
+         iTRrLzPyO6OoulmERZX54MH8cvFbD7MqR6NwU+HNkptR+gBH3Qc2NALal5pWHh3qfZ
+         vU/xWGz7ayQ/CHlQ6ANoftG/qHsaYmCvuJhAK7eZ7X+zIfVDrV+5Rr2qpC5llyae5g
+         jr/43JdXKel7A==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1omtKi-00056L-TD; Mon, 24 Oct 2022 11:01:20 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        <devicetree@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>
-References: <20221013221242.218808-1-marex@denx.de>
- <20221013221242.218808-3-marex@denx.de>
-From:   Alexandre TORGUE <alexandre.torgue@foss.st.com>
-In-Reply-To: <20221013221242.218808-3-marex@denx.de>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.201.21.93]
-X-ClientProxiedBy: SHFCAS1NODE1.st.com (10.75.129.72) To SHFDAG1NODE1.st.com
- (10.75.129.69)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-24_02,2022-10-21_01,2022-06-22_01
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 00/10] phy: qcom-qmp-ufs: fix sc8280xp binding
+Date:   Mon, 24 Oct 2022 11:00:31 +0200
+Message-Id: <20221024090041.19574-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.37.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/14/22 00:12, Marek Vasut wrote:
-> The pl18x MMCI driver does not use the interrupt-names property,
-> the binding document has been updated to recommend this property
-> be unused, remove it.
-> 
-> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-> Reviewed-by: Yann Gautier <yann.gautier@foss.st.com>
-> Signed-off-by: Marek Vasut <marex@denx.de>
-> ---
-> Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> Cc: Yann Gautier <yann.gautier@foss.st.com>
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-mmc@vger.kernel.org
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-stm32@st-md-mailman.stormreply.com
-> To: linux-arm-kernel@lists.infradead.org
-> ---
-> V2: Add RB from Linus and Yann
-> ---
->   arch/arm/boot/dts/stm32h743.dtsi  | 2 --
->   arch/arm/boot/dts/stm32mp131.dtsi | 2 --
->   arch/arm/boot/dts/stm32mp151.dtsi | 3 ---
->   3 files changed, 7 deletions(-)
-> 
+This series fixes the UFS PHY devicetree binding for SC8280XP and adds
+support for the new updated binding to the driver.
 
-Applied on stm32-next.
+The first half of the series clean up the driver in preparation for
+supporting SC8280XP and its new binding that drops the legacy child node
+and the (incomplete) description of register subregions.
 
-Cheers
-Alex
+The other QMP bindings suffer from similar problems and the PCIe driver
+is being fixed here:
+
+	https://lore.kernel.org/lkml/20221021110947.28103-1-johan+linaro@kernel.org/
+
+and follow-on series will do corresponding changes to the USB and combo
+QMP bindings and drivers.
+
+Note that these patches depend on the linux-phy next branch of today and
+the following two series:
+
+ 1. [PATCH v2 00/14] phy: qcom-qmp: further prep cleanups
+
+    https://lore.kernel.org/lkml/20221012081241.18273-1-johan+linaro@kernel.org
+
+ 2. [PATCH 00/20] phy: qcom-qmp: further prep fixes and cleanups (set 3)
+
+    https://lore.kernel.org/lkml/20221012084846.24003-1-johan+linaro@kernel.org
+
+Johan
+
+
+Johan Hovold (10):
+  phy: qcom-qmp-ufs: move device-id table
+  phy: qcom-qmp-ufs: merge driver data
+  phy: qcom-qmp-ufs: clean up device-tree parsing
+  phy: qcom-qmp-ufs: clean up probe initialisation
+  phy: qcom-qmp-ufs: rename PHY ops structure
+  phy: qcom-qmp-ufs: clean up PHY init
+  dt-bindings: phy: qcom,qmp-ufs: rename current bindings
+  dt-bindings: phy: qcom,qmp-ufs: fix sc8280xp binding
+  phy: qcom-qmp-ufs: restructure PHY creation
+  phy: qcom-qmp-ufs: add support for updated sc8280xp binding
+
+ ...phy.yaml => qcom,msm8996-qmp-ufs-phy.yaml} |  17 +-
+ .../phy/qcom,sc8280xp-qmp-ufs-phy.yaml        |  83 ++++
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       | 381 +++++++++---------
+ 3 files changed, 287 insertions(+), 194 deletions(-)
+ rename Documentation/devicetree/bindings/phy/{qcom,qmp-ufs-phy.yaml => qcom,msm8996-qmp-ufs-phy.yaml} (93%)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
+
+-- 
+2.37.3
 
