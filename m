@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A34FD60B655
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 20:55:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 581E360B695
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 21:05:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232910AbiJXSz2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Oct 2022 14:55:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52028 "EHLO
+        id S231225AbiJXTFN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Oct 2022 15:05:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233448AbiJXSy0 (ORCPT
+        with ESMTP id S233023AbiJXTEH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Oct 2022 14:54:26 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F7DA155D92;
-        Mon, 24 Oct 2022 10:35:48 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id y14so6661672ejd.9;
-        Mon, 24 Oct 2022 10:35:48 -0700 (PDT)
+        Mon, 24 Oct 2022 15:04:07 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DF71635C4;
+        Mon, 24 Oct 2022 10:43:41 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id 13so6783138ejn.3;
+        Mon, 24 Oct 2022 10:43:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=rnL+He7Da96VSkLj6A5rMl8m0utiApVsa5fPZkDJuiw=;
-        b=PWMAzyQCBjOkiF0KARAICjx/FkhFzywfmEco9vOnkNvA/a7mXmtIe/9yWQUdDPngEo
-         bmXKIIcUldyzzf2lop+T9gbUjSpXA2ABfc7Y9k64gaG4H/UPT+qQTRd95+8CfKnp9MZV
-         PgWz4qgoEMQTXcQU4PFPXYe1y8PW+OJ2RQPTpLpvH4Zk1lf+pPYttgOzJa3OelPkVQpo
-         xH4PQ7lwqQfhtYGb7bWeb3PiAhnCqElTzL8O7Hves0uVqF1sQ01ZdmjJJ39bli9dLZBK
-         epw5hg/AqUmJikXRC7QOvbCfTVPyLx+7KyJZop+1PKBgymniuC/tZVA/Eho8kBS+QWJ2
-         jPag==
+        bh=G5dEsEgZ/MYkIBk3aJrt65fnhNjkvgLRnG0jJQz6jDU=;
+        b=PjjgvEElO5osAliUOTVCQFOeYjdHlXiKcham5vx71LuYRj+RmHWNdn9pEE/ginrQNq
+         G9dgaeQbeQC7xAE25//AGEvtg+bULsZDBTPSfh1ruBtyxXdVYmNkN4/aQlk0PSCeRK6w
+         mVib5hbS9abLD8TZuMs49Iz2iWipNw4kf8iFuuky3v9agrwgqwPUlmcK2qGklTzJBHRh
+         TE5jqtpFuuEpweTrUUrPbul0SRpLKoUwd17GGcNHlSMdmuQgzqo1cJpatTGZtfFAoIsX
+         QjLVKJxKWqd/CWsKE0umP1xKonYHRv6xzCnQY/q+D6F9pxHPUkWvPQLx09YJ8McqAbQI
+         g1nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rnL+He7Da96VSkLj6A5rMl8m0utiApVsa5fPZkDJuiw=;
-        b=KT+SWMWce0XlE+2Pg/uSo9I2ucGmy8KB6k21Fo5qPgCWroRYzzKY/2JQhPOegvpqna
-         dOYtW4Zjl6176tTo38kjvJP6JygBGKJRT5giWCp4qOoFs7TwTjCIft9Ju0nil7MWvsGD
-         D4iwXU3cT3zcIB5fZibQ5tHzClsDqGw6pa2PVPVi561Fwz1v7qcsKfTmqb7h8H/z7CYZ
-         LVAI5M9goMqO6n/XX9mwnossflYwOOHpcxdNEhcKyyEIjJ/aIGWQO2OvmmzAQ1MMLiXZ
-         XOPKYeyA8xkctIBcfj6u9oaeXTDAJgVozOtJWUme8H+Ma+Nos1pki15kMFYC9lP9bPF7
-         Jkdg==
-X-Gm-Message-State: ACrzQf15BF6ux6iyo/zQNDdg7IU2C8ynBovIbiUYJfrBr3PdsE5GYbyR
-        lpSynEojwHuNPToYdHsoEuqY1wnW/cE=
-X-Google-Smtp-Source: AMsMyM7BB8skGM4KFCTRzz1V3aGh49EYx7q0lPqOzxoD4nOHm8bxrJ5aBJykYDHasSPKxEyojOZHsQ==
-X-Received: by 2002:a17:906:5daa:b0:791:8933:f9f0 with SMTP id n10-20020a1709065daa00b007918933f9f0mr28244284ejv.335.1666632859671;
-        Mon, 24 Oct 2022 10:34:19 -0700 (PDT)
+        bh=G5dEsEgZ/MYkIBk3aJrt65fnhNjkvgLRnG0jJQz6jDU=;
+        b=GaYnukHF/pRxiaDNYlrviu0dRPxsKmTRUr3ziFhQg9PheiM59A0sWeTWepyunUvMo0
+         8ADsG5Ah2A/7MztuqoHTW+aXowBbYsch+2aCFqLsPLKEDcTG2fJXj4Zy5hWB1JzATcLQ
+         Q2EdScDSbRA5GWSJgOEiQSJsmRQb3L5Y+ujhoEQOujeyKnFQcAWTKKMomQ/9zXpWORlQ
+         4XUPiYOq4ed4ubS+fdty07t8vTM4w2gbxMQbwyih8BEp+zKaooyvBbbCjTS2HUK3hSMI
+         YsVQvJLo5R6zu5iuAaMiXLiVnDEGPeUbteGBIqjoItQuuZz//JW5srspKh71w/RjFb/2
+         aYNQ==
+X-Gm-Message-State: ACrzQf3/7MEAPnVexma0LzflvqZ/eviiIhAJe5fu89bPjI6IhSblhIMn
+        FuUjxczhtzAopw/SP4ToQ/CLOL2gaxk=
+X-Google-Smtp-Source: AMsMyM7XPS+4QTEj+9w9kdtCBaOiJDGH58pvqCRCzZSYhUnYOAOEaECdyDqMrPlKKAhxZPPZJVW+WA==
+X-Received: by 2002:a17:907:70a:b0:741:78ab:dce5 with SMTP id xb10-20020a170907070a00b0074178abdce5mr29052090ejb.527.1666633345683;
+        Mon, 24 Oct 2022 10:42:25 -0700 (PDT)
 Received: from localhost.localdomain ([46.216.4.225])
-        by smtp.googlemail.com with ESMTPSA id z11-20020a17090655cb00b0078b03d57fa7sm188861ejp.34.2022.10.24.10.34.18
+        by smtp.googlemail.com with ESMTPSA id v7-20020aa7cd47000000b0044bfdbd8a33sm195278edw.88.2022.10.24.10.42.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Oct 2022 10:34:19 -0700 (PDT)
+        Mon, 24 Oct 2022 10:42:25 -0700 (PDT)
 From:   Dzmitry Sankouski <dsankouski@gmail.com>
 To:     linux-kernel@vger.kernel.org
 Cc:     Dzmitry Sankouski <dsankouski@gmail.com>,
@@ -59,10 +59,11 @@ Cc:     Dzmitry Sankouski <dsankouski@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
         devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS)
-Subject: [PATCH v10 0/2] add device Xiaomi Mi 6 (codename sagit) and board binding
-Date:   Mon, 24 Oct 2022 20:34:07 +0300
-Message-Id: <20221024173409.1649376-1-dsankouski@gmail.com>
+        DEVICE TREE BINDINGS),
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v10 1/2] dt-bindings: arm: add xiaomi,sagit board based on msm8998 chip
+Date:   Mon, 24 Oct 2022 20:42:20 +0300
+Message-Id: <20221024174220.1649910-1-dsankouski@gmail.com>
 X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -76,19 +77,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add initial support for Xiaomi Mi 6 phone (codename sagit)
+Add xiaomi,sagit board (Xiaomi Mi 6) binding.
 
-Dzmitry Sankouski (2):
-  dt-bindings: arm: add xiaomi,sagit board based on msm8998 chip
-  arm64: dts: qcom: sagit: add initial device tree for sagit
+Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+Changes for v2:none
+Changes for v3:
+- remove unused 'sagit' compatible line
+Changes for v4: none
+Changes for v5: none
+Changes for v6: Start with capital letter and finish with full-stop
+Changes for v7: none
+Changes for v8: none
+Changes for v9: add Acked-by tag
+Changes for v10: none
 
- .../devicetree/bindings/arm/qcom.yaml         |   1 +
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/msm8998-xiaomi-sagit.dts    | 681 ++++++++++++++++++
- arch/arm64/boot/dts/qcom/pm8998.dtsi          |   8 +
- 4 files changed, 691 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index fb1d00bcc847..294075bafb97 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -239,6 +239,7 @@ properties:
+               - sony,xperia-lilac
+               - sony,xperia-maple
+               - sony,xperia-poplar
++              - xiaomi,sagit
+           - const: qcom,msm8998
+ 
+       - items:
 -- 
 2.30.2
 
