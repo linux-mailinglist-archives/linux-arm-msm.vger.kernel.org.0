@@ -2,254 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D4F46098AA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 05:21:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C08C16098FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 06:01:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230155AbiJXDVF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 Oct 2022 23:21:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55560 "EHLO
+        id S230012AbiJXEBw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Oct 2022 00:01:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230168AbiJXDU3 (ORCPT
+        with ESMTP id S229891AbiJXEBv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 Oct 2022 23:20:29 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC1AB7B1DC;
-        Sun, 23 Oct 2022 20:17:46 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29O3FpUS016404;
-        Mon, 24 Oct 2022 03:17:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=dyymc5XR/iziRTvi3y8RNFC2R9mx4OC4Q4sRKcbXEl4=;
- b=PqX4MhFmawF4+Kuv+pCATMw+YLLjVMnw9e0ZzaZu4g5Ouk9KdyOG7MLoMrQdens7fdas
- I8KYcfHDwDP/dsK28k5lend6ZT1hMUnJmOtVgVZR5ta1/dDiX059tQ/ftBFIqhZGHR+y
- WpjVPN80kJFRAi4QdEEVBdI7t52/gx23I0AzHDRMvvuk6BQ8GYH2uGyUnT7zNg/sdT8p
- dzHsJaKKUbBG2nFovXw9Pddv4EobkMdVhtJlaz5IWikBNb3YJjsr+jpExXjGcjKEhYoo
- OqjVW18J1cCC5x1jDIpI5Itgu5Hbqqqj6fWKdvkfxnops6DF88qCRGctk45iwvyZXFW8 9g== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kc8wg2nwe-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 24 Oct 2022 03:17:06 +0000
-Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29O3H5mH011755
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 24 Oct 2022 03:17:05 GMT
-Received: from [10.239.133.73] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Sun, 23 Oct
- 2022 20:17:03 -0700
-Message-ID: <70828854-8427-8ce1-1535-e14261fd122d@quicinc.com>
-Date:   Mon, 24 Oct 2022 11:17:01 +0800
+        Mon, 24 Oct 2022 00:01:51 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A1256A531
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Oct 2022 21:01:49 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id f23so7480100plr.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Oct 2022 21:01:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=zkSiz3crf2T+ikAMcFUJLUknPn5PUxv2vZ/hh7siBZ4=;
+        b=l+Q97JnNAQ06zAHzXqbTdRWx1QLTeWV7R190V3pPlPg+HC3DM7dF1gB8qWLiFtq+uP
+         IFGgiK2TxfZ+jJ4rCpzUiK9kJJFXW6CejOx32JbEIwzVRCOU29fswh2a0GoE8AH0fhmT
+         AbTYnU72zgJMxm/Wpu1K25gITMoPe+i9VGprgkPcMDnwJsGAAbzGxFQAMtecOLQQk9r8
+         GeD07LwHZnz/1gJ7nj8CeLuvFccIxkgIaa9dDTpkOX1fCgVH0gNmd6qYf2+QDoTpclfQ
+         bfyK7ylD0Pl+9271W65/vqvHCYxTY7PqZrl/VHvL6jn1lh+dPxdR0YDs8x05UxDO2Yyh
+         tung==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zkSiz3crf2T+ikAMcFUJLUknPn5PUxv2vZ/hh7siBZ4=;
+        b=hpN9fy5ZBMz5ZckJzkQONIczr/JIKC7ijiYWJVo+pCm48I02ZYiYjJUooDgW+LSqn7
+         Uxo1SQiW2A4WI9CvMfGnMip0EVS7TSFJq8mT+poUJ7Yy9aXBvxks/mvqoiAOzkd/aMpW
+         ildNWR6AfYF55qTqbj16KnmOVvF5qjUNv5bkohUOpAKxVAFjULANOEch86BHKfORzWuP
+         A6RbK2VWO3BDhJFD3KvRTLwbtpenH31l7KIOg/tJ+mkQ5l3LRxR7zIm7pTfPvLWr2RIz
+         nMGoRHqy/x1ylvPsrJjM7lqolqxNReDyVTinR/XMWkR8vDXRkWQzAh65F+xMgcDRl3RG
+         yvSA==
+X-Gm-Message-State: ACrzQf0LrhYExC8qaiNZqhfRbcwECqISn/ZGwgUTDL8UFORz17oJd/Mm
+        A6MOtVjABhuIfy6SE4JfPA8P
+X-Google-Smtp-Source: AMsMyM6izrD95VKfxNC49/7xFe9LascYp5uSU5dAjgNEqhZo/P5Q0QG8IvRmkPuP/P6kq22u256/WA==
+X-Received: by 2002:a17:90b:4d0c:b0:20b:c983:2d85 with SMTP id mw12-20020a17090b4d0c00b0020bc9832d85mr72770137pjb.45.1666584108931;
+        Sun, 23 Oct 2022 21:01:48 -0700 (PDT)
+Received: from thinkpad ([117.193.210.252])
+        by smtp.gmail.com with ESMTPSA id 5-20020a630205000000b00442c70b659esm16520472pgc.91.2022.10.23.21.01.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 23 Oct 2022 21:01:47 -0700 (PDT)
+Date:   Mon, 24 Oct 2022 09:31:40 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        viresh.kumar@linaro.org, krzysztof.kozlowski+dt@linaro.org,
+        rafael@kernel.org, robh+dt@kernel.org, johan@kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH 3/4] cpufreq: qcom-hw: Add CPU clock provider support
+Message-ID: <20221024040140.GA221610@thinkpad>
+References: <20221019135925.366162-1-manivannan.sadhasivam@linaro.org>
+ <20221019135925.366162-4-manivannan.sadhasivam@linaro.org>
+ <b88de305-cb1f-7251-ccb8-4ea3b62bc322@linaro.org>
+ <20221021093140.GC93287@thinkpad>
+ <20221024030648.dthglkkcy5wtziwd@baldur>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [PATCH v4] remoteproc: core: do pm relax when in RPROC_OFFLINE
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-CC:     <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_clew@quicinc.com>
-References: <128dc161-8949-1146-bf8b-310aa33c06a8@quicinc.com>
- <1663312351-28476-1-git-send-email-quic_aiquny@quicinc.com>
- <20221012204344.GA1178915@p14s>
- <792f05fc-995e-9a87-ab7d-bee03f15bc79@quicinc.com>
- <20221013173442.GA1279972@p14s> <20221013180334.GB1279972@p14s>
- <8807a9a6-d93d-aef5-15f4-88648a6ecbe2@quicinc.com>
- <CANLsYkx8Vcha9FpfRvJEkq2pd+mSYFeZQBXj65YoiSBv+WEY4A@mail.gmail.com>
-From:   "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
-In-Reply-To: <CANLsYkx8Vcha9FpfRvJEkq2pd+mSYFeZQBXj65YoiSBv+WEY4A@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: FcWGSD1tVuCRZa0_N4jR-ZI_ioJolA0t
-X-Proofpoint-GUID: FcWGSD1tVuCRZa0_N4jR-ZI_ioJolA0t
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-21_04,2022-10-21_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
- mlxscore=0 adultscore=0 impostorscore=0 clxscore=1011 phishscore=0
- lowpriorityscore=0 priorityscore=1501 mlxlogscore=999 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210240019
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221024030648.dthglkkcy5wtziwd@baldur>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/22/2022 3:34 AM, Mathieu Poirier wrote:
-> On Wed, 19 Oct 2022 at 23:52, Aiqun(Maria) Yu <quic_aiquny@quicinc.com> wrote:
->>
->> On 10/14/2022 2:03 AM, Mathieu Poirier wrote:
->>> On Thu, Oct 13, 2022 at 11:34:42AM -0600, Mathieu Poirier wrote:
->>>> On Thu, Oct 13, 2022 at 09:40:09AM +0800, Aiqun(Maria) Yu wrote:
->>>>> Hi Mathieu,
->>>>>
->>>>> On 10/13/2022 4:43 AM, Mathieu Poirier wrote:
->>>>>> Please add what has changed from one version to another, either in a cover
->>>>>> letter or after the "Signed-off-by".  There are many examples on how to do that
->>>>>> on the mailing list.
->>>>>>
->>>>> Thx for the information, will take a note and benefit for next time.
->>>>>
->>>>>> On Fri, Sep 16, 2022 at 03:12:31PM +0800, Maria Yu wrote:
->>>>>>> RPROC_OFFLINE state indicate there is no recovery process
->>>>>>> is in progress and no chance to do the pm_relax.
->>>>>>> Because when recovering from crash, rproc->lock is held and
->>>>>>> state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
->>>>>>> and then unlock rproc->lock.
->>>>>>
->>>>>> You are correct - because the lock is held rproc->state should be set to RPROC_RUNNING
->>>>>> when rproc_trigger_recovery() returns.  If that is not the case then something
->>>>>> went wrong.
->>>>>>
->>>>>> Function rproc_stop() sets rproc->state to RPROC_OFFLINE just before returning,
->>>>>> so we know the remote processor was stopped.  Therefore if rproc->state is set
->>>>>> to RPROC_OFFLINE something went wrong in either request_firmware() or
->>>>>> rproc_start().  Either way the remote processor is offline and the system probably
->>>>>> in an unknown/unstable.  As such I don't see how calling pm_relax() can help
->>>>>> things along.
->>>>>>
->>>>> PROC_OFFLINE is possible that rproc_shutdown is triggered and successfully
->>>>> finished.
->>>>> Even if it is multi crash rproc_crash_handler_work contention issue, and
->>>>> last rproc_trigger_recovery bailed out with only
->>>>> rproc->state==RPROC_OFFLINE, it is still worth to do pm_relax in pair.
->>>>> Since the subsystem may still can be recovered with customer's next trigger
->>>>> of rproc_start, and we can make each error out path clean with pm resources.
->>>>>
->>>>>> I suggest spending time understanding what leads to the failure when recovering
->>>>>> from a crash and address that problem(s).
->>>>>>
->>>>> In current case, the customer's information is that the issue happened when
->>>>> rproc_shutdown is triggered at similar time. So not an issue from error out
->>>>> of rproc_trigger_recovery.
->>>>
->>>> That is a very important element to consider and should have been mentioned from
->>>> the beginning.  What I see happening is the following:
->>>>
->>>> rproc_report_crash()
->>>>           pm_stay_awake()
->>>>           queue_work() // current thread is suspended
->>>>
->>>> rproc_shutdown()
->>>>           rproc_stop()
->>>>                   rproc->state = RPROC_OFFLINE;
->>>>
->>>> rproc_crash_handler_work()
->>>>           if (rproc->state == RPROC_OFFLINE)
->>>>                   return // pm_relax() is not called
->>>>
->>>> The right way to fix this is to add a pm_relax() in rproc_shutdown() and
->>>> rproc_detach(), along with a very descriptive comment as to why it is needed.
->>>
->>> Thinking about this further there are more ramifications to consider.  Please
->>> confirm the above scenario is what you are facing.  I will advise on how to move
->>> forward if that is the case.
->>>
->> Not sure if the situation is clear or not. So resend the email again.
->>
->> The above senario is what customer is facing. crash hanppened while at
->> the same time shutdown is triggered.
+On Sun, Oct 23, 2022 at 10:06:48PM -0500, Bjorn Andersson wrote:
+> On Fri, Oct 21, 2022 at 03:01:40PM +0530, Manivannan Sadhasivam wrote:
+> > On Thu, Oct 20, 2022 at 08:39:50AM +0300, Dmitry Baryshkov wrote:
+> > > On 19/10/2022 16:59, Manivannan Sadhasivam wrote:
+> > > > Qcom CPUFreq hardware (EPSS/OSM) controls clock and voltage to the CPU
+> > > > cores. But this relationship is not represented with the clk framework
+> > > > so far.
+> > > > 
+> > > > So, let's make the qcom-cpufreq-hw driver a clock provider. This makes the
+> > > > clock producer/consumer relationship cleaner and is also useful for CPU
+> > > > related frameworks like OPP to know the frequency at which the CPUs are
+> > > > running.
+> > > > 
+> > > > The clock frequency provided by the driver is for each CPU policy. We
+> > > > cannot get the frequency of each CPU core because, not all platforms
+> > > > support per-core DCVS feature.
+> > > > 
+> > > > Also the frequency supplied by the driver is the actual frequency that
+> > > > comes out of the EPSS/OSM block after the DCVS operation. This frequency is
+> > > > not same as what the CPUFreq framework has set but it is the one that gets
+> > > > supplied to the CPUs after throttling by LMh.
+> > > > 
+> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > ---
+> > > >   drivers/cpufreq/qcom-cpufreq-hw.c | 67 +++++++++++++++++++++++++++++--
+> > > >   1 file changed, 63 insertions(+), 4 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> > > > index a5b3b8d0e164..4dd710f9fb69 100644
+> > > > --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> > > > +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> > > > @@ -4,6 +4,7 @@
+> > > >    */
+> > > >   #include <linux/bitfield.h>
+> > > > +#include <linux/clk-provider.h>
+> > > >   #include <linux/cpufreq.h>
+> > > >   #include <linux/init.h>
+> > > >   #include <linux/interconnect.h>
+> > > > @@ -54,6 +55,7 @@ struct qcom_cpufreq_data {
+> > > >   	bool cancel_throttle;
+> > > >   	struct delayed_work throttle_work;
+> > > >   	struct cpufreq_policy *policy;
+> > > > +	struct clk_hw cpu_clk;
+> > > >   	bool per_core_dcvs;
+> > > >   };
+> > > > @@ -482,6 +484,54 @@ static void qcom_cpufreq_hw_lmh_exit(struct qcom_cpufreq_data *data)
+> > > >   	free_irq(data->throttle_irq, data);
+> > > >   }
+> > > > +static unsigned long qcom_cpufreq_hw_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+> > > > +{
+> > > > +	struct qcom_cpufreq_data *data = container_of(hw, struct qcom_cpufreq_data, cpu_clk);
+> > > > +
+> > > > +	return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
+> > > > +}
+> > > > +
+> > > > +static const struct clk_ops qcom_cpufreq_hw_clk_ops = {
+> > > > +	.recalc_rate = qcom_cpufreq_hw_recalc_rate,
+> > > > +};
+> > > > +
+> > > > +static int qcom_cpufreq_hw_clk_add(struct qcom_cpufreq_data *data, u32 index)
+> > > > +{
+> > > > +	struct platform_device *pdev = cpufreq_get_driver_data();
+> > > > +	struct device *dev = &pdev->dev;
+> > > > +	char *clk_name = devm_kasprintf(dev, GFP_KERNEL, "qcom_cpufreq%d", index);
+> > > > +	static struct clk_init_data init = {};
+> > > > +	int ret;
+> > > > +
+> > > > +	init.name = clk_name;
+> > > > +	init.flags = CLK_GET_RATE_NOCACHE;
+> > > > +	init.ops = &qcom_cpufreq_hw_clk_ops;
+> > > > +	data->cpu_clk.init = &init;
+> > > > +
+> > > > +	ret = clk_hw_register(dev, &data->cpu_clk);
+> > > > +	if (ret < 0) {
+> > > > +		dev_err(dev, "Failed to register Qcom CPUFreq clock\n");
+> > > > +		return ret;
+> > > > +	}
+> > > > +
+> > > > +	ret = of_clk_add_hw_provider(dev->of_node, of_clk_hw_simple_get, &data->cpu_clk);
+> > > 
+> > > This doesn't look corresponding to the DT bindings you are adding.
+> > > of_clk_hw_simple_get() would return a single clock per dt node, whichever
+> > > arguments were passed, while you are adding clocks correspoding to CPU
+> > > clusters.
+> > > 
+> > > From what I see according to the bindings, you should register a single
+> > > provider using the of_clk_hw_onecell_get() function.
+> > > 
+> > 
+> > Well, that won't work either :( The detail that I missed in first place is
+> > that the clock providers are added for the same DT node for each policy. So
+> > there is a single clock under the clock provider for a policy but they all
+> > belong to the same DT node.
+> > 
+> > This works when a clk provider gets added and then followed by "clk_get()"
+> > (that's what happening during the ->init() callback). But each time a new
+> > provider gets added, it is replacing the old for the same DT node.
+> > 
+> > The problem here is, we do not know how many policys are going to be there
+> > during the probe time. I'll think about a proper solution and update.
+> > 
 > 
-> Unfortunately this is not enough details to address a problem as
-> complex as this one.
+> You could get this by looping over all the cpus and count how many
+> unique qcom,freq-domains you have.
 > 
->> And the device cannto goes to suspend state after that.
->> the subsystem can still be start normally after this.
+
+I just counted the number of "freq-domainX" register spaces defined in cpufreq
+node and used that as the domain count.
+
+> But it seems like a bigger problem is that you need to register your
+> clock "provider" at a device-level, rather than a policy level. I did
+> some experiments with moving most of the resource management to probe
+> and it did look quite promising, but in the end I figured out a shorter
+> path to per-core frequency voting and threw that code out again.
 > 
-> If the code flow I pasted above reflects the problem at hand, the
-> current patch will not be sufficient to address the issue.  If Arnaud
-> confirms my suspicions we will have to think about a better solution.
->
+> It seems however that this would be a good idea to pick up.
+> 
 
-Hi Mathiew,
+This is what exactly I've done now (not posted yet). Moving the resource
+management is indeed the correct way since the resources are static and not
+tied to the CPUs. Plus it allows us to use devm_ helpers for tieing all the
+resources to the device.
 
-Could you pls have more details of any side effects other then power 
-issue of the current senario?
-Why the current patch is not sufficient pls?
+> 
+> Beyond resolving Viresh request though, we have the problem that on
+> SM8350 and SC8280XP (at least), the L3 cache is controlled by per-core
+> registers residing in the register blocks hogged by the cpufreq driver,
+> and is configured in unit of Hz. So we can't directly use the osm-l3
+> model - without hacking up the drivers to allow for overlapping ioremap.
+> 
+> We could probably extend the cpufreq driver to express this as a path
+> between each core and the L3 cache and just ignore the unit (kBps vs Hz)
+> (i.e.  duplicate osm-l3 in the cpufreq driver).
+> But it doesn't seem unreasonable to me to express this as a clock per
+> CPU and just add another opp-hz value to the opp-table, now that this is
+> supported.
+> 
+> This design would also allow for profiling based mechanisms to pick
+> these clocks up and issue clk_set_rate(), if such mechanisms would be
+> desirable.
+> 
 
+This sounds reasonable to me. Let's discuss this offline and come up with a
+design.
 
-Have the current senario in details with rproc->lock information in details:
+Thanks,
+Mani
 
-| subsystem crashed interrupt issued      | user trigger shutdown
-| rproc_report_crash()                    |
-|          pm_stay_awake()                |
-|          queue_work()                   |
-|                                         |rproc_shutdown
-|                                         |mutex_lock(&rproc->lock);
-|                                         |rproc_stop()
-|rproc_crash_handler_work()               |rproc->state = RPROC_OFFLINE;
-|                                         |mutex_unlock(&rproc->lock);
-|mutex_lock(&rproc->lock);                |
-|if (rproc->state == RPROC_OFFLINE)       |
-|return // pm_relax() is not called       |rproc_boot
-|mutex_unlock(&rproc->lock);              |
-|                                         |mutex_lock(&rproc->lock);
-|                                         |rproc_start()
-|                                         |mutex_unlock(&rproc->lock);
-
-
->>
->>>>
->>>>
->>>>>> Thanks,
->>>>>> Mathieu
->>>>>>
->>>>>>
->>>>>>> When the state is in RPROC_OFFLINE it means separate request
->>>>>>> of rproc_stop was done and no need to hold the wakeup source
->>>>>>> in crash handler to recover any more.
->>>>>>>
->>>>>>> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
->>>>>>> ---
->>>>>>>     drivers/remoteproc/remoteproc_core.c | 11 +++++++++++
->>>>>>>     1 file changed, 11 insertions(+)
->>>>>>>
->>>>>>> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
->>>>>>> index e5279ed9a8d7..6bc7b8b7d01e 100644
->>>>>>> --- a/drivers/remoteproc/remoteproc_core.c
->>>>>>> +++ b/drivers/remoteproc/remoteproc_core.c
->>>>>>> @@ -1956,6 +1956,17 @@ static void rproc_crash_handler_work(struct work_struct *work)
->>>>>>>            if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
->>>>>>>                    /* handle only the first crash detected */
->>>>>>>                    mutex_unlock(&rproc->lock);
->>>>>>> +         /*
->>>>>>> +          * RPROC_OFFLINE state indicate there is no recovery process
->>>>>>> +          * is in progress and no chance to have pm_relax in place.
->>>>>>> +          * Because when recovering from crash, rproc->lock is held and
->>>>>>> +          * state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
->>>>>>> +          * and then unlock rproc->lock.
->>>>>>> +          * RPROC_OFFLINE is only an intermediate state in recovery
->>>>>>> +          * process.
->>>>>>> +          */
->>>>>>> +         if (rproc->state == RPROC_OFFLINE)
->>>>>>> +                 pm_relax(rproc->dev.parent);
->>>>>>>                    return;
->>>>>>>            }
->>>>>>> --
->>>>>>> 2.7.4
->>>>>>>
->>>>>
->>>>>
->>>>> --
->>>>> Thx and BRs,
->>>>> Aiqun(Maria) Yu
->>
->>
->> --
->> Thx and BRs,
->> Aiqun(Maria) Yu
-
+> Regards,
+> Bjorn
 
 -- 
-Thx and BRs,
-Aiqun(Maria) Yu
+மணிவண்ணன் சதாசிவம்
