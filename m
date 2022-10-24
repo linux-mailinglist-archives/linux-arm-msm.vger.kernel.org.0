@@ -2,234 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C08C16098FC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 06:01:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBE2A609921
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 06:27:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230012AbiJXEBw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Oct 2022 00:01:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36676 "EHLO
+        id S229613AbiJXE1U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Oct 2022 00:27:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229891AbiJXEBv (ORCPT
+        with ESMTP id S229501AbiJXE1T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Oct 2022 00:01:51 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A1256A531
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Oct 2022 21:01:49 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id f23so7480100plr.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Oct 2022 21:01:49 -0700 (PDT)
+        Mon, 24 Oct 2022 00:27:19 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F26C472B7C
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Oct 2022 21:27:15 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id d6so14805480lfs.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Oct 2022 21:27:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=zkSiz3crf2T+ikAMcFUJLUknPn5PUxv2vZ/hh7siBZ4=;
-        b=l+Q97JnNAQ06zAHzXqbTdRWx1QLTeWV7R190V3pPlPg+HC3DM7dF1gB8qWLiFtq+uP
-         IFGgiK2TxfZ+jJ4rCpzUiK9kJJFXW6CejOx32JbEIwzVRCOU29fswh2a0GoE8AH0fhmT
-         AbTYnU72zgJMxm/Wpu1K25gITMoPe+i9VGprgkPcMDnwJsGAAbzGxFQAMtecOLQQk9r8
-         GeD07LwHZnz/1gJ7nj8CeLuvFccIxkgIaa9dDTpkOX1fCgVH0gNmd6qYf2+QDoTpclfQ
-         bfyK7ylD0Pl+9271W65/vqvHCYxTY7PqZrl/VHvL6jn1lh+dPxdR0YDs8x05UxDO2Yyh
-         tung==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Dsk5CrZNueDPtuaAH1T6ByrqedpifBu30NKTXE3DIrQ=;
+        b=CpCMkhdenirRouvRGG0BILtVUvFEd5aDGL7VID6oPrth7aNOd91QDz1oy7B7OH0Obh
+         B3RRzzs6FmVuEQIXqGIjEyyJBqDMNEvJf25QnS5VOLW3hF1Tbz45Lk+fW9SfeqTINsmC
+         U9Inbfmg+fkFeXwDqi/G+2fYuvlSGw3qFokOoiKWjyTp1OJwwruOmBaryzDu7fBTgVQM
+         bAEgsdi5lWIvTjdVCSoi5CVClE4aAPKwVtQHX6ROu8v4BpwTQSrzMAdd16e4lWJLohpD
+         CxU6kj2Yy7Fp282otnASNrJvUbJRUZK3Ed4F1K3pLWWMZvcjOJMmHkEk4BDkmRArxA3x
+         4eQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zkSiz3crf2T+ikAMcFUJLUknPn5PUxv2vZ/hh7siBZ4=;
-        b=hpN9fy5ZBMz5ZckJzkQONIczr/JIKC7ijiYWJVo+pCm48I02ZYiYjJUooDgW+LSqn7
-         Uxo1SQiW2A4WI9CvMfGnMip0EVS7TSFJq8mT+poUJ7Yy9aXBvxks/mvqoiAOzkd/aMpW
-         ildNWR6AfYF55qTqbj16KnmOVvF5qjUNv5bkohUOpAKxVAFjULANOEch86BHKfORzWuP
-         A6RbK2VWO3BDhJFD3KvRTLwbtpenH31l7KIOg/tJ+mkQ5l3LRxR7zIm7pTfPvLWr2RIz
-         nMGoRHqy/x1ylvPsrJjM7lqolqxNReDyVTinR/XMWkR8vDXRkWQzAh65F+xMgcDRl3RG
-         yvSA==
-X-Gm-Message-State: ACrzQf0LrhYExC8qaiNZqhfRbcwECqISn/ZGwgUTDL8UFORz17oJd/Mm
-        A6MOtVjABhuIfy6SE4JfPA8P
-X-Google-Smtp-Source: AMsMyM6izrD95VKfxNC49/7xFe9LascYp5uSU5dAjgNEqhZo/P5Q0QG8IvRmkPuP/P6kq22u256/WA==
-X-Received: by 2002:a17:90b:4d0c:b0:20b:c983:2d85 with SMTP id mw12-20020a17090b4d0c00b0020bc9832d85mr72770137pjb.45.1666584108931;
-        Sun, 23 Oct 2022 21:01:48 -0700 (PDT)
-Received: from thinkpad ([117.193.210.252])
-        by smtp.gmail.com with ESMTPSA id 5-20020a630205000000b00442c70b659esm16520472pgc.91.2022.10.23.21.01.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Oct 2022 21:01:47 -0700 (PDT)
-Date:   Mon, 24 Oct 2022 09:31:40 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        viresh.kumar@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        rafael@kernel.org, robh+dt@kernel.org, johan@kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH 3/4] cpufreq: qcom-hw: Add CPU clock provider support
-Message-ID: <20221024040140.GA221610@thinkpad>
-References: <20221019135925.366162-1-manivannan.sadhasivam@linaro.org>
- <20221019135925.366162-4-manivannan.sadhasivam@linaro.org>
- <b88de305-cb1f-7251-ccb8-4ea3b62bc322@linaro.org>
- <20221021093140.GC93287@thinkpad>
- <20221024030648.dthglkkcy5wtziwd@baldur>
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Dsk5CrZNueDPtuaAH1T6ByrqedpifBu30NKTXE3DIrQ=;
+        b=obX+Sdo2ehe94L7G0IpllsIGLxA/c3u4QQRYmJWU7hzQEhOJgGmEl6U29XXUgBpq2E
+         bgJEVXyeMIvq5DPmEkHaYlKhRgZn8xUKUo/StT172/V5S8bGPyn/2ptkSS8QzeYdeaJk
+         dzc8UVrRiWiQD3BrhR3Twqz8OKn8wsKhrrCfqb6oRS2u1loQAADdZWs65SwfsdBje/Nj
+         OXn/Yy0f3E7a40aqsQXjgeW3O5bSgLOJTuZNowc+JLH6tkaM5O7c0PpTf8q5opAUEpD+
+         3DCUaWjHhmYg2QTlgD+YbMWWHNJaJCPzScPvR4sBgD8EMs3HhWER26CIfbYxMhDD1sI/
+         cvFQ==
+X-Gm-Message-State: ACrzQf2UOod7JeQoIBf9zKqO39Ie4XRW69sVCEEwzvJJaekcJy2OkE5g
+        HAXolXi+JHTCYSq44Hj6NN8K27t0nL2BpxSZ07+Mbw==
+X-Google-Smtp-Source: AMsMyM4T3topThgg5ZuMoUHR0TVRDCF2V1F6PeP3YU93In1utVJUs/DA4F87zpq37OFYZ4BaDeiDJ+o98W2pyco+au4=
+X-Received: by 2002:a05:6512:2207:b0:4a2:6b5d:8afc with SMTP id
+ h7-20020a056512220700b004a26b5d8afcmr10071171lfu.261.1666585634285; Sun, 23
+ Oct 2022 21:27:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221024030648.dthglkkcy5wtziwd@baldur>
+References: <20220805074935.1158098-1-jun.nie@linaro.org> <20220805074935.1158098-3-jun.nie@linaro.org>
+ <20220926162917.yte3kooilqenufrp@builder.lan>
+In-Reply-To: <20220926162917.yte3kooilqenufrp@builder.lan>
+From:   Jun Nie <jun.nie@linaro.org>
+Date:   Mon, 24 Oct 2022 12:27:03 +0800
+Message-ID: <CABymUCP9XbKvq=_7Q1ToE7cp3zP1JF2KThK-SSTz=B6mS92eXQ@mail.gmail.com>
+Subject: Re: [PATCH 2/4] soc: qcom: rpmpd: Add corner power-domains states
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     abel.vesa@linaro.org, bjorn.andersson@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, agross@kernel.org,
+        shawn.guo@linaro.org, bryan.odonoghue@linaro.org,
+        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Oct 23, 2022 at 10:06:48PM -0500, Bjorn Andersson wrote:
-> On Fri, Oct 21, 2022 at 03:01:40PM +0530, Manivannan Sadhasivam wrote:
-> > On Thu, Oct 20, 2022 at 08:39:50AM +0300, Dmitry Baryshkov wrote:
-> > > On 19/10/2022 16:59, Manivannan Sadhasivam wrote:
-> > > > Qcom CPUFreq hardware (EPSS/OSM) controls clock and voltage to the CPU
-> > > > cores. But this relationship is not represented with the clk framework
-> > > > so far.
-> > > > 
-> > > > So, let's make the qcom-cpufreq-hw driver a clock provider. This makes the
-> > > > clock producer/consumer relationship cleaner and is also useful for CPU
-> > > > related frameworks like OPP to know the frequency at which the CPUs are
-> > > > running.
-> > > > 
-> > > > The clock frequency provided by the driver is for each CPU policy. We
-> > > > cannot get the frequency of each CPU core because, not all platforms
-> > > > support per-core DCVS feature.
-> > > > 
-> > > > Also the frequency supplied by the driver is the actual frequency that
-> > > > comes out of the EPSS/OSM block after the DCVS operation. This frequency is
-> > > > not same as what the CPUFreq framework has set but it is the one that gets
-> > > > supplied to the CPUs after throttling by LMh.
-> > > > 
-> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > ---
-> > > >   drivers/cpufreq/qcom-cpufreq-hw.c | 67 +++++++++++++++++++++++++++++--
-> > > >   1 file changed, 63 insertions(+), 4 deletions(-)
-> > > > 
-> > > > diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> > > > index a5b3b8d0e164..4dd710f9fb69 100644
-> > > > --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> > > > +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> > > > @@ -4,6 +4,7 @@
-> > > >    */
-> > > >   #include <linux/bitfield.h>
-> > > > +#include <linux/clk-provider.h>
-> > > >   #include <linux/cpufreq.h>
-> > > >   #include <linux/init.h>
-> > > >   #include <linux/interconnect.h>
-> > > > @@ -54,6 +55,7 @@ struct qcom_cpufreq_data {
-> > > >   	bool cancel_throttle;
-> > > >   	struct delayed_work throttle_work;
-> > > >   	struct cpufreq_policy *policy;
-> > > > +	struct clk_hw cpu_clk;
-> > > >   	bool per_core_dcvs;
-> > > >   };
-> > > > @@ -482,6 +484,54 @@ static void qcom_cpufreq_hw_lmh_exit(struct qcom_cpufreq_data *data)
-> > > >   	free_irq(data->throttle_irq, data);
-> > > >   }
-> > > > +static unsigned long qcom_cpufreq_hw_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-> > > > +{
-> > > > +	struct qcom_cpufreq_data *data = container_of(hw, struct qcom_cpufreq_data, cpu_clk);
-> > > > +
-> > > > +	return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
-> > > > +}
-> > > > +
-> > > > +static const struct clk_ops qcom_cpufreq_hw_clk_ops = {
-> > > > +	.recalc_rate = qcom_cpufreq_hw_recalc_rate,
-> > > > +};
-> > > > +
-> > > > +static int qcom_cpufreq_hw_clk_add(struct qcom_cpufreq_data *data, u32 index)
-> > > > +{
-> > > > +	struct platform_device *pdev = cpufreq_get_driver_data();
-> > > > +	struct device *dev = &pdev->dev;
-> > > > +	char *clk_name = devm_kasprintf(dev, GFP_KERNEL, "qcom_cpufreq%d", index);
-> > > > +	static struct clk_init_data init = {};
-> > > > +	int ret;
-> > > > +
-> > > > +	init.name = clk_name;
-> > > > +	init.flags = CLK_GET_RATE_NOCACHE;
-> > > > +	init.ops = &qcom_cpufreq_hw_clk_ops;
-> > > > +	data->cpu_clk.init = &init;
-> > > > +
-> > > > +	ret = clk_hw_register(dev, &data->cpu_clk);
-> > > > +	if (ret < 0) {
-> > > > +		dev_err(dev, "Failed to register Qcom CPUFreq clock\n");
-> > > > +		return ret;
-> > > > +	}
-> > > > +
-> > > > +	ret = of_clk_add_hw_provider(dev->of_node, of_clk_hw_simple_get, &data->cpu_clk);
-> > > 
-> > > This doesn't look corresponding to the DT bindings you are adding.
-> > > of_clk_hw_simple_get() would return a single clock per dt node, whichever
-> > > arguments were passed, while you are adding clocks correspoding to CPU
-> > > clusters.
-> > > 
-> > > From what I see according to the bindings, you should register a single
-> > > provider using the of_clk_hw_onecell_get() function.
-> > > 
-> > 
-> > Well, that won't work either :( The detail that I missed in first place is
-> > that the clock providers are added for the same DT node for each policy. So
-> > there is a single clock under the clock provider for a policy but they all
-> > belong to the same DT node.
-> > 
-> > This works when a clk provider gets added and then followed by "clk_get()"
-> > (that's what happening during the ->init() callback). But each time a new
-> > provider gets added, it is replacing the old for the same DT node.
-> > 
-> > The problem here is, we do not know how many policys are going to be there
-> > during the probe time. I'll think about a proper solution and update.
-> > 
-> 
-> You could get this by looping over all the cpus and count how many
-> unique qcom,freq-domains you have.
-> 
-
-I just counted the number of "freq-domainX" register spaces defined in cpufreq
-node and used that as the domain count.
-
-> But it seems like a bigger problem is that you need to register your
-> clock "provider" at a device-level, rather than a policy level. I did
-> some experiments with moving most of the resource management to probe
-> and it did look quite promising, but in the end I figured out a shorter
-> path to per-core frequency voting and threw that code out again.
-> 
-> It seems however that this would be a good idea to pick up.
-> 
-
-This is what exactly I've done now (not posted yet). Moving the resource
-management is indeed the correct way since the resources are static and not
-tied to the CPUs. Plus it allows us to use devm_ helpers for tieing all the
-resources to the device.
-
-> 
-> Beyond resolving Viresh request though, we have the problem that on
-> SM8350 and SC8280XP (at least), the L3 cache is controlled by per-core
-> registers residing in the register blocks hogged by the cpufreq driver,
-> and is configured in unit of Hz. So we can't directly use the osm-l3
-> model - without hacking up the drivers to allow for overlapping ioremap.
-> 
-> We could probably extend the cpufreq driver to express this as a path
-> between each core and the L3 cache and just ignore the unit (kBps vs Hz)
-> (i.e.  duplicate osm-l3 in the cpufreq driver).
-> But it doesn't seem unreasonable to me to express this as a clock per
-> CPU and just add another opp-hz value to the opp-table, now that this is
-> supported.
-> 
-> This design would also allow for profiling based mechanisms to pick
-> these clocks up and issue clk_set_rate(), if such mechanisms would be
-> desirable.
-> 
-
-This sounds reasonable to me. Let's discuss this offline and come up with a
-design.
-
-Thanks,
-Mani
-
+Bjorn Andersson <andersson@kernel.org> =E4=BA=8E2022=E5=B9=B49=E6=9C=8827=
+=E6=97=A5=E5=91=A8=E4=BA=8C 00:29=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Fri, Aug 05, 2022 at 03:49:33PM +0800, Jun Nie wrote:
+> > Some SoCs use corner instead of level in rpm regulator, such as
+> > MSM8916 and MSM8939. Add these power-domains states value so that
+> > devices can vote them.
+> >
+> > Note that there is a shift with 1 when converting the value from
+> > regulator usage in Qualcomm Linux 3.18 to power domain usage here.
+> > Because corner is not well hacked in regulator framework in 3.18.
+> > For example, RPM_REGULATOR_CORNER_RETENTION is 2 in 3.18 while
+> > RPM_SMD_CORNER_RETENTION is 1.
+> >
+>
+> How about we just stick with the numbers in the rpmpd node in DT, as
+> that would be the only place these constants are used and all the actual
+> users can use the label associated there?
+>
 > Regards,
 > Bjorn
 
--- 
-மணிவண்ணன் சதாசிவம்
+The clock driver change in this patch set, the consumer of the
+regulator, is dropped. So there
+is no more consumers that need the name. So this whole patch set can
+be abandoned now.
+
+Regards,
+Jun
+>
+> > Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> > ---
+> >  include/dt-bindings/power/qcom-rpmpd.h | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> >
+> > diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindin=
+gs/power/qcom-rpmpd.h
+> > index 6cce5b7aa940..f778dbbf083d 100644
+> > --- a/include/dt-bindings/power/qcom-rpmpd.h
+> > +++ b/include/dt-bindings/power/qcom-rpmpd.h
+> > @@ -297,4 +297,12 @@
+> >  #define RPM_SMD_LEVEL_TURBO_HIGH      448
+> >  #define RPM_SMD_LEVEL_BINNING         512
+> >
+> > +/* RPM SMD Power Domain performance levels in regulator corner method =
+*/
+> > +#define RPM_SMD_CORNER_RETENTION     1
+> > +#define RPM_SMD_CORNER_SVS_KRAIT     2
+> > +#define RPM_SMD_CORNER_SVS_SOC               3
+> > +#define RPM_SMD_CORNER_NORMAL                4
+> > +#define RPM_SMD_CORNER_TURBO         5
+> > +#define RPM_SMD_CORNER_SUPER_TURBO   6
+> > +
+> >  #endif
+> > --
+> > 2.25.1
+> >
