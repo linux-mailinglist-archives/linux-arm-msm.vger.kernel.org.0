@@ -2,60 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8175A609DB5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 11:16:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BC67609DD0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 11:19:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230055AbiJXJQV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Oct 2022 05:16:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55322 "EHLO
+        id S230375AbiJXJTP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Oct 2022 05:19:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231261AbiJXJQE (ORCPT
+        with ESMTP id S230232AbiJXJSl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Oct 2022 05:16:04 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DBA94D162;
-        Mon, 24 Oct 2022 02:15:42 -0700 (PDT)
+        Mon, 24 Oct 2022 05:18:41 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2083B30567;
+        Mon, 24 Oct 2022 02:18:10 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 924666108B;
-        Mon, 24 Oct 2022 09:15:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D434BC433D7;
-        Mon, 24 Oct 2022 09:15:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666602940;
-        bh=/59S997d8HJo0WppUTEKLowxRoQ4GCM2JDP0Y998Dq0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=LV0WQ8I27+oCDDOeeB8dTlnh2+56dc9iq1ssU4q6pmXt7dlxZcE0yix/IlXBlsAEv
-         HkdaSwbSaugB+uM6/2eMSs1Ws620zoMCBrZmP7XY0grc4yfJRemxlEskdCGkGbWSmC
-         KT5Ft2+GWpunOssq+TD8/36HJ/HwgG4V951GeDDwJsUYHo+The0+A/ytN6cHtgp5xe
-         VfSiGQRDsrUDpxTLA6qwrNnYW4ojZjSDiFMkPIHE97mnlNS7U2AwzgHHKpHTtvzlRR
-         iwPJYyKR17hKAPDvHLy7i3HoW0QNF5GXAw0nWuEhzmhLhfFEJI9hwNWEGyRxaNyZGF
-         5A7lLRHqRdlpQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1omtYK-0005J4-JD; Mon, 24 Oct 2022 11:15:24 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 4/4] arm64: dts: qcom: sm8450: fix UFS PHY registers
-Date:   Mon, 24 Oct 2022 11:15:07 +0200
-Message-Id: <20221024091507.20342-5-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20221024091507.20342-1-johan+linaro@kernel.org>
-References: <20221024091507.20342-1-johan+linaro@kernel.org>
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1AF256112A;
+        Mon, 24 Oct 2022 09:18:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E91FC433D6;
+        Mon, 24 Oct 2022 09:18:00 +0000 (UTC)
+Message-ID: <9781200b-2d6e-b401-abc5-559410b1a435@xs4all.nl>
+Date:   Mon, 24 Oct 2022 11:17:58 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH v7 14/21] media: tegra-vde: Prepare to dynamic dma-buf
+ locking specification
+Content-Language: en-US
+To:     Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+        David Airlie <airlied@linux.ie>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Daniel Almeida <daniel.almeida@collabora.com>,
+        Gert Wollny <gert.wollny@collabora.com>,
+        Gustavo Padovan <gustavo.padovan@collabora.com>,
+        Daniel Stone <daniel@fooishbar.org>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Clark <robdclark@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        =?UTF-8?Q?Thomas_Hellstr=c3=b6m?= <thomas_os@shipmail.org>,
+        Qiang Yu <yuq825@gmail.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>,
+        Leon Romanovsky <leon@kernel.org>,
+        Juergen Gross <jgross@suse.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        Ruhl Michael J <michael.j.ruhl@intel.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Dmitry Osipenko <digetx@gmail.com>,
+        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
+        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        kernel@collabora.com, virtualization@lists.linux-foundation.org,
+        linux-rdma@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20221017172229.42269-1-dmitry.osipenko@collabora.com>
+ <20221017172229.42269-15-dmitry.osipenko@collabora.com>
+From:   Hans Verkuil <hverkuil@xs4all.nl>
+In-Reply-To: <20221017172229.42269-15-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,NICE_REPLY_A,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,39 +91,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The sizes of the UFS PHY register regions are too small and does
-specifically not cover all registers used by the Linux driver.
 
-As Linux maps these regions as full pages this is currently not an issue
-on Linux, but let's update the sizes to match the vendor driver.
 
-Fixes: 07fa917a335e ("arm64: dts: qcom: sm8450: add ufs nodes")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+On 10/17/22 19:22, Dmitry Osipenko wrote:
+> Prepare Tegra video decoder driver to the common dynamic dma-buf
+> locking convention by starting to use the unlocked versions of dma-buf
+> API functions.
+> 
+> Acked-by: Christian König <christian.koenig@amd.com>
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index d32f08df743d..dfc799244180 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -3161,11 +3161,11 @@ ufs_mem_phy: phy@1d87000 {
- 			status = "disabled";
- 
- 			ufs_mem_phy_lanes: phy@1d87400 {
--				reg = <0 0x01d87400 0 0x108>,
--				      <0 0x01d87600 0 0x1e0>,
--				      <0 0x01d87c00 0 0x1dc>,
--				      <0 0x01d87800 0 0x108>,
--				      <0 0x01d87a00 0 0x1e0>;
-+				reg = <0 0x01d87400 0 0x188>,
-+				      <0 0x01d87600 0 0x200>,
-+				      <0 0x01d87c00 0 0x200>,
-+				      <0 0x01d87800 0 0x188>,
-+				      <0 0x01d87a00 0 0x200>;
- 				#phy-cells = <0>;
- 			};
- 		};
--- 
-2.37.3
+Acked-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
+Thanks!
+
+	Hans
+
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>  drivers/media/platform/nvidia/tegra-vde/dmabuf-cache.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/media/platform/nvidia/tegra-vde/dmabuf-cache.c b/drivers/media/platform/nvidia/tegra-vde/dmabuf-cache.c
+> index 69c346148070..1c5b94989aec 100644
+> --- a/drivers/media/platform/nvidia/tegra-vde/dmabuf-cache.c
+> +++ b/drivers/media/platform/nvidia/tegra-vde/dmabuf-cache.c
+> @@ -38,7 +38,7 @@ static void tegra_vde_release_entry(struct tegra_vde_cache_entry *entry)
+>  	if (entry->vde->domain)
+>  		tegra_vde_iommu_unmap(entry->vde, entry->iova);
+>  
+> -	dma_buf_unmap_attachment(entry->a, entry->sgt, entry->dma_dir);
+> +	dma_buf_unmap_attachment_unlocked(entry->a, entry->sgt, entry->dma_dir);
+>  	dma_buf_detach(dmabuf, entry->a);
+>  	dma_buf_put(dmabuf);
+>  
+> @@ -102,7 +102,7 @@ int tegra_vde_dmabuf_cache_map(struct tegra_vde *vde,
+>  		goto err_unlock;
+>  	}
+>  
+> -	sgt = dma_buf_map_attachment(attachment, dma_dir);
+> +	sgt = dma_buf_map_attachment_unlocked(attachment, dma_dir);
+>  	if (IS_ERR(sgt)) {
+>  		dev_err(dev, "Failed to get dmabufs sg_table\n");
+>  		err = PTR_ERR(sgt);
+> @@ -152,7 +152,7 @@ int tegra_vde_dmabuf_cache_map(struct tegra_vde *vde,
+>  err_free:
+>  	kfree(entry);
+>  err_unmap:
+> -	dma_buf_unmap_attachment(attachment, sgt, dma_dir);
+> +	dma_buf_unmap_attachment_unlocked(attachment, sgt, dma_dir);
+>  err_detach:
+>  	dma_buf_detach(dmabuf, attachment);
+>  err_unlock:
