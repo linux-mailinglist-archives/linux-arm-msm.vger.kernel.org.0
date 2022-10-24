@@ -2,189 +2,323 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DF6760BC83
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 23:51:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BE3460BC89
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 23:53:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231216AbiJXVvM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Oct 2022 17:51:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44928 "EHLO
+        id S231261AbiJXVxh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Oct 2022 17:53:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231401AbiJXVum (ORCPT
+        with ESMTP id S230380AbiJXVxN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Oct 2022 17:50:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6E8215820
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Oct 2022 13:03:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1666641749;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=yAu84s8rk3cqzQWkUOACGj/hySV4th5LzQjIQBUH6pI=;
-        b=KKKOSTSVeJfZxCtF1xe0Yl6FB+hzIGe2iUEZXEsIoJmTtvbOe12HjcI5esGDtHqeKapVZ5
-        lEafO4HbeJBR2QGsADyhzryF1it68ps35pwCziKL5cU0f4xeyF0F7Q2aKFX7lsXyD9VFQo
-        3wzjPUacfq0JSdt20XbmLRUy8R4kebc=
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
- [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-648-61BlFFYtMWmL03xS4O1xnw-1; Mon, 24 Oct 2022 16:02:28 -0400
-X-MC-Unique: 61BlFFYtMWmL03xS4O1xnw-1
-Received: by mail-ot1-f69.google.com with SMTP id d4-20020a05683018e400b00661a05b6cf3so5924689otf.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Oct 2022 13:02:28 -0700 (PDT)
+        Mon, 24 Oct 2022 17:53:13 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FE3B2F10D8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Oct 2022 13:06:35 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id n14so2910590wmq.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Oct 2022 13:06:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oiQT7+HgE+jR4dsGrwJz3G94YiAtTC/9uOWXE+hCFGA=;
+        b=okuddTzYO1TEbcOoHs3cETupscqVLFavT+ZuM0xyJ0FmgPOtwXLLbSGbDEtSB/vSeU
+         6y6hfL8paCriUw/eTP1AK+UrvF0MefnhJeNHDN8IkYKopUW2gsjlEpe7qO05CMornGP6
+         A/LjFxv0v2fI2RMpWEOfzutp13JkWalxwEGnj9maqqg3y/MLJSMyQaqp2b6KJFxuQwg1
+         W3FzYiqHS4aVRPDo8ntcp0sUQCB/qsIIngYm5Ni9YktjINff7ZOOT32zUlXMZYrRElNU
+         RzQtAYEkTjbeMKw3jFxDHXe2VisvcW2U/Q5eiSZnpLMcRcWRukJPHIEgwepD4RgDtXJQ
+         UnAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yAu84s8rk3cqzQWkUOACGj/hySV4th5LzQjIQBUH6pI=;
-        b=l0yGLZlEDyt9wBiXsQ5Ki6b353Ym1UPJAzPbCfzbpFt5qLABOmdXPbz3gnhzJvL7zQ
-         LZY4tZekPPW5bhcN0kHTQYTOlqjNDQNlEu+lKb6/1pJ6lR9xuctW7YtRq9d8PaWrB6ya
-         kgNcRNpP+OZvifGdDGoXJ3nYFLuy+DVvGzO49LKIcImrkRKuERokT35+v7jKhZCCxSg7
-         nu4/HT9aVAV+gSxDrZ76UDOvPD+QxnnEJZZ/SjDMZ5F8VQdqt30YUhzF6oqahc6w/KXQ
-         Tr7T6Pu1MBc3zsDF8+y4GcWNNK4lS4WOATBWvloxUe++zgEhrFykzWnO5TSUFrFIJ3oR
-         8hkQ==
-X-Gm-Message-State: ACrzQf0rAZtp+DlYh9djwTTGY7mQF2ZLI53mwBcecLC1rz45DkSz5oI1
-        HOIKqyLSWSf3vM43uutFUsvBr5q7f0sGKSSZQYao0jwq8VzMyCI6twbgwOY0mMz4rM5VoXOSdK+
-        uT8Fpt4Gehz7AotSlFCmQQhEmqQ==
-X-Received: by 2002:a05:6870:f202:b0:13b:c2c5:ed3d with SMTP id t2-20020a056870f20200b0013bc2c5ed3dmr3016219oao.252.1666641746026;
-        Mon, 24 Oct 2022 13:02:26 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM54g8rhYLOuCJEYPTIti3cvvmXOtuSfRfS5sohQPzeU0IGnm6DuA2ng30T7rsaeW4R33wdz9Q==
-X-Received: by 2002:a05:6870:f202:b0:13b:c2c5:ed3d with SMTP id t2-20020a056870f20200b0013bc2c5ed3dmr3016197oao.252.1666641745716;
-        Mon, 24 Oct 2022 13:02:25 -0700 (PDT)
-Received: from halaney-x13s ([2600:1700:1ff0:d0e0::21])
-        by smtp.gmail.com with ESMTPSA id w16-20020a056830061000b006619f38a686sm154449oti.56.2022.10.24.13.02.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Oct 2022 13:02:25 -0700 (PDT)
-Date:   Mon, 24 Oct 2022 15:02:22 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        echanude@redhat.com
-Subject: Re: [PATCH 2/4] soc: qcom: pmic_glink: Introduce base PMIC GLINK
- driver
-Message-ID: <20221024200222.vg7vhu7dfd3wlnkc@halaney-x13s>
-References: <20220818031512.319310-1-bjorn.andersson@linaro.org>
- <20220818031512.319310-3-bjorn.andersson@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oiQT7+HgE+jR4dsGrwJz3G94YiAtTC/9uOWXE+hCFGA=;
+        b=PJpFUKbEdfOqP4zKinqaG9kByaVg81IA3xXQ46yMv7qMXjO9W3F9/C5Mhfl3bSeOpq
+         LHX+TBLFcglkqJ1Ku+xlBzjf9bGtVrpCAHH6GQwe1qfE4JmRlLKq4/lFTIIRH+Bl4H3b
+         hU9MWiJcmsYEJ78Po6XvBhubc1NEiV3ySu36JVIEAFxvF3AMythyC6vfdotfAkII5Qsf
+         HsrzGkZT8wRRt5i6Olzn6x4rc5juzHjcd1uZNrYaHcHCS9PHDC46xUUYWaviBqPL++8D
+         tqdmSj5owC55pfDfTTniC05bR9PgQqPUSmR9Z6BootxyIbuE8QrtoTe6rNUS05IXUWY0
+         O34w==
+X-Gm-Message-State: ACrzQf3I8mQEW70NHKK5Da2p3Wc+8MXUxwASu/n8ogkcnBH94/cL6x8Q
+        mIy1E83T7BWfehKp/qmOctpZWA==
+X-Google-Smtp-Source: AMsMyM5EgP3jrP0MHpcLueOSzk0P2MHNxZCsG/d9Mt4n7Q/UQlJfwgjk70koZ+VpXSeqg6kzdf/TMw==
+X-Received: by 2002:a05:600c:42c6:b0:3c6:f27e:cac8 with SMTP id j6-20020a05600c42c600b003c6f27ecac8mr23194116wme.175.1666641891081;
+        Mon, 24 Oct 2022 13:04:51 -0700 (PDT)
+Received: from [192.168.0.11] (cpc76482-cwma10-2-0-cust629.7-3.cable.virginm.net. [86.14.22.118])
+        by smtp.gmail.com with ESMTPSA id c11-20020a05600c0a4b00b003c6f27d275dsm9654212wmq.33.2022.10.24.13.04.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Oct 2022 13:04:50 -0700 (PDT)
+Message-ID: <e5ae9c89-7890-9bd7-3583-483667391203@linaro.org>
+Date:   Mon, 24 Oct 2022 21:04:49 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220818031512.319310-3-bjorn.andersson@linaro.org>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH] net: ipa: fix some resource limit max values
+To:     Alex Elder <elder@linaro.org>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>
+Cc:     Alex Elder <elder@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>
+References: <20221024165636.3979249-1-caleb.connolly@linaro.org>
+ <bf67b30f-074b-22b5-8d23-b1531ad30d74@linaro.org>
+Content-Language: en-US
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <bf67b30f-074b-22b5-8d23-b1531ad30d74@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 17, 2022 at 08:15:10PM -0700, Bjorn Andersson wrote:
-> The PMIC GLINK service runs on one of the co-processors of some modern
-> Qualcomm platforms and implements USB-C and battery managements. It uses
-> a message based protocol over GLINK for communication with the OS, hence
-> the name.
+
+
+On 24/10/2022 20:15, Alex Elder wrote:
+> On 10/24/22 11:56 AM, Caleb Connolly wrote:
+>> Some resource limits on IPA v3.1 and v3.5.1 have their max values set to
+>> 255, this causes a few splats in ipa_reg_encode and prevents it from booting.
+>> The limits are all 6 bits wide so adjust the max values to 63.
 > 
-> The driver implemented provides the rpmsg device for communication and
-> uses auxilirary bus to spawn off individual devices in respsective
-> subsystem. The auxilirary devices are spawned off from a
-> platform_device, so that the drm_bridge is available early, to allow the
-> DisplayPort driver to probe even before the remoteproc has spun up.
+> Thank you for sending this Caleb.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-<snip>
-> diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
-> new file mode 100644
-> index 000000000000..d42127521eca
-> --- /dev/null
-> +++ b/drivers/soc/qcom/pmic_glink.c
-> @@ -0,0 +1,336 @@
-<snip>
-> +
-> +static void _devm_pmic_glink_release_client(struct device *dev, void *res)
-> +{
-> +	struct pmic_glink_client *client = *(struct pmic_glink_client **)res;
+> On IPA v3.5.1 (SDM845) I confirm that these resource limit fields are
+> 6 bits wide, while the values we assign are in some cases 255, which
+> cannot be represented in 6 bits.  Your fix in this case is proper,
+> changing the maximum limit from 255 to be 63.  (Just in case, I've
+> sent a note to Qualcomm to ask them to confirm this, but I think this
+> is fine.)
 
-As Eric Chanudet pointed out to me, this should be:
+Great, thanks
 
-	struct pmic_glink_client *client = (struct pmic_glink_client *)res;
+> 
+> I re-checked the definitions of the MIN_LIMIT and MAX_LIMIT fields
+> for IPA v3.1, and it turns out in that case the *register field*
+> definitions were wrong.  They should, in fact, be 8 bits wide rather
+> than just 6.  So in that case, 255 would be a reasonable limit value.
 
-Otherwise you get a splat like below (which somehow resulted in my
-panel output not to work on my x13s... not sure of the connection
-there, and is easily reproducible with a probe deferal or qcom_battmgr
-unload):
+Heh, well that's fun... Thanks for checking
 
-        Unable to handle kernel NULL pointer dereference at virtual address 0000000000000958
-        Mem abort info:
-          ESR = 0x0000000096000004
-          EC = 0x25: DABT (current EL), IL = 32 bits
-          ESR = 0x0000000096000004
-          EC = 0x25: DABT (current EL), IL = 32 bits
-          SET = 0, FnV = 0
-          EA = 0, S1PTW = 0
-          FSC = 0x04: level 0 translation fault
-        Data abort info:
-          ISV = 0, ISS = 0x00000004
-          CM = 0, WnR = 0
-        user pgtable: 4k pages, 48-bit VAs, pgdp=0000000106b92000
-        [0000000000000958] pgd=0000000000000000, p4d=0000000000000000
-        Internal error: Oops: 96000004 [#1] PREEMPT SMP
-        Modules linked in: llcc_qcom qcom_battmgr aes_ce_blk pmic_glink_altmode aes_ce_cipher ghash_ce gf128mul sha2_ce sha256_arm64 sha1_ce gpio_sbu_mux pmic_glink gpio_keys autofs4
-        CPU: 2 PID: 182 Comm: kworker/u16:5 Not tainted 6.0.0-rc6 #29
-        Hardware name: LENOVO 21BX0016US/21BX0016US, BIOS N3HET47W (1.19 ) 07/04/2022
-        Workqueue: events_unbound deferred_probe_work_func
-        pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-        pc : mutex_lock+0x1c/0x60
-        lr : _devm_pmic_glink_release_client+0x2c/0x74 [pmic_glink]
-        sp : ffff80000c553970
-        x29: ffff80000c553970 x28: 0000000000000000 x27: 0000000000000000
-        x26: ffffc297e181e0e8 x25: ffffc297e181d000 x24: ffffc2984efd9a80
-        x23: ffffc2984ea7a008 x22: ffff1738863cc3a0 x21: ffff80000c553a28
-        x20: 0000000000000958 x19: ffff1738863cc9f8 x18: ffffffffffffffff
-        x17: 0000000000000000 x16: ffffc2984e1bb110 x15: 61622d6d6f63713d
-        x14: ffffc2984f3b23e0 x13: 554e514553007972 x12: 0000000000000000
-        x11: 00313731333d4d55 x10: 0000000000000000 x9 : ffffc297e181d1cc
-        x8 : ffff80000c553910 x7 : 0000000000000000 x6 : 0000000080200016
-        x5 : 0000000000000038 x4 : 0000000000000000 x3 : 0000000000000958
-        x2 : ffff17388522c100 x1 : 0000000000000000 x0 : 0000000000000958
-        Call trace:
-         mutex_lock+0x1c/0x60
-         release_nodes+0x68/0x100
-         devres_release_all+0x94/0xf0
-         device_unbind_cleanup+0x20/0x70
-         device_release_driver_internal+0x214/0x260
-         device_release_driver+0x20/0x30
-         bus_remove_device+0xdc/0x170
-         device_del+0x178/0x3ac
-         pmic_glink_probe+0x1e8/0x240 [pmic_glink]
-         platform_probe+0x70/0xcc
-         really_probe+0xc8/0x3e0
-         __driver_probe_device+0x84/0x190
-         driver_probe_device+0x44/0x100
-         __device_attach_driver+0xc4/0x160
-         bus_for_each_drv+0x84/0xe0
-         __device_attach+0xa4/0x1c4
-         device_initial_probe+0x1c/0x30
-         bus_probe_device+0xa4/0xb0
-         deferred_probe_work_func+0xc0/0x114
-         process_one_work+0x1ec/0x470
-         worker_thread+0x74/0x410
-         kthread+0xfc/0x110
-         ret_from_fork+0x10/0x20
-        Code: d5384102 d503201f d2800001 aa0103e4 (c8e47c02)
-        ---[ end trace 0000000000000000 ]---
+> 
+> Did you observe these splats when doing actual testing on an msm8998
+> (which has IPA v3.1)?  Or did you just double-check the code?  I
+> looked at the other currently-supported platforms and didn't see
+> this sort of problem elsewhere (IPA v4.2, 4.5, 4.9, 4.11).
 
-All credit to Eric[0] on that, I'm just tying up loose ends.
+I found these just by 'grep'ing for "max = 255", none of the other versions had 
+that and I didn't see anything obvious at a glance so I expect only these two 
+platforms are affected. The same issue has been confirmed on MSM8998: 
+https://gitlab.com/msm8998-mainline/linux/-/issues/39
 
-[0] https://gitlab.com/ahalaney/linux/-/commit/1819fbccd03de430d9fd4c58ded35f5be83e9aa8
+Jami (CC'd) has offered to test the next revision of the fix there so we can be 
+sure it works on v3.1 and v3.5.1.
+> 
+> 
+> Could you please send a new version of your patch, which fixes the
+> register definition in "ipa_reg-v3.1.c" instead?
+> 
+> It might be best to fix the two issues in separate patches, since
+> they will parts pf the code with different development histories.
 
-Thanks,
-Andrew
+That makes sense, will do.
+> 
+> Thanks!
+> 
+>                      -Alex
+> 
+>> Fixes: 1c418c4a929c ("net: ipa: define resource group/type IPA register fields")
+>> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+>> ---
+>>   drivers/net/ipa/data/ipa_data-v3.1.c   | 62 +++++++++++++-------------
+>>   drivers/net/ipa/data/ipa_data-v3.5.1.c |  4 +-
+>>   2 files changed, 33 insertions(+), 33 deletions(-)
+>>
+>> diff --git a/drivers/net/ipa/data/ipa_data-v3.1.c 
+>> b/drivers/net/ipa/data/ipa_data-v3.1.c
+>> index e0d71f609272..7ff093f982ad 100644
+>> --- a/drivers/net/ipa/data/ipa_data-v3.1.c
+>> +++ b/drivers/net/ipa/data/ipa_data-v3.1.c
+>> @@ -187,53 +187,53 @@ static const struct ipa_gsi_endpoint_data 
+>> ipa_gsi_endpoint_data[] = {
+>>   static const struct ipa_resource ipa_resource_src[] = {
+>>       [IPA_RESOURCE_TYPE_SRC_PKT_CONTEXTS] = {
+>>           .limits[IPA_RSRC_GROUP_SRC_UL] = {
+>> -            .min = 3,    .max = 255,
+>> +            .min = 3,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_DL] = {
+>> -            .min = 3,    .max = 255,
+>> +            .min = 3,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_DIAG] = {
+>> -            .min = 1,    .max = 255,
+>> +            .min = 1,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_DMA] = {
+>> -            .min = 1,    .max = 255,
+>> +            .min = 1,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_UC_RX_Q] = {
+>> -            .min = 2,    .max = 255,
+>> +            .min = 2,    .max = 63,
+>>           },
+>>       },
+>>       [IPA_RESOURCE_TYPE_SRC_HDR_SECTORS] = {
+>>           .limits[IPA_RSRC_GROUP_SRC_UL] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_DL] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_DIAG] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_DMA] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_UC_RX_Q] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>       },
+>>       [IPA_RESOURCE_TYPE_SRC_HDRI1_BUFFER] = {
+>>           .limits[IPA_RSRC_GROUP_SRC_UL] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_DL] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_DIAG] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_DMA] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_UC_RX_Q] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>       },
+>>       [IPA_RESOURCE_TYPE_SRC_DESCRIPTOR_LISTS] = {
+>> @@ -272,36 +272,36 @@ static const struct ipa_resource ipa_resource_src[] = {
+>>       },
+>>       [IPA_RESOURCE_TYPE_SRC_HDRI2_BUFFERS] = {
+>>           .limits[IPA_RSRC_GROUP_SRC_UL] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_DL] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_DIAG] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_DMA] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_UC_RX_Q] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>       },
+>>       [IPA_RESOURCE_TYPE_SRC_HPS_DMARS] = {
+>>           .limits[IPA_RSRC_GROUP_SRC_UL] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_DL] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_DIAG] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_DMA] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_UC_RX_Q] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>       },
+>>       [IPA_RESOURCE_TYPE_SRC_ACK_ENTRIES] = {
+>> @@ -345,22 +345,22 @@ static const struct ipa_resource ipa_resource_dst[] = {
+>>       },
+>>       [IPA_RESOURCE_TYPE_DST_DATA_SECTOR_LISTS] = {
+>>           .limits[IPA_RSRC_GROUP_DST_UL] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_DST_DL] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_DST_DIAG_DPL] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_DST_DMA] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_DST_Q6ZIP_GENERAL] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_DST_Q6ZIP_ENGINE] = {
+>> -            .min = 0,    .max = 255,
+>> +            .min = 0,    .max = 63,
+>>           },
+>>       },
+>>       [IPA_RESOURCE_TYPE_DST_DPS_DMARS] = {
+>> diff --git a/drivers/net/ipa/data/ipa_data-v3.5.1.c 
+>> b/drivers/net/ipa/data/ipa_data-v3.5.1.c
+>> index 383ef1890065..42f2c88a92d4 100644
+>> --- a/drivers/net/ipa/data/ipa_data-v3.5.1.c
+>> +++ b/drivers/net/ipa/data/ipa_data-v3.5.1.c
+>> @@ -179,10 +179,10 @@ static const struct ipa_gsi_endpoint_data 
+>> ipa_gsi_endpoint_data[] = {
+>>   static const struct ipa_resource ipa_resource_src[] = {
+>>       [IPA_RESOURCE_TYPE_SRC_PKT_CONTEXTS] = {
+>>           .limits[IPA_RSRC_GROUP_SRC_LWA_DL] = {
+>> -            .min = 1,    .max = 255,
+>> +            .min = 1,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_UL_DL] = {
+>> -            .min = 1,    .max = 255,
+>> +            .min = 1,    .max = 63,
+>>           },
+>>           .limits[IPA_RSRC_GROUP_SRC_UC_RX_Q] = {
+>>               .min = 1,    .max = 63,
+> 
 
+-- 
+Kind Regards,
+Caleb (they/them)
