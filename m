@@ -2,146 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB82660BB32
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 22:51:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 677B460BB68
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 22:59:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235167AbiJXUvC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Oct 2022 16:51:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44540 "EHLO
+        id S231225AbiJXU7d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Oct 2022 16:59:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235196AbiJXUul (ORCPT
+        with ESMTP id S235294AbiJXU7F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Oct 2022 16:50:41 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 970EB28E0F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Oct 2022 11:57:24 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id h24so6168896qta.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Oct 2022 11:57:24 -0700 (PDT)
+        Mon, 24 Oct 2022 16:59:05 -0400
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4411786C4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Oct 2022 12:04:51 -0700 (PDT)
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-36d2188004bso32869507b3.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Oct 2022 12:04:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jqGBPdHQZiFqUka1kDcHbUhHs0PplNnmpo9lzEnhfhE=;
-        b=bw0emhiUidncaichi3Vs/0u0jfym+MDqp1eOW9vF6cemZ8f2+cvCLG29+nBrYsWpMh
-         SKBbMW7cuWPVuNiRvOyi6FpyXATyV5EHdKfofc+I1AthLSamsZsLb9Z4pfoCqWr+6j06
-         3OYrzeY3aZdtTCrm0Y5nfMif4DWqTS0oM5it1ksTxmN/143y8BaEWmBSBpmPy34xHGT6
-         Uj8vf58vC13PpHIBSvvON2IaUSUQQDixm24OabegjWXtEwT0wW4pU1THQzw37/e406s5
-         ONR05STYbKGNcaHn7LC3LMQwwcB6aPQA7ey6dZsCgfB1q9UAxdaRl1DaVGwlSmoKughK
-         WPxg==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=snPxLK8FNksLj7AlNjpK1EeZ2TmNBOvlk5453e59nHQ=;
+        b=F4SVF3jk24n6z+LnLCjYSBtGLVDAo6KtD0axHrkjMgc1mVueWl5aUEwg0rauh3RKQ3
+         CJSnb36LIqa5mtpMnDBWREdUjni2/neikL6rWLrJ5OTWIuou6ByzZ9tdGkVv6ncGxXB0
+         ad5ksck22IlA6GgagUQZNJo4oHl+b+BGcVtUeXvAJwgcNScR3lfnT5l/MZCpyLUBpnwJ
+         Ho5isLUzeCak6e9DiXDk2xbhwq9kvX3BnlM9ntuZXu/IxX9nS2ZkhhhIUj2MuTO1sHnT
+         kEgMauo/kEjWpKJj5mJHYTt2RLt+QVWWrS9rwwG1oujM9ckvXOBNleeRCLN9ziMaVxrT
+         GABw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jqGBPdHQZiFqUka1kDcHbUhHs0PplNnmpo9lzEnhfhE=;
-        b=c93VxpNamv5tf+RH7TQjQUjv1M8c7TIOwnIYeceqHSFxpSKk8/SE23EsAVNaghNaGz
-         QqFCws06lMvjixPmX6msphrMko29pBNWGlHpHYFBQhGAdJ5+Tgq4jwidnAMcZJ4x0jfd
-         q0JnhTVxCFnDkCgZ1lf1YWf413yWz3m7kMnQBf0d00Euv13v1q7Oku0KbitejRZXEw0v
-         QdWKZDEV5V7yrKpKQctWJHlBROT6XqKOR8ymSdOOPzZ9kFRevs9UsKL2IqzzW3tIzSE1
-         Hhm+1r4AdCaEM3S1zeycXU+6BC5SBVBNjJYY4Fb34ZOKtrXScZuDAMprhejIhJgFIJvz
-         KaFw==
-X-Gm-Message-State: ACrzQf3w4IqciGktFpgJTpeEbR63Z7v3IxurgbiLROy41UacOjKu+oTF
-        +JWseBL3ZAATgGiXTx5Jr/7G9A==
-X-Google-Smtp-Source: AMsMyM7qADn0FOHMfkSwAlnDytaDQrl/fPHJ55zOMl6gP82fbHXNjnm09mZUi4Ab6e3NRNbmdf4Ifw==
-X-Received: by 2002:a05:622a:187:b0:39c:f998:8963 with SMTP id s7-20020a05622a018700b0039cf9988963mr25930035qtw.603.1666637783762;
-        Mon, 24 Oct 2022 11:56:23 -0700 (PDT)
-Received: from [192.168.1.8] ([64.57.193.93])
-        by smtp.gmail.com with ESMTPSA id s15-20020ac85ccf000000b0039cc22a2c49sm355571qta.47.2022.10.24.11.56.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Oct 2022 11:56:23 -0700 (PDT)
-Message-ID: <d5726896-e62b-d19d-454b-700dd1c42222@linaro.org>
-Date:   Mon, 24 Oct 2022 14:56:17 -0400
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=snPxLK8FNksLj7AlNjpK1EeZ2TmNBOvlk5453e59nHQ=;
+        b=zAGufc5K8+5EWnEQsvJeZfZ10LnI1TPhVU0AT4LCxy3bNyLXAaU0osIrDFPZu0VUy3
+         8IOhBZd6p+qfgthD8sZV6zY4M/nb8YlC/KVYOBPhGNg0xtA9kAE1fzmu6TiLqssTCXh5
+         J48zeMgZZ8w0CxHuZaQ+a6YEkK2J2Kim/flNLqG+MPoJK4+rSfh1JtmSjQO57UI6Grn5
+         uoWUSamn2O0bVJNKAySSY9KIhMa9qS5zZqOGZ9hWawlIWHGDX5UpI6pzP2T5tH2Aoeqx
+         izHEcvWSkGV87M4KFrFfUq8B1pumus5wYLO2i0KkQIhkDL4Hsx48Ptz/am1vk4FXjReo
+         +Ztg==
+X-Gm-Message-State: ACrzQf2VYkKKzvzgsk+uP/6rRK+3AN9S1M/thbd6lTSl5ig86gS2sKL5
+        h+ztC9UpcEiCTRG1eEjHLKGzgsM2iMk6pBgvihS/YQ==
+X-Google-Smtp-Source: AMsMyM44Yz57mLZ7aNo97LD42ijifgZDz8rD7i+PQ4S/RlMbhD3VDaPhHwMEzKMn2sK6msV6oIdd29hYTu2mpkc4lZc=
+X-Received: by 2002:a81:7804:0:b0:369:1074:e2b with SMTP id
+ t4-20020a817804000000b0036910740e2bmr20270304ywc.127.1666637939812; Mon, 24
+ Oct 2022 11:58:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
+References: <20211209103505.197453-1-vkoul@kernel.org> <20211209103505.197453-11-vkoul@kernel.org>
+ <5035b6a3-164b-afa0-b714-4deb886f9f90@linaro.org> <9f696023-f2b4-ccd0-34a0-6f4d5848e862@linaro.org>
+ <8c1428a6-f268-cb03-3e55-887d30236924@linaro.org> <3af48606-731f-6047-92ca-80435f401ae3@linaro.org>
+ <d5726896-e62b-d19d-454b-700dd1c42222@linaro.org>
+In-Reply-To: <d5726896-e62b-d19d-454b-700dd1c42222@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 24 Oct 2022 21:58:48 +0300
+Message-ID: <CAA8EJpovd0D154QUG1_EtCnCrffJBt+SPWQtLEZWb=dc_PLGjA@mail.gmail.com>
 Subject: Re: [PATCH v2 10/13] arm64: dts: qcom: sm8450: add spmi node
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20211209103505.197453-1-vkoul@kernel.org>
- <20211209103505.197453-11-vkoul@kernel.org>
- <5035b6a3-164b-afa0-b714-4deb886f9f90@linaro.org>
- <9f696023-f2b4-ccd0-34a0-6f4d5848e862@linaro.org>
- <8c1428a6-f268-cb03-3e55-887d30236924@linaro.org>
- <3af48606-731f-6047-92ca-80435f401ae3@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <3af48606-731f-6047-92ca-80435f401ae3@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/10/2022 12:48, Dmitry Baryshkov wrote:
-> On 24/10/2022 19:46, Krzysztof Kozlowski wrote:
->> On 24/10/2022 12:45, Dmitry Baryshkov wrote:
->>> On 24/10/2022 17:56, Krzysztof Kozlowski wrote:
->>>> On 09/12/2021 05:35, Vinod Koul wrote:
->>>>> Add the spmi bus as found in the SM8450 SoC
->>>>>
->>>>> Signed-off-by: Vinod Koul <vkoul@kernel.org>
->>>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->>>>> ---
->>>>>    arch/arm64/boot/dts/qcom/sm8450.dtsi | 18 ++++++++++++++++++
->>>>>    1 file changed, 18 insertions(+)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>>>> index f75de777f6ea..b80e34fd3fe1 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>>>> @@ -645,6 +645,24 @@ pdc: interrupt-controller@b220000 {
->>>>>    			interrupt-controller;
->>>>>    		};
->>>>>    
->>>>> +		spmi_bus: spmi@c42d000 {
->>>>> +			compatible = "qcom,spmi-pmic-arb";
->>>>> +			reg = <0x0 0x0c400000 0x0 0x00003000>,
->>>>> +			      <0x0 0x0c500000 0x0 0x00400000>,
->>>>> +			      <0x0 0x0c440000 0x0 0x00080000>,
->>>>> +			      <0x0 0x0c4c0000 0x0 0x00010000>,
->>>>> +			      <0x0 0x0c42d000 0x0 0x00010000>;
->>>>
->>>> This is a patch from December 2021. Is there anything blocking it from
->>>> being merged?
->>>>
->>>> The same applies to several other patches here.
->>>
->>> As far as I know, Stephen still didn't pick up the spmi-pmic-arb support
->>> for the PMIC on the SM8450 platform. Thus we also can not merge the DT
->>> parts.
->>
->> Why we cannot merge DTS? How is DTS with new nodes depending on any
->> driver changes?
-> 
-> In this particular case, there was an open question, what should be the 
-> bindings for the PMIC ARB v7.
+On Mon, 24 Oct 2022 at 21:56, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 24/10/2022 12:48, Dmitry Baryshkov wrote:
+> > On 24/10/2022 19:46, Krzysztof Kozlowski wrote:
+> >> On 24/10/2022 12:45, Dmitry Baryshkov wrote:
+> >>> On 24/10/2022 17:56, Krzysztof Kozlowski wrote:
+> >>>> On 09/12/2021 05:35, Vinod Koul wrote:
+> >>>>> Add the spmi bus as found in the SM8450 SoC
+> >>>>>
+> >>>>> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> >>>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> >>>>> ---
+> >>>>>    arch/arm64/boot/dts/qcom/sm8450.dtsi | 18 ++++++++++++++++++
+> >>>>>    1 file changed, 18 insertions(+)
+> >>>>>
+> >>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> >>>>> index f75de777f6ea..b80e34fd3fe1 100644
+> >>>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> >>>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> >>>>> @@ -645,6 +645,24 @@ pdc: interrupt-controller@b220000 {
+> >>>>>                           interrupt-controller;
+> >>>>>                   };
+> >>>>>
+> >>>>> +         spmi_bus: spmi@c42d000 {
+> >>>>> +                 compatible = "qcom,spmi-pmic-arb";
+> >>>>> +                 reg = <0x0 0x0c400000 0x0 0x00003000>,
+> >>>>> +                       <0x0 0x0c500000 0x0 0x00400000>,
+> >>>>> +                       <0x0 0x0c440000 0x0 0x00080000>,
+> >>>>> +                       <0x0 0x0c4c0000 0x0 0x00010000>,
+> >>>>> +                       <0x0 0x0c42d000 0x0 0x00010000>;
+> >>>>
+> >>>> This is a patch from December 2021. Is there anything blocking it from
+> >>>> being merged?
+> >>>>
+> >>>> The same applies to several other patches here.
+> >>>
+> >>> As far as I know, Stephen still didn't pick up the spmi-pmic-arb support
+> >>> for the PMIC on the SM8450 platform. Thus we also can not merge the DT
+> >>> parts.
+> >>
+> >> Why we cannot merge DTS? How is DTS with new nodes depending on any
+> >> driver changes?
+> >
+> > In this particular case, there was an open question, what should be the
+> > bindings for the PMIC ARB v7.
+>
+> Ah, so it is about PMIC ARB v7 bindings? Then it's reasonable to wait
+> with this one. I just had an impression that it's about driver changes...
 
-Ah, so it is about PMIC ARB v7 bindings? Then it's reasonable to wait
-with this one. I just had an impression that it's about driver changes...
+Yes, it's about binding. Thus we have been waiting for quite some time.
 
-> 
->>
->> Just like I replied to Konrad - if that's true, bindings are simply
->> wrong and should be fixed.
-> 
-> Maybe I missed the reply. Which email are you referring to?
+>
+> >
+> >>
+> >> Just like I replied to Konrad - if that's true, bindings are simply
+> >> wrong and should be fixed.
+> >
+> > Maybe I missed the reply. Which email are you referring to?
+>
+> I meant about this one:
+>
+> https://lore.kernel.org/linux-arm-msm/8c1428a6-f268-cb03-3e55-887d30236924@linaro.org/T/#m50f4c72775492046f9b0a172e974cab83563af3c
 
-I meant about this one:
+Ack, for some reason I got it later than the previous one.
 
-https://lore.kernel.org/linux-arm-msm/8c1428a6-f268-cb03-3e55-887d30236924@linaro.org/T/#m50f4c72775492046f9b0a172e974cab83563af3c
+>
+> Best regards,
+> Krzysztof
+>
 
-Best regards,
-Krzysztof
 
+-- 
+With best wishes
+Dmitry
