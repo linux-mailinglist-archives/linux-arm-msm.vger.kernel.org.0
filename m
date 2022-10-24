@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A99860AA05
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 15:27:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D111E60ABA1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 15:55:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234174AbiJXN1g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Oct 2022 09:27:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49918 "EHLO
+        id S236447AbiJXNzA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Oct 2022 09:55:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236443AbiJXNZp (ORCPT
+        with ESMTP id S236824AbiJXNyQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Oct 2022 09:25:45 -0400
+        Mon, 24 Oct 2022 09:54:16 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0ACDA99EF;
-        Mon, 24 Oct 2022 05:31:28 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6543BD051;
+        Mon, 24 Oct 2022 05:43:51 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7A50A612DD;
-        Mon, 24 Oct 2022 12:31:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99063C43149;
-        Mon, 24 Oct 2022 12:31:08 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3930861325;
+        Mon, 24 Oct 2022 12:43:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38768C433D7;
+        Mon, 24 Oct 2022 12:43:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666614670;
-        bh=9X6SVDf/1tQMe9AbO2xOUjgoU+K7KCwfULZRA7cjm0Q=;
+        s=k20201202; t=1666615422;
+        bh=D2PZQrDtlP+eiP0Nd/UbqdKsgYkhQBlz39Na1mE1SOo=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=HndUX2hkhmZvTvKujWQo24m3lxvzu5RmKUf5jyxP8L36a77WzCyeErG5N3shUZuuZ
-         QbA++2DpAx7Yp6id8JcNHxNaJLFjJ0Ibw5xB026RAb6QIo1E+cdqwUAaKQl0jEwN2/
-         6JHvrQvmS2kZHkHMKnNRXxbt4vQdSwEpsHMovrIHlHvxCYv82d7uN6GtuQDjkSGPdH
-         kwQZPjnMDbHXsl9qhZ/FvzXCFbaCRW+AJeh7fZLDvWZRipIMiRHmFyeNJnPoP//u65
-         zHZfY51l1o4QBGO1VKlWoYMH45V7ZyUabgW6ulr5fqpQG9wkt0io2RiFJftaJGlyTe
-         I9UObK0N4ngcQ==
-Date:   Mon, 24 Oct 2022 13:31:05 +0100
+        b=Gq0skJQWuazhFpK+nEcDNGRmPO4Sf91zVDEiPtM4lv3CQ/bseoieGrgKQ9i8tIlHD
+         2fc4j7oYpjILgnHtcrtEJDloJa5Fg8N6ZYPD5vaLDD3d0l7yuKG292UjMAwUJVyY4K
+         PWdOgcPf5KSfXDFIfcz9AQjPD/WuUEAFZzDXw5FAj4D+qlauIoj6e4n/NRzpEZQaif
+         LWPna5PU5vlOL5pVYN+UT4fJO9KKHQCYULkoPlOtYnd7sKgIdAc/TbOkOwDca6V1IM
+         eaiC59lduOdhFaz7cQ6U9bCmr+PulFflwJYb/Z2N/2bKTbL3hAFS8W5VOB0rO09y9s
+         iq2LGNvbQD8Uw==
+Date:   Mon, 24 Oct 2022 13:43:37 +0100
 From:   Lee Jones <lee@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v6 1/1] dt-bindings: mfd: qcom,spmi-pmic: Drop PWM reg
- dependency
-Message-ID: <Y1aFieLdjCu+QuSq@google.com>
-References: <20220928000517.228382-1-bryan.odonoghue@linaro.org>
- <20220928000517.228382-2-bryan.odonoghue@linaro.org>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: mfd: qcom,tcsr: add sc8280xp binding
+Message-ID: <Y1aIeeazaDVPfDSc@google.com>
+References: <20221007121110.5432-1-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220928000517.228382-2-bryan.odonoghue@linaro.org>
+In-Reply-To: <20221007121110.5432-1-johan+linaro@kernel.org>
 X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -59,26 +59,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 28 Sep 2022, Bryan O'Donoghue wrote:
+On Fri, 07 Oct 2022, Johan Hovold wrote:
 
-> The PWM node is not a separate device and is expected to be part of parent
-> SPMI PMIC node, thus it obtains the address space from the parent. One IO
-> address in "reg" is also not correct description because LPG block maps to
-> several regions.
+> Add a binding for the SC8280XP TCSR.
 > 
-> Fixes: 3f5117be9584 ("dt-bindings: mfd: convert to yaml Qualcomm SPMI PMIC")
-> Suggested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
 Applied, thanks.
 
-NB: This applied with conflicts.  I fixed them up, but they might be
-incorrect.  Please ensure you review them, either in the MFD tree, or
-when they appear in -next.
+NB: Didn't apply cleanly, so ensure you review my fix-up.
 
 -- 
 Lee Jones [李琼斯]
