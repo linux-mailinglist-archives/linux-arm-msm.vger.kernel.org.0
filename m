@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22D6460AFAC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 17:54:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 105FB60AE75
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 17:01:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231620AbiJXPy5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Oct 2022 11:54:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39776 "EHLO
+        id S233297AbiJXPBU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Oct 2022 11:01:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231817AbiJXPyZ (ORCPT
+        with ESMTP id S233959AbiJXPAx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Oct 2022 11:54:25 -0400
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A218675FFC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Oct 2022 07:49:58 -0700 (PDT)
-Received: by mail-lf1-f53.google.com with SMTP id b1so17113419lfs.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Oct 2022 07:49:58 -0700 (PDT)
+        Mon, 24 Oct 2022 11:00:53 -0400
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E30B13588D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Oct 2022 06:37:52 -0700 (PDT)
+Received: by mail-lj1-f170.google.com with SMTP id bn35so4097668ljb.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Oct 2022 06:37:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=HFZjX5S7TOtvQCwB9xl/hGQf5yUtgAWOiJRBK3Mc0r4=;
-        b=M/DrH1WIigY7MKVYeORXxguZGdlaMYm388Q9Y0zeJXJAYpNHUHnC/seWKCRCDKVHZh
-         FYLajzsz66qCaNceZ4vmnt6q8mylKNF6hvucvj0kq6KjGhccTuNPAZWnq83tJUI7Z2St
-         13JCqldQNVjW8JcEu9r2l5ED0Q3ZFdZIr9V2BFb4ECvtpBhJlie6bxLVirhOvz3P8+yc
-         0xYFfs46bfRCSHixg3T4aH/gR/HPM0R3W1YWJdu5KYXrCiItapruc5uPaS87CZjTypfF
-         ZK+d7HI9Y8/0t2DFftZ6FMqgICqwl6t9MaqXPtoysb99Gh9xPGzLnUgX3I4RVBkksVBp
-         UDww==
+        bh=OccXvrVFPSdcIBEbMx4c26n9Pf99eO9A16XUUuZhuS8=;
+        b=xGHR8U9ExEcHmssSxgKskB3JbHr72wsekwdOEpuYkrGjwe8nSuiiK9vogyhh/KENCz
+         VAnaFMf2/Tw1UmRC8T7XZ7uOqx4lw9CPLRqfhaF/21tt1A8MkMmMmoySSaL0LhVEqcyb
+         NWFkEqPhInWC+gQIZ7xBFGfiqALA+cVLSKjCHwPmqVRSy0QvgN5w2UbtAFSTcHwgvvgK
+         nHsF0b6kE9abbC1FfwKAICbAHA9JQTqNZhTYhD8X8GhJX7I/T+d90GQIMnw+YlOTDzni
+         nM7Z/014IT9o9FzUrjOvPNbh3hnvzHHtuVWwCSXfCSMBKStw/0sNBirM3jhEPYwNuLx7
+         0Gwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HFZjX5S7TOtvQCwB9xl/hGQf5yUtgAWOiJRBK3Mc0r4=;
-        b=XAU44OosgbwybEucpJWHCSwQzuuKkKJmVxlckVTUkT2y3KBplL0ThicsMJzwA7T9cs
-         13SjoXuajIPb7Dns2+5hDcMPnpJ8GPR2HNhlkhOF+RQYCEOwnWX+T8wAitQabjXcBr+7
-         YOgHfLK+Ba09HaeTdtmVop+r+knSgzT6/aDwNu/Q1fdROzS9wbM8HxdO64xB2wHGPEuJ
-         jVSkJr6SN83XJK7NySR5YKBWa/usffZ2IhJgwxFiSFl39m84t0ACmltHajsx9EOF+yvC
-         H0RtvmY/UI4cVLCDb7BrhH/V23RDgcLo6+UWKS+pTslabCWzm8hNg+UEsCd6aBVDrM7e
-         uk7Q==
-X-Gm-Message-State: ACrzQf03sjRSVMmtsRLlW1PfhpYyZI3qx4CBjkhfr0SwBfA5kheTgpBB
-        n3VJnte3Vl5KW/McYYCXVlUQNSdG7jLlAie1
-X-Google-Smtp-Source: AMsMyM6Cay83Fhrt2am2YSVlmOjugpbTdf1Ui3AKwagVyB8ovojrmkQXtuTIMd3QITZ4VR22jyyMYg==
-X-Received: by 2002:ac2:5b4e:0:b0:4aa:301f:3e2e with SMTP id i14-20020ac25b4e000000b004aa301f3e2emr2873383lfp.90.1666618468819;
-        Mon, 24 Oct 2022 06:34:28 -0700 (PDT)
+        bh=OccXvrVFPSdcIBEbMx4c26n9Pf99eO9A16XUUuZhuS8=;
+        b=SQ70+E3YZtH/iWr8S31tZkyUEl6sqg7YiXccZEXFUN4Kr4ghdMogMBoJq59ASyu+mI
+         nnqbDBSjqr2M3ZR3sGeMpH+9WnJ8KKc9lMwcTlZObPxd6ZHsOoesnAacaHPO4tob8n92
+         J9TqH33B78zk4DVCFtZfizlvKovqKSL4Oi+68i+PCbuvK1sy8AZkyNDpUWMU6WBv3UDY
+         yZdLuyU3k5/61CA1B4XPEh5Y+JF4xJfVouEr5T+/SD58JyHUyX2vQgBXGd2rnAkYdWZY
+         huKrn3P7q7sgFyq2bkjaD8LKEqAYEmrnnoJU7oP2MR5Ud+BeAHQFqL/rCEtanWxkfRXa
+         K5zQ==
+X-Gm-Message-State: ACrzQf1R9TdNtdyz5gYnSOwl6ykvTGJhQcYLkl8wF377eX+dMt3ZSJvq
+        ka13sDmcP9pPxo5VSmmp1/bMpw==
+X-Google-Smtp-Source: AMsMyM4GVB2gyMzEwr7DXV7QkBWicvLrN8nkwr0PZVkKWxNJmxv36lEuSDbONmjQQTcTuRUaEwvdww==
+X-Received: by 2002:a2e:9181:0:b0:26e:91d8:5796 with SMTP id f1-20020a2e9181000000b0026e91d85796mr12231780ljg.398.1666618490966;
+        Mon, 24 Oct 2022 06:34:50 -0700 (PDT)
 Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id n28-20020a05651203fc00b00494643db68bsm4531561lfq.78.2022.10.24.06.34.28
+        by smtp.gmail.com with ESMTPSA id k11-20020a05651210cb00b0048b003c4bf7sm4544630lfg.169.2022.10.24.06.34.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Oct 2022 06:34:28 -0700 (PDT)
-Message-ID: <e19e563c-842d-d54a-c986-62526a58b468@linaro.org>
-Date:   Mon, 24 Oct 2022 16:34:27 +0300
+        Mon, 24 Oct 2022 06:34:50 -0700 (PDT)
+Message-ID: <7ede9df3-f333-96a4-5b88-aa157d4b8847@linaro.org>
+Date:   Mon, 24 Oct 2022 16:34:50 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.3
-Subject: Re: [PATCH 07/13] phy: qcom-qmp-usb: clean up probe initialisation
+Subject: Re: [PATCH 09/13] phy: qcom-qmp-usb: clean up PHY init
 Content-Language: en-GB
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>
@@ -67,9 +67,9 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20221024100632.20549-1-johan+linaro@kernel.org>
- <20221024100632.20549-8-johan+linaro@kernel.org>
+ <20221024100632.20549-10-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221024100632.20549-8-johan+linaro@kernel.org>
+In-Reply-To: <20221024100632.20549-10-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,13 +83,13 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 24/10/2022 13:06, Johan Hovold wrote:
-> Stop abusing the driver data pointer and instead pass the driver state
-> structure directly to the initialisation helpers during probe.
+> Clean up the PHY initialisation somewhat by programming both tx and rx
+> for the second lane after the first lane.
 > 
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->   drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 46 ++++++++++++-------------
->   1 file changed, 22 insertions(+), 24 deletions(-)
+>   drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 8 +++-----
+>   1 file changed, 3 insertions(+), 5 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
