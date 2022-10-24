@@ -2,31 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8A88609EC4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 12:12:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54031609F19
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 12:32:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229948AbiJXKMB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Oct 2022 06:12:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36078 "EHLO
+        id S229817AbiJXKct (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Oct 2022 06:32:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230234AbiJXKLc (ORCPT
+        with ESMTP id S229634AbiJXKct (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Oct 2022 06:11:32 -0400
+        Mon, 24 Oct 2022 06:32:49 -0400
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9FC025143C;
-        Mon, 24 Oct 2022 03:11:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A599457212;
+        Mon, 24 Oct 2022 03:32:46 -0700 (PDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C911DED1;
-        Mon, 24 Oct 2022 03:10:58 -0700 (PDT)
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1EE022B;
+        Mon, 24 Oct 2022 03:32:51 -0700 (PDT)
 Received: from [10.57.68.77] (unknown [10.57.68.77])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id ACD103F7B4;
-        Mon, 24 Oct 2022 03:10:49 -0700 (PDT)
-Message-ID: <cbe5813e-337b-6c77-8571-cf400d4abc41@arm.com>
-Date:   Mon, 24 Oct 2022 11:10:48 +0100
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5CEC13F7B4;
+        Mon, 24 Oct 2022 03:32:42 -0700 (PDT)
+Message-ID: <a9b090ac-b154-eef7-7872-78f7fe388f61@arm.com>
+Date:   Mon, 24 Oct 2022 11:32:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.0
-Subject: Re: [PATCH 4/9] coresight-tpdm: Add reset node to TPDM node
+Subject: Re: [PATCH 5/9] coresight-tpdm: Add nodes to set trigger timestamp
+ and type
 To:     Tao Zhang <quic_taozha@quicinc.com>,
         Mathieu Poirier <mathieu.poirier@linaro.org>,
         Alexander Shishkin <alexander.shishkin@linux.intel.com>,
@@ -43,9 +44,9 @@ Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
         Hao Zhang <quic_hazha@quicinc.com>,
         linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
 References: <1662626705-13097-1-git-send-email-quic_taozha@quicinc.com>
- <1662626705-13097-5-git-send-email-quic_taozha@quicinc.com>
+ <1662626705-13097-6-git-send-email-quic_taozha@quicinc.com>
 From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1662626705-13097-5-git-send-email-quic_taozha@quicinc.com>
+In-Reply-To: <1662626705-13097-6-git-send-email-quic_taozha@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
@@ -58,86 +59,115 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 08/09/2022 09:45, Tao Zhang wrote:
-> TPDM device need a node to reset the configurations and status of
-> it. This change provides a node to reset the configurations and
-> disable the TPDM if it has been enabled.
-
-It is not clear to me *why* this is needed. Please could you
-elaborate on the use case of this ? See my questions below.
-
+> The nodes are needed to set or show the trigger timestamp and
+> trigger type. This change is to add these nodes to achieve these
+> function.
 > 
 > Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
 > ---
->   drivers/hwtracing/coresight/coresight-tpdm.c | 32 ++++++++++++++++++++++++++++
->   1 file changed, 32 insertions(+)
+>   drivers/hwtracing/coresight/coresight-tpdm.c | 90 ++++++++++++++++++++++++++++
+>   1 file changed, 90 insertions(+)
 > 
 > diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index 69ea453..74cc653 100644
+> index 74cc653..fae9963 100644
 > --- a/drivers/hwtracing/coresight/coresight-tpdm.c
 > +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -152,6 +152,37 @@ static void tpdm_init_default_data(struct tpdm_drvdata *drvdata)
->   	}
->   }
+> @@ -232,8 +232,98 @@ static struct attribute_group tpdm_attr_grp = {
+>   	.attrs = tpdm_attrs,
+>   };
 >   
-> +static ssize_t reset_store(struct device *dev,
-> +					  struct device_attribute *attr,
-> +					  const char *buf,
-> +					  size_t size)
-
-minor nit: Alignment
-
+> +static ssize_t dsb_trig_type_show(struct device *dev,
+> +				     struct device_attribute *attr,
+> +				     char *buf)
 > +{
-> +	int ret = 0;
-> +	unsigned long val;
 > +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
 > +
-> +	ret = kstrtoul(buf, 10, &val);
-
-So, any integer value written to the sysfs knob triggers the rest ?
-It may be better to restrict this to "1".
-
-
-> +	if (ret)
-> +		return ret;
+> +	if (!(drvdata->datasets & TPDM_PIDR0_DS_DSB))
+> +		return -EPERM;
+> +
+> +	return scnprintf(buf, PAGE_SIZE, "%u\n",
+> +			 (unsigned int)drvdata->dsb->trig_type);
+> +}
+> +
+> +/*
+> + * value 0: set trigger type as enablement
+> + * value 1: set trigger type as disablement
+> + */
+> +static ssize_t dsb_trig_type_store(struct device *dev,
+> +				      struct device_attribute *attr,
+> +				      const char *buf,
+> +				      size_t size)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	unsigned long val;
+> +
+> +	if ((kstrtoul(buf, 16, &val)) || val < 0 || val > 1)
+> +		return -EINVAL;
+> +	if (!(drvdata->datasets & TPDM_PIDR0_DS_DSB))
+> +		return -EPERM;
 > +
 > +	spin_lock(&drvdata->spinlock);
-> +	/* Reset all datasets to ZERO */
-> +	if (drvdata->dsb != NULL)
-> +		memset(drvdata->dsb, 0, sizeof(struct dsb_dataset));
-> +
-> +	/* Init the default data */
-> +	tpdm_init_default_data(drvdata);
-
-Why is this needed ? Does the DSB device configuration change
-on the fly ?
-
-> +
+> +	if (val)
+> +		drvdata->dsb->trig_type = true;
+> +	else
+> +		drvdata->dsb->trig_type = false;
 > +	spin_unlock(&drvdata->spinlock);
-> +
-> +	/* Disable tpdm if enabled */
-> +	if (drvdata->enable)
-> +		coresight_disable(drvdata->csdev);
-
-Why is this needed ? Isn't this supposed to be triggered from the "path"
-when the trace session is complete ?
-
-
-Suzuki
-
-> +
 > +	return size;
 > +}
-> +static DEVICE_ATTR_WO(reset);
+> +static DEVICE_ATTR_RW(dsb_trig_type);
 > +
->   /*
->    * value 1: 64 bits test data
->    * value 2: 32 bits test data
-> @@ -192,6 +223,7 @@ static ssize_t integration_test_store(struct device *dev,
->   static DEVICE_ATTR_WO(integration_test);
->   
->   static struct attribute *tpdm_attrs[] = {
-> +	&dev_attr_reset.attr,
->   	&dev_attr_integration_test.attr,
->   	NULL,
->   };
+> +static ssize_t dsb_trig_ts_show(struct device *dev,
+> +				     struct device_attribute *attr,
+> +				     char *buf)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +
+> +	if (!(drvdata->datasets & TPDM_PIDR0_DS_DSB))
+> +		return -EPERM;
+> +
+> +	return scnprintf(buf, PAGE_SIZE, "%u\n",
+> +			 (unsigned int)drvdata->dsb->trig_ts);
+> +}
+> +
+> +/*
+> + * value 0: set trigger timestamp as enablement
+> + * value 1: set trigger timestamp as disablement
+> + */
+> +static ssize_t dsb_trig_ts_store(struct device *dev,
+> +				      struct device_attribute *attr,
+> +				      const char *buf,
+> +				      size_t size)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	unsigned long val;
+> +
+> +	if ((kstrtoul(buf, 16, &val)) || val < 0 || val > 1)
+> +		return -EINVAL;
+> +	if (!(drvdata->datasets & TPDM_PIDR0_DS_DSB))
+> +		return -EPERM;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	if (val)
+> +		drvdata->dsb->trig_ts = true;
+> +	else
+> +		drvdata->dsb->trig_ts = false;
+> +	spin_unlock(&drvdata->spinlock);
+> +	return size;
+> +}
+> +static DEVICE_ATTR_RW(dsb_trig_ts);
+> +static struct attribute *tpdm_dsb_attrs[] = {
+> +	&dev_attr_dsb_trig_ts.attr,
+> +	&dev_attr_dsb_trig_type.attr,
+> +	NULL,
+> +};
+> +
+> +static struct attribute_group tpdm_dsb_attr_grp = {
+> +	.attrs = tpdm_dsb_attrs,
+> +};
+> +
+
+Please could we hide the "DSB" related knobs, if the
+the Data sets are missing using is_visible() hook ?
+
+Suzuki
 
