@@ -2,124 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CF7260AFA5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 17:54:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D674260B110
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Oct 2022 18:16:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230238AbiJXPyA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Oct 2022 11:54:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39750 "EHLO
+        id S233847AbiJXQP5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Oct 2022 12:15:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231955AbiJXPxj (ORCPT
+        with ESMTP id S234570AbiJXQPA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Oct 2022 11:53:39 -0400
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C12E136BD7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Oct 2022 07:48:52 -0700 (PDT)
-Received: by mail-qk1-f171.google.com with SMTP id z30so6148639qkz.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Oct 2022 07:48:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PQh6en3faLQiT/yj2VP0RfsSYxaK3tAnPo5TU5fEGwc=;
-        b=XQwHoUNkuA6v6mtVC0x7/Jdi2fJ+j+bLMcd4M8ZRXa84QYTdOZiBGd0W57yOnWipZF
-         iLj02CJsYIfvSiuYvmr5mESSMZkJSQEFdmAj6KQGuvOU4JjCi3VORda7DJaZFFxcxBZ+
-         IRoqURWQX+VqEb02VJ3rNyyfxWotJCTex0O9xRnLI+rRFpyUDSbk9BTpRuKKkNaXsh21
-         FRRHX6SbEvjuN+MRg4qSYVrBLR+ecTPwchYA7BVaXvabr5vn/DGwZNIi/quj44Q6Cnt0
-         /x7e8gIlUnNfwTnibxZ6sxL3TrgSYOQXqAzpLPv1ap2zBsT3jvamSehEu3hLYxlrr54B
-         gHWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PQh6en3faLQiT/yj2VP0RfsSYxaK3tAnPo5TU5fEGwc=;
-        b=ocnvAPL4YSrbLCdEJobJB4HMC03d5HmFGsEhs7cTVQnw7SlmpMr3zYd2EtPYvPsGVA
-         c10sWoJ+ZDoQFX6Nq6DXq1Uims2rBsWvA19cnss+a59CUANRows6K6630Y0AnvLX39cs
-         fzro/3AVP9FtRmeWQrIp/9Qkd/KJOgvyGYbIroEW/Ad4UUWgQSOBa3a0O1nrePbhDFQV
-         Pp9GSSFL00bxlqCS4oqZIl86A4xnJeLOQsxc8tNG3euC65wE7nXE2UDwupVJmLeBKCua
-         OeR0Cff0qNkB47vTGpb+T++1sw2ZEVFptvJQsRF6dmHBwi0r0jNoHgZOVHCsaLG5tBKd
-         vZGQ==
-X-Gm-Message-State: ACrzQf37JuNCDxri7KeZceb6G61RIMlmeQ1Krqpjb8k5uWt9QtnEXIrE
-        Mp3qBUmwF9SdcR32o7XijBPid2K3cC18Ew==
-X-Google-Smtp-Source: AMsMyM7Qxr6BevMKOWfQdZIPH/PhEDWpoflXYfmA0OT9fJubp9WQkPM2hswnDri38ZBfuIOc8i3S6g==
-X-Received: by 2002:a05:620a:29c2:b0:6ee:b27c:2a50 with SMTP id s2-20020a05620a29c200b006eeb27c2a50mr23920806qkp.485.1666620593227;
-        Mon, 24 Oct 2022 07:09:53 -0700 (PDT)
-Received: from [192.168.1.8] ([64.57.193.93])
-        by smtp.gmail.com with ESMTPSA id q13-20020a05620a0d8d00b006dfa0891397sm29980qkl.32.2022.10.24.07.09.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Oct 2022 07:09:52 -0700 (PDT)
-Message-ID: <826176ba-d7c6-a64f-e15e-d2694571cb72@linaro.org>
-Date:   Mon, 24 Oct 2022 10:09:51 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: add TCSR node
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Mon, 24 Oct 2022 12:15:00 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 885E3EACA2;
+        Mon, 24 Oct 2022 08:02:07 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id DD502B815A9;
+        Mon, 24 Oct 2022 12:17:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC16C433C1;
+        Mon, 24 Oct 2022 12:17:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1666613831;
+        bh=beAhWKXvQm9GjdNfxG+/MZqHkyVEr24AhaspX2hWJsw=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=S2TryclGSrn5flJ3BFy1pxfyok2HCusvJJ+C+pdH4qnPeDpVNVpjUHGamPWXTYl8g
+         dBGAUrmkM8H3TPr0VtZd7ZLd9a1ttcmTevaBtqhki13GYfXUN8BF3+L7M0a+paErJn
+         CwuIaPW6zon3DCqXQJysW0Saty82pPxyjjFud3J0=
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        stable@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221024125843.25261-1-johan+linaro@kernel.org>
- <94e05a63-e7f3-a78f-d0a6-8efcae619726@linaro.org>
- <Y1aWPhP7/ft8s+bh@hovoldconsulting.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <Y1aWPhP7/ft8s+bh@hovoldconsulting.com>
+        linux-arm-msm@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 031/390] regulator: qcom_rpm: Fix circular deferral regression
+Date:   Mon, 24 Oct 2022 13:27:08 +0200
+Message-Id: <20221024113023.929146219@linuxfoundation.org>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221024113022.510008560@linuxfoundation.org>
+References: <20221024113022.510008560@linuxfoundation.org>
+User-Agent: quilt/0.67
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/10/2022 09:42, Johan Hovold wrote:
-> On Mon, Oct 24, 2022 at 09:34:22AM -0400, Krzysztof Kozlowski wrote:
->> On 24/10/2022 08:58, Johan Hovold wrote:
->>> Add the TCSR node which is needed for PCIe configuration.
->>>
->>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
->>> ---
->>>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 5 +++++
->>
->> Please send the patches together with the binding. There is no need to
->> have this split and it causes additional effort during review - lookup
->> of the binding.
-> 
-> I was under the impression that the dts changes should be submitted
-> separately from the binding as they go through different trees. (And
-> last time I posted them together the subsystem maintainer ended up
-> taking also the dts changes by mistake).
+From: Linus Walleij <linus.walleij@linaro.org>
 
-Yes, that's also true. :)
+commit 8478ed5844588703a1a4c96a004b1525fbdbdd5e upstream.
 
-> The binding has been picked up by Lee now so I posted the dts change.
-> Could have added a lore link though.
+On recent kernels, the PM8058 L16 (or any other PM8058 LDO-regulator)
+does not come up if they are supplied by an SMPS-regulator. This
+is not very strange since the regulators are registered in a long
+array and the L-regulators are registered before the S-regulators,
+and if an L-regulator defers, it will never get around to registering
+the S-regulator that it needs.
 
-This also would work and help a lot.
+See arch/arm/boot/dts/qcom-apq8060-dragonboard.dts:
 
-It depends in general on the maintainer - for example Greg does not want
-to deal with individual patches, especially if DTS is just one patch and
-USB would be 10 of them. Our toolset is not good for picking up 10 out
-of 11. For all such cases - please provide link to lore.
+pm8058-regulators {
+    (...)
+    vdd_l13_l16-supply = <&pm8058_s4>;
+    (...)
 
-If however there are just two patches - one DTS and one for maintainer -
-then having them in one patchset should not cause additional effort for
-the maintainer.
+Ooops.
 
-As you can see on the list, majority of patchsets consist of
-bindings+DTS. Pretty often entire piece - bindings+driver+DTS.
+Fix this by moving the PM8058 S-regulators first in the array.
 
-Best regards,
-Krzysztof
+Do the same for the PM8901 S-regulators (though this is currently
+not causing any problems with out device trees) so that the pattern
+of registration order is the same on all PMnnnn chips.
+
+Fixes: 087a1b5cdd55 ("regulator: qcom: Rework to single platform device")
+Cc: stable@vger.kernel.org
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc: linux-arm-msm@vger.kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20220909112529.239143-1-linus.walleij@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/regulator/qcom_rpm-regulator.c |   24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
+
+--- a/drivers/regulator/qcom_rpm-regulator.c
++++ b/drivers/regulator/qcom_rpm-regulator.c
+@@ -802,6 +802,12 @@ static const struct rpm_regulator_data r
+ };
+ 
+ static const struct rpm_regulator_data rpm_pm8058_regulators[] = {
++	{ "s0",   QCOM_RPM_PM8058_SMPS0,  &pm8058_smps, "vdd_s0" },
++	{ "s1",   QCOM_RPM_PM8058_SMPS1,  &pm8058_smps, "vdd_s1" },
++	{ "s2",   QCOM_RPM_PM8058_SMPS2,  &pm8058_smps, "vdd_s2" },
++	{ "s3",   QCOM_RPM_PM8058_SMPS3,  &pm8058_smps, "vdd_s3" },
++	{ "s4",   QCOM_RPM_PM8058_SMPS4,  &pm8058_smps, "vdd_s4" },
++
+ 	{ "l0",   QCOM_RPM_PM8058_LDO0,   &pm8058_nldo, "vdd_l0_l1_lvs"	},
+ 	{ "l1",   QCOM_RPM_PM8058_LDO1,   &pm8058_nldo, "vdd_l0_l1_lvs" },
+ 	{ "l2",   QCOM_RPM_PM8058_LDO2,   &pm8058_pldo, "vdd_l2_l11_l12" },
+@@ -829,12 +835,6 @@ static const struct rpm_regulator_data r
+ 	{ "l24",  QCOM_RPM_PM8058_LDO24,  &pm8058_nldo, "vdd_l23_l24_l25" },
+ 	{ "l25",  QCOM_RPM_PM8058_LDO25,  &pm8058_nldo, "vdd_l23_l24_l25" },
+ 
+-	{ "s0",   QCOM_RPM_PM8058_SMPS0,  &pm8058_smps, "vdd_s0" },
+-	{ "s1",   QCOM_RPM_PM8058_SMPS1,  &pm8058_smps, "vdd_s1" },
+-	{ "s2",   QCOM_RPM_PM8058_SMPS2,  &pm8058_smps, "vdd_s2" },
+-	{ "s3",   QCOM_RPM_PM8058_SMPS3,  &pm8058_smps, "vdd_s3" },
+-	{ "s4",   QCOM_RPM_PM8058_SMPS4,  &pm8058_smps, "vdd_s4" },
+-
+ 	{ "lvs0", QCOM_RPM_PM8058_LVS0, &pm8058_switch, "vdd_l0_l1_lvs" },
+ 	{ "lvs1", QCOM_RPM_PM8058_LVS1, &pm8058_switch, "vdd_l0_l1_lvs" },
+ 
+@@ -843,6 +843,12 @@ static const struct rpm_regulator_data r
+ };
+ 
+ static const struct rpm_regulator_data rpm_pm8901_regulators[] = {
++	{ "s0",   QCOM_RPM_PM8901_SMPS0, &pm8901_ftsmps, "vdd_s0" },
++	{ "s1",   QCOM_RPM_PM8901_SMPS1, &pm8901_ftsmps, "vdd_s1" },
++	{ "s2",   QCOM_RPM_PM8901_SMPS2, &pm8901_ftsmps, "vdd_s2" },
++	{ "s3",   QCOM_RPM_PM8901_SMPS3, &pm8901_ftsmps, "vdd_s3" },
++	{ "s4",   QCOM_RPM_PM8901_SMPS4, &pm8901_ftsmps, "vdd_s4" },
++
+ 	{ "l0",   QCOM_RPM_PM8901_LDO0, &pm8901_nldo, "vdd_l0" },
+ 	{ "l1",   QCOM_RPM_PM8901_LDO1, &pm8901_pldo, "vdd_l1" },
+ 	{ "l2",   QCOM_RPM_PM8901_LDO2, &pm8901_pldo, "vdd_l2" },
+@@ -851,12 +857,6 @@ static const struct rpm_regulator_data r
+ 	{ "l5",   QCOM_RPM_PM8901_LDO5, &pm8901_pldo, "vdd_l5" },
+ 	{ "l6",   QCOM_RPM_PM8901_LDO6, &pm8901_pldo, "vdd_l6" },
+ 
+-	{ "s0",   QCOM_RPM_PM8901_SMPS0, &pm8901_ftsmps, "vdd_s0" },
+-	{ "s1",   QCOM_RPM_PM8901_SMPS1, &pm8901_ftsmps, "vdd_s1" },
+-	{ "s2",   QCOM_RPM_PM8901_SMPS2, &pm8901_ftsmps, "vdd_s2" },
+-	{ "s3",   QCOM_RPM_PM8901_SMPS3, &pm8901_ftsmps, "vdd_s3" },
+-	{ "s4",   QCOM_RPM_PM8901_SMPS4, &pm8901_ftsmps, "vdd_s4" },
+-
+ 	{ "lvs0", QCOM_RPM_PM8901_LVS0, &pm8901_switch, "lvs0_in" },
+ 	{ "lvs1", QCOM_RPM_PM8901_LVS1, &pm8901_switch, "lvs1_in" },
+ 	{ "lvs2", QCOM_RPM_PM8901_LVS2, &pm8901_switch, "lvs2_in" },
+
 
