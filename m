@@ -2,146 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E1CE660BFC1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 02:42:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B31460C314
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 07:08:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230262AbiJYAmU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Oct 2022 20:42:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34150 "EHLO
+        id S230366AbiJYFIJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Oct 2022 01:08:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230309AbiJYAmI (ORCPT
+        with ESMTP id S230168AbiJYFHv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Oct 2022 20:42:08 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B26781C9054
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Oct 2022 16:13:26 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id g1so19066612lfu.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Oct 2022 16:13:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=N++ECBeiYTMrGhdzzlYvKWtcZRGylld/eBk1VfSFo+0=;
-        b=Jb3dJUcj77xb+NVMl3d7F4DKDlJf9tqwDpl7Xk1CzibXBGhUajRZ+DnWG+TJlG/TnW
-         DkMeADFDKCGWeMHhH4H8KSku8hvHXNMJ0HlnDBe6GX/lhngtZqXN1wUC+fW42a1nJxeE
-         efabcSBwNuQI7669JcRJzn0CmSoqz1pK59H7Y=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=N++ECBeiYTMrGhdzzlYvKWtcZRGylld/eBk1VfSFo+0=;
-        b=fPkF0HSGT1DPEaRzgCvKYjwmt6nq21PpVYiiJYxBIeAd7/b974tpBHg+8thIBzQxfa
-         A2nAcA3h3WSXjun6OtabTBZObSs7ScdG4N0S6sVnjuRgWbo9bGXJCjHPL/4Zdp9Vkcun
-         xh7DQmHDO6XSaZe5/Eo1DZbvohwT2m3bWRwYyR4XEIHrcGgrvu2DQ8TV7jAGceqY1XZo
-         wlFP0bH9F80+aRgP+bd82U8bkzmtBFGnR6tt6k/NhoJkHVl8JkavrJWt95/ZZv5gRLbD
-         yZV335gaQl89yMLGuirSs2vrxfdqgif5/+yEjyKl5xpxM4LZDS1mjFrGdlBTc2DE0Bim
-         kY7Q==
-X-Gm-Message-State: ACrzQf0GI9pL5qFM6lwCToeYP6KTD6gpDzbPbM3as80LOdg0CbxBlHa/
-        MdfehN1tDTR8ucTwk4dJbPZ5zebyoCVNqPJHtgPEoA==
-X-Google-Smtp-Source: AMsMyM4zgnkTMjwuPQychO5/KeczfWRL6z5D7QwOTlvV0HoDnDHmmJJoSpbO/Td0JYGontrEUP3ONUHVi4cb5C+4yLM=
-X-Received: by 2002:a05:6512:104e:b0:4a2:6bd2:4db5 with SMTP id
- c14-20020a056512104e00b004a26bd24db5mr13284277lfb.52.1666653205078; Mon, 24
- Oct 2022 16:13:25 -0700 (PDT)
+        Tue, 25 Oct 2022 01:07:51 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A46FC133311;
+        Mon, 24 Oct 2022 22:06:30 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29P4KMOB008691;
+        Tue, 25 Oct 2022 05:06:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=8xyiXvZjbxXhCBSXY+hjWgeku7qnVeQ3Jkuvo1+Tu8Q=;
+ b=hipVOKORk+Zaya0rzrvCVzikobKFBBZgqRqx/GOJbJqPCm5CPQq/UabdcQx2ZBXSgLWv
+ OMBUSa/yM+WeyNIHnEMu2nrB/1gMYbGV0w9doUIboZ9JEKFj8Y3YxoWPPN9FUC6feXut
+ gE0g73z8HdPlTaG51vhS65tes8r4nPXVpnTKbLM+3Qruc6XlALk9j6g5Vemdqz5VV762
+ 45AmfKoDMRMDjgLTGIfFzcMu13AD2/f0i2vBtas3GIkDGJ7s6nBXHG6kgp3bNONGGsAc
+ wJSzTqFycA7rhwgcUDKF4rF1TynGRGOFtGuI+rRthjR4FAHm7ZIC1Tr5PV5kUKRRxVgH VQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kc848dbty-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Oct 2022 05:06:27 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29P56Qj1018074
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Oct 2022 05:06:26 GMT
+Received: from fenglinw2-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Mon, 24 Oct 2022 22:06:24 -0700
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <sboyd@kernel.org>
+CC:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
+        <quic_fenglinw@quicinc.com>
+Subject: [RESEND PATCH v1 0/2] Add changes to support SPMI resource protection
+Date:   Tue, 25 Oct 2022 13:06:04 +0800
+Message-ID: <20221025050608.2635173-1-quic_fenglinw@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <CANHAJhG7wCv4TwVCtWa2wqHzaG5ncbtfnVJtnQqqDSbEoPmoHw@mail.gmail.com>
- <CAA8EJpoBYb-=3RT_EO+PSFkbJ95RobyeHt6QmOfTTgvEEFoUfQ@mail.gmail.com>
-In-Reply-To: <CAA8EJpoBYb-=3RT_EO+PSFkbJ95RobyeHt6QmOfTTgvEEFoUfQ@mail.gmail.com>
-From:   Nathan Hebert <nhebert@chromium.org>
-Date:   Mon, 24 Oct 2022 16:13:12 -0700
-Message-ID: <CANHAJhEui=wn985RzfsUR+GdsESCExi2Gst43c+WEOBqaD5dTg@mail.gmail.com>
-Subject: Re: [PULL V2]: qcom: SC7180 and SC7280 venus firmware updates
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-firmware@kernel.org, Rob Clark <robdclark@gmail.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Fritz Koenig <frkoenig@chromium.org>,
-        Vikash Garodia <vgarodia@qti.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: cop_2Ilyxr4SBY9V16QGSHuKszjuEZie
+X-Proofpoint-ORIG-GUID: cop_2Ilyxr4SBY9V16QGSHuKszjuEZie
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-25_01,2022-10-21_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 mlxlogscore=650 adultscore=0 suspectscore=0 bulkscore=0
+ impostorscore=0 spamscore=0 clxscore=1011 mlxscore=0 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210250028
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 20, 2022 at 11:02 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Thu, 20 Oct 2022 at 20:08, Nathan Hebert <nhebert@chromium.org> wrote:
-> >
-> > The following changes since commit 48407ffd7adb9511701547068b1e6f0956bd1c94:
-> >
-> >   cnm: update chips&media wave521c firmware. (2022-10-17 10:20:43 -0400)
-> >
-> > are available in the Git repository at:
-> >
-> >   https://github.com/nathan-google/linux-firmware.git
-> > update_sc7180_and_sc7280_firmwares_v2
-> >
-> > for you to fetch changes up to 054271e4164b6b4c069a3aaaeb9bfcde8c850339:
-> >
-> >   qcom: update venus firmware files for VPU-2.0 (2022-10-20 09:37:35 -0700)
-> >
-> > ----------------------------------------------------------------
-> > Nathan Hebert (3):
-> >       qcom: update venus firmware files for v5.4
-> >       qcom: remove split SC7280 venus firmware images
-> >       qcom: update venus firmware files for VPU-2.0
-> >
-> >  WHENCE                   |  17 ++---------------
-> >  qcom/venus-5.4/venus.b00 | Bin 212 -> 212 bytes
-> >  qcom/venus-5.4/venus.b01 | Bin 6808 -> 6808 bytes
-> >  qcom/venus-5.4/venus.b02 | Bin 873596 -> 875020 bytes
-> >  qcom/venus-5.4/venus.b03 | Bin 33792 -> 33896 bytes
-> >  qcom/venus-5.4/venus.mbn | Bin 919708 -> 921236 bytes
-> >  qcom/venus-5.4/venus.mdt | Bin 7020 -> 7020 bytes
-> >  qcom/vpu-2.0/venus.b00   | Bin 692 -> 0 bytes
-> >  qcom/vpu-2.0/venus.b01   | Bin 7376 -> 0 bytes
-> >  qcom/vpu-2.0/venus.b02   | Bin 300 -> 0 bytes
-> >  qcom/vpu-2.0/venus.b03   | Bin 20 -> 0 bytes
-> >  qcom/vpu-2.0/venus.b04   | Bin 20 -> 0 bytes
-> >  qcom/vpu-2.0/venus.b05   | Bin 20 -> 0 bytes
-> >  qcom/vpu-2.0/venus.b06   | Bin 20 -> 0 bytes
-> >  qcom/vpu-2.0/venus.b07   | Bin 24 -> 0 bytes
-> >  qcom/vpu-2.0/venus.b08   | Bin 16 -> 0 bytes
-> >  qcom/vpu-2.0/venus.b09   | Bin 939184 -> 0 bytes
-> >  qcom/vpu-2.0/venus.b10   | Bin 42976 -> 0 bytes
-> >  qcom/vpu-2.0/venus.b19   |   1 -
-> >  qcom/vpu-2.0/venus.mbn   | Bin 2031188 -> 2031620 bytes
-> >  qcom/vpu-2.0/venus.mdt   | Bin 8068 -> 0 bytes
-> >  21 files changed, 2 insertions(+), 16 deletions(-)
-> >  delete mode 100644 qcom/vpu-2.0/venus.b00
-> >  delete mode 100644 qcom/vpu-2.0/venus.b01
-> >  delete mode 100644 qcom/vpu-2.0/venus.b02
-> >  delete mode 100644 qcom/vpu-2.0/venus.b03
-> >  delete mode 100644 qcom/vpu-2.0/venus.b04
-> >  delete mode 100644 qcom/vpu-2.0/venus.b05
-> >  delete mode 100644 qcom/vpu-2.0/venus.b06
-> >  delete mode 100644 qcom/vpu-2.0/venus.b07
-> >  delete mode 100644 qcom/vpu-2.0/venus.b08
-> >  delete mode 100644 qcom/vpu-2.0/venus.b09
-> >  delete mode 100644 qcom/vpu-2.0/venus.b10
-> >  delete mode 100644 qcom/vpu-2.0/venus.b19
-> >  delete mode 100644 qcom/vpu-2.0/venus.mdt
->
-> As I wrote in another email thread, it might be better to drop split
-> files, add only venus.mbn and then use Link: lines to create venus.mdt
-> -> venus.mbn symlinks.
-Thanks for the feedback. There was some concern from Vikash at Qualcomm
-about making a change to the venus-5.4 firmware to drop the split files.
+If a secure VM uses the SPMI PMIC arbiter driver to access PMIC modules
+with secure access, such as in a trust UI feature when the secure VM is
+accessing PMIC modules that supply to display power rails, the display
+driver in primary VM (no-secure) needs to translate the SPMI address of
+the PMIC modules and get the corresponding physical SoC register range
+within the SPMI PMIC arbiter that is used to initiate SPMI write transactions,
+and lend the memory range to the secure VM via a hypervisor call to prevent
+any SPMI access to these modules from the non-secure VM. Hence, an API for
+such SPMI address translation is added and exported.
 
-Vikash, are you able to comment about whether or not it is a concern to replace
-the venus.mdt and split files with a symbolic link to venus.mdn for
-the venus-5.4
-files? I tested the suggested approach on ChromeOS with kernels based on 5.4
-and 5.15 and did not see any issues.
+Further, the secure-VM that loads the SPMI PMIC arbiter driver can't specify
+the PMIC arbiter HLOS EE summary IRQ becuase it can't have the permission,
+also the secure VM has no needs to use the PMIC modules interrupt, hence add
+a change to make the interrupt support optional for the secure-VM to specify
+the PMIC arbiter device node without interrupt support. The driver change has
+a binding document change which has already been applied:
+https://lore.kernel.org/all/YmxnIQ9niVbyASfN@robh.at.kernel.org/
 
-This is a holiday week, so his response may be slow.
+David Collins (2):
+  spmi: pmic-arb: add support to map SPMI addresses to physical addr
+  spmi: pmic-arb: make interrupt support optional
 
->
-> --
-> With best wishes
-> Dmitry
+ drivers/spmi/spmi-pmic-arb.c           | 149 ++++++++++++++++++++++---
+ include/linux/soc/qcom/spmi-pmic-arb.h |  23 ++++
+ 2 files changed, 155 insertions(+), 17 deletions(-)
+ create mode 100644 include/linux/soc/qcom/spmi-pmic-arb.h
+
+-- 
+2.25.1
+
