@@ -2,202 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A134360CB8A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 14:12:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 424B760CD03
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 15:09:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229497AbiJYMMg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Oct 2022 08:12:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60370 "EHLO
+        id S231193AbiJYNJd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Oct 2022 09:09:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230345AbiJYMMf (ORCPT
+        with ESMTP id S231315AbiJYNJb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Oct 2022 08:12:35 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C8D0E4B0FA;
-        Tue, 25 Oct 2022 05:12:34 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CFF96D6E;
-        Tue, 25 Oct 2022 05:12:40 -0700 (PDT)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0DAD53F7B4;
-        Tue, 25 Oct 2022 05:12:32 -0700 (PDT)
-Date:   Tue, 25 Oct 2022 13:12:30 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Amit Pundir <amit.pundir@linaro.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: qrb5165-rb5: Disable cpuidle states
-Message-ID: <20221025121230.xmdkfn55wmw3cg7s@bogus>
-References: <20221018145348.4051809-1-amit.pundir@linaro.org>
- <CAPDyKFoBMB9OMUrcoPCV0of1fj2dimEwPyHGW=ydjJ2M0ubM8Q@mail.gmail.com>
- <20221020093057.zrrvxlgghn27bpes@bogus>
- <CAMi1Hd05PkEJcHqHpQX-X6B2oR4250_pHPjkd2-54JWgKsYx0Q@mail.gmail.com>
- <CAPDyKFo=w-ET62c-B6=qSpkZm-V9LmBuVRy38GzX_UAjQhX6oA@mail.gmail.com>
- <20221020161628.nyimwuni4zboasjo@bogus>
- <CAPDyKFonwjh58jPoGc==BEjj6kY-=C97Ws=43hbdAqJMpEAa=g@mail.gmail.com>
- <CAMi1Hd0B7T=Tkw=P_rBDV9SQSGCXAeYLYPADtVkh=95xf54D8A@mail.gmail.com>
+        Tue, 25 Oct 2022 09:09:31 -0400
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C373AEA25;
+        Tue, 25 Oct 2022 06:09:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1666703361; x=1698239361;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=88arnngAkPSJ0EwT+zIV8oFGGUQKALohpb28ESLCmmM=;
+  b=VlQQpUzIbvgq0z/mUhLjaZaAivXlB+VOco2vRibB+6LdZLOwTbhP7j/B
+   AtyNvMevoQn+OhjCiXCSpyf6qqpfS7iHUtGa1jS77e+S3TWG7xZ8X/eer
+   9US0NXMesJbcvjqna/f0Yk7ugzO5JaO9TY6YXpFmNleOZS+B7SsCisXjl
+   nURCO33wZupIh3E2EX84mleApZcnfKe/9xSenk80V7YxamhgGzqYVuH/6
+   m1qksQphSMAKJky8GS8ZtABYnrQxtqVZOuEXxFgUMfBDU8Uel8q7YuiML
+   6NsSKxrAW3n+1Va+VT2uflj0uKfUq2q50WrUJj0aisc0ocBZXTg1ZnPqt
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10510"; a="334264826"
+X-IronPort-AV: E=Sophos;i="5.95,212,1661842800"; 
+   d="scan'208";a="334264826"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2022 06:09:21 -0700
+X-IronPort-AV: E=McAfee;i="6500,9779,10510"; a="626414886"
+X-IronPort-AV: E=Sophos;i="5.95,212,1661842800"; 
+   d="scan'208";a="626414886"
+Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.252.45.236])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2022 06:09:11 -0700
+Message-ID: <de5186fb-e176-23df-63fc-2a436e765c14@intel.com>
+Date:   Tue, 25 Oct 2022 16:09:06 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMi1Hd0B7T=Tkw=P_rBDV9SQSGCXAeYLYPADtVkh=95xf54D8A@mail.gmail.com>
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.4.0
+Subject: Re: [PATCH v3 1/7] mmc: cqhci: Provide helper for resetting both
+ SDHCI and CQHCI
+Content-Language: en-US
+To:     Brian Norris <briannorris@chromium.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Shawn Lin <shawn.lin@rock-chips.com>, linux-mmc@vger.kernel.org,
+        Al Cooper <alcooperx@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Sowjanya Komatineni <skomatineni@nvidia.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        linux-kernel@vger.kernel.org, Shawn Guo <shawnguo@kernel.org>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, Haibo Chen <haibo.chen@nxp.com>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        Faiz Abbas <faiz_abbas@ti.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>, stable@vger.kernel.org
+References: <20221024175501.2265400-1-briannorris@chromium.org>
+ <20221024105229.v3.1.Ie85faa09432bfe1b0890d8c24ff95e17f3097317@changeid>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+In-Reply-To: <20221024105229.v3.1.Ie85faa09432bfe1b0890d8c24ff95e17f3097317@changeid>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 25, 2022 at 04:53:51PM +0530, Amit Pundir wrote:
-> On Fri, 21 Oct 2022 at 18:33, Ulf Hansson <ulf.hansson@linaro.org> wrote:
-> >
-> > On Thu, 20 Oct 2022 at 18:16, Sudeep Holla <sudeep.holla@arm.com> wrote:
-> > >
-> > > On Thu, Oct 20, 2022 at 04:40:15PM +0200, Ulf Hansson wrote:
-> > > > On Thu, 20 Oct 2022 at 16:09, Amit Pundir <amit.pundir@linaro.org> wrote:
-> > > > >
-> > > > > On Thu, 20 Oct 2022 at 15:01, Sudeep Holla <sudeep.holla@arm.com> wrote:
-> > > > > >
-> > > > > > On Wed, Oct 19, 2022 at 01:57:34PM +0200, Ulf Hansson wrote:
-> > > > > > > On Tue, 18 Oct 2022 at 16:53, Amit Pundir <amit.pundir@linaro.org> wrote:
-> > > > > > > >
-> > > > > > > > Disable cpuidle states for RB5. These cpuidle states
-> > > > > > > > made the device highly unstable and it runs into the
-> > > > > > > > following crash frequently:
-> > > > > > > >
-> > > > > > > > [    T1] vreg_l11c_3p3: failed to enable: -ETIMEDOUT
-> > > > > > > > [    T1] qcom-rpmh-regulator 18200000.rsc:pm8150l-rpmh-regulators: ldo11: devm_regulator_register() failed, ret=-110
-> > > > > > > > [    T1] qcom-rpmh-regulator: probe of 18200000.rsc:pm8150l-rpmh-regulators failed with error -110
-> > > > > > > >
-> > > > > > > > Fixes: 32bc936d7321 ("arm64: dts: qcom: sm8250: Add cpuidle states")
-> > > > > > > > Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
-> > > > > > > > ---
-> > > > > > > >  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 8 ++++++++
-> > > > > > > >  1 file changed, 8 insertions(+)
-> > > > > > > >
-> > > > > > > > diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> > > > > > > > index cc003535a3c5..f936c41bfbea 100644
-> > > > > > > > --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> > > > > > > > +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> > > > > > > > @@ -251,6 +251,14 @@ qca639x: qca639x {
-> > > > > > > >
-> > > > > > > >  };
-> > > > > > > >
-> > > > > > > > +&LITTLE_CPU_SLEEP_0 {
-> > > > > > > > +       status = "disabled";
-> > > > > > > > +};
-> > > > > > > > +
-> > > > > > > > +&BIG_CPU_SLEEP_0 {
-> > > > > > > > +       status = "disabled";
-> > > > > > > > +};
-> > > > > > > > +
-> > > > > > > >  &adsp {
-> > > > > > > >         status = "okay";
-> > > > > > > >         firmware-name = "qcom/sm8250/adsp.mbn";
-> > > > > > > > --
-> > > > > > > > 2.25.1
-> > > > > > >
-> > > > > > > Disabling the CPU idlestates, will revert us back to using only the WFI state.
-> > > > > > >
-> > > > > > > An option that probably works too is to just drop the idlestate for
-> > > > > > > the CPU cluster. Would you mind trying the below and see if that works
-> > > > > > > too?
-> > > > > > >
-> > > > > >
-> > > > > > Indeed this is was I suggested to check initially. But I was surprised to
-> > > > > > see IIUC, Amit just disabled CPU states with above change and got it working.
-> > > > > > So it is not cluster state alone causing the issue, is it somehow presence
-> > > > > > of both cpu and cluster states ? Am I missing something here.
-> > > > > >
-> > > > > > > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > > > > > b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > > > > > index c32227ea40f9..c707a49e8001 100644
-> > > > > > > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > > > > > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > > > > > @@ -700,7 +700,6 @@ CPU_PD7: cpu7 {
-> > > > > > >
-> > > > > > >                 CLUSTER_PD: cpu-cluster0 {
-> > > > > > >                         #power-domain-cells = <0>;
-> > > > > > > -                       domain-idle-states = <&CLUSTER_SLEEP_0>;
-> > > > > >
-> > > > > > How about just marking CLUSTER_SLEEP_0 state disabled ? That looks cleaner
-> > > > > > than deleting this domain-idle-states property here. Also not sure if DTS
-> > > > > > warnings will appear if you delete this ?
-> > > > >
-> > > > > Hi, I did try disabling CLUSTER_SLEEP_0: cluster-sleep-0 {} in
-> > > > > domain-idle-states {} but that didn't help. That's why I end up
-> > > > > disabling individual cpu states in idle-states {}.
-> > > >
-> > > > Yep, this boils down to the fact that genpd doesn't check whether the
-> > > > domain-idle-state is disabled by using of_device_is_available(). See
-> > > > genpd_iterate_idle_states().
-> > > >
-> > >
-> > > Yes I found that but can't that be fixed with a simple patch like below ?
-> >
-> > Sure, yes it can.
-> >
-> > Although, it does complicate things a bit, as we would need two
-> > patches instead of one, to get things working.
-> >
-> > >
-> > > > That said, I suggest we go with the above one-line change. It may not
-> > > > be as clean as it could be, but certainly easy to revert when the
-> > > > support for it has been added in a newer kernel.
-> > > >
-> > >
-> > > I don't like removing the state. It means it doesn't have the state rather
-> > > than i"it has state but is not working and hence disabled".
-> > >
-> > > Will handling the availability of the state cause any issues ?
-> >
-> > No, this works fine. It's already been proven by Amit's test.
-> >
-> > >
-> > > Regards,
-> > > Sudeep
-> > >
-> > > -->8
-> > >
-> > > diff --git i/drivers/base/power/domain.c w/drivers/base/power/domain.c
-> > > index ead135c7044c..6471b559230e 100644
-> > > --- i/drivers/base/power/domain.c
-> > > +++ w/drivers/base/power/domain.c
-> > > @@ -2952,6 +2952,10 @@ static int genpd_iterate_idle_states(struct device_node *dn,
-> > >                 np = it.node;
-> > >                 if (!of_match_node(idle_state_match, np))
-> > >                         continue;
-> > > +
-> > > +               if (!of_device_is_available(np))
-> > > +                       continue;
-> > > +
-> > >                 if (states) {
-> > >                         ret = genpd_parse_state(&states[i], np);
-> > >                         if (ret) {
-> > >
-> >
-> > The above code looks correct to me. Anyone that wants to submit the
-> > patches? Otherwise I can try to manage it...
+On 24/10/22 20:54, Brian Norris wrote:
+> Several SDHCI drivers need to deactivate command queueing in their reset
+> hook (see sdhci_cqhci_reset() / sdhci-pci-core.c, for example), and
+> several more are coming.
 > 
-> Just out of curiosity, I gave this patch a test run and, as Ulf also
-> mentioned above, this patch alone is not enough to fix the boot
-> regression I see on RB5.
->
+> Those reset implementations have some small subtleties (e.g., ordering
+> of initialization of SDHCI vs. CQHCI might leave us resetting with a
+> NULL ->cqe_private), and are often identical across different host
+> drivers.
+> 
+> We also don't want to force a dependency between SDHCI and CQHCI, or
+> vice versa; non-SDHCI drivers use CQHCI, and SDHCI drivers might support
+> command queueing through some other means.
+> 
+> So, implement a small helper, to avoid repeating the same mistakes in
+> different drivers. Simply stick it in a header, because it's so small it
+> doesn't deserve its own module right now, and inlining to each driver is
+> pretty reasonable.
+> 
+> This is marked for -stable, as it is an important prerequisite patch for
+> several SDHCI controller bugfixes that follow.
+> 
+> Cc: <stable@vger.kernel.org>
+> Signed-off-by: Brian Norris <briannorris@chromium.org>
 
-Indeed, Ulf has posted the other changes needed and I have reviewed it
-just now. I can post this one. I agree it is multiple change but I think
-it is right set as we need to fix all these anyways, why not at once.
-Though they are multiple changes, the delta is not too much in my opinion.
+One cosmetic nit, otherwise:
 
--- 
-Regards,
-Sudeep
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+
+> ---
+> 
+> Changes in v3:
+>  - New in v3 (replacing a simple 'cqe_private == NULL' patch in v2)
+> 
+>  drivers/mmc/host/sdhci-cqhci.h | 25 +++++++++++++++++++++++++
+>  1 file changed, 25 insertions(+)
+>  create mode 100644 drivers/mmc/host/sdhci-cqhci.h
+> 
+> diff --git a/drivers/mmc/host/sdhci-cqhci.h b/drivers/mmc/host/sdhci-cqhci.h
+> new file mode 100644
+> index 000000000000..270ab1f1de3c
+> --- /dev/null
+> +++ b/drivers/mmc/host/sdhci-cqhci.h
+> @@ -0,0 +1,25 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright 2022 The Chromium OS Authors
+> + *
+> + * Support that applies to the combination of SDHCI and CQHCI, while not
+> + * expressing a dependency between the two modules.
+> + */
+> +
+> +#ifndef __MMC_HOST_SDHCI_CQHCI_H__
+> +#define __MMC_HOST_SDHCI_CQHCI_H__
+> +
+> +#include "cqhci.h"
+> +#include "sdhci.h"
+> +
+> +static inline void sdhci_and_cqhci_reset(struct sdhci_host *host, u8 mask)
+> +{
+> +	if ((host->mmc->caps2 & MMC_CAP2_CQE) && (mask & SDHCI_RESET_ALL) &&
+> +	    host->mmc->cqe_private)
+> +		cqhci_deactivate(host->mmc);
+> +
+> +	sdhci_reset(host, mask);
+> +}
+> +
+> +
+
+Double blank line
+
+> +#endif /* __MMC_HOST_SDHCI_CQHCI_H__ */
+
