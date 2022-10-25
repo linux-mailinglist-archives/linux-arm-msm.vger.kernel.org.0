@@ -2,101 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA13A60D302
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 20:07:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5296F60D454
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 21:07:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232734AbiJYSHZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Oct 2022 14:07:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43536 "EHLO
+        id S232530AbiJYTHp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Oct 2022 15:07:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232682AbiJYSHT (ORCPT
+        with ESMTP id S232440AbiJYTHo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Oct 2022 14:07:19 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41AA763D6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Oct 2022 11:07:06 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id pb15so11595167pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Oct 2022 11:07:06 -0700 (PDT)
+        Tue, 25 Oct 2022 15:07:44 -0400
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96CF9D7E15
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Oct 2022 12:07:43 -0700 (PDT)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-3691e040abaso123936657b3.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Oct 2022 12:07:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=UaHvsuBeqGUDHNJwrHZu7I7KXYW+zqfgTqUGn6DC/xo=;
-        b=BrZrLWVB5VSJpkzOeZqV2YWZUWJDEwqbeQ1Nve9BZ4AAyOSYp43pwQEn1bBPMP1PUV
-         xFiQdrcQEowdrnFBqYSxGvy8VpMmBzyE2atFCIS/8/rs65U/DPt7ezxoUwSB7kqZU/LH
-         rZ4F/tlv0HbrYah5/V8rNIThPb6tiWOQcfTEg=
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=QglMpokujQD49tkAIJsSoikNiyFqI/khYwYOp+rRE0c=;
+        b=oAkt9AaK6MJ7zcIi7bgTGM889YqiiXsOSuw3wndAmyhd0vdZLIvgCpMO2YjHGOkNxR
+         M5nQK8cTtNBgDLp+I/ajE5gA2EBXQWJhSu5+hpjzt+jR7n53GOMFXYw2cvmFTqcynCjK
+         12qID4cy66a9anoBl0MSjF1lRbcksBpJugQvfMmnPeIyJha8N2GXfSXQDzkbyK7lHimf
+         AlOi4v1Fg5Bxm2RzgJwwojmfA87FanzZrzZP5BzO2t1Xbo8v4YB3rh0bLIoKEvcnw9W1
+         tmk17mxKK6dpaqqdgEw5pYyuq59CRDZRMMiEUA7mkMteWWYkwttcwGVUAokMFI9t2qXp
+         k07Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=UaHvsuBeqGUDHNJwrHZu7I7KXYW+zqfgTqUGn6DC/xo=;
-        b=J69TmVBWDwMA4xI4cu+78XKkhTmj8JkwIFEZFJe6FrfEXKXc1JZ8aa8Xrjy2TOlsS3
-         rKdhOAo6h0JRSbm7nf4IZqRrBQBBMnPtsphRuDgYkFc7lgNVpVVWQAC6VHRG36d2Fe3M
-         6MHZYB3S0ZBgySolkYF5z1jy1GG50Ns8H7OlSwLFkA1NHDkswjfE+XNcpw26KgGOz9aP
-         lUaShmqdPmUlACnAICSvr+RTORBdXSjA9TivwtfW7y/099YVvXyyU7w23uN1Uc69gVli
-         HkSy5SaDrT0UE8XOKFlylilAPuxgHwzeqBiVG6fqmPGKuThQVZtdITYvdlUyULMOFUt5
-         i27w==
-X-Gm-Message-State: ACrzQf1e318ncrqtXKrJeEPf5EnAP5C8uPbISptU8GlSMfVwdfkhWgyf
-        Q+JrPJCMSfvTLXR6wzsiCOi82Q==
-X-Google-Smtp-Source: AMsMyM6KD70FiLQ2NY7/KT4ZdCgreGIg8amZ286q1tYd4ft48X6ah9dtxyQ5N7DjKGkH08gBYBnE6w==
-X-Received: by 2002:a17:902:d483:b0:182:cb98:26e8 with SMTP id c3-20020a170902d48300b00182cb9826e8mr39797221plg.73.1666721225601;
-        Tue, 25 Oct 2022 11:07:05 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:11a:201:97a:f22a:beab:58])
-        by smtp.gmail.com with ESMTPSA id d8-20020a170902654800b001788ccecbf5sm1493786pln.31.2022.10.25.11.07.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Oct 2022 11:07:05 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH] arm64: dts: qcom: Remove fingerprint node from herobrine-r1
-Date:   Tue, 25 Oct 2022 11:07:03 -0700
-Message-Id: <20221025180703.1806234-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.38.1.273.g43a17bfeac-goog
+        bh=QglMpokujQD49tkAIJsSoikNiyFqI/khYwYOp+rRE0c=;
+        b=PP22Km/FvpMdX6lOwkhoBI7lHVXZbTckwSFxdfktTRSFDb+Fg/Rhbzz0Q97w8sMd3r
+         Awj7/5m6aXupPYEquZ52oqfmbjGJVRtTPE4lmuUaKEU7LBJwZXgFS+QhDYDtEBubtoJe
+         tR8vjksepiwMDBuGXwxl0KxfDuNyZnFY7AnXFhF9xVnBjYJgTerr3k5muJAaajYm3P+C
+         vOzKA23E4RmAs0SwoVY3SWxNRxpL3pQRNHb96WLmvGx12Wt65Q44Ndev3o4uDrdG4aKe
+         eau3cP6LxgdZHogZPv/BO5ythpQSCxc9v8pLGim6mIQOooI32uEA7D1GE7ax/D8eYnZh
+         DbmA==
+X-Gm-Message-State: ACrzQf0BWcdiM6OvsMIL44s/VJ1r8lhQzNnyxb7u2fumOOxQg1cP+HWO
+        xK8pPj0ZWgeHKIWHaeYwymDWvJRO1X6NCKKmKeiLbA==
+X-Google-Smtp-Source: AMsMyM4+sZEx3v2gjS7ffJvvxqM8D519E7qQtj0u+R2NhGRVtJGB4VILj5K9Nmm5O3xM+HI2La5qVfi2kPbfmAxMD8M=
+X-Received: by 2002:a81:7804:0:b0:369:1074:e2b with SMTP id
+ t4-20020a817804000000b0036910740e2bmr25610487ywc.127.1666724862831; Tue, 25
+ Oct 2022 12:07:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20220706114407.1507412-1-dmitry.baryshkov@linaro.org> <CAK7LNAQPS+U1qq4K+7Rao9P7p94bMU3Y6g0+ALUd3t=ioZqSnw@mail.gmail.com>
+In-Reply-To: <CAK7LNAQPS+U1qq4K+7Rao9P7p94bMU3Y6g0+ALUd3t=ioZqSnw@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 25 Oct 2022 22:07:31 +0300
+Message-ID: <CAA8EJpotkSfP6xgm9s-8iS3FGsTss403RXcBuMwB_9=JFdispA@mail.gmail.com>
+Subject: Re: [PATCH v2] kbuild: allow validating individual dtb files against schema
+To:     Masahiro Yamada <masahiroy@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>, Tom Rini <trini@konsulko.com>,
+        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It turns out that only a few people have the fingerprint sensor hooked
-up on their board. Leaving this enabled is slowing down boot for
-everyone else because the driver slowly fails to probe while trying to
-communicate with a sensor that isn't there. Remove the node to speed up
-boot, developers with the board can manually enable it themselves.
+On Sat, 16 Jul 2022 at 12:38, Masahiro Yamada <masahiroy@kernel.org> wrote:
+> First, apply the following clean-up patch to reduce the code duplication.
+> https://lore.kernel.org/all/20220716093122.137494-1-masahiroy@kernel.org/T/#u
+>
 
-Reported-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts | 4 ----
- 1 file changed, 4 deletions(-)
+The cleanup patch has been merged into 6.0.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
-index c1a671968725..8d07401d852d 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
-@@ -47,10 +47,6 @@ &pp1200_wf_cam {
- 
- /* ADDITIONS TO NODES DEFINED IN PARENT DEVICE TREE FILES */
- 
--&ap_spi_fp {
--	status = "okay";
--};
--
- /*
-  * Although the trackpad is really part of the herobrine baseboard, we'll
-  * put the actual definition in the board device tree since different boards
+> Then, apply the attached patch.diff
 
-base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
--- 
-https://chromeos.dev
+But the patch you proposed didn't seem to be posted. Do you still
+intend to post it?
 
+--
+With best wishes
+Dmitry
