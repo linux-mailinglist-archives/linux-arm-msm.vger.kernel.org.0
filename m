@@ -2,42 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8585560C65B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 10:25:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B932060C67A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 10:33:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229652AbiJYIZK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Oct 2022 04:25:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33288 "EHLO
+        id S232283AbiJYIdB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Oct 2022 04:33:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230214AbiJYIZJ (ORCPT
+        with ESMTP id S232198AbiJYIc7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Oct 2022 04:25:09 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49D1660FF;
-        Tue, 25 Oct 2022 01:25:05 -0700 (PDT)
+        Tue, 25 Oct 2022 04:32:59 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A68E8A4B8A;
+        Tue, 25 Oct 2022 01:32:58 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 49825CE1C03;
-        Tue, 25 Oct 2022 08:25:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7934DC433C1;
-        Tue, 25 Oct 2022 08:25:02 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4DFF9617E7;
+        Tue, 25 Oct 2022 08:32:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A35C433C1;
+        Tue, 25 Oct 2022 08:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666686302;
-        bh=95Bw03v1d7DpNovUuUhhDHWGN1eDfLvag7c8d/BfT3c=;
+        s=k20201202; t=1666686777;
+        bh=P9otne2bGV5OzhI0QZtc8zRICsJTxdIfBvbZ+x2AHD4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=BpgBnumk2WY6jmeSGjyimBupg2i/Gz6Fj2jYBdav4GuS3vZI/mAXM1HF8jxL7DUXp
-         vktLYfItFNox/TbNJ489U1YqgjlZEOVxIRB5bS5ImslUiWGhPR9HuUcR27uK2zb94n
-         oQlfJCv7PnTb43Ue5MKcOUWFWcvK8OI1OgChi5EmM1XsYrPqOH9BundJPug0e0u1Ni
-         KCgwlpmLY4g8wOF/AJeQyb25VuU9ckJzdWMQ5OX/9FAVVu3atq1GxrDHge0QNTZNYe
-         yAlAy8azCC5yH3WxWFduwVngJI9TYFKe19LHy0WEfr4XSlkv/3kKzfw1FmKc+QQzcR
-         KGSLN0I3aEnow==
+        b=DmuJBtrRLQRjMfi8fNmmrNYXtQG2e0SbTjhslLVQRZpDxwBOarHUGsOyb6atqoxu5
+         30wsWp6tK1WlcHgb8/TqU3BvN8ekb1rjBmYQuK5poeSWYKbbJe8yWUBUzt+eK/rW00
+         IJSFKAQxIjcMmKHmFY1E/TbPcckFxz7ZQMP8o4WY06UJZwyb6HZucpo4xXoLdjcxn0
+         wqRfeGi5aC9W2q2EQ1IJyqeubzLaJmRLU/aw/yh+k4Klyhrfu60XHNJXVMUpgjlngM
+         nG7RB4BfcsZNqI97S9Bdg4U0q3Crc6wld0c+IL3YwL5xELTtcXXbp/Uy3R2vLWhvu1
+         UzRpL7GQOtW0w==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1onFEq-0000ud-7S; Tue, 25 Oct 2022 10:24:44 +0200
-Date:   Tue, 25 Oct 2022 10:24:44 +0200
+        id 1onFMU-00015B-MI; Tue, 25 Oct 2022 10:32:39 +0200
+Date:   Tue, 25 Oct 2022 10:32:38 +0200
 From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -46,7 +46,7 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
 Subject: Re: [PATCH 3/4] soc: qcom: pmic_glink: Introduce altmode support
-Message-ID: <Y1edTHlbaPlhxIuB@hovoldconsulting.com>
+Message-ID: <Y1efJh11B5UQZ0Tz@hovoldconsulting.com>
 References: <20220818031512.319310-1-bjorn.andersson@linaro.org>
  <20220818031512.319310-4-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
@@ -61,6 +61,8 @@ X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
+
+[ Resending to Bjorn's current address. ]
 
 On Wed, Aug 17, 2022 at 08:15:11PM -0700, Bjorn Andersson wrote:
 > With the PMIC GLINK service, the host OS subscribes to USB-C altmode
