@@ -2,65 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C77C60D5ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 22:58:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB75560D5F5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 23:03:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230090AbiJYU6Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Oct 2022 16:58:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45778 "EHLO
+        id S232029AbiJYVDw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Oct 2022 17:03:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229904AbiJYU6Y (ORCPT
+        with ESMTP id S231628AbiJYVDv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Oct 2022 16:58:24 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2788EB56DE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Oct 2022 13:58:23 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id j16so4954146lfe.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Oct 2022 13:58:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=yUTt6VLq/FG7bgtqV4fhWrAEHOLV/WTIHQhdcrc1Wog=;
-        b=Tp0TLa00HLCXtl3ffcadkzejggM1y241hFCoY5J0DWzBHimYZgdV/tt/hkoCAvQB/v
-         808aUD+QHNgq3jvfqrzR9B2UqeYUcJxRn8XaUDqQJI2xLfEYy7kRqc0irqxTtTpKrV2C
-         pNJkD6raN1oJ5euAK2GgDuoqd3qkKEOUDh/HQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yUTt6VLq/FG7bgtqV4fhWrAEHOLV/WTIHQhdcrc1Wog=;
-        b=y0vHdsNBjt7ynOf3ratKQfSb/uufLlA6YlX6fdURKDJsSDED7r/EcIydCaKvH1u+vB
-         stiQB+98+LLhEvrhmTas8PtyHJwgld+CfQLZDsvJ92hhXq84J6Bol9kX4gmqgqUJgV30
-         cZ5Rgoqnh063VWlFjjx2UOsR1dx7zEWWj+ZuWrUJCaWNJIOkwLLllsPB07uFRWXLPiqz
-         IXhIikeb9k2ynBDmrWtwPrIOihFDvmqo8Ja5TE+oYQgSrmpphuc+F5xGkAEYuBIp4VO0
-         xdfxpwMRJ3urPKPqgjKVWvp/slMka7AHTmkPPnOoYifESf/RDVUEPHW1QOLK20el/34P
-         k4Lw==
-X-Gm-Message-State: ACrzQf1j148R6mJUa3Sn3kPdN3KpDo6vzdyIPY384JOTDgHQPb3MXmVU
-        y5CPW6bAW+K4l/zO782o1ZOEAnPhUiLOF9ZZnnKK6g==
-X-Google-Smtp-Source: AMsMyM7k+V4SEh4ZacdYw66y4Hxj0CbKLUR3YfJBFYjUYEQpZYrodngI4GSQU+eNpvTiB8SGEEec/8vIC9OmgIyO1qQ=
-X-Received: by 2002:a05:6512:6d4:b0:4a2:f89:db7d with SMTP id
- u20-20020a05651206d400b004a20f89db7dmr14224188lff.125.1666731501476; Tue, 25
- Oct 2022 13:58:21 -0700 (PDT)
+        Tue, 25 Oct 2022 17:03:51 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FF225A8FA;
+        Tue, 25 Oct 2022 14:03:50 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29PL0KpX008719;
+        Tue, 25 Oct 2022 21:03:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=6ANxO3FG04XfjlFDKn1rFO+qMY4ZOEYGEf9X9sJVsmk=;
+ b=cxqQhj8AtgsMXHoG8pQT1eqouYm7U32ZahN+UEnr5aX8Wp6AiDrlUSSDP7feOtgjm48o
+ UQ1Y/38LJEsCc4bnTfU43BLne4kKHHfKGBNTpGFPEZLrLOW5Tgf2Y+I1tzr1/V8Wnru1
+ xNxdpMpBKa3GmuY4CwEMN53oaEiNsup2bwUTJTSBRaUukXTmqvnqVdFbNuHSEVnlK8DG
+ H/+NK//15hmTSllP3XMHuxjlpiEjghPjmww91By5QFFf8ZGB2mBF4GJwg3lbA2FLl8/z
+ qgb2+O7/SZQAZUPaCWypxZF3H5wdVzUn/axbbVhdBk3XylbdItuefxHqAi4bsovZSBIh ng== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3keaf0hqgb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Oct 2022 21:03:40 +0000
+Received: from nasanex01b.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29PL3dCt010905
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Oct 2022 21:03:39 GMT
+Received: from [10.134.66.255] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 25 Oct
+ 2022 14:03:38 -0700
+Message-ID: <05474921-eb21-968c-ed92-34769517cf31@quicinc.com>
+Date:   Tue, 25 Oct 2022 14:03:38 -0700
 MIME-Version: 1.0
-References: <CANHAJhG7wCv4TwVCtWa2wqHzaG5ncbtfnVJtnQqqDSbEoPmoHw@mail.gmail.com>
- <CAA8EJpoBYb-=3RT_EO+PSFkbJ95RobyeHt6QmOfTTgvEEFoUfQ@mail.gmail.com>
- <CANHAJhEui=wn985RzfsUR+GdsESCExi2Gst43c+WEOBqaD5dTg@mail.gmail.com> <CAF6AEGs3RoB7zm8NjgsHMfqGY=-+etr8-EEuZw1MPUaXbDBy_A@mail.gmail.com>
-In-Reply-To: <CAF6AEGs3RoB7zm8NjgsHMfqGY=-+etr8-EEuZw1MPUaXbDBy_A@mail.gmail.com>
-From:   Nathan Hebert <nhebert@chromium.org>
-Date:   Tue, 25 Oct 2022 13:58:10 -0700
-Message-ID: <CANHAJhEWXf8U-FJJbOUpRV1gCXsd++H8kzbiBP1Z7iryaOCoYQ@mail.gmail.com>
-Subject: Re: [PULL V2]: qcom: SC7180 and SC7280 venus firmware updates
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-firmware@kernel.org, linux-arm-msm@vger.kernel.org,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH v2 2/2] pinctrl: qcom: Add QDU1000/QRU1000 pinctrl driver
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Fritz Koenig <frkoenig@chromium.org>,
-        Vikash Garodia <vgarodia@qti.qualcomm.com>
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20221014221025.7372-1-quic_molvera@quicinc.com>
+ <20221014221025.7372-3-quic_molvera@quicinc.com>
+ <498ea0a0-24c2-c9c0-3a5d-150ba32b3c4c@linaro.org>
+Content-Language: en-US
+From:   Melody Olvera <quic_molvera@quicinc.com>
+In-Reply-To: <498ea0a0-24c2-c9c0-3a5d-150ba32b3c4c@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6IoC9bP1KQH-dwbJq4dVclCY2YJWicb7
+X-Proofpoint-ORIG-GUID: 6IoC9bP1KQH-dwbJq4dVclCY2YJWicb7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-25_13,2022-10-25_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=787
+ priorityscore=1501 suspectscore=0 phishscore=0 spamscore=0 adultscore=0
+ clxscore=1015 malwarescore=0 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
+ definitions=main-2210250117
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -69,93 +86,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 25, 2022 at 7:24 AM Rob Clark <robdclark@gmail.com> wrote:
->
-> On Mon, Oct 24, 2022 at 4:13 PM Nathan Hebert <nhebert@chromium.org> wrote:
-> >
-> > On Thu, Oct 20, 2022 at 11:02 AM Dmitry Baryshkov
-> > <dmitry.baryshkov@linaro.org> wrote:
-> > >
-> > > On Thu, 20 Oct 2022 at 20:08, Nathan Hebert <nhebert@chromium.org> wrote:
-> > > >
-> > > > The following changes since commit 48407ffd7adb9511701547068b1e6f0956bd1c94:
-> > > >
-> > > >   cnm: update chips&media wave521c firmware. (2022-10-17 10:20:43 -0400)
-> > > >
-> > > > are available in the Git repository at:
-> > > >
-> > > >   https://github.com/nathan-google/linux-firmware.git
-> > > > update_sc7180_and_sc7280_firmwares_v2
-> > > >
-> > > > for you to fetch changes up to 054271e4164b6b4c069a3aaaeb9bfcde8c850339:
-> > > >
-> > > >   qcom: update venus firmware files for VPU-2.0 (2022-10-20 09:37:35 -0700)
-> > > >
-> > > > ----------------------------------------------------------------
-> > > > Nathan Hebert (3):
-> > > >       qcom: update venus firmware files for v5.4
-> > > >       qcom: remove split SC7280 venus firmware images
-> > > >       qcom: update venus firmware files for VPU-2.0
-> > > >
-> > > >  WHENCE                   |  17 ++---------------
-> > > >  qcom/venus-5.4/venus.b00 | Bin 212 -> 212 bytes
-> > > >  qcom/venus-5.4/venus.b01 | Bin 6808 -> 6808 bytes
-> > > >  qcom/venus-5.4/venus.b02 | Bin 873596 -> 875020 bytes
-> > > >  qcom/venus-5.4/venus.b03 | Bin 33792 -> 33896 bytes
-> > > >  qcom/venus-5.4/venus.mbn | Bin 919708 -> 921236 bytes
-> > > >  qcom/venus-5.4/venus.mdt | Bin 7020 -> 7020 bytes
-> > > >  qcom/vpu-2.0/venus.b00   | Bin 692 -> 0 bytes
-> > > >  qcom/vpu-2.0/venus.b01   | Bin 7376 -> 0 bytes
-> > > >  qcom/vpu-2.0/venus.b02   | Bin 300 -> 0 bytes
-> > > >  qcom/vpu-2.0/venus.b03   | Bin 20 -> 0 bytes
-> > > >  qcom/vpu-2.0/venus.b04   | Bin 20 -> 0 bytes
-> > > >  qcom/vpu-2.0/venus.b05   | Bin 20 -> 0 bytes
-> > > >  qcom/vpu-2.0/venus.b06   | Bin 20 -> 0 bytes
-> > > >  qcom/vpu-2.0/venus.b07   | Bin 24 -> 0 bytes
-> > > >  qcom/vpu-2.0/venus.b08   | Bin 16 -> 0 bytes
-> > > >  qcom/vpu-2.0/venus.b09   | Bin 939184 -> 0 bytes
-> > > >  qcom/vpu-2.0/venus.b10   | Bin 42976 -> 0 bytes
-> > > >  qcom/vpu-2.0/venus.b19   |   1 -
-> > > >  qcom/vpu-2.0/venus.mbn   | Bin 2031188 -> 2031620 bytes
-> > > >  qcom/vpu-2.0/venus.mdt   | Bin 8068 -> 0 bytes
-> > > >  21 files changed, 2 insertions(+), 16 deletions(-)
-> > > >  delete mode 100644 qcom/vpu-2.0/venus.b00
-> > > >  delete mode 100644 qcom/vpu-2.0/venus.b01
-> > > >  delete mode 100644 qcom/vpu-2.0/venus.b02
-> > > >  delete mode 100644 qcom/vpu-2.0/venus.b03
-> > > >  delete mode 100644 qcom/vpu-2.0/venus.b04
-> > > >  delete mode 100644 qcom/vpu-2.0/venus.b05
-> > > >  delete mode 100644 qcom/vpu-2.0/venus.b06
-> > > >  delete mode 100644 qcom/vpu-2.0/venus.b07
-> > > >  delete mode 100644 qcom/vpu-2.0/venus.b08
-> > > >  delete mode 100644 qcom/vpu-2.0/venus.b09
-> > > >  delete mode 100644 qcom/vpu-2.0/venus.b10
-> > > >  delete mode 100644 qcom/vpu-2.0/venus.b19
-> > > >  delete mode 100644 qcom/vpu-2.0/venus.mdt
-> > >
-> > > As I wrote in another email thread, it might be better to drop split
-> > > files, add only venus.mbn and then use Link: lines to create venus.mdt
-> > > -> venus.mbn symlinks.
-> > Thanks for the feedback. There was some concern from Vikash at Qualcomm
-> > about making a change to the venus-5.4 firmware to drop the split files.
-> >
-> > Vikash, are you able to comment about whether or not it is a concern to replace
-> > the venus.mdt and split files with a symbolic link to venus.mdn for
-> > the venus-5.4
-> > files? I tested the suggested approach on ChromeOS with kernels based on 5.4
-> > and 5.15 and did not see any issues.
-> >
-> > This is a holiday week, so his response may be slow.
-> >
->
-> The symlink trick that Dmitry suggested would cover the case that
-> Vikash is concerned about.
->
-> BR,
-> -R
-Thanks Rob, Dmitry, and Vikash for the feedback. I have sent a V3 pull
-request that incorporates Dmitry's suggestion to the linux-firmware
-mailing list.
 
-BR,
-Nathan
+
+On 10/15/2022 6:40 AM, Krzysztof Kozlowski wrote:
+> On 14/10/2022 18:10, Melody Olvera wrote:
+>> Add pin control driver for the TLMM block found in the QDU1000
+>> and QRU1000 SoC.
+>>
+>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>> ---
+>>  drivers/pinctrl/qcom/Kconfig           |    9 +
+>>  drivers/pinctrl/qcom/Makefile          |    1 +
+>>  drivers/pinctrl/qcom/pinctrl-qdu1000.c | 1274 ++++++++++++++++++++++++
+>>  3 files changed, 1284 insertions(+)
+>>  create mode 100644 drivers/pinctrl/qcom/pinctrl-qdu1000.c
+>>
+>> diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
+>> index 9dc2d803a586..4ab857dc2847 100644
+>> --- a/drivers/pinctrl/qcom/Kconfig
+>> +++ b/drivers/pinctrl/qcom/Kconfig
+>> @@ -248,6 +248,15 @@ config PINCTRL_QCOM_SSBI_PMIC
+>>  	 which are using SSBI for communication with SoC. Example PMIC's
+>>  	 devices are pm8058 and pm8921.
+>>  
+>> +config PINCTRL_QDU1000
+>> +	tristate "Qualcomm Tehcnologies Inc QDU1000/QRU1000 pin controller driver"
+>> +	depends on GPIOLIB && OF
+> depends on ARM64 || COMPILE_TEST
+Will add.
+>> +	depends on PINCTRL_MSM
+>> +	help
+>> +	  This is the pinctrl, pinmux, pinconf, and gpiolib driver for the
+>> +	  Qualcomm Technologies Inc TLMM block found on the Qualcomm
+>> +	  Technologies Inc QDU1000 and QRU1000 platforms.
+>> +
+> (...)
+>
+>> +	PINCTRL_PIN(138, "GPIO_138"),
+>> +	PINCTRL_PIN(139, "GPIO_139"),
+>> +	PINCTRL_PIN(140, "GPIO_140"),
+>> +	PINCTRL_PIN(141, "GPIO_141"),
+>> +	PINCTRL_PIN(142, "GPIO_142"),
+>> +	PINCTRL_PIN(143, "GPIO_143"),
+>> +	PINCTRL_PIN(144, "GPIO_144"),
+>> +	PINCTRL_PIN(145, "GPIO_145"),
+>> +	PINCTRL_PIN(146, "GPIO_146"),
+>> +	PINCTRL_PIN(147, "GPIO_147"),
+>> +	PINCTRL_PIN(148, "GPIO_148"),
+>> +	PINCTRL_PIN(149, "GPIO_149"),
+>> +	PINCTRL_PIN(150, "GPIO_150"),
+> Your bindings said you have GPIOs 0-149, not 0-150.
+Updated bindings.
+>
+>> +	PINCTRL_PIN(151, "SDC1_RCLK"),
+>> +	PINCTRL_PIN(152, "SDC1_CLK"),
+>> +	PINCTRL_PIN(153, "SDC1_CMD"),
+>> +	PINCTRL_PIN(154, "SDC1_DATA"),
+> This also does not match bindings.
+Updated bindings.
+
+Thanks,
+Melody
