@@ -2,222 +2,221 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0995F60C967
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 12:07:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60C1960CAD4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 13:24:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231878AbiJYKHR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Oct 2022 06:07:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36202 "EHLO
+        id S231207AbiJYLYb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Oct 2022 07:24:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230078AbiJYKGl (ORCPT
+        with ESMTP id S231452AbiJYLYa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Oct 2022 06:06:41 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9B14518BE31;
-        Tue, 25 Oct 2022 03:00:37 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 93264D6E;
-        Tue, 25 Oct 2022 03:00:43 -0700 (PDT)
-Received: from [10.57.68.77] (unknown [10.57.68.77])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D70BE3F792;
-        Tue, 25 Oct 2022 03:00:34 -0700 (PDT)
-Message-ID: <08201626-9998-6327-b5f7-e49ad279fd0f@arm.com>
-Date:   Tue, 25 Oct 2022 11:00:33 +0100
+        Tue, 25 Oct 2022 07:24:30 -0400
+Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2722C1F637
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Oct 2022 04:24:29 -0700 (PDT)
+Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-13b6c1c89bdso9242055fac.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Oct 2022 04:24:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ogvOahPNmhpggqBTZ5QbvTn84Q49yePxZeXFmnUqiLs=;
+        b=jutuwQxLvlEtjl08GBEDEUQLUX0ZptKv2K4eZi72W8GM7Qc2yUpxRsr+hXwVtu+diN
+         ot8DN8Gnd4YFEI/dymIexaiz9CTLFPWzIzIBSFialYercjlsjhqfVBsin1yzJS/QfPXY
+         DsqtLyLFDuIE8pg4D5N1ubpMaMp7Jee8dXMncrAAhnYYtVWppvc6lKdxvghxhjb2VrzR
+         bE791M9x6DSiICRPPnF8+zvQqI2uSNjPbC3gbnJlMRQnIdgHYdtMteK1hlQI1c4IVmt5
+         U2eRg34zVbfoRXm4XnPRpLuMrnnxA8AGxmkhyBhHeNApBLp2GVt8H8duYlxMnS8IBilf
+         eSLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ogvOahPNmhpggqBTZ5QbvTn84Q49yePxZeXFmnUqiLs=;
+        b=fmIgb9DUxnsBj+be13+5yueFpHi38bQIbvrbG482vbfqyXl2mq8aEq8MlkdVse9/qp
+         AWTaVprdDNPq6n0Xcc3JqYWc9KpDZy/wxkbRF77PVZpCaQIVQkktO65yeEzy97+cLx3z
+         yrckj3tLT7374iAbI0VxGht/OWa2ph6JHUVOxGL5o5pw6/u31AglNBlQFTPLhpgnrXw9
+         n2WJrtrc1SG4pf8gVtW+PrG3E/AOc+2kbXIxgUmXJ4nJD+dMVTDJVxi2MGHwtRH3TU+1
+         EuN3yyEuJF82SJZPzPoyUT3K/IT/tpCzJ1s1ZU3sdbn8RDN2NY3weXpvpfXCGRknl14E
+         PGsQ==
+X-Gm-Message-State: ACrzQf028qjX/FWRxHGjb2zab32W3KZ1IFyhGA7PNkVM21malXd2yrMa
+        nUj5iAQCazrkjN2cJt9jcQtEHh4u4+5f7UB/gxlqnA==
+X-Google-Smtp-Source: AMsMyM76taCJV+dCGKywuvCZcEk2Xs4M2Rw6lpxM+f0zfnwF1BufrNo2tesNJ4zzfv12nDqHKLnIKsJPPbZDyD77A34=
+X-Received: by 2002:a05:6871:7a1:b0:131:946a:7b30 with SMTP id
+ o33-20020a05687107a100b00131946a7b30mr40030282oap.67.1666697068405; Tue, 25
+ Oct 2022 04:24:28 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.0
-Subject: Re: [PATCH 9/9] coresight-tpdm: Add nodes for timestamp request
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
-References: <1662626705-13097-1-git-send-email-quic_taozha@quicinc.com>
- <1662626705-13097-10-git-send-email-quic_taozha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1662626705-13097-10-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20221018145348.4051809-1-amit.pundir@linaro.org>
+ <CAPDyKFoBMB9OMUrcoPCV0of1fj2dimEwPyHGW=ydjJ2M0ubM8Q@mail.gmail.com>
+ <20221020093057.zrrvxlgghn27bpes@bogus> <CAMi1Hd05PkEJcHqHpQX-X6B2oR4250_pHPjkd2-54JWgKsYx0Q@mail.gmail.com>
+ <CAPDyKFo=w-ET62c-B6=qSpkZm-V9LmBuVRy38GzX_UAjQhX6oA@mail.gmail.com>
+ <20221020161628.nyimwuni4zboasjo@bogus> <CAPDyKFonwjh58jPoGc==BEjj6kY-=C97Ws=43hbdAqJMpEAa=g@mail.gmail.com>
+In-Reply-To: <CAPDyKFonwjh58jPoGc==BEjj6kY-=C97Ws=43hbdAqJMpEAa=g@mail.gmail.com>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Tue, 25 Oct 2022 16:53:51 +0530
+Message-ID: <CAMi1Hd0B7T=Tkw=P_rBDV9SQSGCXAeYLYPADtVkh=95xf54D8A@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: qrb5165-rb5: Disable cpuidle states
+To:     Sudeep Holla <sudeep.holla@arm.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/09/2022 09:45, Tao Zhang wrote:
-> Add nodes to configure the timestamp request based on input
-> pattern match. Each TPDM that support DSB subunit has n(0-7) TPR
-> registers to configure value for timestamp request based on input
-> pattern match, and has m(0-7) TPMR registers to configure pattern
-> mask for timestamp request.
-> Add nodes to enable/disable pattern timestamp and set pattern
-> timestamp type.
-> 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> ---
->   drivers/hwtracing/coresight/coresight-tpdm.c | 189 +++++++++++++++++++++++++++
->   drivers/hwtracing/coresight/coresight-tpdm.h |  14 ++
->   2 files changed, 203 insertions(+)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index 648bbe6..4212ff4 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -32,6 +32,13 @@ static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
->   			   drvdata->base + TPDM_DSB_EDCMR(i));
->   
->   	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
-> +		writel_relaxed(drvdata->dsb->patt_val[i],
-> +			    drvdata->base + TPDM_DSB_TPR(i));
-> +		writel_relaxed(drvdata->dsb->patt_mask[i],
-> +			    drvdata->base + TPDM_DSB_TPMR(i));
-> +	}
-> +
-> +	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
->   		writel_relaxed(drvdata->dsb->trig_patt_val[i],
->   			    drvdata->base + TPDM_DSB_XPR(i));
->   		writel_relaxed(drvdata->dsb->trig_patt_mask[i],
-> @@ -39,6 +46,16 @@ static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
->   	}
->   
->   	val = readl_relaxed(drvdata->base + TPDM_DSB_TIER);
-> +	/* Set pattern timestamp type and enablement */
-> +	if (drvdata->dsb->patt_ts) {
-> +		val |= TPDM_DSB_PATT_TSENAB;
-> +		if (drvdata->dsb->patt_type)
-> +			val |= TPDM_DSB_PATT_TYPE;
-> +		else
-> +			val &= ~TPDM_DSB_PATT_TYPE;
-> +	} else {
-> +		val &= ~TPDM_DSB_PATT_TSENAB;
-> +	}
->   	/* Set trigger timestamp */
->   	if (drvdata->dsb->trig_ts)
->   		val |= TPDM_DSB_XTRIG_TSENAB;
-> @@ -411,6 +428,174 @@ static ssize_t dsb_edge_ctrl_mask_store(struct device *dev,
->   }
->   static DEVICE_ATTR_RW(dsb_edge_ctrl_mask);
->   
-> +static ssize_t dsb_patt_val_show(struct device *dev,
-> +				      struct device_attribute *attr,
-> +				      char *buf)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	ssize_t size = 0;
-> +	int i = 0;
-> +
-> +	if (!(drvdata->datasets & TPDM_PIDR0_DS_DSB))
-> +		return -EPERM;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
-> +		size += scnprintf(buf + size, PAGE_SIZE - size,
-> +				  "Index: 0x%x Value: 0x%x\n", i,
-> +				  drvdata->dsb->patt_val[i]);
-> +	}
-> +	spin_unlock(&drvdata->spinlock);
-> +	return size;
-> +}
-> +
-> +/*
-> + * value 1: Index of TPR register
-> + * value 2: Value need to be written
-> + */
-> +static ssize_t dsb_patt_val_store(struct device *dev,
-> +				       struct device_attribute *attr,
-> +				       const char *buf,
-> +				       size_t size)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	unsigned long index, val;
-> +
-> +	if (sscanf(buf, "%lx %lx", &index, &val) != 2)
-> +		return -EINVAL;
-> +	if (!(drvdata->datasets & TPDM_PIDR0_DS_DSB) ||
-> +	    index >= TPDM_DSB_MAX_PATT)
-> +		return -EPERM;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	drvdata->dsb->patt_val[index] = val;
-> +	spin_unlock(&drvdata->spinlock);
-> +	return size;
-> +}
-> +static DEVICE_ATTR_RW(dsb_patt_val);
-> +
-> +static ssize_t dsb_patt_mask_show(struct device *dev,
-> +				       struct device_attribute *attr,
-> +				       char *buf)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	ssize_t size = 0;
-> +	int i = 0;
-> +
-> +	if (!(drvdata->datasets & TPDM_PIDR0_DS_DSB))
-> +		return -EPERM;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
-> +		size += scnprintf(buf + size, PAGE_SIZE - size,
-> +				  "Index: 0x%x Value: 0x%x\n", i,
-> +				  drvdata->dsb->patt_mask[i]);
-> +	}
-> +	spin_unlock(&drvdata->spinlock);
-> +	return size;
-> +}
-> +
-> +/*
-> + * value 1: Index of TPMR register
-> + * value 2: Value need to be written
-> + */
-> +static ssize_t dsb_patt_mask_store(struct device *dev,
-> +					struct device_attribute *attr,
-> +					const char *buf,
-> +					size_t size)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	unsigned long index, val;
-> +
-> +	if (sscanf(buf, "%lx %lx", &index, &val) != 2)
-> +		return -EINVAL;
-> +	if (!(drvdata->datasets & TPDM_PIDR0_DS_DSB) ||
-> +	    index >= TPDM_DSB_MAX_PATT)
-> +		return -EPERM;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	drvdata->dsb->patt_mask[index] = val;
-> +	spin_unlock(&drvdata->spinlock);
-> +	return size;
-> +}
-> +static DEVICE_ATTR_RW(dsb_patt_mask);
-> +
-> +static ssize_t dsb_patt_ts_show(struct device *dev,
-> +				     struct device_attribute *attr,
-> +				     char *buf)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +
-> +	if (!(drvdata->datasets & TPDM_PIDR0_DS_DSB))
-> +		return -EPERM;
-> +
-> +	return scnprintf(buf, PAGE_SIZE, "%u\n",
-> +			 (unsigned int)drvdata->dsb->patt_ts);
+On Fri, 21 Oct 2022 at 18:33, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+>
+> On Thu, 20 Oct 2022 at 18:16, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> >
+> > On Thu, Oct 20, 2022 at 04:40:15PM +0200, Ulf Hansson wrote:
+> > > On Thu, 20 Oct 2022 at 16:09, Amit Pundir <amit.pundir@linaro.org> wrote:
+> > > >
+> > > > On Thu, 20 Oct 2022 at 15:01, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> > > > >
+> > > > > On Wed, Oct 19, 2022 at 01:57:34PM +0200, Ulf Hansson wrote:
+> > > > > > On Tue, 18 Oct 2022 at 16:53, Amit Pundir <amit.pundir@linaro.org> wrote:
+> > > > > > >
+> > > > > > > Disable cpuidle states for RB5. These cpuidle states
+> > > > > > > made the device highly unstable and it runs into the
+> > > > > > > following crash frequently:
+> > > > > > >
+> > > > > > > [    T1] vreg_l11c_3p3: failed to enable: -ETIMEDOUT
+> > > > > > > [    T1] qcom-rpmh-regulator 18200000.rsc:pm8150l-rpmh-regulators: ldo11: devm_regulator_register() failed, ret=-110
+> > > > > > > [    T1] qcom-rpmh-regulator: probe of 18200000.rsc:pm8150l-rpmh-regulators failed with error -110
+> > > > > > >
+> > > > > > > Fixes: 32bc936d7321 ("arm64: dts: qcom: sm8250: Add cpuidle states")
+> > > > > > > Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> > > > > > > ---
+> > > > > > >  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 8 ++++++++
+> > > > > > >  1 file changed, 8 insertions(+)
+> > > > > > >
+> > > > > > > diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > > > > > > index cc003535a3c5..f936c41bfbea 100644
+> > > > > > > --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > > > > > > +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > > > > > > @@ -251,6 +251,14 @@ qca639x: qca639x {
+> > > > > > >
+> > > > > > >  };
+> > > > > > >
+> > > > > > > +&LITTLE_CPU_SLEEP_0 {
+> > > > > > > +       status = "disabled";
+> > > > > > > +};
+> > > > > > > +
+> > > > > > > +&BIG_CPU_SLEEP_0 {
+> > > > > > > +       status = "disabled";
+> > > > > > > +};
+> > > > > > > +
+> > > > > > >  &adsp {
+> > > > > > >         status = "okay";
+> > > > > > >         firmware-name = "qcom/sm8250/adsp.mbn";
+> > > > > > > --
+> > > > > > > 2.25.1
+> > > > > >
+> > > > > > Disabling the CPU idlestates, will revert us back to using only the WFI state.
+> > > > > >
+> > > > > > An option that probably works too is to just drop the idlestate for
+> > > > > > the CPU cluster. Would you mind trying the below and see if that works
+> > > > > > too?
+> > > > > >
+> > > > >
+> > > > > Indeed this is was I suggested to check initially. But I was surprised to
+> > > > > see IIUC, Amit just disabled CPU states with above change and got it working.
+> > > > > So it is not cluster state alone causing the issue, is it somehow presence
+> > > > > of both cpu and cluster states ? Am I missing something here.
+> > > > >
+> > > > > > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > > > b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > > > index c32227ea40f9..c707a49e8001 100644
+> > > > > > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > > > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > > > > @@ -700,7 +700,6 @@ CPU_PD7: cpu7 {
+> > > > > >
+> > > > > >                 CLUSTER_PD: cpu-cluster0 {
+> > > > > >                         #power-domain-cells = <0>;
+> > > > > > -                       domain-idle-states = <&CLUSTER_SLEEP_0>;
+> > > > >
+> > > > > How about just marking CLUSTER_SLEEP_0 state disabled ? That looks cleaner
+> > > > > than deleting this domain-idle-states property here. Also not sure if DTS
+> > > > > warnings will appear if you delete this ?
+> > > >
+> > > > Hi, I did try disabling CLUSTER_SLEEP_0: cluster-sleep-0 {} in
+> > > > domain-idle-states {} but that didn't help. That's why I end up
+> > > > disabling individual cpu states in idle-states {}.
+> > >
+> > > Yep, this boils down to the fact that genpd doesn't check whether the
+> > > domain-idle-state is disabled by using of_device_is_available(). See
+> > > genpd_iterate_idle_states().
+> > >
+> >
+> > Yes I found that but can't that be fixed with a simple patch like below ?
+>
+> Sure, yes it can.
+>
+> Although, it does complicate things a bit, as we would need two
+> patches instead of one, to get things working.
+>
+> >
+> > > That said, I suggest we go with the above one-line change. It may not
+> > > be as clean as it could be, but certainly easy to revert when the
+> > > support for it has been added in a newer kernel.
+> > >
+> >
+> > I don't like removing the state. It means it doesn't have the state rather
+> > than i"it has state but is not working and hence disabled".
+> >
+> > Will handling the availability of the state cause any issues ?
+>
+> No, this works fine. It's already been proven by Amit's test.
+>
+> >
+> > Regards,
+> > Sudeep
+> >
+> > -->8
+> >
+> > diff --git i/drivers/base/power/domain.c w/drivers/base/power/domain.c
+> > index ead135c7044c..6471b559230e 100644
+> > --- i/drivers/base/power/domain.c
+> > +++ w/drivers/base/power/domain.c
+> > @@ -2952,6 +2952,10 @@ static int genpd_iterate_idle_states(struct device_node *dn,
+> >                 np = it.node;
+> >                 if (!of_match_node(idle_state_match, np))
+> >                         continue;
+> > +
+> > +               if (!of_device_is_available(np))
+> > +                       continue;
+> > +
+> >                 if (states) {
+> >                         ret = genpd_parse_state(&states[i], np);
+> >                         if (ret) {
+> >
+>
+> The above code looks correct to me. Anyone that wants to submit the
+> patches? Otherwise I can try to manage it...
 
-Please use sysfs_emit() everywhere (in the previous patches too)
-for such operations.
+Just out of curiosity, I gave this patch a test run and, as Ulf also
+mentioned above, this patch alone is not enough to fix the boot
+regression I see on RB5.
 
-I have finished reviewing this series.
+Regards,
+Amit Pundir
 
-Suzuki
+>
+> Kind regards
+> Uffe
