@@ -2,58 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43CAA60D62B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 23:32:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E36F860D62F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 23:33:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231640AbiJYVcU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Oct 2022 17:32:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60418 "EHLO
+        id S231877AbiJYVd5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Oct 2022 17:33:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230075AbiJYVcU (ORCPT
+        with ESMTP id S232447AbiJYVd4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Oct 2022 17:32:20 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42672B56DF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Oct 2022 14:32:19 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id a15so14321397ljb.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Oct 2022 14:32:19 -0700 (PDT)
+        Tue, 25 Oct 2022 17:33:56 -0400
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56250106A5D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Oct 2022 14:33:55 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id o65so11694715iof.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Oct 2022 14:33:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=lNl18H7nWoSg769nmPB4Fbb4nB49kkuQLERALgD+1Y4=;
-        b=Yn/mSchSYMqvsnMbPCEEme2tqkdvEi3zO/P7A0aWLrUfwKoaG3xymu68CLNuZ/gqE+
-         TXo0CFO0Mt8SZtotHwihLJArVdiqJw11mQGfXh0c+THt33QcD8/phaFUpelm5TZx0vp8
-         KTlFp03xFplmFDCGa69AHkx9jGsfqldHLttHM=
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=aqCyDzBlgI0lxrRS0dVDOBPWnZoyypnDJaDYBUnhBSA=;
+        b=ZbCWAHeaKy2n264Ub+ghiRtRmway0DRQ071l6WoJpSS1lHbUdOyzGEWfAkv7NZ3/Bp
+         lfMxjFqVrLNEI+69N5m/udrQUiRi6+nWfEelZXmTmYKjEXJDakIn6pCkOxktYlUE0UHW
+         NGy62ZV/grMkxizRvH/hcWpI+4d2bBPCfKpSs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lNl18H7nWoSg769nmPB4Fbb4nB49kkuQLERALgD+1Y4=;
-        b=ne8l58eJ9rJk9vg5a+z6ttsdpZPa7grWTLkVebhmG2236nM5HI9Ujr0oZ+HMNaJLjI
-         QRGDUP+DMftFAQxheQU0AE/6fzuRkGSE8UI8of4Wt5aEemvgUQ0Nu5DDCg2X29vwkTM7
-         x285qGkrCK8Ee0bhfHD24IPeMimGlkOf7c1Z/IPO6723FLAmWYBZHXuq/ix/F8+Rt8BW
-         qP71itt9uLHZV/dKYAAYfgiC5pjdYPyVJ7pTBY/UfUL/Jb/e+NP6SMM5jgedF1B8Bavq
-         29i4Dk4YmRG+ovyPmenISv9ahfP5EW5dKnMHpjc6LI7jFVdUxuOMHgBV1+aCtbesUYkc
-         0PTg==
-X-Gm-Message-State: ACrzQf1SiaitZNbmFZ1YKWZdapRLNyKvY0SD3taOMEeJRjEbtY3vtdko
-        RA16+K6raGimzaNm9/fgREVCT5SpEeL9YJejLAWfMw==
-X-Google-Smtp-Source: AMsMyM6oOm735Tw4SCfCbxdiC5xAzsoPMgJAxelTIMgOFci+ndfnXH2la4glFkPX5J57nWcCE2yyUl8epmTCvSxnMhM=
-X-Received: by 2002:a05:651c:907:b0:26f:bb25:f66c with SMTP id
- e7-20020a05651c090700b0026fbb25f66cmr15471794ljq.132.1666733537626; Tue, 25
- Oct 2022 14:32:17 -0700 (PDT)
-MIME-Version: 1.0
-From:   Nathan Hebert <nhebert@chromium.org>
-Date:   Tue, 25 Oct 2022 14:32:06 -0700
-Message-ID: <CANHAJhH41JnZA_fPNczMpBwnTy5P-5xhgPY5_eHkOsBzx0Qy=A@mail.gmail.com>
-Subject: [PULL V4]: qcom: SC7180 and SC7280 venus firmware updates
-To:     linux-firmware@kernel.org
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aqCyDzBlgI0lxrRS0dVDOBPWnZoyypnDJaDYBUnhBSA=;
+        b=Ju2DuGgMbLFUBkyiLYTwQ2HDwh0OqmR1s0Q/AoQtlo5sTl+wJdaXxxilqWJn4FXH7h
+         L0rvTliKwwGXcWUfAbPluFa/l+FSe0IK2wX0RQKh/9uSmLlalk/Wqk3VpleXlyVLZkdU
+         totqxQBOWEEzYm/pG6iaki4YReeJcCdMFua+ozuNDEQI4TWevdnkb4T7TwgfFyOeCUCl
+         Ys74JxZzVrUBsB8l24Blb0E1PZnwsROZ5Kr6fcL9JlEqie7d0Bc1h+ZkmuILXKVeK5Ow
+         SYP2HM/TqjHbaZORGLkNNM2QvpJ0p6FehICnjOcgHMhidQcVApmzRhia2gRFWA20CnZl
+         Us1w==
+X-Gm-Message-State: ACrzQf2GyS5D6ACzXk6VVB8SXtYsqqqKGzTr/TLkF4XmphKal7J0Kwz2
+        0nZ0g6D5m7wrTtIOoupMgxCoQg==
+X-Google-Smtp-Source: AMsMyM697VIOL/dbE1vPoZgpCLB2Ws+ra6abn/XsvHDNZhHcaNpAUdaRm0Fv/A2x82DlF7T0Pz/cAw==
+X-Received: by 2002:a05:6602:2ac9:b0:6bc:17dd:3800 with SMTP id m9-20020a0566022ac900b006bc17dd3800mr22880722iov.72.1666733634729;
+        Tue, 25 Oct 2022 14:33:54 -0700 (PDT)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id h12-20020a92c08c000000b003001f822301sm1356232ile.81.2022.10.25.14.33.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Oct 2022 14:33:54 -0700 (PDT)
+Date:   Tue, 25 Oct 2022 21:33:53 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Fritz Koenig <frkoenig@chromium.org>,
-        Vikash Garodia <vgarodia@qti.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+Subject: Re: [PATCH] thermal: qcom-spmi-temp-alarm: Log the actual max stage
+ 2 threshold
+Message-ID: <Y1hWQXnl7ko0EJDw@google.com>
+References: <20221025171453.1.I13c2a23f276fb63bfc225aeab0bf0db9560a90e0@changeid>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221025171453.1.I13c2a23f276fb63bfc225aeab0bf0db9560a90e0@changeid>
 X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -64,65 +78,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit 48407ffd7adb9511701547068b1e6f0956bd1c94:
+I just saw that Luca already posted a similar patch:
 
-  cnm: update chips&media wave521c firmware. (2022-10-17 10:20:43 -0400)
+https://lore.kernel.org/lkml/CAHLCerN+-5qKsRmpuF55RdeUMZJZuiZJ-7O4LnM8+QuHJfs0mQ@mail.gmail.com/T/
 
-are available in the Git repository at:
+Please disregard this one.
 
-  https://github.com/nathan-google/linux-firmware.git
-update_sc7180_and_sc7280_firmware_v4
-
-for you to fetch changes up to 05df8e65182f7ee945f826e41b5eaa17c188a8df:
-
-  qcom: update venus firmware files for VPU-2.0 (2022-10-25 14:16:59 -0700)
-
-----------------------------------------------------------------
-Nathan Hebert (4):
-      qcom: replace split SC7180 venus firmware images with symlink
-      qcom: update venus firmware file for v5.4
-      qcom: remove split SC7280 venus firmware images
-      qcom: update venus firmware files for VPU-2.0
-
- WHENCE                   |  24 +++---------------------
- qcom/venus-5.4/venus.b00 | Bin 212 -> 0 bytes
- qcom/venus-5.4/venus.b01 | Bin 6808 -> 0 bytes
- qcom/venus-5.4/venus.b02 | Bin 873596 -> 0 bytes
- qcom/venus-5.4/venus.b03 | Bin 33792 -> 0 bytes
- qcom/venus-5.4/venus.b04 |   1 -
- qcom/venus-5.4/venus.mbn | Bin 919708 -> 921236 bytes
- qcom/venus-5.4/venus.mdt | Bin 7020 -> 0 bytes
- qcom/vpu-2.0/venus.b00   | Bin 692 -> 0 bytes
- qcom/vpu-2.0/venus.b01   | Bin 7376 -> 0 bytes
- qcom/vpu-2.0/venus.b02   | Bin 300 -> 0 bytes
- qcom/vpu-2.0/venus.b03   | Bin 20 -> 0 bytes
- qcom/vpu-2.0/venus.b04   | Bin 20 -> 0 bytes
- qcom/vpu-2.0/venus.b05   | Bin 20 -> 0 bytes
- qcom/vpu-2.0/venus.b06   | Bin 20 -> 0 bytes
- qcom/vpu-2.0/venus.b07   | Bin 24 -> 0 bytes
- qcom/vpu-2.0/venus.b08   | Bin 16 -> 0 bytes
- qcom/vpu-2.0/venus.b09   | Bin 939184 -> 0 bytes
- qcom/vpu-2.0/venus.b10   | Bin 42976 -> 0 bytes
- qcom/vpu-2.0/venus.b19   |   1 -
- qcom/vpu-2.0/venus.mbn   | Bin 2031188 -> 2031620 bytes
- qcom/vpu-2.0/venus.mdt   | Bin 8068 -> 0 bytes
- 22 files changed, 3 insertions(+), 23 deletions(-)
- delete mode 100644 qcom/venus-5.4/venus.b00
- delete mode 100644 qcom/venus-5.4/venus.b01
- delete mode 100644 qcom/venus-5.4/venus.b02
- delete mode 100644 qcom/venus-5.4/venus.b03
- delete mode 100644 qcom/venus-5.4/venus.b04
- delete mode 100644 qcom/venus-5.4/venus.mdt
- delete mode 100644 qcom/vpu-2.0/venus.b00
- delete mode 100644 qcom/vpu-2.0/venus.b01
- delete mode 100644 qcom/vpu-2.0/venus.b02
- delete mode 100644 qcom/vpu-2.0/venus.b03
- delete mode 100644 qcom/vpu-2.0/venus.b04
- delete mode 100644 qcom/vpu-2.0/venus.b05
- delete mode 100644 qcom/vpu-2.0/venus.b06
- delete mode 100644 qcom/vpu-2.0/venus.b07
- delete mode 100644 qcom/vpu-2.0/venus.b08
- delete mode 100644 qcom/vpu-2.0/venus.b09
- delete mode 100644 qcom/vpu-2.0/venus.b10
- delete mode 100644 qcom/vpu-2.0/venus.b19
- delete mode 100644 qcom/vpu-2.0/venus.mdt
+On Tue, Oct 25, 2022 at 05:15:08PM +0000, Matthias Kaehlcke wrote:
+> If the critical trip point of the thermal zone is higher than
+> the max threshold of the PMIC log the actual max threshold of the
+> chip, not the gen1 max threshold of 140°C.
+> 
+> Reported-by: Luca Weiss <luca.weiss@fairphone.com>
+> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+> 
+>  drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+> index be785ab37e53..bdfe2129c357 100644
+> --- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+> +++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+> @@ -252,7 +252,8 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
+>  			disable_s2_shutdown = true;
+>  		else
+>  			dev_warn(chip->dev,
+> -				 "No ADC is configured and critical temperature is above the maximum stage 2 threshold of 140 C! Configuring stage 2 shutdown at 140 C.\n");
+> +				 "No ADC is configured and critical temperature is above the maximum stage 2 threshold of %d C! Configuring stage 2 shutdown at %d C.\n",
+> +				 stage2_threshold_max / 1000, stage2_threshold_max / 1000);
+>  	}
+>  
+>  skip:
+> -- 
+> 2.38.0.135.g90850a2211-goog
+> 
