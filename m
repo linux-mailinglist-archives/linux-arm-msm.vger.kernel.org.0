@@ -2,235 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C32AF60D4FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 21:52:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 474A060D51D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Oct 2022 22:04:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232572AbiJYTwG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Oct 2022 15:52:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53728 "EHLO
+        id S229682AbiJYUED (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Oct 2022 16:04:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232499AbiJYTwA (ORCPT
+        with ESMTP id S232708AbiJYUEC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Oct 2022 15:52:00 -0400
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF2C3106E08
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Oct 2022 12:51:58 -0700 (PDT)
-Received: by mail-io1-xd2d.google.com with SMTP id q75so1648731iod.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Oct 2022 12:51:58 -0700 (PDT)
+        Tue, 25 Oct 2022 16:04:02 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92DD911A951
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Oct 2022 13:04:00 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id z24so8649887ljn.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Oct 2022 13:04:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kzxGUpzbXxImm84chnls9JcE5FMkEnfBOo4eTdKEFsk=;
-        b=d7vJizjehnoLsN4v+Aizmx7Y1q2iL54jeFUJWrbcm4/2ynOw1RDegLc409znFarKsw
-         HE9OKWnp9eW4nJnTnie9nMmTs+2rO4s2vMBmcmG7yaFlbqIBxdK8pUOh6ygb+d4M6qxy
-         ljle91MMhrF1omsAOxXQJJvBcA7JTAvRMQUrJA0Zpehe7rSrEKQOMGB+6k/TTmxdB5Ox
-         8rmLW0Q89Ta5FD10PT/GpJOcbdsgBq3IsiTVnIBHyyxDwd7+ulg9orZkRoUh0vhRs4Ke
-         O9B4Xi4a7aBDBFAMagF2rgxg8zYoLO2aPJzKJnxg/RW9/kERYCV+qxKY7wsJrDr5AqE2
-         kAzw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=YFJl/4cGNkCZP1NH99JYcngmGYwQXPAhMhIz5gxLTBA=;
+        b=R6dypa8AWI2UvZSLBjThDl80b/DPa37GxSaQaTA/kSSrqQMFeE0h3QaVyaxDBFxWls
+         Vb5jS92SLWmpF65G93NBsWZpbHz4p3tyN5chbRocvrKmJijCCgISVxtkEZgoo885dJJ0
+         LmP0z7U5rT7zQ/m+icAyhKrNXDRXZmFxZ2aodd6VVTBw7VibgwrUUnnaUog0LPZ2a+4V
+         ja2VON1lGj6OFjIInXSkOOPfnfXkVqCYakBinl7WsHHR3ofPq9DGopPE21kgECSlT6by
+         OqdNTxn/OcN7hPb6phQqJQwIREEImm7lAivxDD8kRs27Fdxyi3O6GaPMYuXkH+IUTLUe
+         3PFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kzxGUpzbXxImm84chnls9JcE5FMkEnfBOo4eTdKEFsk=;
-        b=pYt07dqZFQY3KWExjv/37lZOdwjPy/E2Tjha98YysSo4VdldwKy5wtLvGNLPkKXM+A
-         yhYg41pbf09nhfRrm9t3Cg66rTfbVezDgntpQCOs08pl6SCSv+D3VglD4CV68FaGZPP3
-         Rm+vKa8Uk1ILnQF0ZcvZdl8qnbHbTO5aI/qxueuQ68Qe8l6LTYpwSsz4AzDCWsWmj2pT
-         kIuL9IjPqLUHoRwAnjfu5E8Eu1NIzLq8lYVSds0NZZIxZPRrk3+LUdHyyqn9LhOKnsg+
-         +SX4hjl/+EApKYKpN6j8yBX8mKF7GU/FHROv7lCf9e7mgmpfZ847SXVtPFh9gG1ZR6PX
-         wJXg==
-X-Gm-Message-State: ACrzQf2jb7t/zkKiZiYH1BZGofkgOrVlB4RKX8xXk5A3BgLYoRac+OzN
-        T2IbcaTnsbtla/vRw1+0DPUJNg==
-X-Google-Smtp-Source: AMsMyM5ljODGAxjMX1WHPCX8qeMMu35WtxFHsuESq6U44Gy7kpGxTVEzLOVKi7fg8V97Z2L5irPFQw==
-X-Received: by 2002:a05:6638:1687:b0:374:fbbd:6617 with SMTP id f7-20020a056638168700b00374fbbd6617mr4754988jat.201.1666727518613;
-        Tue, 25 Oct 2022 12:51:58 -0700 (PDT)
-Received: from localhost.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id y10-20020a056638014a00b00349d2d52f6asm1211719jao.37.2022.10.25.12.51.56
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YFJl/4cGNkCZP1NH99JYcngmGYwQXPAhMhIz5gxLTBA=;
+        b=IZoxDotHxJiMJFkWAC8M903m2p3SD/K4LYql5dr1jk5LRQSF6X5TEH9SdEyIqVffup
+         c3Wsp/omZPq//MaZ+mMjbZ0ZzKvx6k8jOUDjOAdP8ZJqjuT7Zm9fU3OxeLGEsMaZO2ib
+         rQMJjsaY6TGTvTYVP/gZBWGFl9rqNH9ECFRiZnMth1DRMF8QxUMwmXaU98LjHn848Hqj
+         t3xsa4BMvabIBEKFtFNdfLHxm6/eKnJ2xd5E03TCmfFvXT2P4iMDJxZRTPv9fljht8XI
+         ctkJRQkX1YGF5MqdlJ5EgZSaK9N0Lm7/hB89YqmW8ufoPLi1Jx9+RuLeo4D03jnTIviL
+         cDPw==
+X-Gm-Message-State: ACrzQf0EUH4c76glE/RBcAXi0O0qGo3A5d4qto+xfZBSLx8u+Y4zFn+x
+        MddCXoM0SxjMBUxy7ERdNiXszA==
+X-Google-Smtp-Source: AMsMyM6pV+qirkwGMYAcS1uZ0I3LCkCdOZYsFxZ9cbWrrtukSGRqaIoFxdaotaZT+sBNn2oTAx4prw==
+X-Received: by 2002:a2e:9656:0:b0:277:55c:a2f6 with SMTP id z22-20020a2e9656000000b00277055ca2f6mr6506458ljh.475.1666728238920;
+        Tue, 25 Oct 2022 13:03:58 -0700 (PDT)
+Received: from localhost.localdomain ([195.165.23.90])
+        by smtp.gmail.com with ESMTPSA id e6-20020a195006000000b00494a1e875a9sm550644lfb.191.2022.10.25.13.03.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Oct 2022 12:51:57 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 4/4] net: ipa: determine filter table size from memory region
-Date:   Tue, 25 Oct 2022 14:51:43 -0500
-Message-Id: <20221025195143.255934-5-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221025195143.255934-1-elder@linaro.org>
-References: <20221025195143.255934-1-elder@linaro.org>
+        Tue, 25 Oct 2022 13:03:58 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v3 0/2] drm/msm: rework msm_iommu_new() and .create_address_space cb
+Date:   Tue, 25 Oct 2022 23:03:55 +0300
+Message-Id: <20221025200357.3637161-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently we assume that any filter table contains a fixed number
-of entries.  Like routing tables, the number of entries in a filter
-table is limited only by the size of the IPA-local memory region
-used to hold the table.
+Simplify the MSM IOMMU code a bit. This moves iommu_domain_alloc() and
+iommu_set_pgtable_quirks() calls to msm_iommu_new() to get rid of the
+disbalance, when the iommu domain is allocated by the caller of
+msm_iommu_new() and then it is freed by the msm_iommu code itself.
 
-Stop assuming that a filter table has exactly 14 entries.  Instead,
-determine the number of entries in a routing table by dividing its
-memory region size by the size of an entry.  (Note that the first
-"entry" in a filter table contains an endpoint bitmap.)
+Changes since v2:
+- Reorder the patches.
+- Move iommu_set_pgtable_quirks() to the msm_iommu_new() too. It will
+  not work if it's called after attaching the device.
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/ipa.h       |  2 ++
- drivers/net/ipa/ipa_cmd.c   |  8 ++------
- drivers/net/ipa/ipa_table.c | 20 +++++++++++---------
- drivers/net/ipa/ipa_table.h |  3 ---
- 4 files changed, 15 insertions(+), 18 deletions(-)
+Changes since v1:
+- Fixed the uninitialized variable usage in a6xx_gmu_memory_probe()
+  (reported by lkp)
 
-diff --git a/drivers/net/ipa/ipa.h b/drivers/net/ipa/ipa.h
-index 5c95acc70bb33..82225316a2e25 100644
---- a/drivers/net/ipa/ipa.h
-+++ b/drivers/net/ipa/ipa.h
-@@ -41,6 +41,7 @@ struct ipa_interrupt;
-  * @table_virt:		Virtual address of filter/route table content
-  * @route_count:	Total number of entries in a routing table
-  * @modem_route_count:	Number of modem entries in a routing table
-+ * @filter_count:	Maximum number of entries in a filter table
-  * @interrupt:		IPA Interrupt information
-  * @uc_powered:		true if power is active by proxy for microcontroller
-  * @uc_loaded:		true after microcontroller has reported it's ready
-@@ -88,6 +89,7 @@ struct ipa {
- 	__le64 *table_virt;
- 	u32 route_count;
- 	u32 modem_route_count;
-+	u32 filter_count;
- 
- 	struct ipa_interrupt *interrupt;
- 	bool uc_powered;
-diff --git a/drivers/net/ipa/ipa_cmd.c b/drivers/net/ipa/ipa_cmd.c
-index 08e3f395a9453..bb3dfa9a2bc81 100644
---- a/drivers/net/ipa/ipa_cmd.c
-+++ b/drivers/net/ipa/ipa_cmd.c
-@@ -151,11 +151,6 @@ static void ipa_cmd_validate_build(void)
- 	 * maximum size.  IPv4 and IPv6 filter tables have the same number
- 	 * of entries.
- 	 */
--#define TABLE_SIZE	(IPA_FILTER_COUNT_MAX * sizeof(__le64))
--	BUILD_BUG_ON(TABLE_SIZE > field_max(IP_FLTRT_FLAGS_HASH_SIZE_FMASK));
--	BUILD_BUG_ON(TABLE_SIZE > field_max(IP_FLTRT_FLAGS_NHASH_SIZE_FMASK));
--#undef TABLE_SIZE
--
- 	/* Hashed and non-hashed fields are assumed to be the same size */
- 	BUILD_BUG_ON(field_max(IP_FLTRT_FLAGS_HASH_SIZE_FMASK) !=
- 		     field_max(IP_FLTRT_FLAGS_NHASH_SIZE_FMASK));
-@@ -177,7 +172,8 @@ bool ipa_cmd_table_init_valid(struct ipa *ipa, const struct ipa_mem *mem,
- 	struct device *dev = &ipa->pdev->dev;
- 	u32 size;
- 
--	size = route ? ipa->route_count * sizeof(__le64) : mem->size;
-+	size = route ? ipa->route_count : ipa->filter_count + 1;
-+	size *= sizeof(__le64);
- 
- 	/* Size must fit in the immediate command field that holds it */
- 	if (size > size_max) {
-diff --git a/drivers/net/ipa/ipa_table.c b/drivers/net/ipa/ipa_table.c
-index c9ab6a3fabbc3..db1992eaafaa9 100644
---- a/drivers/net/ipa/ipa_table.c
-+++ b/drivers/net/ipa/ipa_table.c
-@@ -160,9 +160,9 @@ bool ipa_filter_map_valid(struct ipa *ipa, u32 filter_map)
- 	}
- 
- 	count = hweight32(filter_map);
--	if (count > IPA_FILTER_COUNT_MAX) {
-+	if (count > ipa->filter_count) {
- 		dev_err(dev, "too many filtering endpoints (%u, max %u)\n",
--			count, IPA_FILTER_COUNT_MAX);
-+			count, ipa->filter_count);
- 
- 		return false;
- 	}
-@@ -178,7 +178,7 @@ static dma_addr_t ipa_table_addr(struct ipa *ipa, bool filter_mask, u16 count)
- 	if (!count)
- 		return 0;
- 
--	WARN_ON(count > max_t(u32, IPA_FILTER_COUNT_MAX, ipa->route_count));
-+	WARN_ON(count > max_t(u32, ipa->filter_count, ipa->route_count));
- 
- 	/* Skip over the zero rule and possibly the filter mask */
- 	skip = filter_mask ? 1 : 2;
-@@ -586,11 +586,13 @@ bool ipa_table_mem_valid(struct ipa *ipa, bool filter)
- 	if (mem_ipv4->size != mem_ipv6->size)
- 		return false;
- 
--	/* Compute the number of entries, and for routing tables, record it */
-+	/* Compute and record the number of entries for each table type */
- 	count = mem_ipv4->size / sizeof(__le64);
- 	if (count < 2)
- 		return false;
--	if (!filter)
-+	if (filter)
-+		ipa->filter_count = count - 1;	/* Filter map in first entry */
-+	else
- 		ipa->route_count = count;
- 
- 	/* Table offset and size must fit in TABLE_INIT command fields */
-@@ -645,7 +647,7 @@ bool ipa_table_mem_valid(struct ipa *ipa, bool filter)
-  *
-  * The first entry in a filter table contains a bitmap indicating which
-  * endpoints contain entries in the table.  In addition to that first entry,
-- * there are at most IPA_FILTER_COUNT_MAX entries that follow.  Filter table
-+ * there is a fixed maximum number of entries that follow.  Filter table
-  * entries are 64 bits wide, and (other than the bitmap) contain the DMA
-  * address of a filter rule.  A "zero rule" indicates no filtering, and
-  * consists of 64 bits of zeroes.  When a filter table is initialized (or
-@@ -669,7 +671,7 @@ bool ipa_table_mem_valid(struct ipa *ipa, bool filter)
-  *	|\   |-------------------|
-  *	| ---- zero rule address | \
-  *	|\   |-------------------|  |
-- *	| ---- zero rule address |  |	IPA_FILTER_COUNT_MAX
-+ *	| ---- zero rule address |  |	Max IPA filter count
-  *	|    |-------------------|   >	or IPA route count,
-  *	|	      ...	    |	whichever is greater
-  *	 \   |-------------------|  |
-@@ -687,7 +689,7 @@ int ipa_table_init(struct ipa *ipa)
- 
- 	ipa_table_validate_build();
- 
--	count = max_t(u32, IPA_FILTER_COUNT_MAX, ipa->route_count);
-+	count = max_t(u32, ipa->filter_count, ipa->route_count);
- 
- 	/* The IPA hardware requires route and filter table rules to be
- 	 * aligned on a 128-byte boundary.  We put the "zero rule" at the
-@@ -723,7 +725,7 @@ int ipa_table_init(struct ipa *ipa)
- 
- void ipa_table_exit(struct ipa *ipa)
- {
--	u32 count = max_t(u32, 1 + IPA_FILTER_COUNT_MAX, ipa->route_count);
-+	u32 count = max_t(u32, 1 + ipa->filter_count, ipa->route_count);
- 	struct device *dev = &ipa->pdev->dev;
- 	size_t size;
- 
-diff --git a/drivers/net/ipa/ipa_table.h b/drivers/net/ipa/ipa_table.h
-index 79583b16f363f..8a4dcd7df4c0f 100644
---- a/drivers/net/ipa/ipa_table.h
-+++ b/drivers/net/ipa/ipa_table.h
-@@ -10,9 +10,6 @@
- 
- struct ipa;
- 
--/* The maximum number of filter table entries (IPv4, IPv6; hashed or not) */
--#define IPA_FILTER_COUNT_MAX	14
--
- /**
-  * ipa_filter_map_valid() - Validate a filter table endpoint bitmap
-  * @ipa:	IPA pointer
+Dmitry Baryshkov (2):
+  drm/msm: move domain allocation into msm_iommu_new()
+  drm/msm: remove duplicated code from a6xx_create_address_space
+
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c    |  2 +-
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c    |  2 +-
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c    |  2 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c    | 12 ++++----
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c    | 36 +-----------------------
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c  | 29 ++++++++++---------
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h  |  9 ++++--
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 19 +++++++------
+ drivers/gpu/drm/msm/msm_drv.c            | 18 ++++++------
+ drivers/gpu/drm/msm/msm_iommu.c          | 20 +++++++++++--
+ drivers/gpu/drm/msm/msm_mmu.h            |  3 +-
+ 11 files changed, 67 insertions(+), 85 deletions(-)
+
 -- 
-2.34.1
+2.35.1
 
