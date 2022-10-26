@@ -2,96 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB28160E989
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 21:47:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C777260E98C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 21:48:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234896AbiJZTrx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Oct 2022 15:47:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42224 "EHLO
+        id S234108AbiJZTsz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Oct 2022 15:48:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235263AbiJZTrU (ORCPT
+        with ESMTP id S233777AbiJZTsy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Oct 2022 15:47:20 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30007E22E2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 12:47:04 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id bx35so17777637ljb.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 12:47:04 -0700 (PDT)
+        Wed, 26 Oct 2022 15:48:54 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95B291A211
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 12:48:53 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id bs14so23819202ljb.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 12:48:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VJjRsujDl/3v+9Mf/eSBWkfplDNIchatoDdNLqZcg1w=;
-        b=RhCNpnDflZSD5XHtPqzpeSJCPwFGlzWnDqMozcUdrOPtYCP9AE4ouqssPyrSh9lzG9
-         3QRKJf6pRNYx/wUp0OI5LVpSIseeLcvvpriFJS53HP11SH8GQ6q9vczrrVykiXJZJG/Q
-         W7qzYAaZJznwkkj7vHwVDLr6Wkbvl+WG6f1m889cBG8MhQqcwjprcx09r04HxP+Zo4nF
-         ut+axCQ8T4q6i93I36aid/D5/SchNdcdXLFbpPfj4GVFkaMkLv8YAUK/3j4GDxwQUyue
-         Rxix78k3GKPg1isz0CpMwfV66KvXkI26KsMoNI+DkYfGhFS2zS93CJVA0Ps4DlXzX7fB
-         jv2g==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IcF7nC6qZeFscVULWcDXtlNjrTcWvwqdBFLX1fChCl0=;
+        b=EKiJC2wvtyc1pnGNDD0QLOFeRSr1ERfSurDZO3BdCMbQoSuB/yzO/PjN/0+B3pB9SP
+         2cNy7mplk1MfulhWHanisX3xPgegT3DlKqsTJ8N84q7J1zSBwzCft3tKfGVNOH7tM7DQ
+         EuukqjcPoafyRLO1ci85aJAXy2HtYiv+3lvQo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VJjRsujDl/3v+9Mf/eSBWkfplDNIchatoDdNLqZcg1w=;
-        b=RRqTBxMp9x1ZPSi8+PYhPex9Tx/OYgyUzA2uGialO8sM2sT2tOr+Yhr8EqS4Hg/q4p
-         3s4pDOOljCvdDQ6m/3voDiOVr7bxeJq79e1SCZxBKuGrSEGbgzv+1qfKs2sR5poGPXrS
-         WiPGJjsb5GCfJjD1MnInb+GAYSa53vBNm0T+GyibN8Q8W7eEXLfO5sqxxiz4xiFiE/xs
-         rUJZg0wy7hXB2LXHOhGpPJV5L5L+edbsFErFJrU3PNqksrLRf+ZeJeosPnldhKvxsY3A
-         Mxs5JVpe57Bmzu8QAsYA5SbLZP2jWu4WSMlKR/smRSh0JWGwPa6bHfwDd3mw812dVRqW
-         JnjA==
-X-Gm-Message-State: ACrzQf1OH7ZTk4kWyh02qXGvirKLHVAL2dRhmzg6NM1SIP0QO2m1nna/
-        dSDhyHHhYa4GCcca9TwVOdnQ4w==
-X-Google-Smtp-Source: AMsMyM7U2yFByXQb4uotUhiQB0V/tO2+T+0Nol8A0/pMBDv1DjnXOhYEv4jUgj9ioEH6sA3z+XGReg==
-X-Received: by 2002:a05:651c:a12:b0:26f:db13:4bd8 with SMTP id k18-20020a05651c0a1200b0026fdb134bd8mr17533154ljq.354.1666813622554;
-        Wed, 26 Oct 2022 12:47:02 -0700 (PDT)
-Received: from [10.27.10.248] ([195.165.23.90])
-        by smtp.gmail.com with ESMTPSA id h2-20020a05651211c200b004acd6e441cesm942826lfr.205.2022.10.26.12.47.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Oct 2022 12:47:02 -0700 (PDT)
-Message-ID: <71c3fdf1-b03d-391d-a731-de8a5a66fdca@linaro.org>
-Date:   Wed, 26 Oct 2022 22:47:00 +0300
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IcF7nC6qZeFscVULWcDXtlNjrTcWvwqdBFLX1fChCl0=;
+        b=a4OvT1V9EyrLy0wglMk7bUUdfkmsuPVR4E+n/lpDd/EhXa6+qrFKp0zrS+jY5vHFG1
+         WJ5g3TSb3kR67DRH7fgPlSnaEldmbkL+oaYjhP+Qy3E7CqyOAUyQmkDbXnQIQzL5/mOy
+         KsEw/NoSHUtFGbGHfjb16qBRR43pNhM1u91SE7mr2idLgmrXsus/k3aEzpKJnElZeb9C
+         XZ0RvaB0BF5KQ5YE+yOlfKF7gYS0TzTfrtqd9wasOBGmJWVgyu5cWi7gmbCa+dgWh0AC
+         Io0WD2Z/O/YHWzvRMfTkWyyQGxusYa8Ug3sEfCdKm5QLh7j+2HQlPchP0CYcgWvaktDZ
+         eakg==
+X-Gm-Message-State: ACrzQf2hIxq348aYR+TZkowFxyTC0ZvsSpEOGRtosYhP+QamB61I7rht
+        LDsYJWNVuOcBKT7heD0YWJUiqIF4qrUSmp6fdWXV4RgNFo8=
+X-Google-Smtp-Source: AMsMyM5oma+Er50gNfY2cB0Oq1hTIo8FlcK+IHcNScdvKqWoTxFq43C3FsNqIhwDSfDNdd3EhE3wM1lS6CydgPL3c3E=
+X-Received: by 2002:a05:651c:1111:b0:26f:eb56:5844 with SMTP id
+ e17-20020a05651c111100b0026feb565844mr17861711ljo.4.1666813731908; Wed, 26
+ Oct 2022 12:48:51 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 26 Oct 2022 15:48:51 -0400
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH v6 03/21] gunyah: Common types and error codes for Gunyah
- hypercalls
-Content-Language: en-GB
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+In-Reply-To: <20221025164915.1.I38e2545eda2b3bd3fef6b41c98f451e32851ae70@changeid>
+References: <20221025164915.1.I38e2545eda2b3bd3fef6b41c98f451e32851ae70@changeid>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Wed, 26 Oct 2022 15:48:51 -0400
+Message-ID: <CAE-0n53uR6WrkTXs-tWgd-jpFB8e776hX-Sv+WcZoAY4H9W5AQ@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Villager doesn't have NVME
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Kalle Valo <kvalo@kernel.org>, devicetree@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221026185846.3983888-1-quic_eberman@quicinc.com>
- <20221026185846.3983888-4-quic_eberman@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221026185846.3983888-4-quic_eberman@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -100,20 +72,12 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/10/2022 21:58, Elliot Berman wrote:
-> Add architecture-independent standard error codes, types, and macros for
-> Gunyah hypercalls.
-> 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+Quoting Douglas Anderson (2022-10-25 16:52:39)
+> The sc7280-herobrine-villager derivative doesn't have NVME enabled so
+> we shouldn't mark the PCIe nodes as "okay" since they're just for
+> boards that have NVME.
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->   MAINTAINERS            |  1 +
->   include/linux/gunyah.h | 74 ++++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 75 insertions(+)
->   create mode 100644 include/linux/gunyah.h
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
--- 
-With best wishes
-Dmitry
-
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
