@@ -2,71 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3327060E5A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 18:45:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CFE160E5AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 18:46:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233718AbiJZQpM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Oct 2022 12:45:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41838 "EHLO
+        id S233760AbiJZQqQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Oct 2022 12:46:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233752AbiJZQpK (ORCPT
+        with ESMTP id S233809AbiJZQqM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Oct 2022 12:45:10 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A835C2BB3B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 09:45:08 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id b2so29867998lfp.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 09:45:08 -0700 (PDT)
+        Wed, 26 Oct 2022 12:46:12 -0400
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB4D0D7E3A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 09:46:08 -0700 (PDT)
+Received: by mail-qt1-x82a.google.com with SMTP id f22so10341324qto.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 09:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:cc:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=H7iGH0jCRRF8jnKlYa8LooBNl7HXW3ndfP8Ygj8/9LU=;
-        b=f8mLasIcQlGNu1JsI61aP8xAvJi/H4LSgM4xG4q7FmrSVnWvTcFJ17XxWsMT2aK7r+
-         aFImRGqQi2XxCoB3pDtjZoEDXsSl1DBTTxSDfbzac5gyRQTitDY/2c45efNGdNm39FcH
-         fUCDrxn83Xnp2fRjAuw4XDUCscF3tLRxaNjkyXqncjtu/JFirqiFUCspnJgD/yAUHs3p
-         jU57MoaocCyU7mgNtwIDfHYkjkngRRs5AQm3aPtKIatiiOqaCJFiCAh7qIsvNIcgwYzh
-         OnlK2TXdCeJU+3UiMR6bOX63Hs63z6z5T74Okeh0QJ4EcjiRlSsVk2ctkqsdjOK2YfZw
-         Ut/w==
+        bh=SMheSMSekbziACF9KD/QIawPn1J9B/ZRlR72lMIdU3o=;
+        b=Fxlg1CvaJwqqgmRMrgdlnSe1Elacu30GnJi1VcTxfXDIGaS9b7dk6BDN8vwq/UCCQL
+         vhbwa+ZvUOwQnKv6iwSmKKcvy+Sgk4IusDuZJiAFvGGiyp2odTmYwOqGEhraw+yW6ffr
+         ynDkkJYjYZrMZPKg0OmX7HIVlRIaCguv/cY/LCmqvwjuI+8wtYc+OpLmRTGtXMTU8T1V
+         JxiWInr8FSVRoz234r1W/GT1s2jPfN+EKoBnSOiRMpD1/6bx+cRv9YFeEO7KGF5Nny4d
+         ZeFybqrRzgu4/0Cu+bEWI74AyfohMy5m/SJM5m1VMeiN3+ssP5ZPSruun+vWfkafNTkn
+         6SPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:cc:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=H7iGH0jCRRF8jnKlYa8LooBNl7HXW3ndfP8Ygj8/9LU=;
-        b=ix4RxqKbKyQhaK15BTPUn3QlC6eDAzasztihNI5tO1/dDy0vkUNNb2RBeRP+dC13Ll
-         r4O0TBlU2vzRz0iyn+nYne8WcyTrVevjpJRzZbjW/vA0SDnqwvR0C+fotIaEaHJLpPOP
-         2FuOjtv7a11og6iT25UrPfy+eSgLyXb5db1qooprSB3uMAPr3D7y7GAJ9rHy7iM5Tp9a
-         hfA3NpkFyZEmhqQ3r+8QeaQ+YS9vRO1fCcttDuaa7WJGm2MR7KPBm/H0BCKywOaOnmQA
-         pbBf/y+jkV4m/DpZkpMDGqADu/zSGcEZX8Nif7KILe1ndKS8oOPqjczFprOv/7IEGKdo
-         AC6Q==
-X-Gm-Message-State: ACrzQf3CdyLBxHYZhN9tFz1gPz2/SWCC4bfDd+DOim2XLLGdrdjf/Qe2
-        JUtiowWFq9RTbQAVC9hfxT14Cw==
-X-Google-Smtp-Source: AMsMyM7c5KMB9Ify6vaDssr65IJB+YQYn2ig8pKKgsff7SJZQMwMnQ5bROeYvaCFOGh8FFeaZW9hGg==
-X-Received: by 2002:a05:6512:2282:b0:4a2:7dc5:6630 with SMTP id f2-20020a056512228200b004a27dc56630mr16662394lfu.645.1666802706946;
-        Wed, 26 Oct 2022 09:45:06 -0700 (PDT)
-Received: from [10.27.10.248] ([195.165.23.90])
-        by smtp.gmail.com with ESMTPSA id p6-20020a05651238c600b0049313f77755sm890178lft.213.2022.10.26.09.45.06
+        bh=SMheSMSekbziACF9KD/QIawPn1J9B/ZRlR72lMIdU3o=;
+        b=oQmEL/v6+DHDTOTx7X8I6jlaOWGiRnGkDMN8EQXB8erfDDqj61O9o/J1OShFBxwdkQ
+         kh1Ounb4Ym+jm2hy1/St9S8K5hTfJaWKLBBW+6y4bgxT+TO4uarWjRwVKFKmGUuQOCtS
+         EMR+97W8qWfNjzNfXo80oIQndZ0lPnH1kOUxDNeZLrRWn9U6r/NZ6y3pAVzY1RvS+WAs
+         dY6IeFsR+ilZSfMZx90k9XblQE0O3X6vuhwz8dmP8OWdjV2Yqr8uRAyynzBObxswQiqU
+         P6eYPS6WSlOD6tzyr74S9pIHmv105yJOdUHr7POEncMbgFQ6IHE8LV+RQxNDJDYCrEM/
+         gAhw==
+X-Gm-Message-State: ACrzQf0J0UF9p6QuLHBwSEIuzh4D3hWa9VORxtSpAMp9mMRYlGgaSpF+
+        CgauNwyo8wtA2IC213jfZ7DZMg==
+X-Google-Smtp-Source: AMsMyM5Cwyc5F4+bGg7LrcAxX29LSjL4SMZBz/L+9GWcZ2aqfepUK2sSXlSGUYUEzi5Q8JFWDE1EHg==
+X-Received: by 2002:ac8:5712:0:b0:39c:cd48:25e4 with SMTP id 18-20020ac85712000000b0039ccd4825e4mr38044105qtw.581.1666802768083;
+        Wed, 26 Oct 2022 09:46:08 -0700 (PDT)
+Received: from [192.168.1.11] ([64.57.193.93])
+        by smtp.gmail.com with ESMTPSA id m8-20020a05620a290800b006ce40fbb8f6sm4285888qkp.21.2022.10.26.09.46.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Oct 2022 09:45:06 -0700 (PDT)
-Message-ID: <bdae97d3-d6a2-d508-cd86-5e427d8db00a@linaro.org>
-Date:   Wed, 26 Oct 2022 19:45:05 +0300
+        Wed, 26 Oct 2022 09:46:07 -0700 (PDT)
+Message-ID: <89071dbf-9a3e-a199-5599-571ee8dffcc1@linaro.org>
+Date:   Wed, 26 Oct 2022 12:46:05 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH] phy: qcom-qmp-pcie: Fix the SM8450 PCS registers
-Content-Language: en-GB
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     vkoul@kernel.org, andersson@kernel.org, kishon@ti.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-References: <20220910063857.17372-1-manivannan.sadhasivam@linaro.org>
- <f6ab7125-4f1a-61fc-cfeb-8988921c35b4@linaro.org>
- <20221026143152.GA93939@thinkpad>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221026143152.GA93939@thinkpad>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Thunderbird/102.4.0
+Subject: Re: [PATCH] dt-bindings: arm: qcom: document Google Cheza
+Content-Language: en-US
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+References: <20220918095430.18068-1-krzysztof.kozlowski@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220918095430.18068-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -78,75 +78,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/10/2022 17:31, Manivannan Sadhasivam wrote:
-> On Wed, Sep 21, 2022 at 04:06:10PM +0300, Dmitry Baryshkov wrote:
->> On 10/09/2022 09:38, Manivannan Sadhasivam wrote:
->>> In the PCS region, registers QPHY_V5_PCS_EQ_CONFIG4 and
->>> QPHY_V5_PCS_EQ_CONFIG5 should be used instead of QPHY_V5_PCS_EQ_CONFIG2
->>> and QPHY_V5_PCS_EQ_CONFIG3.
->>>
->>> This causes high latency when ASPM is enabled, so fix it!
->>
->> I have checked against vendor's tree [1]. The registers in question have
->> offsets 0x01c0f3e0 / 0x01c0f3e4. The sm8450.dtsi uses 0x1c0f200 as the PCS
->> region base for the PCIe PHY1. Thus the correct offsets for the table are
->> 0x1e0/0x1e4.
->>
->> There might be a mistake in the name of the register, but the address
->> corresponds to the address in the vendor's tree.
->>
+On 18/09/2022 05:54, Krzysztof Kozlowski wrote:
+> Document Google Cheza board compatibles recently added.
 > 
-> Right. Only the register name is wrong and I've got the offset wrong here.
-> But the actual latency issue is fixed by clearing the
-> QPHY_V4_PCS_PCIE_PRESET_P10_POST register in pcs_misc register space.
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
 
-Please, don't use v4 register names in v5.2 tables. If the register 
-matches, could you please add corresponding define?
+This one waits for a month. It has Rob's ack so I am not sure why.
 
-> 
-> I will check with Qcom on this behaviour and post v2 with register name fix.
-> 
-> Thanks,
-> Mani
-> 
->> [1] https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/waipio-pcie.dtsi#L520
->>
->>>
->>> Fixes: 2c91bf6bf290 ("phy: qcom-qmp: Add SM8450 PCIe1 PHY support")
->>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>> ---
->>>    drivers/phy/qualcomm/phy-qcom-qmp-pcie.c   | 4 ++--
->>>    drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h | 4 ++--
->>>    2 files changed, 4 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->>> index 4648467d5cac..b508903d77d0 100644
->>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->>> @@ -1332,8 +1332,8 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_rx_tbl[] = {
->>>    };
->>>    static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_pcs_tbl[] = {
->>> -	QMP_PHY_INIT_CFG(QPHY_V5_PCS_EQ_CONFIG2, 0x16),
->>> -	QMP_PHY_INIT_CFG(QPHY_V5_PCS_EQ_CONFIG3, 0x22),
->>> +	QMP_PHY_INIT_CFG(QPHY_V5_PCS_EQ_CONFIG4, 0x16),
->>> +	QMP_PHY_INIT_CFG(QPHY_V5_PCS_EQ_CONFIG5, 0x22),
->>>    	QMP_PHY_INIT_CFG(QPHY_V5_PCS_G3S2_PRE_GAIN, 0x2e),
->>>    	QMP_PHY_INIT_CFG(QPHY_V5_PCS_RX_SIGDET_LVL, 0x99),
->>>    };
->>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
->>> index 61a44519f969..cca6455ec98c 100644
->>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
->>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
->>> @@ -11,7 +11,7 @@
->>>    #define QPHY_V5_PCS_G3S2_PRE_GAIN			0x170
->>>    #define QPHY_V5_PCS_RX_SIGDET_LVL			0x188
->>>    #define QPHY_V5_PCS_RATE_SLEW_CNTRL1			0x198
->>> -#define QPHY_V5_PCS_EQ_CONFIG2				0x1e0
->>> -#define QPHY_V5_PCS_EQ_CONFIG3				0x1e4
->>> +#define QPHY_V5_PCS_EQ_CONFIG4				0x2e0
->>> +#define QPHY_V5_PCS_EQ_CONFIG5				0x2e4
->>>    #endif
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
 
