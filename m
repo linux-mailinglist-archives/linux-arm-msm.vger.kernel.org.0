@@ -2,127 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01D4160DA9B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 07:33:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B42360DAA6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 07:37:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232859AbiJZFdJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Oct 2022 01:33:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57938 "EHLO
+        id S232698AbiJZFhC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Oct 2022 01:37:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232201AbiJZFdJ (ORCPT
+        with ESMTP id S232954AbiJZFhB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Oct 2022 01:33:09 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2173495AF0;
-        Tue, 25 Oct 2022 22:33:08 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C9C6DB81F42;
-        Wed, 26 Oct 2022 05:33:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC72C433D6;
-        Wed, 26 Oct 2022 05:33:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666762385;
-        bh=V7dhDAxCberv0FazjYgXec3VLT03lzWX86stkGtppEk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qJa/c6BowPHO5yKpcUaxsmzQHmOpRlvpqMYSCznBiF4xz+WRBGIP2q8SZJ8yTYGIp
-         Byw+QTdzbZnX9e8gnDqm93sqXypT8FJnBNn58viSfoz3yJnhVQKxQLd0LhhoWKjmNz
-         M6Aik3BykhGrzCvzBRMB3RJlpnmmoQ8u3RoTp48pYqX4kdgZ1uMtIwrs8qAX/moNgt
-         X+f9AhCFkbucCVfQE8jCl5W8bHK2C3x2EKxHkygwQqEBGOJWtZzXv/X9Jgk2Z/5tjX
-         w+Vu+Ot8F+eGKrVlhZuw5BrXnU9vLihdVQX8LO+6hxsH+GTlNKKFD1tXGkcQYb5t99
-         KgY2a8YLFkqmA==
-Date:   Wed, 26 Oct 2022 11:03:00 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 10/13] arm64: dts: qcom: sm8450: add spmi node
-Message-ID: <Y1jGjCU47+tOBLus@matsya>
-References: <20211209103505.197453-1-vkoul@kernel.org>
- <20211209103505.197453-11-vkoul@kernel.org>
- <5035b6a3-164b-afa0-b714-4deb886f9f90@linaro.org>
- <9f696023-f2b4-ccd0-34a0-6f4d5848e862@linaro.org>
- <8c1428a6-f268-cb03-3e55-887d30236924@linaro.org>
- <3af48606-731f-6047-92ca-80435f401ae3@linaro.org>
- <d5726896-e62b-d19d-454b-700dd1c42222@linaro.org>
- <CAA8EJpovd0D154QUG1_EtCnCrffJBt+SPWQtLEZWb=dc_PLGjA@mail.gmail.com>
+        Wed, 26 Oct 2022 01:37:01 -0400
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3949AA367;
+        Tue, 25 Oct 2022 22:37:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1666762620; x=1698298620;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=11SS/CZdUJPAXR40E/mqXfwrhgxwSRXMWxOyR2uE4/k=;
+  b=gOww/MH8rPLAbc3EMqAZvTlQYKvEPTGoU3J7Hs7McenDsNfCUbvWTXtO
+   VBvFuQarzMuivAAaLBikAPhI81UPmZ8Ui12iR40X3Ib9f9Z1STuYh5KRv
+   RmqHQ3CsX1yxVDQ+gq/Rkb4c/cYtVjE4dduqvPjirGfxYUB9S/5HfJXZd
+   ExRzexxhe9ElowvmNxz8iwrQLw158+SLDCHK29uzRiYJYl1eFENu5t/z1
+   vxSZBT0/yb1m3iJWDss+9wj9bTTUsJsuoauWgW3cIAZgEo0rpVXdPQtrW
+   hBUJnR0YMe7D6TKrayjd1HB10GqBIX8eiEuadSUZZSmw+K8YHXyjyvP+2
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10511"; a="372074095"
+X-IronPort-AV: E=Sophos;i="5.95,213,1661842800"; 
+   d="scan'208";a="372074095"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2022 22:36:59 -0700
+X-IronPort-AV: E=McAfee;i="6500,9779,10511"; a="609830410"
+X-IronPort-AV: E=Sophos;i="5.95,213,1661842800"; 
+   d="scan'208";a="609830410"
+Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.252.53.127])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2022 22:36:53 -0700
+Message-ID: <7db0a98e-36c8-afee-5b0d-16b836ac8de0@intel.com>
+Date:   Wed, 26 Oct 2022 08:36:48 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpovd0D154QUG1_EtCnCrffJBt+SPWQtLEZWb=dc_PLGjA@mail.gmail.com>
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.4.0
+Subject: Re: [PATCH v3 6/7] mmc: sdhci_am654: Fix SDHCI_RESET_ALL for CQHCI
+To:     Brian Norris <briannorris@chromium.org>,
+        Florian Fainelli <f.fainelli@gmail.com>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Shawn Lin <shawn.lin@rock-chips.com>,
+        linux-mmc@vger.kernel.org, Al Cooper <alcooperx@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Sowjanya Komatineni <skomatineni@nvidia.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        linux-kernel@vger.kernel.org, Shawn Guo <shawnguo@kernel.org>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, Haibo Chen <haibo.chen@nxp.com>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        Faiz Abbas <faiz_abbas@ti.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>
+References: <20221024175501.2265400-1-briannorris@chromium.org>
+ <20221024105229.v3.6.I35ca9d6220ba48304438b992a76647ca8e5b126f@changeid>
+ <5b91c0eb-52aa-8431-c286-81b7feae84ce@intel.com>
+ <Y1hY57vkkOhybwE1@google.com>
+ <6268199c-78ca-8f55-0377-c14bb0299443@gmail.com>
+ <Y1higmSUMLsxvXyq@google.com>
+Content-Language: en-US
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+In-Reply-To: <Y1higmSUMLsxvXyq@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24-10-22, 21:58, Dmitry Baryshkov wrote:
-> On Mon, 24 Oct 2022 at 21:56, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
-> >
-> > On 24/10/2022 12:48, Dmitry Baryshkov wrote:
-> > > On 24/10/2022 19:46, Krzysztof Kozlowski wrote:
-> > >> On 24/10/2022 12:45, Dmitry Baryshkov wrote:
-> > >>> On 24/10/2022 17:56, Krzysztof Kozlowski wrote:
-> > >>>> On 09/12/2021 05:35, Vinod Koul wrote:
-> > >>>>> Add the spmi bus as found in the SM8450 SoC
-> > >>>>>
-> > >>>>> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > >>>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> > >>>>> ---
-> > >>>>>    arch/arm64/boot/dts/qcom/sm8450.dtsi | 18 ++++++++++++++++++
-> > >>>>>    1 file changed, 18 insertions(+)
-> > >>>>>
-> > >>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > >>>>> index f75de777f6ea..b80e34fd3fe1 100644
-> > >>>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > >>>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > >>>>> @@ -645,6 +645,24 @@ pdc: interrupt-controller@b220000 {
-> > >>>>>                           interrupt-controller;
-> > >>>>>                   };
-> > >>>>>
-> > >>>>> +         spmi_bus: spmi@c42d000 {
-> > >>>>> +                 compatible = "qcom,spmi-pmic-arb";
-> > >>>>> +                 reg = <0x0 0x0c400000 0x0 0x00003000>,
-> > >>>>> +                       <0x0 0x0c500000 0x0 0x00400000>,
-> > >>>>> +                       <0x0 0x0c440000 0x0 0x00080000>,
-> > >>>>> +                       <0x0 0x0c4c0000 0x0 0x00010000>,
-> > >>>>> +                       <0x0 0x0c42d000 0x0 0x00010000>;
-> > >>>>
-> > >>>> This is a patch from December 2021. Is there anything blocking it from
-> > >>>> being merged?
-> > >>>>
-> > >>>> The same applies to several other patches here.
-> > >>>
-> > >>> As far as I know, Stephen still didn't pick up the spmi-pmic-arb support
-> > >>> for the PMIC on the SM8450 platform. Thus we also can not merge the DT
-> > >>> parts.
-> > >>
-> > >> Why we cannot merge DTS? How is DTS with new nodes depending on any
-> > >> driver changes?
-> > >
-> > > In this particular case, there was an open question, what should be the
-> > > bindings for the PMIC ARB v7.
-> >
-> > Ah, so it is about PMIC ARB v7 bindings? Then it's reasonable to wait
-> > with this one. I just had an impression that it's about driver changes...
+On 26/10/22 01:26, Brian Norris wrote:
+> On Tue, Oct 25, 2022 at 02:53:46PM -0700, Florian Fainelli wrote:
+>> On 10/25/22 14:45, Brian Norris wrote:
+>>> On Tue, Oct 25, 2022 at 04:10:44PM +0300, Adrian Hunter wrote:
+>>>> On 24/10/22 20:55, Brian Norris wrote:
+>>>>> diff --git a/drivers/mmc/host/sdhci_am654.c b/drivers/mmc/host/sdhci_am654.c
+>>>>> index 8f1023480e12..6a282c7a221e 100644
+>>>>> --- a/drivers/mmc/host/sdhci_am654.c
+>>>>> +++ b/drivers/mmc/host/sdhci_am654.c
+>>>
+>>>>> @@ -378,7 +379,7 @@ static void sdhci_am654_reset(struct sdhci_host *host, u8 mask)
+>>>>>   	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>>>>>   	struct sdhci_am654_data *sdhci_am654 = sdhci_pltfm_priv(pltfm_host);
+>>>>> -	sdhci_reset(host, mask);
+>>>>> +	sdhci_and_cqhci_reset(host, mask);
+>>>>>   	if (sdhci_am654->quirks & SDHCI_AM654_QUIRK_FORCE_CDTEST) {
+>>>>>   		ctrl = sdhci_readb(host, SDHCI_HOST_CONTROL);
+>>>>
+>>>> What about sdhci_reset in sdhci_am654_ops ?
+>>>
+>>> Oops, I think you caught a big fallacy in some of my patches: I assumed
+>>> there was a single reset() implementation in a given driver (an unwise
+>>> assumption, I realize). I see at least sdhci-brcmstb.c also has several
+>>> variant ops that call sdhci_reset(), and I should probably convert them
+>>> too.
+
+I checked and found only sdhci_am654_ops
+
+>>
+>> You got it right for sdhci-brcmstb.c because "supports-cqe" which gates the
+>> enabling of CQE can only be found with the "brcm,bcm7216-sdhci" compatible
+>> which implies using brcmstb_reset().
 > 
-> Yes, it's about binding. Thus we have been waiting for quite some time.
+> I don't see any in-tree device trees for these chips (which is OK), and
+> that's not what the Documentation/ says, and AFAICT nothing in the
+> driver is limiting other variants from specifying the "supports-cqe"
+> flag in their (out-of-tree) device tree. The closest thing I see is that
+> an *example* in brcm,sdhci-brcmstb.yaml shows "supports-cqe" only on
+> brcm,bcm7216-sdhci -- but an example is not a binding agreement. Am I
+> missing something?
 
-Yes sadly Steven has stopped responding to emails or IRC.. I am not
-sure whats going on!
+It was mentioned in the patch from the Fixes tag.
 
-Even the SPMI tree is not being actively maintained with only few
-patches which were picked in last cycle since this year!
+> 
+> Now of course, you probably know behind the scenes that there are no
+> other sdhci-brcmstb-relevant controllers that "support cqe", but AFAICT
+> I have no way of knowing that a priori. The driver and bindings give
+> (too much?) flexibility.
+> 
+> Poking around, I think the only other one I might have missed would be
+> gl9763e in sdhci-pci-gli.c. That also calls cqhci_init() but is
+> otherwise relying on the default sdhci_pci_ops. So I'd either have to
 
--- 
-~Vinod
+It uses sdhci_gl9763e_ops not the default sdhci_pci_ops.  It looks OK
+to me.
+
+> change the common sdhci_pci_ops, or else start a new copy/paste/modify
+> 'struct sdhci_ops' for it... This really does start to get messy when
+> poking around on drivers I can't test. As in, it shouldn't be harmful
+> to change most sdhci_reset() to sdhci_and_cqhci_reset() (as long as they
+> aren't using some other CQE implementation), but the more invasive it
+> gets (say, rewriting a bunch of other ops), the easier it is to get
+> something wrong.
+
+AFAICS it was just sdhci_am654_ops
+
