@@ -2,95 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F5B660E9B1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 22:02:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7DA860E9B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 22:04:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234101AbiJZUCQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Oct 2022 16:02:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56332 "EHLO
+        id S234610AbiJZUEF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Oct 2022 16:04:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234063AbiJZUBx (ORCPT
+        with ESMTP id S233721AbiJZUEE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Oct 2022 16:01:53 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC5CCDE88
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 13:01:52 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id bs14so23878229ljb.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 13:01:52 -0700 (PDT)
+        Wed, 26 Oct 2022 16:04:04 -0400
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0CC910B79B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 13:04:02 -0700 (PDT)
+Received: by mail-qt1-x82c.google.com with SMTP id bb5so10820362qtb.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 13:04:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=to:subject:message-id:date:user-agent:from:references:in-reply-to
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=GnXS8TIFkJvQIC9t/oWLC9m0IY5PsGt6PFcCSazh+EE=;
-        b=NoATqSyjyoZ0XjlODJBeT9cHHsqAM2AVwGBmWXRRujd9v2bdLkUQbipXunJ20k4uBt
-         4wMJU94eAilLuaYHBdvt2Zc5znZa0NiSUUXHQEkvxTQPbNRJrQ9Gz5qNUYPdzOJvZdIu
-         nGWCO+g9ii0L2RLSXZbEQF8ckQ9dtNqTQ8Tz8=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EbNR/dH/UvEk8OZajZc3Xj3CD2WxJowSsk/m1lg+P+o=;
+        b=e3zEePpdfvCLXRLEOCuYY4rAeIt8oEtelWU5oS/fSYlJQqjy86t01wAPqb7rI25X2K
+         j01LEdfdAaEl6cCv70scgg8p/tjN4072ExJpgL8+ipFIVqC1qxnk0TtZixyK5qI/tLFW
+         JHkHiLbozTvl4aVTFq/DNcnHHb3IohNmHMmVttBtzFn08VWwqNZtbvLnDyHLK9daPnNi
+         hySbIfKjcDW+p6RcaW8yVMmIaAdtPBc9Ick98rJvpcZpsGyqAz24CBBwlJ+RU5A4AERT
+         5LH4TNMAQJ065gbuzldcvHb5kjptNdNAH8GeeJfhcOSF3H/OI9Lgq7WcDo5Jy0z3LNpp
+         9ruA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:user-agent:from:references:in-reply-to
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=GnXS8TIFkJvQIC9t/oWLC9m0IY5PsGt6PFcCSazh+EE=;
-        b=tp4wfVCczgX++wZgvYjWeONlHTcLxYAo6BHb5N32XWqml/nvpKUzMpgJGKtPgFLiLV
-         UUTolOhO9T3f9uqJGvJ0anGO56/N7QZ4MDpkkeYQ2YgfkG8sOyaurrBtF3KTuWlVR0sU
-         2jhrVXfvqWOHZ2rqEFamu1jMO9HFqwDDtzDPZuSpvwsCOMbkd0FbGkT7PMlFGpz94F06
-         Y5w694Ye8n5pzgiA1Z0Add5YvN5yr993XI7TxLEHoUtCppj9gfJAJLpS5/OA+ZgWR4LA
-         bgOhUtK3iRzhyBrfQPOONXHH21Fvp4OcDKkA5067HQer56XYfTvbVdwujKv6vrW0Zw+A
-         IMLA==
-X-Gm-Message-State: ACrzQf1BNKYxNrPUTN+BH7cpDNzd22tUxhps4mMwv4kyurWWRnlmFYzT
-        2xn+U2pTW/YwXg0xkm8EEKoGVyduwZbS5zfA+9sTsA==
-X-Google-Smtp-Source: AMsMyM6kBWiilqKfJ9EC2Ru879bM6yYh3y91TcLcmREOeIgiBGIeh9jfiVqNlw2kYndIw2Tlcudg9REgr+OEBl4ylEA=
-X-Received: by 2002:a2e:8081:0:b0:277:b:33db with SMTP id i1-20020a2e8081000000b00277000b33dbmr9186348ljg.228.1666814511330;
- Wed, 26 Oct 2022 13:01:51 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 26 Oct 2022 16:01:50 -0400
-MIME-Version: 1.0
-In-Reply-To: <20221020225135.31750-3-krzysztof.kozlowski@linaro.org>
-References: <20221020225135.31750-1-krzysztof.kozlowski@linaro.org> <20221020225135.31750-3-krzysztof.kozlowski@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Wed, 26 Oct 2022 16:01:50 -0400
-Message-ID: <CAE-0n53yX4Q8cxLWGK1wG2veMNUb_aHSgFxBiRzuBRtPm3UPpg@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: sc7180: revert "arm64: dts:
- qcom: sc7180: Avoid glitching SPI CS at bootup on trogdor"
+        bh=EbNR/dH/UvEk8OZajZc3Xj3CD2WxJowSsk/m1lg+P+o=;
+        b=zmNCi/RmOILdhaAHXCSPhQweD10JlBX2cJUn2OqUAyu/JYDgyU4klaAxvcbTdbW3mW
+         IjtbhY2K4H6LXmg8QxnWUGffjL58pL3fofuwcDyvtA+ieWA06+255G240YSbOhoga2jB
+         suFOA87d9XBz3HuI7pJ+z+kQauSVWABlXxv/3wnXzFJ9G+0HQMo6ff0pGONJvlBoJiqj
+         7GemAXQiozNV6JvL3czxQ+06kC1s+Pt6j36M99FhYQG6hCtEUUGczbgaMCfCx40WgviV
+         qwRugGkWSt3Hm03ApmNvLJfYcF6Nq0tWhK3uAFWJRBQf+xFR5D8tQoU3WlZVEWEJZAeD
+         Qwew==
+X-Gm-Message-State: ACrzQf2SE5z8/NxBcomzTIA64Vt7bEdhFsHG7OdUA8EU64aTHWClWjH8
+        TFZsN70qm4vn0YDkSme9tHtfQQ==
+X-Google-Smtp-Source: AMsMyM6C5AlIVSN95ncUeCbiVObuIzE73kQdtNULsiZVdtzJGtI+decG2fMGpyLOL+g11tTtrwL8+Q==
+X-Received: by 2002:ac8:7f07:0:b0:39c:c64d:852e with SMTP id f7-20020ac87f07000000b0039cc64d852emr36974258qtk.21.1666814641805;
+        Wed, 26 Oct 2022 13:04:01 -0700 (PDT)
+Received: from krzk-bin.. ([64.57.193.93])
+        by smtp.gmail.com with ESMTPSA id de30-20020a05620a371e00b006e99290e83fsm2942089qkb.107.2022.10.26.13.03.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Oct 2022 13:04:00 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 0/4] arm64: dts: qcom: sm8450: add SDHCI
+Date:   Wed, 26 Oct 2022 16:03:53 -0400
+Message-Id: <20221026200357.391635-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Krzysztof Kozlowski (2022-10-20 15:51:34)
-> This reverts commit e440e30e26dd6b0424002ad0ddcbbcea783efd85 because it
-> is not a reliable way of fixing SPI CS glitch and it depends on specific
-> Linux kernel pin controller driver behavior.
->
-> This behavior of kernel driver was changed in commit b991f8c3622c
-> ("pinctrl: core: Handling pinmux and pinconf separately") thus
-> effectively the DTS fix stopped being effective.
->
-> Proper solution for the glitching SPI chip select must be implemented in
-> the drivers, not via ordering of entries in DTS, and is already
-> introduced in commit d21f4b7ffc22 ("pinctrl: qcom: Avoid glitching lines
-> when we first mux to output").
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> Tested-by: Douglas Anderson <dianders@chromium.org>
->
-> ---
+Hi,
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Depends on:
+https://lore.kernel.org/all/20220410205127.1670705-2-dmitry.baryshkov@linaro.org/
+
+Best regards,
+Krzysztof
+
+Krzysztof Kozlowski (4):
+  arm64: dts: qcom: sm8450: move SDHCI pin configuration to DTSI
+  arm64: dts: qcom: sm8450: disable SDHCI SDR104/SDR50 on all boards
+  arm64: dts: qcom: sm8450-hdk: add SDHCI for microSD
+  arm64: dts: qcom: sm8450-qrd: add SDHCI for microSD
+
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts       | 19 +++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8450-qrd.dts       | 19 +++++++++++++++
+ .../qcom/sm8450-sony-xperia-nagara-pdx223.dts | 22 ------------------
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          | 23 +++++++++++++++++++
+ 4 files changed, 61 insertions(+), 22 deletions(-)
+
+-- 
+2.34.1
+
