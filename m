@@ -2,31 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 416AE60EA0E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 22:12:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F2F7360EA11
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 22:13:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235150AbiJZUMr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Oct 2022 16:12:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50662 "EHLO
+        id S234821AbiJZUNL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Oct 2022 16:13:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235120AbiJZUMo (ORCPT
+        with ESMTP id S235107AbiJZUNJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Oct 2022 16:12:44 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74B0A143A7D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 13:12:42 -0700 (PDT)
+        Wed, 26 Oct 2022 16:13:09 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9CA5148F57
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 13:13:07 -0700 (PDT)
 Received: from [192.168.31.208] (unknown [194.29.137.22])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id BAA163F36E;
-        Wed, 26 Oct 2022 22:12:39 +0200 (CEST)
-Message-ID: <fad51882-d3f1-c6d2-a222-41da601d58ff@somainline.org>
-Date:   Wed, 26 Oct 2022 22:12:37 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E5E433F291;
+        Wed, 26 Oct 2022 22:13:04 +0200 (CEST)
+Message-ID: <1765192b-30f4-eeac-76b4-5b52b3a27813@somainline.org>
+Date:   Wed, 26 Oct 2022 22:13:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.0
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sm8450-hdk: add SDHCI for microSD
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm8450-qrd: add SDHCI for microSD
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -36,9 +36,9 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-kernel@vger.kernel.org
 Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 References: <20221026200357.391635-1-krzysztof.kozlowski@linaro.org>
- <20221026200357.391635-4-krzysztof.kozlowski@linaro.org>
+ <20221026200357.391635-5-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20221026200357.391635-4-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221026200357.391635-5-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
@@ -52,9 +52,13 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 26/10/2022 22:03, Krzysztof Kozlowski wrote:
-> The HDK8450 has microSD card slot.
+> Based on downstream DTS, it seems that SM8450 QRD has microSD card slot.
 >
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
+> ---
+>
+> Not tested.
 > ---
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
@@ -62,14 +66,14 @@ Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
 Konrad
 
->   arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 19 +++++++++++++++++++
+>   arch/arm64/boot/dts/qcom/sm8450-qrd.dts | 19 +++++++++++++++++++
 >   1 file changed, 19 insertions(+)
 >
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> index 3ccbdd2ed734..f4a5f1a8e573 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> @@ -426,6 +426,18 @@ &remoteproc_slpi {
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450-qrd.dts b/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
+> index 017bc48430ba..c9a08608ccf4 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
+> @@ -427,6 +427,18 @@ &remoteproc_slpi {
 >   	firmware-name = "qcom/sm8450/slpi.mbn";
 >   };
 >   
@@ -85,10 +89,10 @@ Konrad
 > +	status = "okay";
 > +};
 > +
->   &tlmm {
->   	gpio-reserved-ranges = <28 4>, <36 4>;
->   
-> @@ -461,6 +473,13 @@ pinconf {
+>   &spi4 {
+>   	status = "okay";
+>   };
+> @@ -474,6 +486,13 @@ pinconf {
 >   			bias-pull-down;
 >   		};
 >   	};
