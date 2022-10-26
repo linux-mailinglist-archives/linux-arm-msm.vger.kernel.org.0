@@ -2,80 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 69E5160EAB9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 23:17:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FD7C60EB70
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 00:18:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233009AbiJZVRB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Oct 2022 17:17:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49032 "EHLO
+        id S232865AbiJZWSK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Oct 2022 18:18:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231628AbiJZVRA (ORCPT
+        with ESMTP id S229456AbiJZWSJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Oct 2022 17:17:00 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D23AA10CFBC;
-        Wed, 26 Oct 2022 14:16:58 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 6B8E8B8243C;
-        Wed, 26 Oct 2022 21:16:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0162FC43145;
-        Wed, 26 Oct 2022 21:16:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666819016;
-        bh=eXNYsyHrjfkj168/GLzMtKplVFDcKDxriIybCsmll4Q=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=rtgM/mh5CDlkpSmwzvcKBbhfpYEk/Y5oWnhBJlt2AWf/j0eJmNK1iGpz/mBT2+Pp/
-         etMbGppanoU7sUeYHaaxD44JOS88dHK2XPxcBIB/wbfS7YP1GA7VEZ1/TwyPTh1nFY
-         z3fZ3NgEIG7AWD6omfOK5jZ9Gc38MSXus3wVUKVMcI1esIewtArzL0ArgywqYKGwkP
-         Poz3u4CxCWbGhPk/n+YKpb6swHACaoGd8XWH1EMPv6iEIREmRrMvZKrVSGRIH9F0XL
-         74Nz8I1KGG6QwuhoPc4DjJ0L3t4kOtrRSbkRLrgy4ZpiBQHerYbai0/JgWcp1GHd5J
-         bRL6X4aytNcJQ==
-Received: by mail-lf1-f48.google.com with SMTP id r14so31494323lfm.2;
-        Wed, 26 Oct 2022 14:16:55 -0700 (PDT)
-X-Gm-Message-State: ACrzQf0RGxkF/CGFQ3bz20BOCZGsSkGqDQYLfS+d/0nQqc3S7F892MoZ
-        fnJGy2mvs3aMasPpsUCQagfVIGZ6D+7G8MsWdA==
-X-Google-Smtp-Source: AMsMyM68r1z6vDi1lrxqvnE4FImJ7MkTnCRg99ilWEyfO4MoJUdjzznRRdfEUQrx5J9gYr8/D1cKKZfj81WvAqCZowI=
-X-Received: by 2002:a05:6512:3f0e:b0:4a0:45b7:a8dc with SMTP id
- y14-20020a0565123f0e00b004a045b7a8dcmr16365342lfa.368.1666819013968; Wed, 26
- Oct 2022 14:16:53 -0700 (PDT)
+        Wed, 26 Oct 2022 18:18:09 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3875F63E3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 15:18:07 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id o12so31769581lfq.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 15:18:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9jqI46+e/77kTgH7h4PL7uKuCpH6Cjz4yNeCC9Ks3dc=;
+        b=MAx9GoqJUSQhB9bUYYAAInmItHedCwfDzU+a4AbWRsIeK/Yc90GUigg1RMlpIdTisx
+         mC4FlztFxd+wbVprYc/rwG8i1qM8Y+NnBwRdOv4HkLoF5IBFaptL9QGCipm79reH71Aj
+         Y9bT4Uf/if6xXcCHZImJQqf7A78epbLOgSNMc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9jqI46+e/77kTgH7h4PL7uKuCpH6Cjz4yNeCC9Ks3dc=;
+        b=Uf2JLR7nLEm2mNvwhQHqEvtS1lyODcTG6FCK0Ud8uAwkH/dghPaMNehqxZbptqVBSV
+         GtvT7pA+vQ+rGI6J+tdLEvLX+uwLrd3jjwnJ+x81VW9dBLjFtJGzhUQPVuJCs27Qu4pm
+         f+x4Zd03mMUQ5uBU6+8O1d5LiDF6sXG+zuak9h/qrSpOQXQidIH6HbzusojgFD6v/mgS
+         V4e1rVw4PV7lYCQkjJye7lTzx3YJ2NCNUUcfzN+dQz5OcGi1AttOTCovESANm2qOa4Ww
+         YAx3uGLh4YBtStZvixJR2WudC0trLEBSTsIlAt0OqUsGvD6iE/jhC0nlukhSLzyNjjqw
+         oBPw==
+X-Gm-Message-State: ACrzQf1AMLmXXiuKDDLneSq2cqa7OCubb1vl3Kt1zQPys08FsaGBQwXX
+        2RP1sd75Gr3TONSJtBoaMlWjr5SO5JD7D+D4XbE4Xw==
+X-Google-Smtp-Source: AMsMyM4NW2ATDJXFwKq7wuAg3X3McqDZmNzLYBOFH6QkeLPvXebMrquLMvO2T31xyTlgJ0snNV/KF5PqAsctW7ikaq4=
+X-Received: by 2002:a05:6512:3dac:b0:4a4:8044:9c3 with SMTP id
+ k44-20020a0565123dac00b004a4804409c3mr16238548lfv.145.1666822686108; Wed, 26
+ Oct 2022 15:18:06 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 26 Oct 2022 18:18:05 -0400
 MIME-Version: 1.0
-References: <20221011000840.289033-1-quic_eberman@quicinc.com>
- <20221011000840.289033-3-quic_eberman@quicinc.com> <20221012155645.GA2173829-robh@kernel.org>
- <ca13eb92-9b5b-19fd-27a5-f91f5048b142@quicinc.com>
-In-Reply-To: <ca13eb92-9b5b-19fd-27a5-f91f5048b142@quicinc.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Wed, 26 Oct 2022 16:16:44 -0500
-X-Gmail-Original-Message-ID: <CAL_Jsq+cR5AEa5i1u-_L6sP6nYXS6qgaVWZ=KwxpUbxV3ZW-BA@mail.gmail.com>
-Message-ID: <CAL_Jsq+cR5AEa5i1u-_L6sP6nYXS6qgaVWZ=KwxpUbxV3ZW-BA@mail.gmail.com>
-Subject: Re: [PATCH v5 02/13] dt-bindings: Add binding for gunyah hypervisor
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+In-Reply-To: <CAPDyKFpay0w6n6rtv+bsdcTvL4ijtEPBODo1=XJpUFNdaooTcg@mail.gmail.com>
+References: <CAE-0n52xbZeJ66RaKwggeRB57fUAwjvxGxfFMKOKJMKVyFTe+w@mail.gmail.com>
+ <CAPDyKFpay0w6n6rtv+bsdcTvL4ijtEPBODo1=XJpUFNdaooTcg@mail.gmail.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Wed, 26 Oct 2022 18:18:05 -0400
+Message-ID: <CAE-0n52Bfe-7Fpawct=_3=miLBygR_-YXm1YPnhCWOwxFnjv7g@mail.gmail.com>
+Subject: Re: clk: qcom: genpd lockdep warning in gdsc
+To:     Ulf Hansson <ulf.hansson@linaro.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Yu Zhao <yuzhao@google.com>, linux-arm-msm@vger.kernel.org,
+        dianders@chromium.org, mka@chromium.org,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya <quic_c_skakit@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,89 +75,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 13, 2022 at 6:59 PM Elliot Berman <quic_eberman@quicinc.com> wrote:
+Reviving this old thread because this commit has lead to a couple bugs
+now.
+
+Quoting Ulf Hansson (2022-06-22 03:26:52)
+> On Fri, 17 Jun 2022 at 21:58, Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > Hi Bjorn and Dmitry,
+> >
+> > Yu reported a lockdep warning coming from the gdsc driver. It looks like
+> > the runtime PM usage in gdsc.c is causing lockdep to see an AA deadlock
+> > possibility with 'genpd->mlock'. I suspect this is because we have
+> > commit 1b771839de05 ("clk: qcom: gdsc: enable optional power domain
+> > support"), and that is now calling runtime PM code from within the genpd
+> > code.
+
+This commit has caused a deadlock at boot for Doug[1] and I see that the
+camera driver on Google CoachZ and Wormdingler devices doesn't work
+after resuming from suspend once this commit is applied. I'm leaning
+towards sending a revert, because it seems to cause 3 issues while
+removing the regulator hack that was in place to enable MMCX. This patch
+is cleaning up the hack, but trading the hack for three more problems.
+
+> I think genpd already has nested lock support, so the only
+> > solution is to not use runtime PM from within genpd code and start
+> > expressing genpd parent relationships in genpd itself?
 >
+> Not sure exactly what you mean here, but yes, expressing the
+> parent/child domain relationship is always needed.
 >
-> On 10/12/2022 8:56 AM, Rob Herring wrote:
-> > On Mon, Oct 10, 2022 at 05:08:29PM -0700, Elliot Berman wrote:
-> >> When Linux is booted as a guest under the Gunyah hypervisor, the Gunyah
-> >> Resource Manager applies a devicetree overlay describing the virtual
-> >> platform configuration of the guest VM, such as the message queue
-> >> capability IDs for communicating with the Resource Manager. This
-> >> information is not otherwise discoverable by a VM: the Gunyah hypervisor
-> >> core does not provide a direct interface to discover capability IDs nor
-> >> a way to communicate with RM without having already known the
-> >> corresponding message queue capability ID. Add the DT bindings that
-> >> Gunyah adheres for the hypervisor node and message queues.
-> >>
-> >> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> >> ---
-> >>   .../bindings/firmware/gunyah-hypervisor.yaml  | 87 +++++++++++++++++++
-> >>   MAINTAINERS                                   |  1 +
-> >>   2 files changed, 88 insertions(+)
-> >>   create mode 100644 Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml b/Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
-> >> new file mode 100644
-> >> index 000000000000..f0a14101e2fd
-> >> --- /dev/null
-> >> +++ b/Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
-> >> @@ -0,0 +1,87 @@
-> >> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> >> +%YAML 1.2
-> >> +---
-> >> +$id: http://devicetree.org/schemas/firmware/gunyah-hypervisor.yaml#
-> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >> +
-> >> +title: Gunyah Hypervisor
-> >> +
-> >> +maintainers:
-> >> +  - Murali Nalajala <quic_mnalajal@quicinc.com>
-> >> +  - Elliot Berman <quic_eberman@quicinc.com>
-> >> +
-> >> +description: |+
-> >> +  On systems which support devicetree, Gunyah generates and overlays a deviceetree overlay which
-> >
-> > How you end up with the node (applying an overlay) is not relavent to
-> > the binding.
-> >
-> >> +  describes the basic configuration of the hypervisor. Virtual machines use this information to determine
-> >> +  the capability IDs of the message queues used to communicate with the Gunyah Resource Manager.
-> >
-> > Wrap at 80. That is the coding standard still though 100 is deemed
-> > allowed. And yamllint only complains at 110 because I didn't care to fix
-> > everyones lines over 100.
-> >
-> >> +  See also: https://github.com/quic/gunyah-resource-manager/blob/develop/src/vm_creation/dto_construct.c
-> >> +
-> >> +properties:
-> >> +  compatible:
-> >> +    items:
-> >> +      - const: gunyah-hypervisor-1.0
-> >> +      - const: gunyah-hypervisor
-> >
-> > 2 compatibles implies a difference between the 2. What's the difference?
-> > Where does '1.0' come from?
-> >
+> Having gdsc_disable() to do runtime PM calls (gdsc_pm_runtime_put())
+> seems awkward to me. Why is that needed, more exactly?
+
+It seems like this is needed so that the gdsc_enable() and
+gdsc_disable() calls can read/write the registers for the genpd, while
+those registers live in some clk controller that needs either a
+different clk (probably some AHB clk) or another genpd to be enabled. It
+looks like for qcom,sm8250-dispcc it relies on MMCX gdsc (which is a
+genpd). From a hardware view, the MDSS_GDSC provided by the display clk
+controller is probably not a sub-domain of MMCX. Instead, we need to
+have MMCX enabled so that we can access the registers for the MDSS GDSC.
+
+My question is if it makes sense to simply describe that the GDSCs
+provided by a device are sub-domains of whatever power domains are
+listed in DT for that device? I think if we did that here for sm8250
+dispcc, we wouldn't need to use runtime PM within the genpd code
+assuming that the MMCX parent genpd is enabled before we attempt to
+read/write the dispcc gdsc registers. Hopefully that is also done, i.e.
+enabling parent domains before enabling child domains if the parent is
+disabled.
+
+Is this already being done with pm_genpd_add_subdomain() in
+gdsc_register()? I see that we're attaching that to dispcc's struct
+device::pm_domain, but I assume that is different from the MMCX genpd.
+Maybe that is the problem here. Dmitry can you further describe the
+problem being solved?
+
 >
-> There's no difference. I thought the convention was to have
-> device-specific compatible and the generic compatible. "device-specific"
-> here would be specific to version of Gunyah since it's software.
+> > Or maybe genpd
+> > needs to drop locks while calling down into gdsc_disable() and reacquire
+> > them after that?
+>
+> Nope, that doesn't work. This internals of genpd relies on this
+> behaviour, as it allows it to properly deal with power-on|off for
+> parent/child domains, for example.
 
-No, that's just what people do because "vendor,new-soc",
-"vendor,old-soc" seems to bother them for some reason. At the end of
-the day, it's just a string identifier that means something. If
-there's no difference in that 'something', then there is no point in
-having more than one string.
+Ok.
 
-You only need something specific enough to discover the rest from the
-firmware. When that changes, then you add a new compatible. Of course,
-if you want existing OSs to work, then better not change the
-compatible.
-
-> We do similar for firmware in the qcom,scm bindings and following that
-> principle.
-
-Always poor examples to follow...
-
-Rob
+[1] https://lore.kernel.org/r/20220922154354.2486595-1-dianders@chromium.org
