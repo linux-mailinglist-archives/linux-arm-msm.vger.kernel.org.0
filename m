@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D86560E5E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 18:57:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 205FC60E5F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 18:58:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233915AbiJZQ5w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Oct 2022 12:57:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47470 "EHLO
+        id S233781AbiJZQ6S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Oct 2022 12:58:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233454AbiJZQ5v (ORCPT
+        with ESMTP id S234023AbiJZQ6A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Oct 2022 12:57:51 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15EAE9D508
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 09:57:50 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id a24so10352112qto.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 09:57:50 -0700 (PDT)
+        Wed, 26 Oct 2022 12:58:00 -0400
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 720D9AF181
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 09:57:59 -0700 (PDT)
+Received: by mail-qk1-x72d.google.com with SMTP id x26so1120151qki.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 09:57:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=SMH8yy0K5bjEVyDE5fQG7VLZrpH6VjDBSTXM9KXwwlM=;
-        b=P81nZevgmYL2bPtSvUe4m5gPskkpK50V39SxUOLOClE4XtiMninGSwcah33MKucLTD
-         +xvtP0gw2lQxDx9tvWt+jiqT+W+CM8s60sszqToHUtwt1WdGfGabMTvVMQ9CkABVqQrV
-         aGXTkf+byIia/LBDKAU10K2IIJpy3RDBEEgttY/I5SCrkGpSootnZ6OY6l15Mn0j8PFW
-         1V1n66alusQoaQzWuIhYULr1Uipz84f+Xx3uGqMIs99wjVS7Xtna8QFLdtWU7dGbQB2T
-         0eXKPB2sZytkpbMZVbPDNaz+y9QtCER0trUT2au22M2Q50Wzx86qeGiH2tzeZBWSRv9O
-         zZEg==
+        bh=aDHp0LO4ebRzQFErfPNEMqx5O4CaTBDIkwZQBMq/Dg4=;
+        b=ArijeelUJ4PnCB2tHC2NEtSYiuXym+iw0HWEI1W1dBOm7EXblIcG21uFbiGLvzrDL1
+         rfJVmY+nvaFoZPQhr7Zs12QdvtEOelzAlDr277gLSNfTv9S4djxu+842lquiHvrwb4ht
+         IH5PJvqvphEJ9nJPke9o2WCPponWeEuyzo9qWj9HfTG52pbGFTGYkVhIkIptjcxUS79Z
+         a53cb1j2OE0FpAxO4hf0p4flfGoIhfoa2mERzDv1V0130kmsOETXwW0M1RVwYBgDcouq
+         S5Zebg4VM0ErgLbTzhvMJSbH7sv5bfZCloMq2NaxKwbSnpy0WwjPaL9bV1myFew4LVZr
+         iTLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SMH8yy0K5bjEVyDE5fQG7VLZrpH6VjDBSTXM9KXwwlM=;
-        b=fHTe07FVbnuXy8uIqRAPu60bTJ0V22RhzRZ2rzMdEGpFM5L3qGUGvZa6K1fpf+udZk
-         n2toFDHkFSyB2xgvahKBfyEYtJfBQqVCozYzVUIVnp6LV6htjbsqTkkRuU72q5haUBnj
-         GyrR2Tz3IihjWSOZyuerZFrIbHxnl+c/FkAe81khzmkOB2ZpivW7psPeMk5xYkoOtIFQ
-         eK2rbVjad/YZGHJyD0PtLHJpu0Vddt5RIGPi3owLGU2RY3Q2kpDUwC8XiN+erNO78iYP
-         AC0uK9NoJycyQCr3OkRulAywh5km+0QG+UyIzhmlN6PjRFJJviPTtFcN7LFpFuWRVOOz
-         7kcw==
-X-Gm-Message-State: ACrzQf1KCk9L2xAE0WWezVcWxR6lThofI9vptE2SWqcd3NzGxtCzzVvY
-        zW9Dp3xcnS7HssA0yBGzELj7/mgnucueAA==
-X-Google-Smtp-Source: AMsMyM52kSo4dwe98KsHb5B/S2GCroXLBYzzgP/n4SM7/4xO2UyexwU8NZBrIReXZn5PgBSiTxoyzg==
-X-Received: by 2002:a05:622a:2488:b0:3a4:ec00:2811 with SMTP id cn8-20020a05622a248800b003a4ec002811mr5170836qtb.487.1666803469255;
-        Wed, 26 Oct 2022 09:57:49 -0700 (PDT)
+        bh=aDHp0LO4ebRzQFErfPNEMqx5O4CaTBDIkwZQBMq/Dg4=;
+        b=3hTPybQCewnRPWVbBYpRMTVcJyq9dVSDboc+QdcKtMtct3xYBsVL86UhIdnrGT2oR4
+         iSuH59yqRurFvZ5j/pFqPEHyFDTI9V5jt2IYHWE0WcWOhhr0veqH23yDEC0OHynx0/0R
+         sgNyaqiANjN71+IbUGSvrcWnEN0d6p4s4MwQeYYM+LJlLW+BSWq2oXR/5SGfC723kPUZ
+         DNvTgTjiFV7XVVs54Ukl0P2Omll0iF0aZgkMIPFW47aYUgS3JENLrxdPSWXc0HMi/+2K
+         KmyB0ElBLD/K7rdob3DHlTNL3oXPXkontbLyIKJbAnzd5CHH2jCHVwRaVsWYUWmralNV
+         EO0g==
+X-Gm-Message-State: ACrzQf36JMcbNiU65ob4uji6mk5Ey4LlUQnd4UK5EF3hR1T14bETg7yZ
+        E6CWWCHHC9e8vbO3dUedqhtSXg==
+X-Google-Smtp-Source: AMsMyM4L31N5v5Z/OJ+Ql1auenm0qxCUxsxrMOlHlUbzzY3cECrNBwFfxUJnIRShJRMOcirE+fzN4w==
+X-Received: by 2002:a05:620a:2189:b0:6e9:856f:944a with SMTP id g9-20020a05620a218900b006e9856f944amr31425798qka.322.1666803478643;
+        Wed, 26 Oct 2022 09:57:58 -0700 (PDT)
 Received: from krzk-bin.. ([64.57.193.93])
-        by smtp.gmail.com with ESMTPSA id g21-20020a05620a40d500b006ee8874f5fasm4360759qko.53.2022.10.26.09.57.47
+        by smtp.gmail.com with ESMTPSA id g21-20020a05620a40d500b006ee8874f5fasm4360759qko.53.2022.10.26.09.57.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Oct 2022 09:57:48 -0700 (PDT)
+        Wed, 26 Oct 2022 09:57:57 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
@@ -60,12 +60,12 @@ To:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
         Andy Gross <agross@kernel.org>
-Subject: Re: (subset) [PATCH 1/2] dt-bindings: pinctrl: qcom,msm8916: convert to dtschema
-Date:   Wed, 26 Oct 2022 12:57:40 -0400
-Message-Id: <166680346262.49767.13769629485836334119.b4-ty@linaro.org>
+Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,pmic-mpp: make compatible fallbacks specific
+Date:   Wed, 26 Oct 2022 12:57:46 -0400
+Message-Id: <166680346261.49767.16285909952987662463.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221024002356.28261-1-krzysztof.kozlowski@linaro.org>
-References: <20221024002356.28261-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220908080703.28643-1-krzysztof.kozlowski@linaro.org>
+References: <20220908080703.28643-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -79,18 +79,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 23 Oct 2022 20:23:55 -0400, Krzysztof Kozlowski wrote:
-> Convert Qualcomm MSM8916 pin controller bindings to DT schema.  Keep the
-> parsing of pin configuration subnodes consistent with other Qualcomm
-> schemas (children named with '-state' suffix, their children with
-> '-pins').
+On Thu, 8 Sep 2022 10:07:03 +0200, Krzysztof Kozlowski wrote:
+> Instead of allowing compatibles followed by any fallback (for SPMI or
+> SSBI PMICs), make the list specific.
 > 
 > 
 
 Applied, thanks!
 
-[1/2] dt-bindings: pinctrl: qcom,msm8916: convert to dtschema
-      https://git.kernel.org/krzk/linux-dt/c/70af922b7f23bc03b89b3f80b679d11d5e7c2045
+[1/1] dt-bindings: pinctrl: qcom,pmic-mpp: make compatible fallbacks specific
+      https://git.kernel.org/krzk/linux-dt/c/7ec006642590033e2b07eeccf57134751acea03e
 
 Best regards,
 -- 
