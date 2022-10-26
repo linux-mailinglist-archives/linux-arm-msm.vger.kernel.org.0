@@ -2,78 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 005C260E8D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 21:15:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D883160E92F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 21:42:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235059AbiJZTPQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Oct 2022 15:15:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43114 "EHLO
+        id S235005AbiJZTmQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Oct 2022 15:42:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235074AbiJZTOt (ORCPT
+        with ESMTP id S235014AbiJZTl5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Oct 2022 15:14:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D556264BC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 12:13:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1666811611;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=TcwkxX7f9akzTpXldeCvOVlbHPDFS3e55cTn/Ew1HBQ=;
-        b=el0+FRtPphhrZlg1WNJobZsFCGHaoWl6GhYr1oKY2sJKx4Blg1KBmFHm4OIlAqzD9n9N36
-        11+J95LwnJwY7+7zzA/TFyE2ErwgoBEdaWippMmStrbGjz0i0pViw2TjaMSfdm+JFQQAEN
-        o9FfpT5gACI217bLL1hw0q1IEx1/p5I=
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
- [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-208-rVgl0O4GPimdAq2HpjMthA-1; Wed, 26 Oct 2022 15:13:30 -0400
-X-MC-Unique: rVgl0O4GPimdAq2HpjMthA-1
-Received: by mail-oa1-f70.google.com with SMTP id 586e51a60fabf-13b29b8eceaso8740869fac.20
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 12:13:30 -0700 (PDT)
+        Wed, 26 Oct 2022 15:41:57 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B24DACABF8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 12:41:56 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id r14so30963904lfm.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 12:41:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wlJf3bJtBBgfFdtr4YnzwfnWV9gabWn1JKDOmEMYAcs=;
+        b=OaLRVdla/d+TMqXrOSWuQDnvl/G7v76nRGBeNbCqwidDlA8awO3d5kSaxKuHb6uhkF
+         Nw8YdrDWyEnIij7buDNTNnMa2aSEqwgANRyQ3ajpcYUFNNK9c+oJ8hVOMg2Q1fe+J1aG
+         aiY7MSOx82phb+XMhm1/SwWIqD+PWr8ITBEH/eXc9vUL+bAsq2V0qY1TFMsYo9IF8QeI
+         TugngMXn8L2O0W3K6u49V43g6OJfNd5VQ3F0LVg9HYAhHdtJ4mE0sy07SlVKXNRwwKa4
+         2/4kfn8ucbcPfBsiCL4CpWG1AhnRvwRGTWzzRcrzlvTBXUTWAHOx7ZtwLczl+0y/wX1P
+         cWnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TcwkxX7f9akzTpXldeCvOVlbHPDFS3e55cTn/Ew1HBQ=;
-        b=NS8HueUo5ih3ip4u8if0ZC754rSqblKmXVBrtYbXap8p+RoQxAt28DRvLCA+Kq+I6f
-         bP55mLc+OKY7fLoWr6qR8HmyBxeQi42TKaPnO23SKwZA1D4rGPakx0AtQmcGo5U6tug/
-         hOMjO2567CtbXHgSc1aJeuBTd8L6LNk3iIEy3YdTnOMh2Bi04L5rGRJijnkHzj5LKLGw
-         rq5einOTqz6dpBSlxO6N3Mt6i+N05GkE1OvOXKYc8aHdO+mqoAoxK7lzOC1dBnLTXadX
-         gecrMBGNHsPj/9Kk1YtbI95mbTqei5xgPYayoHSoQIc0ymojrf5lC/4gnh0Z996G20mx
-         8mdA==
-X-Gm-Message-State: ACrzQf2sf6Vg80e+a5isYMXzSXVXH2WRxFXI4m3rpsFpHTehEPBjRvVQ
-        UdjMoUbMmkeqdzCtPglY/d0ZycmR+YKJXrkjKk2xZIyor6lHfmTByiryHu+NFdgNXy02UVAoWkj
-        zqrf6W/jqp0dQsTzF7rNRJB06EQ==
-X-Received: by 2002:a05:6808:1802:b0:354:b406:540b with SMTP id bh2-20020a056808180200b00354b406540bmr2692773oib.256.1666811607657;
-        Wed, 26 Oct 2022 12:13:27 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM51GHRU3SteyubonbaqiEhWoUUnM42aduIw9CPdsyhnz0+5pKAXp58pAeWEh0n/myr6t/6Tvw==
-X-Received: by 2002:a05:6808:1802:b0:354:b406:540b with SMTP id bh2-20020a056808180200b00354b406540bmr2692756oib.256.1666811607376;
-        Wed, 26 Oct 2022 12:13:27 -0700 (PDT)
-Received: from halaney-x13s ([2600:1700:1ff0:d0e0::21])
-        by smtp.gmail.com with ESMTPSA id cc14-20020a05683061ce00b00661948e6119sm2568306otb.47.2022.10.26.12.13.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Oct 2022 12:13:26 -0700 (PDT)
-Date:   Wed, 26 Oct 2022 14:13:24 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH] phy: qcom-qmp-combo: fix NULL-deref on runtime resume
-Message-ID: <20221026191324.ehk3zarmcboq32zn@halaney-x13s>
-References: <20221026162116.26462-1-johan+linaro@kernel.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wlJf3bJtBBgfFdtr4YnzwfnWV9gabWn1JKDOmEMYAcs=;
+        b=W1lo8WuCRdgLOlRwLy7ajUPeRY4/WwBroFLfExpGGwQPlnADDePRNA1XbN37W/nq/8
+         aScLeP10etJECTyxU4ZB/qSP2josF33M/ZS0utwGdx32qk7TXQ8U8O9rL8z7suG1qtnb
+         Fd3K+6G3dl9SseDlfBDstsTAdGimL7hQhJRPugzjvxO1fnaUJ9UEG4ziWc0nYgzMktEl
+         1WA5735su4Z6NUNG1NJPzygP+1/mr8/anlptoUKKZUKW2cQUGIUGeINhmptg6PHj62JR
+         QRgzBEP8PwI/eLWn11xeMf2wINFQXy01xJm+fmWAKM9crwvlYFPDy/+dqYZCf1Ozyax+
+         fVHQ==
+X-Gm-Message-State: ACrzQf3vuXB59TSuknm/UNriU/8iZ2jSQIA2FoyzsPxlmgCbpxeLBysL
+        8WkirK8tyicuIHbr+IEVSKS3dw==
+X-Google-Smtp-Source: AMsMyM7PFC5Uw4to/B1qlnRLPHlmqEyPFzMnsc0jMDHWsc7stttckh7FiiZh9Te3P35yPA6tQ0aD6g==
+X-Received: by 2002:ac2:5cba:0:b0:4aa:5b6d:fb33 with SMTP id e26-20020ac25cba000000b004aa5b6dfb33mr7781326lfq.491.1666813315070;
+        Wed, 26 Oct 2022 12:41:55 -0700 (PDT)
+Received: from [10.27.10.248] ([195.165.23.90])
+        by smtp.gmail.com with ESMTPSA id s14-20020a056512314e00b0049f6484694bsm942263lfi.161.2022.10.26.12.41.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Oct 2022 12:41:54 -0700 (PDT)
+Message-ID: <3aa1d8f5-156d-2bd8-b9fc-3e496d7d64d3@linaro.org>
+Date:   Wed, 26 Oct 2022 22:41:53 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221026162116.26462-1-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Subject: Re: [PATCH v4 06/10] drm/msm/dsi: Migrate to
+ drm_dsc_compute_rc_parameters()
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Douglas Anderson <dianders@chromium.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20221026182824.876933-1-marijn.suijten@somainline.org>
+ <20221026182824.876933-7-marijn.suijten@somainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221026182824.876933-7-marijn.suijten@somainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,46 +90,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 26, 2022 at 06:21:16PM +0200, Johan Hovold wrote:
-> Commit fc64623637da ("phy: qcom-qmp-combo,usb: add support for separate
-> PCS_USB region") started treating the PCS_USB registers as potentially
-> separate from the PCS registers but used the wrong base when no PCS_USB
-> offset has been provided.
+On 26/10/2022 21:28, Marijn Suijten wrote:
+> As per the FIXME this code is entirely duplicate with what is already
+> provided inside drm_dsc_compute_rc_parameters(), supposedly because that
+> function was yielding "incorrect" results while in reality the panel
+> driver(s?) used for testing were providing incorrect parameters.
 > 
-> Fix the PCS_USB base used at runtime resume to prevent dereferencing a
-> NULL pointer on platforms that do not provide a PCS_USB offset (e.g.
-> SC7180).
+> For example, this code from downstream assumed dsc->bits_per_pixel to
+> contain an integer value, whereas the upstream drm_dsc_config struct
+> stores it with 4 fractional bits.  drm_dsc_compute_rc_parameters()
+> already accounts for this feat while the panel driver used for testing
+> [1] wasn't, hence making drm_dsc_compute_rc_parameters() seem like it
+> was returning an incorrect result.
+> Other users of dsc->bits_per_pixel inside dsi_populate_dsc_params() also
+> treat it in the same erroneous way, and will be addressed in a separate
+> patch.
+> In the end, using drm_dsc_compute_rc_parameters() spares both a lot of
+> duplicate code and erratic behaviour.
 > 
-> Fixes: fc64623637da ("phy: qcom-qmp-combo,usb: add support for separate PCS_USB region")
-> Cc: stable@vger.kernel.org	# 5.20
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-
-Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
-
-For what it is worth, I double checked and phy-qcom-qmp-usb.c has this
-done properly already.
-
-Thanks,
-Andrew
-
+> [1]: https://git.linaro.org/people/vinod.koul/kernel.git/commit/?h=topic/pixel3_5.18-rc1&id=1d7d98ad564f1ec69e7525e07418918d90f247a1
+> 
+> Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > ---
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> index f6328434c61e..ad6a0fd7ba8e 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> @@ -2144,7 +2144,7 @@ static void qmp_combo_enable_autonomous_mode(struct qmp_phy *qphy)
->  static void qmp_combo_disable_autonomous_mode(struct qmp_phy *qphy)
->  {
->  	const struct qmp_phy_cfg *cfg = qphy->cfg;
-> -	void __iomem *pcs_usb = qphy->pcs_usb ?: qphy->pcs_usb;
-> +	void __iomem *pcs_usb = qphy->pcs_usb ?: qphy->pcs;
->  	void __iomem *pcs_misc = qphy->pcs_misc;
->  
->  	/* Disable i/o clamp_n on resume for normal mode */
-> -- 
-> 2.37.3
-> 
+>   drivers/gpu/drm/msm/dsi/dsi_host.c | 64 +++---------------------------
+>   1 file changed, 6 insertions(+), 58 deletions(-)
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Thank you for the expanded explanation.
+
+-- 
+With best wishes
+Dmitry
 
