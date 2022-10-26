@@ -2,130 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38F4A60E9C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 22:04:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6F4060E9CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 22:05:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234741AbiJZUEP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Oct 2022 16:04:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57560 "EHLO
+        id S234802AbiJZUFA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Oct 2022 16:05:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234774AbiJZUEN (ORCPT
+        with ESMTP id S234729AbiJZUEn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Oct 2022 16:04:13 -0400
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DC8F10B7A1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 13:04:09 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id d13so11529891qko.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 13:04:09 -0700 (PDT)
+        Wed, 26 Oct 2022 16:04:43 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E3FC123464;
+        Wed, 26 Oct 2022 13:04:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=M6v/CsZRDA1d2R0cAzGnQgTWkDS1APIaz3UwNgmbIWw=;
-        b=gnhQwLYxwtx7Xdco+gT2KU/NHypeROjgqFu7jLuzg3eNmN6gkbJH07jY4v4xM3+8PC
-         Tf4kXZM5pdqNRqw16IqsZopmK+w+ZEtsEN7fJNK1GcHEJcLk4Pq5bop+y8e94cEqX+EC
-         lmzTeisbs1/ftmTxTtRTnSYIq0inrO5MmZuK8quifr20GWeLExyp3Fv3rVjdtonzciDB
-         gwEoQh/jH8q9YXhv0rRUG6OySYN/DVpSk0RlqbKH6ixeQlKISI/8FlHgPvdbygWJEx1a
-         DsyzuMbUp5k6DXBSNSI943IAqxAt0uL6VmCZlncMmHg/NUt6j1E8wGJ5UrvEWBldLg9P
-         8Pfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=M6v/CsZRDA1d2R0cAzGnQgTWkDS1APIaz3UwNgmbIWw=;
-        b=Chnv3UlGANudy7a5zqM3yIlmToYSBhKo9W5YjdBRHq7LhTXZdCDcjYhV+vV1uL5ytX
-         CxzCZMF7vphgXm0b8NZv2/cX6CUxa6yoJDHB7EdDFGzqkX5fwLnL57xhBsZvTpb84RWR
-         YOfslD+LCqJ29JE+wA28nUmLJV/wpKSDYSUb7fffeSzr+M2BYP3WTvdOOoyxg+qQEaeJ
-         L+R0hb0Q4+j35x+Zl8qIsVnZ6UzwtjmnnPDFnWpTqwSIyCrICqwA1lJU8nCAMgw3opKN
-         ZpIHjo1STQpGS6ig1LAMhN+NaU2rUEwdrRFkshFb0LA+3Yh6O1H9VND0S7ZaLVf1QdGo
-         Ry0g==
-X-Gm-Message-State: ACrzQf2Bxow0POLj51XHC7G/jRY83Ga0HBAiK2kqaEP91w3ewcIjsBsp
-        tMLaHxJGEGiEts6jRUer8qy+XQ==
-X-Google-Smtp-Source: AMsMyM71/Afca9qU2l+fzQKLHNh42odj4FueRgDJvBxurcK1AlXpFmoCHECPt5aAEeGjVJySKFGCEw==
-X-Received: by 2002:a05:620a:240f:b0:6ec:ffd0:22a4 with SMTP id d15-20020a05620a240f00b006ecffd022a4mr32322478qkn.523.1666814648390;
-        Wed, 26 Oct 2022 13:04:08 -0700 (PDT)
-Received: from krzk-bin.. ([64.57.193.93])
-        by smtp.gmail.com with ESMTPSA id de30-20020a05620a371e00b006e99290e83fsm2942089qkb.107.2022.10.26.13.04.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Oct 2022 13:04:07 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1666814681; x=1698350681;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=xjqZcX/w60yx5/h99rH2JbvNNgZ5iiv92T8VqJf6IA8=;
+  b=ewJyBph/It005533Ml95Cf0VSu4ehcRJMfDhvKquje2Qp8HLbfo8Lb4X
+   yyEaJ5MaEH+HtL9GCTtsXV1T6AWkXzG+sOQNJZ3fYgv1zGm602qd8Fcfi
+   4Cx5+Yy4uoR/KTLwIdIBhFOy0fjTzjDkDJ6iNJ/xJgk0z1g9AXfE1F1OI
+   c=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 26 Oct 2022 13:04:40 -0700
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Oct 2022 13:04:40 -0700
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Wed, 26 Oct 2022 13:04:40 -0700
+From:   Melody Olvera <quic_molvera@quicinc.com>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 4/4] arm64: dts: qcom: sm8450-qrd: add SDHCI for microSD
-Date:   Wed, 26 Oct 2022 16:03:57 -0400
-Message-Id: <20221026200357.391635-5-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221026200357.391635-1-krzysztof.kozlowski@linaro.org>
-References: <20221026200357.391635-1-krzysztof.kozlowski@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Melody Olvera <quic_molvera@quicinc.com>
+Subject: [PATCH v3 0/4] Add base device tree files for QDU1000/QRU1000
+Date:   Wed, 26 Oct 2022 13:04:25 -0700
+Message-ID: <20221026200429.162212-1-quic_molvera@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Based on downstream DTS, it seems that SM8450 QRD has microSD card slot.
+This series adds the base device tree files and DTS support for the
+Qualcomm QDU1000 and QRU1000 IDP SoCs, including the clocks, tlmm, smmu,
+regulators, mmc, interconnects, cpufreq, and qup. 
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+This patchset is based off of [1] which adds support for the PMIC arb used
+on these SoCs. It also requires the dt-bindings from [2], [3], [4], [5],
+and [6].
 
----
+The Qualcomm Technologies, Inc. Distributed Unit 1000 and Radio Unit
+1000 are new SoCs meant for enabling Open RAN solutions. See more at
+https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/documents/qualcomm_5g_ran_platforms_product_brief.pdf
 
-Not tested.
----
- arch/arm64/boot/dts/qcom/sm8450-qrd.dts | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+[1] https://lore.kernel.org/all/20220914165212.3705892-3-vkoul@kernel.org/
+[2] https://lore.kernel.org/all/20221026190441.4002212-1-quic_molvera@quicinc.com/
+[3] https://lore.kernel.org/all/20221026190457.4003037-1-quic_molvera@quicinc.com/
+[4] https://lore.kernel.org/all/20221026190520.4004264-1-quic_molvera@quicinc.com/
+[5] https://lore.kernel.org/all/20221026190534.4004945-1-quic_molvera@quicinc.com/
+[6] https://lore.kernel.org/all/20221026190549.4005703-1-quic_molvera@quicinc.com/
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-qrd.dts b/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
-index 017bc48430ba..c9a08608ccf4 100644
---- a/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
-@@ -427,6 +427,18 @@ &remoteproc_slpi {
- 	firmware-name = "qcom/sm8450/slpi.mbn";
- };
- 
-+&sdhc_2 {
-+	cd-gpios = <&tlmm 92 GPIO_ACTIVE_HIGH>;
-+	pinctrl-names = "default", "sleep";
-+	pinctrl-0 = <&sdc2_default_state &sdc2_card_det_n>;
-+	pinctrl-1 = <&sdc2_sleep_state &sdc2_card_det_n>;
-+	vmmc-supply = <&vreg_l9c_2p96>;
-+	vqmmc-supply = <&vreg_l6c_1p8>;
-+	no-sdio;
-+	no-mmc;
-+	status = "okay";
-+};
-+
- &spi4 {
- 	status = "okay";
- };
-@@ -474,6 +486,13 @@ pinconf {
- 			bias-pull-down;
- 		};
- 	};
-+
-+	sdc2_card_det_n: sd-card-det-n-state {
-+		pins = "gpio92";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
- };
- 
- &uart7 {
+Changes from v2:
+- Revised device nodes to match updated dt-bindings
+- Revised rpmh-rsc bindings to allow for generic regulator nodes
+- Updated soc ordering
+- Moved clock node to DTS files
+- Updated regulator nodes to be generic
+- Removed some unnecessary whitespace
+
+Melody Olvera (4):
+  dt-bindings: soc: qcom,rpmh-rsc: Update to allow for generic nodes
+  dt-bindings: arm: qcom: Document QDU1000/QRU1000 SoCs and boards
+  arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
+  arm64: dts: qcom: Add base QDU1000/QRU1000 IDP DTs
+
+ .../devicetree/bindings/arm/qcom.yaml         |   16 +
+ .../bindings/soc/qcom/qcom,rpmh-rsc.yaml      |    2 +-
+ arch/arm64/boot/dts/qcom/Makefile             |    2 +
+ arch/arm64/boot/dts/qcom/qdu1000-idp.dts      |  245 +++
+ arch/arm64/boot/dts/qcom/qdu1000.dtsi         | 1406 +++++++++++++++++
+ arch/arm64/boot/dts/qcom/qru1000-idp.dts      |  245 +++
+ arch/arm64/boot/dts/qcom/qru1000.dtsi         |   27 +
+ 7 files changed, 1942 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/qdu1000.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/qru1000-idp.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/qru1000.dtsi
+
+
+base-commit: 60eac8672b5b6061ec07499c0f1b79f6d94311ce
+prerequisite-patch-id: 01437f10d7e0ca6365e82de7d3097110e5f5015b
+prerequisite-patch-id: 2b59bb9d152bd8f3094e2a4e16d62191a40da67f
+prerequisite-patch-id: c39bef976384eacd3ff0c28168bca355e3c1609d
+prerequisite-patch-id: 116279180e6d97fbbdcc6738627daad393680a58
+prerequisite-patch-id: 58dc60e65b348ec703dba9327f51656d4ac81717
+prerequisite-patch-id: b67d749c7d2e3f6639c547f7908911c5dfb92ba4
+prerequisite-patch-id: 93c63c6cdcc2acb525ea4a958b1c6443e6fe3580
+prerequisite-patch-id: bc93c707c0fdbd6b25b0c595e6e121038ab89af4
+prerequisite-patch-id: 5e7a02607aecd3f5346a2f450982601cf6935e54
 -- 
-2.34.1
+2.25.1
 
