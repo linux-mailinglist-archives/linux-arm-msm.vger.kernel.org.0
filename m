@@ -2,76 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BB9760DCF0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 10:19:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C60560DDD2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 11:14:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232589AbiJZITm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Oct 2022 04:19:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43502 "EHLO
+        id S231903AbiJZJOp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Oct 2022 05:14:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233135AbiJZITi (ORCPT
+        with ESMTP id S231476AbiJZJOm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Oct 2022 04:19:38 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3DE1B1CC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 01:19:34 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id z97so40191373ede.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 01:19:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=sMtqbHlLZFpW7omrjtZXOBYfjn0MC+C+YnFrrsHdRjs=;
-        b=liFfOeY4hx0N4zrjBJD02ke1SJWVcrMthhaYNWmGXRub08CZSFDvJYeLsQd6GzQgqN
-         lKo1GDeIZRO+YrpUSOETHKq1DYlhwE94QNYBhsk0PAmcpFO7kIrCFx2XoeM5ldtsbsdq
-         CXxOCH7yTKPiun+V8cBiY8DHsNSTsV4rpWTurmFF0ZXsJAMGxSMsIHViF5ZY3D0zSxK4
-         4sP/5VwE5aKZ1r85tftPnMXqCuzY8+c7e2pKSoN18xmZKbKV6mqAPakOWvwaeotOf7tJ
-         sDOx6nzr9dN/mDxbiViCuFaHHXHaxAvYIVPVvG2C/OKujJeE8PRRng8Wxp11WDolUH+A
-         J4jA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sMtqbHlLZFpW7omrjtZXOBYfjn0MC+C+YnFrrsHdRjs=;
-        b=bKefjXECdAhYNcpcBbK3t8hvedjT2HWh1wg9bxb1zuMwZCw91cCBty5gs7ZVZ9ut7F
-         IW6EFfGihwo8hKLxpCg1onrdEFzUPDEX1Z0fEBLRBdk3thxiEncjzOmZom7Y10e1PTAW
-         f/Tfcgd1z6vwNvdOw/eHWqBKMTryMgOF+WFZPxD5taAlcjFmiCfUC7vqDls4HsBNKOBo
-         CzWX1h58/ayi433/YUNnGt77RFPVS+ItBOkMIU6UdWQyMk72pww4pdjw4/1k1dNSa/br
-         LSRgFwbTlvyk+0QHg8JgWX5ym0Ylw2oKm9l0vMs4/R83ZQ4MGoAwnpYE5PNQkP01TFeb
-         P8qg==
-X-Gm-Message-State: ACrzQf32g/DVwwm3idfEMvxTfiPLZUAIW7GnQJsbnRhWJQxCrKL4j1Ff
-        r8rO2djDbiqfEUi2uJdjg6q7Z351TdpMHFfPKHLJjZrjSLFWj7f+
-X-Google-Smtp-Source: AMsMyM7SH3F529rlWhEoTHUIMUwS3tzdmcSUpPN3lQbCjmXF4Hv1H8UlF/bAfXad6TZ8Tt1UPReSD16WbYO5i6r8Nwc=
-X-Received: by 2002:aa7:d385:0:b0:461:8cd3:b38b with SMTP id
- x5-20020aa7d385000000b004618cd3b38bmr18885323edq.172.1666772373091; Wed, 26
- Oct 2022 01:19:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <20221021181016.14740-1-ansuelsmth@gmail.com> <CACRpkdbfvr1pkVb3XhBZLnmn7vy3XyzavwVjW_VmFKTdh3LABQ@mail.gmail.com>
- <63531543.050a0220.b6bf5.284d@mx.google.com> <CACRpkdbOQq9hUT=d1QBDMmgLaJ1wZ=hd44ciMnjFVgpLCnK8Wg@mail.gmail.com>
- <6357240c.170a0220.999b2.23d6@mx.google.com>
-In-Reply-To: <6357240c.170a0220.999b2.23d6@mx.google.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 26 Oct 2022 10:19:21 +0200
-Message-ID: <CACRpkdb4iqazgVerHCPU0VqZKYoB5kJeDSaL+ek67L=2Txem-A@mail.gmail.com>
-Subject: Re: [PATCH] ARM: mach-qcom: fix support for ipq806x
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Geert Uytterhoeven <geert+renesas@glider.be>,
-        Russell King <linux@armlinux.org.uk>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-        Nick Hawkins <nick.hawkins@hpe.com>,
-        John Crispin <john@phrozen.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
+        Wed, 26 Oct 2022 05:14:42 -0400
+Received: from mailgw01.mediatek.com (unknown [60.244.123.138])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D54A013EB2;
+        Wed, 26 Oct 2022 02:14:31 -0700 (PDT)
+X-UUID: 9180668afd1e48199418e165d170df1a-20221026
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
+        h=Content-Transfer-Encoding:MIME-Version:Content-Type:References:In-Reply-To:Date:CC:To:From:Subject:Message-ID; bh=RoSN/0vdZNJI1BsXeQN/CB5ivpuRXHYEGS36plQjLDY=;
+        b=oVoKD3YtbAV+Ce2geY2o+8+AJruyAX25fYIr/1RaVFf4Znm2jgHdt+jL5U9TS2PzM7u/ImfZyRuUkjCHN9fBjDILQFjy9xZRyoX7csP0A0aEqRO+5w9Xkjaafh6kGbU0rC4wR3dL4/tVqvBeiBPU+ROn5b+DYicjNXjkvV7+hBU=;
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.12,REQID:c2c223ea-be03-4e47-8771-4066d431554f,IP:0,U
+        RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+        release,TS:0
+X-CID-META: VersionHash:62cd327,CLOUDID:3686286d-89d3-4bfa-baad-dc632a24bca3,B
+        ulkID:nil,BulkQuantity:0,Recheck:0,SF:102,TC:nil,Content:0,EDM:-3,IP:nil,U
+        RL:1,File:nil,Bulk:nil,QS:nil,BEC:nil,COL:0
+X-UUID: 9180668afd1e48199418e165d170df1a-20221026
+Received: from mtkmbs11n1.mediatek.inc [(172.21.101.185)] by mailgw01.mediatek.com
+        (envelope-from <eddie.huang@mediatek.com>)
+        (Generic MTA with TLSv1.2 ECDHE-RSA-AES256-GCM-SHA384 256/256)
+        with ESMTP id 72722634; Wed, 26 Oct 2022 17:14:25 +0800
+Received: from mtkmbs13n1.mediatek.inc (172.21.101.193) by
+ mtkmbs13n1.mediatek.inc (172.21.101.193) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.792.15; Wed, 26 Oct 2022 17:14:24 +0800
+Received: from mtksdccf07 (172.21.84.99) by mtkmbs13n1.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.2.792.15 via Frontend
+ Transport; Wed, 26 Oct 2022 17:14:24 +0800
+Message-ID: <0fdbd62925665469a3f3eff2a85bc582d5be83ea.camel@mediatek.com>
+Subject: Re: [PATCH v3 06/17] ufs: core: mcq: Configure resource regions
+From:   Eddie Huang <eddie.huang@mediatek.com>
+To:     Asutosh Das <quic_asutoshd@quicinc.com>, <quic_cang@quicinc.com>,
+        <martin.petersen@oracle.com>, <linux-scsi@vger.kernel.org>
+CC:     <quic_nguyenb@quicinc.com>, <quic_xiaosenh@quicinc.com>,
+        <stanley.chu@mediatek.com>, <daejun7.park@samsung.com>,
+        <bvanassche@acm.org>, <avri.altman@wdc.com>, <mani@kernel.org>,
+        <beanhuo@micron.com>, <quic_richardp@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        open list <linux-kernel@vger.kernel.org>
+Date:   Wed, 26 Oct 2022 17:14:24 +0800
+In-Reply-To: <b3f9b7fab4e187ad50dbf80cbd982353ad2d8130.1666288432.git.quic_asutoshd@quicinc.com>
+References: <cover.1666288432.git.quic_asutoshd@quicinc.com>
+         <b3f9b7fab4e187ad50dbf80cbd982353ad2d8130.1666288432.git.quic_asutoshd@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-MTK:  N
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,T_SPF_TEMPERROR,
+        UNPARSEABLE_RELAY,URIBL_BLOCKED autolearn=no autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,85 +70,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 25, 2022 at 1:47 AM Christian Marangi <ansuelsmth@gmail.com> wrote:
+Hi Asutosh,
 
-> bad news... yesterday I tested this binding and it's problematic. It
-> does work and the router correctly boot...
+On Thu, 2022-10-20 at 11:03 -0700, Asutosh Das wrote:
+> Define the mcq resources and add support to ioremap
+> the resource regions.
+> 
+> Co-developed-by: Can Guo <quic_cang@quicinc.com>
+> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+> Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
+> ---
+>  drivers/ufs/core/ufs-mcq.c | 102
+> +++++++++++++++++++++++++++++++++++++++++++++
+>  include/ufs/ufshcd.h       |  28 +++++++++++++
+>  2 files changed, 130 insertions(+)
+> 
+[....]
+> 
+> +
+> +static int ufshcd_mcq_config_resource(struct ufs_hba *hba)
+> +{
+> +	struct platform_device *pdev = to_platform_device(hba->dev);
+> +	struct ufshcd_res_info *res;
+> +	struct resource *res_mem, *res_mcq;
+> +	int i, ret = 0;
+> +
+> +	memcpy(hba->res, ufs_res_info, sizeof(ufs_res_info));
+> +
+> +	for (i = 0; i < RES_MAX; i++) {
+> +		res = &hba->res[i];
+> +		res->resource = platform_get_resource_byname(pdev,
+> +							     IORESOURCE
+> _MEM,
+> +							     res-
+> >name);
+> 
 
-That's actually partly good news :D
+Please check patch[1] for mcq_config_resource vops
 
-> problem is that SMEM is
-> broken with such configuration... I assume with this binding, by the
-> system view ram starts from 0x42000000 instead of 0x40000000 and this
-> cause SMEM to fail probe with the error "SBL didn't init SMEM".
+[1] 
+https://patchwork.kernel.org/project/linux-scsi/patch/20221026073943.22111-2-eddie.huang@mediatek.com/
+ 
 
-We need to fix this.
+Eddie Huang
 
-> This is the location of SMEM entry in ram
->
->                 smem: smem@41000000 {
->                         compatible = "qcom,smem";
->                         reg = <0x41000000 0x200000>;
->                         no-map;
->
->                         hwlocks = <&sfpb_mutex 3>;
->                 };
-(...)
-> Wonder if you have other ideas about this.
 
-So the problem is that the resource is outside of the system RAM?
-
-I don't understand why that triggers it since this is per definition not
-system RAM, it is SMEM after all. And it is no different in esssence
-from any memory mapped IO or other things that are outside of
-the system RAM.
-
-The SMEM node is special since it is created without children thanks
-to the hack in drivers/of/platform.c.
-
-Then the driver in drivers/soc/qcom/smem.c
-contains things like this:
-
-        rmem = of_reserved_mem_lookup(pdev->dev.of_node);
-        if (rmem) {
-                smem->regions[0].aux_base = rmem->base;
-                smem->regions[0].size = rmem->size;
-        } else {
-                /*
-                 * Fall back to the memory-region reference, if we're not a
-                 * reserved-memory node.
-                 */
-                ret = qcom_smem_resolve_mem(smem, "memory-region",
-&smem->regions[0]);
-                if (ret)
-                        return ret;
-        }
-
-However it is treated as memory-mapped IO later:
-
-        for (i = 1; i < num_regions; i++) {
-                smem->regions[i].virt_base = devm_ioremap_wc(&pdev->dev,
-
-smem->regions[i].aux_base,
-
-smem->regions[i].size);
-                if (!smem->regions[i].virt_base) {
-                        dev_err(&pdev->dev, "failed to remap %pa\n",
-&smem->regions[i].aux_base);
-                        return -ENOMEM;
-                }
-        }
-
-As a first hack I would check:
-
-1. Is it the of_reserved_mem_lookup() or qcom_smem_resolve_smem() stuff
-   in drivers/soc/qcom/smem.c that is failing?
-
-If yes then:
-
-2. Add a fallback path just using of_iomap(node) for aux_base and size
-  with some comment like /* smem is outside of the main memory map */
-  and see if that works.
-
-Yours,
-Linus Walleij
