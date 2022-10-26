@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8ABAC60E9FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 22:11:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1897060EA05
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 22:12:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234960AbiJZULY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Oct 2022 16:11:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48650 "EHLO
+        id S235014AbiJZUMN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Oct 2022 16:12:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234859AbiJZULV (ORCPT
+        with ESMTP id S234908AbiJZUMM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Oct 2022 16:11:21 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92327119BE7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 13:11:19 -0700 (PDT)
+        Wed, 26 Oct 2022 16:12:12 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0E9413B52B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 13:12:11 -0700 (PDT)
 Received: from [192.168.31.208] (unknown [194.29.137.22])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id EE9643F73D;
-        Wed, 26 Oct 2022 22:11:16 +0200 (CEST)
-Message-ID: <cd4bea2e-3832-1684-ff8e-2236ccdbe558@somainline.org>
-Date:   Wed, 26 Oct 2022 22:11:13 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id B67973F73D;
+        Wed, 26 Oct 2022 22:12:09 +0200 (CEST)
+Message-ID: <1ce38a7a-7c4d-32b0-dd53-90fd3b708d64@somainline.org>
+Date:   Wed, 26 Oct 2022 22:12:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.0
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: sm8450: move SDHCI pin
- configuration to DTSI
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: sm8450: disable SDHCI SDR104/SDR50
+ on all boards
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -37,9 +37,9 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-kernel@vger.kernel.org
 Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 References: <20221026200357.391635-1-krzysztof.kozlowski@linaro.org>
- <20221026200357.391635-2-krzysztof.kozlowski@linaro.org>
+ <20221026200357.391635-3-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20221026200357.391635-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221026200357.391635-3-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
@@ -53,87 +53,55 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 26/10/2022 22:03, Krzysztof Kozlowski wrote:
-> The SDHCI pin configuration/mux nodes are actually common to all
-> upstreamed boards, so define them in SoC DTSI to reduce code
-> duplication.
+> SDHCI on SM8450 HDK also has problems with SDR104/SDR50:
+>
+>    mmc0: card never left busy state
+>    mmc0: error -110 whilst initialising SD card
+>
+> so I think it is safe to assume this issue affects all SM8450 boards.
+> Move the quirk disallowing these modes to the SoC DTSI, to spare people
+> working on other boards the misery of debugging this issue.
 >
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->
 > ---
+
+While I have no way to tell whether this is a common issue, it may as 
+well be..
+
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
 
 Konrad
 
->
-> In theory drive strength belongs to the board DTS, not SoC DTSI, but I
-> am following the advice here:
-> https://lore.kernel.org/lkml/CAD=FV=VUL4GmjaibAMhKNdpEso_Hg_R=XeMaqah1LSj_9-Ce4Q@mail.gmail.com/
-> ---
->   .../qcom/sm8450-sony-xperia-nagara-pdx223.dts | 20 -------------------
->   arch/arm64/boot/dts/qcom/sm8450.dtsi          | 20 +++++++++++++++++++
->   2 files changed, 20 insertions(+), 20 deletions(-)
+>   arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts | 2 --
+>   arch/arm64/boot/dts/qcom/sm8450.dtsi                          | 3 +++
+>   2 files changed, 3 insertions(+), 2 deletions(-)
 >
 > diff --git a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
-> index 82918c2d956f..718c690af8ad 100644
+> index 718c690af8ad..ae8ba297b0b6 100644
 > --- a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
 > +++ b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts
-> @@ -572,26 +572,6 @@ &spi10 {
->   &tlmm {
->   	gpio-reserved-ranges = <28 4>;
->   
-> -	sdc2_default_state: sdc2-default-state {
-> -		clk-pins {
-> -			pins = "sdc2_clk";
-> -			drive-strength = <16>;
-> -			bias-disable;
-> -		};
-> -
-> -		cmd-pins {
-> -			pins = "sdc2_cmd";
-> -			drive-strength = <16>;
-> -			bias-pull-up;
-> -		};
-> -
-> -		data-pins {
-> -			pins = "sdc2_data";
-> -			drive-strength = <16>;
-> -			bias-pull-up;
-> -		};
-> -	};
-> -
->   	ts_int_default: ts-int-default-state {
->   		pins = "gpio23";
->   		function = "gpio";
+> @@ -556,8 +556,6 @@ &sdhc_2 {
+>   	pinctrl-1 = <&sdc2_sleep_state &sdc2_card_det_n>;
+>   	vmmc-supply = <&pm8350c_l9>;
+>   	vqmmc-supply = <&pm8350c_l6>;
+> -	/* Forbid SDR104/SDR50 - broken hw! */
+> -	sdhci-caps-mask = <0x3 0x0>;
+>   	no-sdio;
+>   	no-mmc;
+>   	status = "okay";
 > diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 1d1775334575..1df5c964c6f7 100644
+> index 1df5c964c6f7..6800e05a549d 100644
 > --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
 > +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -2515,6 +2515,26 @@ tlmm: pinctrl@f100000 {
->   			gpio-ranges = <&tlmm 0 0 211>;
->   			wakeup-parent = <&pdc>;
+> @@ -3412,6 +3412,9 @@ sdhc_2: sdhci@8804000 {
+>   			bus-width = <4>;
+>   			dma-coherent;
 >   
-> +			sdc2_default_state: sdc2-default-state {
-> +				clk-pins {
-> +					pins = "sdc2_clk";
-> +					drive-strength = <16>;
-> +					bias-disable;
-> +				};
+> +			/* Forbid SDR104/SDR50 - broken hw! */
+> +			sdhci-caps-mask = <0x3 0x0>;
 > +
-> +				cmd-pins {
-> +					pins = "sdc2_cmd";
-> +					drive-strength = <16>;
-> +					bias-pull-up;
-> +				};
-> +
-> +				data-pins {
-> +					pins = "sdc2_data";
-> +					drive-strength = <16>;
-> +					bias-pull-up;
-> +				};
-> +			};
-> +
->   			sdc2_sleep_state: sdc2-sleep-state {
->   				clk-pins {
->   					pins = "sdc2_clk";
+>   			status = "disabled";
+>   
+>   			sdhc2_opp_table: opp-table {
