@@ -2,153 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F01360E010
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 13:55:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE39560E0C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 14:36:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233159AbiJZLzr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Oct 2022 07:55:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52946 "EHLO
+        id S233486AbiJZMgI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Oct 2022 08:36:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231937AbiJZLzq (ORCPT
+        with ESMTP id S233551AbiJZMgH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Oct 2022 07:55:46 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20B0DAA3EB;
-        Wed, 26 Oct 2022 04:55:46 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AAFCC61E5A;
-        Wed, 26 Oct 2022 11:55:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0715FC433C1;
-        Wed, 26 Oct 2022 11:55:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666785345;
-        bh=Pxq8mKgAK7SZAZtzyx61wd600ewnbz1pLQkko6CDjTU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Y6/QtF3fFCUuWmwUKxrYcRcA6N0lYc5vViotYovq85s6jDR1tNz4nDlr7ZC9MVDLW
-         IPyVR+vO4jvjoKcA7M0i3ATj/8WXUxMvDOTeybKTYbBSrBA3j0IZDZ1cjD6l6wGana
-         5vY54Bs9jtIx+WSJStpXQJCICctEerYmTOK3AlFDYumfMDA9K0OB8uRA5w06h9/GEp
-         C9x4yNNApzvieaUg+hoXyvWDbgP3jXK5cZfRbrr8QbdpBanYbZcivXKvQGIQdTo+kD
-         ukbX3F1tkPUEfAHnrU/3obYq+hATgSg1/RNoVPs9B5UuyXh9M2TowYim0F/hh94iUn
-         XGQb4YXtM5xaQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1onf0J-0007FN-VE; Wed, 26 Oct 2022 13:55:28 +0200
-Date:   Wed, 26 Oct 2022 13:55:27 +0200
-From:   Johan Hovold <johan@kernel.org>
+        Wed, 26 Oct 2022 08:36:07 -0400
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4972984E5B;
+        Wed, 26 Oct 2022 05:36:03 -0700 (PDT)
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-13b23e29e36so19030671fac.8;
+        Wed, 26 Oct 2022 05:36:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kV4Oxfken2/ulM3nGzbwK4CyKckevFO7gguVOI5Hhm4=;
+        b=Ksf/Lu4CUcEYmyb2vNavBe6fXuU4ioTcRyFEqQ5lg93haCQ7g9xw2rVNqY7dtLrSwC
+         EJ5P2HnY+/gKOjOp53y7fZCCk/jfoQUg0NU429CS1meu/knm4cMWlwVWvnZMqaFcz/5y
+         4hi329SpvBCx5FwoSEa3sXWIEa3A195qfKjW3LBiIJAAfefvDWKm04Za0w7L9/+gWNZP
+         e2HPltsoU0kd+tJrg4X8XT6LREnAKyk/ubTYnOFCTyzxJNwZ/SREh3/1VgVN/HO3mWVm
+         N43Suu9lxWY2rjJNkGF0UVT2CX7dmZmvdNY2rOwGUCLUzapAzRpz/rqrRcEmpXBo+/iZ
+         4IqQ==
+X-Gm-Message-State: ACrzQf3oHSSxqOBE+B1EnTK87xRiISM6MdGS3tYZnm2Uly+QArYdwinW
+        mZXdoT4IRixDumLAFyQ/3Q==
+X-Google-Smtp-Source: AMsMyM7avrAhnzOr2x6d70zZ/hy8bXiFehrVQMoacKHi/oBio7h7PU7naRlNqMgIa18WyCNJRmnZHg==
+X-Received: by 2002:a05:6870:8910:b0:131:2f31:dc1c with SMTP id i16-20020a056870891000b001312f31dc1cmr2029210oao.290.1666787762448;
+        Wed, 26 Oct 2022 05:36:02 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id d22-20020a4ad356000000b004805e9e9f3dsm2123538oos.1.2022.10.26.05.36.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Oct 2022 05:36:01 -0700 (PDT)
+Received: (nullmailer pid 277720 invoked by uid 1000);
+        Wed, 26 Oct 2022 12:36:02 -0000
+From:   Rob Herring <robh@kernel.org>
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
+Cc:     linux-arm-msm@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        freedreno@lists.freedesktop.org, Rob Herring <robh+dt@kernel.org>,
+        devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-kernel@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@gmail.com>,
         Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 10/12] arm64: dts: qcom: sc8280xp: Define some of the
- display blocks
-Message-ID: <Y1kgL9YuIXoViSFD@hovoldconsulting.com>
-References: <20221026032624.30871-1-quic_bjorande@quicinc.com>
- <20221026032624.30871-11-quic_bjorande@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221026032624.30871-11-quic_bjorande@quicinc.com>
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Johan Hovold <johan@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>
+In-Reply-To: <20221026032624.30871-2-quic_bjorande@quicinc.com>
+References: <20221026032624.30871-1-quic_bjorande@quicinc.com> <20221026032624.30871-2-quic_bjorande@quicinc.com>
+Message-Id: <166678762718.274656.14416161449532771853.robh@kernel.org>
+Subject: Re: [PATCH v3 01/12] dt-bindings: display/msm: Add binding for SC8280XP MDSS
+Date:   Wed, 26 Oct 2022 07:36:02 -0500
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 25, 2022 at 08:26:22PM -0700, Bjorn Andersson wrote:
+On Tue, 25 Oct 2022 20:26:13 -0700, Bjorn Andersson wrote:
 > From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> Define the display clock controllers, the MDSS instances, the DP phys
-> and connect these together.
+> Add binding for the display subsystem and display processing unit in the
+> Qualcomm SC8280XP platform.
 > 
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
 > 
 > Changes since v2:
-> - New patch on list
+> - Cleaned up description and interconnect definitions
+> - Added opp-table
 > 
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 838 +++++++++++++++++++++++++
->  1 file changed, 838 insertions(+)
+>  .../bindings/display/msm/dpu-sc8280xp.yaml    | 287 ++++++++++++++++++
+>  1 file changed, 287 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sc8280xp.yaml
+> 
 
-> +				mdss0_mdp_opp_table: opp-table {
-> +					compatible = "operating-points-v2";
-> +
-> +					opp-200000000 {
-> +						opp-hz = /bits/ 64 <200000000>;
-> +						required-opps = <&rpmhpd_opp_low_svs>;
-> +					};
-> +
-> +					opp-300000000 {
-> +						opp-hz = /bits/ 64 <300000000>;
-> +						required-opps = <&rpmhpd_opp_svs>;
-> +					};
-> +
-> +					opp-375000000 {
-> +						opp-hz = /bits/ 64 <375000000>;
-> +						required-opps = <&rpmhpd_opp_svs_l1>;
-> +					};
-> +
-> +					opp-500000000 {
-> +						opp-hz = /bits/ 64 <500000000>;
-> +						required-opps = <&rpmhpd_opp_nom>;
-> +					};
-> +					opp-600000000 {
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Super nit: missing newline between entries (I only noticed when rebasing
-the external DP support on top).
+yamllint warnings/errors:
 
-> +						opp-hz = /bits/ 64 <600000000>;
-> +						required-opps = <&rpmhpd_opp_turbo_l1>;
-> +					};
-> +				};
-> +			};
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/display/msm/dpu-sc8280xp.example.dts:21:18: fatal error: dt-bindings/clock/qcom,dispcc-sc8280xp.h: No such file or directory
+   21 |         #include <dt-bindings/clock/qcom,dispcc-sc8280xp.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[1]: *** [scripts/Makefile.lib:406: Documentation/devicetree/bindings/display/msm/dpu-sc8280xp.example.dtb] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1492: dt_binding_check] Error 2
 
-> +				mdss1_mdp_opp_table: opp-table {
-> +					compatible = "operating-points-v2";
-> +
-> +					opp-200000000 {
-> +						opp-hz = /bits/ 64 <200000000>;
-> +						required-opps = <&rpmhpd_opp_low_svs>;
-> +					};
-> +
-> +					opp-300000000 {
-> +						opp-hz = /bits/ 64 <300000000>;
-> +						required-opps = <&rpmhpd_opp_svs>;
-> +					};
-> +
-> +					opp-375000000 {
-> +						opp-hz = /bits/ 64 <375000000>;
-> +						required-opps = <&rpmhpd_opp_svs_l1>;
-> +					};
-> +
-> +					opp-500000000 {
-> +						opp-hz = /bits/ 64 <500000000>;
-> +						required-opps = <&rpmhpd_opp_nom>;
-> +					};
-> +					opp-600000000 {
-> +						opp-hz = /bits/ 64 <600000000>;
-> +						required-opps = <&rpmhpd_opp_turbo_l1>;
-> +					};
+doc reference errors (make refcheckdocs):
 
-Ditto.
+See https://patchwork.ozlabs.org/patch/
 
-> +				};
-> +			};
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
 
-Johan
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
