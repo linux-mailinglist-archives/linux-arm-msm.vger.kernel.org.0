@@ -2,75 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 731C760E57E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 18:31:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B481060E588
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Oct 2022 18:36:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233040AbiJZQbn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Oct 2022 12:31:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48822 "EHLO
+        id S233520AbiJZQgx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Oct 2022 12:36:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233435AbiJZQbm (ORCPT
+        with ESMTP id S230090AbiJZQgw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Oct 2022 12:31:42 -0400
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81735A025F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 09:31:41 -0700 (PDT)
-Received: by mail-qk1-x736.google.com with SMTP id x26so1048106qki.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 09:31:41 -0700 (PDT)
+        Wed, 26 Oct 2022 12:36:52 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BADCEAC28E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 09:36:50 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id c23so10304619qtw.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Oct 2022 09:36:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:cc:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vZroYCfLP4kV6yI2SRRkLF4nBxcg+8GdvFiXm2KAN+0=;
-        b=gCRfbxTztxyAglTagJ90CBhqnus+JgUzmKoYY9/0MsEP0wUYumGlms0kroMz2tdy+0
-         dQ7pwGFr2FC+Lh9NYSXPBYWx4UU8Mc0j7g7zmepKBf/T6NaMqH5pF2xFsOJdfBydH0w5
-         EPgU1WDnWu0/PTDgoPCBiO3R6FyU0a1LdvwLJMddT6qZtWWPn3KHjF1NZ6skR0mcjZSN
-         LsIe9HA9Z7bTvXz3Oi+qV6PKu1fNrohSeUrtCEPTEXxCILDGbe0U81rP2Xapzv3OVKpD
-         pftWQCvFA+6xejk6uMiNDVHpwXWQk6JJOa34wdV6Y3MkiWsomuo5PZpq/2u4/6z2X/8F
-         m+5A==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+O6n1+4Noo4lqABNPcNmHpEdPhT1c2lxt97PdSfadgg=;
+        b=lGZQfp2ouRZjOccXJJKrtcDtmvCxmhC4VwWrnGQrDqBqrTinjAK6oSLGGSKU6q8NI/
+         D7AkuJQCXxocXdMVUUSeCISSv0e3oMPgAZL3KbzSK3meS7rHCEBrqX0PmzNkRbv8v89v
+         p2vZwwfodQZ2d/Ts5lq/OXwA0sYsYzTHtHZGPWZ8JnhsLjaBOJpx7B+V4bfQFaeBKRSx
+         Hie6MX+Yvs4Fh9OaK2crkRH8Gs6ikBmlJF2vimFXoAvllkLUe6EIjzbI+1FOH+Pbzu9a
+         vb92LPjLoOnXkV122OYrqkjywxDS1AR/kcs0hysf7a0qogvWKgBwPNSSYV6YIwLCxcFY
+         8LEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:cc:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vZroYCfLP4kV6yI2SRRkLF4nBxcg+8GdvFiXm2KAN+0=;
-        b=gqUlQ/azoP/fkep35BFEZMXbLIqWIxNuvJPosCaddNJsh7CdzGHY9Q5xeyyru5G8U6
-         gOF6Z/DikOAVckKUbAbwZmn2D3Yz9au7mDwlaEcsXqvpFshL3dlb1Sb4Ks+e47Wlkc7w
-         sUdoSR/pKJ1khVMd9czEd//+5JfS8hozRAIV3w3vZ85cOzUni4ArHul2N5HiTNwOaC5z
-         ucieN5GIUiiOTc9gqazhLqGCOEIvYvCTMnjivMKAgMBHpeeBPYqWdAZK/sNyKXvP5qn7
-         o+VhjyH9V3qA5z7yL65NS48QiPpECcCXmfChzUu+kn1vlZysHMqMENKi4kfTZZ/OJF2+
-         aUPw==
-X-Gm-Message-State: ACrzQf0e3VFL4MhULJsN6uLFwH/pY0fGYH9IVGYtPIoRLPGNlJEAaUNr
-        fsZgCKVOdhV/v9GmRXhHA7+HaocF6tX81Q==
-X-Google-Smtp-Source: AMsMyM7zb0Ad8R3XGxlHoD3MmtUEhan1tNmdrsbjDd8I1m15K/nuONOXPqL7vgs0BM6lGAVY1R/VKg==
-X-Received: by 2002:a05:622a:4cc:b0:39c:bfb1:8a45 with SMTP id q12-20020a05622a04cc00b0039cbfb18a45mr36998426qtx.647.1666801889584;
-        Wed, 26 Oct 2022 09:31:29 -0700 (PDT)
-Received: from [192.168.1.11] ([64.57.193.93])
-        by smtp.gmail.com with ESMTPSA id n12-20020a05620a294c00b006b8e63dfffbsm4239476qkp.58.2022.10.26.09.31.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Oct 2022 09:31:28 -0700 (PDT)
-Message-ID: <f3148a5a-2424-8589-684e-7d759bb08bb1@linaro.org>
-Date:   Wed, 26 Oct 2022 12:31:26 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH 1/5] slimbus: stream: add checks for invalid
- unprepare/disable usage
-Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-References: <20220923155740.422411-1-krzysztof.kozlowski@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+O6n1+4Noo4lqABNPcNmHpEdPhT1c2lxt97PdSfadgg=;
+        b=lUtwbMS5DyJSYlUw+wm5qqLS0RvtoJ3tyUQqgFf5PTJcVKXHD6Gl4Ato9plWXuYZg0
+         ojyhxclderpWMHCz/MI0JRP7y5/PMl1n3p2g9vkcCqldUgLwIhUGWUSEQ6kJkb6ogWZf
+         5GRxo9l1uHDu4Dwj6DBUKxptH4D/CP5F9bUM7N1ryw0ZdHuDw36MJHmkpmm7jAz3UfKd
+         R+zKGjEe9u7JgaL9cF/Am8zVp8b4z2Wdm6TGVAOgvm2uoHnXXZL7nYXh9a+4Z4eEfNr2
+         SRhEIryNDdv70ceKb73riavhD/fMgPnDOa6QrDKaiTyY9GUI2uuRHbfOH+U+FKXMmVpz
+         4fxA==
+X-Gm-Message-State: ACrzQf29kSeSKfPNsXXD4FBrcjRWSSfBOmNbkPq3kYFWfSE2EFM2t30o
+        sA2i5rZTWfcgB25elUepQX7Jmw==
+X-Google-Smtp-Source: AMsMyM4nmCswutT+FfSqr7WQOhGm2VmuDShqaCLJO01GoLr+2YAVnpGdHlAlEdTjGAKXzOyAH3aelw==
+X-Received: by 2002:a05:622a:5cb:b0:39c:fb06:5f6c with SMTP id d11-20020a05622a05cb00b0039cfb065f6cmr34629412qtb.474.1666802209719;
+        Wed, 26 Oct 2022 09:36:49 -0700 (PDT)
+Received: from krzk-bin.. ([64.57.193.93])
+        by smtp.gmail.com with ESMTPSA id w8-20020a05620a424800b006b949afa980sm4161223qko.56.2022.10.26.09.36.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Oct 2022 09:36:48 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220923155740.422411-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [RESEND PATCH] arm64: dts: qcom: sm6125: fix SDHCI CQE reg names
+Date:   Wed, 26 Oct 2022 12:36:46 -0400
+Message-Id: <20221026163646.37433-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,17 +75,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/09/2022 11:57, Krzysztof Kozlowski wrote:
-> slim_disable_stream() and slim_stream_unprepare() are exported, so add
-> sanity checks preventing unmatched/invalid calls.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
+SM6125 comes with SDCC (SDHCI controller) v5, so the second range of
+registers is cqhci, not core.
 
-Hi Srini,
+Fixes: cff4bbaf2a2d ("arm64: dts: qcom: Add support for SM6125")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-This patchset is also waiting for a month without comments.
+---
 
-Best regards,
-Krzysztof
+Not tested on hardware, but no practical impact is expected, because
+supports-cqe is not defined.
+---
+ arch/arm64/boot/dts/qcom/sm6125.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+index af49a748e511..24ee7c0c1195 100644
+--- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+@@ -458,7 +458,7 @@ rpm_msg_ram: sram@45f0000 {
+ 		sdhc_1: mmc@4744000 {
+ 			compatible = "qcom,sm6125-sdhci", "qcom,sdhci-msm-v5";
+ 			reg = <0x04744000 0x1000>, <0x04745000 0x1000>;
+-			reg-names = "hc", "core";
++			reg-names = "hc", "cqhci";
+ 
+ 			interrupts = <GIC_SPI 348 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 352 IRQ_TYPE_LEVEL_HIGH>;
+-- 
+2.34.1
 
