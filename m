@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 732D260F508
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 12:28:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF61260F509
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 12:28:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234729AbiJ0K2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Oct 2022 06:28:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56974 "EHLO
+        id S234289AbiJ0K2E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Oct 2022 06:28:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235152AbiJ0K1v (ORCPT
+        with ESMTP id S234872AbiJ0K1z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Oct 2022 06:27:51 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36A023ECC7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 03:27:49 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id h9so1441450wrt.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 03:27:49 -0700 (PDT)
+        Thu, 27 Oct 2022 06:27:55 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A53287FA8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 03:27:52 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id bp11so1383313wrb.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 03:27:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XRksJXQbYrRhqCpyqmwfEWWPK1xGzs4Mo3xZYXwQ8qI=;
-        b=f/fmha2i9p6KmSlokHd/hMBPFW6SAgl0PFNlWcJ4nEkGm20pZSQJXenfEJEcEHuLlm
-         6ZP4/qQy5iLUJBfGCqaND/KY+y2CUqDlKqti0B7zr2sWuyOfH6SaRU51YcpATNIKNumZ
-         Ce+yLpP9wBBn8RFE9HDi1mkhCoXtdPG0L1Uh0lNXoQ6i7pKtsyekb9Ak7UQfNpSAPHNk
-         xhg7S7aBV+jP8CvrR1TkwgHho3M6uhm6ytah8H6e5g+/DJoFl+z+EjMvnE7LUSrdiPG9
-         ZwcgfyIr9AJ6x7G82/pnt9zk3felswollEp8bJno0RkB4mXxIF8PWLwX3QwCKTCC/zq5
-         /LwA==
+        bh=P38kTBSJr/DRXyh4Je0XkAOEtRTZS4roS95ylRUlbWA=;
+        b=ILJoWb3XrEu77ZuGCBs0pipPfO4HGPcyLw4RSiRRZTtUO8SCysUSQExzlcDrTMIRvN
+         cBb/7EBQclQbY0zrEv8j2I7E8PiPYHot7xwsKOOLha0kgM4OGpvJNZX/a/Bywk3iAGDq
+         tiNgZJe/5heYhar822aPNtv4gneYYhPVFkUpLzNE02gv0IiOTV6YfhMHsZtnXsawmqJj
+         Gekwk2Dr72DN8aRhqRrIln6/ekwlGOsmNGRspkG9AVr1XVz52NqnswULcIvM7d9N7a5L
+         2wpww+JO5VccrA/sXkL/b5jdTiw4as9PKSPi1tCh9N8Y03eBbXgTg5IatcSelIrWtx/+
+         8RIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XRksJXQbYrRhqCpyqmwfEWWPK1xGzs4Mo3xZYXwQ8qI=;
-        b=J6BhLWRAYTyAF0hozn80APlXrg3hp6tybWY2dDpKZD21T3kqhxR5tOfPDRa9BJq0ty
-         GLmE4pHbN3C7LkAhCaowSmzJbc2lt9TH9z+8LlhxW/5Pw5cYEI7FZTvrv+xPznb2r0vi
-         vgwywJZNB5twVlFRABipdJFSt0dtx4/0icBPiJpYMo9NIWDTwu+dCXTluMU7xbvXb1i8
-         MaOi4ATOn/VaJdcxDcCbtxJlkLo7SvXXI5fWb/ElcV7ehTUb3uMV2q+nKujBs5ZY2djB
-         SW/MPyt8WS4OlNphHkCVWQtTtTI6fbm7/DXrGVaJcngU0ZcGLo6JtPsQw//t1X9G/pe6
-         +fIA==
-X-Gm-Message-State: ACrzQf2DOrtO7sV5Vd9s3w2KeWnuZN3nKFIg1KYG00YWdxo8ZeZ4/ENK
-        ApxmrUq9838KsasIadfRTeKNMzcoWdzYWw==
-X-Google-Smtp-Source: AMsMyM6pc1chA1bRxJ6xEZf1ooe1oXo97K30OmXVvaQEhM4IL6eIDQ49o5kWt5LbqOn7iKpTLTq3gQ==
-X-Received: by 2002:adf:fc12:0:b0:236:9b2e:4843 with SMTP id i18-20020adffc12000000b002369b2e4843mr658925wrr.620.1666866469328;
-        Thu, 27 Oct 2022 03:27:49 -0700 (PDT)
+        bh=P38kTBSJr/DRXyh4Je0XkAOEtRTZS4roS95ylRUlbWA=;
+        b=L2IbHNocWNuQ7du07QQIb8I+DaHvxBGecZwosj4EUHtaDnYjUrpEZdrDMC+r2sfWhY
+         b4+LXewk7ME4r2z2QnSthgMYM1WqL9Sv2oqcM1kyyzsvb9w8Pwc06pxHPIcDY562qes2
+         2grq0Wl0BdzLn/4al7EX33xUG9j83TkF332Gx29jhHtQ74qbdTxlNQSPYDkkKGYlGYcJ
+         HwXLsTNALfLwiVzsAAHqtBhxY8PEjHZKjPbQIh7Rbmkm1fnilk8787CIpwZq1rsM9iUP
+         zGzmz7gFZcjdeXn9+KmOh9QGoq+2plONR6f5jsau4Q/BRt3psLOmK9E9AEwylgI08bg3
+         tY4Q==
+X-Gm-Message-State: ACrzQf0ilSl6C4a5WDgSvrFT/PCjXREj3H/TYxE1HIjHr5F2nVWWQx2n
+        Sr19VxX+HYaPxC+YtHDdTVIMEA==
+X-Google-Smtp-Source: AMsMyM6n1kCTi8daTd2SVcuEjyzVj6ZAP/A2zOOB2oE7t372oUSp1ruGQ0IjsqMc53/pKEuRKijVQQ==
+X-Received: by 2002:a05:6000:1b0e:b0:236:5c9e:7110 with SMTP id f14-20020a0560001b0e00b002365c9e7110mr18891472wrz.650.1666866470678;
+        Thu, 27 Oct 2022 03:27:50 -0700 (PDT)
 Received: from localhost.localdomain ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id fc7-20020a05600c524700b003b505d26776sm5088674wmb.5.2022.10.27.03.27.48
+        by smtp.gmail.com with ESMTPSA id fc7-20020a05600c524700b003b505d26776sm5088674wmb.5.2022.10.27.03.27.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Oct 2022 03:27:48 -0700 (PDT)
+        Thu, 27 Oct 2022 03:27:50 -0700 (PDT)
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 To:     broonie@kernel.org
 Cc:     lgirdwood@gmail.com, bgoswami@quicinc.com, perex@perex.cz,
         tiwai@suse.com, linux-arm-msm@vger.kernel.org,
         alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v3 8/9] ASoC: qdsp6: audioreach: add support for MFC Module
-Date:   Thu, 27 Oct 2022 11:27:09 +0100
-Message-Id: <20221027102710.21407-9-srinivas.kandagatla@linaro.org>
+Subject: [PATCH v3 9/9] ASoC: qdsp6: audioreach: add support to enable module command
+Date:   Thu, 27 Oct 2022 11:27:10 +0100
+Message-Id: <20221027102710.21407-10-srinivas.kandagatla@linaro.org>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20221027102710.21407-1-srinivas.kandagatla@linaro.org>
 References: <20221027102710.21407-1-srinivas.kandagatla@linaro.org>
@@ -66,52 +66,43 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support to enable and configure Media Format Converter (MFC) Module.
+Add support to enable Module command which is required for logging
+module to be able to debug.
 
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
- sound/soc/qcom/qdsp6/audioreach.c | 53 ++++++++++++++++++++++++++++++-
- sound/soc/qcom/qdsp6/audioreach.h |  1 +
- 2 files changed, 53 insertions(+), 1 deletion(-)
+ sound/soc/qcom/qdsp6/audioreach.c | 40 ++++++++++++++++++++++++++++++-
+ sound/soc/qcom/qdsp6/audioreach.h |  5 ++++
+ 2 files changed, 44 insertions(+), 1 deletion(-)
 
 diff --git a/sound/soc/qcom/qdsp6/audioreach.c b/sound/soc/qcom/qdsp6/audioreach.c
-index be7068742fe4..1338b99f37e1 100644
+index 1338b99f37e1..1e0c918eb576 100644
 --- a/sound/soc/qcom/qdsp6/audioreach.c
 +++ b/sound/soc/qcom/qdsp6/audioreach.c
-@@ -159,6 +159,8 @@ struct apm_module_hw_ep_mf_cfg {
- 
- #define APM_HW_EP_CFG_PSIZE ALIGN(sizeof(struct apm_module_hw_ep_mf_cfg), 8)
- 
-+#define APM_MFC_CFG_PSIZE(p, n) ALIGN(struct_size(p, channel_mapping, n), 4)
-+
- struct apm_module_frame_size_factor_cfg {
- 	struct apm_module_param_data param_data;
- 	uint32_t frame_size_factor;
-@@ -729,6 +731,53 @@ static int audioreach_sal_set_media_format(struct q6apm_graph *graph,
+@@ -731,6 +731,42 @@ static int audioreach_sal_set_media_format(struct q6apm_graph *graph,
  	return rc;
  }
  
-+static int audioreach_mfc_set_media_format(struct q6apm_graph *graph,
-+					   struct audioreach_module *module,
-+					   struct audioreach_module_config *cfg)
++static int audioreach_module_enable(struct q6apm_graph *graph,
++				    struct audioreach_module *module,
++				    bool enable)
 +{
 +	struct apm_module_param_data *param_data;
-+	struct param_id_mfc_media_format *media_format;
-+	uint32_t num_channels = cfg->num_channels;
++	struct param_id_module_enable *param;
 +	int payload_size;
 +	struct gpr_pkt *pkt;
 +	int rc;
 +	void *p;
 +
-+	payload_size = APM_MFC_CFG_PSIZE(media_format, num_channels) +
-+		APM_MODULE_PARAM_DATA_SIZE;
++	payload_size = sizeof(*param) + APM_MODULE_PARAM_DATA_SIZE;
 +
 +	pkt = audioreach_alloc_apm_cmd_pkt(payload_size, APM_CMD_SET_CFG, 0);
 +	if (IS_ERR(pkt))
@@ -122,21 +113,12 @@ index be7068742fe4..1338b99f37e1 100644
 +	param_data = p;
 +	param_data->module_instance_id = module->instance_id;
 +	param_data->error_code = 0;
-+	param_data->param_id = PARAM_ID_MFC_OUTPUT_MEDIA_FORMAT;
-+	param_data->param_size = APM_MFC_CFG_PSIZE(media_format, num_channels);
++	param_data->param_id = PARAM_ID_MODULE_ENABLE;
++	param_data->param_size = sizeof(*param);
 +	p = p + APM_MODULE_PARAM_DATA_SIZE;
-+	media_format = p;
++	param = p;
 +
-+	media_format->sample_rate = cfg->sample_rate;
-+	media_format->bit_width = cfg->bit_width;
-+	media_format->num_channels = cfg->num_channels;
-+
-+	if (num_channels == 1) {
-+		media_format->channel_mapping[0] = PCM_CHANNEL_L;
-+	} else if (num_channels == 2) {
-+		media_format->channel_mapping[0] = PCM_CHANNEL_L;
-+		media_format->channel_mapping[1] = PCM_CHANNEL_R;
-+	}
++	param->enable = enable;
 +
 +	rc = q6apm_send_cmd_sync(graph->apm, pkt, 0);
 +
@@ -145,32 +127,36 @@ index be7068742fe4..1338b99f37e1 100644
 +	return rc;
 +}
 +
- static int audioreach_i2s_set_media_format(struct q6apm_graph *graph,
+ static int audioreach_mfc_set_media_format(struct q6apm_graph *graph,
  					   struct audioreach_module *module,
  					   struct audioreach_module_config *cfg)
-@@ -1054,7 +1103,9 @@ int audioreach_set_media_format(struct q6apm_graph *graph, struct audioreach_mod
- 		if (!rc)
- 			rc = audioreach_sal_limiter_enable(graph, module, true);
+@@ -1077,7 +1113,9 @@ int audioreach_set_media_format(struct q6apm_graph *graph, struct audioreach_mod
+ 
+ 	switch (module->module_id) {
+ 	case MODULE_ID_DATA_LOGGING:
+-		rc = audioreach_logging_set_media_format(graph, module);
++		rc = audioreach_module_enable(graph, module, true);
++		if (!rc)
++			rc = audioreach_logging_set_media_format(graph, module);
  		break;
--
-+	case MODULE_ID_MFC:
-+		rc = audioreach_mfc_set_media_format(graph, module, cfg);
-+		break;
- 	default:
- 		rc = 0;
- 	}
+ 	case MODULE_ID_PCM_DEC:
+ 	case MODULE_ID_PCM_ENC:
 diff --git a/sound/soc/qcom/qdsp6/audioreach.h b/sound/soc/qcom/qdsp6/audioreach.h
-index f2b51d8fc718..707dfbdbc156 100644
+index 707dfbdbc156..1d1d47d47d40 100644
 --- a/sound/soc/qcom/qdsp6/audioreach.h
 +++ b/sound/soc/qcom/qdsp6/audioreach.h
-@@ -16,6 +16,7 @@ struct q6apm_graph;
- #define MODULE_ID_PCM_ENC		0x07001004
- #define MODULE_ID_PCM_DEC		0x07001005
- #define MODULE_ID_SAL			0x07001010
-+#define MODULE_ID_MFC			0x07001015
- #define MODULE_ID_CODEC_DMA_SINK	0x07001023
- #define MODULE_ID_CODEC_DMA_SOURCE	0x07001024
- #define MODULE_ID_I2S_SINK		0x0700100A
+@@ -537,6 +537,11 @@ struct payload_media_fmt_pcm {
+ 	uint8_t channel_mapping[];
+ } __packed;
+ 
++#define PARAM_ID_MODULE_ENABLE			0x08001026
++struct param_id_module_enable {
++	uint32_t enable;
++} __packed;
++
+ #define PARAM_ID_CODEC_DMA_INTF_CFG		0x08001063
+ 
+ struct param_id_codec_dma_intf_cfg {
 -- 
 2.21.0
 
