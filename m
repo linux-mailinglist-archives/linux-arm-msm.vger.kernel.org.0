@@ -2,85 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FE3260FF7B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 19:40:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E8C360FFE6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 20:13:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235586AbiJ0Rkr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Oct 2022 13:40:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34230 "EHLO
+        id S235779AbiJ0SNu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Oct 2022 14:13:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235991AbiJ0Rko (ORCPT
+        with ESMTP id S235730AbiJ0SNu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Oct 2022 13:40:44 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2180E6068B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 10:40:38 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id u11so4352420ljk.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 10:40:38 -0700 (PDT)
+        Thu, 27 Oct 2022 14:13:50 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDAC13BC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 11:13:47 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id b8so4748305ljf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 11:13:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5dQ5iXYypgbJC6JVuTz64YgEiNayZPBEIXcuhjY1RiA=;
-        b=MUdxN8jBJLvEPpz4xRlWyHx+U+2qnlG1s2vyNGymS4IA5POKPvoEx4n8I29061lwWR
-         FOXns6ZJ9464gxWK9dYzFKPTmEAihozFtmpEUqe5jhpzMlkDKggwUaBJZjphPTzvrIGX
-         sJWcGp9GYAe4GNTJXaE5hlQselL5I28H6+3CfuUvSJ43oMt6uf98C4nLNS5n0Y7Btse9
-         h/K6ixcbTaJmDBBo+4ZcGrU3NWVzvi3YbN2mrkF8Wf6rKg25WGdVFdo1gC8IDaMt187N
-         069vQ70kpRoLR5f/9QzZZ8jaxFnlXJ48RwD8BWYyqsd7GXpw8lzG7WeC/6eGYJZmkqKo
-         8COw==
+        bh=AH3B2XVD+782BtcBMlI9PyqTgXUoHuH6MusMjljvSDs=;
+        b=fvmm7xeIfG0714j5BtaMWH51TgwVKTWCp5poHufD++4vRk5I/kK4JVj6iBiajavhzn
+         JG5CWOk5tthB4dpzPbD6E0Vb+VqyNfZ1FckinVysRSEgV7b8gZKUfg3xOcJMjeC6pGvu
+         J7ted5WOBqnHjKuMvW61Lnbeq6Yj/I6vCZOr9ugDUaB3ZdfrDlVxpKH24DLrF03+9oF1
+         9nE/s+m5WysRxUIB+c8H7On2lsJsHXzqFXrIvRPUOM36m0sNGujPZ5hWOB1ggX3QbtL9
+         Yz42a5Phh1WiemRjpp2gOBPo6DCz1falIoDgMLny37IHwUXY3Z4MeQX193115vjLGpFk
+         lRrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5dQ5iXYypgbJC6JVuTz64YgEiNayZPBEIXcuhjY1RiA=;
-        b=GMiZpmOkJn+PCDlGfyMtgBLdyKM3mI8FpqxbkFQdZOpqyMK9S7e2BH1CDTD9jTYcjr
-         GS0H7pZWmMNb+9HazhjK45DBi7Wj1gP1aHkIIyAQBJTNFbydlpZO2R6aVMDy7WrA3KIB
-         G2SiKe5t+CxwWvbbU3VMJ5Y729pobYx0ylyVOYiizgFs3RHW6aRlxD/HTENiohl8D3FO
-         0dLx9X8nvI4F4WIG37HfspTisAVWcAgYUTg/EyNY4gJBJfZ78b/KKqUVUSvQxTydNyu6
-         6tpw6zU/jLLxHbNB+6S3CdiJ6cfsnZk3gS7ts/ZjjCgD4ujvGG5oy1MDO9/fw+mV2Df3
-         q6dA==
-X-Gm-Message-State: ACrzQf3PTARHHyVB95CsaiM+y3wH4CuvEOwd6be/8KWSXqopvCu8BOjA
-        hm3/3kMkUp1VAo1epij9RTx+fA==
-X-Google-Smtp-Source: AMsMyM7il5IkwmWr4mwznK/xwHIcZqOrxqV6QhIQMw5WDa6TNpHUypqnTGu3qs9hDYuZTcnPGMVQtA==
-X-Received: by 2002:a05:651c:b13:b0:277:2a88:6995 with SMTP id b19-20020a05651c0b1300b002772a886995mr1748143ljr.516.1666892437114;
-        Thu, 27 Oct 2022 10:40:37 -0700 (PDT)
+        bh=AH3B2XVD+782BtcBMlI9PyqTgXUoHuH6MusMjljvSDs=;
+        b=nx73SK84UZALSHxH4ys97fDwt2esa8WQ0iuWOABv4k+pJQbxUJL/UWAzk+2iCtdWTS
+         C3LwCxLDe/wet7BScMa48U3aR9w/bmXEjS5Kbugd6MJVOHVlL1usooDZBf99xihOmBzG
+         tEIKhxCPBb3O/AX6Y//qxAvpIYrBLgckGc5Qznc4ryIhnn2JXIhzwBTAK+QEm57RC+w+
+         EOlxteOnjH6L71ObwzwBWpnDxLnK/llA5nESnNvbyKsls++0z7AC9knuaDB0R5vidsGR
+         Gg19ytLrgp3bV76ZGf3fd1eK0ND29yfceAwVB4dRFcjCgosNIodHvS6jg1xRqnDw9QtE
+         4HEg==
+X-Gm-Message-State: ACrzQf0cOlRs0hM7qPNy/IodIW0MCRUaG9MNtFRoWGKFBWzqwZy0YUsQ
+        wEAVP3iataItZv5VQMO39pk0ww==
+X-Google-Smtp-Source: AMsMyM5xYI5/5dwMTnYXc+gGf4S8cfEbL29ctsWNazAgG3BAm21oY79OdUt2kvL6tP9WJNbNyHQQ1A==
+X-Received: by 2002:a05:6512:3684:b0:4b0:4ef:dc39 with SMTP id d4-20020a056512368400b004b004efdc39mr770237lfs.91.1666894426146;
+        Thu, 27 Oct 2022 11:13:46 -0700 (PDT)
 Received: from [10.27.10.248] ([195.165.23.90])
-        by smtp.gmail.com with ESMTPSA id 142-20020a2e0994000000b0027706d22878sm306643ljj.94.2022.10.27.10.40.36
+        by smtp.gmail.com with ESMTPSA id bk9-20020a05651c238900b0026befa96249sm322815ljb.8.2022.10.27.11.13.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Oct 2022 10:40:36 -0700 (PDT)
-Message-ID: <780a3aeb-2e7f-b3ca-be58-ab24bd06d805@linaro.org>
-Date:   Thu, 27 Oct 2022 20:40:35 +0300
+        Thu, 27 Oct 2022 11:13:45 -0700 (PDT)
+Message-ID: <9a696c92-eac2-e8fc-5081-8feb9c6150c1@linaro.org>
+Date:   Thu, 27 Oct 2022 21:13:44 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.3
-Subject: Re: [PATCH v8 01/15] drm/msm/disp/dpu: clear dpu_assign_crtc and get
- crtc from connector state instead of dpu_enc
+Subject: Re: clk: qcom: genpd lockdep warning in gdsc
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Yu Zhao <yuzhao@google.com>, linux-arm-msm@vger.kernel.org,
+        dianders@chromium.org, mka@chromium.org,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya <quic_c_skakit@quicinc.com>
+References: <CAE-0n52xbZeJ66RaKwggeRB57fUAwjvxGxfFMKOKJMKVyFTe+w@mail.gmail.com>
+ <CAPDyKFpay0w6n6rtv+bsdcTvL4ijtEPBODo1=XJpUFNdaooTcg@mail.gmail.com>
+ <CAE-0n52Bfe-7Fpawct=_3=miLBygR_-YXm1YPnhCWOwxFnjv7g@mail.gmail.com>
 Content-Language: en-GB
-To:     Vinod Polimera <vpolimer@qti.qualcomm.com>,
-        "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>
-Cc:     "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "robdclark@gmail.com" <robdclark@gmail.com>,
-        "dianders@chromium.org" <dianders@chromium.org>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        "Vishnuvardhan Prodduturi (QUIC)" <quic_vproddut@quicinc.com>,
-        "Bjorn Andersson (QUIC)" <quic_bjorande@quicinc.com>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>
-References: <1665576159-3749-1-git-send-email-quic_vpolimer@quicinc.com>
- <1665576159-3749-2-git-send-email-quic_vpolimer@quicinc.com>
- <52e7a83b-bd83-ba63-55f9-a75cf549546d@linaro.org>
- <BN0PR02MB8173F084DD0DDAD2E312CA6DE4339@BN0PR02MB8173.namprd02.prod.outlook.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <BN0PR02MB8173F084DD0DDAD2E312CA6DE4339@BN0PR02MB8173.namprd02.prod.outlook.com>
+In-Reply-To: <CAE-0n52Bfe-7Fpawct=_3=miLBygR_-YXm1YPnhCWOwxFnjv7g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -92,142 +82,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/10/2022 16:34, Vinod Polimera wrote:
->> -----Original Message-----
->> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Sent: Monday, October 24, 2022 8:52 PM
->> To: Vinod Polimera (QUIC) <quic_vpolimer@quicinc.com>; dri-
->> devel@lists.freedesktop.org; linux-arm-msm@vger.kernel.org;
->> freedreno@lists.freedesktop.org; devicetree@vger.kernel.org
->> Cc: linux-kernel@vger.kernel.org; robdclark@gmail.com;
->> dianders@chromium.org; swboyd@chromium.org; Kalyan Thota (QUIC)
->> <quic_kalyant@quicinc.com>; Kuogee Hsieh (QUIC)
->> <quic_khsieh@quicinc.com>; Vishnuvardhan Prodduturi (QUIC)
->> <quic_vproddut@quicinc.com>; Bjorn Andersson (QUIC)
->> <quic_bjorande@quicinc.com>; Aravind Venkateswaran (QUIC)
->> <quic_aravindh@quicinc.com>; Abhinav Kumar (QUIC)
->> <quic_abhinavk@quicinc.com>; Sankeerth Billakanti (QUIC)
->> <quic_sbillaka@quicinc.com>
->> Subject: Re: [PATCH v8 01/15] drm/msm/disp/dpu: clear dpu_assign_crtc and
->> get crtc from connector state instead of dpu_enc
->>
->> WARNING: This email originated from outside of Qualcomm. Please be wary
->> of any links or attachments, and do not enable macros.
->>
->> On 12/10/2022 15:02, Vinod Polimera wrote:
->>> Update crtc retrieval from dpu_enc to dpu_enc connector state,
->>> since new links get set as part of the dpu enc virt mode set.
->>> The dpu_enc->crtc cache is no more needed, hence cleaning it as
->>> part of this change.
->>>
->>> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
->>> ---
->>>    drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  4 ---
->>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 42 +++++++++---------
->> -----------
->>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  8 ------
->>>    3 files changed, 13 insertions(+), 41 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->>> index 13ce321..8ec9a13 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->>> @@ -1029,7 +1029,6 @@ static void dpu_crtc_disable(struct drm_crtc *crtc,
->>>                 */
->>>                if (dpu_encoder_get_intf_mode(encoder) == INTF_MODE_VIDEO)
->>>                        release_bandwidth = true;
->>> -             dpu_encoder_assign_crtc(encoder, NULL);
->>>        }
->>>
->>>        /* wait for frame_event_done completion */
->>> @@ -1099,9 +1098,6 @@ static void dpu_crtc_enable(struct drm_crtc *crtc,
->>>        trace_dpu_crtc_enable(DRMID(crtc), true, dpu_crtc);
->>>        dpu_crtc->enabled = true;
->>>
->>> -     drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state-
->>> encoder_mask)
->>> -             dpu_encoder_assign_crtc(encoder, crtc);
->>> -
->>>        /* Enable/restore vblank irq handling */
->>>        drm_crtc_vblank_on(crtc);
->>>    }
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> index 9c6817b..d05b353 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> @@ -132,11 +132,6 @@ enum dpu_enc_rc_states {
->>>     * @intfs_swapped:  Whether or not the phys_enc interfaces have been
->> swapped
->>>     *                  for partial update right-only cases, such as pingpong
->>>     *                  split where virtual pingpong does not generate IRQs
->>> - * @crtc:            Pointer to the currently assigned crtc. Normally you
->>> - *                   would use crtc->state->encoder_mask to determine the
->>> - *                   link between encoder/crtc. However in this case we need
->>> - *                   to track crtc in the disable() hook which is called
->>> - *                   _after_ encoder_mask is cleared.
->>>     * @connector:              If a mode is set, cached pointer to the active
->> connector
->>>     * @crtc_kickoff_cb:                Callback into CRTC that will flush & start
->>>     *                          all CTL paths
->>> @@ -181,7 +176,6 @@ struct dpu_encoder_virt {
->>>
->>>        bool intfs_swapped;
->>>
->>> -     struct drm_crtc *crtc;
->>>        struct drm_connector *connector;
->>>
->>>        struct dentry *debugfs_root;
->>> @@ -1288,7 +1282,7 @@ static void dpu_encoder_vblank_callback(struct
->> drm_encoder *drm_enc,
->>>                struct dpu_encoder_phys *phy_enc)
->>>    {
->>>        struct dpu_encoder_virt *dpu_enc = NULL;
->>> -     unsigned long lock_flags;
->>> +     struct drm_crtc *crtc;
->>>
->>>        if (!drm_enc || !phy_enc)
->>>                return;
->>> @@ -1296,12 +1290,13 @@ static void dpu_encoder_vblank_callback(struct
->> drm_encoder *drm_enc,
->>>        DPU_ATRACE_BEGIN("encoder_vblank_callback");
->>>        dpu_enc = to_dpu_encoder_virt(drm_enc);
->>>
->>> -     atomic_inc(&phy_enc->vsync_cnt);
->>> +     if (!dpu_enc->connector || !dpu_enc->connector->state ||
->>> +         !dpu_enc->connector->state->crtc)
->>> +             return;
->>>
->>> -     spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
->>> -     if (dpu_enc->crtc)
->>> -             dpu_crtc_vblank_callback(dpu_enc->crtc);
->>> -     spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
->>> +     atomic_inc(&phy_enc->vsync_cnt);
->>> +     crtc = dpu_enc->connector->state->crtc;
->>> +     dpu_crtc_vblank_callback(crtc);
->>
->> So, what if the user commits the mode setting change on another CPU,
->> while we are handling the vblank callback here? Can this happen?
->>
-> If user issues a commit on another CPU, it will wait in the drm_atomic_helper_swap_state
-> as drm_atomic_helper_commit_hw_done which does the complete_all(&commit->hw_done)
-> for the current commit didn't finish yet.
-
-Yes. But there is no interlock between commit->hw_done and vblank IRQ 
-processing, isn't it? This call happens when DPU processes the vblank 
-IRQ, so nobody stops other core from swapping the encode state on 
-another core.
-
->>>
->>>        DPU_ATRACE_END("encoder_vblank_callback");
->>>    }
->> --
->> With best wishes
->> Dmitry
+On 27/10/2022 01:18, Stephen Boyd wrote:
+> Reviving this old thread because this commit has lead to a couple bugs
+> now.
 > 
-> Thanks,
-> Vinod P.
+> Quoting Ulf Hansson (2022-06-22 03:26:52)
+>> On Fri, 17 Jun 2022 at 21:58, Stephen Boyd <swboyd@chromium.org> wrote:
+>>>
+>>> Hi Bjorn and Dmitry,
+>>>
+>>> Yu reported a lockdep warning coming from the gdsc driver. It looks like
+>>> the runtime PM usage in gdsc.c is causing lockdep to see an AA deadlock
+>>> possibility with 'genpd->mlock'. I suspect this is because we have
+>>> commit 1b771839de05 ("clk: qcom: gdsc: enable optional power domain
+>>> support"), and that is now calling runtime PM code from within the genpd
+>>> code.
+> 
+> This commit has caused a deadlock at boot for Doug[1] and I see that the
+> camera driver on Google CoachZ and Wormdingler devices doesn't work
+> after resuming from suspend once this commit is applied. I'm leaning
+> towards sending a revert, because it seems to cause 3 issues while
+> removing the regulator hack that was in place to enable MMCX. This patch
+> is cleaning up the hack, but trading the hack for three more problems.
+> 
+>> I think genpd already has nested lock support, so the only
+>>> solution is to not use runtime PM from within genpd code and start
+>>> expressing genpd parent relationships in genpd itself?
+>>
+>> Not sure exactly what you mean here, but yes, expressing the
+>> parent/child domain relationship is always needed.
+>>
+>> Having gdsc_disable() to do runtime PM calls (gdsc_pm_runtime_put())
+>> seems awkward to me. Why is that needed, more exactly?
+> 
+> It seems like this is needed so that the gdsc_enable() and
+> gdsc_disable() calls can read/write the registers for the genpd, while
+> those registers live in some clk controller that needs either a
+> different clk (probably some AHB clk) or another genpd to be enabled. It
+> looks like for qcom,sm8250-dispcc it relies on MMCX gdsc (which is a
+> genpd). From a hardware view, the MDSS_GDSC provided by the display clk
+> controller is probably not a sub-domain of MMCX. Instead, we need to
+> have MMCX enabled so that we can access the registers for the MDSS GDSC.
+
+Yes, exactly.
+
+> 
+> My question is if it makes sense to simply describe that the GDSCs
+> provided by a device are sub-domains of whatever power domains are
+> listed in DT for that device? I think if we did that here for sm8250
+> dispcc, we wouldn't need to use runtime PM within the genpd code
+> assuming that the MMCX parent genpd is enabled before we attempt to
+> read/write the dispcc gdsc registers. Hopefully that is also done, i.e.
+> enabling parent domains before enabling child domains if the parent is
+> disabled.
+
+I will check this tomorrow. It should be possible to handle the 
+MMCX/MDSS_GDSC relationship in this way.
+
+> Is this already being done with pm_genpd_add_subdomain() in
+> gdsc_register()? I see that we're attaching that to dispcc's struct
+> device::pm_domain, but I assume that is different from the MMCX genpd.
+
+No, I think the only domain there is the MMCX domain, so this call s
+
+> Maybe that is the problem here. Dmitry can you further describe the
+> problem being solved?
+
+I must admit, I don't remember what caused me to add this call. May be 
+it was added before me getting the pm_genpd_add_subdomain() call in place.
+
+> 
+>>
+>>> Or maybe genpd
+>>> needs to drop locks while calling down into gdsc_disable() and reacquire
+>>> them after that?
+>>
+>> Nope, that doesn't work. This internals of genpd relies on this
+>> behaviour, as it allows it to properly deal with power-on|off for
+>> parent/child domains, for example.
+> 
+> Ok.
+> 
+> [1] https://lore.kernel.org/r/20220922154354.2486595-1-dianders@chromium.org
 
 -- 
 With best wishes
