@@ -2,74 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D29F60F7AE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 14:43:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2450060F7B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 14:43:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234241AbiJ0MnP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Oct 2022 08:43:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50230 "EHLO
+        id S235288AbiJ0Mnc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Oct 2022 08:43:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235182AbiJ0MnO (ORCPT
+        with ESMTP id S235379AbiJ0MnZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Oct 2022 08:43:14 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E11A8E47D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 05:43:12 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id r12so2615956lfp.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 05:43:12 -0700 (PDT)
+        Thu, 27 Oct 2022 08:43:25 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 301D5855AA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 05:43:24 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id x26so763902qki.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 05:43:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=zjus4Lr0mUJgIUezKjrW0GVyYQEzhhCvXjhUecntBY4=;
-        b=aBnkL+Gocmi/zSZlxJoPrpTqFzaxt4RPjqGteTNMBjULBg0HQ80YWiJScZMc8/ZAmA
-         N/1wckLU8mEmU/f++51N7+jIryV+kisI3lHsKEzOPYSWExce1pjoUYAyURvx1sSn8PJS
-         TRBxx837VgQTzbULNsgU5VnrRHQF5CUo8e0gPX/eaZsx93bj+O1z9a7ozELkMpy6HW0z
-         vmi1VaaE9NaOr0qdwApEObm7gg2ubkcMxhdDvG5RK5KEsLW+vXob0czrdnMEf4KWWG1p
-         0oVtL1gntGc022FmYgnfBjeErgNAE4HdarBEWFqhC9fF/Hinx+2FUwIF9IMxGlxeuzmZ
-         nUkg==
+        bh=wgI6HG8FQ8TV0CSUErQizBzICht7movStGCeNSKfSsU=;
+        b=BCm5z5Oq1brMVlg64USQxbVgmqnBPy3tEgE/tNxGsERJTQ4SusNunpXmUgZffDBJan
+         E3vjmQ+hwz8qwct4uJL5laOZc6vUxq0HmBwrWQsWtj1cBrHaXVEFb1m6ruPc+b80wWAM
+         TWcBP5mz+lL584fVN9rCPvDXwzt6YSNiLJFdPQ1UiVSKs9ZBVi74o/jUvGmpQMxYRpE6
+         riC9kl99qp3oHrZHfBjFhdcAaKdQkqyf38nh/aDeDULTUtuEyFFTmNAWeZafEj6mXSmv
+         oM2vMgiUP4VzIh+VcWj4Luj3BloTZtVa5Nn+W7DhxXDlgGmgbOoGgiFvsSuQb2caiWog
+         JuqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zjus4Lr0mUJgIUezKjrW0GVyYQEzhhCvXjhUecntBY4=;
-        b=kOQrSrYu2Pif33nqyaWWys5uZ4ngq70rxaS4zlCcez9FbLfB54zpc1yBr1uoF1Uql5
-         wwHkSiAtTNkjhh8K+8GlFrGb/58ut5CTUpIXR1+svpTrPrx2ycB0NdYc6ZfHce8F4hGc
-         UDyoEvP5EGBB+QSLnPbR6QN9NGjsA8wMk5/+Y5MZ8Vo9em+wnMcvWuN8dP1Q/BKfpSSC
-         ixKh7s4XNvfbCTmsivQV8EPosBfmjDJR8IdGNwvKvvXkKVYUaw0QkxX8ab5IHfPg5nfW
-         D7J8Si9gS/IDkMeIZjZ+8Rp1BmJl+MsyKcsXH5jYahRJ43jRI/R8a/bPsSlzpeJIarix
-         3+kg==
-X-Gm-Message-State: ACrzQf2/vynXGg0f6D6HT4dh0F60FvLdLOjSZyPWt3aaj+03ZMMV/nyd
-        31KtB0khgZ/Q53OOYnn1yeVYdA==
-X-Google-Smtp-Source: AMsMyM50yf2JWdGhQGJTPH/iX4++QAjFltwPWNfb0to5tRN6b9WvutsNUTgmYquih5lM+wQAlU3tcg==
-X-Received: by 2002:a05:6512:3503:b0:496:55d:a186 with SMTP id h3-20020a056512350300b00496055da186mr17549123lfs.340.1666874590962;
-        Thu, 27 Oct 2022 05:43:10 -0700 (PDT)
-Received: from [10.27.10.248] ([195.165.23.90])
-        by smtp.gmail.com with ESMTPSA id x25-20020a19f619000000b0049ad2619becsm173970lfe.131.2022.10.27.05.43.10
+        bh=wgI6HG8FQ8TV0CSUErQizBzICht7movStGCeNSKfSsU=;
+        b=S7DrziIwO90i0aSRS1lzplWGIA2y92+U6BNqzV4OKP8+/OwAUPyWXnt8tbfnBwKFdK
+         W6bH7sVcUIVHe6839G1h9DACPV1Dq6traaOhYtGJ5UBjZyULVavQiGlBcaoFAyBP+gIs
+         YKo6gZ1VCYQmDsKMHux+FvCz1K48ZW761Y9QDH8s+Vl2GkszicbtjojQfqKqB0AWVNSQ
+         9jRY0dVrp2yR6nryL6se1oAx24DTO+Vv/xZJgGXSOik78eEzSOllsNa/FfN3uqvX3fpk
+         ZcBndEoys2/f6awpASMU3gOW4Yas3MtxNDp4ai3x/8/Gt8/wQrVV7HR4JeL2IaMVVyjs
+         YlWA==
+X-Gm-Message-State: ACrzQf16K+yK+tcvr+clHKQjAi7VVSMeCvYPyxCQOFis62/5tnGN31hv
+        JdJ9f5qRdubM/G6tVyu+0erNGw==
+X-Google-Smtp-Source: AMsMyM7rtq2ZKBo6fZyLQxT3jX6HgF4Wq/x3EeirSE37uYvQzziEhRLXw0DIWaMvgGLwjU0T5TKKpA==
+X-Received: by 2002:a05:620a:370c:b0:6ee:cece:c779 with SMTP id de12-20020a05620a370c00b006eececec779mr32768327qkb.727.1666874603351;
+        Thu, 27 Oct 2022 05:43:23 -0700 (PDT)
+Received: from [192.168.1.11] ([64.57.193.93])
+        by smtp.gmail.com with ESMTPSA id f18-20020a05620a409200b006cbe3be300esm916562qko.12.2022.10.27.05.43.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Oct 2022 05:43:10 -0700 (PDT)
-Message-ID: <e6e410f4-5417-0ad8-7d99-2af75f97980e@linaro.org>
-Date:   Thu, 27 Oct 2022 15:43:09 +0300
+        Thu, 27 Oct 2022 05:43:22 -0700 (PDT)
+Message-ID: <68f6d58e-8b7a-1032-4a3d-c4c74b82d111@linaro.org>
+Date:   Thu, 27 Oct 2022 08:43:20 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH v1 1/5] clk: qcom: dispcc-sm8250: Disable EDP_GTC for
- sm8350
-Content-Language: en-GB
-To:     Robert Foss <robert.foss@linaro.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Jonathan Marek <jonathan@marek.ca>
-References: <20221027123432.1818530-1-robert.foss@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221027123432.1818530-1-robert.foss@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Thunderbird/102.4.0
+Subject: Re: [PATCH v4 06/11] dt-bindings: input: qcom,pm8921-pwrkey: convert
+ to dt-schema
+To:     neil.armstrong@linaro.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Lee Jones <lee@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Andy Gross <agross@kernel.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, Rob Herring <robh@kernel.org>,
+        linux-rtc@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220928-mdm9615-dt-schema-fixes-v4-0-dac2dfaac703@linaro.org>
+ <20220928-mdm9615-dt-schema-fixes-v4-6-dac2dfaac703@linaro.org>
+ <Y1o5hYAnBuf1akJ9@google.com>
+ <e8f53c8a-2842-9e6e-75bd-e099db3fe6f3@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <e8f53c8a-2842-9e6e-75bd-e099db3fe6f3@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -80,18 +89,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/10/2022 15:34, Robert Foss wrote:
-> SM8350 does not have the EDP_GTC clock, so let's disable it
-> for this SoC.
+On 27/10/2022 08:39, Neil Armstrong wrote:
+> Hi,
 > 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> ---
->   drivers/clk/qcom/dispcc-sm8250.c | 3 +++
->   1 file changed, 3 insertions(+)
+> On 27/10/2022 09:55, Dmitry Torokhov wrote:
+>> On Fri, Oct 21, 2022 at 11:06:42AM +0200, Neil Armstrong wrote:
+>>> Convert input/qcom,pm8xxx-pwrkey.txt to YAML, and take in account that
+>>> the PM8921 pwrkey compatible is used as fallback for the PM8018 pwrkey.
+>>>
+>>> Reviewed-by: Rob Herring <robh@kernel.org>
+>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>
+>> Should I merge this through my tree or you want all these changes to go
+>> together through some particular tree?
+> 
+> I have no preference,
+> Krzysztof will you take it and prepare a branch to Bjorn ?
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+No, I did not plan on doing it.
 
--- 
-With best wishes
-Dmitry
+Dmitry,
+Please grab it (assuming there are no dependencies).
+
+Best regards,
+Krzysztof
 
