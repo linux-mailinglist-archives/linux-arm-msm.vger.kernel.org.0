@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F378060F9A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 15:50:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA63460F9AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 15:51:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236258AbiJ0NuR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Oct 2022 09:50:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47564 "EHLO
+        id S236118AbiJ0NvC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Oct 2022 09:51:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236182AbiJ0NuQ (ORCPT
+        with ESMTP id S235865AbiJ0NvB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Oct 2022 09:50:16 -0400
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33B2C2F66F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 06:50:14 -0700 (PDT)
-Received: by mail-qt1-x82c.google.com with SMTP id w29so1110629qtv.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 06:50:14 -0700 (PDT)
+        Thu, 27 Oct 2022 09:51:01 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09980158D72
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 06:51:00 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id f8so907122qkg.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 06:50:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=D3pXCVJKhd+ms+BqydS25AWP0xoxdy1/2V2ykBkMA0w=;
-        b=EmGxmajG4Tg5RARSSbCcY/dgD0AN31W+M0PsfxY3NQHalnLhkU2UHsGipH51XzuMB5
-         xKAHmkB/hGKPq51gH/JUHbq3YudO6VcVADIKMCHyOSYAGfLSdhFM5q1Fp1Zi4g49lmKA
-         P4g6jIogOwfXnHbAG+ERk6v8iKZ7wRIebH08lKrKgdY+AaWUhhNSD0Uvg7JmW0RGwlsO
-         eSY96WdtP3KznVwjXXEUeSeq+KxTPcYutaImscbW44+A6+ItjjYlchDVfxJVDBkcvMo6
-         kScnjrQhZCPHn+NEtca407wI8mHrmt2f5/MJuW7An/5C57MjBlo+ExJZyz0k0dH0Y/Wi
-         o0Ag==
+        bh=PYl2yGA33sxqPBp36UKuhRgJm4+UsQlZQY/PlMOZfAs=;
+        b=VsSyf+7ggXF+d56cf9MVg7Kej8FyImK3jRTbVkF5ghZVXLLsZJzgg7fDCJ7GnPMBYg
+         mwnOtN3H4+wXahhrv5qRo8yjFzcaRB6yE/0wWRp/k2ryv9U3dS3XziILbFdQZaGgUwxF
+         mTR7WBGRSjVy6ToTLkl6C/vVk8DI9DbnbmJSzwxcfIaI73LOQQBOK+zxhfpViUw+941g
+         9tLKdjIWs2DiZMUIvXbnWOR+i+Rt8XDrI7OQVg37eKEMFNOcRZMq2Gu6Z9K1G++bnjJ6
+         9xnqCmPWXo5lMr04gCh/G0/q2YwN0q/FsFfR75rjM61cn8TQAKmSNsQ/k3KSlT2CvtBY
+         io/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=D3pXCVJKhd+ms+BqydS25AWP0xoxdy1/2V2ykBkMA0w=;
-        b=Yz1uriKzJYUudeLDryepwJUaB30GkHoamQr6+M1bChWGv4NQs4uYL6jpgji+BEfQzI
-         3CfsOEjsQxLPd2fpPYyMNn/sSQboH/ZJG+23iHWkhwp25CUbi/ngTBsY7wJHdF2uEQ/7
-         SC47mkfoaV6QeTTjO9PtNMY7CBH8+GXNVz0ueX27+ROkBMkZ1SRFnf6tFxpHyXgeWh6C
-         TT9CVEuY0oOxhO3INkVZf+Byc36YCWVH8WoSwpXoXkOr9/U3cu6TZ8U8aSfr8RgeGogs
-         o09xi2hLmnb+7Fc1vEaU32C374VR+E656hJUDjui4M9xEBLDB+XEQ+jgIVXzsnRCD5yC
-         5xcw==
-X-Gm-Message-State: ACrzQf3LNwF4V2Q8y4U+sI3Ml0k631X5PvNzAuSIzQxTACKxVtTVy7kU
-        89fBd/iqu0qCLv0XgHg2bl3TVg==
-X-Google-Smtp-Source: AMsMyM41cr1GYKfDHX93ERkxB4phIGT+9anDjASKQj/RnFXBFvMUGzL60wXNnkaCKtLYVsrVicqqXQ==
-X-Received: by 2002:a05:622a:1754:b0:3a4:f21f:84fb with SMTP id l20-20020a05622a175400b003a4f21f84fbmr6032895qtk.618.1666878613723;
-        Thu, 27 Oct 2022 06:50:13 -0700 (PDT)
+        bh=PYl2yGA33sxqPBp36UKuhRgJm4+UsQlZQY/PlMOZfAs=;
+        b=Bk1g6B7BXt+mv9v3E9kXVZZ+15dhBcip+mUyMnKCFiENrKJP2vLPksKJKbKyZQd096
+         R4s5yAQAu17vNgcdYUy6j8tJxY++8HGVthKZ7HNHbfi85R4OEJ0TO0Q+/V1PrpV27UrC
+         /Ti/Q+i5hMo2Vcki66RGsCbfuX0ELgTyIyFJAbqg/ehSFU9Vr03aPhgfAjrnNzUo2ryt
+         FuMwwkhorAvIieFIlKSe/UoEaKu8pDmy2PBi9s29yOn3yXwzWNNgOzeGdkuJvTFzdsTd
+         chdAbdtu3Di+7px3edR/6VTsLsLN8Jgh2OMHLojAlHy5yurIlPJyG6blgsYNvunvNpq5
+         /NQA==
+X-Gm-Message-State: ACrzQf3KqmjqGOYLGccoV0QBWsVBi/lEMailZa7lO67V6K+GyyOFUGs6
+        he2oGPjSYdkUDvjfl03SSceTaw==
+X-Google-Smtp-Source: AMsMyM57q0PhQ/FemEuSVx7TXUHEOjywCo4JB6pcsPk8GIs9IHvQQ6JKK0QTIEqb7oU5nMU2ABmg3Q==
+X-Received: by 2002:a05:620a:4005:b0:6ee:d836:9ed4 with SMTP id h5-20020a05620a400500b006eed8369ed4mr34604633qko.352.1666878659218;
+        Thu, 27 Oct 2022 06:50:59 -0700 (PDT)
 Received: from [192.168.1.11] ([64.57.193.93])
-        by smtp.gmail.com with ESMTPSA id u10-20020a05620a430a00b006eeb51bb33dsm1000342qko.78.2022.10.27.06.50.12
+        by smtp.gmail.com with ESMTPSA id u10-20020a05620a430a00b006eeb51bb33dsm1001445qko.78.2022.10.27.06.50.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Oct 2022 06:50:12 -0700 (PDT)
-Message-ID: <e8845fb0-66d1-4daa-8aa1-efd66cb1416d@linaro.org>
-Date:   Thu, 27 Oct 2022 09:50:11 -0400
+        Thu, 27 Oct 2022 06:50:58 -0700 (PDT)
+Message-ID: <3950f020-9e5d-3736-8764-548e3a57152b@linaro.org>
+Date:   Thu, 27 Oct 2022 09:50:56 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.0
-Subject: Re: [PATCH 03/11] arm64: dts: qcom: sc8280xp-pmics: Add thermal zones
- for PM8280_{1/2} PMICs
+Subject: Re: [PATCH 04/11] arm64: dts: qcom: sc8280xp-pmics: Add support for
+ PMK8280 RESIN input
 Content-Language: en-US
 To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         andersson@kernel.org
@@ -65,14 +65,15 @@ Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
         quic_jprakash@quicinc.com, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20221027063006.9056-1-manivannan.sadhasivam@linaro.org>
- <20221027063006.9056-4-manivannan.sadhasivam@linaro.org>
+ <20221027063006.9056-5-manivannan.sadhasivam@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221027063006.9056-4-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20221027063006.9056-5-manivannan.sadhasivam@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -80,17 +81,13 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 27/10/2022 02:29, Manivannan Sadhasivam wrote:
-> Add thermal zones for the PM8280_{1/2} PMICs by using the temperature
-> alarm blocks as the thermal sensors. Temperature trip points are
-> inheried from PM8350 PMIC.
-
-inherited
-
+> The RESIN input can be used to reset the PMK8280 PMIC. Enabling the
+> RESIN block allows the PMK8280 to detect reset input via RESIN_N pin.
 > 
 > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
 
-With above:
+
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
