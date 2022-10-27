@@ -2,101 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC94160F7B7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 14:43:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AE1C60F88E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 15:09:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235644AbiJ0Mnh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Oct 2022 08:43:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50264 "EHLO
+        id S236006AbiJ0NJ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Oct 2022 09:09:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235216AbiJ0Mne (ORCPT
+        with ESMTP id S236016AbiJ0NJt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Oct 2022 08:43:34 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B9AD8E47D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 05:43:32 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id j14so2256471ljh.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 05:43:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=atHpyVeDvRSxK97x6ncdrfXkT0/3Udk1X2L2iSDbRWI=;
-        b=mfT4BdhP9SUoj/74Ss/1RbrT+saz3w/uYz94FzaYqv9/gI9t3NG8VIyQpLAJEy/jRw
-         UzwB5xV7gaNkqmjKZvkTJcXnu4zrztTKJBvDTCJT9PzS2emX3wRl9jaNGzh1oKNe4fI5
-         OPO0bCr+2kZRbuNN9K0KbpbCXnycHiXff9Wwl2spQKkUWt9//l7yzUS6aCR9vUlLRKMH
-         nuf5+BmldZxhwr48LCN460/Kp4F+MFS2IXn/Bpd29IWPJmqNoW5jBsbaUkWO3XmvUZ6Y
-         /C/Ew6CeotdbDC0QThlsPM6MGVeHIv0DFFymvQ3M0anjq/6LF76yxrNxh2IINMgX+JRw
-         2BKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=atHpyVeDvRSxK97x6ncdrfXkT0/3Udk1X2L2iSDbRWI=;
-        b=18NlcliM4p/TIrQtXmYrH0UjSV3mxFuQ/EwbwEm+k+TqK6l4p3TC8u3I7zb5GuMGUU
-         b6nD3sZWicPDOVthTiZBqsg/VSOIlvz5j9qpA3Wv341T+EjEpbOTyS2Z4t0jVaoIfgn0
-         +ZOVICR38xBb0JFQO4u51c5ied+lTvvq/GiwEBAaXQ0RkReM26n1SDRuoePoi8/FijHr
-         vgakuH2mL3CdQy8d76lULNOIgJKjZI5Krp+MQeolEQRIpspKpcqU0uojbmdH3czN37pn
-         PK2/W4NY6xKHhbrXYR74bM8vjP5pud2+PdyJM/FQnIyiu+GzrvXda8B4s7sYdKMetKkf
-         qJug==
-X-Gm-Message-State: ACrzQf1qFXkrtC+YQvdf42m7rKq/0X/fojo0+FR3HXOian5vsfyXMdtE
-        vS8rkB4/V64XdIih2082x/j7tg==
-X-Google-Smtp-Source: AMsMyM6zRp9lukIKib2/jvNiSe8l+sxzPJvD16MdorWgPwYLJK8JlqoB7SJqTxLRPQXghF6b12xGJA==
-X-Received: by 2002:a2e:be10:0:b0:26f:b35e:c29e with SMTP id z16-20020a2ebe10000000b0026fb35ec29emr19198877ljq.488.1666874610470;
-        Thu, 27 Oct 2022 05:43:30 -0700 (PDT)
-Received: from [10.27.10.248] ([195.165.23.90])
-        by smtp.gmail.com with ESMTPSA id p18-20020a056512313200b004979ec19387sm167821lfd.305.2022.10.27.05.43.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Oct 2022 05:43:30 -0700 (PDT)
-Message-ID: <cd5a049d-0ff4-bd61-1e0e-81b9ed5911fb@linaro.org>
-Date:   Thu, 27 Oct 2022 15:43:29 +0300
+        Thu, 27 Oct 2022 09:09:49 -0400
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 725EB15719;
+        Thu, 27 Oct 2022 06:09:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1666876185; x=1698412185;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=MCLBFO3GdgdeuhUJUcNaR1oNkl/w8+FZPyXKz03sSkk=;
+  b=Csfqd9Cu3JJB1BTToBAV+lVY4mjIRmbY5Tfai5/ygWpuXicNLnDXhmvi
+   +MsMJUZMP6dFGjGBSwOoro34Cf4lNsjOC0heHg5plHZiNIlcKFOzYrGLI
+   gmCX5R57IJuSglyxHU6M+buMnyauaqp63bqs8XKrCuVOHxF9ZWYWXhpJJ
+   dyaN/3FeKW76W3fC4/IOuJap86SbZIEbXTdA2VtMTUedzlCqRMOKcQYRO
+   Zsye/bHJu0d7LOrj/8hFZ5zfdzD06PXaboiG68eb5HiNKVOodd5v6FLfU
+   sugchdMByhnDmyTYpgiS6e7jVY4jBPLkBqW+DGuLiqd5kf3ztRvsfqBJg
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10512"; a="309912630"
+X-IronPort-AV: E=Sophos;i="5.95,217,1661842800"; 
+   d="scan'208";a="309912630"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2022 06:09:36 -0700
+X-IronPort-AV: E=McAfee;i="6500,9779,10512"; a="757692314"
+X-IronPort-AV: E=Sophos;i="5.95,217,1661842800"; 
+   d="scan'208";a="757692314"
+Received: from djohn1-mobl1.amr.corp.intel.com (HELO [10.212.54.86]) ([10.212.54.86])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2022 06:09:35 -0700
+Message-ID: <86b64496-71e0-7e2d-0911-f67e1684db20@linux.intel.com>
+Date:   Thu, 27 Oct 2022 08:45:21 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH v1 2/5] clk: qcom: dispcc-sm8250: Add RETAIN_FF_ENABLE
- flag for mdss_gdsc
-Content-Language: en-GB
-To:     Robert Foss <robert.foss@linaro.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Jonathan Marek <jonathan@marek.ca>
-References: <20221027123432.1818530-1-robert.foss@linaro.org>
- <20221027123432.1818530-2-robert.foss@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221027123432.1818530-2-robert.foss@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+ Firefox/102.0 Thunderbird/102.2.2
+Subject: Re: [PATCH 6/6] soundwire: qcom: add support for v1.7 Soundwire
+ Controller
+Content-Language: en-US
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        vkoul@kernel.org, yung-chuan.liao@linux.intel.com
+Cc:     devicetree@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, sanyog.r.kale@intel.com
+References: <20221026110210.6575-1-srinivas.kandagatla@linaro.org>
+ <20221026110210.6575-7-srinivas.kandagatla@linaro.org>
+ <e3ebba30-65ec-183a-eb91-c5147c28441d@linux.intel.com>
+ <619a829e-d902-eba9-537e-176a8acb149c@linaro.org>
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <619a829e-d902-eba9-537e-176a8acb149c@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/10/2022 15:34, Robert Foss wrote:
-> All SoC supported by this driver supports the RETAIN_FF_ENABLE flag,
-> so it should be enabled here.
+
+>>> @@ -1582,6 +1597,7 @@ static const struct of_device_id
+>>> qcom_swrm_of_match[] = {
+>>>       { .compatible = "qcom,soundwire-v1.3.0", .data =
+>>> &swrm_v1_3_data },
+>>>       { .compatible = "qcom,soundwire-v1.5.1", .data =
+>>> &swrm_v1_5_data },
+>>>       { .compatible = "qcom,soundwire-v1.6.0", .data =
+>>> &swrm_v1_6_data },
+>>> +    { .compatible = "qcom,soundwire-v1.7.0", .data = &swrm_v1_5_data },
+>>
+>> is this line intentional, it looks odd that 1.7 is compatible with 1.5,
+>> but 1.6 isn't?
+> This is more around the data rather than compatible, 1.6 data is marked
+> with sw_clk_gate_required = true which is not the case with 1.7.
 > 
-> This feature enables registers to maintain their state after
-> dis/re-enabling the GDSC.
-> 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> ---
->   drivers/clk/qcom/dispcc-sm8250.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> from 1.5 we use same frame shape info for 1.6, 1.7, except that 1.6 had
+> this sw_clk_gate_required flag set.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
--- 
-With best wishes
-Dmitry
-
+probably worthy of a comment to show intent and explain the differences?
