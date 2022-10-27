@@ -2,115 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 704326104F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 23:59:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C695E61054B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 00:02:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237163AbiJ0V7i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Oct 2022 17:59:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46676 "EHLO
+        id S234558AbiJ0WCD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Oct 2022 18:02:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237156AbiJ0V7f (ORCPT
+        with ESMTP id S234434AbiJ0WBw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Oct 2022 17:59:35 -0400
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFC0E271D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 14:59:31 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id j6so2713910qvn.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 14:59:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=q7ugP0tq/kTqwapqa/g5RjNpPzZRDaE9uddOPhLuISc=;
-        b=o7sW47GHzXAoiD2j6H6QFu/7GUf/pA0/oDdbcm6+sZ9bOmjpAo/qB24B0IowZvt9P+
-         uEs+wbUUSlkmnLlVdNkn65fxdk5zBa5isbU+FAL+wpT+pO1YhGTdX2/pgOan1gvHNCPl
-         9qVN6T8ALdciWQ3Oo6k2+p55TKJ4AkaLgvxO0mveT+TCFzB/fAyxkViEbfJuupiToNIT
-         NQQWZo2QRbvY79zCmS+btF6flLLVtGFS+nGdVlM9nxoJw0C4oyKnyiBlDa+GMxDYAbRT
-         Yl7yiRraviHFOwYRsvBF8ogkgaSuOEtsuk8P1O7ywuqYPLFqDn6QWUmaDLBhaxsQL30e
-         +N2w==
+        Thu, 27 Oct 2022 18:01:52 -0400
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07BC6A026D;
+        Thu, 27 Oct 2022 15:01:51 -0700 (PDT)
+Received: by mail-pf1-f173.google.com with SMTP id i3so3061775pfc.11;
+        Thu, 27 Oct 2022 15:01:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q7ugP0tq/kTqwapqa/g5RjNpPzZRDaE9uddOPhLuISc=;
-        b=6ZSpk4OaLKD3W4a5NT/zms0bfDE9naEEpJNk8rji8t1DwhXd21wkaU47BjAN5cDXxK
-         EO5s0GxkUO9RVUCu3EU/KdJmQBcxqyyNAK5uwU841WmNRKAVLmP7pMIWwYW6v/wtl/Ot
-         oWWSPEiZzZV+Jtb0WTHzH6401eHPfwVgI3QFpznuunTfzYGwj/2YFxFuoMs1BnTP6J6V
-         csOrbPaWfbZTgr6dDTKob7SJ49upqJXU99RP4mv+QeXcvDhkLPbp3qlsvE7EXx+NflMs
-         Z9YeE97qn81My7xouKygwbJ0WKZ6dMVG/yz1nFcXCvPh2aZHC0bLFazNqfaL6vM/B1xb
-         GHHw==
-X-Gm-Message-State: ACrzQf0r4NsZzHzmc3+SR67VI9tKLO8kn8h/zmLVwzQeQJvBm93QSXg7
-        Z97abLQa2UMQqtSYLwkFTdl1O31oEfZ+FQ==
-X-Google-Smtp-Source: AMsMyM4FZ19Rf+aeDh57uIFiQqlt84X/FMAN2OviCklU/tLpK688yp4VPjiM2ZG3IyKbfArb+7ea7Q==
-X-Received: by 2002:a05:6214:20a7:b0:4bb:9359:8368 with SMTP id 7-20020a05621420a700b004bb93598368mr10237414qvd.122.1666907971077;
-        Thu, 27 Oct 2022 14:59:31 -0700 (PDT)
-Received: from [192.168.1.11] ([64.57.193.93])
-        by smtp.gmail.com with ESMTPSA id k10-20020a05620a414a00b006be8713f742sm1794489qko.38.2022.10.27.14.59.29
+        bh=Xuf2rYc4skGV/brVADA47UOE0bGVgDUQN7KLwp1HwW8=;
+        b=7T4uVmhQp+b2sCm0RWNy1Hj3WdJXv0flFD94q7W+1M5Tu4pqfSqcDzXtIBiqGJCtQ3
+         /Sr4U2Sy/c3Ju77DVPLCh8tHncmCgpglm8KlWUWQbfV0kOaTx4eqfA5JubVI7aGc5Az4
+         rympNxY7GRIETFxzG6/YIRoEQPh1NV1Ylz6h6VuAZ3Nz/CdNRhMx6VSrxslnWcECEjwu
+         xsW80CmOKMv9hNt3Y5bv1yXWIr9qLxjkUHHGfWrKZwnc67MTDTkhNVfiSkOj1BC5q3vC
+         4bxbQ4NK1faQ0x8g2MMbmXv7Zy7uanjeg6ktSMbrDoAZdIdtDQVFPTICweZRiprQdI6R
+         4XsQ==
+X-Gm-Message-State: ACrzQf1df9x2fu+EL65r28aKyHTl41Y9p5zkDorUzogQ4RSAsTjaOMqA
+        ho8nexxrCUcejbdeiCPGNJo=
+X-Google-Smtp-Source: AMsMyM63yLidIP4PV9Xc0SANp2ydp+HPviTsYt2HnMrs+WOCV8sF4IDlYE+H12U1KYsKv+/Xo3fhZg==
+X-Received: by 2002:a63:480e:0:b0:46e:b96c:4f89 with SMTP id v14-20020a63480e000000b0046eb96c4f89mr30330659pga.201.1666908110449;
+        Thu, 27 Oct 2022 15:01:50 -0700 (PDT)
+Received: from ?IPV6:2620:15c:211:201:bc2b:ff19:1b02:257b? ([2620:15c:211:201:bc2b:ff19:1b02:257b])
+        by smtp.gmail.com with ESMTPSA id i7-20020a170902c94700b00181e55d02dcsm1675471pla.139.2022.10.27.15.01.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Oct 2022 14:59:30 -0700 (PDT)
-Message-ID: <2c8c4642-8aee-3da3-7698-5e08b4c5894d@linaro.org>
-Date:   Thu, 27 Oct 2022 17:59:28 -0400
+        Thu, 27 Oct 2022 15:01:49 -0700 (PDT)
+Message-ID: <8113c37b-9917-b5f2-87c8-cb76f59c69da@acm.org>
+Date:   Thu, 27 Oct 2022 15:01:46 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH v3 1/5] dt-bindings: clock: Add QDU1000 and QRU1000 GCC
- clock bindings
+ Thunderbird/102.3.0
+Subject: Re: [PATCH v3 09/17] ufs: core: mcq: Configure operation and runtime
+ interface
 Content-Language: en-US
-To:     Melody Olvera <quic_molvera@quicinc.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_cang@quicinc.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
+        stanley.chu@mediatek.com, eddie.huang@mediatek.com,
+        daejun7.park@samsung.com, avri.altman@wdc.com, mani@kernel.org,
+        beanhuo@micron.com, quic_richardp@quicinc.com,
+        linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>
-Cc:     Taniya Das <quic_tdas@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221026190441.4002212-1-quic_molvera@quicinc.com>
- <20221026190441.4002212-2-quic_molvera@quicinc.com>
- <e5009a33-1f71-1fe3-3a06-98bba031fdf0@linaro.org>
- <20221027182449.366AEC433D6@smtp.kernel.org>
- <cb9a2732-0904-4a2b-61a5-a6d65cad58ae@linaro.org>
- <a5e8c70a-3358-513b-c8a5-7a7903f6ea42@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <a5e8c70a-3358-513b-c8a5-7a7903f6ea42@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <cover.1666288432.git.quic_asutoshd@quicinc.com>
+ <84a13c45fa8edc375b3342a5b9b35fc097208bab.1666288432.git.quic_asutoshd@quicinc.com>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <84a13c45fa8edc375b3342a5b9b35fc097208bab.1666288432.git.quic_asutoshd@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/10/2022 17:28, Melody Olvera wrote:
+On 10/20/22 11:03, Asutosh Das wrote:
+> +/**
+> + * ufshcd_mcq_config_mac - Set the #Max Activ Cmds.
+> + * @hba - per adpater instance
 
->>>>> +      - description: Board XO source
->>>>> +      - description: Sleep clock source
->>>>> +      - description: PCIE 0 Pipe clock source
->>>>> +      - description: PCIE 0 Phy Auxiliary clock source
->>>>> +      - description: USB3 Phy wrapper pipe clock source
->>>>> +    minItems: 2
->>>> Why the clocks are optional?
->>> They should not be optional. They're always there.
->> Just to be sure - I refer to last three clocks here as indicated by
->> minItems:2.
->>
->> DTS does not define them, so something here is not complete or correct.
->>
-> DT is incomplete; I don't have that in my current patchset. Will add later when PCIE and
-> USB nodes are complete.
+adpater -> adapter
 
-Bindings should be complete as much as possible, therefore please define
-in the DTS stub clocks (fixed clocks) to fill these with a TODO notes.
+> + * @max_active_cmds - maximum # of active commands to the device at any time.
+> + *
+> + * The controller wouldn't send more than the max_active_cmds to the device at
+> + * any time.
+> + */
 
-Best regards,
-Krzysztof
+wouldn't -> won't
 
+> +#define MCQ_CFG_n(r, i) \
+> +	((r) + MCQ_QCFG_SIZE * (i))
+
+No need to spread this macro over two lines.
+
+Otherwise this patch looks good to me.
+
+Bart.
