@@ -2,178 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97EC560FC50
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 17:49:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC2F960FC5F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 17:52:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234947AbiJ0Ptg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Oct 2022 11:49:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48066 "EHLO
+        id S236327AbiJ0Pwt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Oct 2022 11:52:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235626AbiJ0Pte (ORCPT
+        with ESMTP id S236228AbiJ0Pwq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Oct 2022 11:49:34 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6200613F68
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 08:49:33 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id o4so3264352ljp.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 08:49:33 -0700 (PDT)
+        Thu, 27 Oct 2022 11:52:46 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBFEC192DA3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 08:52:41 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id 8so1252619qka.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 08:52:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=WprwqfLl3Iivd950JkjtFAnJzh16n5EfJhXUamtdvGk=;
-        b=s9rsDgGIhSLnoJ+ZtdB9NW8C+Ai94QFSWQtM4D1fcH4h1XqhgPdUBpeaKmGievQtuo
-         ZKzasUpkZA70rskgweAjWvKoycL4UHgL2I5LqvaQAT2xIIS4GqD7VOcf6KIFDP3TJt7g
-         QHbyfIiXrlGEC89cEj6w07bxb+4y26oGOkMA2eVXLxVhOOgWUYUZiQWTfMOtVB0y/ZhY
-         m5rbPTLT/GF6nG+Ft9TJyn09UI0yzXuRcULwLY0XxfZcw+z/o8nHgl8JCCI/sLaoI/cV
-         e0YVPaTs05xy1hrFif8WQ/l6Yg8t7icmn4wx9tTgcWH0gXFWxjqABuTC0zPxzJu3eQQQ
-         TAPA==
+        bh=3gIoXxiDmfLBwHjIKOLcfrxpt8ArE5iNwkoMZ1If8W0=;
+        b=nKQA1LYfKxriWZ9VvH4IRAzSzXZpDjetbvw6Mb0yTTAuBBjXbGKaOOpY3TF6R+B+sO
+         qPsi7jAPz1Xy0qZMrpZay0ch2wE/iqkXzGlh9JmKNfeWAnEPZJFPiCgTRRriZbRqT3iF
+         c0Uvc0GXPvacdv5Ut3KtsVnod9NbvzPloug1graWwscVQZSsKiUo5NEhFGTH3lbEpvK4
+         GExnUdbaI4fMxapMW9ndrnSJBt276TGOGmBFoFeppyPUkgHYaoLPcDTMuIF3XFrQq7i3
+         iXq43/5wIDdL0Cs8Ss7v0P0Lqk9XQkOtXKGy3Jz/IQ6UbmgJGt1NMe3DhAvUNF1KESIK
+         sNew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WprwqfLl3Iivd950JkjtFAnJzh16n5EfJhXUamtdvGk=;
-        b=QgsMW2XE/oeXwMpiXPa65il3ETLXkdZpaqCk3LsXnKTpozTgOV3yoRIJB/43Rh0mM5
-         m7dH+Yu92k6dZlhQ6ndMoqY1iyCOm6P/KrySHU+ebX7fYLKFxoCsLHgR13YqTB9p4SvS
-         XhPIafw/3CGNV9CZZO6y5bWpeUrxixM3oR8PECm/F2V8KJ2RKfXQcAnHAK5wFh2ImPnW
-         OSZFTy+NX+1lqBORP+0DGd6EG75yyMjP61fSsYilRZUdsfMm4O71RUocR1Zms/ruPo3r
-         8ReCH7yS73hoX7fOhxxKaX7pQA5QDnuA+L4t28PaKs5P1KTbY1EeAkLKpuSlUnYXxEud
-         J5cQ==
-X-Gm-Message-State: ACrzQf2yhQqpszTh+83BBeNOC4IFme9nQciB256VPEznvD0FuqLdCPgb
-        8PwLgz2dWum4YdWNvxNgUcEcwA==
-X-Google-Smtp-Source: AMsMyM7Nmo34eZsrHJBFBvHH8HAtYk4C2XnKIK8GG8rrpGIy/J1cK9fezxUj/aJbbrXslARNuAtz1A==
-X-Received: by 2002:a2e:9650:0:b0:277:10f4:5d85 with SMTP id z16-20020a2e9650000000b0027710f45d85mr7295240ljh.253.1666885771679;
-        Thu, 27 Oct 2022 08:49:31 -0700 (PDT)
-Received: from [10.27.10.248] ([195.165.23.90])
-        by smtp.gmail.com with ESMTPSA id k7-20020a05651c10a700b002770c030dc0sm265525ljn.109.2022.10.27.08.49.30
+        bh=3gIoXxiDmfLBwHjIKOLcfrxpt8ArE5iNwkoMZ1If8W0=;
+        b=zGrTamPzAJ/PMsBZ3aHCSV2XWMhMZVq+j2U0X6pOF02AO+kWuPA4a9oU0ctys8912f
+         u0T0XWuE/XnGi/tsDMm9LwbO8td0hQv/WQrFn3El2MMeGya9F4OJSmOaSTRuVMGeM90W
+         NA32U/4Z+sq6T4k5166Bkjcx3cqzMgvbzg6gTRveWRgkLcl1nj31Qtqpok+5HYuWjHnj
+         +SmWZ5oCR2H6wD+FaG1chSo6WUFD+zOrJYODdvaJRYgUupps0JTG3URWERb8o6oRYyBG
+         ZVS2YVqsbApgP2CI9HKwXEMBwmMTwaYf1CVCDOtSfqnxY6c3MyfRnoalyZZHw3+oC1RN
+         /5vQ==
+X-Gm-Message-State: ACrzQf3p5DPEvPPcaH8097jXYkyiMOrUSHyFl+QsUf+Zd6vzaQHZoy/G
+        4CEb8pAC77Q1cjM0qDsR/AAcmg==
+X-Google-Smtp-Source: AMsMyM69+ighMCJFVZ5PyILef6TBCOJVDKpNzjTR4VbSGgNOa7WUffx36huom6eVW9hFG1DTA1W7vw==
+X-Received: by 2002:a05:620a:17a9:b0:6ee:e098:b2c7 with SMTP id ay41-20020a05620a17a900b006eee098b2c7mr6601418qkb.113.1666885960753;
+        Thu, 27 Oct 2022 08:52:40 -0700 (PDT)
+Received: from [192.168.1.11] ([64.57.193.93])
+        by smtp.gmail.com with ESMTPSA id y27-20020a37f61b000000b006cf19068261sm1139776qkj.116.2022.10.27.08.52.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Oct 2022 08:49:31 -0700 (PDT)
-Message-ID: <7fbde090-7c1a-48e6-13e0-73b673db847c@linaro.org>
-Date:   Thu, 27 Oct 2022 18:49:30 +0300
+        Thu, 27 Oct 2022 08:52:40 -0700 (PDT)
+Message-ID: <37c53d8c-2810-509a-7404-7ca24d79fed8@linaro.org>
+Date:   Thu, 27 Oct 2022 11:52:38 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH v3 1/2] drm/msm: move domain allocation into
- msm_iommu_new()
-Content-Language: en-GB
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+ Thunderbird/102.4.0
+Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: qcom: Add QDU1000 and
+ QRU1000 pinctrl bindings
+Content-Language: en-US
+To:     Melody Olvera <quic_molvera@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, kernel test robot <lkp@intel.com>
-References: <20221025200357.3637161-1-dmitry.baryshkov@linaro.org>
- <20221025200357.3637161-2-dmitry.baryshkov@linaro.org>
- <CAF6AEGvhJzpX1sJ1+SE_FA0eL=XEyDKnvyLz_Q15-eJvvL65PQ@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAF6AEGvhJzpX1sJ1+SE_FA0eL=XEyDKnvyLz_Q15-eJvvL65PQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221026190457.4003037-1-quic_molvera@quicinc.com>
+ <20221026190457.4003037-2-quic_molvera@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221026190457.4003037-2-quic_molvera@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/10/2022 18:48, Rob Clark wrote:
-> On Tue, Oct 25, 2022 at 1:04 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> After the msm_iommu instance is created, the IOMMU domain is completely
->> handled inside the msm_iommu code. Move the iommu_domain_alloc() call
->> into the msm_iommu_new() to simplify callers code.
->>
->> Reported-by: kernel test robot <lkp@intel.com>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c    | 12 +++++-------
->>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c    | 25 +++++++++---------------
->>   drivers/gpu/drm/msm/adreno/adreno_gpu.c  | 25 +++++++++---------------
->>   drivers/gpu/drm/msm/adreno/adreno_gpu.h  |  2 --
->>   drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 19 +++++++++---------
->>   drivers/gpu/drm/msm/msm_drv.c            | 18 ++++++++---------
->>   drivers/gpu/drm/msm/msm_iommu.c          | 20 ++++++++++++++++---
->>   drivers/gpu/drm/msm/msm_mmu.h            |  3 ++-
->>   8 files changed, 60 insertions(+), 64 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> index e033d6a67a20..6484b97c5344 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> @@ -1213,19 +1213,17 @@ static int a6xx_gmu_memory_alloc(struct a6xx_gmu *gmu, struct a6xx_gmu_bo *bo,
->>
->>   static int a6xx_gmu_memory_probe(struct a6xx_gmu *gmu)
->>   {
->> -       struct iommu_domain *domain;
->>          struct msm_mmu *mmu;
->>
->> -       domain = iommu_domain_alloc(&platform_bus_type);
->> -       if (!domain)
->> +       mmu = msm_iommu_new(gmu->dev, 0);
->> +       if (!mmu)
->>                  return -ENODEV;
->> +       if (IS_ERR(mmu))
->> +               return PTR_ERR(mmu);
->>
->> -       mmu = msm_iommu_new(gmu->dev, domain);
->>          gmu->aspace = msm_gem_address_space_create(mmu, "gmu", 0x0, 0x80000000);
->> -       if (IS_ERR(gmu->aspace)) {
->> -               iommu_domain_free(domain);
->> +       if (IS_ERR(gmu->aspace))
->>                  return PTR_ERR(gmu->aspace);
->> -       }
->>
->>          return 0;
->>   }
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> index fdc578016e0b..7a1b4397b842 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> @@ -1784,37 +1784,30 @@ static void a6xx_gpu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp,
->>   static struct msm_gem_address_space *
->>   a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
->>   {
->> -       struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->> -       struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->> -       struct iommu_domain *iommu;
->>          struct msm_mmu *mmu;
->>          struct msm_gem_address_space *aspace;
->> +       struct iommu_domain_geometry *geometry;
->>          u64 start, size;
->>
->> -       iommu = iommu_domain_alloc(&platform_bus_type);
->> -       if (!iommu)
->> -               return NULL;
->> -
->>          /*
->>           * This allows GPU to set the bus attributes required to use system
->>           * cache on behalf of the iommu page table walker.
->>           */
->> -       if (!IS_ERR_OR_NULL(a6xx_gpu->htw_llc_slice))
->> -               adreno_set_llc_attributes(iommu);
->> -
->> -       mmu = msm_iommu_new(&pdev->dev, iommu);
->> -       if (IS_ERR(mmu)) {
->> -               iommu_domain_free(iommu);
->> +       mmu = msm_iommu_new(&pdev->dev, IO_PGTABLE_QUIRK_ARM_OUTER_WBWA);
+On 26/10/2022 15:04, Melody Olvera wrote:
+> Add documentation details for device tree bindings for QDU1000 and QRU1000
+> TLMM devices.
+
+Just "Add Devicetree bindings for QDU1000 and QRU1000 TLMM devices."
+
+Subject - drop redundant second bindings.
+
 > 
-> I think/assume the quirk still needs to be conditional on
-> a6xx_gpu->htw_llc_slice.. or at least I'm not sure what happens if we
-> set it but do not have an LLCC (or allocated slice)
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> ---
+>  .../bindings/pinctrl/qcom,qdu1000-tlmm.yaml   | 135 ++++++++++++++++++
+>  1 file changed, 135 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
+> new file mode 100644
+> index 000000000000..a2ca4d59e2e0
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,qdu1000-tlmm.yaml
+> @@ -0,0 +1,135 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,qdu1000-tlmm.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. QDU1000/QRU1000 TLMM block
+> +
+> +maintainers:
+> +  - Melody Olvera <quic_molvera@quicinc.com>
+> +
+> +description: |
+> +  This binding describes the Top Level Mode Multiplexer block (TLMM) found
+
+Drop "This binding describes"
+
+IOW, just take a peak at current bindings in next.
 
 
-Argh, I forgot the check while doing the refactoring. Will fix in v4.
+> +  in the QDU1000 and QRU1000 platforms.
+> +
+> +allOf:
+> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    items:
 
+No items.
 
--- 
-With best wishes
-Dmitry
+> +      - const: qcom,qdu1000-tlmm
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts: true
+> +  interrupt-controller: true
+> +  "#interrupt-cells": true
+> +  gpio-controller: true
+> +
+> +  gpio-reserved-ranges:
+> +    minItems: 1
+> +    maxItems: 75
+> +
+> +  gpio-line-names:
+> +    maxItems: 151
+> +
+> +  "#gpio-cells": true
+> +  gpio-ranges: true
+> +  wakeup-parent: true
+> +
+> +patternProperties:
+> +  "-state$":
+> +    oneOf:
+> +      - $ref: "#/$defs/qcom-qdu1000-tlmm-state"
+> +      - patternProperties:
+> +          "-pins$":
+> +            $ref: "#/$defs/qcom-qdu1000-tlmm-state"
+> +        additionalProperties: false
+> +
+> +$defs:
+> +  qcom-qdu1000-tlmm-state:
+> +    type: object
+> +    description:
+> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+> +      Client device subnodes use below standard properties.
+> +    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
+> +
+> +    properties:
+> +      pins:
+> +        description:
+> +          List of gpio pins affected by the properties specified in this
+> +          subnode.
+> +        items:
+> +          oneOf:
+> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-4][0-9])$"
+
+This is not fixed.
+
+> +            - enum: [ sdc1_rclk, sdc1_clk, sdc1_cmd, sdc1_data ]
+> +        minItems: 1
+> +        maxItems: 36
+> +
+> +      function:
+Best regards,
+Krzysztof
 
