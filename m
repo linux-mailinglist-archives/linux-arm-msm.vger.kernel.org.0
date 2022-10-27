@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D50C6610017
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 20:22:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDCDD610020
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 20:25:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234021AbiJ0SWs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Oct 2022 14:22:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36572 "EHLO
+        id S235600AbiJ0SZO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Oct 2022 14:25:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235517AbiJ0SWp (ORCPT
+        with ESMTP id S235842AbiJ0SYz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Oct 2022 14:22:45 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 091504621A;
-        Thu, 27 Oct 2022 11:22:42 -0700 (PDT)
+        Thu, 27 Oct 2022 14:24:55 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DB4831DED;
+        Thu, 27 Oct 2022 11:24:52 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 987FD6243A;
-        Thu, 27 Oct 2022 18:22:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FA0C433D6;
-        Thu, 27 Oct 2022 18:22:40 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id BBCCDB82752;
+        Thu, 27 Oct 2022 18:24:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366AEC433D6;
+        Thu, 27 Oct 2022 18:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666894961;
-        bh=UvYccBMXQpd8jcmhcnu+u0g9XscsdMXPp/rPJPdrT+I=;
+        s=k20201202; t=1666895089;
+        bh=59Pw40a4Cn+LbgrGbl89Wp804IafCpdymwLTbzmtb8Q=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=PnKrsKLWA8Gxu55XbI/ou+wUMB0AoPZQ13su9+TW8hCpGMLTTrv618XuWK7PUMVN2
-         KqIdMbpbIpdA2Migoh/gxwam0JIlcJDIbz7SuSyTuX2ZpTfub4vpUBGl0nODFY2c4s
-         FbWHekrEvrd7rFK/fRc5EghvrwNNo0DFo/9Y9YhGoL2AXaqdwt9ZDHfNalX/ILM/Nl
-         C2n8udSbyJg/7Q74KalZPqOHSNEKWpBTUmTrJ3rO6I7IJ99NZl3VVAFpwxxqVA1sgU
-         P1svdD4nZeNMISZknPmtqjpAtin4drW2I8V2Do+NlY4Gr+3MlyRhJy0aCYytkihao4
-         ZjsMUiLz0Ij3Q==
+        b=PwetMeddijuZSfdb3qiz+ALrl6FPHsc1Ei/dIxhQiaQxHCeRRdYV9+Hpiq/qZghfF
+         jcYKLCDWLeYWlzaMjMRMc116RahtvDMmn5AHskY8stRDqNNPRWHfFUtbG7G+iYCglM
+         VtMEI+FWgRCBrujaz+mRJPPa5t7E8pEFJJ2ihiJHqKn42Gk19m82BVaHCAjypsdDeY
+         e7CNhKZU/TtBq5flOmTRUm9xNx/38qUmYnMjpWYMBeryAUNHDynM25IGSn4fQk5pmA
+         VTkcAcoCRwM+2vKazzC52qq71AmrnfB8Oc6KgA+ayo4fhRabQkyDPrEjTbLBkActAQ
+         huWBKCeodfluA==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20221026190441.4002212-6-quic_molvera@quicinc.com>
-References: <20221026190441.4002212-1-quic_molvera@quicinc.com> <20221026190441.4002212-6-quic_molvera@quicinc.com>
-Subject: Re: [PATCH v3 5/5] dt-bindings: qcom,pdc: Introduce pdc bindings for QDU1000 and QRU1000
+In-Reply-To: <e5009a33-1f71-1fe3-3a06-98bba031fdf0@linaro.org>
+References: <20221026190441.4002212-1-quic_molvera@quicinc.com> <20221026190441.4002212-2-quic_molvera@quicinc.com> <e5009a33-1f71-1fe3-3a06-98bba031fdf0@linaro.org>
+Subject: Re: [PATCH v3 1/5] dt-bindings: clock: Add QDU1000 and QRU1000 GCC clock bindings
 From:   Stephen Boyd <sboyd@kernel.org>
 Cc:     Taniya Das <quic_tdas@quicinc.com>, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Melody Olvera <quic_molvera@quicinc.com>
+        linux-kernel@vger.kernel.org
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Marc Zyngier <maz@kernel.org>,
         Melody Olvera <quic_molvera@quicinc.com>,
         Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
         Thomas Gleixner <tglx@linutronix.de>
-Date:   Thu, 27 Oct 2022 11:22:37 -0700
+Date:   Thu, 27 Oct 2022 11:24:45 -0700
 User-Agent: alot/0.10
-Message-Id: <20221027182240.E9FA0C433D6@smtp.kernel.org>
+Message-Id: <20221027182449.366AEC433D6@smtp.kernel.org>
 X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -63,13 +63,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Melody Olvera (2022-10-26 12:04:41)
-> Add compatible fields for QDU1000 and QRU1000 pdcs.
+Quoting Krzysztof Kozlowski (2022-10-27 08:54:51)
+> On 26/10/2022 15:04, Melody Olvera wrote:
+> > +description: |
+> > +  Qualcomm global clock control module which supports the clocks, rese=
+ts and
+> > +  power domains on QDU1000 and QRU1000
+> > +
+> > +  See also:
+> > +  - include/dt-bindings/clock/qcom,gcc-qdu1000.h
+> > +
+> > +properties:
+> > +  compatible:
+> > +    items:
+> > +      - const: qcom,gcc-qdu1000
+> > +      - const: syscon
+> > +
+> > +  clocks:
+> > +    items:
+> > +      - description: Board XO source
+> > +      - description: Sleep clock source
+> > +      - description: PCIE 0 Pipe clock source
+> > +      - description: PCIE 0 Phy Auxiliary clock source
+> > +      - description: USB3 Phy wrapper pipe clock source
+> > +    minItems: 2
 >=20
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> ---
+> Why the clocks are optional?
 
-Is there a reason why this patch continues to be included in what is
-otherwise a clk driver patch series? Can this patch be sent separately
-from the clk patches (and not Cced to clk maintainers/list) in the
-future?
+They should not be optional. They're always there.
