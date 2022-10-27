@@ -2,221 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D571660FB34
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 17:08:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B886C60FB2E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 17:08:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235922AbiJ0PIm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Oct 2022 11:08:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56300 "EHLO
+        id S235830AbiJ0PIb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Oct 2022 11:08:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235863AbiJ0PIl (ORCPT
+        with ESMTP id S235754AbiJ0PIa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Oct 2022 11:08:41 -0400
-Received: from wnew3-smtp.messagingengine.com (wnew3-smtp.messagingengine.com [64.147.123.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43F5018E737;
-        Thu, 27 Oct 2022 08:08:39 -0700 (PDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailnew.west.internal (Postfix) with ESMTP id CDB482B067A1;
-        Thu, 27 Oct 2022 11:08:37 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Thu, 27 Oct 2022 11:08:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=svenpeter.dev;
-         h=cc:cc:content-transfer-encoding:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm3; t=1666883317; x=
-        1666890517; bh=tHzuOmU+HU6cakH/7CcnyTDF5rh8M6mBGsxwOP1JyDc=; b=G
-        7xAg01PTVLno976Us4AWGP9QBpk2HpXKILrA6+iUqfPrfJxQ6wglqSmx/WHKNBDK
-        znBRM43GB1QK7dELtGK3/CFCSmpdQHMpsZCvPC6bZ70Ylz43N+2IsMS8PGe19iTK
-        mXsJKn00jJH8gpAZD0sxh6SkTQt4Qy2O361f7tR70e105ekFnG2rv1Ir1Hum1Zot
-        yCPq53hv4pcX7LHrVFUfJI2FCIl4Zo8jXZF8tfSpBso+Dv/euWQAIPjXC9/+3bJa
-        ddzVeNdG4yk/OZdg0vZg6/TgJx2OHyXACC7QLef3iOqEr2LdAjazLaX4e5xAv7Fh
-        JWwaGkK23Dz52GmX1sz2w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1666883317; x=1666890517; bh=tHzuOmU+HU6ca
-        kH/7CcnyTDF5rh8M6mBGsxwOP1JyDc=; b=LIVN6nxTIkLdZ3SccVwmhQTyd+/8F
-        AnvKDef3rIPVRz99Yj5vtlDHM0BZXR2Fq9aB9nItf9ubddN2osGzcjZnUmiQRMd0
-        XjEky9eG9r/Bti63CAAMv9E/d9OoPFlymTYFvGO7+OEj0ufL5bpbsCfYf0YYFg8x
-        fOPQ6A42RMwa/mUDJVc7MEPB6s3x1XmI7Tkb4QxCG7T8Hdi2330lxO+0WuUTWAna
-        IEYACu/4UCl06AnDWH6OTKAYCVH/SabZLuLbjFyXVR0dmFvk//T7yMBjO1a8WA2/
-        gjFuEGXsKE9BCvWVMtmWJ1UsDXr/n1QXF+EjdLrVmb89BEExsPPlSKgKg==
-X-ME-Sender: <xms:9J5aY9czs09jcQX2aXFG4txO4aAdC6JnzEKMlnHcX9Ty8Y36NXEAKA>
-    <xme:9J5aY7NYCnS4PbwT3l-BGQ-YdPNTw5cHGMGeBr93dARgacQj_vRIZciE_qBxqfcat
-    trw5kEDIPODYHaVw-w>
-X-ME-Received: <xmr:9J5aY2jufKpuCqdcM5NusALuPW2N19DvL9ETDg1ayxQxCTVgL1Sy_3XxDDo_xsfeei7MC_Zhgs5YyALK2pZIvASwQaz7ZKa2R-2okpxpixb1V6SORGKsu9w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrtdeggdekfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpefuvhgvnhcu
-    rfgvthgvrhcuoehsvhgvnhesshhvvghnphgvthgvrhdruggvvheqnecuggftrfgrthhtvg
-    hrnhephfeufffgffegtdefhfefueejfefghfelkeetuddvffeigeffuedvjeegudelieel
-    necuffhomhgrihhnpeguvghvihgtvghtrhgvvgdrohhrghenucevlhhushhtvghrufhiii
-    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehsvhgvnhesshhvvghnphgvthgvrhdr
-    uggvvh
-X-ME-Proxy: <xmx:9J5aY29eJhJiJeV-Oz0ESTXIUScWIWxs5byOZOATt0yILnt14phj1w>
-    <xmx:9J5aY5uzxb8MjuMbLDnZHaJKuZvElrsfiiXBiw53Wy0Qg6U7SZZibA>
-    <xmx:9J5aY1FXVcQTPrjcRBQzYat2TBVHnAZVoOhfZ6s-IQIoZVmIoZjiaw>
-    <xmx:9Z5aYyNiRZQKs9SMMEh6Qnc0xNVLNQpP9UVkb6RPFEgGigG3tiqOQTj42Dk>
-Feedback-ID: i51094778:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 27 Oct 2022 11:08:33 -0400 (EDT)
-From:   Sven Peter <sven@svenpeter.dev>
-To:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Thu, 27 Oct 2022 11:08:30 -0400
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3824518BE2D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 08:08:28 -0700 (PDT)
+Received: by mail-qv1-xf32.google.com with SMTP id j6so1520257qvn.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 08:08:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wE686Pb+0yjapSYCZjAr13ID0S8f2XiuAOg7iuBSl98=;
+        b=EPC9+qUzXv/AnYm7ePSxoIvaSIrm2NdpASBOEGxeQHVJmpfbcmfuDOPzrU0eyfp7Sc
+         xP4nsKvnrVXeGRJLNCyOkQUv0AUtr0bZ6nFDfdj67ymBcWCJQW6+VhCAeq2LpMVbz2mW
+         x6SMNCHG4PP+FCtU+2xKeLOcMHKl3KTH1brzopCcuERaBvEpnh8O5px7AiNxDxiKLoSA
+         Wf8PXVehJjIjU/2Sf59GFo04ZfQXKQGlWRBr9EQNjVQ8/CQODMrBZnUvaz7iZiyoJzM0
+         YVLhqXhj11VKjcQBcBmAR5zVkxxTK/Le7vtTAr2EK8wcEYQDjrv0/tWvLCIEro1nR6nG
+         GTtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wE686Pb+0yjapSYCZjAr13ID0S8f2XiuAOg7iuBSl98=;
+        b=SxNB97m2flbqQV8cBgAdkRCVnXgfx24u4XR0vDOtI653H56JzLCFZ+G2Ejroxz8nTC
+         TxA/Pvw5io6uL4PA/Ds2KoWvPInsRyGzpcFTnEkHUOlB3RiKx/TAMF4BW3G5XO1yj1od
+         Dujr9jsycDa1lIdfvopPPkuYvZktH+RVSlVGk6rJFFCp7qrSTXrn1cor4f2CjWp5Uzd3
+         6zYZzvyc3l+ZthZhobKjsR3+niPazNOhUB8CNyMbX2Ik1kFfXpVVpHWZa+C5lwsDR0G4
+         MSeh6AYBWH0+2J7gXQbiHIcMGE4K4AoPW6V/lrYi7cu4Z9S7Xex1UmxB0RQlfmJknKHx
+         p8BA==
+X-Gm-Message-State: ACrzQf1WMqJdxvh2Qx27MKrOu0kmUUhJ68dcjFq5qnzDNtw97QIzgTkd
+        nyhzjA1Skgz4IM1uvbXHIBY2WmvcnCCauA==
+X-Google-Smtp-Source: AMsMyM5GxBn/p7hdxLvlxLyplihGm5RoOw0z68qM1FyW7uu3kAH04pJqeCeamGBPHWW6f0gOqrKDvA==
+X-Received: by 2002:a05:6214:500d:b0:4af:8e3c:d254 with SMTP id jo13-20020a056214500d00b004af8e3cd254mr40305080qvb.36.1666883307318;
+        Thu, 27 Oct 2022 08:08:27 -0700 (PDT)
+Received: from [192.168.1.11] ([64.57.193.93])
+        by smtp.gmail.com with ESMTPSA id c2-20020a05622a024200b0038b684a1642sm1019469qtx.32.2022.10.27.08.08.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Oct 2022 08:08:26 -0700 (PDT)
+Message-ID: <ad1d4135-031e-9393-07af-7b81c9ecffb5@linaro.org>
+Date:   Thu, 27 Oct 2022 11:08:25 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Subject: Re: [PATCH v3 1/4] dt-bindings: soc: qcom,rpmh-rsc: Update to allow
+ for generic nodes
+Content-Language: en-US
+To:     Melody Olvera <quic_molvera@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Sven Peter <sven@svenpeter.dev>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Hector Martin <marcan@marcan.st>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        asahi@lists.linux.dev, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh@kernel.org>
-Subject: [PATCH v4 1/7] dt-bindings: net: Add generic Bluetooth controller
-Date:   Thu, 27 Oct 2022 17:08:16 +0200
-Message-Id: <20221027150822.26120-2-sven@svenpeter.dev>
-X-Mailer: git-send-email 2.30.1 (Apple Git-130)
-In-Reply-To: <20221027150822.26120-1-sven@svenpeter.dev>
-References: <20221027150822.26120-1-sven@svenpeter.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221026200429.162212-1-quic_molvera@quicinc.com>
+ <20221026200429.162212-2-quic_molvera@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221026200429.162212-2-quic_molvera@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bluetooth controllers share the common local-bd-address property.
-Add a generic YAML schema to replace bluetooth.txt for those.
+On 26/10/2022 16:04, Melody Olvera wrote:
+> Update the bindings to allow for generic regulator nodes instead of
+> device-specific node names.
+> 
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml
+> index 4a50f1d27724..0e7e07975f3a 100644
+> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml
+> @@ -109,7 +109,7 @@ properties:
+>      $ref: /schemas/power/qcom,rpmpd.yaml#
+>  
+>  patternProperties:
+> -  '-regulators$':
+> +  'regulators$':
 
-Signed-off-by: Sven Peter <sven@svenpeter.dev>
-Reviewed-by: Rob Herring <robh@kernel.org>
----
- .../devicetree/bindings/net/bluetooth.txt     |  5 ----
- .../net/bluetooth/bluetooth-controller.yaml   | 29 +++++++++++++++++++
- .../{ => bluetooth}/qualcomm-bluetooth.yaml   |  6 ++--
- .../bindings/soc/qcom/qcom,wcnss.yaml         |  8 ++---
- 4 files changed, 35 insertions(+), 13 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/net/bluetooth.txt
- create mode 100644 Documentation/devicetree/bindings/net/bluetooth/bluetooth-controller.yaml
- rename Documentation/devicetree/bindings/net/{ => bluetooth}/qualcomm-bluetooth.yaml (96%)
+This should be rather fixed like:
+https://lore.kernel.org/linux-devicetree/20220926092104.111449-1-krzysztof.kozlowski@linaro.org/
 
-diff --git a/Documentation/devicetree/bindings/net/bluetooth.txt b/Documentation/devicetree/bindings/net/bluetooth.txt
-deleted file mode 100644
-index 94797df751b8..000000000000
---- a/Documentation/devicetree/bindings/net/bluetooth.txt
-+++ /dev/null
-@@ -1,5 +0,0 @@
--The following properties are common to the Bluetooth controllers:
--
--- local-bd-address: array of 6 bytes, specifies the BD address that was
--  uniquely assigned to the Bluetooth device, formatted with least significant
--  byte first (little-endian).
-diff --git a/Documentation/devicetree/bindings/net/bluetooth/bluetooth-controller.yaml b/Documentation/devicetree/bindings/net/bluetooth/bluetooth-controller.yaml
-new file mode 100644
-index 000000000000..9309dc40f54f
---- /dev/null
-+++ b/Documentation/devicetree/bindings/net/bluetooth/bluetooth-controller.yaml
-@@ -0,0 +1,29 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/net/bluetooth/bluetooth-controller.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Bluetooth Controller Generic Binding
-+
-+maintainers:
-+  - Marcel Holtmann <marcel@holtmann.org>
-+  - Johan Hedberg <johan.hedberg@gmail.com>
-+  - Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-+
-+properties:
-+  $nodename:
-+    pattern: "^bluetooth(@.*)?$"
-+
-+  local-bd-address:
-+    $ref: /schemas/types.yaml#/definitions/uint8-array
-+    maxItems: 6
-+    description:
-+      Specifies the BD address that was uniquely assigned to the Bluetooth
-+      device. Formatted with least significant byte first (little-endian), e.g.
-+      in order to assign the address 00:11:22:33:44:55 this property must have
-+      the value [55 44 33 22 11 00].
-+
-+additionalProperties: true
-+
-+...
-diff --git a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
-similarity index 96%
-rename from Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
-rename to Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
-index f93c6e7a1b59..a6a6b0e4df7a 100644
---- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
-+++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
- %YAML 1.2
- ---
--$id: http://devicetree.org/schemas/net/qualcomm-bluetooth.yaml#
-+$id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
- title: Qualcomm Bluetooth Chips
-@@ -79,8 +79,7 @@ properties:
-   firmware-name:
-     description: specify the name of nvm firmware to load
- 
--  local-bd-address:
--    description: see Documentation/devicetree/bindings/net/bluetooth.txt
-+  local-bd-address: true
- 
- 
- required:
-@@ -89,6 +88,7 @@ required:
- additionalProperties: false
- 
- allOf:
-+  - $ref: bluetooth-controller.yaml#
-   - if:
-       properties:
-         compatible:
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
-index 5320504bb5e0..0e6fd57d658d 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
-@@ -42,15 +42,13 @@ properties:
-   bluetooth:
-     type: object
-     additionalProperties: false
-+    allOf:
-+      - $ref: /schemas/net/bluetooth/bluetooth-controller.yaml#
-     properties:
-       compatible:
-         const: qcom,wcnss-bt
- 
--      local-bd-address:
--        $ref: /schemas/types.yaml#/definitions/uint8-array
--        maxItems: 6
--        description:
--          See Documentation/devicetree/bindings/net/bluetooth.txt
-+      local-bd-address: true
- 
-     required:
-       - compatible
--- 
-2.25.1
+I don't know why there is such a popularity of adding specific model
+names as device node names...
+
+Best regards,
+Krzysztof
 
