@@ -2,88 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13E8C61043F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 23:18:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5ED50610464
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 23:28:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236228AbiJ0VS0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Oct 2022 17:18:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34822 "EHLO
+        id S236847AbiJ0V2l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Oct 2022 17:28:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235707AbiJ0VSZ (ORCPT
+        with ESMTP id S235771AbiJ0V2k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Oct 2022 17:18:25 -0400
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94F214E62C;
-        Thu, 27 Oct 2022 14:18:24 -0700 (PDT)
-Received: by mail-pf1-f169.google.com with SMTP id d10so2963226pfh.6;
-        Thu, 27 Oct 2022 14:18:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=217TEmeRSkgT5FXJL3tI+C7Nv9uUKHWlPOhDk+RYVKc=;
-        b=cQZAkfH+EhSOksqzJ89qdYiOaDAPZSSo4MyeoZ8M5s+ZO9HAj8TPcbjSTxIkFh4blk
-         zp1gUohommt/jM2zJOB8j17QlSareIS6fV0l/2Cx4e45Kv6TQMpuQO/u/zFdrb5Ojo2E
-         iaE1jHGyrYMqTqHRw1ptS/QSqs8LJSaGwRqBDyRQVcGdCkXZhWPsnTlWomfovWGnjjPw
-         alAgrDrXL7+fpfpHKXjEaZEihL576hoqRmcpgntPrPjgOgW+Lyy+5TKn+wGCjKwmB6Ed
-         0qKr3rPtJe8699xIPuuyAej6N8hgdS48QwVOoDYh5eqmYc8ZfFrZ6FrfugpHoxq88LeI
-         8rKg==
-X-Gm-Message-State: ACrzQf1g5zTBC4v4sDLu350lpirWWUdRHGk20WrTAO/yuW/aoVSYx+jK
-        /597M6iMrbYjeT27DaP44V4=
-X-Google-Smtp-Source: AMsMyM53gvpEmxUdREpf4JaDPlbW1SXiEFjZX4DyQbljNPr0+zkz4lIxFltKaHkBNLos8/97RllzHw==
-X-Received: by 2002:a05:6a00:1912:b0:564:f6be:11fd with SMTP id y18-20020a056a00191200b00564f6be11fdmr50036558pfi.32.1666905503861;
-        Thu, 27 Oct 2022 14:18:23 -0700 (PDT)
-Received: from ?IPV6:2620:15c:211:201:bc2b:ff19:1b02:257b? ([2620:15c:211:201:bc2b:ff19:1b02:257b])
-        by smtp.gmail.com with ESMTPSA id b23-20020a17090a011700b00208c58d5a0esm3004972pjb.40.2022.10.27.14.18.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Oct 2022 14:18:23 -0700 (PDT)
-Message-ID: <b48a1556-d5bf-ea57-7f84-bdf55246a70f@acm.org>
-Date:   Thu, 27 Oct 2022 14:18:20 -0700
+        Thu, 27 Oct 2022 17:28:40 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5931562A4B;
+        Thu, 27 Oct 2022 14:28:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1666906119; x=1698442119;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=jrKbybPxii/8LFLtEI8Q2yFUWjUeSbp0R5yoUIHIO04=;
+  b=gfbzDtYMOpteBY9GQ0RLgdIs9zUb3pNVOZVett/e1tecnCDix1qj6uL2
+   K5zmXtEvpslPGukX0ryaWzyUW863YwFS/sFPC41NSPLnKH1Qda5euf7B3
+   G97lJOfFGNOZLuQn4lYvtu140CzvBbhr2+n83+OP4x7noV81INPqvsCCR
+   Q=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 27 Oct 2022 14:28:38 -0700
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2022 14:28:38 -0700
+Received: from [10.110.41.43] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 27 Oct
+ 2022 14:28:37 -0700
+Message-ID: <a5e8c70a-3358-513b-c8a5-7a7903f6ea42@quicinc.com>
+Date:   Thu, 27 Oct 2022 14:28:37 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH v3 04/17] ufs: core: Defer adding host to scsi if mcq is
- supported
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH v3 1/5] dt-bindings: clock: Add QDU1000 and QRU1000 GCC
+ clock bindings
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Marc Zyngier <maz@kernel.org>,
+        "Michael Turquette" <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Thomas Gleixner" <tglx@linutronix.de>
+CC:     Taniya Das <quic_tdas@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20221026190441.4002212-1-quic_molvera@quicinc.com>
+ <20221026190441.4002212-2-quic_molvera@quicinc.com>
+ <e5009a33-1f71-1fe3-3a06-98bba031fdf0@linaro.org>
+ <20221027182449.366AEC433D6@smtp.kernel.org>
+ <cb9a2732-0904-4a2b-61a5-a6d65cad58ae@linaro.org>
 Content-Language: en-US
-To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_cang@quicinc.com,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
-        stanley.chu@mediatek.com, eddie.huang@mediatek.com,
-        daejun7.park@samsung.com, avri.altman@wdc.com, mani@kernel.org,
-        beanhuo@micron.com, quic_richardp@quicinc.com,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        open list <linux-kernel@vger.kernel.org>
-References: <cover.1666288432.git.quic_asutoshd@quicinc.com>
- <052c9049e4f3f6dc60e1254fbc67ee374f28a621.1666288432.git.quic_asutoshd@quicinc.com>
-From:   Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <052c9049e4f3f6dc60e1254fbc67ee374f28a621.1666288432.git.quic_asutoshd@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From:   Melody Olvera <quic_molvera@quicinc.com>
+In-Reply-To: <cb9a2732-0904-4a2b-61a5-a6d65cad58ae@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/20/22 11:03, Asutosh Das wrote:
-> If MCQ support is present, then enabling it would need
-> reallocating tags and memory. It would also free up the
-> already allocated memory in Single Doorbell Mode.
-> So defer invoking scsi_add_host() until MCQ is configured.
 
-The above probably should be modified to improve clarity. How about 
-changing "then enabling it would need" into "enabling it after MCQ 
-support has been configured would require"? Otherwise this patch looks 
-good to me.
+
+On 10/27/2022 12:35 PM, Krzysztof Kozlowski wrote:
+> On 27/10/2022 14:24, Stephen Boyd wrote:
+>> Quoting Krzysztof Kozlowski (2022-10-27 08:54:51)
+>>> On 26/10/2022 15:04, Melody Olvera wrote:
+>>>> +description: |
+>>>> +  Qualcomm global clock control module which supports the clocks, resets and
+>>>> +  power domains on QDU1000 and QRU1000
+>>>> +
+>>>> +  See also:
+>>>> +  - include/dt-bindings/clock/qcom,gcc-qdu1000.h
+>>>> +
+>>>> +properties:
+>>>> +  compatible:
+>>>> +    items:
+>>>> +      - const: qcom,gcc-qdu1000
+>>>> +      - const: syscon
+>>>> +
+>>>> +  clocks:
+>>>> +    items:
+>>>> +      - description: Board XO source
+>>>> +      - description: Sleep clock source
+>>>> +      - description: PCIE 0 Pipe clock source
+>>>> +      - description: PCIE 0 Phy Auxiliary clock source
+>>>> +      - description: USB3 Phy wrapper pipe clock source
+>>>> +    minItems: 2
+>>> Why the clocks are optional?
+>> They should not be optional. They're always there.
+> Just to be sure - I refer to last three clocks here as indicated by
+> minItems:2.
+>
+> DTS does not define them, so something here is not complete or correct.
+>
+DT is incomplete; I don't have that in my current patchset. Will add later when PCIE and
+USB nodes are complete.
 
 Thanks,
-
-Bart.
-
+Melody
