@@ -2,102 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6564060F4BE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 12:19:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 922C360F4F8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 12:27:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235283AbiJ0KTo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Oct 2022 06:19:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34402 "EHLO
+        id S235016AbiJ0K1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Oct 2022 06:27:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235246AbiJ0KTn (ORCPT
+        with ESMTP id S235083AbiJ0K1l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Oct 2022 06:19:43 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96CA9114F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 03:19:35 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id v130-20020a1cac88000000b003bcde03bd44so3772321wme.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 03:19:35 -0700 (PDT)
+        Thu, 27 Oct 2022 06:27:41 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D025758DDC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 03:27:40 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id y10so649373wma.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 03:27:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=p3v8EBCOL/pBarxV0ODSGCNmHcX5fEuS/fZKHlL3Tpw=;
-        b=gKA2dW3fJ2rFkjzoulrUEa0ZDzOT0UEWyrFD/SIlWhEb6Whcmyl6CQAToGDwyRWYIJ
-         L256X0v3MeZ37S0/8KOzsxMjhEGFBmJJDa3AxZR6Q2WocPGUKDteY2MxuuKoDQdgzV/M
-         5HMuHkRSrZgeZFcaC9hGoL/xffJEUk944P8pq6u/+WeCzeApEbiuAX7XQWGNkpbo3PoL
-         ymvNPOx4jvD+0ZlMbF1UJPli0/VxcBsd6pf4ScXWLGf8clXlSjovCcPOLlrO9+85LmpL
-         ysiq4xEo4G50hftAGd4vfdz3bH9w49ipcSdKOwEX4oZbEiSZJF9QmdTGDZE9Gun1Lkur
-         uEIw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=c10Qe+zVZwwhBmGpXr4d44up0IldqesvWFfpeof/vkk=;
+        b=fVIZxf6ldVYp8IBSoyM4y0u487MzBl4hyvzk2dmHbQ6cAjTw/gb3hGHq/fNXIAIknO
+         wUkpKa9NXUqqXGvKs6y5a8aP8ah7+k+Rb+Fvm6NiM4U8TfDVENUquvVTE3jaiCy3hY5b
+         PyEu71SuL7hVubSIhG1CUe5OAhkqivw5IieTuSkvBgKBZyQ2LASo4CAZrhvbf6HwsxmX
+         YceOtRHXKz8Uos6/HkcbfK/Z7fEruPIQTFalW53j55EMLMzkkGWeVx+CpYvAPT2Oj++D
+         D0Y3hoD5NuErKKUQoZ345ja+k0N3bPc3JTmNUfacDfh/JEqMEvIXu2mYNShWqmRm7ojv
+         zR3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p3v8EBCOL/pBarxV0ODSGCNmHcX5fEuS/fZKHlL3Tpw=;
-        b=ZV9Bk+Kc8DLGJ2tI11sbBiOL9bF80f+wDY9z7m3y7IokZCGs1cb68mOPdwJA3PBY5z
-         m8Y6WLm7TcFF6mddyNczDo18jo5EbDG9nkyeCLOS4/1c2OH+OLhybk/PpwGNhNMPKTnc
-         WVuAeMNL7kofz3CUt+d4PVo1dl3ZIeSGqOYFYlnpIUceEHrh9q1x6OW/PfiN6kZ2TMLl
-         QwjJKkyTZIa7Yk//4sgfoZFqKeF7UYgvGuXpOgqAeMn/KNAxZCYmTuipWJpt4cKt/t7V
-         2+/ZCIqzQZHJ1hUk4Eu8X0E13SqK2NgHOi2gfnRzuIFjJamO4ROyJgOcA0a6DO2Jh+qJ
-         Dh0g==
-X-Gm-Message-State: ACrzQf1vIcTWZmyBq43B10duCH7g0v9esHLiGwoH3OtVcpRsyz2wrepZ
-        9Vs2fkENxZ5UDUwlRXi00NjZMA==
-X-Google-Smtp-Source: AMsMyM7Z0QwLULgwz0dq3qhv6BQb+6iwiHd/mM4Ad8Zaf10YeEBPSMLE6J0xqkKIeai1eHLPuCoM9g==
-X-Received: by 2002:a05:600c:1c9d:b0:3c5:8081:1fc4 with SMTP id k29-20020a05600c1c9d00b003c580811fc4mr5425907wms.161.1666865974182;
-        Thu, 27 Oct 2022 03:19:34 -0700 (PDT)
-Received: from [192.168.1.194] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id l3-20020a05600c4f0300b003a5f3f5883dsm4703642wmq.17.2022.10.27.03.19.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Oct 2022 03:19:33 -0700 (PDT)
-Message-ID: <619a829e-d902-eba9-537e-176a8acb149c@linaro.org>
-Date:   Thu, 27 Oct 2022 11:19:28 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 6/6] soundwire: qcom: add support for v1.7 Soundwire
- Controller
-Content-Language: en-US
-To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        vkoul@kernel.org, yung-chuan.liao@linux.intel.com
-Cc:     andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, sanyog.r.kale@intel.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org
-References: <20221026110210.6575-1-srinivas.kandagatla@linaro.org>
- <20221026110210.6575-7-srinivas.kandagatla@linaro.org>
- <e3ebba30-65ec-183a-eb91-c5147c28441d@linux.intel.com>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=c10Qe+zVZwwhBmGpXr4d44up0IldqesvWFfpeof/vkk=;
+        b=KFTnVNe4uIwgD4/w2Uxumq0uL0BFCGBWXc3tSjKCz8scEV+uzFAyT93oi3GBO1Cll2
+         auSnsORCsZyPinGr8Ry8TnWqUe/jpccsCzutA9MBGfyBIRiaJtaKtrK35L4DO+AMPIjW
+         KoII3J+d849gLbTy52Zg/G80o73y4QeAr3cL3BiTTfUQjSspJ8kDm2Uw+ZEUAk0fCOoj
+         VIEAKLgesOq5sOhTpAwuRlJkE8lucA1JgASiqbQXD6dzPl+9sDbrodANqRa0unS5gHWb
+         v5dwWUL3Tp+FgCXt4d9qUP5AHcF3UKpBmmts8TN/uMR/BiLWLdbvFbwuualnI3MVBB8J
+         ddRw==
+X-Gm-Message-State: ACrzQf30SnK7RKa9+9G1ojdXjLzHbkJBd9lV4jcUQcThqJjU3NwULR/E
+        XSRDQPjgmfh4MO4JQbPbhaolsw==
+X-Google-Smtp-Source: AMsMyM5XkM9qBJkZHViwAVqTaVREs+du9SVmS5VfkwGNbmlgN1NNuWvkGYxmgCXT5+ZG1v56r31oVA==
+X-Received: by 2002:a1c:7405:0:b0:3cf:55ea:6520 with SMTP id p5-20020a1c7405000000b003cf55ea6520mr436038wmc.46.1666866459346;
+        Thu, 27 Oct 2022 03:27:39 -0700 (PDT)
+Received: from localhost.localdomain ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id fc7-20020a05600c524700b003b505d26776sm5088674wmb.5.2022.10.27.03.27.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Oct 2022 03:27:38 -0700 (PDT)
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <e3ebba30-65ec-183a-eb91-c5147c28441d@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     broonie@kernel.org
+Cc:     lgirdwood@gmail.com, bgoswami@quicinc.com, perex@perex.cz,
+        tiwai@suse.com, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH v3 0/9] ASoC: qdsp6: audioreach: add multi-port, SAL and MFC support
+Date:   Thu, 27 Oct 2022 11:27:01 +0100
+Message-Id: <20221027102710.21407-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Pierre,
+This patchset adds support to multi-port connections between AudioReach Modules
+which is required for sophisticated graphs like ECNS or Speaker Protection.
+Also as part of ECNS testing new module support for SAL and MFC are added.
 
-On 26/10/2022 21:14, Pierre-Louis Bossart wrote:
-> 
->> @@ -1582,6 +1597,7 @@ static const struct of_device_id qcom_swrm_of_match[] = {
->>   	{ .compatible = "qcom,soundwire-v1.3.0", .data = &swrm_v1_3_data },
->>   	{ .compatible = "qcom,soundwire-v1.5.1", .data = &swrm_v1_5_data },
->>   	{ .compatible = "qcom,soundwire-v1.6.0", .data = &swrm_v1_6_data },
->> +	{ .compatible = "qcom,soundwire-v1.7.0", .data = &swrm_v1_5_data },
-> 
-> is this line intentional, it looks odd that 1.7 is compatible with 1.5,
-> but 1.6 isn't?
-This is more around the data rather than compatible, 1.6 data is marked 
-with sw_clk_gate_required = true which is not the case with 1.7.
 
-from 1.5 we use same frame shape info for 1.6, 1.7, except that 1.6 had 
-this sw_clk_gate_required flag set.
+Tested on SM8450 with ECNS.
 
---srini
+Thanks,
+Srini
 
-> 
+Changes since v2:
+	Fixed two spelling mistakes in commit message
+	No code changes.
+
+Srinivas Kandagatla (9):
+  ASoC: qdsp6: audioreach: topology use idr_alloc_u32
+  ASoC: qdsp6: audioreach: remove unused connection_list
+  ASoC: qdsp6: audioreach: update dapm kcontrol private data
+  ASoC: qdsp6: audioreach: Simplify handing FE and BE graph connections
+  ASoC: qdsp6: audioreach: simplify module_list sz calculation
+  ASoC: qdsp6: audioreach: add support for more port connections
+  ASoC: qdsp6: audioreach: add support to enable SAL Module
+  ASoC: qdsp6: audioreach: add support for MFC Module
+  ASoC: qdsp6: audioreach: add support to enable module command
+
+ include/uapi/sound/snd_ar_tokens.h |  27 +++
+ sound/soc/qcom/qdsp6/audioreach.c  | 310 ++++++++++++++++++++---------
+ sound/soc/qcom/qdsp6/audioreach.h  |  47 +++--
+ sound/soc/qcom/qdsp6/q6apm.c       |  84 +-------
+ sound/soc/qcom/qdsp6/q6apm.h       |   6 +-
+ sound/soc/qcom/qdsp6/topology.c    | 243 +++++++++++++++++++---
+ 6 files changed, 489 insertions(+), 228 deletions(-)
+
+-- 
+2.21.0
+
