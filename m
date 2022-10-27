@@ -2,241 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B24A61023C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 21:59:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01A4C6103FA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 23:06:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236929AbiJ0T7x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Oct 2022 15:59:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35230 "EHLO
+        id S237300AbiJ0VGY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Oct 2022 17:06:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236891AbiJ0T7X (ORCPT
+        with ESMTP id S237287AbiJ0VGL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Oct 2022 15:59:23 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D68389CF3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 12:59:07 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29RIeTRf023257;
-        Thu, 27 Oct 2022 19:59:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=0NGXDm14CD3CSJAbvcKSD0ea0Gf24+q12i0K39i6Kps=;
- b=LXAU1jQ8yFvp+eFTuVTkaXf0o7KxAGTpqJ+rIpMxiDRP9VXLcP2F4cgaP6J+JmzqphbJ
- 64jYaxr9oddcrE+q5nuYuZEiKH3ggKEfLf7u3yuM8nILI7oR35pBLI/fwNClifuj5qYb
- 9L8dYjmsn/bHa2RhTpJUJne2Yde8/M9EUptUIzcJE7kBGsFQBSLLZBNRH2y6rPrBkxi1
- I2VMVHjswc1rx2zTuxfwLgNpN5uYQiCp4cMRvw+Ca3qebwz5/XFhKsjmGD1xWR9gCMad
- MOa1Bb4S00ENbdo2F//hiye6Rbz7bulJThxIifUoNSTqqgScW0KwqFg0jm+m5DDonLul RQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kfaj034a0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Oct 2022 19:59:01 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29RJx0Jr015152
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Oct 2022 19:59:00 GMT
-Received: from [10.38.246.117] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 27 Oct
- 2022 12:58:57 -0700
-Message-ID: <0b6f8319-78e3-44fe-78ad-621a817ceaca@quicinc.com>
-Date:   Thu, 27 Oct 2022 12:58:56 -0700
+        Thu, 27 Oct 2022 17:06:11 -0400
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 287DA5DF3E;
+        Thu, 27 Oct 2022 14:02:52 -0700 (PDT)
+Received: by mail-pj1-f48.google.com with SMTP id u8-20020a17090a5e4800b002106dcdd4a0so7837303pji.1;
+        Thu, 27 Oct 2022 14:02:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UmE1DG7kSl1xwJVJ4g+VjJX4wwHIYDfR/132aX/ZXDQ=;
+        b=jKdkOcRvmp/s3JXiX1MTBRVA0KzDakC0B+e6++o5i23gU+nfoisFfVipGCMTWq8ZUY
+         tD4WHec3LjipCre4Hty85+9f1OxaGTmMNGYZm+VqtiDqJ+tfASZPcE4+eclwq8hA/zHt
+         hEjLwVrVT+pFT/kzmdQVjXH2itM7Ml4RzAx1DU/bpiXnnp3qFqpSvguQ7xVQ8d/wxIrT
+         mLhXWCQFb3SxN9ok8M/eOcrv+ijmVowcGfYoNUzCi2pGzlKSM4rgTMPjCIP15DSepUfo
+         7feoFqFU/QqMBDt3t8a1IUOvr9Y0I3KTEgcBo1yXIx1Dh4kbw6etldYQqmKlq35Mn0xC
+         aCZQ==
+X-Gm-Message-State: ACrzQf2L93b3xEWSYmIxRCvSSoxSRBljpcP5ZYUSJ4xQwpwf9kBAdsVt
+        pq0GptocdY/y2gPJLn3ekGY=
+X-Google-Smtp-Source: AMsMyM4waBikI2WZ1brhVMMOQyb//PPS2Vno4JXG8gLyAZEPyadBpLLjvNBP4/85jCGUHmDpbrJMXA==
+X-Received: by 2002:a17:90b:4d84:b0:212:c78f:8d6e with SMTP id oj4-20020a17090b4d8400b00212c78f8d6emr12100332pjb.201.1666904571619;
+        Thu, 27 Oct 2022 14:02:51 -0700 (PDT)
+Received: from ?IPV6:2620:15c:211:201:bc2b:ff19:1b02:257b? ([2620:15c:211:201:bc2b:ff19:1b02:257b])
+        by smtp.gmail.com with ESMTPSA id ne23-20020a17090b375700b0020aacde1964sm3035694pjb.32.2022.10.27.14.02.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Oct 2022 14:02:51 -0700 (PDT)
+Message-ID: <e370c9df-ce6e-99b6-25d4-a0cc691675ce@acm.org>
+Date:   Thu, 27 Oct 2022 14:02:48 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [Freedreno] [PATCH v3] drm/msm/mdp5: stop overriding drvdata
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH v3 01/17] ufs: core: Probe for ext_iid support
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>
-References: <20221024152642.3213488-1-dmitry.baryshkov@linaro.org>
- <481b99e7-9e97-0109-d922-0bba39d952a3@quicinc.com>
- <b6dcd614-1bf8-3b2d-cc7e-ee3a59564fc6@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <b6dcd614-1bf8-3b2d-cc7e-ee3a59564fc6@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ghlSvIXENq8PO0DCaDH-W1wv2GFTjNwW
-X-Proofpoint-ORIG-GUID: ghlSvIXENq8PO0DCaDH-W1wv2GFTjNwW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-27_07,2022-10-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
- phishscore=0 spamscore=0 priorityscore=1501 mlxscore=0 adultscore=0
- lowpriorityscore=0 impostorscore=0 mlxlogscore=999 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2210270112
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_cang@quicinc.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
+        stanley.chu@mediatek.com, eddie.huang@mediatek.com,
+        daejun7.park@samsung.com, avri.altman@wdc.com, mani@kernel.org,
+        beanhuo@micron.com, quic_richardp@quicinc.com,
+        linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Jinyoung Choi <j-young.choi@samsung.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <cover.1666288432.git.quic_asutoshd@quicinc.com>
+ <1de72ea43ca5958cf839f4f21e42be744e122960.1666288432.git.quic_asutoshd@quicinc.com>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <1de72ea43ca5958cf839f4f21e42be744e122960.1666288432.git.quic_asutoshd@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 10/20/22 11:03, Asutosh Das wrote:
+> +static unsigned int ufs_get_ext_ufs_feature(struct ufs_hba *hba,
+> +					    const u8 *desc_buf)
+> +{
+> +	if (hba->desc_size[QUERY_DESC_IDN_DEVICE] <
+> +	    DEVICE_DESC_PARAM_EXT_UFS_FEATURE_SUP + 4)
+> +		return 0;
+> +
+> +	return get_unaligned_be32(desc_buf +
+> +				  DEVICE_DESC_PARAM_EXT_UFS_FEATURE_SUP);
+> +}
 
+Please avoid code duplication and make ufshcd_wb_probe() and
+ufshcd_temp_notif_probe() call the above function. Please also introduce
+the above function and perform the requested refactoring as a separate
+patch.
 
-On 10/27/2022 12:56 PM, Dmitry Baryshkov wrote:
-> On 27/10/2022 21:30, Abhinav Kumar wrote:
->>
->>
->> On 10/24/2022 8:26 AM, Dmitry Baryshkov wrote:
->>> The rest of the code expects that master's device drvdata is the
->>> struct msm_drm_private instance. Do not override the mdp5's drvdata.
->>>
->>> Fixes: 6874f48bb8b0 ("drm/msm: make mdp5/dpu devices master components")
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>> Abhinav, Rob, please pick this for -fixes.
->>>
->>> This is an updated version of [1]. Fixed the read_mdp_hw_revision()
->>> function. PM runtime isn't available at the moment, as priv->kms is not
->>> set.
->>>
->>> [1] https://patchwork.freedesktop.org/patch/490326/?series=105392&rev=1
->>>
->>> Changes since v2:
->>> - Removed the clause checking whether mdp5_enable() has failed (it can
->>>    not fail, noted by Abhinav)
->>>
->>> Changes since v1:
->>> - Expanded the patch to also handle the read_mdp_hw_revision() and also
->>>    to move pm enablement to the place where the pm_runtime can actually
->>>    be used.
->>>
->>> ---
->>>   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 32 +++++++++++++-----------
->>>   1 file changed, 17 insertions(+), 15 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c 
->>> b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
->>> index b0d21838a134..b46f983f2b46 100644
->>> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
->>> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
->>> @@ -203,7 +203,7 @@ static int mdp5_set_split_display(struct msm_kms 
->>> *kms,
->>>                                 slave_encoder);
->>>   }
->>> -static void mdp5_destroy(struct platform_device *pdev);
->>> +static void mdp5_destroy(struct mdp5_kms *mdp5_kms);
->>>   static void mdp5_kms_destroy(struct msm_kms *kms)
->>>   {
->>> @@ -223,7 +223,7 @@ static void mdp5_kms_destroy(struct msm_kms *kms)
->>>       }
->>>       mdp_kms_destroy(&mdp5_kms->base);
->>> -    mdp5_destroy(mdp5_kms->pdev);
->>> +    mdp5_destroy(mdp5_kms);
->>>   }
->>>   #ifdef CONFIG_DEBUG_FS
->>> @@ -519,9 +519,10 @@ static void read_mdp_hw_revision(struct mdp5_kms 
->>> *mdp5_kms,
->>>       struct device *dev = &mdp5_kms->pdev->dev;
->>>       u32 version;
->>> -    pm_runtime_get_sync(dev);
->>> +    /* Manually enable the MDP5, as pm runtime isn't usable yet. */
->>> +    mdp5_enable(mdp5_kms);
->>>       version = mdp5_read(mdp5_kms, REG_MDP5_HW_VERSION);
->>> -    pm_runtime_put_sync(dev);
->>> +    mdp5_disable(mdp5_kms);
->>
->> Please correct me if wrong here, if we bypass the pm to enable the 
->> clocks explicitly here, are we still guaranteed about GDSC to be ON?
-> 
-> The gdsc is tied to the mdss device, not to mdp5. So the gdsc will be 
-> enabled, because for mdp5 to probe the mdss device also should be powered.
-> 
+Otherwise this patch looks good to me.
 
-Ok, thanks for clarifying.
+Thanks,
 
-LGTM,
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>
->>
->>>       *major = FIELD(version, MDP5_HW_VERSION_MAJOR);
->>>       *minor = FIELD(version, MDP5_HW_VERSION_MINOR);
->>> @@ -559,6 +560,8 @@ static int mdp5_kms_init(struct drm_device *dev)
->>>       int irq, i, ret;
->>>       ret = mdp5_init(to_platform_device(dev->dev), dev);
->>> +    if (ret)
->>> +        return ret;
->>>       /* priv->kms would have been populated by the MDP5 driver */
->>>       kms = priv->kms;
->>> @@ -632,9 +635,8 @@ static int mdp5_kms_init(struct drm_device *dev)
->>>       return ret;
->>>   }
->>> -static void mdp5_destroy(struct platform_device *pdev)
->>> +static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
->>>   {
->>> -    struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
->>>       int i;
->>>       if (mdp5_kms->ctlm)
->>> @@ -648,7 +650,7 @@ static void mdp5_destroy(struct platform_device 
->>> *pdev)
->>>           kfree(mdp5_kms->intfs[i]);
->>>       if (mdp5_kms->rpm_enabled)
->>> -        pm_runtime_disable(&pdev->dev);
->>> +        pm_runtime_disable(&mdp5_kms->pdev->dev);
->>>       drm_atomic_private_obj_fini(&mdp5_kms->glob_state);
->>>       drm_modeset_lock_fini(&mdp5_kms->glob_state_lock);
->>> @@ -797,8 +799,6 @@ static int mdp5_init(struct platform_device 
->>> *pdev, struct drm_device *dev)
->>>           goto fail;
->>>       }
->>> -    platform_set_drvdata(pdev, mdp5_kms);
->>> -
->>>       spin_lock_init(&mdp5_kms->resource_lock);
->>>       mdp5_kms->dev = dev;
->>> @@ -839,9 +839,6 @@ static int mdp5_init(struct platform_device 
->>> *pdev, struct drm_device *dev)
->>>        */
->>>       clk_set_rate(mdp5_kms->core_clk, 200000000);
->>> -    pm_runtime_enable(&pdev->dev);
->>> -    mdp5_kms->rpm_enabled = true;
->>> -
->>>       read_mdp_hw_revision(mdp5_kms, &major, &minor);
->>>       mdp5_kms->cfg = mdp5_cfg_init(mdp5_kms, major, minor);
->>> @@ -893,10 +890,13 @@ static int mdp5_init(struct platform_device 
->>> *pdev, struct drm_device *dev)
->>>       /* set uninit-ed kms */
->>>       priv->kms = &mdp5_kms->base.base;
->>> +    pm_runtime_enable(&pdev->dev);
->>> +    mdp5_kms->rpm_enabled = true;
->>> +
->>>       return 0;
->>>   fail:
->>>       if (mdp5_kms)
->>> -        mdp5_destroy(pdev);
->>> +        mdp5_destroy(mdp5_kms);
->>>       return ret;
->>>   }
->>> @@ -953,7 +953,8 @@ static int mdp5_dev_remove(struct platform_device 
->>> *pdev)
->>>   static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
->>>   {
->>>       struct platform_device *pdev = to_platform_device(dev);
->>> -    struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
->>> +    struct msm_drm_private *priv = platform_get_drvdata(pdev);
->>> +    struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
->>>       DBG("");
->>> @@ -963,7 +964,8 @@ static __maybe_unused int 
->>> mdp5_runtime_suspend(struct device *dev)
->>>   static __maybe_unused int mdp5_runtime_resume(struct device *dev)
->>>   {
->>>       struct platform_device *pdev = to_platform_device(dev);
->>> -    struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
->>> +    struct msm_drm_private *priv = platform_get_drvdata(pdev);
->>> +    struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
->>>       DBG("");
-> 
+Bart.
