@@ -2,60 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDCDD610020
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 20:25:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92D4E61003C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 20:31:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235600AbiJ0SZO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Oct 2022 14:25:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39782 "EHLO
+        id S229565AbiJ0SbI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Oct 2022 14:31:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235842AbiJ0SYz (ORCPT
+        with ESMTP id S235484AbiJ0SbG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Oct 2022 14:24:55 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DB4831DED;
-        Thu, 27 Oct 2022 11:24:52 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id BBCCDB82752;
-        Thu, 27 Oct 2022 18:24:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366AEC433D6;
-        Thu, 27 Oct 2022 18:24:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666895089;
-        bh=59Pw40a4Cn+LbgrGbl89Wp804IafCpdymwLTbzmtb8Q=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=PwetMeddijuZSfdb3qiz+ALrl6FPHsc1Ei/dIxhQiaQxHCeRRdYV9+Hpiq/qZghfF
-         jcYKLCDWLeYWlzaMjMRMc116RahtvDMmn5AHskY8stRDqNNPRWHfFUtbG7G+iYCglM
-         VtMEI+FWgRCBrujaz+mRJPPa5t7E8pEFJJ2ihiJHqKn42Gk19m82BVaHCAjypsdDeY
-         e7CNhKZU/TtBq5flOmTRUm9xNx/38qUmYnMjpWYMBeryAUNHDynM25IGSn4fQk5pmA
-         VTkcAcoCRwM+2vKazzC52qq71AmrnfB8Oc6KgA+ayo4fhRabQkyDPrEjTbLBkActAQ
-         huWBKCeodfluA==
-Content-Type: text/plain; charset="utf-8"
+        Thu, 27 Oct 2022 14:31:06 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A7EB81137
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 11:31:01 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29R8ucZI019223;
+        Thu, 27 Oct 2022 18:30:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=gKYh2Gj7Cpeiu6imARdBRfX9/V501/7S7jvCbkHlc6k=;
+ b=Wq/0nWTrcDMCaV6HfKUx9OUyvS9FBd1fB6wY03mjNAwyBMVwV11Cv3f8bDVDkMaPaBJR
+ /eLuBHhLjRAnZqVXbdwyuImGIPiz3dsPUtVMDq987byvfxhOs3/aq2ZFdw9R/1SwRAI6
+ HN2WPelJks+znyr/Mm09+51hFwPCJysWRBhvyly/vrrGm4GmrDAQmHjxjsvQRiPBVFLW
+ Yj/dEDc5tIDJImCnJOz7BNB401pgRdLz1wlQ3Z0B5DH8fL2afa7IqHaU6P+lyKx7dL1P
+ C/IzCNpjCyf14Y/phEZpmUyhI3Sj6tvMxfoAtZbfWl99L6jAICNSmNrt8SWGNyKdYPPf bw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kfahem5jk-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 27 Oct 2022 18:30:54 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29RIUr7B009283
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 27 Oct 2022 18:30:53 GMT
+Received: from [10.38.246.117] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 27 Oct
+ 2022 11:30:51 -0700
+Message-ID: <481b99e7-9e97-0109-d922-0bba39d952a3@quicinc.com>
+Date:   Thu, 27 Oct 2022 11:30:49 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <e5009a33-1f71-1fe3-3a06-98bba031fdf0@linaro.org>
-References: <20221026190441.4002212-1-quic_molvera@quicinc.com> <20221026190441.4002212-2-quic_molvera@quicinc.com> <e5009a33-1f71-1fe3-3a06-98bba031fdf0@linaro.org>
-Subject: Re: [PATCH v3 1/5] dt-bindings: clock: Add QDU1000 and QRU1000 GCC clock bindings
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Taniya Das <quic_tdas@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-To:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [Freedreno] [PATCH v3] drm/msm/mdp5: stop overriding drvdata
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>
-Date:   Thu, 27 Oct 2022 11:24:45 -0700
-User-Agent: alot/0.10
-Message-Id: <20221027182449.366AEC433D6@smtp.kernel.org>
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>
+References: <20221024152642.3213488-1-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20221024152642.3213488-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: fULHlCpFr_TFJ75Ccs00QoRkQrqc_y9o
+X-Proofpoint-ORIG-GUID: fULHlCpFr_TFJ75Ccs00QoRkQrqc_y9o
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-27_07,2022-10-27_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 clxscore=1015 malwarescore=0 spamscore=0 phishscore=0
+ adultscore=0 mlxscore=0 bulkscore=0 mlxlogscore=999 priorityscore=1501
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2210270104
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,31 +83,156 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Krzysztof Kozlowski (2022-10-27 08:54:51)
-> On 26/10/2022 15:04, Melody Olvera wrote:
-> > +description: |
-> > +  Qualcomm global clock control module which supports the clocks, rese=
-ts and
-> > +  power domains on QDU1000 and QRU1000
-> > +
-> > +  See also:
-> > +  - include/dt-bindings/clock/qcom,gcc-qdu1000.h
-> > +
-> > +properties:
-> > +  compatible:
-> > +    items:
-> > +      - const: qcom,gcc-qdu1000
-> > +      - const: syscon
-> > +
-> > +  clocks:
-> > +    items:
-> > +      - description: Board XO source
-> > +      - description: Sleep clock source
-> > +      - description: PCIE 0 Pipe clock source
-> > +      - description: PCIE 0 Phy Auxiliary clock source
-> > +      - description: USB3 Phy wrapper pipe clock source
-> > +    minItems: 2
->=20
-> Why the clocks are optional?
 
-They should not be optional. They're always there.
+
+On 10/24/2022 8:26 AM, Dmitry Baryshkov wrote:
+> The rest of the code expects that master's device drvdata is the
+> struct msm_drm_private instance. Do not override the mdp5's drvdata.
+> 
+> Fixes: 6874f48bb8b0 ("drm/msm: make mdp5/dpu devices master components")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+> Abhinav, Rob, please pick this for -fixes.
+> 
+> This is an updated version of [1]. Fixed the read_mdp_hw_revision()
+> function. PM runtime isn't available at the moment, as priv->kms is not
+> set.
+> 
+> [1] https://patchwork.freedesktop.org/patch/490326/?series=105392&rev=1
+> 
+> Changes since v2:
+> - Removed the clause checking whether mdp5_enable() has failed (it can
+>    not fail, noted by Abhinav)
+> 
+> Changes since v1:
+> - Expanded the patch to also handle the read_mdp_hw_revision() and also
+>    to move pm enablement to the place where the pm_runtime can actually
+>    be used.
+> 
+> ---
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 32 +++++++++++++-----------
+>   1 file changed, 17 insertions(+), 15 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> index b0d21838a134..b46f983f2b46 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> @@ -203,7 +203,7 @@ static int mdp5_set_split_display(struct msm_kms *kms,
+>   							  slave_encoder);
+>   }
+>   
+> -static void mdp5_destroy(struct platform_device *pdev);
+> +static void mdp5_destroy(struct mdp5_kms *mdp5_kms);
+>   
+>   static void mdp5_kms_destroy(struct msm_kms *kms)
+>   {
+> @@ -223,7 +223,7 @@ static void mdp5_kms_destroy(struct msm_kms *kms)
+>   	}
+>   
+>   	mdp_kms_destroy(&mdp5_kms->base);
+> -	mdp5_destroy(mdp5_kms->pdev);
+> +	mdp5_destroy(mdp5_kms);
+>   }
+>   
+>   #ifdef CONFIG_DEBUG_FS
+> @@ -519,9 +519,10 @@ static void read_mdp_hw_revision(struct mdp5_kms *mdp5_kms,
+>   	struct device *dev = &mdp5_kms->pdev->dev;
+>   	u32 version;
+>   
+> -	pm_runtime_get_sync(dev);
+> +	/* Manually enable the MDP5, as pm runtime isn't usable yet. */
+> +	mdp5_enable(mdp5_kms);
+>   	version = mdp5_read(mdp5_kms, REG_MDP5_HW_VERSION);
+> -	pm_runtime_put_sync(dev);
+> +	mdp5_disable(mdp5_kms);
+
+Please correct me if wrong here, if we bypass the pm to enable the 
+clocks explicitly here, are we still guaranteed about GDSC to be ON?
+
+
+>   
+>   	*major = FIELD(version, MDP5_HW_VERSION_MAJOR);
+>   	*minor = FIELD(version, MDP5_HW_VERSION_MINOR);
+> @@ -559,6 +560,8 @@ static int mdp5_kms_init(struct drm_device *dev)
+>   	int irq, i, ret;
+>   
+>   	ret = mdp5_init(to_platform_device(dev->dev), dev);
+> +	if (ret)
+> +		return ret;
+>   
+>   	/* priv->kms would have been populated by the MDP5 driver */
+>   	kms = priv->kms;
+> @@ -632,9 +635,8 @@ static int mdp5_kms_init(struct drm_device *dev)
+>   	return ret;
+>   }
+>   
+> -static void mdp5_destroy(struct platform_device *pdev)
+> +static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
+>   {
+> -	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
+>   	int i;
+>   
+>   	if (mdp5_kms->ctlm)
+> @@ -648,7 +650,7 @@ static void mdp5_destroy(struct platform_device *pdev)
+>   		kfree(mdp5_kms->intfs[i]);
+>   
+>   	if (mdp5_kms->rpm_enabled)
+> -		pm_runtime_disable(&pdev->dev);
+> +		pm_runtime_disable(&mdp5_kms->pdev->dev);
+>   
+>   	drm_atomic_private_obj_fini(&mdp5_kms->glob_state);
+>   	drm_modeset_lock_fini(&mdp5_kms->glob_state_lock);
+> @@ -797,8 +799,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+>   		goto fail;
+>   	}
+>   
+> -	platform_set_drvdata(pdev, mdp5_kms);
+> -
+>   	spin_lock_init(&mdp5_kms->resource_lock);
+>   
+>   	mdp5_kms->dev = dev;
+> @@ -839,9 +839,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+>   	 */
+>   	clk_set_rate(mdp5_kms->core_clk, 200000000);
+>   
+> -	pm_runtime_enable(&pdev->dev);
+> -	mdp5_kms->rpm_enabled = true;
+> -
+>   	read_mdp_hw_revision(mdp5_kms, &major, &minor);
+>   
+>   	mdp5_kms->cfg = mdp5_cfg_init(mdp5_kms, major, minor);
+> @@ -893,10 +890,13 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+>   	/* set uninit-ed kms */
+>   	priv->kms = &mdp5_kms->base.base;
+>   
+> +	pm_runtime_enable(&pdev->dev);
+> +	mdp5_kms->rpm_enabled = true;
+> +
+>   	return 0;
+>   fail:
+>   	if (mdp5_kms)
+> -		mdp5_destroy(pdev);
+> +		mdp5_destroy(mdp5_kms);
+>   	return ret;
+>   }
+>   
+> @@ -953,7 +953,8 @@ static int mdp5_dev_remove(struct platform_device *pdev)
+>   static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
+>   {
+>   	struct platform_device *pdev = to_platform_device(dev);
+> -	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
+> +	struct msm_drm_private *priv = platform_get_drvdata(pdev);
+> +	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+>   
+>   	DBG("");
+>   
+> @@ -963,7 +964,8 @@ static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
+>   static __maybe_unused int mdp5_runtime_resume(struct device *dev)
+>   {
+>   	struct platform_device *pdev = to_platform_device(dev);
+> -	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
+> +	struct msm_drm_private *priv = platform_get_drvdata(pdev);
+> +	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+>   
+>   	DBG("");
+>   
