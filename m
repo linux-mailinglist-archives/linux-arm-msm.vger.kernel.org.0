@@ -2,73 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F150660F16A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 09:47:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4088860F19E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 09:56:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234871AbiJ0HrS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Oct 2022 03:47:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42910 "EHLO
+        id S234268AbiJ0H4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Oct 2022 03:56:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229743AbiJ0HrK (ORCPT
+        with ESMTP id S234150AbiJ0Hz6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Oct 2022 03:47:10 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 188E3169100;
-        Thu, 27 Oct 2022 00:47:05 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id h14so765514pjv.4;
-        Thu, 27 Oct 2022 00:47:05 -0700 (PDT)
+        Thu, 27 Oct 2022 03:55:58 -0400
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D42C28D220;
+        Thu, 27 Oct 2022 00:55:54 -0700 (PDT)
+Received: by mail-pf1-x42c.google.com with SMTP id w189so743220pfw.4;
+        Thu, 27 Oct 2022 00:55:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ALxYcoQL7dP6mgXsQO6Lg/e/4QIgrgKqxl3ALb+fP3Y=;
-        b=amc8h/bvI9K6TJRi42Q+oYQJ7o5DKKQGbyLckOiVr7tAp1qdgtdGVMIdFK3tfTpNhj
-         3ZZOMu0PDZS9trnyjHt1jVJYiOSQ2TjpVLPzTfFZI62zliv8g0Hq3tVLIrCQ3eXa2TR9
-         8MEXl8nkakzXY/nGHcqrK4+B8yC5EnuIa+p5p+DfBRQbzOm8ReZ0pkbFyxI/bsiQrEaD
-         WPgJN4D7PNfNScnq3WuCZQhx3zYyHFlxvJhHvZTHg1nLNlA+SsCtlYBe9lhhnzL7bEPC
-         v9DMdIITeBU4/zS7G5MPiPupVDoujxgObRsL1mSfL6GvEa6ekdl9fUdnyo0ZTVHzdXzt
-         lphQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=OJAEKndr3m6wkfHwUrnC0w/oTWY26XXJ7PxMYSqorLA=;
+        b=F0KKv+ad3qoKlO1BO7vEexO8niWP4K3suGfjq2soz7HeZjjCp+RCqX69vAAE4H0l3G
+         JjRa2lEKbrZ87cgPlqasGGxBPQOV1Sb8CRg9wJZh4wtTWP7jZXV1ogOeNLWzVibP7s/O
+         8TdEh2sP0bsFR/CyDsJD8HrOnHaVsRFRtTCC5nnaaT9e7CJChFvkkoTr9i1lZbImstoP
+         w0F8fNhT6nkeLNW9cHUP7qt7bPkGjWc6p9Jtq+twr0JcBEZA0Cw5H86toRxrWoYjt3za
+         Mpyme/IvITrGdk2wRYtxyTI5B3S3ayYvYMnimGqEQX/8wJT43/6Jkq5hh2MvMOHuhwTU
+         pf8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ALxYcoQL7dP6mgXsQO6Lg/e/4QIgrgKqxl3ALb+fP3Y=;
-        b=KRXU3N9OWDX7/Ta4uAKiqiocQU4oYp9bZ/z05BvAaA84mT9gbWblJBwjhCTNrYNUdC
-         xgF63Cy5kSWegAi0kgzsQxrhdkh4GpSpYFD7na1JalQTmFyZIdaY7lkEerqeJRm0CDtQ
-         jxnYTsdSyq7kRiGVTtGqIAXfyhULl2TB1XNEGbNqB4NRplS3rK8nuCmvy6jyq59JEqWv
-         D3FmIn6b8fdAZUJM4UGA3asci7zSRUhIoPFrRDA9TJ2r+j8eBxUYrcl8Jafphx/cGCOg
-         QK/MJLQgnPB53U4DsfoNnGMQCNrFKToRa5d3ZrjcaFS8QfurP6Mq83QT/kj2LoKKMAkt
-         JCgA==
-X-Gm-Message-State: ACrzQf0anELw9VQDOEdR9vcaoR9TZBQcyMWZDg8fGJpqwg45FL4q2ISO
-        Dw3r09ytDVjitX04su5JyMw=
-X-Google-Smtp-Source: AMsMyM7BkAF7n4+4kev5NLXg01Teai+kgMxQXZurnmug6rMBOL7QVqO0VnXiOXZcLcwZIUGOwiqepw==
-X-Received: by 2002:a17:903:1250:b0:185:40c6:3c2c with SMTP id u16-20020a170903125000b0018540c63c2cmr48228966plh.64.1666856824425;
-        Thu, 27 Oct 2022 00:47:04 -0700 (PDT)
-Received: from dtor-ws.mtv.corp.google.com ([2620:15c:9d:2:99d6:ae15:f9aa:1819])
-        by smtp.gmail.com with ESMTPSA id i4-20020a056a00004400b0056ba02feda1sm611386pfk.94.2022.10.27.00.47.02
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OJAEKndr3m6wkfHwUrnC0w/oTWY26XXJ7PxMYSqorLA=;
+        b=dBvRN1/AJeuG8esA3uWSPZCmix8na1RNrTpbFxHQYJHCjwTEoACG3Ft8QHc7LwQWul
+         R49DbnYcZlgmpvZNdyJUxCWDuzbM2uy/eRfPUfsqLhueIMcJrh4BHmgzoocu0L8lFX0K
+         iuOohWZxdt/ASS/y1/a0rLJfQeHO54576dfDmqMp49af3dxM1c0OXtY9yT79XH7OsCQq
+         Jg4Jmp+IRyadsTHqBq2CLwjfJh/RW/Q3DhGBd0Wg6HngoUr4mCeUcvVTvE3WWoHJYuFR
+         wUaywvjZ/SoG8NVLTQ+OKy2OljD5rVcbp3TQzE+mGqS32wFCHRqs1hHnV4cQRxrRUnX2
+         dS1w==
+X-Gm-Message-State: ACrzQf3Xt1LKrS9Lhezy68yqsUdW4/72cF8kkReSrAw2Fkt+kPjv8LI4
+        b2V9G3VGGrI2LirB2A37RUA=
+X-Google-Smtp-Source: AMsMyM4RuXf3SFWGHbEF/qs8moP9zk6bojXHDwIAw0jrPBotzHFLCqlixCAZlEmHMoAsFj6N/fwnpw==
+X-Received: by 2002:a63:4307:0:b0:464:a24d:8201 with SMTP id q7-20020a634307000000b00464a24d8201mr41524700pga.116.1666857353905;
+        Thu, 27 Oct 2022 00:55:53 -0700 (PDT)
+Received: from google.com ([2620:15c:9d:2:99d6:ae15:f9aa:1819])
+        by smtp.gmail.com with ESMTPSA id s24-20020a170902b19800b0017b264a2d4asm588191plr.44.2022.10.27.00.55.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Oct 2022 00:47:03 -0700 (PDT)
+        Thu, 27 Oct 2022 00:55:53 -0700 (PDT)
+Date:   Thu, 27 Oct 2022 00:55:49 -0700
 From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mark Brown <broonie@kernel.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Lee Jones <lee@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 6/6] ASoC: dt-bindings: wcd938x: fix codec reset line polarity in example
-Date:   Thu, 27 Oct 2022 00:46:52 -0700
-Message-Id: <20221027074652.1044235-6-dmitry.torokhov@gmail.com>
-X-Mailer: git-send-email 2.38.0.135.g90850a2211-goog
-In-Reply-To: <20221027074652.1044235-1-dmitry.torokhov@gmail.com>
-References: <20221027074652.1044235-1-dmitry.torokhov@gmail.com>
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Andy Gross <agross@kernel.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org, Rob Herring <robh@kernel.org>,
+        linux-rtc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 06/11] dt-bindings: input: qcom,pm8921-pwrkey: convert
+ to dt-schema
+Message-ID: <Y1o5hYAnBuf1akJ9@google.com>
+References: <20220928-mdm9615-dt-schema-fixes-v4-0-dac2dfaac703@linaro.org>
+ <20220928-mdm9615-dt-schema-fixes-v4-6-dac2dfaac703@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220928-mdm9615-dt-schema-fixes-v4-6-dac2dfaac703@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -79,28 +84,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The driver for the codec, when resetting the chip, first drives the line
-low, and then high. This means that the line is active low. Change the
-annotation in the example DTS accordingly.
+On Fri, Oct 21, 2022 at 11:06:42AM +0200, Neil Armstrong wrote:
+> Convert input/qcom,pm8xxx-pwrkey.txt to YAML, and take in account that
+> the PM8921 pwrkey compatible is used as fallback for the PM8018 pwrkey.
+> 
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
----
- Documentation/devicetree/bindings/sound/qcom,wcd938x.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Should I merge this through my tree or you want all these changes to go
+together through some particular tree?
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd938x.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd938x.yaml
-index 51547190f709..2f5e0df93872 100644
---- a/Documentation/devicetree/bindings/sound/qcom,wcd938x.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,wcd938x.yaml
-@@ -112,7 +112,7 @@ examples:
-   - |
-     codec {
-         compatible = "qcom,wcd9380-codec";
--        reset-gpios = <&tlmm 32 0>;
-+        reset-gpios = <&tlmm 32 GPIO_ACTIVE_LOW>;
-         #sound-dai-cells = <1>;
-         qcom,tx-device = <&wcd938x_tx>;
-         qcom,rx-device = <&wcd938x_rx>;
+Thanks.
+
 -- 
-2.38.0.135.g90850a2211-goog
-
+Dmitry
