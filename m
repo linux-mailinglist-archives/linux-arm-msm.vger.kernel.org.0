@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE3AA60FBA4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 17:20:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC7A060FBC7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Oct 2022 17:22:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235613AbiJ0PUB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Oct 2022 11:20:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50252 "EHLO
+        id S236262AbiJ0PW2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Oct 2022 11:22:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236306AbiJ0PSp (ORCPT
+        with ESMTP id S236011AbiJ0PWC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Oct 2022 11:18:45 -0400
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E97E42D7D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 08:15:28 -0700 (PDT)
-Received: by mail-qt1-x831.google.com with SMTP id l28so1344220qtv.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 08:15:28 -0700 (PDT)
+        Thu, 27 Oct 2022 11:22:02 -0400
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3F96A2320
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 08:21:52 -0700 (PDT)
+Received: by mail-qt1-x832.google.com with SMTP id r19so1349538qtx.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 08:21:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=aYI3hUFZ00keDLy7S9+ULcLvZKu2MhiqQOtj9sMJ7F0=;
-        b=NUiK0KJGFwemQWM2Rjm8EuZLRK/EicCcfymDxBbEm65LGrScsGvPeyBh+rQcS/4se/
-         EwOpvh6lmLQk8wEt74yEiDUModIPnkrK20KQ88oYDnPrb3ED7TvIL2czcGH3myhmbUDh
-         06ZdXwRh0r60qeX+aD3gUu6+1MlJ7h1L76gWfQbPVyq2IGttMG0R4kTheNSt62cAW4D1
-         64jFKTMndOPk5TE4UFw2nVT6orKi3MS4Jv6B5rfnkAoRigflLLOZRNhewUPp6f6a99nK
-         IqO8NKpUHgLEBc7qQbvD3HLRPTW16Qr6R4VEE5LV+2Cx33WYuwAO8VcAL+tPQ9Xa0td6
-         lRrQ==
+        bh=heHpdcI45GOXk8T2s9CmWTp8F02GlWHnis60xMjPMlk=;
+        b=B6pZGgr5Vb424y2UPAUjVdVDpiMLvwsdFM7+CrEvb00N8q5EF4R+w+SLQqq3RNL6i+
+         dda795nURfokgHWmscaDh5bQt4n9BlfhVrZzIYNPeioZZHxuzgfH8PG6lQI3JnyaYeVB
+         y7ivL2118dYWNSYp5QnrE0AOSUIf3wS+P0FVjvPRiPeKZuOkCUzCjofP95A9pub7EOLN
+         sd7GGCbmolDJz/pHT5OppzbZgJyehQ5d28wzutZ8lruxuXNvO00M38WUfmzCFJtgPhff
+         LcrWGzIrV4w8Wabdumi2jfgRLFHfY6yJ9Le30/NdiZlrBjD+bsoolEvzzHReqyqhGUM+
+         ld0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aYI3hUFZ00keDLy7S9+ULcLvZKu2MhiqQOtj9sMJ7F0=;
-        b=uqgf/Rt6Dvoalkgpw3l+AvoWHM6oU5RESXB6LJgg8uzeNXtXoWbnbwjc8PwP7kwZU/
-         9ZnMsftKKShcXdWqC1CA5rrT4qwGV73TEYJo54S/DQl5JRWZyJx54iWmgwZLoTJVVhzu
-         rUvNYLeAOxzMsNOY6GL8fLSLlhTqxyAI1P5fdqD3ONUbkXy88GQRP+uvOkrJ/QW9AUZf
-         xf//RYRmPIh9HCgvZPwEL13uOhj1OXoq8QU2EZ9auBbtnyLXBytV430iFgO6b6Pbhtuf
-         zpE1vF5Z/KbE68I0RYenQ4mp/UBVwQSPlBpFD5lLWP0rtDJEiLPfd3F9LsrPndz9f+2K
-         bDeg==
-X-Gm-Message-State: ACrzQf1NM/Ud+eQWZk0ZZBD6xsdmq8UNSTLabPreI01WIai5XfrHDDUV
-        5BB2AAcGwhcxqYigundw7gBLGQ==
-X-Google-Smtp-Source: AMsMyM6JygfUE8YeS9uzbRrBYkJMdQa9vcKt4XMrjaE1BhjDp1XACApjqnGP+FqAf8j1tO6QoVZ8Hw==
-X-Received: by 2002:ac8:5994:0:b0:39d:9b6:69a2 with SMTP id e20-20020ac85994000000b0039d09b669a2mr34201950qte.316.1666883727732;
-        Thu, 27 Oct 2022 08:15:27 -0700 (PDT)
+        bh=heHpdcI45GOXk8T2s9CmWTp8F02GlWHnis60xMjPMlk=;
+        b=eaMJvtuyi6gET7QPb6czdNj1xtnnBXU9azakuVIMlQXDPYVt8Q/CuXIJdsHUKXYDJD
+         iaU9imc0kkwwW5qdrqoYpVcGXwTrG3pQufSbXtrka4llI2oZAl0lkjuNjrxWxq6vp/DH
+         dJMYO3YOAdtWIAsl97RnA67s/JkyIHIvvC0xHlFja8U1ZSXcmFZgYEVyUVRmIlQRCfYG
+         sZnffNt+m7o6a/QMUTqjKFHkYJgGSyA2NArXT4y4tkzfbOmnvDtPPN+RcPzKBQ+5zf7R
+         1GtiEwu15jYxrXt5UmQtNwqCTVvYsE0ql+Wh7tb+TfSpDideWAhcxz1DyXkxxXQMqRo1
+         89Zw==
+X-Gm-Message-State: ACrzQf2iqQbezpWfT56qN0/jYBTgeE3I0PaDKDPBRkeR9FXTVSoMaXMy
+        RTcLUMW1nC9s2okCvlJFTKYtw7kUTFHxDg==
+X-Google-Smtp-Source: AMsMyM5A7BjcafrMIY/pw2z0YoMSHNSpNA/KPFxJ/5qUjU7y0AS8z0jOn6JQnM46RXu18BQEf5iKvA==
+X-Received: by 2002:a05:622a:19a2:b0:39c:ba6d:5d6d with SMTP id u34-20020a05622a19a200b0039cba6d5d6dmr41370322qtc.358.1666884100567;
+        Thu, 27 Oct 2022 08:21:40 -0700 (PDT)
 Received: from [192.168.1.11] ([64.57.193.93])
-        by smtp.gmail.com with ESMTPSA id k6-20020a05620a414600b006ce9e880c6fsm1128203qko.111.2022.10.27.08.15.26
+        by smtp.gmail.com with ESMTPSA id y27-20020a37f61b000000b006cf19068261sm1094226qkj.116.2022.10.27.08.21.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Oct 2022 08:15:27 -0700 (PDT)
-Message-ID: <0b58180d-2f2a-ba0a-cc95-acaf91c49b76@linaro.org>
-Date:   Thu, 27 Oct 2022 11:15:25 -0400
+        Thu, 27 Oct 2022 08:21:39 -0700 (PDT)
+Message-ID: <ae4b2333-d243-17ee-1ebd-6b1c89eef9f3@linaro.org>
+Date:   Thu, 27 Oct 2022 11:21:38 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.0
-Subject: Re: [PATCH v3 2/4] dt-bindings: arm: qcom: Document QDU1000/QRU1000
- SoCs and boards
+Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
 Content-Language: en-US
 To:     Melody Olvera <quic_molvera@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -66,14 +65,15 @@ To:     Melody Olvera <quic_molvera@quicinc.com>,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20221026200429.162212-1-quic_molvera@quicinc.com>
- <20221026200429.162212-3-quic_molvera@quicinc.com>
+ <20221026200429.162212-4-quic_molvera@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221026200429.162212-3-quic_molvera@quicinc.com>
+In-Reply-To: <20221026200429.162212-4-quic_molvera@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -81,13 +81,143 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 26/10/2022 16:04, Melody Olvera wrote:
-> Document the QDU1000 and QRU1000 SoC bindings and the boards that use
-> them.
+> Add the base DTSI files for QDU1000 and QRU1000 SoCs, including base
+> descriptions of CPUs, GCC, RPMHCC, QUP, TLMM, and interrupt-controller
+> to boot to shell with console on these SoCs.
 > 
 > Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 1406 +++++++++++++++++++++++++
+
+Please use scripts/get_maintainers.pl to get a list of necessary people
+and lists to CC.  It might happen, that command when run on an older
+kernel, gives you outdated entries.  Therefore please be sure you base
+your patches on recent Linux kernel.
+
+>  arch/arm64/boot/dts/qcom/qru1000.dtsi |   27 +
+>  2 files changed, 1433 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/qru1000.dtsi
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> new file mode 100644
+> index 000000000000..76474106e931
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> @@ -0,0 +1,1406 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+
+(...)
+
+> +
+> +	soc: soc@0 {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges = <0 0 0 0 0x10 0>;
+> +		dma-ranges = <0 0 0 0 0x10 0>;
+> +		compatible = "simple-bus";
+> +
+> +		gcc: clock-controller@80000 {
+> +			compatible = "qcom,gcc-qdu1000", "syscon";
+> +			reg = <0x0 0x80000 0x0 0x1f4200>;
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>, <&sleep_clk>;
+> +			clock-names = "bi_tcxo", "sleep_clk";
+> +		};
+> +
+> +		gpi_dma0: dma-controller@900000  {
+> +			compatible = "qcom,sm6350-gpi-dma";
+
+You should add here a specific compatible as well. Same in other places.
+All places. I had impression we talked about this few times, so I don't
+know what is missing on your side.
+
+This must be:
+"qcom,qdu1000-gpi-dma", "qcom,sm6350-gpi-dma"
+
+> +			#dma-cells = <3>;
+> +			reg = <0x0 0x900000 0x0 0x60000>;
+> +			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 251 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
+> +			dma-channels = <12>;
+> +			dma-channel-mask = <0x3f>;
+> +			iommus = <&apps_smmu 0xf6 0x0>;
+> +		};
+> +
+
+(...)
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> +
+> +		tlmm: pinctrl@f000000 {
+> +			compatible = "qcom,qdu1000-tlmm";
+> +			reg = <0x0 0xf000000 0x0 0x1000000>;
+> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+> +			gpio-controller;
+> +			#gpio-cells = <2>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +			gpio-ranges = <&tlmm 0 0 151>;
+> +			wakeup-parent = <&pdc>;
+> +
+> +			qup_uart0_default: qup-uart0-default-state {
+> +				pins = "gpio6", "gpio7", "gpio8", "gpio9";
+> +				function = "qup00";
+> +			};
+> +
+> +			qup_i2c1_data_clk: qup-i2c1-data-clk-state {
+> +				pins = "gpio10", "gpio11";
+> +				function = "qup01";
+> +				drive-strength = <2>;
+
+Can we have some generic agreement where to put drive-strengths and bias?
+
+See also:
+https://lore.kernel.org/linux-devicetree/20221026200357.391635-2-krzysztof.kozlowski@linaro.org/
+
+https://lore.kernel.org/lkml/CAD=FV=VUL4GmjaibAMhKNdpEso_Hg_R=XeMaqah1LSj_9-Ce4Q@mail.gmail.com/
+
+> +				bias-pull-up;
+> +			};
+
+(...)
+
+> +		};
+> +
+> +		cpufreq_hw: cpufreq@17d90000 {
+> +			compatible = "qcom,sm8250-cpufreq-epss", "qcom,cpufreq-epss";
+
+This is not sm8250...
+
+> +			reg = <0x0 0x17d90000 0x0 0x1000>, <0x0 0x17d91000 0x0 0x1000>;
+> +			reg-names = "freq-domain0", "freq-domain1";
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
+> +			clock-names = "xo", "alternate";
+> +			#freq-domain-cells = <1>;
+> +		};
+> +
+> +		gem_noc: interconnect@19100000 {
+> +			reg = <0x0 0x19100000 0x0 0xB8080>;
+> +			compatible = "qcom,qdu1000-gem-noc";
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +	};
 
 Best regards,
 Krzysztof
