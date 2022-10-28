@@ -2,49 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CE0C611CB5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 23:53:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB29E611CC4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 23:56:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229927AbiJ1VxG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 17:53:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38330 "EHLO
+        id S230043AbiJ1V4Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 17:56:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbiJ1VxF (ORCPT
+        with ESMTP id S229766AbiJ1V4X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 17:53:05 -0400
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C288724C978;
-        Fri, 28 Oct 2022 14:53:04 -0700 (PDT)
-Received: by mail-pl1-f181.google.com with SMTP id p21so2087831plr.7;
-        Fri, 28 Oct 2022 14:53:04 -0700 (PDT)
+        Fri, 28 Oct 2022 17:56:23 -0400
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48F0E24C102;
+        Fri, 28 Oct 2022 14:56:22 -0700 (PDT)
+Received: by mail-pl1-f170.google.com with SMTP id c24so5952138pls.9;
+        Fri, 28 Oct 2022 14:56:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aHW0VpCYFExt/yJYXKv4CHfVB0y8NEIPRLasE5/M9fU=;
-        b=oNoLsF0h9+0rbURD9pboRjTuA+0uJ7hoBPwsk/7OPNAdK09P5ycee2yThc/zEs+9FC
-         TR8BBgUIJdvcOLxLolVfheRNEOY0J7a7J1MLHkVOwp3uc2TxAMhFuJAhS28S+4lcpHtv
-         sN46PZc/bG4Jclv65+4T6FQ8f+EBFNKc6TEuH+ehLJBAKWm4FdT1fhFuc6fTYSFNsTjO
-         cewzp7rt1nVLy/ai/W8Q5RjT6WueTPQIFu/zat+qKzArodaQWvrot0aTHuWUjNVretcP
-         IM+5t2vANjpqD4JHnyfq+k0e8dzsRTBGMIRm7LCLhBhqKc0i9uNvVAWuX8tAPrJdc9Mf
-         TMZQ==
-X-Gm-Message-State: ACrzQf2crsu+MA7PYL+CuHpbR8Bsu99l2qUcm+3xTo7xMCQSbPdHXVmb
-        Ccu5MIGKCeQMeuHtrqBC/SM=
-X-Google-Smtp-Source: AMsMyM7B3Xyir5PKlTiNvIB9P3ZB8N9O1f8bxaCqGk3PwosEpzTJTt5dyRPVqzbE8EEaHRM0LJ0dbQ==
-X-Received: by 2002:a17:902:b092:b0:186:9dc3:dc44 with SMTP id p18-20020a170902b09200b001869dc3dc44mr1167576plr.112.1666993984173;
-        Fri, 28 Oct 2022 14:53:04 -0700 (PDT)
+        bh=xRxOJs0CrcGRU71XFSlw3IgjDlkrMUlaAe5RLb6zS/w=;
+        b=LFjMsluKwrIluzDM4iHJemE7BuLWrSSvNkebQQOUC/mr8l+0uu+nYELSmELg+OCR5m
+         wSKvKHrVz/X+5/wO/Y0k78ECUjoul2bquUi33ydGNXcjiiUjgKy/Oljz2S1012Iuihqv
+         gLA2kpgyfYsx8Coci5sEG2sEd82Id22WzM6FeNS0bAICE4P7uQQbBmMG7OzjKzFA9ZJ1
+         9Q9fKxDEO5wbp0M6Al7AkH/hblqY0/ULb5hnDz1gM0uV9E5XuGIVVC9cMMqoMCndIjhc
+         qXfoeVCLo9GvjrDoH4emMUgY7a+JaZWvqx+BH2rL0CbatO1aMIqEAjzEo0YTXV5LMC9A
+         KWwA==
+X-Gm-Message-State: ACrzQf1mBMwfrLOfVF2UVgTqFMj2NCZB6aCkFJyceXV21QPcUKpm3CSr
+        uunx8yV6Gj33HKdOcnqdYaw=
+X-Google-Smtp-Source: AMsMyM4uKDLG7ECuZMK5mLyvCKvvNk+/R9jMhajRHsYGLg8JhrUI76TZDV0ixXqLWa0IeHt4xf+/CQ==
+X-Received: by 2002:a17:90b:954:b0:213:c01:b8ce with SMTP id dw20-20020a17090b095400b002130c01b8cemr18931873pjb.168.1666994181757;
+        Fri, 28 Oct 2022 14:56:21 -0700 (PDT)
 Received: from [192.168.3.219] ([98.51.102.78])
-        by smtp.gmail.com with ESMTPSA id l13-20020a17090a660d00b00212e8945d97sm4618065pjj.56.2022.10.28.14.53.01
+        by smtp.gmail.com with ESMTPSA id l17-20020a17090aaa9100b0020a821e97fbsm3015068pjq.13.2022.10.28.14.56.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Oct 2022 14:53:03 -0700 (PDT)
-Message-ID: <817ec99a-b28e-6fb7-383d-f8a3ac578686@acm.org>
-Date:   Fri, 28 Oct 2022 14:53:01 -0700
+        Fri, 28 Oct 2022 14:56:21 -0700 (PDT)
+Message-ID: <410bdf50-b7a0-9157-724b-9410f23f21e7@acm.org>
+Date:   Fri, 28 Oct 2022 14:56:18 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.3
-Subject: Re: [PATCH v3 12/17] ufs: core: mcq: Find hardware queue to queue
- request
+Subject: Re: [PATCH v3 13/17] ufs: core: Prepare for completion in mcq
 Content-Language: en-US
 To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_cang@quicinc.com,
         martin.petersen@oracle.com, linux-scsi@vger.kernel.org
@@ -58,9 +57,9 @@ Cc:     quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         open list <linux-kernel@vger.kernel.org>
 References: <cover.1666288432.git.quic_asutoshd@quicinc.com>
- <c70e6972daf3bb1cef6fbf157b8549bfc365f674.1666288432.git.quic_asutoshd@quicinc.com>
+ <200c3ff9c2f3f83fb6f04afb4c83da01e5f27f1f.1666288432.git.quic_asutoshd@quicinc.com>
 From:   Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <c70e6972daf3bb1cef6fbf157b8549bfc365f674.1666288432.git.quic_asutoshd@quicinc.com>
+In-Reply-To: <200c3ff9c2f3f83fb6f04afb4c83da01e5f27f1f.1666288432.git.quic_asutoshd@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
@@ -74,25 +73,14 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 10/20/22 11:03, Asutosh Das wrote:
-> +struct ufs_hw_queue *ufshcd_mcq_req_to_hwq(struct ufs_hba *hba,
-> +					 struct request *req)
-> +{
-> +	u32 utag, hwq;
-> +
-> +	utag = blk_mq_unique_tag(req);
-> +	hwq = blk_mq_unique_tag_to_hwq(utag);
+> Modifies completion path APIs and adds completion queue
+> entry.
 
-A minor stylistic nit: please combine declaration and assignment as follows:
+Modifies -> Modify
+adds -> add
 
-         u32 utag = blk_mq_unique_tag(req);
-         u32 hwq = blk_mq_unique_tag_to_hwq(utag);
+Patch descriptions should be written in the imperative mood.
 
-> +	/* uhq[0] is to serve device commands */
-
-is -> is used?
-
-> +	return &hba->uhq[hwq + UFSHCD_MCQ_IO_QUEUE_OFFSET];
-
-Otherwise this patch looks good to me. Hence:
+Otherwise this patch looks good to me, hence:
 
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
