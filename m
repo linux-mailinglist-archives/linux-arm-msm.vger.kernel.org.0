@@ -2,108 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7192761111B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 14:20:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9EFF611131
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 14:23:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230337AbiJ1MU0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 08:20:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53200 "EHLO
+        id S229543AbiJ1MXl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 08:23:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230224AbiJ1MUS (ORCPT
+        with ESMTP id S229531AbiJ1MXk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 08:20:18 -0400
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9814231EE0;
-        Fri, 28 Oct 2022 05:20:10 -0700 (PDT)
-Received: by mail-ot1-f41.google.com with SMTP id cy15-20020a056830698f00b0065c530585afso2884112otb.2;
-        Fri, 28 Oct 2022 05:20:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NwwUKBJK2ts9JQbEn+aT2R7CdnRNl0fVI6fqIamBwNM=;
-        b=4cqLckJXKqYBpKCyYNC6z5COApqWnQXn0mMNAziNtUChVIamMmyDjW0R/5giF8ivm8
-         bqj/KB0w54vNSoernqJ6VSxYKKddKZcRQmV/COmjGqBVOtGZBKaRz0LGEuMivxdglFgu
-         xzdPNUHvtoZFsIvkKO/PFfDwUrBlj9YP9RIpgWkvWv8sooZhLL8uxIoDW2o6cfiMEWg7
-         AeoyczUU7erPhFElDIeF1cnn7kDBHeeSjNkyUa9cMg5mWRji1Uz+nQAN7vWzd0sviBFe
-         1pQy/Fq38/lyP5Mcn/xML8aTz1SH1uah7BYPI4IQPjLEDjCfqEeDW5AHB+cBBkwn55rB
-         fEtg==
-X-Gm-Message-State: ACrzQf25fjaTc5RMhn4i12ELLvN0P4u6erSvf5zxygWXE0ULo8S0y1kT
-        pHnU7D9KXe/gG85tTy+ctQYcQPj9dg==
-X-Google-Smtp-Source: AMsMyM61gDqPCsm78gUOyWJAjboELdy4Wi9sePZ0bD4E8MIGa1EEc2Wy1l9L2JynMsaYNH1jsAljrQ==
-X-Received: by 2002:a05:6830:368c:b0:660:ece0:ce33 with SMTP id bk12-20020a056830368c00b00660ece0ce33mr26535851otb.146.1666959609714;
-        Fri, 28 Oct 2022 05:20:09 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id w30-20020a056870b39e00b0012b298699dbsm2039684oap.1.2022.10.28.05.20.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Oct 2022 05:20:09 -0700 (PDT)
-Received: (nullmailer pid 1079531 invoked by uid 1000);
-        Fri, 28 Oct 2022 12:20:05 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org,
-        Sibi Sankar <quic_sibis@quicinc.com>,
+        Fri, 28 Oct 2022 08:23:40 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0A4A40E1E;
+        Fri, 28 Oct 2022 05:23:39 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 6D3C1B829BC;
+        Fri, 28 Oct 2022 12:23:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28541C433C1;
+        Fri, 28 Oct 2022 12:23:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1666959816;
+        bh=aMABIn5VBGdso1UMHCRd1cHCeGi+PYCtr5sq0K9Cir4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=IGk2WYZRRV7vVnwGQvOBOk4TvzROTq98CggsXXE4XOYG0ME/bGsRJJy3/VPjLzjcy
+         V7Rs1iZ2Y1Pp2i9MroALy+l9WCD67zdsztcdsHKqy/Erx0frb6AWBBQ+shW3TiQ+D9
+         +j4t6RwU8VKo/A/eC2cpO8NyuXOQa5z99ziSDuoDp7oZH0oRDfbixnL96HNud1vOsF
+         7+E6Mj9L65fz1beQ4zdZjxr+tspMkXJ8TGo3p8KTT35YV2/jwk+GWr/Mrr+xav4zM2
+         QlsjCqaWXUruUzGgwSzcN3Yb0GUNE2w0jfOogBrJk0EgA5jWIovHXEpPa1Y6mxwIEo
+         Ipa79QTy4/B6A==
+Date:   Fri, 28 Oct 2022 17:53:31 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, mani@kernel.org
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        devicetree@vger.kernel.org, Georgi Djakov <djakov@kernel.org>,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-In-Reply-To: <20221028034155.5580-6-quic_bjorande@quicinc.com>
-References: <20221028034155.5580-1-quic_bjorande@quicinc.com> <20221028034155.5580-6-quic_bjorande@quicinc.com>
-Message-Id: <166695949085.1076887.9913893260550976176.robh@kernel.org>
-Subject: Re: [PATCH 05/10] dt-bindings: interconnect: Add sm8350, sc8280xp and generic OSM L3 compatibles
-Date:   Fri, 28 Oct 2022 07:20:05 -0500
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 16/20] phy: qcom-qmp-pcie: drop start-ctrl abstraction
+Message-ID: <Y1vJw2Co5tVhUrc+@matsya>
+References: <20221012084846.24003-1-johan+linaro@kernel.org>
+ <20221012085002.24099-1-johan+linaro@kernel.org>
+ <20221012085002.24099-16-johan+linaro@kernel.org>
+ <81632b90-bc8a-7f3b-d2c9-153b4cea16ed@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <81632b90-bc8a-7f3b-d2c9-153b4cea16ed@linaro.org>
+X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 27 Oct 2022 20:41:50 -0700, Bjorn Andersson wrote:
-> Add EPSS L3 compatibles for sm8350 and sc8280xp, but while at it also
-> introduce generic compatible for both qcom,osm-l3 and qcom,epss-l3.
+On 13-10-22, 00:20, Dmitry Baryshkov wrote:
+> On 12/10/2022 11:49, Johan Hovold wrote:
+> > All PCIe PHYs need to start and stop the SerDes and PCS so drop the
+> > start-ctrl abstraction which is no longer needed since the QMP driver
+> > split.
+> > 
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> >   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 18 +++---------------
+> >   1 file changed, 3 insertions(+), 15 deletions(-)
 > 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
->  .../bindings/interconnect/qcom,osm-l3.yaml    | 22 +++++++++++++------
->  1 file changed, 15 insertions(+), 7 deletions(-)
+> I think it should be possible to also drop the pwrdn_ctrl by replacing it
+> with something like no_refclk_drv_dsbl. However I'd like to understand why
+> this is not required for SDX55. Is this the peculiarity of that platform? Or
+> is it a specifics of the EP mode?
+> Many, Vinod, do you know the answer by chance?
+
+Adding Mani, i am not sure maybe sdx55 specific...?
+
 > 
+> Nevertheless, for this patch:
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> > 
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > index d3e7e673114f..5534a4ad0243 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > @@ -1355,7 +1355,6 @@ struct qmp_phy_cfg {
+> >   	/* array of registers with different offsets */
+> >   	const unsigned int *regs;
+> > -	unsigned int start_ctrl;
+> >   	unsigned int pwrdn_ctrl;
+> >   	/* bit offset of PHYSTATUS in QPHY_PCS_STATUS register */
+> >   	unsigned int phy_status;
+> > @@ -1491,7 +1490,6 @@ static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
+> >   	.num_vregs		= 0,
+> >   	.regs			= pciephy_regs_layout,
+> > -	.start_ctrl		= SERDES_START | PCS_START,
+> >   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> >   	.phy_status		= PHYSTATUS,
+> >   };
+> > @@ -1517,7 +1515,6 @@ static const struct qmp_phy_cfg ipq8074_pciephy_gen3_cfg = {
+> >   	.num_vregs		= 0,
+> >   	.regs			= ipq_pciephy_gen3_regs_layout,
+> > -	.start_ctrl		= SERDES_START | PCS_START,
+> >   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> >   	.phy_status		= PHYSTATUS,
+> > @@ -1547,7 +1544,6 @@ static const struct qmp_phy_cfg ipq6018_pciephy_cfg = {
+> >   	.num_vregs		= 0,
+> >   	.regs			= ipq_pciephy_gen3_regs_layout,
+> > -	.start_ctrl		= SERDES_START | PCS_START,
+> >   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> >   	.phy_status		= PHYSTATUS,
+> >   };
+> > @@ -1575,7 +1571,6 @@ static const struct qmp_phy_cfg sdm845_qmp_pciephy_cfg = {
+> >   	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> >   	.regs			= sdm845_qmp_pciephy_regs_layout,
+> > -	.start_ctrl		= PCS_START | SERDES_START,
+> >   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> >   	.phy_status		= PHYSTATUS,
+> >   };
+> > @@ -1601,7 +1596,6 @@ static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
+> >   	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> >   	.regs			= sdm845_qhp_pciephy_regs_layout,
+> > -	.start_ctrl		= PCS_START | SERDES_START,
+> >   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> >   	.phy_status		= PHYSTATUS,
+> >   };
+> > @@ -1639,7 +1633,6 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x1_pciephy_cfg = {
+> >   	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> >   	.regs			= sm8250_pcie_regs_layout,
+> > -	.start_ctrl		= PCS_START | SERDES_START,
+> >   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> >   	.phy_status		= PHYSTATUS,
+> >   };
+> > @@ -1677,7 +1670,6 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x2_pciephy_cfg = {
+> >   	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> >   	.regs			= sm8250_pcie_regs_layout,
+> > -	.start_ctrl		= PCS_START | SERDES_START,
+> >   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> >   	.phy_status		= PHYSTATUS,
+> >   };
+> > @@ -1703,7 +1695,6 @@ static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
+> >   	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> >   	.regs			= pciephy_regs_layout,
+> > -	.start_ctrl             = SERDES_START | PCS_START,
+> >   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> >   	.phy_status		= PHYSTATUS,
+> > @@ -1733,7 +1724,6 @@ static const struct qmp_phy_cfg sc8180x_pciephy_cfg = {
+> >   	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> >   	.regs			= sm8250_pcie_regs_layout,
+> > -	.start_ctrl		= PCS_START | SERDES_START,
+> >   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> >   	.phy_status		= PHYSTATUS,
+> >   };
+> > @@ -1761,7 +1751,6 @@ static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
+> >   	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> >   	.regs			= sm8250_pcie_regs_layout,
+> > -	.start_ctrl		= PCS_START | SERDES_START,
+> >   	.pwrdn_ctrl		= SW_PWRDN,
+> >   	.phy_status		= PHYSTATUS_4_20,
+> >   };
+> > @@ -1789,7 +1778,6 @@ static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
+> >   	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> >   	.regs			= sm8250_pcie_regs_layout,
+> > -	.start_ctrl             = SERDES_START | PCS_START,
+> >   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> >   	.phy_status		= PHYSTATUS,
+> >   };
+> > @@ -1832,7 +1820,6 @@ static const struct qmp_phy_cfg sm8450_qmp_gen4x2_pciephy_cfg = {
+> >   	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> >   	.regs			= sm8250_pcie_regs_layout,
+> > -	.start_ctrl             = SERDES_START | PCS_START,
+> >   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> >   	.phy_status		= PHYSTATUS_4_20,
+> >   };
+> > @@ -1997,7 +1984,7 @@ static int qmp_pcie_power_on(struct phy *phy)
+> >   	qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
+> >   	/* start SerDes and Phy-Coding-Sublayer */
+> > -	qphy_setbits(pcs, cfg->regs[QPHY_START_CTRL], cfg->start_ctrl);
+> > +	qphy_setbits(pcs, cfg->regs[QPHY_START_CTRL], SERDES_START | PCS_START);
+> >   	if (!cfg->skip_start_delay)
+> >   		usleep_range(1000, 1200);
+> > @@ -2030,7 +2017,8 @@ static int qmp_pcie_power_off(struct phy *phy)
+> >   	qphy_setbits(qphy->pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
+> >   	/* stop SerDes and Phy-Coding-Sublayer */
+> > -	qphy_clrbits(qphy->pcs, cfg->regs[QPHY_START_CTRL], cfg->start_ctrl);
+> > +	qphy_clrbits(qphy->pcs, cfg->regs[QPHY_START_CTRL],
+> > +			SERDES_START | PCS_START);
+> >   	/* Put PHY into POWER DOWN state: active low */
+> >   	qphy_clrbits(qphy->pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
+> 
+> -- 
+> With best wishes
+> Dmitry
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml:27:7: [error] duplication of key "items" in mapping (key-duplicates)
-
-dtschema/dtc warnings/errors:
-make[1]: *** Deleting file 'Documentation/devicetree/bindings/interconnect/qcom,osm-l3.example.dts'
-Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml:27:7: found duplicate key "items" with value "[]" (original value: "[]")
-make[1]: *** [Documentation/devicetree/bindings/Makefile:26: Documentation/devicetree/bindings/interconnect/qcom,osm-l3.example.dts] Error 1
-make[1]: *** Waiting for unfinished jobs....
-./Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml:27:7: found duplicate key "items" with value "[]" (original value: "[]")
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml: ignoring, error parsing file
-make: *** [Makefile:1492: dt_binding_check] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+-- 
+~Vinod
