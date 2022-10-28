@@ -2,83 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D9DA61115E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 14:29:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC7FC6111BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 14:41:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229936AbiJ1M3g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 08:29:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43618 "EHLO
+        id S229597AbiJ1Ml5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 08:41:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229828AbiJ1M3f (ORCPT
+        with ESMTP id S229437AbiJ1Ml4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 08:29:35 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D2822BF1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 05:29:29 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id d3so8200251ljl.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 05:29:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xhh2GfNPqccqHt9z7S0/T4lVRI1pm6I0GIyqBlDEE6Q=;
-        b=Gv3mhdHv4vTqTawNHz1Bsh6DyvFILad7+MCdXJ/Kg9Hu8zE08m6fZ8RGYRwg76Qt7h
-         xiVKcxSf9tQQxNOF007MpB2BTQUVbn3dCwuaS2V+PFtS2nPi0x0fe7DPKouC0o8+IPtF
-         aKKWJX/UxIDkAf7/FTMYLYItVomf7DtW17XMYNjmxuMmB6cerpTlO1ofsONDt2eJoXSR
-         peDoWokbyIryddPi1EUHNAj8obcrkfrzSmbmaEYDSy8nNcGWxisgLP0d77xdEaUIfyjX
-         AC5eXEc1PmLjCOg7c3rOVB0LocXqV6ephnuD692n+5j0VW3Kfs6fluKoG3wpY47ezLvl
-         cluA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xhh2GfNPqccqHt9z7S0/T4lVRI1pm6I0GIyqBlDEE6Q=;
-        b=NkXRxiJb0J42T9cGDOJzcOkkOfUuCqbUzyyloRq9wPaW/j5PfB8Rj+p4CEv/HjXP+t
-         c56oy/8kL4jrf0kAe4QS7ZcicFTzObjK4kzeV+NLnU3uLGNzgkSxYiYEGKGOkBcR0DsN
-         pM/RgFTFsK2nZkJjftPqQWThZD9I9oEr/iv3zua9jhgpjxdKbTtaVBiqvMaGIBko+gNX
-         J8jJ0LyPkeyYOry7g1qRFBk+coiT8yqwtcQCjtADdgZjitRbhOwahRsACEgVCM24xtGD
-         EXyilA4gT3F9wd+mCra2uLSytFUz/W3XnrueKp+ucIpqPb+Ro7I7eZefjw9iUi1iNbn9
-         BOqQ==
-X-Gm-Message-State: ACrzQf0uG+g+iwQkMlsQo6aKof84j+4ej/QXvYLj8/1qVKer/vvem5SB
-        Cfd7Bc35XoX+qs0YTSAspLq7NA==
-X-Google-Smtp-Source: AMsMyM4cqflCH7VKbXl6GhfGyt9BzQJBZMw3rl9thrFiCIpESo5T+Xin/zo7hOdtAxup19xhLpLF2w==
-X-Received: by 2002:a05:651c:111:b0:277:2451:816c with SMTP id a17-20020a05651c011100b002772451816cmr4467514ljb.17.1666960167619;
-        Fri, 28 Oct 2022 05:29:27 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id z10-20020a05651c11ca00b00277074c12ddsm621018ljo.125.2022.10.28.05.29.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Oct 2022 05:29:27 -0700 (PDT)
-Message-ID: <09a049cc-0514-2db3-0e8b-ff3dfa61d585@linaro.org>
-Date:   Fri, 28 Oct 2022 15:29:26 +0300
+        Fri, 28 Oct 2022 08:41:56 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDD428F260
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 05:41:54 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 8EB01B829B9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 12:41:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F1CC433D6;
+        Fri, 28 Oct 2022 12:41:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1666960912;
+        bh=yt0OtT5mZC5NU6S4qy6NmPJ8mfVfSxPDuZcOimddJT8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=tyeO2dUijGtvSzQjoGST0fMWZEqS7sLc8zPDzFQqFpeuzBH5TcRbumevySoCzJONK
+         GGQN3D8vHdWjsoh/K3BFY6/js81GK+HOnolj3dfVqVmEFh1SLdtTVsTpEG81w3xGkp
+         DY7e4UlunNCW7x8BDGDXXBbSJr+VKS55uFJiv0SNtf77KMV+lZHSyUM1jiz9+xpjaz
+         OTqt2ttR5Sz/Vc2LCblOfr7NdcWfKB5bA9+5K6eoW0lmbYnVwdcyfe7WewGhLr0jqG
+         oQZVwcm1x6fGCxBNmTm7BsDc/w1AE/jHITzTH8tPHPOSMBK1qPzMbU/dZPC5VpfTpL
+         +OfTmaVl3L57Q==
+Date:   Fri, 28 Oct 2022 18:11:47 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        Robert Marko <robimarko@gmail.com>
+Subject: Re: [PATCH] phy: qcom-qmp-usb: correct registers layout for IPQ8074
+ USB3 PHY
+Message-ID: <Y1vOC3kiUTb2C25Z@matsya>
+References: <20220929190017.529207-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH v1 1/9] drm/msm: Add compatibles for SM8350 display
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Robert Foss <robert.foss@linaro.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
-        airlied@linux.ie, daniel@ffwll.ch, quic_kalyant@quicinc.com,
-        swboyd@chromium.org, angelogioacchino.delregno@somainline.org,
-        loic.poulain@linaro.org, quic_vpolimer@quicinc.com,
-        vkoul@kernel.org, dianders@chromium.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Jonathan Marek <jonathan@marek.ca>, vinod.koul@linaro.org,
-        quic_jesszhan@quicinc.com
-References: <20221028120812.339100-1-robert.foss@linaro.org>
- <20221028120812.339100-2-robert.foss@linaro.org>
- <0f8e73f6-d005-7e0b-ba38-c4d0161c1acd@linaro.org>
-In-Reply-To: <0f8e73f6-d005-7e0b-ba38-c4d0161c1acd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220929190017.529207-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,47 +59,13 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/10/2022 15:19, Dmitry Baryshkov wrote:
-> On 28/10/2022 15:08, Robert Foss wrote:
->> Add compatible string for "qcom,sm8350-dpu" and
->> "qcom,sm8350-mdss".
->>
->> Signed-off-by: Robert Foss <robert.foss@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 1 +
->>   drivers/gpu/drm/msm/msm_mdss.c          | 1 +
->>   2 files changed, 2 insertions(+)
-> 
-> [skipped]
-> 
->> diff --git a/drivers/gpu/drm/msm/msm_mdss.c 
->> b/drivers/gpu/drm/msm/msm_mdss.c
->> index e13c5c12b775..fd5a95cace16 100644
->> --- a/drivers/gpu/drm/msm/msm_mdss.c
->> +++ b/drivers/gpu/drm/msm/msm_mdss.c
->> @@ -447,6 +447,7 @@ static const struct of_device_id mdss_dt_match[] = {
->>       { .compatible = "qcom,sc8180x-mdss" },
->>       { .compatible = "qcom,sm8150-mdss" },
->>       { .compatible = "qcom,sm8250-mdss" },
->> +    { .compatible = "qcom,sm8350-mdss" },
->>       {}
->>   };
->>   MODULE_DEVICE_TABLE(of, mdss_dt_match);
-> 
-> 
-> BTW: you probably also have to update the msm_mdss_enable() function 
-> with the 8350-specific code.
-> 
+On 29-09-22, 22:00, Dmitry Baryshkov wrote:
+> According to the kernel 4.4 sources from NHSS.QSDK.9.0.2 and according
+> to hardware docs, the PHY registers layout used for IPQ8074 USB3 PHY is
+> incorrect. This platform uses offset 0x174 for the PCS_STATUS register,
+> 0xd8 for PCS_AUTONOMOUS_MODE_CTRL, etc.
 
-For mdss changes you can depend on [1], I plan to merge this patch in 
-this window.
-
-[1] https://patchwork.freedesktop.org/patch/489578/?series=105162&rev=1
-
-Also with the mdss changes, it would be good to split this patch into 
-dpu and mdss parts.
+Applied, thanks
 
 -- 
-With best wishes
-Dmitry
-
+~Vinod
