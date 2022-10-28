@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E2E4611444
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 16:15:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D3F961144F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 16:17:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229938AbiJ1OPw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 10:15:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41790 "EHLO
+        id S230054AbiJ1ORL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 10:17:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230330AbiJ1OPa (ORCPT
+        with ESMTP id S229871AbiJ1ORG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 10:15:30 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C3C8C4DB4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 07:15:27 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id b18so8487632ljr.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 07:15:27 -0700 (PDT)
+        Fri, 28 Oct 2022 10:17:06 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 059361D73C6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 07:17:05 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id be13so8545719lfb.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 07:17:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=1llsZlre5HYEk/5lJAL2HT8KNgEJ2nZJKCRD8edZfTM=;
-        b=iBr2iDHVd4dGVM3VVTqOSRWYUfeNYWA7pnY9o3J+X9ZgTbfjd662xAEZxrnJyjY1l9
-         jWQo260/mlrZL9n71uXS9gSGp5QEF2pYJwDy+jTtZu2VpOWRo1PfUBKNak0EJvFM3N6Y
-         Yz5WJKohBW1kQOSYr0+tn/AB4XGpRq+1pfeWy5XIVTMmFhZvjRooYOUFBFOYPBmosZAJ
-         Hdcz+nG2JHne7rX1Qnyd/XEYLXLIBqeqFc9iNiRY+XDz5X95ZUN9xjGWpnX2I7gjbbfL
-         9d1yNKRaW0mMTb+CtP62LEIiEw0CB5oyJjbQxPC3N0dmk4S2LzzAEDVz1SdtUCtkgy5v
-         SuXQ==
+        bh=4J/sXyEdqyItftLKRWQlfAWzGrOTW4HnYFqWzMysIi4=;
+        b=ZAL5xdvHt5LTVV98rbvm/6GVG7tPk50osYKnbq4cW9aBUDbMM2ZBuNrVDrWu7vhQ9X
+         Hpi/T/OQSeA6kJS/sR8eKQ/26fNqKlY9PsD9t/MP4qO7o65/8PASdP1AB7nplZ4gOzJz
+         Z/lHLC6TEFHlKSg4xatMU/FHWFNk6e0B1P+MDqI5lFnLQYpUi5jAmEBxFVRfYljaZCl9
+         0GeMkc+8n5rqae9qCYwYfyQY2O3TnZqG99bJRyA6RnqLrtma8W+77TjHgvlTjBLoJUmI
+         xObLRsuHh88/WnD87ryb8PvUR+Q1WNtMPDKU06znt3oUOLuj4OlQADfr+6L29QuI/tDT
+         rf8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1llsZlre5HYEk/5lJAL2HT8KNgEJ2nZJKCRD8edZfTM=;
-        b=0Bw2BNWm6On0+UoUas8l0i3PK90HPLmXoY2L/LLOrFN552uQDLbS5ZDAMmHzHmhC7q
-         7bE3RLC2NG30gQw81bSimPf4pHjtTQdL5xTo35JjOmXosbAnMrH6tXcZ1KqMzpgYHRjq
-         XH3R0tJzX6dF5SeIY5065nL6y3wsY/jAZR/6t9hrI3JyseOrFrg50lffEtEu4fmGmVr6
-         qIN9Cwmr+4EPQPOEPffMNOS8fi8pvl/Ayv6UnMHa1ZAgVUkPP0/L3j2E3kTlLVffNh9i
-         QCGF632SdTpGClW2+Wy3JIsTGcFzh7PQDa4O/jI0kUzze0moeNgbta8rwWKjKBg1HZ8n
-         G9Iw==
-X-Gm-Message-State: ACrzQf1CuXe2EIm+4UGlAB6sGYZh+K0r6fgcIP24S3dysaiW05S+m2WM
-        Ec2fKrKv6zMi6v4JQTHnc65Qz/GJiDWxRA==
-X-Google-Smtp-Source: AMsMyM6nJKSVLYCaGHCp7jA8wpaHC7MDQcdwjDvzbKyqdOLXc7VEtwG9jHUNZ3LlR1f9uKF26z9Frg==
-X-Received: by 2002:a2e:93ce:0:b0:26d:cdc0:86a4 with SMTP id p14-20020a2e93ce000000b0026dcdc086a4mr20799921ljh.320.1666966526948;
-        Fri, 28 Oct 2022 07:15:26 -0700 (PDT)
+        bh=4J/sXyEdqyItftLKRWQlfAWzGrOTW4HnYFqWzMysIi4=;
+        b=KDxa+aPlExNZP7beBssjlFOUQEmkqoQ9X9mg2sxH5NGKhpLiqwK1y0x6mmM8uoZPIE
+         o/o8kO5mGk/zFKOkS1aQ91qi32g1G3aGTEDS+2A0CvbIpEZmptwIg9gtBDftOu2Mdw1I
+         W2XO7l3dIvYNM1vBGXyo5O+XMxIrcU1/0FbA/oNDtyavmyjw9/6uM11fE8XMc+s292p+
+         dB0J++4RP7fAJw8CWsEz9jmZG64rb7maCS82UPaERTGJqkfsxe8b1fD7Xmpl4RocMK/N
+         ZWefkdmthhfekt9uAsJLdZqv7gOeBWahHJnl3yEfXRKkRnn1spHQ8Ms73jeYYe6oXy8F
+         PzOA==
+X-Gm-Message-State: ACrzQf0J2c7DTP4p1AMkHawUGuvoUX5fQ+3YCn3qWYLCzeaUozQfL2e2
+        mVYKaAAzGTM1rSLaYzCcWY8cGg==
+X-Google-Smtp-Source: AMsMyM6eQiKVik2y9rlF5HrxniO/C+2f15b/1ffW5U9Uj2hWXG+lSG3PQEG8rBodPyFRQNcgbaf6sw==
+X-Received: by 2002:a05:6512:ac8:b0:4a2:61e7:7963 with SMTP id n8-20020a0565120ac800b004a261e77963mr19939264lfu.363.1666966623425;
+        Fri, 28 Oct 2022 07:17:03 -0700 (PDT)
 Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id o17-20020a056512051100b004acb2adfa21sm576358lfb.297.2022.10.28.07.15.26
+        by smtp.gmail.com with ESMTPSA id v22-20020a05651203b600b00497a1f92a72sm578570lfp.221.2022.10.28.07.17.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Oct 2022 07:15:26 -0700 (PDT)
-Message-ID: <f0a45e17-15dc-4ceb-bbc6-54b36eadbb94@linaro.org>
-Date:   Fri, 28 Oct 2022 17:15:26 +0300
+        Fri, 28 Oct 2022 07:17:03 -0700 (PDT)
+Message-ID: <f8c0e2c1-945e-9bcb-30ae-05bdc43269ee@linaro.org>
+Date:   Fri, 28 Oct 2022 17:17:02 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.3
-Subject: Re: [PATCH v4 09/16] phy: qcom-qmp-pcie: add register init helper
+Subject: Re: [PATCH v4 15/16] phy: qcom-qmp-pcie: add support for sc8280xp
 Content-Language: en-GB
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>
@@ -67,9 +67,9 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
 References: <20221028133603.18470-1-johan+linaro@kernel.org>
- <20221028133603.18470-10-johan+linaro@kernel.org>
+ <20221028133603.18470-16-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221028133603.18470-10-johan+linaro@kernel.org>
+In-Reply-To: <20221028133603.18470-16-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,17 +81,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/10/2022 16:35, Johan Hovold wrote:
-> Generalise the serdes initialisation helper so that it can be used to
-> initialise all the PHY registers (e.g. serdes, tx, rx, pcs).
+On 28/10/2022 16:36, Johan Hovold wrote:
+> Add support for the single and dual-lane PHYs found on SC8280XP.
 > 
-> Note that this defers the ungating of the PIPE clock somewhat, which is
-> fine as it isn't needed until starting the PHY.
+> Note that the SC8280XP binding does not try to describe every register
+> subregion and instead the driver holds the corresponding offsets.
 > 
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 37 +++++-------------------
->   1 file changed, 8 insertions(+), 29 deletions(-)
+>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 299 +++++++++++++++++-
+>   .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h   |   2 +
+>   2 files changed, 291 insertions(+), 10 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
