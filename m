@@ -2,116 +2,301 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DABF611CC7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 23:57:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CB8D611D15
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 00:01:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229718AbiJ1V5F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 17:57:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47184 "EHLO
+        id S229824AbiJ1WBg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 18:01:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbiJ1V5E (ORCPT
+        with ESMTP id S229631AbiJ1WBe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 17:57:04 -0400
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30CF824CC3C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 14:57:04 -0700 (PDT)
-Received: by mail-qv1-xf31.google.com with SMTP id e15so4949353qvo.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 14:57:04 -0700 (PDT)
+        Fri, 28 Oct 2022 18:01:34 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92EEF229E43
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 15:01:32 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id hh9so4334315qtb.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 15:01:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=MUWbiScYvPNDPAH5SO6hLMvIWSq0j/aSTl7hAdbp+eM=;
-        b=ofpXCdMGwrvsDSFzvhpHRIVKl/C/xGzCwEox1ACQea24YUKHeNANtX6oZHhnkz61Yu
-         kiRBDW1FMJ3q8PwC//hCzVbshy1h4Q9fnCZVCNUZybN6AjkFwcxz/Q9654OwMkQDaQgB
-         fFxgJ1SyhlPnKZr64mn3o11dZ0cItCBz3OQfY5+1XnHK+w9EocXXIWaBEVWYGka5mKfH
-         xbSU5My4+mGBqaoeD60+WA60dcv34uGucVzx2VQ/Km6P55IibVKB9OEV44VMsKgYGdYO
-         WHP23Beb0Yd4iZ4dVqL4ArUz8iKd0cbSBMaMsys0aIaxdqk/1yQlKT5CPJv0kY0nW4Wi
-         dWhA==
+        bh=yr8HUh+1Ce740LCeQRhqA45PIBCHDZMjS7OE/YrOh64=;
+        b=W9FqxqVnRpTbDGEs374QqsqI4sSBT2PWyKERYSuC+2neXgYNGwjuSYr2/ApwF+NVbA
+         Q0dM2jBrF/UfnRAISug35FgYcv+0fw1/fP8rQjcNcQqzwBX1dcTG2rjQR1QFp1y+jbUi
+         x/iJ2p04XhKdaEihWKAwmWZgdiFh5NgEZmNSQNVQGIFbWT5OGVgvuHZgAU/rKnCpX7K1
+         iEEBWzFeK7MFsIiUkty+mxSGdp7Nrm4qCKQ9JmB6yOiQmXHKkEOABaJPN7Z6qnDReXJL
+         tEDtNEtKQdTZGwleHGGLIGKq9hGWtKu8CTF4MgTEXtiMWesmIw1Pix067DtUo8NvsXSQ
+         NI6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MUWbiScYvPNDPAH5SO6hLMvIWSq0j/aSTl7hAdbp+eM=;
-        b=tJNyTG8WTqZt35OL7ZK1d1ahw7P0imSHYbsuhseVcdiH+NhAJqkr6lUqE2smD/0UPn
-         lHLhKSdBjtoikvKQZhwClUjjxAv45PEnN9SE6KviJZuJPzN4WKf9OaWePsrwduQ+xkXy
-         L2b96kOFHgfNR9Nw6/QlRrdjkuR3QMrHZztpuvllyaXOfARim/zreDMTYeJiLO4Fesy/
-         9GkezAD/GdHFKHeBxfjhqFrMFZI3z6CV1319ZVUAx7Gi7lWnpmw5TLK/jLMtDGL4ZBqI
-         0xGPq8kDBzETcIB5psbZ2Xws01S2Dk91SCy9dFRDDd/8yQ+W2bGrMHlBywpt3PF52lZ5
-         4CwQ==
-X-Gm-Message-State: ACrzQf2+Az3KPa62+9M1CN8TJCrL3WcRODVOxWgRKvPfOPMbujm5a9qw
-        /ocm1zzQjdyRLdtO0+h9YQuTtg==
-X-Google-Smtp-Source: AMsMyM5o6391rBXXM8kVVIWRdZrhrUEKL+CGQRbHz2sDc/uL5JAsZCXZZnC5JtkC+TJV2J1iW9FVdg==
-X-Received: by 2002:a05:6214:1cc2:b0:4af:891b:4e75 with SMTP id g2-20020a0562141cc200b004af891b4e75mr1408505qvd.30.1666994223399;
-        Fri, 28 Oct 2022 14:57:03 -0700 (PDT)
+        bh=yr8HUh+1Ce740LCeQRhqA45PIBCHDZMjS7OE/YrOh64=;
+        b=2I5oAalL1QEmBWOU2X4Do7IA9NJVMe9CHxN1P37L5slM983R9qQ3NUQAmEBRobox84
+         0Mi71lMjqIkNBmO1t3gITFGQ1ek0M8lpX2cK8Gz0X9p/qVXP1FdYE1FY6F7lpUUoMadN
+         EAlFjZEuSLMMD+ajJNMRkRGfYI+GLxO5EidhaoqA/3OeUoAqRd1P3H80F7X9XISWZ8MU
+         +WFBZOn3+nk2PqXYLsfSUb64Mvjl/uKkwQv4YcG++6TYmWvDHvFQemECPIrbNdPvNCX5
+         tSpFl0Wk73ZzbPPHcUVwMt9rjY8YJgDJDDXEycRHqhJe7P+qOtaiYSUi4tTfoYNdNzdC
+         jyIQ==
+X-Gm-Message-State: ACrzQf0iwW1bSrK/YUskt3H6c5bJ+ufvYadeCzIKpIkf1EL0YPfHvosg
+        yyUXhgXkqCr25LET8Ue/IRntow==
+X-Google-Smtp-Source: AMsMyM6orjMbEmKKnktdS6B4pHMzgMLO4tFbtwa8t4mwDA17uPa9xsXNo4D2AWjXskqRxr20EIO8Og==
+X-Received: by 2002:a05:622a:1114:b0:3a4:f4e4:6430 with SMTP id e20-20020a05622a111400b003a4f4e46430mr1443085qty.337.1666994491244;
+        Fri, 28 Oct 2022 15:01:31 -0700 (PDT)
 Received: from [192.168.1.11] ([64.57.193.93])
-        by smtp.gmail.com with ESMTPSA id t18-20020a37ea12000000b006af0ce13499sm3681335qkj.115.2022.10.28.14.57.01
+        by smtp.gmail.com with ESMTPSA id m8-20020a05620a24c800b006ce515196a7sm3784993qkn.8.2022.10.28.15.01.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Oct 2022 14:57:02 -0700 (PDT)
-Message-ID: <33b13789-33d6-a22f-82c9-4c5691d0737d@linaro.org>
-Date:   Fri, 28 Oct 2022 17:57:01 -0400
+        Fri, 28 Oct 2022 15:01:30 -0700 (PDT)
+Message-ID: <c868e55d-b808-0ca9-4e84-baf94c469182@linaro.org>
+Date:   Fri, 28 Oct 2022 18:01:27 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.1
-Subject: Re: [PATCH v4 10/16] dt-bindings: phy: qcom,qmp-pcie: rename current
- bindings
+Subject: Re: [PATCH v1 7/9] arm64: dts: qcom: sm8350: Add display system nodes
 Content-Language: en-US
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-References: <20221028133603.18470-1-johan+linaro@kernel.org>
- <20221028133603.18470-11-johan+linaro@kernel.org>
+To:     Robert Foss <robert.foss@linaro.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, quic_kalyant@quicinc.com, swboyd@chromium.org,
+        angelogioacchino.delregno@somainline.org, loic.poulain@linaro.org,
+        quic_vpolimer@quicinc.com, vkoul@kernel.org, dianders@chromium.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Jonathan Marek <jonathan@marek.ca>, vinod.koul@linaro.org,
+        quic_jesszhan@quicinc.com,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20221028120812.339100-1-robert.foss@linaro.org>
+ <20221028120812.339100-8-robert.foss@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221028133603.18470-11-johan+linaro@kernel.org>
+In-Reply-To: <20221028120812.339100-8-robert.foss@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/10/2022 09:35, Johan Hovold wrote:
-> The current QMP PCIe PHY bindings are based on the original MSM8996
-> binding which provided multiple PHYs per IP block and these in turn were
-> described by child nodes.
+On 28/10/2022 08:08, Robert Foss wrote:
+> Add mdss, mdss_mdp, dsi0, dsi0_phy nodes. With these
+> nodes the display subsystem is configured to support
+> one DSI output.
 > 
-> Later QMP PCIe PHY blocks only provide a single PHY and the remnant
-> child node does not really reflect the hardware.
-> 
-> The original MSM8996 binding also ended up describing the individual
-> register blocks as belonging to either the wrapper node or the PHY child
-> nodes.
-> 
-> This is an unnecessary level of detail which has lead to problems when
-> later IP blocks using different register layouts have been forced to fit
-> the original mould rather than updating the binding. The bindings are
-> arguable also incomplete as they only the describe register blocks used
-> by the current Linux drivers (e.g. does not include the per lane PCS
-> registers).
-> 
-> In preparation for adding new bindings for SC8280XP which further
-> bindings can be based on, rename the current schema file after IPQ8074,
-> which was the first SoC added to the bindings after MSM8996 (which has
-> already been split out), and add a reference to the SC8280XP bindings.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
 > ---
+>  arch/arm64/boot/dts/qcom/sm8350.dtsi | 196 ++++++++++++++++++++++++++-
+>  1 file changed, 192 insertions(+), 4 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> index b6e44cd3b394..eaa3cdee1860 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> @@ -3,6 +3,7 @@
+>   * Copyright (c) 2020, Linaro Limited
+>   */
+>  
+> +#include <dt-bindings/interconnect/qcom,sm8350.h>
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>  #include <dt-bindings/clock/qcom,dispcc-sm8350.h>
+>  #include <dt-bindings/clock/qcom,gcc-sm8350.h>
+> @@ -2535,14 +2536,200 @@ usb_2_dwc3: usb@a800000 {
+>  			};
+>  		};
+>  
+> +		mdss: mdss@ae00000 {
+> +			compatible = "qcom,sm8350-mdss";
+> +			reg = <0 0x0ae00000 0 0x1000>;
+> +			reg-names = "mdss";
+> +
+> +			interconnects = <&mmss_noc MASTER_MDP0 0 &mc_virt SLAVE_EBI1 0>,
+> +					<&mmss_noc MASTER_MDP1 0 &mc_virt SLAVE_EBI1 0>;
+> +			interconnect-names = "mdp0-mem", "mdp1-mem";
+> +
+> +			power-domains = <&dispcc MDSS_GDSC>;
+> +			resets = <&dispcc DISP_CC_MDSS_CORE_BCR>;
+> +
+> +			clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +				 <&gcc GCC_DISP_HF_AXI_CLK>,
+> +				 <&gcc GCC_DISP_SF_AXI_CLK>,
+> +				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
+> +			clock-names = "iface", "bus", "nrt_bus", "core";
+> +
+> +			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <1>;
+> +
+> +			status = "ok";
 
-Also missing cc devicetree list.
+No need for this.
+
+> +
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+> +
+> +			mdss_mdp: mdp@ae01000 {
+
+Node name: display-controller
+> +				compatible = "qcom,sm8350-dpu";
+> +				reg = <0 0x0ae01000 0 0x8f000>,
+> +				      <0 0x0aeb0000 0 0x2008>;
+> +				reg-names = "mdp", "vbif";
+> +				iommus = <&apps_smmu 0x820 0x402>;
+> +
+> +				clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
+> +					<&gcc GCC_DISP_SF_AXI_CLK>,
+> +					<&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					<&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
+> +					<&dispcc DISP_CC_MDSS_MDP_CLK>,
+> +					<&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+> +				clock-names = "bus",
+> +					      "nrt_bus",
+> +					      "iface",
+> +					      "lut",
+> +					      "core",
+> +					      "vsync";
+> +
+> +				assigned-clocks = <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+> +				assigned-clock-rates = <19200000>;
+> +
+> +				operating-points-v2 = <&mdp_opp_table>;
+> +				power-domains = <&rpmhpd SM8350_MMCX>;
+> +
+> +				interrupt-parent = <&mdss>;
+> +				interrupts = <0>;
+> +
+> +				status = "ok";
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +						dpu_intf1_out: endpoint {
+> +							remote-endpoint = <&dsi0_in>;
+> +						};
+> +					};
+> +				};
+> +
+> +				mdp_opp_table: mdp-opp-table {
+
+I have doubts that it passes dtbs_checks... opp-table
+
+> +					compatible = "operating-points-v2";
+> +
+> +					opp-200000000 {
+> +						opp-hz = /bits/ 64 <200000000>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
+> +
+> +					opp-300000000 {
+> +						opp-hz = /bits/ 64 <300000000>;
+> +						required-opps = <&rpmhpd_opp_svs>;
+> +					};
+> +
+> +					opp-345000000 {
+> +						opp-hz = /bits/ 64 <345000000>;
+> +						required-opps = <&rpmhpd_opp_svs_l1>;
+> +					};
+> +
+> +					opp-460000000 {
+> +						opp-hz = /bits/ 64 <460000000>;
+> +						required-opps = <&rpmhpd_opp_nom>;
+> +					};
+> +				};
+> +			};
+> +
+> +			dsi0: dsi@ae94000 {
+> +				compatible = "qcom,mdss-dsi-ctrl";
+> +				reg = <0 0x0ae94000 0 0x400>;
+> +				reg-names = "dsi_ctrl";
+> +
+> +				interrupt-parent = <&mdss>;
+> +				interrupts = <4>;
+> +
+> +				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_ESC0_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&gcc GCC_DISP_HF_AXI_CLK>;
+> +				clock-names = "byte",
+> +					      "byte_intf",
+> +					      "pixel",
+> +					      "core",
+> +					      "iface",
+> +					      "bus";
+> +
+> +				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>,
+> +						  <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
+> +				assigned-clock-parents = <&dsi0_phy 0>,
+> +							 <&dsi0_phy 1>;
+> +
+> +				operating-points-v2 = <&dsi_opp_table>;
+> +				power-domains = <&rpmhpd SM8350_MMCX>;
+> +
+> +				phys = <&dsi0_phy>;
+> +				phy-names = "dsi";
+> +
+> +				status = "disabled";
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +						dsi0_in: endpoint {
+> +							remote-endpoint = <&dpu_intf1_out>;
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +						dsi0_out: endpoint {
+> +						};
+> +					};
+> +				};
+> +			};
+> +
+> +			dsi0_phy: dsi-phy@ae94400 {
+
+Just "phy". I think Dmitry was renaming all of these.
+
+> +				compatible = "qcom,dsi-phy-5nm-8350";
+> +				reg = <0 0x0ae94400 0 0x200>,
+> +				      <0 0x0ae94600 0 0x280>,
+> +				      <0 0x0ae94900 0 0x260>;
+> +				reg-names = "dsi_phy",
+> +					    "dsi_phy_lane",
+> +					    "dsi_pll";
+> +
+> +				#clock-cells = <1>;
+> +				#phy-cells = <0>;
+> +
+> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&rpmhcc RPMH_CXO_CLK>;
+> +				clock-names = "iface", "ref";
+> +
+> +				status = "disabled";
+> +
+> +				dsi_opp_table: dsi-opp-table {
+
+opp-table
+
+Run `make dtbs_check`
+
 
 Best regards,
 Krzysztof
