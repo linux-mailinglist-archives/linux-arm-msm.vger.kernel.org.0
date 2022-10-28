@@ -2,76 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BB836113C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 15:58:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48DA76113E9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 16:04:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230238AbiJ1N6i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 09:58:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33988 "EHLO
+        id S231304AbiJ1OEe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 10:04:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230241AbiJ1N6h (ORCPT
+        with ESMTP id S231238AbiJ1OEc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 09:58:37 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F07BB1DC4DD;
-        Fri, 28 Oct 2022 06:58:36 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8D1406288C;
-        Fri, 28 Oct 2022 13:58:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13DCC433C1;
-        Fri, 28 Oct 2022 13:58:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666965516;
-        bh=rQJmDiZBQTvN+g8AYTpf+XHiQUInYFOXGygbIqa2AsU=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=Af0m17xuZbTwWJqFBcBchtYBwTX/56llbV2SIn2WSNwl1mLoC8OdZ7+E7NFVcWUN4
-         kHU3nx14HQnf5PEdu9K4vQTHTrZwof0mBKZqzA2PJrA5M3LJ5wEDwELVZBu2mcGZLv
-         xwf3IOJcEm2W3WCPVKz/zUBSUsF7AqmfQW2WnpH/ZbwnG15NywL4edG6GDGloQ1sRw
-         4U1ky9Ba50lOevZ24IP1+Si/TUH8EUty3RPLufXJxaL5IsUBS3MViTbbNcRU8uI526
-         g6YSHEmWIlO5Mab9VeNE/f+XGytiTDzFWxFiYfNQF0PLMPAJhU9ope6ucNvD85B+/N
-         7fL+SHtZiCMWw==
-Received: by mail-lf1-f52.google.com with SMTP id b2so8427331lfp.6;
-        Fri, 28 Oct 2022 06:58:35 -0700 (PDT)
-X-Gm-Message-State: ACrzQf3ixzpUkFsEbdlyBE04LEMWO/S6LgYWxUvWHgil2/WG3a18q5cu
-        go7zJrgOYLNknQQRFMVeQOvXKWzOocIBCs9zbQ==
-X-Google-Smtp-Source: AMsMyM5SqS8RL4UBDJ7wHzAgyFAfsN0Ga0Spzui6yy/w0QIc3g13LZNL9RwHD1TAhaNWFBTshMh260o1G1EYejE0xgA=
-X-Received: by 2002:a05:6512:3e10:b0:4a2:48c1:8794 with SMTP id
- i16-20020a0565123e1000b004a248c18794mr19546204lfv.17.1666965514048; Fri, 28
- Oct 2022 06:58:34 -0700 (PDT)
-MIME-Version: 1.0
-References: <20221028134407.19300-1-johan+linaro@kernel.org> <20221028134407.19300-12-johan+linaro@kernel.org>
-In-Reply-To: <20221028134407.19300-12-johan+linaro@kernel.org>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Fri, 28 Oct 2022 08:58:24 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqL+8OXb_0qE20wA-+Dkjqx1UjDTXiWG2CKp7=GkKeis0A@mail.gmail.com>
-Message-ID: <CAL_JsqL+8OXb_0qE20wA-+Dkjqx1UjDTXiWG2CKp7=GkKeis0A@mail.gmail.com>
-Subject: Re: [PATCH v2 11/13] dt-bindings: phy: qcom,qmp-usb: fix sc8280xp binding
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Fri, 28 Oct 2022 10:04:32 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF702CE1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 07:04:26 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id cr19so3518396qtb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 07:04:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=P8oKprLw8ZYm+8GU3x4F5q2ce8H0sbZgjnP+ajJvPJI=;
+        b=EvuSFD8XSe837jMobEgQmwLyHBXFuLECBBN7IL8NsbQOeJnK79KcFF6rtBZmKY6SZF
+         K61FSKN8/GdEvlerc+ae7dDFs5SVDee9VVYNpkq/QaMgEbR6mUVeKmibKkBFJzwvXax2
+         thJ7arKGs7GoZDFjd5c6VHK1xDS1cXAv6sdXUuZXzLh8cxLrm9MtnjVzHQ6/jcNJkulX
+         fq+q75OxoYl+/DjM9rWwSYsDxqwakrSUehzQlG5EOTzLg1Mbi28fPRDqEztm8sUsd0B1
+         GHuF9xDFErNgdurg6VYlsFqa+7buusI9oCzkgMEaMN4WrjXQaTIZiMPZuv8g83hCwEL7
+         KqKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=P8oKprLw8ZYm+8GU3x4F5q2ce8H0sbZgjnP+ajJvPJI=;
+        b=W4iaXxgYZRvFLNpA2ZevPxppRiCXiCQDTXHwSDbZnKuFowOX2qxtMD4gGDvT481PsB
+         A/hr3t3GcC2A8VWuauwEt21CSqj23gH3Hj1rxn6FMNt1q2ZsY3Fp+SSv5XjBHk6cTI0C
+         j+xbIiulLA20a9TbtEv47/uBov4HeVsh89Sqo2Zi8ZnVhd4YrmaF1wwF5HseRA0OOa11
+         jYlmr+Ryidclyewb8kfCcd9ijPcgDpZ9qGl1Vzht9gySjoNJpeGFO6aWQNO9Cz9n4HPH
+         TYkQX9XnP4N+FZMQe927IDwKk9RFsIprCzoYRpcQ+XLzA+78yvWUOYI36SS9h5k19yG1
+         QrBQ==
+X-Gm-Message-State: ACrzQf1Hz8S5crQV/BouDh/fR7G99WEKwdaQd8HxSvUoqsGhWVbvG7o7
+        VyUsfk+RYRrlrLA6hvWeee+tqQ==
+X-Google-Smtp-Source: AMsMyM4UqyN4iexH4H/2B3I0jFyzxPa5AYb4vXnKt17haWEFdfDUuSlvomj6hSMi1DWUp+Amq5UFaw==
+X-Received: by 2002:ac8:5854:0:b0:39c:dba4:6fa0 with SMTP id h20-20020ac85854000000b0039cdba46fa0mr46658376qth.175.1666965865720;
+        Fri, 28 Oct 2022 07:04:25 -0700 (PDT)
+Received: from krzk-bin.. ([64.57.193.93])
+        by smtp.gmail.com with ESMTPSA id w8-20020a05620a424800b006ed30a8fb21sm3028252qko.76.2022.10.28.07.04.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Oct 2022 07:04:24 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Lars Povlsen <lars.povlsen@microchip.com>,
+        Steen Hegelund <Steen.Hegelund@microchip.com>,
+        Daniel Machon <daniel.machon@microchip.com>,
+        UNGLinuxDriver@microchip.com, Sergey Shtylyov <s.shtylyov@omp.ru>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Martin Botka <martin.botka@somainline.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        krishna Lanka <quic_vamslank@quicinc.com>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Del Regno <angelogioacchino.delregno@somainline.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Govind Singh <govinds@codeaurora.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Oleksij Rempel <linux@rempel-privat.de>,
+        Horatiu Vultur <horatiu.vultur@microchip.com>,
+        Vladimir Oltean <vladimir.oltean@nxp.com>,
+        Claudiu Manoil <claudiu.manoil@nxp.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] dt-bindings: clock: qcom,gcc-ipq8074: use common GCC schema
+Date:   Fri, 28 Oct 2022 10:03:24 -0400
+Message-Id: <20221028140326.43470-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 28, 2022 at 8:44 AM Johan Hovold <johan+linaro@kernel.org> wrote:
->
-> The current QMP USB PHY bindings are based on the original MSM8996 PCIe
-> PHY binding which provided multiple PHYs per IP block and these in turn
-> were described by child nodes.
+Reference common Qualcomm GCC schema to remove common pieces.
 
-Missing the DT list, so checks don't run and it's not in my review queue.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../bindings/clock/qcom,gcc-ipq8074.yaml      | 25 +++----------------
+ 1 file changed, 4 insertions(+), 21 deletions(-)
 
-Rob
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml
+index 21470f52ce36..ac6711ed01ba 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml
+@@ -17,34 +17,17 @@ description: |
+   See also:
+   - dt-bindings/clock/qcom,gcc-ipq8074.h
+ 
++allOf:
++  - $ref: qcom,gcc.yaml#
++
+ properties:
+   compatible:
+     const: qcom,gcc-ipq8074
+ 
+-  '#clock-cells':
+-    const: 1
+-
+-  '#power-domain-cells':
+-    const: 1
+-
+-  '#reset-cells':
+-    const: 1
+-
+-  reg:
+-    maxItems: 1
+-
+-  protected-clocks:
+-    description:
+-      Protected clock specifier list as per common clock binding.
+-
+ required:
+   - compatible
+-  - reg
+-  - '#clock-cells'
+-  - '#power-domain-cells'
+-  - '#reset-cells'
+ 
+-additionalProperties: false
++unevaluatedProperties: false
+ 
+ examples:
+   - |
+-- 
+2.34.1
+
