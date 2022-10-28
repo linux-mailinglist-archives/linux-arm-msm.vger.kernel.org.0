@@ -2,190 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 697D7611B63
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 22:09:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5933611BE4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 22:55:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229866AbiJ1UJW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 16:09:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47992 "EHLO
+        id S229944AbiJ1Uzw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 16:55:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229767AbiJ1UJV (ORCPT
+        with ESMTP id S229940AbiJ1Uzv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 16:09:21 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E30141CC75C;
-        Fri, 28 Oct 2022 13:09:18 -0700 (PDT)
-Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        Fri, 28 Oct 2022 16:55:51 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C48B51D2F7D;
+        Fri, 28 Oct 2022 13:55:48 -0700 (PDT)
+Received: from notapiano.myfiosgateway.com (zone.collabora.co.uk [167.235.23.81])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 804013F1D8;
-        Fri, 28 Oct 2022 22:09:16 +0200 (CEST)
-Date:   Fri, 28 Oct 2022 22:09:15 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
+        (Authenticated sender: nfraprado)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 16028660293F;
+        Fri, 28 Oct 2022 21:55:43 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1666990546;
+        bh=iSgsGlmn8UzFPy/Bi6ux9UCWV6sTSj4Y28v6dJJ/BVc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=C7RFbtoqRooAQPAssjew96nxn7HNdspClPWlfGz2SoJULrIu+2lIB88QzX1GXDBDB
+         r3d2Xc6a+cgIi/tjSsOWCktvM+Gn9YtBDgfw2s3rcZ/1CVY36Qy8Fi4wtEOUT47F+k
+         rv2k0L3tNocOPg1YGL4Zb78aPqZ0bgwEeHDqOtzGIwsGsdt48H1S4SNHhy+9Kw7wU5
+         +0lUBCGkmZB1p1RfAMcFyX0ivCe9f1zrhq35POGZt1hsihLcWPfaRoX0fRlmAT301i
+         HTbHjNqoZy7ClBn3KbsHkJC9YZno0YKHdw0t2W6oHdgHINF69vlj/G7OgtvcRRIdJM
+         2jmXm+sO9ge1A==
+From:   =?UTF-8?q?N=C3=ADcolas=20F=2E=20R=2E=20A=2E=20Prado?= 
+        <nfraprado@collabora.com>
+To:     Mark Brown <broonie@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     kernel@collabora.com,
         AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
+        <angelogioacchino.delregno@collabora.com>,
+        =?UTF-8?q?N=C3=ADcolas=20F=2E=20R=2E=20A=2E=20Prado?= 
+        <nfraprado@collabora.com>, Andy Gross <agross@kernel.org>,
+        Derek Fang <derek.fang@realtek.com>,
+        Jaroslav Kysela <perex@perex.cz>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 00/10] drm/msm: Fix math issues in MSM DSC
- implementation
-Message-ID: <20221028200823.s5ygokpfy5jz25ge@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20221026182824.876933-1-marijn.suijten@somainline.org>
- <99744fda-a3b8-f97a-294c-78e512d865bc@quicinc.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Oder Chiou <oder_chiou@realtek.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 0/8] Adjust usage of rt5682(s) power supply properties
+Date:   Fri, 28 Oct 2022 16:55:32 -0400
+Message-Id: <20221028205540.3197304-1-nfraprado@collabora.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <99744fda-a3b8-f97a-294c-78e512d865bc@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Abhinav,
 
-On 2022-10-28 11:33:21, Abhinav Kumar wrote:
-> Hi Marijn
-> 
-> On 10/26/2022 11:28 AM, Marijn Suijten wrote:
-> > Various removals of complex yet unnecessary math, fixing all uses of
-> > drm_dsc_config::bits_per_pixel to deal with the fact that this field
-> > includes four fractional bits, and finally making sure that
-> > range_bpg_offset contains values 6-bits wide to prevent overflows in
-> > drm_dsc_pps_payload_pack().
-> > 
-> > Altogether this series is responsible for solving _all_ Display Stream
-> > Compression issues and artifacts on the Sony Tama (sdm845) Akatsuki
-> > smartphone (2880x1440p).
-> > 
-> > Changes since v3:
-> > - Swap patch 7 and 8 to make sure msm_host is available inside
-> >    dsi_populate_dsc_params();
-> > - Reword patch 6 (Migrate to drm_dsc_compute_rc_parameters()) to more
-> >    clearly explain why the FIXME wasn't solved initially, but why it can
-> >    (and should!) be resolved now.
-> > 
-> > v3: https://lore.kernel.org/linux-arm-msm/20221009184824.457416-1-marijn.suijten@somainline.org/T/#u
-> > 
-> > Changes since v2:
-> > - Generalize mux_word_size setting depending on bits_per_component;
-> > - Migrate DSI's DSC calculations to drm_dsc_compute_rc_parameters(),
-> >    implicitly addressing existing math issues;
-> > - Disallow any bits_per_component other than 8, until hardcoded values
-> >    are updated and tested to support such cases.
-> > 
-> > v2: https://lore.kernel.org/linux-arm-msm/20221005181657.784375-1-marijn.suijten@somainline.org/T/#u
-> > 
-> > Changes since v1:
-> > 
-> > - Propagate r-b's, except (obviously) in patches that were (heavily)
-> >    modified;
-> > - Remove accidental debug code in dsi_cmd_dma_add;
-> > - Move Range BPG Offset masking out of DCS PPS packing, back into the
-> >    DSI driver when it is assigned to drm_dsc_config (this series is now
-> >    strictly focusing on drm/msm again);
-> > - Replace modulo-check resulting in conditional increment with
-> >    DIV_ROUND_UP;
-> > - Remove repeated calculation of slice_chunk_size;
-> > - Use u16 instead of int when handling bits_per_pixel;
-> > - Use DRM_DEV_ERROR instead of pr_err in DSI code;
-> > - Also remove redundant target_bpp_x16 variable.
-> > 
-> > v1: https://lore.kernel.org/linux-arm-msm/20221001190807.358691-1-marijn.suijten@somainline.org/T/#u
-> > 
-> > Marijn Suijten (10):
-> >    drm/msm/dsi: Remove useless math in DSC calculations
-> >    drm/msm/dsi: Remove repeated calculation of slice_per_intf
-> >    drm/msm/dsi: Use DIV_ROUND_UP instead of conditional increment on
-> >      modulo
-> >    drm/msm/dsi: Reuse earlier computed dsc->slice_chunk_size
-> >    drm/msm/dsi: Appropriately set dsc->mux_word_size based on bpc
-> >    drm/msm/dsi: Migrate to drm_dsc_compute_rc_parameters()
-> >    drm/msm/dsi: Account for DSC's bits_per_pixel having 4 fractional bits
-> >    drm/msm/dsi: Disallow 8 BPC DSC configuration for alternative BPC
-> >      values
-> >    drm/msm/dpu1: Account for DSC's bits_per_pixel having 4 fractional
-> >      bits
-> >    drm/msm/dsi: Prevent signed BPG offsets from bleeding into adjacent
-> >      bits
-> > 
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c |  11 +-
-> >   drivers/gpu/drm/msm/dsi/dsi_host.c         | 121 ++++++---------------
-> >   2 files changed, 37 insertions(+), 95 deletions(-)
-> > 
-> > --
-> > 2.38.1
-> > 
-> 
-> To keep the -fixes cycle to have only critical fixes (others are 
-> important too but are cleanups), I was thinking of absorbing patches 
-> 7,8,9 and 10 alone in the -fixes cycle and for patches 1-6, will go 
-> through the 6.2 push.
-> 
-> Let me know if there are any concerns if we just take patches 7,8,9 and 
-> 10 separately.
+This series sets straight the usage of power supply properties for the
+rt5682 and rt5682s audio codecs.
 
-Unfortunately that isn't going to cut it.  For starters patch 8 is only
-introducing additional validation but as long as no panel drivers set
-bpc != 8, this doesn't change anything: it is not a critical fix.
+These properties were already being used by sc7180-trogdor.dtsi (and
+derived DTs like sc7180-trogdor-kingoftown.dtsi).
 
-Then, more importantly, as discussed in v2 reviews it was preferred to
-_not_ fix the broken code in dsi_populate_dsc_params() but migrate to
-drm_dsc_compute_rc_parameters() directly [1].  As such patch 6 (which
-performs the migration) is definitely a requirement for the fixes to be
-complete.  Then again this patch looks weird when 5 is not applied,
-since both refactor how dsc->mux_word_size is assigned.  At the same
-time it cannot be cleanly applied without patch 1 (Remove useless math
-in DSC calculations) nor patch 3 (Use DIV_ROUND_UP instead of
-conditional increment on modulo), but I just realized that patch 3 is
-now also useless as the code is being removed altogether while migrating
-to drm_dsc_compute_rc_parameters().
+We start by documenting the power supplies that are already in use and
+then add few others that were missing to the bindings.
 
-Same for patch 4 (Reuse earlier computed dsc->slice_chunk_size): while
-it may not seem obvious at first, the original code uses bits_per_pixel
-without considering the fractional bits, again resulting invalid values.
-Perhaps this should have been mentioned in the patch description, but I
-did not want to create an even larger chain of references pointing back
-and forth to future patches fixing the exact same bug.  Unfortunately
-this patch doesn't apply cleanly without patch 2 (Remove repeated
-calculation of slice_per_intf) either.
+Then we update the drivers to also support the new supplies.
 
-All in all, applying this series piecemeal requires careful
-consideration which of the patches are actually fixing issues, and is
-terribly tricky considering code cleanups touching the same code and
-sitting right before the fixes (done intentionally to not distract diffs
-in bugfixes being surrounded by odd looking code).
+Finally we update the trogdor DTs so they have the newly added but
+required supplies and remove a superfluous one that was causing
+warnings.
 
-[1]: https://lore.kernel.org/linux-arm-msm/CAA8EJpr=0w0KReqNW2jP8DzvXLgo_o6bKmwMOed2sXb6d8HKhg@mail.gmail.com/
 
-- Marijn
+Nícolas F. R. A. Prado (8):
+  ASoC: dt-bindings: realtek,rt5682s: Add AVDD and MICVDD supplies
+  ASoC: dt-bindings: realtek,rt5682s: Add dbvdd and ldo1-in supplies
+  ASoC: dt-bindings: rt5682: Add AVDD, MICVDD and VBAT supplies
+  ASoC: dt-bindings: rt5682: Add dbvdd and ldo1-in supplies
+  ASoC: rt5682s: Support dbvdd and ldo1-in supplies
+  ASoC: rt5682: Support dbvdd and ldo1-in supplies
+  arm64: dts: qcom: sc7180-trogdor: Add missing supplies for rt5682
+  arm64: dts: qcom: sc7180-trogdor: Remove VBAT supply from rt5682s
+
+ .../bindings/sound/realtek,rt5682s.yaml       | 23 +++++++++++++++++++
+ .../devicetree/bindings/sound/rt5682.txt      | 20 ++++++++++++++++
+ .../dts/qcom/sc7180-trogdor-kingoftown.dtsi   |  1 +
+ ...0-trogdor-wormdingler-rev1-boe-rt5682s.dts |  1 +
+ ...0-trogdor-wormdingler-rev1-inx-rt5682s.dts |  1 +
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  2 ++
+ sound/soc/codecs/rt5682.c                     |  2 ++
+ sound/soc/codecs/rt5682.h                     |  2 +-
+ sound/soc/codecs/rt5682s.c                    | 22 ++++++++++++++++++
+ sound/soc/codecs/rt5682s.h                    |  2 ++
+ 10 files changed, 75 insertions(+), 1 deletion(-)
+
+-- 
+2.38.1
+
