@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DFD96611310
+	by mail.lfdr.de (Postfix) with ESMTP id 9548661130F
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 15:37:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231181AbiJ1Nh3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 09:37:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42732 "EHLO
+        id S231250AbiJ1Nhb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 09:37:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231127AbiJ1Ngy (ORCPT
+        with ESMTP id S231164AbiJ1Ng4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 09:36:54 -0400
+        Fri, 28 Oct 2022 09:36:56 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C3DB1D8F3F;
-        Fri, 28 Oct 2022 06:36:52 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD7C11D81A7;
+        Fri, 28 Oct 2022 06:36:54 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 05C01B82A2E;
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5E830B82A3B;
         Fri, 28 Oct 2022 13:36:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A4BC4167D;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5709AC4FF08;
         Fri, 28 Oct 2022 13:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1666964209;
-        bh=GiJmZNg8T5O5/fCxOI/o4taQRIeOyB6kSPSO4qZDxu8=;
+        bh=mYIbphH61ygAshc0/AeTkkmyeoct/Novzft8mwHEBDU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=aRpCQcxNqO65X3OEJS41fQwz+ntOGgwekh4xk4UKWvPyMxse0kGdvIm4RjiP5elXj
-         /l046r4Mr0Jo/OFXscUmDhLGR4dcXFPxSu3nEsOpzOHRkfjz0svusUt/Q+ICKHZAHz
-         qT8s8lGsM6U+rUoWs/7YWynNd9pURNFIHteC9RhhvmbsOwH4HBdcolF/d8SrI7tkN+
-         lvgBUlUhU69mAC8lEOekm960V8h/58F1APPxP+OtNiK2VuF93KKeCO96RhqcO5hH1Z
-         b55t9NQ4QCsJ3bjGFqz2uj0W+dSNXQxmeomd2u06FNJ1OKOIeualFDDF9F8pPjkRXF
-         1GAeFpwdveT4A==
+        b=Ts0wMsSbijgMNoPwccyMviMwaXjukyT4SUPruUjedLnOqNlKOfzO0dumIADDEW7/n
+         OQWd8Xqv06KsZCYZauASvzKxxarhvcXWe4o1kSheaMVCZ56qVVjAtUXD539BTeZxrl
+         Za6bnsq2hWUWrIoQ66EY4t9GkDGkh38memcdWD8gZkoG5m/Zt+54jO4PbOQaaJ17hE
+         pMwaF7ewQWDyGj0lxFLHNbMr1wRdJTrjHpNOaxPIR1NW4EOQhyvgZiY3FQXUZce+Zu
+         gTO+QuI/X3o8Bsbjs4FhbXmjVUzr95ELVPJ95vfOHPZ4KB67zwO/8gGYVdV3GoQR4c
+         iUcnkg3JGxpsQ==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan+linaro@kernel.org>)
-        id 1ooPXH-0004rK-KR; Fri, 28 Oct 2022 15:36:35 +0200
+        id 1ooPXH-0004rN-NM; Fri, 28 Oct 2022 15:36:35 +0200
 From:   Johan Hovold <johan+linaro@kernel.org>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -47,9 +47,9 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-kernel@vger.kernel.org,
         Johan Hovold <johan+linaro@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v4 10/16] dt-bindings: phy: qcom,qmp-pcie: rename current bindings
-Date:   Fri, 28 Oct 2022 15:35:57 +0200
-Message-Id: <20221028133603.18470-11-johan+linaro@kernel.org>
+Subject: [PATCH v4 11/16] dt-bindings: phy: qcom,qmp-pcie: add sc8280xp bindings
+Date:   Fri, 28 Oct 2022 15:35:58 +0200
+Message-Id: <20221028133603.18470-12-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.37.3
 In-Reply-To: <20221028133603.18470-1-johan+linaro@kernel.org>
 References: <20221028133603.18470-1-johan+linaro@kernel.org>
@@ -64,66 +64,192 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The current QMP PCIe PHY bindings are based on the original MSM8996
-binding which provided multiple PHYs per IP block and these in turn were
-described by child nodes.
+Add bindings for the PCIe QMP PHYs found on SC8280XP.
 
-Later QMP PCIe PHY blocks only provide a single PHY and the remnant
-child node does not really reflect the hardware.
+The PCIe2 and PCIe3 controllers and PHYs on SC8280XP can be used in
+4-lane mode or as separate controllers and PHYs in 2-lane mode (e.g. as
+PCIe2A and PCIe2B).
 
-The original MSM8996 binding also ended up describing the individual
-register blocks as belonging to either the wrapper node or the PHY child
-nodes.
-
-This is an unnecessary level of detail which has lead to problems when
-later IP blocks using different register layouts have been forced to fit
-the original mould rather than updating the binding. The bindings are
-arguable also incomplete as they only the describe register blocks used
-by the current Linux drivers (e.g. does not include the per lane PCS
-registers).
-
-In preparation for adding new bindings for SC8280XP which further
-bindings can be based on, rename the current schema file after IPQ8074,
-which was the first SoC added to the bindings after MSM8996 (which has
-already been split out), and add a reference to the SC8280XP bindings.
+The configuration for a specific system can be read from a TCSR register.
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- ...om,qmp-pcie-phy.yaml => qcom,ipq8074-qmp-pcie-phy.yaml} | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
- rename Documentation/devicetree/bindings/phy/{qcom,qmp-pcie-phy.yaml => qcom,ipq8074-qmp-pcie-phy.yaml} (96%)
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       | 165 ++++++++++++++++++
+ 1 file changed, 165 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq8074-qmp-pcie-phy.yaml
-similarity index 96%
-rename from Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
-rename to Documentation/devicetree/bindings/phy/qcom,ipq8074-qmp-pcie-phy.yaml
-index 324ad7d03a38..62045dcfb20c 100644
---- a/Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,ipq8074-qmp-pcie-phy.yaml
-@@ -1,10 +1,10 @@
- # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
- %YAML 1.2
- ---
--$id: http://devicetree.org/schemas/phy/qcom,qmp-pcie-phy.yaml#
-+$id: http://devicetree.org/schemas/phy/qcom,ipq8074-qmp-pcie-phy.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: Qualcomm QMP PHY controller (PCIe)
-+title: Qualcomm QMP PHY controller (PCIe, IPQ8074)
- 
- maintainers:
-   - Vinod Koul <vkoul@kernel.org>
-@@ -13,6 +13,9 @@ description:
-   QMP PHY controller supports physical layer functionality for a number of
-   controllers on Qualcomm chipsets, such as, PCIe, UFS, and USB.
- 
-+  Note that these bindings are for SoCs up to SC8180X. For newer SoCs, see
-+  qcom,sc8280xp-qmp-pcie-phy.yaml.
+diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+new file mode 100644
+index 000000000000..80aa8d2507fb
+--- /dev/null
++++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+@@ -0,0 +1,165 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
- properties:
-   compatible:
-     enum:
++title: Qualcomm QMP PHY controller (PCIe, SC8280XP)
++
++maintainers:
++  - Vinod Koul <vkoul@kernel.org>
++
++description:
++  The QMP PHY controller supports physical layer functionality for a number of
++  controllers on Qualcomm chipsets, such as, PCIe, UFS, and USB.
++
++properties:
++  compatible:
++    enum:
++      - qcom,sc8280xp-qmp-gen3x1-pcie-phy
++      - qcom,sc8280xp-qmp-gen3x2-pcie-phy
++      - qcom,sc8280xp-qmp-gen3x4-pcie-phy
++
++  reg:
++    minItems: 1
++    maxItems: 2
++
++  clocks:
++    maxItems: 6
++
++  clock-names:
++    items:
++      - const: aux
++      - const: cfg_ahb
++      - const: ref
++      - const: rchng
++      - const: pipe
++      - const: pipediv2
++
++  power-domains:
++    maxItems: 1
++
++  resets:
++    maxItems: 1
++
++  reset-names:
++    items:
++      - const: phy
++
++  vdda-phy-supply: true
++
++  vdda-pll-supply: true
++
++  qcom,4ln-config-sel:
++    description: PCIe 4-lane configuration
++    $ref: /schemas/types.yaml#/definitions/phandle-array
++    items:
++      - items:
++          - description: phandle of TCSR syscon
++          - description: offset of PCIe 4-lane configuration register
++          - description: offset of configuration bit for this PHY
++
++  "#clock-cells":
++    const: 0
++
++  clock-output-names:
++    maxItems: 1
++
++  "#phy-cells":
++    const: 0
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - power-domains
++  - resets
++  - reset-names
++  - vdda-phy-supply
++  - vdda-pll-supply
++  - "#clock-cells"
++  - clock-output-names
++  - "#phy-cells"
++
++additionalProperties: false
++
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sc8280xp-qmp-gen3x4-pcie-phy
++    then:
++      properties:
++        reg:
++          items:
++            - description: port a
++            - description: port b
++      required:
++        - qcom,4ln-config-sel
++    else:
++      properties:
++        reg:
++          maxItems: 1
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,gcc-sc8280xp.h>
++
++    pcie2b_phy: phy@1c18000 {
++      compatible = "qcom,sc8280xp-qmp-gen3x2-pcie-phy";
++      reg = <0x01c18000 0x2000>;
++
++      clocks = <&gcc GCC_PCIE_2B_AUX_CLK>,
++               <&gcc GCC_PCIE_2B_CFG_AHB_CLK>,
++               <&gcc GCC_PCIE_2A2B_CLKREF_CLK>,
++               <&gcc GCC_PCIE2B_PHY_RCHNG_CLK>,
++               <&gcc GCC_PCIE_2B_PIPE_CLK>,
++               <&gcc GCC_PCIE_2B_PIPEDIV2_CLK>;
++      clock-names = "aux", "cfg_ahb", "ref", "rchng",
++                    "pipe", "pipediv2";
++
++      power-domains = <&gcc PCIE_2B_GDSC>;
++
++      resets = <&gcc GCC_PCIE_2B_PHY_BCR>;
++      reset-names = "phy";
++
++      vdda-phy-supply = <&vreg_l6d>;
++      vdda-pll-supply = <&vreg_l4d>;
++
++      #clock-cells = <0>;
++      clock-output-names = "pcie_2b_pipe_clk";
++
++      #phy-cells = <0>;
++    };
++
++    pcie2a_phy: phy@1c24000 {
++      compatible = "qcom,sc8280xp-qmp-gen3x4-pcie-phy";
++      reg = <0x01c24000 0x2000>, <0x01c26000 0x2000>;
++
++      clocks = <&gcc GCC_PCIE_2A_AUX_CLK>,
++               <&gcc GCC_PCIE_2A_CFG_AHB_CLK>,
++               <&gcc GCC_PCIE_2A2B_CLKREF_CLK>,
++               <&gcc GCC_PCIE2A_PHY_RCHNG_CLK>,
++               <&gcc GCC_PCIE_2A_PIPE_CLK>,
++               <&gcc GCC_PCIE_2A_PIPEDIV2_CLK>;
++      clock-names = "aux", "cfg_ahb", "ref", "rchng",
++                    "pipe", "pipediv2";
++
++      power-domains = <&gcc PCIE_2A_GDSC>;
++
++      resets = <&gcc GCC_PCIE_2A_PHY_BCR>;
++      reset-names = "phy";
++
++      vdda-phy-supply = <&vreg_l6d>;
++      vdda-pll-supply = <&vreg_l4d>;
++
++      qcom,4ln-config-sel = <&tcsr 0xa044 0>;
++
++      #clock-cells = <0>;
++      clock-output-names = "pcie_2a_pipe_clk";
++
++      #phy-cells = <0>;
++    };
 -- 
 2.37.3
 
