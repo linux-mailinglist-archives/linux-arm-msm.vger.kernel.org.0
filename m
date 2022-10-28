@@ -2,109 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 19CE9611AD7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 21:24:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D479611AF9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 21:39:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229473AbiJ1TYR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 15:24:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52380 "EHLO
+        id S229876AbiJ1Tjx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 15:39:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229981AbiJ1TYP (ORCPT
+        with ESMTP id S229576AbiJ1Tjw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 15:24:15 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E12762303FF;
-        Fri, 28 Oct 2022 12:24:14 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7E19762A08;
-        Fri, 28 Oct 2022 19:24:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10082C433D6;
-        Fri, 28 Oct 2022 19:24:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666985053;
-        bh=8//h+tyapzLVTU5tcVVz+UK6ke4W6O7sJMkE3L3lUk8=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=qGYXPELWt1WeG5WS5xiF4ANqv504+Qmpmexgb5MJ0+Tbw96ZjDDin0TDTx5WVS9HH
-         PbtDss+cIJqBCI8nxoLqg6KAAAEXNLikkmpPa5ILBEmp7ivYs/16L/mdKWxwJ5ofwr
-         P9tuk+pc/xMdQwpEkZ2x94DsDEo0ziBHmRsdzb/ep0t58Y6i1d81YuXItIRBTSDcmb
-         4wzNtylYIF3HZYEJVBaPc6D5IADdnIKd9xSJQbEwjJ4526gbzkhlFRrJyKFvgC2vnv
-         tybvYLcKOXhAKH0u79/ftl+uHpDyHwl9noRxiNK0pvwt9hIP8UMIhCk3sN/ldsDIyG
-         rd501z5oOs8Cw==
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     lgirdwood@gmail.com, perex@perex.cz, bgoswami@quicinc.com,
-        alsa-devel@alsa-project.org, tiwai@suse.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20221027102710.21407-1-srinivas.kandagatla@linaro.org>
-References: <20221027102710.21407-1-srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH v3 0/9] ASoC: qdsp6: audioreach: add multi-port, SAL and MFC support
-Message-Id: <166698505174.1386510.10315804075480658283.b4-ty@kernel.org>
-Date:   Fri, 28 Oct 2022 20:24:11 +0100
+        Fri, 28 Oct 2022 15:39:52 -0400
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3943214D39;
+        Fri, 28 Oct 2022 12:39:45 -0700 (PDT)
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-13ae8117023so7395068fac.9;
+        Fri, 28 Oct 2022 12:39:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gO2vxqm78QhPt3F83EEw+gwkQklZjajmJIRAkN8DiHo=;
+        b=VoPcL13olOURLgREPIKUrmc3MLzRfSAY16wHqYnB/7WdVFJQKJ7Stma4sT5WSGn5ht
+         i51snYDV1+jkMSSQ4fqtdutPumYFOVYElrAXRQ5nMNd7uWzJ+8R/aPsE8md7VoahHCoE
+         85SriZr3S3p8LRmcAvM1Leskfh5CiM1ijrYPK9vTV/AU0sYRWd8N5s0gYFQElcJWPCQw
+         AlRFXgetVY6zQXHAa3FYjELM7DLYG4cry131Wyg9rWnEFwBh0u2oeb/nNC/68sj5ACPu
+         0LRMO28WAyh5yXS2kbTJLIE3BYTDVpXFfLDbZV5+RHGPk0eCe1ZxTBNV616caJzGdybE
+         nEjg==
+X-Gm-Message-State: ACrzQf2fzFKAM4/2/J+a07SDghokdlTwaPkZWh3l0igdHXGYm/3jDWRm
+        TmAeIUhc/uQM3qcBasKmR5QFcE4vbw==
+X-Google-Smtp-Source: AMsMyM6Xj1iu4oGXFzZGjKiVrQBh8AQZKNOax1t8inO/Roy6hBuh8rXVQ0FHFrTLlEPlJecGS865Ug==
+X-Received: by 2002:a05:6870:c155:b0:136:3bfd:4df with SMTP id g21-20020a056870c15500b001363bfd04dfmr452806oad.221.1666985984477;
+        Fri, 28 Oct 2022 12:39:44 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id g13-20020a544f8d000000b0035437f4deefsm1833001oiy.26.2022.10.28.12.39.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Oct 2022 12:39:43 -0700 (PDT)
+Received: (nullmailer pid 2192832 invoked by uid 1000);
+        Fri, 28 Oct 2022 19:39:45 -0000
+Date:   Fri, 28 Oct 2022 14:39:45 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 6/6] ASoC: dt-bindings: wcd938x: fix codec reset line
+ polarity in example
+Message-ID: <20221028193945.GA2192436-robh@kernel.org>
+References: <20221027074652.1044235-1-dmitry.torokhov@gmail.com>
+ <20221027074652.1044235-6-dmitry.torokhov@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.10.0-dev-fc921
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221027074652.1044235-6-dmitry.torokhov@gmail.com>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 27 Oct 2022 11:27:01 +0100, Srinivas Kandagatla wrote:
-> This patchset adds support to multi-port connections between AudioReach Modules
-> which is required for sophisticated graphs like ECNS or Speaker Protection.
-> Also as part of ECNS testing new module support for SAL and MFC are added.
+On Thu, Oct 27, 2022 at 12:46:52AM -0700, Dmitry Torokhov wrote:
+> The driver for the codec, when resetting the chip, first drives the line
+> low, and then high. This means that the line is active low. Change the
+> annotation in the example DTS accordingly.
+> 
+> Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/sound/qcom,wcd938x.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd938x.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd938x.yaml
+> index 51547190f709..2f5e0df93872 100644
+> --- a/Documentation/devicetree/bindings/sound/qcom,wcd938x.yaml
+> +++ b/Documentation/devicetree/bindings/sound/qcom,wcd938x.yaml
+> @@ -112,7 +112,7 @@ examples:
+>    - |
+>      codec {
+>          compatible = "qcom,wcd9380-codec";
+> -        reset-gpios = <&tlmm 32 0>;
+> +        reset-gpios = <&tlmm 32 GPIO_ACTIVE_LOW>;
+
+Missing a header for this.
+
+>          #sound-dai-cells = <1>;
+>          qcom,tx-device = <&wcd938x_tx>;
+>          qcom,rx-device = <&wcd938x_rx>;
+> -- 
+> 2.38.0.135.g90850a2211-goog
 > 
 > 
-> Tested on SM8450 with ECNS.
-> 
-> [...]
-
-Applied to
-
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
-
-Thanks!
-
-[1/9] ASoC: qdsp6: audioreach: topology use idr_alloc_u32
-      commit: af7ed7eb70e8964514c706f8498623a2a3696657
-[2/9] ASoC: qdsp6: audioreach: remove unused connection_list
-      commit: 5b488e80078f09bbc197d766babf014dd52c30bf
-[3/9] ASoC: qdsp6: audioreach: update dapm kcontrol private data
-      commit: 1c87d3817b74b895933e9940b9de09b17c674b9b
-[4/9] ASoC: qdsp6: audioreach: Simplify handing FE and BE graph connections
-      commit: e4977b91cff8b00cdeb310735ef34fa4dee9485c
-[5/9] ASoC: qdsp6: audioreach: simplify module_list sz calculation
-      commit: 4efb98e9635b9919f2cb72cddae97b7231cf96ef
-[6/9] ASoC: qdsp6: audioreach: add support for more port connections
-      commit: 03365d6a58c47b3a3f2f964d0777493e293d7da4
-[7/9] ASoC: qdsp6: audioreach: add support to enable SAL Module
-      commit: a934afdbb022d5a7b1d20251875ecefcaf48536a
-[8/9] ASoC: qdsp6: audioreach: add support for MFC Module
-      commit: cf0de67d954db21002fd7521364f2ac89aabae35
-[9/9] ASoC: qdsp6: audioreach: add support to enable module command
-      commit: 6648a6dcfe40ae8c5e7cb5c1d7b9e59f010e285d
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
