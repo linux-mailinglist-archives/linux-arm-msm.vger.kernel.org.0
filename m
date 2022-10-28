@@ -2,115 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4ACF611BF3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 22:56:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96058611C9B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 23:44:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230194AbiJ1U4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 16:56:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35820 "EHLO
+        id S230149AbiJ1Vo4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 17:44:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230057AbiJ1U4G (ORCPT
+        with ESMTP id S230153AbiJ1Voh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 16:56:06 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56D4B241B06;
-        Fri, 28 Oct 2022 13:56:05 -0700 (PDT)
-Received: from notapiano.myfiosgateway.com (zone.collabora.co.uk [167.235.23.81])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: nfraprado)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 2A4DC660293F;
-        Fri, 28 Oct 2022 21:56:02 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1666990564;
-        bh=N8cgOi4X/bGXGpJD1NivnBMWo59PYqBzjXyEcn5g/c4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Uz2gH1d5rmELMS/Cg98cAiOnfzWrfm5ZTh5bTWtLXZs9ilO5PTxCUudUwAnTebvYI
-         0hBv2FVkqhdFqHPMvJPLzNW11qU/6rkuO8xjiEu9QgUW5NaWg6oCH9dycm6vb4WkEH
-         MkOiZj7rxyGa21PYU4VqaMkbN15EdkbVx72ATKkvy8kvpcFA+1IZ0P2pZVnCh8luhH
-         wur8lMjO8lh1t3Iv5rLSchm61qFS2fC2X4Yow3/p80NROqi1a/fCgEQda/vbU2Ru7M
-         hYPbN5Uazx9qqpSO7IyXF3jg137UjjnJ6Btij0r5v5xuWpFb7ebvbHKRtPjxmbDjQW
-         hAVChXCXP7tWA==
-From:   =?UTF-8?q?N=C3=ADcolas=20F=2E=20R=2E=20A=2E=20Prado?= 
-        <nfraprado@collabora.com>
-To:     Mark Brown <broonie@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     kernel@collabora.com,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        =?UTF-8?q?N=C3=ADcolas=20F=2E=20R=2E=20A=2E=20Prado?= 
-        <nfraprado@collabora.com>, Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 8/8] arm64: dts: qcom: sc7180-trogdor: Remove VBAT supply from rt5682s
-Date:   Fri, 28 Oct 2022 16:55:40 -0400
-Message-Id: <20221028205540.3197304-9-nfraprado@collabora.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221028205540.3197304-1-nfraprado@collabora.com>
-References: <20221028205540.3197304-1-nfraprado@collabora.com>
+        Fri, 28 Oct 2022 17:44:37 -0400
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5102D24CC8B;
+        Fri, 28 Oct 2022 14:44:04 -0700 (PDT)
+Received: by mail-pl1-f179.google.com with SMTP id l2so5915704pld.13;
+        Fri, 28 Oct 2022 14:44:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Kst96+KKew9c/RGg4G6XTf+FqUHJFIea+S6RSYWJinU=;
+        b=6csjOEhS9uDy5OlzUlTrisFXstZUMD+S7w/bdQ2ohjBxfnrkLwNiJrWRMVi58qP47C
+         jYMg/ViUZhNhytGha7sqULyPf+79r55YDLavu4yukY7AQ8l1zivoSSB/VXbv8zXUWvct
+         ZpVSgOQ1Ypeq5tQgVZ2RF1/JnjLtqa11Cp5UoLLv69NueYNQH7vf7Q66KpjVup4xHPcW
+         6Vmna47oZ7PW9yWrc4oVUpXnOT2WhuM+XuCl9rtNqYbN8Hk3os6AHBEkSzUkOGBtjC3+
+         3pJj5WbUFagNnanKfTT7oYcmQNWH7cAUqGdnzlQ+3VCwRptZG7Rl6RLYR2AenM0mHd47
+         FsAQ==
+X-Gm-Message-State: ACrzQf3itBKME5sOLMSd/iYhxwD6DmQWglwOZ+cPbLtDx2DvyOByZgW3
+        PCE1ImlWEM5O356RfZzwTzg=
+X-Google-Smtp-Source: AMsMyM7TXR6v597ftvLT7XDc73XL6FzzeQr/pMMnaxoH4ieteZdRXTyiKndoLjJFHQGtye97moui0w==
+X-Received: by 2002:a17:902:c612:b0:186:8376:208d with SMTP id r18-20020a170902c61200b001868376208dmr1073356plr.89.1666993443737;
+        Fri, 28 Oct 2022 14:44:03 -0700 (PDT)
+Received: from [192.168.3.219] ([98.51.102.78])
+        by smtp.gmail.com with ESMTPSA id d23-20020a170902b71700b00178b6ccc8a0sm3493911pls.51.2022.10.28.14.44.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Oct 2022 14:44:03 -0700 (PDT)
+Message-ID: <b5082698-1dfe-ceee-b263-439a719a55c3@acm.org>
+Date:   Fri, 28 Oct 2022 14:44:01 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Subject: Re: [PATCH v3 03/17] ufs: core: Introduce Multi-circular queue
+ capability
+Content-Language: en-US
+To:     Asutosh Das <quic_asutoshd@quicinc.com>
+Cc:     quic_cang@quicinc.com, martin.petersen@oracle.com,
+        linux-scsi@vger.kernel.org, quic_nguyenb@quicinc.com,
+        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
+        eddie.huang@mediatek.com, daejun7.park@samsung.com,
+        avri.altman@wdc.com, mani@kernel.org, beanhuo@micron.com,
+        quic_richardp@quicinc.com, linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <cover.1666288432.git.quic_asutoshd@quicinc.com>
+ <1718196085461c37138c194c49146efa5c5503dc.1666288432.git.quic_asutoshd@quicinc.com>
+ <14a5925b-df2b-3f84-ed99-b4157c0a1b21@acm.org>
+ <20221028165116.GC9077@asutoshd-linux1.qualcomm.com>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20221028165116.GC9077@asutoshd-linux1.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-These devicetrees override a rt5682 node to use the rt5682s compatible,
-however, unlike rt5682, rt5682s doesn't have a VBAT supply. Remove the
-inexistent supply in the rt5682s nodes.
+On 10/28/22 09:51, Asutosh Das wrote:
+> On Thu, Oct 27 2022 at 14:10 -0700, Bart Van Assche wrote:
+>> Since UFSHCI 4.0 controllers must support UFSHCI 3.0, shouldn't users 
+>> have a way to disable MCQ, e.g. via a kernel module parameter?
+>>
+> I can add a kernel module parameter to disable MCQ.
+> I think adding it to host driver (e.g. ufs-qcom) would be good.
+> Please let me know if you have a better place in mind.
 
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
----
+Since this functionality is useful for all host controllers please add 
+it in the core UFS host controller driver (drivers/ufs/core/ufshcd.c).
 
- arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi          | 1 +
- .../dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts     | 1 +
- .../dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts     | 1 +
- 3 files changed, 3 insertions(+)
+Thanks,
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-index 74f0e07ea5cf..e0fb83a9a0b1 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-@@ -11,6 +11,7 @@
- 
- &alc5682 {
- 	compatible = "realtek,rt5682s";
-+	/delete-property/ VBAT-supply;
- 	realtek,dmic1-clk-pin = <2>;
- 	realtek,dmic-clk-rate-hz = <2048000>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts
-index aa605885c371..6225ab8329c3 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts
-@@ -19,6 +19,7 @@ / {
- 
- &alc5682 {
- 	compatible = "realtek,rt5682s";
-+	/delete-property/ VBAT-supply;
- 	realtek,dmic1-clk-pin = <2>;
- 	realtek,dmic-clk-rate-hz = <2048000>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts
-index 7116c44c8d85..b40b068dad6a 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts
-@@ -19,6 +19,7 @@ / {
- 
- &alc5682 {
- 	compatible = "realtek,rt5682s";
-+	/delete-property/ VBAT-supply;
- 	realtek,dmic1-clk-pin = <2>;
- 	realtek,dmic-clk-rate-hz = <2048000>;
- };
--- 
-2.38.1
+Bart.
 
