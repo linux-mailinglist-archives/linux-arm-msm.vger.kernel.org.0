@@ -2,256 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C208611DDD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 01:00:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F13F9611E78
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 02:00:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229458AbiJ1XAh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 19:00:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56038 "EHLO
+        id S229689AbiJ2AAE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 20:00:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229531AbiJ1XAg (ORCPT
+        with ESMTP id S229912AbiJ2AAA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 19:00:36 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A952F1D6A7E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 16:00:33 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29SMkqSa005267;
-        Fri, 28 Oct 2022 23:00:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=wMRGGRgNrU7SvuXvBDADOkXmdgsMZCTv8afozyE0jUc=;
- b=GcxMA9N8pUyVhnYKlXqPVD3dix8j5Si6zJplAHibLvVJMPf4r3rvPLemZYnPO16lLTLU
- x8/hz2mVa34M7O5isIFnn7qTwbGfvUe5o0pqxL3Cok33GvDkiGMXjLPPXaaCszdnqH2k
- DIcHReuI487iutCQheoQ/aFxDFhAf54lM2xlBI7RY75jNvu2LjP3yn/M7egWTuAQcPbB
- B0o94gMQwz3GbikPnnK/Jjvxup6innQeimuOyFNWbQRhA6gesQQI/Rt+dsPYNhOblXAo
- xnmtJZ80ODM8VSZ8E8ksZCYbcCoeuKdXYCKbyZN6ldZZ89RCHnUIXrHEr9ph1ZhAgOIo nw== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kg59akdgg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Oct 2022 23:00:19 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29SN0I4I025316
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Oct 2022 23:00:18 GMT
-Received: from JESSZHAN.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Fri, 28 Oct 2022 16:00:18 -0700
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-To:     <freedreno@lists.freedesktop.org>
-CC:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>,
-        <swboyd@chromium.org>, <dmitry.baryshkov@linaro.org>,
-        <quic_abhinavk@quicinc.com>, <contact@emersion.fr>,
-        <daniel.vetter@ffwll.ch>, <laurent.pinchart@ideasonboard.com>
-Subject: [RFC PATCH 3/3] drm/msm/dpu: Use color_fill property for DPU planes
-Date:   Fri, 28 Oct 2022 15:59:52 -0700
-Message-ID: <20221028225952.160-4-quic_jesszhan@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221028225952.160-1-quic_jesszhan@quicinc.com>
-References: <20221028225952.160-1-quic_jesszhan@quicinc.com>
+        Fri, 28 Oct 2022 20:00:00 -0400
+Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D25092F3B6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 16:59:44 -0700 (PDT)
+Received: (Authenticated sender: miquel.raynal@bootlin.com)
+        by mail.gandi.net (Postfix) with ESMTPSA id BBAFCFF802;
+        Fri, 28 Oct 2022 23:59:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+        t=1667001576;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=zC82iFrlIYbSsP6fbExDAPio+9uwFvsxm72+V19fmUQ=;
+        b=R2AMi4l+N69yWcGSR7WvtK5yF4dZv9jT7XFuGPsfTZl22MAuEiTIBoq5ZcYVpqLHufCBMH
+        e2IofCj9i7rtK3BGWV0yZZnqn//kfOwsYzyqgqd16lV9dEZ6ypbVyJN4B0a5iSxt0JzUcq
+        A+5tFYsb4c7LVz1GM1LHFyesQiWAevQh+zUhv8AVIKcg2EcqtU6zjGlgf0w9pR0/7fjwyk
+        kO8qv+n9lGxo6+o9nGZMcXBaptnZf7N86lEOR3mxhGGloq7BsVnScVuWWo2G69SdHBrMXY
+        Eyrb+XiexTTSaOXf7XXa2/8X7p+t1hEdyrhcGWSMacC4LFRokRqXEpXPOEVnNg==
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Tudor Ambarus <Tudor.Ambarus@microchip.com>,
+        Pratyush Yadav <p.yadav@ti.com>,
+        Michael Walle <michael@walle.cc>,
+        <linux-mtd@lists.infradead.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        devicetree@vger.kernel.org
+Cc:     Chen-Yu Tsai <wens@csie.org>,
+        Naga Sureshkumar Relli <nagasure@xilinx.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>,
+        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 00/12] Improve MTD bindings
+Date:   Sat, 29 Oct 2022 01:59:21 +0200
+Message-Id: <20221028235933.934850-1-miquel.raynal@bootlin.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: bX0aUcNm09c9TFubp4VAB8xqgoIv0OmM
-X-Proofpoint-ORIG-GUID: bX0aUcNm09c9TFubp4VAB8xqgoIv0OmM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-28_10,2022-10-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- clxscore=1015 mlxscore=0 suspectscore=0 mlxlogscore=999 bulkscore=0
- priorityscore=1501 spamscore=0 impostorscore=0 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2210280146
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Initialize and use the color_fill properties for planes in DPU driver. In
-addition, relax framebuffer requirements within atomic commit path and
-add checks for NULL framebuffers.
+Hello,
 
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  7 ++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 66 ++++++++++++++---------
- 2 files changed, 48 insertions(+), 25 deletions(-)
+During a yaml conversion review, Krzysztof opened the discussion about
+the links and references made between the different files in the mtd
+bindings. I figured out some minimal changes might be needed to properly
+reference everything correctly and ensure we constrain as much as
+possible the existing bindings. That is what I tried to do here.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 13ce321283ff..157698b4f234 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -441,7 +441,12 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
- 				sspp_idx - SSPP_VIG0,
- 				state->fb ? state->fb->base.id : -1);
- 
--		format = to_dpu_format(msm_framebuffer_format(pstate->base.fb));
-+		if (pstate->base.fb)
-+			format = to_dpu_format(msm_framebuffer_format(pstate->base.fb));
-+		else if (state->color_fill && !state->color_fill_format)
-+			format = dpu_get_dpu_format(DRM_FORMAT_ABGR8888);
-+		else
-+			format = dpu_get_dpu_format(state->color_fill_format);
- 
- 		if (pstate->stage == DPU_STAGE_BASE && format->alpha_enable)
- 			bg_alpha_enable = true;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 658005f609f4..f3be37e97b64 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -103,7 +103,6 @@ struct dpu_plane {
- 	enum dpu_sspp pipe;
- 
- 	struct dpu_hw_pipe *pipe_hw;
--	uint32_t color_fill;
- 	bool is_error;
- 	bool is_rt_pipe;
- 	const struct dpu_mdss_cfg *catalog;
-@@ -697,7 +696,10 @@ static int _dpu_plane_color_fill(struct dpu_plane *pdpu,
- 	 * select fill format to match user property expectation,
- 	 * h/w only supports RGB variants
- 	 */
--	fmt = dpu_get_dpu_format(DRM_FORMAT_ABGR8888);
-+	if (plane->state->color_fill && !plane->state->color_fill_format)
-+		fmt = dpu_get_dpu_format(DRM_FORMAT_ABGR8888);
-+	else
-+		fmt = dpu_get_dpu_format(plane->state->color_fill_format);
- 
- 	/* update sspp */
- 	if (fmt && pdpu->pipe_hw->ops.setup_solidfill) {
-@@ -720,6 +722,10 @@ static int _dpu_plane_color_fill(struct dpu_plane *pdpu,
- 					fmt, DPU_SSPP_SOLID_FILL,
- 					pstate->multirect_index);
- 
-+		/* skip remaining processing on color fill */
-+		if (!plane->state->fb)
-+			return 0;
-+
- 		if (pdpu->pipe_hw->ops.setup_rects)
- 			pdpu->pipe_hw->ops.setup_rects(pdpu->pipe_hw,
- 					&pipe_cfg,
-@@ -999,12 +1005,21 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
- 
- 	dst = drm_plane_state_dest(new_plane_state);
- 
--	fb_rect.x2 = new_plane_state->fb->width;
--	fb_rect.y2 = new_plane_state->fb->height;
-+	if (new_plane_state->fb) {
-+		fb_rect.x2 = new_plane_state->fb->width;
-+		fb_rect.y2 = new_plane_state->fb->height;
-+	}
- 
- 	max_linewidth = pdpu->catalog->caps->max_linewidth;
- 
--	fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
-+	if (new_plane_state->fb) {
-+		fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
-+	} else if (new_plane_state->color_fill) {
-+		if (new_plane_state->color_fill_format)
-+			fmt = dpu_get_dpu_format(new_plane_state->color_fill_format);
-+		else
-+			fmt = dpu_get_dpu_format(DRM_FORMAT_ABGR8888);
-+	}
- 
- 	min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
- 
-@@ -1016,7 +1031,7 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
- 		return -EINVAL;
- 
- 	/* check src bounds */
--	} else if (!dpu_plane_validate_src(&src, &fb_rect, min_src_size)) {
-+	} else if (new_plane_state->fb && !dpu_plane_validate_src(&src, &fb_rect, min_src_size)) {
- 		DPU_DEBUG_PLANE(pdpu, "invalid source " DRM_RECT_FMT "\n",
- 				DRM_RECT_ARG(&src));
- 		return -E2BIG;
-@@ -1084,9 +1099,9 @@ void dpu_plane_flush(struct drm_plane *plane)
- 	if (pdpu->is_error)
- 		/* force white frame with 100% alpha pipe output on error */
- 		_dpu_plane_color_fill(pdpu, 0xFFFFFF, 0xFF);
--	else if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG)
-+	else if (!(plane->state->fb) && plane->state->color_fill)
- 		/* force 100% alpha */
--		_dpu_plane_color_fill(pdpu, pdpu->color_fill, 0xFF);
-+		_dpu_plane_color_fill(pdpu, plane->state->color_fill, 0xFF);
- 	else if (pdpu->pipe_hw && pdpu->pipe_hw->ops.setup_csc) {
- 		const struct dpu_format *fmt = to_dpu_format(msm_framebuffer_format(plane->state->fb));
- 		const struct dpu_csc_cfg *csc_ptr = _dpu_plane_get_csc(pdpu, fmt);
-@@ -1125,23 +1140,30 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
- 	struct drm_crtc *crtc = state->crtc;
- 	struct drm_framebuffer *fb = state->fb;
- 	bool is_rt_pipe, update_qos_remap;
--	const struct dpu_format *fmt =
--		to_dpu_format(msm_framebuffer_format(fb));
-+	const struct dpu_format *fmt;
- 	struct dpu_hw_pipe_cfg pipe_cfg;
- 
--	memset(&pipe_cfg, 0, sizeof(struct dpu_hw_pipe_cfg));
--
--	_dpu_plane_set_scanout(plane, pstate, &pipe_cfg, fb);
--
- 	pstate->pending = true;
- 
- 	is_rt_pipe = (dpu_crtc_get_client_type(crtc) != NRT_CLIENT);
- 	_dpu_plane_set_qos_ctrl(plane, false, DPU_PLANE_QOS_PANIC_CTRL);
- 
--	DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
--			", %4.4s ubwc %d\n", fb->base.id, DRM_RECT_FP_ARG(&state->src),
--			crtc->base.id, DRM_RECT_ARG(&state->dst),
--			(char *)&fmt->base.pixel_format, DPU_FORMAT_IS_UBWC(fmt));
-+	/* override for color fill */
-+	if (!fb && plane->state->color_fill) {
-+		/* skip remaining processing on color fill */
-+		return;
-+	}
-+
-+	memset(&pipe_cfg, 0, sizeof(struct dpu_hw_pipe_cfg));
-+
-+	fmt = to_dpu_format(msm_framebuffer_format(fb));
-+	_dpu_plane_set_scanout(plane, pstate, &pipe_cfg, fb);
-+
-+	if (fb)
-+		DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
-+				", %4.4s ubwc %d\n", fb->base.id, DRM_RECT_FP_ARG(&state->src),
-+				crtc->base.id, DRM_RECT_ARG(&state->dst),
-+				(char *)&fmt->base.pixel_format, DPU_FORMAT_IS_UBWC(fmt));
- 
- 	pipe_cfg.src_rect = state->src;
- 
-@@ -1153,12 +1175,6 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
- 
- 	pipe_cfg.dst_rect = state->dst;
- 
--	/* override for color fill */
--	if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG) {
--		/* skip remaining processing on color fill */
--		return;
--	}
--
- 	if (pdpu->pipe_hw->ops.setup_rects) {
- 		pdpu->pipe_hw->ops.setup_rects(pdpu->pipe_hw,
- 				&pipe_cfg,
-@@ -1509,6 +1525,8 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
- 		DPU_ERROR("failed to install zpos property, rc = %d\n", ret);
- 
- 	drm_plane_create_alpha_property(plane);
-+	drm_plane_create_color_fill_property(plane);
-+	drm_plane_create_color_fill_format_property(plane);
- 	drm_plane_create_blend_mode_property(plane,
- 			BIT(DRM_MODE_BLEND_PIXEL_NONE) |
- 			BIT(DRM_MODE_BLEND_PREMULTI) |
+The idea is:
+* partition.yaml defines one MTD partition
+* parsers/*.yaml define partition parsers (mainly compatibles)
+* mtd.yaml contains the generic definition of any mtd device (nand,
+  spi-nand, spi-nor, nor, sram, etc), in particular, it defines the
+  various partition formats (legacy and current) and references
+  partition.yaml as well as a list of all the possible parsers within a
+  "partitions" node.
+* nand-chip.yaml, jedec,spi-nor, mtd-physmap.yaml all describe real
+  instances of mtd device, each of them with a different underlying
+  technology, they reference mtd.yaml 
+* nand-controller.yaml has subnodes which reference nand-chip.yaml.
+* Specific NAND controller bindings reference nand-controller.yaml.
+
+I've tested with the following command and it worked okay:
+$ make dt_binding_check -j10 DT_CHECKER_FLAG=-m DT_SCHEMA_FILES=mtd/
+
+Comments welcome of course :-)
+
+Cheers,
+Miquèl
+
+Miquel Raynal (12):
+  dt-bindings: mtd: Clarify all partition subnodes
+  dt-bindings: mtd: Mention basic properties
+  dt-bindings: mtd: Remove useless file about partitions
+  dt-bindings: mtd: ingenic: Mark partitions in the controller node as
+    deprecated
+  dt-bindings: mtd: onenand: Mention the expected node name
+  dt-bindings: mtd: nand-chip: Reference mtd.yaml
+  dt-bindings: mtd: Drop common properties from NAND controllers
+  dt-bindings: mtd: spi-nor: Drop common properties
+  dt-bindings: mtd: phymap: Reuse the generic definitions
+  dt-bindings: mtd: Drop object types when referencing other files
+  dt-bindings: mtd: Argue in favor of keeping additionalProperties set
+    to true
+  dt-bindings: mtd: Constrain the list of parsers
+
+ .../mtd/allwinner,sun4i-a10-nand.yaml         |  3 --
+ .../bindings/mtd/arasan,nand-controller.yaml  |  3 --
+ .../devicetree/bindings/mtd/ingenic,nand.yaml | 13 +-----
+ .../bindings/mtd/intel,lgm-ebunand.yaml       | 10 +----
+ .../bindings/mtd/jedec,spi-nor.yaml           | 14 -------
+ .../devicetree/bindings/mtd/mtd-physmap.yaml  |  7 ++--
+ .../devicetree/bindings/mtd/mtd.yaml          | 41 ++++++++++++++++++-
+ .../devicetree/bindings/mtd/nand-chip.yaml    |  4 ++
+ .../bindings/mtd/nand-controller.yaml         |  1 -
+ .../devicetree/bindings/mtd/partition.txt     | 33 ---------------
+ .../bindings/mtd/partitions/partition.yaml    |  1 +
+ .../devicetree/bindings/mtd/qcom,nandc.yaml   |  3 --
+ .../bindings/mtd/ti,gpmc-onenand.yaml         |  3 ++
+ 13 files changed, 52 insertions(+), 84 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/mtd/partition.txt
+
 -- 
-2.38.0
+2.34.1
 
