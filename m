@@ -2,100 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C695E61054B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 00:02:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 442B76106C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 02:23:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234558AbiJ0WCD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Oct 2022 18:02:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54970 "EHLO
+        id S234811AbiJ1AXu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Oct 2022 20:23:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234434AbiJ0WBw (ORCPT
+        with ESMTP id S234184AbiJ1AXt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Oct 2022 18:01:52 -0400
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07BC6A026D;
-        Thu, 27 Oct 2022 15:01:51 -0700 (PDT)
-Received: by mail-pf1-f173.google.com with SMTP id i3so3061775pfc.11;
-        Thu, 27 Oct 2022 15:01:51 -0700 (PDT)
+        Thu, 27 Oct 2022 20:23:49 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CE54A027D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 17:23:48 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id k19so5987886lji.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Oct 2022 17:23:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bZYWmbkkX4tjycvaxT68XqwdEysdPnbhAunSSy5OJgM=;
+        b=IHxYowaoqHjIbbyLOYZS90Pa8uc4TM5JOtjG8Mn58hLNLNzChZt2xPWeUXf0xBUn9X
+         SdzHy2cgav9WSafWuNoL5gtQTLJuhgcDZRuECg+YcB1jBmmx0pMhjLp8MIlGJE/9u/z/
+         vVmzvbPI9f2NzGPdGLN3zoILUCGRSE2d/pnH0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xuf2rYc4skGV/brVADA47UOE0bGVgDUQN7KLwp1HwW8=;
-        b=7T4uVmhQp+b2sCm0RWNy1Hj3WdJXv0flFD94q7W+1M5Tu4pqfSqcDzXtIBiqGJCtQ3
-         /Sr4U2Sy/c3Ju77DVPLCh8tHncmCgpglm8KlWUWQbfV0kOaTx4eqfA5JubVI7aGc5Az4
-         rympNxY7GRIETFxzG6/YIRoEQPh1NV1Ylz6h6VuAZ3Nz/CdNRhMx6VSrxslnWcECEjwu
-         xsW80CmOKMv9hNt3Y5bv1yXWIr9qLxjkUHHGfWrKZwnc67MTDTkhNVfiSkOj1BC5q3vC
-         4bxbQ4NK1faQ0x8g2MMbmXv7Zy7uanjeg6ktSMbrDoAZdIdtDQVFPTICweZRiprQdI6R
-         4XsQ==
-X-Gm-Message-State: ACrzQf1df9x2fu+EL65r28aKyHTl41Y9p5zkDorUzogQ4RSAsTjaOMqA
-        ho8nexxrCUcejbdeiCPGNJo=
-X-Google-Smtp-Source: AMsMyM63yLidIP4PV9Xc0SANp2ydp+HPviTsYt2HnMrs+WOCV8sF4IDlYE+H12U1KYsKv+/Xo3fhZg==
-X-Received: by 2002:a63:480e:0:b0:46e:b96c:4f89 with SMTP id v14-20020a63480e000000b0046eb96c4f89mr30330659pga.201.1666908110449;
-        Thu, 27 Oct 2022 15:01:50 -0700 (PDT)
-Received: from ?IPV6:2620:15c:211:201:bc2b:ff19:1b02:257b? ([2620:15c:211:201:bc2b:ff19:1b02:257b])
-        by smtp.gmail.com with ESMTPSA id i7-20020a170902c94700b00181e55d02dcsm1675471pla.139.2022.10.27.15.01.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Oct 2022 15:01:49 -0700 (PDT)
-Message-ID: <8113c37b-9917-b5f2-87c8-cb76f59c69da@acm.org>
-Date:   Thu, 27 Oct 2022 15:01:46 -0700
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bZYWmbkkX4tjycvaxT68XqwdEysdPnbhAunSSy5OJgM=;
+        b=N+z7glcK9vyu7dw/zocC0oXbeizhNFGbDRQP1uD+thBucrb3iLDIkBKB24zYRti1/7
+         ShnKYn/TQu6mYB3Pb4KRAOuThlvYjSszj9bWpOkKP6Y+FzGVhrym2Px7yqLm949MBlKH
+         35lsZqu6ZvmYQB7Rqhe5uVyg8ypHZcBC5GPaw70wHbrO0a4jVxDhKjjrfwfSPysejDKY
+         btU9TpToTBwntivBCh8OKa4BazjiuaUyV4n9DCO4zI/jsPluPUVm6/6cd6V4t1fXYUkP
+         dfBJilsjOd5tSnK5vhZZtVtPVKv5L/Vg+Ufh+vNh82QinjKk8dqu3aPkgvEXi3CPEBUI
+         7A9w==
+X-Gm-Message-State: ACrzQf2LX1y230r9x6A9MVngvJoF2S+rEX6xD2N/zHaisFgEOEuaBnGm
+        gDPCwK6W/TBiSLnwWLHUqh3mEyHg09YJD5TPvAjnsQ==
+X-Google-Smtp-Source: AMsMyM4XnutzWavl2CaDfCXL+NDneRFi94v1QO+dssMzMZyLaX2H7s4OEN4i8mf8M3e074LWZ65Q0+cFfxQ3DjJdW8U=
+X-Received: by 2002:a05:651c:222c:b0:26b:dec5:a4f0 with SMTP id
+ y44-20020a05651c222c00b0026bdec5a4f0mr20966207ljq.359.1666916626872; Thu, 27
+ Oct 2022 17:23:46 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 27 Oct 2022 20:23:46 -0400
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH v3 09/17] ufs: core: mcq: Configure operation and runtime
- interface
-Content-Language: en-US
-To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_cang@quicinc.com,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
-        stanley.chu@mediatek.com, eddie.huang@mediatek.com,
-        daejun7.park@samsung.com, avri.altman@wdc.com, mani@kernel.org,
-        beanhuo@micron.com, quic_richardp@quicinc.com,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        open list <linux-kernel@vger.kernel.org>
-References: <cover.1666288432.git.quic_asutoshd@quicinc.com>
- <84a13c45fa8edc375b3342a5b9b35fc097208bab.1666288432.git.quic_asutoshd@quicinc.com>
-From:   Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <84a13c45fa8edc375b3342a5b9b35fc097208bab.1666288432.git.quic_asutoshd@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <1666159535-6447-1-git-send-email-quic_c_skakit@quicinc.com>
+References: <1666159535-6447-1-git-send-email-quic_c_skakit@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Thu, 27 Oct 2022 20:23:46 -0400
+Message-ID: <CAE-0n51s94fsxz2Ay7YOs96aL1ScPUQGovbjut3R5m=2yxHnzg@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: Update the force mem core bit for GPU clocks
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_tdas@quicinc.com, linux-clk@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/20/22 11:03, Asutosh Das wrote:
-> +/**
-> + * ufshcd_mcq_config_mac - Set the #Max Activ Cmds.
-> + * @hba - per adpater instance
+Quoting Satya Priya (2022-10-18 23:05:35)
+> From: Taniya Das <quic_tdas@quicinc.com>
+>
+> There are few GPU clocks which are powering up the memories
+> and thus enable the FORCE_MEM_PERIPH always for these clocks
+> to force the periph_on signal to remain active during halt
+> state of the clock.
+>
+> Fixes: a3cc092196ef ("clk: qcom: Add Global Clock controller (GCC) driver for SC7280")
+> Fixes: 3e0f01d6c7e7 ("clk: qcom: Add graphics clock controller driver for SC7280")
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+> ---
 
-adpater -> adapter
-
-> + * @max_active_cmds - maximum # of active commands to the device at any time.
-> + *
-> + * The controller wouldn't send more than the max_active_cmds to the device at
-> + * any time.
-> + */
-
-wouldn't -> won't
-
-> +#define MCQ_CFG_n(r, i) \
-> +	((r) + MCQ_QCFG_SIZE * (i))
-
-No need to spread this macro over two lines.
-
-Otherwise this patch looks good to me.
-
-Bart.
+Applied to clk-fixes
