@@ -2,82 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5944061181C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 18:51:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C808611845
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 18:54:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229576AbiJ1Qvl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 12:51:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48074 "EHLO
+        id S229846AbiJ1QyY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 12:54:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229964AbiJ1Qvb (ORCPT
+        with ESMTP id S230173AbiJ1QyT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 12:51:31 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00378190E54;
-        Fri, 28 Oct 2022 09:51:29 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29SBrwPl002046;
-        Fri, 28 Oct 2022 16:51:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=MWks2PIv5z1t6U2gIbqK1G/0YBGynsz7BSXDq//qxQg=;
- b=XFnK4t3ypPDG/xQSn67H+7Orj3ovpvkYik0HnmWS/bZ1TmOJNEWw2M67C1dbzA3udlFb
- 9WXRnMsR9+Ffs5xL1tZIzTewoJ6vB3dmw4JkarXSVklzTInxxY8w34I30gtM1cPNwNEO
- E9M3bzYXQTVfzG1F60yS3jaRffYtDMmpwHXLkXtzhq8YaMpNc2H80F975KeuatybxljM
- S8Q0bsqU1ikcUVFOb+COVe7laECezZLpfI413n0sIJ/sjunXaHwDD1Ycj9a2sjgsH+T0
- dbbr5Bx/Zw4lX3xO8APH83YJ9+Y98vQU2BF0F/hX6P7Si5VySrO5JO34Gz7JfaMOS242 zQ== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kg59ajgys-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Oct 2022 16:51:17 +0000
-Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29SGpGWs023274
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Oct 2022 16:51:17 GMT
-Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Fri, 28 Oct 2022 09:51:16 -0700
-Date:   Fri, 28 Oct 2022 09:51:16 -0700
-From:   Asutosh Das <quic_asutoshd@quicinc.com>
-To:     Bart Van Assche <bvanassche@acm.org>
-CC:     <quic_cang@quicinc.com>, <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>, <quic_nguyenb@quicinc.com>,
-        <quic_xiaosenh@quicinc.com>, <stanley.chu@mediatek.com>,
-        <eddie.huang@mediatek.com>, <daejun7.park@samsung.com>,
-        <avri.altman@wdc.com>, <mani@kernel.org>, <beanhuo@micron.com>,
-        <quic_richardp@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "open list" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 03/17] ufs: core: Introduce Multi-circular queue
- capability
-Message-ID: <20221028165116.GC9077@asutoshd-linux1.qualcomm.com>
-References: <cover.1666288432.git.quic_asutoshd@quicinc.com>
- <1718196085461c37138c194c49146efa5c5503dc.1666288432.git.quic_asutoshd@quicinc.com>
- <14a5925b-df2b-3f84-ed99-b4157c0a1b21@acm.org>
+        Fri, 28 Oct 2022 12:54:19 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AB0E224A97;
+        Fri, 28 Oct 2022 09:54:12 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5B075623A9;
+        Fri, 28 Oct 2022 16:54:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD04EC433B5;
+        Fri, 28 Oct 2022 16:54:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1666976051;
+        bh=CagHt1YKwrFPw9NQtg1cErC7qHaLnYF/pJpMHFrobgY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=YZCvVBy+vDkYlZMf/7/EGEMNXjyy3syl32922bEgQN1M1C36tEVngOnb1IlPUKXaY
+         wSHlRtWrfGlshaalXeNuf9OC1wFi91GF/zFU8FRIIteQwV4XBD8vvDnUdDRZCdBr8Z
+         UluKjSLTSKuB8OA2wNwxNwaSEDwO6iZALGwhE/z3DxBY7cgJBIwCDojZ7A32ChZPm2
+         1uj+y0rIstBtFf3KBnLeIoxLOljEtHgTP6eP4zlIL9ZUIgHHzAX+BMJ2Riqn8SMFr+
+         HBlQqwfiL2UeHMVKCe9JZBueFJtrk48+E43D/o+CetvRJwTvVTEGSP+gQ5bAhXJNCH
+         RIBOi4AOUoGYQ==
+Date:   Fri, 28 Oct 2022 22:24:01 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Qiang Yu <quic_qianyu@quicinc.com>
+Cc:     mani@kernel.org, loic.poulain@linaro.org, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_cang@quicinc.com, mrana@quicinc.com
+Subject: Re: [PATCH v2] bus: mhi: host: Fix race between channel preparation
+ and M0 event
+Message-ID: <20221028165401.GA13880@thinkpad>
+References: <1665889532-13634-1-git-send-email-quic_qianyu@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <14a5925b-df2b-3f84-ed99-b4157c0a1b21@acm.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SpBA5FrS_tlYh4PC270buJIINgKO4k3Y
-X-Proofpoint-ORIG-GUID: SpBA5FrS_tlYh4PC270buJIINgKO4k3Y
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-28_07,2022-10-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- clxscore=1015 mlxscore=0 suspectscore=0 mlxlogscore=999 bulkscore=0
- priorityscore=1501 spamscore=0 impostorscore=0 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2210280105
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1665889532-13634-1-git-send-email-quic_qianyu@quicinc.com>
+X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,31 +56,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 27 2022 at 14:10 -0700, Bart Van Assche wrote:
->On 10/20/22 11:03, Asutosh Das wrote:
->>+
->>+	/*
->>+	 * This capability allows the host controller driver to turn on/off
->>+	 * MCQ mode. MCQ mode may be used to increase performance.
->>+	 */
->>+	UFSHCD_CAP_MCQ_EN				= 1 << 12,
->>  };
->
->I prefer that the above flag would only be introduced after a need 
->appears to disable MCQ, e.g. discovery of a host controller that is 
->too broken to enable MCQ.
->
-I think this flag is useful during chip bring-ups &/or debugs.
-Considering that this is a fairly new hardware block even though the HC supports
-MCQ there could be times to keep it disabled.
+On Sun, Oct 16, 2022 at 11:05:32AM +0800, Qiang Yu wrote:
+> There is a race condition where mhi_prepare_channel() updates the
+> read and write pointers as the base address and in parallel, if
+> an M0 transition occurs, the tasklet goes ahead and rings
+> doorbells for all channels with a delta in TRE rings assuming
+> they are already enabled. This causes a null pointer access. Fix
+> it by adding a channel enabled check before ringing channel
+> doorbells.
+> 
+> Fixes: a6e2e3522f29 "bus: mhi: core: Add support for PM state transitions"
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
 
->Since UFSHCI 4.0 controllers must support UFSHCI 3.0, shouldn't users 
->have a way to disable MCQ, e.g. via a kernel module parameter?
->
-I can add a kernel module parameter to disable MCQ.
-I think adding it to host driver (e.g. ufs-qcom) would be good.
-Please let me know if you have a better place in mind.
+Can you also CC stable list for backporting?
 
->Thanks,
->
->Bart.
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+
+Thanks,
+Mani
+
+> ---
+> v1->v2: add Fixes tags
+> 
+>  drivers/bus/mhi/host/pm.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+> index 4a42186..0834590 100644
+> --- a/drivers/bus/mhi/host/pm.c
+> +++ b/drivers/bus/mhi/host/pm.c
+> @@ -301,7 +301,8 @@ int mhi_pm_m0_transition(struct mhi_controller *mhi_cntrl)
+>  		read_lock_irq(&mhi_chan->lock);
+>  
+>  		/* Only ring DB if ring is not empty */
+> -		if (tre_ring->base && tre_ring->wp  != tre_ring->rp)
+> +		if (tre_ring->base && tre_ring->wp  != tre_ring->rp &&
+> +		    mhi_chan->ch_state == MHI_CH_STATE_ENABLED)
+>  			mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+>  		read_unlock_irq(&mhi_chan->lock);
+>  	}
+> -- 
+> 2.7.4
+> 
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
