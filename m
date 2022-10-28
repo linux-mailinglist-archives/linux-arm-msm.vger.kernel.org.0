@@ -2,48 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 683FF611CAF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 23:49:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CE0C611CB5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 23:53:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230013AbiJ1VtX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 17:49:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56184 "EHLO
+        id S229927AbiJ1VxG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 17:53:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230049AbiJ1VtW (ORCPT
+        with ESMTP id S229515AbiJ1VxF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 17:49:22 -0400
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1B7824C945;
-        Fri, 28 Oct 2022 14:49:21 -0700 (PDT)
-Received: by mail-pl1-f171.google.com with SMTP id p21so2081704plr.7;
-        Fri, 28 Oct 2022 14:49:21 -0700 (PDT)
+        Fri, 28 Oct 2022 17:53:05 -0400
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C288724C978;
+        Fri, 28 Oct 2022 14:53:04 -0700 (PDT)
+Received: by mail-pl1-f181.google.com with SMTP id p21so2087831plr.7;
+        Fri, 28 Oct 2022 14:53:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tJODnJHrzUQ0dJuxRpB7z2CDN1C20lkbwqTM9JUYhfw=;
-        b=ENujUU5MBhOxVJKpYJJQHf4avdc5kfxk8bsEftrP3QC2XehWZ9v+T4dJV/P7mDuSFT
-         6dEF6pUPmdOJpAWJomSrUu/OUbYPtYoD6Yl/4fGf5TgYHS/8iFVK7daDZGmrm0/1czjD
-         HeRmEJ2Qn0UqStwttHb5prSp2WaC+k+rYMsyluwXYBgCdiSuSXJxizhA+qP85hLgdakQ
-         2VwC0E/0xjNfd9eeIhsXblMDoO7svA3K5X+olEj4kWPTTdOw2mEptBVq2M4s2Ioy0yNk
-         abAfBNDN64uPZKZDKZLyAS36fdpj5cPgNX8ZzrjmGzSawI0JFdRPBtpHio4gWrJkQK7c
-         cpJg==
-X-Gm-Message-State: ACrzQf0MogwuC5CE26UZxu7RgH35q8XyQsSVV2zp/jHXXHe/4d6Wj8nc
-        GGsuiF7ukO0OI9mjDGejndU=
-X-Google-Smtp-Source: AMsMyM5P2LZ8aSwfa5LdH2ue6RAAbIfPpu+99Klju67VAEE5toHo494tXyRAWIZi/fM84K7FJOQ0lA==
-X-Received: by 2002:a17:90a:df91:b0:213:8a69:c504 with SMTP id p17-20020a17090adf9100b002138a69c504mr7001564pjv.82.1666993761200;
-        Fri, 28 Oct 2022 14:49:21 -0700 (PDT)
+        bh=aHW0VpCYFExt/yJYXKv4CHfVB0y8NEIPRLasE5/M9fU=;
+        b=oNoLsF0h9+0rbURD9pboRjTuA+0uJ7hoBPwsk/7OPNAdK09P5ycee2yThc/zEs+9FC
+         TR8BBgUIJdvcOLxLolVfheRNEOY0J7a7J1MLHkVOwp3uc2TxAMhFuJAhS28S+4lcpHtv
+         sN46PZc/bG4Jclv65+4T6FQ8f+EBFNKc6TEuH+ehLJBAKWm4FdT1fhFuc6fTYSFNsTjO
+         cewzp7rt1nVLy/ai/W8Q5RjT6WueTPQIFu/zat+qKzArodaQWvrot0aTHuWUjNVretcP
+         IM+5t2vANjpqD4JHnyfq+k0e8dzsRTBGMIRm7LCLhBhqKc0i9uNvVAWuX8tAPrJdc9Mf
+         TMZQ==
+X-Gm-Message-State: ACrzQf2crsu+MA7PYL+CuHpbR8Bsu99l2qUcm+3xTo7xMCQSbPdHXVmb
+        Ccu5MIGKCeQMeuHtrqBC/SM=
+X-Google-Smtp-Source: AMsMyM7B3Xyir5PKlTiNvIB9P3ZB8N9O1f8bxaCqGk3PwosEpzTJTt5dyRPVqzbE8EEaHRM0LJ0dbQ==
+X-Received: by 2002:a17:902:b092:b0:186:9dc3:dc44 with SMTP id p18-20020a170902b09200b001869dc3dc44mr1167576plr.112.1666993984173;
+        Fri, 28 Oct 2022 14:53:04 -0700 (PDT)
 Received: from [192.168.3.219] ([98.51.102.78])
-        by smtp.gmail.com with ESMTPSA id o12-20020a170902d4cc00b001830ed575c3sm3528860plg.117.2022.10.28.14.49.18
+        by smtp.gmail.com with ESMTPSA id l13-20020a17090a660d00b00212e8945d97sm4618065pjj.56.2022.10.28.14.53.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Oct 2022 14:49:20 -0700 (PDT)
-Message-ID: <777e523e-1a6f-2b4d-0470-3e293b28c110@acm.org>
-Date:   Fri, 28 Oct 2022 14:49:18 -0700
+        Fri, 28 Oct 2022 14:53:03 -0700 (PDT)
+Message-ID: <817ec99a-b28e-6fb7-383d-f8a3ac578686@acm.org>
+Date:   Fri, 28 Oct 2022 14:53:01 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.3
-Subject: Re: [PATCH v3 11/17] ufs: core: Prepare ufshcd_send_command for mcq
+Subject: Re: [PATCH v3 12/17] ufs: core: mcq: Find hardware queue to queue
+ request
 Content-Language: en-US
 To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_cang@quicinc.com,
         martin.petersen@oracle.com, linux-scsi@vger.kernel.org
@@ -57,15 +58,15 @@ Cc:     quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         open list <linux-kernel@vger.kernel.org>
 References: <cover.1666288432.git.quic_asutoshd@quicinc.com>
- <c06dfe2ec39f2f1d4914ee3330188a41f1c4408e.1666288432.git.quic_asutoshd@quicinc.com>
+ <c70e6972daf3bb1cef6fbf157b8549bfc365f674.1666288432.git.quic_asutoshd@quicinc.com>
 From:   Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <c06dfe2ec39f2f1d4914ee3330188a41f1c4408e.1666288432.git.quic_asutoshd@quicinc.com>
+In-Reply-To: <c70e6972daf3bb1cef6fbf157b8549bfc365f674.1666288432.git.quic_asutoshd@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
         FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -73,8 +74,25 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 10/20/22 11:03, Asutosh Das wrote:
-> Add support to send commands using multiple submission
-> queues in MCQ mode.
-> Modify the functions that use ufshcd_send_command().
+> +struct ufs_hw_queue *ufshcd_mcq_req_to_hwq(struct ufs_hba *hba,
+> +					 struct request *req)
+> +{
+> +	u32 utag, hwq;
+> +
+> +	utag = blk_mq_unique_tag(req);
+> +	hwq = blk_mq_unique_tag_to_hwq(utag);
+
+A minor stylistic nit: please combine declaration and assignment as follows:
+
+         u32 utag = blk_mq_unique_tag(req);
+         u32 hwq = blk_mq_unique_tag_to_hwq(utag);
+
+> +	/* uhq[0] is to serve device commands */
+
+is -> is used?
+
+> +	return &hba->uhq[hwq + UFSHCD_MCQ_IO_QUEUE_OFFSET];
+
+Otherwise this patch looks good to me. Hence:
 
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
