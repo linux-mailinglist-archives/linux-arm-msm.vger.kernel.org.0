@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A909611931
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 19:22:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6D0C611948
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 19:28:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229728AbiJ1RWN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 13:22:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43208 "EHLO
+        id S229766AbiJ1R2q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 13:28:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231202AbiJ1RWN (ORCPT
+        with ESMTP id S229819AbiJ1R2q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 13:22:13 -0400
+        Fri, 28 Oct 2022 13:28:46 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 550D86CD3A;
-        Fri, 28 Oct 2022 10:22:12 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D29C1DD8BB;
+        Fri, 28 Oct 2022 10:28:45 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E7883629D3;
-        Fri, 28 Oct 2022 17:22:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6164FC433C1;
-        Fri, 28 Oct 2022 17:22:08 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2A142629DD;
+        Fri, 28 Oct 2022 17:28:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C145C433D6;
+        Fri, 28 Oct 2022 17:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666977731;
-        bh=RCc4qKIHtkfxg/CFdtsU8GG54g7gSd6z0PMWBWissZs=;
+        s=k20201202; t=1666978124;
+        bh=jT5rZEE6y+PXjgFd1192RTwBkHZ3W7K2exfQwkqp5s8=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hgrFOb/4HzKUvv7KCSfPG29Jk88l8NVf52ETzbuajDpZtDpK3IkzcC1BlCOe8/TwW
-         eA7AKPRABd3nb9E6GgduXlhnBrd6xb5+tWF9S+j9TpIzsfCp2/lpBGotm9IgGMbLbF
-         VekBR/bAebefY1Sqtg7KS/PFFh9ZtBpnMSw8CkadZGLtpIPobXDQF63nPmxc+OwAmU
-         Tay8GroEAdj4NKa9yKtVZ9/0wYL5PyGC20nvJEabKlQ+pK/3IoWCRjaf7YiVovKJIH
-         WxvxkX8gt4JG0JVegYJsZWbWylcxm/V4Z7fEmkPwbBdWcrn41Z8ASSZqR9RhbtDQ2K
-         R3uDFIGMvJeFA==
-Date:   Fri, 28 Oct 2022 22:52:03 +0530
+        b=dkfovKxxnRrnYNPYtCgcC6ZmL3f/A2ILV5eU7Hh1LkxQReOWtQuX1z90izLuCmwVq
+         xj6vW74Ka82Z44L5TxRJ6f4gkarToWZM5GM3aG+6oa3GZaDg1r8nABS/C477isWyjG
+         xQumJbfCp5jvRDUgS3Xn2mQSVHxIMmNMWtiFilo7cRQnlU80v0H3rdFkl/vkaA1nyh
+         G5isAcpzgySvfDjQZh6WoRMNAqeNSue2mnImsxArRJaN8CtxKZZmftcwl7V8x8lun0
+         icpmpqdI2cs5wbRjadXUTDT56S3xayy2viy9D82KRcxVn0jkskp3vy8PPttC1xPrLb
+         kWLtL+tfCeTHQ==
+Date:   Fri, 28 Oct 2022 22:58:36 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
 To:     Qiang Yu <quic_qianyu@quicinc.com>
 Cc:     quic_hemantk@quicinc.com, loic.poulain@linaro.org,
@@ -41,7 +41,7 @@ Cc:     quic_hemantk@quicinc.com, loic.poulain@linaro.org,
         mrana@quicinc.com
 Subject: Re: [PATCH] bus: mhi: host: Use mhi_soc_reset() API in place of
  register write
-Message-ID: <20221028172203.GD13880@thinkpad>
+Message-ID: <20221028172836.GF13880@thinkpad>
 References: <1665376324-34258-1-git-send-email-quic_qianyu@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -67,10 +67,7 @@ On Mon, Oct 10, 2022 at 12:32:04PM +0800, Qiang Yu wrote:
 > Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
 > Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-
-Btw, this patch is supposed to be v2... Please keep the version info and also
-add the changelog for future patches.
+Applied to mhi-next!
 
 Thanks,
 Mani
