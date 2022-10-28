@@ -2,92 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6BC3610B98
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 09:51:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31A2C610BA6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 09:54:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229786AbiJ1HvS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 03:51:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46014 "EHLO
+        id S230015AbiJ1HyU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 03:54:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229948AbiJ1HvP (ORCPT
+        with ESMTP id S229885AbiJ1HyS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 03:51:15 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0984485AB9;
-        Fri, 28 Oct 2022 00:51:13 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29S6lQ80023975;
-        Fri, 28 Oct 2022 07:51:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=FUOkIyLd1KkITdni1CtAq8I3dI94667xNj2Ue+unSpU=;
- b=YF9tD7MqFdEcg7iH132qjRTQKVyDiJv0LqXCKSDHBKY2pO0QWSAB1FA1QqRjbe+p31EF
- /Oumxv90sZhYglezFh0VvEzRdoA/FwkHEcpVzsGhoHgsEVionUWMzqISGo+jvfnv3DRH
- CiBf945TpbTlNnGtWM+mDs7Iq2mfP6CR8fSyHt42191uggjt0MBQxDMvaGAQw4n14/uw
- +TJ96Dp3MXhpm7/gtNMSHUiZPjX3QzDRpHHINBi7A8ia18CR2+gwfK5xPuKaW3BCC9Ez
- CDRE5gaif56TJlpFofIU/OYzT2v4WN1o/HC0sARpMtGMGDyEW6qHtbymOITmiUrTUpBA sA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kg59agx8t-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Oct 2022 07:51:07 +0000
-Received: from pps.filterd (NALASPPMTA05.qualcomm.com [127.0.0.1])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 29S7m1tq009085;
-        Fri, 28 Oct 2022 07:51:07 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 3kf9urq5ea-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Oct 2022 07:51:07 +0000
-Received: from NALASPPMTA05.qualcomm.com (NALASPPMTA05.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 29S7nWBk010017;
-        Fri, 28 Oct 2022 07:51:06 GMT
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 29S7p6BG011702
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Oct 2022 07:51:06 +0000
-Received: from hu-ppareek-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Fri, 28 Oct 2022 00:51:03 -0700
-Date:   Fri, 28 Oct 2022 13:20:59 +0530
-From:   Parikshit Pareek <quic_ppareek@quicinc.com>
-To:     <konrad.dybcio@somainline.org>
-CC:     Andy Gross <agross@kernel.org>,
+        Fri, 28 Oct 2022 03:54:18 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6A321BFBA6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 00:54:16 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id v27so6751906eda.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 00:54:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PEh7we78H3C504Ey8uKXhsNpfv9vdx7UebnqIo2Gcv8=;
+        b=j0ZZLooRH9i9GWkWCy4Id9RJsOEpEieKVgmJ0bYLgtpvSr+uP1BDaJaW86SWD/akod
+         MWsD6O6z/CWvALagOqHG72vqxQuwYD4z7rNO1YS2hS6aDL45Hi1uQ1PrSWgFQREPdjqE
+         16pruyrm7v7dIrWy0SV6dfnprMt7mN61HMUdmmi4+7XBQD2dWjL+5oEx5p1PUpi40tiW
+         mbHqETFGJfY2wRVlFtnppwbN4yxdmPgvZmz5uPF0PvI6GqFHrLtXV0EXOWKpHx9iRtKP
+         GVl1kKE6qKgoxOjC+Ec3qjn2zVm0y9JTswKeFIrvp1ZxptVg2Qhi0IWfWYHIVgYGghvd
+         nKoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PEh7we78H3C504Ey8uKXhsNpfv9vdx7UebnqIo2Gcv8=;
+        b=NNO5DabEcMhQb6ksWhU0ptlaHQSa8tOBqE/r5XBtBUylLsfCW/ufs1Y9orlo8ehBFS
+         1ZRVMUxyBJhOIS8jq/1hV5GLBq9plP0Ro50V5rN3NBmpwPG0EFVoWnAlm6uuCuvHmhWJ
+         ntaHbCCvMMRImJbGJ1jw0OOi+8jgTHCHeMQBp/2TeEx4Ev0a2RdhEsCxiurf+IgWKH1E
+         lPWazDecGw3c478UgyFF0mBiFiMq7zERWBrz4QaOS8Mt4gIGTx6gSwTLZfwm6TVZSWZ3
+         GkOrKodXKxNaRq2qKTc376alNgt46qOwRDbk5SvkO6qMfAMOxV8uoTbB77RJbzwQME6y
+         GKDA==
+X-Gm-Message-State: ACrzQf3eJDb9gWZJKJ9ybSCii0wq++R9bnZpBQ0AmfU8fZfaIEG9sTvF
+        x3khBQm0Wrjk6B0tvf0kPQmsC63RpHqFHw==
+X-Google-Smtp-Source: AMsMyM6ElPrCWCp47BFYHByQwW0VRG8TQjVnN9IB3snxFHTB2FGWQd0k0zG2bArqCSDOleJlzFDXTw==
+X-Received: by 2002:a05:6402:3408:b0:43c:2dd3:d86b with SMTP id k8-20020a056402340800b0043c2dd3d86bmr49507591edc.108.1666943655226;
+        Fri, 28 Oct 2022 00:54:15 -0700 (PDT)
+Received: from otso.. (31-151-115-246.dynamic.upc.nl. [31.151.115.246])
+        by smtp.gmail.com with ESMTPSA id v8-20020a170906b00800b0078dce9984afsm1776009ejy.220.2022.10.28.00.54.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Oct 2022 00:54:14 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>,
-        "Brian Masney" <bmasney@redhat.com>,
-        Johan Hovold <johan@kernel.org>
-Subject: Re: [PATCH v6 2/2] arm64: dts: qcom: add SA8540P ride(Qdrive-3)
-Message-ID: <20221028075059.GA15101@hu-ppareek-blr.qualcomm.com>
-References: <20221020073036.16656-1-quic_ppareek@quicinc.com>
- <20221020073036.16656-3-quic_ppareek@quicinc.com>
- <7a62dd552c02e2b83fabaf9ff55a7c6c@somainline.org>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/2] arm64: dts: qcom: pm6350: add temp sensor and thermal zone config
+Date:   Fri, 28 Oct 2022 09:54:04 +0200
+Message-Id: <20221028075405.124809-1-luca.weiss@fairphone.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <7a62dd552c02e2b83fabaf9ff55a7c6c@somainline.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BNlJnMlT2jzr7tJQHOKrWUIHFqqr54qT
-X-Proofpoint-ORIG-GUID: BNlJnMlT2jzr7tJQHOKrWUIHFqqr54qT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-28_04,2022-10-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- clxscore=1015 mlxscore=0 suspectscore=0 mlxlogscore=757 bulkscore=0
- priorityscore=1501 spamscore=0 impostorscore=0 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2210280049
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -97,51 +75,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 20, 2022 at 01:49:23PM +0200, konrad.dybcio@somainline.org wrote:
-> On 2022-10-20 09:30, Parikshit Pareek wrote:
-> > Introduce the Qualcomm SA8540P ride automotive platform, also known as
-> > Qdrive-3 development board.
-> > 
-> > This initial contribution supports SMP, CPUFreq, cluster idle, UFS, RPMh
-> > regulators, debug UART, PMICs, remoteprocs and USB.
-> > 
-> > The SA8540P ride contains four PM8450 PMICs.
-> > 
-> > Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
-> > ---
-> 
-> Hi!
-> 
-> [...[
-> 
-> > +		vreg_l3c: ldo3 {
-> > +			regulator-name = "vreg_l3c";
-> > +			regulator-min-microvolt = <1200000>;
-> > +			regulator-max-microvolt = <1200000>;
-> > +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> > +			regulator-allow-set-load;
-> Not sure if setting load is desired after recent rpmh regulator changes.
-May I know the exact patch being refered here?
-> 
-> [...]
-> 
-> > +
-> > +&spmi_bus {
-> > +	pm8450a: pmic@0 {
-> > +		compatible = "qcom,pm8150", "qcom,spmi-pmic";
-> Please add a pm8450[aceg].dtsi instead, as other boards would probably like
-> to
-> reuse this. Also, move the spmi.h inclusion there.
-> 
-> [...]
-> 
-> > +};
-> > +
-> > +/* PINCTRL */
-> Not sure if it's useful if there's nothing there for now.
-> 
-> Konrad
+Add temp-alarm device tree node and a default configuration for the
+corresponding thermal zone for this PMIC. Temperatures are based on
+downstream values, except for trip2 where 125°C is used instead of 145°C
+due to limitations without a configured ADC.
 
-Regards,
-Parikshit Pareek
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Changes in v2:
+* Decrease trip2 temp to 125degC from 145degC after discussion with
+  Matthias
+
+ arch/arm64/boot/dts/qcom/pm6350.dtsi | 38 ++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/pm6350.dtsi b/arch/arm64/boot/dts/qcom/pm6350.dtsi
+index ecf9b9919182..c9575cf0f518 100644
+--- a/arch/arm64/boot/dts/qcom/pm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm6350.dtsi
+@@ -5,6 +5,37 @@
+ 
+ #include <dt-bindings/spmi/spmi.h>
+ 
++/ {
++	thermal-zones {
++		pm6350-thermal {
++			polling-delay-passive = <100>;
++			polling-delay = <0>;
++
++			thermal-sensors = <&pm6350_temp>;
++
++			trips {
++				trip0 {
++					temperature = <95000>;
++					hysteresis = <0>;
++					type = "passive";
++				};
++
++				trip1 {
++					temperature = <115000>;
++					hysteresis = <0>;
++					type = "hot";
++				};
++
++				trip2 {
++					temperature = <125000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++	};
++};
++
+ &spmi_bus {
+ 	pmic@0 {
+ 		compatible = "qcom,pm6350", "qcom,spmi-pmic";
+@@ -35,6 +66,13 @@ pm6350_resin: resin {
+ 			};
+ 		};
+ 
++		pm6350_temp: temp-alarm@2400 {
++			compatible = "qcom,spmi-temp-alarm";
++			reg = <0x2400>;
++			interrupts = <0x0 0x24 0x0 IRQ_TYPE_EDGE_BOTH>;
++			#thermal-sensor-cells = <0>;
++		};
++
+ 		pm6350_gpios: gpios@c000 {
+ 			compatible = "qcom,pm6350-gpio", "qcom,spmi-gpio";
+ 			reg = <0xc000>;
+-- 
+2.38.1
 
