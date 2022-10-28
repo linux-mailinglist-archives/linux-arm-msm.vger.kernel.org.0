@@ -2,107 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C67A6611C9E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 23:45:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B75C5611CA5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 23:47:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229983AbiJ1Vpz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 17:45:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41976 "EHLO
+        id S229552AbiJ1Vrp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 17:47:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229962AbiJ1Vph (ORCPT
+        with ESMTP id S229515AbiJ1Vro (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 17:45:37 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B0C13CBFF;
-        Fri, 28 Oct 2022 14:44:47 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4294862A9A;
-        Fri, 28 Oct 2022 21:44:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8841C433C1;
-        Fri, 28 Oct 2022 21:44:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666993486;
-        bh=hEPWWlelcGH3NQVG+eZz1c2zEG8h8Bc4DpOykI4c9Gk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lCifIkfabc3Jhkz4fjaWCTgPqUFY6iypjHmafhtPZwpsAaSeav5hoQsjrowongJD/
-         E4hvNN1opq6PBc4kN7fHcndS9JUOMMBGHKXUURcE9UjjCylPtb34ePtBWcD3/5b0g3
-         XVV74JyQ+4QbEhXMqotyyegecdwxoRPZt0+tVx1N5/+lyu34mtpfp0+S0RAH+K26SA
-         z2aKMVv+7fHOVnIa+Ln6nWjzYW5RvVIQ25V0mwkZlBssJayoBi8zmAPxtdennkyIs0
-         SfmsMf2EOmfLRwv62heLRDN0GgpFulhGzy8CpH/6kAsf1RcPrWVwAImDt7liDWmA4h
-         hIF7ZaPyGt8nA==
-Date:   Fri, 28 Oct 2022 16:44:43 -0500
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Job Noorman <job@noorman.info>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 3/3] arm64: dts: qcom: sdm632: fairphone-fp3: add
- touchscreen
-Message-ID: <20221028214443.oeg5u4n4bjdyeuks@builder.lan>
-References: <20221024140001.139111-1-job@noorman.info>
- <20221024140001.139111-4-job@noorman.info>
+        Fri, 28 Oct 2022 17:47:44 -0400
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27C1E24BAB6;
+        Fri, 28 Oct 2022 14:47:44 -0700 (PDT)
+Received: by mail-pl1-f172.google.com with SMTP id l2so5921885pld.13;
+        Fri, 28 Oct 2022 14:47:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DFrGHfetuBgL/SnOurCB1y7VCm5G+cM3KwFDzCof9iI=;
+        b=0Yjb8Fnr4jKaoV6sZ2TnDZ8s/Gky89SMhVAx+k6CgAJgIAPaxi0j2kkJI37iGitEdb
+         0KLTqd6DP5kr4mzBaSJaUMTumUD8VHNpkfri0WnS4/zrC+wyUvx30BWfaXIGvU3r+ZmM
+         A/IHd1/jjVJAYadsMYgqJJjZCbx6ZyDVzob1xWZmt1N3GKYSxQJWepsB1qVCVDFneFKC
+         nIpKszZo9KZ7wi4KjwCBzQ/9Onln+yAf3BMWr9sB86YF16qQTb2AQZw1Yb5wiy2TWjf/
+         eM70ykdXOpw+0+0358He/uBn9vmm/wtfBJxeOHsEN4qd6AB5ogpU4N8qgY3pQ8bHLEQI
+         Ym1Q==
+X-Gm-Message-State: ACrzQf1AihdV4tphrcjJkJItkyOD0Ue997u8gYfa4ld3oHevR1jbdGng
+        RAvzMsWIiyKnKTG5cK13KzXq/hjWlyo=
+X-Google-Smtp-Source: AMsMyM4iWB2Mojn7T5n2sI1tb4EqtFT0stMNgH03wtyAZ0x38sRGmjUUFAFpl97KH9PWbk9HES4bfQ==
+X-Received: by 2002:a17:902:8491:b0:183:c3d2:2112 with SMTP id c17-20020a170902849100b00183c3d22112mr1059833plo.133.1666993663559;
+        Fri, 28 Oct 2022 14:47:43 -0700 (PDT)
+Received: from [192.168.3.219] ([98.51.102.78])
+        by smtp.gmail.com with ESMTPSA id y6-20020a17090322c600b001869f2120a6sm3571947plg.108.2022.10.28.14.47.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Oct 2022 14:47:42 -0700 (PDT)
+Message-ID: <035082d1-af66-3938-59f5-e4730e4516bb@acm.org>
+Date:   Fri, 28 Oct 2022 14:47:40 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221024140001.139111-4-job@noorman.info>
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Subject: Re: [PATCH v3 10/17] ufs: core: mcq: Use shared tags for MCQ mode
+Content-Language: en-US
+To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_cang@quicinc.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
+        stanley.chu@mediatek.com, eddie.huang@mediatek.com,
+        daejun7.park@samsung.com, avri.altman@wdc.com, mani@kernel.org,
+        beanhuo@micron.com, quic_richardp@quicinc.com,
+        linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <cover.1666288432.git.quic_asutoshd@quicinc.com>
+ <2fea9d4f0b8dfc2e2c82d176f0c928b0525d8110.1666288432.git.quic_asutoshd@quicinc.com>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <2fea9d4f0b8dfc2e2c82d176f0c928b0525d8110.1666288432.git.quic_asutoshd@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 24, 2022 at 03:59:59PM +0200, Job Noorman wrote:
-> Add Himax hx83112b touchscreen to the FP3 DT.
-> 
-> Signed-off-by: Job Noorman <job@noorman.info>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On 10/20/22 11:03, Asutosh Das wrote:
+> Enable shared taggs for MCQ. For UFS, this should
 
-Please include at least all the mailing lists as Cc on all your patches
-in the series - I'm not subscribed to linux-input, so I don't have patch
-1 or patch 2 in my inbox.
+taggs -> tags
 
-Thanks,
-Bjorn
+Otherwise this patch looks good to me. Hence:
 
-> ---
->  arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-> index 891e314bc782..2920504461d3 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-> @@ -49,6 +49,20 @@ &hsusb_phy {
->  	vdda-phy-dpdm-supply = <&pm8953_l13>;
->  };
->  
-> +&i2c_3 {
-> +	status = "okay";
-> +
-> +	touchscreen@48 {
-> +		compatible = "himax,hx83112b";
-> +		reg = <0x48>;
-> +		interrupt-parent = <&tlmm>;
-> +		interrupts = <65 IRQ_TYPE_LEVEL_LOW>;
-> +		touchscreen-size-x = <1080>;
-> +		touchscreen-size-y = <2160>;
-> +		reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
-> +	};
-> +};
-> +
->  &pm8953_resin {
->  	status = "okay";
->  	linux,code = <KEY_VOLUMEDOWN>;
-> -- 
-> 2.38.1
-> 
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
