@@ -2,48 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9821611D34
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 00:07:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98F84611D3C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 00:09:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229738AbiJ1WHg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 18:07:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35436 "EHLO
+        id S230304AbiJ1WJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 18:09:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230036AbiJ1WHb (ORCPT
+        with ESMTP id S229571AbiJ1WIm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 18:07:31 -0400
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34D2124D892;
-        Fri, 28 Oct 2022 15:07:30 -0700 (PDT)
-Received: by mail-pg1-f173.google.com with SMTP id q1so5937209pgl.11;
-        Fri, 28 Oct 2022 15:07:30 -0700 (PDT)
+        Fri, 28 Oct 2022 18:08:42 -0400
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7628C24CCA6;
+        Fri, 28 Oct 2022 15:08:41 -0700 (PDT)
+Received: by mail-pf1-f174.google.com with SMTP id y13so5888406pfp.7;
+        Fri, 28 Oct 2022 15:08:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jcpk8CmaMkGFoybxiTAHyQGaGi/qPUntpcpAOZKAFN0=;
-        b=rjx3M8PDZLXIcEWpLwPo9k0dL44wtLIw1aiJyibSTvifT4utvBMi3nBDVgWTGQoIxx
-         qoYSUzoGO4NRY1SnkZRMTbPGwUicjA58ELkgcT3HVetVfpztRDEeN3fwLgY872yYcRpz
-         JVKFzrbxTKEmmYqAWPmHAI1dX01M+OYy2wrHYxGZH2oPkqWRW9gNvu9BmKKBbkESIlYC
-         2t2ByqZItJYbFPEMwVd7mCe7ZXQeHvRHF5aiQz2IZI3dDadGSVP+6IJ2KXhGqdRgpmmP
-         vOdHpfi+e70BUrd51hHkKH3apD47PCFqVIoHbSNI6Jqaqiq2QAsydlGVSAw28zpQg+nx
-         fjDA==
-X-Gm-Message-State: ACrzQf1TJfcHvd9jsYutaAJhkhsJW4WysxU7GMpcuGsnZGa8xskcLu0M
-        m7kLPhTgiLc83MzOTXAuWb0s2MRJJo8=
-X-Google-Smtp-Source: AMsMyM7q5jdgy66puytik9g5+Lb6M9f+36JxwW+qB34UjjwetMgf6YTetQX0VCWuEzod2J5PBCZ4UQ==
-X-Received: by 2002:a05:6a00:14d2:b0:56c:b1c5:c5da with SMTP id w18-20020a056a0014d200b0056cb1c5c5damr1326952pfu.2.1666994849556;
-        Fri, 28 Oct 2022 15:07:29 -0700 (PDT)
+        bh=vIdR8ig1omdEV7fd5WEXjnAuRKZfGz+B13uwi7OkHMs=;
+        b=A0J5WwcCwcwa5eVJumbaM9VjSbYuSB/W4rIFi8Zzadc3fyAHLJAumuRYncR2ZQxdfo
+         yupUKeeeCIKwFTMb++Oz0/phSXgO1OalS8vkOrN7uXu/snrnAEDtOGUOaFbi3+TdmpK8
+         +e4J5eUgN8/s0ugXmu7XrENsf8PnlCJjlUdKwlFSChaj25QNXf2AoYUxNRaILebjgtBk
+         cYO++/5yn13iY2L+EiOcOOl7ffHPzfZCCgQS9KIzd2AbXvfNu5vIXbAyhgucekutfahL
+         ZzUjx96yddpPdlcskErQPpWo6Zwg+D6a886gutOslqpchgkHaQuxz3MlUkvt2KxKqc3h
+         Kqug==
+X-Gm-Message-State: ACrzQf1yhO2qDAGTsRwbyUogW8latBdrhQKFImFT6QDYgIQkP35xr7bq
+        6CEuBpvaIlXHL8WQlmZb748=
+X-Google-Smtp-Source: AMsMyM7CGn68icfXshr3ltUjfrQSZfJ++ezHubkJVXBc3vBo7Ik5LqcSYDpnvn8qLoa4TtprJP6d1g==
+X-Received: by 2002:a05:6a00:1943:b0:563:8173:b46a with SMTP id s3-20020a056a00194300b005638173b46amr1569645pfk.34.1666994920926;
+        Fri, 28 Oct 2022 15:08:40 -0700 (PDT)
 Received: from [192.168.3.219] ([98.51.102.78])
-        by smtp.gmail.com with ESMTPSA id p7-20020a170902780700b001714c36a6e7sm3464387pll.284.2022.10.28.15.07.27
+        by smtp.gmail.com with ESMTPSA id bi6-20020a170902bf0600b0017f36638010sm3464312plb.276.2022.10.28.15.08.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Oct 2022 15:07:28 -0700 (PDT)
-Message-ID: <a3cf0510-a502-b623-4abc-cd02b9074501@acm.org>
-Date:   Fri, 28 Oct 2022 15:07:26 -0700
+        Fri, 28 Oct 2022 15:08:40 -0700 (PDT)
+Message-ID: <c03ac1f5-e4a4-c26a-c1f5-b4e78cae3472@acm.org>
+Date:   Fri, 28 Oct 2022 15:08:38 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.3
-Subject: Re: [PATCH v3 16/17] ufs: core: mcq: Enable Multi Circular Queue
+Subject: Re: [PATCH v3 17/17] ufs: qcom-host: Enable multi circular queue
+ capability
 Content-Language: en-US
 To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_cang@quicinc.com,
         martin.petersen@oracle.com, linux-scsi@vger.kernel.org
@@ -51,14 +52,14 @@ Cc:     quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
         stanley.chu@mediatek.com, eddie.huang@mediatek.com,
         daejun7.park@samsung.com, avri.altman@wdc.com, mani@kernel.org,
         beanhuo@micron.com, quic_richardp@quicinc.com,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         "James E.J. Bottomley" <jejb@linux.ibm.com>,
         open list <linux-kernel@vger.kernel.org>
 References: <cover.1666288432.git.quic_asutoshd@quicinc.com>
- <4c7e03d7d99e305a8e5ae0547fa9648a2a910fe2.1666288432.git.quic_asutoshd@quicinc.com>
+ <4d21c867708a9d37e53293510d81013088d01c39.1666288432.git.quic_asutoshd@quicinc.com>
 From:   Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <4c7e03d7d99e305a8e5ae0547fa9648a2a910fe2.1666288432.git.quic_asutoshd@quicinc.com>
+In-Reply-To: <4d21c867708a9d37e53293510d81013088d01c39.1666288432.git.quic_asutoshd@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,
@@ -72,7 +73,21 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 10/20/22 11:03, Asutosh Das wrote:
-> Enable MCQ in the Host Controller.
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 36c40210..b740299 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -853,6 +853,7 @@ static void ufs_qcom_set_caps(struct ufs_hba *hba)
+>   	hba->caps |= UFSHCD_CAP_CRYPTO;
+>   	hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
+>   	hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
+> +	hba->caps |= UFSHCD_CAP_MCQ_EN;
 
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Shouldn't we have a flag that disables MCQ rather than a flag that 
+enables MCQ? Otherwise the above line will be duplicated in every single 
+host controller driver that supports MCQ.
+
+Thanks,
+
+Bart.
 
