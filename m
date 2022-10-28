@@ -2,68 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D91761142F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 16:12:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5F89611449
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 16:16:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230213AbiJ1OMw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 10:12:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36270 "EHLO
+        id S229949AbiJ1OQj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 10:16:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230200AbiJ1OMn (ORCPT
+        with ESMTP id S229937AbiJ1OQh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 10:12:43 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D0E41CC3E6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 07:12:39 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id 63so6268314ybq.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 07:12:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q6z80PFwyq5zF4sE798rB0h2XoymCmatv0a4gNGnqVA=;
-        b=Wp/DSxUFZO65+GOpkFzMjak1zC2fi/t9MD6/d3fyiCZlWUxsnkCGWZsxJIbMIWfLJj
-         b9Kl7Zki0zOAUjXd7DR5nRjJ8RBot7DuoQD2YpDgBQQ9nl+NIUEbqesT2OJh2a8B0DI7
-         IOlKay0atm8kzc/RW2GgHga7waU9LxLN4UToG65UUrmwqRPk7hUTYkBxU+IeMd0nAYDD
-         R1mFhGqnOCX7uXO2Y2HYnW9rp3Roa0OSX69EdMwHXuHzMJOhjMZEPZ6w0e09yvlAPhU9
-         8mTKacyLeXbdo56I0rWI2a9YL+nvx5+5vp0q2eDGK0BKjFuA88+1vYDnbaJ78zyexlHO
-         J3OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Q6z80PFwyq5zF4sE798rB0h2XoymCmatv0a4gNGnqVA=;
-        b=VbZx66O2h+r+VHRrhokquyjeek492R4iN1GB6ZN2jl5AXANFujBT5iH8AhbxihFEyC
-         ahsMgV0Ykf69ihCktA/WNME8ui5zdYU1veP30FRburgLqHyhHGEJFo1M6FDvqeoM/2Rs
-         z3yS4RFATSXm5nzWr0BRIwKSx57iCNsZjrOR2+0coFqoH6cFCmQ0tLPkkcdNCLY/JTDc
-         cL5wTlBkwwjfmLVN54EJXdQ/GBkdmRIbtBv355ngeT1lknbeSFOSoAGS4ZKYRPbH0BzO
-         HIlYiIAwhAJDxd5rL+2kQec0PAI8wmHCcx4UQmkYHWiAcGB01lp6QNq7vlYY3YiEfEEI
-         DO6A==
-X-Gm-Message-State: ACrzQf1QkF+Ln59fIyXvYB39b5et15USNfyUA2wwTQ7PfJsU/LOf7YZA
-        Aew7KSAIzLfzd7uxhg6I+L4xHJh6Fvz2KOBYowiufA==
-X-Google-Smtp-Source: AMsMyM6OwOcDdtyjMOjpE0CUWcvsWyuJLrnqqc7RWsg5FE+k5sEhC+q8bkBat3SxJGLVKTTd6TjkANKUE5/8lfxZF18=
-X-Received: by 2002:a25:dac3:0:b0:6ca:3133:8d58 with SMTP id
- n186-20020a25dac3000000b006ca31338d58mr41892617ybf.516.1666966358681; Fri, 28
- Oct 2022 07:12:38 -0700 (PDT)
+        Fri, 28 Oct 2022 10:16:37 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DF8E1D639E;
+        Fri, 28 Oct 2022 07:16:35 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29SDVcBv032409;
+        Fri, 28 Oct 2022 14:15:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=dUwCBBBVioqpv4W9fJp7HCTTNgfmZzayTqkqExmwh8I=;
+ b=XB1kcbbyNTtE+cla4nTuuHFIH4v5Jbu191f1H9Y41OKPKmY6hw4LP2vlofpj3al+rUPf
+ sMdqaUvQlz8xD1nn9xgJJc6Sqv666nTr8BWZ/BTmisq13TLwX0isoap5zEf4n/FB7gBF
+ WVvFrDxdtgJh4JrqZvRmstp71+1FuH51CHyXZLBLueW+fQFMpZ8l3rkdtWUB2gIQamlo
+ VwAVhpv33RCFfH8VpGpWy2vNJCZgGs5DnUMEYTWolIGEdpcOiiXBujk1/A3WQiHELabp
+ I65d0bQT9WXBBrUzybDvF6Hz+EdNntQyEipLAxOd7Gfz8gKo6SQdmwT1LNQiulqYmT56 tw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kg9tys325-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 28 Oct 2022 14:15:40 +0000
+Received: from pps.filterd (NALASPPMTA04.qualcomm.com [127.0.0.1])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 29SE7t27017934;
+        Fri, 28 Oct 2022 14:14:49 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by NALASPPMTA04.qualcomm.com (PPS) with ESMTPS id 3kf9vsghn6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 28 Oct 2022 14:14:49 +0000
+Received: from NALASPPMTA04.qualcomm.com (NALASPPMTA04.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 29SEEmT9024560;
+        Fri, 28 Oct 2022 14:14:48 GMT
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (PPS) with ESMTPS id 29SEEmQX024559
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 28 Oct 2022 14:14:48 +0000
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Fri, 28 Oct
+ 2022 07:14:45 -0700
+Message-ID: <a8df4485-36f0-171f-5569-9e6bac190a1b@quicinc.com>
+Date:   Fri, 28 Oct 2022 08:14:44 -0600
 MIME-Version: 1.0
-References: <20221028125148.264833-1-dmitry.baryshkov@linaro.org> <20221028134036.s3sunt7loa2gcq6s@baldur>
-In-Reply-To: <20221028134036.s3sunt7loa2gcq6s@baldur>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 28 Oct 2022 17:12:27 +0300
-Message-ID: <CAA8EJprxt3qKTDBi2t=yw-j-1rs_xOpS66C0r7FCEW3pRW5teQ@mail.gmail.com>
-Subject: Re: [PATCH v5] phy: qcom-qmp-ufs: provide symbol clocks
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH 2/2] dt-bindings: clock: qcom: cleanup
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Lars Povlsen <lars.povlsen@microchip.com>,
+        Steen Hegelund <Steen.Hegelund@microchip.com>,
+        Daniel Machon <daniel.machon@microchip.com>,
+        <UNGLinuxDriver@microchip.com>,
+        Sergey Shtylyov <s.shtylyov@omp.ru>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Martin Botka <martin.botka@somainline.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        "Stephan Gerhold" <stephan@gerhold.net>,
+        Shawn Guo <shawn.guo@linaro.org>,
         Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        Johan Hovold <johan@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        krishna Lanka <quic_vamslank@quicinc.com>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Del Regno <angelogioacchino.delregno@somainline.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Govind Singh <govinds@codeaurora.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Oleksij Rempel <linux@rempel-privat.de>,
+        Horatiu Vultur <horatiu.vultur@microchip.com>,
+        Vladimir Oltean <vladimir.oltean@nxp.com>,
+        Claudiu Manoil <claudiu.manoil@nxp.com>,
+        "Alexandre Belloni" <alexandre.belloni@bootlin.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-renesas-soc@vger.kernel.org>
+References: <20221028140326.43470-1-krzysztof.kozlowski@linaro.org>
+ <20221028140326.43470-3-krzysztof.kozlowski@linaro.org>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20221028140326.43470-3-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: tpV2KDS-qvlbojaReTiHGCklDeoD7ZM2
+X-Proofpoint-GUID: tpV2KDS-qvlbojaReTiHGCklDeoD7ZM2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-28_07,2022-10-27_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
+ impostorscore=0 malwarescore=0 bulkscore=0 adultscore=0 suspectscore=0
+ spamscore=0 clxscore=1011 lowpriorityscore=0 phishscore=0 mlxlogscore=820
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
+ definitions=main-2210280089
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,68 +131,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 28 Oct 2022 at 16:40, Bjorn Andersson <andersson@kernel.org> wrote:
->
-> On Fri, Oct 28, 2022 at 03:51:48PM +0300, Dmitry Baryshkov wrote:
-> > Register three UFS symbol clocks (ufs_rx_symbol_0_clk_src,
-> > ufs_rx_symbol_1_clk_src ufs_tx_symbol_0_clk_src). Register OF clock
-> > provider to let other devices link these clocks through the DT.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >
-> > Changes since v4:
-> > - Rebased, dropping merged clk patches
-> > - Fix whitespace errors
-> > - Add linebreaks to fit into 100 chars limit
-> >
-> > ---
-> >  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 61 +++++++++++++++++++++++++
-> >  1 file changed, 61 insertions(+)
-> >
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> > index e28c45ab74ea..f60e29c68c26 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> > @@ -1067,6 +1067,60 @@ static int qmp_ufs_clk_init(struct device *dev, const struct qmp_phy_cfg *cfg)
-> >       return devm_clk_bulk_get(dev, num, qmp->clks);
-> >  }
-> >
-> > +static void phy_clk_release_provider(void *res)
-> > +{
-> > +     of_clk_del_provider(res);
-> > +}
-> > +
-> > +#define UFS_SYMBOL_CLOCKS 3
-> > +
-> > +static int phy_symbols_clk_register(struct qcom_qmp *qmp, struct device_node *np)
-> > +{
-> > +     struct clk_hw_onecell_data *clk_data;
-> > +     struct clk_hw *hw;
-> > +     char name[64];
-> > +     int ret;
-> > +
-> > +     clk_data = devm_kzalloc(qmp->dev,
-> > +                             struct_size(clk_data, hws, UFS_SYMBOL_CLOCKS),
-> > +                             GFP_KERNEL);
-> > +     if (!clk_data)
-> > +             return -ENOMEM;
-> > +
-> > +     clk_data->num = UFS_SYMBOL_CLOCKS;
-> > +
-> > +     snprintf(name, sizeof(name), "%s::rx_symbol_0", dev_name(qmp->dev));
-> > +     hw = devm_clk_hw_register_fixed_rate(qmp->dev, name, NULL, 0, 0);
->
-> Wouldn't it be desirable to provide a non-zero frequency for these
-> clocks?
+On 10/28/2022 8:03 AM, Krzysztof Kozlowski wrote:
+> Clean the Qualcomm SoCs clock bindings:
+> 1. Drop redundant "bindings" in title.
+> 2. Correct language grammar "<independent clause without verb>, which
+>     supports" -> "provides".
+> 3. Use full path to the bindings header, so tools can validate it.
+> 4. Drop quotes where not needed.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
 
-Is there a stable frequency that we can provide here? If I remember
-correctly from my tests, UFS symbol frequencies vary depending on the
-workload (but I might be mistaken here).
+For 8998 bits -
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-
-
-
--- 
-With best wishes
-Dmitry
+For MMCC bit -
+Acked-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
