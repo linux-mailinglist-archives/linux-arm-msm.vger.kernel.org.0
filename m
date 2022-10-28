@@ -2,55 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AEEB361195F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 19:38:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C61D611985
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 19:43:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229665AbiJ1RiW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 13:38:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37734 "EHLO
+        id S229648AbiJ1RnP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 13:43:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbiJ1RiV (ORCPT
+        with ESMTP id S230179AbiJ1RnK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 13:38:21 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FD0822B79D;
-        Fri, 28 Oct 2022 10:38:20 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1C7C26299B;
-        Fri, 28 Oct 2022 17:38:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BCF1C433C1;
-        Fri, 28 Oct 2022 17:38:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1666978699;
-        bh=pSH5TbZ4op8f2G25l5havY6JqLWPvfAfAEWvyxloAGU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ki/WuuaTC0CqMRrkL3PdRkOsUynzz5otdqvITRi2vKXFZZiD9i4nQAGl9prbZjEC4
-         yoEiQmX78l6Tq8dduc/HBsBkndcQfdQNOqfb1ygbONppjTR6lP7YmtZFbJxCmtliya
-         2RZDkxdt65erVttCqUz3t3Mgv5iVOKzNdx5G/pxItkEuTADlHQ0ALoTRMJAsoSO9dF
-         VJDi0W6OY76V7ZPoanyfPCHK9lS8xo5dGJLY1kFb9UmY0RTbJkxGiRpPHoWGRhVUOC
-         XkKo2BungZxgnSxJ4z7pgXUlX4a8yVDP2DeHavPDtnY7LYpYIHNGpNgxqiu5ssVBKS
-         qXxg4lXxVkbkg==
-Date:   Fri, 28 Oct 2022 23:08:10 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Fabio Porcedda <fabio.porcedda@gmail.com>
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, loic.poulain@linaro.org,
-        ryazanov.s.a@gmail.com, davem@davemloft.net, edumazet@google.com,
-        kuba@kernel.org, pabeni@redhat.com, dnlplm@gmail.com
-Subject: Re: [PATCH 2/2] bus: mhi: host: pci_generic: Add a secondary AT port
- to Telit FN990
-Message-ID: <20221028173810.GI13880@thinkpad>
-References: <20220916144329.243368-1-fabio.porcedda@gmail.com>
- <20220916144329.243368-3-fabio.porcedda@gmail.com>
+        Fri, 28 Oct 2022 13:43:10 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ECF622BAFF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 10:43:09 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id q71so5425156pgq.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 10:43:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0lCS/ZUURVz1YCG4pNVk+KiLqyYD23fxRdWfocVL5sE=;
+        b=GeM1PpMU78y0RQ5AoOn8RBhPwx+Q8QjxLZ0EgvXK+5nLlO972d2aJ4BtwkJ7IVgIGs
+         L3/lvL502/tIjGrLNX9joh+i5e5tTNImqQtMb1q1JcUmLj4U52eb/+nwvY1iE8Shtv9Z
+         cgn56hSBg4dCyUhjfJ2wV2Tg71kWA76as5+7Cy1ieDSh5vBJKuDl5cZX010s6Ql4n5FG
+         inHqsPaq/7PcI9z84ASt5vYB/nwPdIanrWbM/zQ3ipc7ziH0bcqy5xCJP393yxTK1Ei+
+         YlmXXQXxrqYahb4hO9HCnC2dG6YewofBSSZ6eioIYtX3DF4JXPhBnxdkyTFlnlGFkuGq
+         6qCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0lCS/ZUURVz1YCG4pNVk+KiLqyYD23fxRdWfocVL5sE=;
+        b=zuY5Xgi1Q9bqWconl1mrrDcav8pZV9Ngu0YVGybMwzji1vlb2jMa+UJNNARusbVa4e
+         m6kI+K6gc+OLm6JhVgxtpvW49vb83ypN16apl3LEsyHdAQZxBeDyNPNft8NLyTLL/dpZ
+         ESF1MUKcmGED68ywFTkpjbDb+pk4/4vSstzFNaGp8n9sLc0z1hLBhDmVYUK0pxsvXCnc
+         UwrYNUswBHujW0kfOUujG+WeEj4G+MGu+YB2Bt3DDJLp3+HTJgD1f4x1RT6l1M27GEnu
+         2LiUsMr8ydWZ3Apu4MH8dvQ7zHRIV8S0gcc9l9TpjdffuA+2LGXrUMBhwyxXOnOIFF0N
+         +zIg==
+X-Gm-Message-State: ACrzQf2PeiUQlKvL2/ozMbRdgvA8eh32AR6k/+6njIRNl0Dj3naN3mXl
+        HqJoJzIkwOr/5Fg8pXLzcyLJ
+X-Google-Smtp-Source: AMsMyM4I97Tuks9zFgFeNlC+dT0Lj+6zfOD3GS/7jyrVxydlSI5w7qyDW9LZM9xOAR5uuuf43M2h4Q==
+X-Received: by 2002:a63:2b10:0:b0:451:5df1:4b17 with SMTP id r16-20020a632b10000000b004515df14b17mr549658pgr.61.1666978989030;
+        Fri, 28 Oct 2022 10:43:09 -0700 (PDT)
+Received: from localhost.localdomain ([59.92.103.167])
+        by smtp.gmail.com with ESMTPSA id y14-20020a17090a154e00b00210039560c0sm4462499pja.49.2022.10.28.10.43.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Oct 2022 10:43:07 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH] MAINTAINERS: Remove Hemant from MHI bus
+Date:   Fri, 28 Oct 2022 23:12:57 +0530
+Message-Id: <20221028174257.52525-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220916144329.243368-3-fabio.porcedda@gmail.com>
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -58,37 +67,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 16, 2022 at 04:43:29PM +0200, Fabio Porcedda wrote:
-> Add a secondary AT port using one of OEM reserved channel.
-> 
-> Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Hemant moved out of Qualcomm and expressed his wish to not continue doing
+any reviews for MHI patches. So let's remove him from MAINTAINERS file.
 
-Applied to mhi-next!
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ MAINTAINERS | 1 -
+ 1 file changed, 1 deletion(-)
 
-Thanks,
-Mani
-
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 51e2b901bae0..caa4ce28cf9e 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -507,6 +507,8 @@ static const struct mhi_channel_config mhi_telit_fn990_channels[] = {
->  	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
->  	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
->  	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
-> +	MHI_CHANNEL_CONFIG_UL(92, "DUN2", 32, 1),
-> +	MHI_CHANNEL_CONFIG_DL(93, "DUN2", 32, 1),
->  	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
->  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
->  };
-> -- 
-> 2.37.3
-> 
-> 
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index cf0f18502372..ad9279218885 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -13395,7 +13395,6 @@ F:	arch/arm64/boot/dts/marvell/armada-3720-uDPU.dts
+ 
+ MHI BUS
+ M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+-R:	Hemant Kumar <quic_hemantk@quicinc.com>
+ L:	mhi@lists.linux.dev
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
 -- 
-மணிவண்ணன் சதாசிவம்
+2.25.1
+
