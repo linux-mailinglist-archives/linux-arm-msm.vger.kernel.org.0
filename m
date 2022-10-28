@@ -2,89 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 686BA611A26
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 20:33:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17B68611AD4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Oct 2022 21:24:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229744AbiJ1Sdl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 14:33:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44976 "EHLO
+        id S229975AbiJ1TYP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 15:24:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229491AbiJ1Sdl (ORCPT
+        with ESMTP id S229473AbiJ1TYN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 14:33:41 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72BB5229E6A;
-        Fri, 28 Oct 2022 11:33:40 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29SAsqh1016745;
-        Fri, 28 Oct 2022 18:33:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=D0lmQtYsP2sAfYk9mMKID7PcUZDPOUW3YzJiwXK2JzE=;
- b=G7xuzpIe+o+RtP1kNlaXmiWnRzm1/SbP439CrEd9o6micKe5IyTzdOMmwDrOW2L7+EC5
- 8uxyv2GxmhbEq7RAUXhl5DUo1xeUaCkB/5RpExT3UGkAAkhQZ8ZT2QSL+fUjfSy06ZMT
- vTczZSXd9Vn0WCtaRp3a3z0gGKf+FV63X3EjulCOR0dLXXCEX705jDYSqycMjZacWMSM
- P8ynIfzGyoX0Kap1GtHZZZdfahLsNDQ6JdiJRdarJZ2UraQ84CL9ZPO8cpiQunKHATck
- IdYuALWyP0hHhap6Gpeh5N1QInKd0WXevtplitOI1eq16jc1K9bXi4rwxHbDIU7DBlcz 2w== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kfw05c6t3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Oct 2022 18:33:27 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29SIXQ98019269
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Oct 2022 18:33:26 GMT
-Received: from [10.38.246.117] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Fri, 28 Oct
- 2022 11:33:23 -0700
-Message-ID: <99744fda-a3b8-f97a-294c-78e512d865bc@quicinc.com>
-Date:   Fri, 28 Oct 2022 11:33:21 -0700
+        Fri, 28 Oct 2022 15:24:13 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A3172303FF;
+        Fri, 28 Oct 2022 12:24:12 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 37BA56281C;
+        Fri, 28 Oct 2022 19:24:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3EFC433C1;
+        Fri, 28 Oct 2022 19:24:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1666985051;
+        bh=ot5Sa9Mlp08Yo/46BwMaqi/qloDRG4Ii89sgfRGOd54=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=ojd1RVNw6hyaCCrYdsqnQgEpBn6ofM9IfNeBwiFPt1RQXzavRtsRoouFedFSCkv0B
+         XF2PFc4N5tLNeNqZKLxMbn0TWFiVJeWF8qw4OCzV/QwioO6f//BlxEBlv941jj/MDj
+         NAG0+64eerSXeiwFXtmTJLutHb4G61oEYACGK+TOppuWFA5FCMngtMrXSxvpez7F+w
+         xYBvtFp2399YT7/hqBa7BLyhrf9/cuJ3n0uJ3mkL09+iUJPEL1ZENNZEoeDVl6TREk
+         pcoif7BTuZgesclLg4cfnuNAxzHcWPNRX5WODORRlgtDsxdrWapBA7+70Kp1vQ+qnM
+         VVvjJ09wxESzw==
+From:   Mark Brown <broonie@kernel.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     perex@perex.cz, lgirdwood@gmail.com, bgoswami@quicinc.com,
+        alsa-devel@alsa-project.org, tiwai@suse.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20220915123837.11591-1-srinivas.kandagatla@linaro.org>
+References: <20220915123837.11591-1-srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH 0/9] ASoC: qdsp6: audioreach: add multi-port, SAL and MFC support
+Message-Id: <166698504930.1386510.17260012636035709007.b4-ty@kernel.org>
+Date:   Fri, 28 Oct 2022 20:24:09 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v4 00/10] drm/msm: Fix math issues in MSM DSC
- implementation
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        <phone-devel@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-CC:     <~postmarketos/upstreaming@lists.sr.ht>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20221026182824.876933-1-marijn.suijten@somainline.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20221026182824.876933-1-marijn.suijten@somainline.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mHQt4GtM411GT24KVna7PtTSVR7uxgxe
-X-Proofpoint-ORIG-GUID: mHQt4GtM411GT24KVna7PtTSVR7uxgxe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-28_10,2022-10-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- spamscore=0 malwarescore=0 bulkscore=0 mlxlogscore=999 mlxscore=0
- priorityscore=1501 adultscore=0 impostorscore=0 clxscore=1011
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2210280116
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.10.0-dev-fc921
+X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -92,86 +55,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Marijn
+On Thu, 15 Sep 2022 13:38:28 +0100, Srinivas Kandagatla wrote:
+> This patchset adds support to multi-port connections between AudioReach Modules
+> which is required for sophisticated graphs like ECNS or Speaker Protection.
+> Also as part of ECNS testing new module support for SAL and MFC are added.
+> 
+> 
+> Tested on SM8450 with ECNS.
+> 
+> [...]
 
-On 10/26/2022 11:28 AM, Marijn Suijten wrote:
-> Various removals of complex yet unnecessary math, fixing all uses of
-> drm_dsc_config::bits_per_pixel to deal with the fact that this field
-> includes four fractional bits, and finally making sure that
-> range_bpg_offset contains values 6-bits wide to prevent overflows in
-> drm_dsc_pps_payload_pack().
-> 
-> Altogether this series is responsible for solving _all_ Display Stream
-> Compression issues and artifacts on the Sony Tama (sdm845) Akatsuki
-> smartphone (2880x1440p).
-> 
-> Changes since v3:
-> - Swap patch 7 and 8 to make sure msm_host is available inside
->    dsi_populate_dsc_params();
-> - Reword patch 6 (Migrate to drm_dsc_compute_rc_parameters()) to more
->    clearly explain why the FIXME wasn't solved initially, but why it can
->    (and should!) be resolved now.
-> 
-> v3: https://lore.kernel.org/linux-arm-msm/20221009184824.457416-1-marijn.suijten@somainline.org/T/#u
-> 
-> Changes since v2:
-> - Generalize mux_word_size setting depending on bits_per_component;
-> - Migrate DSI's DSC calculations to drm_dsc_compute_rc_parameters(),
->    implicitly addressing existing math issues;
-> - Disallow any bits_per_component other than 8, until hardcoded values
->    are updated and tested to support such cases.
-> 
-> v2: https://lore.kernel.org/linux-arm-msm/20221005181657.784375-1-marijn.suijten@somainline.org/T/#u
-> 
-> Changes since v1:
-> 
-> - Propagate r-b's, except (obviously) in patches that were (heavily)
->    modified;
-> - Remove accidental debug code in dsi_cmd_dma_add;
-> - Move Range BPG Offset masking out of DCS PPS packing, back into the
->    DSI driver when it is assigned to drm_dsc_config (this series is now
->    strictly focusing on drm/msm again);
-> - Replace modulo-check resulting in conditional increment with
->    DIV_ROUND_UP;
-> - Remove repeated calculation of slice_chunk_size;
-> - Use u16 instead of int when handling bits_per_pixel;
-> - Use DRM_DEV_ERROR instead of pr_err in DSI code;
-> - Also remove redundant target_bpp_x16 variable.
-> 
-> v1: https://lore.kernel.org/linux-arm-msm/20221001190807.358691-1-marijn.suijten@somainline.org/T/#u
-> 
-> Marijn Suijten (10):
->    drm/msm/dsi: Remove useless math in DSC calculations
->    drm/msm/dsi: Remove repeated calculation of slice_per_intf
->    drm/msm/dsi: Use DIV_ROUND_UP instead of conditional increment on
->      modulo
->    drm/msm/dsi: Reuse earlier computed dsc->slice_chunk_size
->    drm/msm/dsi: Appropriately set dsc->mux_word_size based on bpc
->    drm/msm/dsi: Migrate to drm_dsc_compute_rc_parameters()
->    drm/msm/dsi: Account for DSC's bits_per_pixel having 4 fractional bits
->    drm/msm/dsi: Disallow 8 BPC DSC configuration for alternative BPC
->      values
->    drm/msm/dpu1: Account for DSC's bits_per_pixel having 4 fractional
->      bits
->    drm/msm/dsi: Prevent signed BPG offsets from bleeding into adjacent
->      bits
-> 
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c |  11 +-
->   drivers/gpu/drm/msm/dsi/dsi_host.c         | 121 ++++++---------------
->   2 files changed, 37 insertions(+), 95 deletions(-)
-> 
-> --
-> 2.38.1
-> 
+Applied to
 
-To keep the -fixes cycle to have only critical fixes (others are 
-important too but are cleanups), I was thinking of absorbing patches 
-7,8,9 and 10 alone in the -fixes cycle and for patches 1-6, will go 
-through the 6.2 push.
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-Let me know if there are any concerns if we just take patches 7,8,9 and 
-10 separately.
+Thanks!
 
-Thanks
+[1/9] ASoC: qdsp6: audioreach: topology use idr_alloc_u32
+      commit: af7ed7eb70e8964514c706f8498623a2a3696657
+[2/9] ASoC: qdsp6: audioreach: remove unused connection_list
+      commit: 5b488e80078f09bbc197d766babf014dd52c30bf
+[3/9] ASoC: qdsp6: audioreach: update dapm kcontrol private data
+      commit: 1c87d3817b74b895933e9940b9de09b17c674b9b
+[4/9] ASoC: qdsp6: audioreach: Simplify handing FE and BE graph connections
+      commit: e4977b91cff8b00cdeb310735ef34fa4dee9485c
+[5/9] ASoC: qdsp6: audioreach: simplify module_list sz calculation
+      commit: 4efb98e9635b9919f2cb72cddae97b7231cf96ef
+[6/9] ASoC: qdsp6: audioreach: add support for more port connections
+      commit: 03365d6a58c47b3a3f2f964d0777493e293d7da4
+[7/9] ASoC: qdsp6: audioreach: add support to enable SAL Module
+      commit: a934afdbb022d5a7b1d20251875ecefcaf48536a
+[8/9] ASoC: qdsp6: audioreach: add support for MFC Module
+      commit: cf0de67d954db21002fd7521364f2ac89aabae35
+[9/9] ASoC: qdsp6: audioreach: add support to enable module command
+      commit: 6648a6dcfe40ae8c5e7cb5c1d7b9e59f010e285d
 
-Abhinav
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
