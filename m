@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 020806123A5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 16:17:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DED9E6123A9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 16:17:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229978AbiJ2ORu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Oct 2022 10:17:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38762 "EHLO
+        id S229839AbiJ2ORy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Oct 2022 10:17:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229904AbiJ2ORY (ORCPT
+        with ESMTP id S229880AbiJ2OR2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Oct 2022 10:17:24 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A0E65F7DB
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 07:17:11 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id i3so7073730pfc.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 07:17:11 -0700 (PDT)
+        Sat, 29 Oct 2022 10:17:28 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45D015F9AD
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 07:17:16 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id d13-20020a17090a3b0d00b00213519dfe4aso6833675pjc.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 07:17:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UOMm8BaOvfEJM7NF+uICaNkya2n9h9Ru0iVe5CxvYeE=;
-        b=Cu+M3uSkfljr/GyQWX3BrmFRiA0yhF3F9il+A4srLwErnN2elI4aKL9n4tbUbhmwSj
-         tVb3J86z32atPqD70Nn8G/KGwgChE/T2hx6FIsuZx7orKCz1ozBogB4d7wM0IFVyoJT6
-         iwurglsAIT+Wsbpx8p1bIdnT5rnB6XOneVPKwrVumQx4jqI0OyDYGMsT65zNB1oH5Rnq
-         Q2eIKlxbAXpe21Q5GA+idVBZUhV8ZxSaCxSYdBFdwglMN+aNuP4SQVHz1EmUMEpJ2mR3
-         xF6BSzDuuH2LFZL0L4KxGMxIuw4EjrjA8g4zK2UUXyEk4QjZ0T1TYPefZmt0v5yfrT/X
-         s3DQ==
+        bh=EXACZbDW7apLefN1TlPN3pFLWjPl4KvU3572LcUxyOo=;
+        b=WQmci7+CXSW6GQ3YZTtOI6wcAHK8ZOSTP+1U4l0Ok+7yrr82esT3H1HiUJZrjVx2yy
+         9nfrnV0qL1ebiTDJRX886/fIPM1lDsO52NsEboppfir0n416j8YuHqNfz7x90T1u8Tef
+         NoWJmWgAz6Toqlu7Dr2HJP+GB7m3Wq9Qvwwc+PpzsWC5PN4RK0FRHQm1IVsIYQxZrHzQ
+         4Gzw9pTYj+VLHFyuQ9SXaR1OEWXzKD8o7gubW4BiRbLSB06I4aO2jRYVrEAYcMY20IF6
+         lMoh2TTik1Qv8sTqF1qy6MIGwI7/OeyOzcm0x/njrF+JDVhng5cfwjlNpcdfrZGZBQzr
+         855g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UOMm8BaOvfEJM7NF+uICaNkya2n9h9Ru0iVe5CxvYeE=;
-        b=vQq3VyM0UVh8IJ+4btJzkiXIH85Gcfo6lBs8DNdUd8LJh3lCO6bChNX0E0hFPNGw2A
-         kY+pKDzVAezdJDYLenyzDtIF1hrkqrFN48lLq1hfSL3j5LP/J97bF+VqA7R3br47jMgu
-         0AWTupT41KdRWppWw6G0HtXM4Nsp1w4KRqkB+NcUCBvv4NK1lrA9asjHI2DDBFlRdl1w
-         4B79uJvkd1WXo5erChJLfH8Eb6c8hVG6kSgEtu/n/sy3ekWBcwMNS2Vp6WXHKt8eXHgp
-         15vyul7cofM6v3tXGxDSlt/RQmRBTGVdFHBqBJGaAEBmYT9QVtaEnv/55RpATzFgPxdd
-         mZew==
-X-Gm-Message-State: ACrzQf28EOL3e3JTq91VnGVj/DZHWhe/dFV5F9twkZcvwnfIsKe7+1b7
-        FHuQAeTrr2UvMXHjv8fj0mX8
-X-Google-Smtp-Source: AMsMyM64kF9+lfMT4V+UR8pVmKJSCyWeW2UbFSOLCQIIsgyRLbEnp0+/dD9je70O9TUKRj17uYSBJw==
-X-Received: by 2002:a63:8942:0:b0:46e:c02e:2eb5 with SMTP id v63-20020a638942000000b0046ec02e2eb5mr4212687pgd.141.1667053030836;
-        Sat, 29 Oct 2022 07:17:10 -0700 (PDT)
+        bh=EXACZbDW7apLefN1TlPN3pFLWjPl4KvU3572LcUxyOo=;
+        b=ycRnONVbI40ghTnQa0nLzMk9gQ0f4BUrl7tIL/vACYl4ollD0bAVfanPUtnIyYIlbf
+         YplLWN8nEaw3GSO2+/Qr0j7A5Qr1LM0uZi9XX7wJ2f7wSaNr5unpQ+IbDwRonQgTjO6R
+         0OJN06WcnrnTLzrjc4BhuszMgZgD3i/gMxbtVCocEpyhKTTHQxDqjLJce8D1AIKtjDNm
+         9T9q+yIoD/XhFJRFzQSHFQZiPJzydtW2xK77m6wqyJPmFtB1C+kkEDwx3W2rWlcZeA5x
+         hvGQsAt7jxlrwZLOm3GeoHDt+izCwntNakUUDmhhFYZwzX0/AtYGocN93nKZInIyovK/
+         wJFw==
+X-Gm-Message-State: ACrzQf0WiC8yWLHj/x5vaWpoirm8Sq4NzaPQIpRCHma+TIwCWOrpIhNM
+        KOK7ldp48wMA74YjYLVPvahu
+X-Google-Smtp-Source: AMsMyM50JY5Z6mFdet8Gu9aa/pUSRGPLlALcaZIKANvKk5YfmmdIGuO+UMd43hf17ma1Hx7OMWc2sQ==
+X-Received: by 2002:a17:902:aa84:b0:185:480a:85b6 with SMTP id d4-20020a170902aa8400b00185480a85b6mr4571563plr.170.1667053035929;
+        Sat, 29 Oct 2022 07:17:15 -0700 (PDT)
 Received: from localhost.localdomain ([117.193.208.18])
-        by smtp.gmail.com with ESMTPSA id u4-20020a170902e5c400b001866049ddb1sm1370157plf.161.2022.10.29.07.17.05
+        by smtp.gmail.com with ESMTPSA id u4-20020a170902e5c400b001866049ddb1sm1370157plf.161.2022.10.29.07.17.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Oct 2022 07:17:09 -0700 (PDT)
+        Sat, 29 Oct 2022 07:17:15 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     martin.petersen@oracle.com, jejb@linux.ibm.com,
         andersson@kernel.org, vkoul@kernel.org,
@@ -59,9 +59,9 @@ Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-phy@lists.infradead.org, linux-scsi@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 05/15] phy: qcom-qmp-ufs: Move HS Rate B register setting to tables_hs_b
-Date:   Sat, 29 Oct 2022 19:46:23 +0530
-Message-Id: <20221029141633.295650-6-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 06/15] dt-bindings: ufs: Add "max-gear" property for UFS device
+Date:   Sat, 29 Oct 2022 19:46:24 +0530
+Message-Id: <20221029141633.295650-7-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221029141633.295650-1-manivannan.sadhasivam@linaro.org>
 References: <20221029141633.295650-1-manivannan.sadhasivam@linaro.org>
@@ -76,120 +76,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since now there is support for configuring the HS Rate B mode properly,
-let's move the register setting to tables_hs_b struct for all SoCs.
-
-This allows the PHY to be configured in Rate A initially and then in
-Rate B if requested by the UFS driver.
+The maximum gear supported by the UFS device can be specified using the
+"max-gear" property. This allows the UFS controller to configure the
+TX/RX gear before starting communication with the UFS device.
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 32 +++++++++++++++++++++----
- 1 file changed, 28 insertions(+), 4 deletions(-)
+ Documentation/devicetree/bindings/ufs/ufs-common.yaml | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-index fa7457c0202b..c55c85a8f95e 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-@@ -228,8 +228,9 @@ static const struct qmp_phy_init_tbl sm6115_ufsphy_serdes[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_COM_BG_TRIM, 0x0f),
- 	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_INITVAL1, 0xff),
- 	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_INITVAL2, 0x00),
-+};
+diff --git a/Documentation/devicetree/bindings/ufs/ufs-common.yaml b/Documentation/devicetree/bindings/ufs/ufs-common.yaml
+index 47a4e9e1a775..591a9bc3b99c 100644
+--- a/Documentation/devicetree/bindings/ufs/ufs-common.yaml
++++ b/Documentation/devicetree/bindings/ufs/ufs-common.yaml
+@@ -73,6 +73,11 @@ properties:
+     description:
+       Specifies max. load that can be drawn from VCCQ2 supply.
  
--	/* Rate B */
-+static const struct qmp_phy_init_tbl sm6115_ufsphy_hs_b_serdes[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_MAP, 0x44),
- };
++  max-gear:
++    description:
++      Specifies max. gear the UFS device supports.
++    enum: [1, 2, 3, 4, 5]
++
+ dependencies:
+   freq-table-hz: [ 'clocks' ]
  
-@@ -305,8 +306,9 @@ static const struct qmp_phy_init_tbl sdm845_ufsphy_serdes[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V3_COM_VCO_TUNE2_MODE1, 0x00),
- 	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP1_MODE1, 0x32),
- 	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP2_MODE1, 0x0f),
-+};
- 
--	/* Rate B */
-+static const struct qmp_phy_init_tbl sdm845_ufsphy_hs_b_serdes[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V3_COM_VCO_TUNE_MAP, 0x44),
- };
- 
-@@ -371,8 +373,9 @@ static const struct qmp_phy_init_tbl sm8150_ufsphy_serdes[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V4_COM_LOCK_CMP2_MODE1, 0x0f),
- 	QMP_PHY_INIT_CFG(QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE1_MODE1, 0xdd),
- 	QMP_PHY_INIT_CFG(QSERDES_V4_COM_BIN_VCOCAL_CMP_CODE2_MODE1, 0x23),
-+};
- 
--	/* Rate B */
-+static const struct qmp_phy_init_tbl sm8150_ufsphy_hs_b_serdes[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V4_COM_VCO_TUNE_MAP, 0x06),
- };
- 
-@@ -492,8 +495,9 @@ static const struct qmp_phy_init_tbl sm8350_ufsphy_serdes[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP2_MODE1, 0x1e),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE1_MODE1, 0xdd),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE2_MODE1, 0x23),
-+};
- 
--	/* Rate B */
-+static const struct qmp_phy_init_tbl sm8350_ufsphy_hs_b_serdes[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_VCO_TUNE_MAP, 0x06),
- };
- 
-@@ -746,6 +750,10 @@ static const struct qmp_phy_cfg sdm845_ufsphy_cfg = {
- 		.pcs		= sdm845_ufsphy_pcs,
- 		.pcs_num	= ARRAY_SIZE(sdm845_ufsphy_pcs),
- 	},
-+	.tables_hs_b = {
-+		.serdes		= sdm845_ufsphy_hs_b_serdes,
-+		.serdes_num	= ARRAY_SIZE(sdm845_ufsphy_hs_b_serdes),
-+	},
- 	.clk_list		= sdm845_ufs_phy_clk_l,
- 	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
- 	.vreg_list		= qmp_phy_vreg_l,
-@@ -772,6 +780,10 @@ static const struct qmp_phy_cfg sm6115_ufsphy_cfg = {
- 		.pcs		= sm6115_ufsphy_pcs,
- 		.pcs_num	= ARRAY_SIZE(sm6115_ufsphy_pcs),
- 	},
-+	.tables_hs_b = {
-+		.serdes		= sm6115_ufsphy_hs_b_serdes,
-+		.serdes_num	= ARRAY_SIZE(sm6115_ufsphy_hs_b_serdes),
-+	},
- 	.clk_list		= sdm845_ufs_phy_clk_l,
- 	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
- 	.vreg_list		= qmp_phy_vreg_l,
-@@ -797,6 +809,10 @@ static const struct qmp_phy_cfg sm8150_ufsphy_cfg = {
- 		.pcs		= sm8150_ufsphy_pcs,
- 		.pcs_num	= ARRAY_SIZE(sm8150_ufsphy_pcs),
- 	},
-+	.tables_hs_b = {
-+		.serdes		= sm8150_ufsphy_hs_b_serdes,
-+		.serdes_num	= ARRAY_SIZE(sm8150_ufsphy_hs_b_serdes),
-+	},
- 	.clk_list		= sdm845_ufs_phy_clk_l,
- 	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
- 	.vreg_list		= qmp_phy_vreg_l,
-@@ -829,6 +845,10 @@ static const struct qmp_phy_cfg sm8250_ufsphy_cfg = {
- 		.pcs		= sm8250_ufsphy_hs_g4_pcs,
- 		.pcs_num	= ARRAY_SIZE(sm8250_ufsphy_hs_g4_pcs),
- 	},
-+	.tables_hs_b = {
-+		.serdes		= sm8150_ufsphy_hs_b_serdes,
-+		.serdes_num	= ARRAY_SIZE(sm8150_ufsphy_hs_b_serdes),
-+	},
- 	.clk_list		= sdm845_ufs_phy_clk_l,
- 	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
- 	.vreg_list		= qmp_phy_vreg_l,
-@@ -853,6 +873,10 @@ static const struct qmp_phy_cfg sm8350_ufsphy_cfg = {
- 		.pcs		= sm8350_ufsphy_pcs,
- 		.pcs_num	= ARRAY_SIZE(sm8350_ufsphy_pcs),
- 	},
-+	.tables_hs_b = {
-+		.serdes		= sm8350_ufsphy_hs_b_serdes,
-+		.serdes_num	= ARRAY_SIZE(sm8350_ufsphy_hs_b_serdes),
-+	},
- 	.clk_list		= sdm845_ufs_phy_clk_l,
- 	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
- 	.vreg_list		= qmp_phy_vreg_l,
 -- 
 2.25.1
 
