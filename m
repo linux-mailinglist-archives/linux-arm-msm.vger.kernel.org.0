@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A08156123E0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 16:23:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B38F46123E6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 16:29:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230087AbiJ2OXq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Oct 2022 10:23:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49892 "EHLO
+        id S229833AbiJ2O3J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Oct 2022 10:29:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229742AbiJ2OXb (ORCPT
+        with ESMTP id S229613AbiJ2O3J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Oct 2022 10:23:31 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7D5466F1D;
-        Sat, 29 Oct 2022 07:21:55 -0700 (PDT)
+        Sat, 29 Oct 2022 10:29:09 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5341863375;
+        Sat, 29 Oct 2022 07:29:08 -0700 (PDT)
 Received: from [192.168.1.101] (95.49.29.156.neoplus.adsl.tpnet.pl [95.49.29.156])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id AB0023EBD1;
-        Sat, 29 Oct 2022 16:21:53 +0200 (CEST)
-Message-ID: <90f5d5a8-eae6-f891-2169-aed62b0ee325@somainline.org>
-Date:   Sat, 29 Oct 2022 16:21:53 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 316E83EE8A;
+        Sat, 29 Oct 2022 16:29:06 +0200 (CEST)
+Message-ID: <90b7e0e0-a354-f64d-8c53-aa80df684a3a@somainline.org>
+Date:   Sat, 29 Oct 2022 16:29:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.0
-Subject: Re: [PATCH v2 11/12] arm64: dts: qcom: sc8280xp-x13s: Add
- PM8280_{1/2} ADC_TM5 channels
+Subject: Re: [PATCH v2 12/12] arm64: dts: qcom: sc8280xp-x13s: Add thermal
+ zone support
 Content-Language: en-US
 To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         andersson@kernel.org
@@ -36,13 +36,14 @@ Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, steev@kali.org
 References: <20221029051449.30678-1-manivannan.sadhasivam@linaro.org>
- <20221029051449.30678-12-manivannan.sadhasivam@linaro.org>
+ <20221029051449.30678-13-manivannan.sadhasivam@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20221029051449.30678-12-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20221029051449.30678-13-manivannan.sadhasivam@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -52,99 +53,81 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 29.10.2022 07:14, Manivannan Sadhasivam wrote:
-> Add ADC_TM5 channels of PM8280_{1/2} for monitoring the temperature from
-> external thermistors connected to AMUX pins. The temperture measurements
-> are collected from the PMK8280's VADC channels that expose the
-> measurements from secondary PMICs PM8280_{1/2}.
+> Add thermal zone support by making use of the thermistor SYS_THERM6.
+> Based on experiments, this thermistor seems to reflect the actual
+> surface temperature of the laptop.
+> 
+> For the cooling device, all BIG CPU cores are throttle down to keep the
+s/throttle/throttled
+
+Is it okay to let the 4xA78C run at full throttle in thermal emergencies though?
+> temperature at a sane level.
 > 
 > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 68 +++++++++++++++++++
->  1 file changed, 68 insertions(+)
+>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 46 +++++++++++++++++++
+>  1 file changed, 46 insertions(+)
 > 
 > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> index 9545b471c2fa..ca77c19c6d0d 100644
+> index ca77c19c6d0d..96e2fa72f782 100644
 > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
 > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> @@ -259,6 +259,74 @@ pmic-die-temp@403 {
+> @@ -29,6 +29,52 @@ backlight {
+>  		pinctrl-0 = <&edp_bl_en>, <&edp_bl_pwm>;
 >  	};
->  };
 >  
-> +&pmk8280_adc_tm {
-> +	status = "okay";
+> +	thermal-zones {
+> +		skin-temp-thermal {
+> +			polling-delay-passive = <250>;
+> +			polling-delay = <0>;
+> +			thermal-sensors = <&pmk8280_adc_tm 5>;
 > +
-> +	sys-therm@0 {
-> +		reg = <0>;
-> +		io-channels = <&pmk8280_vadc PM8350_ADC7_AMUX_THM1_100K_PU(1)>;
-> +		qcom,avg-samples = <2>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time-us = <200>;
-If you decide to change the order in the prev patches, it applies here too.
+> +			trips {
+> +				skin_temp_alert0: trip-point0 {
+> +					temperature = <55000>;
+> +					hysteresis = <1000>;
+> +					type = "passive";
+> +				};
+> +
+> +				skin_temp_alert1: trip-point1 {
+> +					temperature = <58000>;
+> +					hysteresis = <1000>;
+> +					type = "passive";
+> +				};
+> +
+> +				skin-temp-crit {
+> +					temperature = <73000>;
+Ouch, I didn't know we were serving burnt fingers at the cafeteria today :D
 
-Otherwise:
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Or maybe this just looks scary.. The laptop looks plastic, so maybe it won't cause instant
+burns?
 
 Konrad
+> +					hysteresis = <1000>;
+> +					type = "critical";
+> +				};
+> +			};
+> +
+> +			cooling-maps {
+> +				map0 {
+> +					trip = <&skin_temp_alert0>;
+> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +
+> +				map1 {
+> +					trip = <&skin_temp_alert1>;
+> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> +				};
+> +			};
+> +		};
 > +	};
 > +
-> +	sys-therm@1 {
-> +		reg = <1>;
-> +		io-channels = <&pmk8280_vadc PM8350_ADC7_AMUX_THM2_100K_PU(1)>;
-> +		qcom,avg-samples = <2>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time-us = <200>;
-> +	};
-> +
-> +	sys-therm@2 {
-> +		reg = <2>;
-> +		io-channels = <&pmk8280_vadc PM8350_ADC7_AMUX_THM3_100K_PU(1)>;
-> +		qcom,avg-samples = <2>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time-us = <200>;
-> +	};
-> +
-> +	sys-therm@3 {
-> +		reg = <3>;
-> +		io-channels = <&pmk8280_vadc PM8350_ADC7_AMUX_THM4_100K_PU(1)>;
-> +		qcom,avg-samples = <2>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time-us = <200>;
-> +	};
-> +
-> +	sys-therm@4 {
-> +		reg = <4>;
-> +		io-channels = <&pmk8280_vadc PM8350_ADC7_AMUX_THM1_100K_PU(3)>;
-> +		qcom,avg-samples = <2>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time-us = <200>;
-> +	};
-> +
-> +	sys-therm@5 {
-> +		reg = <5>;
-> +		io-channels = <&pmk8280_vadc PM8350_ADC7_AMUX_THM2_100K_PU(3)>;
-> +		qcom,avg-samples = <2>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time-us = <200>;
-> +	};
-> +
-> +	sys-therm@6 {
-> +		reg = <6>;
-> +		io-channels = <&pmk8280_vadc PM8350_ADC7_AMUX_THM3_100K_PU(3)>;
-> +		qcom,avg-samples = <2>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time-us = <200>;
-> +	};
-> +
-> +	sys-therm@7 {
-> +		reg = <7>;
-> +		io-channels = <&pmk8280_vadc PM8350_ADC7_AMUX_THM4_100K_PU(3)>;
-> +		qcom,avg-samples = <2>;
-> +		qcom,ratiometric;
-> +		qcom,hw-settle-time-us = <200>;
-> +	};
-> +};
-> +
->  &qup0 {
->  	status = "okay";
->  };
+>  	vreg_edp_bl: regulator-edp-bl {
+>  		compatible = "regulator-fixed";
+>  
