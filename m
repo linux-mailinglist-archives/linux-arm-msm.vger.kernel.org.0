@@ -2,69 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70DF4611F0E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 03:27:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52FC1611FDD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 05:47:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229819AbiJ2B1o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 21:27:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38502 "EHLO
+        id S229648AbiJ2Drv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 23:47:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbiJ2B1m (ORCPT
+        with ESMTP id S229522AbiJ2Drv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 21:27:42 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9356D13F87
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 18:27:41 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id f27so16867973eje.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 18:27:41 -0700 (PDT)
+        Fri, 28 Oct 2022 23:47:51 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA2141CD6BD
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 20:47:49 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id m6-20020a17090a5a4600b00212f8dffec9so6147708pji.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 20:47:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=SB8cXsJ6cSiGdyMloRjmKV5mlYek2j619QkGusLH93k=;
-        b=OIignES46Kbt8O1G/D8CE5LCzf4liD+TVCHTDYlD1UbO7ZV00At2PgUGiLzRcjcRoP
-         KDz7BunLbRO8b7QvzRLiyOYUoHvTfU9FCx65vWf3xgqvOJfA9iwsnxzTSjLjFF9sYFPW
-         oYjD0DXfz6gTvYLzJGRJbZK+G+AXCUGpHlhghba5fZUJvAy/kS6ffd4YC9jxzDunFcSf
-         vFV9nR1IVVFNTZQXpa+glCngHUChxUtAowEyJGhQRCTxA5BuzVj4ZMRpqk49kbNedsjN
-         j+nCAT3fysljbaAoQW9f4RydBrH+FUr24DZEeAVV9w+0jE2sDNkP80yZyp1RAxuojKBH
-         q1xg==
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pHHuVIPCzYs7vFmo8UtoBL7CxgkvRSRe5+6DkfW68II=;
+        b=I4+9NGTpHkN9TQzvwFMlgL1TXIJuXtWwAqK78qqc3zF+sNmjB3S55ZfzRd49mF2xlC
+         Z+gZl2Vyoe25nuhYnO3/mw4dYexkH4PUoS+YSooCQPyH2dWOL19alcDoIuf0EHAxsoYS
+         WfuO/3lml48WNuWYE3wBzChjkYcaMWFWPh6TwzIQKr9JXiQNMMUaetRgHFrpZeunWwqY
+         mDn9/MzQeW2Lo9qve8OSQyup1FwEJ9v0zPu8jaQFThOy+gpd8I96JgYwMdsNBGeI8zsn
+         NXzGRFZjXW6YP7u7LSifJhNMCddWJ9hYIO/jO5jgBxehUiDy2kttBUf5i6lk9kRYf0kO
+         i3mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SB8cXsJ6cSiGdyMloRjmKV5mlYek2j619QkGusLH93k=;
-        b=Wl9BwGdBwB1kgOJAbadG2dhKqBL3gy9cpRCcemVNHHkvn79iSV33bADMyqh3P/J5JT
-         bWmRx7p55ZM9PXmro8Dsxwih02sxBbXZyCOD/fs3H+ID/D/sDiteT2YpMUHzZ1PKUHEH
-         tisaNVCVRLyuXo6rhQTb54SY1Ai2dCGgoQRmU0uZ+jdnH54mth/T7U6QpOxZvupP1trK
-         SwGvbFVm83EcQwoFpgUAEgf5vMbCt7iG6daKBMTlL52qspgtgvHPOA0+ewFGC0ejdMfx
-         o5zd0aFj3wrP3v6kghxrJRCAsyMT2zOkRMhMTsnBr49YeDIaJ0U9iVENJc53n3ha9RwH
-         83MA==
-X-Gm-Message-State: ACrzQf1/ZCNFFuL1/1vLc4NQ20PSTQiTZoiXXwAiVRJHbapOR4dc5mqQ
-        bnTY94cwfpBMTQc1e/I4zp5B4qLn0E4zrEBzpD4mjA==
-X-Google-Smtp-Source: AMsMyM6MGnF2TSbEaIjrBzL/n0tAG+PSMkH6yiE/pY/08UqBhcIIpMPKhMmviToeyNxz+zsaPbVSgur3Lfy83BExNZM=
-X-Received: by 2002:a17:907:75c1:b0:79b:f804:c081 with SMTP id
- jl1-20020a17090775c100b0079bf804c081mr1857415ejc.381.1667006860118; Fri, 28
- Oct 2022 18:27:40 -0700 (PDT)
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pHHuVIPCzYs7vFmo8UtoBL7CxgkvRSRe5+6DkfW68II=;
+        b=4gUucMG7EWnYo0zhf1kLdPjiXcbzmIarINGJ+5RGztiwqOFrLaGhvdm2zurY3esX/f
+         N7Q8LNYW0CoGptiJNdZ9yuLLUjUGH0jNYEv9NsJs4wI+mKAu7sqRFYdnVcEXnE0pTQj8
+         +JgVO5xrxxNTMKzxSPqQGHcrdW9AhxWGwhM1QRWRSLbOm0ZemJ0ECGXdHJbcUeUrRPAa
+         QenehZ5Zi+ttveAnJ7sgZZpWhe6OlQpaJREOpanuQ6QStWPqltJqO08BMwcycFaLDpGz
+         NDaANI81iBVDRTRPFmx8dkv/sdURaGxyxfU5kzTcG6cCQqByC0ZHBfLOSFTlpwBDrz8R
+         ohoA==
+X-Gm-Message-State: ACrzQf1nu80FJu8C6CYbOIxQTqW7LzO+Wj852xWAjg5fEZBIW0gIACtc
+        vhsyHM2fuOij/R6mLg1c8tAkW45lR+CH
+X-Google-Smtp-Source: AMsMyM5Zcg3AuhBsfjwRtrcFrektA3tWfdXZQtZBW8NNlwtdTNgJimcz25+wKdzPhml1gPJQufMDzg==
+X-Received: by 2002:a17:90b:17c3:b0:213:2578:e5ce with SMTP id me3-20020a17090b17c300b002132578e5cemr20042047pjb.231.1667015269407;
+        Fri, 28 Oct 2022 20:47:49 -0700 (PDT)
+Received: from thinkpad ([59.92.103.167])
+        by smtp.gmail.com with ESMTPSA id y28-20020a634b1c000000b004393c5a8006sm195286pga.75.2022.10.28.20.47.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Oct 2022 20:47:48 -0700 (PDT)
+Date:   Sat, 29 Oct 2022 09:17:43 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] MAINTAINERS: Remove Hemant from MHI bus
+Message-ID: <20221029034743.GA5362@thinkpad>
+References: <20221028174257.52525-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-References: <20221028034155.5580-1-quic_bjorande@quicinc.com>
-In-Reply-To: <20221028034155.5580-1-quic_bjorande@quicinc.com>
-From:   Steev Klimaszewski <steev@kali.org>
-Date:   Fri, 28 Oct 2022 20:27:27 -0500
-Message-ID: <CAKXuJqhOH1Ts0Nde5WB0-bVHUv=_As23eJRsH=VnCxxjtkNB_A@mail.gmail.com>
-Subject: Re: [PATCH 00/10] interconnect: osm-l3: SC8280XP L3 and DDR scaling
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Mike Tipton <quic_mdtipton@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221028174257.52525-1-manivannan.sadhasivam@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -74,101 +70,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 27, 2022 at 10:42 PM Bjorn Andersson
-<quic_bjorande@quicinc.com> wrote:
->
-> The SC8280XP currently shows depressing results in memory benchmarks.
-> Fix this by introducing support for the platform in the OSM (and EPSS)
-> L3 driver and support for the platform in the bwmon binding.
->
-> Then add the necessary nodes and values throughout the sc8280xp and
-> sa8540p dtsi files to make the various devices on these platforms scale
-> both L3, memory bus and DDR.
->
-> Bjorn Andersson (10):
->   interconnect: qcom: osm-l3: Use platform-independent node ids
->   interconnect: qcom: osm-l3: Squash common descriptors
->   interconnect: qcom: osm-l3: Add per-core EPSS L3 support
->   interconnect: qcom: osm-l3: Simplify osm_l3_set()
->   dt-bindings: interconnect: Add sm8350, sc8280xp and generic OSM L3
->     compatibles
->   arm64: dts: qcom: Align with generic osm-l3/epss-l3
->   arm64: dts: qcom: sc8280xp: Add epss_l3 node
->   arm64: dts: qcom: sc8280xp: Set up L3 scaling
->   dt-bindings: interconnect: qcom,msm8998-bwmon: Add sc8280xp bwmon
->     instances
->   arm64: dts: qcom: sc8280xp: Add bwmon instances
->
->  .../interconnect/qcom,msm8998-bwmon.yaml      |   5 +
->  .../bindings/interconnect/qcom,osm-l3.yaml    |  22 ++-
->  arch/arm64/boot/dts/qcom/sa8540p.dtsi         |  39 +++++
->  arch/arm64/boot/dts/qcom/sc7180.dtsi          |   2 +-
->  arch/arm64/boot/dts/qcom/sc7280.dtsi          |   2 +-
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 152 ++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sdm845.dtsi          |   2 +-
->  arch/arm64/boot/dts/qcom/sm8150.dtsi          |   2 +-
->  arch/arm64/boot/dts/qcom/sm8250.dtsi          |   2 +-
->  drivers/interconnect/qcom/osm-l3.c            | 126 ++++-----------
->  10 files changed, 251 insertions(+), 103 deletions(-)
->
-> --
-> 2.37.3
->
-Prior to this series being applied:
+On Fri, Oct 28, 2022 at 11:12:57PM +0530, Manivannan Sadhasivam wrote:
+> Hemant moved out of Qualcomm and expressed his wish to not continue doing
+> any reviews for MHI patches. So let's remove him from MAINTAINERS file.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-steev@cho:~/temp/mybw$ ./mybw
-    64: 21043.42MB/s
-   128: 22511.90MB/s
-   256: 23190.96MB/s
-   512: 23532.00MB/s
-  1024: 23537.36MB/s
-    2K: 23730.19MB/s
-    4K: 23307.45MB/s
-    8K: 23603.36MB/s
-   16K: 23752.39MB/s
-   32K: 23819.91MB/s
-   64K: 23871.28MB/s
-  128K: 23890.10MB/s
-  256K: 23851.90MB/s
-  512K: 23759.65MB/s
- 1024K: 15956.73MB/s
-    2M: 8418.88MB/s
-    4M: 6385.06MB/s
-    8M: 5959.11MB/s
-   16M: 5892.18MB/s
-   32M: 6109.78MB/s
+Applied to mhi-next!
 
+Thanks,
+Mani
 
-With this series applied:
-steev@cho:~/temp/mybw$ ./mybw
-    64: 21193.63MB/s
-   128: 22513.64MB/s
-   256: 23196.15MB/s
-   512: 23554.33MB/s
-  1024: 23555.31MB/s
-    2K: 23738.53MB/s
-    4K: 23310.13MB/s
-    8K: 23616.14MB/s
-   16K: 23768.47MB/s
-   32K: 23847.16MB/s
-   64K: 23881.61MB/s
-  128K: 23901.33MB/s
-  256K: 23910.21MB/s
-  512K: 23839.70MB/s
- 1024K: 23577.47MB/s
-    2M: 23836.08MB/s
-    4M: 23798.35MB/s
-    8M: 23759.23MB/s
-   16M: 22887.62MB/s
-   32M: 22491.87MB/s
+> ---
+>  MAINTAINERS | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index cf0f18502372..ad9279218885 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -13395,7 +13395,6 @@ F:	arch/arm64/boot/dts/marvell/armada-3720-uDPU.dts
+>  
+>  MHI BUS
+>  M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> -R:	Hemant Kumar <quic_hemantk@quicinc.com>
+>  L:	mhi@lists.linux.dev
+>  L:	linux-arm-msm@vger.kernel.org
+>  S:	Maintained
+> -- 
+> 2.25.1
+> 
 
-Additionally, if anyone is curious, geekbench 5.4 comparison, with
-this patchset applied on 6.0.5:
-
-https://browser.geekbench.com/v5/cpu/compare/18284519?baseline=18076980
-
-This change is very welcomed :)
-
-Tested on the Lenovo Thinkpad X13s
-
-Tested-by: Steev Klimaszewski <steev@kali.org>
+-- 
+மணிவண்ணன் சதாசிவம்
