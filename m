@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DED9E6123A9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 16:17:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA7506123AF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 16:18:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229839AbiJ2ORy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Oct 2022 10:17:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39434 "EHLO
+        id S229959AbiJ2OSO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Oct 2022 10:18:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229880AbiJ2OR2 (ORCPT
+        with ESMTP id S229773AbiJ2ORj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Oct 2022 10:17:28 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45D015F9AD
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 07:17:16 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id d13-20020a17090a3b0d00b00213519dfe4aso6833675pjc.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 07:17:16 -0700 (PDT)
+        Sat, 29 Oct 2022 10:17:39 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB5495FAD5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 07:17:21 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id 20so7161576pgc.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 07:17:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EXACZbDW7apLefN1TlPN3pFLWjPl4KvU3572LcUxyOo=;
-        b=WQmci7+CXSW6GQ3YZTtOI6wcAHK8ZOSTP+1U4l0Ok+7yrr82esT3H1HiUJZrjVx2yy
-         9nfrnV0qL1ebiTDJRX886/fIPM1lDsO52NsEboppfir0n416j8YuHqNfz7x90T1u8Tef
-         NoWJmWgAz6Toqlu7Dr2HJP+GB7m3Wq9Qvwwc+PpzsWC5PN4RK0FRHQm1IVsIYQxZrHzQ
-         4Gzw9pTYj+VLHFyuQ9SXaR1OEWXzKD8o7gubW4BiRbLSB06I4aO2jRYVrEAYcMY20IF6
-         lMoh2TTik1Qv8sTqF1qy6MIGwI7/OeyOzcm0x/njrF+JDVhng5cfwjlNpcdfrZGZBQzr
-         855g==
+        bh=zpvMghJCmR+gGIw9o+kRim98+XO1f+vARcxfCW900eI=;
+        b=yYkL76DgBZx6Rsxi/Ij7SK5aFTqXLyr8YZGbEESvuOrPUHyVHS41Rwf2pOZtswXz7z
+         LdLe+ktnRkuSMnbkg+/i2Hd9M5JA3pPtYuqgwrh5KvSGIMfV0xTx1Hj1Bz7nYzA70eB5
+         qOy5Srrfl9TMw9D0R22oHirewUnz+uiD0DZp6nnGyfbv/DzdHJ+tuT63EjSQpy9UUb+9
+         pMhSU6af+L9KoWoHin2GJdANibYtScE6IKgtshtqMQPY5YF7iUA2kXA2rYw2RqhF3NMR
+         Vg5GmOsFaJcvNTQM8HqyQE3qZnC3RQNavPUpM3NXIMrBD6ytPCaz9pbzZwGOAOoykjUP
+         wLNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EXACZbDW7apLefN1TlPN3pFLWjPl4KvU3572LcUxyOo=;
-        b=ycRnONVbI40ghTnQa0nLzMk9gQ0f4BUrl7tIL/vACYl4ollD0bAVfanPUtnIyYIlbf
-         YplLWN8nEaw3GSO2+/Qr0j7A5Qr1LM0uZi9XX7wJ2f7wSaNr5unpQ+IbDwRonQgTjO6R
-         0OJN06WcnrnTLzrjc4BhuszMgZgD3i/gMxbtVCocEpyhKTTHQxDqjLJce8D1AIKtjDNm
-         9T9q+yIoD/XhFJRFzQSHFQZiPJzydtW2xK77m6wqyJPmFtB1C+kkEDwx3W2rWlcZeA5x
-         hvGQsAt7jxlrwZLOm3GeoHDt+izCwntNakUUDmhhFYZwzX0/AtYGocN93nKZInIyovK/
-         wJFw==
-X-Gm-Message-State: ACrzQf0WiC8yWLHj/x5vaWpoirm8Sq4NzaPQIpRCHma+TIwCWOrpIhNM
-        KOK7ldp48wMA74YjYLVPvahu
-X-Google-Smtp-Source: AMsMyM50JY5Z6mFdet8Gu9aa/pUSRGPLlALcaZIKANvKk5YfmmdIGuO+UMd43hf17ma1Hx7OMWc2sQ==
-X-Received: by 2002:a17:902:aa84:b0:185:480a:85b6 with SMTP id d4-20020a170902aa8400b00185480a85b6mr4571563plr.170.1667053035929;
-        Sat, 29 Oct 2022 07:17:15 -0700 (PDT)
+        bh=zpvMghJCmR+gGIw9o+kRim98+XO1f+vARcxfCW900eI=;
+        b=WL38xHKgP2MWtlIcL+iwLRHurhWKhFl2Puw7KDXtQLFkvy6D5FXg6j6VY5Ay1FAbtr
+         no50mZtz0PZ6MdFOR87aBuUpd7xN22nUfgZao/wrzUt7OPkbu9Ks5dj4zbebaoHV6jh0
+         vB0Uqd7p3lrPJyPJye6/ZFbgQAVxKKHSOXaqvQ045yJxxDcfXRV5nUGfYFQ6Cw+gHewD
+         eZkPk5aMq8mWXO939VKUVerHv8JzPmlpzqLQk4p7AFk0YSi8TQiSAMuotQ0TY1mkWYr1
+         4ZVrvJ1OezfXgbPrgD4bI0nRCA9n6Z1EhzDQeWLZ8qJRKOKd6ux/J2EqUvwycMHa5sFz
+         LZfA==
+X-Gm-Message-State: ACrzQf16fwed/CtHnY2CY8WuBz9w/6JFjlsSMN9c/i3tDafm40XCeKxZ
+        YIDwyNI1sOWVoRLbaOLb8pTz
+X-Google-Smtp-Source: AMsMyM5UyeJR8v0O/g6VCLnIvcYt7DT1bOrRBBnA/htxwCrn3uXpfqP7PUi6J8UKxdSnLBc3vuMVfg==
+X-Received: by 2002:a63:d313:0:b0:46b:2ea0:5b68 with SMTP id b19-20020a63d313000000b0046b2ea05b68mr4189259pgg.464.1667053041148;
+        Sat, 29 Oct 2022 07:17:21 -0700 (PDT)
 Received: from localhost.localdomain ([117.193.208.18])
-        by smtp.gmail.com with ESMTPSA id u4-20020a170902e5c400b001866049ddb1sm1370157plf.161.2022.10.29.07.17.11
+        by smtp.gmail.com with ESMTPSA id u4-20020a170902e5c400b001866049ddb1sm1370157plf.161.2022.10.29.07.17.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Oct 2022 07:17:15 -0700 (PDT)
+        Sat, 29 Oct 2022 07:17:20 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     martin.petersen@oracle.com, jejb@linux.ibm.com,
         andersson@kernel.org, vkoul@kernel.org,
@@ -59,9 +59,9 @@ Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-phy@lists.infradead.org, linux-scsi@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 06/15] dt-bindings: ufs: Add "max-gear" property for UFS device
-Date:   Sat, 29 Oct 2022 19:46:24 +0530
-Message-Id: <20221029141633.295650-7-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 07/15] arm64: dts: qcom: qrb5165-rb5: Add max-gear property to UFS node
+Date:   Sat, 29 Oct 2022 19:46:25 +0530
+Message-Id: <20221029141633.295650-8-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221029141633.295650-1-manivannan.sadhasivam@linaro.org>
 References: <20221029141633.295650-1-manivannan.sadhasivam@linaro.org>
@@ -69,38 +69,34 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The maximum gear supported by the UFS device can be specified using the
-"max-gear" property. This allows the UFS controller to configure the
-TX/RX gear before starting communication with the UFS device.
+Add "max-gear" property to UFS node to specify the maximum gear speed
+supported by the UFS device on the RB5 board.
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- Documentation/devicetree/bindings/ufs/ufs-common.yaml | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/ufs/ufs-common.yaml b/Documentation/devicetree/bindings/ufs/ufs-common.yaml
-index 47a4e9e1a775..591a9bc3b99c 100644
---- a/Documentation/devicetree/bindings/ufs/ufs-common.yaml
-+++ b/Documentation/devicetree/bindings/ufs/ufs-common.yaml
-@@ -73,6 +73,11 @@ properties:
-     description:
-       Specifies max. load that can be drawn from VCCQ2 supply.
+diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+index bf8077a1cf9a..bdc3b879293f 100644
+--- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
++++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+@@ -1250,6 +1250,7 @@ &uart12 {
+ &ufs_mem_hc {
+ 	status = "okay";
  
-+  max-gear:
-+    description:
-+      Specifies max. gear the UFS device supports.
-+    enum: [1, 2, 3, 4, 5]
-+
- dependencies:
-   freq-table-hz: [ 'clocks' ]
- 
++	max-gear = <4>;
+ 	vcc-supply = <&vreg_l17a_3p0>;
+ 	vcc-max-microamp = <800000>;
+ 	vccq-supply = <&vreg_l6a_1p2>;
 -- 
 2.25.1
 
