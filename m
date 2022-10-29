@@ -2,131 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EEB9F612410
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 16:56:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B741612503
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 21:07:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229938AbiJ2O4w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Oct 2022 10:56:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34392 "EHLO
+        id S229587AbiJ2THq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Oct 2022 15:07:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229679AbiJ2O4v (ORCPT
+        with ESMTP id S229489AbiJ2THp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Oct 2022 10:56:51 -0400
-Received: from msg-1.mailo.com (msg-1.mailo.com [213.182.54.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E9F01A831;
-        Sat, 29 Oct 2022 07:56:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mailoo.org; s=mailo;
-        t=1667055393; bh=cnHB/4wJLTp97pHPmNGyrytKlD90FNbK6YTVOWwFjM0=;
-        h=X-EA-Auth:From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:
-         References:MIME-Version:Content-Transfer-Encoding;
-        b=lZ+latLXQv3zvEePk//cFDAIpwxMiWZTxKcFeTvDSxh5LGT69dDzsPhZmnDuo7cYQ
-         Q96Cf+swjxsY33wOxzfOaqHxj7ukEmfbMkqdckPDqAwEMpMXd44dve/w6WFZDUbPdQ
-         VjBc8q41aaLVw1qNJoyrX1TWdKIJzXLr5IvECxgI=
-Received: by b-1.in.mailobj.net [192.168.90.11] with ESMTP
-        via [213.182.55.207]
-        Sat, 29 Oct 2022 16:56:33 +0200 (CEST)
-X-EA-Auth: ICeHAvWj9qLZjB+ctyqYPt4DioJaU/Djg+uFctKL2Y03oPkzlKncDD3xawmzWga5ooQLzFwsNw1TaxOkcDKyklx/+0fJ0VjqkolTrdLhTgU=
-From:   Vincent Knecht <vincent.knecht@mailoo.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Vincent Knecht <vincent.knecht@mailoo.org>
-Subject: [PATCH v1 2/2] arm64: dts: qcom: msm8916-alcatel-idol347: add LED indicator
-Date:   Sat, 29 Oct 2022 16:55:57 +0200
-Message-Id: <20221029145557.106920-2-vincent.knecht@mailoo.org>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20221029145557.106920-1-vincent.knecht@mailoo.org>
-References: <20221029145557.106920-1-vincent.knecht@mailoo.org>
+        Sat, 29 Oct 2022 15:07:45 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 921BF6274
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 12:07:43 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id 13so20367736ejn.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 12:07:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=vxbWFg7iqEwoKAXmvMDJBeHivZgp9qPLv+RGDyqDdNU=;
+        b=UwfabeVl7QBRjouAJKyrNYLPkdq8/01Rh2g20BsevZgulVXgLtFhsv+wOgDu6tTKXC
+         HWVC/pTsOsPPniBCIqy/bp2+jW50gjsvwsjYNVb8IMKMvB1xO5sjzL+G9xYz52rzVYJ0
+         Rwum4bq6nIv1vrNyc53s+d3+EpFKqycVKtYG9YckI6doMs7buBWNrEikyxKZoTs9Xl+6
+         QUAlBjEwxY76k8HtyyPzoJSUJPFjqP/HvQNgf1sWytG50QYK34+UahTN2ZmXBOyViCw1
+         XUVricdKX03Fg/MlZm+xwgXDKf5cC7CY3wpT4vGNxVKuwEBKiDlX1C1Kmz+zXqvp9wjq
+         qRLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vxbWFg7iqEwoKAXmvMDJBeHivZgp9qPLv+RGDyqDdNU=;
+        b=Jpl1Ltjhl/WVbh+Ogj/pvC5Ggl3KlzR47foXrVziO7rf1OVy8aX7m2HATtS+SL04ra
+         MsEUhl0hWX0e07fIwm1UdKKVij+2j65RbQ9agZs2bT9m/JB1zyaV2Yjb5hkZ/oZ7nnTe
+         bXMFvcF0m4mQrswBETS+gfqn61qTg42s2L7o8XZ8uHqeO4K0bKVdgnxN+94KqwxxcU3Y
+         +Ejsg4cK14EqGrNqAi1ARcC5Pcm3KRmYIB5fM4DK+yBVmPpOQS0Qm+IsEgByb94oB8/f
+         LFNuIoPeKWbWV4IrwPnHQ6DVWWlxwV3/Hz74t72ZQbp6YS70yvCdWzEG67Y6Xe2PAxoJ
+         awRQ==
+X-Gm-Message-State: ACrzQf1UYl4oqidAIsYIhEoQRSHOm5XZ+MIDpZB5Kro7opE95TjFgDJU
+        ioNDCiIM9eIxsScMPxnMVKDC6SAdX8VDD7ODgsEKwA==
+X-Google-Smtp-Source: AMsMyM7YXTudD6bbcX4zQ0JMSXBAl+uEW0Ph54C5La2a7prfW4z9+lMWSXkyfnEmvirTIbcMSDNDy/Yt1/3m3cTNG34=
+X-Received: by 2002:a17:907:2c72:b0:7a4:a4b4:9fcb with SMTP id
+ ib18-20020a1709072c7200b007a4a4b49fcbmr5022245ejc.403.1667070462169; Sat, 29
+ Oct 2022 12:07:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20221029051449.30678-1-manivannan.sadhasivam@linaro.org>
+ <20221029051449.30678-13-manivannan.sadhasivam@linaro.org> <90b7e0e0-a354-f64d-8c53-aa80df684a3a@somainline.org>
+In-Reply-To: <90b7e0e0-a354-f64d-8c53-aa80df684a3a@somainline.org>
+From:   Steev Klimaszewski <steev@kali.org>
+Date:   Sat, 29 Oct 2022 14:07:25 -0500
+Message-ID: <CAKXuJqhzNvuCh8q0d6F5+X9XxNzx5vOYy490X4-LAXy6WhN49g@mail.gmail.com>
+Subject: Re: [PATCH v2 12/12] arm64: dts: qcom: sc8280xp-x13s: Add thermal
+ zone support
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, johan+linaro@kernel.org,
+        quic_jprakash@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add si-en,sn3190 LED controller to enable white LED indicator.
+On Sat, Oct 29, 2022 at 9:29 AM Konrad Dybcio
+<konrad.dybcio@somainline.org> wrote:
+>
+>
+>
+> On 29.10.2022 07:14, Manivannan Sadhasivam wrote:
+> > Add thermal zone support by making use of the thermistor SYS_THERM6.
+> > Based on experiments, this thermistor seems to reflect the actual
+> > surface temperature of the laptop.
+> >
+> > For the cooling device, all BIG CPU cores are throttle down to keep the
+> s/throttle/throttled
+>
+> Is it okay to let the 4xA78C run at full throttle in thermal emergencies though?
+> > temperature at a sane level.
+> >
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 46 +++++++++++++++++++
+> >  1 file changed, 46 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > index ca77c19c6d0d..96e2fa72f782 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > @@ -29,6 +29,52 @@ backlight {
+> >               pinctrl-0 = <&edp_bl_en>, <&edp_bl_pwm>;
+> >       };
+> >
+> > +     thermal-zones {
+> > +             skin-temp-thermal {
+> > +                     polling-delay-passive = <250>;
+> > +                     polling-delay = <0>;
+> > +                     thermal-sensors = <&pmk8280_adc_tm 5>;
+> > +
+> > +                     trips {
+> > +                             skin_temp_alert0: trip-point0 {
+> > +                                     temperature = <55000>;
+> > +                                     hysteresis = <1000>;
+> > +                                     type = "passive";
+> > +                             };
+> > +
+> > +                             skin_temp_alert1: trip-point1 {
+> > +                                     temperature = <58000>;
+> > +                                     hysteresis = <1000>;
+> > +                                     type = "passive";
+> > +                             };
+> > +
+> > +                             skin-temp-crit {
+> > +                                     temperature = <73000>;
+> Ouch, I didn't know we were serving burnt fingers at the cafeteria today :D
+>
+> Or maybe this just looks scary.. The laptop looks plastic, so maybe it won't cause instant
+> burns?
+>
 
-This requires adding the additional "enable" gpio that the OEM
-choose to use, despite it not being mentioned in si-en,sn3190
-datasheet nor supported by the driver.
+Disclaimer: I'm an end user that likes to cosplay as a kernel
+developer sometimes...
 
-Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
----
- .../boot/dts/qcom/msm8916-alcatel-idol347.dts | 44 +++++++++++++++++++
- 1 file changed, 44 insertions(+)
+IMO, it just looks scary.  the skin-temp, afaik, is the temperature of
+the shell of the laptop, so once it reaches 73C, it would be crit.  In
+practice (I've been testing this patch set for a while), I've never
+been able to hit 73C, even with the ambient temperature in my
+apartment being 77F and multiple compilations running.  I've also
+tested a hack to increase the trips to a little bit higher (65/68/73)
+and still not been able to do so.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts b/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
-index 3a0a593899ae..952ae092e6ae 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
-@@ -130,6 +130,27 @@ gyroscope@68 {
- 	};
- };
- 
-+&blsp_i2c6 {
-+	status = "okay";
-+
-+	led-controller@68 {
-+		compatible = "si-en,sn3190";
-+		reg = <0x68>;
-+		shutdown-gpios = <&msmgpio 89 GPIO_ACTIVE_HIGH>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&led_enable_default &led_shutdown_default>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		led@1 {
-+			reg = <1>;
-+			led-max-microamp = <5000>;
-+			function = LED_FUNCTION_INDICATOR;
-+			color = <LED_COLOR_ID_WHITE>;
-+		};
-+	};
-+};
-+
- &pm8916_resin {
- 	status = "okay";
- 	linux,code = <KEY_VOLUMEDOWN>;
-@@ -306,6 +327,29 @@ gyro_int_default: gyro-int-default {
- 		bias-disable;
- 	};
- 
-+	/*
-+	 * The OEM wired an additional GPIO to be asserted so that
-+	 * the si-en,sn3190 LED IC works. Since this GPIO is not
-+	 * part of the IC datasheet nor supported by the driver,
-+	 * force it asserted here.
-+	 */
-+	led_enable_default: led-enable-default {
-+		pins = "gpio102";
-+		function = "gpio";
-+
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-high;
-+	};
-+
-+	led_shutdown_default: led-shutdown-default {
-+		pins = "gpio89";
-+		function = "gpio";
-+
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	mag_reset_default: mag-reset-default {
- 		pins = "gpio8";
- 		function = "gpio";
--- 
-2.37.3
+On the flip side, without this patchset, we do not have any thermal
+trips at all, and the machine will quite happily run up to 90C (and
+I've not seen it shut down, but I wouldn't use it on my lap when this
+is occurring...)
 
-
-
+> Konrad
+> > +                                     hysteresis = <1000>;
+> > +                                     type = "critical";
+> > +                             };
+> > +                     };
+> > +
+> > +                     cooling-maps {
+> > +                             map0 {
+> > +                                     trip = <&skin_temp_alert0>;
+> > +                                     cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > +                                                      <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > +                                                      <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > +                                                      <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> > +                             };
+> > +
+> > +                             map1 {
+> > +                                     trip = <&skin_temp_alert1>;
+> > +                                     cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > +                                                      <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > +                                                      <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > +                                                      <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> > +                             };
+> > +                     };
+> > +             };
+> > +     };
+> > +
+> >       vreg_edp_bl: regulator-edp-bl {
+> >               compatible = "regulator-fixed";
+> >
