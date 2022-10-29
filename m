@@ -2,34 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB5F86123B0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 16:18:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 612E86123D6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 16:21:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229785AbiJ2OSP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Oct 2022 10:18:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39948 "EHLO
+        id S230029AbiJ2OVg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Oct 2022 10:21:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229845AbiJ2ORj (ORCPT
+        with ESMTP id S230090AbiJ2OVG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Oct 2022 10:17:39 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60D8F5FAE4;
-        Sat, 29 Oct 2022 07:17:22 -0700 (PDT)
+        Sat, 29 Oct 2022 10:21:06 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1622862A8F
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 07:18:55 -0700 (PDT)
 Received: from [192.168.1.101] (95.49.29.156.neoplus.adsl.tpnet.pl [95.49.29.156])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 645283EBA5;
-        Sat, 29 Oct 2022 16:17:20 +0200 (CEST)
-Message-ID: <6e5b1e5e-b10c-2a7f-7b32-c603db423f25@somainline.org>
-Date:   Sat, 29 Oct 2022 16:17:19 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id DF00D3EBD1;
+        Sat, 29 Oct 2022 16:18:53 +0200 (CEST)
+Message-ID: <cbcf15b5-8cae-671c-b783-3213d55c575b@somainline.org>
+Date:   Sat, 29 Oct 2022 16:18:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.0
-Subject: Re: [PATCH v2 05/12] arm64: dts: qcom: sc8280xp-pmics: Add PMK8280
- ADC7 block
+Subject: Re: [PATCH v2 08/12] arm64: dts: qcom: sc8280xp-x13s: Add PMK8280
+ VADC channels
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         andersson@kernel.org
 Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
@@ -37,13 +36,14 @@ Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, steev@kali.org
 References: <20221029051449.30678-1-manivannan.sadhasivam@linaro.org>
- <20221029051449.30678-6-manivannan.sadhasivam@linaro.org>
- <2842a802-3f5a-7f28-5e81-b46d7a3abca5@somainline.org>
-In-Reply-To: <2842a802-3f5a-7f28-5e81-b46d7a3abca5@somainline.org>
+ <20221029051449.30678-9-manivannan.sadhasivam@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20221029051449.30678-9-manivannan.sadhasivam@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -52,45 +52,57 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 29.10.2022 16:15, Konrad Dybcio wrote:
+On 29.10.2022 07:14, Manivannan Sadhasivam wrote:
+> Add VADC channels for measuring the on-chip die temperature and external
+> crystal osciallator temperature of PMK8280.
 > 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
 > 
-> On 29.10.2022 07:14, Manivannan Sadhasivam wrote:
->> Add support for ADC7 block available in PMK8280 for reading the
->> temperature via the AMUX pins.
->>
->> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->> ---
->>  arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi | 9 +++++++++
->>  1 file changed, 9 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
->> index 4a3464f5e6e9..3c56e4cb5b5b 100644
->> --- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
->> @@ -75,6 +75,15 @@ pmk8280_pon_resin: resin {
->>  				status = "disabled";
->>  			};
->>  		};
->> +
->> +		pmk8280_vadc: adc@3100 {
->> +			compatible = "qcom,spmi-adc7";
->> +			reg = <0x3100>;
->> +			#address-cells = <1>;
->> +			#size-cells = <0>;
->> +			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
->> +			#io-channel-cells = <1>;
-> Maybe having interrupts after reg and all the -cells below that would look better.
-> 
-> For the contents though:
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> 
-> Konrad
-Sorry for double noise, I just noticed you didn't disable this by default. Was that intended?
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> index 6aa8cf6d9776..18315743313b 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> @@ -7,6 +7,7 @@
+>  /dts-v1/;
+>  
+>  #include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
+>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>  
+>  #include "sc8280xp.dtsi"
+> @@ -173,6 +174,23 @@ &pmk8280_pon_resin {
+>  	status = "okay";
+>  };
+>  
+> +&pmk8280_vadc {
+> +	status = "okay";
+As I mentioned in the patch adding this to the PMIC DTSI, it's enabled by default (perhaps by mistake).
+> +
+> +	pmic-die-temp@3 {
+> +		reg = <PMK8350_ADC7_DIE_TEMP>;
+> +		label = "pmk8280_die_temp";
+> +		qcom,pre-scaling = <1 1>;
+> +	};
+> +
+> +	xo-therm@44 {
+> +		reg = <PMK8350_ADC7_AMUX_THM1_100K_PU>;
+> +		label = "pmk8280_xo_therm";
+> +		qcom,ratiometric;
+> +		qcom,hw-settle-time = <200>;
+having qcom,hw-settle-time above qcom,ratiometric would make this more reverse-Christmas-tree-y, but
+maybe I'm just picky..
+
+For the contents though:
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
 Konrad
->> +		};
->>  	};
->>  
->>  	pmc8280_1: pmic@1 {
+> +	};
+> +};
+> +
+>  &qup0 {
+>  	status = "okay";
+>  };
