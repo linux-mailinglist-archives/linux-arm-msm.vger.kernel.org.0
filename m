@@ -2,64 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3695F61251F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 21:27:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6832A61256A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 23:13:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229571AbiJ2T1F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Oct 2022 15:27:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58600 "EHLO
+        id S229726AbiJ2VNS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Oct 2022 17:13:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbiJ2T1E (ORCPT
+        with ESMTP id S229515AbiJ2VNR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Oct 2022 15:27:04 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B94C8371B2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 12:27:03 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id 13so20435484ejn.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 12:27:03 -0700 (PDT)
+        Sat, 29 Oct 2022 17:13:17 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B78A3CBFB
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 14:13:16 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id bp15so13525569lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 14:13:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=EXBb2KmYy3ncxj7dKkH0trJ5gNOnsu1rYOjk7rftcsw=;
-        b=EIRsEPaxOhKa2mqvXJS8AcT7VCw2lvmMNBMC8u27uFMEheVD2gUM5hWkn4EVtLCCA3
-         lrdJe5aoYawDIfx5ECQ9ZO7QIRGxKgWhFrNyAqn/Vmjl4XCPXaROH+Ghx6NwZgSdvxFE
-         ETP7oLZSdSMVJIRKclqyhWRK+MPHteSk0gEXEsYjsJ6PtMy96CLnrMoGpaYwN4cldluv
-         QPETofSvZXJmgVeD49uhkEf6keORYF9lyPFxnxnxEgMq308P2DT0K9QrIfYDPKfIJFWr
-         maCyBHE8EWED7JBEH8fcyr+YdvRt8t/T+wPcNaPx01+ODYPgj7ZCMnGOwjnM8PL+SsNn
-         sv1w==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mq8Mg06fdD8FFSs+dwD1ITMKqlWnIs/wVZyIglcsiPc=;
+        b=po6WXVw9WSHq/UQZyPh9zCXDgLHvb4PeMI38LBF4vn0NS5ZDPMaKDJgzN4ctT4wZKw
+         spnRodfwn+6y/mYskrqV/NDQu+SZ/Xy9z9+xkVzewoRaA7oXZcSZSuT/q/BiJy5CjkzQ
+         MZ4Y+SPB85ndhYiqLj8ZYx3hgZNsKdJXZubR9t/kV8vZ5+vpZRzjc8kiw/GvTRdDEMo1
+         uDSnYQbb/0NTsYzszJEfbv5IKehB1E/RyQ+fvg/CzJHER0ajcAc3UrJygAejKVP+ER3r
+         NlUPeAk/7CknWx65tjHv1EQy9QMiVZU7sk1GjLYgk9q4Ai3r9pjEOr+FIoDswROARauU
+         Qkjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=EXBb2KmYy3ncxj7dKkH0trJ5gNOnsu1rYOjk7rftcsw=;
-        b=XOMRYDSDhXHO7z9d0DwyTQeadyaI1wHCP8rQ/ysx56ziwlYwnMmR6mZGMrljrFml5g
-         6eLI1DWm1X+SGImN6p14/BKeAzfoce/MhEpNrZDWD9XZfgrISzBtkOuPDrZRWFiLBfFp
-         Ebi7UjVHVKUPXMghIBUMuwzVg99ujXN3S512E49gd7db78FD7d3vT7uItB19Dry9XOAl
-         Hg8wCOOhGUvi7Y8cQOzWad+ZaNOJlgzMS/xsnc3suibkw/8dxvuZT00VZJ5Rl1EVB5Ji
-         HoTVl52GyA6zzofOnOnucSGYk6PpxA4MKVb9eOz5gugO4t3fa1W8d37kH951iMV89sc2
-         SN3A==
-X-Gm-Message-State: ACrzQf328LM96jHPsQvUlTQRbbx91D814leOwThhQ9IRt6VwAMa4CmMK
-        pON28Ruw2KG/VBpowKzC7mrlaDXbdO3adbBro4DLGA==
-X-Google-Smtp-Source: AMsMyM5KMRnudNBo/IcXctcMQsq2cC3UFJwBzJdDsyJN/jzFa11L+XbhckUl1zm/xuCma59yDYOpZatiuI2vixTMeRE=
-X-Received: by 2002:a17:907:75c1:b0:79b:f804:c081 with SMTP id
- jl1-20020a17090775c100b0079bf804c081mr5041794ejc.381.1667071622257; Sat, 29
- Oct 2022 12:27:02 -0700 (PDT)
+        bh=mq8Mg06fdD8FFSs+dwD1ITMKqlWnIs/wVZyIglcsiPc=;
+        b=yzDix9cf0CZJb9WVfIOjo89eUD3Fx7FYAfObSFImHFC2UZZqziha4qDpzLJYkSOAMX
+         cxHzD9AQJ8l5r9unud7g5GRpqJlRYFInJbzqWCjt8MQ5AsgfZ0Wo8jP+9KZJWnWXaohN
+         HmerhknLoUQ0FThgDsQWwmKPKjcwE8Z5Fr/l0fXFn3ZiHLkXwEa0VmamZKDU8la8lDIQ
+         uCTotydzEr9re+RqyW4Se1SmL69Bh9NAW3U3hixml0Xy5AWoM6OpsapTU1Om5eF/h8XO
+         NAlnODoR3RIo8tLJGvRzP6qNCbyflKYbMzUveXJ7TkNl/rmNou3skUD+uzB4H+8Thkru
+         xRDw==
+X-Gm-Message-State: ACrzQf0CJ5RzaRkcK1zi8mzZg8+htOBTE60w8DcofTfveiFls8M3Yx8q
+        tIKfxQ/hcUE7TONQJvItJYFbBA==
+X-Google-Smtp-Source: AMsMyM46iI4lf7SmclXK+EHWE1Atz1jHMgUHdPOMtJSyDkqEgBOlRePWkwbCVNxvvkAnY6D4+s/FNg==
+X-Received: by 2002:a05:6512:2102:b0:4a2:48a2:2cc1 with SMTP id q2-20020a056512210200b004a248a22cc1mr2379585lfr.167.1667077994504;
+        Sat, 29 Oct 2022 14:13:14 -0700 (PDT)
+Received: from localhost.localdomain ([195.165.23.90])
+        by smtp.gmail.com with ESMTPSA id j14-20020a05651231ce00b004a480c8f770sm433508lfe.210.2022.10.29.14.13.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 29 Oct 2022 14:13:14 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v1 0/7] PCI/phy: Add support for PCI on sm8350 platform
+Date:   Sun, 30 Oct 2022 00:13:05 +0300
+Message-Id: <20221029211312.929862-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-References: <20221029051449.30678-1-manivannan.sadhasivam@linaro.org>
-In-Reply-To: <20221029051449.30678-1-manivannan.sadhasivam@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-Date:   Sat, 29 Oct 2022 14:26:50 -0500
-Message-ID: <CAKXuJqg6Ggh=amGJj2B5gT+bBKY035iBmj_YiGFO8CYOh+NMBA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/12] sc8280xp-pmic updates and X13s thermal zone support
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        johan+linaro@kernel.org, quic_jprakash@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -69,77 +81,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Oct 29, 2022 at 12:15 AM Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> Hello,
->
-> This series adds below updates to sc8280xp-pmics:
->
-> PM8280_{1/2}:
-> - Temp alarm
-> - Thermal zones
-> - VADC channels
-> - ADC_TM5 channels
->
-> PMK8280:
-> - ADC7 block
-> - VADC channels
-> - TM5 block
->
-> PMR735A:
-> - VADC channels
->
-> Also adds the thermal zone support to Lenovo X13s based on the thermistor
-> SYS_THERM6 that provides the laptop skin temperature.
->
-> The sc8280xp-pmics is based on the new PMIC7 architecture. In this, all the
-> ADC/TM5 measurements are collected by the primary PMIC PMK8280 from other
-> slave PMICs PM8280_{1/2}, PMR735A using the Programmable Boot Sequence (PBS)
-> and exposed them over the individual channels.
->
-> PMK8280 uses the Slave ID (SID) for identifying each slave PMICs in a system.
-> This ID is not static for each PMIC but rather set for each platform by the
-> hardware designers. So this series allows the configurable SID by modifying the
-> binding to accept SID values instead of hardcoding them.
->
-> This series is tested on Lenovo X13s laptop by monitoring the temperature of
-> the 8 on-board thermistors through IIO interface. The thermal zone support is
-> validated by adding loads to the CPUs and making sure the skin temperature stays
-> below the threshold provided in DT.
->
-> Thanks,
-> Mani
->
-> Changes in v2:
->
-> * Fixed issues reported by Krzysztof and "make dtbs_check"
-> * Collected reviews from Krzysztof
-> * Added the Lenovo X13s thermal zone patch
->
-> Manivannan Sadhasivam (12):
->   dt-bindings: iio: qcom: adc7-pm8350: Allow specifying SID for channels
->   arm64: dts: qcom: sc8280xp-pmics: Add temp alarm for PM8280_{1/2}
->     PMICs
->   arm64: dts: qcom: sc8280xp-pmics: Add thermal zones for PM8280_{1/2}
->     PMICs
->   arm64: dts: qcom: sc8280xp-pmics: Add support for PMK8280 RESIN input
->   arm64: dts: qcom: sc8280xp-pmics: Add PMK8280 ADC7 block
->   arm64: dts: qcom: sc8280xp-pmics: Add support for TM5 block in PMK8280
->   arm64: dts: qcom: sc8280xp-x13s: Enable PMK8280 RESIN input
->   arm64: dts: qcom: sc8280xp-x13s: Add PMK8280 VADC channels
->   arm64: dts: qcom: sc8280xp-x13s: Add PM8280_{1/2} VADC channels
->   arm64: dts: qcom: sc8280xp-x13s: Add PMR735A VADC channel
->   arm64: dts: qcom: sc8280xp-x13s: Add PM8280_{1/2} ADC_TM5 channels
->   arm64: dts: qcom: sc8280xp-x13s: Add thermal zone support
->
->  .../bindings/thermal/qcom-spmi-adc-tm5.yaml   |   6 +-
->  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 204 ++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi  |  83 +++++++
->  .../dt-bindings/iio/qcom,spmi-adc7-pm8350.h   |  90 ++++----
->  4 files changed, 333 insertions(+), 50 deletions(-)
->
-> --
-> 2.25.1
->
-Tested-by: Steev Klimaszewski <steev@kali.org>
+SM8350 is one of the recent Qualcomm platforms which lacks PCIe support.
+Use sm8450 PHY tables to add support for the PCIe hosts on Qualcomm SM8350 platform.
+
+Note: the PCIe0 table is based on the v2.1 tables, so it might work
+incorrectly on earlier platforms.
+
+Dependencies:
+- phy/next
+- https://lore.kernel.org/all/20221028133603.18470-1-johan+linaro@kernel.org/
+
+Dmitry Baryshkov (7):
+  dt-bindings: PCI: qcom: Add sm8350 to bindings
+  dt-bindings: phy: qcom,qmp-pcie: add sm8350 bindings
+  PCI: qcom: Add support for SM8350
+  phy: qcom-qmp-pcie: split and rename the sm8450 gen3 PHY config tables
+  phy: qcom-qmp-pcie: add support for sm8350 platform
+  arm64: dts: qcom: sm8350: add PCIe devices
+  arm64: dts: qcom: sm8350-hdk: enable PCIe devices
+
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |  54 ++++
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |  22 ++
+ arch/arm64/boot/dts/qcom/sm8350-hdk.dts       |  16 ++
+ arch/arm64/boot/dts/qcom/sm8350.dtsi          | 248 +++++++++++++++++-
+ drivers/pci/controller/dwc/pcie-qcom.c        |   1 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 164 ++++++++++--
+ 6 files changed, 487 insertions(+), 18 deletions(-)
+
+
+base-commit: 25dcaf94448f41f1634e8e44f28f37b1aff4bc2c
+prerequisite-patch-id: 2653b8544469dbf460318520629a991707063a74
+prerequisite-patch-id: 8e104dd9bcbfc111a3e3a40e653b7529bc43c2da
+prerequisite-patch-id: a20eaeb1d3c239365d6941e0b78bd735d80ac16c
+prerequisite-patch-id: 564c51aafef04658f6f72a90680640f77117c8eb
+prerequisite-patch-id: 6d7542be2843ccfd1f649d2dc85230e640adf5f1
+prerequisite-patch-id: e36118b08045416bf3d79a2c69b7f1b2009d6945
+prerequisite-patch-id: d48963bb923f85108a8f0d574e92dc63ce341483
+prerequisite-patch-id: d8dfcbc4413e5a29ed9d4c2a50f5e6cdec0d261a
+prerequisite-patch-id: 0493226b1dd5989626619e598650d98e165a9c1b
+prerequisite-patch-id: 7264ed9ab2e1fc6c25db45812c6834f36590e72e
+prerequisite-patch-id: 2784713a211929f0b253674742a7bf0966e02c22
+prerequisite-patch-id: 454b9956cd3d4c4cdc4f39e746175a5d6a1ca084
+prerequisite-patch-id: ce69ae926fb095edd2f3699cfe28e9e75719985c
+prerequisite-patch-id: 0286a9947535ee3be9f58b8a06f7b3018d1309d8
+prerequisite-patch-id: 9d0856ce66a0603950eaa4024057c1cf1f84ed95
+-- 
+2.35.1
+
