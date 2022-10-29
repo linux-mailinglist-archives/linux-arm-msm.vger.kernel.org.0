@@ -2,56 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B57846120B8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 08:30:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F1B0612194
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 10:48:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229552AbiJ2Ga2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Oct 2022 02:30:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34956 "EHLO
+        id S229494AbiJ2IsI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Oct 2022 04:48:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbiJ2Ga1 (ORCPT
+        with ESMTP id S229718AbiJ2IsH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Oct 2022 02:30:27 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC1A163867;
-        Fri, 28 Oct 2022 23:30:24 -0700 (PDT)
+        Sat, 29 Oct 2022 04:48:07 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A282258B4C;
+        Sat, 29 Oct 2022 01:48:06 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 80A2AB82EB6;
-        Sat, 29 Oct 2022 06:30:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1CE4CC43470;
-        Sat, 29 Oct 2022 06:30:22 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5A420B80B19;
+        Sat, 29 Oct 2022 08:48:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF89C433C1;
+        Sat, 29 Oct 2022 08:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667025022;
-        bh=wpXi1qZG6xn4QtLmN7YWSN+v1kXuJUfAGZI4wJLWYfw=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=fPkjmTCzEZ3G4k7G55gmcm6G/1JtqQraEBNFRKQXpwA5Yhwh37PmOHuaqXmf0x+ip
-         mVcv7dNdRMN4I43oiUnnR46TP8g3OySQBQu4VO8Zqi/xHFTxEM5btALp+4HrAX8P59
-         6lsnkWiCNAT1XzZlU+paCwIsfE6ZlFyEfB7i1fgTzbZHSoTuLxtVwRhhY31U3gWypz
-         LjRRE7cSD74bBkUpteNLkbRWMreGUM3UlgELeNOSBXJAf5luiPzCNjNOVYENjbBTgy
-         xkrSm4RZhIzR1hs0BHiv71uozTq5mXO7y3cFAD93zo0O20hemeAekYhQBC5y9r56mo
-         joyewl7yTCm6w==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D53B2C41672;
-        Sat, 29 Oct 2022 06:30:21 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next 0/7] net: ipa: start adding IPA v5.0 functionality
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <166702502186.25217.1144022250011614264.git-patchwork-notify@kernel.org>
-Date:   Sat, 29 Oct 2022 06:30:21 +0000
-References: <20221027122632.488694-1-elder@linaro.org>
-In-Reply-To: <20221027122632.488694-1-elder@linaro.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, mka@chromium.org, evgreen@chromium.org,
-        andersson@kernel.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        s=k20201202; t=1667033284;
+        bh=qAB44AW9l7MBg3PipZA9gp8hcRBcbWZ2uPxGK7uAZ0k=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Hj9EHjO9OTXV1nd8TMHapdEkPKuS1I1SAr0E/MPHdkLWnjuijP2cgi5Y+Acm4SJFF
+         1TL9TQq/s9gK0F7VTDHiksxoom9bHUgBvHxY53QFEec6nwxKVamuNrs0eJ7spw6HU1
+         luXDV39kM/dbJ9W7mM2VLTDnFomcfHRjkWqaT0OlB/TzrXZoLfYV06UVLkb2tVKlVl
+         ATTVHRZ/dTomj7FtA5al8cvUvfBxBnZ6BKnqxR4HjJZhxQ6LUTtrGBD/0YSvih44Co
+         PcW6+B/uUxtMkkd5YIhXnFbmS1KoDQl2JUeMHYZo8H5NnXiQx+Z8xDvttSyZF2n5N5
+         jnpwTAVdloU0g==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oohVP-00008o-Av; Sat, 29 Oct 2022 10:47:51 +0200
+Date:   Sat, 29 Oct 2022 10:47:51 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 10/16] dt-bindings: phy: qcom,qmp-pcie: rename current
+ bindings
+Message-ID: <Y1zot8aJ1WXnbrwF@hovoldconsulting.com>
+References: <20221028133603.18470-1-johan+linaro@kernel.org>
+ <20221028133603.18470-11-johan+linaro@kernel.org>
+ <33b13789-33d6-a22f-82c9-4c5691d0737d@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <33b13789-33d6-a22f-82c9-4c5691d0737d@linaro.org>
 X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -61,46 +66,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
-
-This series was applied to netdev/net-next.git (master)
-by Jakub Kicinski <kuba@kernel.org>:
-
-On Thu, 27 Oct 2022 07:26:25 -0500 you wrote:
-> The biggest change for IPA v5.0 is that it supports more than 32
-> endpoints.  However there are two other unrelated changes:
->   - The STATS_TETHERING memory region is not required
->   - Filter tables no longer support a "global" filter
+On Fri, Oct 28, 2022 at 05:57:01PM -0400, Krzysztof Kozlowski wrote:
+> On 28/10/2022 09:35, Johan Hovold wrote:
+> > The current QMP PCIe PHY bindings are based on the original MSM8996
+> > binding which provided multiple PHYs per IP block and these in turn were
+> > described by child nodes.
+> > 
+> > Later QMP PCIe PHY blocks only provide a single PHY and the remnant
+> > child node does not really reflect the hardware.
+> > 
+> > The original MSM8996 binding also ended up describing the individual
+> > register blocks as belonging to either the wrapper node or the PHY child
+> > nodes.
+> > 
+> > This is an unnecessary level of detail which has lead to problems when
+> > later IP blocks using different register layouts have been forced to fit
+> > the original mould rather than updating the binding. The bindings are
+> > arguable also incomplete as they only the describe register blocks used
+> > by the current Linux drivers (e.g. does not include the per lane PCS
+> > registers).
+> > 
+> > In preparation for adding new bindings for SC8280XP which further
+> > bindings can be based on, rename the current schema file after IPQ8074,
+> > which was the first SoC added to the bindings after MSM8996 (which has
+> > already been split out), and add a reference to the SC8280XP bindings.
+> > 
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
 > 
-> Beyond this, refactoring some code makes supporting more than 32
-> endpoints (in an upcoming series) easier.  So this series includes
-> a few other changes (not in this order):
->   - The maximum endpoint ID in use is determined during config
->   - Loops over all endpoints only involve those in use
->   - Endpoints IDs and their directions are checked for validity
->     differently to simplify comparison against the maximum
-> 
-> [...]
+> Also missing cc devicetree list.
 
-Here is the summary with links:
-  - [net-next,1/7] net: ipa: define IPA v5.0
-    https://git.kernel.org/netdev/net-next/c/5783c68a2519
-  - [net-next,2/7] net: ipa: change an IPA v5.0 memory requirement
-    https://git.kernel.org/netdev/net-next/c/5ba5faa2e271
-  - [net-next,3/7] net: ipa: no more global filtering starting with IPA v5.0
-    https://git.kernel.org/netdev/net-next/c/bd5524930ba7
-  - [net-next,4/7] net: ipa: more completely check endpoint validity
-    (no matching commit)
-  - [net-next,5/7] net: ipa: refactor endpoint loops
-    https://git.kernel.org/netdev/net-next/c/e359ba89a4aa
-  - [net-next,6/7] net: ipa: determine the maximum endpoint ID
-    https://git.kernel.org/netdev/net-next/c/5274c7158b2b
-  - [net-next,7/7] net: ipa: record and use the number of defined endpoint IDs
-    https://git.kernel.org/netdev/net-next/c/b7aaff0b010e
+Yes, I know, but as I mentioned in my reply to Rob on the QMP USB
+series, I do not intend to repost this series unless someone insists as
+there were no binding-related changes in v4 (or v3).
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Johan
