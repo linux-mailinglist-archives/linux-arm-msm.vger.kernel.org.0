@@ -2,116 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 056BA611E83
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 02:00:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70DF4611F0E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Oct 2022 03:27:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230037AbiJ2AAO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Oct 2022 20:00:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51808 "EHLO
+        id S229819AbiJ2B1o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Oct 2022 21:27:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230003AbiJ2AAG (ORCPT
+        with ESMTP id S229482AbiJ2B1m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Oct 2022 20:00:06 -0400
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 974F01900A;
-        Fri, 28 Oct 2022 17:00:04 -0700 (PDT)
-Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id 1CCACFF80F;
-        Fri, 28 Oct 2022 23:59:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1667001598;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=UEYlWh78STx8kM7HdfKAssnfJ9FCt1Mok1R8ei+AmNY=;
-        b=e8517KkBQ6XkYOpU3YdF4RvgZDguqK03Sk4EcOEa4oQB84Sz7SHVwl1hcVckcNl9SOmSsJ
-        REyjtbeLsnM11NWSWWFuYsVvA1exiAd4fFxu3gQeGW0lPZv90IHFQP9SjkLW6Z4ittLM8a
-        2ht+gWanmogiE2OchmVHiWFWwh8ERkRmomFoNdNK62EZiBAeiUyxppmLGEa7n+zep3yNY/
-        djNlr5WAnEk2krmDyFzE126JPtxljRbXlRetg0wFVxiJik3TaRlS0jnRh+lky/lpgnTHOI
-        GTD8+QRLWo8vqBwK0ljvY0S1KcT8PA4Sffw8VccMU67eskMO17ehFh8uaNPzgg==
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Tudor Ambarus <Tudor.Ambarus@microchip.com>,
-        Pratyush Yadav <p.yadav@ti.com>,
-        Michael Walle <michael@walle.cc>,
-        <linux-mtd@lists.infradead.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        devicetree@vger.kernel.org
-Cc:     Chen-Yu Tsai <wens@csie.org>,
-        Naga Sureshkumar Relli <nagasure@xilinx.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>,
-        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 12/12] dt-bindings: mtd: Constrain the list of parsers
-Date:   Sat, 29 Oct 2022 01:59:33 +0200
-Message-Id: <20221028235933.934850-13-miquel.raynal@bootlin.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221028235933.934850-1-miquel.raynal@bootlin.com>
-References: <20221028235933.934850-1-miquel.raynal@bootlin.com>
+        Fri, 28 Oct 2022 21:27:42 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9356D13F87
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 18:27:41 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id f27so16867973eje.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Oct 2022 18:27:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=SB8cXsJ6cSiGdyMloRjmKV5mlYek2j619QkGusLH93k=;
+        b=OIignES46Kbt8O1G/D8CE5LCzf4liD+TVCHTDYlD1UbO7ZV00At2PgUGiLzRcjcRoP
+         KDz7BunLbRO8b7QvzRLiyOYUoHvTfU9FCx65vWf3xgqvOJfA9iwsnxzTSjLjFF9sYFPW
+         oYjD0DXfz6gTvYLzJGRJbZK+G+AXCUGpHlhghba5fZUJvAy/kS6ffd4YC9jxzDunFcSf
+         vFV9nR1IVVFNTZQXpa+glCngHUChxUtAowEyJGhQRCTxA5BuzVj4ZMRpqk49kbNedsjN
+         j+nCAT3fysljbaAoQW9f4RydBrH+FUr24DZEeAVV9w+0jE2sDNkP80yZyp1RAxuojKBH
+         q1xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SB8cXsJ6cSiGdyMloRjmKV5mlYek2j619QkGusLH93k=;
+        b=Wl9BwGdBwB1kgOJAbadG2dhKqBL3gy9cpRCcemVNHHkvn79iSV33bADMyqh3P/J5JT
+         bWmRx7p55ZM9PXmro8Dsxwih02sxBbXZyCOD/fs3H+ID/D/sDiteT2YpMUHzZ1PKUHEH
+         tisaNVCVRLyuXo6rhQTb54SY1Ai2dCGgoQRmU0uZ+jdnH54mth/T7U6QpOxZvupP1trK
+         SwGvbFVm83EcQwoFpgUAEgf5vMbCt7iG6daKBMTlL52qspgtgvHPOA0+ewFGC0ejdMfx
+         o5zd0aFj3wrP3v6kghxrJRCAsyMT2zOkRMhMTsnBr49YeDIaJ0U9iVENJc53n3ha9RwH
+         83MA==
+X-Gm-Message-State: ACrzQf1/ZCNFFuL1/1vLc4NQ20PSTQiTZoiXXwAiVRJHbapOR4dc5mqQ
+        bnTY94cwfpBMTQc1e/I4zp5B4qLn0E4zrEBzpD4mjA==
+X-Google-Smtp-Source: AMsMyM6MGnF2TSbEaIjrBzL/n0tAG+PSMkH6yiE/pY/08UqBhcIIpMPKhMmviToeyNxz+zsaPbVSgur3Lfy83BExNZM=
+X-Received: by 2002:a17:907:75c1:b0:79b:f804:c081 with SMTP id
+ jl1-20020a17090775c100b0079bf804c081mr1857415ejc.381.1667006860118; Fri, 28
+ Oct 2022 18:27:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20221028034155.5580-1-quic_bjorande@quicinc.com>
+In-Reply-To: <20221028034155.5580-1-quic_bjorande@quicinc.com>
+From:   Steev Klimaszewski <steev@kali.org>
+Date:   Fri, 28 Oct 2022 20:27:27 -0500
+Message-ID: <CAKXuJqhOH1Ts0Nde5WB0-bVHUv=_As23eJRsH=VnCxxjtkNB_A@mail.gmail.com>
+Subject: Re: [PATCH 00/10] interconnect: osm-l3: SC8280XP L3 and DDR scaling
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Mike Tipton <quic_mdtipton@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Parser compatibles cannot be used anywhere, and the list is limited. In
-order to constrain this list, enumerate them all under the top
-"partitions" subnode. New parsers will have to add their own compatible
-here as well.
+On Thu, Oct 27, 2022 at 10:42 PM Bjorn Andersson
+<quic_bjorande@quicinc.com> wrote:
+>
+> The SC8280XP currently shows depressing results in memory benchmarks.
+> Fix this by introducing support for the platform in the OSM (and EPSS)
+> L3 driver and support for the platform in the bwmon binding.
+>
+> Then add the necessary nodes and values throughout the sc8280xp and
+> sa8540p dtsi files to make the various devices on these platforms scale
+> both L3, memory bus and DDR.
+>
+> Bjorn Andersson (10):
+>   interconnect: qcom: osm-l3: Use platform-independent node ids
+>   interconnect: qcom: osm-l3: Squash common descriptors
+>   interconnect: qcom: osm-l3: Add per-core EPSS L3 support
+>   interconnect: qcom: osm-l3: Simplify osm_l3_set()
+>   dt-bindings: interconnect: Add sm8350, sc8280xp and generic OSM L3
+>     compatibles
+>   arm64: dts: qcom: Align with generic osm-l3/epss-l3
+>   arm64: dts: qcom: sc8280xp: Add epss_l3 node
+>   arm64: dts: qcom: sc8280xp: Set up L3 scaling
+>   dt-bindings: interconnect: qcom,msm8998-bwmon: Add sc8280xp bwmon
+>     instances
+>   arm64: dts: qcom: sc8280xp: Add bwmon instances
+>
+>  .../interconnect/qcom,msm8998-bwmon.yaml      |   5 +
+>  .../bindings/interconnect/qcom,osm-l3.yaml    |  22 ++-
+>  arch/arm64/boot/dts/qcom/sa8540p.dtsi         |  39 +++++
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 152 ++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi          |   2 +-
+>  drivers/interconnect/qcom/osm-l3.c            | 126 ++++-----------
+>  10 files changed, 251 insertions(+), 103 deletions(-)
+>
+> --
+> 2.37.3
+>
+Prior to this series being applied:
 
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
----
- Documentation/devicetree/bindings/mtd/mtd.yaml | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+steev@cho:~/temp/mybw$ ./mybw
+    64: 21043.42MB/s
+   128: 22511.90MB/s
+   256: 23190.96MB/s
+   512: 23532.00MB/s
+  1024: 23537.36MB/s
+    2K: 23730.19MB/s
+    4K: 23307.45MB/s
+    8K: 23603.36MB/s
+   16K: 23752.39MB/s
+   32K: 23819.91MB/s
+   64K: 23871.28MB/s
+  128K: 23890.10MB/s
+  256K: 23851.90MB/s
+  512K: 23759.65MB/s
+ 1024K: 15956.73MB/s
+    2M: 8418.88MB/s
+    4M: 6385.06MB/s
+    8M: 5959.11MB/s
+   16M: 5892.18MB/s
+   32M: 6109.78MB/s
 
-diff --git a/Documentation/devicetree/bindings/mtd/mtd.yaml b/Documentation/devicetree/bindings/mtd/mtd.yaml
-index bddb7bdf441b..29db0b5c115e 100644
---- a/Documentation/devicetree/bindings/mtd/mtd.yaml
-+++ b/Documentation/devicetree/bindings/mtd/mtd.yaml
-@@ -27,13 +27,29 @@ properties:
-   partitions:
-     type: object
-     properties:
-+      compatible:
-+        contains:
-+          enum:
-+            - fixed-partitions
-+            - arm,arm-firmware-suite
-+            - brcm,bcm4908-partitions
-+            - brcm,bcm947xx-cfe-partitions
-+            - nksys,ns-partitions
-+            - nvmem-cells
-+            - qcom,smem-part
-+            - redboot-fis
-+
-       '#address-cells': true
-+
-       '#size-cells': true
- 
-     patternProperties:
-       "partition@[0-9a-f]+":
-         $ref: partitions/partition.yaml
- 
-+    required:
-+      - compatible
-+
- patternProperties:
-   "@[0-9a-f]+$":
-     $ref: partitions/partition.yaml
--- 
-2.34.1
 
+With this series applied:
+steev@cho:~/temp/mybw$ ./mybw
+    64: 21193.63MB/s
+   128: 22513.64MB/s
+   256: 23196.15MB/s
+   512: 23554.33MB/s
+  1024: 23555.31MB/s
+    2K: 23738.53MB/s
+    4K: 23310.13MB/s
+    8K: 23616.14MB/s
+   16K: 23768.47MB/s
+   32K: 23847.16MB/s
+   64K: 23881.61MB/s
+  128K: 23901.33MB/s
+  256K: 23910.21MB/s
+  512K: 23839.70MB/s
+ 1024K: 23577.47MB/s
+    2M: 23836.08MB/s
+    4M: 23798.35MB/s
+    8M: 23759.23MB/s
+   16M: 22887.62MB/s
+   32M: 22491.87MB/s
+
+Additionally, if anyone is curious, geekbench 5.4 comparison, with
+this patchset applied on 6.0.5:
+
+https://browser.geekbench.com/v5/cpu/compare/18284519?baseline=18076980
+
+This change is very welcomed :)
+
+Tested on the Lenovo Thinkpad X13s
+
+Tested-by: Steev Klimaszewski <steev@kali.org>
