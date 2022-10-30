@@ -2,216 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C5B4612BB3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Oct 2022 18:05:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AAAA612C0E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Oct 2022 18:57:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229674AbiJ3RF4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 Oct 2022 13:05:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43224 "EHLO
+        id S229608AbiJ3R5M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 Oct 2022 13:57:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbiJ3RFz (ORCPT
+        with ESMTP id S229441AbiJ3R5L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 Oct 2022 13:05:55 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9F1A1E6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Oct 2022 10:05:50 -0700 (PDT)
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ore@pengutronix.de>)
-        id 1opBju-0002tX-Qd; Sun, 30 Oct 2022 18:04:50 +0100
-Received: from ore by ptx.hi.pengutronix.de with local (Exim 4.92)
-        (envelope-from <ore@pengutronix.de>)
-        id 1opBjm-0000cU-6B; Sun, 30 Oct 2022 18:04:42 +0100
-Date:   Sun, 30 Oct 2022 18:04:42 +0100
-From:   Oleksij Rempel <o.rempel@pengutronix.de>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Lars Povlsen <lars.povlsen@microchip.com>,
-        Steen Hegelund <Steen.Hegelund@microchip.com>,
-        Daniel Machon <daniel.machon@microchip.com>,
-        UNGLinuxDriver@microchip.com, Sergey Shtylyov <s.shtylyov@omp.ru>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Martin Botka <martin.botka@somainline.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        krishna Lanka <quic_vamslank@quicinc.com>,
-        Iskren Chernev <iskren.chernev@gmail.com>,
-        Del Regno <angelogioacchino.delregno@somainline.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Govind Singh <govinds@codeaurora.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Oleksij Rempel <linux@rempel-privat.de>,
-        Horatiu Vultur <horatiu.vultur@microchip.com>,
-        Vladimir Oltean <vladimir.oltean@nxp.com>,
-        Claudiu Manoil <claudiu.manoil@nxp.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Sun, 30 Oct 2022 13:57:11 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8CD0AE6E;
+        Sun, 30 Oct 2022 10:57:09 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id z97so14618750ede.8;
+        Sun, 30 Oct 2022 10:57:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7mapbQ6IvGqWah0HR/O13e7IZQPvJmBvQBO0mfMDvXs=;
+        b=fSfeZZGSaA0jvuVeMSVBagWEBerWxkzJjbzbDAQ72PMUHkGer604u9HFOPlo86qVJ0
+         BWwa4d6WyorKEuRzzAqULGy2gbaTvhqzym+AX/JVmm8sV1hTmyx3fm79VEI5CbmTQJK2
+         1qYFVOmQiYW8/vWqEUNbpcZfLvYSdOkt2O+b+ozWNITk0gY4DFpXzf9hcleXZJZfyzOh
+         i6czL+EAzPV5/2TwDfnUwOG95yhIhahGLp3ZZMGYzV/XeMxfgNd12Q+qoLTMmVfTg/fV
+         X/dRoKBdx40cCUO2xEB1QuMd82efAXlswE+hEtNuydysc2r9VGz1l3P/kXrGha4rrzDl
+         Sw4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7mapbQ6IvGqWah0HR/O13e7IZQPvJmBvQBO0mfMDvXs=;
+        b=GwGIcgBnyMI7lvuaQcksecDv8XzIuY6iR+Il3Q8auB1djHYfHzZ7sZ3xFlvf4ouXKy
+         1TshsMG8obnI9gaApBZMwzDUCQ14yIjYawfK27d5eaX9Ndlpp7vNqAtVSJXsp4u15BaT
+         VVD+3OpAWsVM5D+0ExEjY0FLyIFtLvmbCue5J779ACw1v7n52R3PXHpQfhEhfqUUsfqL
+         EOFEyJ9a7MPFcieou02p739VmNLXVaoTypAoGlCIvybdogfrhIqB3CH94lZk+AajK1m3
+         226O0rI23QyQW8zJYVVXN7ow0hii9fi3VwbJHgNzQbq80QBngPDq/qwAEKyZEHDy1eTz
+         HV4Q==
+X-Gm-Message-State: ACrzQf3wZtXQniYMJaxV7RZTKGjLGZXuhXtTyTKL0f45t2GEwsYEiuWd
+        ALqWAwuDFyGs17sH+Y19ETg=
+X-Google-Smtp-Source: AMsMyM5O//C43EyghhM9u3buQBAuZXj8tQTff4943Ui07aJ2mx4diCtpy0nqWT5c9DFlANjzbjVFRA==
+X-Received: by 2002:a05:6402:2409:b0:456:f97b:3794 with SMTP id t9-20020a056402240900b00456f97b3794mr9747412eda.145.1667152628436;
+        Sun, 30 Oct 2022 10:57:08 -0700 (PDT)
+Received: from fedora.. (dh207-98-142.xnet.hr. [88.207.98.142])
+        by smtp.googlemail.com with ESMTPSA id b24-20020a17090630d800b0073de0506745sm2053029ejb.197.2022.10.30.10.57.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 30 Oct 2022 10:57:08 -0700 (PDT)
+From:   Robert Marko <robimarko@gmail.com>
+To:     agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, mturquette@baylibre.com,
+        sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, tdas@codeaurora.org,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: net: constrain number of 'reg' in ethernet
- ports
-Message-ID: <20221030170442.GA7508@pengutronix.de>
-References: <20221028140326.43470-1-krzysztof.kozlowski@linaro.org>
- <20221028140326.43470-2-krzysztof.kozlowski@linaro.org>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Robert Marko <robimarko@gmail.com>
+Subject: [PATCH 2/3] dt-bindings: clocks: qcom,gcc-ipq8074: allow XO and sleep clocks
+Date:   Sun, 30 Oct 2022 18:57:02 +0100
+Message-Id: <20221030175703.1103224-2-robimarko@gmail.com>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221030175703.1103224-1-robimarko@gmail.com>
+References: <20221030175703.1103224-1-robimarko@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20221028140326.43470-2-krzysztof.kozlowski@linaro.org>
-X-Sent-From: Pengutronix Hildesheim
-X-URL:  http://www.pengutronix.de/
-X-Accept-Language: de,en
-X-Accept-Content-Type: text/plain
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: ore@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 28, 2022 at 10:03:25AM -0400, Krzysztof Kozlowski wrote:
-> 'reg' without any constraints allows multiple items which is not the
-> intention for Ethernet controller's port number.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Allow passing XO and sleep clocks to the IPQ8074 to avoid having to do
+a global matching by name.
 
-For  asix,ax88178.yaml and microchip,lan95xx.yaml
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+---
+ .../devicetree/bindings/clock/qcom,gcc-ipq8074.yaml    | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
-
-> 
-> ---
-> 
-> Please give it a time for Rob's bot to process this.
-> ---
->  Documentation/devicetree/bindings/net/asix,ax88178.yaml       | 4 +++-
->  Documentation/devicetree/bindings/net/microchip,lan95xx.yaml  | 4 +++-
->  .../devicetree/bindings/net/microchip,lan966x-switch.yaml     | 4 ++--
->  .../devicetree/bindings/net/microchip,sparx5-switch.yaml      | 3 ++-
->  .../devicetree/bindings/net/mscc,vsc7514-switch.yaml          | 3 ++-
->  .../bindings/net/renesas,r8a779f0-ether-switch.yaml           | 4 ++--
->  6 files changed, 14 insertions(+), 8 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/net/asix,ax88178.yaml b/Documentation/devicetree/bindings/net/asix,ax88178.yaml
-> index 1af52358de4c..a81dbc4792f6 100644
-> --- a/Documentation/devicetree/bindings/net/asix,ax88178.yaml
-> +++ b/Documentation/devicetree/bindings/net/asix,ax88178.yaml
-> @@ -27,7 +27,9 @@ properties:
->            - usbb95,772b   # ASIX AX88772B
->            - usbb95,7e2b   # ASIX AX88772B
->  
-> -  reg: true
-> +  reg:
-> +    maxItems: 1
-> +
->    local-mac-address: true
->    mac-address: true
->  
-> diff --git a/Documentation/devicetree/bindings/net/microchip,lan95xx.yaml b/Documentation/devicetree/bindings/net/microchip,lan95xx.yaml
-> index cf91fecd8909..3715c5f8f0e0 100644
-> --- a/Documentation/devicetree/bindings/net/microchip,lan95xx.yaml
-> +++ b/Documentation/devicetree/bindings/net/microchip,lan95xx.yaml
-> @@ -39,7 +39,9 @@ properties:
->            - usb424,9e08   # SMSC LAN89530 USB Ethernet Device
->            - usb424,ec00   # SMSC9512/9514 USB Hub & Ethernet Device
->  
-> -  reg: true
-> +  reg:
-> +    maxItems: 1
-> +
->    local-mac-address: true
->    mac-address: true
->  
-> diff --git a/Documentation/devicetree/bindings/net/microchip,lan966x-switch.yaml b/Documentation/devicetree/bindings/net/microchip,lan966x-switch.yaml
-> index dc116f14750e..583d70c51be6 100644
-> --- a/Documentation/devicetree/bindings/net/microchip,lan966x-switch.yaml
-> +++ b/Documentation/devicetree/bindings/net/microchip,lan966x-switch.yaml
-> @@ -83,8 +83,8 @@ properties:
->              const: 0
->  
->            reg:
-> -            description:
-> -              Switch port number
-> +            items:
-> +              - description: Switch port number
->  
->            phys:
->              description:
-> diff --git a/Documentation/devicetree/bindings/net/microchip,sparx5-switch.yaml b/Documentation/devicetree/bindings/net/microchip,sparx5-switch.yaml
-> index 57ffeb8fc876..ccb912561446 100644
-> --- a/Documentation/devicetree/bindings/net/microchip,sparx5-switch.yaml
-> +++ b/Documentation/devicetree/bindings/net/microchip,sparx5-switch.yaml
-> @@ -89,7 +89,8 @@ properties:
->  
->          properties:
->            reg:
-> -            description: Switch port number
-> +            items:
-> +              - description: Switch port number
->  
->            phys:
->              maxItems: 1
-> diff --git a/Documentation/devicetree/bindings/net/mscc,vsc7514-switch.yaml b/Documentation/devicetree/bindings/net/mscc,vsc7514-switch.yaml
-> index ee0a504bdb24..1cf82955d75e 100644
-> --- a/Documentation/devicetree/bindings/net/mscc,vsc7514-switch.yaml
-> +++ b/Documentation/devicetree/bindings/net/mscc,vsc7514-switch.yaml
-> @@ -109,7 +109,8 @@ properties:
->  
->          properties:
->            reg:
-> -            description: Switch port number
-> +            items:
-> +              - description: Switch port number
->  
->            phy-handle: true
->  
-> diff --git a/Documentation/devicetree/bindings/net/renesas,r8a779f0-ether-switch.yaml b/Documentation/devicetree/bindings/net/renesas,r8a779f0-ether-switch.yaml
-> index 581fff8902f4..0eba66a29c6c 100644
-> --- a/Documentation/devicetree/bindings/net/renesas,r8a779f0-ether-switch.yaml
-> +++ b/Documentation/devicetree/bindings/net/renesas,r8a779f0-ether-switch.yaml
-> @@ -106,8 +106,8 @@ properties:
->  
->          properties:
->            reg:
-> -            description:
-> -              Port number of ETHA (TSNA).
-> +            items:
-> +              - description: Port number of ETHA (TSNA).
->  
->            phys:
->              maxItems: 1
-> -- 
-> 2.34.1
-> 
-> 
-
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml
+index ac6711ed01ba..a190523a8c25 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8074.yaml
+@@ -24,6 +24,16 @@ properties:
+   compatible:
+     const: qcom,gcc-ipq8074
+ 
++  clocks:
++    items:
++      - description: board XO clock
++      - description: sleep clock
++
++  clock-names:
++    items:
++      - const: xo
++      - const: sleep_clk
++
+ required:
+   - compatible
+ 
 -- 
-Pengutronix e.K.                           |                             |
-Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
-31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
-Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
+2.38.1
+
