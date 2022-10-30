@@ -2,91 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F70C6128C9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Oct 2022 08:33:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 681A6612993
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Oct 2022 10:43:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229988AbiJ3HdJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 Oct 2022 03:33:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58346 "EHLO
+        id S229971AbiJ3JnL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 Oct 2022 05:43:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229982AbiJ3Hcx (ORCPT
+        with ESMTP id S229946AbiJ3JnH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 Oct 2022 03:32:53 -0400
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E06EA6334
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Oct 2022 00:32:50 -0700 (PDT)
-Received: from localhost.localdomain (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 82D06200DF;
-        Sun, 30 Oct 2022 08:32:48 +0100 (CET)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Andy Gross <agross@kernel.org>,
+        Sun, 30 Oct 2022 05:43:07 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7925CD104;
+        Sun, 30 Oct 2022 02:43:04 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id a14so12099725wru.5;
+        Sun, 30 Oct 2022 02:43:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=el1uBcYSsOxkuMCXtaqTfOSF/xC4DrDJWOTKK9iaBnE=;
+        b=drCnBi96HM4gMyanXFhlxgPpUpI1VrPTRivTIYxnsqGiIiWEEUpFztyC+aIW8I/STw
+         U3VazpPaiZ1Zy3kq205EgE95C5oKQ8B9WxMuJdAz86ShW2NXgRHFX94eSIBJ2C9MH+3m
+         0XS+87N25UgQ5AcuQVzeUnOFBCsynyRG/jhfQSmlfQVpit2EUtJ2tK16Hc4X34YnNydo
+         sq2lgv9mpGD2iuycxduqJxYWMdjB50pZTtuJ9wHh78NBSRWP86JuNK17mrB9l4bBqLfi
+         EpxOchkZ7gWb+C6KnM1+iZJqb75SMn91x6mcvywI6UiUqK3w94wDtPUuxa5PcKw5+/DY
+         5B2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=el1uBcYSsOxkuMCXtaqTfOSF/xC4DrDJWOTKK9iaBnE=;
+        b=UHblTPhZLyrsV7E5MbAhwLjWj2lJOgk11u330Oygw8govWtA3x9XKjY3dqk0DG2jbH
+         qgYC+zEHAY0/IjKTMpvJuihhcfnVtMUuyL25MEOrDw7EAK8X7Cb8zGUVrlsyg0XU8ZI/
+         s211YGV0pHQfyybu5zwowJMIKy6hEi/N56xRsXsuRpDHPkoUBcTPKWUg+HkptzqH77l5
+         pBYaXiqkQDejmg2qlZP46S9DtBWXOpa+0cEU7jJInlQQmPgYErsW/FHwHtdoxJToZOZV
+         5cJIBgtQkUWlvT1il0/ZuZ0vSp/1jDfAKenTGislY/h6U3O+FfteJu8V8GYY2t1BvTRF
+         4kMw==
+X-Gm-Message-State: ACrzQf3nVx24ZAQ52gxAkKmVToeBK1GxCvI7+eI4sQ/xVRjHqyEob9hX
+        T0kVhw+DzlQMVukqMBUaHwk=
+X-Google-Smtp-Source: AMsMyM7dGn+ozvM9hHqLQm1/2R3zz7vJRKWrvea5EeHkh837XJAHk6cExaKdqoye0BR+zu+i+ef8aA==
+X-Received: by 2002:a05:6000:15cd:b0:236:9701:7939 with SMTP id y13-20020a05600015cd00b0023697017939mr4440305wry.248.1667122982531;
+        Sun, 30 Oct 2022 02:43:02 -0700 (PDT)
+Received: from localhost ([77.78.20.135])
+        by smtp.gmail.com with ESMTPSA id z3-20020a5d6403000000b0022ccae2fa62sm3752873wru.22.2022.10.30.02.43.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 30 Oct 2022 02:43:01 -0700 (PDT)
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 10/10] arm64: dts: qcom: sm6350: Add apps_smmu with streamID to SDHCI 1/2 nodes
-Date:   Sun, 30 Oct 2022 08:32:32 +0100
-Message-Id: <20221030073232.22726-11-marijn.suijten@somainline.org>
+        Rob Herring <robh+dt@kernel.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Subject: [PATCH v5 0/8] Add support for sm6115,4250 and OnePlus Nord N100
+Date:   Sun, 30 Oct 2022 11:42:50 +0200
+Message-Id: <20221030094258.486428-1-iskren.chernev@gmail.com>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221030073232.22726-1-marijn.suijten@somainline.org>
-References: <20221030073232.22726-1-marijn.suijten@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When enabling the APPS SMMU the mainline driver reconfigures the SMMU
-from its bootloader configuration, loosing the stream mapping for (among
-which) the SDHCI hardware and breaking its ADMA feature.  This feature
-can be disabled with:
+Changes from v4
+v4: https://lore.kernel.org/linux-arm-msm/20220919180618.1840194-1-iskren.chernev@gmail.com/
+- rebase on next-20221028
+- drop merged patches
+- add unmerged patches from https://lore.kernel.org/linux-devicetree/20220815100952.23795-1-a39.skl@gmail.com/
+- all in all, treat this as a resend
 
-    sdhci.debug_quirks=0x40
+Changes from v3
+---------------
+v3: https://lore.kernel.org/linux-arm-msm/20220910143213.477261-1-iskren.chernev@gmail.com/
+- move qcom,smem to reserved-memory region
+- change soc to soc@0
+- pad reg addresses to 8 digits
+- align pinctrl with latest linux-next
+- rename usb labels to align with existing socs
+- use named masks for armv8-timer
+- order billie2 overrides by label name
+- dual license dts(i) files
+- dropped merged patches
 
-But it is of course desired to have this feature enabled and working
-through the SMMU.
+NOTE: Not done as suggested:
+- armv8-timer: I used GIC_CPU_MASK_SIMPLE(4) instead of GIC_CPU_MASK_SIMPLE(8),
+  which would have changed the hardcoded mask
+- I haven't changed the default state of regulators - there seems to be no
+  clear way to do that across the board
 
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
----
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+Changes from v2
+---------------
+v2: https://lore.kernel.org/all/20220903174150.3566935-1-iskren.chernev@gmail.com/
+- fix ufs bindings to follow sdm845
+- drop nvmem, firmware, reserved-range patches (merged)
+- add patch that fixes sm6115-dwc3 bindings (4/9)
+- add patch that fixes qcom,sm6115-sdhci bindings (5/9)
+- add patch that fixes qcom,sm6115-qmp-ufs-phy bindings (6/9)
+- drop dynamic reserved memory regions
+- drop clock-output-names
+- drop frequency for timer
+- fix mmc pinctrl regression in v2
+- move board clock freqs in relative scope
+- fix indentation to please Konrad
+- reorder some DT props (reg, status, compatible)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index b98b881ebe7e..c309a359ded9 100644
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -485,6 +485,7 @@ sdhc_1: mmc@7c4000 {
- 			interrupts = <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 644 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
-+			iommus = <&apps_smmu 0x60 0x0>;
- 
- 			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
- 				 <&gcc GCC_SDCC1_APPS_CLK>,
-@@ -1064,6 +1065,7 @@ sdhc_2: mmc@8804000 {
- 			interrupts = <GIC_SPI 204 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 222 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
-+			iommus = <&apps_smmu 0x560 0x0>;
- 
- 			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
- 				 <&gcc GCC_SDCC2_APPS_CLK>,
+Changes from v1
+---------------
+v1: https://lore.kernel.org/all/20220901072414.1923075-1-iskren.chernev@gmail.com/
+- merge dtsi patches in one
+- fix ufs binding (allow ice register)
+- fix dt schema issues (to the best of my ability)
+- add a few necessary bindings (compats)
+- some comments on remaining schema issues after commit msg (patch 7 and 9)
+
+This series adds support for sm6115 (clocks, pinctrl, usb, ufs, sdhc),
+sm4250 (mostly empty shell on top of sm6115) and finally basic OnePlus Nord
+N100 (codename billie2), including the above mentiond items plus simple
+framebuffer.
+
+Adam Skladowski (3):
+  dt-bindings: dmaengine: qcom: gpi: add compatible for SM6115
+  dt-bindings: arm-smmu: Add compatible for Qualcomm SM6115
+  iommu/arm-smmu-qcom: Add SM6115 support
+
+Iskren Chernev (5):
+  dt-bindings: ufs: qcom: Add sm6115 binding
+  dt-bindings: arm: qcom: Add compatible for oneplus,billie2 phone
+  arm64: dts: qcom: sm6115: Add basic soc dtsi
+  arm64: dts: qcom: sm4250: Add soc dtsi
+  arm64: dts: qcom: sm4250: Add support for oneplus-billie2
+
+ .../devicetree/bindings/arm/qcom.yaml         |   7 +
+ .../devicetree/bindings/dma/qcom,gpi.yaml     |   1 +
+ .../devicetree/bindings/iommu/arm,smmu.yaml   |   1 +
+ .../devicetree/bindings/ufs/qcom,ufs.yaml     |  26 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/sm4250-oneplus-billie2.dts  | 241 +++++
+ arch/arm64/boot/dts/qcom/sm4250.dtsi          |  38 +
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          | 854 ++++++++++++++++++
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c    |   1 +
+ 9 files changed, 1170 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sm4250.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sm6115.dtsi
+
 -- 
 2.38.1
 
