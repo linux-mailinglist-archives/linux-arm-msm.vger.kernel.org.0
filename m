@@ -2,219 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE5586126B3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Oct 2022 02:20:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 998C26128A2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Oct 2022 08:17:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229637AbiJ3AUT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Oct 2022 20:20:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41214 "EHLO
+        id S229665AbiJ3HRN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 Oct 2022 03:17:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229941AbiJ3ATJ (ORCPT
+        with ESMTP id S229651AbiJ3HRM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Oct 2022 20:19:09 -0400
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EF575004B
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 17:18:53 -0700 (PDT)
-Received: by mail-io1-xd2b.google.com with SMTP id n191so7360460iod.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 17:18:53 -0700 (PDT)
+        Sun, 30 Oct 2022 03:17:12 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB97226CA
+        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Oct 2022 00:17:08 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id c2so8263483plz.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Oct 2022 00:17:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cEUlpLn6RuLc4Fo/uPSYCehvdn31euMXFsdMmyCklyk=;
-        b=SgQo6EF4wTm/UBaevZtlQYHMSlg7mAp5S8g0l0XvdCufc9TjYfk8eg50qb7ggL3r0+
-         musLPB0I22VqJZrSvjCgVwVYGvZNf5prBF0zZ+fBVXIMt+a7KjCieF8pGqSQ0qIjzkD1
-         9uoK2iP8Hz4rwvZqYh91jq2MsQrZgCDV9QSIY86oo2k7s0tn2epfkA0nEUHGdYfu/zfl
-         BduYuQWAYUGnfgfS8/cVLUhnmDAONGv97oB772BePT7HsJCs3+D/533siTlS9fhYbDyx
-         7MVOrpcGYlJlDtLeEtoqD6cRmVZ7dEcTAfYSRdiKjgJ2RPFKbAxYhljzKXkSJqIpUI7G
-         zXSA==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=a/6WjG/dX440R2RO6wLGBQFAWw0l4A8fGFfY6dPSRdk=;
+        b=Mg+zuw4new1q3qD5JLv0sng+Xzr0B9aaKuJVVMyROQg15GkfkdVUFar0pKR7lM5noA
+         XAxmOWH4JeJapdFWDD+cn4+TUDOXGSOOkHCs6jPi7bMaRrJ4Kbo3Mz1LIhzWkyILtaQQ
+         GVL1b86UAiWqtlsXiZ9eddGmLgoEvUr7HJlHZEuvAztKYH8s0POz2FN5CWKGTSTvMnSv
+         D4qsukxWiQj6gQ/gsfpd35xHFlS4xCOwXwG7FNefbipZ7dtuXzA5OtM+rKbzKfQDLwuh
+         GgYjelVud9QIK7BuDHA6y04/Afg9ggpM9TIOsLaILSiF/Za2DaJ9DC3FagIIoFSJ1PeZ
+         P4AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cEUlpLn6RuLc4Fo/uPSYCehvdn31euMXFsdMmyCklyk=;
-        b=N/D751wINtG29Vm+0cQsoK1HfCB2oXlW+wQGLigSbFqJUvPfsViAjn9dHaxFlMAlAb
-         cydfoQrVh081V3c/Nq4yAdP25UD/kTfuTQUlKASr+f6VRjPBSG+2ZpPgnWPVXt8XgUKW
-         eH5hSTRtsetjUNyUblYhkyK3/fZKZ3owvQKhBY2fmWmNrVG9hekXHFSY7OMVKy/PHUkg
-         mvYM5bcjcH5fhYgc4X4FE/evtPDe/BEXag8Mo2TLcsAapiJ4HHJNElXmZuCeG8ZGckCt
-         73L7ePHDv3+qhv1FrW4Q+N9aslK1pE4uQTQJXzESxKsv6LVc+NrDEShcq4V1AOIQ2LpX
-         N3Zg==
-X-Gm-Message-State: ACrzQf3Y2Ggsp2QYFYb4e+Np2saXy6ZtSUN7D6pnrXaD5Xr4KDIlYZVU
-        7yxw7uvDiRoO3LnKm5SMF8SsRg==
-X-Google-Smtp-Source: AMsMyM5JicI5H6e3IRZLxXLnhj7L4y9fUvtaoryjcSsgFFK+c547ySMaskYTWqNT4deOVsAKiqB/tg==
-X-Received: by 2002:a02:6d15:0:b0:375:3523:b643 with SMTP id m21-20020a026d15000000b003753523b643mr3579915jac.144.1667089132781;
-        Sat, 29 Oct 2022 17:18:52 -0700 (PDT)
-Received: from presto.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id co20-20020a0566383e1400b00375126ae55fsm1087519jab.58.2022.10.29.17.18.50
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=a/6WjG/dX440R2RO6wLGBQFAWw0l4A8fGFfY6dPSRdk=;
+        b=hBYPgokSgFWLsTlKBBL3zWA91NXKohG2m6CJOtb93mzzPFk1YEzajPAimhN4hDpwY2
+         0Vl1q3LoxYbdr9qTxP2l2LQdvjsG12d5VZSAv9ELkCR1vLxvPmxq/VAV8A/5eIFqFzi3
+         kDcTY10eMcExIxCCfuPUuAgHkZ4EYqtnleQVaIZctjC5yrVfzpImIO8RJ39YwS3aSp6f
+         6OK+3NZvlMPqEU/7xXwdXw8nWN8mZ3FaGo4KziFxfHRjEOmxBrntMYl4ppKG6d6v1Rx9
+         sLFr2m/gkG8NtQ8/17iJaFGsNA+3zNGb/F7ZFgojs6h0Fnllkh8GdP7n83wZKKI/Xj1j
+         gUhQ==
+X-Gm-Message-State: ACrzQf3yDbrOO4tR3i7H/Li+wtWZSLxbkRuQFzMjeCQ8D9WwiECLEWis
+        GfWx+trH4FT4A8GrDaDyM194
+X-Google-Smtp-Source: AMsMyM7wsfvc+EMO+FSSOGbqYotGNKN6ObjIJAVh/JYMc2kixEPR3MrUzel3AnaAx1M4DMOxBfAU9g==
+X-Received: by 2002:a17:90a:86c6:b0:213:36b6:1b4c with SMTP id y6-20020a17090a86c600b0021336b61b4cmr8494492pjv.7.1667114228178;
+        Sun, 30 Oct 2022 00:17:08 -0700 (PDT)
+Received: from thinkpad ([117.193.208.18])
+        by smtp.gmail.com with ESMTPSA id j16-20020a170902da9000b0017a0668befasm2249377plx.124.2022.10.30.00.17.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Oct 2022 17:18:52 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 9/9] net: ipa: use a bitmap for enabled endpoints
-Date:   Sat, 29 Oct 2022 19:18:28 -0500
-Message-Id: <20221030001828.754010-10-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221030001828.754010-1-elder@linaro.org>
-References: <20221030001828.754010-1-elder@linaro.org>
+        Sun, 30 Oct 2022 00:17:06 -0700 (PDT)
+Date:   Sun, 30 Oct 2022 12:46:59 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     andersson@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        johan+linaro@kernel.org, quic_jprakash@quicinc.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 09/11] arm64: dts: qcom: sc8280xp-x13s: Add PM8280_{1/2}
+ VADC channels
+Message-ID: <20221030071659.GE5362@thinkpad>
+References: <20221027063006.9056-1-manivannan.sadhasivam@linaro.org>
+ <20221027063006.9056-10-manivannan.sadhasivam@linaro.org>
+ <5e66c095-898e-067e-1874-a3d2e5babf17@linaro.org>
+ <20221029044831.GC5362@thinkpad>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221029044831.GC5362@thinkpad>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Replace the 32-bit unsigned used to track enabled endpoints with a
-Linux bitmap, to allow an arbitrary number of endpoints to be
-represented.
+On Sat, Oct 29, 2022 at 10:18:37AM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Oct 27, 2022 at 10:09:21AM -0400, Krzysztof Kozlowski wrote:
+> > On 27/10/2022 02:30, Manivannan Sadhasivam wrote:
+> > > Add VADC channels of PM8280_{1/2} PMICs for measuring the on-chip die
+> > > temperature and external thermistors connected to the AMUX pins.
+> > > 
+> > > The measurements are collected by the primary PMIC PMK8280 from the
+> > > slave PMICs PM8280_{1/2} and exposed them over the PMK8280's VADC
+> > 
+> > secondary PMICs
+> > 
+> > Drop "them"
+> > 
+> > 
+> > > channels.
+> > > 
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > ---
+> > >  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 61 +++++++++++++++++++
+> > >  1 file changed, 61 insertions(+)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > > index 9ac5d5c22832..d300d217fdc6 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > > @@ -7,6 +7,7 @@
+> > >  /dts-v1/;
+> > >  
+> > >  #include <dt-bindings/gpio/gpio.h>
+> > > +#include <dt-bindings/iio/qcom,spmi-adc7-pm8350.h>
+> > >  #include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
+> > >  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> > >  
+> > > @@ -189,6 +190,66 @@ pmk8280-xo-therm@44 {
+> > >  		qcom,ratiometric;
+> > >  		qcom,hw-settle-time = <200>;
+> > >  	};
+> > > +
+> > > +	pm8280-1-die-temp@103 {
+> > 
+> > pmic-die-temp? What pm8280 stands here?
+> > 
+> 
+> As agreed, will use "pmic-die-temp"
+> 
+> > 
+> > > +		reg = <PM8350_ADC7_DIE_TEMP(1)>;
+> > > +		label = "pm8280_1_die_temp";
+> > > +		qcom,pre-scaling = <1 1>;
+> > > +	};
+> > > +
+> > > +	sys-therm1@144 {
+> > 
+> > I would say sys-therm@... why do we need the "1" suffix in node name?
+> > 
+> 
+> Suffix represents the index of the thermistor as per the schematics but I guess
+> it can be dropped.
+> 
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/ipa.h          |  4 ++--
- drivers/net/ipa/ipa_endpoint.c | 28 ++++++++++++++++------------
- 2 files changed, 18 insertions(+), 14 deletions(-)
+I was wrong. Suffix is necessary since IIO core registers the channel based on
+the node name, so it has to be unique.
 
-diff --git a/drivers/net/ipa/ipa.h b/drivers/net/ipa/ipa.h
-index f14d1bd34e7e5..5372db58b5bdc 100644
---- a/drivers/net/ipa/ipa.h
-+++ b/drivers/net/ipa/ipa.h
-@@ -67,7 +67,7 @@ struct ipa_interrupt;
-  * @available:		Bitmap of endpoints supported by hardware
-  * @filtered:		Bitmap of endpoints that support filtering
-  * @set_up:		Bitmap of endpoints that are set up for use
-- * @enabled:		Bit mask indicating endpoints enabled
-+ * @enabled:		Bitmap of currently enabled endpoints
-  * @modem_tx_count:	Number of defined modem TX endoints
-  * @endpoint:		Array of endpoint information
-  * @channel_map:	Mapping of GSI channel to IPA endpoint
-@@ -125,7 +125,7 @@ struct ipa {
- 	unsigned long *available;	/* Supported by hardware */
- 	u64 filtered;			/* Support filtering (AP and modem) */
- 	unsigned long *set_up;
--	u32 enabled;
-+	unsigned long *enabled;
- 
- 	u32 modem_tx_count;
- 	struct ipa_endpoint endpoint[IPA_ENDPOINT_MAX];
-diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.c
-index 564a209f75a0f..ea9ed2da4ff0c 100644
---- a/drivers/net/ipa/ipa_endpoint.c
-+++ b/drivers/net/ipa/ipa_endpoint.c
-@@ -1666,6 +1666,7 @@ static void ipa_endpoint_program(struct ipa_endpoint *endpoint)
- 
- int ipa_endpoint_enable_one(struct ipa_endpoint *endpoint)
- {
-+	u32 endpoint_id = endpoint->endpoint_id;
- 	struct ipa *ipa = endpoint->ipa;
- 	struct gsi *gsi = &ipa->gsi;
- 	int ret;
-@@ -1675,37 +1676,35 @@ int ipa_endpoint_enable_one(struct ipa_endpoint *endpoint)
- 		dev_err(&ipa->pdev->dev,
- 			"error %d starting %cX channel %u for endpoint %u\n",
- 			ret, endpoint->toward_ipa ? 'T' : 'R',
--			endpoint->channel_id, endpoint->endpoint_id);
-+			endpoint->channel_id, endpoint_id);
- 		return ret;
- 	}
- 
- 	if (!endpoint->toward_ipa) {
--		ipa_interrupt_suspend_enable(ipa->interrupt,
--					     endpoint->endpoint_id);
-+		ipa_interrupt_suspend_enable(ipa->interrupt, endpoint_id);
- 		ipa_endpoint_replenish_enable(endpoint);
- 	}
- 
--	ipa->enabled |= BIT(endpoint->endpoint_id);
-+	__set_bit(endpoint_id, ipa->enabled);
- 
- 	return 0;
- }
- 
- void ipa_endpoint_disable_one(struct ipa_endpoint *endpoint)
- {
--	u32 mask = BIT(endpoint->endpoint_id);
-+	u32 endpoint_id = endpoint->endpoint_id;
- 	struct ipa *ipa = endpoint->ipa;
- 	struct gsi *gsi = &ipa->gsi;
- 	int ret;
- 
--	if (!(ipa->enabled & mask))
-+	if (!test_bit(endpoint_id, ipa->enabled))
- 		return;
- 
--	ipa->enabled ^= mask;
-+	__clear_bit(endpoint_id, endpoint->ipa->enabled);
- 
- 	if (!endpoint->toward_ipa) {
- 		ipa_endpoint_replenish_disable(endpoint);
--		ipa_interrupt_suspend_disable(ipa->interrupt,
--					      endpoint->endpoint_id);
-+		ipa_interrupt_suspend_disable(ipa->interrupt, endpoint_id);
- 	}
- 
- 	/* Note that if stop fails, the channel's state is not well-defined */
-@@ -1713,7 +1712,7 @@ void ipa_endpoint_disable_one(struct ipa_endpoint *endpoint)
- 	if (ret)
- 		dev_err(&ipa->pdev->dev,
- 			"error %d attempting to stop endpoint %u\n", ret,
--			endpoint->endpoint_id);
-+			endpoint_id);
- }
- 
- void ipa_endpoint_suspend_one(struct ipa_endpoint *endpoint)
-@@ -1722,7 +1721,7 @@ void ipa_endpoint_suspend_one(struct ipa_endpoint *endpoint)
- 	struct gsi *gsi = &endpoint->ipa->gsi;
- 	int ret;
- 
--	if (!(endpoint->ipa->enabled & BIT(endpoint->endpoint_id)))
-+	if (!test_bit(endpoint->endpoint_id, endpoint->ipa->enabled))
- 		return;
- 
- 	if (!endpoint->toward_ipa) {
-@@ -1742,7 +1741,7 @@ void ipa_endpoint_resume_one(struct ipa_endpoint *endpoint)
- 	struct gsi *gsi = &endpoint->ipa->gsi;
- 	int ret;
- 
--	if (!(endpoint->ipa->enabled & BIT(endpoint->endpoint_id)))
-+	if (!test_bit(endpoint->endpoint_id, endpoint->ipa->enabled))
- 		return;
- 
- 	if (!endpoint->toward_ipa)
-@@ -1970,8 +1969,10 @@ void ipa_endpoint_exit(struct ipa *ipa)
- 	for_each_set_bit(endpoint_id, ipa->defined, ipa->endpoint_count)
- 		ipa_endpoint_exit_one(&ipa->endpoint[endpoint_id]);
- 
-+	bitmap_free(ipa->enabled);
- 	bitmap_free(ipa->set_up);
- 	bitmap_free(ipa->defined);
-+	ipa->enabled = NULL;
- 	ipa->set_up = NULL;
- 	ipa->defined = NULL;
- 
-@@ -1997,8 +1998,11 @@ int ipa_endpoint_init(struct ipa *ipa, u32 count,
- 	/* Set up the defined endpoint bitmap */
- 	ipa->defined = bitmap_zalloc(ipa->endpoint_count, GFP_KERNEL);
- 	ipa->set_up = bitmap_zalloc(ipa->endpoint_count, GFP_KERNEL);
-+	ipa->enabled = bitmap_zalloc(ipa->endpoint_count, GFP_KERNEL);
- 	if (!ipa->defined || !ipa->set_up) {
- 		dev_err(dev, "unable to allocate endpoint bitmaps\n");
-+		bitmap_free(ipa->set_up);
-+		ipa->set_up = NULL;
- 		bitmap_free(ipa->defined);
- 		ipa->defined = NULL;
- 		return -ENOMEM;
+Thanks,
+Mani
+
+> Thanks,
+> Mani
+> 
+> > > +		reg = <PM8350_ADC7_AMUX_THM1_100K_PU(1)>;
+> > > +		qcom,ratiometric;
+> > > +		qcom,hw-settle-time = <200>;
+> > > +	};
+> > 
+> > Best regards,
+> > Krzysztof
+> > 
+> 
+> -- 
+> மணிவண்ணன் சதாசிவம்
+
 -- 
-2.34.1
-
+மணிவண்ணன் சதாசிவம்
