@@ -2,113 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BAE28612622
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Oct 2022 00:07:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73757612694
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Oct 2022 02:18:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229574AbiJ2WHq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Oct 2022 18:07:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54526 "EHLO
+        id S229739AbiJ3ASk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Oct 2022 20:18:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbiJ2WHo (ORCPT
+        with ESMTP id S229717AbiJ3ASi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Oct 2022 18:07:44 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B14933432
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 15:07:43 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id l8so1589669ljh.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 15:07:43 -0700 (PDT)
+        Sat, 29 Oct 2022 20:18:38 -0400
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9791D24BE7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 17:18:35 -0700 (PDT)
+Received: by mail-io1-xd2d.google.com with SMTP id z3so7385408iof.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Oct 2022 17:18:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kH0QVpvpb7zwsERmRHshEbzMpFPeVcyeSJAaIxfPmeA=;
-        b=knwXWXI35Z9QHYg/HnqH+NOaEsQ5qMooSHtXrI7QvPMaaQpqlQjkHkKtAVsUzOdF6a
-         lzY0X4nhgD7dwm2bVd+DbOB2m3bBWI0NJ+g6TCgNqdBHkCOCt8eVTrv3sWjAIsvVpgOB
-         grO3Ebm7UpPd1BQLIxiZQKCGfhcouUyWdwRKVYyaVahrS5H+cxCZjFgqRoO2gVRmCE9x
-         pjIcztC2FaUpAyIg6J+QqUeAcOwwcdwfU3UnlQKIhWtg0+Wfr0SXtqCytqJWel+ENGXW
-         hqSov814BZCkfEMrZ51GiQTde/ASWWydCPCDu8ZfHP5BRj1F/mTdw1Y9Rq2+5qnm/DKJ
-         O6NQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JjHQrp4EVDI8n+t1cgspBMWy1K3NeCgFafwd7Mct33w=;
+        b=vCQsA14K/mjpp2iHhDOvehLXBhPnOJE5yfjbmYukbJmldzsXZg5Ob+hZpg7w4CNk5h
+         2SP6Yn6oKCNVMOtvspxTUWH+6Q+MrUDnrYwcOip8qrCyTkVI+30atqUYKO3XQ6pU0m85
+         il37XGg4p3gGb3YLQ7nq9pi4BaZWZZjEu3aa+8OhiyTWnqF9LbT13Gv3HdVJf8p/jclx
+         +K8EofOj0HrxPmOJNPkFla14pL5l0b2Q2hklgV1TW7lBK2+RJiQEPtVH2BvxlKMeGre4
+         P3VEwq3Vym7GzQ+XZ7hwuxCBxSKFW/r4dk19E91KCCm4SBdJPu+LelMIc78flMJM+SqT
+         Ur0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kH0QVpvpb7zwsERmRHshEbzMpFPeVcyeSJAaIxfPmeA=;
-        b=V4ytBjO33mCFcDUkQLPaJSrCGv+uRkj97WjNBEW0cfsDE334eslz979udNvifPP4Tp
-         68tqvFb2hEGYDr9NygJtJ1/Gzf5AjDLUZ94enZDeGHUutKVKBehaGP6jA3mDb3G+Hk18
-         7VHIQEvKfAlPzbFVg2VtF8dfDBpbGVC917F4YqPkV8Ev3kCugenidJyB1nZ/NtdCNNCV
-         XzmCKSNYjXfbqfVE+f1dRujyi8nk74npZlPR68K1b7URGvaTLuiDT36GFDsFnAscRFr7
-         Jb6RD5I3lrPm7yc068ISm8DTeoTdTcgtT3/1NadLfePUenEsFSrh9lMH9VHMkj+qZiDj
-         3j8Q==
-X-Gm-Message-State: ACrzQf2f4BRFSPcx9rHVHn0OnWYCd5TRcVJanjxgiK4J6rFB4j14mgp2
-        lsEs9UIq70FO4zFF/8zlcJ85CA==
-X-Google-Smtp-Source: AMsMyM4Kim3IsWLAeRiaNmbOWMXPNztIz3EePZlhHCUOgoJB2enCeOLO/ytox+A3fQBULaeUOHQbzA==
-X-Received: by 2002:a2e:a601:0:b0:26c:4149:251a with SMTP id v1-20020a2ea601000000b0026c4149251amr2283442ljp.348.1667081262018;
-        Sat, 29 Oct 2022 15:07:42 -0700 (PDT)
-Received: from [10.27.10.248] ([195.165.23.90])
-        by smtp.gmail.com with ESMTPSA id h12-20020a2ea48c000000b00277041268absm435049lji.78.2022.10.29.15.07.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 29 Oct 2022 15:07:41 -0700 (PDT)
-Message-ID: <c88b11d2-79db-13af-0252-9b7dafb5314e@linaro.org>
-Date:   Sun, 30 Oct 2022 01:07:40 +0300
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JjHQrp4EVDI8n+t1cgspBMWy1K3NeCgFafwd7Mct33w=;
+        b=jZhN8fy7lIpiOiWNDqRzd2EQvHGmrQPiMu83RfYb83ILsU5/XffmZ5k/f8OVwg8MoJ
+         HK14/ePEDamvobpZx9O9ov5fWEjBbsh/iSKxXKMdOqnJ2TcMGKh3JRbgVBM9eNhUGWTx
+         FAQzdLkT2XpLlonTwNoyCgBbDHDXgUwqD7KxQqcPw+x6w2qhe+f9uyvqk9FBRTfsmy+g
+         Bwi9w1MvgudWumRlStJtxi7KOYYTGNmi1RLWT5hWu9s9ZRg6MdHnCsjEcLaeFwzLpd41
+         mjY6NmSnHnHURTBQ15jcVk3oASiFZtUhc5TIm//SMBST2kPutrErjKTmD3+bS6RUuCeo
+         2JEg==
+X-Gm-Message-State: ACrzQf3ebrBi1lU/eA4q261bRufEUP392RRlHC4j/kS2W1t03juGI9o2
+        HdF+2yIgugnd0JWOosLK3yuu6g==
+X-Google-Smtp-Source: AMsMyM69iz8ar9hrTlPrBc/7GyLn4sJGahSZmxtstIe7fbX8B31jkeC3PuHTrP3YZ8V8PSSvFqXbQg==
+X-Received: by 2002:a05:6638:2646:b0:374:f6f6:2e12 with SMTP id n6-20020a056638264600b00374f6f62e12mr3298217jat.182.1667089114811;
+        Sat, 29 Oct 2022 17:18:34 -0700 (PDT)
+Received: from presto.localdomain ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id co20-20020a0566383e1400b00375126ae55fsm1087519jab.58.2022.10.29.17.18.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 29 Oct 2022 17:18:33 -0700 (PDT)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH net-next 0/9] net: ipa: support more endpoints
+Date:   Sat, 29 Oct 2022 19:18:19 -0500
+Message-Id: <20221030001828.754010-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH v2 01/12] dt-bindings: iio: qcom: adc7-pm8350: Allow
- specifying SID for channels
-Content-Language: en-GB
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        andersson@kernel.org
-Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, johan+linaro@kernel.org,
-        quic_jprakash@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        steev@kali.org
-References: <20221029051449.30678-1-manivannan.sadhasivam@linaro.org>
- <20221029051449.30678-2-manivannan.sadhasivam@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221029051449.30678-2-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/10/2022 08:14, Manivannan Sadhasivam wrote:
-> As per the new ADC7 architecture used by the Qualcomm PMICs, each PMIC
-> has the static Slave ID (SID) assigned by default. The primary PMIC
-> PMK8350 is responsible for collecting the temperature/voltage data from
-> the slave PMICs and exposing them via it's registers.
-> 
-> For getting the measurements from the slave PMICs, PMK8350 uses the
-> channel ID encoded with the SID of the relevant PMIC. So far, the
-> dt-binding for the slave PMIC PM8350 assumed that there will be only
-> one PM8350 in a system. So it harcoded SID 1 with channel IDs.
-> 
-> But this got changed in platforms such as Lenovo X13s where there are a
-> couple of PM8350 PMICs available. So to address multiple PM8350s, change
-> the binding to accept the SID specified by the user and use it for
-> encoding the channel ID.
-> 
-> It should be noted that, even though the SID is static it is not
-> globally unique. Only the primary PMIC has the unique SID id 0.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->   .../bindings/thermal/qcom-spmi-adc-tm5.yaml   |  6 +-
->   .../dt-bindings/iio/qcom,spmi-adc7-pm8350.h   | 90 +++++++++----------
->   2 files changed, 46 insertions(+), 50 deletions(-)
-> 
+This series adds support for more than 32 IPA endpoints.  To do
+this, five registers whose bits represent endpoint state are
+replicated as needed to represent endpoints beyond 32.  For existing
+platforms, the number of endpoints is never greater than 32, so
+there is just one of each register.  IPA v5.0+ supports more than
+that though; these changes prepare the code for that.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Beyond that, the IPA fields that represent endpoints in a 32-bit
+bitmask are updated to support an arbitrary number of these endpoint
+registers.  (There is one exception, explained in patch 7.)
+
+The first two patches are some sort of unrelated cleanups, making
+use of a helper function introduced recently.
+
+The third and fourth use parameterized functions to determine the
+register offset for registers that represent endpoints.
+
+The last five convert fields representing endpoints to allow more
+than 32 endpoints to be represented.
+
+Signed-off-by: Alex Elder <elder@linaro.org>
+
+Alex Elder (9):
+  net: ipa: reduce arguments to ipa_table_init_add()
+  net: ipa: use ipa_table_mem() in ipa_table_reset_add()
+  net: ipa: add a parameter to aggregation registers
+  net: ipa: add a parameter to suspend registers
+  net: ipa: use a bitmap for defined endpoints
+  net: ipa: use a bitmap for available endpoints
+  net: ipa: support more filtering endpoints
+  net: ipa: use a bitmap for set-up endpoints
+  net: ipa: use a bitmap for enabled endpoints
+
+ drivers/net/ipa/ipa.h                |  26 +++--
+ drivers/net/ipa/ipa_endpoint.c       | 167 +++++++++++++++------------
+ drivers/net/ipa/ipa_endpoint.h       |   2 +-
+ drivers/net/ipa/ipa_interrupt.c      |  34 ++++--
+ drivers/net/ipa/ipa_main.c           |   7 +-
+ drivers/net/ipa/ipa_table.c          |  88 +++++++-------
+ drivers/net/ipa/ipa_table.h          |   6 +-
+ drivers/net/ipa/reg/ipa_reg-v3.1.c   |  13 ++-
+ drivers/net/ipa/reg/ipa_reg-v3.5.1.c |  13 ++-
+ drivers/net/ipa/reg/ipa_reg-v4.11.c  |  13 ++-
+ drivers/net/ipa/reg/ipa_reg-v4.2.c   |  13 ++-
+ drivers/net/ipa/reg/ipa_reg-v4.5.c   |  13 ++-
+ drivers/net/ipa/reg/ipa_reg-v4.9.c   |  13 ++-
+ 13 files changed, 227 insertions(+), 181 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.34.1
 
