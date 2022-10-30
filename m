@@ -2,88 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34DF5612AF4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Oct 2022 15:24:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DBC4B612AFA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Oct 2022 15:26:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229689AbiJ3OYk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 Oct 2022 10:24:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45994 "EHLO
+        id S229721AbiJ3O0U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 Oct 2022 10:26:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbiJ3OYi (ORCPT
+        with ESMTP id S229552AbiJ3O0S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 Oct 2022 10:24:38 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EF93B4BB;
-        Sun, 30 Oct 2022 07:24:37 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 29UEJ0eB029315;
-        Sun, 30 Oct 2022 14:24:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=LDUPl7AJWoGiHgR4WjutUPTsZY9o/snrEnz/KgKrF5g=;
- b=k0wXczeyxGiROWoeVqWNRQYePwVtPoNC5eiPWpusSbIaPVJVpM9ZLxkBjCaKFEaV2kA2
- O9ueXMHtexRR5rUTUCvI0TfdCb0HYB7t+mcTBxxosL3S7JpDNS16aRX+fBxY5VA4mzjl
- qZMoU3SCzbpC1sqKNyFz/avlJWcz+zQGKhRQSgcF44rh/8A4cB3expSHtnjwMQF4JisV
- FbxmyRYtrABMpts2/vSNZCYqV3nnr36bgZ6GMwPM7wqCWViMhDIGOBZe4QI9GTR6uRQE
- GRhMebPYpyjkc0/gGThlOwstgW0NnhaoTKxRdFxUXAaGkEWIylF+0LgJxlgKLKPY+ldM 3w== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3khf9krkte-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 30 Oct 2022 14:24:25 +0000
-Received: from pps.filterd (NALASPPMTA02.qualcomm.com [127.0.0.1])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 29UEOO2f025649;
-        Sun, 30 Oct 2022 14:24:24 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by NALASPPMTA02.qualcomm.com (PPS) with ESMTPS id 3khdn4hh9h-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 30 Oct 2022 14:24:23 +0000
-Received: from NALASPPMTA02.qualcomm.com (NALASPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 29UEON25025644;
-        Sun, 30 Oct 2022 14:24:23 GMT
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (PPS) with ESMTPS id 29UEONCA025643
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 30 Oct 2022 14:24:23 +0000
-Received: from shazhuss-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Sun, 30 Oct 2022 07:24:20 -0700
-From:   Shazad Hussain <quic_shazhuss@quicinc.com>
-To:     <andersson@kernel.org>
-CC:     <bmasney@redhat.com>, Shazad Hussain <quic_shazhuss@quicinc.com>,
-        "Andy Gross" <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v1] clk: qcom: gcc-sc8280xp: add cxo as parent for gcc_ufs_ref_clkref_clk
-Date:   Sun, 30 Oct 2022 19:53:33 +0530
-Message-ID: <20221030142333.31019-1-quic_shazhuss@quicinc.com>
-X-Mailer: git-send-email 2.38.0
+        Sun, 30 Oct 2022 10:26:18 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D378B7C5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Oct 2022 07:26:17 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id d3so14004292ljl.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Oct 2022 07:26:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=km6wTK9gxRICmw3iQSSF3JcpeR0eL80m2+vYs16O/UQ=;
+        b=V1zyLgdo5YBUiVFFhEx4zgY3FiUrLOcOpn+wGpxtoWgS4fkYBeYa/p05+nKo9VEEBp
+         v4LQhI0o8sv8o4XYdCIuPTzMr14KfVRf4SNtsIAEyNg9Jd0wjPzVCFWYY3Kk2HVO6nSw
+         cgIS6tSmxGWiuXkZTTkLHlpEAVeUmlemYIHu5oP0nunhiPvWih8O43ZG8f2w2hwPd6kX
+         1wHpdHkeMTCZKXjZuxf3vvAnzbn4LDUKtzn1CHFBU1ZiH7n5kMww/7khN+EDtD9P9IHq
+         oFm1EWAQdBcV7UvNrfK0aShRqJ4sMGeXt1AuN5nnVMI9xfPqLeXrt9cY3It1kqxEhNt0
+         bBJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=km6wTK9gxRICmw3iQSSF3JcpeR0eL80m2+vYs16O/UQ=;
+        b=Qs0gOsgPmBghsWpkLA21NM/7T+8h8h4lVqBonrtJIU5swg8uQ4eC3QxRTzAwDvnmzx
+         O0IOjRacQrr3G8M5X6nlkXTUOPLFlsrBU2SPnm/XOFvAKzVB+HX6tq052LPyojWhKlxB
+         pLJ+8KsM0l2TuP4ERd5p8qLK2+2E5B9na3kePKSUn6yDVtcSYmzpiEPrwy72WESm5k+s
+         oyO3WgPVybvaGqwkBoqZD8MEN8GMv92cbjGViZey4dYmMR0D87H4dpYBxPvsDtoLUOrQ
+         T/pT23emGOgmtFIQFJVe36jasEyzMc3i9VcNk2mK80Xg/abBQz5CglYtryYGdNqrO9OB
+         /Djg==
+X-Gm-Message-State: ACrzQf36Sbmw9yeGz7Lue16cNkXGfGURXLa2tRdChl/QJ4uFHWRwSDkS
+        v8X14YYDWqdJGRSTCxx1bmGeyQ==
+X-Google-Smtp-Source: AMsMyM5cnvx25mpAcD4KhlBDyl+lCQToilLxqqHXKf5AeiIp0KAacgeT10PKwy3Nv+iNARZthnMX3g==
+X-Received: by 2002:a05:651c:1038:b0:277:5452:60f6 with SMTP id w24-20020a05651c103800b00277545260f6mr584140ljm.21.1667139975982;
+        Sun, 30 Oct 2022 07:26:15 -0700 (PDT)
+Received: from [10.27.10.248] ([195.165.23.90])
+        by smtp.gmail.com with ESMTPSA id c27-20020a056512239b00b0049487818dd9sm818086lfv.60.2022.10.30.07.26.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 30 Oct 2022 07:26:15 -0700 (PDT)
+Message-ID: <ffabb95a-8994-a695-255a-b19c25b9fbfa@linaro.org>
+Date:   Sun, 30 Oct 2022 17:26:14 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: -CXHWSQnbCumlR0LcJXgIvhXYt3QXQrr
-X-Proofpoint-GUID: -CXHWSQnbCumlR0LcJXgIvhXYt3QXQrr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-30_08,2022-10-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- mlxscore=0 phishscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 malwarescore=0 clxscore=1011
- mlxlogscore=760 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2210300094
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Subject: Re: [PATCH v1 0/7] PCI/phy: Add support for PCI on sm8350 platform
+Content-Language: en-GB
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org
+References: <20221030122301.GA1022001@bhelgaas>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221030122301.GA1022001@bhelgaas>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,28 +88,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since 'commit f3aa975e230e ("arm64: dts: qcom: sc8280xp: correct ref
-clock for ufs_mem_phy")' we need to explicitly make cxo as parent to
-gcc_ufs_ref_clkref_clk to have an independent vote from ufs_mem_phy.
+On 30/10/2022 15:23, Bjorn Helgaas wrote:
+> On Sun, Oct 30, 2022 at 12:13:05AM +0300, Dmitry Baryshkov wrote:
+>> SM8350 is one of the recent Qualcomm platforms which lacks PCIe support.
+> 
+> I guess the "platform" (the hardware) has PCIe, but the current driver
+> doesn't support it?
 
-Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
----
- drivers/clk/qcom/gcc-sc8280xp.c | 2 ++
- 1 file changed, 2 insertions(+)
+Yes.
 
-diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-index a18ed88f3b82..72b545121c57 100644
---- a/drivers/clk/qcom/gcc-sc8280xp.c
-+++ b/drivers/clk/qcom/gcc-sc8280xp.c
-@@ -5848,6 +5848,8 @@ static struct clk_branch gcc_ufs_ref_clkref_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(const struct clk_init_data) {
- 			.name = "gcc_ufs_ref_clkref_clk",
-+			.parent_data = &gcc_parent_data_tcxo,
-+			.num_parents = 1,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
+> 
+>> Use sm8450 PHY tables to add support for the PCIe hosts on Qualcomm SM8350 platform.
+>>
+>> Note: the PCIe0 table is based on the v2.1 tables, so it might work
+>> incorrectly on earlier platforms.
+> 
+> I'm not sure what this means in terms of applying this series.  It
+> sounds like "this series might break earlier platforms".  That
+> wouldn't be good, so I assume it's more subtle than that.
+> 
+> I guess "v2.1 tables" refers to "PHY config tables"?  "PCIe0" appears
+> mostly in [6/7] as a 1-lane Gen3 host.  "v2.1" and "v2_1" don't appear
+> at all.  I can't quite figure out what symbols in the patches these
+> refer to.
+
+Oh, excuse me. There were several revisions of sm8350 SoC (1.0, 2.0, 
+2.1), with slight differences in the PHY programming. Usually we support 
+only the latest version, which is the version going into 
+mass-production. I'll expand the description in the v2.
+
 -- 
-2.38.0
+With best wishes
+Dmitry
 
