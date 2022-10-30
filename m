@@ -2,163 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 998C26128A2
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Oct 2022 08:17:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF4406128B4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Oct 2022 08:32:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229665AbiJ3HRN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 Oct 2022 03:17:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56118 "EHLO
+        id S229920AbiJ3Hcw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 Oct 2022 03:32:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229651AbiJ3HRM (ORCPT
+        with ESMTP id S229716AbiJ3Hcq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 Oct 2022 03:17:12 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB97226CA
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Oct 2022 00:17:08 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id c2so8263483plz.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Oct 2022 00:17:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=a/6WjG/dX440R2RO6wLGBQFAWw0l4A8fGFfY6dPSRdk=;
-        b=Mg+zuw4new1q3qD5JLv0sng+Xzr0B9aaKuJVVMyROQg15GkfkdVUFar0pKR7lM5noA
-         XAxmOWH4JeJapdFWDD+cn4+TUDOXGSOOkHCs6jPi7bMaRrJ4Kbo3Mz1LIhzWkyILtaQQ
-         GVL1b86UAiWqtlsXiZ9eddGmLgoEvUr7HJlHZEuvAztKYH8s0POz2FN5CWKGTSTvMnSv
-         D4qsukxWiQj6gQ/gsfpd35xHFlS4xCOwXwG7FNefbipZ7dtuXzA5OtM+rKbzKfQDLwuh
-         GgYjelVud9QIK7BuDHA6y04/Afg9ggpM9TIOsLaILSiF/Za2DaJ9DC3FagIIoFSJ1PeZ
-         P4AA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a/6WjG/dX440R2RO6wLGBQFAWw0l4A8fGFfY6dPSRdk=;
-        b=hBYPgokSgFWLsTlKBBL3zWA91NXKohG2m6CJOtb93mzzPFk1YEzajPAimhN4hDpwY2
-         0Vl1q3LoxYbdr9qTxP2l2LQdvjsG12d5VZSAv9ELkCR1vLxvPmxq/VAV8A/5eIFqFzi3
-         kDcTY10eMcExIxCCfuPUuAgHkZ4EYqtnleQVaIZctjC5yrVfzpImIO8RJ39YwS3aSp6f
-         6OK+3NZvlMPqEU/7xXwdXw8nWN8mZ3FaGo4KziFxfHRjEOmxBrntMYl4ppKG6d6v1Rx9
-         sLFr2m/gkG8NtQ8/17iJaFGsNA+3zNGb/F7ZFgojs6h0Fnllkh8GdP7n83wZKKI/Xj1j
-         gUhQ==
-X-Gm-Message-State: ACrzQf3yDbrOO4tR3i7H/Li+wtWZSLxbkRuQFzMjeCQ8D9WwiECLEWis
-        GfWx+trH4FT4A8GrDaDyM194
-X-Google-Smtp-Source: AMsMyM7wsfvc+EMO+FSSOGbqYotGNKN6ObjIJAVh/JYMc2kixEPR3MrUzel3AnaAx1M4DMOxBfAU9g==
-X-Received: by 2002:a17:90a:86c6:b0:213:36b6:1b4c with SMTP id y6-20020a17090a86c600b0021336b61b4cmr8494492pjv.7.1667114228178;
-        Sun, 30 Oct 2022 00:17:08 -0700 (PDT)
-Received: from thinkpad ([117.193.208.18])
-        by smtp.gmail.com with ESMTPSA id j16-20020a170902da9000b0017a0668befasm2249377plx.124.2022.10.30.00.17.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 Oct 2022 00:17:06 -0700 (PDT)
-Date:   Sun, 30 Oct 2022 12:46:59 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     andersson@kernel.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        johan+linaro@kernel.org, quic_jprakash@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 09/11] arm64: dts: qcom: sc8280xp-x13s: Add PM8280_{1/2}
- VADC channels
-Message-ID: <20221030071659.GE5362@thinkpad>
-References: <20221027063006.9056-1-manivannan.sadhasivam@linaro.org>
- <20221027063006.9056-10-manivannan.sadhasivam@linaro.org>
- <5e66c095-898e-067e-1874-a3d2e5babf17@linaro.org>
- <20221029044831.GC5362@thinkpad>
+        Sun, 30 Oct 2022 03:32:46 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88EB72D6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Oct 2022 00:32:44 -0700 (PDT)
+Received: from localhost.localdomain (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 6A6751F91E;
+        Sun, 30 Oct 2022 08:32:41 +0100 (CET)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 00/10] arm64: dts: qcom: sm6350: SD Card fixes, pm6350 keys and touchscreen for PDX213
+Date:   Sun, 30 Oct 2022 08:32:22 +0100
+Message-Id: <20221030073232.22726-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221029044831.GC5362@thinkpad>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Oct 29, 2022 at 10:18:37AM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Oct 27, 2022 at 10:09:21AM -0400, Krzysztof Kozlowski wrote:
-> > On 27/10/2022 02:30, Manivannan Sadhasivam wrote:
-> > > Add VADC channels of PM8280_{1/2} PMICs for measuring the on-chip die
-> > > temperature and external thermistors connected to the AMUX pins.
-> > > 
-> > > The measurements are collected by the primary PMIC PMK8280 from the
-> > > slave PMICs PM8280_{1/2} and exposed them over the PMK8280's VADC
-> > 
-> > secondary PMICs
-> > 
-> > Drop "them"
-> > 
-> > 
-> > > channels.
-> > > 
-> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > ---
-> > >  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 61 +++++++++++++++++++
-> > >  1 file changed, 61 insertions(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > > index 9ac5d5c22832..d300d217fdc6 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > > @@ -7,6 +7,7 @@
-> > >  /dts-v1/;
-> > >  
-> > >  #include <dt-bindings/gpio/gpio.h>
-> > > +#include <dt-bindings/iio/qcom,spmi-adc7-pm8350.h>
-> > >  #include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
-> > >  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> > >  
-> > > @@ -189,6 +190,66 @@ pmk8280-xo-therm@44 {
-> > >  		qcom,ratiometric;
-> > >  		qcom,hw-settle-time = <200>;
-> > >  	};
-> > > +
-> > > +	pm8280-1-die-temp@103 {
-> > 
-> > pmic-die-temp? What pm8280 stands here?
-> > 
-> 
-> As agreed, will use "pmic-die-temp"
-> 
-> > 
-> > > +		reg = <PM8350_ADC7_DIE_TEMP(1)>;
-> > > +		label = "pm8280_1_die_temp";
-> > > +		qcom,pre-scaling = <1 1>;
-> > > +	};
-> > > +
-> > > +	sys-therm1@144 {
-> > 
-> > I would say sys-therm@... why do we need the "1" suffix in node name?
-> > 
-> 
-> Suffix represents the index of the thermistor as per the schematics but I guess
-> it can be dropped.
-> 
+Enable SD Card for Sony Lena PDX213 on the sm6350 SoC by providing it
+the necessary IOMMU stream ID(s) and pinctrl in SoC dtsi, and setting up
+the regulators in device/board DT.  Together with regulator support,
+power up the touchscreen and import pm6350 dtsi to enable the power and
+volume up/down keys.
 
-I was wrong. Suffix is necessary since IIO core registers the channel based on
-the node name, so it has to be unique.
+Marijn Suijten (10):
+  arm64: dts: qcom: sm6350: Add resets for SDHCI 1/2
+  arm64: dts: qcom: sm6350: Add pinctrl for SDHCI 2
+  arm64: dts: qcom: sm6350-lena: Add SD Card Detect to sdc2 on/off
+    pinctrl
+  arm64: dts: qcom: pm6350: Include header for KEY_POWER
+  arm64: dts: qcom: sm6350-lena: Include pm6350 and configure buttons
+  arm64: dts: qcom: sm6350-lena: Define pm6350 and pm6150l regulators
+  arm64: dts: qcom: sm6350-lena: Provide power to SDHCI 2 (SDCard slot)
+  arm64: dts: qcom: sm6350-lena: Enable QUP and GPI DMA
+  arm64: dts: qcom: sm6350-lena: Configure Samsung touchscreen
+  arm64: dts: qcom: sm6350: Add apps_smmu with streamID to SDHCI 1/2
+    nodes
 
-Thanks,
-Mani
+ arch/arm64/boot/dts/qcom/pm6350.dtsi          |   1 +
+ .../qcom/sm6350-sony-xperia-lena-pdx213.dts   | 337 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm6350.dtsi          |  48 +++
+ 3 files changed, 386 insertions(+)
 
-> Thanks,
-> Mani
-> 
-> > > +		reg = <PM8350_ADC7_AMUX_THM1_100K_PU(1)>;
-> > > +		qcom,ratiometric;
-> > > +		qcom,hw-settle-time = <200>;
-> > > +	};
-> > 
-> > Best regards,
-> > Krzysztof
-> > 
-> 
-> -- 
-> மணிவண்ணன் சதாசிவம்
+--
+2.38.1
 
--- 
-மணிவண்ணன் சதாசிவம்
