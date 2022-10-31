@@ -2,283 +2,231 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68A756140F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 23:54:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 916286141A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 00:25:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229637AbiJaWyN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 18:54:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58316 "EHLO
+        id S229479AbiJaXZU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 19:25:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229920AbiJaWyM (ORCPT
+        with ESMTP id S229469AbiJaXZT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 18:54:12 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07A2B13DD0;
-        Mon, 31 Oct 2022 15:54:11 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id h193so3237511pgc.10;
-        Mon, 31 Oct 2022 15:54:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RiVXEvEzqUG+Z4LGnvslCa6bZT/BrJ9oTtksveCxmNM=;
-        b=E2u7Itjt5rlL5oPtdrvjXaT8jUjC1BpZHzJNkPsRKyeuvtdKcahIvEGH7N+g+KuuRl
-         VKGMtebR1fbRx0X/ZGYCVj0K+obNBIdYrqZTDVkU3KvinZPxNhuPVCtHiPw2nuNTaZ4M
-         rkW/suo0u5Lu1JEYAsewsIcxitAo/AkmRazDwHzM4TkYuds1rHWpphg1y6bp8qPZmhrC
-         BP9rVFfkfZeRueLvLObewS7kNqdWVlv+kyzNh1jDHz3Y6c3MF8Q6MR+97psgSufFfxOE
-         rNOR9oW0eXUmaMJoCTDbrGIr8wgVnEX8gJZAmjIfUGjV3VBdKNPcv85K56C+YeDpGLbV
-         viNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RiVXEvEzqUG+Z4LGnvslCa6bZT/BrJ9oTtksveCxmNM=;
-        b=aNSwUp6da1x89W468nZNMEWV9zq+PHHSxKR0b04wPOlHa3+u/EzCG9k6z5teKMcjeV
-         mP4ULntsc4SuX49+9sao1+DW648BwrziiSxNRgDZ0kJyyvk/ccLhMKe7jap8pDBMHN8I
-         l9z9MpOXXv3gOibQ1U4WhBoaXRDY8nSP9Pw0zncC7tnyz5Dpf5qDYJybiwxHllbl/o5U
-         BASS9+GUnWX0ooz0XeRD/RRTG3Rg7HhtpFk1C9vaqKi7X2BcrtIY6iCzNPE9jVVpQGj9
-         UM5KcQY6+tG7yEK0rRWUM2R+5hoGnnY2yTqaqcZKitufIXKPBIF49aL+jHJsuryvSbMI
-         t+bw==
-X-Gm-Message-State: ACrzQf1hguoazOdMbJP7+Bvdn/AaBashcfwgGnhLBuOUzRihnO08DoHb
-        tVX8XCWFMytPdWzzO3GA3lKpc8mayFE=
-X-Google-Smtp-Source: AMsMyM60J9LUoOFuV/UcqeY/BNTtBDPyBHOcnTH5UogjcyU8U6HEhocEoYxoxQ+SM2hfNaIpvPottw==
-X-Received: by 2002:a65:6bd3:0:b0:42b:9117:b9d1 with SMTP id e19-20020a656bd3000000b0042b9117b9d1mr14578565pgw.238.1667256850337;
-        Mon, 31 Oct 2022 15:54:10 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
-        by smtp.gmail.com with ESMTPSA id b6-20020a170903228600b001869d71228bsm4937216plh.170.2022.10.31.15.54.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Oct 2022 15:54:09 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/2] drm/msm: Hangcheck progress detection
-Date:   Mon, 31 Oct 2022 15:54:07 -0700
-Message-Id: <20221031225414.1280169-3-robdclark@gmail.com>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20221031225414.1280169-1-robdclark@gmail.com>
-References: <20221031225414.1280169-1-robdclark@gmail.com>
+        Mon, 31 Oct 2022 19:25:19 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 439A91115D;
+        Mon, 31 Oct 2022 16:25:18 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 29VNKdCk019914;
+        Mon, 31 Oct 2022 23:25:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=JYksKW9i/ivZ02ZoqaKVZvP/OXs9/T1SBPtTC1ZwuPw=;
+ b=oaupJA/+jYihECyTaKyLBvSSiyvJM8GtqGm1a1mD3l9/OLOIlarTwOCqxJowYSJVNY/5
+ eP+OzhSZltt4iNXvhRz7OFvwt5ZWkHTLT8a7+26cA6y11CP+qKEzvoLhP2QH1S7aL/CC
+ ILn/lwQIwh+eATR4YCkFIsO1jRly7ovqZOwjmeRpZD1rHqBJ9p7kCE8ocfUdk2t2adQJ
+ nMhe1i52pvGujZulVXyPppQQgfHbB3nqnfVKXbHkg/PEkcI5b9omwRgGJrWhB3XlsAMF
+ GrRl+mhWQTIAFXztzkjEgkvDdTjVPHkJ8gUvjUXlX2BeF53kfK7bPVVIjvVYsJ+y+BXT pQ== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kjqxcr07r-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Oct 2022 23:25:14 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29VNPEJG024490
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Oct 2022 23:25:14 GMT
+Received: from [10.110.115.41] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 31 Oct
+ 2022 16:25:13 -0700
+Message-ID: <5314f33d-dba0-ad86-0db8-9c1d16faec41@quicinc.com>
+Date:   Mon, 31 Oct 2022 16:25:13 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
+Content-Language: en-US
+From:   Melody Olvera <quic_molvera@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20221026200429.162212-1-quic_molvera@quicinc.com>
+ <20221026200429.162212-4-quic_molvera@quicinc.com>
+ <ae4b2333-d243-17ee-1ebd-6b1c89eef9f3@linaro.org>
+ <d109cbdf-1b0e-ff67-879c-d0955da4898e@quicinc.com>
+In-Reply-To: <d109cbdf-1b0e-ff67-879c-d0955da4898e@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ju0lmPWNIqTBiUW4THkEBfx-ZjpsCIyW
+X-Proofpoint-GUID: ju0lmPWNIqTBiUW4THkEBfx-ZjpsCIyW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-31_21,2022-10-31_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
+ suspectscore=0 bulkscore=0 mlxlogscore=999 lowpriorityscore=0 adultscore=0
+ clxscore=1015 impostorscore=0 mlxscore=0 priorityscore=1501 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
+ definitions=main-2210310146
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
 
-If the hangcheck timer expires, check if the fw's position in the
-cmdstream has advanced (changed) since last timer expiration, and
-allow it up to three additional "extensions" to it's alotted time.
-The intention is to continue to catch "shader stuck in a loop" type
-hangs quickly, but allow more time for things that are actually
-making forward progress.
 
-Because we need to sample the CP state twice to detect if there has
-not been progress, this also cuts the the timer's duration in half.
-
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 34 +++++++++++++++++++++++++++
- drivers/gpu/drm/msm/msm_drv.h         |  8 ++++++-
- drivers/gpu/drm/msm/msm_gpu.c         | 20 +++++++++++++++-
- drivers/gpu/drm/msm/msm_gpu.h         |  5 +++-
- drivers/gpu/drm/msm/msm_ringbuffer.h  | 24 +++++++++++++++++++
- 5 files changed, 88 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 1ff605c18ee6..3b8fb7a11dff 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1843,6 +1843,39 @@ static uint32_t a6xx_get_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
- 	return ring->memptrs->rptr = gpu_read(gpu, REG_A6XX_CP_RB_RPTR);
- }
- 
-+static bool a6xx_progress(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
-+{
-+	struct msm_cp_state cp_state = {
-+		.ib1_base = gpu_read64(gpu, REG_A6XX_CP_IB1_BASE),
-+		.ib2_base = gpu_read64(gpu, REG_A6XX_CP_IB2_BASE),
-+		.ib1_rem  = gpu_read(gpu, REG_A6XX_CP_IB1_REM_SIZE),
-+		.ib2_rem  = gpu_read(gpu, REG_A6XX_CP_IB2_REM_SIZE),
-+	};
-+	bool progress;
-+
-+	/*
-+	 * Adjust the remaining data to account for what has already been
-+	 * fetched from memory, but not yet consumed by the SQE.
-+	 *
-+	 * This is not *technically* correct, the amount buffered could
-+	 * exceed the IB size due to hw prefetching ahead, but:
-+	 *
-+	 * (1) We aren't trying to find the exact position, just whether
-+	 *     progress has been made
-+	 * (2) The CP_REG_TO_MEM at the end of a submit should be enough
-+	 *     to prevent prefetching into an unrelated submit.  (And
-+	 *     either way, at some point the ROQ will be full.)
-+	 */
-+	cp_state.ib1_rem += gpu_read(gpu, REG_A6XX_CP_CSQ_IB1_STAT) >> 16;
-+	cp_state.ib2_rem += gpu_read(gpu, REG_A6XX_CP_CSQ_IB1_STAT) >> 16;
-+
-+	progress = !!memcmp(&cp_state, &ring->last_cp_state, sizeof(cp_state));
-+
-+	ring->last_cp_state = cp_state;
-+
-+	return progress;
-+}
-+
- static u32 a618_get_speed_bin(u32 fuse)
- {
- 	if (fuse == 0)
-@@ -1961,6 +1994,7 @@ static const struct adreno_gpu_funcs funcs = {
- 		.create_address_space = a6xx_create_address_space,
- 		.create_private_address_space = a6xx_create_private_address_space,
- 		.get_rptr = a6xx_get_rptr,
-+		.progress = a6xx_progress,
- 	},
- 	.get_timestamp = a6xx_get_timestamp,
- };
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index efcd7260f428..970a1a0ab34f 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -226,7 +226,13 @@ struct msm_drm_private {
- 
- 	struct drm_atomic_state *pm_state;
- 
--	/* For hang detection, in ms */
-+	/**
-+	 * hangcheck_period: For hang detection, in ms
-+	 *
-+	 * Note that in practice, a submit/job will get at least two hangcheck
-+	 * periods, due to checking for progress being implemented as simply
-+	 * "have the CP position registers changed since last time?"
-+	 */
- 	unsigned int hangcheck_period;
- 
- 	/**
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 3dffee54a951..136f5977b0bf 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -500,6 +500,21 @@ static void hangcheck_timer_reset(struct msm_gpu *gpu)
- 			round_jiffies_up(jiffies + msecs_to_jiffies(priv->hangcheck_period)));
- }
- 
-+static bool made_progress(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
-+{
-+	if (ring->hangcheck_progress_retries >= DRM_MSM_HANGCHECK_PROGRESS_RETRIES)
-+		return false;
-+
-+	if (!gpu->funcs->progress)
-+		return false;
-+
-+	if (!gpu->funcs->progress(gpu, ring))
-+		return false;
-+
-+	ring->hangcheck_progress_retries++;
-+	return true;
-+}
-+
- static void hangcheck_handler(struct timer_list *t)
- {
- 	struct msm_gpu *gpu = from_timer(gpu, t, hangcheck_timer);
-@@ -511,9 +526,12 @@ static void hangcheck_handler(struct timer_list *t)
- 	if (fence != ring->hangcheck_fence) {
- 		/* some progress has been made.. ya! */
- 		ring->hangcheck_fence = fence;
--	} else if (fence_before(fence, ring->fctx->last_fence)) {
-+		ring->hangcheck_progress_retries = 0;
-+	} else if (fence_before(fence, ring->fctx->last_fence) &&
-+			!made_progress(gpu, ring)) {
- 		/* no progress and not done.. hung! */
- 		ring->hangcheck_fence = fence;
-+		ring->hangcheck_progress_retries = 0;
- 		DRM_DEV_ERROR(dev->dev, "%s: hangcheck detected gpu lockup rb %d!\n",
- 				gpu->name, ring->id);
- 		DRM_DEV_ERROR(dev->dev, "%s:     completed fence: %u\n",
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 585fd9c8d45a..d8f355e9f0b2 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -78,6 +78,8 @@ struct msm_gpu_funcs {
- 	struct msm_gem_address_space *(*create_private_address_space)
- 		(struct msm_gpu *gpu);
- 	uint32_t (*get_rptr)(struct msm_gpu *gpu, struct msm_ringbuffer *ring);
-+
-+	bool (*progress)(struct msm_gpu *gpu, struct msm_ringbuffer *ring);
- };
- 
- /* Additional state for iommu faults: */
-@@ -236,7 +238,8 @@ struct msm_gpu {
- 	 */
- #define DRM_MSM_INACTIVE_PERIOD   66 /* in ms (roughly four frames) */
- 
--#define DRM_MSM_HANGCHECK_DEFAULT_PERIOD 500 /* in ms */
-+#define DRM_MSM_HANGCHECK_DEFAULT_PERIOD 250 /* in ms */
-+#define DRM_MSM_HANGCHECK_PROGRESS_RETRIES 3
- 	struct timer_list hangcheck_timer;
- 
- 	/* Fault info for most recent iova fault: */
-diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
-index 2a5045abe46e..e3d33bae3380 100644
---- a/drivers/gpu/drm/msm/msm_ringbuffer.h
-+++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
-@@ -35,6 +35,11 @@ struct msm_rbmemptrs {
- 	volatile u64 ttbr0;
- };
- 
-+struct msm_cp_state {
-+	uint64_t ib1_base, ib2_base;
-+	uint32_t ib1_rem, ib2_rem;
-+};
-+
- struct msm_ringbuffer {
- 	struct msm_gpu *gpu;
- 	int id;
-@@ -64,6 +69,25 @@ struct msm_ringbuffer {
- 	uint64_t memptrs_iova;
- 	struct msm_fence_context *fctx;
- 
-+	/**
-+	 * hangcheck_progress_retries:
-+	 *
-+	 * The number of extra hangcheck duration cycles that we have given
-+	 * due to it appearing that the GPU is making forward progress.
-+	 *
-+	 * If the GPU appears to be making progress (ie. the CP has advanced
-+	 * in the command stream, we'll allow up to DRM_MSM_HANGCHECK_PROGRESS_RETRIES
-+	 * expirations of the hangcheck timer before killing the job.  In other
-+	 * words we'll let the submit run for up to
-+	 * DRM_MSM_HANGCHECK_DEFAULT_PERIOD *  DRM_MSM_HANGCHECK_PROGRESS_RETRIES
-+	 */
-+	int hangcheck_progress_retries;
-+
-+	/**
-+	 * last_cp_state: The state of the CP at the last call to gpu->progress()
-+	 */
-+	struct msm_cp_state last_cp_state;
-+
- 	/*
- 	 * preempt_lock protects preemption and serializes wptr updates against
- 	 * preemption.  Can be aquired from irq context.
--- 
-2.37.3
-
+On 10/31/2022 2:49 PM, Melody Olvera wrote:
+>
+> On 10/27/2022 8:21 AM, Krzysztof Kozlowski wrote:
+>> On 26/10/2022 16:04, Melody Olvera wrote:
+>>> Add the base DTSI files for QDU1000 and QRU1000 SoCs, including base
+>>> descriptions of CPUs, GCC, RPMHCC, QUP, TLMM, and interrupt-controller
+>>> to boot to shell with console on these SoCs.
+>>>
+>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>>> ---
+>>>  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 1406 +++++++++++++++++++++++++
+>> Please use scripts/get_maintainers.pl to get a list of necessary people
+>> and lists to CC.  It might happen, that command when run on an older
+>> kernel, gives you outdated entries.  Therefore please be sure you base
+>> your patches on recent Linux kernel.
+> Sure thing; we talked about this on a different patch.
+>>>  arch/arm64/boot/dts/qcom/qru1000.dtsi |   27 +
+>>>  2 files changed, 1433 insertions(+)
+>>>  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>>>  create mode 100644 arch/arm64/boot/dts/qcom/qru1000.dtsi
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>>> new file mode 100644
+>>> index 000000000000..76474106e931
+>>> --- /dev/null
+>>> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>>> @@ -0,0 +1,1406 @@
+>>> +// SPDX-License-Identifier: BSD-3-Clause
+>>> +/*
+>>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>>> + */
+>> (...)
+>>
+>>> +
+>>> +	soc: soc@0 {
+>>> +		#address-cells = <2>;
+>>> +		#size-cells = <2>;
+>>> +		ranges = <0 0 0 0 0x10 0>;
+>>> +		dma-ranges = <0 0 0 0 0x10 0>;
+>>> +		compatible = "simple-bus";
+>>> +
+>>> +		gcc: clock-controller@80000 {
+>>> +			compatible = "qcom,gcc-qdu1000", "syscon";
+>>> +			reg = <0x0 0x80000 0x0 0x1f4200>;
+>>> +			#clock-cells = <1>;
+>>> +			#reset-cells = <1>;
+>>> +			#power-domain-cells = <1>;
+>>> +			clocks = <&rpmhcc RPMH_CXO_CLK>, <&sleep_clk>;
+>>> +			clock-names = "bi_tcxo", "sleep_clk";
+>>> +		};
+>>> +
+>>> +		gpi_dma0: dma-controller@900000  {
+>>> +			compatible = "qcom,sm6350-gpi-dma";
+>> You should add here a specific compatible as well. Same in other places.
+>> All places. I had impression we talked about this few times, so I don't
+>> know what is missing on your side.
+>>
+>> This must be:
+>> "qcom,qdu1000-gpi-dma", "qcom,sm6350-gpi-dma"
+> Got it. I talked to Stephan and he said either your suggestion or just using
+> preexisting compatibles would be ok. I thought it might be cleaner to not
+> have the qdu compats, but I'm fine either way.
+Coming back to this, it looks like this will fail dtb_check since compatible field is too long.
+Is there an adjustment to the binding which needs to be made here?
+>>> +			#dma-cells = <3>;
+>>> +			reg = <0x0 0x900000 0x0 0x60000>;
+>>> +			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 251 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
+>>> +			dma-channels = <12>;
+>>> +			dma-channel-mask = <0x3f>;
+>>> +			iommus = <&apps_smmu 0xf6 0x0>;
+>>> +		};
+>>> +
+>> (...)
+>>
+>>
+>>> +
+>>> +		tlmm: pinctrl@f000000 {
+>>> +			compatible = "qcom,qdu1000-tlmm";
+>>> +			reg = <0x0 0xf000000 0x0 0x1000000>;
+>>> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+>>> +			gpio-controller;
+>>> +			#gpio-cells = <2>;
+>>> +			interrupt-controller;
+>>> +			#interrupt-cells = <2>;
+>>> +			gpio-ranges = <&tlmm 0 0 151>;
+>>> +			wakeup-parent = <&pdc>;
+>>> +
+>>> +			qup_uart0_default: qup-uart0-default-state {
+>>> +				pins = "gpio6", "gpio7", "gpio8", "gpio9";
+>>> +				function = "qup00";
+>>> +			};
+>>> +
+>>> +			qup_i2c1_data_clk: qup-i2c1-data-clk-state {
+>>> +				pins = "gpio10", "gpio11";
+>>> +				function = "qup01";
+>>> +				drive-strength = <2>;
+>> Can we have some generic agreement where to put drive-strengths and bias?
+>>
+>> See also:
+>> https://lore.kernel.org/linux-devicetree/20221026200357.391635-2-krzysztof.kozlowski@linaro.org/
+>>
+>> https://lore.kernel.org/lkml/CAD=FV=VUL4GmjaibAMhKNdpEso_Hg_R=XeMaqah1LSj_9-Ce4Q@mail.gmail.com/
+> Not sure how much two-sense I have for the conversation at large, but generally I agree with Doug's
+> point in the first paragraph. Pulls for this soc are consistent across boards so I don't think it makes
+> sense to move them to the board files here. I vote that these stay here.
+>>> +				bias-pull-up;
+>>> +			};
+>> (...)
+>>
+>>> +		};
+>>> +
+>>> +		cpufreq_hw: cpufreq@17d90000 {
+>>> +			compatible = "qcom,sm8250-cpufreq-epss", "qcom,cpufreq-epss";
+>> This is not sm8250...
+> Ack.
+>>> +			reg = <0x0 0x17d90000 0x0 0x1000>, <0x0 0x17d91000 0x0 0x1000>;
+>>> +			reg-names = "freq-domain0", "freq-domain1";
+>>> +			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
+>>> +			clock-names = "xo", "alternate";
+>>> +			#freq-domain-cells = <1>;
+>>> +		};
+>>> +
+>>> +		gem_noc: interconnect@19100000 {
+>>> +			reg = <0x0 0x19100000 0x0 0xB8080>;
+>>> +			compatible = "qcom,qdu1000-gem-noc";
+>>> +			#interconnect-cells = <1>;
+>>> +			qcom,bcm-voters = <&apps_bcm_voter>;
+>>> +		};
+>>> +	};
+>>>
+Thanks,
+Melody
