@@ -2,116 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 31011613804
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 14:28:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 75EF261387D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 14:56:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230189AbiJaN2U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 09:28:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36336 "EHLO
+        id S230327AbiJaN44 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 09:56:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbiJaN2T (ORCPT
+        with ESMTP id S231318AbiJaN4z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 09:28:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B94910045
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 06:27:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1667222838;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=GwqNSS0OJIleR6uoXEXg4AgYpmJqcWP2KGT201SIVMg=;
-        b=W0vqrJETrrXTqQoG3vpBmoqKSRrJS1/Jq7LTpPu+mO9deitZfgbdUDFUfCZ5bixBYlMIUZ
-        GrDC02uosAahqXIn6bqCVSZB6T87vh0yNDdytr1uBX2vmgQpsTb5GxCpQz186gv0yM5s91
-        Ju+RHUdGinbYv4UwP1yzMQLflk8HTSQ=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-671-3YkNkfWbM_-zOC2abgNSnQ-1; Mon, 31 Oct 2022 09:27:17 -0400
-X-MC-Unique: 3YkNkfWbM_-zOC2abgNSnQ-1
-Received: by mail-wm1-f72.google.com with SMTP id p9-20020a1c7409000000b003cf670dad6eso744881wmc.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 06:27:16 -0700 (PDT)
+        Mon, 31 Oct 2022 09:56:55 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4085F2C4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 06:56:54 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id r14so17562513edc.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 06:56:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZcCKYUH9Lbw/pHPSk6/2WqMZQyQUMyuhsXpUiDfOF6A=;
+        b=MHShAiwKTrTKgezu8b/h1HoWiKmRbMo2Se7Cqp0JBdChjeixK+L0le1H3GXkvigB+s
+         tl1nb+Pnb1oJjdpb/LjPiD9TJUKR7TUUPFUHxlwjWN1j2ruklEG3lDaWN19Q5V7o8i2Q
+         9ae1VwZkDTRFRsksktZlCLJ7ukCegJxsj2IP1C3+23KdkS872MiAqMHYUaA0Y8tj5X4m
+         pZxEweYicWfz1f3HCYMGqWP4u+oouDxlrGb0/RU3S8kFR02V3F6lk405m4PmD4WUR2LO
+         CsbLxLDBTKjBBFeQBWhgZz7hrFJuiMpeZOa+wHqM5IfSZLG4v481jSWye7Gm9kURvhmJ
+         Gl3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GwqNSS0OJIleR6uoXEXg4AgYpmJqcWP2KGT201SIVMg=;
-        b=mYZgJ8am0AqwsVJ0/o1qlwk9vKVrWqkhC2PY/1B4SBUTIrLE7MQqDC3tbV9riw7Jr6
-         QJkcNiTkVjz9kR7F66Xhcu2VPJCxEMw6ntz+TC7Ik4wSgXeI61QS0+TLRtv4ExCYtWkU
-         iZInOFIHnc+azNO3Wr/RBXI+gvq/aziGakUYprJvxvzb+Gl1gG9e1BFoD5+uF3srCsBy
-         6L/S6s9V4jW1bWM3AdE+e8Uz5qIJINVUIqdhTgaHU9s+C1AcSN8/La8g7FK78JJgt6Y2
-         QtAmmZMTo/KZ5aae2q5MQcM+ns7IWjiL3aKIfgbX3lYVhkjL+7SBWClOpxNJVWtufBWN
-         7O8g==
-X-Gm-Message-State: ACrzQf1uwZHQEaJho+5uTYVZKRcdGDUMFUnHDWjko0casL+FXaU0lIOo
-        6zhiZUJNYSjRvo9DQ6D5E0iNhSb4yrrSZ1C1Q6eoqYtSkMWJPRVgKEFxR39mmDeKDxbtTL92+Uf
-        041oMSrZky8bOOmeyya8tPmKp4A==
-X-Received: by 2002:adf:ec8a:0:b0:236:5b80:da83 with SMTP id z10-20020adfec8a000000b002365b80da83mr7858623wrn.509.1667222835978;
-        Mon, 31 Oct 2022 06:27:15 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM4XoYVkE5jE7vlhuKQ/BuqMv6qQj/pE66jVA36/qVXv1WZdIDiMFN0/ixJs2zjwBzGxtBPgyA==
-X-Received: by 2002:adf:ec8a:0:b0:236:5b80:da83 with SMTP id z10-20020adfec8a000000b002365b80da83mr7858599wrn.509.1667222835772;
-        Mon, 31 Oct 2022 06:27:15 -0700 (PDT)
-Received: from [192.168.1.130] (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
-        by smtp.gmail.com with ESMTPSA id bg37-20020a05600c3ca500b003b477532e66sm25116881wmb.2.2022.10.31.06.27.14
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ZcCKYUH9Lbw/pHPSk6/2WqMZQyQUMyuhsXpUiDfOF6A=;
+        b=v4N0hc7xC4UtD5at1Mn75fI3cUAqHqUXFoJ9SPhmEyzhwkwH8eOArkTRvY3ceQnV+T
+         3UYYVK4XcNgWs4QENkwqMfkzUoWHS2MbFguy2nce7H/7rDxe6918+rxhf9JqNWhlWsmJ
+         1sVltXfxAXFG1FeAkAR86rat8Nlt43Qrp4mFMjaLAwXFSOI/cu9NJJa1dfMdtrpmmHYX
+         prByXdeK93Z3+2H08FwYtpP7dkA7Q2Z3I9eciTVet3zB+5+XKppAL57pcE3iLZWC1jKB
+         EtQfarHzraotPSoltC7FlXz8/ha+kX0ZW793GNnFRJg37uORE38ZokiYWkH1iZd3f3xW
+         aVJQ==
+X-Gm-Message-State: ACrzQf3AGBnNO2DQtBWfSUbfeSqvsLYeDvhSVx7wDWzAXBiWtKwr+Utl
+        Pi2qnRotNm+gagZmK1uDRIOif7J5CgeGgA==
+X-Google-Smtp-Source: AMsMyM6u3JAX6R+7QqE3QY18S43gVSOpaUsIoIZwvU1h8v4fcdHEBIhKdyE7CRGMaOBEy+diJLl18Q==
+X-Received: by 2002:a50:ec99:0:b0:462:2c1c:8764 with SMTP id e25-20020a50ec99000000b004622c1c8764mr13656055edr.325.1667224612782;
+        Mon, 31 Oct 2022 06:56:52 -0700 (PDT)
+Received: from localhost (31-151-115-246.dynamic.upc.nl. [31.151.115.246])
+        by smtp.gmail.com with ESMTPSA id t31-20020a056402241f00b00459cd13fd34sm3214246eda.85.2022.10.31.06.56.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Oct 2022 06:27:15 -0700 (PDT)
-Message-ID: <0fe3974c-de66-9eaa-b56a-ed1d07644e4c@redhat.com>
-Date:   Mon, 31 Oct 2022 14:27:13 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH v2 14/21] drm/fb-helper: Rename
- drm_fb_helper_unregister_fbi() to use _info postfix
-Content-Language: en-US
-To:     Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
-        airlied@gmail.com, sam@ravnborg.org, mripard@kernel.org,
-        maarten.lankhorst@linux.intel.com
-Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        linux-aspeed@lists.ozlabs.org,
-        linux-arm-kernel@lists.infradead.org,
-        etnaviv@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
-        linux-hyperv@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-mips@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        spice-devel@lists.freedesktop.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        xen-devel@lists.xenproject.org
-References: <20221024111953.24307-1-tzimmermann@suse.de>
- <20221024111953.24307-15-tzimmermann@suse.de>
-From:   Javier Martinez Canillas <javierm@redhat.com>
-In-Reply-To: <20221024111953.24307-15-tzimmermann@suse.de>
+        Mon, 31 Oct 2022 06:56:52 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+Date:   Mon, 31 Oct 2022 14:56:50 +0100
+Message-Id: <CO05SSJUFW72.1PUZJ0FMJH3DF@otso>
+Cc:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
+        "Dylan Van Assche" <me@dylanvanassche.be>
+Subject: Re: [PATCH v4 1/2] leds: flash: add driver to support flash LED
+ module in QCOM PMICs
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Fenglin Wu" <quic_fenglinw@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <krzysztof.kozlowski@linaro.org>, "Pavel Machek" <pavel@ucw.cz>,
+        "Gene Chen" <gene_chen@richtek.com>,
+        "Jacek Anaszewski" <jacek.anaszewski@gmail.com>,
+        <linux-leds@vger.kernel.org>
+X-Mailer: aerc 0.12.0
+References: <20221025073802.2662564-1-quic_fenglinw@quicinc.com>
+ <20221025073802.2662564-2-quic_fenglinw@quicinc.com>
+In-Reply-To: <20221025073802.2662564-2-quic_fenglinw@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/24/22 13:19, Thomas Zimmermann wrote:
-> Rename drm_fb_helper_unregister_fbi() to drm_fb_helper_unregister_info()
-> as part of unifying the naming within fbdev helpers. Adapt drivers. No
-> functional changes.
-> 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Hi Fenglin,
+
+On Tue Oct 25, 2022 at 9:38 AM CEST, Fenglin Wu wrote:
+> Add initial driver to support flash LED module found in Qualcomm
+> Technologies, Inc. PMICs. The flash module can have 3 or 4 channels
+> and each channel can be controlled indepedently and support full scale
+> current up to 1.5 A. It also supports connecting two channels together
+> to supply one LED component with full scale current up to 2 A. In that
+> case, the current will be split on each channel symmetrically and the
+> channels will be enabled and disabled at the same time.
+>
+> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sm7225-fairphone-fp4 +=
+ pm6150l
 > ---
+>  drivers/leds/flash/Kconfig           |  15 +
+>  drivers/leds/flash/Makefile          |   1 +
+>  drivers/leds/flash/leds-qcom-flash.c | 700 +++++++++++++++++++++++++++
+>  3 files changed, 716 insertions(+)
+>  create mode 100644 drivers/leds/flash/leds-qcom-flash.c
+>
 
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+<snip>
 
--- 
-Best regards,
+> +static const struct of_device_id qcom_flash_led_match_table[] =3D {
+> +	{ .compatible =3D "qcom,spmi-flash-led" },
+> +	{ }
+> +};
 
-Javier Martinez Canillas
-Core Platforms
-Red Hat
+Dylan has noticed that auto-loading the module based on dt match doesn't
+work currently. It seems that this line is missing here to enable that:
+
+  MODULE_DEVICE_TABLE(of, qcom_flash_led_match_table);
+
+Please add it for v5!
+
+Regards
+Luca
+
+> +
+> +static struct platform_driver qcom_flash_led_driver =3D {
+> +	.driver =3D {
+> +		.name =3D "leds-qcom-flash",
+> +		.of_match_table =3D qcom_flash_led_match_table,
+> +	},
+> +	.probe =3D qcom_flash_led_probe,
+> +	.remove =3D qcom_flash_led_remove,
+> +};
+> +
+> +module_platform_driver(qcom_flash_led_driver);
+> +
+> +MODULE_DESCRIPTION("QCOM Flash LED driver");
+> +MODULE_LICENSE("GPL");
+> --=20
+> 2.25.1
 
