@@ -2,161 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D7509613DC9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 19:52:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1120D613DDE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 19:57:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229452AbiJaSwl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 14:52:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46158 "EHLO
+        id S229468AbiJaS5j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 14:57:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229681AbiJaSwk (ORCPT
+        with ESMTP id S229452AbiJaS5i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 14:52:40 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA1671276C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 11:52:38 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id f37so20629567lfv.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 11:52:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2m+IiXrsLStNouFmhecgJA2gSt8vjAtj7/teiT7CjBk=;
-        b=hdIf0eTW0S87ia9RbcQzP4ZT3P6rvadiOZG25jVkki0QnvwfSj0RRW/Gb6sJG3yYEU
-         9AZ7Z4nVmyYicjp7/LPMJDb5ILz+7+R+6T0paAgeMknQ4gBYf3fUIC2L21DZllRR2n1h
-         dLbPIodLPxuZ5ypSwBawN42zYR16siA+aj9pyOvPYKHd87ShCHhFAxZnzghkTMlSy9r+
-         v15m7A0HX8cNJPvR/fZyFbo8kl+1UXWRiCEWm0iuqFMIqCjso7/747ukUo9aEmGwMGML
-         C0UwPJIJs7S56ONV+Uop4COrz8s6hgqnX4qh0U0frInJYMQN+dFi+Y1f1C6C3D9PTkUr
-         MJfg==
+        Mon, 31 Oct 2022 14:57:38 -0400
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B5DEE83;
+        Mon, 31 Oct 2022 11:57:37 -0700 (PDT)
+Received: by mail-ot1-f45.google.com with SMTP id r13-20020a056830418d00b0065601df69c0so7260678otu.7;
+        Mon, 31 Oct 2022 11:57:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2m+IiXrsLStNouFmhecgJA2gSt8vjAtj7/teiT7CjBk=;
-        b=gKlJPmNzES9THqJCTI/RJIBxBMBdtv9CgoTd8079RaW5QTVW7F1jnOZqmRU01QXfK0
-         lnjCl6/QqDgRmYbsniHAv31YDHVUS/9KXqOLJ94g/SKH/MExFWcab/7GTcJFKaWZmTse
-         Ez7iPSi8tdrEMV2ECZOzdiJj0Z9bojqLESgNIwRFvrznFRYJA2CgqW0FdAb8j26O6i6s
-         1wD/GoKhr9/SszqyAikM2KZhqvi+2VDjA9yAn43Pqas8e59BLiNrutfHgV+Skl/klCT8
-         BL6wQHezaTIgJ8X7F2bIr3j/pDEMz4Te+GiHJwMGwV/vKPqA67mCw2YXnhlcfx5vZG73
-         1LDA==
-X-Gm-Message-State: ACrzQf3MY6nVn/6A+VIfPEAadoEUqFFouA98v3cBDIIEgav2P1XbI0Gr
-        EDmsnnjn/w+8YVQ9M952wp42ZQ==
-X-Google-Smtp-Source: AMsMyM4Q5b7LpNXMLeLpnI7m/hdrZ5ObVjNpLE+Jh9k7S1IeKWaR1G+TBQ4xfp8Zl8sY/DYXeqg87g==
-X-Received: by 2002:ac2:5922:0:b0:4af:d4e:de3f with SMTP id v2-20020ac25922000000b004af0d4ede3fmr5679455lfi.528.1667242357077;
-        Mon, 31 Oct 2022 11:52:37 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id q3-20020a2eb4a3000000b0026fb5525ee4sm1454768ljm.116.2022.10.31.11.52.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Oct 2022 11:52:36 -0700 (PDT)
-Message-ID: <282de1ee-f1c5-39cf-90d7-8a10fc27c171@linaro.org>
-Date:   Mon, 31 Oct 2022 21:52:36 +0300
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FDlfsp4Z5dv3KOOJ8RIYeDVzw6SpbAuGhZbFngKWrh4=;
+        b=ApuCjdQGnAkYEw3aA45vxd0De/Gil+rj9tD0m/YWBgUkGcvsbx2I87/If8v+SiNwxb
+         D2aIP/kI/PsCppCc3exCPIXngc6x/8v5rplluP+Ao7CSJxI3Em/xMZpuhBeKs3PhEZ4d
+         QEAgQkuoROlbsJZLewmnlQaKb+32OXImbotim/l048xrFEzxWG9JmBojgu1xvAmiuJqU
+         fx+7mK7yLLzIIfsxKyNw/cUezt5D5dhTgRNR7VWNlxNaV7arWNwQCGI8W0gha0YnDgBu
+         US8ZgTOgj6u2V2QG9+jB2t3Oibz01vHhny5rJ6TybbRgBw2Hcwh9kj9KNFtV2VuHre4G
+         MGfw==
+X-Gm-Message-State: ACrzQf3JA9P2P0uqgKP+cltt5xQOl/vRZ7RzPhC/+fk2D99SOhpxZDeO
+        c2QYpcPhWtgZWCkDcP/pEcCGOcXsNA==
+X-Google-Smtp-Source: AMsMyM79yUDuGBea14DUf4Zuj8HFysGU8WkrzLwG32UPNQt2MnBJ3ULoUWcDy4y7qO1o86pkPKNvgw==
+X-Received: by 2002:a05:6830:1e97:b0:66c:52cc:8e9 with SMTP id n23-20020a0568301e9700b0066c52cc08e9mr3271198otr.113.1667242656487;
+        Mon, 31 Oct 2022 11:57:36 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id t8-20020a4aadc8000000b00480e77f90f9sm2619242oon.41.2022.10.31.11.57.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Oct 2022 11:57:36 -0700 (PDT)
+Received: (nullmailer pid 3255352 invoked by uid 1000);
+        Mon, 31 Oct 2022 18:57:37 -0000
+Date:   Mon, 31 Oct 2022 13:57:37 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Lars Povlsen <lars.povlsen@microchip.com>,
+        Steen Hegelund <Steen.Hegelund@microchip.com>,
+        Daniel Machon <daniel.machon@microchip.com>,
+        UNGLinuxDriver@microchip.com, Sergey Shtylyov <s.shtylyov@omp.ru>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Martin Botka <martin.botka@somainline.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        krishna Lanka <quic_vamslank@quicinc.com>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Del Regno <angelogioacchino.delregno@somainline.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Govind Singh <govinds@codeaurora.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Oleksij Rempel <linux@rempel-privat.de>,
+        Horatiu Vultur <horatiu.vultur@microchip.com>,
+        Vladimir Oltean <vladimir.oltean@nxp.com>,
+        Claudiu Manoil <claudiu.manoil@nxp.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: net: constrain number of 'reg' in ethernet
+ ports
+Message-ID: <20221031185737.GA3249912-robh@kernel.org>
+References: <20221028140326.43470-1-krzysztof.kozlowski@linaro.org>
+ <20221028140326.43470-2-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH 14/15] scsi: ufs: ufs-qcom: Add support for finding HS
- gear on new UFS versions
-Content-Language: en-GB
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
-        andersson@kernel.org, vkoul@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, quic_cang@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-scsi@vger.kernel.org
-References: <20221029141633.295650-1-manivannan.sadhasivam@linaro.org>
- <20221029141633.295650-15-manivannan.sadhasivam@linaro.org>
- <cf8dcf53-f131-68f4-c6aa-d41e02ac6d5c@linaro.org>
- <20221031145647.GC10515@thinkpad>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221031145647.GC10515@thinkpad>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221028140326.43470-2-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/10/2022 17:56, Manivannan Sadhasivam wrote:
-> On Sun, Oct 30, 2022 at 12:48:21AM +0300, Dmitry Baryshkov wrote:
->> On 29/10/2022 17:16, Manivannan Sadhasivam wrote:
->>> Starting from UFS controller v4, Qcom supports dual gear mode (i.e., the
->>> controller/PHY can be configured to run in two gear speeds). But that
->>> requires an agreement between the UFS controller and the UFS device.
->>> This commit finds the max gear supported by both controller and device
->>> then decides which one to use.
->>>
->>> UFS controller's max gear can be read from the REG_UFS_PARAM0 register and
->>> UFS device's max gear can be read from the "max-gear" devicetree property.
->>>
->>> The UFS PHY also needs to be configured with the decided gear using the
->>> phy_set_mode_ext() API.
->>>
->>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>> ---
->>>    drivers/ufs/host/ufs-qcom.c | 35 ++++++++++++++++++++++++++++++++---
->>>    drivers/ufs/host/ufs-qcom.h |  4 ++++
->>>    2 files changed, 36 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
->>> index f952cc76919f..268463e92d67 100644
->>> --- a/drivers/ufs/host/ufs-qcom.c
->>> +++ b/drivers/ufs/host/ufs-qcom.c
->>> @@ -281,6 +281,9 @@ static int ufs_qcom_host_reset(struct ufs_hba *hba)
->>>    static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba, u32 hs_gear)
->>>    {
->>>    	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->>> +	struct device *dev = hba->dev;
->>> +	u32 max_gear, hcd_max_gear, reg;
->>> +	int ret;
->>>    	if (host->hw_ver.major == 0x1) {
->>>    		/*
->>> @@ -292,8 +295,33 @@ static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba, u32 hs_gear)
->>>    		 */
->>>    		if (hs_gear > UFS_HS_G2)
->>>    			return UFS_HS_G2;
->>> +	} else if (host->hw_ver.major > 0x3) {
->>> +		/*
->>> +		 * Starting from UFS controller v4, Qcom supports dual gear mode (i.e., the
->>> +		 * controller/PHY can be configured to run in two gear speeds). But that
->>> +		 * requires an agreement between the UFS controller and the device. Below
->>> +		 * code tries to find the max gear of both and decides which gear to use.
->>> +		 *
->>> +		 * First get the max gear supported by the UFS device if available.
->>> +		 * If the property is not defined in devicetree, then use the default gear.
->>> +		 */
->>> +		ret = of_property_read_u32(dev->of_node, "max-gear", &max_gear);
->>> +		if (ret)
->>> +			goto err_out;
->>
->> Can we detect the UFS device's max gear somehow? If not, the 'max-gear'
->> property name doesn't sound good. Maybe calling it 'device-gear' would be
->> better.
->>
+On Fri, Oct 28, 2022 at 10:03:25AM -0400, Krzysztof Kozlowski wrote:
+> 'reg' without any constraints allows multiple items which is not the
+> intention for Ethernet controller's port number.
 > 
-> UFS device probing depends on PHY init sequence. So technically we cannot know
-> the max gear of the device without using an init sequence, but this information
-> is static and should be known to a board manufacturer. That's why I decided to
-> use this property. Another option is to use a fixed init sequence for probing
-> the device and do a re-init after knowing it's max gear but that is not
-> recommended.
+
+Shouldn't this constrained by dsa-port.yaml (or the under review 
+ethernet switch schemas that split out the DSA parts)?
+
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
-> We need "max" keyword because this property specifies the maximum gear at which
-> the device could operate and not necessarily the gear at which it operates.
-> Maybe, "max-device-gear" would make it clear.
-
-Ack, thank you for the explanation. Yes, from my opinion max-device-gear 
-is better. Let's see what Rob and Krzysztof would say.
-
-
--- 
-With best wishes
-Dmitry
-
+> ---
+> 
+> Please give it a time for Rob's bot to process this.
+> ---
+>  Documentation/devicetree/bindings/net/asix,ax88178.yaml       | 4 +++-
+>  Documentation/devicetree/bindings/net/microchip,lan95xx.yaml  | 4 +++-
+>  .../devicetree/bindings/net/microchip,lan966x-switch.yaml     | 4 ++--
+>  .../devicetree/bindings/net/microchip,sparx5-switch.yaml      | 3 ++-
+>  .../devicetree/bindings/net/mscc,vsc7514-switch.yaml          | 3 ++-
+>  .../bindings/net/renesas,r8a779f0-ether-switch.yaml           | 4 ++--
+>  6 files changed, 14 insertions(+), 8 deletions(-)
