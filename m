@@ -2,120 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D40CB613D1D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 19:10:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FF00613D3F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 19:25:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229565AbiJaSKg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 14:10:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50788 "EHLO
+        id S229781AbiJaSZH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 14:25:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbiJaSKg (ORCPT
+        with ESMTP id S229476AbiJaSZH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 14:10:36 -0400
+        Mon, 31 Oct 2022 14:25:07 -0400
 Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FC59100E;
-        Mon, 31 Oct 2022 11:10:33 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E54F4D80;
+        Mon, 31 Oct 2022 11:25:05 -0700 (PDT)
 Received: from g550jk.arnhem.chello.nl (31-151-115-246.dynamic.upc.nl [31.151.115.246])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 1B387D03F1;
-        Mon, 31 Oct 2022 18:10:32 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 2BA7CD03F1;
+        Mon, 31 Oct 2022 18:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1667239832; bh=03cs4/GWsyd+zjE3smFFK0Esd6yU/N6x5URAFrq3wvo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=jxb/3OdvVt08kmnwvFljeu24VvqY+2DSRdzzVQ2SxLOtTeA1gR941UQzO+9K7RrxL
-         CDwSrosLe8DWgoRZvcMlLPLhAt8ngoXJV+TFpBGRs3ysckQJjeQZXy6EwZ5HnmC/qO
-         wH8MNrq371XiaApjahIBXERXqBZZWLQvA18tyJOk=
+        t=1667240704; bh=7iBgek2JhQmhnFtXHoGRmTx0yH0Ccd14S9GW/5t6pqA=;
+        h=From:To:Cc:Subject:Date;
+        b=h7dN2NmmyBT7y2iKa4vKczh+OqKqzBYxukUc4OiQJiWi4rjECNgRpuJAcKgEkLWOD
+         Se47FJJP5crCFoSPZf54v0Xt/EsF+ksYGXU2FzZ7TCsLBA78jELvmuFOW18ZIkyCIj
+         JeWzQx8jByRKd5zACLqDNcXxkeyzRQSri+kyYNsY=
 From:   Luca Weiss <luca@z3ntu.xyz>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         afd@ti.com, Luca Weiss <luca@z3ntu.xyz>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] ARM: dts: qcom: pm8941: fix vadc channel node names
-Date:   Mon, 31 Oct 2022 19:10:22 +0100
-Message-Id: <20221031181022.947412-2-luca@z3ntu.xyz>
+        linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/2] dt-bindings: iio/adc: qcom,spmi-iadc: use double compatibles
+Date:   Mon, 31 Oct 2022 19:24:54 +0100
+Message-Id: <20221031182456.952648-1-luca@z3ntu.xyz>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221031181022.947412-1-luca@z3ntu.xyz>
-References: <20221031181022.947412-1-luca@z3ntu.xyz>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=1.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        FROM_SUSPICIOUS_NTLD_FP,PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The spmi-vadc bindings require the '@' in the node.
+As in other bindings, let's use specific compatibles together with the
+fallback compatible. Adjust the bindings for it.
 
-Additionally change the node name to adc-chan which both makes it a
-generic node name and also removes the underscore from it.
-
-At the same time sort the nodes by reg value.
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 ---
 Changes in v2:
-* Make commit message more accurate
-* Make number actually hex in node address (made it decimal before)
+* New patch
 
- arch/arm/boot/dts/qcom-pm8941.dtsi | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ .../devicetree/bindings/iio/adc/qcom,spmi-iadc.yaml        | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-pm8941.dtsi b/arch/arm/boot/dts/qcom-pm8941.dtsi
-index 863e598591b7..a9e83836bf86 100644
---- a/arch/arm/boot/dts/qcom-pm8941.dtsi
-+++ b/arch/arm/boot/dts/qcom-pm8941.dtsi
-@@ -101,26 +101,33 @@ pm8941_vadc: adc@3100 {
- 			#size-cells = <0>;
- 			#io-channel-cells = <1>;
+diff --git a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-iadc.yaml b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-iadc.yaml
+index 2a94db688830..fa855baa368c 100644
+--- a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-iadc.yaml
++++ b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-iadc.yaml
+@@ -18,7 +18,10 @@ description: |
  
--			bat_temp {
--				reg = <VADC_LR_MUX1_BAT_THERM>;
-+
-+			adc-chan@6 {
-+				reg = <VADC_VBAT_SNS>;
- 			};
--			die_temp {
-+
-+			adc-chan@8 {
- 				reg = <VADC_DIE_TEMP>;
- 			};
--			ref_625mv {
-+
-+			adc-chan@9 {
- 				reg = <VADC_REF_625MV>;
- 			};
--			ref_1250v {
-+
-+			adc-chan@a {
- 				reg = <VADC_REF_1250MV>;
- 			};
--			ref_gnd {
-+
-+			adc-chan@e {
- 				reg = <VADC_GND_REF>;
- 			};
--			ref_vdd {
-+
-+			adc-chan@f {
- 				reg = <VADC_VDD_VADC>;
- 			};
--			vbat_sns {
--				reg = <VADC_VBAT_SNS>;
-+
-+			adc-chan@30 {
-+				reg = <VADC_LR_MUX1_BAT_THERM>;
- 			};
- 		};
+ properties:
+   compatible:
+-    const: qcom,spmi-iadc
++    items:
++      - enum:
++          - qcom,pm8941-iadc
++      - const: qcom,spmi-iadc
  
+   reg:
+     description: IADC base address and length in the SPMI PMIC register map
+@@ -50,7 +53,7 @@ examples:
+         #address-cells = <1>;
+         #size-cells = <0>;
+         pmic_iadc: adc@3600 {
+-            compatible = "qcom,spmi-iadc";
++            compatible = "qcom,pm8941-iadc", "qcom,spmi-iadc";
+             reg = <0x3600>;
+             interrupts = <0x0 0x36 0x0 IRQ_TYPE_EDGE_RISING>;
+             qcom,external-resistor-micro-ohms = <10000>;
 -- 
 2.38.1
 
