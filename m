@@ -2,408 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D069F613F8C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 22:11:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A692A613F91
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 22:12:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229746AbiJaVLo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 17:11:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47432 "EHLO
+        id S229781AbiJaVMC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 17:12:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229545AbiJaVLo (ORCPT
+        with ESMTP id S229779AbiJaVMB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 17:11:44 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E09D514018
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 14:11:40 -0700 (PDT)
-Received: from [192.168.1.101] (95.49.29.156.neoplus.adsl.tpnet.pl [95.49.29.156])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 3322A3EBDD;
-        Mon, 31 Oct 2022 22:11:38 +0100 (CET)
-Message-ID: <be4da650-27ac-fcd7-b71d-1531f421d030@somainline.org>
-Date:   Mon, 31 Oct 2022 22:11:37 +0100
+        Mon, 31 Oct 2022 17:12:01 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C8CE1401F;
+        Mon, 31 Oct 2022 14:11:58 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 29VL81J6007811;
+        Mon, 31 Oct 2022 21:11:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ZAkqwLRZ1j8jO6LLr5eFL4hvEKpdF5SbJ3eHSOfdEyQ=;
+ b=EYc6gAvXR0WeEB6DU8BKlcKWSBQtg8jhgCXc8duZjU8aNgPFZRXD3EnnDaQDKSwmmEfN
+ 8zNfulSRNSZGzg/Ic3PnvPIi/N2VwbAkKtYxnKJscOWHVVVBuoBQgzWPWgAr0z6d/EXh
+ UnfcKWdB8BCZNd7l/K/VJF7JD5GDOzs2/hqw3rk9aRj2WcfvniD1RtxZv65ruKCRgJjb
+ 1Gs1et0dVRPZ2nlTgd8LUdIhkVStpJlS85rMA3zWD5QBMZBEV9ABCXFIX00OPTDmrwTY
+ kPGlHIsXCDooSPQTH3ZfzdUIKOm/e65DDxs/RanE3lKFjNiRaeN/FrIzAZhDfEdjMgnV 5w== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kjnh2r13y-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Oct 2022 21:11:50 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29VLBnBo025697
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Oct 2022 21:11:49 GMT
+Received: from [10.110.63.84] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 31 Oct
+ 2022 14:11:47 -0700
+Message-ID: <deb60200-5a37-ec77-9515-0c0c89022174@quicinc.com>
+Date:   Mon, 31 Oct 2022 14:11:39 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v3 06/11] clk: qcom: mmcc-msm8974: use ARRAY_SIZE instead
- of specifying num_parents
-Content-Language: en-US
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Subject: Re: [PATCH] drm/msm/dp: remove limitation of link rate at 5.4G to
+ support HBR3
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-References: <20221030155520.91629-1-dmitry.baryshkov@linaro.org>
- <20221030155520.91629-7-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20221030155520.91629-7-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
+        <airlied@linux.ie>, <agross@kernel.org>,
+        <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1667237245-24988-1-git-send-email-quic_khsieh@quicinc.com>
+ <94b507e8-5b94-12ae-4c81-95f5d36279d5@linaro.org>
+Content-Language: en-US
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <94b507e8-5b94-12ae-4c81-95f5d36279d5@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ncKcc3Nx-eKDKW4967MDvSq-ns-XbuSb
+X-Proofpoint-GUID: ncKcc3Nx-eKDKW4967MDvSq-ns-XbuSb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-31_21,2022-10-31_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
+ priorityscore=1501 phishscore=0 clxscore=1015 impostorscore=0 mlxscore=0
+ adultscore=0 malwarescore=0 lowpriorityscore=0 mlxlogscore=824
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2210310131
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Dmitry,
 
 
-On 30.10.2022 16:55, Dmitry Baryshkov wrote:
-> Use ARRAY_SIZE() instead of manually specifying num_parents. This makes
-> adding/removing entries to/from parent_data easy and errorproof.
-> 
-> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Link rate is advertised by sink, but adjusted (reduced the link rate)  
+by host during link training.
 
-Konrad
->  drivers/clk/qcom/mmcc-msm8974.c | 74 ++++++++++++++++-----------------
->  1 file changed, 37 insertions(+), 37 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-msm8974.c
-> index f74662925a58..9008df2305df 100644
-> --- a/drivers/clk/qcom/mmcc-msm8974.c
-> +++ b/drivers/clk/qcom/mmcc-msm8974.c
-> @@ -252,7 +252,7 @@ static struct clk_rcg2 mmss_ahb_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "mmss_ahb_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -289,7 +289,7 @@ static struct clk_rcg2 mmss_axi_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "mmss_axi_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -313,7 +313,7 @@ static struct clk_rcg2 ocmemnoc_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "ocmemnoc_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -332,7 +332,7 @@ static struct clk_rcg2 csi0_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "csi0_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -345,7 +345,7 @@ static struct clk_rcg2 csi1_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "csi1_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -358,7 +358,7 @@ static struct clk_rcg2 csi2_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "csi2_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -371,7 +371,7 @@ static struct clk_rcg2 csi3_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "csi3_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -418,7 +418,7 @@ static struct clk_rcg2 vfe0_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "vfe0_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -431,7 +431,7 @@ static struct clk_rcg2 vfe1_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "vfe1_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -472,7 +472,7 @@ static struct clk_rcg2 mdp_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "mdp_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_dsi_hdmi_gpll0,
-> -		.num_parents = 6,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_dsi_hdmi_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -495,7 +495,7 @@ static struct clk_rcg2 jpeg0_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "jpeg0_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -508,7 +508,7 @@ static struct clk_rcg2 jpeg1_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "jpeg1_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -521,7 +521,7 @@ static struct clk_rcg2 jpeg2_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "jpeg2_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -534,7 +534,7 @@ static struct clk_rcg2 pclk0_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "pclk0_clk_src",
->  		.parent_names = mmcc_xo_dsi_hdmi_edp_gpll0,
-> -		.num_parents = 6,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_dsi_hdmi_edp_gpll0),
->  		.ops = &clk_pixel_ops,
->  		.flags = CLK_SET_RATE_PARENT,
->  	},
-> @@ -548,7 +548,7 @@ static struct clk_rcg2 pclk1_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "pclk1_clk_src",
->  		.parent_names = mmcc_xo_dsi_hdmi_edp_gpll0,
-> -		.num_parents = 6,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_dsi_hdmi_edp_gpll0),
->  		.ops = &clk_pixel_ops,
->  		.flags = CLK_SET_RATE_PARENT,
->  	},
-> @@ -581,7 +581,7 @@ static struct clk_rcg2 vcodec0_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "vcodec0_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_1_3_gpll0,
-> -		.num_parents = 5,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_1_3_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -599,7 +599,7 @@ static struct clk_rcg2 cci_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "cci_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -623,7 +623,7 @@ static struct clk_rcg2 camss_gp0_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "camss_gp0_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_1_gpll1_0,
-> -		.num_parents = 5,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_1_gpll1_0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -637,7 +637,7 @@ static struct clk_rcg2 camss_gp1_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "camss_gp1_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_1_gpll1_0,
-> -		.num_parents = 5,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_1_gpll1_0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -672,7 +672,7 @@ static struct clk_rcg2 mclk0_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "mclk0_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -685,7 +685,7 @@ static struct clk_rcg2 mclk1_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "mclk1_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -698,7 +698,7 @@ static struct clk_rcg2 mclk2_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "mclk2_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -711,7 +711,7 @@ static struct clk_rcg2 mclk3_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "mclk3_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -730,7 +730,7 @@ static struct clk_rcg2 csi0phytimer_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "csi0phytimer_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -743,7 +743,7 @@ static struct clk_rcg2 csi1phytimer_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "csi1phytimer_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -756,7 +756,7 @@ static struct clk_rcg2 csi2phytimer_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "csi2phytimer_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -787,7 +787,7 @@ static struct clk_rcg2 cpp_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "cpp_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -805,7 +805,7 @@ static struct clk_rcg2 byte0_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "byte0_clk_src",
->  		.parent_names = mmcc_xo_dsibyte_hdmi_edp_gpll0,
-> -		.num_parents = 6,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_dsibyte_hdmi_edp_gpll0),
->  		.ops = &clk_byte2_ops,
->  		.flags = CLK_SET_RATE_PARENT,
->  	},
-> @@ -819,7 +819,7 @@ static struct clk_rcg2 byte1_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "byte1_clk_src",
->  		.parent_names = mmcc_xo_dsibyte_hdmi_edp_gpll0,
-> -		.num_parents = 6,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_dsibyte_hdmi_edp_gpll0),
->  		.ops = &clk_byte2_ops,
->  		.flags = CLK_SET_RATE_PARENT,
->  	},
-> @@ -838,7 +838,7 @@ static struct clk_rcg2 edpaux_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "edpaux_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -857,7 +857,7 @@ static struct clk_rcg2 edplink_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "edplink_clk_src",
->  		.parent_names = mmcc_xo_dsi_hdmi_edp_gpll0,
-> -		.num_parents = 6,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_dsi_hdmi_edp_gpll0),
->  		.ops = &clk_rcg2_ops,
->  		.flags = CLK_SET_RATE_PARENT,
->  	},
-> @@ -877,7 +877,7 @@ static struct clk_rcg2 edppixel_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "edppixel_clk_src",
->  		.parent_names = mmcc_xo_dsi_hdmi_edp,
-> -		.num_parents = 6,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_dsi_hdmi_edp),
->  		.ops = &clk_edp_pixel_ops,
->  	},
->  };
-> @@ -895,7 +895,7 @@ static struct clk_rcg2 esc0_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "esc0_clk_src",
->  		.parent_names = mmcc_xo_dsibyte_hdmi_edp_gpll0,
-> -		.num_parents = 6,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_dsibyte_hdmi_edp_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -908,7 +908,7 @@ static struct clk_rcg2 esc1_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "esc1_clk_src",
->  		.parent_names = mmcc_xo_dsibyte_hdmi_edp_gpll0,
-> -		.num_parents = 6,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_dsibyte_hdmi_edp_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -926,7 +926,7 @@ static struct clk_rcg2 extpclk_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "extpclk_clk_src",
->  		.parent_names = mmcc_xo_dsi_hdmi_edp_gpll0,
-> -		.num_parents = 6,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_dsi_hdmi_edp_gpll0),
->  		.ops = &clk_byte_ops,
->  		.flags = CLK_SET_RATE_PARENT,
->  	},
-> @@ -945,7 +945,7 @@ static struct clk_rcg2 hdmi_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "hdmi_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -963,7 +963,7 @@ static struct clk_rcg2 vsync_clk_src = {
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "vsync_clk_src",
->  		.parent_names = mmcc_xo_mmpll0_mmpll1_gpll0,
-> -		.num_parents = 4,
-> +		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_mmpll1_gpll0),
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
+Therefore should be fine if host did not support HBR3 rate.
+
+It will reduce to lower link rate during link training procedures.
+
+kuogee
+
+On 10/31/2022 11:46 AM, Dmitry Baryshkov wrote:
+> On 31/10/2022 20:27, Kuogee Hsieh wrote:
+>> An HBR3-capable device shall also support TPS4. Since TPS4 feature
+>> had been implemented already, it is not necessary to limit link
+>> rate at HBR2 (5.4G). This patch remove this limitation to support
+>> HBR3 (8.1G) link rate.
+>
+> The DP driver supports several platforms including sdm845 and can 
+> support, if I'm not mistaken, platforms up to msm8998/sdm630/660. 
+> Could you please confirm that all these SoCs have support for HBR3?
+>
+> With that fact being confirmed:
+>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+>
+>>
+>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_panel.c | 4 ----
+>>   1 file changed, 4 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c 
+>> b/drivers/gpu/drm/msm/dp/dp_panel.c
+>> index 5149ceb..3344f5a 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+>> @@ -78,10 +78,6 @@ static int dp_panel_read_dpcd(struct dp_panel 
+>> *dp_panel)
+>>       if (link_info->num_lanes > dp_panel->max_dp_lanes)
+>>           link_info->num_lanes = dp_panel->max_dp_lanes;
+>>   -    /* Limit support upto HBR2 until HBR3 support is added */
+>> -    if (link_info->rate >= 
+>> (drm_dp_bw_code_to_link_rate(DP_LINK_BW_5_4)))
+>> -        link_info->rate = drm_dp_bw_code_to_link_rate(DP_LINK_BW_5_4);
+>> -
+>>       drm_dbg_dp(panel->drm_dev, "version: %d.%d\n", major, minor);
+>>       drm_dbg_dp(panel->drm_dev, "link_rate=%d\n", link_info->rate);
+>>       drm_dbg_dp(panel->drm_dev, "lane_count=%d\n", 
+>> link_info->num_lanes);
+>
