@@ -2,120 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBE42613D58
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 19:29:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6D9F613D7B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 19:39:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230092AbiJaS3Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 14:29:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59926 "EHLO
+        id S229452AbiJaSjg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 14:39:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229827AbiJaS3K (ORCPT
+        with ESMTP id S230076AbiJaSje (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 14:29:10 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 409AE11A06
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 11:29:09 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5so7628896wmo.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 11:29:09 -0700 (PDT)
+        Mon, 31 Oct 2022 14:39:34 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DDDBDFBE
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 11:39:33 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id bp15so20549841lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 11:39:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LlUfkjYYiQUn+hV5fhdZbKU09G31Rb+nq+V7VvzQ2Fs=;
-        b=HZ/0UJ8wkTGZ/sCQeiRZoBv52Db+m0n8A3KfzelK5fr4LXUcAMToPZ7R7FfWtUVw4a
-         za9cQ5L+iQYLdYSD0Y84NljCjxTqe/uSH/8CIHWAakb/Galvyx0733h3HTD8as01M+ZW
-         EZC1Fnp6qRtvbrrADEIZ1v8Mfi+Hr4NegLHLFJ/VwjHKBX13OVzX9qOYyszmARfjZy1d
-         wizxDraCQfrxtSIatUxunX+VHKU2aSuRf1VqAPLA2CSsp72/LkDpRB0MrawrGXfSL590
-         QdaFL2kmDz8rjbSkvYbka9fMQRco/y+nSO7h2XnneQ3FrNgWj9MSsENgDPcV3U5jqUTe
-         vbyw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=QD9I/Io73NXhv6vuPQAZR34rbl9fAgyID+CM+BVilyc=;
+        b=PRkvD8+7IGrRwcM9Ip5T4GblFOF6r6tyWWuKUS3ImEeadOL8xg+PbVwma0dejRyRbf
+         6N758/uamhpU6ylDssgp53nleGS/mxXKVt+sFuhch3XDjv7q2jKUevC78RHQeH+0Jx4V
+         c5AJKkDlFMoYDVU3HQSXp/t9q9Ij8JEBWc4ngwn4oeSH5jHGqml90AFxbCrelZMocpgK
+         KvddzSlNFx+peRiwP1rLfuQOHjadWGwpdf3RaYjPFRPIJpoTIy6vYc2G//+rl9Nc4qg2
+         0pPSU6AeaSw/qBqsnEQD6g4ay7a4sEdwo633tDWzKhWysqii9Hx9Xur+kkIW0goaMa7f
+         E1DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LlUfkjYYiQUn+hV5fhdZbKU09G31Rb+nq+V7VvzQ2Fs=;
-        b=fxCVdQN6sFXIsEi3Rmx5t9f2nfkiJ5z4RFcy7RWnhZ36vXGDNhWWIL0LvwcT4rpCdN
-         ui5FJBzPJVIMI8GezYemNFqjq7M4ZVALdOycqmiLYLPK9vU0Sqe2K1yaZQE3S4na1RKL
-         co+pV+KzCSceljtLAJCuhNPzBWJRdnI/qaoi4Cm9JUkY32Qwwn7sEvsLkw3/ask1VeP8
-         SSrdMMWsoJ9HvAOQ+CJSkLQZG5i/VKufj89CAht/bVloR80rkHBzhWyb8yOSwWUc1+s0
-         dGx6qrFyJQjTpSGch8g1b0SR+VZFIdECdpuMN9jRcI+nWsLtP59ATYwWNIIY1VinmqXa
-         eOBA==
-X-Gm-Message-State: ACrzQf0anQZ0aL6Cn2QdzvJQhDpLLh4CQQcVl9F2t8exB7n8tX6pBTFx
-        K9GGjvmxYURBYNOyFhaNIxPVyw==
-X-Google-Smtp-Source: AMsMyM78R6nUUr+MeluBZtUpWGSDuxd/FMrN+uJmxzmIigg7TLZxDyukSL5adbjFn2RdeWVvBW8qpg==
-X-Received: by 2002:a05:600c:695:b0:3c6:b7f1:6f39 with SMTP id a21-20020a05600c069500b003c6b7f16f39mr9385279wmn.5.1667240947769;
-        Mon, 31 Oct 2022 11:29:07 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id bj29-20020a0560001e1d00b002366b241cf3sm7746285wrb.35.2022.10.31.11.29.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Oct 2022 11:29:07 -0700 (PDT)
-Message-ID: <8e3bd948-6649-742b-ea4c-4f7236d156a5@linaro.org>
-Date:   Mon, 31 Oct 2022 18:29:06 +0000
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QD9I/Io73NXhv6vuPQAZR34rbl9fAgyID+CM+BVilyc=;
+        b=AKmDZWEDbqQg8lLaDrbt2iTdDp+iJ1FYVLzn5sLH9eVNEgqAxuC4kfVJr4pwP7v7ik
+         WRHD46WM2+df/nIdhpFyHRDurVDa2kYx2lrU8JkrZOkuAhU31fZh5bkSR+4u4YZC7Bzv
+         MBpQiyVaNvzR/JW49ZAyGR5T1xVcqbJMWIihLmqU4cDg6tr+w8Q+uZOaMfqZ4/Y9Um5M
+         PnJeAypJh9s2TlN804lO2KKwQtfy/1LKT4C9zaXRchuxDmusbi8twsdT5t9IRfdian49
+         NvVSxM+2yYrtH4aq1PNRzLNr3wBYJEJlQxTDfX1+jG1Hm67fcgaBNvlemIQ1M9oS8t+7
+         G78w==
+X-Gm-Message-State: ACrzQf12dZpicpo30Jko5gMsXv4yBITHqMqEaRajstWETyouEhiDrO1h
+        uBkHTagK6DqOOvLU0oKEg6MWuQ==
+X-Google-Smtp-Source: AMsMyM65fqNU07UkemXao1tc2YoXEJiQEjyudhb9/27IgSRVRQgveOlVeBWO9nEII7wnswEaYRfBiw==
+X-Received: by 2002:a05:6512:3c96:b0:4a4:7abe:10d9 with SMTP id h22-20020a0565123c9600b004a47abe10d9mr6541928lfv.350.1667241571373;
+        Mon, 31 Oct 2022 11:39:31 -0700 (PDT)
+Received: from eriador.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id l15-20020ac24a8f000000b0048a934168c0sm1397698lfp.35.2022.10.31.11.39.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Oct 2022 11:39:30 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     linux-firmware@kernel.org
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@gmail.com>
+Subject: [PULL] qcom: drop split a530_zap file in favour of a530_zap.mbn
+Date:   Mon, 31 Oct 2022 21:39:30 +0300
+Message-Id: <20221031183930.103623-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH 1/2] slimbus: qcom-ngd-ctrl: check for device runtime PM
- status during ISR
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org
-Cc:     Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
-References: <20220928132011.455347-1-krzysztof.kozlowski@linaro.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20220928132011.455347-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Follow the example of recent qcom/venus changes. Drop the split
+qcom/a530_zap.bNN files. Replace the qcom/a530_zap.mdt with the symlink to
+qcom/apq8096/a530_zap.mbn.
 
+The following changes since commit 8bb75626e9dd831d323c4e460414b56260f0b700:
 
-On 28/09/2022 14:20, Krzysztof Kozlowski wrote:
-> Slimbus core interrupt is getting fired after suspend. At this point
-> ADSP slimbus hardware is off with gated clocks which is leading to an
-> unclocked access when HLOS slimbus tried to read the interrupt
-> status register in the ISR.
-> 
-> Co-developed-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
-> Signed-off-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
+  Merge branch 'for-upstream' of https://github.com/CirrusLogic/linux-firmware (2022-10-31 11:12:54 -0400)
 
-Applied both,
+are available in the Git repository at:
 
---srini
->   drivers/slimbus/qcom-ngd-ctrl.c | 9 ++++++++-
->   1 file changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-> index cec11aa106bf..ba36eb5c0de3 100644
-> --- a/drivers/slimbus/qcom-ngd-ctrl.c
-> +++ b/drivers/slimbus/qcom-ngd-ctrl.c
-> @@ -763,7 +763,14 @@ static irqreturn_t qcom_slim_ngd_interrupt(int irq, void *d)
->   {
->   	struct qcom_slim_ngd_ctrl *ctrl = d;
->   	void __iomem *base = ctrl->ngd->base;
-> -	u32 stat = readl(base + NGD_INT_STAT);
-> +	u32 stat;
-> +
-> +	if (pm_runtime_suspended(ctrl->ctrl.dev)) {
-> +		dev_warn_once(ctrl->dev, "Interrupt received while suspended\n");
-> +		return IRQ_NONE;
-> +	}
-> +
-> +	stat = readl(base + NGD_INT_STAT);
->   
->   	if ((stat & NGD_INT_MSG_BUF_CONTE) ||
->   		(stat & NGD_INT_MSG_TX_INVAL) || (stat & NGD_INT_DEV_ERR) ||
+  https://github.com/lumag/linux-firmware a530-mbn
+
+for you to fetch changes up to 7d2bb50ced53767875f30f94cebdbd17b1346b9b:
+
+  qcom: drop split a530_zap firmware file (2022-10-31 21:33:47 +0300)
+
+----------------------------------------------------------------
+Dmitry Baryshkov (1):
+      qcom: drop split a530_zap firmware file
+
+ WHENCE            |   5 +----
+ qcom/a530_zap.b00 | Bin 148 -> 0 bytes
+ qcom/a530_zap.b01 | Bin 6536 -> 0 bytes
+ qcom/a530_zap.b02 | Bin 4900 -> 0 bytes
+ qcom/a530_zap.mdt | Bin 6684 -> 0 bytes
+ 5 files changed, 1 insertion(+), 4 deletions(-)
+ delete mode 100644 qcom/a530_zap.b00
+ delete mode 100644 qcom/a530_zap.b01
+ delete mode 100644 qcom/a530_zap.b02
+ delete mode 100644 qcom/a530_zap.mdt
