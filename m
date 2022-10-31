@@ -2,137 +2,209 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75EF261387D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 14:56:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0737D61394D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 15:50:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230327AbiJaN44 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 09:56:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50434 "EHLO
+        id S231411AbiJaOuS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 10:50:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231318AbiJaN4z (ORCPT
+        with ESMTP id S231221AbiJaOuR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 09:56:55 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4085F2C4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 06:56:54 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id r14so17562513edc.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 06:56:54 -0700 (PDT)
+        Mon, 31 Oct 2022 10:50:17 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DE5810B4D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 07:50:16 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id k15so2818143pfg.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 07:50:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZcCKYUH9Lbw/pHPSk6/2WqMZQyQUMyuhsXpUiDfOF6A=;
-        b=MHShAiwKTrTKgezu8b/h1HoWiKmRbMo2Se7Cqp0JBdChjeixK+L0le1H3GXkvigB+s
-         tl1nb+Pnb1oJjdpb/LjPiD9TJUKR7TUUPFUHxlwjWN1j2ruklEG3lDaWN19Q5V7o8i2Q
-         9ae1VwZkDTRFRsksktZlCLJ7ukCegJxsj2IP1C3+23KdkS872MiAqMHYUaA0Y8tj5X4m
-         pZxEweYicWfz1f3HCYMGqWP4u+oouDxlrGb0/RU3S8kFR02V3F6lk405m4PmD4WUR2LO
-         CsbLxLDBTKjBBFeQBWhgZz7hrFJuiMpeZOa+wHqM5IfSZLG4v481jSWye7Gm9kURvhmJ
-         Gl3A==
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=G61ZtZyzLbGn60Ny6OY1xq5S4nX4pwImvQvsYH0GFno=;
+        b=h+AZN1emo1F/GPSOBe9v3NFLYdpHmSzshIlpJlH3Geua8ehCIy/9qpUX9+VfZBg7bB
+         z+8OPNVh++U7733AaV+t/Hhr5fWdvoFZkEDIt2fyCBEOHQkm5W0zdn3FV3cVPvm8ZRX3
+         peodf6oZ3P+4diGYd3fJsV1qWnIUBuWZysiJ/foPRE6I4YAoAq32x2T/Mt5OAK89kX4e
+         j0G7nDVWjst4XqbwiN1vh9oqoHm5ZJP2fMw5OJ8/TagUc6WRfoDjNlFJZ+FqZt4UwsMx
+         5jhImqqJN2vpTbV2aFbpn83kSdt/GejJDBBD8qAPSaWv51bV/Dc4bRbUV/8aBr3D2NQI
+         L8nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ZcCKYUH9Lbw/pHPSk6/2WqMZQyQUMyuhsXpUiDfOF6A=;
-        b=v4N0hc7xC4UtD5at1Mn75fI3cUAqHqUXFoJ9SPhmEyzhwkwH8eOArkTRvY3ceQnV+T
-         3UYYVK4XcNgWs4QENkwqMfkzUoWHS2MbFguy2nce7H/7rDxe6918+rxhf9JqNWhlWsmJ
-         1sVltXfxAXFG1FeAkAR86rat8Nlt43Qrp4mFMjaLAwXFSOI/cu9NJJa1dfMdtrpmmHYX
-         prByXdeK93Z3+2H08FwYtpP7dkA7Q2Z3I9eciTVet3zB+5+XKppAL57pcE3iLZWC1jKB
-         EtQfarHzraotPSoltC7FlXz8/ha+kX0ZW793GNnFRJg37uORE38ZokiYWkH1iZd3f3xW
-         aVJQ==
-X-Gm-Message-State: ACrzQf3AGBnNO2DQtBWfSUbfeSqvsLYeDvhSVx7wDWzAXBiWtKwr+Utl
-        Pi2qnRotNm+gagZmK1uDRIOif7J5CgeGgA==
-X-Google-Smtp-Source: AMsMyM6u3JAX6R+7QqE3QY18S43gVSOpaUsIoIZwvU1h8v4fcdHEBIhKdyE7CRGMaOBEy+diJLl18Q==
-X-Received: by 2002:a50:ec99:0:b0:462:2c1c:8764 with SMTP id e25-20020a50ec99000000b004622c1c8764mr13656055edr.325.1667224612782;
-        Mon, 31 Oct 2022 06:56:52 -0700 (PDT)
-Received: from localhost (31-151-115-246.dynamic.upc.nl. [31.151.115.246])
-        by smtp.gmail.com with ESMTPSA id t31-20020a056402241f00b00459cd13fd34sm3214246eda.85.2022.10.31.06.56.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Oct 2022 06:56:52 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Mon, 31 Oct 2022 14:56:50 +0100
-Message-Id: <CO05SSJUFW72.1PUZJ0FMJH3DF@otso>
-Cc:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
-        "Dylan Van Assche" <me@dylanvanassche.be>
-Subject: Re: [PATCH v4 1/2] leds: flash: add driver to support flash LED
- module in QCOM PMICs
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Fenglin Wu" <quic_fenglinw@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <krzysztof.kozlowski@linaro.org>, "Pavel Machek" <pavel@ucw.cz>,
-        "Gene Chen" <gene_chen@richtek.com>,
-        "Jacek Anaszewski" <jacek.anaszewski@gmail.com>,
-        <linux-leds@vger.kernel.org>
-X-Mailer: aerc 0.12.0
-References: <20221025073802.2662564-1-quic_fenglinw@quicinc.com>
- <20221025073802.2662564-2-quic_fenglinw@quicinc.com>
-In-Reply-To: <20221025073802.2662564-2-quic_fenglinw@quicinc.com>
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=G61ZtZyzLbGn60Ny6OY1xq5S4nX4pwImvQvsYH0GFno=;
+        b=0BMgYVhM98sU4nqLrvu7YTfzQqPl58VTfDIX4ZVaELGB/wZtlYiP4ouLJeXu0Vrulu
+         6wn/ZoIeJKu0Lh+sBjQ85W5QAn+ZKhqX+WGWBGdJigZstNLe+FNgycaiHn8oY3tLNkTP
+         aGZ2vmrdJh4KoQyVArdk35MgRxQ2+ULymdZJXU9gcyHaCgdySCrzyBU6zdsmwk+pEYGx
+         LWi5lOg/PdGvU5+o4lxX4xzt0EEqZXJdpCmvEibaQYbS2lGsRmZ7LEWg1RDiE07/N7+Q
+         kIJkyGYiDXa/Nm0+iMerLqqd6jjU9jskPoq6WUd0C8ySMMCWNdMcjt2jbDoUL4C0nNuH
+         cGzA==
+X-Gm-Message-State: ACrzQf04omQ6lIYKr5Jm4+Qt064c7i2UPPiaddP5ku7t6fNriWLgM6yK
+        stvOaeGiBXfYXys7Bu00Alr5
+X-Google-Smtp-Source: AMsMyM5RRehaTeLhtzAe1dhNO1cSAE/tCbXXuTRW2JUlaOB4/VnEV1BmaFq8CdTJHAW9nrBd/e6oGg==
+X-Received: by 2002:a65:6bc4:0:b0:439:8ff8:e2e1 with SMTP id e4-20020a656bc4000000b004398ff8e2e1mr13003767pgw.91.1667227815594;
+        Mon, 31 Oct 2022 07:50:15 -0700 (PDT)
+Received: from thinkpad ([117.193.209.221])
+        by smtp.gmail.com with ESMTPSA id z184-20020a6233c1000000b0056c47a5c34dsm4685401pfz.122.2022.10.31.07.50.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Oct 2022 07:50:14 -0700 (PDT)
+Date:   Mon, 31 Oct 2022 20:20:05 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
+        andersson@kernel.org, vkoul@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, quic_cang@quicinc.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-scsi@vger.kernel.org
+Subject: Re: [PATCH 10/15] scsi: ufs: ufs-qcom: Use bitfields where
+ appropriate
+Message-ID: <20221031145005.GA10515@thinkpad>
+References: <20221029141633.295650-1-manivannan.sadhasivam@linaro.org>
+ <20221029141633.295650-11-manivannan.sadhasivam@linaro.org>
+ <01a01fb3-2520-58ce-6432-b278bb8118f5@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <01a01fb3-2520-58ce-6432-b278bb8118f5@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Fenglin,
+On Sun, Oct 30, 2022 at 12:58:57AM +0300, Dmitry Baryshkov wrote:
+> On 29/10/2022 17:16, Manivannan Sadhasivam wrote:
+> > Use bitfield macros where appropriate to simplify the driver.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >   drivers/ufs/host/ufs-qcom.h | 58 ++++++++++++++++---------------------
+> >   1 file changed, 25 insertions(+), 33 deletions(-)
+> > 
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> > diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+> > index 44466a395bb5..6cb0776456b3 100644
+> > --- a/drivers/ufs/host/ufs-qcom.h
+> > +++ b/drivers/ufs/host/ufs-qcom.h
+> > @@ -17,12 +17,9 @@
+> >   #define DEFAULT_CLK_RATE_HZ     1000000
+> >   #define BUS_VECTOR_NAME_LEN     32
+> > -#define UFS_HW_VER_MAJOR_SHFT	(28)
+> > -#define UFS_HW_VER_MAJOR_MASK	(0x000F << UFS_HW_VER_MAJOR_SHFT)
+> > -#define UFS_HW_VER_MINOR_SHFT	(16)
+> > -#define UFS_HW_VER_MINOR_MASK	(0x0FFF << UFS_HW_VER_MINOR_SHFT)
+> > -#define UFS_HW_VER_STEP_SHFT	(0)
+> > -#define UFS_HW_VER_STEP_MASK	(0xFFFF << UFS_HW_VER_STEP_SHFT)
+> > +#define UFS_HW_VER_MAJOR_MASK	GENMASK(31, 28)
+> > +#define UFS_HW_VER_MINOR_MASK	GENMASK(27, 16)
+> > +#define UFS_HW_VER_STEP_MASK	GENMASK(15, 0)
+> >   /* vendor specific pre-defined parameters */
+> >   #define SLOW 1
+> > @@ -76,24 +73,24 @@ enum {
+> >   #define UFS_CNTLR_3_x_x_VEN_REGS_OFFSET(x)	(0x400 + x)
+> >   /* bit definitions for REG_UFS_CFG1 register */
+> > -#define QUNIPRO_SEL		0x1
+> > -#define UTP_DBG_RAMS_EN		0x20000
+> > +#define QUNIPRO_SEL		BIT(0)
+> > +#define UTP_DBG_RAMS_EN		BIT(17)
+> >   #define TEST_BUS_EN		BIT(18)
+> >   #define TEST_BUS_SEL		GENMASK(22, 19)
+> >   #define UFS_REG_TEST_BUS_EN	BIT(30)
+> >   /* bit definitions for REG_UFS_CFG2 register */
+> > -#define UAWM_HW_CGC_EN		(1 << 0)
+> > -#define UARM_HW_CGC_EN		(1 << 1)
+> > -#define TXUC_HW_CGC_EN		(1 << 2)
+> > -#define RXUC_HW_CGC_EN		(1 << 3)
+> > -#define DFC_HW_CGC_EN		(1 << 4)
+> > -#define TRLUT_HW_CGC_EN		(1 << 5)
+> > -#define TMRLUT_HW_CGC_EN	(1 << 6)
+> > -#define OCSC_HW_CGC_EN		(1 << 7)
+> > +#define UAWM_HW_CGC_EN		BIT(0)
+> > +#define UARM_HW_CGC_EN		BIT(1)
+> > +#define TXUC_HW_CGC_EN		BIT(2)
+> > +#define RXUC_HW_CGC_EN		BIT(3)
+> > +#define DFC_HW_CGC_EN		BIT(4)
+> > +#define TRLUT_HW_CGC_EN		BIT(5)
+> > +#define TMRLUT_HW_CGC_EN	BIT(6)
+> > +#define OCSC_HW_CGC_EN		BIT(7)
+> >   /* bit definition for UFS_UFS_TEST_BUS_CTRL_n */
+> > -#define TEST_BUS_SUB_SEL_MASK	0x1F  /* All XXX_SEL fields are 5 bits wide */
+> > +#define TEST_BUS_SUB_SEL_MASK	GENMASK(4, 0)  /* All XXX_SEL fields are 5 bits wide */
+> >   #define REG_UFS_CFG2_CGC_EN_ALL (UAWM_HW_CGC_EN | UARM_HW_CGC_EN |\
+> >   				 TXUC_HW_CGC_EN | RXUC_HW_CGC_EN |\
+> > @@ -101,17 +98,12 @@ enum {
+> >   				 TMRLUT_HW_CGC_EN | OCSC_HW_CGC_EN)
+> >   /* bit offset */
+> > -enum {
+> > -	OFFSET_UFS_PHY_SOFT_RESET           = 1,
+> > -	OFFSET_CLK_NS_REG                   = 10,
+> > -};
+> > +#define OFFSET_CLK_NS_REG		0xa
+> >   /* bit masks */
+> > -enum {
+> > -	MASK_UFS_PHY_SOFT_RESET             = 0x2,
+> > -	MASK_TX_SYMBOL_CLK_1US_REG          = 0x3FF,
+> > -	MASK_CLK_NS_REG                     = 0xFFFC00,
+> > -};
+> > +#define MASK_UFS_PHY_SOFT_RESET		BIT(1)
+> > +#define MASK_TX_SYMBOL_CLK_1US_REG	GENMASK(9, 0)
+> > +#define MASK_CLK_NS_REG			GENMASK(23, 10)
+> >   /* QCOM UFS debug print bit mask */
+> >   #define UFS_QCOM_DBG_PRINT_REGS_EN	BIT(0)
+> > @@ -135,15 +127,15 @@ ufs_qcom_get_controller_revision(struct ufs_hba *hba,
+> >   {
+> >   	u32 ver = ufshcd_readl(hba, REG_UFS_HW_VERSION);
+> > -	*major = (ver & UFS_HW_VER_MAJOR_MASK) >> UFS_HW_VER_MAJOR_SHFT;
+> > -	*minor = (ver & UFS_HW_VER_MINOR_MASK) >> UFS_HW_VER_MINOR_SHFT;
+> > -	*step = (ver & UFS_HW_VER_STEP_MASK) >> UFS_HW_VER_STEP_SHFT;
+> > +	*major = FIELD_GET(UFS_HW_VER_MAJOR_MASK, ver);
+> > +	*minor = FIELD_GET(UFS_HW_VER_MINOR_MASK, ver);
+> > +	*step = FIELD_GET(UFS_HW_VER_STEP_MASK, ver);
+> >   };
+> >   static inline void ufs_qcom_assert_reset(struct ufs_hba *hba)
+> >   {
+> > -	ufshcd_rmwl(hba, MASK_UFS_PHY_SOFT_RESET,
+> > -			1 << OFFSET_UFS_PHY_SOFT_RESET, REG_UFS_CFG1);
+> > +	ufshcd_rmwl(hba, MASK_UFS_PHY_SOFT_RESET, FIELD_PREP(MASK_UFS_PHY_SOFT_RESET, 1),
+> 
+> Nit: I'd just define the value too and use the defined name here.
+> 
+> > +		    REG_UFS_CFG1);
+> >   	/*
+> >   	 * Make sure assertion of ufs phy reset is written to
+> > @@ -154,8 +146,8 @@ static inline void ufs_qcom_assert_reset(struct ufs_hba *hba)
+> >   static inline void ufs_qcom_deassert_reset(struct ufs_hba *hba)
+> >   {
+> > -	ufshcd_rmwl(hba, MASK_UFS_PHY_SOFT_RESET,
+> > -			0 << OFFSET_UFS_PHY_SOFT_RESET, REG_UFS_CFG1);
+> > +	ufshcd_rmwl(hba, MASK_UFS_PHY_SOFT_RESET, FIELD_PREP(MASK_UFS_PHY_SOFT_RESET, 0),
+> 
+> Nit: FIELD_PREP is always 0.
+> 
 
-On Tue Oct 25, 2022 at 9:38 AM CEST, Fenglin Wu wrote:
-> Add initial driver to support flash LED module found in Qualcomm
-> Technologies, Inc. PMICs. The flash module can have 3 or 4 channels
-> and each channel can be controlled indepedently and support full scale
-> current up to 1.5 A. It also supports connecting two channels together
-> to supply one LED component with full scale current up to 2 A. In that
-> case, the current will be split on each channel symmetrically and the
-> channels will be enabled and disabled at the same time.
->
-> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
-> Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sm7225-fairphone-fp4 +=
- pm6150l
-> ---
->  drivers/leds/flash/Kconfig           |  15 +
->  drivers/leds/flash/Makefile          |   1 +
->  drivers/leds/flash/leds-qcom-flash.c | 700 +++++++++++++++++++++++++++
->  3 files changed, 716 insertions(+)
->  create mode 100644 drivers/leds/flash/leds-qcom-flash.c
->
+I know but this make the code in sync with reset assert.
 
-<snip>
+Thanks,
+Mani
 
-> +static const struct of_device_id qcom_flash_led_match_table[] =3D {
-> +	{ .compatible =3D "qcom,spmi-flash-led" },
-> +	{ }
-> +};
+> > +		    REG_UFS_CFG1);
+> >   	/*
+> >   	 * Make sure de-assertion of ufs phy reset is written to
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
 
-Dylan has noticed that auto-loading the module based on dt match doesn't
-work currently. It seems that this line is missing here to enable that:
-
-  MODULE_DEVICE_TABLE(of, qcom_flash_led_match_table);
-
-Please add it for v5!
-
-Regards
-Luca
-
-> +
-> +static struct platform_driver qcom_flash_led_driver =3D {
-> +	.driver =3D {
-> +		.name =3D "leds-qcom-flash",
-> +		.of_match_table =3D qcom_flash_led_match_table,
-> +	},
-> +	.probe =3D qcom_flash_led_probe,
-> +	.remove =3D qcom_flash_led_remove,
-> +};
-> +
-> +module_platform_driver(qcom_flash_led_driver);
-> +
-> +MODULE_DESCRIPTION("QCOM Flash LED driver");
-> +MODULE_LICENSE("GPL");
-> --=20
-> 2.25.1
-
+-- 
+மணிவண்ணன் சதாசிவம்
