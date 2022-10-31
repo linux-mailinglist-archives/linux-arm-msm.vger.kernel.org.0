@@ -2,64 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AE33613201
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 09:55:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 557F5613204
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 09:56:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230031AbiJaIzT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 04:55:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38660 "EHLO
+        id S230042AbiJaI4Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 04:56:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230013AbiJaIzR (ORCPT
+        with ESMTP id S230012AbiJaI4Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 04:55:17 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 240517665
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 01:55:16 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id bj12so27558992ejb.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 01:55:16 -0700 (PDT)
+        Mon, 31 Oct 2022 04:56:24 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04784D105
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 01:56:23 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id z97so16413665ede.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 01:56:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=fairphone.com; s=fair;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=07p05AvXxhhg9Ebj2EYm3CyzIzK358DNeUTZctR79PI=;
-        b=GZQfWLfmnuI5l9MZYGnSAYveWIFMxE58j8f5hvgoMp7eyitHBtHWTEb+uZ+QCz7+D1
-         ILQ/sB5+dYeaXHTh7U1MpS4agInDcsNNxKDXqNBhMAMVqf85Jgy6MMmIJvG52bbiCjbv
-         PH0QEasMd1paHeqr/fkeziXfGflPhjGFgceyifgvZvHID29F1mypW/14MCuLRfr12/9b
-         Sz5zXmuJu0ZS0d0uPHgdMrx+p/O5GJtXvtYatWNjBn8UM6BxBe3EJikeoa1Y72ueELZf
-         rPWQz94f4GI2hM3DCJh7ko7IcmZU6PnxUiSLPfcvSJ597QgAGBAljb8dnx9hcIslfdet
-         zTfA==
+        bh=dtvgExSXmepQtdrqHIZul+dYO79vk5qNCOM8KdJOFIQ=;
+        b=KHI6SRPVSMWfZtRUmnZPqGypwl0WZULHv29q2PexONdIeAha8cux/h9jMOoORSNRvI
+         W/QUB2Hf8t3p3C65GXJ6Znt79eC2jWfMcRAH6fkDr/CwR56rKoTEsvmZDnWYeCIjW7gU
+         pP+h+kcIArJ0/1nQrrLU8XDhF4SojMVawO+bDNTnPKhelNpXPqPuWNsExguaP5NgQZm8
+         zRuSnVuMrN1M2hipiRUtja3MU5mM9D/eHY5qQMOObgoIWrOGjYnuze+fhzr14CEg2bP3
+         xy13hiZ1HeefGjiqSuDfpFGZckDDDnGNs/z4SaA77K7UHvFU2iWMExwbA7M2e0vOCYas
+         OwMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=07p05AvXxhhg9Ebj2EYm3CyzIzK358DNeUTZctR79PI=;
-        b=KobLnqT1OTeGCSC9W63LOMXb+NxVAyKvNguRJeoL8yUlpOJ1o42rbI/4bz1h7Zwyqp
-         qnDMMv8XD19NdQbHRNhlIcFWgV97KwrQ21qtt5UErE97Do8gXGLN3bPkxnxbzpra/BRs
-         eF/8H+Bx1a+XhtPFF7idiWZY7hgVh8BJKskiwF8bbzKkMvcB5yY/mwBIURIH50S6NdhM
-         G4UTFefrw+inO3JedjLG5xKBeGY2J/mT2bMVqJ2rG1tPtZxNG12LK3d+px8skaBtLIHI
-         2nWqRmb2dRoIUCbGfig9OGlTIYzLDRVJIpKuupdCbL+Tm4YrS19Z9iP+NrHEjt9KTANW
-         YJvw==
-X-Gm-Message-State: ACrzQf2SrxEu/e+YwRzyjg3rZJAEdt+ahkCaJMgBtXKgz/TASCDVE1Jc
-        aZ4KuTLVMuRoEYolk2a0lqYM/w==
-X-Google-Smtp-Source: AMsMyM6Ls3q3a245kOnbwO75tFYa02f6fAzk6wJP3W3KapAsowgtoEDHccbyuuTIyj3GPqs4TX4UrQ==
-X-Received: by 2002:a17:907:271b:b0:7ad:b748:63df with SMTP id w27-20020a170907271b00b007adb74863dfmr9258436ejk.639.1667206514690;
-        Mon, 31 Oct 2022 01:55:14 -0700 (PDT)
+        bh=dtvgExSXmepQtdrqHIZul+dYO79vk5qNCOM8KdJOFIQ=;
+        b=i3w1CLlVjDL+ysWQr1W9gZuhwIVtKel/ASscKImQHJ1AEBqG/77kzKwNn84+55nGqo
+         tHqS8uu7PS5CgeC5nOMAb5Dn/aZSsVrIUd362xMwOTTfqNbuOCw5FZLOtqs6atfJ8xqx
+         I0KuI5t0+f1MhwlXlijWNYI+N9CBeCSXUuF1Y0Zew2CCDUIABKxjxOfA5wcq2htuIJkP
+         vzL7BqeaBHaxQq5INEboWK5t/xRxvcNp0rh4gBAwyNApr9cmKxdL3YuJqdCB9oJwYxJI
+         rs/Zdcgq7xOkMDyoZukLtxhcke+qW5cSMDBt6RZAWgo1rct4WENuwz7uIKGPR3qFpFL5
+         Qcsg==
+X-Gm-Message-State: ACrzQf2tysMa7KoY1dhHnT4Cs4RuCuYt3sxXhC/bL8Fpzlozimy6+Yrn
+        M8Z8e9NIUVbpxYqpNmKxdKbAVg==
+X-Google-Smtp-Source: AMsMyM5By2pxB2aLOtKu+C8JgxF+coDN320xPl7ypCiZtXuV+DDTuqhB/n+dZwqullsn+JXr6QkxqA==
+X-Received: by 2002:aa7:cd12:0:b0:463:69ac:a5d3 with SMTP id b18-20020aa7cd12000000b0046369aca5d3mr2915187edw.269.1667206581548;
+        Mon, 31 Oct 2022 01:56:21 -0700 (PDT)
 Received: from localhost (31-151-115-246.dynamic.upc.nl. [31.151.115.246])
-        by smtp.gmail.com with ESMTPSA id hw20-20020a170907a0d400b007aacfce2a91sm2713110ejc.27.2022.10.31.01.55.13
+        by smtp.gmail.com with ESMTPSA id bm6-20020a0564020b0600b00461a6997c5dsm2966444edb.83.2022.10.31.01.56.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Oct 2022 01:55:14 -0700 (PDT)
+        Mon, 31 Oct 2022 01:56:21 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date:   Mon, 31 Oct 2022 09:55:13 +0100
-Message-Id: <CNZZDUY2NAEQ.2MTXWFKUSHNA7@otso>
-Subject: Re: [PATCH 01/10] arm64: dts: qcom: sm6350: Add resets for SDHCI
- 1/2
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Marijn Suijten" <marijn.suijten@somainline.org>,
-        <phone-devel@vger.kernel.org>
+Date:   Mon, 31 Oct 2022 09:56:20 +0100
+Message-Id: <CNZZEPIA4LGS.EFHSXO9SRUSH@otso>
 Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
         "AngeloGioacchino Del Regno" 
         <angelogioacchino.delregno@somainline.org>,
@@ -72,10 +67,14 @@ Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
         "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
         "Luca Weiss" <luca@z3ntu.xyz>, <linux-arm-msm@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 02/10] arm64: dts: qcom: sm6350: Add pinctrl for SDHCI 2
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Marijn Suijten" <marijn.suijten@somainline.org>,
+        <phone-devel@vger.kernel.org>
 X-Mailer: aerc 0.12.0
 References: <20221030073232.22726-1-marijn.suijten@somainline.org>
- <20221030073232.22726-2-marijn.suijten@somainline.org>
-In-Reply-To: <20221030073232.22726-2-marijn.suijten@somainline.org>
+ <20221030073232.22726-3-marijn.suijten@somainline.org>
+In-Reply-To: <20221030073232.22726-3-marijn.suijten@somainline.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -87,11 +86,8 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Sun Oct 30, 2022 at 8:32 AM CET, Marijn Suijten wrote:
-> Make sure the SDHCI hardware is properly reset before interacting with
-> it, to protect against any possibly indeterminate state left by the
-> bootloader.
+> Use the generic pin functions specifically for sdc2.
 >
-> Suggested-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 
 Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
@@ -101,31 +97,72 @@ Regards
 Luca
 
 > ---
->  arch/arm64/boot/dts/qcom/sm6350.dtsi | 2 ++
->  1 file changed, 2 insertions(+)
+>  arch/arm64/boot/dts/qcom/sm6350.dtsi | 44 ++++++++++++++++++++++++++++
+>  1 file changed, 44 insertions(+)
 >
 > diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/q=
 com/sm6350.dtsi
-> index c39de7d3ace0..a3ae765d9781 100644
+> index a3ae765d9781..b98b881ebe7e 100644
 > --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
 > +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> @@ -490,6 +490,7 @@ sdhc_1: mmc@7c4000 {
->  				 <&gcc GCC_SDCC1_APPS_CLK>,
->  				 <&rpmhcc RPMH_CXO_CLK>;
->  			clock-names =3D "iface", "core", "xo";
-> +			resets =3D <&gcc GCC_SDCC1_BCR>;
->  			qcom,dll-config =3D <0x000f642c>;
->  			qcom,ddr-config =3D <0x80040868>;
->  			power-domains =3D <&rpmhpd SM6350_CX>;
-> @@ -1068,6 +1069,7 @@ sdhc_2: mmc@8804000 {
->  				 <&gcc GCC_SDCC2_APPS_CLK>,
->  				 <&rpmhcc RPMH_CXO_CLK>;
->  			clock-names =3D "iface", "core", "xo";
-> +			resets =3D <&gcc GCC_SDCC2_BCR>;
->  			interconnects =3D <&aggre2_noc MASTER_SDCC_2 0 &clk_virt SLAVE_EBI_CH=
-0 0>,
+> @@ -1074,6 +1074,10 @@ sdhc_2: mmc@8804000 {
 >  					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_SDCC_2 0>;
 >  			interconnect-names =3D "sdhc-ddr", "cpu-sdhc";
+> =20
+> +			pinctrl-0 =3D <&sdc2_on_state>;
+> +			pinctrl-1 =3D <&sdc2_off_state>;
+> +			pinctrl-names =3D "default", "sleep";
+> +
+>  			qcom,dll-config =3D <0x0007642c>;
+>  			qcom,ddr-config =3D <0x80040868>;
+>  			power-domains =3D <&rpmhpd SM6350_CX>;
+> @@ -1316,6 +1320,46 @@ tlmm: pinctrl@f100000 {
+>  			#interrupt-cells =3D <2>;
+>  			gpio-ranges =3D <&tlmm 0 0 157>;
+> =20
+> +			sdc2_off_state: sdc2-off-state {
+> +				clk-pins {
+> +					pins =3D "sdc2_clk";
+> +					drive-strength =3D <2>;
+> +					bias-disable;
+> +				};
+> +
+> +				cmd-pins {
+> +					pins =3D "sdc2_cmd";
+> +					drive-strength =3D <2>;
+> +					bias-pull-up;
+> +				};
+> +
+> +				data-pins {
+> +					pins =3D "sdc2_data";
+> +					drive-strength =3D <2>;
+> +					bias-pull-up;
+> +				};
+> +			};
+> +
+> +			sdc2_on_state: sdc2-on-state {
+> +				clk-pins {
+> +					pins =3D "sdc2_clk";
+> +					drive-strength =3D <16>;
+> +					bias-disable;
+> +				};
+> +
+> +				cmd-pins {
+> +					pins =3D "sdc2_cmd";
+> +					drive-strength =3D <10>;
+> +					bias-pull-up;
+> +				};
+> +
+> +				data-pins {
+> +					pins =3D "sdc2_data";
+> +					drive-strength =3D <10>;
+> +					bias-pull-up;
+> +				};
+> +			};
+> +
+>  			qup_uart9_default: qup-uart9-default-state {
+>  				pins =3D "gpio25", "gpio26";
+>  				function =3D "qup13_f2";
 > --=20
 > 2.38.1
 
