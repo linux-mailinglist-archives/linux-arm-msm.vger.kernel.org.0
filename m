@@ -2,94 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD6A2613B49
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 17:26:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A40F613C26
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 18:27:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231737AbiJaQ0j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 12:26:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44732 "EHLO
+        id S231580AbiJaR1v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 13:27:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231745AbiJaQ0Y (ORCPT
+        with ESMTP id S231423AbiJaR1r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 12:26:24 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A14FC12761;
-        Mon, 31 Oct 2022 09:26:21 -0700 (PDT)
-Received: from g550jk.localnet (31-151-115-246.dynamic.upc.nl [31.151.115.246])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id ACCEBC6FDC;
-        Mon, 31 Oct 2022 16:26:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1667233579; bh=95JUHQn52ri+8xaZUvWAgUDOFF//oBrHuFn5YIY7670=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=hZ+WrpmewXHoZVv7ZA3io4ZknEzsnKJt5owEYimIbnw8fLGHFjN6nsSHTMe/GU7gs
-         rXTNyjm9ZFvgof6+WbfT+q9SdJt4SwYLPRIl2BxjIvjWb+q8F0pyrMsVwIL0Cgt8ns
-         ig5oTGSbdKIEbXU2qtpR9OjWFAV8ZvUG7A6vKf1U=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        iommu@lists.linux.dev, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/3] dt-bindings: qcom-iommu: Add Qualcomm MSM8953 compatible
-Date:   Mon, 31 Oct 2022 17:26:19 +0100
-Message-ID: <5615419.DvuYhMxLoT@g550jk>
-In-Reply-To: <20221016161554.673006-2-luca@z3ntu.xyz>
-References: <20221016161554.673006-1-luca@z3ntu.xyz> <20221016161554.673006-2-luca@z3ntu.xyz>
+        Mon, 31 Oct 2022 13:27:47 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20F4F13CDE;
+        Mon, 31 Oct 2022 10:27:45 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 29VHO0lt008142;
+        Mon, 31 Oct 2022 17:27:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=O+w9lGOhPyqCtjmnPAnAruDm3ryHtBkHMrAOy4NESwE=;
+ b=ep2OIW84mP46Qf/oW+dXBwS32b1/ACYjxEKnqx9gY3UKrrvXYWEiBelMUgLvdgNKl6fq
+ WEmt0tZCYqoCcKzcIxUsmYiqykYYIPeK4+8P9bUoNITjzYD9gV1AVP3SIvjGjGAK73cv
+ 1Xejpz6cHOI7kDkdEKYeB6IABkde0srF91iJll9foGAsz1+eOAs9P7Fh5B8nO32zTAan
+ BMuutYlBwkMOc6l45QMEQNw+f7bEzwj9CzeZD96ttBNmGFNmMdPpDD915AWoQcG5Qyqg
+ U4iLRBDYBBhOwaOS1bSt78Dbb/Qlp/clWoOofPhioW6/i3XigVmvHpvDns/3s5jYHa7z Tg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kjjqb00hr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Oct 2022 17:27:33 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29VHRWZh017547
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Oct 2022 17:27:32 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Mon, 31 Oct 2022 10:27:32 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
+        <airlied@linux.ie>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_khsieh@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH] drm/msm/dp: remove limitation of link rate at 5.4G to support HBR3
+Date:   Mon, 31 Oct 2022 10:27:25 -0700
+Message-ID: <1667237245-24988-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=0.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: B3uYstytrGzf9Q_1GyZqjspKPjlymOPk
+X-Proofpoint-GUID: B3uYstytrGzf9Q_1GyZqjspKPjlymOPk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-31_19,2022-10-31_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
+ lowpriorityscore=0 adultscore=0 malwarescore=0 bulkscore=0 mlxscore=0
+ mlxlogscore=632 priorityscore=1501 spamscore=0 phishscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
+ definitions=main-2210310108
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi all,
+An HBR3-capable device shall also support TPS4. Since TPS4 feature
+had been implemented already, it is not necessary to limit link
+rate at HBR2 (5.4G). This patch remove this limitation to support
+HBR3 (8.1G) link rate.
 
-On Sonntag, 16. Oktober 2022 18:15:51 CET Luca Weiss wrote:
-> Document the compatible used for IOMMU on the msm8953 SoC.
-> 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+---
+ drivers/gpu/drm/msm/dp/dp_panel.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-Could someone please pick up this patch?
-
-Looking at the file history, there's not much but maybe @Rob could you take 
-this? Or maybe Bjorn?
-
-Regards
-Luca
-
-> ---
-> Changes since v3:
-> - no changes
-> 
->  Documentation/devicetree/bindings/iommu/qcom,iommu.txt | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-> b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt index
-> 059139abce35..e6cecfd360eb 100644
-> --- a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-> +++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-> @@ -10,6 +10,7 @@ to non-secure vs secure interrupt line.
->  - compatible       : Should be one of:
-> 
->                          "qcom,msm8916-iommu"
-> +                        "qcom,msm8953-iommu"
-> 
->                       Followed by "qcom,msm-iommu-v1".
-
-
-
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+index 5149ceb..3344f5a 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.c
++++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+@@ -78,10 +78,6 @@ static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
+ 	if (link_info->num_lanes > dp_panel->max_dp_lanes)
+ 		link_info->num_lanes = dp_panel->max_dp_lanes;
+ 
+-	/* Limit support upto HBR2 until HBR3 support is added */
+-	if (link_info->rate >= (drm_dp_bw_code_to_link_rate(DP_LINK_BW_5_4)))
+-		link_info->rate = drm_dp_bw_code_to_link_rate(DP_LINK_BW_5_4);
+-
+ 	drm_dbg_dp(panel->drm_dev, "version: %d.%d\n", major, minor);
+ 	drm_dbg_dp(panel->drm_dev, "link_rate=%d\n", link_info->rate);
+ 	drm_dbg_dp(panel->drm_dev, "lane_count=%d\n", link_info->num_lanes);
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
