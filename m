@@ -2,75 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2DDA61400B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 22:41:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EFCC9614016
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 22:45:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229626AbiJaVlh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 17:41:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45748 "EHLO
+        id S229475AbiJaVpK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 17:45:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229589AbiJaVlh (ORCPT
+        with ESMTP id S229827AbiJaVpG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 17:41:37 -0400
-Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C67813F3F;
-        Mon, 31 Oct 2022 14:41:36 -0700 (PDT)
-Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-13b23e29e36so14908847fac.8;
-        Mon, 31 Oct 2022 14:41:36 -0700 (PDT)
+        Mon, 31 Oct 2022 17:45:06 -0400
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 196B1140D9;
+        Mon, 31 Oct 2022 14:44:53 -0700 (PDT)
+Received: by mail-oi1-f172.google.com with SMTP id m204so2417605oib.6;
+        Mon, 31 Oct 2022 14:44:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VcI0kyKn8cZbGuLpOtO1mv+Kxd6UqslGrJVaFZhYmE8=;
-        b=uJ1YLUajOvn2dRVLu+LAc4sTkdDwmDTUjIszf0buFh51QKmQl87kttCNiS669cDvEz
-         Wak8EnAVqGgv5OwjhUZuzOrCjd32jiJ1cSNzbKXAZrxvAYOb8zd95vGUas0A28PhbJKQ
-         +hw6XUKiTW/82uHQCT70fInW1Ac+N8RFx0WPmyWZvLCKjvclfDQHn5oYLJ3VVpprr+8Y
-         kmBKYuG3xa51p79yJwPQ57JS+Y2Kv7AYUxxFKJovOfgxwbvSaedh4xJ0SP49/yqcDHX2
-         F5qqjzf2XYVNgof4t9KCAJIbGOeDhaXYAbzvGrFeXpHCRKRY18fAm09JhjtOfjrR4spV
-         4FNA==
-X-Gm-Message-State: ACrzQf24s9eVpFrImPHbOUaXeuoXIkaABE/10eijZuNbSXRFNtFb068b
-        OsLPT4dySDh6FMFcqZW3LA==
-X-Google-Smtp-Source: AMsMyM5gEDn+v8FtcjVtTsmNxCqAjnGMCDqmiyURwxRSwgQ0L/lI8gWwRhVd0bJSL60yRW2+0Zja+g==
-X-Received: by 2002:a05:6870:4798:b0:12c:fdf7:e948 with SMTP id c24-20020a056870479800b0012cfdf7e948mr8606870oaq.247.1667252495847;
-        Mon, 31 Oct 2022 14:41:35 -0700 (PDT)
+        bh=XjxwkLQZ4tD75LnXvg548BEqZdFlUP3QqZ10JPMVReU=;
+        b=BZqOSSwAgfdKxY/O1DDOAEYo30HU8t9mgb5pk9cs3SDJ2l/MqU0ziTCBMSnqQy7fth
+         f2CUrs6Rtv6Gli2gCsuDLL5MLrACF5okpOBxcorQRm1RTPTJ/Epbia5B0+uCjF8IACKh
+         oiqN2TUf03BrHn8B+1EFUyuiV2W+M1uj9ZvWfGmJIRwRqnVsZDGm6QqnntEkhrMj/BvM
+         lbU30gUCb7+0qlaIFlaNxgyRowKdB5KcELBwkE0+VZDDYuTii1aMwYpvQcMSrqPcu4VP
+         RZNHbBTSf6XT/VohFs41F0DvRZyTtrZFtMJnQ6R+OgojeFYZcrocexlA7FgVhgaGHtoI
+         K3vg==
+X-Gm-Message-State: ACrzQf2OgMm2i6qMMH7+PTmzGvEjHW0q31uhz3dvIjiV/sEFgXTmeykr
+        V3rCOwXLvGjLCnto+0jeNizaQxcr3g==
+X-Google-Smtp-Source: AMsMyM4FkjjF3koz07xQw5qHaDhFn1B7/s9//njaVGmLQtfJGo/aRGkm59Po/5eVIkIDKiMtBKRB6Q==
+X-Received: by 2002:a05:6808:1483:b0:354:a36e:5b with SMTP id e3-20020a056808148300b00354a36e005bmr15884883oiw.35.1667252692254;
+        Mon, 31 Oct 2022 14:44:52 -0700 (PDT)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id x32-20020a05683040a000b0066aba96addbsm3200540ott.81.2022.10.31.14.41.34
+        by smtp.gmail.com with ESMTPSA id i3-20020a4addc3000000b0049201e2b8f4sm2806653oov.4.2022.10.31.14.44.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Oct 2022 14:41:35 -0700 (PDT)
-Received: (nullmailer pid 3618755 invoked by uid 1000);
-        Mon, 31 Oct 2022 21:41:37 -0000
-Date:   Mon, 31 Oct 2022 16:41:37 -0500
+        Mon, 31 Oct 2022 14:44:51 -0700 (PDT)
+Received: (nullmailer pid 3622272 invoked by uid 1000);
+        Mon, 31 Oct 2022 21:44:53 -0000
+Date:   Mon, 31 Oct 2022 16:44:53 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-arm-msm@vger.kernel.org, Johan Hovold <johan@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
+To:     Iskren Chernev <iskren.chernev@gmail.com>
+Cc:     Adam Skladowski <a39.skl@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Vinod Koul <vkoul@kernel.org>, devicetree@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, linux-phy@lists.infradead.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Andy Gross <agross@kernel.org>, phone-devel@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        linux-pci@vger.kernel.org, Jingoo Han <jingoohan1@gmail.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Subject: Re: [PATCH v1 2/7] dt-bindings: phy: qcom,qmp-pcie: add sm8350
- bindings
-Message-ID: <166725249648.3618701.17839968861509422583.robh@kernel.org>
-References: <20221029211312.929862-1-dmitry.baryshkov@linaro.org>
- <20221029211312.929862-3-dmitry.baryshkov@linaro.org>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org
+Subject: Re: [PATCH v5 3/8] dt-bindings: dmaengine: qcom: gpi: add compatible
+ for SM6115
+Message-ID: <166725269282.3622215.12274868256756111136.robh@kernel.org>
+References: <20221030094258.486428-1-iskren.chernev@gmail.com>
+ <20221030094258.486428-4-iskren.chernev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221029211312.929862-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221030094258.486428-4-iskren.chernev@gmail.com>
 X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -78,13 +74,16 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Sun, 30 Oct 2022 00:13:07 +0300, Dmitry Baryshkov wrote:
-> Add bindings for the PCIe QMP PHYs found on SM8350.
+On Sun, 30 Oct 2022 11:42:53 +0200, Iskren Chernev wrote:
+> From: Adam Skladowski <a39.skl@gmail.com>
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Document the compatible for GPI DMA controller on SM6115 SoC.
+> 
+> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 > ---
->  .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       | 22 +++++++++++++++++++
->  1 file changed, 22 insertions(+)
+>  Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Acked-by: Rob Herring <robh@kernel.org>
