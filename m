@@ -2,160 +2,326 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11E0F613F0B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 21:32:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D63C613F18
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 21:41:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229839AbiJaUcj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 16:32:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58426 "EHLO
+        id S229553AbiJaUl0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 16:41:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbiJaUce (ORCPT
+        with ESMTP id S229468AbiJaUlZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 16:32:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8BBB13CC8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 13:31:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1667248298;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=6iglFbtxmswy6Wel7/DoB7/VCgHF3PqnZ3i1JdiWSK0=;
-        b=Kx/M5jPO7MonSgdDG0gvJcThxGKWS6TMDVYlj1mLQLpJddmj1REqCytGBz4gBBhoMem3ek
-        9r4KXVhLC7riaQDY5OougA9e49KLjRaKpP2avE9Q6j97nMgUUe+QmKjpKyDEkHxkhDYkOD
-        JeXdqO3q+qT+K+B5aJIJyN4TxB8HwDk=
-Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com
- [209.85.161.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-367-bygLD4FHNwiqDmsgkW5PdQ-1; Mon, 31 Oct 2022 16:31:37 -0400
-X-MC-Unique: bygLD4FHNwiqDmsgkW5PdQ-1
-Received: by mail-oo1-f69.google.com with SMTP id z18-20020a4a9c92000000b00490581b75e9so4403449ooj.23
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 13:31:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6iglFbtxmswy6Wel7/DoB7/VCgHF3PqnZ3i1JdiWSK0=;
-        b=uvO7BaroPLFyNwMaPmkYxjucBIsJJwQEb0lHRzR2PI1jtr5eQYByEQ/7pbIeiAkQnp
-         g9PQ99yzObDBOL0PUZmdqeEH51HooXPK4R8yzpoXvwkeAhlSYw60TTN63IykK2jICHUG
-         ItEgisZxLUZTvQaw2VY7s53VTVK5xk1hcHWwZQlDYvceHtshzO1nQhZP/fKhYcI0/cq+
-         Wtudlm9RFUzjxXGMLfIjcJPS/CQDIOAbCgOzvJMWolLf1XmaXYRxsU3FqydD3wemZG5K
-         F078hyVspJWwtI8FBDbIXfzBdkju39r5i3Y70CaBPLyRCEPMZFWnWbNG9V/kPPHIvq1l
-         TslA==
-X-Gm-Message-State: ACrzQf33xTjGii3KM2tx/ALrQiPF5SFWPIDQfIUoSRE1R13wsjPma5UW
-        sp7XFBCTiW+tliy+frM76pYcyvdS3maNHHliQ01gb8e2tsXXDm9WzRmoPjg3t10gL3KAU1StdBX
-        Ei7wxyjnsupxOdiQMnnx6nw+Ryg==
-X-Received: by 2002:a05:6808:1693:b0:353:e980:30bf with SMTP id bb19-20020a056808169300b00353e98030bfmr7619332oib.206.1667248296673;
-        Mon, 31 Oct 2022 13:31:36 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM6B6/z0lcd7D5OLl9WDtE+Mx0BJBDVllYVLYSG10XWz2v15lMdxxewtOH4kYWzU7mQ+tcnlRQ==
-X-Received: by 2002:a05:6808:1693:b0:353:e980:30bf with SMTP id bb19-20020a056808169300b00353e98030bfmr7619312oib.206.1667248296393;
-        Mon, 31 Oct 2022 13:31:36 -0700 (PDT)
-Received: from halaney-x13s ([2600:1700:1ff0:d0e0::41])
-        by smtp.gmail.com with ESMTPSA id x13-20020a056830114d00b0066c34486aa7sm3113890otq.73.2022.10.31.13.31.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Oct 2022 13:31:35 -0700 (PDT)
-Date:   Mon, 31 Oct 2022 15:31:33 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
-        andersson@kernel.org, vkoul@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, quic_cang@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-scsi@vger.kernel.org, dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH v2 13/15] scsi: ufs: ufs-qcom: Factor out the logic
- finding the HS Gear
-Message-ID: <20221031203133.vmqqig7wlryrgiwv@halaney-x13s>
-References: <20221031180217.32512-1-manivannan.sadhasivam@linaro.org>
- <20221031180217.32512-14-manivannan.sadhasivam@linaro.org>
+        Mon, 31 Oct 2022 16:41:25 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA9FDC39
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 13:41:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1667248883; x=1698784883;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=s/+zSapwtbO3gYn8zGcbb5Sq/Na3M4nPzN/kw6GP67w=;
+  b=svQnEIOigCGefaimyCmLZM8SMpEA9/26eRMFOfZfwAGuAqULY3YJRB3Q
+   naqQqa0SYz/FbbZpd9rORVvwkJg7h+pLaPouRS8T+APQm9kZdGDkh5rmC
+   DH3DC5+yXpb+HeFZgOCA4OuORl1nt8Mgez822IPvX0SEuhjW3cWc9E4it
+   A=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 31 Oct 2022 13:41:23 -0700
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Oct 2022 13:41:23 -0700
+Received: from [10.71.111.47] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 31 Oct
+ 2022 13:41:22 -0700
+Message-ID: <4c3a1efa-bd64-deba-0420-96f40c64557a@quicinc.com>
+Date:   Mon, 31 Oct 2022 13:41:21 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221031180217.32512-14-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [RFC PATCH 2/3] drm: Adjust atomic checks for solid fill color
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <freedreno@lists.freedesktop.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <robdclark@gmail.com>, <seanpaul@chromium.org>,
+        <swboyd@chromium.org>, <quic_abhinavk@quicinc.com>,
+        <contact@emersion.fr>, <daniel.vetter@ffwll.ch>,
+        <laurent.pinchart@ideasonboard.com>
+References: <20221028225952.160-1-quic_jesszhan@quicinc.com>
+ <20221028225952.160-3-quic_jesszhan@quicinc.com>
+ <8d375543-846a-59b0-0bd5-061c31b32d02@linaro.org>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <8d375543-846a-59b0-0bd5-061c31b32d02@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 31, 2022 at 11:32:15PM +0530, Manivannan Sadhasivam wrote:
-> In the preparation of adding support for new gears, let's move the
-> logic that finds the gear for each platform to a new function. This helps
-> with code readability and also allows the logic to be used in other places
-> of the driver in future.
-> 
-> While at it, let's make it clear that this driver only supports symmetric
-> gear setting (hs_tx_gear == hs_rx_gear).
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 
-> ---
->  drivers/ufs/host/ufs-qcom.c | 36 +++++++++++++++++++++++-------------
->  1 file changed, 23 insertions(+), 13 deletions(-)
+On 10/29/2022 4:38 AM, Dmitry Baryshkov wrote:
+> On 29/10/2022 01:59, Jessica Zhang wrote:
+>> Loosen the requirements for atomic and legacy commit so that, in cases
+>> where solid fill planes is enabled (and FB_ID is NULL), the commit can
+>> still go through.
+>>
+>> In addition, add framebuffer NULL checks in other areas to account for
+>> FB being NULL when solid fill is enabled.
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/drm_atomic.c        | 68 ++++++++++++++++-------------
+>>   drivers/gpu/drm/drm_atomic_helper.c | 34 +++++++++------
+>>   drivers/gpu/drm/drm_plane.c         |  8 ++--
+>>   include/drm/drm_atomic_helper.h     |  5 ++-
+>>   4 files changed, 64 insertions(+), 51 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
+>> index f197f59f6d99..b576ed221431 100644
+>> --- a/drivers/gpu/drm/drm_atomic.c
+>> +++ b/drivers/gpu/drm/drm_atomic.c
+>> @@ -601,8 +601,10 @@ static int drm_atomic_plane_check(const struct 
+>> drm_plane_state *old_plane_state,
+>>       uint32_t num_clips;
+>>       int ret;
+>> -    /* either *both* CRTC and FB must be set, or neither */
+>> -    if (crtc && !fb) {
+>> +    /* When color_fill is disabled,
+>> +     * either *both* CRTC and FB must be set, or neither
+>> +     */
+>> +    if (crtc && !fb && !new_plane_state->color_fill) {
 > 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 38e2ed749d75..c93d2d38b43e 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -278,6 +278,26 @@ static int ufs_qcom_host_reset(struct ufs_hba *hba)
->  	return 0;
->  }
->  
-> +static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba, u32 hs_gear)
-> +{
-> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> +
-> +	if (host->hw_ver.major == 0x1) {
-> +		/*
-> +		 * HS-G3 operations may not reliably work on legacy QCOM
-> +		 * UFS host controller hardware even though capability
-> +		 * exchange during link startup phase may end up
-> +		 * negotiating maximum supported gear as G3.
-> +		 * Hence downgrade the maximum supported gear to HS-G2.
-> +		 */
-> +		if (hs_gear > UFS_HS_G2)
-> +			return UFS_HS_G2;
-> +	}
-> +
-> +	/* Default is HS-G3 */
-> +	return UFS_HS_G3;
-> +}
-> +
->  static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
->  {
->  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> @@ -692,19 +712,9 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
->  		ufshcd_init_pwr_dev_param(&ufs_qcom_cap);
->  		ufs_qcom_cap.hs_rate = UFS_QCOM_LIMIT_HS_RATE;
->  
-> -		if (host->hw_ver.major == 0x1) {
-> -			/*
-> -			 * HS-G3 operations may not reliably work on legacy QCOM
-> -			 * UFS host controller hardware even though capability
-> -			 * exchange during link startup phase may end up
-> -			 * negotiating maximum supported gear as G3.
-> -			 * Hence downgrade the maximum supported gear to HS-G2.
-> -			 */
-> -			if (ufs_qcom_cap.hs_tx_gear > UFS_HS_G2)
-> -				ufs_qcom_cap.hs_tx_gear = UFS_HS_G2;
-> -			if (ufs_qcom_cap.hs_rx_gear > UFS_HS_G2)
-> -				ufs_qcom_cap.hs_rx_gear = UFS_HS_G2;
-> -		}
-> +		/* This driver only supports symmetic gear setting i.e., hs_tx_gear == hs_rx_gear */
-> +		ufs_qcom_cap.hs_tx_gear = ufs_qcom_cap.hs_rx_gear = ufs_qcom_get_hs_gear(hba,
-> +									ufs_qcom_cap.hs_tx_gear);
->  
->  		ret = ufshcd_get_pwr_dev_param(&ufs_qcom_cap,
->  					       dev_max_params,
+> Using !color_fill sounds bad. It would disallow using black as the plane 
+> fill color. I think, you need to check color_fill_format instead.
+
+Hey Dmitry,
+
+Good point -- acked.
+
+> 
+>>           drm_dbg_atomic(plane->dev, "[PLANE:%d:%s] CRTC set but no 
+>> FB\n",
+>>                      plane->base.id, plane->name);
+>>           return -EINVAL;
+>> @@ -626,14 +628,16 @@ static int drm_atomic_plane_check(const struct 
+>> drm_plane_state *old_plane_state,
+>>       }
+> 
+> 
+> Don't we need to check that the color_fill_format is supported too?
+
+Acked.
+
+> 
+>>       /* Check whether this plane supports the fb pixel format. */
+>> -    ret = drm_plane_check_pixel_format(plane, fb->format->format,
+>> -                       fb->modifier);
+>> -    if (ret) {
+>> -        drm_dbg_atomic(plane->dev,
+>> -                   "[PLANE:%d:%s] invalid pixel format %p4cc, 
+>> modifier 0x%llx\n",
+>> -                   plane->base.id, plane->name,
+>> -                   &fb->format->format, fb->modifier);
+>> -        return ret;
+>> +    if (fb) {
+>> +        ret = drm_plane_check_pixel_format(plane, fb->format->format,
+>> +                           fb->modifier);
+>> +
+>> +        if (ret)
+>> +            drm_dbg_atomic(plane->dev,
+>> +                       "[PLANE:%d:%s] invalid pixel format %p4cc, 
+>> modifier 0x%llx\n",
+>> +                       plane->base.id, plane->name,
+>> +                       &fb->format->format, fb->modifier);
+>> +            return ret;
+>>       }
+>>       /* Give drivers some help against integer overflows */
+>> @@ -649,28 +653,30 @@ static int drm_atomic_plane_check(const struct 
+>> drm_plane_state *old_plane_state,
+>>           return -ERANGE;
+>>       }
+>> -    fb_width = fb->width << 16;
+>> -    fb_height = fb->height << 16;
+>> +    if (fb) {
+>> +        fb_width = fb->width << 16;
+>> +        fb_height = fb->height << 16;
+>> -    /* Make sure source coordinates are inside the fb. */
+>> -    if (new_plane_state->src_w > fb_width ||
+>> -        new_plane_state->src_x > fb_width - new_plane_state->src_w ||
+>> -        new_plane_state->src_h > fb_height ||
+>> -        new_plane_state->src_y > fb_height - new_plane_state->src_h) {
+>> -        drm_dbg_atomic(plane->dev,
+>> -                   "[PLANE:%d:%s] invalid source coordinates "
+>> -                   "%u.%06ux%u.%06u+%u.%06u+%u.%06u (fb %ux%u)\n",
+>> -                   plane->base.id, plane->name,
+>> -                   new_plane_state->src_w >> 16,
+>> -                   ((new_plane_state->src_w & 0xffff) * 15625) >> 10,
+>> -                   new_plane_state->src_h >> 16,
+>> -                   ((new_plane_state->src_h & 0xffff) * 15625) >> 10,
+>> -                   new_plane_state->src_x >> 16,
+>> -                   ((new_plane_state->src_x & 0xffff) * 15625) >> 10,
+>> -                   new_plane_state->src_y >> 16,
+>> -                   ((new_plane_state->src_y & 0xffff) * 15625) >> 10,
+>> -                   fb->width, fb->height);
+>> -        return -ENOSPC;
+>> +        /* Make sure source coordinates are inside the fb. */
+>> +        if (new_plane_state->src_w > fb_width ||
+>> +            new_plane_state->src_x > fb_width - 
+>> new_plane_state->src_w ||
+>> +            new_plane_state->src_h > fb_height ||
+>> +            new_plane_state->src_y > fb_height - 
+>> new_plane_state->src_h) {
+>> +            drm_dbg_atomic(plane->dev,
+>> +                       "[PLANE:%d:%s] invalid source coordinates "
+>> +                       "%u.%06ux%u.%06u+%u.%06u+%u.%06u (fb %ux%u)\n",
+>> +                       plane->base.id, plane->name,
+>> +                       new_plane_state->src_w >> 16,
+>> +                       ((new_plane_state->src_w & 0xffff) * 15625) >> 
+>> 10,
+>> +                       new_plane_state->src_h >> 16,
+>> +                       ((new_plane_state->src_h & 0xffff) * 15625) >> 
+>> 10,
+>> +                       new_plane_state->src_x >> 16,
+>> +                       ((new_plane_state->src_x & 0xffff) * 15625) >> 
+>> 10,
+>> +                       new_plane_state->src_y >> 16,
+>> +                       ((new_plane_state->src_y & 0xffff) * 15625) >> 
+>> 10,
+>> +                       fb->width, fb->height);
+>> +            return -ENOSPC;
+>> +        }
+>>       }
+>>       clips = __drm_plane_get_damage_clips(new_plane_state);
+>> diff --git a/drivers/gpu/drm/drm_atomic_helper.c 
+>> b/drivers/gpu/drm/drm_atomic_helper.c
+>> index 8bf41aa24068..5a5ffa06b8bd 100644
+>> --- a/drivers/gpu/drm/drm_atomic_helper.c
+>> +++ b/drivers/gpu/drm/drm_atomic_helper.c
+>> @@ -818,7 +818,7 @@ int drm_atomic_helper_check_plane_state(struct 
+>> drm_plane_state *plane_state,
+>>       *src = drm_plane_state_src(plane_state);
+>>       *dst = drm_plane_state_dest(plane_state);
+>> -    if (!fb) {
+>> +    if (!fb && !plane_state->color_fill) {
+>>           plane_state->visible = false;
+>>           return 0;
+>>       }
+>> @@ -835,25 +835,31 @@ int drm_atomic_helper_check_plane_state(struct 
+>> drm_plane_state *plane_state,
+>>           return -EINVAL;
+>>       }
+>> -    drm_rect_rotate(src, fb->width << 16, fb->height << 16, rotation);
+>> +    if (fb) {
+>> +        drm_rect_rotate(src, fb->width << 16, fb->height << 16, 
+>> rotation);
+>> -    /* Check scaling */
+>> -    hscale = drm_rect_calc_hscale(src, dst, min_scale, max_scale);
+>> -    vscale = drm_rect_calc_vscale(src, dst, min_scale, max_scale);
+>> -    if (hscale < 0 || vscale < 0) {
+>> -        drm_dbg_kms(plane_state->plane->dev,
+>> -                "Invalid scaling of plane\n");
+>> -        drm_rect_debug_print("src: ", &plane_state->src, true);
+>> -        drm_rect_debug_print("dst: ", &plane_state->dst, false);
+>> -        return -ERANGE;
+>> +        /* Check scaling */
+>> +        hscale = drm_rect_calc_hscale(src, dst, min_scale, max_scale);
+>> +        vscale = drm_rect_calc_vscale(src, dst, min_scale, max_scale);
+>> +
+>> +        if (hscale < 0 || vscale < 0) {
+>> +            drm_dbg_kms(plane_state->plane->dev,
+>> +                    "Invalid scaling of plane\n");
+>> +            drm_rect_debug_print("src: ", &plane_state->src, true);
+>> +            drm_rect_debug_print("dst: ", &plane_state->dst, false);
+>> +            return -ERANGE;
+>> +        }
+>>       }
+>>       if (crtc_state->enable)
+>>           drm_mode_get_hv_timing(&crtc_state->mode, &clip.x2, &clip.y2);
+>> -    plane_state->visible = drm_rect_clip_scaled(src, dst, &clip);
+>> -
+>> -    drm_rect_rotate_inv(src, fb->width << 16, fb->height << 16, 
+>> rotation);
+>> +    if (fb) {
+>> +        plane_state->visible = drm_rect_clip_scaled(src, dst, &clip);
+>> +        drm_rect_rotate_inv(src, fb->width << 16, fb->height << 16, 
+>> rotation);
+>> +    } else if (plane_state->color_fill) {
+>> +        plane_state->visible = true;
+>> +    }
+>>       if (!plane_state->visible)
+>>           /*
+>> diff --git a/drivers/gpu/drm/drm_plane.c b/drivers/gpu/drm/drm_plane.c
+>> index 726f2f163c26..223b5ed93d3a 100644
+>> --- a/drivers/gpu/drm/drm_plane.c
+>> +++ b/drivers/gpu/drm/drm_plane.c
+>> @@ -850,8 +850,8 @@ static int __setplane_internal(struct drm_plane 
+>> *plane,
+>>       WARN_ON(drm_drv_uses_atomic_modeset(plane->dev));
+>> -    /* No fb means shut it down */
+>> -    if (!fb) {
+>> +    /* No fb and no color fill means shut it down */
+>> +    if (!fb && (plane->state && !plane->state->color_fill)) {
+> 
+> I'd suggest abstracting this to a helper function, which can then be 
+> used in drm_atomic_plane_check() too.
+
+Agreed.
+
+> 
+>>           plane->old_fb = plane->fb;
+>>           ret = plane->funcs->disable_plane(plane, ctx);
+>>           if (!ret) {
+>> @@ -902,8 +902,8 @@ static int __setplane_atomic(struct drm_plane *plane,
+>>       WARN_ON(!drm_drv_uses_atomic_modeset(plane->dev));
+>> -    /* No fb means shut it down */
+>> -    if (!fb)
+>> +    /* No fb and no color fill means shut it down */
+>> +    if (!fb && (plane->state && !plane->state->color_fill))
+>>           return plane->funcs->disable_plane(plane, ctx);
+>>       /*
+>> diff --git a/include/drm/drm_atomic_helper.h 
+>> b/include/drm/drm_atomic_helper.h
+>> index 2a0b17842402..aa7576f0879d 100644
+>> --- a/include/drm/drm_atomic_helper.h
+>> +++ b/include/drm/drm_atomic_helper.h
+>> @@ -219,8 +219,9 @@ drm_atomic_plane_disabling(struct drm_plane_state 
+>> *old_plane_state,
+>>        * Anything else should be considered a bug in the atomic core, 
+>> so we
+>>        * gently warn about it.
+>>        */
+>> -    WARN_ON((new_plane_state->crtc == NULL && new_plane_state->fb != 
+>> NULL) ||
+>> -        (new_plane_state->crtc != NULL && new_plane_state->fb == NULL));
+>> +    WARN_ON(!new_plane_state->color_fill &&
+>> +            ((new_plane_state->crtc == NULL && new_plane_state->fb != 
+>> NULL) ||
+>> +            (new_plane_state->crtc != NULL && new_plane_state->fb == 
+>> NULL)));
+> 
+> Please fix the indentation.
+
+Acked.
+
+Thanks,
+
+Jessica Zhang
+
+> 
+>>       return old_plane_state->crtc && !new_plane_state->crtc;
+>>   }
+> 
 > -- 
-> 2.25.1
+> With best wishes
+> Dmitry
 > 
-
