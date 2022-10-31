@@ -2,179 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D73F613DEE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 20:01:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB117613E2E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 20:25:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229798AbiJaTBG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 15:01:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57984 "EHLO
+        id S230041AbiJaTZG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 15:25:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbiJaTBF (ORCPT
+        with ESMTP id S229691AbiJaTZF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 15:01:05 -0400
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11D5E64E5;
-        Mon, 31 Oct 2022 12:01:04 -0700 (PDT)
-Received: by mail-oi1-f169.google.com with SMTP id r187so13712844oia.8;
-        Mon, 31 Oct 2022 12:01:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=97OeCNtvARFMLHt3Ap1ZoXYFgbmXk1P85smxt9Y1vS4=;
-        b=ChJyjd3rnBBqgE2l7KjO60iXRzc/qPVFf253RPtM5yl7lnQNhJCA5qWndMCh2mq7H9
-         AHXKQjJAbAggQi2bHbbjqp0MCNaAnLJkfoSUaEkygU2RVzyMQfAprgLVg9MO3PyCpS9W
-         w0mfgG12Go4Fo49JEUnAnve891CqSei/ELr+2fYgQDXEm6NuM/J8LwrhCM4jA01MVibl
-         26FGfL3NE4EHwli+5v406gml/PsHO4Yw4fIGCXHFHolBuEJYvc8ZugNtLaZyFLRsA3F6
-         +OPwhavtuuA+yi/1i4+rVUuWFBviAdDDM5FGP2pfZ893lvk+8QLevDyvKruwAn9DJ9RA
-         /3dA==
-X-Gm-Message-State: ACrzQf3yoYQ2E0jlbJASDn3yk+qpsoz70Ka3ovDdLeuuqUWw86z8Jj3o
-        2tKCUltEHQfOcDKm1y81Tg==
-X-Google-Smtp-Source: AMsMyM4tZ4U7APjHhUeEZUR88VKHJ79ebC4Z8DAfRPUK25IfNsrRoJMYHULuY3pEru30WN830H99Ow==
-X-Received: by 2002:a05:6808:1248:b0:354:2c04:c35b with SMTP id o8-20020a056808124800b003542c04c35bmr15126786oiv.143.1667242863194;
-        Mon, 31 Oct 2022 12:01:03 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id o4-20020acabe04000000b0035494c1202csm2584831oif.42.2022.10.31.12.01.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Oct 2022 12:01:02 -0700 (PDT)
-Received: (nullmailer pid 3259256 invoked by uid 1000);
-        Mon, 31 Oct 2022 19:01:03 -0000
-Date:   Mon, 31 Oct 2022 14:01:03 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Lars Povlsen <lars.povlsen@microchip.com>,
-        Steen Hegelund <Steen.Hegelund@microchip.com>,
-        Daniel Machon <daniel.machon@microchip.com>,
-        UNGLinuxDriver@microchip.com, Sergey Shtylyov <s.shtylyov@omp.ru>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Martin Botka <martin.botka@somainline.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        krishna Lanka <quic_vamslank@quicinc.com>,
-        Iskren Chernev <iskren.chernev@gmail.com>,
-        Del Regno <angelogioacchino.delregno@somainline.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Govind Singh <govinds@codeaurora.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Oleksij Rempel <linux@rempel-privat.de>,
-        Horatiu Vultur <horatiu.vultur@microchip.com>,
-        Vladimir Oltean <vladimir.oltean@nxp.com>,
-        Claudiu Manoil <claudiu.manoil@nxp.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org
-Subject: Re: [PATCH 2/2] dt-bindings: clock: qcom: cleanup
-Message-ID: <20221031190103.GA3257132-robh@kernel.org>
-References: <20221028140326.43470-1-krzysztof.kozlowski@linaro.org>
- <20221028140326.43470-3-krzysztof.kozlowski@linaro.org>
+        Mon, 31 Oct 2022 15:25:05 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6578D13DF1;
+        Mon, 31 Oct 2022 12:25:04 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 29VIsrZV003836;
+        Mon, 31 Oct 2022 19:24:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=Pc5EVDHtm6VBnIfyigRm+fWGfdtfPod7VeY/RMb84xE=;
+ b=F0t1bGMh6JtUc3m13A5ca3En/svens7pzbZFwWpUCIGDUiOxTs+Oo4ZW4qDu0lqmHbFg
+ PRft0fto0ZI1KJVxEG8Q3oR/2eIlnyraKC5u+P7qVn7UJP6V02vF4plkxllhCLf5wNeh
+ ifQVOjQhUDIy9kZZLu+MZjYXGF9x5PzE9ZPCSwTymWFy8UFzCuq6DlEPq+8DNQVTMdMQ
+ 7aCNJmQBLFUBip5iWKBfjbnXqWcLdaWX9Dt/m+2EYChcPvu/B5lnPahQd5UkTPKTJz6+
+ 9ZnsMiibpD7pUtAr5hjDouXQvN7d3pwNCDIKnkCnS4n5lo8OvL8/FGNYPfrY1sTr6UJb RA== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kj7tx2k17-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Oct 2022 19:24:37 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29VJOaZD015939
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 31 Oct 2022 19:24:36 GMT
+Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Mon, 31 Oct 2022 12:24:35 -0700
+Date:   Mon, 31 Oct 2022 12:24:35 -0700
+From:   Asutosh Das <quic_asutoshd@quicinc.com>
+To:     Bart Van Assche <bvanassche@acm.org>
+CC:     <quic_cang@quicinc.com>, <martin.petersen@oracle.com>,
+        <linux-scsi@vger.kernel.org>, <quic_nguyenb@quicinc.com>,
+        <quic_xiaosenh@quicinc.com>, <stanley.chu@mediatek.com>,
+        <eddie.huang@mediatek.com>, <daejun7.park@samsung.com>,
+        <avri.altman@wdc.com>, <mani@kernel.org>, <beanhuo@micron.com>,
+        <quic_richardp@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Andy Gross" <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Jinyoung Choi <j-young.choi@samsung.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v3 07/17] ufs: core: mcq: Calculate queue depth
+Message-ID: <20221031192435.GD9077@asutoshd-linux1.qualcomm.com>
+References: <cover.1666288432.git.quic_asutoshd@quicinc.com>
+ <1987fbada1d33c04c9598614ef712e0a48fe065e.1666288432.git.quic_asutoshd@quicinc.com>
+ <0fb3f8ae-5ed7-9057-0d2b-8866f36c2441@acm.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20221028140326.43470-3-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <0fb3f8ae-5ed7-9057-0d2b-8866f36c2441@acm.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: eoCIszkxZxLc1tUxvwMHzAOSyAR5E8eE
+X-Proofpoint-GUID: eoCIszkxZxLc1tUxvwMHzAOSyAR5E8eE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-31_20,2022-10-31_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 malwarescore=0
+ mlxlogscore=999 impostorscore=0 suspectscore=0 mlxscore=0 spamscore=0
+ adultscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2210310120
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 28, 2022 at 10:03:26AM -0400, Krzysztof Kozlowski wrote:
-> Clean the Qualcomm SoCs clock bindings:
+On Thu, Oct 27 2022 at 14:52 -0700, Bart Van Assche wrote:
+>On 10/20/22 11:03, Asutosh Das wrote:
+>>+u32 ufshcd_mcq_decide_queue_depth(struct ufs_hba *hba)
+>>+{
+>>+	u32 qd, val;
+>>+	int mac;
+>>+
+>>+	mac = ufshcd_mcq_vops_get_hba_mac(hba);
+>>+	if (mac < 0) {
+>>+		val = ufshcd_readl(hba, REG_UFS_MCQ_CFG);
+>>+		mac = FIELD_GET(MCQ_CFG_MAC_MASK, val);
+>>+	}
+>
+>According to the UFSHCI 4.0 specification the MAC value is set by the 
+>host. Can the above code read the MAC value from the host controller 
+>before it has been set by the host? If so, how about leaving out the 
+>code that reads the MAC value from the controller and making it 
+>mandatory to implement the new get_hba_mac vop?
+>
+The reason it is not mandatory to define get_hba_mac vop is UFSHCI 4.0
+specification mentions that the default value of MAC is 32. So even if a vendor
+HC doesn't override the MAC, it'd be 32.
+Hence, the current code first checks for an override, and if there's none uses
+the default value defined in the HC.
 
-Perhaps at least 'Clean-up titles and descriptions' for the subject.
-
-> 1. Drop redundant "bindings" in title.
-> 2. Correct language grammar "<independent clause without verb>, which
->    supports" -> "provides".
-> 3. Use full path to the bindings header, so tools can validate it.
-> 4. Drop quotes where not needed.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../bindings/clock/qcom,a53pll.yaml           |  2 +-
->  .../devicetree/bindings/clock/qcom,a7pll.yaml |  2 +-
->  .../bindings/clock/qcom,aoncc-sm8250.yaml     |  2 +-
->  .../bindings/clock/qcom,audiocc-sm8250.yaml   |  2 +-
->  .../bindings/clock/qcom,camcc-sm8250.yaml     |  6 ++--
->  .../bindings/clock/qcom,dispcc-sm6125.yaml    |  9 +++---
->  .../bindings/clock/qcom,dispcc-sm6350.yaml    |  8 ++---
->  .../bindings/clock/qcom,dispcc-sm8x50.yaml    | 14 ++++-----
->  .../bindings/clock/qcom,gcc-apq8064.yaml      | 18 +++++------
->  .../bindings/clock/qcom,gcc-apq8084.yaml      | 10 +++----
->  .../bindings/clock/qcom,gcc-ipq8064.yaml      | 18 +++++------
->  .../bindings/clock/qcom,gcc-ipq8074.yaml      |  9 +++---
->  .../bindings/clock/qcom,gcc-msm8660.yaml      | 12 ++++----
->  .../bindings/clock/qcom,gcc-msm8909.yaml      |  9 +++---
->  .../bindings/clock/qcom,gcc-msm8916.yaml      | 16 +++++-----
->  .../bindings/clock/qcom,gcc-msm8976.yaml      |  9 +++---
->  .../bindings/clock/qcom,gcc-msm8994.yaml      |  9 +++---
->  .../bindings/clock/qcom,gcc-msm8996.yaml      |  7 ++---
->  .../bindings/clock/qcom,gcc-msm8998.yaml      |  9 +++---
->  .../bindings/clock/qcom,gcc-other.yaml        | 30 +++++++++----------
->  .../bindings/clock/qcom,gcc-qcm2290.yaml      |  9 +++---
->  .../bindings/clock/qcom,gcc-qcs404.yaml       |  9 +++---
->  .../bindings/clock/qcom,gcc-sc7180.yaml       |  9 +++---
->  .../bindings/clock/qcom,gcc-sc7280.yaml       |  9 +++---
->  .../bindings/clock/qcom,gcc-sc8180x.yaml      |  9 +++---
->  .../bindings/clock/qcom,gcc-sc8280xp.yaml     |  7 ++---
->  .../bindings/clock/qcom,gcc-sdm660.yaml       |  8 ++---
->  .../bindings/clock/qcom,gcc-sdm845.yaml       |  9 +++---
->  .../bindings/clock/qcom,gcc-sdx55.yaml        |  7 ++---
->  .../bindings/clock/qcom,gcc-sdx65.yaml        |  9 +++---
->  .../bindings/clock/qcom,gcc-sm6115.yaml       |  9 +++---
->  .../bindings/clock/qcom,gcc-sm6125.yaml       |  9 +++---
->  .../bindings/clock/qcom,gcc-sm6350.yaml       |  9 +++---
->  .../bindings/clock/qcom,gcc-sm8150.yaml       |  9 +++---
->  .../bindings/clock/qcom,gcc-sm8250.yaml       |  9 +++---
->  .../bindings/clock/qcom,gcc-sm8350.yaml       |  9 +++---
->  .../bindings/clock/qcom,gcc-sm8450.yaml       |  9 +++---
->  .../devicetree/bindings/clock/qcom,gcc.yaml   |  6 ++--
->  .../bindings/clock/qcom,gpucc-sdm660.yaml     |  4 +--
->  .../bindings/clock/qcom,gpucc-sm8350.yaml     |  9 +++---
->  .../devicetree/bindings/clock/qcom,gpucc.yaml | 22 +++++++-------
->  .../devicetree/bindings/clock/qcom,mmcc.yaml  |  4 +--
->  .../bindings/clock/qcom,msm8998-gpucc.yaml    |  8 ++---
->  .../bindings/clock/qcom,q6sstopcc.yaml        |  2 +-
->  .../bindings/clock/qcom,qcm2290-dispcc.yaml   |  8 ++---
->  .../bindings/clock/qcom,sc7180-camcc.yaml     |  9 +++---
->  .../bindings/clock/qcom,sc7180-dispcc.yaml    |  8 ++---
->  .../clock/qcom,sc7180-lpasscorecc.yaml        |  9 +++---
->  .../bindings/clock/qcom,sc7180-mss.yaml       |  7 ++---
->  .../bindings/clock/qcom,sc7280-camcc.yaml     |  6 ++--
->  .../bindings/clock/qcom,sc7280-dispcc.yaml    |  8 ++---
->  .../bindings/clock/qcom,sc7280-lpasscc.yaml   |  9 +++---
->  .../clock/qcom,sc7280-lpasscorecc.yaml        | 12 ++++----
->  .../bindings/clock/qcom,sdm845-camcc.yaml     |  8 ++---
->  .../bindings/clock/qcom,sdm845-dispcc.yaml    |  8 ++---
->  .../bindings/clock/qcom,sm6115-dispcc.yaml    |  7 ++---
->  .../bindings/clock/qcom,sm6375-gcc.yaml       |  9 +++---
->  .../bindings/clock/qcom,sm8450-camcc.yaml     |  8 ++---
->  .../bindings/clock/qcom,sm8450-dispcc.yaml    |  7 ++---
->  .../bindings/clock/qcom,videocc.yaml          | 20 ++++++-------
->  60 files changed, 258 insertions(+), 289 deletions(-)
-
-Acked-by: Rob Herring <robh@kernel.org>
+-asd
