@@ -2,78 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 916286141A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 00:25:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B5686141CF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 00:30:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229479AbiJaXZU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 19:25:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44744 "EHLO
+        id S230072AbiJaXaG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 19:30:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbiJaXZT (ORCPT
+        with ESMTP id S230075AbiJaX3v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 19:25:19 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 439A91115D;
-        Mon, 31 Oct 2022 16:25:18 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 29VNKdCk019914;
-        Mon, 31 Oct 2022 23:25:15 GMT
+        Mon, 31 Oct 2022 19:29:51 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CE85BA5;
+        Mon, 31 Oct 2022 16:29:20 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 29VMxBUC018265;
+        Mon, 31 Oct 2022 23:29:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
+ mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=JYksKW9i/ivZ02ZoqaKVZvP/OXs9/T1SBPtTC1ZwuPw=;
- b=oaupJA/+jYihECyTaKyLBvSSiyvJM8GtqGm1a1mD3l9/OLOIlarTwOCqxJowYSJVNY/5
- eP+OzhSZltt4iNXvhRz7OFvwt5ZWkHTLT8a7+26cA6y11CP+qKEzvoLhP2QH1S7aL/CC
- ILn/lwQIwh+eATR4YCkFIsO1jRly7ovqZOwjmeRpZD1rHqBJ9p7kCE8ocfUdk2t2adQJ
- nMhe1i52pvGujZulVXyPppQQgfHbB3nqnfVKXbHkg/PEkcI5b9omwRgGJrWhB3XlsAMF
- GrRl+mhWQTIAFXztzkjEgkvDdTjVPHkJ8gUvjUXlX2BeF53kfK7bPVVIjvVYsJ+y+BXT pQ== 
+ bh=i+BTeQs/uLoY4sXsMIzzuDbt+PCHvSTaZbj7cPW3MiA=;
+ b=bgcNNpyUAjmmaqKcjvMWEr6ndM30a9a9Cw/WTs+H/j1cl5ABwrjUCAG5JIKWCcW/eB6g
+ SH15mgvRaq41BvoUsOfPckqJ1P/a6ZE/owry5YsWQOiBnejzP4GriRdMgrdUraDY5f8U
+ 3Sx/aj26IMdhmF5APW6TcvB1ojklaG+cBHUFR+KDMXtVp9urDav3dVhW4r7qryldVAnU
+ UbOzPfSJGiR9FQ45kDEh/k71tGl6QhV6vnPJaxJXst1CbohmlmDgafpdiX3VsX+A0Kgw
+ FEg8aASLPPELmt+X1bPKsmnKreqkCFKhCz+uI99yqqM4Uu55gURQ0eppL9eCJDdk8rrK iQ== 
 Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kjqxcr07r-1
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kjjqb0mrd-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Oct 2022 23:25:14 +0000
+        Mon, 31 Oct 2022 23:29:17 +0000
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29VNPEJG024490
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29VNTG1d028916
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Oct 2022 23:25:14 GMT
+        Mon, 31 Oct 2022 23:29:16 GMT
 Received: from [10.110.115.41] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 31 Oct
- 2022 16:25:13 -0700
-Message-ID: <5314f33d-dba0-ad86-0db8-9c1d16faec41@quicinc.com>
-Date:   Mon, 31 Oct 2022 16:25:13 -0700
+ 2022 16:29:15 -0700
+Message-ID: <64d0e5ef-fd36-6f25-2c39-00e8e1346af7@quicinc.com>
+Date:   Mon, 31 Oct 2022 16:29:15 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.2
-Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
+Subject: Re: [PATCH v3 1/3] dt-bindings: interconnect: Remove required reg
+ field
 Content-Language: en-US
-From:   Melody Olvera <quic_molvera@quicinc.com>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20221026200429.162212-1-quic_molvera@quicinc.com>
- <20221026200429.162212-4-quic_molvera@quicinc.com>
- <ae4b2333-d243-17ee-1ebd-6b1c89eef9f3@linaro.org>
- <d109cbdf-1b0e-ff67-879c-d0955da4898e@quicinc.com>
-In-Reply-To: <d109cbdf-1b0e-ff67-879c-d0955da4898e@quicinc.com>
+CC:     Odelu Kukatla <quic_okukatla@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20221026190520.4004264-1-quic_molvera@quicinc.com>
+ <20221026190520.4004264-2-quic_molvera@quicinc.com>
+ <a214f513-fe28-2096-c2b0-2107e97f3ce2@linaro.org>
+From:   Melody Olvera <quic_molvera@quicinc.com>
+In-Reply-To: <a214f513-fe28-2096-c2b0-2107e97f3ce2@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ju0lmPWNIqTBiUW4THkEBfx-ZjpsCIyW
-X-Proofpoint-GUID: ju0lmPWNIqTBiUW4THkEBfx-ZjpsCIyW
+X-Proofpoint-ORIG-GUID: JW5bdcnBbfT8RrbgZDWEhlgz1HgcA-WI
+X-Proofpoint-GUID: JW5bdcnBbfT8RrbgZDWEhlgz1HgcA-WI
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
  definitions=2022-10-31_21,2022-10-31_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
- suspectscore=0 bulkscore=0 mlxlogscore=999 lowpriorityscore=0 adultscore=0
- clxscore=1015 impostorscore=0 mlxscore=0 priorityscore=1501 malwarescore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ lowpriorityscore=0 adultscore=0 malwarescore=0 bulkscore=0 mlxscore=0
+ mlxlogscore=843 priorityscore=1501 spamscore=0 phishscore=0 suspectscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
  definitions=main-2210310146
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,146 +89,31 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/31/2022 2:49 PM, Melody Olvera wrote:
+On 10/27/2022 8:29 AM, Krzysztof Kozlowski wrote:
+> On 26/10/2022 15:05, Melody Olvera wrote:
+>> Many of the *-virt compatible devices do not have a reg field
+>> so remove it as required from the bindings.
+> and some virt have it... This should be probably separate binding or if
+> the list is small - allOf:if:then.
+I attempted this; however I'm still seeing failures in dtb_check. I've added this
+to the binding; does this look correct?
+ allOf:
+   - $ref: qcom,rpmh-common.yaml#
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,qdu1000-clk-virt
++              - qcom,qdu1000-mc-virt
++
++    then:
++      required:
++        - compatible
+
 >
-> On 10/27/2022 8:21 AM, Krzysztof Kozlowski wrote:
->> On 26/10/2022 16:04, Melody Olvera wrote:
->>> Add the base DTSI files for QDU1000 and QRU1000 SoCs, including base
->>> descriptions of CPUs, GCC, RPMHCC, QUP, TLMM, and interrupt-controller
->>> to boot to shell with console on these SoCs.
->>>
->>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
->>> ---
->>>  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 1406 +++++++++++++++++++++++++
->> Please use scripts/get_maintainers.pl to get a list of necessary people
->> and lists to CC.  It might happen, that command when run on an older
->> kernel, gives you outdated entries.  Therefore please be sure you base
->> your patches on recent Linux kernel.
-> Sure thing; we talked about this on a different patch.
->>>  arch/arm64/boot/dts/qcom/qru1000.dtsi |   27 +
->>>  2 files changed, 1433 insertions(+)
->>>  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000.dtsi
->>>  create mode 100644 arch/arm64/boot/dts/qcom/qru1000.dtsi
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
->>> new file mode 100644
->>> index 000000000000..76474106e931
->>> --- /dev/null
->>> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
->>> @@ -0,0 +1,1406 @@
->>> +// SPDX-License-Identifier: BSD-3-Clause
->>> +/*
->>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->>> + */
->> (...)
->>
->>> +
->>> +	soc: soc@0 {
->>> +		#address-cells = <2>;
->>> +		#size-cells = <2>;
->>> +		ranges = <0 0 0 0 0x10 0>;
->>> +		dma-ranges = <0 0 0 0 0x10 0>;
->>> +		compatible = "simple-bus";
->>> +
->>> +		gcc: clock-controller@80000 {
->>> +			compatible = "qcom,gcc-qdu1000", "syscon";
->>> +			reg = <0x0 0x80000 0x0 0x1f4200>;
->>> +			#clock-cells = <1>;
->>> +			#reset-cells = <1>;
->>> +			#power-domain-cells = <1>;
->>> +			clocks = <&rpmhcc RPMH_CXO_CLK>, <&sleep_clk>;
->>> +			clock-names = "bi_tcxo", "sleep_clk";
->>> +		};
->>> +
->>> +		gpi_dma0: dma-controller@900000  {
->>> +			compatible = "qcom,sm6350-gpi-dma";
->> You should add here a specific compatible as well. Same in other places.
->> All places. I had impression we talked about this few times, so I don't
->> know what is missing on your side.
->>
->> This must be:
->> "qcom,qdu1000-gpi-dma", "qcom,sm6350-gpi-dma"
-> Got it. I talked to Stephan and he said either your suggestion or just using
-> preexisting compatibles would be ok. I thought it might be cleaner to not
-> have the qdu compats, but I'm fine either way.
-Coming back to this, it looks like this will fail dtb_check since compatible field is too long.
-Is there an adjustment to the binding which needs to be made here?
->>> +			#dma-cells = <3>;
->>> +			reg = <0x0 0x900000 0x0 0x60000>;
->>> +			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 251 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
->>> +			dma-channels = <12>;
->>> +			dma-channel-mask = <0x3f>;
->>> +			iommus = <&apps_smmu 0xf6 0x0>;
->>> +		};
->>> +
->> (...)
->>
->>
->>> +
->>> +		tlmm: pinctrl@f000000 {
->>> +			compatible = "qcom,qdu1000-tlmm";
->>> +			reg = <0x0 0xf000000 0x0 0x1000000>;
->>> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
->>> +			gpio-controller;
->>> +			#gpio-cells = <2>;
->>> +			interrupt-controller;
->>> +			#interrupt-cells = <2>;
->>> +			gpio-ranges = <&tlmm 0 0 151>;
->>> +			wakeup-parent = <&pdc>;
->>> +
->>> +			qup_uart0_default: qup-uart0-default-state {
->>> +				pins = "gpio6", "gpio7", "gpio8", "gpio9";
->>> +				function = "qup00";
->>> +			};
->>> +
->>> +			qup_i2c1_data_clk: qup-i2c1-data-clk-state {
->>> +				pins = "gpio10", "gpio11";
->>> +				function = "qup01";
->>> +				drive-strength = <2>;
->> Can we have some generic agreement where to put drive-strengths and bias?
->>
->> See also:
->> https://lore.kernel.org/linux-devicetree/20221026200357.391635-2-krzysztof.kozlowski@linaro.org/
->>
->> https://lore.kernel.org/lkml/CAD=FV=VUL4GmjaibAMhKNdpEso_Hg_R=XeMaqah1LSj_9-Ce4Q@mail.gmail.com/
-> Not sure how much two-sense I have for the conversation at large, but generally I agree with Doug's
-> point in the first paragraph. Pulls for this soc are consistent across boards so I don't think it makes
-> sense to move them to the board files here. I vote that these stay here.
->>> +				bias-pull-up;
->>> +			};
->> (...)
->>
->>> +		};
->>> +
->>> +		cpufreq_hw: cpufreq@17d90000 {
->>> +			compatible = "qcom,sm8250-cpufreq-epss", "qcom,cpufreq-epss";
->> This is not sm8250...
-> Ack.
->>> +			reg = <0x0 0x17d90000 0x0 0x1000>, <0x0 0x17d91000 0x0 0x1000>;
->>> +			reg-names = "freq-domain0", "freq-domain1";
->>> +			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
->>> +			clock-names = "xo", "alternate";
->>> +			#freq-domain-cells = <1>;
->>> +		};
->>> +
->>> +		gem_noc: interconnect@19100000 {
->>> +			reg = <0x0 0x19100000 0x0 0xB8080>;
->>> +			compatible = "qcom,qdu1000-gem-noc";
->>> +			#interconnect-cells = <1>;
->>> +			qcom,bcm-voters = <&apps_bcm_voter>;
->>> +		};
->>> +	};
->>>
+> Anyway you need to resend everything to Cc all maintainers, not some subset.
+Discussed earlier.
+
 Thanks,
 Melody
