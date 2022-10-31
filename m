@@ -2,81 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 761AF614024
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 22:49:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC812614040
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 22:59:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229549AbiJaVtw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 17:49:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48406 "EHLO
+        id S229939AbiJaV7D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 17:59:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229477AbiJaVtv (ORCPT
+        with ESMTP id S230037AbiJaV7B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 17:49:51 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26FC510FD3;
-        Mon, 31 Oct 2022 14:49:50 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 29VL55OU016793;
-        Mon, 31 Oct 2022 21:49:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=CkhE949TVC0iDdW3/Q+OOK85Q2bDYQ+v7ZIaOAkG96Y=;
- b=HzBf6v2wnUQn/sQsewcAtn3m7cFCzflv+Im7OG4Qq4Ni/skhs46KIimLv/2Ygea5+Teu
- 15ADI2W6xKWFiO8WZj4EWeAkOHBctY0fZIAhlGCCwWToONnLp2xXeicKluWK3skWC/8g
- KM7nzqfWfqGtnofVgSzSKZQdGhL5SX7pcKVKzoACCr5Rp89xmQgs2EHRpu7zoWDOVNEQ
- 1zmdo8ezAfcZF3TomQElBBVX5oyP2gZ0IivmP6Kth+D24SdPUQ9eWrmVwvQkS3ZxnFZd
- X0oo+OxOiC3bQp4isCXkASmLapv2eu1EHD85MmVQT+LsGmoaf8YqxersoZeeTZv9RjNw jA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kjj148vpt-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Oct 2022 21:49:46 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29VLnkvN003739
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Oct 2022 21:49:46 GMT
-Received: from [10.110.115.41] (10.80.80.8) by nasanex01b.na.qualcomm.com
+        Mon, 31 Oct 2022 17:59:01 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FF69140D0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 14:58:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1667253539; x=1698789539;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=aqLEGr3U3WnfEfbfQlPB2KHmwE3MLBwA9bUK+nByZCc=;
+  b=aPFoePfEhmOc1yQgFJem6hXdRGNAZ/l2YLWngYZ/fmC52Qhu46JLRTGJ
+   GXaW73M5r+Qo2ahPaW47lNfPKTaMnt1KcwGH28jLzUCb7uVrfxK/jXkY/
+   6XMYsfDPx5HDfZlCbpdosLt54DOinASD9wzP0iet5jxl2qQ6bX8wNzBzw
+   4=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 31 Oct 2022 14:58:58 -0700
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Oct 2022 14:58:58 -0700
+Received: from [10.71.111.47] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 31 Oct
- 2022 14:49:45 -0700
-Message-ID: <d109cbdf-1b0e-ff67-879c-d0955da4898e@quicinc.com>
-Date:   Mon, 31 Oct 2022 14:49:45 -0700
+ 2022 14:58:58 -0700
+Message-ID: <2ce98d20-097f-be48-5411-feba5e3bfef5@quicinc.com>
+Date:   Mon, 31 Oct 2022 14:58:58 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.2
-Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
+Subject: Re: [RFC PATCH 1/3] drm: Introduce color fill properties for drm
+ plane
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20221026200429.162212-1-quic_molvera@quicinc.com>
- <20221026200429.162212-4-quic_molvera@quicinc.com>
- <ae4b2333-d243-17ee-1ebd-6b1c89eef9f3@linaro.org>
-From:   Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <ae4b2333-d243-17ee-1ebd-6b1c89eef9f3@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <freedreno@lists.freedesktop.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <robdclark@gmail.com>, <seanpaul@chromium.org>,
+        <swboyd@chromium.org>, <quic_abhinavk@quicinc.com>,
+        <contact@emersion.fr>, <daniel.vetter@ffwll.ch>,
+        <laurent.pinchart@ideasonboard.com>
+References: <20221028225952.160-1-quic_jesszhan@quicinc.com>
+ <20221028225952.160-2-quic_jesszhan@quicinc.com>
+ <eddf4726-3d7e-601a-51ac-03adb2dd822b@linaro.org>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <eddf4726-3d7e-601a-51ac-03adb2dd822b@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 1q56z4J4NQ0pGJ5Bvl_v_sObOSMBFZd6
-X-Proofpoint-GUID: 1q56z4J4NQ0pGJ5Bvl_v_sObOSMBFZd6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-31_21,2022-10-31_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- phishscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0 mlxscore=0
- bulkscore=0 mlxlogscore=999 impostorscore=0 malwarescore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
- definitions=main-2210310135
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,145 +70,184 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/27/2022 8:21 AM, Krzysztof Kozlowski wrote:
-> On 26/10/2022 16:04, Melody Olvera wrote:
->> Add the base DTSI files for QDU1000 and QRU1000 SoCs, including base
->> descriptions of CPUs, GCC, RPMHCC, QUP, TLMM, and interrupt-controller
->> to boot to shell with console on these SoCs.
+On 10/29/2022 4:23 AM, Dmitry Baryshkov wrote:
+> On 29/10/2022 01:59, Jessica Zhang wrote:
+>> Add support for COLOR_FILL and COLOR_FILL_FORMAT properties for
+>> drm_plane. In addition, add support for setting and getting the values
+>> of these properties.
 >>
->> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>> COLOR_FILL represents the color fill of a plane while COLOR_FILL_FORMAT
+>> represents the format of the color fill. Userspace can set enable solid
+>> fill on a plane by assigning COLOR_FILL to a uint64_t value, assigning
+>> the COLOR_FILL_FORMAT property to a uint32_t value, and setting the
+>> framebuffer to NULL.
+> 
+> I suppose that COLOR_FILL should override framebuffer rather than 
+> requiring that FB is set to NULL. In other words, if color_filL_format 
+> is non-zero, it would make sense to ignore the FB. Then one can use the 
+> color_fill_format property to quickly switch between filled plane and 
+> FB-backed one.
+
+Hey Dmitry,
+
+I think this is a good idea -- acked.
+
+> 
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 >> ---
->>  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 1406 +++++++++++++++++++++++++
-> Please use scripts/get_maintainers.pl to get a list of necessary people
-> and lists to CC.  It might happen, that command when run on an older
-> kernel, gives you outdated entries.  Therefore please be sure you base
-> your patches on recent Linux kernel.
-Sure thing; we talked about this on a different patch.
->
->>  arch/arm64/boot/dts/qcom/qru1000.dtsi |   27 +
->>  2 files changed, 1433 insertions(+)
->>  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000.dtsi
->>  create mode 100644 arch/arm64/boot/dts/qcom/qru1000.dtsi
+>>   drivers/gpu/drm/drm_atomic_uapi.c |  8 +++++++
+>>   drivers/gpu/drm/drm_blend.c       | 38 +++++++++++++++++++++++++++++++
+>>   include/drm/drm_blend.h           |  2 ++
+>>   include/drm/drm_plane.h           | 28 +++++++++++++++++++++++
+>>   4 files changed, 76 insertions(+)
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
->> new file mode 100644
->> index 000000000000..76474106e931
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
->> @@ -0,0 +1,1406 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +/*
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
-> (...)
->
+>> diff --git a/drivers/gpu/drm/drm_atomic_uapi.c 
+>> b/drivers/gpu/drm/drm_atomic_uapi.c
+>> index 79730fa1dd8e..e1664463fca4 100644
+>> --- a/drivers/gpu/drm/drm_atomic_uapi.c
+>> +++ b/drivers/gpu/drm/drm_atomic_uapi.c
+>> @@ -544,6 +544,10 @@ static int drm_atomic_plane_set_property(struct 
+>> drm_plane *plane,
+>>           state->src_w = val;
+>>       } else if (property == config->prop_src_h) {
+>>           state->src_h = val;
+>> +    } else if (property == plane->color_fill_format_property) {
+>> +        state->color_fill_format = val;
+>> +    } else if (property == plane->color_fill_property) {
+>> +        state->color_fill = val;
+>>       } else if (property == plane->alpha_property) {
+>>           state->alpha = val;
+>>       } else if (property == plane->blend_mode_property) {
+>> @@ -616,6 +620,10 @@ drm_atomic_plane_get_property(struct drm_plane 
+>> *plane,
+>>           *val = state->src_w;
+>>       } else if (property == config->prop_src_h) {
+>>           *val = state->src_h;
+>> +    } else if (property == plane->color_fill_format_property) {
+>> +        *val = state->color_fill_format;
+>> +    } else if (property == plane->color_fill_property) {
+>> +        *val = state->color_fill;
+>>       } else if (property == plane->alpha_property) {
+>>           *val = state->alpha;
+>>       } else if (property == plane->blend_mode_property) {
+>> diff --git a/drivers/gpu/drm/drm_blend.c b/drivers/gpu/drm/drm_blend.c
+>> index b4c8cab7158c..b8c2b263fa51 100644
+>> --- a/drivers/gpu/drm/drm_blend.c
+>> +++ b/drivers/gpu/drm/drm_blend.c
+>> @@ -616,3 +616,41 @@ int drm_plane_create_blend_mode_property(struct 
+>> drm_plane *plane,
+>>       return 0;
+>>   }
+>>   EXPORT_SYMBOL(drm_plane_create_blend_mode_property);
 >> +
->> +	soc: soc@0 {
->> +		#address-cells = <2>;
->> +		#size-cells = <2>;
->> +		ranges = <0 0 0 0 0x10 0>;
->> +		dma-ranges = <0 0 0 0 0x10 0>;
->> +		compatible = "simple-bus";
+>> +int drm_plane_create_color_fill_property(struct drm_plane *plane)
+>> +{
+>> +    struct drm_property *prop;
 >> +
->> +		gcc: clock-controller@80000 {
->> +			compatible = "qcom,gcc-qdu1000", "syscon";
->> +			reg = <0x0 0x80000 0x0 0x1f4200>;
->> +			#clock-cells = <1>;
->> +			#reset-cells = <1>;
->> +			#power-domain-cells = <1>;
->> +			clocks = <&rpmhcc RPMH_CXO_CLK>, <&sleep_clk>;
->> +			clock-names = "bi_tcxo", "sleep_clk";
->> +		};
+>> +    prop = drm_property_create_range(plane->dev, 0, "color_fill",
+>> +                     0, 0xffffffff);
+>> +    if (!prop)
+>> +        return -ENOMEM;
 >> +
->> +		gpi_dma0: dma-controller@900000  {
->> +			compatible = "qcom,sm6350-gpi-dma";
-> You should add here a specific compatible as well. Same in other places.
-> All places. I had impression we talked about this few times, so I don't
-> know what is missing on your side.
->
-> This must be:
-> "qcom,qdu1000-gpi-dma", "qcom,sm6350-gpi-dma"
-Got it. I talked to Stephan and he said either your suggestion or just using
-preexisting compatibles would be ok. I thought it might be cleaner to not
-have the qdu compats, but I'm fine either way.
->
->> +			#dma-cells = <3>;
->> +			reg = <0x0 0x900000 0x0 0x60000>;
->> +			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 251 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
->> +			dma-channels = <12>;
->> +			dma-channel-mask = <0x3f>;
->> +			iommus = <&apps_smmu 0xf6 0x0>;
->> +		};
+>> +    drm_object_attach_property(&plane->base, prop, 0);
+>> +    plane->color_fill_property = prop;
 >> +
-> (...)
->
->
+>> +    if (plane->state)
+>> +        plane->state->color_fill = 0;
 >> +
->> +		tlmm: pinctrl@f000000 {
->> +			compatible = "qcom,qdu1000-tlmm";
->> +			reg = <0x0 0xf000000 0x0 0x1000000>;
->> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
->> +			gpio-controller;
->> +			#gpio-cells = <2>;
->> +			interrupt-controller;
->> +			#interrupt-cells = <2>;
->> +			gpio-ranges = <&tlmm 0 0 151>;
->> +			wakeup-parent = <&pdc>;
+>> +    return 0;
+>> +}
+>> +EXPORT_SYMBOL(drm_plane_create_color_fill_property);
 >> +
->> +			qup_uart0_default: qup-uart0-default-state {
->> +				pins = "gpio6", "gpio7", "gpio8", "gpio9";
->> +				function = "qup00";
->> +			};
+>> +int drm_plane_create_color_fill_format_property(struct drm_plane *plane)
+>> +{
+>> +    struct drm_property *prop;
 >> +
->> +			qup_i2c1_data_clk: qup-i2c1-data-clk-state {
->> +				pins = "gpio10", "gpio11";
->> +				function = "qup01";
->> +				drive-strength = <2>;
-> Can we have some generic agreement where to put drive-strengths and bias?
->
-> See also:
-> https://lore.kernel.org/linux-devicetree/20221026200357.391635-2-krzysztof.kozlowski@linaro.org/
->
-> https://lore.kernel.org/lkml/CAD=FV=VUL4GmjaibAMhKNdpEso_Hg_R=XeMaqah1LSj_9-Ce4Q@mail.gmail.com/
-Not sure how much two-sense I have for the conversation at large, but generally I agree with Doug's
-point in the first paragraph. Pulls for this soc are consistent across boards so I don't think it makes
-sense to move them to the board files here. I vote that these stay here.
->
->> +				bias-pull-up;
->> +			};
-> (...)
->
->> +		};
+>> +    prop = drm_property_create_range(plane->dev, 0, "color_fill_format",
+>> +                     0, 0xffffffff);
+>> +    if (!prop)
+>> +        return -ENOMEM;
 >> +
->> +		cpufreq_hw: cpufreq@17d90000 {
->> +			compatible = "qcom,sm8250-cpufreq-epss", "qcom,cpufreq-epss";
-> This is not sm8250...
-Ack.
->
->> +			reg = <0x0 0x17d90000 0x0 0x1000>, <0x0 0x17d91000 0x0 0x1000>;
->> +			reg-names = "freq-domain0", "freq-domain1";
->> +			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
->> +			clock-names = "xo", "alternate";
->> +			#freq-domain-cells = <1>;
->> +		};
+>> +    drm_object_attach_property(&plane->base, prop, 0);
+>> +    plane->color_fill_format_property = prop;
 >> +
->> +		gem_noc: interconnect@19100000 {
->> +			reg = <0x0 0x19100000 0x0 0xB8080>;
->> +			compatible = "qcom,qdu1000-gem-noc";
->> +			#interconnect-cells = <1>;
->> +			qcom,bcm-voters = <&apps_bcm_voter>;
->> +		};
->> +	};
+>> +    if (plane->state)
+>> +        plane->state->color_fill_format = 0;
+> 
+> Don't you also need to reset these properties in 
+> __drm_atomic_helper_plane_state_reset() ?
+
+Ah, yes I believe so -- acked.
+
 Thanks,
-Melody
+
+Jessica Zhang
+
+> 
+>> +
+>> +    return 0;
+>> +}
+>> +EXPORT_SYMBOL(drm_plane_create_color_fill_format_property);
+>> diff --git a/include/drm/drm_blend.h b/include/drm/drm_blend.h
+>> index 88bdfec3bd88..3e96f5e83cce 100644
+>> --- a/include/drm/drm_blend.h
+>> +++ b/include/drm/drm_blend.h
+>> @@ -58,4 +58,6 @@ int drm_atomic_normalize_zpos(struct drm_device *dev,
+>>                     struct drm_atomic_state *state);
+>>   int drm_plane_create_blend_mode_property(struct drm_plane *plane,
+>>                        unsigned int supported_modes);
+>> +int drm_plane_create_color_fill_property(struct drm_plane *plane);
+>> +int drm_plane_create_color_fill_format_property(struct drm_plane 
+>> *plane);
+>>   #endif
+>> diff --git a/include/drm/drm_plane.h b/include/drm/drm_plane.h
+>> index 89ea54652e87..dcbfdb0e1f71 100644
+>> --- a/include/drm/drm_plane.h
+>> +++ b/include/drm/drm_plane.h
+>> @@ -116,6 +116,20 @@ struct drm_plane_state {
+>>       /** @src_h: height of visible portion of plane (in 16.16) */
+>>       uint32_t src_h, src_w;
+>> +    /**
+>> +     * @color_fill_format:
+>> +     * Format of the color fill value.
+>> +     */
+>> +    uint32_t color_fill_format;
+>> +
+>> +    /**
+>> +     * @color_fill:
+>> +     * Fill color of the plane with 0 as black and 0xffffffff as white.
+>> +     * Can be set by user by setting the COLOR_FILL property. See
+>> +     * drm_plane_create_color_fill_property() for more details.
+>> +     */
+>> +    uint32_t color_fill;
+>> +
+>>       /**
+>>        * @alpha:
+>>        * Opacity of the plane with 0 as completely transparent and 
+>> 0xffff as
+>> @@ -699,6 +713,20 @@ struct drm_plane {
+>>        */
+>>       struct drm_plane_state *state;
+>> +    /*
+>> +     * @color_fill_format_property:
+>> +     * Optional color fill format property for this plane. See
+>> +     * drm_plane_create_color_fill_format_property().
+>> +     */
+>> +    struct drm_property *color_fill_format_property;
+>> +
+>> +    /*
+>> +     * @color_fill_property:
+>> +     * Optional color fill property for this plane. See
+>> +     * drm_plane_create_color_fill_property().
+>> +     */
+>> +    struct drm_property *color_fill_property;
+>> +
+>>       /**
+>>        * @alpha_property:
+>>        * Optional alpha property for this plane. See
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
