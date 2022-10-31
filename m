@@ -2,96 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC6EA613723
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 13:57:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 31011613804
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 14:28:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231273AbiJaM5D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 08:57:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38762 "EHLO
+        id S230189AbiJaN2U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 09:28:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231236AbiJaM5C (ORCPT
+        with ESMTP id S229686AbiJaN2T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 08:57:02 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F557FD15;
-        Mon, 31 Oct 2022 05:57:01 -0700 (PDT)
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 9E5336602387;
-        Mon, 31 Oct 2022 12:56:59 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1667221020;
-        bh=qUMc+7j+1tBRezz89d7ayJZy1Z0iXhHJQcr9IuHgvBI=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=PBV+TEZ4Tf6RzSZfbnD6LD13qW50nJpafAra+k9BQPUBPQOuOXs8nank8YVH8BUBA
-         EYmMTU0+tl/xgvyN9YSKe7VYAfg4WbRfJnppgkomKaakhXV9hn0LLUgvFJFFAO32Si
-         Cm3fXx/6HYpu9OxKWhWQ8+6E8KnuNwCvg3H1sEi2mLs5pdK1c7HKzoRLIN53R9GOzv
-         qVlvdUA0IgJTq3sMh3jR2whXpQ1mhUPGtGimQSlxELmAUMBuZ0EAlktFUlavK4X2XH
-         y199cnJi4axyL0cDtg1xfxezsPskgORKzsOOUAMWL+Oq468LMkGFUVDVFfyGmpYfEN
-         y3SDpkVdx/Hhg==
-Message-ID: <30e04ec6-3702-0b56-d475-365974fa04a6@collabora.com>
-Date:   Mon, 31 Oct 2022 13:56:57 +0100
+        Mon, 31 Oct 2022 09:28:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B94910045
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 06:27:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1667222838;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=GwqNSS0OJIleR6uoXEXg4AgYpmJqcWP2KGT201SIVMg=;
+        b=W0vqrJETrrXTqQoG3vpBmoqKSRrJS1/Jq7LTpPu+mO9deitZfgbdUDFUfCZ5bixBYlMIUZ
+        GrDC02uosAahqXIn6bqCVSZB6T87vh0yNDdytr1uBX2vmgQpsTb5GxCpQz186gv0yM5s91
+        Ju+RHUdGinbYv4UwP1yzMQLflk8HTSQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-671-3YkNkfWbM_-zOC2abgNSnQ-1; Mon, 31 Oct 2022 09:27:17 -0400
+X-MC-Unique: 3YkNkfWbM_-zOC2abgNSnQ-1
+Received: by mail-wm1-f72.google.com with SMTP id p9-20020a1c7409000000b003cf670dad6eso744881wmc.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 06:27:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GwqNSS0OJIleR6uoXEXg4AgYpmJqcWP2KGT201SIVMg=;
+        b=mYZgJ8am0AqwsVJ0/o1qlwk9vKVrWqkhC2PY/1B4SBUTIrLE7MQqDC3tbV9riw7Jr6
+         QJkcNiTkVjz9kR7F66Xhcu2VPJCxEMw6ntz+TC7Ik4wSgXeI61QS0+TLRtv4ExCYtWkU
+         iZInOFIHnc+azNO3Wr/RBXI+gvq/aziGakUYprJvxvzb+Gl1gG9e1BFoD5+uF3srCsBy
+         6L/S6s9V4jW1bWM3AdE+e8Uz5qIJINVUIqdhTgaHU9s+C1AcSN8/La8g7FK78JJgt6Y2
+         QtAmmZMTo/KZ5aae2q5MQcM+ns7IWjiL3aKIfgbX3lYVhkjL+7SBWClOpxNJVWtufBWN
+         7O8g==
+X-Gm-Message-State: ACrzQf1uwZHQEaJho+5uTYVZKRcdGDUMFUnHDWjko0casL+FXaU0lIOo
+        6zhiZUJNYSjRvo9DQ6D5E0iNhSb4yrrSZ1C1Q6eoqYtSkMWJPRVgKEFxR39mmDeKDxbtTL92+Uf
+        041oMSrZky8bOOmeyya8tPmKp4A==
+X-Received: by 2002:adf:ec8a:0:b0:236:5b80:da83 with SMTP id z10-20020adfec8a000000b002365b80da83mr7858623wrn.509.1667222835978;
+        Mon, 31 Oct 2022 06:27:15 -0700 (PDT)
+X-Google-Smtp-Source: AMsMyM4XoYVkE5jE7vlhuKQ/BuqMv6qQj/pE66jVA36/qVXv1WZdIDiMFN0/ixJs2zjwBzGxtBPgyA==
+X-Received: by 2002:adf:ec8a:0:b0:236:5b80:da83 with SMTP id z10-20020adfec8a000000b002365b80da83mr7858599wrn.509.1667222835772;
+        Mon, 31 Oct 2022 06:27:15 -0700 (PDT)
+Received: from [192.168.1.130] (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
+        by smtp.gmail.com with ESMTPSA id bg37-20020a05600c3ca500b003b477532e66sm25116881wmb.2.2022.10.31.06.27.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 31 Oct 2022 06:27:15 -0700 (PDT)
+Message-ID: <0fe3974c-de66-9eaa-b56a-ed1d07644e4c@redhat.com>
+Date:   Mon, 31 Oct 2022 14:27:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH 8/8] arm64: dts: qcom: sc7180-trogdor: Remove VBAT supply
- from rt5682s
+ Thunderbird/102.3.1
+Subject: Re: [PATCH v2 14/21] drm/fb-helper: Rename
+ drm_fb_helper_unregister_fbi() to use _info postfix
 Content-Language: en-US
-To:     =?UTF-8?B?TsOtY29sYXMgRi4gUi4gQS4gUHJhZG8=?= 
-        <nfraprado@collabora.com>, Mark Brown <broonie@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     kernel@collabora.com, Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221028205540.3197304-1-nfraprado@collabora.com>
- <20221028205540.3197304-9-nfraprado@collabora.com>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20221028205540.3197304-9-nfraprado@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+To:     Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
+        airlied@gmail.com, sam@ravnborg.org, mripard@kernel.org,
+        maarten.lankhorst@linux.intel.com
+Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        linux-aspeed@lists.ozlabs.org,
+        linux-arm-kernel@lists.infradead.org,
+        etnaviv@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
+        linux-hyperv@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mips@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        spice-devel@lists.freedesktop.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org
+References: <20221024111953.24307-1-tzimmermann@suse.de>
+ <20221024111953.24307-15-tzimmermann@suse.de>
+From:   Javier Martinez Canillas <javierm@redhat.com>
+In-Reply-To: <20221024111953.24307-15-tzimmermann@suse.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 28/10/22 22:55, Nícolas F. R. A. Prado ha scritto:
-> These devicetrees override a rt5682 node to use the rt5682s compatible,
-> however, unlike rt5682, rt5682s doesn't have a VBAT supply. Remove the
-> inexistent supply in the rt5682s nodes.
+On 10/24/22 13:19, Thomas Zimmermann wrote:
+> Rename drm_fb_helper_unregister_fbi() to drm_fb_helper_unregister_info()
+> as part of unifying the naming within fbdev helpers. Adapt drivers. No
+> functional changes.
 > 
-> Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 > ---
-> 
->   arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi          | 1 +
->   .../dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts     | 1 +
->   .../dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts     | 1 +
->   3 files changed, 3 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-> index 74f0e07ea5cf..e0fb83a9a0b1 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtsi
-> @@ -11,6 +11,7 @@
->   
->   &alc5682 {
->   	compatible = "realtek,rt5682s";
-> +	/delete-property/ VBAT-supply;
 
-I really dislike seeing /delete-property/ but I don't know if changing all of the
-non-kingoftown and non-wormdingler devicetrees is worth the noise...
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
 
-Any strong opinions on that?
+-- 
+Best regards,
 
-Regards,
-Angelo
+Javier Martinez Canillas
+Core Platforms
+Red Hat
 
