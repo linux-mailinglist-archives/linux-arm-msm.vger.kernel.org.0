@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6064161395A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 15:51:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D433613973
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 15:57:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231705AbiJaOvO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 10:51:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60456 "EHLO
+        id S231732AbiJaO47 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 10:56:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231707AbiJaOvG (ORCPT
+        with ESMTP id S230348AbiJaO45 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 10:51:06 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D24FD11146
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 07:51:03 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id l22-20020a17090a3f1600b00212fbbcfb78so16130851pjc.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 07:51:03 -0700 (PDT)
+        Mon, 31 Oct 2022 10:56:57 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC66011147
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 07:56:56 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id y13so10885644pfp.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 07:56:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=LgaSg3YilW0bY3wb0PfV4C2o6RkFEiky2r/QW3cr95Q=;
-        b=NDX+/pbFibStxDbfcIKfe9Cw1g+cwYVRJeqt5kJcdCi5TKhYHmo+n1CuKGLOqdKfP2
-         GdYXCuDUGPno200z7QLnM/0kZI3H5VtIGCuXDrXLNUNoi1M2H7/GPm2ZTE8W0aH7TMj0
-         2tg8a9Z5lQ+FMlKEPqjqhyENTtWE85NpEIDSIQSy0kdA8zvhUXrZq7P230w0EUmx4r2C
-         N8omqUJH8CmYmXeGofaell5BDTX/4R/PRuQmsHkJ3lr7MCScv4rPvYORfr15pG6v+YTy
-         G9+RyL2zZJIZSW+V63spiZ9cxugZvL2X5UkIVxh7I1Ql+dc9vayvpM86NFJYW/rt46uU
-         J+8A==
+        bh=qfRWCQkOBm2MxnVgDK5v0Vn9xRjDYCGceLE5mq8RAWI=;
+        b=stVuBKmZrU7+ei+AFFBE+eKP4PINriYNYY5RsQGv1tc+A6WJ/s7pAKdcc7QZYF4+XO
+         QWS2lLzveBESkZroA6tZEavUJE03g62quWyzPY0QbB9S9Fn4ePHiMyvv7qiHILct2ilD
+         +dmu15gA+VXLxciUsRlhZw65iOYkZ6Lk8j36WixjIHf+1eqf+RajjtP3DfofZztb2SQc
+         0tBimU3mNeMZKv1ZT0LOkiQcQA9AY5OIQscOmqH2B3+LT8oxNq75BZKMlT3L6gep76Uv
+         NQGPc+iBjB+3bAG7L9vnZBqtR9QbTby81m4+c1vAT3Ir6uWvpVrzAMV800H5ZUQjoymv
+         KBAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LgaSg3YilW0bY3wb0PfV4C2o6RkFEiky2r/QW3cr95Q=;
-        b=cWP2B4n46gGd2D/jIbpPtiKJUAbwDpFfvHG1vEXm8sYVJCYV67TYzlZEgvfr70a7SQ
-         ihYJBBRs50NHZ/dWEuO8xS0eUbzeLMCr9pHq4pHEy0y+VMhDXdP4zyuiZStXRelSOJmT
-         PQSnPoolHWgBKIjSP0v3GhRrzLv1RNbVoiKwOZAjKs9bSd5Sgb+Nus/fosIVfhwnodNL
-         BXkSMZZTqsaRxg/bKJmk59WxNHRuUDIH8E1yeWaFmMPTXr8/VMgafcMZ7LvrTiYMD13b
-         yYDbmG57m69e9jHp6HYFOFoXhLJIoTGKnfZC9tTKokgpHbzHi9sgk/dECo8+56Q/lXnn
-         g8CA==
-X-Gm-Message-State: ACrzQf2qvnaR9rQVqyhoszyzu4JS92LfeZI4VuJHekogHLVvw0U4sncD
-        Dwj/6O/Yvuow4NqRGpu+Afc0
-X-Google-Smtp-Source: AMsMyM6Ca2btqqaMDtFBtgxJEd4UJ/gTOBby0iJg7mkBNzulg11Wh9oaaSrw15z7NN+qZrNYh7rIuQ==
-X-Received: by 2002:a17:90a:e606:b0:212:f100:22e3 with SMTP id j6-20020a17090ae60600b00212f10022e3mr32735016pjy.83.1667227863165;
-        Mon, 31 Oct 2022 07:51:03 -0700 (PDT)
+        bh=qfRWCQkOBm2MxnVgDK5v0Vn9xRjDYCGceLE5mq8RAWI=;
+        b=COaj63TUkmWanIrqeCceQuEB2C2Ykf/WCd8h0K4yGM1kX8yqU5jHtqtUdahiD6ccJF
+         K0GO8R4Gjb3aSpPSGJe62grPvWLyIKNWF79S2/0DVFWxbpaWdvf+Ll+sYTHO1Pxec13+
+         J3PqJ8ub+p/la55L3KVhPEqv+RBr91jQX9kMZcLA1dBbR5UdkeB3KX060fENWOtCoUic
+         rHKlTGZVnxMasP7l82Hsr8Saqa7gJstlyL3ISQGM3WUqLB2f2En2SbqTnHMRc7hDQOm3
+         8Ot+bQzXnY/p7Be4L2e5sFlOBK/L1DO7VCeV54db5dfjxeRHC0DOMZdKgIAdMFkwwJJK
+         E85Q==
+X-Gm-Message-State: ACrzQf0ClurjRtecLjKwjTDwsFhYS8obotwqtBNitIjQIJLwbN4P0kSj
+        +aHiVI0wdvq6BQWNWFu3toDc
+X-Google-Smtp-Source: AMsMyM7SHU/9duW/QueVKxebwPeGGo51l3TZSSc9aXZpBWMnn19DzLxyNQfHIvbOJuiSkwcMuVYOrw==
+X-Received: by 2002:a05:6a00:230f:b0:53e:2c2c:5c03 with SMTP id h15-20020a056a00230f00b0053e2c2c5c03mr14699448pfh.11.1667228216041;
+        Mon, 31 Oct 2022 07:56:56 -0700 (PDT)
 Received: from thinkpad ([117.193.209.221])
-        by smtp.gmail.com with ESMTPSA id l6-20020a622506000000b0056c08c87196sm4705475pfl.48.2022.10.31.07.50.56
+        by smtp.gmail.com with ESMTPSA id m12-20020a17090a414c00b002135fdfa995sm4235595pjg.25.2022.10.31.07.56.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Oct 2022 07:51:01 -0700 (PDT)
-Date:   Mon, 31 Oct 2022 20:20:51 +0530
+        Mon, 31 Oct 2022 07:56:54 -0700 (PDT)
+Date:   Mon, 31 Oct 2022 20:26:47 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
@@ -60,17 +60,17 @@ Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-scsi@vger.kernel.org
-Subject: Re: [PATCH 12/15] scsi: ufs: ufs-qcom: Fix the Qcom register name
- for offset 0xD0
-Message-ID: <20221031145051.GB10515@thinkpad>
+Subject: Re: [PATCH 14/15] scsi: ufs: ufs-qcom: Add support for finding HS
+ gear on new UFS versions
+Message-ID: <20221031145647.GC10515@thinkpad>
 References: <20221029141633.295650-1-manivannan.sadhasivam@linaro.org>
- <20221029141633.295650-13-manivannan.sadhasivam@linaro.org>
- <9c1ca51d-2202-8279-cecb-12792385b18d@linaro.org>
+ <20221029141633.295650-15-manivannan.sadhasivam@linaro.org>
+ <cf8dcf53-f131-68f4-c6aa-d41e02ac6d5c@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <9c1ca51d-2202-8279-cecb-12792385b18d@linaro.org>
+In-Reply-To: <cf8dcf53-f131-68f4-c6aa-d41e02ac6d5c@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -81,40 +81,126 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Oct 30, 2022 at 01:06:20AM +0300, Dmitry Baryshkov wrote:
+On Sun, Oct 30, 2022 at 12:48:21AM +0300, Dmitry Baryshkov wrote:
 > On 29/10/2022 17:16, Manivannan Sadhasivam wrote:
-> > Fix the register name used for offset 0xD0. The correct name is
-> > REG_UFS_PARAM0.
+> > Starting from UFS controller v4, Qcom supports dual gear mode (i.e., the
+> > controller/PHY can be configured to run in two gear speeds). But that
+> > requires an agreement between the UFS controller and the UFS device.
+> > This commit finds the max gear supported by both controller and device
+> > then decides which one to use.
+> > 
+> > UFS controller's max gear can be read from the REG_UFS_PARAM0 register and
+> > UFS device's max gear can be read from the "max-gear" devicetree property.
+> > 
+> > The UFS PHY also needs to be configured with the decided gear using the
+> > phy_set_mode_ext() API.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >   drivers/ufs/host/ufs-qcom.c | 35 ++++++++++++++++++++++++++++++++---
+> >   drivers/ufs/host/ufs-qcom.h |  4 ++++
+> >   2 files changed, 36 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> > index f952cc76919f..268463e92d67 100644
+> > --- a/drivers/ufs/host/ufs-qcom.c
+> > +++ b/drivers/ufs/host/ufs-qcom.c
+> > @@ -281,6 +281,9 @@ static int ufs_qcom_host_reset(struct ufs_hba *hba)
+> >   static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba, u32 hs_gear)
+> >   {
+> >   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> > +	struct device *dev = hba->dev;
+> > +	u32 max_gear, hcd_max_gear, reg;
+> > +	int ret;
+> >   	if (host->hw_ver.major == 0x1) {
+> >   		/*
+> > @@ -292,8 +295,33 @@ static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba, u32 hs_gear)
+> >   		 */
+> >   		if (hs_gear > UFS_HS_G2)
+> >   			return UFS_HS_G2;
+> > +	} else if (host->hw_ver.major > 0x3) {
+> > +		/*
+> > +		 * Starting from UFS controller v4, Qcom supports dual gear mode (i.e., the
+> > +		 * controller/PHY can be configured to run in two gear speeds). But that
+> > +		 * requires an agreement between the UFS controller and the device. Below
+> > +		 * code tries to find the max gear of both and decides which gear to use.
+> > +		 *
+> > +		 * First get the max gear supported by the UFS device if available.
+> > +		 * If the property is not defined in devicetree, then use the default gear.
+> > +		 */
+> > +		ret = of_property_read_u32(dev->of_node, "max-gear", &max_gear);
+> > +		if (ret)
+> > +			goto err_out;
 > 
-> The vendor kernels starting from 3.10 define this register as
-> RETRY_TIMER_REG (but it is unused). I'd suggest adding a comment about the
-> older register name.
+> Can we detect the UFS device's max gear somehow? If not, the 'max-gear'
+> property name doesn't sound good. Maybe calling it 'device-gear' would be
+> better.
 > 
 
-Makes sense to me.
+UFS device probing depends on PHY init sequence. So technically we cannot know
+the max gear of the device without using an init sequence, but this information
+is static and should be known to a board manufacturer. That's why I decided to
+use this property. Another option is to use a fixed init sequence for probing
+the device and do a re-init after knowing it's max gear but that is not
+recommended.
+
+We need "max" keyword because this property specifies the maximum gear at which
+the device could operate and not necessarily the gear at which it operates.
+Maybe, "max-device-gear" would make it clear.
 
 Thanks,
 Mani
 
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >   drivers/ufs/host/ufs-qcom.h | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
+> > +
+> > +		/* Next get the max gear supported by the UFS controller */
+> > +		reg = ufshcd_readl(hba, REG_UFS_PARAM0);
+> > +		hcd_max_gear = UFS_QCOM_MAX_GEAR(reg);
+> > +
+> > +		/*
+> > +		 * Now compare both the gears. If the max gear supported by the UFS device
+> > +		 * is compatible with UFS controller, then use the UFS device's max gear
+> > +		 * speed. Otherwise, use the UFS controller supported max gear speed.
+> > +		 */
+> > +		return (max_gear <= hcd_max_gear) ? max_gear : hcd_max_gear;
+> 
+> return max(max_gear, hcd_max_gear); ?
+> 
+> >   	}
+> > +err_out:
+> >   	/* Default is HS-G3 */
+> >   	return UFS_HS_G3;
+> >   }
+> > @@ -303,7 +331,7 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+> >   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> >   	struct phy *phy = host->generic_phy;
+> >   	int ret;
+> > -	bool is_rate_B = UFS_QCOM_LIMIT_HS_RATE == PA_HS_MODE_B;
+> > +	u32 hs_gear;
+> >   	/* Reset UFS Host Controller and PHY */
+> >   	ret = ufs_qcom_host_reset(hba);
+> > @@ -311,8 +339,9 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+> >   		dev_warn(hba->dev, "%s: host reset returned %d\n",
+> >   				  __func__, ret);
+> > -	if (is_rate_B)
+> > -		phy_set_mode(phy, PHY_MODE_UFS_HS_B);
+> > +	/* UFS_HS_G2 is used here since that's the least gear supported by legacy Qcom platforms */
+> > +	hs_gear = ufs_qcom_get_hs_gear(hba, UFS_HS_G2);
+> > +	phy_set_mode_ext(phy, PHY_MODE_UFS_HS_B, hs_gear);
+> >   	/* phy initialization - calibrate the phy */
+> >   	ret = phy_init(phy);
 > > diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-> > index 6cb0776456b3..214ea50acab9 100644
+> > index 214ea50acab9..c93bc52ea848 100644
 > > --- a/drivers/ufs/host/ufs-qcom.h
 > > +++ b/drivers/ufs/host/ufs-qcom.h
-> > @@ -33,7 +33,7 @@ enum {
-> >   	REG_UFS_TX_SYMBOL_CLK_NS_US         = 0xC4,
-> >   	REG_UFS_LOCAL_PORT_ID_REG           = 0xC8,
-> >   	REG_UFS_PA_ERR_CODE                 = 0xCC,
-> > -	REG_UFS_RETRY_TIMER_REG             = 0xD0,
-> > +	REG_UFS_PARAM0                      = 0xD0,
-> >   	REG_UFS_PA_LINK_STARTUP_TIMER       = 0xD8,
-> >   	REG_UFS_CFG1                        = 0xDC,
-> >   	REG_UFS_CFG2                        = 0xE0,
+> > @@ -89,6 +89,10 @@ enum {
+> >   #define TMRLUT_HW_CGC_EN	BIT(6)
+> >   #define OCSC_HW_CGC_EN		BIT(7)
+> > +/* bit definitions for REG_UFS_PARAM0 */
+> > +#define MAX_HS_GEAR_MASK	GENMASK(6, 4)
+> > +#define UFS_QCOM_MAX_GEAR(x)	FIELD_GET(MAX_HS_GEAR_MASK, (x))
+> > +
+> >   /* bit definition for UFS_UFS_TEST_BUS_CTRL_n */
+> >   #define TEST_BUS_SUB_SEL_MASK	GENMASK(4, 0)  /* All XXX_SEL fields are 5 bits wide */
 > 
 > -- 
 > With best wishes
