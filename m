@@ -2,116 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB117613E2E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 20:25:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 291A2613E41
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Oct 2022 20:32:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230041AbiJaTZG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 15:25:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44118 "EHLO
+        id S229668AbiJaTc3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 15:32:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229691AbiJaTZF (ORCPT
+        with ESMTP id S229515AbiJaTc2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 15:25:05 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6578D13DF1;
-        Mon, 31 Oct 2022 12:25:04 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 29VIsrZV003836;
-        Mon, 31 Oct 2022 19:24:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=Pc5EVDHtm6VBnIfyigRm+fWGfdtfPod7VeY/RMb84xE=;
- b=F0t1bGMh6JtUc3m13A5ca3En/svens7pzbZFwWpUCIGDUiOxTs+Oo4ZW4qDu0lqmHbFg
- PRft0fto0ZI1KJVxEG8Q3oR/2eIlnyraKC5u+P7qVn7UJP6V02vF4plkxllhCLf5wNeh
- ifQVOjQhUDIy9kZZLu+MZjYXGF9x5PzE9ZPCSwTymWFy8UFzCuq6DlEPq+8DNQVTMdMQ
- 7aCNJmQBLFUBip5iWKBfjbnXqWcLdaWX9Dt/m+2EYChcPvu/B5lnPahQd5UkTPKTJz6+
- 9ZnsMiibpD7pUtAr5hjDouXQvN7d3pwNCDIKnkCnS4n5lo8OvL8/FGNYPfrY1sTr6UJb RA== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kj7tx2k17-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Oct 2022 19:24:37 +0000
-Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 29VJOaZD015939
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 31 Oct 2022 19:24:36 GMT
-Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Mon, 31 Oct 2022 12:24:35 -0700
-Date:   Mon, 31 Oct 2022 12:24:35 -0700
-From:   Asutosh Das <quic_asutoshd@quicinc.com>
-To:     Bart Van Assche <bvanassche@acm.org>
-CC:     <quic_cang@quicinc.com>, <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>, <quic_nguyenb@quicinc.com>,
-        <quic_xiaosenh@quicinc.com>, <stanley.chu@mediatek.com>,
-        <eddie.huang@mediatek.com>, <daejun7.park@samsung.com>,
-        <avri.altman@wdc.com>, <mani@kernel.org>, <beanhuo@micron.com>,
-        <quic_richardp@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Jinyoung Choi <j-young.choi@samsung.com>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 07/17] ufs: core: mcq: Calculate queue depth
-Message-ID: <20221031192435.GD9077@asutoshd-linux1.qualcomm.com>
-References: <cover.1666288432.git.quic_asutoshd@quicinc.com>
- <1987fbada1d33c04c9598614ef712e0a48fe065e.1666288432.git.quic_asutoshd@quicinc.com>
- <0fb3f8ae-5ed7-9057-0d2b-8866f36c2441@acm.org>
+        Mon, 31 Oct 2022 15:32:28 -0400
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F27E12A91;
+        Mon, 31 Oct 2022 12:32:27 -0700 (PDT)
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-13b103a3e5dso14572115fac.2;
+        Mon, 31 Oct 2022 12:32:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FVVqsExfMH5y/nVKQLe7SB8sVIcEpxDpkI7AXNSICDk=;
+        b=Wr7MBfjPF55f/OurVVews0fyZU2z1qQyI1SjwIWIm9Q/s8XUr0Ump4zBf9x70QmveT
+         9YugaI79zXjikHjyOO+RiIK83zXQ201rOyoG5qCUEf7OOSfJSW8igoAGG+IobHjy1LTV
+         UzIepa8+tvRK4OpxoZHUXCjpeLtvsk8aytdkbBU58VLAulDzI0tefWRA90dAmN2/ukmY
+         FekXMFYEJRctbwG9fAKqjCwJiURTum95xB7M4nn4XC/tZ83Ec7qGs65DY/ILIoJyBs0E
+         GB7nifSgCvyY6pp4WwqkvnoUD6MOlEyKzWy2HiX3HAL20HoMGrAPdJUDlQYgh4FV+p9E
+         q4ww==
+X-Gm-Message-State: ACrzQf1Sp5e/LeHYpqPxBUyVBZu4UtXrM3sSzjzpu4Q03jxbTYGOEfn1
+        cndMi4KANCa6bpcCkkfNSA==
+X-Google-Smtp-Source: AMsMyM51Ay/CK4pAwfGf+l/L2CO2NolCQmH5Ou1KvFFhPO09DUo2mDuk+qqH803TerpG8A6bPcDstw==
+X-Received: by 2002:a05:6870:d78c:b0:136:ddfe:bf16 with SMTP id bd12-20020a056870d78c00b00136ddfebf16mr8358187oab.86.1667244744371;
+        Mon, 31 Oct 2022 12:32:24 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id m33-20020a056870562100b0012779ba00fesm3512244oao.2.2022.10.31.12.32.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Oct 2022 12:32:23 -0700 (PDT)
+Received: (nullmailer pid 3293099 invoked by uid 1000);
+        Mon, 31 Oct 2022 19:32:25 -0000
+Date:   Mon, 31 Oct 2022 14:32:25 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Miquel Raynal <miquel.raynal@bootlin.com>
+Cc:     Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Tudor Ambarus <Tudor.Ambarus@microchip.com>,
+        Pratyush Yadav <p.yadav@ti.com>,
+        Michael Walle <michael@walle.cc>,
+        linux-mtd@lists.infradead.org,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        devicetree@vger.kernel.org, Chen-Yu Tsai <wens@csie.org>,
+        Naga Sureshkumar Relli <nagasure@xilinx.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>,
+        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+Subject: Re: [PATCH 01/12] dt-bindings: mtd: Clarify all partition subnodes
+Message-ID: <20221031193225.GA3291000-robh@kernel.org>
+References: <20221028235933.934850-1-miquel.raynal@bootlin.com>
+ <20221028235933.934850-2-miquel.raynal@bootlin.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0fb3f8ae-5ed7-9057-0d2b-8866f36c2441@acm.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: eoCIszkxZxLc1tUxvwMHzAOSyAR5E8eE
-X-Proofpoint-GUID: eoCIszkxZxLc1tUxvwMHzAOSyAR5E8eE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-31_20,2022-10-31_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 malwarescore=0
- mlxlogscore=999 impostorscore=0 suspectscore=0 mlxscore=0 spamscore=0
- adultscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2210310120
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20221028235933.934850-2-miquel.raynal@bootlin.com>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 27 2022 at 14:52 -0700, Bart Van Assche wrote:
->On 10/20/22 11:03, Asutosh Das wrote:
->>+u32 ufshcd_mcq_decide_queue_depth(struct ufs_hba *hba)
->>+{
->>+	u32 qd, val;
->>+	int mac;
->>+
->>+	mac = ufshcd_mcq_vops_get_hba_mac(hba);
->>+	if (mac < 0) {
->>+		val = ufshcd_readl(hba, REG_UFS_MCQ_CFG);
->>+		mac = FIELD_GET(MCQ_CFG_MAC_MASK, val);
->>+	}
->
->According to the UFSHCI 4.0 specification the MAC value is set by the 
->host. Can the above code read the MAC value from the host controller 
->before it has been set by the host? If so, how about leaving out the 
->code that reads the MAC value from the controller and making it 
->mandatory to implement the new get_hba_mac vop?
->
-The reason it is not mandatory to define get_hba_mac vop is UFSHCI 4.0
-specification mentions that the default value of MAC is 32. So even if a vendor
-HC doesn't override the MAC, it'd be 32.
-Hence, the current code first checks for an override, and if there's none uses
-the default value defined in the HC.
+On Sat, Oct 29, 2022 at 01:59:22AM +0200, Miquel Raynal wrote:
+> Over time the various ways to define MTD partitions has evolved. Most of
+> the controllers support several different bindings. Let's define all
+> possible choices in one file and mark the legacy ones deprecated. This
+> way, we can just reference this file and avoid dupplicating these
+> definitions.
+> 
+> Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+> ---
+>  Documentation/devicetree/bindings/mtd/mtd.yaml | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/mtd/mtd.yaml b/Documentation/devicetree/bindings/mtd/mtd.yaml
+> index 25b91f25fcf4..9fcaa61b046c 100644
+> --- a/Documentation/devicetree/bindings/mtd/mtd.yaml
+> +++ b/Documentation/devicetree/bindings/mtd/mtd.yaml
+> @@ -21,7 +21,25 @@ properties:
+>        based name) in order to ease flash device identification and/or
+>        describe what they are used for.
+>  
+> +  partitions:
+> +    type: object
+> +    properties:
+> +      '#address-cells': true
+> +      '#size-cells': true
 
--asd
+These should only be 1 or 2 which I don't think is defined anywhere 
+else.
+
+> +
+> +    patternProperties:
+> +      "partition@[0-9a-f]+":
+> +        $ref: partitions/partition.yaml
+> +
+>  patternProperties:
+> +  "@[0-9a-f]+$":
+> +    $ref: partitions/partition.yaml
+> +    deprecated: true
+> +
+> +  "^partition@[0-9a-f]+":
+> +    $ref: partitions/partition.yaml
+> +    deprecated: true
+> +
+>    "^otp(-[0-9]+)?$":
+>      type: object
+>      $ref: ../nvmem/nvmem.yaml#
+> -- 
+> 2.34.1
+> 
+> 
