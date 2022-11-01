@@ -2,372 +2,360 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF6AA6152A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 21:03:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 936FD6152C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 21:11:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229591AbiKAUDk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Nov 2022 16:03:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48302 "EHLO
+        id S229949AbiKAULy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Nov 2022 16:11:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbiKAUDj (ORCPT
+        with ESMTP id S229939AbiKAULy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Nov 2022 16:03:39 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04B4C1C435;
-        Tue,  1 Nov 2022 13:03:37 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A1JsAui027526;
-        Tue, 1 Nov 2022 20:03:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=rMAQr0h+bK7jIkLU2FgSnd26AU1dkIsaqK/M0szhDsA=;
- b=nbU8tXbmfg/hiFWUT6mvZszKhw9Q9ZLUCPdSmazOjJ+OkfzflloVxMV9YVnVx6PMdy7f
- Z6sKXzi7KllaXjH7xZKMpQrJLxGSeDH00tOyQgPPP+qY0QnjfG8FbgQ3e/YRrhkO95xI
- hCpSSFgajnVt7Qh9Um/Tfm0vNPILUMKjsFrjDiJjXuFi+kHtG3+3NwN4kIeSqPIrBivR
- Vm72k0OCt4fSVj3+tuKlEL/dqyyak844C4Yq+NBK2dX94n0gfKzdAY/S+FBKPglVm+SR
- 5fEZKYwyIQuAj0GECbXqI6RW24joLEB+V51uGC/3zCyl880jPEURdGXl4Jb7xXHNKxEy Lw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kk7qfr9cs-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 01 Nov 2022 20:03:30 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A1K3TlP022580
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 1 Nov 2022 20:03:29 GMT
-Received: from [10.216.52.223] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 1 Nov 2022
- 13:03:24 -0700
-Message-ID: <28c6f233-4386-27e6-7ff4-227e2a126b1e@quicinc.com>
-Date:   Wed, 2 Nov 2022 01:33:21 +0530
+        Tue, 1 Nov 2022 16:11:54 -0400
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5B741C91F
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Nov 2022 13:11:51 -0700 (PDT)
+Received: by mail-il1-x136.google.com with SMTP id g13so8432532ile.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Nov 2022 13:11:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=mLLx1a78lJLl5l4L2ZdRt+V05DeFH5SG+BbEf9OcZfI=;
+        b=yEFW9QmrwZO1asOCR4nbC91yWWwtZNCrZeeaBltP5Jd8lGRPBGBJbnj2Em9IyFMpj1
+         m6JDzRcsdTdiCBqKY1ytkmTANGIVONBBvxbWoJL90fra6/wIusv7RAfEzEiJlZqNpFEn
+         md0u+0CYXA96KxJKJhqgpZdrpeEUuGUZMB1hOA00MKxyIwoa0C2Orr2MemjyNdn/XEOl
+         SOJPmBfxUj7GCeytOkDJKrO8Ev3z9hoXvZyMwwhOjrDjmWt7xGerYTilAbselwkHAkEE
+         aZM2Wbv72cEUyYIbMFKgJixosFU6qZW0KSVxn7vykGGCNV8JVH0neu2ahWMiuj24fmSp
+         kUbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mLLx1a78lJLl5l4L2ZdRt+V05DeFH5SG+BbEf9OcZfI=;
+        b=XLaeQMca5/uJ8KJZyjLQGivFScBasX6pBY9jo6y6seIzo5Jg8VvYvxNNdfef8LySo+
+         h9U0dcCB9jZ+C+Ccl+04JN9Q7vMDs2iCBEPel6qWd8Og9VXXmG6wKqBF9h5o4M9Fx7ax
+         Q6IReEGfX4/uwyutmznRLlXqLnVrYXGMYCrdpQ1nl5sv8JE2/yB+ASYu9n0lakpy3Eim
+         jGj9I+928eruQUisBpKdab2xCv5tWvqqPc3JuxyMbtYdxI9uZE/VFh4p5NetGZelNxGw
+         1Ux2MiV2Ll1LsX/6lfWQFC2DnaiRvkcI1z829Y2ivNBfE+xziKH94+y9ar2QUJcV58Si
+         UrCw==
+X-Gm-Message-State: ACrzQf0hoWjWKX97RHij7ItjT9RSvU2XTWYoPGdDWZvDnPJUSMubKRE5
+        Kg/EAeZ0xog+SHcUNYTKh0xuhMdGxVvCIDgz09QXAA==
+X-Google-Smtp-Source: AMsMyM7ipR4ZQqgkFKCWS6Wywx49XnCwp5+UYa5nnqVbS8oIjvFTSvFS1KRBcAp4cZ0sVwE63PbOAs66L7XyL7lNyeY=
+X-Received: by 2002:a92:cb8c:0:b0:300:7897:1c9e with SMTP id
+ z12-20020a92cb8c000000b0030078971c9emr151444ilo.212.1667333511226; Tue, 01
+ Nov 2022 13:11:51 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH 1/2] drm/msm/adreno: Simplify read64/write64 helpers
-Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>, <dri-devel@lists.freedesktop.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        "Rob Clark" <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "Vladimir Lypak" <vladimir.lypak@gmail.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20221031225414.1280169-1-robdclark@gmail.com>
- <20221031225414.1280169-2-robdclark@gmail.com>
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-In-Reply-To: <20221031225414.1280169-2-robdclark@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: DwWBCP6u2PPsr6Bt85hkWFEOM02Gk2L-
-X-Proofpoint-ORIG-GUID: DwWBCP6u2PPsr6Bt85hkWFEOM02Gk2L-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-01_09,2022-11-01_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 priorityscore=1501 mlxscore=0 adultscore=0 clxscore=1011
- mlxlogscore=999 suspectscore=0 malwarescore=0 bulkscore=0 spamscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211010143
+References: <128dc161-8949-1146-bf8b-310aa33c06a8@quicinc.com>
+ <1663312351-28476-1-git-send-email-quic_aiquny@quicinc.com>
+ <20221012204344.GA1178915@p14s> <792f05fc-995e-9a87-ab7d-bee03f15bc79@quicinc.com>
+ <20221013173442.GA1279972@p14s> <20221013180334.GB1279972@p14s>
+ <8807a9a6-d93d-aef5-15f4-88648a6ecbe2@quicinc.com> <CANLsYkx8Vcha9FpfRvJEkq2pd+mSYFeZQBXj65YoiSBv+WEY4A@mail.gmail.com>
+ <70828854-8427-8ce1-1535-e14261fd122d@quicinc.com> <420faf00-d59e-57c6-55a5-fae08a411517@foss.st.com>
+In-Reply-To: <420faf00-d59e-57c6-55a5-fae08a411517@foss.st.com>
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+Date:   Tue, 1 Nov 2022 14:11:39 -0600
+Message-ID: <CANLsYkw1Ex0TfmG-tRhHJgn3LsdvNhS_6HjJXn=ogwcCOWbH_A@mail.gmail.com>
+Subject: Re: [PATCH v4] remoteproc: core: do pm relax when in RPROC_OFFLINE
+To:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Cc:     "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>,
+        linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_clew@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/1/2022 4:24 AM, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On Fri, 28 Oct 2022 at 09:31, Arnaud POULIQUEN
+<arnaud.pouliquen@foss.st.com> wrote:
 >
-> The _HI reg is always following the _LO reg, so no need to pass these
-> offsets seprately.
+> Hi,
 >
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->   drivers/gpu/drm/msm/adreno/a4xx_gpu.c       |  3 +--
->   drivers/gpu/drm/msm/adreno/a5xx_gpu.c       | 27 ++++++++-------------
->   drivers/gpu/drm/msm/adreno/a5xx_preempt.c   |  4 +--
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c       | 24 ++++++------------
->   drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |  3 +--
->   drivers/gpu/drm/msm/msm_gpu.h               | 12 ++++-----
->   6 files changed, 27 insertions(+), 46 deletions(-)
+> On 10/24/22 05:17, Aiqun(Maria) Yu wrote:
+> > On 10/22/2022 3:34 AM, Mathieu Poirier wrote:
+> >> On Wed, 19 Oct 2022 at 23:52, Aiqun(Maria) Yu <quic_aiquny@quicinc.com> wrote:
+> >>>
+> >>> On 10/14/2022 2:03 AM, Mathieu Poirier wrote:
+> >>>> On Thu, Oct 13, 2022 at 11:34:42AM -0600, Mathieu Poirier wrote:
+> >>>>> On Thu, Oct 13, 2022 at 09:40:09AM +0800, Aiqun(Maria) Yu wrote:
+> >>>>>> Hi Mathieu,
+> >>>>>>
+> >>>>>> On 10/13/2022 4:43 AM, Mathieu Poirier wrote:
+> >>>>>>> Please add what has changed from one version to another, either in a cover
+> >>>>>>> letter or after the "Signed-off-by".  There are many examples on how to
+> >>>>>>> do that
+> >>>>>>> on the mailing list.
+> >>>>>>>
+> >>>>>> Thx for the information, will take a note and benefit for next time.
+> >>>>>>
+> >>>>>>> On Fri, Sep 16, 2022 at 03:12:31PM +0800, Maria Yu wrote:
+> >>>>>>>> RPROC_OFFLINE state indicate there is no recovery process
+> >>>>>>>> is in progress and no chance to do the pm_relax.
+> >>>>>>>> Because when recovering from crash, rproc->lock is held and
+> >>>>>>>> state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
+> >>>>>>>> and then unlock rproc->lock.
+> >>>>>>>
+> >>>>>>> You are correct - because the lock is held rproc->state should be set to
+> >>>>>>> RPROC_RUNNING
+> >>>>>>> when rproc_trigger_recovery() returns.  If that is not the case then
+> >>>>>>> something
+> >>>>>>> went wrong.
+> >>>>>>>
+> >>>>>>> Function rproc_stop() sets rproc->state to RPROC_OFFLINE just before
+> >>>>>>> returning,
+> >>>>>>> so we know the remote processor was stopped.  Therefore if rproc->state
+> >>>>>>> is set
+> >>>>>>> to RPROC_OFFLINE something went wrong in either request_firmware() or
+> >>>>>>> rproc_start().  Either way the remote processor is offline and the system
+> >>>>>>> probably
+> >>>>>>> in an unknown/unstable.  As such I don't see how calling pm_relax() can help
+> >>>>>>> things along.
+> >>>>>>>
+> >>>>>> PROC_OFFLINE is possible that rproc_shutdown is triggered and successfully
+> >>>>>> finished.
+> >>>>>> Even if it is multi crash rproc_crash_handler_work contention issue, and
+> >>>>>> last rproc_trigger_recovery bailed out with only
+> >>>>>> rproc->state==RPROC_OFFLINE, it is still worth to do pm_relax in pair.
+> >>>>>> Since the subsystem may still can be recovered with customer's next trigger
+> >>>>>> of rproc_start, and we can make each error out path clean with pm resources.
+> >>>>>>
+> >>>>>>> I suggest spending time understanding what leads to the failure when
+> >>>>>>> recovering
+> >>>>>>> from a crash and address that problem(s).
+> >>>>>>>
+> >>>>>> In current case, the customer's information is that the issue happened when
+> >>>>>> rproc_shutdown is triggered at similar time. So not an issue from error out
+> >>>>>> of rproc_trigger_recovery.
+> >>>>>
+> >>>>> That is a very important element to consider and should have been mentioned
+> >>>>> from
+> >>>>> the beginning.  What I see happening is the following:
+> >>>>>
+> >>>>> rproc_report_crash()
+> >>>>>           pm_stay_awake()
+> >>>>>           queue_work() // current thread is suspended
+> >>>>>
+> >>>>> rproc_shutdown()
+> >>>>>           rproc_stop()
+> >>>>>                   rproc->state = RPROC_OFFLINE;
+> >>>>>
+> >>>>> rproc_crash_handler_work()
+> >>>>>           if (rproc->state == RPROC_OFFLINE)
+> >>>>>                   return // pm_relax() is not called
+> >>>>>
+> >>>>> The right way to fix this is to add a pm_relax() in rproc_shutdown() and
+> >>>>> rproc_detach(), along with a very descriptive comment as to why it is needed.
+> >>>>
+> >>>> Thinking about this further there are more ramifications to consider.  Please
+> >>>> confirm the above scenario is what you are facing.  I will advise on how to
+> >>>> move
+> >>>> forward if that is the case.
+> >>>>
+> >>> Not sure if the situation is clear or not. So resend the email again.
+> >>>
+> >>> The above senario is what customer is facing. crash hanppened while at
+> >>> the same time shutdown is triggered.
+> >>
+> >> Unfortunately this is not enough details to address a problem as
+> >> complex as this one.
+> >>
+> >>> And the device cannto goes to suspend state after that.
+> >>> the subsystem can still be start normally after this.
+> >>
+> >> If the code flow I pasted above reflects the problem at hand, the
+> >> current patch will not be sufficient to address the issue.  If Arnaud
+> >> confirms my suspicions we will have to think about a better solution.
+> >>
+> >
+> > Hi Mathiew,
+> >
+> > Could you pls have more details of any side effects other then power issue of
+> > the current senario?
+> > Why the current patch is not sufficient pls?
+> >
+> >
+> > Have the current senario in details with rproc->lock information in details:
+> >
+> > | subsystem crashed interrupt issued      | user trigger shutdown
+> > | rproc_report_crash()                    |
+> > |          pm_stay_awake()                |
+> > |          queue_work()                   |
+> > |                                         |rproc_shutdown
+> > |                                         |mutex_lock(&rproc->lock);
+> > |                                         |rproc_stop()
+> > |rproc_crash_handler_work()               |rproc->state = RPROC_OFFLINE;
+> > |                                         |mutex_unlock(&rproc->lock);
+> > |mutex_lock(&rproc->lock);                |
+> > |if (rproc->state == RPROC_OFFLINE)       |
+> > |return // pm_relax() is not called       |rproc_boot
+> > |mutex_unlock(&rproc->lock);              |
+> > |                                         |mutex_lock(&rproc->lock);
+> > |                                         |rproc_start()
+> > |                                         |mutex_unlock(&rproc->lock);
+> >
+> >
 >
-> diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-> index 7cb8d9849c07..a10feb8a4194 100644
-> --- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-> @@ -606,8 +606,7 @@ static int a4xx_pm_suspend(struct msm_gpu *gpu) {
->   
->   static int a4xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
->   {
-> -	*value = gpu_read64(gpu, REG_A4XX_RBBM_PERFCTR_CP_0_LO,
-> -		REG_A4XX_RBBM_PERFCTR_CP_0_HI);
-> +	*value = gpu_read64(gpu, REG_A4XX_RBBM_PERFCTR_CP_0_LO);
->   
->   	return 0;
->   }
-> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> index 3dcec7acb384..ba22d3c918bc 100644
-> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> @@ -605,11 +605,9 @@ static int a5xx_ucode_init(struct msm_gpu *gpu)
->   		a5xx_ucode_check_version(a5xx_gpu, a5xx_gpu->pfp_bo);
->   	}
->   
-> -	gpu_write64(gpu, REG_A5XX_CP_ME_INSTR_BASE_LO,
-> -		REG_A5XX_CP_ME_INSTR_BASE_HI, a5xx_gpu->pm4_iova);
-> +	gpu_write64(gpu, REG_A5XX_CP_ME_INSTR_BASE_LO, a5xx_gpu->pm4_iova);
->   
-> -	gpu_write64(gpu, REG_A5XX_CP_PFP_INSTR_BASE_LO,
-> -		REG_A5XX_CP_PFP_INSTR_BASE_HI, a5xx_gpu->pfp_iova);
-> +	gpu_write64(gpu, REG_A5XX_CP_PFP_INSTR_BASE_LO, a5xx_gpu->pfp_iova);
->   
->   	return 0;
->   }
-> @@ -868,8 +866,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
->   	 * memory rendering at this point in time and we don't want to block off
->   	 * part of the virtual memory space.
->   	 */
-> -	gpu_write64(gpu, REG_A5XX_RBBM_SECVID_TSB_TRUSTED_BASE_LO,
-> -		REG_A5XX_RBBM_SECVID_TSB_TRUSTED_BASE_HI, 0x00000000);
-> +	gpu_write64(gpu, REG_A5XX_RBBM_SECVID_TSB_TRUSTED_BASE_LO, 0x00000000);
->   	gpu_write(gpu, REG_A5XX_RBBM_SECVID_TSB_TRUSTED_SIZE, 0x00000000);
->   
->   	/* Put the GPU into 64 bit by default */
-> @@ -908,8 +905,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
->   		return ret;
->   
->   	/* Set the ringbuffer address */
-> -	gpu_write64(gpu, REG_A5XX_CP_RB_BASE, REG_A5XX_CP_RB_BASE_HI,
-> -		gpu->rb[0]->iova);
-> +	gpu_write64(gpu, REG_A5XX_CP_RB_BASE, gpu->rb[0]->iova);
->   
->   	/*
->   	 * If the microcode supports the WHERE_AM_I opcode then we can use that
-> @@ -936,7 +932,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
->   		}
->   
->   		gpu_write64(gpu, REG_A5XX_CP_RB_RPTR_ADDR,
-> -			REG_A5XX_CP_RB_RPTR_ADDR_HI, shadowptr(a5xx_gpu, gpu->rb[0]));
-> +			    shadowptr(a5xx_gpu, gpu->rb[0]));
->   	} else if (gpu->nr_rings > 1) {
->   		/* Disable preemption if WHERE_AM_I isn't available */
->   		a5xx_preempt_fini(gpu);
-> @@ -1239,9 +1235,9 @@ static void a5xx_fault_detect_irq(struct msm_gpu *gpu)
->   		gpu_read(gpu, REG_A5XX_RBBM_STATUS),
->   		gpu_read(gpu, REG_A5XX_CP_RB_RPTR),
->   		gpu_read(gpu, REG_A5XX_CP_RB_WPTR),
-> -		gpu_read64(gpu, REG_A5XX_CP_IB1_BASE, REG_A5XX_CP_IB1_BASE_HI),
-> +		gpu_read64(gpu, REG_A5XX_CP_IB1_BASE),
->   		gpu_read(gpu, REG_A5XX_CP_IB1_BUFSZ),
-> -		gpu_read64(gpu, REG_A5XX_CP_IB2_BASE, REG_A5XX_CP_IB2_BASE_HI),
-> +		gpu_read64(gpu, REG_A5XX_CP_IB2_BASE),
->   		gpu_read(gpu, REG_A5XX_CP_IB2_BUFSZ));
->   
->   	/* Turn off the hangcheck timer to keep it from bothering us */
-> @@ -1427,8 +1423,7 @@ static int a5xx_pm_suspend(struct msm_gpu *gpu)
->   
->   static int a5xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
->   {
-> -	*value = gpu_read64(gpu, REG_A5XX_RBBM_ALWAYSON_COUNTER_LO,
-> -		REG_A5XX_RBBM_ALWAYSON_COUNTER_HI);
-> +	*value = gpu_read64(gpu, REG_A5XX_RBBM_ALWAYSON_COUNTER_LO);
->   
->   	return 0;
->   }
-> @@ -1465,8 +1460,7 @@ static int a5xx_crashdumper_run(struct msm_gpu *gpu,
->   	if (IS_ERR_OR_NULL(dumper->ptr))
->   		return -EINVAL;
->   
-> -	gpu_write64(gpu, REG_A5XX_CP_CRASH_SCRIPT_BASE_LO,
-> -		REG_A5XX_CP_CRASH_SCRIPT_BASE_HI, dumper->iova);
-> +	gpu_write64(gpu, REG_A5XX_CP_CRASH_SCRIPT_BASE_LO, dumper->iova);
->   
->   	gpu_write(gpu, REG_A5XX_CP_CRASH_DUMP_CNTL, 1);
->   
-> @@ -1666,8 +1660,7 @@ static u64 a5xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate)
->   {
->   	u64 busy_cycles;
->   
-> -	busy_cycles = gpu_read64(gpu, REG_A5XX_RBBM_PERFCTR_RBBM_0_LO,
-> -			REG_A5XX_RBBM_PERFCTR_RBBM_0_HI);
-> +	busy_cycles = gpu_read64(gpu, REG_A5XX_RBBM_PERFCTR_RBBM_0_LO);
->   	*out_sample_rate = clk_get_rate(gpu->core_clk);
->   
->   	return busy_cycles;
-> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-> index 8abc9a2b114a..7658e89844b4 100644
-> --- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-> +++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-> @@ -137,7 +137,6 @@ void a5xx_preempt_trigger(struct msm_gpu *gpu)
->   
->   	/* Set the address of the incoming preemption record */
->   	gpu_write64(gpu, REG_A5XX_CP_CONTEXT_SWITCH_RESTORE_ADDR_LO,
-> -		REG_A5XX_CP_CONTEXT_SWITCH_RESTORE_ADDR_HI,
->   		a5xx_gpu->preempt_iova[ring->id]);
->   
->   	a5xx_gpu->next_ring = ring;
-> @@ -211,8 +210,7 @@ void a5xx_preempt_hw_init(struct msm_gpu *gpu)
->   	}
->   
->   	/* Write a 0 to signal that we aren't switching pagetables */
-> -	gpu_write64(gpu, REG_A5XX_CP_CONTEXT_SWITCH_SMMU_INFO_LO,
-> -		REG_A5XX_CP_CONTEXT_SWITCH_SMMU_INFO_HI, 0);
-> +	gpu_write64(gpu, REG_A5XX_CP_CONTEXT_SWITCH_SMMU_INFO_LO, 0);
->   
->   	/* Reset the preemption state */
->   	set_preempt_state(a5xx_gpu, PREEMPT_NONE);
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index fdc578016e0b..1ff605c18ee6 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -247,8 +247,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->   	OUT_RING(ring, submit->seqno);
->   
->   	trace_msm_gpu_submit_flush(submit,
-> -		gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER_LO,
-> -			REG_A6XX_CP_ALWAYS_ON_COUNTER_HI));
-> +		gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER_LO));
->   
->   	a6xx_flush(gpu, ring);
->   }
-> @@ -947,8 +946,7 @@ static int a6xx_ucode_init(struct msm_gpu *gpu)
->   		}
->   	}
->   
-> -	gpu_write64(gpu, REG_A6XX_CP_SQE_INSTR_BASE,
-> -		REG_A6XX_CP_SQE_INSTR_BASE+1, a6xx_gpu->sqe_iova);
-> +	gpu_write64(gpu, REG_A6XX_CP_SQE_INSTR_BASE, a6xx_gpu->sqe_iova);
->   
->   	return 0;
->   }
-> @@ -999,8 +997,7 @@ static int hw_init(struct msm_gpu *gpu)
->   	 * memory rendering at this point in time and we don't want to block off
->   	 * part of the virtual memory space.
->   	 */
-> -	gpu_write64(gpu, REG_A6XX_RBBM_SECVID_TSB_TRUSTED_BASE_LO,
-> -		REG_A6XX_RBBM_SECVID_TSB_TRUSTED_BASE_HI, 0x00000000);
-> +	gpu_write64(gpu, REG_A6XX_RBBM_SECVID_TSB_TRUSTED_BASE_LO, 0x00000000);
->   	gpu_write(gpu, REG_A6XX_RBBM_SECVID_TSB_TRUSTED_SIZE, 0x00000000);
->   
->   	/* Turn on 64 bit addressing for all blocks */
-> @@ -1049,11 +1046,9 @@ static int hw_init(struct msm_gpu *gpu)
->   
->   	if (!adreno_is_a650_family(adreno_gpu)) {
->   		/* Set the GMEM VA range [0x100000:0x100000 + gpu->gmem - 1] */
-> -		gpu_write64(gpu, REG_A6XX_UCHE_GMEM_RANGE_MIN_LO,
-> -			REG_A6XX_UCHE_GMEM_RANGE_MIN_HI, 0x00100000);
-> +		gpu_write64(gpu, REG_A6XX_UCHE_GMEM_RANGE_MIN_LO, 0x00100000);
->   
->   		gpu_write64(gpu, REG_A6XX_UCHE_GMEM_RANGE_MAX_LO,
-> -			REG_A6XX_UCHE_GMEM_RANGE_MAX_HI,
->   			0x00100000 + adreno_gpu->gmem - 1);
->   	}
->   
-> @@ -1145,8 +1140,7 @@ static int hw_init(struct msm_gpu *gpu)
->   		goto out;
->   
->   	/* Set the ringbuffer address */
-> -	gpu_write64(gpu, REG_A6XX_CP_RB_BASE, REG_A6XX_CP_RB_BASE_HI,
-> -		gpu->rb[0]->iova);
-> +	gpu_write64(gpu, REG_A6XX_CP_RB_BASE, gpu->rb[0]->iova);
->   
->   	/* Targets that support extended APRIV can use the RPTR shadow from
->   	 * hardware but all the other ones need to disable the feature. Targets
-> @@ -1178,7 +1172,6 @@ static int hw_init(struct msm_gpu *gpu)
->   		}
->   
->   		gpu_write64(gpu, REG_A6XX_CP_RB_RPTR_ADDR_LO,
-> -			REG_A6XX_CP_RB_RPTR_ADDR_HI,
->   			shadowptr(a6xx_gpu, gpu->rb[0]));
->   	}
->   
-> @@ -1499,9 +1492,9 @@ static void a6xx_fault_detect_irq(struct msm_gpu *gpu)
->   		gpu_read(gpu, REG_A6XX_RBBM_STATUS),
->   		gpu_read(gpu, REG_A6XX_CP_RB_RPTR),
->   		gpu_read(gpu, REG_A6XX_CP_RB_WPTR),
-> -		gpu_read64(gpu, REG_A6XX_CP_IB1_BASE, REG_A6XX_CP_IB1_BASE_HI),
-> +		gpu_read64(gpu, REG_A6XX_CP_IB1_BASE),
->   		gpu_read(gpu, REG_A6XX_CP_IB1_REM_SIZE),
-> -		gpu_read64(gpu, REG_A6XX_CP_IB2_BASE, REG_A6XX_CP_IB2_BASE_HI),
-> +		gpu_read64(gpu, REG_A6XX_CP_IB2_BASE),
->   		gpu_read(gpu, REG_A6XX_CP_IB2_REM_SIZE));
->   
->   	/* Turn off the hangcheck timer to keep it from bothering us */
-> @@ -1712,8 +1705,7 @@ static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
->   	/* Force the GPU power on so we can read this register */
->   	a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
->   
-> -	*value = gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER_LO,
-> -			    REG_A6XX_CP_ALWAYS_ON_COUNTER_HI);
-> +	*value = gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER_LO);
->   
->   	a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
->   
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> index a5c3d1ed255a..a023d5f962dc 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> @@ -147,8 +147,7 @@ static int a6xx_crashdumper_run(struct msm_gpu *gpu,
->   	/* Make sure all pending memory writes are posted */
->   	wmb();
->   
-> -	gpu_write64(gpu, REG_A6XX_CP_CRASH_SCRIPT_BASE_LO,
-> -		REG_A6XX_CP_CRASH_SCRIPT_BASE_HI, dumper->iova);
-> +	gpu_write64(gpu, REG_A6XX_CP_CRASH_SCRIPT_BASE_LO, dumper->iova);
->   
->   	gpu_write(gpu, REG_A6XX_CP_CRASH_DUMP_CNTL, 1);
->   
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-> index 58a72e6b1400..585fd9c8d45a 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.h
-> +++ b/drivers/gpu/drm/msm/msm_gpu.h
-> @@ -540,7 +540,7 @@ static inline void gpu_rmw(struct msm_gpu *gpu, u32 reg, u32 mask, u32 or)
->   	msm_rmw(gpu->mmio + (reg << 2), mask, or);
->   }
->   
-> -static inline u64 gpu_read64(struct msm_gpu *gpu, u32 lo, u32 hi)
-> +static inline u64 gpu_read64(struct msm_gpu *gpu, u32 reg)
->   {
->   	u64 val;
->   
-> @@ -558,17 +558,17 @@ static inline u64 gpu_read64(struct msm_gpu *gpu, u32 lo, u32 hi)
->   	 * when the lo is read, so make sure to read the lo first to trigger
->   	 * that
->   	 */
-> -	val = (u64) msm_readl(gpu->mmio + (lo << 2));
-> -	val |= ((u64) msm_readl(gpu->mmio + (hi << 2)) << 32);
-> +	val = (u64) msm_readl(gpu->mmio + (reg << 2));
-> +	val |= ((u64) msm_readl(gpu->mmio + ((reg + 1) << 2)) << 32);
->   
->   	return val;
->   }
->   
-> -static inline void gpu_write64(struct msm_gpu *gpu, u32 lo, u32 hi, u64 val)
-> +static inline void gpu_write64(struct msm_gpu *gpu, u32 reg, u64 val)
->   {
->   	/* Why not a writeq here? Read the screed above */
-> -	msm_writel(lower_32_bits(val), gpu->mmio + (lo << 2));
-> -	msm_writel(upper_32_bits(val), gpu->mmio + (hi << 2));
-> +	msm_writel(lower_32_bits(val), gpu->mmio + (reg << 2));
-> +	msm_writel(upper_32_bits(val), gpu->mmio + ((reg + 1) << 2));
->   }
->   
->   int msm_gpu_pm_suspend(struct msm_gpu *gpu);
+> Agree with Mathieu, this is not so simple.
+>
 
-Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Thanks for looking into this.
 
+> Here is my view  hoping I haven't missed a point in your discussion or
+> an other corner cases.
+>
+> I tried to analyze the issues (in what follows, the term "condition" means
+> the "if" condition in which Aiqun proposes to add the fix) :
+>
+> I can see 4 use cases with race condition
+>
+> 1) crash report while already one is treated (rproc_boot_recovery called)
+>      => not a real use case as if the remote processor is crashed we
+>               should not have a second crash report
+>
 
--Akhil.
+That part is of great concern to me.  *Theoretically* we should not
+get a new crash report while one has already been dispatched but the
+current code accounts for this scenario and as such the possibility
+can't be dismissed.  Therefore we need to expect rproc_report_crash()
+to be called multiple times before a single instance of
+rproc_boot_recovery() is scheduled.
+
+> 2) rproc_stop executed between the queuing of the crash work and the call of
+>   rproc_crash_handler_work
+>    => rproc->state = RPROC_OFFLINE
+>    => we enter in the "condition" and the pm_relax has to be called
+>    => This commit fix should solve this use case
+>
+> 3) rproc_detach executed between the queue of the crash work and the call of
+>   rproc_crash_handler_work
+>    => rproc->state = RPROC_DETACHED;
+>    => we don't go in "the condition" and issue because the recovery reattach
+>       to the remote processor
+>    => but pm_relax is called
+>    => probably need an extra fix to avoid to re-attach
+>
+> 4) crash report while already one is treated (rproc_attach_recovery called)
+>    this one corresponds to an auto reboot of the remote processor, with a
+>    new crash
+>    => rproc->state = RPROC_CRASHED or rproc->state = RPROC_DETACHED;
+>    4)a) rproc->state = RPROC_CRASHED if rproc->recovery_disabled = true
+>         => should call pm_relax if rproc->recovery_disabled = true
+>         => commit does not work for this use case
+>
+>    4)b) rproc->state = RPROC_DETACHED if recovery fails
+>        => error case with an unstable state
+>        => how to differentiate it from the use case 3) ?
+>        => introduce a RPROC_RECOVERY_FAIL state?
+>
+
+The case where a recovery fails needs to be considered and is the
+reason the original patch doesn't work.  Right now in
+rproc_crash_handler_work(), it is not possible to differentiate
+between a legitimate shutdown request (scenario #2 above) and a
+recovery that went wrong.  I think introducing RPROC_RECOVERY_FAIL
+would greatly simplify things.
+
+My initial evaluation had not considered the attach/detach scenarios -
+thanks for adding that in the mix.
+
+Aiqun, please send a new patchset that adds a new remote processor
+state, i.e RPROC_RECOVERY_FAIL.  There should also be another patch in
+that set that takes attach/detach scenarios into account.  The code
+between the v6.0 and v6.1 cycle has changed a lot in that area so make
+sure to properly rebase.
+
+>
+> Then pm_stay_awake is called when the crash work is queued.
+> It seems to me coherent to call the pm_relax in the work handler.
+>
+>
+>
+> Here is a quick and dirty patch (not tested) that should take into account the
+> main use cases ( except 1) and 4)b) )
+>
+> @@ -2009,8 +2009,18 @@ static void rproc_crash_handler_work(struct work_struct *work)
+>
+>         mutex_lock(&rproc->lock);
+>
+> -       if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
+> +       if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE ||
+> +           rproc->state == RPROC_DETACHED) {
+>                 /* handle only the first crash detected */
+> +
+> +               /*
+> +                * call pm-relax in following use cases:
+> +                * - the remote processor has been stopped by the user
+> +                * - the remote processor is detached
+> +                + - the remote proc has an autonomous reset but recovery_disabled is true.
+> +                */
+> +               if(rproc->state != RPROC_CRASHED || rproc->recovery_disabled)
+> +                       pm_relax(rproc->dev.parent);
+>                 mutex_unlock(&rproc->lock);
+>                 return;
+>         }
+>
+> Regards,
+> Arnaud
+>
+> >>>
+> >>>>>
+> >>>>>
+> >>>>>>> Thanks,
+> >>>>>>> Mathieu
+> >>>>>>>
+> >>>>>>>
+> >>>>>>>> When the state is in RPROC_OFFLINE it means separate request
+> >>>>>>>> of rproc_stop was done and no need to hold the wakeup source
+> >>>>>>>> in crash handler to recover any more.
+> >>>>>>>>
+> >>>>>>>> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+> >>>>>>>> ---
+> >>>>>>>>     drivers/remoteproc/remoteproc_core.c | 11 +++++++++++
+> >>>>>>>>     1 file changed, 11 insertions(+)
+> >>>>>>>>
+> >>>>>>>> diff --git a/drivers/remoteproc/remoteproc_core.c
+> >>>>>>>> b/drivers/remoteproc/remoteproc_core.c
+> >>>>>>>> index e5279ed9a8d7..6bc7b8b7d01e 100644
+> >>>>>>>> --- a/drivers/remoteproc/remoteproc_core.c
+> >>>>>>>> +++ b/drivers/remoteproc/remoteproc_core.c
+> >>>>>>>> @@ -1956,6 +1956,17 @@ static void rproc_crash_handler_work(struct
+> >>>>>>>> work_struct *work)
+> >>>>>>>>            if (rproc->state == RPROC_CRASHED || rproc->state ==
+> >>>>>>>> RPROC_OFFLINE) {
+> >>>>>>>>                    /* handle only the first crash detected */
+> >>>>>>>>                    mutex_unlock(&rproc->lock);
+> >>>>>>>> +         /*
+> >>>>>>>> +          * RPROC_OFFLINE state indicate there is no recovery process
+> >>>>>>>> +          * is in progress and no chance to have pm_relax in place.
+> >>>>>>>> +          * Because when recovering from crash, rproc->lock is held and
+> >>>>>>>> +          * state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
+> >>>>>>>> +          * and then unlock rproc->lock.
+> >>>>>>>> +          * RPROC_OFFLINE is only an intermediate state in recovery
+> >>>>>>>> +          * process.
+> >>>>>>>> +          */
+> >>>>>>>> +         if (rproc->state == RPROC_OFFLINE)
+> >>>>>>>> +                 pm_relax(rproc->dev.parent);
+> >>>>>>>>                    return;
+> >>>>>>>>            }
+> >>>>>>>> --
+> >>>>>>>> 2.7.4
+> >>>>>>>>
+> >>>>>>
+> >>>>>>
+> >>>>>> --
+> >>>>>> Thx and BRs,
+> >>>>>> Aiqun(Maria) Yu
+> >>>
+> >>>
+> >>> --
+> >>> Thx and BRs,
+> >>> Aiqun(Maria) Yu
+> >
+> >
