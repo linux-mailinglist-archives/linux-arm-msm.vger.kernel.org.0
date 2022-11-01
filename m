@@ -2,43 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F5176149CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 12:49:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 469AA6149DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 12:50:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231460AbiKALtf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Nov 2022 07:49:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40814 "EHLO
+        id S231334AbiKALuQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Nov 2022 07:50:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231553AbiKALtA (ORCPT
+        with ESMTP id S231493AbiKALtj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Nov 2022 07:49:00 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B3D21C435;
-        Tue,  1 Nov 2022 04:43:10 -0700 (PDT)
-Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Tue, 1 Nov 2022 07:49:39 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFDFF625D;
+        Tue,  1 Nov 2022 04:46:06 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 01C2F3EBA9;
-        Tue,  1 Nov 2022 12:43:06 +0100 (CET)
-Date:   Tue, 1 Nov 2022 12:43:04 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Kalyan Thota <quic_kalyant@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        dianders@chromium.org, swboyd@chromium.org,
-        quic_vpolimer@quicinc.com, dmitry.baryshkov@linaro.org,
-        quic_abhinavk@quicinc.com
-Subject: Re: [v7] drm/msm/disp/dpu1: add support for dspp sub block flush in
- sc7280
-Message-ID: <20221101114304.3vsurukthhh34wmf@SoMainline.org>
-References: <1667300225-14367-1-git-send-email-quic_kalyant@quicinc.com>
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8CCC260B2C;
+        Tue,  1 Nov 2022 11:46:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E161DC433D6;
+        Tue,  1 Nov 2022 11:46:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667303165;
+        bh=a8xt1T5Uay9NpOBwXLmpdOHdQGFiCZzWC7ujs3LyI4E=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=qURshmvKeB8E2t/oIPTGsnh0Udh6UOT3w52nnQGF6gaemKL14K8svBmxsqAcHsCqb
+         wel1ZZUlgIAJWu65ghln+yTwCahK0ucC77KLV2T5LNIhh8ZWgCRirrEqXGMvGj3XZq
+         Q/ftj0KKcY3hWSfikw2xk51LQAMSrvZpExcoIMDq5dX9EpJMSEKxh+Rnda9mImDiOS
+         jv6h6umxXe9JepBzvutst+9/Yqtwx8qUWLtirN/DDEx/HBEVJvvoRKMCCD9I1bpVvc
+         9s9G17/W+SEtPmEIH32kl9fonlJfUSVxsCwwsawWx0b0vZzu0MDk95RIR/SIVwoDKC
+         dbkcWj+GqBtyQ==
+Date:   Tue, 1 Nov 2022 17:15:54 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Qiang Yu <quic_qianyu@quicinc.com>
+Cc:     quic_hemantk@quicinc.com, loic.poulain@linaro.org,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+        mrana@quicinc.com
+Subject: Re: [PATCH] bus: mhi: host: Add session ID to MHI controller
+Message-ID: <20221101114554.GD54667@thinkpad>
+References: <1665376870-60668-1-git-send-email-quic_qianyu@quicinc.com>
+ <20221028172022.GC13880@thinkpad>
+ <7dc5b87a-1413-f7cb-4fdc-93828252c4f1@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1667300225-14367-1-git-send-email-quic_kalyant@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7dc5b87a-1413-f7cb-4fdc-93828252c4f1@quicinc.com>
+X-Spam-Status: No, score=-8.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -46,268 +58,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-11-01 03:57:05, Kalyan Thota wrote:
-> Flush mechanism for DSPP blocks has changed in sc7280 family, it
-> allows individual sub blocks to be flushed in coordination with
-> master flush control.
+On Mon, Oct 31, 2022 at 04:54:55PM +0800, Qiang Yu wrote:
 > 
-> Representation: master_flush && (PCC_flush | IGC_flush .. etc )
+> On 10/29/2022 1:20 AM, Manivannan Sadhasivam wrote:
+> > On Mon, Oct 10, 2022 at 12:41:10PM +0800, Qiang Yu wrote:
+> > > Session ID to be used during BHI transfers to recognize a
+> > > particular session are currently not being stored in the MHI
+> > > controller structure. Store them to allow for tracking and other
+> > > future usage.
+> > > 
+> > > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> > Who/what is going to use this session id?
+> Sometimes, we may find some error logs and want to see what happens on
+> device when host is printing these error logs.
+> Session id can help us find the logs we want.
+
+Okay. Please add this info to the commit message.
+
+Thanks,
+Mani
+
+> > 
+> > Thanks,
+> > Mani
+> > 
+> > > ---
+> > >   drivers/bus/mhi/host/boot.c | 8 ++++----
+> > >   include/linux/mhi.h         | 1 +
+> > >   2 files changed, 5 insertions(+), 4 deletions(-)
+> > > 
+> > > diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
+> > > index 26d0edd..5bed8b51 100644
+> > > --- a/drivers/bus/mhi/host/boot.c
+> > > +++ b/drivers/bus/mhi/host/boot.c
+> > > @@ -231,7 +231,7 @@ static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
+> > >   			   dma_addr_t dma_addr,
+> > >   			   size_t size)
+> > >   {
+> > > -	u32 tx_status, val, session_id;
+> > > +	u32 tx_status, val;
+> > >   	int i, ret;
+> > >   	void __iomem *base = mhi_cntrl->bhi;
+> > >   	rwlock_t *pm_lock = &mhi_cntrl->pm_lock;
+> > > @@ -253,16 +253,16 @@ static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
+> > >   		goto invalid_pm_state;
+> > >   	}
+> > > -	session_id = MHI_RANDOM_U32_NONZERO(BHI_TXDB_SEQNUM_BMSK);
+> > > +	mhi_cntrl->session_id = MHI_RANDOM_U32_NONZERO(BHI_TXDB_SEQNUM_BMSK);
+> > >   	dev_dbg(dev, "Starting image download via BHI. Session ID: %u\n",
+> > > -		session_id);
+> > > +		mhi_cntrl->session_id);
+> > >   	mhi_write_reg(mhi_cntrl, base, BHI_STATUS, 0);
+> > >   	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_HIGH,
+> > >   		      upper_32_bits(dma_addr));
+> > >   	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_LOW,
+> > >   		      lower_32_bits(dma_addr));
+> > >   	mhi_write_reg(mhi_cntrl, base, BHI_IMGSIZE, size);
+> > > -	mhi_write_reg(mhi_cntrl, base, BHI_IMGTXDB, session_id);
+> > > +	mhi_write_reg(mhi_cntrl, base, BHI_IMGTXDB, mhi_cntrl->session_id);
+> > >   	read_unlock_bh(pm_lock);
+> > >   	/* Wait for the image download to complete */
+> > > diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> > > index a5441ad..8b3c934 100644
+> > > --- a/include/linux/mhi.h
+> > > +++ b/include/linux/mhi.h
+> > > @@ -405,6 +405,7 @@ struct mhi_controller {
+> > >   	u32 minor_version;
+> > >   	u32 serial_number;
+> > >   	u32 oem_pk_hash[MHI_MAX_OEM_PK_HASH_SEGMENTS];
+> > > +	u32 session_id;
+> > >   	struct mhi_event *mhi_event;
+> > >   	struct mhi_cmd *mhi_cmd;
+> > > -- 
+> > > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> > > a Linux Foundation Collaborative Project
+> > > 
+> > > 
 > 
-> This change adds necessary support for the above design.
-> 
-> Changes in v1:
-> - Few nits (Doug, Dmitry)
-> - Restrict sub-block flush programming to dpu_hw_ctl file (Dmitry)
-> 
-> Changes in v2:
-> - Move the address offset to flush macro (Dmitry)
-> - Seperate ops for the sub block flush (Dmitry)
-> 
-> Changes in v3:
-> - Reuse the DPU_DSPP_xx enum instead of a new one (Dmitry)
-> 
-> Changes in v4:
-> - Use shorter version for unsigned int (Stephen)
-> 
-> Changes in v5:
-> - Spurious patch please ignore.
-> 
-> Changes in v6:
-> - Add SOB tag (Doug, Dmitry)
-> 
-> Changes in v7:
-> - Cache flush mask per dspp (Dmitry)
-> - Few nits (Marijn)
 
-Thanks, but it seems like you skipped some of them.  I'll point them out
-again this time, including some new formatting issues.
-
-> 
-> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c       |  2 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  5 ++-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  4 +++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c     | 46 ++++++++++++++++++++++++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h     |  7 ++--
->  5 files changed, 58 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 601d687..4170fbe 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -766,7 +766,7 @@ static void _dpu_crtc_setup_cp_blocks(struct drm_crtc *crtc)
->  
->  		/* stage config flush mask */
->  		ctl->ops.update_pending_flush_dspp(ctl,
-> -			mixer[i].hw_dspp->idx);
-> +			mixer[i].hw_dspp->idx, DPU_DSPP_PCC);
->  	}
->  }
->  
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 27f029f..0eecb2f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -65,7 +65,10 @@
->  	(PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE2))
->  
->  #define CTL_SC7280_MASK \
-> -	(BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE) | BIT(DPU_CTL_VM_CFG))
-> +	(BIT(DPU_CTL_ACTIVE_CFG) | \
-> +	 BIT(DPU_CTL_FETCH_ACTIVE) | \
-> +	 BIT(DPU_CTL_VM_CFG) | \
-> +	 BIT(DPU_CTL_DSPP_SUB_BLOCK_FLUSH))
->  
->  #define MERGE_3D_SM8150_MASK (0)
->  
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 38aa38a..8148e91 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -161,10 +161,12 @@ enum {
->   * DSPP sub-blocks
->   * @DPU_DSPP_PCC             Panel color correction block
->   * @DPU_DSPP_GC              Gamma correction block
-> + * @DPU_DSPP_IGC             Inverse Gamma correction block
-
-Here.
-
->   */
->  enum {
->  	DPU_DSPP_PCC = 0x1,
->  	DPU_DSPP_GC,
-> +	DPU_DSPP_IGC,
->  	DPU_DSPP_MAX
->  };
->  
-> @@ -191,6 +193,7 @@ enum {
->   * @DPU_CTL_SPLIT_DISPLAY:	CTL supports video mode split display
->   * @DPU_CTL_FETCH_ACTIVE:	Active CTL for fetch HW (SSPPs)
->   * @DPU_CTL_VM_CFG:		CTL config to support multiple VMs
-> + * @DPU_CTL_DSPP_BLOCK_FLUSH: CTL config to support dspp sub-block flush
-
-I even overlooked this in my review: all docs use spaces except these
-use tabs... Yet you use spaces here and didn't even align the text.
-
-Either use tabs in the line you add here, or replace the rest with
-spaces and align them again.
-
->   * @DPU_CTL_MAX
->   */
->  enum {
-> @@ -198,6 +201,7 @@ enum {
->  	DPU_CTL_ACTIVE_CFG,
->  	DPU_CTL_FETCH_ACTIVE,
->  	DPU_CTL_VM_CFG,
-> +	DPU_CTL_DSPP_SUB_BLOCK_FLUSH,
->  	DPU_CTL_MAX
->  };
->  
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index a35ecb6..fbcb7da 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -33,6 +33,7 @@
->  #define   CTL_INTF_FLUSH                0x110
->  #define   CTL_INTF_MASTER               0x134
->  #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
-> +#define   CTL_DSPP_n_FLUSH(n)		((0x13C) + ((n) * 4))
-
-Here.
-
->  
->  #define CTL_MIXER_BORDER_OUT            BIT(24)
->  #define CTL_FLUSH_MASK_CTL              BIT(17)
-> @@ -110,9 +111,14 @@ static inline void dpu_hw_ctl_trigger_pending(struct dpu_hw_ctl *ctx)
->  
->  static inline void dpu_hw_ctl_clear_pending_flush(struct dpu_hw_ctl *ctx)
->  {
-> +	int i;
-> +
->  	trace_dpu_hw_ctl_clear_pending_flush(ctx->pending_flush_mask,
->  				     dpu_hw_ctl_get_flush_register(ctx));
->  	ctx->pending_flush_mask = 0x0;
-> +
-> +	for(i = 0; i < ARRAY_SIZE(ctx->pending_dspp_flush_mask); i++)
-> +		ctx->pending_dspp_flush_mask[i] = 0x0;
-
-Any idea why the other `pending_xxx_flush_mask`s aren't cleared here?
-
->  }
->  
->  static inline void dpu_hw_ctl_update_pending_flush(struct dpu_hw_ctl *ctx,
-> @@ -130,6 +136,8 @@ static u32 dpu_hw_ctl_get_pending_flush(struct dpu_hw_ctl *ctx)
->  
->  static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
->  {
-> +	int i;
-> +
->  	if (ctx->pending_flush_mask & BIT(MERGE_3D_IDX))
->  		DPU_REG_WRITE(&ctx->hw, CTL_MERGE_3D_FLUSH,
->  				ctx->pending_merge_3d_flush_mask);
-> @@ -140,6 +148,11 @@ static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
->  		DPU_REG_WRITE(&ctx->hw, CTL_WB_FLUSH,
->  				ctx->pending_wb_flush_mask);
->  
-> +	for(i = 0; i < ARRAY_SIZE(ctx->pending_dspp_flush_mask); i++)
-> +		if (ctx->pending_dspp_flush_mask[i])
-> +			DPU_REG_WRITE(&ctx->hw, CTL_DSPP_n_FLUSH(i),
-> +				ctx->pending_dspp_flush_mask[i]);
-> +
->  	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
->  }
->  
-> @@ -287,8 +300,9 @@ static void dpu_hw_ctl_update_pending_flush_merge_3d_v1(struct dpu_hw_ctl *ctx,
->  }
->  
->  static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl *ctx,
-> -	enum dpu_dspp dspp)
-> +	enum dpu_dspp dspp, u32 dspp_sub_blk)
->  {
-> +
->  	switch (dspp) {
->  	case DSPP_0:
->  		ctx->pending_flush_mask |= BIT(13);
-> @@ -307,6 +321,30 @@ static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl *ctx,
->  	}
->  }
->  
-> +static void dpu_hw_ctl_update_pending_flush_dspp_subblocks(
-> +	struct dpu_hw_ctl *ctx,	enum dpu_dspp dspp, u32 dspp_sub_blk)
-> +{
-> +
-> +	if (dspp >= DSPP_MAX)
-> +		return;
-> +
-> +	switch (dspp_sub_blk) {
-> +	case DPU_DSPP_IGC:
-> +		ctx->pending_dspp_flush_mask[dspp-DSPP_0] |= BIT(2);
-
-Spaces around -, here and below.
-
-- Marijn
-
-> +		break;
-> +	case DPU_DSPP_PCC:
-> +		ctx->pending_dspp_flush_mask[dspp-DSPP_0] |= BIT(4);
-> +		break;
-> +	case DPU_DSPP_GC:
-> +		ctx->pending_dspp_flush_mask[dspp-DSPP_0] |= BIT(5);
-> +		break;
-> +	default:
-> +		return;
-> +	}
-> +
-> +	ctx->pending_flush_mask |= BIT(29);
-> +}
-> +
->  static u32 dpu_hw_ctl_poll_reset_status(struct dpu_hw_ctl *ctx, u32 timeout_us)
->  {
->  	struct dpu_hw_blk_reg_map *c = &ctx->hw;
-> @@ -675,7 +713,11 @@ static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
->  	ops->setup_blendstage = dpu_hw_ctl_setup_blendstage;
->  	ops->update_pending_flush_sspp = dpu_hw_ctl_update_pending_flush_sspp;
->  	ops->update_pending_flush_mixer = dpu_hw_ctl_update_pending_flush_mixer;
-> -	ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp;
-> +	if (cap & BIT(DPU_CTL_DSPP_SUB_BLOCK_FLUSH))
-> +		ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp_subblocks;
-> +	else
-> +		ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp;
-> +
->  	if (cap & BIT(DPU_CTL_FETCH_ACTIVE))
->  		ops->set_active_pipes = dpu_hw_ctl_set_fetch_pipe_active;
->  };
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> index 96c012e..ff4e92c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> @@ -148,13 +148,15 @@ struct dpu_hw_ctl_ops {
->  		enum dpu_lm blk);
->  
->  	/**
-> -	 * OR in the given flushbits to the cached pending_flush_mask
-> +	 * OR in the given flushbits to the cached pending_dspp_flush_mask
->  	 * No effect on hardware
->  	 * @ctx       : ctl path ctx pointer
->  	 * @blk       : DSPP block index
-> +	 * @dspp_sub_blk : DSPP sub-block index
->  	 */
->  	void (*update_pending_flush_dspp)(struct dpu_hw_ctl *ctx,
-> -		enum dpu_dspp blk);
-> +		enum dpu_dspp blk, u32 dspp_sub_blk);
-> +
->  	/**
->  	 * Write the value of the pending_flush_mask to hardware
->  	 * @ctx       : ctl path ctx pointer
-> @@ -242,6 +244,7 @@ struct dpu_hw_ctl {
->  	u32 pending_intf_flush_mask;
->  	u32 pending_wb_flush_mask;
->  	u32 pending_merge_3d_flush_mask;
-> +	u32 pending_dspp_flush_mask[DSPP_MAX - DSPP_0];
->  
->  	/* ops */
->  	struct dpu_hw_ctl_ops ops;
-> -- 
-> 2.7.4
-> 
+-- 
+மணிவண்ணன் சதாசிவம்
