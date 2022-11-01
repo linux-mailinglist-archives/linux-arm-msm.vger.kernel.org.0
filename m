@@ -2,127 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0018F614F1B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 17:23:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 21448614F33
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 17:30:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229531AbiKAQXv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Nov 2022 12:23:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59236 "EHLO
+        id S229939AbiKAQaE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Nov 2022 12:30:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbiKAQXt (ORCPT
+        with ESMTP id S229824AbiKAQaD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Nov 2022 12:23:49 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E6A91A213;
-        Tue,  1 Nov 2022 09:23:48 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id n12so38231554eja.11;
-        Tue, 01 Nov 2022 09:23:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QjE9lTE++fclwFa7yMAIrErfvE6I/XCjhnbSuMJSadI=;
-        b=HuednwKGDdGrvaUJCdekwxP+OyuF405/uycgqP4ZZkDWTkegfIrL6QXKivPLKzxEVy
-         ytOGI0Id3iUMsMWl/bkBr5NDfTZPbO2QNldy621TP7TABjsoofQX0EG58gr2heBwejNO
-         624qNm4sfn17mtTtVVml/7uON5U97fFeCmQ5gbPyG1Kd9Qv1oV3rt5Aw4cudGr6DDIj+
-         lLKKcSztI0bOhFnZbkJrm1iiUQePy0hU6QRdNco59DVmD/GycjvQZc2FM5FA2eBNSfn6
-         mHg9+fF09heSEwonV9UmXI5v7P6t7nNq9mIvhbAQpAOJkFOr2unyC15xgCIiaKDoXBWP
-         V5bA==
+        Tue, 1 Nov 2022 12:30:03 -0400
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CABA1CB2E;
+        Tue,  1 Nov 2022 09:30:03 -0700 (PDT)
+Received: by mail-pl1-f176.google.com with SMTP id k7so4321503pll.6;
+        Tue, 01 Nov 2022 09:30:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QjE9lTE++fclwFa7yMAIrErfvE6I/XCjhnbSuMJSadI=;
-        b=V+eYBzCFSgFJ96Wi+O+iNOBpvHjgoeVLsY0Jxe9ndp0F20tISRYd8SkVvDmcE8fjTx
-         wi2NT6lpZApMGpbQXPj6M5B5MnGDs7/UsPXN25PHm4kLMXG2CIi0e+99EiqFX/KRMb6K
-         wQs0hZBmt8g+I2v+L6ZSfXApfrngRT2bJ80xKQ92tk3DXrDh7qLAg5JD2aItFUWtKwOA
-         cfHkdcnBy5ujhj8y2/odrvsbjRGynhsy4EfycTmCDeiRwvUSPIJW5xSw0CBqIrGhVxAc
-         hQsTdtjOVsIgYapC2bslY5ASpKf0ibB3mRe18UeXNG74TqCWlqzfpT63nry6oI9cS6hG
-         9eLw==
-X-Gm-Message-State: ACrzQf1XSHYl/jWWastj31elQSOnQWJ2n1qjJ1M1pq8lGO+1LAOofxDT
-        3l+toPgC7XeMofCvN1p+Bjy+BOQZRWCpx9PJxGI=
-X-Google-Smtp-Source: AMsMyM6yCCYE1jRfdc2k7pNZy6hR1Yn704uJKgDoSiQVMAtUpptyljIOsw2MSx8YH4+AHoDsO+yCTAU/SxHwxZmdR2w=
-X-Received: by 2002:a17:906:2ad3:b0:78d:b88c:5e35 with SMTP id
- m19-20020a1709062ad300b0078db88c5e35mr149386eje.157.1667319826948; Tue, 01
- Nov 2022 09:23:46 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=g2GHjD229JwzIH1zM0q8wr8h+WcU6euFtyspK/NJZCk=;
+        b=FXXiFLu6gb+JV/Ee+BzfC8boz4HQ/x6SkTq0L9o5h+233Luy+bpn8b27Of+R4nhTQu
+         votzVWOXfauA7cPHz4dQc1tzbexo3qyQ/WCLbV9TC7zUfj654L6UtY5BFKYaIPzMji2y
+         A1CeHA1sV0AI4IXUsBUaaucCd3gnbY0MfYUfqSEqwQHWs317CQhQSo3fXiljowrrRm9b
+         Q/maZbNbClv/BxBBqaZ2WrBL8jyazUtoEl7bZG74iYSmWPWz2wJD5sIqFOOLoPCJlStq
+         80h+AMXLn0mIWfFsSGIv0JWOo2KeNhfRphvs1y/I1s/2RpxwPLIUN0ddbKd3L6cHbSlm
+         aRZg==
+X-Gm-Message-State: ACrzQf0EhJg92Euw+ysj3UkNpqCDOfwdFN9JjBa09HtELOEOz/WWmvHF
+        +TaZT4TKyYCHPLAGnl733wc=
+X-Google-Smtp-Source: AMsMyM5NUmhbJYKYslY7dTDp55y9CBju7lTDRo+4rfia1Mw9t+3EfaL7U0OSsGJQADU3+yAwVK1bdA==
+X-Received: by 2002:a17:903:2284:b0:187:2989:b7ed with SMTP id b4-20020a170903228400b001872989b7edmr8591622plh.120.1667320202459;
+        Tue, 01 Nov 2022 09:30:02 -0700 (PDT)
+Received: from ?IPV6:2620:15c:211:201:8574:e82f:b860:3ad0? ([2620:15c:211:201:8574:e82f:b860:3ad0])
+        by smtp.gmail.com with ESMTPSA id x29-20020aa7941d000000b0056bc31f4f9fsm6698486pfo.65.2022.11.01.09.30.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Nov 2022 09:30:01 -0700 (PDT)
+Message-ID: <bb9c46b0-1c6e-2dd9-c820-9e419ee9d44f@acm.org>
+Date:   Tue, 1 Nov 2022 09:29:59 -0700
 MIME-Version: 1.0
-References: <20221026185846.3983888-1-quic_eberman@quicinc.com>
- <20221026185846.3983888-3-quic_eberman@quicinc.com> <CABb+yY3JVNPG3dcyHNFxEeGEu3MN_pAOh3+cwexPPe2YG6SNUg@mail.gmail.com>
- <fb7e101f-8de0-d77e-30e1-74b882b19583@quicinc.com>
-In-Reply-To: <fb7e101f-8de0-d77e-30e1-74b882b19583@quicinc.com>
-From:   Jassi Brar <jassisinghbrar@gmail.com>
-Date:   Tue, 1 Nov 2022 11:23:35 -0500
-Message-ID: <CABb+yY08jP+Q5xvzLf=7F1tULP6-eZz5EDiK9mBj2fAv=iZa_A@mail.gmail.com>
-Subject: Re: [PATCH v6 02/21] dt-bindings: Add binding for gunyah hypervisor
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Kalle Valo <kvalo@kernel.org>, devicetree@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH v3 10/17] ufs: core: mcq: Use shared tags for MCQ mode
+Content-Language: en-US
+To:     Avri Altman <Avri.Altman@wdc.com>,
+        Asutosh Das <quic_asutoshd@quicinc.com>,
+        "quic_cang@quicinc.com" <quic_cang@quicinc.com>,
+        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
+Cc:     "quic_nguyenb@quicinc.com" <quic_nguyenb@quicinc.com>,
+        "quic_xiaosenh@quicinc.com" <quic_xiaosenh@quicinc.com>,
+        "stanley.chu@mediatek.com" <stanley.chu@mediatek.com>,
+        "eddie.huang@mediatek.com" <eddie.huang@mediatek.com>,
+        "daejun7.park@samsung.com" <daejun7.park@samsung.com>,
+        "mani@kernel.org" <mani@kernel.org>,
+        "beanhuo@micron.com" <beanhuo@micron.com>,
+        "quic_richardp@quicinc.com" <quic_richardp@quicinc.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <cover.1666288432.git.quic_asutoshd@quicinc.com>
+ <2fea9d4f0b8dfc2e2c82d176f0c928b0525d8110.1666288432.git.quic_asutoshd@quicinc.com>
+ <DM6PR04MB6575F436DDB2AFE5500BF0A8FC349@DM6PR04MB6575.namprd04.prod.outlook.com>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <DM6PR04MB6575F436DDB2AFE5500BF0A8FC349@DM6PR04MB6575.namprd04.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 31, 2022 at 10:20 PM Elliot Berman <quic_eberman@quicinc.com> wrote:
->
-> Hi Jassi,
->
-> On 10/27/2022 7:33 PM, Jassi Brar wrote:
->  > On Wed, Oct 26, 2022 at 1:59 PM Elliot Berman
-> <quic_eberman@quicinc.com> wrote:
->  > .....
->  >> +
->  >> +        gunyah-resource-mgr@0 {
->  >> +            compatible = "gunyah-resource-manager-1-0",
-> "gunyah-resource-manager";
->  >> +            interrupts = <GIC_SPI 3 IRQ_TYPE_EDGE_RISING>, /* TX
-> full IRQ */
->  >> +                         <GIC_SPI 4 IRQ_TYPE_EDGE_RISING>; /* RX
-> empty IRQ */
->  >> +            reg = <0x00000000 0x00000000>, <0x00000000 0x00000001>;
->  >> +                  /* TX, RX cap ids */
->  >> +        };
->  >>
->  > All these resources are used only by the mailbox controller driver.
->  > So, this should be the mailbox controller node, rather than the
->  > mailbox user.> One option is to load gunyah-resource-manager as a
-> module that relies
->  > on the gunyah-mailbox provider. That would also avoid the "Allow
->  > direct registration to a channel" hack patch.
->
-> A message queue to another guest VM wouldn't be known at boot time and
-> thus couldn't be described on the devicetree.
->
-I think you need to implement of_xlate() ... or please tell me what
-exactly you need to specify in the dt.
+On 10/30/22 06:06, Avri Altman wrote:
+>>   static int ufshcd_map_queues(struct Scsi_Host *shost)
+> This seems like an old version of ufshcd_map_queues - returns void now.
+> Needs rebase?
 
-thnx.
+Hi Asutosh,
+
+Please use the for-next branch of 
+https://git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git/ when 
+preparing SCSI patches for the next merge window.
+
+Thanks,
+
+Bart.
+
