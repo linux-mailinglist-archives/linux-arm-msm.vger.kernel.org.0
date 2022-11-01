@@ -2,62 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72AF0614CC3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 15:38:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BE9E614CE9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 15:41:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230086AbiKAOiK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Nov 2022 10:38:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51540 "EHLO
+        id S229992AbiKAOl4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Nov 2022 10:41:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229889AbiKAOiJ (ORCPT
+        with ESMTP id S229714AbiKAOlz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Nov 2022 10:38:09 -0400
+        Tue, 1 Nov 2022 10:41:55 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03FC51C11E;
-        Tue,  1 Nov 2022 07:38:07 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94F4912AFF;
+        Tue,  1 Nov 2022 07:41:54 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A01B1B81DE9;
-        Tue,  1 Nov 2022 14:38:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C9BC433D6;
-        Tue,  1 Nov 2022 14:37:57 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 43E24B81DE8;
+        Tue,  1 Nov 2022 14:41:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8944BC433D6;
+        Tue,  1 Nov 2022 14:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667313484;
-        bh=kXIES3fUfmzO3HJbLiS5y/Jt0Jn+5tsME6+CcibsmBQ=;
+        s=k20201202; t=1667313711;
+        bh=6fLhKHkcCTdjlHjtarNnhYCz/WQJHny1JZxIw0NKpOk=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Nd1RzC5/4V/HY9n0QcSbWzhxKVyETUTh38ZBhXbEnOWbpZhO29Rmq+sL7CocZvXRC
-         zypQa7TxV9+aLi3m6Z2GARHHVNvKl3bwYMZ9v58iXCVFJsYKvfKOpuhz3urtn7kXoE
-         7M5T2ud/lwVlkEdSG23H4F7D6PKdSfqGeZgB3zwLVeyZshHnLfzrKCkuhlbs2ipr2L
-         ryf/Utxx4mtmS2ezTwmkgvQTtqdPck1QDq5DTCr7dIAMhdAAsEC1+LoWZ4JRJyjKOy
-         rwv3BT4M/NMHcrInbaKq26Jxt3z3Ra+vBGmYK5qQ2giDt+5n2EKJiDn/ARD4XY8iUG
-         pCilnbJq8Z1lQ==
-Date:   Tue, 1 Nov 2022 20:07:49 +0530
+        b=AF/uNtsrND3wviLza4EuafmD0UX2XS6MQsazz+oR88XcaIULiugDHZRnocmmXBZhH
+         bNOL2t6UgtyVgHhRR4f4VutDu7TuilN9Wgmx+yBS4/FNUfiJ3BLCdZWwEvPwiiUseA
+         i0oMHlM9C+mMzgdTFcwcwv+lcWHhWRTXjM40DlIhRt9ZEJag+526y9AzZq1rHNg1WQ
+         1n9lt1Dww8rDWZdhk+rdYvAXX3oajQrs10Cs1pCFFzdEX32XMMpRYxWw+/AOXFjeSB
+         P5L0VjPVhRkqzH74iRyt5vr24K/6BU1X/zdQ39frmZ1p9JPT4VddIOQ7I4LTipmB2H
+         kx+Jkd9fLNs+Q==
+Date:   Tue, 1 Nov 2022 20:11:35 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        quic_vbadigan@quicinc.com, Brian Masney <bmasney@redhat.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: PCI: qcom: Add SC8280XP/SA8540P
- interconnects
-Message-ID: <20221101143749.GB244012@thinkpad>
-References: <20221021064616.6380-1-johan+linaro@kernel.org>
- <20221021064616.6380-2-johan+linaro@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        martin.petersen@oracle.com, jejb@linux.ibm.com,
+        andersson@kernel.org, vkoul@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, quic_cang@quicinc.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-scsi@vger.kernel.org
+Subject: Re: [PATCH 01/15] phy: qcom-qmp-ufs: Move register settings to
+ qmp_phy_cfg_tables struct
+Message-ID: <20221101144135.GC244012@thinkpad>
+References: <20221029141633.295650-1-manivannan.sadhasivam@linaro.org>
+ <20221029141633.295650-2-manivannan.sadhasivam@linaro.org>
+ <14844656-0d93-eac0-1877-f3e967691f5a@linaro.org>
+ <20221031154607.GB12738@thinkpad>
+ <748f41e1-cafc-e7eb-43ac-b8daacf88da4@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221021064616.6380-2-johan+linaro@kernel.org>
+In-Reply-To: <748f41e1-cafc-e7eb-43ac-b8daacf88da4@linaro.org>
 X-Spam-Status: No, score=-8.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -67,63 +65,91 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 21, 2022 at 08:46:15AM +0200, Johan Hovold wrote:
-> Add the missing SC8280XP/SA8540P "pcie-mem" and "cpu-pcie" interconnect
-> paths to the bindings.
-> 
-> Fixes: 76d777ae045e ("dt-bindings: PCI: qcom: Add SC8280XP to binding")
-> Fixes: 76c4207f4085 ("dt-bindings: PCI: qcom: Add SA8540P to binding")
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+On Mon, Oct 31, 2022 at 09:50:59PM +0300, Dmitry Baryshkov wrote:
+> On 31/10/2022 18:46, Manivannan Sadhasivam wrote:
+> > On Sun, Oct 30, 2022 at 12:50:50AM +0300, Dmitry Baryshkov wrote:
+> > > On 29/10/2022 17:16, Manivannan Sadhasivam wrote:
+> > > > As done for Qcom PCIe PHY driver, let's move the register settings to the
+> > > > common qmp_phy_cfg_tables struct. This helps in adding any additional PHY
+> > > > settings needed for functionalities like HS-G4 in the future by adding one
+> > > > more instance of the qmp_phy_cfg_tables.
+> > > > 
+> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > ---
+> > > >    drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 223 +++++++++++++-----------
+> > > >    1 file changed, 126 insertions(+), 97 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
 
-Acked-by: Manivannan Sadhasivam <mani@kernel.org>
+[...]
+
+> > > >    static int qmp_ufs_com_init(struct qmp_phy *qphy)
+> > > > @@ -933,31 +977,16 @@ static int qmp_ufs_power_on(struct phy *phy)
+> > > >    	struct qmp_phy *qphy = phy_get_drvdata(phy);
+> > > >    	struct qcom_qmp *qmp = qphy->qmp;
+> > > >    	const struct qmp_phy_cfg *cfg = qphy->cfg;
+> > > > -	void __iomem *tx = qphy->tx;
+> > > > -	void __iomem *rx = qphy->rx;
+> > > >    	void __iomem *pcs = qphy->pcs;
+> > > >    	void __iomem *status;
+> > > >    	unsigned int mask, val, ready;
+> > > >    	int ret;
+> > > > -	qmp_ufs_serdes_init(qphy);
+> > > > -
+> > > > -	/* Tx, Rx, and PCS configurations */
+> > > > -	qmp_ufs_configure_lane(tx, cfg->regs, cfg->tx_tbl, cfg->tx_tbl_num, 1);
+> > > > +	qmp_ufs_serdes_init(qphy, &cfg->tables);
+> > > > -	if (cfg->lanes >= 2) {
+> > > > -		qmp_ufs_configure_lane(qphy->tx2, cfg->regs,
+> > > > -					cfg->tx_tbl, cfg->tx_tbl_num, 2);
+> > > > -	}
+> > > > -
+> > > > -	qmp_ufs_configure_lane(rx, cfg->regs, cfg->rx_tbl, cfg->rx_tbl_num, 1);
+> > > > -
+> > > > -	if (cfg->lanes >= 2) {
+> > > > -		qmp_ufs_configure_lane(qphy->rx2, cfg->regs,
+> > > > -					cfg->rx_tbl, cfg->rx_tbl_num, 2);
+> > > > -	}
+> > > > +	qmp_ufs_lanes_init(qphy, &cfg->tables);
+> > > > -	qmp_ufs_configure(pcs, cfg->regs, cfg->pcs_tbl, cfg->pcs_tbl_num);
+> > > > +	qmp_ufs_pcs_init(qphy, &cfg->tables);
+> > > 
+> > > I'd suggest going straight to qmp_ufs_init_registers, which would contain
+> > > both serdes, lanes and pcs inits.
+> > > 
+> > 
+> > That adds one more level of indirection which may not be needed here. Moreover,
+> > I'm trying to be in sync with other qmp drivers, specifically the pcie one.
+> > This helps in working with these drivers.
+> 
+> Yes, I understand. However I hope that the respective patchset (including
+> [1]) will be merged soon. Thus I suggest skipping the step and using the
+> same function already.
+> 
+> [1] https://lore.kernel.org/linux-phy/20221028133603.18470-10-johan+linaro@kernel.org/
+> 
+
+Ah, I missed this series. Will use the common function then.
 
 Thanks,
-Mani 
+Mani
 
-> ---
->  .../devicetree/bindings/pci/qcom,pcie.yaml    | 20 +++++++++++++++++++
->  1 file changed, 20 insertions(+)
+> > 
+> > Thanks,
+> > Mani
+> > 
+> > > >    	ret = reset_control_deassert(qmp->ufs_reset);
+> > > >    	if (ret)
+> > > 
+> > > -- 
+> > > With best wishes
+> > > Dmitry
+> > > 
+> > 
 > 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> index 54f07852d279..2f851c804bb0 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> @@ -62,6 +62,14 @@ properties:
->      minItems: 3
->      maxItems: 13
->  
-> +  interconnects:
-> +    maxItems: 2
-> +
-> +  interconnect-names:
-> +    items:
-> +      - const: pcie-mem
-> +      - const: cpu-pcie
-> +
->    resets:
->      minItems: 1
->      maxItems: 12
-> @@ -631,6 +639,18 @@ allOf:
->            items:
->              - const: pci # PCIe core reset
->  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,pcie-sa8540p
-> +              - qcom,pcie-sc8280xp
-> +    then:
-> +      required:
-> +        - interconnects
-> +        - interconnect-names
-> +
->    - if:
->        not:
->          properties:
 > -- 
-> 2.37.3
+> With best wishes
+> Dmitry
 > 
 
 -- 
