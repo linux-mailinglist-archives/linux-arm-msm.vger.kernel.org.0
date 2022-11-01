@@ -2,50 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DDAD2614C4B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 15:10:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 12C50614CB3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 15:36:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229787AbiKAOKu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Nov 2022 10:10:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34808 "EHLO
+        id S229457AbiKAOgL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Nov 2022 10:36:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230180AbiKAOKn (ORCPT
+        with ESMTP id S230401AbiKAOfz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Nov 2022 10:10:43 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E59DE1AF1A;
-        Tue,  1 Nov 2022 07:10:42 -0700 (PDT)
+        Tue, 1 Nov 2022 10:35:55 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C2C61B9D8;
+        Tue,  1 Nov 2022 07:35:44 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9DF62B81D9F;
-        Tue,  1 Nov 2022 14:10:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E0FC433C1;
-        Tue,  1 Nov 2022 14:10:39 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D4F7F615C5;
+        Tue,  1 Nov 2022 14:35:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB6E4C433C1;
+        Tue,  1 Nov 2022 14:35:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667311840;
-        bh=mlVeu1Ne59sKBF/PzA58tEMoYoFfmj0wPNUSof98OKA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=H8Vmc0WsTY2I85vQ+MjkbMlhzhoUsCxYNVxghx0seQz/7nK3yT/IWKwUKvKvgxJ5n
-         J9aHV21ZURNtSHjXfCa/zxI+gCTdUm4o/CDQ1rFSmCZS7z35yNWWwR6GSKhX8gYN1j
-         C3XS0JWEqC5GcnwUdtYPA7n61Ls+vDF350Iq6BJ916qOnsKpLowoWkZJdIzWfRJjrl
-         nCJTy/laSWtOVHwwJh3Xx+qi2I/hoMSBakMVzDEiAyQRvYF2f1WZ0iOjYGDkWeaC1Q
-         4z7kQyMZoXiytiF9e9dIZrnGKWdBqoWNuqLnD61Awpay4uvgeD6rcAr1SH18ZeMHbR
-         Z/47fscS30Lcw==
-Date:   Tue, 1 Nov 2022 09:10:38 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Slark Xiao <slark_xiao@163.com>
-Cc:     Greg KH <gregkh@linuxfoundation.org>, mani@kernel.org,
-        quic_hemantk@quicinc.com, bhelgaas@google.com,
-        loic.poulain@linaro.org, dnlplm@gmail.com, yonglin.tan@outlook.com,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
-Subject: Re: Re: [PATCH v3] PCI: Add vendor ID for QUECTEL
-Message-ID: <20221101141038.GA1255580@bhelgaas>
+        s=k20201202; t=1667313343;
+        bh=O2IUvbj/N3TdgpyaE2KkKjkh22Z7LBbDiIgzXNXCzHw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hRLkanXej6i8EOQN3UiLQJkfEd12MjxwtNNz8t9QtHErH2uiBIO+V/yCK9axSsbJi
+         pM4zy44Qyh9pRZeZuFnUm7nZhwUUpFU763+Hg8Shdvyt1O8AsV62bKfMS2HocEdIRk
+         Mx119NNQFrG7nxuB8LxdME18RgcW852WBrEWAG9aN3PxziM1UETXUt3NXGxdtRei5W
+         S0va1gvliT9wFSS3t9KZWlyfdu+1fwRESBopq8dus2yJm42S5kRBWCZZrJdMthvPVQ
+         7tk6BP7z1yfyYn77U/CWW7zKFiGIXM2PcFNR2XMCxG1+EH/+c+C0xnapHShj1GuYQx
+         8v6qTuEV+d3Rw==
+Date:   Tue, 1 Nov 2022 20:05:29 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        quic_vbadigan@quicinc.com, Brian Masney <bmasney@redhat.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] PCI: qcom: Add basic interconnect support
+Message-ID: <20221101143529.GA244012@thinkpad>
+References: <20221021064616.6380-1-johan+linaro@kernel.org>
+ <20221021064616.6380-3-johan+linaro@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <3af61b4.1f11.18431cf918d.Coremail.slark_xiao@163.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221021064616.6380-3-johan+linaro@kernel.org>
 X-Spam-Status: No, score=-8.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -55,66 +67,172 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 01, 2022 at 02:09:57PM +0800, Slark Xiao wrote:
-> At 2022-11-01 12:46:19, "Greg KH" <gregkh@linuxfoundation.org> wrote:
-> >On Tue, Nov 01, 2022 at 10:10:52AM +0800, Slark Xiao wrote:
-> >> n MHI driver, there are some companies' product still do not have their
-> >> own PCI vendor macro. So we add it here to make the code neat. Ref ID
-> >> could be found in link https://pcisig.com/membership/member-companies.
-> >> 
-> >> Signed-off-by: Slark Xiao <slark_xiao@163.com>
-> >> ---
-> >> v3: Separate different vendors into different patch.
-> >> 
-> >> v2: Update vendor ID to the right location sorted by numeric value.
-> >> ---
-> >>  drivers/bus/mhi/host/pci_generic.c | 6 +++---
-> >>  include/linux/pci_ids.h            | 2 ++
-> >>  2 files changed, 5 insertions(+), 3 deletions(-)
-> >> 
-> >> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> >> index caa4ce28cf9e..81ae9c49ce2a 100644
-> >> --- a/drivers/bus/mhi/host/pci_generic.c
-> >> +++ b/drivers/bus/mhi/host/pci_generic.c
-> >> @@ -555,11 +555,11 @@ static const struct pci_device_id mhi_pci_id_table[] = {
-> >>  		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
-> >>  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
-> >>  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
-> >> -	{ PCI_DEVICE(0x1eac, 0x1001), /* EM120R-GL (sdx24) */
-> >> +	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
-> >>  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-> >> -	{ PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
-> >> +	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
-> >>  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-> >> -	{ PCI_DEVICE(0x1eac, 0x2001), /* EM120R-GL for FCCL (sdx24) */
-> >> +	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x2001), /* EM120R-GL for FCCL (sdx24) */
-> >>  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-> >>  	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
-> >>  	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
-> >> diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
-> >> index b362d90eb9b0..3c91461bcfe4 100644
-> >> --- a/include/linux/pci_ids.h
-> >> +++ b/include/linux/pci_ids.h
-> >> @@ -2585,6 +2585,8 @@
-> >>  #define PCI_VENDOR_ID_TEKRAM		0x1de1
-> >>  #define PCI_DEVICE_ID_TEKRAM_DC290	0xdc29
-> >>  
-> >> +#define PCI_VENDOR_ID_QUECTEL		0x1eac
-> >
-> >Why did you ignore the comment at the top of this file saying that new
-> >entries are not needed to be added, especially for just one user?
->
->  Actually I didn't see this notice before committing this patch. I even discussed 
-> it with the maintainer for several times and nobody show me this rule.
-> I have a concern, some IOT module vendors, like QUECTEL, CINTERION(THALES),
-> SIERRA,ROLLING and so on, they only produce IOT modules without other 
-> hardware with PCIe  interface, and they applied for their own VID. But they
-> can't get a their own VENDOR MARCO? This seems unreasonable.
-> This change should be harmless and  make the code neat.
-> This is my opinion.
+On Fri, Oct 21, 2022 at 08:46:16AM +0200, Johan Hovold wrote:
+> On Qualcomm platforms like SC8280XP and SA8540P, interconnect bandwidth
+> must be requested before enabling interconnect clocks.
+> 
+> Add basic support for managing an optional "pcie-mem" interconnect path
+> by setting a low constraint before enabling clocks and updating it after
+> the link is up.
+> 
+> Note that it is not possible for a controller driver to set anything but
+> a maximum peak bandwidth as expected average bandwidth will vary with
+> use case and actual use (and power policy?). This very much remains an
+> unresolved problem with the interconnect framework.
+> 
+> Also note that no constraint is set for the SC8280XP/SA8540P "cpu-pcie"
+> path for now as it is not clear what an appropriate constraint would be
+> (and the system does not crash when left unspecified).
+> 
 
-Sorry, this is my fault.  I have merged or acked several vendor ID
-additions recently, but I don't really backport changes like Greg
-does, so I'm not as sensitized to the churn and merge issues.
+I initially thought we should move this to dwc core but I'm not sure if the
+interconnect path is going to be the same for all platforms. So keeping it
+within Qcom driver is good for now. 
 
-Bjorn
+> Fixes: 70574511f3fc ("PCI: qcom: Add support for SC8280XP")
+> Reviewed-by: Brian Masney <bmasney@redhat.com>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 76 ++++++++++++++++++++++++++
+>  1 file changed, 76 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 7db94a22238d..0c13f976626f 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -12,6 +12,7 @@
+>  #include <linux/crc8.h>
+>  #include <linux/delay.h>
+>  #include <linux/gpio/consumer.h>
+> +#include <linux/interconnect.h>
+>  #include <linux/interrupt.h>
+>  #include <linux/io.h>
+>  #include <linux/iopoll.h>
+> @@ -224,6 +225,7 @@ struct qcom_pcie {
+>  	union qcom_pcie_resources res;
+>  	struct phy *phy;
+>  	struct gpio_desc *reset;
+> +	struct icc_path *icc_mem;
+>  	const struct qcom_pcie_cfg *cfg;
+>  };
+>  
+> @@ -1644,6 +1646,74 @@ static const struct dw_pcie_ops dw_pcie_ops = {
+>  	.start_link = qcom_pcie_start_link,
+>  };
+>  
+> +static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
+> +{
+> +	struct dw_pcie *pci = pcie->pci;
+> +	int ret;
+> +
+> +	pcie->icc_mem = devm_of_icc_get(pci->dev, "pcie-mem");
+> +	if (IS_ERR(pcie->icc_mem)) {
+> +		ret = PTR_ERR(pcie->icc_mem);
+> +		return ret;
+
+return PTR_ERR(pcie->icc_mem);
+
+> +	}
+> +
+> +	/*
+> +	 * Some Qualcomm platforms require interconnect bandwidth constraints
+> +	 * to be set before enabling interconnect clocks.
+> +	 *
+> +	 * Set an initial peak bandwidth corresponding to single-lane Gen 1
+> +	 * for the pcie-mem path.
+> +	 */
+> +	ret = icc_set_bw(pcie->icc_mem, 0, MBps_to_icc(250));
+> +	if (ret) {
+> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> +			ret);
+
+Move "ret);" to prior line. No need to keep up within 80 columns.
+
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
+> +{
+> +	struct dw_pcie *pci = pcie->pci;
+> +	u32 offset, status, bw;
+> +	int speed, width;
+> +	int ret;
+> +
+> +	if (!pcie->icc_mem)
+> +		return;
+> +
+> +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> +	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
+> +
+> +	/* Only update constraints if link is up. */
+> +	if (!(status & PCI_EXP_LNKSTA_DLLLA))
+> +		return;
+
+What if the link comes back later? I'd suggest to call this function from
+qcom_pcie_link_up(), whenever link is up.
+
+> +
+> +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
+> +	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
+> +
+> +	switch (speed) {
+> +	case 1:
+> +		bw = MBps_to_icc(250);
+> +		break;
+> +	case 2:
+> +		bw = MBps_to_icc(500);
+> +		break;
+> +	default:
+> +	case 3:
+
+Why do you need explicit "case 3" and not just default case?
+
+> +		bw = MBps_to_icc(985);
+> +		break;
+> +	}
+> +
+> +	ret = icc_set_bw(pcie->icc_mem, 0, width * bw);
+> +	if (ret) {
+> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> +			ret);
+
+Move "ret);" to prior line and save braces.
+
+Thanks,
+Mani
+
+> +	}
+> +}
+> +
+>  static int qcom_pcie_probe(struct platform_device *pdev)
+>  {
+>  	struct device *dev = &pdev->dev;
+> @@ -1704,6 +1774,10 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  		goto err_pm_runtime_put;
+>  	}
+>  
+> +	ret = qcom_pcie_icc_init(pcie);
+> +	if (ret)
+> +		goto err_pm_runtime_put;
+> +
+>  	ret = pcie->cfg->ops->get_resources(pcie);
+>  	if (ret)
+>  		goto err_pm_runtime_put;
+> @@ -1722,6 +1796,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  		goto err_phy_exit;
+>  	}
+>  
+> +	qcom_pcie_icc_update(pcie);
+> +
+>  	return 0;
+>  
+>  err_phy_exit:
+> -- 
+> 2.37.3
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
