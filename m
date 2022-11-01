@@ -2,69 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ACB3F615516
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 23:34:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E2D161551D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 23:34:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231294AbiKAWeQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Nov 2022 18:34:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36088 "EHLO
+        id S231388AbiKAWew (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Nov 2022 18:34:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231329AbiKAWdq (ORCPT
+        with ESMTP id S231349AbiKAWd4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Nov 2022 18:33:46 -0400
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C338EEBE;
-        Tue,  1 Nov 2022 15:33:45 -0700 (PDT)
-Received: by mail-pl1-x631.google.com with SMTP id v17so11870105plo.1;
-        Tue, 01 Nov 2022 15:33:45 -0700 (PDT)
+        Tue, 1 Nov 2022 18:33:56 -0400
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D05FC769;
+        Tue,  1 Nov 2022 15:33:53 -0700 (PDT)
+Received: by mail-pf1-x42c.google.com with SMTP id i3so14740146pfc.11;
+        Tue, 01 Nov 2022 15:33:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jGENntLfOCR8ozrjU0gP3ahdz7LS9qRpY/T4IjONjfE=;
-        b=ePNbBYmMrBWf14035Ml6F9See1fo11rsu5nojA/frdjk6+kB6ylOkz0WOOtInV2YUw
-         k8uE+nlZiPdngARdYCJel4lYD1k+mFF16JBtSIQVlx4ueuc9jPQ32mrSme0y5RRIAxod
-         MiZF7abfG/tVvGmF/f338+N2d2SQvzMqQsOtLT6bAAh9v4qcDeOrI5nHi4RkFEGcnWKz
-         cf0KCti865++nvT9QL0QhYqqUQttK8NWlxZt0PRJC/ojNhtqDzjxIgR57Q4C+uSGJ4HE
-         Z/Di7T9DiUE/eVPhAiyZ/rzyTvj7RlWXaXA06Lpsa3Ko91F2mXRuVPUD3ux/O7VKooUi
-         VOBg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=l67drlOMjlbuXUK5so1ZjMU1uw6TeoDS8wjlIGiLg9o=;
+        b=O3nT0f7gfvurF3K8oAML3xyWFKuP5m6fwcgwQH5PfivLaALfkHAmbh5XMaOztE2EYs
+         4ygwWl3tIxwdPmaOne0OvTNwPQgvTXgLETv8nqNpQg7SmdeS+LMBjzEHI9Ci7NEV6o3p
+         sCWlUrrMBskzx1hl1VbZ4qKr8Bnh4BSLbmlPffNErzPcP9U1qbv20uKZ0rgYQzMiBAbh
+         +oeTK4XbOdvoIIOwGYkAhGIPSwUvZ0Wi7jjA+8/vtrM/uu4WSYCQZYEZ4mrGwU0bHlao
+         tLU9Ztneh2CqGnQuc/gy5s6BBoYoOm7cB+Rt6dUsDYuxWsk+jlc9fM/qXg0qAo8Js6Lm
+         Wq7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jGENntLfOCR8ozrjU0gP3ahdz7LS9qRpY/T4IjONjfE=;
-        b=FYayfl4qZ7u/q6V+GPf3aUpFhVmQIXZE7kKYBxaHhjTQGflQ82isEroCsU+sDqkH+C
-         NpJAtMTnrqn2TJPNdWQXv55nNuZsJqu52tAIwzU4a+vkkFW65d2EfbZ3GjC3NgcYd9l2
-         Pz2OKWm3FM8sP95QmP4SR+GHFYFQA8tHKe9B4UacWMqHrI9SiKRXA480rMA9C6rF0+c6
-         85a8h8d7UpRlPpKZ3Pw5Yk2Oq6ExSsYvI62Ut4LBuNFobpdvRFkCL7G8MAxmudo2e5Vo
-         LehItGA8HVPKL+ZMMV/ViYDTJ0VcXoYpq0JvIE6r7ft6gpGk32k/xWRaN1J5C4cRo/Jg
-         RJ4g==
-X-Gm-Message-State: ACrzQf16juoVJZ4S471QHSLDqKOedzUCkY4hUnqc0eESpBUebwEjOeL3
-        gOzajz6qPpxgFWLN45mnmvk=
-X-Google-Smtp-Source: AMsMyM7RCutusfpBemA0YCYWXd5vhzuK8RyIImMWAWCB3UJilDp/SJYM0ty/SZsO8O7AN1t1HSfQkA==
-X-Received: by 2002:a17:902:e8c4:b0:186:6d63:7e with SMTP id v4-20020a170902e8c400b001866d63007emr22106758plg.122.1667342025099;
-        Tue, 01 Nov 2022 15:33:45 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=l67drlOMjlbuXUK5so1ZjMU1uw6TeoDS8wjlIGiLg9o=;
+        b=iOUu8mdxly0b/Im6SxJx0l8N/HVc6d1mUVNO7ieG6GxJfBz5iZIGPA6d0F/zCu5YAi
+         3l+jXNPh0HydrrRL7VNqTmjwwNkwhjuRm+gZBEOdZ+6llKuH3SXkS8pSXEOlKNUgrbwR
+         DV2zJmK/iEiAQsD6722VpsO/1IUR7pihEOVcJ3MQBs+4bjpcIOp1BOvEku0ZrfNCw8LG
+         Nn7kj5p91Jeo6iAOPkpwqDNpRqu7B86pPpQt1GozLTY0+EdnQ+P1fuszuUdHR8bVt8Tc
+         CCQMeAaxlxfwTmbyoguxqBTJvcnRp6exFxiZxrUGcWDhgDPPVHSM1uVGm9MNz+I7Hn1+
+         1Isw==
+X-Gm-Message-State: ACrzQf3vKPoihK/FVTxD0g+n3MQOKxY3uZu+UB3qjd/joeEPKPHiHIoy
+        HMppnVe/jUABizPBuue6ZC8=
+X-Google-Smtp-Source: AMsMyM4NEZ7IXFvo2vzvZv2QLiav+eiY0OdZE68Qsx062URlJhaasC3gmknYG+c/98LafhCj8wbznQ==
+X-Received: by 2002:a63:dc54:0:b0:44c:ce26:fa35 with SMTP id f20-20020a63dc54000000b0044cce26fa35mr19467755pgj.374.1667342032958;
+        Tue, 01 Nov 2022 15:33:52 -0700 (PDT)
 Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
-        by smtp.gmail.com with ESMTPSA id j4-20020a170902c3c400b001754064ac31sm6821074plj.280.2022.11.01.15.33.44
+        by smtp.gmail.com with ESMTPSA id nv3-20020a17090b1b4300b001fde655225fsm1026292pjb.2.2022.11.01.15.33.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Nov 2022 15:33:44 -0700 (PDT)
+        Tue, 01 Nov 2022 15:33:52 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Rob Clark <robdclark@chromium.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
         Douglas Anderson <dianders@chromium.org>,
+        Chia-I Wu <olvaffe@gmail.com>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-kernel@vger.kernel.org (open list),
-        Sean Paul <sean@poorly.run>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>
-Subject: [PATCH v2 0/2] drm/msm: Improved hang detection
-Date:   Tue,  1 Nov 2022 15:33:08 -0700
-Message-Id: <20221101223319.165493-1-robdclark@gmail.com>
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2 1/2] drm/msm/adreno: Simplify read64/write64 helpers
+Date:   Tue,  1 Nov 2022 15:33:09 -0700
+Message-Id: <20221101223319.165493-2-robdclark@gmail.com>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221101223319.165493-1-robdclark@gmail.com>
+References: <20221101223319.165493-1-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -79,24 +85,283 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-Try to detect when submit jobs are making forward progress and give them
-a bit more time.
+The _HI reg is always following the _LO reg, so no need to pass these
+offsets seprately.
 
-Rob Clark (2):
-  drm/msm/adreno: Simplify read64/write64 helpers
-  drm/msm: Hangcheck progress detection
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+---
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c       |  3 +--
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c       | 27 ++++++++-------------
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c   |  4 +--
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c       | 24 ++++++------------
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |  3 +--
+ drivers/gpu/drm/msm/msm_gpu.h               | 12 ++++-----
+ 6 files changed, 27 insertions(+), 46 deletions(-)
 
- drivers/gpu/drm/msm/adreno/a4xx_gpu.c       |  3 +-
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c       | 43 +++++++++------
- drivers/gpu/drm/msm/adreno/a5xx_preempt.c   |  4 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c       | 58 +++++++++++++++------
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |  3 +-
- drivers/gpu/drm/msm/msm_drv.h               |  8 ++-
- drivers/gpu/drm/msm/msm_gpu.c               | 20 ++++++-
- drivers/gpu/drm/msm/msm_gpu.h               | 17 +++---
- drivers/gpu/drm/msm/msm_ringbuffer.h        | 24 +++++++++
- 9 files changed, 131 insertions(+), 49 deletions(-)
-
+diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+index 7cb8d9849c07..a10feb8a4194 100644
+--- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+@@ -606,8 +606,7 @@ static int a4xx_pm_suspend(struct msm_gpu *gpu) {
+ 
+ static int a4xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
+ {
+-	*value = gpu_read64(gpu, REG_A4XX_RBBM_PERFCTR_CP_0_LO,
+-		REG_A4XX_RBBM_PERFCTR_CP_0_HI);
++	*value = gpu_read64(gpu, REG_A4XX_RBBM_PERFCTR_CP_0_LO);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index 3dcec7acb384..ba22d3c918bc 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -605,11 +605,9 @@ static int a5xx_ucode_init(struct msm_gpu *gpu)
+ 		a5xx_ucode_check_version(a5xx_gpu, a5xx_gpu->pfp_bo);
+ 	}
+ 
+-	gpu_write64(gpu, REG_A5XX_CP_ME_INSTR_BASE_LO,
+-		REG_A5XX_CP_ME_INSTR_BASE_HI, a5xx_gpu->pm4_iova);
++	gpu_write64(gpu, REG_A5XX_CP_ME_INSTR_BASE_LO, a5xx_gpu->pm4_iova);
+ 
+-	gpu_write64(gpu, REG_A5XX_CP_PFP_INSTR_BASE_LO,
+-		REG_A5XX_CP_PFP_INSTR_BASE_HI, a5xx_gpu->pfp_iova);
++	gpu_write64(gpu, REG_A5XX_CP_PFP_INSTR_BASE_LO, a5xx_gpu->pfp_iova);
+ 
+ 	return 0;
+ }
+@@ -868,8 +866,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
+ 	 * memory rendering at this point in time and we don't want to block off
+ 	 * part of the virtual memory space.
+ 	 */
+-	gpu_write64(gpu, REG_A5XX_RBBM_SECVID_TSB_TRUSTED_BASE_LO,
+-		REG_A5XX_RBBM_SECVID_TSB_TRUSTED_BASE_HI, 0x00000000);
++	gpu_write64(gpu, REG_A5XX_RBBM_SECVID_TSB_TRUSTED_BASE_LO, 0x00000000);
+ 	gpu_write(gpu, REG_A5XX_RBBM_SECVID_TSB_TRUSTED_SIZE, 0x00000000);
+ 
+ 	/* Put the GPU into 64 bit by default */
+@@ -908,8 +905,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
+ 		return ret;
+ 
+ 	/* Set the ringbuffer address */
+-	gpu_write64(gpu, REG_A5XX_CP_RB_BASE, REG_A5XX_CP_RB_BASE_HI,
+-		gpu->rb[0]->iova);
++	gpu_write64(gpu, REG_A5XX_CP_RB_BASE, gpu->rb[0]->iova);
+ 
+ 	/*
+ 	 * If the microcode supports the WHERE_AM_I opcode then we can use that
+@@ -936,7 +932,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
+ 		}
+ 
+ 		gpu_write64(gpu, REG_A5XX_CP_RB_RPTR_ADDR,
+-			REG_A5XX_CP_RB_RPTR_ADDR_HI, shadowptr(a5xx_gpu, gpu->rb[0]));
++			    shadowptr(a5xx_gpu, gpu->rb[0]));
+ 	} else if (gpu->nr_rings > 1) {
+ 		/* Disable preemption if WHERE_AM_I isn't available */
+ 		a5xx_preempt_fini(gpu);
+@@ -1239,9 +1235,9 @@ static void a5xx_fault_detect_irq(struct msm_gpu *gpu)
+ 		gpu_read(gpu, REG_A5XX_RBBM_STATUS),
+ 		gpu_read(gpu, REG_A5XX_CP_RB_RPTR),
+ 		gpu_read(gpu, REG_A5XX_CP_RB_WPTR),
+-		gpu_read64(gpu, REG_A5XX_CP_IB1_BASE, REG_A5XX_CP_IB1_BASE_HI),
++		gpu_read64(gpu, REG_A5XX_CP_IB1_BASE),
+ 		gpu_read(gpu, REG_A5XX_CP_IB1_BUFSZ),
+-		gpu_read64(gpu, REG_A5XX_CP_IB2_BASE, REG_A5XX_CP_IB2_BASE_HI),
++		gpu_read64(gpu, REG_A5XX_CP_IB2_BASE),
+ 		gpu_read(gpu, REG_A5XX_CP_IB2_BUFSZ));
+ 
+ 	/* Turn off the hangcheck timer to keep it from bothering us */
+@@ -1427,8 +1423,7 @@ static int a5xx_pm_suspend(struct msm_gpu *gpu)
+ 
+ static int a5xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
+ {
+-	*value = gpu_read64(gpu, REG_A5XX_RBBM_ALWAYSON_COUNTER_LO,
+-		REG_A5XX_RBBM_ALWAYSON_COUNTER_HI);
++	*value = gpu_read64(gpu, REG_A5XX_RBBM_ALWAYSON_COUNTER_LO);
+ 
+ 	return 0;
+ }
+@@ -1465,8 +1460,7 @@ static int a5xx_crashdumper_run(struct msm_gpu *gpu,
+ 	if (IS_ERR_OR_NULL(dumper->ptr))
+ 		return -EINVAL;
+ 
+-	gpu_write64(gpu, REG_A5XX_CP_CRASH_SCRIPT_BASE_LO,
+-		REG_A5XX_CP_CRASH_SCRIPT_BASE_HI, dumper->iova);
++	gpu_write64(gpu, REG_A5XX_CP_CRASH_SCRIPT_BASE_LO, dumper->iova);
+ 
+ 	gpu_write(gpu, REG_A5XX_CP_CRASH_DUMP_CNTL, 1);
+ 
+@@ -1666,8 +1660,7 @@ static u64 a5xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate)
+ {
+ 	u64 busy_cycles;
+ 
+-	busy_cycles = gpu_read64(gpu, REG_A5XX_RBBM_PERFCTR_RBBM_0_LO,
+-			REG_A5XX_RBBM_PERFCTR_RBBM_0_HI);
++	busy_cycles = gpu_read64(gpu, REG_A5XX_RBBM_PERFCTR_RBBM_0_LO);
+ 	*out_sample_rate = clk_get_rate(gpu->core_clk);
+ 
+ 	return busy_cycles;
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+index 8abc9a2b114a..7658e89844b4 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+@@ -137,7 +137,6 @@ void a5xx_preempt_trigger(struct msm_gpu *gpu)
+ 
+ 	/* Set the address of the incoming preemption record */
+ 	gpu_write64(gpu, REG_A5XX_CP_CONTEXT_SWITCH_RESTORE_ADDR_LO,
+-		REG_A5XX_CP_CONTEXT_SWITCH_RESTORE_ADDR_HI,
+ 		a5xx_gpu->preempt_iova[ring->id]);
+ 
+ 	a5xx_gpu->next_ring = ring;
+@@ -211,8 +210,7 @@ void a5xx_preempt_hw_init(struct msm_gpu *gpu)
+ 	}
+ 
+ 	/* Write a 0 to signal that we aren't switching pagetables */
+-	gpu_write64(gpu, REG_A5XX_CP_CONTEXT_SWITCH_SMMU_INFO_LO,
+-		REG_A5XX_CP_CONTEXT_SWITCH_SMMU_INFO_HI, 0);
++	gpu_write64(gpu, REG_A5XX_CP_CONTEXT_SWITCH_SMMU_INFO_LO, 0);
+ 
+ 	/* Reset the preemption state */
+ 	set_preempt_state(a5xx_gpu, PREEMPT_NONE);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index fdc578016e0b..1ff605c18ee6 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -247,8 +247,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+ 	OUT_RING(ring, submit->seqno);
+ 
+ 	trace_msm_gpu_submit_flush(submit,
+-		gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER_LO,
+-			REG_A6XX_CP_ALWAYS_ON_COUNTER_HI));
++		gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER_LO));
+ 
+ 	a6xx_flush(gpu, ring);
+ }
+@@ -947,8 +946,7 @@ static int a6xx_ucode_init(struct msm_gpu *gpu)
+ 		}
+ 	}
+ 
+-	gpu_write64(gpu, REG_A6XX_CP_SQE_INSTR_BASE,
+-		REG_A6XX_CP_SQE_INSTR_BASE+1, a6xx_gpu->sqe_iova);
++	gpu_write64(gpu, REG_A6XX_CP_SQE_INSTR_BASE, a6xx_gpu->sqe_iova);
+ 
+ 	return 0;
+ }
+@@ -999,8 +997,7 @@ static int hw_init(struct msm_gpu *gpu)
+ 	 * memory rendering at this point in time and we don't want to block off
+ 	 * part of the virtual memory space.
+ 	 */
+-	gpu_write64(gpu, REG_A6XX_RBBM_SECVID_TSB_TRUSTED_BASE_LO,
+-		REG_A6XX_RBBM_SECVID_TSB_TRUSTED_BASE_HI, 0x00000000);
++	gpu_write64(gpu, REG_A6XX_RBBM_SECVID_TSB_TRUSTED_BASE_LO, 0x00000000);
+ 	gpu_write(gpu, REG_A6XX_RBBM_SECVID_TSB_TRUSTED_SIZE, 0x00000000);
+ 
+ 	/* Turn on 64 bit addressing for all blocks */
+@@ -1049,11 +1046,9 @@ static int hw_init(struct msm_gpu *gpu)
+ 
+ 	if (!adreno_is_a650_family(adreno_gpu)) {
+ 		/* Set the GMEM VA range [0x100000:0x100000 + gpu->gmem - 1] */
+-		gpu_write64(gpu, REG_A6XX_UCHE_GMEM_RANGE_MIN_LO,
+-			REG_A6XX_UCHE_GMEM_RANGE_MIN_HI, 0x00100000);
++		gpu_write64(gpu, REG_A6XX_UCHE_GMEM_RANGE_MIN_LO, 0x00100000);
+ 
+ 		gpu_write64(gpu, REG_A6XX_UCHE_GMEM_RANGE_MAX_LO,
+-			REG_A6XX_UCHE_GMEM_RANGE_MAX_HI,
+ 			0x00100000 + adreno_gpu->gmem - 1);
+ 	}
+ 
+@@ -1145,8 +1140,7 @@ static int hw_init(struct msm_gpu *gpu)
+ 		goto out;
+ 
+ 	/* Set the ringbuffer address */
+-	gpu_write64(gpu, REG_A6XX_CP_RB_BASE, REG_A6XX_CP_RB_BASE_HI,
+-		gpu->rb[0]->iova);
++	gpu_write64(gpu, REG_A6XX_CP_RB_BASE, gpu->rb[0]->iova);
+ 
+ 	/* Targets that support extended APRIV can use the RPTR shadow from
+ 	 * hardware but all the other ones need to disable the feature. Targets
+@@ -1178,7 +1172,6 @@ static int hw_init(struct msm_gpu *gpu)
+ 		}
+ 
+ 		gpu_write64(gpu, REG_A6XX_CP_RB_RPTR_ADDR_LO,
+-			REG_A6XX_CP_RB_RPTR_ADDR_HI,
+ 			shadowptr(a6xx_gpu, gpu->rb[0]));
+ 	}
+ 
+@@ -1499,9 +1492,9 @@ static void a6xx_fault_detect_irq(struct msm_gpu *gpu)
+ 		gpu_read(gpu, REG_A6XX_RBBM_STATUS),
+ 		gpu_read(gpu, REG_A6XX_CP_RB_RPTR),
+ 		gpu_read(gpu, REG_A6XX_CP_RB_WPTR),
+-		gpu_read64(gpu, REG_A6XX_CP_IB1_BASE, REG_A6XX_CP_IB1_BASE_HI),
++		gpu_read64(gpu, REG_A6XX_CP_IB1_BASE),
+ 		gpu_read(gpu, REG_A6XX_CP_IB1_REM_SIZE),
+-		gpu_read64(gpu, REG_A6XX_CP_IB2_BASE, REG_A6XX_CP_IB2_BASE_HI),
++		gpu_read64(gpu, REG_A6XX_CP_IB2_BASE),
+ 		gpu_read(gpu, REG_A6XX_CP_IB2_REM_SIZE));
+ 
+ 	/* Turn off the hangcheck timer to keep it from bothering us */
+@@ -1712,8 +1705,7 @@ static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
+ 	/* Force the GPU power on so we can read this register */
+ 	a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
+ 
+-	*value = gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER_LO,
+-			    REG_A6XX_CP_ALWAYS_ON_COUNTER_HI);
++	*value = gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER_LO);
+ 
+ 	a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
+ 
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index a5c3d1ed255a..a023d5f962dc 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -147,8 +147,7 @@ static int a6xx_crashdumper_run(struct msm_gpu *gpu,
+ 	/* Make sure all pending memory writes are posted */
+ 	wmb();
+ 
+-	gpu_write64(gpu, REG_A6XX_CP_CRASH_SCRIPT_BASE_LO,
+-		REG_A6XX_CP_CRASH_SCRIPT_BASE_HI, dumper->iova);
++	gpu_write64(gpu, REG_A6XX_CP_CRASH_SCRIPT_BASE_LO, dumper->iova);
+ 
+ 	gpu_write(gpu, REG_A6XX_CP_CRASH_DUMP_CNTL, 1);
+ 
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index 58a72e6b1400..585fd9c8d45a 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -540,7 +540,7 @@ static inline void gpu_rmw(struct msm_gpu *gpu, u32 reg, u32 mask, u32 or)
+ 	msm_rmw(gpu->mmio + (reg << 2), mask, or);
+ }
+ 
+-static inline u64 gpu_read64(struct msm_gpu *gpu, u32 lo, u32 hi)
++static inline u64 gpu_read64(struct msm_gpu *gpu, u32 reg)
+ {
+ 	u64 val;
+ 
+@@ -558,17 +558,17 @@ static inline u64 gpu_read64(struct msm_gpu *gpu, u32 lo, u32 hi)
+ 	 * when the lo is read, so make sure to read the lo first to trigger
+ 	 * that
+ 	 */
+-	val = (u64) msm_readl(gpu->mmio + (lo << 2));
+-	val |= ((u64) msm_readl(gpu->mmio + (hi << 2)) << 32);
++	val = (u64) msm_readl(gpu->mmio + (reg << 2));
++	val |= ((u64) msm_readl(gpu->mmio + ((reg + 1) << 2)) << 32);
+ 
+ 	return val;
+ }
+ 
+-static inline void gpu_write64(struct msm_gpu *gpu, u32 lo, u32 hi, u64 val)
++static inline void gpu_write64(struct msm_gpu *gpu, u32 reg, u64 val)
+ {
+ 	/* Why not a writeq here? Read the screed above */
+-	msm_writel(lower_32_bits(val), gpu->mmio + (lo << 2));
+-	msm_writel(upper_32_bits(val), gpu->mmio + (hi << 2));
++	msm_writel(lower_32_bits(val), gpu->mmio + (reg << 2));
++	msm_writel(upper_32_bits(val), gpu->mmio + ((reg + 1) << 2));
+ }
+ 
+ int msm_gpu_pm_suspend(struct msm_gpu *gpu);
 -- 
 2.38.1
 
