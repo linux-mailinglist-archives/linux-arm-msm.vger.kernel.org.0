@@ -2,315 +2,338 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3CB961551F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 23:35:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A8955615625
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 00:34:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231398AbiKAWe6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Nov 2022 18:34:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37186 "EHLO
+        id S229841AbiKAXe1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Nov 2022 19:34:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231392AbiKAWeL (ORCPT
+        with ESMTP id S229462AbiKAXe0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Nov 2022 18:34:11 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3049A1FF99;
-        Tue,  1 Nov 2022 15:33:58 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id f9so14679315pgj.2;
-        Tue, 01 Nov 2022 15:33:58 -0700 (PDT)
+        Tue, 1 Nov 2022 19:34:26 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFA341A808
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Nov 2022 16:34:24 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id o7so11449998pjj.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Nov 2022 16:34:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VxeOMGDEphJ5EBKU4t4wsdXzYKyxaBqm90z9B0rYTIU=;
-        b=pYo5UhJPO3tW9ll+l2ZYyivpknW3o09rB6jysv+BKZWWoPct4H0/nfaIIiioNh5BwM
-         x/Ymzu1fkDVE2e0MZ8gHuFkz3NrEU6trfYucHM2MhwjOQ4pxLanJcofV4rSM0m9w5qEd
-         LWJB4NVUN2m+3de6oEshQ985mTcHs3C0QIfvuvWryCRYA1omADZDlMeKYXALB0Qt8VUh
-         lwwO+F7oYNt3QKcFLsZFJFBk5eifU8ECcrCr5KIvrL787X2S2cY22lSxqrpVnaZZhrwB
-         Q+pocQW1DVrOkeo6SvAinSDJYANlsJCWcxoXJqyl2/dWE03MNv5hbJOQH9Zwj66wDtnA
-         4TZQ==
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fiCS58ae4A8sQ9uGla/myzHbwEt2fBq1HAnefdPpGXw=;
+        b=Q86fSDNTbms1Mb8JrOYHI1p7oaSFY/zMzgVag9dI/GNGn2oQYG2KaWanrqqryNhN9j
+         /o1IYA5nOqK9KoBrUAMx8Ecwoy4hREDsIUikXri20AkUxhiLBGnGM66xHMPV+I+0xFG4
+         LFONQS24R+U28wLX94W1q79A5ZLyNEmJmQJZ0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VxeOMGDEphJ5EBKU4t4wsdXzYKyxaBqm90z9B0rYTIU=;
-        b=eOnGYfvk2TagA4vEHnalgI4WaUtsF8poCsbYG/SllbreahufIwB5f2pnSD+CyovWwi
-         kW2Ik7sv+Jb5/dIZAd5+myNYMTKi0QiSHbjbLqUCtdc2xyPi98Tq8+dVjB24G9JmfjN3
-         qmePf3h/vbRWCI/0RsYGmQkK3SMfMomYzW6KVTY9/J6uapY7N6wZFYi2v3brbSey5V2d
-         QEKwywbgfvGRJ2WwJ2GgmIlis4EdeSI8h5Wx+WBBJUN5Wzxr+lvYZ9Ri1+CshpAfzpam
-         CFX79ZWM3iLJn1243nk7AuVNJ5HD21GgcfZpKLG9BwpzK/WgdwayAbm0e3MIdrsXZp1s
-         SYdg==
-X-Gm-Message-State: ACrzQf2fd6rsFKi+q/+acYgD2z80EW8kScKVZHXdFskScObZmJDSvVpN
-        RZGuG9xhNr6acTRBS9yFRRs=
-X-Google-Smtp-Source: AMsMyM7UgJJEBIxONS/22UTMuVhjZUPgXI7PICUOp4DVVBd1P2DyhU0Tdm/HAH38zo350WFXy+HtZg==
-X-Received: by 2002:a05:6a00:2187:b0:56c:7e85:c8f9 with SMTP id h7-20020a056a00218700b0056c7e85c8f9mr21939023pfi.75.1667342037228;
-        Tue, 01 Nov 2022 15:33:57 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
-        by smtp.gmail.com with ESMTPSA id 65-20020a621644000000b0056bbcf88b93sm7032500pfw.42.2022.11.01.15.33.56
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fiCS58ae4A8sQ9uGla/myzHbwEt2fBq1HAnefdPpGXw=;
+        b=mwDfRKEKwRrVyL2PPKRWWX+W0BhBA6rU7IzipZfMxk4V8xFQh7VuNfzlSupFT6N4AL
+         xcUCwf94qq/d6WkzL6UZIk2vDenIQsxdu4izaS/Wxis6pyJF/rwjpFSxFzcBNmi2RGer
+         UgRHn+MYRx3Wd4dkznCiBZ1CseftlkxQRbL81VkxymxRPYv3hVgBM3FGEHLtd1VFrwWW
+         /XMx3F1eU/dLb/CjdtJBAhbJ6OY5r56vAlXnAChiH2O2/NFAzzddRrcrRdG7H/EFjv2e
+         LYyVnG6iNYePMSx2eVOB/6VBW6ZmPYRv52U+IrODBpaPv9TiCAKBytZFpZH1f/fN8WEx
+         z6sw==
+X-Gm-Message-State: ACrzQf3DC/NS8pN6JLf6IID0W/6XC6RvVQislQmi1ZIQkk1i70mXl0Cs
+        OVh+umkLzW4cWdpk0SWx5WGGug==
+X-Google-Smtp-Source: AMsMyM72nKPR2ufazXxcn0DYr+8HSKemjmCYJg0pO1CLdZHKdz9XflAKz9Qzy1PCInazElLUrg97Qg==
+X-Received: by 2002:a17:902:b70b:b0:186:b014:9609 with SMTP id d11-20020a170902b70b00b00186b0149609mr22177828pls.108.1667345664412;
+        Tue, 01 Nov 2022 16:34:24 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:11a:201:4437:8d79:dd1:7eb8])
+        by smtp.gmail.com with ESMTPSA id a19-20020aa79713000000b0056bc1a41209sm7051224pfg.33.2022.11.01.16.34.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Nov 2022 15:33:56 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>,
+        Tue, 01 Nov 2022 16:34:23 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        patches@lists.linux.dev, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 2/2] drm/msm: Hangcheck progress detection
-Date:   Tue,  1 Nov 2022 15:33:10 -0700
-Message-Id: <20221101223319.165493-3-robdclark@gmail.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221101223319.165493-1-robdclark@gmail.com>
-References: <20221101223319.165493-1-robdclark@gmail.com>
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
+Date:   Tue,  1 Nov 2022 16:34:21 -0700
+Message-Id: <20221101233421.997149-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.38.1.273.g43a17bfeac-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+We shouldn't be calling runtime PM APIs from within the genpd
+enable/disable path for a couple reasons.
 
-If the hangcheck timer expires, check if the fw's position in the
-cmdstream has advanced (changed) since last timer expiration, and
-allow it up to three additional "extensions" to it's alotted time.
-The intention is to continue to catch "shader stuck in a loop" type
-hangs quickly, but allow more time for things that are actually
-making forward progress.
+First, this causes an AA lockdep splat because genpd can call into genpd
+code again while holding the genpd lock.
 
-Because we need to sample the CP state twice to detect if there has
-not been progress, this also cuts the the timer's duration in half.
+WARNING: possible recursive locking detected
+5.19.0-rc2-lockdep+ #7 Not tainted
+--------------------------------------------
+kworker/2:1/49 is trying to acquire lock:
+ffffffeea0370788 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
 
-v2: Fix typo (REG_A6XX_CP_CSQ_IB2_STAT), add comment
+but task is already holding lock:
+ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+other info that might help us debug this:
+ Possible unsafe locking scenario:
+
+       CPU0
+       ----
+  lock(&genpd->mlock);
+  lock(&genpd->mlock);
+
+ *** DEADLOCK ***
+
+ May be due to missing lock nesting notation
+
+3 locks held by kworker/2:1/49:
+ #0: 74ffff80811a5748 ((wq_completion)pm){+.+.}-{0:0}, at: process_one_work+0x320/0x5fc
+ #1: ffffffc008537cf8 ((work_completion)(&genpd->power_off_work)){+.+.}-{0:0}, at: process_one_work+0x354/0x5fc
+ #2: ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+
+stack backtrace:
+CPU: 2 PID: 49 Comm: kworker/2:1 Not tainted 5.19.0-rc2-lockdep+ #7
+Hardware name: Google Lazor (rev3 - 8) with KB Backlight (DT)
+Workqueue: pm genpd_power_off_work_fn
+Call trace:
+ dump_backtrace+0x1a0/0x200
+ show_stack+0x24/0x30
+ dump_stack_lvl+0x7c/0xa0
+ dump_stack+0x18/0x44
+ __lock_acquire+0xb38/0x3634
+ lock_acquire+0x180/0x2d4
+ __mutex_lock_common+0x118/0xe30
+ mutex_lock_nested+0x70/0x7c
+ genpd_lock_mtx+0x24/0x30
+ genpd_runtime_suspend+0x2f0/0x414
+ __rpm_callback+0xdc/0x1b8
+ rpm_callback+0x4c/0xcc
+ rpm_suspend+0x21c/0x5f0
+ rpm_idle+0x17c/0x1e0
+ __pm_runtime_idle+0x78/0xcc
+ gdsc_disable+0x24c/0x26c
+ _genpd_power_off+0xd4/0x1c4
+ genpd_power_off+0x2d8/0x41c
+ genpd_power_off_work_fn+0x60/0x94
+ process_one_work+0x398/0x5fc
+ worker_thread+0x42c/0x6c4
+ kthread+0x194/0x1b4
+ ret_from_fork+0x10/0x20
+
+Second, this confuses runtime PM on CoachZ for the camera devices by
+causing the camera clock controller's runtime PM usage_count to go
+negative after resuming from suspend. This is because runtime PM is
+being used on the clock controller while runtime PM is disabled for the
+device.
+
+The reason for the negative count is because a GDSC is represented as a
+genpd and each genpd that is attached to a device is resumed during the
+noirq phase of system wide suspend/resume (see the noirq suspend ops
+assignment in pm_genpd_init() for more details). The camera GDSCs are
+attached to camera devices with the 'power-domains' property in DT.
+Every device has runtime PM disabled in the late system suspend phase
+via __device_suspend_late(). Runtime PM is not usable until runtime PM
+is enabled in device_resume_early(). The noirq phases run after the
+'late' and before the 'early' phase of suspend/resume. When the genpds
+are resumed in genpd_resume_noirq(), we call down into gdsc_enable()
+that calls pm_runtime_resume_and_get() and that returns -EACCES to
+indicate failure to resume because runtime PM is disabled for all
+devices.
+
+Upon closer inspection, calling runtime PM APIs like this in the GDSC
+driver doesn't make sense. It was intended to make sure the GDSC for the
+clock controller providing other GDSCs was enabled, specifically the
+MMCX GDSC for the display clk controller on SM8250 (sm8250-dispcc), so
+that GDSC register accesses succeeded. That will already happen because
+we make the 'dev->pm_domain' a parent domain of each GDSC we register in
+gdsc_register() via pm_genpd_add_subdomain(). When any of these GDSCs
+are accessed, we'll enable the parent domain (in this specific case
+MMCX).
+
+We also remove any getting of runtime PM during registration, because
+when a genpd is registered it increments the count on the parent if the
+genpd itself is already enabled. And finally, the runtime PM state of
+the clk controller registering the GDSC shouldn't matter to the
+subdomain setup. Therefore we always assign 'dev' unconditionally so
+when GDSCs are removed we properly unlink the GDSC from the clk
+controller's pm_domain.
+
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Taniya Das <quic_tdas@quicinc.com>
+Cc: Satya Priya <quic_c_skakit@quicinc.com>
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Reported-by: Stephen Boyd <swboyd@chromium.org>
+Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 16 +++++++++++++
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 34 +++++++++++++++++++++++++++
- drivers/gpu/drm/msm/msm_drv.h         |  8 ++++++-
- drivers/gpu/drm/msm/msm_gpu.c         | 20 +++++++++++++++-
- drivers/gpu/drm/msm/msm_gpu.h         |  5 +++-
- drivers/gpu/drm/msm/msm_ringbuffer.h  | 24 +++++++++++++++++++
- 6 files changed, 104 insertions(+), 3 deletions(-)
+ drivers/clk/qcom/gdsc.c | 64 ++++++-----------------------------------
+ 1 file changed, 8 insertions(+), 56 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index ba22d3c918bc..9638ce71e172 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -1677,6 +1677,22 @@ static uint32_t a5xx_get_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
- 	return ring->memptrs->rptr = gpu_read(gpu, REG_A5XX_CP_RB_RPTR);
- }
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index 7cf5e130e92f..a775ce1b7d8a 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -11,7 +11,6 @@
+ #include <linux/kernel.h>
+ #include <linux/ktime.h>
+ #include <linux/pm_domain.h>
+-#include <linux/pm_runtime.h>
+ #include <linux/regmap.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/reset-controller.h>
+@@ -56,22 +55,6 @@ enum gdsc_status {
+ 	GDSC_ON
+ };
  
-+static bool a5xx_progress(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
-+{
-+	struct msm_cp_state cp_state = {
-+		.ib1_base = gpu_read64(gpu, REG_A5XX_CP_IB1_BASE),
-+		.ib2_base = gpu_read64(gpu, REG_A5XX_CP_IB2_BASE),
-+		.ib1_rem  = gpu_read(gpu, REG_A5XX_CP_IB1_BUFSZ),
-+		.ib2_rem  = gpu_read(gpu, REG_A5XX_CP_IB2_BUFSZ),
-+	};
-+	bool progress =
-+		!!memcmp(&cp_state, &ring->last_cp_state, sizeof(cp_state));
-+
-+	ring->last_cp_state = cp_state;
-+
-+	return progress;
-+}
-+
- static const struct adreno_gpu_funcs funcs = {
- 	.base = {
- 		.get_param = adreno_get_param,
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 1ff605c18ee6..7fe60c65a1eb 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1843,6 +1843,39 @@ static uint32_t a6xx_get_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
- 	return ring->memptrs->rptr = gpu_read(gpu, REG_A6XX_CP_RB_RPTR);
- }
- 
-+static bool a6xx_progress(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
-+{
-+	struct msm_cp_state cp_state = {
-+		.ib1_base = gpu_read64(gpu, REG_A6XX_CP_IB1_BASE),
-+		.ib2_base = gpu_read64(gpu, REG_A6XX_CP_IB2_BASE),
-+		.ib1_rem  = gpu_read(gpu, REG_A6XX_CP_IB1_REM_SIZE),
-+		.ib2_rem  = gpu_read(gpu, REG_A6XX_CP_IB2_REM_SIZE),
-+	};
-+	bool progress;
-+
-+	/*
-+	 * Adjust the remaining data to account for what has already been
-+	 * fetched from memory, but not yet consumed by the SQE.
-+	 *
-+	 * This is not *technically* correct, the amount buffered could
-+	 * exceed the IB size due to hw prefetching ahead, but:
-+	 *
-+	 * (1) We aren't trying to find the exact position, just whether
-+	 *     progress has been made
-+	 * (2) The CP_REG_TO_MEM at the end of a submit should be enough
-+	 *     to prevent prefetching into an unrelated submit.  (And
-+	 *     either way, at some point the ROQ will be full.)
-+	 */
-+	cp_state.ib1_rem += gpu_read(gpu, REG_A6XX_CP_CSQ_IB1_STAT) >> 16;
-+	cp_state.ib2_rem += gpu_read(gpu, REG_A6XX_CP_CSQ_IB2_STAT) >> 16;
-+
-+	progress = !!memcmp(&cp_state, &ring->last_cp_state, sizeof(cp_state));
-+
-+	ring->last_cp_state = cp_state;
-+
-+	return progress;
-+}
-+
- static u32 a618_get_speed_bin(u32 fuse)
+-static int gdsc_pm_runtime_get(struct gdsc *sc)
+-{
+-	if (!sc->dev)
+-		return 0;
+-
+-	return pm_runtime_resume_and_get(sc->dev);
+-}
+-
+-static int gdsc_pm_runtime_put(struct gdsc *sc)
+-{
+-	if (!sc->dev)
+-		return 0;
+-
+-	return pm_runtime_put_sync(sc->dev);
+-}
+-
+ /* Returns 1 if GDSC status is status, 0 if not, and < 0 on error */
+ static int gdsc_check_status(struct gdsc *sc, enum gdsc_status status)
  {
- 	if (fuse == 0)
-@@ -1961,6 +1994,7 @@ static const struct adreno_gpu_funcs funcs = {
- 		.create_address_space = a6xx_create_address_space,
- 		.create_private_address_space = a6xx_create_private_address_space,
- 		.get_rptr = a6xx_get_rptr,
-+		.progress = a6xx_progress,
- 	},
- 	.get_timestamp = a6xx_get_timestamp,
- };
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index 0609daf4fa4c..876d8d5eec2f 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -225,7 +225,13 @@ struct msm_drm_private {
- 
- 	struct drm_atomic_state *pm_state;
- 
--	/* For hang detection, in ms */
-+	/**
-+	 * hangcheck_period: For hang detection, in ms
-+	 *
-+	 * Note that in practice, a submit/job will get at least two hangcheck
-+	 * periods, due to checking for progress being implemented as simply
-+	 * "have the CP position registers changed since last time?"
-+	 */
- 	unsigned int hangcheck_period;
- 
- 	/**
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 3dffee54a951..136f5977b0bf 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -500,6 +500,21 @@ static void hangcheck_timer_reset(struct msm_gpu *gpu)
- 			round_jiffies_up(jiffies + msecs_to_jiffies(priv->hangcheck_period)));
+@@ -271,8 +254,9 @@ static void gdsc_retain_ff_on(struct gdsc *sc)
+ 	regmap_update_bits(sc->regmap, sc->gdscr, mask, mask);
  }
  
-+static bool made_progress(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
-+{
-+	if (ring->hangcheck_progress_retries >= DRM_MSM_HANGCHECK_PROGRESS_RETRIES)
-+		return false;
-+
-+	if (!gpu->funcs->progress)
-+		return false;
-+
-+	if (!gpu->funcs->progress(gpu, ring))
-+		return false;
-+
-+	ring->hangcheck_progress_retries++;
-+	return true;
-+}
-+
- static void hangcheck_handler(struct timer_list *t)
+-static int _gdsc_enable(struct gdsc *sc)
++static int gdsc_enable(struct generic_pm_domain *domain)
  {
- 	struct msm_gpu *gpu = from_timer(gpu, t, hangcheck_timer);
-@@ -511,9 +526,12 @@ static void hangcheck_handler(struct timer_list *t)
- 	if (fence != ring->hangcheck_fence) {
- 		/* some progress has been made.. ya! */
- 		ring->hangcheck_fence = fence;
--	} else if (fence_before(fence, ring->fctx->last_fence)) {
-+		ring->hangcheck_progress_retries = 0;
-+	} else if (fence_before(fence, ring->fctx->last_fence) &&
-+			!made_progress(gpu, ring)) {
- 		/* no progress and not done.. hung! */
- 		ring->hangcheck_fence = fence;
-+		ring->hangcheck_progress_retries = 0;
- 		DRM_DEV_ERROR(dev->dev, "%s: hangcheck detected gpu lockup rb %d!\n",
- 				gpu->name, ring->id);
- 		DRM_DEV_ERROR(dev->dev, "%s:     completed fence: %u\n",
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 585fd9c8d45a..d8f355e9f0b2 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -78,6 +78,8 @@ struct msm_gpu_funcs {
- 	struct msm_gem_address_space *(*create_private_address_space)
- 		(struct msm_gpu *gpu);
- 	uint32_t (*get_rptr)(struct msm_gpu *gpu, struct msm_ringbuffer *ring);
-+
-+	bool (*progress)(struct msm_gpu *gpu, struct msm_ringbuffer *ring);
- };
++	struct gdsc *sc = domain_to_gdsc(domain);
+ 	int ret;
  
- /* Additional state for iommu faults: */
-@@ -236,7 +238,8 @@ struct msm_gpu {
- 	 */
- #define DRM_MSM_INACTIVE_PERIOD   66 /* in ms (roughly four frames) */
+ 	if (sc->pwrsts == PWRSTS_ON)
+@@ -328,22 +312,11 @@ static int _gdsc_enable(struct gdsc *sc)
+ 	return 0;
+ }
  
--#define DRM_MSM_HANGCHECK_DEFAULT_PERIOD 500 /* in ms */
-+#define DRM_MSM_HANGCHECK_DEFAULT_PERIOD 250 /* in ms */
-+#define DRM_MSM_HANGCHECK_PROGRESS_RETRIES 3
- 	struct timer_list hangcheck_timer;
+-static int gdsc_enable(struct generic_pm_domain *domain)
++static int gdsc_disable(struct generic_pm_domain *domain)
+ {
+ 	struct gdsc *sc = domain_to_gdsc(domain);
+ 	int ret;
  
- 	/* Fault info for most recent iova fault: */
-diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
-index 2a5045abe46e..e3d33bae3380 100644
---- a/drivers/gpu/drm/msm/msm_ringbuffer.h
-+++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
-@@ -35,6 +35,11 @@ struct msm_rbmemptrs {
- 	volatile u64 ttbr0;
- };
+-	ret = gdsc_pm_runtime_get(sc);
+-	if (ret)
+-		return ret;
+-
+-	return _gdsc_enable(sc);
+-}
+-
+-static int _gdsc_disable(struct gdsc *sc)
+-{
+-	int ret;
+-
+ 	if (sc->pwrsts == PWRSTS_ON)
+ 		return gdsc_assert_reset(sc);
  
-+struct msm_cp_state {
-+	uint64_t ib1_base, ib2_base;
-+	uint32_t ib1_rem, ib2_rem;
-+};
-+
- struct msm_ringbuffer {
- 	struct msm_gpu *gpu;
- 	int id;
-@@ -64,6 +69,25 @@ struct msm_ringbuffer {
- 	uint64_t memptrs_iova;
- 	struct msm_fence_context *fctx;
+@@ -388,18 +361,6 @@ static int _gdsc_disable(struct gdsc *sc)
+ 	return 0;
+ }
  
-+	/**
-+	 * hangcheck_progress_retries:
-+	 *
-+	 * The number of extra hangcheck duration cycles that we have given
-+	 * due to it appearing that the GPU is making forward progress.
-+	 *
-+	 * If the GPU appears to be making progress (ie. the CP has advanced
-+	 * in the command stream, we'll allow up to DRM_MSM_HANGCHECK_PROGRESS_RETRIES
-+	 * expirations of the hangcheck timer before killing the job.  In other
-+	 * words we'll let the submit run for up to
-+	 * DRM_MSM_HANGCHECK_DEFAULT_PERIOD *  DRM_MSM_HANGCHECK_PROGRESS_RETRIES
-+	 */
-+	int hangcheck_progress_retries;
-+
-+	/**
-+	 * last_cp_state: The state of the CP at the last call to gpu->progress()
-+	 */
-+	struct msm_cp_state last_cp_state;
-+
- 	/*
- 	 * preempt_lock protects preemption and serializes wptr updates against
- 	 * preemption.  Can be aquired from irq context.
+-static int gdsc_disable(struct generic_pm_domain *domain)
+-{
+-	struct gdsc *sc = domain_to_gdsc(domain);
+-	int ret;
+-
+-	ret = _gdsc_disable(sc);
+-
+-	gdsc_pm_runtime_put(sc);
+-
+-	return ret;
+-}
+-
+ static int gdsc_init(struct gdsc *sc)
+ {
+ 	u32 mask, val;
+@@ -447,11 +408,6 @@ static int gdsc_init(struct gdsc *sc)
+ 				return ret;
+ 		}
+ 
+-		/* ...and the power-domain */
+-		ret = gdsc_pm_runtime_get(sc);
+-		if (ret)
+-			goto err_disable_supply;
+-
+ 		/*
+ 		 * Votable GDSCs can be ON due to Vote from other masters.
+ 		 * If a Votable GDSC is ON, make sure we have a Vote.
+@@ -459,14 +415,14 @@ static int gdsc_init(struct gdsc *sc)
+ 		if (sc->flags & VOTABLE) {
+ 			ret = gdsc_update_collapse_bit(sc, false);
+ 			if (ret)
+-				goto err_put_rpm;
++				goto err_disable_supply;
+ 		}
+ 
+ 		/* Turn on HW trigger mode if supported */
+ 		if (sc->flags & HW_CTRL) {
+ 			ret = gdsc_hwctrl(sc, true);
+ 			if (ret < 0)
+-				goto err_put_rpm;
++				goto err_disable_supply;
+ 		}
+ 
+ 		/*
+@@ -495,14 +451,11 @@ static int gdsc_init(struct gdsc *sc)
+ 		sc->pd.power_on = gdsc_enable;
+ 
+ 	ret = pm_genpd_init(&sc->pd, NULL, !on);
+-	if (ret)
+-		goto err_put_rpm;
++	if (!ret)
++		goto err_disable_supply;
+ 
+ 	return 0;
+ 
+-err_put_rpm:
+-	if (on)
+-		gdsc_pm_runtime_put(sc);
+ err_disable_supply:
+ 	if (on && sc->rsupply)
+ 		regulator_disable(sc->rsupply);
+@@ -541,8 +494,7 @@ int gdsc_register(struct gdsc_desc *desc,
+ 	for (i = 0; i < num; i++) {
+ 		if (!scs[i])
+ 			continue;
+-		if (pm_runtime_enabled(dev))
+-			scs[i]->dev = dev;
++		scs[i]->dev = dev;
+ 		scs[i]->regmap = regmap;
+ 		scs[i]->rcdev = rcdev;
+ 		ret = gdsc_init(scs[i]);
 -- 
-2.38.1
+https://chromeos.dev
 
