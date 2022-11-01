@@ -2,338 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8955615625
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 00:34:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C89D461564D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 00:57:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229841AbiKAXe1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Nov 2022 19:34:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57194 "EHLO
+        id S229752AbiKAX5l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Nov 2022 19:57:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbiKAXe0 (ORCPT
+        with ESMTP id S229457AbiKAX5k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Nov 2022 19:34:26 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFA341A808
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Nov 2022 16:34:24 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id o7so11449998pjj.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Nov 2022 16:34:24 -0700 (PDT)
+        Tue, 1 Nov 2022 19:57:40 -0400
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 820631F625;
+        Tue,  1 Nov 2022 16:57:39 -0700 (PDT)
+Received: by mail-il1-x12e.google.com with SMTP id g13so8700298ile.0;
+        Tue, 01 Nov 2022 16:57:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fiCS58ae4A8sQ9uGla/myzHbwEt2fBq1HAnefdPpGXw=;
-        b=Q86fSDNTbms1Mb8JrOYHI1p7oaSFY/zMzgVag9dI/GNGn2oQYG2KaWanrqqryNhN9j
-         /o1IYA5nOqK9KoBrUAMx8Ecwoy4hREDsIUikXri20AkUxhiLBGnGM66xHMPV+I+0xFG4
-         LFONQS24R+U28wLX94W1q79A5ZLyNEmJmQJZ0=
+        bh=79QVVyXFg8UxsRAv7iIJih7AMld9P3iLtMsZBswHoqE=;
+        b=q5qrb4vacT3b1cEDSOcuN/m0eNwt7oNmU3Dq2x09izIHg1QSA9i35IM69duVGQKKlQ
+         HqR9wvist2TPiMaWuuoN7XKbZ4pvE0mA8DR24LLPrXENpOTeTmxGDmT24knL/CLC31KZ
+         NBB5xVNjFrH6XfW7zhwziR+f1sEbau4NyM3L4bqL6xyZ2/y8n5FPo1wtuc0Ogu+iYWFy
+         KDuk4c8mqNlfGTmqceT/lCippBBepWn0AuCxFF/uGPB6sXHXtQtoYwzCQwWldVaciZ2e
+         zaF1u7G/DSgjEmIkZLDwo60jr1D3BMV48As6DVNvO7iTyqSderbmB5wKcu7Qpdn/apyt
+         u80w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=fiCS58ae4A8sQ9uGla/myzHbwEt2fBq1HAnefdPpGXw=;
-        b=mwDfRKEKwRrVyL2PPKRWWX+W0BhBA6rU7IzipZfMxk4V8xFQh7VuNfzlSupFT6N4AL
-         xcUCwf94qq/d6WkzL6UZIk2vDenIQsxdu4izaS/Wxis6pyJF/rwjpFSxFzcBNmi2RGer
-         UgRHn+MYRx3Wd4dkznCiBZ1CseftlkxQRbL81VkxymxRPYv3hVgBM3FGEHLtd1VFrwWW
-         /XMx3F1eU/dLb/CjdtJBAhbJ6OY5r56vAlXnAChiH2O2/NFAzzddRrcrRdG7H/EFjv2e
-         LYyVnG6iNYePMSx2eVOB/6VBW6ZmPYRv52U+IrODBpaPv9TiCAKBytZFpZH1f/fN8WEx
-         z6sw==
-X-Gm-Message-State: ACrzQf3DC/NS8pN6JLf6IID0W/6XC6RvVQislQmi1ZIQkk1i70mXl0Cs
-        OVh+umkLzW4cWdpk0SWx5WGGug==
-X-Google-Smtp-Source: AMsMyM72nKPR2ufazXxcn0DYr+8HSKemjmCYJg0pO1CLdZHKdz9XflAKz9Qzy1PCInazElLUrg97Qg==
-X-Received: by 2002:a17:902:b70b:b0:186:b014:9609 with SMTP id d11-20020a170902b70b00b00186b0149609mr22177828pls.108.1667345664412;
-        Tue, 01 Nov 2022 16:34:24 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:11a:201:4437:8d79:dd1:7eb8])
-        by smtp.gmail.com with ESMTPSA id a19-20020aa79713000000b0056bc1a41209sm7051224pfg.33.2022.11.01.16.34.22
+        bh=79QVVyXFg8UxsRAv7iIJih7AMld9P3iLtMsZBswHoqE=;
+        b=YYkWFl8H1uXdBOza3JEJbkDG0Dou8FnrC03TTXDfVA3e35TFERSt4rXq4S37dfjtmm
+         tXJPqBOxEtUlVDnzmCt6FsOWZwqwcmPPZ4V0Qnr+8e2yRCCvvyAX9Usow+hUfxOfQM2h
+         /bAl7IsNgzFbp9cBviG06wBT+g0MXi68lwwSTYs/Wft764/Fz3OMSTZ0TS0JDVU3KPXy
+         yZ2Cf7izuXxHERgUjFpVFYODdfE//MuIT2WE762syvZWuLOrGA6Zchjm8i45uG5y/pwI
+         hyZiT0HPamG94mOj03BCRfFFNlMQfdkXiF68M0mpRwCyUJV/+WE7GVjHZ6F3mn+AkdiZ
+         4kKQ==
+X-Gm-Message-State: ACrzQf1059IY10H3btyey+m+P9Mi1ZIiY5ILLKbtEf7J4ltrJb3g48fa
+        78IhGguXKvMLIQ9QFUV8LA4=
+X-Google-Smtp-Source: AMsMyM5qvwLWgIrPUtRiDcylkN4kx1MzFaJj64axVksnHyx7mknR1a34xP3bW7qkCNcd5Ede9ms/TA==
+X-Received: by 2002:a92:7d0a:0:b0:300:b187:cac7 with SMTP id y10-20020a927d0a000000b00300b187cac7mr7699147ilc.178.1667347058181;
+        Tue, 01 Nov 2022 16:57:38 -0700 (PDT)
+Received: from localhost ([2607:fea8:a2e2:2d00:f1f0:c4d7:e39e:e2f])
+        by smtp.gmail.com with ESMTPSA id u6-20020a02cbc6000000b00363fe31cf55sm4446477jaq.40.2022.11.01.16.57.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Nov 2022 16:34:23 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        patches@lists.linux.dev, Andy Gross <agross@kernel.org>,
+        Tue, 01 Nov 2022 16:57:37 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
-Date:   Tue,  1 Nov 2022 16:34:21 -0700
-Message-Id: <20221101233421.997149-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.38.1.273.g43a17bfeac-goog
+        Vinod Koul <vkoul@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Chanho Park <chanho61.park@samsung.com>,
+        Thierry Reding <treding@nvidia.com>,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Subject: [PATCH 0/4] Initial SDM670 and Pixel 3a support
+Date:   Tue,  1 Nov 2022 19:57:18 -0400
+Message-Id: <20221101235722.53955-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We shouldn't be calling runtime PM APIs from within the genpd
-enable/disable path for a couple reasons.
+Do not apply this series yet. It is only for review comments. It can be
+applied once the "qcom,sdm670-smmu-500" compatible string gets added (or
+now if you don't care about handling an unnecessary quirk).
 
-First, this causes an AA lockdep splat because genpd can call into genpd
-code again while holding the genpd lock.
+This adds the device trees and bindings to support the Qualcomm
+Snapdragon 670 and Google Pixel 3a. This patch series, specifically the
+last patch, depends on:
 
-WARNING: possible recursive locking detected
-5.19.0-rc2-lockdep+ #7 Not tainted
---------------------------------------------
-kworker/2:1/49 is trying to acquire lock:
-ffffffeea0370788 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+[PATCH v4 0/3] SDM670 Global Clocks
+  https://lore.kernel.org/all/20220914013922.198778-1-mailingradian@gmail.com/T/
+[PATCH v2 0/2] RPMh Support for PM660 and PM660L
+  https://lore.kernel.org/all/20220920223331.150635-1-mailingradian@gmail.com/T/
+[PATCH v2 0/2] SDM670 RPMh Clocks
+  https://lore.kernel.org/all/20220920223734.151135-1-mailingradian@gmail.com/T/
+[PATCH v2 0/2] SDM670 USB 2.0 support
+  https://lore.kernel.org/all/20220922024656.178529-1-mailingradian@gmail.com/T/
+[PATCH 0/2] SDM670 SDHCI support
+  https://lore.kernel.org/all/20220923014322.33620-1-mailingradian@gmail.com/T/
+[PATCH v2 0/2] SDM670 Power Domains
+  https://lore.kernel.org/all/20221004221130.14076-1-mailingradian@gmail.com/T/
+[PATCH v10 0/3] SDM670 Pin Control Driver
+  https://lore.kernel.org/all/20221014001934.4995-1-mailingradian@gmail.com/T/
+[PATCH v6 0/4] SDM670 GPI DMA support
+  https://lore.kernel.org/all/20221018005740.23952-1-mailingradian@gmail.com/T/
+[RFC PATCH 0/9] iommy/arm-smmu-qcom: Rework Qualcomm SMMU bindings and implementation
+  https://lore.kernel.org/linux-iommu/73eee2ed-f8ee-f136-2853-34b27c099644@quicinc.com/T/
 
-but task is already holding lock:
-ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+Richard Acayan (4):
+  dt-bindings: arm: cpus: add qcom kryo 360 compatible
+  dt-bindings: arm: qcom: add sdm670 and pixel 3a compatible
+  dt-bindings: firmware: scm: add sdm670 compatible
+  arm64: dts: qcom: add sdm670 and pixel 3a device trees
 
-other info that might help us debug this:
- Possible unsafe locking scenario:
+ .../devicetree/bindings/arm/cpus.yaml         |    1 +
+ .../devicetree/bindings/arm/qcom.yaml         |    6 +
+ .../bindings/firmware/qcom,scm.yaml           |    1 +
+ arch/arm64/boot/dts/qcom/Makefile             |    1 +
+ .../boot/dts/qcom/sdm670-google-sargo.dts     |  519 +++++++
+ arch/arm64/boot/dts/qcom/sdm670.dtsi          | 1216 +++++++++++++++++
+ 6 files changed, 1744 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm670.dtsi
 
-       CPU0
-       ----
-  lock(&genpd->mlock);
-  lock(&genpd->mlock);
-
- *** DEADLOCK ***
-
- May be due to missing lock nesting notation
-
-3 locks held by kworker/2:1/49:
- #0: 74ffff80811a5748 ((wq_completion)pm){+.+.}-{0:0}, at: process_one_work+0x320/0x5fc
- #1: ffffffc008537cf8 ((work_completion)(&genpd->power_off_work)){+.+.}-{0:0}, at: process_one_work+0x354/0x5fc
- #2: ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
-
-stack backtrace:
-CPU: 2 PID: 49 Comm: kworker/2:1 Not tainted 5.19.0-rc2-lockdep+ #7
-Hardware name: Google Lazor (rev3 - 8) with KB Backlight (DT)
-Workqueue: pm genpd_power_off_work_fn
-Call trace:
- dump_backtrace+0x1a0/0x200
- show_stack+0x24/0x30
- dump_stack_lvl+0x7c/0xa0
- dump_stack+0x18/0x44
- __lock_acquire+0xb38/0x3634
- lock_acquire+0x180/0x2d4
- __mutex_lock_common+0x118/0xe30
- mutex_lock_nested+0x70/0x7c
- genpd_lock_mtx+0x24/0x30
- genpd_runtime_suspend+0x2f0/0x414
- __rpm_callback+0xdc/0x1b8
- rpm_callback+0x4c/0xcc
- rpm_suspend+0x21c/0x5f0
- rpm_idle+0x17c/0x1e0
- __pm_runtime_idle+0x78/0xcc
- gdsc_disable+0x24c/0x26c
- _genpd_power_off+0xd4/0x1c4
- genpd_power_off+0x2d8/0x41c
- genpd_power_off_work_fn+0x60/0x94
- process_one_work+0x398/0x5fc
- worker_thread+0x42c/0x6c4
- kthread+0x194/0x1b4
- ret_from_fork+0x10/0x20
-
-Second, this confuses runtime PM on CoachZ for the camera devices by
-causing the camera clock controller's runtime PM usage_count to go
-negative after resuming from suspend. This is because runtime PM is
-being used on the clock controller while runtime PM is disabled for the
-device.
-
-The reason for the negative count is because a GDSC is represented as a
-genpd and each genpd that is attached to a device is resumed during the
-noirq phase of system wide suspend/resume (see the noirq suspend ops
-assignment in pm_genpd_init() for more details). The camera GDSCs are
-attached to camera devices with the 'power-domains' property in DT.
-Every device has runtime PM disabled in the late system suspend phase
-via __device_suspend_late(). Runtime PM is not usable until runtime PM
-is enabled in device_resume_early(). The noirq phases run after the
-'late' and before the 'early' phase of suspend/resume. When the genpds
-are resumed in genpd_resume_noirq(), we call down into gdsc_enable()
-that calls pm_runtime_resume_and_get() and that returns -EACCES to
-indicate failure to resume because runtime PM is disabled for all
-devices.
-
-Upon closer inspection, calling runtime PM APIs like this in the GDSC
-driver doesn't make sense. It was intended to make sure the GDSC for the
-clock controller providing other GDSCs was enabled, specifically the
-MMCX GDSC for the display clk controller on SM8250 (sm8250-dispcc), so
-that GDSC register accesses succeeded. That will already happen because
-we make the 'dev->pm_domain' a parent domain of each GDSC we register in
-gdsc_register() via pm_genpd_add_subdomain(). When any of these GDSCs
-are accessed, we'll enable the parent domain (in this specific case
-MMCX).
-
-We also remove any getting of runtime PM during registration, because
-when a genpd is registered it increments the count on the parent if the
-genpd itself is already enabled. And finally, the runtime PM state of
-the clk controller registering the GDSC shouldn't matter to the
-subdomain setup. Therefore we always assign 'dev' unconditionally so
-when GDSCs are removed we properly unlink the GDSC from the clk
-controller's pm_domain.
-
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Taniya Das <quic_tdas@quicinc.com>
-Cc: Satya Priya <quic_c_skakit@quicinc.com>
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Reported-by: Stephen Boyd <swboyd@chromium.org>
-Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/clk/qcom/gdsc.c | 64 ++++++-----------------------------------
- 1 file changed, 8 insertions(+), 56 deletions(-)
-
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index 7cf5e130e92f..a775ce1b7d8a 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -11,7 +11,6 @@
- #include <linux/kernel.h>
- #include <linux/ktime.h>
- #include <linux/pm_domain.h>
--#include <linux/pm_runtime.h>
- #include <linux/regmap.h>
- #include <linux/regulator/consumer.h>
- #include <linux/reset-controller.h>
-@@ -56,22 +55,6 @@ enum gdsc_status {
- 	GDSC_ON
- };
- 
--static int gdsc_pm_runtime_get(struct gdsc *sc)
--{
--	if (!sc->dev)
--		return 0;
--
--	return pm_runtime_resume_and_get(sc->dev);
--}
--
--static int gdsc_pm_runtime_put(struct gdsc *sc)
--{
--	if (!sc->dev)
--		return 0;
--
--	return pm_runtime_put_sync(sc->dev);
--}
--
- /* Returns 1 if GDSC status is status, 0 if not, and < 0 on error */
- static int gdsc_check_status(struct gdsc *sc, enum gdsc_status status)
- {
-@@ -271,8 +254,9 @@ static void gdsc_retain_ff_on(struct gdsc *sc)
- 	regmap_update_bits(sc->regmap, sc->gdscr, mask, mask);
- }
- 
--static int _gdsc_enable(struct gdsc *sc)
-+static int gdsc_enable(struct generic_pm_domain *domain)
- {
-+	struct gdsc *sc = domain_to_gdsc(domain);
- 	int ret;
- 
- 	if (sc->pwrsts == PWRSTS_ON)
-@@ -328,22 +312,11 @@ static int _gdsc_enable(struct gdsc *sc)
- 	return 0;
- }
- 
--static int gdsc_enable(struct generic_pm_domain *domain)
-+static int gdsc_disable(struct generic_pm_domain *domain)
- {
- 	struct gdsc *sc = domain_to_gdsc(domain);
- 	int ret;
- 
--	ret = gdsc_pm_runtime_get(sc);
--	if (ret)
--		return ret;
--
--	return _gdsc_enable(sc);
--}
--
--static int _gdsc_disable(struct gdsc *sc)
--{
--	int ret;
--
- 	if (sc->pwrsts == PWRSTS_ON)
- 		return gdsc_assert_reset(sc);
- 
-@@ -388,18 +361,6 @@ static int _gdsc_disable(struct gdsc *sc)
- 	return 0;
- }
- 
--static int gdsc_disable(struct generic_pm_domain *domain)
--{
--	struct gdsc *sc = domain_to_gdsc(domain);
--	int ret;
--
--	ret = _gdsc_disable(sc);
--
--	gdsc_pm_runtime_put(sc);
--
--	return ret;
--}
--
- static int gdsc_init(struct gdsc *sc)
- {
- 	u32 mask, val;
-@@ -447,11 +408,6 @@ static int gdsc_init(struct gdsc *sc)
- 				return ret;
- 		}
- 
--		/* ...and the power-domain */
--		ret = gdsc_pm_runtime_get(sc);
--		if (ret)
--			goto err_disable_supply;
--
- 		/*
- 		 * Votable GDSCs can be ON due to Vote from other masters.
- 		 * If a Votable GDSC is ON, make sure we have a Vote.
-@@ -459,14 +415,14 @@ static int gdsc_init(struct gdsc *sc)
- 		if (sc->flags & VOTABLE) {
- 			ret = gdsc_update_collapse_bit(sc, false);
- 			if (ret)
--				goto err_put_rpm;
-+				goto err_disable_supply;
- 		}
- 
- 		/* Turn on HW trigger mode if supported */
- 		if (sc->flags & HW_CTRL) {
- 			ret = gdsc_hwctrl(sc, true);
- 			if (ret < 0)
--				goto err_put_rpm;
-+				goto err_disable_supply;
- 		}
- 
- 		/*
-@@ -495,14 +451,11 @@ static int gdsc_init(struct gdsc *sc)
- 		sc->pd.power_on = gdsc_enable;
- 
- 	ret = pm_genpd_init(&sc->pd, NULL, !on);
--	if (ret)
--		goto err_put_rpm;
-+	if (!ret)
-+		goto err_disable_supply;
- 
- 	return 0;
- 
--err_put_rpm:
--	if (on)
--		gdsc_pm_runtime_put(sc);
- err_disable_supply:
- 	if (on && sc->rsupply)
- 		regulator_disable(sc->rsupply);
-@@ -541,8 +494,7 @@ int gdsc_register(struct gdsc_desc *desc,
- 	for (i = 0; i < num; i++) {
- 		if (!scs[i])
- 			continue;
--		if (pm_runtime_enabled(dev))
--			scs[i]->dev = dev;
-+		scs[i]->dev = dev;
- 		scs[i]->regmap = regmap;
- 		scs[i]->rcdev = rcdev;
- 		ret = gdsc_init(scs[i]);
+P.S.: Thank you to all the maintainers and reviewers who went through
+everything and made helpful comments!
 -- 
-https://chromeos.dev
+2.38.1
 
