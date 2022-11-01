@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DEC2614805
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 11:57:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 999A361480E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 11:59:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229835AbiKAK5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Nov 2022 06:57:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39708 "EHLO
+        id S229468AbiKAK7g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Nov 2022 06:59:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229907AbiKAK5T (ORCPT
+        with ESMTP id S229589AbiKAK7f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Nov 2022 06:57:19 -0400
+        Tue, 1 Nov 2022 06:59:35 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B01A193EB;
-        Tue,  1 Nov 2022 03:57:18 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A1AMo5h000519;
-        Tue, 1 Nov 2022 10:57:15 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3312C18349;
+        Tue,  1 Nov 2022 03:59:31 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A1AGGgl018408;
+        Tue, 1 Nov 2022 10:59:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
  subject : date : message-id; s=qcppdkim1;
- bh=ZdwizPVPfe4p+N7OYBrHEa0WUaclhEatP+qhUy19UuM=;
- b=E/5FGYh0rrcPIBMNV3PJDR6gRyRLGTBCk/J/5PbZsHWkhsnNt5NcGFBEppjo+0f70I3c
- a55tCGXeAnCD9xPsxs8pXw1gIEAb7yMdqvSHI04hdqlMazNs2iEPueWMnSoOx6fTkEVu
- KiudgXYSIriTXfbZbwCFgmbX6Izz9LSTIYkLExYmbNI9IAoA8O5LlwKc0oOB9pSW8Kc0
- 7GZGZAURNDZ2GVktCEqCge+xzEPcm/6AXaZ8VngL8ljKqFmzx2K+kjW8Nx7mEp6fD3/j
- fg07hzG2AaoaLsGjaA5J4yRXFDd0n53RVLuKZ9g684eSbcZllwfI32Xznzw4e36rBLkz 9w== 
+ bh=Tm52GU8Xznxd1YWnShLAx2J3LjJ/mSlqe0bNCk93z1k=;
+ b=jAzwh0cG1dltYjwMQs+/yCGLcPuCaz/Qd9GavyC1O+eHfT5xHCXVG3ixmDqsEZD6u+WT
+ VLhCQ9MGpgNpFdVOlq2V8scQfgQ9dh+h74/CalQETa+x5/4fUXvLv+x9n1WMAWzPNTQr
+ Y8tFI0EU1b6ydrjy664iGhjwnamGzsUlmy86GPMdHUx+8alPHd8dtM4f0evx0yKGdfa3
+ jy0tm/x6vkC+smRP2JCYXTzeGajzCqc4A3fih7kXO0fRl/ENciSQxXx9x6gqZW+lwFhu
+ qS2vHxmPrsdYDa72LxsryXI17RwCujWKNP+uaMVCKkp6gYZGWNeEaZC+BkSrAU6YIKs+ VA== 
 Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kjxqgrr5m-1
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kk1j202bt-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 01 Nov 2022 10:57:14 +0000
+        Tue, 01 Nov 2022 10:59:28 +0000
 Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2A1AvBK7011728;
-        Tue, 1 Nov 2022 10:57:11 GMT
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2A1AxOHS013711;
+        Tue, 1 Nov 2022 10:59:24 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3khdp1w0nt-1
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3khdp1w0u9-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 01 Nov 2022 10:57:11 +0000
+        Tue, 01 Nov 2022 10:59:24 +0000
 Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2A1AvAv7011718;
-        Tue, 1 Nov 2022 10:57:10 GMT
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2A1AxO3R013705;
+        Tue, 1 Nov 2022 10:59:24 GMT
 Received: from kalyant-linux.qualcomm.com (kalyant-linux.qualcomm.com [10.204.66.210])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 2A1AvA0M011703;
-        Tue, 01 Nov 2022 10:57:10 +0000
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 2A1AxOak013704;
+        Tue, 01 Nov 2022 10:59:24 +0000
 Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
-        id 9E57B2E82; Tue,  1 Nov 2022 03:57:09 -0700 (PDT)
+        id 826EC2E82; Tue,  1 Nov 2022 03:59:23 -0700 (PDT)
 From:   Kalyan Thota <quic_kalyant@quicinc.com>
 To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
@@ -53,23 +53,23 @@ Cc:     Kalyan Thota <quic_kalyant@quicinc.com>,
         dianders@chromium.org, swboyd@chromium.org,
         quic_vpolimer@quicinc.com, dmitry.baryshkov@linaro.org,
         quic_abhinavk@quicinc.com
-Subject: [v7] drm/msm/disp/dpu1: add support for dspp sub block flush in sc7280
-Date:   Tue,  1 Nov 2022 03:57:05 -0700
-Message-Id: <1667300225-14367-1-git-send-email-quic_kalyant@quicinc.com>
+Subject: [PATCH] drm/msm/disp/dpu1: register crtc color management to first crtc in the list
+Date:   Tue,  1 Nov 2022 03:59:21 -0700
+Message-Id: <1667300361-14572-1-git-send-email-quic_kalyant@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: maAWYAbJmaCPMRYUH7AF_8mWCv42PfVg
-X-Proofpoint-GUID: maAWYAbJmaCPMRYUH7AF_8mWCv42PfVg
+X-Proofpoint-ORIG-GUID: icYNtdUyKzzy7EUWT5fIM6u4LOMCwPCm
+X-Proofpoint-GUID: icYNtdUyKzzy7EUWT5fIM6u4LOMCwPCm
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
  definitions=2022-11-01_05,2022-11-01_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- clxscore=1011 adultscore=0 priorityscore=1501 lowpriorityscore=0
- mlxscore=0 mlxlogscore=999 impostorscore=0 spamscore=0 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 suspectscore=0 mlxscore=0
+ lowpriorityscore=0 mlxlogscore=999 bulkscore=0 impostorscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2210170000 definitions=main-2211010083
 X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
@@ -81,242 +81,308 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Flush mechanism for DSPP blocks has changed in sc7280 family, it
-allows individual sub blocks to be flushed in coordination with
-master flush control.
+This patch does the following:
 
-Representation: master_flush && (PCC_flush | IGC_flush .. etc )
-
-This change adds necessary support for the above design.
-
-Changes in v1:
-- Few nits (Doug, Dmitry)
-- Restrict sub-block flush programming to dpu_hw_ctl file (Dmitry)
-
-Changes in v2:
-- Move the address offset to flush macro (Dmitry)
-- Seperate ops for the sub block flush (Dmitry)
-
-Changes in v3:
-- Reuse the DPU_DSPP_xx enum instead of a new one (Dmitry)
-
-Changes in v4:
-- Use shorter version for unsigned int (Stephen)
-
-Changes in v5:
-- Spurious patch please ignore.
-
-Changes in v6:
-- Add SOB tag (Doug, Dmitry)
-
-Changes in v7:
-- Cache flush mask per dspp (Dmitry)
-- Few nits (Marijn)
+1) Registers crtc color management to the first crtc in the list and
+attach to an encoder which is neither pluggable nor virtual
+2) Pin 1 crtc to 1 encoder
+3) Assign dspp block if crtc supports color processing.
 
 Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c       |  2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  5 ++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  4 +++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c     | 46 ++++++++++++++++++++++++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h     |  7 ++--
- 5 files changed, 58 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 17 +++++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    | 23 ++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 42 ++++++++++++++++++++++-------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 16 ++++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 14 +++++++---
+ drivers/gpu/drm/msm/dp/dp_display.c         |  5 ++++
+ drivers/gpu/drm/msm/msm_drv.h               |  7 ++++-
+ 7 files changed, 109 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 601d687..4170fbe 100644
+index 4170fbe..14ff7ca 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -766,7 +766,7 @@ static void _dpu_crtc_setup_cp_blocks(struct drm_crtc *crtc)
- 
- 		/* stage config flush mask */
- 		ctl->ops.update_pending_flush_dspp(ctl,
--			mixer[i].hw_dspp->idx);
-+			mixer[i].hw_dspp->idx, DPU_DSPP_PCC);
- 	}
+@@ -18,6 +18,7 @@
+ #include <drm/drm_flip_work.h>
+ #include <drm/drm_framebuffer.h>
+ #include <drm/drm_mode.h>
++#include <drm/drm_mode_object.h>
+ #include <drm/drm_probe_helper.h>
+ #include <drm/drm_rect.h>
+ #include <drm/drm_vblank.h>
+@@ -553,6 +554,17 @@ static void _dpu_crtc_complete_flip(struct drm_crtc *crtc)
+ 	spin_unlock_irqrestore(&dev->event_lock, flags);
  }
  
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 27f029f..0eecb2f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -65,7 +65,10 @@
- 	(PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE2))
- 
- #define CTL_SC7280_MASK \
--	(BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE) | BIT(DPU_CTL_VM_CFG))
-+	(BIT(DPU_CTL_ACTIVE_CFG) | \
-+	 BIT(DPU_CTL_FETCH_ACTIVE) | \
-+	 BIT(DPU_CTL_VM_CFG) | \
-+	 BIT(DPU_CTL_DSPP_SUB_BLOCK_FLUSH))
- 
- #define MERGE_3D_SM8150_MASK (0)
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 38aa38a..8148e91 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -161,10 +161,12 @@ enum {
-  * DSPP sub-blocks
-  * @DPU_DSPP_PCC             Panel color correction block
-  * @DPU_DSPP_GC              Gamma correction block
-+ * @DPU_DSPP_IGC             Inverse Gamma correction block
-  */
- enum {
- 	DPU_DSPP_PCC = 0x1,
- 	DPU_DSPP_GC,
-+	DPU_DSPP_IGC,
- 	DPU_DSPP_MAX
- };
- 
-@@ -191,6 +193,7 @@ enum {
-  * @DPU_CTL_SPLIT_DISPLAY:	CTL supports video mode split display
-  * @DPU_CTL_FETCH_ACTIVE:	Active CTL for fetch HW (SSPPs)
-  * @DPU_CTL_VM_CFG:		CTL config to support multiple VMs
-+ * @DPU_CTL_DSPP_BLOCK_FLUSH: CTL config to support dspp sub-block flush
-  * @DPU_CTL_MAX
-  */
- enum {
-@@ -198,6 +201,7 @@ enum {
- 	DPU_CTL_ACTIVE_CFG,
- 	DPU_CTL_FETCH_ACTIVE,
- 	DPU_CTL_VM_CFG,
-+	DPU_CTL_DSPP_SUB_BLOCK_FLUSH,
- 	DPU_CTL_MAX
- };
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-index a35ecb6..fbcb7da 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-@@ -33,6 +33,7 @@
- #define   CTL_INTF_FLUSH                0x110
- #define   CTL_INTF_MASTER               0x134
- #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
-+#define   CTL_DSPP_n_FLUSH(n)		((0x13C) + ((n) * 4))
- 
- #define CTL_MIXER_BORDER_OUT            BIT(24)
- #define CTL_FLUSH_MASK_CTL              BIT(17)
-@@ -110,9 +111,14 @@ static inline void dpu_hw_ctl_trigger_pending(struct dpu_hw_ctl *ctx)
- 
- static inline void dpu_hw_ctl_clear_pending_flush(struct dpu_hw_ctl *ctx)
- {
-+	int i;
-+
- 	trace_dpu_hw_ctl_clear_pending_flush(ctx->pending_flush_mask,
- 				     dpu_hw_ctl_get_flush_register(ctx));
- 	ctx->pending_flush_mask = 0x0;
-+
-+	for(i = 0; i < ARRAY_SIZE(ctx->pending_dspp_flush_mask); i++)
-+		ctx->pending_dspp_flush_mask[i] = 0x0;
- }
- 
- static inline void dpu_hw_ctl_update_pending_flush(struct dpu_hw_ctl *ctx,
-@@ -130,6 +136,8 @@ static u32 dpu_hw_ctl_get_pending_flush(struct dpu_hw_ctl *ctx)
- 
- static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
- {
-+	int i;
-+
- 	if (ctx->pending_flush_mask & BIT(MERGE_3D_IDX))
- 		DPU_REG_WRITE(&ctx->hw, CTL_MERGE_3D_FLUSH,
- 				ctx->pending_merge_3d_flush_mask);
-@@ -140,6 +148,11 @@ static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
- 		DPU_REG_WRITE(&ctx->hw, CTL_WB_FLUSH,
- 				ctx->pending_wb_flush_mask);
- 
-+	for(i = 0; i < ARRAY_SIZE(ctx->pending_dspp_flush_mask); i++)
-+		if (ctx->pending_dspp_flush_mask[i])
-+			DPU_REG_WRITE(&ctx->hw, CTL_DSPP_n_FLUSH(i),
-+				ctx->pending_dspp_flush_mask[i]);
-+
- 	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
- }
- 
-@@ -287,8 +300,9 @@ static void dpu_hw_ctl_update_pending_flush_merge_3d_v1(struct dpu_hw_ctl *ctx,
- }
- 
- static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl *ctx,
--	enum dpu_dspp dspp)
-+	enum dpu_dspp dspp, u32 dspp_sub_blk)
- {
-+
- 	switch (dspp) {
- 	case DSPP_0:
- 		ctx->pending_flush_mask |= BIT(13);
-@@ -307,6 +321,30 @@ static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl *ctx,
- 	}
- }
- 
-+static void dpu_hw_ctl_update_pending_flush_dspp_subblocks(
-+	struct dpu_hw_ctl *ctx,	enum dpu_dspp dspp, u32 dspp_sub_blk)
++bool dpu_crtc_has_color_enabled(struct drm_crtc *crtc)
 +{
++	u32 gamma_id = crtc->dev->mode_config.gamma_lut_property->base.id;
++	u32 degamma_id = crtc->dev->mode_config.degamma_lut_property->base.id;
++	u32 ctm_id = crtc->dev->mode_config.ctm_property->base.id;
 +
-+	if (dspp >= DSPP_MAX)
-+		return;
-+
-+	switch (dspp_sub_blk) {
-+	case DPU_DSPP_IGC:
-+		ctx->pending_dspp_flush_mask[dspp-DSPP_0] |= BIT(2);
-+		break;
-+	case DPU_DSPP_PCC:
-+		ctx->pending_dspp_flush_mask[dspp-DSPP_0] |= BIT(4);
-+		break;
-+	case DPU_DSPP_GC:
-+		ctx->pending_dspp_flush_mask[dspp-DSPP_0] |= BIT(5);
-+		break;
-+	default:
-+		return;
-+	}
-+
-+	ctx->pending_flush_mask |= BIT(29);
++	return !!(find_prop_id(&crtc->base, gamma_id) ||
++		  find_prop_id(&crtc->base, degamma_id) ||
++		  find_prop_id(&crtc->base, ctm_id));
 +}
 +
- static u32 dpu_hw_ctl_poll_reset_status(struct dpu_hw_ctl *ctx, u32 timeout_us)
+ enum dpu_intf_mode dpu_crtc_get_intf_mode(struct drm_crtc *crtc)
  {
- 	struct dpu_hw_blk_reg_map *c = &ctx->hw;
-@@ -675,7 +713,11 @@ static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
- 	ops->setup_blendstage = dpu_hw_ctl_setup_blendstage;
- 	ops->update_pending_flush_sspp = dpu_hw_ctl_update_pending_flush_sspp;
- 	ops->update_pending_flush_mixer = dpu_hw_ctl_update_pending_flush_mixer;
--	ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp;
-+	if (cap & BIT(DPU_CTL_DSPP_SUB_BLOCK_FLUSH))
-+		ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp_subblocks;
-+	else
-+		ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp;
+ 	struct drm_encoder *encoder;
+@@ -1575,6 +1587,8 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
+ {
+ 	struct drm_crtc *crtc = NULL;
+ 	struct dpu_crtc *dpu_crtc = NULL;
++	struct msm_drm_private *priv = dev->dev_private;
++	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
+ 	int i;
+ 
+ 	dpu_crtc = kzalloc(sizeof(*dpu_crtc), GFP_KERNEL);
+@@ -1604,7 +1618,8 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
+ 
+ 	drm_crtc_helper_add(crtc, &dpu_crtc_helper_funcs);
+ 
+-	drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
++	if (dpu_kms->catalog->dspp && drm_crtc_index(crtc) == 0)
++		drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
+ 
+ 	/* save user friendly CRTC name for later */
+ 	snprintf(dpu_crtc->name, DPU_CRTC_NAME_SIZE, "crtc%u", crtc->base.id);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+index 539b68b..164208e 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+@@ -240,6 +240,29 @@ static inline int dpu_crtc_frame_pending(struct drm_crtc *crtc)
+ }
+ 
+ /**
++ * find_prop_id - find the property for the drm object
++ * @obj: Pointer to drm object
++ * @prop_id: Property id.
++ */
++static inline struct drm_property *find_prop_id(struct drm_mode_object *obj,
++					       uint32_t prop_id)
++{
++	int i;
 +
- 	if (cap & BIT(DPU_CTL_FETCH_ACTIVE))
- 		ops->set_active_pipes = dpu_hw_ctl_set_fetch_pipe_active;
++	for (i = 0; i < obj->properties->count; i++)
++		if (obj->properties->properties[i]->base.id == prop_id)
++			return obj->properties->properties[i];
++
++	return NULL;
++}
++
++/**
++ * dpu_crtc_has_color_enabled - check if the crtc has color management enabled
++ * @crtc: Pointer to drm crtc object
++ */
++bool dpu_crtc_has_color_enabled(struct drm_crtc *crtc);
++
++/**
+  * dpu_crtc_vblank - enable or disable vblanks for this crtc
+  * @crtc: Pointer to drm crtc object
+  * @en: true to enable vblanks, false to disable
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 9c6817b..f09b957 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -545,7 +545,8 @@ bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
+ static struct msm_display_topology dpu_encoder_get_topology(
+ 			struct dpu_encoder_virt *dpu_enc,
+ 			struct dpu_kms *dpu_kms,
+-			struct drm_display_mode *mode)
++			struct drm_display_mode *mode,
++			struct drm_crtc *crtc)
+ {
+ 	struct msm_display_topology topology = {0};
+ 	int i, intf_count = 0;
+@@ -573,11 +574,9 @@ static struct msm_display_topology dpu_encoder_get_topology(
+ 	else
+ 		topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
+ 
+-	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
+-		if (dpu_kms->catalog->dspp &&
+-			(dpu_kms->catalog->dspp_count >= topology.num_lm))
++	if (dpu_crtc_has_color_enabled(crtc) &&
++		(dpu_kms->catalog->dspp_count >= topology.num_lm))
+ 			topology.num_dspp = topology.num_lm;
+-	}
+ 
+ 	topology.num_enc = 0;
+ 	topology.num_intf = intf_count;
+@@ -643,7 +642,7 @@ static int dpu_encoder_virt_atomic_check(
+ 		}
+ 	}
+ 
+-	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
++	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state->crtc);
+ 
+ 	/* Reserve dynamic resources now. */
+ 	if (!ret) {
+@@ -2412,7 +2411,7 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
+ 	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
+ 	struct drm_encoder *drm_enc = NULL;
+ 	struct dpu_encoder_virt *dpu_enc = NULL;
+-	int ret = 0;
++	int ret = 0, intf_i;
+ 
+ 	dpu_enc = to_dpu_encoder_virt(enc);
+ 
+@@ -2424,13 +2423,16 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
+ 	timer_setup(&dpu_enc->frame_done_timer,
+ 			dpu_encoder_frame_done_timeout, 0);
+ 
++	intf_i = disp_info->h_tile_instance[0];
+ 	if (disp_info->intf_type == DRM_MODE_ENCODER_DSI)
+ 		timer_setup(&dpu_enc->vsync_event_timer,
+ 				dpu_encoder_vsync_event_handler,
+ 				0);
+-	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS)
++	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS) {
+ 		dpu_enc->wide_bus_en = msm_dp_wide_bus_available(
+-				priv->dp[disp_info->h_tile_instance[0]]);
++				priv->dp[intf_i]);
++		disp_info->is_pluggable = msm_dp_is_pluggable(priv->dp[intf_i]);
++	}
+ 
+ 	INIT_DELAYED_WORK(&dpu_enc->delayed_off_work,
+ 			dpu_encoder_off_work);
+@@ -2455,6 +2457,28 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
+ 
+ }
+ 
++bool dpu_encoder_is_pluggable(struct drm_encoder *drm_enc)
++{
++	struct dpu_encoder_virt *dpu_enc;
++
++	if (!drm_enc)
++		return false;
++
++	dpu_enc = to_dpu_encoder_virt(drm_enc);
++	return dpu_enc->disp_info.is_pluggable;
++}
++
++bool dpu_encoder_is_virtual(struct drm_encoder *drm_enc)
++{
++	struct dpu_encoder_virt *dpu_enc;
++
++	if (!drm_enc)
++		return false;
++
++	dpu_enc = to_dpu_encoder_virt(drm_enc);
++	return (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_VIRTUAL);
++}
++
+ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
+ 		int drm_enc_mode)
+ {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+index 9e7236e..209adb4 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+@@ -25,7 +25,8 @@
+  * @num_of_h_tiles:     Number of horizontal tiles in case of split interface
+  * @h_tile_instance:    Controller instance used per tile. Number of elements is
+  *                      based on num_of_h_tiles
+- * @is_cmd_mode		Boolean to indicate if the CMD mode is requested
++ * @is_cmd_mode:	Boolean to indicate if the CMD mode is requested
++ * @is_pluggable:	Boolean to indicate if the intf is pluggable
+  * @is_te_using_watchdog_timer:  Boolean to indicate watchdog TE is
+  *				 used instead of panel TE in cmd mode panels
+  * @dsc:		DSC configuration data for DSC-enabled displays
+@@ -35,6 +36,7 @@ struct msm_display_info {
+ 	uint32_t num_of_h_tiles;
+ 	uint32_t h_tile_instance[MAX_H_TILES_PER_DISPLAY];
+ 	bool is_cmd_mode;
++	bool is_pluggable;
+ 	bool is_te_using_watchdog_timer;
+ 	struct drm_dsc_config *dsc;
  };
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-index 96c012e..ff4e92c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-@@ -148,13 +148,15 @@ struct dpu_hw_ctl_ops {
- 		enum dpu_lm blk);
+@@ -128,6 +130,18 @@ enum dpu_intf_mode dpu_encoder_get_intf_mode(struct drm_encoder *encoder);
+ void dpu_encoder_virt_runtime_resume(struct drm_encoder *encoder);
  
- 	/**
--	 * OR in the given flushbits to the cached pending_flush_mask
-+	 * OR in the given flushbits to the cached pending_dspp_flush_mask
- 	 * No effect on hardware
- 	 * @ctx       : ctl path ctx pointer
- 	 * @blk       : DSPP block index
-+	 * @dspp_sub_blk : DSPP sub-block index
- 	 */
- 	void (*update_pending_flush_dspp)(struct dpu_hw_ctl *ctx,
--		enum dpu_dspp blk);
-+		enum dpu_dspp blk, u32 dspp_sub_blk);
+ /**
++ * dpu_encoder_is_pluggable - get pluggable info from the encoder.
++ * @drm_enc:    Pointer to previously created drm encoder structure
++ */
++bool dpu_encoder_is_pluggable(struct drm_encoder *drm_enc);
 +
- 	/**
- 	 * Write the value of the pending_flush_mask to hardware
- 	 * @ctx       : ctl path ctx pointer
-@@ -242,6 +244,7 @@ struct dpu_hw_ctl {
- 	u32 pending_intf_flush_mask;
- 	u32 pending_wb_flush_mask;
- 	u32 pending_merge_3d_flush_mask;
-+	u32 pending_dspp_flush_mask[DSPP_MAX - DSPP_0];
++/**
++ * dpu_encoder_is_virtual - find if the encoder is of type virtual.
++ * @drm_enc:    Pointer to previously created drm encoder structure
++ */
++bool dpu_encoder_is_virtual(struct drm_encoder *drm_enc);
++
++/**
+  * dpu_encoder_init - initialize virtual encoder object
+  * @dev:        Pointer to drm device structure
+  * @disp_info:  Pointer to display information structure
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 7a5fabc..2b9c316 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -807,9 +807,17 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
+ 		priv->crtcs[priv->num_crtcs++] = crtc;
+ 	}
  
- 	/* ops */
- 	struct dpu_hw_ctl_ops ops;
+-	/* All CRTCs are compatible with all encoders */
+-	drm_for_each_encoder(encoder, dev)
+-		encoder->possible_crtcs = (1 << priv->num_crtcs) - 1;
++	/* Pin 1 crtc for 1 encoder and crtc 0 for primary display as it has
++	 * color management registered
++	 */
++	i = 1;
++	drm_for_each_encoder(encoder, dev) {
++		if ((!dpu_encoder_is_pluggable(encoder) &&
++			!dpu_encoder_is_virtual(encoder)) || (num_encoders == 1))
++			encoder->possible_crtcs = 1 << drm_crtc_index(priv->crtcs[0]);
++		else
++			encoder->possible_crtcs = 1 << drm_crtc_index(priv->crtcs[i++]);
++	}
+ 
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index bfd0aef..5690ea3 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1509,6 +1509,11 @@ bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
+ 	return dp->wide_bus_en;
+ }
+ 
++bool msm_dp_is_pluggable(const struct msm_dp *dp_display)
++{
++	return (dp_display->connector_type == DRM_MODE_CONNECTOR_DisplayPort);
++}
++
+ void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
+ {
+ 	struct dp_display_private *dp;
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index ea80846..b0d0546 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -331,7 +331,7 @@ void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_displa
+ 
+ void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor);
+ bool msm_dp_wide_bus_available(const struct msm_dp *dp_display);
+-
++bool msm_dp_is_pluggable(const struct msm_dp *dp_display);
+ #else
+ static inline int __init msm_dp_register(void)
+ {
+@@ -365,6 +365,11 @@ static inline bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
+ 	return false;
+ }
+ 
++static inline bool msm_dp_is_pluggable(const struct msm_dp *dp_display)
++{
++	return false;
++}
++
+ #endif
+ 
+ #ifdef CONFIG_DRM_MSM_MDP4
 -- 
 2.7.4
 
