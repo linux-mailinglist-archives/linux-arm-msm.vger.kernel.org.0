@@ -2,76 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 393D161422C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 01:15:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D5A861423E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 01:24:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229779AbiKAAP4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 20:15:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51538 "EHLO
+        id S229744AbiKAAYf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Oct 2022 20:24:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbiKAAPz (ORCPT
+        with ESMTP id S229527AbiKAAYc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 20:15:55 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0F9015A3B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 17:15:54 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id j14so18737177ljh.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 17:15:54 -0700 (PDT)
+        Mon, 31 Oct 2022 20:24:32 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F01E3E02C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 17:24:31 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id f37so21617509lfv.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Oct 2022 17:24:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=38cDXdi0r69fdE/BUKO80R1kI/zw2O2sBzCV4ZqhUwg=;
-        b=J9E40lntmHOrjoy9Xcdik21H9sYudcve10nrz642t/oMhyvmL9VFzyufdi3szUwjBV
-         m/p5FEnviTesKG2W7OtG7jBD+iMM+10VyyFiueKZLk8IlllJ61r+A9sFe1BC38dtweGP
-         23GUL1AqAFIhJ/cVI2cCFPse2JsR0XwPIh16/MNKJFKZnrmjDBquRlbwwYzweTQj2nXw
-         C3/KLMl81IzZP3sRWy8In1aoOzLESHfQYwXhdSs4xrh9W5c5tJhKuuvtsfRqKeCNiydH
-         BpprdULh+xbph4gtavi+z08szpmE7RLQ6ICzMZc1ZXnzEZf9UCfhjzTcFroAfmbE1H1b
-         b7HA==
+        bh=+exwCng/IdD1MhFa/UI62X8vLjy6a/cFPmc8Y4Cwpo4=;
+        b=ZX7Wbo7qBX7YrGpC53w7yJrjIeHSz5R/Q0JB3s0DrLXFyyMcsZWhvz9kxFc1fTRGVX
+         1UNr/sAcfCjkOTxQqFPG/oDt1/Pl70qKWKlHCTtVW0MZidYgelZ/Oc1L57iM1xmpUJlD
+         Wt1smVGbaTFzvNMbZDEzWTKzMpx0fGzb5MHujwCEi1k5ZLafxxEj11bmqfMwKjvGluMq
+         YGeeVufSU21qY5TptNFTLgAwTW8kw5VJuuR6Qe3uh1tqpzRxxUtqL4HatzNxeZEEsP9N
+         LVzPIaCqLPro4g7RHObvDLerXGEnAMbi3OBBu1Q2l1ltFMkyDwtFDo/MSwAoaOWqiUOT
+         yi4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=38cDXdi0r69fdE/BUKO80R1kI/zw2O2sBzCV4ZqhUwg=;
-        b=YTO5L3F24h8b1u48Fu2kG5UkqU3ePPGjopLQSM4czhoxm8YhgM4TdosfMxrSurq3ug
-         78ModNAsVkJ8QNXc/usIB7/lPv9QvZuHywrBFpjpanAeXWS76o8EWLyo7eT0OM9IMsp3
-         r4UFv7Qc22KpkxpumFp9KZf/5n7RlJrNqsf3vdhcwsvuFNQpsV1mEDWt7QMTJ/elR8Go
-         7ivemjV+j8Mb11MPZ5RDNji2RB5L3y2fJXcI7BMdsCoGGX79VeuIUZdFAJCHINs2jreo
-         54WcSZ6wqq7t1xJylXM+2TePQ7XD1k2E5+MVtK7r/28Oxx0IuSiuez43lA4yg77T2DdB
-         DEYg==
-X-Gm-Message-State: ACrzQf2B079mnkmA5UG7vcfDyleQ2iZ+0Kx81BpvATFSnazn0jBXr/xc
-        9DMseNUdUahbL6BgNAhZ+zm+Wg==
-X-Google-Smtp-Source: AMsMyM4nWjJC7qQLq2CsQhuNIRUwJ8W7P86DduyVfrSh1xY70OZRwrvx9QT6G38gI6top2m9YGZSUA==
-X-Received: by 2002:a2e:9c89:0:b0:277:138c:9fd9 with SMTP id x9-20020a2e9c89000000b00277138c9fd9mr174812lji.119.1667261753008;
-        Mon, 31 Oct 2022 17:15:53 -0700 (PDT)
+        bh=+exwCng/IdD1MhFa/UI62X8vLjy6a/cFPmc8Y4Cwpo4=;
+        b=5LJ7QdSKf/SA08o82xd1k4SjsnfGqvWpLe3F9qTFpyauIFit/5tv8HEWmvBKL+L638
+         sfOEOs/8dbRgRNzt/emjl6EfIQK+CHptkeYQzW3PXV0ghAu+AkA/ZyRfLGA4/xsQcNR3
+         djZ8l/qVCEqjEsNultD8URj8iS4oaPqr6LhPaG0NB1rJTUunzXnqfCtQC0aCsgiAItwo
+         0uhTMLbYxXE5aEjEHVa1SaK0ba08qeWj6gQ8+mdhYDSxv7UD44kf1Xy1lD/e+TeuKXVZ
+         S2tIB/RclMeYhacM5rc+omwCFZfQMG6QCW18lvJrBlpiaSGiKAfsoax0c5Kh+xVFhw0J
+         nt5A==
+X-Gm-Message-State: ACrzQf1AcNkFGetcqqKVN9dk3uFolHRzgfPhrWL7gXDgyJmktH6ED/FQ
+        f+pMcpmQczRHuLHRHxEcNa7mAA==
+X-Google-Smtp-Source: AMsMyM49VFM7BsrC16yPhi+5RzKjTIKFsvAPXuTCBAVOtXH6jc6RySVnNUgcAbutYcvcQpME4YGKnA==
+X-Received: by 2002:a05:6512:2314:b0:4a2:6c4a:4fb9 with SMTP id o20-20020a056512231400b004a26c4a4fb9mr6853631lfu.482.1667262270310;
+        Mon, 31 Oct 2022 17:24:30 -0700 (PDT)
 Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id u18-20020a05651220d200b004a1e7216131sm1491028lfr.116.2022.10.31.17.15.52
+        by smtp.gmail.com with ESMTPSA id d2-20020ac244c2000000b004a27d2ea029sm1472345lfm.172.2022.10.31.17.24.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Oct 2022 17:15:52 -0700 (PDT)
-Message-ID: <155e4171-187c-4ecf-5a9b-12f0c2207524@linaro.org>
-Date:   Tue, 1 Nov 2022 03:15:51 +0300
+        Mon, 31 Oct 2022 17:24:29 -0700 (PDT)
+Message-ID: <1c735bcc-d4f7-333f-58a5-e3f463bab10d@linaro.org>
+Date:   Tue, 1 Nov 2022 03:24:29 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.3
-Subject: Re: [PATCH] drm/msm/dp: remove limitation of link rate at 5.4G to
- support HBR3
+Subject: Re: [PATCH] drm/msm: Fix return type of
+ mdp4_lvds_connector_mode_valid
 Content-Language: en-GB
-To:     Doug Anderson <dianders@chromium.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1667237245-24988-1-git-send-email-quic_khsieh@quicinc.com>
- <94b507e8-5b94-12ae-4c81-95f5d36279d5@linaro.org>
- <deb60200-5a37-ec77-9515-0c0c89022174@quicinc.com>
- <CAD=FV=X_fs_4JYcRvAwkU9mAafOten9WdyzPfSVWdAU=ZMo8zg@mail.gmail.com>
+To:     Nathan Chancellor <nathan@kernel.org>,
+        Nathan Huckleberry <nhuck@google.com>
+Cc:     Dan Carpenter <error27@gmail.com>, llvm@lists.linux.dev,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Tom Rix <trix@redhat.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <20220913205551.155128-1-nhuck@google.com>
+ <Y2BH7sx09nqwKNmt@dev-arch.thelio-3990X>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAD=FV=X_fs_4JYcRvAwkU9mAafOten9WdyzPfSVWdAU=ZMo8zg@mail.gmail.com>
+In-Reply-To: <Y2BH7sx09nqwKNmt@dev-arch.thelio-3990X>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,87 +85,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/11/2022 03:08, Doug Anderson wrote:
-> Hi,
+On 01/11/2022 01:10, Nathan Chancellor wrote:
+> On Tue, Sep 13, 2022 at 01:55:48PM -0700, Nathan Huckleberry wrote:
+>> The mode_valid field in drm_connector_helper_funcs is expected to be of
+>> type:
+>> enum drm_mode_status (* mode_valid) (struct drm_connector *connector,
+>>                                       struct drm_display_mode *mode);
+>>
+>> The mismatched return type breaks forward edge kCFI since the underlying
+>> function definition does not match the function hook definition.
+>>
+>> The return type of mdp4_lvds_connector_mode_valid should be changed from
+>> int to enum drm_mode_status.
+>>
+>> Reported-by: Dan Carpenter <error27@gmail.com>
+>> Link: https://github.com/ClangBuiltLinux/linux/issues/1703
+>> Cc: llvm@lists.linux.dev
+>> Signed-off-by: Nathan Huckleberry <nhuck@google.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c | 5 +++--
+>>   1 file changed, 3 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
+>> index 7288041dd86a..7444b75c4215 100644
+>> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
+>> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
+>> @@ -56,8 +56,9 @@ static int mdp4_lvds_connector_get_modes(struct drm_connector *connector)
+>>   	return ret;
+>>   }
+>>   
+>> -static int mdp4_lvds_connector_mode_valid(struct drm_connector *connector,
+>> -				 struct drm_display_mode *mode)
+>> +static enum drm_mode_status
+>> +mdp4_lvds_connector_mode_valid(struct drm_connector *connector,
+>> +			       struct drm_display_mode *mode)
+>>   {
+>>   	struct mdp4_lvds_connector *mdp4_lvds_connector =
+>>   			to_mdp4_lvds_connector(connector);
+>> -- 
+>> 2.37.2.789.g6183377224-goog
+>>
+>>
 > 
-> On Mon, Oct 31, 2022 at 2:11 PM Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->>
->> Hi Dmitry,
->>
->>
->> Link rate is advertised by sink, but adjusted (reduced the link rate)
->> by host during link training.
->>
->> Therefore should be fine if host did not support HBR3 rate.
->>
->> It will reduce to lower link rate during link training procedures.
->>
->> kuogee
->>
->> On 10/31/2022 11:46 AM, Dmitry Baryshkov wrote:
->>> On 31/10/2022 20:27, Kuogee Hsieh wrote:
->>>> An HBR3-capable device shall also support TPS4. Since TPS4 feature
->>>> had been implemented already, it is not necessary to limit link
->>>> rate at HBR2 (5.4G). This patch remove this limitation to support
->>>> HBR3 (8.1G) link rate.
->>>
->>> The DP driver supports several platforms including sdm845 and can
->>> support, if I'm not mistaken, platforms up to msm8998/sdm630/660.
->>> Could you please confirm that all these SoCs have support for HBR3?
->>>
->>> With that fact being confirmed:
->>>
->>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>
->>>
->>>>
->>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>>> ---
->>>>    drivers/gpu/drm/msm/dp/dp_panel.c | 4 ----
->>>>    1 file changed, 4 deletions(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c
->>>> b/drivers/gpu/drm/msm/dp/dp_panel.c
->>>> index 5149ceb..3344f5a 100644
->>>> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
->>>> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
->>>> @@ -78,10 +78,6 @@ static int dp_panel_read_dpcd(struct dp_panel
->>>> *dp_panel)
->>>>        if (link_info->num_lanes > dp_panel->max_dp_lanes)
->>>>            link_info->num_lanes = dp_panel->max_dp_lanes;
->>>>    -    /* Limit support upto HBR2 until HBR3 support is added */
->>>> -    if (link_info->rate >=
->>>> (drm_dp_bw_code_to_link_rate(DP_LINK_BW_5_4)))
->>>> -        link_info->rate = drm_dp_bw_code_to_link_rate(DP_LINK_BW_5_4);
->>>> -
->>>>        drm_dbg_dp(panel->drm_dev, "version: %d.%d\n", major, minor);
->>>>        drm_dbg_dp(panel->drm_dev, "link_rate=%d\n", link_info->rate);
->>>>        drm_dbg_dp(panel->drm_dev, "lane_count=%d\n",
->>>> link_info->num_lanes);
+> Did this patch get lost somewhere? I do not see it picked up. It is
+> needed to avoid a new WIP warning from clang for catching these CFI
+> failures:
 > 
-> Stephen might remember better, but I could have sworn that the problem
-> was that there might be something in the middle that couldn't support
-> the higher link rate. In other words, I think we have:
-> 
-> SoC <--> TypeC Port Controller <--> Display
-> 
-> The SoC might support HBR3 and the display might support HBR3, but the
-> TCPC (Type C Port Controller) might not. I think that the TCPC is a
-> silent/passive component so it can't really let anyone know about its
-> limitations.
-> 
-> In theory I guess you could rely on link training to just happen to
-> fail if you drive the link too fast for the TCPC to handle. Does this
-> actually work reliably?
-> 
-> I think the other option that was discussed in the past was to add
-> something in the device tree for this. Either you could somehow model
-> the TCPC in DRM and thus know that a given model of TCPC limits the
-> link rate or you could hack in a property in the DP controller to
-> limit it.
+> drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c:89:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+>          .mode_valid = mdp4_lvds_connector_mode_valid,
+>                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> 1 error generated.
 
-Latest pmic_glink proposal from Bjorn include adding the drm_bridge for 
-the TCPC. Such bridge can in theory limit supported modes and rates.
+It will be picked into 6.1-rc and then propagate through the stable 
+kernel updates.
+
+Anyway:
+
+Fixes: 3e87599b68e7 ("drm/msm/mdp4: add LVDS panel support")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
 -- 
 With best wishes
