@@ -2,99 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45707614396
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 04:20:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BBF2C6143F5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 05:45:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229819AbiKADUO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Oct 2022 23:20:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60118 "EHLO
+        id S229531AbiKAEpc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Nov 2022 00:45:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229565AbiKADUM (ORCPT
+        with ESMTP id S229457AbiKAEpb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Oct 2022 23:20:12 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A03E164C1;
-        Mon, 31 Oct 2022 20:20:10 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A13B3We003254;
-        Tue, 1 Nov 2022 03:19:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=vsmyPGqjrN3pNUGJKucOlOuMfiAWJI3kVBM4CmpcAkg=;
- b=UUJ0PGKXDKWr5c3E2BU6bNCBnUPNMa0Equr0An1IGwSLjMDeld0Q1S79X1JxIq5dXGb+
- kG6ulC1mMuXLMDmCu0i2QX+vTzs08Klenr/y1VWSNNWzZINaI/SPoWNsLFSQImZbOe3b
- DCLLTVawa4nQVXP5mVWm3D4tMPBm7aXB+yj4ToXzr9hC/pVUUOnSjyuybNtaItgVqFoG
- Ki5altTbn2ScPNROPmrGTWwi9st/hHGJA15ZLkT30j/QXcBA4GUFf65EzIS+sL/lauc0
- Pl1GgCpc+75hf1A4NQm71V/UvO4WgE1a+F9ToBezO9RpHxhGO/tgFFedTWcYxwY4iM+V dQ== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kjsqh05ve-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 01 Nov 2022 03:19:56 +0000
-Received: from nasanex01b.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A13JtsO000716
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 1 Nov 2022 03:19:55 GMT
-Received: from [10.110.109.83] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 31 Oct
- 2022 20:19:53 -0700
-Message-ID: <fb7e101f-8de0-d77e-30e1-74b882b19583@quicinc.com>
-Date:   Mon, 31 Oct 2022 20:19:52 -0700
+        Tue, 1 Nov 2022 00:45:31 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2D2C1740C;
+        Mon, 31 Oct 2022 21:45:30 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3DBA360F72;
+        Tue,  1 Nov 2022 04:45:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0281BC433C1;
+        Tue,  1 Nov 2022 04:45:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1667277929;
+        bh=7Tgw9cmj0X/gJHgDspc1Fx8Gx0C3tPIo/87cHLCWo0I=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=UVoFYYNvXUbe5hm+tNZ6oB3cxE/1fBZskqLiojb4VhHAcb6JOYCsxxlwlx9Rl1X2d
+         Ha+BUh1uEyf9loYaV6j9UOfzWs8uwrQOaJ+NFl+azuDcyijbhyhPRZATg17rCNe0kQ
+         IiVKsAM/J8hp8dCmMOcDobeizx2TF3erI+zGhHDE=
+Date:   Tue, 1 Nov 2022 05:46:19 +0100
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Slark Xiao <slark_xiao@163.com>
+Cc:     mani@kernel.org, quic_hemantk@quicinc.com, bhelgaas@google.com,
+        loic.poulain@linaro.org, dnlplm@gmail.com, yonglin.tan@outlook.com,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v3] PCI: Add vendor ID for QUECTEL
+Message-ID: <Y2Ckm79PgcTcVVne@kroah.com>
+References: <20221101021052.7532-1-slark_xiao@163.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH v6 02/21] dt-bindings: Add binding for gunyah hypervisor
-Content-Language: en-US
-To:     Jassi Brar <jassisinghbrar@gmail.com>
-CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        "Mark Rutland" <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        "Marc Zyngier" <maz@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Kalle Valo <kvalo@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20221026185846.3983888-1-quic_eberman@quicinc.com>
- <20221026185846.3983888-3-quic_eberman@quicinc.com>
- <CABb+yY3JVNPG3dcyHNFxEeGEu3MN_pAOh3+cwexPPe2YG6SNUg@mail.gmail.com>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <CABb+yY3JVNPG3dcyHNFxEeGEu3MN_pAOh3+cwexPPe2YG6SNUg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4w0f77iR79SVZoQsJSIViVLTnRUaGtL4
-X-Proofpoint-ORIG-GUID: 4w0f77iR79SVZoQsJSIViVLTnRUaGtL4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-31_22,2022-10-31_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- priorityscore=1501 malwarescore=0 impostorscore=0 lowpriorityscore=0
- suspectscore=0 bulkscore=0 mlxlogscore=749 clxscore=1015 spamscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211010023
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221101021052.7532-1-slark_xiao@163.com>
+X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -102,34 +52,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jassi,
+On Tue, Nov 01, 2022 at 10:10:52AM +0800, Slark Xiao wrote:
+> n MHI driver, there are some companies' product still do not have their
+> own PCI vendor macro. So we add it here to make the code neat. Ref ID
+> could be found in link https://pcisig.com/membership/member-companies.
+> 
+> Signed-off-by: Slark Xiao <slark_xiao@163.com>
+> ---
+> v3: Separate different vendors into different patch.
+> 
+> v2: Update vendor ID to the right location sorted by numeric value.
+> ---
+>  drivers/bus/mhi/host/pci_generic.c | 6 +++---
+>  include/linux/pci_ids.h            | 2 ++
+>  2 files changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index caa4ce28cf9e..81ae9c49ce2a 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -555,11 +555,11 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+>  		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
+>  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
+> -	{ PCI_DEVICE(0x1eac, 0x1001), /* EM120R-GL (sdx24) */
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
+>  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+> -	{ PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
+>  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+> -	{ PCI_DEVICE(0x1eac, 0x2001), /* EM120R-GL for FCCL (sdx24) */
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x2001), /* EM120R-GL for FCCL (sdx24) */
+>  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+>  	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
+> diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+> index b362d90eb9b0..3c91461bcfe4 100644
+> --- a/include/linux/pci_ids.h
+> +++ b/include/linux/pci_ids.h
+> @@ -2585,6 +2585,8 @@
+>  #define PCI_VENDOR_ID_TEKRAM		0x1de1
+>  #define PCI_DEVICE_ID_TEKRAM_DC290	0xdc29
+>  
+> +#define PCI_VENDOR_ID_QUECTEL		0x1eac
 
-On 10/27/2022 7:33 PM, Jassi Brar wrote:
- > On Wed, Oct 26, 2022 at 1:59 PM Elliot Berman 
-<quic_eberman@quicinc.com> wrote:
- > .....
- >> +
- >> +        gunyah-resource-mgr@0 {
- >> +            compatible = "gunyah-resource-manager-1-0", 
-"gunyah-resource-manager";
- >> +            interrupts = <GIC_SPI 3 IRQ_TYPE_EDGE_RISING>, /* TX 
-full IRQ */
- >> +                         <GIC_SPI 4 IRQ_TYPE_EDGE_RISING>; /* RX 
-empty IRQ */
- >> +            reg = <0x00000000 0x00000000>, <0x00000000 0x00000001>;
- >> +                  /* TX, RX cap ids */
- >> +        };
- >>
- > All these resources are used only by the mailbox controller driver.
- > So, this should be the mailbox controller node, rather than the
- > mailbox user.> One option is to load gunyah-resource-manager as a 
-module that relies
- > on the gunyah-mailbox provider. That would also avoid the "Allow
- > direct registration to a channel" hack patch.
+Why did you ignore the comment at the top of this file saying that new
+entries are not needed to be added, especially for just one user?
 
-A message queue to another guest VM wouldn't be known at boot time and 
-thus couldn't be described on the devicetree. We will need "Allow direct 
-registration to a channel" patch anyway to support those message queues. 
-I would like to have one consistent mechanism to set up message queues.
+thanks,
 
-- Elliot
+greg k-h
