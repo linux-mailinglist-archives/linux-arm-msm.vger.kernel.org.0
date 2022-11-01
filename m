@@ -2,152 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1FCA615083
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 18:22:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DBAA36150C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 18:34:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230519AbiKARWe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Nov 2022 13:22:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53706 "EHLO
+        id S231256AbiKAReY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Nov 2022 13:34:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231179AbiKARWd (ORCPT
+        with ESMTP id S230431AbiKAReL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Nov 2022 13:22:33 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE0DE1B1DF;
-        Tue,  1 Nov 2022 10:22:32 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4B391616D3;
-        Tue,  1 Nov 2022 17:22:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF73AC43470;
-        Tue,  1 Nov 2022 17:22:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667323351;
-        bh=rgPGhUUt+Eyr0PadTOMg/b3hGIEIFxFAmO+UgjHuXjg=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=sKK7JjMNpUp0pB4xBhlrCB4Q5PsVPhMCuyQFP06qzMwkOZUXClGjTp3ioNusBPvql
-         pDtDKVjcSDhLImjrE/4+pfjgfeKpoiwXm8zeNcEqJ1EFd6Cug6V7NB9nvzk1a0uVrH
-         BtykVR53Ni8+BOFwtc4crxEVkaPeh+fugsdv+R6OvwPluKc9IdrKOyC7j3NquziIFo
-         vHX9Ihlt44Bb7XSnnoXrBY3rAjA7NcMCwTtw1yCRr+JgXLrElPcW3llcNItoaTBOic
-         qYSC32+9pLwAChCVilgLXhHX+7rFAqLR5aLRDIj6lAJ3zBuFmKvxvtZNdIRsZydwsi
-         1aczXvTT8+SZQ==
-Received: by mail-lj1-f177.google.com with SMTP id j14so21856352ljh.12;
-        Tue, 01 Nov 2022 10:22:31 -0700 (PDT)
-X-Gm-Message-State: ACrzQf3lago/N2nUOKtze1SsdGJflAI5zrkhEjTvXSQSSnETNLr2i5ja
-        lO4M5KEVj/Q9YoJC7rF8MoBRO/El4ubAEeNozA==
-X-Google-Smtp-Source: AMsMyM5vOg74NIWBfxSPaEbGXTsm2QqL0KeMr1dNQn0vaGrKgq5wWdu76VnqemjN8nO91mLCT9GkD3PgA7n9FTpeu5A=
-X-Received: by 2002:a2e:9a85:0:b0:275:1343:df71 with SMTP id
- p5-20020a2e9a85000000b002751343df71mr1163621lji.215.1667323349671; Tue, 01
- Nov 2022 10:22:29 -0700 (PDT)
+        Tue, 1 Nov 2022 13:34:11 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 600A81C409
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Nov 2022 10:34:10 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id l6so13906568pjj.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Nov 2022 10:34:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=A6I3W5iz5oKsw7fuRbgEDYeDmXhDRKQPgqXFKZPwJ7I=;
+        b=bOIleHIeQBQX1Tz/VCpSiJjhzgp3eLDDe06G7ZxLe/M/UhKhsq4fiPB4YbwXNc0J/3
+         NM8dv4sgYmP5V8kvsVDN3qi9krRuDX/zwH3h4+inctLsKO/lHs2HK8drNA2/IBrma38/
+         Kr2Z7DoVsHheghXMJg2PtLNDhGkt7Uo4UcL1NYY87xqwJyoeRBSqCXp3VDynX9LGbRdR
+         unp/GYjzFR5O7lG1nbvy7xjs6bwumle7p9vuZu9AH3EFwy5ZiBMS5JklSWrSnf+86Sga
+         NLO8YwJ3txUqOPtml/YTVZRNUf1PBzOxZlbWb73OblTLl4gacOX9nzd1xmehuFk0EUN8
+         nO4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A6I3W5iz5oKsw7fuRbgEDYeDmXhDRKQPgqXFKZPwJ7I=;
+        b=zNbAePK3HHS/5IppdSPBAB0BIUfhya+xzxCDgFeyGfO0ZJZmkl4nOMW4TH+CrmfbOS
+         0jSZWZikRAx7YTM2hZYrGLkG5gvISM/wjKqIesuuC1gF0HdOZrFZmPfTEtUTMyWRPWR8
+         FIVBxJ+WnAr2UUZsWC4th7tz+pA+OrZx5PTi+0GxFzkTLU/H6k05hv+X2nDhPPRRnx2b
+         AI6dB9VkS76Tjf26g4SNKaPBNYS6V56B2KavxZMS0RcTr7BRv6CYCaT8W1dyrpq2AYhE
+         m84SuWVteGNgDKqvVmtuEfKufJa8n3UuuYbboEY/q6iq50tSPAiHTf/MoTzFvsPkQ3P4
+         qa9A==
+X-Gm-Message-State: ACrzQf0RCGYdPOCV2SiQsrXleTYb5CzdpNMAolnpODn5I8a/DAr1nNf6
+        XQtJUMCevnzMEQchbXApmgFX
+X-Google-Smtp-Source: AMsMyM67u0Ks8SV2gK6c35+YOWZI5aqcUdzG/H1PLrHSf/K7O/o7L18cFEVz7nA/zo/PdBhK0dT3aw==
+X-Received: by 2002:a17:902:b90b:b0:186:8a4d:d4b7 with SMTP id bf11-20020a170902b90b00b001868a4dd4b7mr20246858plb.129.1667324049792;
+        Tue, 01 Nov 2022 10:34:09 -0700 (PDT)
+Received: from localhost.localdomain ([117.193.209.178])
+        by smtp.gmail.com with ESMTPSA id f27-20020aa7969b000000b0056cea9530b6sm6725415pfk.202.2022.11.01.10.34.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Nov 2022 10:34:08 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     andersson@kernel.org
+Cc:     konrad.dybcio@somainline.org, mturquette@baylibre.com,
+        sboyd@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH] clk: qcom: gcc-sm8250: Use retention mode for USB GDSCs
+Date:   Tue,  1 Nov 2022 23:03:55 +0530
+Message-Id: <20221101173355.339573-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20221029211312.929862-1-dmitry.baryshkov@linaro.org>
- <20221029211312.929862-2-dmitry.baryshkov@linaro.org> <20221031214055.GA3613285-robh@kernel.org>
- <CAA8EJpqt+UvWHwd90Cdm3iCi2sbxbwbC3ADY6PW053Tw8r94VA@mail.gmail.com>
-In-Reply-To: <CAA8EJpqt+UvWHwd90Cdm3iCi2sbxbwbC3ADY6PW053Tw8r94VA@mail.gmail.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Tue, 1 Nov 2022 12:22:20 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqLVzPawSFh9e6b3nVfn+dNDFooVgOa7B_iTGU13tzXTRQ@mail.gmail.com>
-Message-ID: <CAL_JsqLVzPawSFh9e6b3nVfn+dNDFooVgOa7B_iTGU13tzXTRQ@mail.gmail.com>
-Subject: Re: [PATCH v1 1/7] dt-bindings: PCI: qcom: Add sm8350 to bindings
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-8.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 31, 2022 at 4:47 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Tue, 1 Nov 2022 at 00:40, Rob Herring <robh@kernel.org> wrote:
-> >
-> > On Sun, Oct 30, 2022 at 12:13:06AM +0300, Dmitry Baryshkov wrote:
-> > > Add bindings for two PCIe hosts on SM8350 platform. The only difference
-> > > between them is in the aggre0 clock, which warrants the oneOf clause for
-> > > the clocks properties.
-> > >
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> > >  .../devicetree/bindings/pci/qcom,pcie.yaml    | 54 +++++++++++++++++++
-> > >  1 file changed, 54 insertions(+)
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > > index 54f07852d279..55bf5958ef79 100644
-> > > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > > @@ -32,6 +32,7 @@ properties:
-> > >        - qcom,pcie-sdm845
-> > >        - qcom,pcie-sm8150
-> > >        - qcom,pcie-sm8250
-> > > +      - qcom,pcie-sm8350
-> > >        - qcom,pcie-sm8450-pcie0
-> > >        - qcom,pcie-sm8450-pcie1
-> > >        - qcom,pcie-ipq6018
-> > > @@ -185,6 +186,7 @@ allOf:
-> > >                - qcom,pcie-sc8180x
-> > >                - qcom,pcie-sc8280xp
-> > >                - qcom,pcie-sm8250
-> > > +              - qcom,pcie-sm8350
-> > >                - qcom,pcie-sm8450-pcie0
-> > >                - qcom,pcie-sm8450-pcie1
-> > >      then:
-> > > @@ -540,6 +542,57 @@ allOf:
-> > >            items:
-> > >              - const: pci # PCIe core reset
-> > >
-> > > +  - if:
-> > > +      properties:
-> > > +        compatible:
-> > > +          contains:
-> > > +            enum:
-> > > +              - qcom,pcie-sm8350
-> > > +    then:
-> > > +      oneOf:
-> > > +          # Unfortunately the "optional" ref clock is used in the middle of the list
-> > > +        - properties:
-> > > +            clocks:
-> > > +              maxItems: 13
-> > > +            clock-names:
-> > > +              items:
-> > > +                - const: pipe # PIPE clock
-> > > +                - const: pipe_mux # PIPE MUX
-> > > +                - const: phy_pipe # PIPE output clock
-> > > +                - const: ref # REFERENCE clock
-> > > +                - const: aux # Auxiliary clock
-> > > +                - const: cfg # Configuration clock
-> > > +                - const: bus_master # Master AXI clock
-> > > +                - const: bus_slave # Slave AXI clock
-> > > +                - const: slave_q2a # Slave Q2A clock
-> > > +                - const: tbu # PCIe TBU clock
-> > > +                - const: ddrss_sf_tbu # PCIe SF TBU clock
-> > > +                - const: aggre0 # Aggre NoC PCIe0 AXI clock
-> >
-> > 'enum: [ aggre0, aggre1 ]' and 'minItems: 12' would eliminate the 2nd
-> > case. There's a implicit requirement that string names are unique (by
-> > default).
->
-> Wouldn't it also allow a single 'aggre0' string?
+USB controllers on SM8250 doesn't work after coming back from suspend.
+This can be fixed by keeping the USB GDSCs in retention mode so that
+hardware can keep them ON and put into rentention mode once the parent
+domain goes to a low power state.
 
-No, because it's only for the 12th entry in the list.
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/clk/qcom/gcc-sm8250.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Rob
+diff --git a/drivers/clk/qcom/gcc-sm8250.c b/drivers/clk/qcom/gcc-sm8250.c
+index 9755ef4888c1..a0ba37656b07 100644
+--- a/drivers/clk/qcom/gcc-sm8250.c
++++ b/drivers/clk/qcom/gcc-sm8250.c
+@@ -3267,7 +3267,7 @@ static struct gdsc usb30_prim_gdsc = {
+ 	.pd = {
+ 		.name = "usb30_prim_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ };
+ 
+ static struct gdsc usb30_sec_gdsc = {
+@@ -3275,7 +3275,7 @@ static struct gdsc usb30_sec_gdsc = {
+ 	.pd = {
+ 		.name = "usb30_sec_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ };
+ 
+ static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc = {
+-- 
+2.25.1
+
