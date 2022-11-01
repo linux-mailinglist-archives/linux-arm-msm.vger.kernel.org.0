@@ -2,162 +2,321 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C36F61466D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 10:13:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DEC2614805
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Nov 2022 11:57:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229645AbiKAJNy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Nov 2022 05:13:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58596 "EHLO
+        id S229835AbiKAK5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Nov 2022 06:57:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229516AbiKAJNx (ORCPT
+        with ESMTP id S229907AbiKAK5T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Nov 2022 05:13:53 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA702DF5E;
-        Tue,  1 Nov 2022 02:13:52 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 66A396156F;
-        Tue,  1 Nov 2022 09:13:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B07C433C1;
-        Tue,  1 Nov 2022 09:13:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667294031;
-        bh=QHsGnq7GKNlqhME9hG1k+53dFj98wy8UH/SBmiMhgFs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=L8uMcfrNm1G0d5ZNL0Bc+vQdmCcZeeUEBv2oKR89hOSce7rBSYJQKnhkx4yG5q/5e
-         GKkfF34jgtC3QuTK5a4VHBy3fFwB4gq5LtJkwl1CzPI01wOCawwvprLiJZRkXmcRS4
-         ji2Yh3ZyugjLxe3OthaKlS/y/ueQXWYzxfpH3yc+5YsAcgUmNtvzDTsCGodYoVuZup
-         dkOXi/LeEnNwxLp15LZTqE4B7/u6CAWMpUw2thWBbrTb19H2eVCu/oLCJTyK7dYPTS
-         3d+4XUUICSBM75kiOkBDyq8ynFG3PTihLJnPwjsWOAjU945YZsa5to68mgepYLTm6f
-         jAOSv2z1KV+IA==
-Date:   Tue, 1 Nov 2022 14:43:39 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Slark Xiao <slark_xiao@163.com>
-Cc:     Greg KH <gregkh@linuxfoundation.org>, quic_hemantk@quicinc.com,
-        bhelgaas@google.com, loic.poulain@linaro.org, dnlplm@gmail.com,
-        yonglin.tan@outlook.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pci@vger.kernel.org
-Subject: Re: Re: Re: [PATCH v3] PCI: Add vendor ID for QUECTEL
-Message-ID: <20221101091339.GA54667@thinkpad>
-References: <20221101021052.7532-1-slark_xiao@163.com>
- <Y2Ckm79PgcTcVVne@kroah.com>
- <3af61b4.1f11.18431cf918d.Coremail.slark_xiao@163.com>
- <Y2C7uhzVorUrfQA2@kroah.com>
- <69942131.48d4.18431f6c080.Coremail.slark_xiao@163.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <69942131.48d4.18431f6c080.Coremail.slark_xiao@163.com>
-X-Spam-Status: No, score=-8.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Tue, 1 Nov 2022 06:57:19 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B01A193EB;
+        Tue,  1 Nov 2022 03:57:18 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A1AMo5h000519;
+        Tue, 1 Nov 2022 10:57:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=ZdwizPVPfe4p+N7OYBrHEa0WUaclhEatP+qhUy19UuM=;
+ b=E/5FGYh0rrcPIBMNV3PJDR6gRyRLGTBCk/J/5PbZsHWkhsnNt5NcGFBEppjo+0f70I3c
+ a55tCGXeAnCD9xPsxs8pXw1gIEAb7yMdqvSHI04hdqlMazNs2iEPueWMnSoOx6fTkEVu
+ KiudgXYSIriTXfbZbwCFgmbX6Izz9LSTIYkLExYmbNI9IAoA8O5LlwKc0oOB9pSW8Kc0
+ 7GZGZAURNDZ2GVktCEqCge+xzEPcm/6AXaZ8VngL8ljKqFmzx2K+kjW8Nx7mEp6fD3/j
+ fg07hzG2AaoaLsGjaA5J4yRXFDd0n53RVLuKZ9g684eSbcZllwfI32Xznzw4e36rBLkz 9w== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kjxqgrr5m-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 01 Nov 2022 10:57:14 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2A1AvBK7011728;
+        Tue, 1 Nov 2022 10:57:11 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3khdp1w0nt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 01 Nov 2022 10:57:11 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2A1AvAv7011718;
+        Tue, 1 Nov 2022 10:57:10 GMT
+Received: from kalyant-linux.qualcomm.com (kalyant-linux.qualcomm.com [10.204.66.210])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 2A1AvA0M011703;
+        Tue, 01 Nov 2022 10:57:10 +0000
+Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
+        id 9E57B2E82; Tue,  1 Nov 2022 03:57:09 -0700 (PDT)
+From:   Kalyan Thota <quic_kalyant@quicinc.com>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Kalyan Thota <quic_kalyant@quicinc.com>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_vpolimer@quicinc.com, dmitry.baryshkov@linaro.org,
+        quic_abhinavk@quicinc.com
+Subject: [v7] drm/msm/disp/dpu1: add support for dspp sub block flush in sc7280
+Date:   Tue,  1 Nov 2022 03:57:05 -0700
+Message-Id: <1667300225-14367-1-git-send-email-quic_kalyant@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: maAWYAbJmaCPMRYUH7AF_8mWCv42PfVg
+X-Proofpoint-GUID: maAWYAbJmaCPMRYUH7AF_8mWCv42PfVg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-01_05,2022-11-01_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ clxscore=1011 adultscore=0 priorityscore=1501 lowpriorityscore=0
+ mlxscore=0 mlxlogscore=999 impostorscore=0 spamscore=0 suspectscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211010083
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 01, 2022 at 02:52:45PM +0800, Slark Xiao wrote:
-> 
-> 
-> 
-> 
-> 
-> At 2022-11-01 14:24:58, "Greg KH" <gregkh@linuxfoundation.org> wrote:
-> >On Tue, Nov 01, 2022 at 02:09:57PM +0800, Slark Xiao wrote:
-> >> 
-> >> 
-> >> At 2022-11-01 12:46:19, "Greg KH" <gregkh@linuxfoundation.org> wrote:
-> >> >On Tue, Nov 01, 2022 at 10:10:52AM +0800, Slark Xiao wrote:
-> >> >> n MHI driver, there are some companies' product still do not have their
-> >> >> own PCI vendor macro. So we add it here to make the code neat. Ref ID
-> >> >> could be found in link https://pcisig.com/membership/member-companies.
-> >> >> 
-> >> >> Signed-off-by: Slark Xiao <slark_xiao@163.com>
-> >> >> ---
-> >> >> v3: Separate different vendors into different patch.
-> >> >> 
-> >> >> v2: Update vendor ID to the right location sorted by numeric value.
-> >> >> ---
-> >> >>  drivers/bus/mhi/host/pci_generic.c | 6 +++---
-> >> >>  include/linux/pci_ids.h            | 2 ++
-> >> >>  2 files changed, 5 insertions(+), 3 deletions(-)
-> >> >> 
-> >> >> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> >> >> index caa4ce28cf9e..81ae9c49ce2a 100644
-> >> >> --- a/drivers/bus/mhi/host/pci_generic.c
-> >> >> +++ b/drivers/bus/mhi/host/pci_generic.c
-> >> >> @@ -555,11 +555,11 @@ static const struct pci_device_id mhi_pci_id_table[] = {
-> >> >>  		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
-> >> >>  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
-> >> >>  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
-> >> >> -	{ PCI_DEVICE(0x1eac, 0x1001), /* EM120R-GL (sdx24) */
-> >> >> +	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
-> >> >>  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-> >> >> -	{ PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
-> >> >> +	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
-> >> >>  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-> >> >> -	{ PCI_DEVICE(0x1eac, 0x2001), /* EM120R-GL for FCCL (sdx24) */
-> >> >> +	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x2001), /* EM120R-GL for FCCL (sdx24) */
-> >> >>  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-> >> >>  	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
-> >> >>  	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
-> >> >> diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
-> >> >> index b362d90eb9b0..3c91461bcfe4 100644
-> >> >> --- a/include/linux/pci_ids.h
-> >> >> +++ b/include/linux/pci_ids.h
-> >> >> @@ -2585,6 +2585,8 @@
-> >> >>  #define PCI_VENDOR_ID_TEKRAM		0x1de1
-> >> >>  #define PCI_DEVICE_ID_TEKRAM_DC290	0xdc29
-> >> >>  
-> >> >> +#define PCI_VENDOR_ID_QUECTEL		0x1eac
-> >> >
-> >> >Why did you ignore the comment at the top of this file saying that new
-> >> >entries are not needed to be added, especially for just one user?
-> >> >
-> >> >thanks,
-> >> >
-> >> >greg k-h
-> >> Hi Greg,
-> >>  Actually I didn't see this notice before committing this patch. I even discussed 
-> >> it with the maintainer for several times and nobody show me this rule.
-> >> I have a concern, some IOT module vendors, like QUECTEL, CINTERION(THALES),
-> >> SIERRA,ROLLING and so on, they only produce IOT modules without other 
-> >> hardware with PCIe  interface, and they applied for their own VID. But they
-> >> can't get a their own VENDOR MARCO? This seems unreasonable.
-> >> This change should be harmless and  make the code neat.
-> >> This is my opinion.
-> >
-> >It causes a _LOT_ of churn and merge issues when everyone is adding new
-> >entries to a single file.  Which is why, 15+ years ago, we made the
-> >decision that if a vendor or device id is only needed in one file, then
-> >it should not be added to the pci_ids.h file.
-> >
-> >No need to change that now, please just put the vendor id in the single
-> >driver that it is needed in.
-> >
-> >thanks,
-> >
-> >greg k-h
-> Hi Greg,
-> Thanks for your explanation. 
-> 
-> Hi Mani,
->   Is there a need to update these vendor ids as macro in
-> pci_generic.c?
-> 
+Flush mechanism for DSPP blocks has changed in sc7280 family, it
+allows individual sub blocks to be flushed in coordination with
+master flush control.
 
-It is not really needed but for convenience you could add a macro in
-pci_generic.c itself.
+Representation: master_flush && (PCC_flush | IGC_flush .. etc )
 
-Thanks,
-Mani
+This change adds necessary support for the above design.
 
-> Thanks.
+Changes in v1:
+- Few nits (Doug, Dmitry)
+- Restrict sub-block flush programming to dpu_hw_ctl file (Dmitry)
 
+Changes in v2:
+- Move the address offset to flush macro (Dmitry)
+- Seperate ops for the sub block flush (Dmitry)
+
+Changes in v3:
+- Reuse the DPU_DSPP_xx enum instead of a new one (Dmitry)
+
+Changes in v4:
+- Use shorter version for unsigned int (Stephen)
+
+Changes in v5:
+- Spurious patch please ignore.
+
+Changes in v6:
+- Add SOB tag (Doug, Dmitry)
+
+Changes in v7:
+- Cache flush mask per dspp (Dmitry)
+- Few nits (Marijn)
+
+Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c       |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  5 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  4 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c     | 46 ++++++++++++++++++++++++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h     |  7 ++--
+ 5 files changed, 58 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index 601d687..4170fbe 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -766,7 +766,7 @@ static void _dpu_crtc_setup_cp_blocks(struct drm_crtc *crtc)
+ 
+ 		/* stage config flush mask */
+ 		ctl->ops.update_pending_flush_dspp(ctl,
+-			mixer[i].hw_dspp->idx);
++			mixer[i].hw_dspp->idx, DPU_DSPP_PCC);
+ 	}
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 27f029f..0eecb2f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -65,7 +65,10 @@
+ 	(PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE2))
+ 
+ #define CTL_SC7280_MASK \
+-	(BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE) | BIT(DPU_CTL_VM_CFG))
++	(BIT(DPU_CTL_ACTIVE_CFG) | \
++	 BIT(DPU_CTL_FETCH_ACTIVE) | \
++	 BIT(DPU_CTL_VM_CFG) | \
++	 BIT(DPU_CTL_DSPP_SUB_BLOCK_FLUSH))
+ 
+ #define MERGE_3D_SM8150_MASK (0)
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+index 38aa38a..8148e91 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -161,10 +161,12 @@ enum {
+  * DSPP sub-blocks
+  * @DPU_DSPP_PCC             Panel color correction block
+  * @DPU_DSPP_GC              Gamma correction block
++ * @DPU_DSPP_IGC             Inverse Gamma correction block
+  */
+ enum {
+ 	DPU_DSPP_PCC = 0x1,
+ 	DPU_DSPP_GC,
++	DPU_DSPP_IGC,
+ 	DPU_DSPP_MAX
+ };
+ 
+@@ -191,6 +193,7 @@ enum {
+  * @DPU_CTL_SPLIT_DISPLAY:	CTL supports video mode split display
+  * @DPU_CTL_FETCH_ACTIVE:	Active CTL for fetch HW (SSPPs)
+  * @DPU_CTL_VM_CFG:		CTL config to support multiple VMs
++ * @DPU_CTL_DSPP_BLOCK_FLUSH: CTL config to support dspp sub-block flush
+  * @DPU_CTL_MAX
+  */
+ enum {
+@@ -198,6 +201,7 @@ enum {
+ 	DPU_CTL_ACTIVE_CFG,
+ 	DPU_CTL_FETCH_ACTIVE,
+ 	DPU_CTL_VM_CFG,
++	DPU_CTL_DSPP_SUB_BLOCK_FLUSH,
+ 	DPU_CTL_MAX
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+index a35ecb6..fbcb7da 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+@@ -33,6 +33,7 @@
+ #define   CTL_INTF_FLUSH                0x110
+ #define   CTL_INTF_MASTER               0x134
+ #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
++#define   CTL_DSPP_n_FLUSH(n)		((0x13C) + ((n) * 4))
+ 
+ #define CTL_MIXER_BORDER_OUT            BIT(24)
+ #define CTL_FLUSH_MASK_CTL              BIT(17)
+@@ -110,9 +111,14 @@ static inline void dpu_hw_ctl_trigger_pending(struct dpu_hw_ctl *ctx)
+ 
+ static inline void dpu_hw_ctl_clear_pending_flush(struct dpu_hw_ctl *ctx)
+ {
++	int i;
++
+ 	trace_dpu_hw_ctl_clear_pending_flush(ctx->pending_flush_mask,
+ 				     dpu_hw_ctl_get_flush_register(ctx));
+ 	ctx->pending_flush_mask = 0x0;
++
++	for(i = 0; i < ARRAY_SIZE(ctx->pending_dspp_flush_mask); i++)
++		ctx->pending_dspp_flush_mask[i] = 0x0;
+ }
+ 
+ static inline void dpu_hw_ctl_update_pending_flush(struct dpu_hw_ctl *ctx,
+@@ -130,6 +136,8 @@ static u32 dpu_hw_ctl_get_pending_flush(struct dpu_hw_ctl *ctx)
+ 
+ static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
+ {
++	int i;
++
+ 	if (ctx->pending_flush_mask & BIT(MERGE_3D_IDX))
+ 		DPU_REG_WRITE(&ctx->hw, CTL_MERGE_3D_FLUSH,
+ 				ctx->pending_merge_3d_flush_mask);
+@@ -140,6 +148,11 @@ static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
+ 		DPU_REG_WRITE(&ctx->hw, CTL_WB_FLUSH,
+ 				ctx->pending_wb_flush_mask);
+ 
++	for(i = 0; i < ARRAY_SIZE(ctx->pending_dspp_flush_mask); i++)
++		if (ctx->pending_dspp_flush_mask[i])
++			DPU_REG_WRITE(&ctx->hw, CTL_DSPP_n_FLUSH(i),
++				ctx->pending_dspp_flush_mask[i]);
++
+ 	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
+ }
+ 
+@@ -287,8 +300,9 @@ static void dpu_hw_ctl_update_pending_flush_merge_3d_v1(struct dpu_hw_ctl *ctx,
+ }
+ 
+ static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl *ctx,
+-	enum dpu_dspp dspp)
++	enum dpu_dspp dspp, u32 dspp_sub_blk)
+ {
++
+ 	switch (dspp) {
+ 	case DSPP_0:
+ 		ctx->pending_flush_mask |= BIT(13);
+@@ -307,6 +321,30 @@ static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl *ctx,
+ 	}
+ }
+ 
++static void dpu_hw_ctl_update_pending_flush_dspp_subblocks(
++	struct dpu_hw_ctl *ctx,	enum dpu_dspp dspp, u32 dspp_sub_blk)
++{
++
++	if (dspp >= DSPP_MAX)
++		return;
++
++	switch (dspp_sub_blk) {
++	case DPU_DSPP_IGC:
++		ctx->pending_dspp_flush_mask[dspp-DSPP_0] |= BIT(2);
++		break;
++	case DPU_DSPP_PCC:
++		ctx->pending_dspp_flush_mask[dspp-DSPP_0] |= BIT(4);
++		break;
++	case DPU_DSPP_GC:
++		ctx->pending_dspp_flush_mask[dspp-DSPP_0] |= BIT(5);
++		break;
++	default:
++		return;
++	}
++
++	ctx->pending_flush_mask |= BIT(29);
++}
++
+ static u32 dpu_hw_ctl_poll_reset_status(struct dpu_hw_ctl *ctx, u32 timeout_us)
+ {
+ 	struct dpu_hw_blk_reg_map *c = &ctx->hw;
+@@ -675,7 +713,11 @@ static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
+ 	ops->setup_blendstage = dpu_hw_ctl_setup_blendstage;
+ 	ops->update_pending_flush_sspp = dpu_hw_ctl_update_pending_flush_sspp;
+ 	ops->update_pending_flush_mixer = dpu_hw_ctl_update_pending_flush_mixer;
+-	ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp;
++	if (cap & BIT(DPU_CTL_DSPP_SUB_BLOCK_FLUSH))
++		ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp_subblocks;
++	else
++		ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp;
++
+ 	if (cap & BIT(DPU_CTL_FETCH_ACTIVE))
+ 		ops->set_active_pipes = dpu_hw_ctl_set_fetch_pipe_active;
+ };
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+index 96c012e..ff4e92c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+@@ -148,13 +148,15 @@ struct dpu_hw_ctl_ops {
+ 		enum dpu_lm blk);
+ 
+ 	/**
+-	 * OR in the given flushbits to the cached pending_flush_mask
++	 * OR in the given flushbits to the cached pending_dspp_flush_mask
+ 	 * No effect on hardware
+ 	 * @ctx       : ctl path ctx pointer
+ 	 * @blk       : DSPP block index
++	 * @dspp_sub_blk : DSPP sub-block index
+ 	 */
+ 	void (*update_pending_flush_dspp)(struct dpu_hw_ctl *ctx,
+-		enum dpu_dspp blk);
++		enum dpu_dspp blk, u32 dspp_sub_blk);
++
+ 	/**
+ 	 * Write the value of the pending_flush_mask to hardware
+ 	 * @ctx       : ctl path ctx pointer
+@@ -242,6 +244,7 @@ struct dpu_hw_ctl {
+ 	u32 pending_intf_flush_mask;
+ 	u32 pending_wb_flush_mask;
+ 	u32 pending_merge_3d_flush_mask;
++	u32 pending_dspp_flush_mask[DSPP_MAX - DSPP_0];
+ 
+ 	/* ops */
+ 	struct dpu_hw_ctl_ops ops;
 -- 
-மணிவண்ணன் சதாசிவம்
+2.7.4
+
