@@ -2,113 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DABF6172B0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 00:35:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 466166172B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 00:35:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231421AbiKBXfJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 19:35:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53722 "EHLO
+        id S231401AbiKBXf0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 19:35:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231417AbiKBXev (ORCPT
+        with ESMTP id S231367AbiKBXfH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 19:34:51 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED97722516
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 16:27:20 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id d6so185679lfs.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 16:27:20 -0700 (PDT)
+        Wed, 2 Nov 2022 19:35:07 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DE6822BF6
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 16:27:31 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id y14so1047639ejd.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 16:27:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4uyZR2sjXqLyFufMaC3oiMlnZtU+QLNchFZs2tyGbA0=;
-        b=kOUNsLx5Y6YNxZXAKN99KHZEhCI9RUxJEK/3X6iMvn23FU+0cKFeOwijjRGO/QrEu7
-         POwKgPGYxiHvdu1kXfirnmTS3yhpZ/nNh9/sXsntH50AqVSMgreKHQ0SYFrta4hE1UPP
-         9yVZnn9s5lUnuZ/OdkhQZ6oe23jccwLSm8uSmpLMino6Oq0mQwSewujiQPFo7jutvlBb
-         kaQ0GMfbN53yBLUD+MZALDhCeAMsgCY2e9Mlo/+Wsxtpf+vSqEdp291/h7YaMfX5mXJg
-         e7yOY905/NPJHzDElm7R7qZGTNlA/8i3PqQqq9Gdzm+XY659wB862PHA8dNL1Vgyv0RW
-         bI6g==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=q4q9wfgcOclGdcMsl14RDjUCS9gfVlvxYztXFkY+AAE=;
+        b=eJKjIYfM3SW+G0n7AWqNkgTG0ba9Cy4iuR3meDnaeJvCu+4iV0UX3p5UwsRF6E1JJt
+         0vaJfVWpOgcBq2tnz00/mptxQk1uEIp+Qav50UiemxUjAGIOdzccOSqr1E06efrPYwgu
+         jHgQYYJB23zJDJX9hy1vb+BrWY9PhA3YOQf/U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4uyZR2sjXqLyFufMaC3oiMlnZtU+QLNchFZs2tyGbA0=;
-        b=qEFW0YD+x7hbNfKR1FwIf8B3+WL+9awlCeAd2DkxeyCaKWff6qOAjDM0409ntWKWtm
-         3eF9EvB3w80QnVp5ObgDQQZCFQaBV3NYsAj+7RUCaJ+eS/sKLV3K3zJieOG4/tJs0YC1
-         Q1Z0pJ50JBDiIXA/a1WEYKLAgc22FwnEAf47C3vwMEnYVGCef0V2LyW8pmsW5tNNld17
-         W8Rnw77SjByzkIyB8KupSqFoteQpuB777j0ABgYEWG2x2QnJjrIe+HC6z6V0L8RqyCjB
-         JFCHaD9JId9G5SYSLoO1IlX+qpRFiXE4Ze/vtCNN66NG8LzDZfkAEpOIPvpwci+RX3H1
-         vnXw==
-X-Gm-Message-State: ACrzQf2j0yyOAcsk5a9pZTUxjJfKqax5c/9CX2d9zzKA0o+DweBQR6XB
-        QJHJaqm2CJff7tdC4ols5lVChQ==
-X-Google-Smtp-Source: AMsMyM7KyTnal/RdmTTT2p5aFTIEEqVQhf0y1ouH5tnV3OgPW/jxPwCYl85ji9r+213jZ0EzyBK+Uw==
-X-Received: by 2002:a05:6512:40c:b0:4a0:5b27:76f0 with SMTP id u12-20020a056512040c00b004a05b2776f0mr10913392lfk.358.1667431581912;
-        Wed, 02 Nov 2022 16:26:21 -0700 (PDT)
-Received: from [10.27.10.248] ([195.165.23.90])
-        by smtp.gmail.com with ESMTPSA id v4-20020a056512048400b004a240eb0217sm2154391lfq.251.2022.11.02.16.26.20
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=q4q9wfgcOclGdcMsl14RDjUCS9gfVlvxYztXFkY+AAE=;
+        b=ua11rW0Cpl8UCS7DjgQfG2UWF347MRgkOznbP4ikhE3AJewOBy+CorvZuCzcsvroR3
+         JgIV5nVkv9VI+FNCzInjeyX86hcBRSGqSIiDnkONRDKP5K/zvf5znSEpOLSdsQou/gTH
+         +pS3qTD1eItNn+aDF1iqimeOzVsgdG6s0igcAxosgztGgBGtFukiq/64S3xZYlBjOwPW
+         2bgutKYfr79UA5dsKlUQzuW8sUxmRZz7lQBP+EvszSpVhtOCJJrs+tKEDLxRpyvHBRlc
+         YixK8k8IV1G1yaVSAdoAqTBl7D3zrB4x8x7/sF04s1sWT/kNJ7j2ucTZmaBNEOtcSaD0
+         wpaA==
+X-Gm-Message-State: ACrzQf2rC1ecTl9jJBcq+pxLvHmFbVF2/iNcDyqTFquxcj7LM66UCYBk
+        M5eNWSKPIWd6ZfgsMMkPLLBZTcvq8AG1/tyr
+X-Google-Smtp-Source: AMsMyM6x++w9KT8+nlILsRCxHDq/64idd/hKKzLefHL9Z9LUcWN8XOqiuY9fjkA4/J5RXMlkTjfcAw==
+X-Received: by 2002:a17:907:ea9:b0:7ad:de1f:9bf1 with SMTP id ho41-20020a1709070ea900b007adde1f9bf1mr15885400ejc.730.1667431599066;
+        Wed, 02 Nov 2022 16:26:39 -0700 (PDT)
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com. [209.85.221.50])
+        by smtp.gmail.com with ESMTPSA id r6-20020aa7d146000000b00459ad800bbcsm6434063edo.33.2022.11.02.16.26.37
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Nov 2022 16:26:21 -0700 (PDT)
-Message-ID: <bf5fb954-c71b-f02f-5300-4e030b10811a@linaro.org>
-Date:   Thu, 3 Nov 2022 02:26:20 +0300
+        Wed, 02 Nov 2022 16:26:38 -0700 (PDT)
+Received: by mail-wr1-f50.google.com with SMTP id l14so413470wrw.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 16:26:37 -0700 (PDT)
+X-Received: by 2002:a5d:51cb:0:b0:236:6a62:4bc8 with SMTP id
+ n11-20020a5d51cb000000b002366a624bc8mr16755550wrv.583.1667431597355; Wed, 02
+ Nov 2022 16:26:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH v2 2/2] drm/msm: Hangcheck progress detection
-Content-Language: en-GB
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>,
+References: <20221102170717.1262547-1-swboyd@chromium.org>
+In-Reply-To: <20221102170717.1262547-1-swboyd@chromium.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 2 Nov 2022 16:26:24 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Xb5h=Su+t32c5m8DDvWG5mt7MP9XRxoBmJjF=ePLhtUw@mail.gmail.com>
+Message-ID: <CAD=FV=Xb5h=Su+t32c5m8DDvWG5mt7MP9XRxoBmJjF=ePLhtUw@mail.gmail.com>
+Subject: Re: [PATCH v2] clk: qcom: gdsc: Remove direct runtime PM calls
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, patches@lists.linux.dev,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20221101223319.165493-1-robdclark@gmail.com>
- <20221101223319.165493-3-robdclark@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221101223319.165493-3-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/11/2022 01:33, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> If the hangcheck timer expires, check if the fw's position in the
-> cmdstream has advanced (changed) since last timer expiration, and
-> allow it up to three additional "extensions" to it's alotted time.
-> The intention is to continue to catch "shader stuck in a loop" type
-> hangs quickly, but allow more time for things that are actually
-> making forward progress.
+Hi,
 
-Just out of curiosity: wouldn't position also change for a 'shader stuck 
-in a loop'?
+On Wed, Nov 2, 2022 at 10:07 AM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> We shouldn't be calling runtime PM APIs from within the genpd
+> enable/disable path for a couple reasons.
+>
+> First, this causes an AA lockdep splat because genpd can call into genpd
+> code again while holding the genpd lock.
+>
+> WARNING: possible recursive locking detected
+> 5.19.0-rc2-lockdep+ #7 Not tainted
+> --------------------------------------------
+> kworker/2:1/49 is trying to acquire lock:
+> ffffffeea0370788 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+>
+> but task is already holding lock:
+> ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+>
+> other info that might help us debug this:
+>  Possible unsafe locking scenario:
+>
+>        CPU0
+>        ----
+>   lock(&genpd->mlock);
+>   lock(&genpd->mlock);
+>
+>  *** DEADLOCK ***
+>
+>  May be due to missing lock nesting notation
+>
+> 3 locks held by kworker/2:1/49:
+>  #0: 74ffff80811a5748 ((wq_completion)pm){+.+.}-{0:0}, at: process_one_work+0x320/0x5fc
+>  #1: ffffffc008537cf8 ((work_completion)(&genpd->power_off_work)){+.+.}-{0:0}, at: process_one_work+0x354/0x5fc
+>  #2: ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+>
+> stack backtrace:
+> CPU: 2 PID: 49 Comm: kworker/2:1 Not tainted 5.19.0-rc2-lockdep+ #7
+> Hardware name: Google Lazor (rev3 - 8) with KB Backlight (DT)
+> Workqueue: pm genpd_power_off_work_fn
+> Call trace:
+>  dump_backtrace+0x1a0/0x200
+>  show_stack+0x24/0x30
+>  dump_stack_lvl+0x7c/0xa0
+>  dump_stack+0x18/0x44
+>  __lock_acquire+0xb38/0x3634
+>  lock_acquire+0x180/0x2d4
+>  __mutex_lock_common+0x118/0xe30
+>  mutex_lock_nested+0x70/0x7c
+>  genpd_lock_mtx+0x24/0x30
+>  genpd_runtime_suspend+0x2f0/0x414
+>  __rpm_callback+0xdc/0x1b8
+>  rpm_callback+0x4c/0xcc
+>  rpm_suspend+0x21c/0x5f0
+>  rpm_idle+0x17c/0x1e0
+>  __pm_runtime_idle+0x78/0xcc
+>  gdsc_disable+0x24c/0x26c
+>  _genpd_power_off+0xd4/0x1c4
+>  genpd_power_off+0x2d8/0x41c
+>  genpd_power_off_work_fn+0x60/0x94
+>  process_one_work+0x398/0x5fc
+>  worker_thread+0x42c/0x6c4
+>  kthread+0x194/0x1b4
+>  ret_from_fork+0x10/0x20
+>
+> Second, this confuses runtime PM on CoachZ for the camera devices by
+> causing the camera clock controller's runtime PM usage_count to go
+> negative after resuming from suspend. This is because runtime PM is
+> being used on the clock controller while runtime PM is disabled for the
+> device.
+>
+> The reason for the negative count is because a GDSC is represented as a
+> genpd and each genpd that is attached to a device is resumed during the
+> noirq phase of system wide suspend/resume (see the noirq suspend ops
+> assignment in pm_genpd_init() for more details). The camera GDSCs are
+> attached to camera devices with the 'power-domains' property in DT.
+> Every device has runtime PM disabled in the late system suspend phase
+> via __device_suspend_late(). Runtime PM is not usable until runtime PM
+> is enabled in device_resume_early(). The noirq phases run after the
+> 'late' and before the 'early' phase of suspend/resume. When the genpds
+> are resumed in genpd_resume_noirq(), we call down into gdsc_enable()
+> that calls pm_runtime_resume_and_get() and that returns -EACCES to
+> indicate failure to resume because runtime PM is disabled for all
+> devices.
+>
+> Upon closer inspection, calling runtime PM APIs like this in the GDSC
+> driver doesn't make sense. It was intended to make sure the GDSC for the
+> clock controller providing other GDSCs was enabled, specifically the
+> MMCX GDSC for the display clk controller on SM8250 (sm8250-dispcc), so
+> that GDSC register accesses succeeded. That will already happen because
+> we make the 'dev->pm_domain' a parent domain of each GDSC we register in
+> gdsc_register() via pm_genpd_add_subdomain(). When any of these GDSCs
+> are accessed, we'll enable the parent domain (in this specific case
+> MMCX).
+>
+> We also remove any getting of runtime PM during registration, because
+> when a genpd is registered it increments the count on the parent if the
+> genpd itself is already enabled. And finally, the runtime PM state of
+> the clk controller registering the GDSC shouldn't matter to the
+> subdomain setup. Therefore we always assign 'dev' unconditionally so
+> when GDSCs are removed we properly unlink the GDSC from the clk
+> controller's pm_domain.
+>
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: Johan Hovold <johan+linaro@kernel.org>
+> Cc: Ulf Hansson <ulf.hansson@linaro.org>
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+> Cc: Satya Priya <quic_c_skakit@quicinc.com>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Matthias Kaehlcke <mka@chromium.org>
+> Reported-by: Stephen Boyd <swboyd@chromium.org>
+> Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>
+> Changes from v1 (https://lore.kernel.org/r/20221101233421.997149-1-swboyd@chromium.org):
+>  * Fix ret thinko
+>  * Update kerneldoc on 'dev' member
+>
+>  drivers/clk/qcom/gdsc.c | 62 +++++------------------------------------
+>  drivers/clk/qcom/gdsc.h |  2 +-
+>  2 files changed, 8 insertions(+), 56 deletions(-)
 
+Though I'm not an expert, this seems reasonable to me and certainly an
+improvement in that it no longer calls pm_runtime calls during the
+"noirq" resume phase. Thus a non-expert:
 
-> Because we need to sample the CP state twice to detect if there has
-> not been progress, this also cuts the the timer's duration in half.
-> 
-> v2: Fix typo (REG_A6XX_CP_CSQ_IB2_STAT), add comment
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
+This also seems to avoid the problems I reported [1]. Even though the
+root cause (pm_runtime vs. clk prepare lock deadlock) is still
+theoretically possible at least the problem is no longer tickled for
+me (I tested on a sc7280-herobrine-villager board). Thus, I'm OK with:
 
+Tested-by: Douglas Anderson <dianders@chromium.org>
 
--- 
-With best wishes
-Dmitry
-
+[1] https://lore.kernel.org/r/20220922154354.2486595-1-dianders@chromium.org
