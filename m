@@ -2,75 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECBAA615A5C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 04:29:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 687F7615A6E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 04:31:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231209AbiKBD3y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Nov 2022 23:29:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48514 "EHLO
+        id S230515AbiKBDbQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Nov 2022 23:31:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231224AbiKBD3Z (ORCPT
+        with ESMTP id S231200AbiKBDau (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Nov 2022 23:29:25 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58C0B2649B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Nov 2022 20:29:23 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id bp15so26169052lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Nov 2022 20:29:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yKlZFLQoOIAO4LNc5IIof0dGye9IlGMG8e3bXJR87d4=;
-        b=LX2kR4FnaqTB5X4KJKL0kO3ZLojgqOXHaQzGTjioK4YsYaNL64BzWTf/4unMGCju5G
-         dtzlPaM5Kd1KHDGxhgvkpq1xgr6QqOnPpKkNMAOw562FUbnz7KO6NpclaKUw4mB5ehFG
-         jpp+OF5ubCq9KW9iLaqnkGqsofsFgDT6bedKs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yKlZFLQoOIAO4LNc5IIof0dGye9IlGMG8e3bXJR87d4=;
-        b=eW9SfGQjSgQ131LSbFH87YM3TwTdeIGlpu3usNLUFO2ssxhHi8LSuLDy2tjmsVgLPC
-         Tiz3ahDp4R53/6TMN5OPmJnzGOXDdpWUSWkHwAo74HOQH5bDA2OVXgqPPnvpuP2vfNdX
-         wynmD2VdCZmHwGlS8b3oGFdNN1ox8rTFE53y6W03+9CRW1Bs1DY1bMvEjQKKYAkxz9tT
-         D1Fn5EiAHlNinQ+PFj8GIU3AoruRaKFjoSIWPX8TnpnTNB8084M2PqM5+WkzAmC8JOrn
-         AZZaCHTAe0bpZu5kkGNy42+Y85cjrNkhMWdmoWAJcq+aQsB2LJEIa1r7lrIxN112y4pk
-         GP7w==
-X-Gm-Message-State: ACrzQf3ay/7IAACA4L3Uvs5lXC02kMnLPrhGolCge97Rkbl9PyML/w81
-        zg15BK1eKioUr0ZF7Jpu5Ygg62AMldmAWh3hcMJo0Q==
-X-Google-Smtp-Source: AMsMyM5ZD/clrC9Dvhtr0Y3CzvqOq0IoUZD4MVNwUAPNrsOtrhTTF7pk8evY6CcHsU6n6gxtRSPMaUUQmH5ySoh748o=
-X-Received: by 2002:a05:6512:3403:b0:48c:9727:50b0 with SMTP id
- i3-20020a056512340300b0048c972750b0mr8100340lfr.309.1667359761658; Tue, 01
- Nov 2022 20:29:21 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 1 Nov 2022 20:29:20 -0700
+        Tue, 1 Nov 2022 23:30:50 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CCFF26123;
+        Tue,  1 Nov 2022 20:30:48 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5AACD61729;
+        Wed,  2 Nov 2022 03:30:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1ECC433D6;
+        Wed,  2 Nov 2022 03:30:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667359847;
+        bh=wry1LO7EncSvzT2po4Kz5Wxy+/zg1TudxF1J/nm2d6w=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=RbcIKR2/8scZmlVdjFaDkU+UKhS1FT5Ic7H87S236JLzuiR97+tHbGEdVYOvA4AkM
+         /fRtRyHmt+87IZQ3H+KzaA2bbIJHeisUA2fKUEh6ZLAO+0WCs7t+JpTojrXQ69JCHG
+         PJaUdOZqamGBMkjWVPX4fGELd4aOj71dUzdsJuOonSQrE4Nyk/+zhSB0ZpvotowZ+q
+         TLFLDabVRI99h9EuCD7s6Tr4Ttrvu7HU4RXxQnt5UDYqSyc0TMTpeoH+WwF1qlqeTQ
+         YO6ZnHesnt2M598su5kt86FAfWCW/zzuc8rHhJWliYDyQm+YU1pXQPYXKTEn2zVAUZ
+         w7jMuT0/eR46g==
+Date:   Tue, 1 Nov 2022 22:30:45 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Deepak Kumar Singh <quic_deesin@quicinc.com>
+Cc:     bjorn.andersson@linaro.org, arnaud.pouliquen@foss.st.com,
+        swboyd@chromium.org, quic_clew@quicinc.com,
+        mathieu.poirier@linaro.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH V3 3/3] rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
+Message-ID: <20221102033045.awxn5zlafdkatmta@builder.lan>
+References: <1663133102-10671-1-git-send-email-quic_deesin@quicinc.com>
+ <1663133102-10671-4-git-send-email-quic_deesin@quicinc.com>
 MIME-Version: 1.0
-In-Reply-To: <20221102024927.n5mjyzyqyapveapa@builder.lan>
-References: <20221101233421.997149-1-swboyd@chromium.org> <20221102024927.n5mjyzyqyapveapa@builder.lan>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Tue, 1 Nov 2022 20:29:20 -0700
-Message-ID: <CAE-0n50uVf-xapfX5A_c7XU7gV58HrKBOf5DCUPCcahPrgkU0Q@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, patches@lists.linux.dev,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1663133102-10671-4-git-send-email-quic_deesin@quicinc.com>
+X-Spam-Status: No, score=-8.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,59 +56,145 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2022-11-01 19:49:27)
-> On Tue, Nov 01, 2022 at 04:34:21PM -0700, Stephen Boyd wrote:
-> > We shouldn't be calling runtime PM APIs from within the genpd
-> > enable/disable path for a couple reasons.
-> [..][
-> > Upon closer inspection, calling runtime PM APIs like this in the GDSC
-> > driver doesn't make sense. It was intended to make sure the GDSC for the
-> > clock controller providing other GDSCs was enabled, specifically the
-> > MMCX GDSC for the display clk controller on SM8250 (sm8250-dispcc), so
-> > that GDSC register accesses succeeded. That will already happen because
-> > we make the 'dev->pm_domain' a parent domain of each GDSC we register in
-> > gdsc_register() via pm_genpd_add_subdomain(). When any of these GDSCs
-> > are accessed, we'll enable the parent domain (in this specific case
-> > MMCX).
-> >
->
-> It's correct that adding the GDSCs as subdomains for the device's
-> parent-domain will ensure that enabling a GDSC will propagate up and
-> turn on the (typically) rpmhpd resource.
->
-> But the purpose for the explicit calls was to ensure that the clock
-> controller itself is accessible. It's been a while since I looked at
-> this, but iirc letting MMCX to turn off would cause the register access
-> during dispcc probing to fail - similar to how
-> clk_pm_runtime_get()/put() ensures the clock registers are accessible.
+On Wed, Sep 14, 2022 at 10:55:02AM +0530, Deepak Kumar Singh wrote:
+> Add TICOMGET and TIOCMSET ioctl support for rpmsg char device nodes
+> to get/set the low level transport signals.
+> 
+> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+> ---
+>  drivers/rpmsg/rpmsg_char.c | 60 +++++++++++++++++++++++++++++++++++++++-------
+>  1 file changed, 52 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
+> index 4f21891..1eb6e9d 100644
+> --- a/drivers/rpmsg/rpmsg_char.c
+> +++ b/drivers/rpmsg/rpmsg_char.c
+> @@ -23,6 +23,7 @@
+>  #include <linux/rpmsg.h>
+>  #include <linux/skbuff.h>
+>  #include <linux/slab.h>
+> +#include <linux/termios.h>
+>  #include <linux/uaccess.h>
+>  #include <uapi/linux/rpmsg.h>
+>  
+> @@ -68,6 +69,8 @@ struct rpmsg_eptdev {
+>  	struct sk_buff_head queue;
+>  	wait_queue_head_t readq;
+>  
+> +	u32 rsigs;
 
-The dispcc and videocc on sm8250 don't use pm_clk APIs. They do use
-pm_runtime APIs during probe (i.e. pm_runtime_resume_and_get()). That
-will enable the MMCX domain and keep it on. Then when the GDSCs are
-registered it will create genpds for each GDSC and make them subdomains
-of the 'dev->pm_domain' genpd for MMCX. If the GDSCs are enabled at
-probe time they will increment the count on MMCX to put the count into
-sync between MMCX and the GDSC provided.
+Please spell out remote_signals, or something like that.
 
-The clk framework also has runtime PM calls throughout the code to make
-sure the device is runtime resumed when it is accessed. Maybe the
-problem is if probe defers and enough runtime puts are called to runtime
-suspend the device thus disabling MMCX? Can MMCX really ever be disabled
-or does disabling it act as a one way disable where you can never enable
-it again?
+> +	bool sig_pending;
 
-Or maybe this is the problem where not all constraints are determined
-yet but we're letting runtime PM put calls from the dispcc device shut
-down the entire multimedia subsystem while other devices that are within
-the same domain haven't probed and been able to sync their state but
-they're actively accessing the bus (i.e. continuous splash screen). I
-could see this problem being avoided by the pm_runtime_get() call in
-gdsc registration keeping MMCX on forever because there isn't a matching
-put anywhere.
+signals_pending
 
->
-> Perhaps I misunderstood something in the process, or lost track of the
-> actual issues?
 
-I dunno. It clearly is a problem to call runtime PM in the noirq phase
-of system suspend though.
+And please update the kernel-doc.
+
+>  };
+>  
+>  int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
+> @@ -107,7 +110,22 @@ static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
+>  	skb_queue_tail(&eptdev->queue, skb);
+>  	spin_unlock(&eptdev->queue_lock);
+>  
+> -	/* wake up any blocking processes, waiting for new data */
+> +	wake_up_interruptible(&eptdev->readq);
+> +
+> +	return 0;
+> +}
+> +
+> +static int rpmsg_flow_cb(struct rpmsg_device *rpdev, void *priv, bool enable)
+
+Please add "ept" to the function name.
+
+Regards,
+Bjorn
+
+> +{
+> +	struct rpmsg_eptdev *eptdev = priv;
+> +
+> +	if (enable)
+> +		eptdev->rsigs = TIOCM_DSR | TIOCM_CTS;
+> +	else
+> +		eptdev->rsigs = 0;
+> +	
+> +	eptdev->sig_pending = true;
+> +
+>  	wake_up_interruptible(&eptdev->readq);
+>  
+>  	return 0;
+> @@ -144,6 +162,7 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
+>  		return -EINVAL;
+>  	}
+>  
+> +	ept->flow_cb = rpmsg_flow_cb;
+>  	eptdev->ept = ept;
+>  	filp->private_data = eptdev;
+>  	mutex_unlock(&eptdev->ept_lock);
+> @@ -164,6 +183,7 @@ static int rpmsg_eptdev_release(struct inode *inode, struct file *filp)
+>  		eptdev->ept = NULL;
+>  	}
+>  	mutex_unlock(&eptdev->ept_lock);
+> +	eptdev->sig_pending = false;
+>  
+>  	/* Discard all SKBs */
+>  	skb_queue_purge(&eptdev->queue);
+> @@ -277,6 +297,9 @@ static __poll_t rpmsg_eptdev_poll(struct file *filp, poll_table *wait)
+>  	if (!skb_queue_empty(&eptdev->queue))
+>  		mask |= EPOLLIN | EPOLLRDNORM;
+>  
+> +	if (eptdev->sig_pending)
+> +		mask |= EPOLLPRI;
+> +
+>  	mask |= rpmsg_poll(eptdev->ept, filp, wait);
+>  
+>  	return mask;
+> @@ -287,14 +310,35 @@ static long rpmsg_eptdev_ioctl(struct file *fp, unsigned int cmd,
+>  {
+>  	struct rpmsg_eptdev *eptdev = fp->private_data;
+>  
+> -	if (cmd != RPMSG_DESTROY_EPT_IOCTL)
+> -		return -EINVAL;
+> -
+> -	/* Don't allow to destroy a default endpoint. */
+> -	if (eptdev->default_ept)
+> -		return -EINVAL;
+> +	bool set;
+> +	u32 val;
+> +	int ret;
+> +	
+> +	switch (cmd) {
+> +	case TIOCMGET:
+> +		eptdev->sig_pending = false;
+> +		ret = put_user(eptdev->rsigs, (int __user *)arg);
+> +		break;
+> +	case TIOCMSET:
+> +		ret = get_user(val, (int __user *)arg);
+> +		if (ret)
+> +			break;
+> +		set = (val & (TIOCM_DTR | TIOCM_RTS)) ? true : false;
+> +		ret = rpmsg_set_flow_control(eptdev->ept, set);
+> +		break;
+> +	case RPMSG_DESTROY_EPT_IOCTL:
+> +		/* Don't allow to destroy a default endpoint. */
+> +		if (eptdev->default_ept) {
+> +			ret = -EINVAL;
+> +			break;
+> +		}
+> +		ret = rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
+> +		break;
+> +	default:
+> +		ret = -EINVAL;
+> +	}
+>  
+> -	return rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
+> +	return ret;
+>  }
+>  
+>  static const struct file_operations rpmsg_eptdev_fops = {
+> -- 
+> 2.7.4
+> 
