@@ -2,182 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A09F4616BAB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 19:08:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D83D616BE2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 19:20:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230296AbiKBSIM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 14:08:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37074 "EHLO
+        id S231358AbiKBSUR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 14:20:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230199AbiKBSIL (ORCPT
+        with ESMTP id S231431AbiKBSUN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 14:08:11 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ADF22EF71
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 11:08:10 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id be13so29549873lfb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 11:08:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=m6s+mDwTFEybSnfsv9FLfpZxULcbiJ7Ktz0jYPN4zbg=;
-        b=oZ190qKXbUdI3pa/TkZ7GnFQDtDHYWG8bjZi1njg37scSepa9KpKnNxCF5ZM/IM+KQ
-         Np/CHo9hpZWYYqOyMwWGXHorI5H2uxm7feX7c3TtuTfuYs5myB2q7dizQUWdWBfEbsKE
-         fwoSJGuEqhARSqpzkQV8FkHnpWPtOw232JAeI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=m6s+mDwTFEybSnfsv9FLfpZxULcbiJ7Ktz0jYPN4zbg=;
-        b=qQ0VTehvzAx8wk+o8t5MsrId+AcXAQqQc6zTGYIlZCd/fDWtzBGZMIeZ8eCmthcwMB
-         b+8OrjFx60gAkez40V/gh5Vb8DRkSbQ8/NMP9b0ItFthPOrh+X+JYm2CItkpOhUt14ba
-         gWHmv+Ez4kH9a0QBuM46ZbbH4grZOixKx+aMsfZsdSJ9lilYdkEdzBU7ZCtoPUN69va5
-         WSRg86+1u6ZbHqgWRLwZckFBl4QtWU8tTXGKahxBQ0ZK4TpQoidhWcUkKz9Ym8p3KMm2
-         QrQVf8nhMb2xyHIxXd7aMKm/59fQ7BbOiIRDvmRU8kPUs4kWrxUKyrUSiODPisUlfAJz
-         M8Fg==
-X-Gm-Message-State: ACrzQf1C5Y5uRPA3uqjTp02IQwD7O2DY7a8a03YcqSDuTnP1SmjbicKb
-        LrZ2T/urMR16g81IlJFP9xA7vWm8nNse8/MdkJw0dg==
-X-Google-Smtp-Source: AMsMyM74PhTMtaDdojPE3Gl+8/j0gbeo2ZUKzdZSx7kiyQHT7FwZ/NQ9JAOxrEN2lb9nIwl2MLZuQl03p4TzbuBym/Y=
-X-Received: by 2002:a05:6512:3dac:b0:4a4:8044:9c3 with SMTP id
- k44-20020a0565123dac00b004a4804409c3mr9462216lfv.145.1667412488653; Wed, 02
- Nov 2022 11:08:08 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 2 Nov 2022 11:08:08 -0700
-MIME-Version: 1.0
-In-Reply-To: <20221102042933.mdlfknp45ajyrrpn@builder.lan>
-References: <20221101233421.997149-1-swboyd@chromium.org> <20221102024927.n5mjyzyqyapveapa@builder.lan>
- <CAE-0n50uVf-xapfX5A_c7XU7gV58HrKBOf5DCUPCcahPrgkU0Q@mail.gmail.com> <20221102042933.mdlfknp45ajyrrpn@builder.lan>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Wed, 2 Nov 2022 11:08:08 -0700
-Message-ID: <CAE-0n52389Pmp1dxHbtGijK_x+0xGyJ4q4rFRpa6L2KkZHKX5Q@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, patches@lists.linux.dev,
-        Andy Gross <agross@kernel.org>,
+        Wed, 2 Nov 2022 14:20:13 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DB9B2F388;
+        Wed,  2 Nov 2022 11:20:09 -0700 (PDT)
+Received: from notapiano.myfiosgateway.com (unknown [IPv6:2600:4041:5b1a:cd00:524d:e95d:1a9c:492a])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: nfraprado)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id EC23566028BD;
+        Wed,  2 Nov 2022 18:20:05 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1667413207;
+        bh=73yq3hSmCgnnBnC9+ZUyzTnv19Mj0CWcIsrmUiNrmxI=;
+        h=From:To:Cc:Subject:Date:From;
+        b=omK34qDxLzEuDlGtMXDGhcAOcY4mxHxqYYS4VJQp20qGEOIofJX3PmEhQrJXS6RHt
+         39fe/AbQJxKAqXZ5KKlg0k2gP/D8pbZGTl18E4kHjW8sgEB7KyxV5F/NifoYyI38q7
+         gooAraSdx3SvF0rz3tpLFwGOLuMPcERWAJwZTI8C3m7cDuFfa0uBSwupvNbd6+etB8
+         /fuf9ZEXDZJDRknvb7egxXCZ+R56vncD21qZh1ad1nHwQEGPICo018iLqy/CUMuvSF
+         6j1KQfr2dKLFmOarx6lC4Hs+V5HFf0VDMCPQxmM0+/G9KxGg7Wo27Hy1iumSxnEUlk
+         0WSHSrkT3SLig==
+From:   =?UTF-8?q?N=C3=ADcolas=20F=2E=20R=2E=20A=2E=20Prado?= 
+        <nfraprado@collabora.com>
+To:     Mark Brown <broonie@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     kernel@collabora.com,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Chen-Yu Tsai <wenst@chromium.org>,
+        =?UTF-8?q?N=C3=ADcolas=20F=2E=20R=2E=20A=2E=20Prado?= 
+        <nfraprado@collabora.com>, Andy Gross <agross@kernel.org>,
+        Derek Fang <derek.fang@realtek.com>,
+        Jaroslav Kysela <perex@perex.cz>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Oder Chiou <oder_chiou@realtek.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/8] Adjust usage of rt5682(s) power supply properties
+Date:   Wed,  2 Nov 2022 14:19:54 -0400
+Message-Id: <20221102182002.255282-1-nfraprado@collabora.com>
+X-Mailer: git-send-email 2.38.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2022-11-01 21:29:33)
-> On Tue, Nov 01, 2022 at 08:29:20PM -0700, Stephen Boyd wrote:
-> > Quoting Bjorn Andersson (2022-11-01 19:49:27)
-> > >
-> > > It's correct that adding the GDSCs as subdomains for the device's
-> > > parent-domain will ensure that enabling a GDSC will propagate up and
-> > > turn on the (typically) rpmhpd resource.
-> > >
-> > > But the purpose for the explicit calls was to ensure that the clock
-> > > controller itself is accessible. It's been a while since I looked at
-> > > this, but iirc letting MMCX to turn off would cause the register access
-> > > during dispcc probing to fail - similar to how
-> > > clk_pm_runtime_get()/put() ensures the clock registers are accessible.
-> >
-> > The dispcc and videocc on sm8250 don't use pm_clk APIs. They do use
-> > pm_runtime APIs during probe (i.e. pm_runtime_resume_and_get()). That
-> > will enable the MMCX domain and keep it on.
->
-> There's a corresponding pm_runtime_put() at the end of
-> disp_cc_sm8250_probe(), so this vote should be released.
 
-Correct.
+This series sets straight the usage of power supply properties for the
+rt5682 and rt5682s audio codecs.
 
->
-> While registering clocks, the framework will clk_pm_runtime_get()/put()
-> while accessing registers. The argument that was given when introducing
-> the calls in the probe was the same, covering the direct regmap
-> accesses...
->
-> And I guess it avoids flipping the genpd on/off for each resource being
-> accessed.
+These properties were already being used by sc7180-trogdor.dtsi (and
+derived DTs like sc7180-trogdor-kingoftown.dtsi).
 
-I don't think the genpd framework accesses anything when a genpd is
-registered. The clock controller is pm_runtime_resume_and_get() during
-the time the gdscs are registered with genpd, so there isn't any more
-need to get the runtime PM state of the clock controller during this
-time. The PM runtime put comes after qcom_cc_probe(). We should be good.
+We start by documenting the power supplies that are already in use and
+then add few others that were missing to the bindings.
 
->
-> > Then when the GDSCs are
-> > registered it will create genpds for each GDSC and make them subdomains
-> > of the 'dev->pm_domain' genpd for MMCX. If the GDSCs are enabled at
-> > probe time they will increment the count on MMCX to put the count into
-> > sync between MMCX and the GDSC provided.
-> >
->
-> This does not fit my argument; if the purpose is for pm_runtime to
-> provide access to the registers (and the subdomain ensuring that the
-> GDSC is powered), we should have a pm_runtime_put() after each operation
-> (analog to clk_pm_runtime_put()).
+Then we update the drivers to also support the new supplies.
 
-I believe registration/probe of the GDSCs is covered, the device is
-runtime resumed there. After that I'm not 100% positive, but with the
-GDSC as a subdomain of the clock controller's domain it will at least
-turn on MMCX before trying to enable the GDSC.
+Finally we update the trogdor DTs so they have the newly added but
+required supplies and remove a superfluous one that was causing
+warnings.
 
->
-> > The clk framework also has runtime PM calls throughout the code to make
-> > sure the device is runtime resumed when it is accessed. Maybe the
-> > problem is if probe defers and enough runtime puts are called to runtime
-> > suspend the device thus disabling MMCX?
->
-> Iirc the problem at hand was really that without any other votes for
-> MMCX, the register accesses during probe, gdsc and reset registration
-> would access registers without power.
+v1: https://lore.kernel.org/all/20221028205540.3197304-1-nfraprado@collabora.com
 
-Makes sense. The runtime PM get call for the clock controller in the
-probe will keep MMCX enabled.
+Changes in v2:
+- Made new supply names uppercase to be consistent with the existing
+  ones
 
->
-> > Can MMCX really ever be disabled
-> > or does disabling it act as a one way disable where you can never enable
-> > it again?
-> >
->
-> I've not seen any indications of that.
->
-> Only the side effect that if you set_performance_state() MMCX lower than
-> required during continuous splash the whole SoC get hosed.
+Nícolas F. R. A. Prado (8):
+  ASoC: dt-bindings: realtek,rt5682s: Add AVDD and MICVDD supplies
+  ASoC: dt-bindings: realtek,rt5682s: Add DBVDD and LDO1-IN supplies
+  ASoC: dt-bindings: rt5682: Add AVDD, MICVDD and VBAT supplies
+  ASoC: dt-bindings: rt5682: Add DBVDD and LDO1-IN supplies
+  ASoC: rt5682s: Support DBVDD and LDO1-IN supplies
+  ASoC: rt5682: Support DBVDD and LDO1-IN supplies
+  arm64: dts: qcom: sc7180-trogdor: Add missing supplies for rt5682
+  arm64: dts: qcom: sc7180-trogdor: Remove VBAT supply from rt5682s
 
-I see. That sounds different.
+ .../bindings/sound/realtek,rt5682s.yaml       | 23 +++++++++++++++++++
+ .../devicetree/bindings/sound/rt5682.txt      | 20 ++++++++++++++++
+ .../dts/qcom/sc7180-trogdor-kingoftown.dtsi   |  1 +
+ ...0-trogdor-wormdingler-rev1-boe-rt5682s.dts |  1 +
+ ...0-trogdor-wormdingler-rev1-inx-rt5682s.dts |  1 +
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  2 ++
+ sound/soc/codecs/rt5682.c                     |  2 ++
+ sound/soc/codecs/rt5682.h                     |  2 +-
+ sound/soc/codecs/rt5682s.c                    | 22 ++++++++++++++++++
+ sound/soc/codecs/rt5682s.h                    |  2 ++
+ 10 files changed, 75 insertions(+), 1 deletion(-)
 
->
-> > Or maybe this is the problem where not all constraints are determined
-> > yet but we're letting runtime PM put calls from the dispcc device shut
-> > down the entire multimedia subsystem while other devices that are within
-> > the same domain haven't probed and been able to sync their state but
-> > they're actively accessing the bus (i.e. continuous splash screen). I
-> > could see this problem being avoided by the pm_runtime_get() call in
-> > gdsc registration keeping MMCX on forever because there isn't a matching
-> > put anywhere.
-> >
->
-> This implementation predates 41fff779d794 ("clk: qcom: gdsc: Bump parent
-> usage count when GDSC is found enabled"), so no this was not introduced
-> to hide the issue of
-> yet-to-be-probed-devices-not-voting-for-their-resources.
->
-> This problem has been avoided by tying rpmhpd to sync_state and
-> requiring that people boot their systems with pd_ignore_unused.
+-- 
+2.38.1
 
-Heh ok.
