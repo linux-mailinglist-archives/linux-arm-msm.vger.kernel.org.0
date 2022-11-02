@@ -2,163 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64323615E05
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 09:40:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E5281615E1E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 09:45:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230440AbiKBIkK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 04:40:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47044 "EHLO
+        id S230425AbiKBIpT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 04:45:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230363AbiKBIkG (ORCPT
+        with ESMTP id S230338AbiKBIpR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 04:40:06 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A9A825281
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 01:40:05 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id q9so43435498ejd.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 01:40:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=e/jtuwgULBOycwGalh+zkT6mjLdV0jwG/bWZgUJxcW8=;
-        b=nRkmXPJgWNcU1eAeVmyDwZ7wmOLf3UxyJf1p03PwhRq4lDa78pIsXQ7Ty2cPuTcml1
-         kQLUesRT+qIw/TivDkTLF036tENc5gqUbdjzprZpng7t7mdSibHC9FYXQJyQf7G+XH3j
-         4DQF23XKCH9RBhhtDPxB25r0gVixcFJMGqC5nZpWLtNaYpj4R4R9lTIjW8pXNHFkkLWD
-         O8CtSRyKfIMvXoEmfTcRhTPeJ9J4trnoA+SrfkhmV6pS87l8tJ7odb8vIdXkYdXeF6GD
-         QAOwhs3h7FktPZwb1UOohta1jWsQAx4IO9lVoD5sJgpOq8OLGz9t4btkQV/n4Beu75he
-         48vQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=e/jtuwgULBOycwGalh+zkT6mjLdV0jwG/bWZgUJxcW8=;
-        b=kqOQDWtQT4Brv9jkaRsI5XkkT+7KyzbA336iDwYc2yxwx9T4kR9hcHletmL8rzcTFa
-         JE6wXzUVlct6aQf9z8KkCYcJGb1NqXlNF871YEmy8HnUkjzuDlsXl6L0vgbtiH4/ueBo
-         D7ihHMHk1v1BAD1in9n22ugLkss2x71XJ8SUmSxmiMOeGjiQhJdxsrUOaUVv5+B9/xcD
-         7I/Nqhr+LTYa+QbupsAd24dUfgfug8f13tTP77/ryeKa96ZSa+1SgfwDKmR2+diG1iNW
-         cZ4xUBrByjqtCsAhUYMZfs44NeVKzEQi7zRILwYHw4/qdpzlbr1Ct0PwP6/j/TRkMvhL
-         4I8w==
-X-Gm-Message-State: ACrzQf0bo5iGZRZE2KgZO8eQoAb2e7X7e6CzDVeDN91Syh7GkoP20eov
-        Vm5td12koHtk26uaqwWk83DO/9BW7XN7uHljWlo9rw==
-X-Google-Smtp-Source: AMsMyM5nzVcTT98Fh7PeXoFIpuR2xOrxd1QJPqjmAIoiBUnWh103tbbpfY8bXpvrDyFZz1aE+VvCY/S3/al36AN61Ik=
-X-Received: by 2002:a17:907:72cb:b0:7ad:7e95:63f5 with SMTP id
- du11-20020a17090772cb00b007ad7e9563f5mr22321018ejc.383.1667378403649; Wed, 02
- Nov 2022 01:40:03 -0700 (PDT)
+        Wed, 2 Nov 2022 04:45:17 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95C6525291;
+        Wed,  2 Nov 2022 01:45:16 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3CA49B82151;
+        Wed,  2 Nov 2022 08:45:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE301C433D6;
+        Wed,  2 Nov 2022 08:45:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667378713;
+        bh=TvEg9RB3Oul1rtDnkJ2s5m8u0GLPILFvqGgTjZSUFXM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=umdY0OrZWjyQFKdiNdjYhUW9pUavikR/U+u1k1JG/X0c/ZxGFt4/ZNSrLG+MB8s/6
+         KbKnSI/hWxEZK7c4tTQYZ7CTGor9yUkFvFRn9syFZGxhUZizf//AtIwvtb9rFd0Feq
+         Duk6lu8B58p7glXykUAhtxgDOMtV7PuhVDppa+sIGZBr28DieQgsYyY39rpKhp+SEX
+         oGEKCZ/xxCTpOQ7MhUAJiQAPkZvQtAh/XtCbLTfjuYlQCDnt517tGqJBh25+RMRMtG
+         DYAd4SZvpC5+SNW8PhexrTa6PcwquFj90Rx+Is+IWl2f04jAGjiphbBQqwqxaT2rem
+         7tzWPbKLef4Rw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oq9Mm-0003uT-Vn; Wed, 02 Nov 2022 09:44:57 +0100
+Date:   Wed, 2 Nov 2022 09:44:56 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        quic_vbadigan@quicinc.com, Brian Masney <bmasney@redhat.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] PCI: qcom: Add basic interconnect support
+Message-ID: <Y2IuCFtbiw4H+T0C@hovoldconsulting.com>
+References: <20221021064616.6380-1-johan+linaro@kernel.org>
+ <20221021064616.6380-3-johan+linaro@kernel.org>
+ <20221101143529.GA244012@thinkpad>
+ <Y2IshhNv6JlhCbkp@hovoldconsulting.com>
 MIME-Version: 1.0
-References: <20221027123432.1818530-1-robert.foss@linaro.org>
- <20221027123432.1818530-4-robert.foss@linaro.org> <e32be4c0-56ea-6999-92e6-3b51792a5255@linaro.org>
-In-Reply-To: <e32be4c0-56ea-6999-92e6-3b51792a5255@linaro.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Wed, 2 Nov 2022 09:39:52 +0100
-Message-ID: <CAG3jFyuvdTOisdP6qexaY3M+JQOHbRomqk4cCKRwS=L=ev6CWA@mail.gmail.com>
-Subject: Re: [PATCH v1 4/5] clk: qcom: dispcc-sm8250: Add missing EDP clocks
- for sm8350
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, mturquette@baylibre.com,
-        sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Jonathan Marek <jonathan@marek.ca>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y2IshhNv6JlhCbkp@hovoldconsulting.com>
+X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 27 Oct 2022 at 14:42, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On 27/10/2022 15:34, Robert Foss wrote:
-> > SM8350 supports embedded displayport, but the clocks for this
-> > were previously not enabled.
->
-> I'd say 'not accounted for' instead. Bjorn has added eDP clocks, but
-> they were following the 8150 (no div_clk_src) and the offsets were not
-> updated.
+On Wed, Nov 02, 2022 at 09:38:31AM +0100, Johan Hovold wrote:
+> On Tue, Nov 01, 2022 at 08:05:29PM +0530, Manivannan Sadhasivam wrote:
+> > On Fri, Oct 21, 2022 at 08:46:16AM +0200, Johan Hovold wrote:
+> > > On Qualcomm platforms like SC8280XP and SA8540P, interconnect bandwidth
+> > > must be requested before enabling interconnect clocks.
+> > > 
+> > > Add basic support for managing an optional "pcie-mem" interconnect path
+> > > by setting a low constraint before enabling clocks and updating it after
+> > > the link is up.
+> > > 
+> > > Note that it is not possible for a controller driver to set anything but
+> > > a maximum peak bandwidth as expected average bandwidth will vary with
+> > > use case and actual use (and power policy?). This very much remains an
+> > > unresolved problem with the interconnect framework.
+> > > 
+> > > Also note that no constraint is set for the SC8280XP/SA8540P "cpu-pcie"
+> > > path for now as it is not clear what an appropriate constraint would be
+> > > (and the system does not crash when left unspecified).
 
-Ack.
+> > > +	}
+> > > +
+> > > +	/*
+> > > +	 * Some Qualcomm platforms require interconnect bandwidth constraints
+> > > +	 * to be set before enabling interconnect clocks.
+> > > +	 *
+> > > +	 * Set an initial peak bandwidth corresponding to single-lane Gen 1
+> > > +	 * for the pcie-mem path.
+> > > +	 */
+> > > +	ret = icc_set_bw(pcie->icc_mem, 0, MBps_to_icc(250));
+> > > +	if (ret) {
+> > > +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> > > +			ret);
+> > 
+> > Move "ret);" to prior line. No need to keep up within 80 columns.
+> 
+> 80 chars is still a soft limit and in this case there's no real gain in
+> terms of readability from breaking it.
+> 
+> But sure, I can remove the line break.
 
->
-> >
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> > ---
-> >   drivers/clk/qcom/dispcc-sm8250.c | 22 +++++++++++++++++++++-
-> >   1 file changed, 21 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
-> > index a7606580cf22..d2aaa44ed3d4 100644
-> > --- a/drivers/clk/qcom/dispcc-sm8250.c
-> > +++ b/drivers/clk/qcom/dispcc-sm8250.c
-> > @@ -462,6 +462,20 @@ static struct clk_branch disp_cc_mdss_edp_link_clk = {
-> >       },
-> >   };
-> >
-> > +static struct clk_regmap_div disp_cc_mdss_edp_link_div_clk_src = {
-> > +     .reg = 0x2288,
-> > +     .shift = 0,
-> > +     .width = 2,
-> > +     .clkr.hw.init = &(struct clk_init_data) {
-> > +             .name = "disp_cc_mdss_edp_link_div_clk_src",
-> > +             .parent_hws = (const struct clk_hw*[]){
-> > +                     &disp_cc_mdss_edp_link_clk_src.clkr.hw,
-> > +             },
-> > +             .num_parents = 1,
-> > +             .ops = &clk_regmap_div_ro_ops,
-> > +     },
-> > +};
-> > +
-> >   static struct clk_branch disp_cc_mdss_edp_link_intf_clk = {
-> >       .halt_reg = 0x2074,
-> >       .halt_check = BRANCH_HALT,
-> > @@ -471,7 +485,7 @@ static struct clk_branch disp_cc_mdss_edp_link_intf_clk = {
-> >               .hw.init = &(struct clk_init_data){
-> >                       .name = "disp_cc_mdss_edp_link_intf_clk",
-> >                       .parent_hws = (const struct clk_hw*[]){
-> > -                             &disp_cc_mdss_edp_link_clk_src.clkr.hw,
-> > +                             &disp_cc_mdss_edp_link_div_clk_src.clkr.hw,
-> >                       },
-> >                       .num_parents = 1,
-> >                       .flags = CLK_GET_RATE_NOCACHE,
-> > @@ -1175,6 +1189,7 @@ static struct clk_regmap *disp_cc_sm8250_clocks[] = {
-> >       [DISP_CC_MDSS_EDP_GTC_CLK_SRC] = &disp_cc_mdss_edp_gtc_clk_src.clkr,
-> >       [DISP_CC_MDSS_EDP_LINK_CLK] = &disp_cc_mdss_edp_link_clk.clkr,
-> >       [DISP_CC_MDSS_EDP_LINK_CLK_SRC] = &disp_cc_mdss_edp_link_clk_src.clkr,
-> > +     [DISP_CC_MDSS_EDP_LINK_DIV_CLK_SRC] = &disp_cc_mdss_edp_link_div_clk_src.clkr,
-> >       [DISP_CC_MDSS_EDP_LINK_INTF_CLK] = &disp_cc_mdss_edp_link_intf_clk.clkr,
-> >       [DISP_CC_MDSS_EDP_PIXEL_CLK] = &disp_cc_mdss_edp_pixel_clk.clkr,
-> >       [DISP_CC_MDSS_EDP_PIXEL_CLK_SRC] = &disp_cc_mdss_edp_pixel_clk_src.clkr,
-> > @@ -1285,7 +1300,11 @@ static int disp_cc_sm8250_probe(struct platform_device *pdev)
-> >                       &disp_cc_mdss_dp_pixel1_clk_src,
-> >                       &disp_cc_mdss_dp_pixel2_clk_src,
-> >                       &disp_cc_mdss_dp_pixel_clk_src,
-> > +                     &disp_cc_mdss_edp_aux_clk_src,
-> > +                     &disp_cc_mdss_edp_link_clk_src,
-> > +                     &disp_cc_mdss_edp_pixel_clk_src,
-> >                       &disp_cc_mdss_esc0_clk_src,
-> > +                     &disp_cc_mdss_esc1_clk_src,
-> >                       &disp_cc_mdss_mdp_clk_src,
-> >                       &disp_cc_mdss_pclk0_clk_src,
-> >                       &disp_cc_mdss_pclk1_clk_src,
-> > @@ -1297,6 +1316,7 @@ static int disp_cc_sm8250_probe(struct platform_device *pdev)
-> >                       &disp_cc_mdss_byte1_div_clk_src,
-> >                       &disp_cc_mdss_dp_link1_div_clk_src,
-> >                       &disp_cc_mdss_dp_link_div_clk_src,
-> > +                     &disp_cc_mdss_edp_link_div_clk_src,
-> >               };
-> >               unsigned int i;
-> >               static bool offset_applied;
->
-> --
-> With best wishes
-> Dmitry
->
+After looking at the result, I changed my mind here and will stick to
+the 80 char limit.
+
+Johan
