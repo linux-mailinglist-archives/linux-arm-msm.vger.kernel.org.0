@@ -2,225 +2,233 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C14361707F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 23:12:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD3EC617171
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 00:10:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231646AbiKBWMU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 18:12:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58868 "EHLO
+        id S230075AbiKBXKr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 19:10:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231540AbiKBWL6 (ORCPT
+        with ESMTP id S230012AbiKBXKp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 18:11:58 -0400
-Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F369CE15
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 15:11:54 -0700 (PDT)
-Received: by mail-il1-x12c.google.com with SMTP id x16so175658ilm.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 15:11:54 -0700 (PDT)
+        Wed, 2 Nov 2022 19:10:45 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF4EB9FEC
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 16:10:43 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id d26-20020a05683018fa00b0066ab705617aso82003otf.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 16:10:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+xtIdRfPlPgVtPzZBa18RgWUGmJjs2ni8p7EMA1XR/M=;
-        b=Wlu9sAWkAYKtytrHJSptm5bLfYhtqmKOZxq0vQB6Xbe7ISfAnAYy3/64MSTJM6tnGT
-         uoyWm89UIrjUA3iKlbny0wiZOM1NldRVWeNRm+P1poTzL/o6MCBqVPmoZfnxTG6HZwgF
-         C6Hd5sFMJwyIEs+OzyfP4FkG5EBzAxxIJDMJBQCJYcn7FGAX+8qRf4b/JCbJ1A1Z2yl3
-         esI3uryzAWE4aLokITyfVozcEd5Bd70+Dz+NZg5PTINEKObVeAHMpnpRUBBjTkEUVTWq
-         YABaR371XFKMe1dpmRaOKNEPoHNZqpGvDZtcJbO02wU9OmxzumrypjtakiYovO06m6tq
-         USbw==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=NOncMiS9A3RMWI4Y+kkqX5A0U4j9jibTTA2TcJiv65c=;
+        b=K1J7h4kOsvTI0XZqdd9KdfNxd8yDQGj7WTjtRsp4NkeHxD432DZhu7n9O+4+sxOCEI
+         RHjF2VR9BJZOi3qXg3L+3lA2PTVbmswiAoucH38ZJ7sErUCK6HEiDmqdUFegmfY0lBEn
+         UVtnfap6H+pn+qFFZ9kBiwBosVT7WEaeWFowQH+2lAc23QMeVZA00DYiGt4SyZBWeFrF
+         wf9DhP2C6d3YeIQ2UBU6sWRzfitBm3oQt5KSaSild8S4ee3jXSoVCiiUKHA7HSC64wlM
+         tiuqZYGEEa2A8ifZT3XkzHSUUm6JFquBNhCW2yXbj+RM7mXTNfuCCtqCSZL8WgmfASVD
+         XLLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+xtIdRfPlPgVtPzZBa18RgWUGmJjs2ni8p7EMA1XR/M=;
-        b=O7W5lsFFsc7PN5bI0IksqKJ69dA1lVclocDBUkgbwk2t5uKMJzG5fKUqfQhyu8uY+H
-         UghSURCFCClpf6rgCQKK2gZVKDpxAPju+nLpME43DIB3poHgBdBa+sBgX5gvclFlMLfy
-         HfoLLBFKYN1gp90YVQI8DiOB+c/sRXxncYdQmTUa19E2FjTO3rdkrOd9gylnYDkiN7yR
-         /CdPPpPCJI3AOymbxQcFtNmig0iw+6qDuYxDlAlso5y2LA8EW1yAacU3XT7ZY0ZULctX
-         X6HWhw3XkpWvmORrh39f/aW7RMopf+8epSzF1IMKS89tvDfMb0h1yywcrLYLx4JtZOf9
-         bg0Q==
-X-Gm-Message-State: ACrzQf1v0tOTzLDCgysd98pjJ/zbwxhu078jA+Ectei/rH33qq8ZJ5Rk
-        EJTZPNmSUgo1lIesX1MqyhzW0Q==
-X-Google-Smtp-Source: AMsMyM45fLWHlrj4gmHAd/3pn69z+QK7aXuuqdfQT4KO1R/jaVShnXVcIiBsfCN2Oaepv/z9baag3g==
-X-Received: by 2002:a92:dac2:0:b0:300:c4e1:8b76 with SMTP id o2-20020a92dac2000000b00300c4e18b76mr6512177ilq.319.1667427114261;
-        Wed, 02 Nov 2022 15:11:54 -0700 (PDT)
-Received: from presto.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id f8-20020a02a108000000b0037465a1dd3fsm5073974jag.156.2022.11.02.15.11.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 15:11:53 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v2 9/9] net: ipa: use a bitmap for enabled endpoints
-Date:   Wed,  2 Nov 2022 17:11:39 -0500
-Message-Id: <20221102221139.1091510-10-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221102221139.1091510-1-elder@linaro.org>
-References: <20221102221139.1091510-1-elder@linaro.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NOncMiS9A3RMWI4Y+kkqX5A0U4j9jibTTA2TcJiv65c=;
+        b=cr98YgDqev1+3zdO07FcQuhxUv2BSeJrvkaxtUlP676Ua5qAWvWIHn8ok9N1C8SVUH
+         ru93FSTjpKa2fVe+bUm35eEEooVsfYrsEkWilwEZ5av5Yn8hu9i+abfijnVtgNF6H4YE
+         MGh9eVVxTDXbz2Pc4LzBj0MD7f8LBeO4UZ15FIjuV00yI895ETUXkVd0vr2VPxp7X4cN
+         TTxOUQq+nMn6K0+nwiEdv39uScXevDax/+H1GOQyKeUi7d++kV0aCx8tOd7fKo8Z0oQs
+         mRElOri/4u8KCisea0DvqVqM+TxTHgVeQvDdR6qPeNUZ7aQF9FCnv+4DUsxr5YMLfFul
+         zcBw==
+X-Gm-Message-State: ACrzQf3BjZscGwAUw/j0x4a7HdM1413VLye01YBqwGm+vMRbEolbjkbe
+        34rpTLwqe9CiF35x6vLQGZQKrkrcM2yuogaNzbo=
+X-Google-Smtp-Source: AMsMyM7aAdGyrEVMAQJIv2QAvYrik0rpkB3tkTqmNr2RDY3d7+4gaTsHPcLASIg4LbCPwXB1FPdl/tE89CUOMGnbhao=
+X-Received: by 2002:a9d:20ea:0:b0:66b:234a:290a with SMTP id
+ x97-20020a9d20ea000000b0066b234a290amr13448405ota.328.1667430643060; Wed, 02
+ Nov 2022 16:10:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20221102175449.452283-1-dmitry.baryshkov@linaro.org> <20221102175449.452283-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221102175449.452283-3-dmitry.baryshkov@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 2 Nov 2022 16:10:59 -0700
+Message-ID: <CAF6AEGtKcreHkT0=ccHbFY=-cLhoMCzXQe3HYKCf31QhgESS-g@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] drm/msm: remove duplicated code from a6xx_create_address_space
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Replace the 32-bit unsigned used to track enabled endpoints with a
-Linux bitmap, to allow an arbitrary number of endpoints to be
-represented.
+On Wed, Nov 2, 2022 at 10:54 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> The function a6xx_create_address_space() is mostly a copy of
+> adreno_iommu_create_address_space() with added quirk setting. Rework
+> these two functions to be a thin wrappers around a common helper.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/ipa.h          |  4 ++--
- drivers/net/ipa/ipa_endpoint.c | 32 ++++++++++++++++++++------------
- 2 files changed, 22 insertions(+), 14 deletions(-)
+Reviewed-by: Rob Clark <robdclark@gmail.com>
 
-diff --git a/drivers/net/ipa/ipa.h b/drivers/net/ipa/ipa.h
-index f14d1bd34e7e5..5372db58b5bdc 100644
---- a/drivers/net/ipa/ipa.h
-+++ b/drivers/net/ipa/ipa.h
-@@ -67,7 +67,7 @@ struct ipa_interrupt;
-  * @available:		Bitmap of endpoints supported by hardware
-  * @filtered:		Bitmap of endpoints that support filtering
-  * @set_up:		Bitmap of endpoints that are set up for use
-- * @enabled:		Bit mask indicating endpoints enabled
-+ * @enabled:		Bitmap of currently enabled endpoints
-  * @modem_tx_count:	Number of defined modem TX endoints
-  * @endpoint:		Array of endpoint information
-  * @channel_map:	Mapping of GSI channel to IPA endpoint
-@@ -125,7 +125,7 @@ struct ipa {
- 	unsigned long *available;	/* Supported by hardware */
- 	u64 filtered;			/* Support filtering (AP and modem) */
- 	unsigned long *set_up;
--	u32 enabled;
-+	unsigned long *enabled;
- 
- 	u32 modem_tx_count;
- 	struct ipa_endpoint endpoint[IPA_ENDPOINT_MAX];
-diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.c
-index 3fe20b4d9c90b..136932464261c 100644
---- a/drivers/net/ipa/ipa_endpoint.c
-+++ b/drivers/net/ipa/ipa_endpoint.c
-@@ -1666,6 +1666,7 @@ static void ipa_endpoint_program(struct ipa_endpoint *endpoint)
- 
- int ipa_endpoint_enable_one(struct ipa_endpoint *endpoint)
- {
-+	u32 endpoint_id = endpoint->endpoint_id;
- 	struct ipa *ipa = endpoint->ipa;
- 	struct gsi *gsi = &ipa->gsi;
- 	int ret;
-@@ -1675,37 +1676,35 @@ int ipa_endpoint_enable_one(struct ipa_endpoint *endpoint)
- 		dev_err(&ipa->pdev->dev,
- 			"error %d starting %cX channel %u for endpoint %u\n",
- 			ret, endpoint->toward_ipa ? 'T' : 'R',
--			endpoint->channel_id, endpoint->endpoint_id);
-+			endpoint->channel_id, endpoint_id);
- 		return ret;
- 	}
- 
- 	if (!endpoint->toward_ipa) {
--		ipa_interrupt_suspend_enable(ipa->interrupt,
--					     endpoint->endpoint_id);
-+		ipa_interrupt_suspend_enable(ipa->interrupt, endpoint_id);
- 		ipa_endpoint_replenish_enable(endpoint);
- 	}
- 
--	ipa->enabled |= BIT(endpoint->endpoint_id);
-+	__set_bit(endpoint_id, ipa->enabled);
- 
- 	return 0;
- }
- 
- void ipa_endpoint_disable_one(struct ipa_endpoint *endpoint)
- {
--	u32 mask = BIT(endpoint->endpoint_id);
-+	u32 endpoint_id = endpoint->endpoint_id;
- 	struct ipa *ipa = endpoint->ipa;
- 	struct gsi *gsi = &ipa->gsi;
- 	int ret;
- 
--	if (!(ipa->enabled & mask))
-+	if (!test_bit(endpoint_id, ipa->enabled))
- 		return;
- 
--	ipa->enabled ^= mask;
-+	__clear_bit(endpoint_id, endpoint->ipa->enabled);
- 
- 	if (!endpoint->toward_ipa) {
- 		ipa_endpoint_replenish_disable(endpoint);
--		ipa_interrupt_suspend_disable(ipa->interrupt,
--					      endpoint->endpoint_id);
-+		ipa_interrupt_suspend_disable(ipa->interrupt, endpoint_id);
- 	}
- 
- 	/* Note that if stop fails, the channel's state is not well-defined */
-@@ -1713,7 +1712,7 @@ void ipa_endpoint_disable_one(struct ipa_endpoint *endpoint)
- 	if (ret)
- 		dev_err(&ipa->pdev->dev,
- 			"error %d attempting to stop endpoint %u\n", ret,
--			endpoint->endpoint_id);
-+			endpoint_id);
- }
- 
- void ipa_endpoint_suspend_one(struct ipa_endpoint *endpoint)
-@@ -1722,7 +1721,7 @@ void ipa_endpoint_suspend_one(struct ipa_endpoint *endpoint)
- 	struct gsi *gsi = &endpoint->ipa->gsi;
- 	int ret;
- 
--	if (!(endpoint->ipa->enabled & BIT(endpoint->endpoint_id)))
-+	if (!test_bit(endpoint->endpoint_id, endpoint->ipa->enabled))
- 		return;
- 
- 	if (!endpoint->toward_ipa) {
-@@ -1742,7 +1741,7 @@ void ipa_endpoint_resume_one(struct ipa_endpoint *endpoint)
- 	struct gsi *gsi = &endpoint->ipa->gsi;
- 	int ret;
- 
--	if (!(endpoint->ipa->enabled & BIT(endpoint->endpoint_id)))
-+	if (!test_bit(endpoint->endpoint_id, endpoint->ipa->enabled))
- 		return;
- 
- 	if (!endpoint->toward_ipa)
-@@ -1971,6 +1970,8 @@ void ipa_endpoint_exit(struct ipa *ipa)
- 	for_each_set_bit(endpoint_id, ipa->defined, ipa->endpoint_count)
- 		ipa_endpoint_exit_one(&ipa->endpoint[endpoint_id]);
- 
-+	bitmap_free(ipa->enabled);
-+	ipa->enabled = NULL;
- 	bitmap_free(ipa->set_up);
- 	ipa->set_up = NULL;
- 	bitmap_free(ipa->defined);
-@@ -2003,6 +2004,10 @@ int ipa_endpoint_init(struct ipa *ipa, u32 count,
- 	if (!ipa->set_up)
- 		goto err_free_defined;
- 
-+	ipa->enabled = bitmap_zalloc(ipa->endpoint_count, GFP_KERNEL);
-+	if (!ipa->enabled)
-+		goto err_free_set_up;
-+
- 	filtered = 0;
- 	for (name = 0; name < count; name++, data++) {
- 		if (ipa_gsi_endpoint_data_empty(data))
-@@ -2027,6 +2032,9 @@ int ipa_endpoint_init(struct ipa *ipa, u32 count,
- 
- 	return 0;
- 
-+err_free_set_up:
-+	bitmap_free(ipa->set_up);
-+	ipa->set_up = NULL;
- err_free_defined:
- 	bitmap_free(ipa->defined);
- 	ipa->defined = NULL;
--- 
-2.34.1
 
+> ---
+>  drivers/gpu/drm/msm/adreno/a3xx_gpu.c   |  2 +-
+>  drivers/gpu/drm/msm/adreno/a4xx_gpu.c   |  2 +-
+>  drivers/gpu/drm/msm/adreno/a5xx_gpu.c   |  2 +-
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 28 +------------------------
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 12 +++++++++--
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h |  7 ++++++-
+>  6 files changed, 20 insertions(+), 33 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+> index 2c8b9899625b..948785ed07bb 100644
+> --- a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+> @@ -500,7 +500,7 @@ static const struct adreno_gpu_funcs funcs = {
+>  #endif
+>                 .gpu_state_get = a3xx_gpu_state_get,
+>                 .gpu_state_put = adreno_gpu_state_put,
+> -               .create_address_space = adreno_iommu_create_address_space,
+> +               .create_address_space = adreno_create_address_space,
+>                 .get_rptr = a3xx_get_rptr,
+>         },
+>  };
+> diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+> index 7cb8d9849c07..2fb32d5552c4 100644
+> --- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+> @@ -635,7 +635,7 @@ static const struct adreno_gpu_funcs funcs = {
+>  #endif
+>                 .gpu_state_get = a4xx_gpu_state_get,
+>                 .gpu_state_put = adreno_gpu_state_put,
+> -               .create_address_space = adreno_iommu_create_address_space,
+> +               .create_address_space = adreno_create_address_space,
+>                 .get_rptr = a4xx_get_rptr,
+>         },
+>         .get_timestamp = a4xx_get_timestamp,
+> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> index 3dcec7acb384..3c537c0016fa 100644
+> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> @@ -1705,7 +1705,7 @@ static const struct adreno_gpu_funcs funcs = {
+>                 .gpu_busy = a5xx_gpu_busy,
+>                 .gpu_state_get = a5xx_gpu_state_get,
+>                 .gpu_state_put = a5xx_gpu_state_put,
+> -               .create_address_space = adreno_iommu_create_address_space,
+> +               .create_address_space = adreno_create_address_space,
+>                 .get_rptr = a5xx_get_rptr,
+>         },
+>         .get_timestamp = a5xx_get_timestamp,
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index db4b3a48c708..e87196457b9a 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1786,10 +1786,6 @@ a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
+>  {
+>         struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+>         struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> -       struct iommu_domain_geometry *geometry;
+> -       struct msm_mmu *mmu;
+> -       struct msm_gem_address_space *aspace;
+> -       u64 start, size;
+>         unsigned long quirks = 0;
+>
+>         /*
+> @@ -1799,29 +1795,7 @@ a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
+>         if (!IS_ERR_OR_NULL(a6xx_gpu->htw_llc_slice))
+>                 quirks |= IO_PGTABLE_QUIRK_ARM_OUTER_WBWA;
+>
+> -       mmu = msm_iommu_new(&pdev->dev, quirks);
+> -       if (IS_ERR_OR_NULL(mmu))
+> -               return ERR_CAST(mmu);
+> -
+> -       geometry = msm_iommu_get_geometry(mmu);
+> -       if (IS_ERR(geometry))
+> -               return ERR_CAST(geometry);
+> -
+> -       /*
+> -        * Use the aperture start or SZ_16M, whichever is greater. This will
+> -        * ensure that we align with the allocated pagetable range while still
+> -        * allowing room in the lower 32 bits for GMEM and whatnot
+> -        */
+> -       start = max_t(u64, SZ_16M, geometry->aperture_start);
+> -       size = geometry->aperture_end - start + 1;
+> -
+> -       aspace = msm_gem_address_space_create(mmu, "gpu",
+> -               start & GENMASK_ULL(48, 0), size);
+> -
+> -       if (IS_ERR(aspace) && !IS_ERR(mmu))
+> -               mmu->funcs->destroy(mmu);
+> -
+> -       return aspace;
+> +       return adreno_iommu_create_address_space(gpu, pdev, quirks);
+>  }
+>
+>  static struct msm_gem_address_space *
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> index 12d0497f57e1..12a964dc3b8d 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -191,16 +191,24 @@ int adreno_zap_shader_load(struct msm_gpu *gpu, u32 pasid)
+>         return zap_shader_load_mdt(gpu, adreno_gpu->info->zapfw, pasid);
+>  }
+>
+> +struct msm_gem_address_space *
+> +adreno_create_address_space(struct msm_gpu *gpu,
+> +                           struct platform_device *pdev)
+> +{
+> +       return adreno_iommu_create_address_space(gpu, pdev, 0);
+> +}
+> +
+>  struct msm_gem_address_space *
+>  adreno_iommu_create_address_space(struct msm_gpu *gpu,
+> -               struct platform_device *pdev)
+> +                                 struct platform_device *pdev,
+> +                                 unsigned long quirks)
+>  {
+>         struct iommu_domain_geometry *geometry;
+>         struct msm_mmu *mmu;
+>         struct msm_gem_address_space *aspace;
+>         u64 start, size;
+>
+> -       mmu = msm_iommu_new(&pdev->dev, 0);
+> +       mmu = msm_iommu_new(&pdev->dev, quirks);
+>         if (IS_ERR_OR_NULL(mmu))
+>                 return ERR_CAST(mmu);
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index 707273339969..5d4b1c95033f 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -335,8 +335,13 @@ void adreno_show_object(struct drm_printer *p, void **ptr, int len,
+>   * attached targets
+>   */
+>  struct msm_gem_address_space *
+> +adreno_create_address_space(struct msm_gpu *gpu,
+> +                           struct platform_device *pdev);
+> +
+> +struct msm_gem_address_space *
+>  adreno_iommu_create_address_space(struct msm_gpu *gpu,
+> -               struct platform_device *pdev);
+> +                                 struct platform_device *pdev,
+> +                                 unsigned long quirks);
+>
+>  int adreno_read_speedbin(struct device *dev, u32 *speedbin);
+>
+> --
+> 2.35.1
+>
