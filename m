@@ -2,121 +2,448 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8A12616DC9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 20:26:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EDEF616E1D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 20:58:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230518AbiKBT0F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 15:26:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49216 "EHLO
+        id S230304AbiKBT6P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 15:58:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229531AbiKBT0D (ORCPT
+        with ESMTP id S229459AbiKBT6O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 15:26:03 -0400
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74931E9
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 12:26:02 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id o8so13168237qvw.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 12:26:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bZ0c9n3S/7R/juAKL/MuQmyZ52QEpr04qFxA/MunVX4=;
-        b=MY+dEW0wPbHYY6f/JC/JnMp+6uroYZomjMRscKoUq6BxwMFbFjj+DOp2TcG48TQidw
-         ++iqOOnhC5OtFyrEjofDZKkOqYkoP8GaxYNkpxR48rDubtqxit4hIpQsEy3pjeFVVBqx
-         DoGJgbrM0Y3zd9UoHaLDbeCzblFurOhmg0UXnUiYYjRCp/6alURNVgqkxPG/wmIu00Dh
-         mdbyaTI05vnqPLZuyw3IiBslvc2GcBUjLsIq0oIa/f8A3TcrOhhi3mzl5Gg6rdqlX1KG
-         aTKuu+l0MZ3yvNtvgN0RQKvPpndgwPRyNv3/MQMN4BbEE0OjX72E5QRvXygjJ0OFNkM/
-         edMg==
+        Wed, 2 Nov 2022 15:58:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB1221036
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 12:57:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1667419039;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=1GBqETIHeBRQQRDVGwUN6VbwWc/Wj9P3JX87LoZg1Z0=;
+        b=T7xdre18IaUCJTDbW6n/OAKbDOn9xDTAVlV+RAYgJw7o1Op7kcSjWwPT26w47zseKriRGO
+        PKWmWpOj5p7Z6Wpq+Cm+0TJ5lk0k+qJPoeVb+U/SRrtBwctB8d0TQMqP3PADAl0veq1Ypk
+        WU5hlBUqqN787IBLCWq8+EJTnMQGU4Q=
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
+ [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-161-MTSW9Q9ZNemCBAvCRMQ79w-1; Wed, 02 Nov 2022 15:57:17 -0400
+X-MC-Unique: MTSW9Q9ZNemCBAvCRMQ79w-1
+Received: by mail-oi1-f197.google.com with SMTP id h129-20020acab787000000b00355945065aeso8382311oif.20
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 12:57:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bZ0c9n3S/7R/juAKL/MuQmyZ52QEpr04qFxA/MunVX4=;
-        b=xPGB6skLi31L+iVXtO8WIjf4aGmmdVqSlbwRqhK4G8T26PHH0yMWNlTcKhOLKWZtnw
-         IL9KhNFnEWSgWgAz7TmHds7nDZRiru7AEA7m7lNPDbl8gJedlFlrZnKLpz/5TM33Rf03
-         GR556GGkv+l5R3LGio2E3FIaPRKJ/Afh7FEdrkhbE/5dFTRzo2YW481fucnrsMEAyXbb
-         bSIKRtJNoR6EYsiWAIJ+YEfLlDGzEmhOjNJNBFm4WaO2iG7/fksMQTAIm8B6OntEF86f
-         XchoQC5p/MYvJcIMmr5lCq7QtDfEdetriaqL3Q81uhS4uMi3FXE8bLR6I0aDhRsR0fYF
-         Y7qw==
-X-Gm-Message-State: ACrzQf1SIJ+M1nZIhFC2+KlLPJF31WHZMOF7CxarJnmXfra7w/FxXhVN
-        /QZPG8mHZfn/wtCrZPxb3VCFqw==
-X-Google-Smtp-Source: AMsMyM5vSN7AXGv7p2SjYikwAFRsnviWIYWPLTa+O5bLfxdrMR2RwAa4LE6i3kp35nDNdEbhEELSiQ==
-X-Received: by 2002:a05:6214:d6e:b0:4b9:692d:c486 with SMTP id 14-20020a0562140d6e00b004b9692dc486mr23080087qvs.104.1667417161687;
-        Wed, 02 Nov 2022 12:26:01 -0700 (PDT)
-Received: from ?IPV6:2601:586:5000:570:28d9:4790:bc16:cc93? ([2601:586:5000:570:28d9:4790:bc16:cc93])
-        by smtp.gmail.com with ESMTPSA id r17-20020a05620a03d100b006eee3a09ff3sm8872607qkm.69.2022.11.02.12.25.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Nov 2022 12:26:00 -0700 (PDT)
-Message-ID: <e1233b16-4289-f193-2084-40ea0e587ef8@linaro.org>
-Date:   Wed, 2 Nov 2022 15:25:59 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v2 1/2] dt-bindings: clock: qcom,gcc-ipq8074: Use common
- GCC schema
-Content-Language: en-US
-To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1GBqETIHeBRQQRDVGwUN6VbwWc/Wj9P3JX87LoZg1Z0=;
+        b=2zHlfxoUtEvfkX2HKjRcYklV9oI6s8ZyHe/juyU1e+BoDK73lfHya5YWk+Z0x1iLJK
+         E+CKSfSVz38/w1k1Pq6LDYGWs+v16fFY/ShCpeEv0aNXjq9Sx+ue+/1Ikr6tfsnjuGqJ
+         SBz6yQT5sLOr49Xw6F/QJkl2gmA7jXg97MKJX0ifnIM5TvDw0vCO+32godumKzQnjfew
+         ZvL1QJKMTnmc5vC1Vp+kkjBn30KM4AjgZPol1J2aquq1zPOC7Db8V+BfeVmI9VjyAagv
+         dB7Q9dUQAr3xKB3yTHy5q7nSNAjwbDGuH+nJS7V4CXXCoBNIJR6hGux9BUvehn+xoFR4
+         kLuA==
+X-Gm-Message-State: ACrzQf0lzh3XCEGriOghEyjwNwBfM8z5QJzPA+JeLgv/slWXoEKd5pE/
+        /+1zSuL4Iw9NQ4YfAM1/UowC1QhJ7NNwJSIAe3pBwAqz6/JgvVnTV0uaThE+s7v3NkXcXtnS/3q
+        Y2zqjW/ZUMT3w026LA8FbwPrC1w==
+X-Received: by 2002:a05:6808:14c5:b0:355:2938:d13e with SMTP id f5-20020a05680814c500b003552938d13emr22681623oiw.147.1667419036546;
+        Wed, 02 Nov 2022 12:57:16 -0700 (PDT)
+X-Google-Smtp-Source: AMsMyM66Td+6C3VQEBkO/uY1gqeJZF1l+0kqKbbOWppGydWDPkAyutm9lGNrD9jZcNMJQljAbp5Omg==
+X-Received: by 2002:a05:6808:14c5:b0:355:2938:d13e with SMTP id f5-20020a05680814c500b003552938d13emr22681609oiw.147.1667419036292;
+        Wed, 02 Nov 2022 12:57:16 -0700 (PDT)
+Received: from halaney-x13s ([2600:1700:1ff0:d0e0::41])
+        by smtp.gmail.com with ESMTPSA id v16-20020a05687105d000b00136cfb02a94sm6444754oan.7.2022.11.02.12.57.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Nov 2022 12:57:15 -0700 (PDT)
+Date:   Wed, 2 Nov 2022 14:57:13 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Parikshit Pareek <quic_ppareek@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Del Regno <angelogioacchino.delregno@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Govind Singh <govinds@codeaurora.org>,
-        Iskren Chernev <iskren.chernev@gmail.com>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Jonathan Marek <jonathan@marek.ca>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Taniya Das <tdas@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>, devicetree@vger.kernel.org,
-        krishna Lanka <quic_vamslank@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Rob Herring <robh@kernel.org>
-References: <20221102163153.55460-1-krzysztof.kozlowski@linaro.org>
- <20221102191441.5EE6EC433D6@smtp.kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221102191441.5EE6EC433D6@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Shazad Hussain <quic_shazhuss@quicinc.com>,
+        Brian Masney <bmasney@redhat.com>,
+        Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH v7 2/2] arm64: dts: qcom: add SA8540P ride(Qdrive-3)
+Message-ID: <20221102195713.7x2weffekly5paaq@halaney-x13s>
+References: <20221102103552.29388-1-quic_ppareek@quicinc.com>
+ <20221102103552.29388-3-quic_ppareek@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221102103552.29388-3-quic_ppareek@quicinc.com>
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/11/2022 15:14, Stephen Boyd wrote:
-> Quoting Krzysztof Kozlowski (2022-11-02 09:31:52)
->> Reference common Qualcomm GCC schema to remove common pieces.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Acked-by: Rob Herring <robh@kernel.org>
->>
->> ---
+On Wed, Nov 02, 2022 at 04:05:52PM +0530, Parikshit Pareek wrote:
+> Introduce the Qualcomm SA8540P ride automotive platform, also known as
+> Qdrive-3 development board.
 > 
-> Acked-by: Stephen Boyd <sboyd@kernel.org>
+> This initial contribution supports SMP, CPUFreq, cluster idle, UFS, RPMh
+> regulators, debug UART, PMICs, remoteprocs and USB.
 > 
-> I figure Bjorn will apply them with other qcom clk patches.
+> The SA8540P ride contains four PM8450 PMICs. A separate DTSI file has
+> been created for PMIC, so that it can be used for future SA8540P based
+> boards.
+> 
+> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+> Tested-by: Brian Masney <bmasney@redhat.com>
+> Reviewed-by: Brian Masney <bmasney@redhat.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile         |   1 +
+>  arch/arm64/boot/dts/qcom/pm8450a.dtsi     |  77 ++++++++
+>  arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 227 ++++++++++++++++++++++
+>  3 files changed, 305 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/pm8450a.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index b0558d3389e5..c89d44756791 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -54,6 +54,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sa8540p-ride.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1-lte.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/pm8450a.dtsi b/arch/arm64/boot/dts/qcom/pm8450a.dtsi
+> new file mode 100644
+> index 000000000000..34fc72896761
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/pm8450a.dtsi
+> @@ -0,0 +1,77 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2022, Linaro Limited
+> + */
+> +
+> +#include <dt-bindings/spmi/spmi.h>
+> +
+> +&spmi_bus {
+> +	pm8450a: pmic@0 {
+> +		compatible = "qcom,pm8150", "qcom,spmi-pmic";
+> +		reg = <0x0 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		pm8450a_gpios: gpio@c000 {
+> +			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
+> +			reg = <0xc000>;
+> +			gpio-controller;
+> +			gpio-ranges = <&pm8450a_gpios 0 0 10>;
+> +			#gpio-cells = <2>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +	};
+> +
+> +	pm8450c: pmic@4 {
+> +		compatible = "qcom,pm8150", "qcom,spmi-pmic";
+> +		reg = <0x4 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		pm8450c_gpios: gpio@c000 {
+> +			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
+> +			reg = <0xc000>;
+> +			gpio-controller;
+> +			gpio-ranges = <&pm8450c_gpios 0 0 10>;
+> +			#gpio-cells = <2>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +	};
+> +
+> +	pm8450e: pmic@8 {
+> +		compatible = "qcom,pm8150", "qcom,spmi-pmic";
+> +		reg = <0x8 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		pm8450e_gpios: gpio@c000 {
+> +			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
+> +			reg = <0xc000>;
+> +			gpio-controller;
+> +			gpio-ranges = <&pm8450e_gpios 0 0 10>;
+> +			#gpio-cells = <2>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +	};
+> +
+> +	pm8450g: pmic@c {
+> +		compatible = "qcom,pm8150", "qcom,spmi-pmic";
+> +		reg = <0xc SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		pm8450g_gpios: gpio@c000 {
+> +			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
+> +			reg = <0xc000>;
+> +			gpio-controller;
+> +			gpio-ranges = <&pm8450g_gpios 0 0 10>;
+> +			#gpio-cells = <2>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +	};
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> new file mode 100644
+> index 000000000000..b480b4927549
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> @@ -0,0 +1,227 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2022, Linaro Limited
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +
+> +#include "sa8540p.dtsi"
+> +#include "pm8450a.dtsi"
+> +
+> +/ {
+> +	model = "Qualcomm SA8540P Ride";
+> +	compatible = "qcom,sa8540p-ride", "qcom,sa8540p";
+> +
+> +	aliases {
+> +		serial0 = &qup2_uart17;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +};
+> +
+> +&apps_rsc {
+> +	pmm8540-a-regulators {
+> +		compatible = "qcom,pm8150-rpmh-regulators";
+> +		qcom,pmic-id = "a";
+> +
+> +		vreg_l3a: ldo3 {
+> +			regulator-name = "vreg_l3a";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1208000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l5a: ldo5 {
+> +			regulator-name = "vreg_l5a";
+> +			regulator-min-microvolt = <912000>;
+> +			regulator-max-microvolt = <912000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l7a: ldo7 {
+> +			regulator-name = "vreg_l7a";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l13a: ldo13 {
+> +			regulator-name = "vreg_l13a";
+> +			regulator-min-microvolt = <3072000>;
+> +			regulator-max-microvolt = <3072000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	pmm8540-c-regulators {
+> +		compatible = "qcom,pm8150-rpmh-regulators";
+> +		qcom,pmic-id = "c";
+> +
+> +		vreg_l1c: ldo1 {
+> +			regulator-name = "vreg_l1c";
+> +			regulator-min-microvolt = <912000>;
+> +			regulator-max-microvolt = <912000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2c: ldo2 {
+> +			regulator-name = "vreg_l2c";
+> +			regulator-min-microvolt = <3072000>;
+> +			regulator-max-microvolt = <3072000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l4c: ldo4 {
+> +			regulator-name = "vreg_l4c";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1208000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l6c: ldo6 {
+> +			regulator-name = "vreg_l6c";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes =
+> +			    <RPMH_REGULATOR_MODE_LPM
+> +			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +		};
+> +
+> +		vreg_l7c: ldo7 {
+> +			regulator-name = "vreg_l7c";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l17c: ldo17 {
+> +			regulator-name = "vreg_l17c";
+> +			regulator-min-microvolt = <2504000>;
+> +			regulator-max-microvolt = <2504000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allowed-modes =
+> +			    <RPMH_REGULATOR_MODE_LPM
+> +			     RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +		};
+> +	};
+> +
+> +	pmm8540-g-regulators {
+> +		compatible = "qcom,pm8150-rpmh-regulators";
+> +		qcom,pmic-id = "g";
+> +
+> +		vreg_l3g: ldo3 {
+> +			regulator-name = "vreg_l3g";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l7g: ldo7 {
+> +			regulator-name = "vreg_l7g";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l8g: ldo8 {
+> +			regulator-name = "vreg_l8g";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <880000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +};
+> +
+> +&qup2 {
+> +	status = "okay";
+> +};
+> +
+> +&qup2_uart17 {
+> +	compatible = "qcom,geni-debug-uart";
+> +	status = "okay";
+> +};
+> +
+> +&remoteproc_adsp {
+> +	firmware-name = "qcom/sa8540p/adsp.mbn";
+> +	status = "okay";
 
-Bjorn,
+Is this actually on the SoC? I thought I had heard it was not.
 
-I think you need to update your scripts:
-https://patchwork.ozlabs.org/project/devicetree-bindings/list/?series=325924
+> +};
+> +
+> +&remoteproc_nsp0 {
+> +	firmware-name = "qcom/sa8540p/cdsp.mbn";
+> +	status = "okay";
+> +};
+> +
+> +&remoteproc_nsp1 {
+> +	firmware-name = "qcom/sa8540p/cdsp1.mbn";
+> +	status = "okay";
+> +};
+> +
+> +&ufs_mem_hc {
+> +	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
+> +
+> +	vcc-supply = <&vreg_l17c>;
+> +	vcc-max-microamp = <800000>;
+> +	vccq-supply = <&vreg_l6c>;
+> +	vccq-max-microamp = <900000>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&ufs_mem_phy {
+> +	vdda-phy-supply = <&vreg_l8g>;
+> +	vdda-pll-supply = <&vreg_l3g>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_0 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_0_dwc3 {
+> +	/* TODO: Define USB-C connector properly */
 
-Best regards,
-Krzysztof
+Is this really TODO? It seems like copy-pasta from other
+dts's.
+
+> +	dr_mode = "peripheral";
+> +};
+> +
+> +&usb_0_hsphy {
+> +	vdda-pll-supply = <&vreg_l5a>;
+> +	vdda18-supply = <&vreg_l7a>;
+> +	vdda33-supply = <&vreg_l13a>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_0_qmpphy {
+> +	vdda-phy-supply = <&vreg_l3a>;
+> +	vdda-pll-supply = <&vreg_l5a>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_2_hsphy0 {
+> +	vdda-pll-supply = <&vreg_l5a>;
+> +	vdda18-supply = <&vreg_l7g>;
+> +	vdda33-supply = <&vreg_l13a>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_2_qmpphy0 {
+> +	vdda-phy-supply = <&vreg_l3a>;
+> +	vdda-pll-supply = <&vreg_l5a>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&xo_board_clk {
+> +	clock-frequency = <38400000>;
+> +};
+> -- 
+> 2.17.1
+> 
 
