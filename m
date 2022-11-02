@@ -2,87 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BEB66160D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 11:33:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 64E0A6160F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 11:36:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230216AbiKBKdQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 06:33:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49622 "EHLO
+        id S230433AbiKBKgb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 06:36:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229557AbiKBKdQ (ORCPT
+        with ESMTP id S229570AbiKBKgV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 06:33:16 -0400
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EF2627CDB;
-        Wed,  2 Nov 2022 03:33:14 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id F080D336B1;
-        Wed,  2 Nov 2022 10:33:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1667385193; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=39AVSkEHI1J+0NxFici1XfnR3bd2AlgAeg7g921bvYs=;
-        b=Cx2xiWMC5E11WkmY909rsos2svtnzjxSZkKuTFtXUFgr5/q5Xz2IM5g1+XgGiDXWLl3iN6
-        j9vK8FYTQJj8c/fwCAVjGLZsRRl8/etR11oAGlj7oqfq0SZsvlm7Gqn7NqATYTdOX31lSm
-        kEohXWWBhiXVhscLaSrUkGEyO7CmrEQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1667385193;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=39AVSkEHI1J+0NxFici1XfnR3bd2AlgAeg7g921bvYs=;
-        b=VmKtdHzSvWZGkFNSUcLJzJsMZ9sTv9odj9s9+U4GRjt8StJaU5YRqyzyk25taSOPmszLei
-        O0R9jIyTleysD+AQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 733C813AE0;
-        Wed,  2 Nov 2022 10:33:12 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id pwAgG2hHYmPXUwAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Wed, 02 Nov 2022 10:33:12 +0000
-Message-ID: <0ca70b76-c24a-4fdb-cf0d-2647d37379df@suse.de>
-Date:   Wed, 2 Nov 2022 11:33:12 +0100
+        Wed, 2 Nov 2022 06:36:21 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E0D328E0D;
+        Wed,  2 Nov 2022 03:36:19 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A2AaD2s004849;
+        Wed, 2 Nov 2022 10:36:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=IOXrnu4nfCWWAcBT0iruUGV/X9DBpAlavLRv2buA7pE=;
+ b=AEn1tST7MShIT9tYyT2HFTMVzq/QHJ8wfgga313biOYYXLfQs2FQSwnMC520LKTIpH/L
+ YLwYYoX26Qz3U6MRL9L67eSaRnC+gUrYiqHWabcxkJXlp1L7omdHxiYAjZwnh7Mz3HRm
+ xljk8VFVv6pgiWo4sTAJLF4j7Kmh7y4I7cWG03Ure6G4VKNe5YCY5YHA7foJzjuVtkK8
+ 4pFP5Dw9OQ8yGq0cy+xHAW//HVW6ZfWvQKNfKkKMZlNz6/62dTNROyz/ldXlgp4XNCvZ
+ 4JnqMRO4hn6yLIIyykCw6SyFSv4R9x8TH9ICXaqi5/gi9cAB/RESGXexrrffEYGjwwTy Nw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kkj7u8jtv-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 02 Nov 2022 10:36:13 +0000
+Received: from pps.filterd (NALASPPMTA05.qualcomm.com [127.0.0.1])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2A2AaCp9007386;
+        Wed, 2 Nov 2022 10:36:12 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 3khdmjn53d-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 02 Nov 2022 10:36:12 +0000
+Received: from NALASPPMTA05.qualcomm.com (NALASPPMTA05.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2A2AaCEZ007381;
+        Wed, 2 Nov 2022 10:36:12 GMT
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 2A2AaCRA007380
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 02 Nov 2022 10:36:12 +0000
+Received: from hu-ppareek-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Wed, 2 Nov 2022 03:36:08 -0700
+From:   Parikshit Pareek <quic_ppareek@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        "Shazad Hussain" <quic_shazhuss@quicinc.com>,
+        Brian Masney <bmasney@redhat.com>,
+        "Johan Hovold" <johan@kernel.org>,
+        Parikshit Pareek <quic_ppareek@quicinc.com>
+Subject: [PATCH v7 0/2] arm64: dts: qcom: add dts for sa8540p-ride board
+Date:   Wed, 2 Nov 2022 16:05:50 +0530
+Message-ID: <20221102103552.29388-1-quic_ppareek@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH v2 17/21] drm/fb-helper: Perform all fbdev I/O with the
- same implementation
-Content-Language: en-US
-To:     Javier Martinez Canillas <javierm@redhat.com>, daniel@ffwll.ch,
-        airlied@gmail.com, sam@ravnborg.org, mripard@kernel.org,
-        maarten.lankhorst@linux.intel.com
-Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        linux-aspeed@lists.ozlabs.org,
-        linux-arm-kernel@lists.infradead.org,
-        etnaviv@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
-        linux-hyperv@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-mips@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        spice-devel@lists.freedesktop.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        xen-devel@lists.xenproject.org
-References: <20221024111953.24307-1-tzimmermann@suse.de>
- <20221024111953.24307-18-tzimmermann@suse.de>
- <3ab32fc3-f2aa-1b42-fd87-557482ab56d5@redhat.com>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-In-Reply-To: <3ab32fc3-f2aa-1b42-fd87-557482ab56d5@redhat.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------580Yj573GGcKpjSl0DPBr0oc"
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: BniAViYznm5D0qLy3hY3SNCsFHyAY9Sf
+X-Proofpoint-GUID: BniAViYznm5D0qLy3hY3SNCsFHyAY9Sf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-02_06,2022-11-02_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 phishscore=0 spamscore=0 malwarescore=0 bulkscore=0
+ mlxlogscore=589 clxscore=1011 priorityscore=1501 adultscore=0
+ impostorscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211020064
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,142 +93,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------580Yj573GGcKpjSl0DPBr0oc
-Content-Type: multipart/mixed; boundary="------------0mHlbG09Ag4oDeheVwguJWiS";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Javier Martinez Canillas <javierm@redhat.com>, daniel@ffwll.ch,
- airlied@gmail.com, sam@ravnborg.org, mripard@kernel.org,
- maarten.lankhorst@linux.intel.com
-Cc: dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
- linux-aspeed@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
- etnaviv@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
- linux-hyperv@vger.kernel.org, intel-gfx@lists.freedesktop.org,
- linux-mips@vger.kernel.org, linux-mediatek@lists.infradead.org,
- linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
- virtualization@lists.linux-foundation.org,
- spice-devel@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
- linux-rockchip@lists.infradead.org,
- linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev,
- linux-tegra@vger.kernel.org, xen-devel@lists.xenproject.org
-Message-ID: <0ca70b76-c24a-4fdb-cf0d-2647d37379df@suse.de>
-Subject: Re: [PATCH v2 17/21] drm/fb-helper: Perform all fbdev I/O with the
- same implementation
-References: <20221024111953.24307-1-tzimmermann@suse.de>
- <20221024111953.24307-18-tzimmermann@suse.de>
- <3ab32fc3-f2aa-1b42-fd87-557482ab56d5@redhat.com>
-In-Reply-To: <3ab32fc3-f2aa-1b42-fd87-557482ab56d5@redhat.com>
+This series introduces the Qualcomm sa8540p-ride automotive development
+  board, also called as Qdrive-3 board.
 
---------------0mHlbG09Ag4oDeheVwguJWiS
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Changes in v7:
+- Put the smpi bus related pmic changes in sseparate dtsi files(Konrad)
+- Mention allowed regulator modes via DT property regulator-allowed-modes
+  (Konrad and Brian)
+- Remove unused ldo nodes vreg_l3c and vreg_l10c(Shazad)
 
-SGkNCg0KQW0gMDIuMTEuMjIgdW0gMTA6MzIgc2NocmllYiBKYXZpZXIgTWFydGluZXogQ2Fu
-aWxsYXM6DQo+IE9uIDEwLzI0LzIyIDEzOjE5LCBUaG9tYXMgWmltbWVybWFubiB3cm90ZToN
-Cj4+IEltcGxlbWVudCB0aGUgZmJkZXYncyByZWFkL3dyaXRlIGhlbHBlcnMgd2l0aCB0aGUg
-c2FtZSBmdW5jdGlvbnMuIFVzZQ0KPj4gdGhlIGdlbmVyaWMgZmJkZXYncyBjb2RlIGFzIHRl
-bXBsYXRlLiBDb252ZXJ0IGFsbCBkcml2ZXJzLg0KPj4NCj4+IERSTSdzIGZiIGhlbHBlcnMg
-bXVzdCBpbXBsZW1lbnQgcmVndWxhciBJL08gZnVuY3Rpb25hbGl0eSBpbiBzdHJ1Y3QNCj4+
-IGZiX29wcyBhbmQgcG9zc2libHkgcGVyZm9ybSBhIGRhbWFnZSB1cGRhdGUuIEhhbmRsZSBh
-bGwgdGhpcyBpbiB0aGUNCj4+IHNhbWUgZnVuY3Rpb25zIGFuZCBjb252ZXJ0IGRyaXZlcnMu
-IFRoZSBmdW5jdGlvbmFsaXR5IGhhcyBiZWVuIHVzZWQNCj4+IGFzIHBhcnQgb2YgdGhlIGdl
-bmVyaWMgZmJkZXYgY29kZSBmb3Igc29tZSB0aW1lLiBUaGUgZHJpdmVycyBkb24ndA0KPj4g
-c2V0IHN0cnVjdCBkcm1fZmJfaGVscGVyLmZiX2RpcnR5LCBzbyB0aGV5IHdpbGwgbm90IGJl
-IGFmZmVjdGVkIGJ5DQo+PiBkYW1hZ2UgaGFuZGxpbmcuDQo+Pg0KPj4gRm9yIEkvTyBtZW1v
-cnksIGZiIGhlbHBlcnMgbm93IHByb3ZpZGUgZHJtX2ZiX2hlbHBlcl9jZmJfcmVhZCgpIGFu
-ZA0KPj4gZHJtX2ZiX2hlbHBlcl9jZmJfd3JpdGUoKS4gU2V2ZXJhbCBkcml2ZXJzIHJlcXVp
-cmUgdGhlc2UuIFVudGlsIG5vdw0KPj4gdGVncmEgdXNlZCBJL08gcmVhZCBhbmQgd3JpdGUs
-IGFsdGhvdWdoIHRoZSBtZW1vcnkgYnVmZmVyIGFwcGVhcnMgdG8NCj4+IGJlIGluIHN5c3Rl
-bSBtZW1vcnkuIFNvIHVzZSBfc3lzXyBoZWxwZXJzIG5vdy4NCj4+DQo+PiBTaWduZWQtb2Zm
-LWJ5OiBUaG9tYXMgWmltbWVybWFubiA8dHppbW1lcm1hbm5Ac3VzZS5kZT4NCj4+IC0tLQ0K
-PiANCj4gWy4uLl0NCj4gDQo+PiArc3RhdGljIHNzaXplX3QgX19kcm1fZmJfaGVscGVyX3dy
-aXRlKHN0cnVjdCBmYl9pbmZvICppbmZvLCBjb25zdCBjaGFyIF9fdXNlciAqYnVmLCBzaXpl
-X3QgY291bnQsDQo+PiArCQkJCSAgICAgbG9mZl90ICpwcG9zLCBkcm1fZmJfaGVscGVyX3dy
-aXRlX3NjcmVlbiB3cml0ZV9zY3JlZW4pDQo+PiArew0KPiANCj4gWy4uLl0NCj4gDQo+PiAr
-CS8qDQo+PiArCSAqIENvcHkgdG8gZnJhbWVidWZmZXIgZXZlbiBpZiB3ZSBhbHJlYWR5IGxv
-Z2dlZCBhbiBlcnJvci4gRW11bGF0ZXMNCj4+ICsJICogdGhlIGJlaGF2aW9yIG9mIHRoZSBv
-cmlnaW5hbCBmYmRldiBpbXBsZW1lbnRhdGlvbi4NCj4+ICsJICovDQo+PiArCXJldCA9IHdy
-aXRlX3NjcmVlbihpbmZvLCBidWYsIGNvdW50LCBwb3MpOw0KPj4gKwlpZiAocmV0IDwgMCkN
-Cj4+ICsJCXJldHVybiByZXQ7IC8qIHJldHVybiBsYXN0IGVycm9yLCBpZiBhbnkgKi8NCj4+
-ICsJZWxzZSBpZiAoIXJldCkNCj4+ICsJCXJldHVybiBlcnI7IC8qIHJldHVybiBwcmV2aW91
-cyBlcnJvciwgaWYgYW55ICovDQo+PiArDQo+PiArCSpwcG9zICs9IHJldDsNCj4+ICsNCj4g
-DQo+IFNob3VsZCAqcHBvcyBiZSBpbmNyZW1lbnRlZCBldmVuIGlmIHRoZSBwcmV2aW91cyBl
-cnJvciBpcyByZXR1cm5lZD8NCg0KWWVzLiBJdCBlbXVsYXRlcyB0aGUgb3JpZ2luYWwgZmJk
-ZXYgY29kZSBhdCBbMV0uIEZ1cnRoZXIgZG93biBpbiB0aGF0IA0KZnVuY3Rpb24sIHRoZSBw
-b3NpdGlvbiBpcyBiZWluZyB1cGRhdGVkIGV2ZW4gaWYgYW4gZXJyb3Igb2NjdXJlZC4gV2Ug
-DQpvbmx5IHJldHVybiB0aGUgaW5pdGlhbCBlcnJvciBpZiBubyBieXRlcyBnb3Qgd3JpdHRl
-bi4NCg0KSXQgY291bGQgaGFwcGVuIHRoYXQgc29tZSB1c2Vyc3BhY2UgcHJvZ3JhbSBoaXRz
-IHRvIGVycm9yLCBidXQgc3RpbGwgDQpyZWxpZXMgb24gdGhlIG91dHB1dCBhbmQgcG9zaXRp
-b24gYmVpbmcgdXBkYXRlZC4gSUlSQyBJIGV2ZW4gYWRkZWQgDQp2YWxpZGF0aW9uIG9mIHRo
-aXMgYmVoYXZpb3IgdG8gdGhlIElHVCBmYmRldiB0ZXN0cy4gIEkgYWdyZWUgdGhhdCB0aGlz
-IA0KaXMgc29tZXdoYXQgYm9ndXMgYmVoYXZpb3IsIGJ1dCBjaGFuZ2luZyBpdCB3b3VsZCBj
-aGFuZ2UgbG9uZy1zdGFuZGluZyANCnVzZXJzcGFjZSBzZW1hbnRpY3MuDQoNClsxXSANCmh0
-dHBzOi8vZWxpeGlyLmJvb3RsaW4uY29tL2xpbnV4L3Y2LjAuNi9zb3VyY2UvZHJpdmVycy92
-aWRlby9mYmRldi9jb3JlL2ZibWVtLmMjTDgyNQ0KDQo+IA0KPiBUaGUgd3JpdGVfc2NyZWVu
-KCkgc3VjY2VlZGVkIGFueXdheXMsIGV2ZW4gd2hlbiB0aGUgY291bnQgd3JpdHRlbiB3YXMN
-Cj4gc21hbGxlciB0aGFuIHdoYXQgdGhlIGNhbGxlciBhc2tlZCBmb3IuDQo+IA0KPj4gICAv
-KioNCj4+IC0gKiBkcm1fZmJfaGVscGVyX3N5c19yZWFkIC0gd3JhcHBlciBhcm91bmQgZmJf
-c3lzX3JlYWQNCj4+ICsgKiBkcm1fZmJfaGVscGVyX3N5c19yZWFkIC0gSW1wbGVtZW50cyBz
-dHJ1Y3QgJmZiX29wcy5mYl9yZWFkIGZvciBzeXN0ZW0gbWVtb3J5DQo+PiAgICAqIEBpbmZv
-OiBmYl9pbmZvIHN0cnVjdCBwb2ludGVyDQo+PiAgICAqIEBidWY6IHVzZXJzcGFjZSBidWZm
-ZXIgdG8gcmVhZCBmcm9tIGZyYW1lYnVmZmVyIG1lbW9yeQ0KPj4gICAgKiBAY291bnQ6IG51
-bWJlciBvZiBieXRlcyB0byByZWFkIGZyb20gZnJhbWVidWZmZXIgbWVtb3J5DQo+PiAgICAq
-IEBwcG9zOiByZWFkIG9mZnNldCB3aXRoaW4gZnJhbWVidWZmZXIgbWVtb3J5DQo+PiAgICAq
-DQo+PiAtICogQSB3cmFwcGVyIGFyb3VuZCBmYl9zeXNfcmVhZCBpbXBsZW1lbnRlZCBieSBm
-YmRldiBjb3JlDQo+PiArICogUmV0dXJuczoNCj4+ICsgKiBUaGUgbnVtYmVyIG9mIHJlYWQg
-Ynl0ZXMgb24gc3VjY2Vzcywgb3IgYW4gZXJyb3IgY29kZSBvdGhlcndpc2UuDQo+PiAgICAq
-Lw0KPiANCj4gVGhpcyBzZW50ZW5jZSBzb3VuZHMgYSBsaXR0bGUgYml0IG9mZiB0byBtZS4g
-U2hvdWxkbid0IGJlICJudW1iZXIgb2YgYnl0ZXMgcmVhZCINCj4gaW5zdGVhZD8gSSdtIG5v
-dCBhIG5hdGl2ZSBFbmdsaXNoIHNwZWFrZXIgdGhvdWdoLCBzbyBmZWVsIGZyZWUgdG8ganVz
-dCBpZ25vcmUgbWUuDQoNCllvdSdyZSByaWdodC4NCg0KPiANCj4gWy4uLl0NCj4gDQo+PiAg
-IA0KPj4gK3N0YXRpYyBzc2l6ZV90IGZiX3JlYWRfc2NyZWVuX2Jhc2Uoc3RydWN0IGZiX2lu
-Zm8gKmluZm8sIGNoYXIgX191c2VyICpidWYsIHNpemVfdCBjb3VudCwNCj4+ICsJCQkJICAg
-bG9mZl90IHBvcykNCj4+ICt7DQo+PiArCWNvbnN0IGNoYXIgX19pb21lbSAqc3JjID0gaW5m
-by0+c2NyZWVuX2Jhc2UgKyBwb3M7DQo+PiArCXNpemVfdCBhbGxvY19zaXplID0gbWluX3Qo
-c2l6ZV90LCBjb3VudCwgUEFHRV9TSVpFKTsNCj4+ICsJc3NpemVfdCByZXQgPSAwOw0KPj4g
-KwlpbnQgZXJyID0gMDsNCj4gDQo+IERvIHlvdSByZWFsbHkgbmVlZCB0aGVzZSB0d28/IEFG
-QUlLIHNzaXplX3QgaXMgYSBzaWduZWQgdHlwZQ0KDQpJIHRoaW5rIHNvLiBXZSdsbCBnbyB0
-aHJvdWdoIHRoZSB3aGlsZSBsb29wIG11bHRpcGxlIHRpbWVzLiBJZiB3ZSBmYWlsIA0Kb24g
-dGhlIGluaXRpYWwgaXRlcmF0aW9uLCB3ZSByZXR1cm4gdGhlIGVycm9yIGluIGVyci4gSWYg
-d2UgZmFpbCBvbiBhbnkgDQpsYXRlciBpdGVyYXRpb24sIHdlIHJldHVybiB0aGUgbnVtYmVy
-IG9mIHByb2Nlc3NlZCBieXRlcy4gIEhhdmluZyB0aGlzIA0KaW4gdHdvIHZhcmlhYmxlcyBz
-aW1wbGlmaWVzIHRoZSBsb2dpYyBBRkFJQ1QuDQoNCkJlc3QgcmVnYXJkcw0KVGhvbWFzDQoN
-Cj4gc28geW91IGNhbiBqdXN0IHVzZSB0aGUgcmV0IHZhcmlhYmxlIHRvIHN0b3JlIGFuZCBy
-ZXR1cm4gdGhlDQo+IGVycm5vIHZhbHVlLg0KPiANCj4gWy4uLl0NCj4gDQo+PiArc3RhdGlj
-IHNzaXplX3QgZmJfd3JpdGVfc2NyZWVuX2Jhc2Uoc3RydWN0IGZiX2luZm8gKmluZm8sIGNv
-bnN0IGNoYXIgX191c2VyICpidWYsIHNpemVfdCBjb3VudCwNCj4+ICsJCQkJICAgIGxvZmZf
-dCBwb3MpDQo+PiArew0KPj4gKwljaGFyIF9faW9tZW0gKmRzdCA9IGluZm8tPnNjcmVlbl9i
-YXNlICsgcG9zOw0KPj4gKwlzaXplX3QgYWxsb2Nfc2l6ZSA9IG1pbl90KHNpemVfdCwgY291
-bnQsIFBBR0VfU0laRSk7DQo+PiArCXNzaXplX3QgcmV0ID0gMDsNCj4+ICsJaW50IGVyciA9
-IDA7DQo+IA0KPiBTYW1lIGhlcmUuDQo+IA0KDQotLSANClRob21hcyBaaW1tZXJtYW5uDQpH
-cmFwaGljcyBEcml2ZXIgRGV2ZWxvcGVyDQpTVVNFIFNvZnR3YXJlIFNvbHV0aW9ucyBHZXJt
-YW55IEdtYkgNCk1heGZlbGRzdHIuIDUsIDkwNDA5IE7DvHJuYmVyZywgR2VybWFueQ0KKEhS
-QiAzNjgwOSwgQUcgTsO8cm5iZXJnKQ0KR2VzY2jDpGZ0c2bDvGhyZXI6IEl2byBUb3Rldg0K
+Changes in v6:
+- Introduced the new dts for the board, rather than moving common nodes
+  between this one and SA8295 ADP board into dtsi file(Bjorn)
+- Drop 'adp' term to imply it being unrelated with ADP board(Internal
+  discussion with Bjorn)
+- Removed Acked-by(Krzysztof) tag in dt-binding document, due to content
+  change.
+- Not including Reviewed-by(Krzysztof), because of the content change.
+
+Changes in v5:
+- Moved the usb and ufs nodes from sa8540p-adp.dtsi file to respective
+  board specific dts files: sa8295p-adp.dts and sa8540p-adp-ride.dts.
+  Took inputs from Shazad Hussain in this regard(John)
+- Added more description of the board differences(John)
+- Not including Reviewed-by for Krzysztof, because of the new changes to
+  be reviewed.
+- Removed Reported-by tag(John).
+
+Changes in v4:
+ - Removed the ufs_card_hc node, as it is not mounted on Qdrive-3 board.
+ - Removed usb_1 relared nodes, as usb1 doesn't have any port connected
+   on Qdrive3 board.
+ - Added Reported-by tag for Shazad(for ufs and usb_1 node removals)
+
+Changes in v3:
+ - Added Acked-by tag (Krzysztof)
+ - Renamed dtsi to sa8540p-adp.dtsi (John)
+ - Removed copyright from sa8295-adp.dts and sa8295-adp.dtsi(John)
+ - Added cover letter
+
+changes in v2:
+- Make dt-binding patch as the first one in the patch set
+- Add , after year 2022, in the license header
+
+Initial version:
+- Move the common nodes to sa8540p-adp.dtsi, and create qrive-3 board
+  specific file sa8540p-adp-ride.dts.
 
 
---------------0mHlbG09Ag4oDeheVwguJWiS--
+Parikshit Pareek (2):
+  dt-bindings: arm: qcom: Document additional sa8540p device
+  arm64: dts: qcom: add SA8540P ride(Qdrive-3)
 
---------------580Yj573GGcKpjSl0DPBr0oc
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/pm8450a.dtsi         |  77 ++++++
+ arch/arm64/boot/dts/qcom/sa8540p-ride.dts     | 227 ++++++++++++++++++
+ 4 files changed, 306 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/pm8450a.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sa8540p-ride.dts
 
------BEGIN PGP SIGNATURE-----
+-- 
+2.17.1
 
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmNiR2gFAwAAAAAACgkQlh/E3EQov+Bj
-MxAAp4wfwx+b/f1M/vv0NPDNSC9u3BJZBg47JuiNuprKGsOIBEeua7fb65cfh+LHqgna0CjJ9xSh
-bxNVEMHqrEWsi84G6EpqeIoHlfMhRK83P5zAE/GXqpxpQVPmOGmRq8RHk3fRXB+NUjW/hp6m2vm1
-4UKKcQr8pm1POl+FqlvBPgIwFcrilo9Xx8FytS+0e1cZhqf1Z3y2sXVzNUQYrdq9Dvz884Jz3wmL
-17m5oRbTVBQke7h08jMRyneJkZgnhF8jBT33C5X+HVNvjgLKSOGQiQbdiMEHhTT/lLa248ypTC2x
-ZtXQfyeTtEb/eGIInJXlE6gizVrOGJpGQb1jg3t1CoxJA0rXFHmHwVFLV+CA9pOtrMOYeE6ud9w+
-iVYQbN/HLph6mIbYkZViGfFABNIr5u32ZJkR90aQWfSeLHgFJtON8p25LxLcUNQEkRe1X/pXaElE
-TLKY2S7E/OKeTTWxhQCk+gF+ZqBcH7uX4oBm6aSfzF/a6wy9XvGRAPPs7vVvD+r7cb0Yj+GLB8Yx
-aWhWFOYh+GZt5xkJ1H3UBQDOhJ237+4NpIzskMoLJPzl5EcSWVE4Nr39CfZTTFFISJsnHmAHt+Za
-bpUEIgHrkfrtP8KsXztM5SXXwSHzICLZHsps/fyvC8MSODtD2hRENA1BtVPpYcGl0MHBtuKjLZWp
-y4I=
-=DprF
------END PGP SIGNATURE-----
-
---------------580Yj573GGcKpjSl0DPBr0oc--
