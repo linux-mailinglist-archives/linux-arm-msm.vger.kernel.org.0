@@ -2,140 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDA28616677
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 16:48:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D6CF616684
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 16:51:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230190AbiKBPs3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 11:48:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58776 "EHLO
+        id S229548AbiKBPvt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 11:51:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230124AbiKBPs2 (ORCPT
+        with ESMTP id S230380AbiKBPvp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 11:48:28 -0400
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8970929C91
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 08:48:26 -0700 (PDT)
-Received: by mail-qv1-xf2b.google.com with SMTP id w10so12724423qvr.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 08:48:26 -0700 (PDT)
+        Wed, 2 Nov 2022 11:51:45 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D1C62BB38
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 08:51:44 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id f37so28893840lfv.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 08:51:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=DqcHEbUhCxHVF2jWXX9rIliz1pXonUtemL5GAsoaHYk=;
-        b=cjJzrwScQSgi/EZHgfDyhONjigKwZTUHGMRYmsipn6PDa/tNpPT/r2YTXbwn+PRKJ4
-         hvzoTNyiUfkrVhEJfrY/3QI261jDZLrgAhiEEfSyujwWfrmCA47QPAcaRWNz83HrWHcC
-         oSBkL/Puj1M+J8+qZCePxUcHVUMGN6VMGWnKOQIcaLXmxQlCOZoxjDMHjtrOTcHIqTM8
-         flR7MAuX6cP0wvRF6Hwx/xzO3ezPAqetNe8ghGHlaO57R5Y8am849P9vRJUIkM+YNNWq
-         rldzL5zpeBkMlu+KVhL+JAIcsiW8ZuqfkRkD4l68HPX4D2c5AdQNJVLVy4LNtv9FgbRt
-         RR9Q==
+        bh=XkrttrP/8k6Uhj+JHOcFHyc8juhef2eGyny7iXFjWgw=;
+        b=Z0VLSJzNCtq9E/ToW9yfbkWyLnA4YxfCOgY356IXchLTKymFr/drPoV6ftSoyyK1kx
+         7HNvXAtou0FZKenXDL6dfoFqMh7JInssILzSMMfBYEFJrWIEKLuCn+TApj49wJfEdvwl
+         p2n3sIFPzHPnzLFUYRjh/oMxWAuMI3n7mTPhkKTJA4c5OIIKISCY5y550/FKvsJjLw9+
+         14vw+0YMXt+QXJJfB035YvPXV1Qxt2CBojYgM2PUJQ+Q/jfD7nlbjPZ8iYBn2xjOjtUK
+         /gOyDngmmxbfzeWYJhhScq7bUEJu/MshMGh1kiS6U8iDcea209WtB1opX5Ut2oAR1N39
+         PV+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DqcHEbUhCxHVF2jWXX9rIliz1pXonUtemL5GAsoaHYk=;
-        b=78w6mEOKYpKcYU8rx1c+PBSOsKFgkN7OMG9V/9esdAGdsb52rqf8I6n1NcKQckgHhn
-         CN4RlWYohHggeJfo5fOKaTWKY8rV0HGSBsO0YuwC+s0ZzqO3RMwGuh+ciphkWjuUmSdx
-         mawan8sgXojnEcuolC/OuQ6WHU5gWFTeWIAtII2bxq4ecdj+k2GHG5YhEUjTdvJYY8QR
-         u6KfFfV7kXFSAbfV+1QIqofAM6CIY6U+GvIstwOA9WFZAHqGhDliAike6Omc8UzMceRX
-         /iQomWPCo1M21sc3kDriY99Vob4WrP8GYzjrkbz102/Wbf7FrJba71NW0NbGDn2zymR7
-         IqNw==
-X-Gm-Message-State: ACrzQf2QB7AuYDcyjgqw060kd975cxnwyZiVFBomCle5vN8y73nEEX63
-        PCmQwtuOzaU4tCnUeWKyeTuSJg==
-X-Google-Smtp-Source: AMsMyM5lWMNbK9eIVv4y7NtTus+Bm2qBB8TllawiBRSGYs8TQbhuMAvGKmpM6iRqg5hbBhBe4lXZUQ==
-X-Received: by 2002:a05:6214:ccd:b0:4bb:663c:8018 with SMTP id 13-20020a0562140ccd00b004bb663c8018mr22348600qvx.24.1667404105566;
-        Wed, 02 Nov 2022 08:48:25 -0700 (PDT)
-Received: from ?IPV6:2601:586:5000:570:28d9:4790:bc16:cc93? ([2601:586:5000:570:28d9:4790:bc16:cc93])
-        by smtp.gmail.com with ESMTPSA id w20-20020a05620a445400b006cbe3be300esm1361638qkp.12.2022.11.02.08.48.23
+        bh=XkrttrP/8k6Uhj+JHOcFHyc8juhef2eGyny7iXFjWgw=;
+        b=YEMUxzjCiSF5WpbhzVbzZeSSAQqbB/lwutcSaVTRNL7JpyKPYBH1yZcbvb0xzLpFeI
+         H5oDZTu67Q7VNIUT0KwHaI9XUQ0vyB/f980XyinqUsdUt16b9DgKdpa0MOz27uk9Ux0+
+         1nDtqyLmGo267aBL76PXJGjM8SHLlDC2XAG+3L56ZKN4i8HTZ/SYUA9yDA9b+iTvSgZ0
+         C2cjfzGNj232ZF1stcCYSLSt8An9LR3fnXZWLJ0Ll4FKT/sEYfE/3QcQYhQgdsskB7HZ
+         ++3JooRT55nA8tfrBnmv6NzRHQ7LsEbQT6FfNaCOLfZxFhq4K+rsgXYxOOgE+/3iswpw
+         l6pw==
+X-Gm-Message-State: ACrzQf2RcLuiQ8EURdH0r6clGnrwyIcMOSSGwgxMO5U5vYpDXRPU0xMM
+        rd/Vy5VOyZqDeF4bVPjIQ0Bkbf+4psUABCsBk1o=
+X-Google-Smtp-Source: AMsMyM5obyOxH5ml1zFCem7IPj8YH+crCGInHzB5mEhtge5d5tFEMYzt7zsPGDsbakKat45LEQ00pQ==
+X-Received: by 2002:ac2:51b4:0:b0:4b1:785c:7a5d with SMTP id f20-20020ac251b4000000b004b1785c7a5dmr349522lfk.261.1667404302716;
+        Wed, 02 Nov 2022 08:51:42 -0700 (PDT)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id u16-20020a2ea170000000b0026c3ecf9a39sm2192247ljl.38.2022.11.02.08.51.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Nov 2022 08:48:24 -0700 (PDT)
-Message-ID: <4d981879-f6e2-8046-1a34-f11abfb19187@linaro.org>
-Date:   Wed, 2 Nov 2022 11:48:22 -0400
+        Wed, 02 Nov 2022 08:51:42 -0700 (PDT)
+Message-ID: <b0663134-f1fe-9d14-44fb-145b95e5228c@linaro.org>
+Date:   Wed, 2 Nov 2022 18:51:41 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH] dt-bindings: net: constrain number of 'reg' in ethernet
- ports
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Lars Povlsen <lars.povlsen@microchip.com>,
-        Steen Hegelund <Steen.Hegelund@microchip.com>,
-        Daniel Machon <daniel.machon@microchip.com>,
-        UNGLinuxDriver@microchip.com, Sergey Shtylyov <s.shtylyov@omp.ru>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Martin Botka <martin.botka@somainline.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        krishna Lanka <quic_vamslank@quicinc.com>,
-        Iskren Chernev <iskren.chernev@gmail.com>,
-        Del Regno <angelogioacchino.delregno@somainline.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Govind Singh <govinds@codeaurora.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Oleksij Rempel <linux@rempel-privat.de>,
-        Horatiu Vultur <horatiu.vultur@microchip.com>,
-        Vladimir Oltean <vladimir.oltean@nxp.com>,
-        Claudiu Manoil <claudiu.manoil@nxp.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org
-References: <20221028140326.43470-1-krzysztof.kozlowski@linaro.org>
- <20221028140326.43470-2-krzysztof.kozlowski@linaro.org>
- <20221031185737.GA3249912-robh@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221031185737.GA3249912-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ Thunderbird/102.4.0
+Subject: Re: [PATCH v5 3/3] drm/msm/dp: retry 3 times if set sink to D0 poweer
+ state failed
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
+        agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1662999830-13916-1-git-send-email-quic_khsieh@quicinc.com>
+ <1662999830-13916-4-git-send-email-quic_khsieh@quicinc.com>
+ <067c7bc0-4746-f714-db56-a3c9e4f25588@linaro.org>
+ <61d591ff-c5d8-a032-9eaa-6ab4c535a679@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <61d591ff-c5d8-a032-9eaa-6ab4c535a679@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/10/2022 14:57, Rob Herring wrote:
-> On Fri, Oct 28, 2022 at 10:03:25AM -0400, Krzysztof Kozlowski wrote:
->> 'reg' without any constraints allows multiple items which is not the
->> intention for Ethernet controller's port number.
->>
+On 12/09/2022 22:26, Kuogee Hsieh wrote:
 > 
-> Shouldn't this constrained by dsa-port.yaml (or the under review 
-> ethernet switch schemas that split out the DSA parts)?
+> On 9/12/2022 11:37 AM, Dmitry Baryshkov wrote:
+>> On 12/09/2022 19:23, Kuogee Hsieh wrote:
+>>> Bring sink out of D3 (power down) mode into D0 (normal operation) mode
+>>> by setting DP_SET_POWER_D0 bit to DP_SET_POWER dpcd register. This
+>>> patch will retry 3 times if written to DP_SET_POWER register failed.
+>>
+>> Could you please elaborate this change? Can the sink succeed in 
+>> reading the DP_SET_POWER, but fail writing DP_SET_POWER?
+> 
+> yes, there is possible since it is not only set local sink device but 
+> also all downstream sink devices to D0 state.
 
-dsa-port should indeed have such change (I'll send one), but these
-schemas do not reference it.
+Ack. Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-They reference only ethernet-controller, which does not even mention
-'reg' port. I'll describe it better in commit msg.
+> 
+>>
+>>>
+>>> Changes in v5:
+>>> -- split into two patches
+>>>
+>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>>> ---
+>>>   drivers/gpu/drm/msm/dp/dp_link.c | 13 ++++++++-----
+>>>   1 file changed, 8 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c 
+>>> b/drivers/gpu/drm/msm/dp/dp_link.c
+>>> index 9d5381d..4360728 100644
+>>> --- a/drivers/gpu/drm/msm/dp/dp_link.c
+>>> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
+>>> @@ -50,6 +50,7 @@ static int dp_aux_link_power_up(struct drm_dp_aux 
+>>> *aux,
+>>>   {
+>>>       u8 value;
+>>>       ssize_t len;
+>>> +    int i;
+>>>         if (link->revision < 0x11)
+>>>           return 0;
+>>> @@ -61,11 +62,13 @@ static int dp_aux_link_power_up(struct drm_dp_aux 
+>>> *aux,
+>>>       value &= ~DP_SET_POWER_MASK;
+>>>       value |= DP_SET_POWER_D0;
+>>>   -    len = drm_dp_dpcd_writeb(aux, DP_SET_POWER, value);
+>>> -    if (len < 0)
+>>> -        return len;
+>>> -
+>>> -    usleep_range(1000, 2000);
+>>> +    /* retry for 1ms to give the sink time to wake up */
+>>> +    for (i = 0; i < 3; i++) {
+>>> +        len = drm_dp_dpcd_writeb(aux, DP_SET_POWER, value);
+>>> +        usleep_range(1000, 2000);
+>>> +        if (len == 1)
+>>> +            break;
+>>> +    }
+>>>         return 0;
+>>>   }
+>>
 
-ethernet-switch is not yet referenced in the schemas changed here. It
-would not be applicable to asix,ax88178.yaml and microchip,lan95xx.yaml.
-To others - probably it would be applicable.
-
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
 
