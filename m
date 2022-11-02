@@ -2,95 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AA36616C3E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 19:33:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E690616CB0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 19:41:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231196AbiKBSdn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 14:33:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55534 "EHLO
+        id S231400AbiKBSlf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 14:41:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230426AbiKBSdl (ORCPT
+        with ESMTP id S231386AbiKBSld (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 14:33:41 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3789C2A962
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 11:33:41 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id s20so5934370qkg.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 11:33:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Q92riiS7ubzxoWF6UuL2jfQgGcw0qGoG//c8sRPlZ6Q=;
-        b=kGcLjV7SmNNbbGA/s5728760o5U/Yl+OT//qiK+lbm1ZFISPUnYEn8Gi1sB78euRC8
-         vszdivvxXScOtJ1ZFruWtROVGOoHJ0As/vBBHiwRZrQyUCENP770io+HaedrF9VMiZvP
-         uq0YYkkB1g/zE4DSaz1E9mNmI/Fwubaj7oVYqEZl7yr1Mlxqv+DGVt6lv9auwZEKlWZ0
-         BshgmtK3Ko3qg950J6/jr+hJWnQWCCpfZfB5xf8R1w36/bh7O/Xa979/DozoS7RwRcxT
-         /XgllTzxF0MZNp2G5hkr+JhWfDvtdGmmV2WUgtYtYfyx6WDXOrYQeqnWs7Cg9SKMUO/V
-         Zp9Q==
+        Wed, 2 Nov 2022 14:41:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9F9E1FCD3
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 11:40:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1667414432;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=z6U2QWI3L7CELeN2uR9v9BKzosx2j/rMnyai3sfNG/I=;
+        b=KSNktb3wfCikjCKeeorYJzoUZiB3AKH17tneXG3+VRNga3E4kWx63aky53MTWK2IPWqJpI
+        FkiGpFnYz2UIvH2lu/aszRB6rP8hpxzGJzbFKitscjjAp6aOrOLavMm0jfvjcsYCbFqUb7
+        mjk+GyyGkbU7FzepV/Ztvxy45hvVjM0=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-297-aQA0pXXgNUy-lEfn8673Zg-1; Wed, 02 Nov 2022 14:40:29 -0400
+X-MC-Unique: aQA0pXXgNUy-lEfn8673Zg-1
+Received: by mail-qt1-f199.google.com with SMTP id b20-20020ac844d4000000b003a542f9de3dso2456759qto.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 11:40:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q92riiS7ubzxoWF6UuL2jfQgGcw0qGoG//c8sRPlZ6Q=;
-        b=AwA7nowEUUM20o7nX9BdxWgcd8lzMKv57DeytMKGIVAcAMrJDF3fVhD7Vv2QVyEgR+
-         0yFxWnweQXZGQGOODTeRYxwB2WYXxR97WiIPxN7k0FOFO4oOJ2F1Czn28pxv8uae5vc4
-         t5/gecnmmq8EyLhNXF+lDIpj5hDs0GFYWJmxEy+pSA0zZqIyp95AyA5IBeFUcNKK/59O
-         XRS4ciuu+85rzniLtkEa0x0nMlY8zvXOKP0DjgF0WfyZwrYfoQdif41dswGbuLuHG1vC
-         fG4JUPQZmgID0hKuJJ7KND/x7sWYFlN6aedhzKvQKGONnt39NFVrNnFm6+N3zCIp0Nss
-         RoTA==
-X-Gm-Message-State: ACrzQf0E+sX7mfoIqVdP4txtIJu8ZxLpnqjsytZ70erDNCLAMN50dRUY
-        NksZ3tPI/qSaxUVHBf2O7csUEg==
-X-Google-Smtp-Source: AMsMyM6n+O//qDHsWRWUhV8NoPCYi8OjtMbiw8u1VyQm+AKGMgDct3y60PhFqUC4AGL9jpSTDfaFcQ==
-X-Received: by 2002:a05:620a:ecd:b0:6fa:2bb0:7d86 with SMTP id x13-20020a05620a0ecd00b006fa2bb07d86mr12957581qkm.296.1667414020390;
-        Wed, 02 Nov 2022 11:33:40 -0700 (PDT)
-Received: from ?IPV6:2601:586:5000:570:28d9:4790:bc16:cc93? ([2601:586:5000:570:28d9:4790:bc16:cc93])
-        by smtp.gmail.com with ESMTPSA id cm8-20020a05622a250800b003a530a32f67sm3506976qtb.65.2022.11.02.11.33.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Nov 2022 11:33:39 -0700 (PDT)
-Message-ID: <9619c472-4fad-c71c-591c-12f5ef7e0a79@linaro.org>
-Date:   Wed, 2 Nov 2022 14:33:38 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v2 1/2] dt-bindings: iio/adc: qcom,spmi-iadc: use double
- compatibles
-Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        afd@ti.com, Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=z6U2QWI3L7CELeN2uR9v9BKzosx2j/rMnyai3sfNG/I=;
+        b=L0gFhGL7nNPpPNy8t1yPcfKFkvrwmFfXzJef6fyz1O01a7roxfR/HGcXZNtEkn6bBv
+         wnCuPRdApLSP1kAWoTzsDKpI7H7Xy+R15Hx4O+Oa7iVY+86lUbI0Wb8rwvhgJXY5psJ5
+         6QNtfYXGV7oxsVaq/MWCocHzqFMRoCqsz/AQMJp9KBm9EAqRVovYss7IQIhm+4Wk2syq
+         h4ch/AQr5KngN/9kmSsa25FsbSgEdVTIU/ZfZ0JPkp7xfWg0v7QnZx+vPHJuEyzkjHBv
+         cQZBEL1QWumVRClOss6ZrcKQZg85QffXFZd5/UH0u3Nr9jVeEJKblf9J1P07XiCkH1oU
+         4z0Q==
+X-Gm-Message-State: ACrzQf2yqAukHKj5NNIqZNieJw6oi6LelqRX5dhtnhiCPH0nPAoBPgPx
+        +f/a3xgzgI9lzv+spPQicWggeKfMRwZLmnF7eq0qp20Bb5wHlkN0CmbCvmJG0+NiPglsXiwYC63
+        jGNVVaFyHLr1Nt5/uMI1+hTuFXw==
+X-Received: by 2002:a05:620a:2984:b0:6fa:6636:d4e5 with SMTP id r4-20020a05620a298400b006fa6636d4e5mr2471921qkp.622.1667414429134;
+        Wed, 02 Nov 2022 11:40:29 -0700 (PDT)
+X-Google-Smtp-Source: AMsMyM5T4ytHu3K/k7aIWWR9fQduopTkBaK9CqkhKpSxE2oFDFcMEEUfWbOKCZP3zXChPWrTaqbUlg==
+X-Received: by 2002:a05:620a:2984:b0:6fa:6636:d4e5 with SMTP id r4-20020a05620a298400b006fa6636d4e5mr2471904qkp.622.1667414428917;
+        Wed, 02 Nov 2022 11:40:28 -0700 (PDT)
+Received: from localhost (pool-100-0-210-47.bstnma.fios.verizon.net. [100.0.210.47])
+        by smtp.gmail.com with ESMTPSA id bm2-20020a05620a198200b006cfc7f9eea0sm8930499qkb.122.2022.11.02.11.40.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Nov 2022 11:40:28 -0700 (PDT)
+Date:   Wed, 2 Nov 2022 14:40:27 -0400
+From:   Eric Chanudet <echanude@redhat.com>
+To:     Parikshit Pareek <quic_ppareek@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221031182456.952648-1-luca@z3ntu.xyz>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221031182456.952648-1-luca@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>,
+        Shazad Hussain <quic_shazhuss@quicinc.com>,
+        Brian Masney <bmasney@redhat.com>,
+        Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH v7 2/2] arm64: dts: qcom: add SA8540P ride(Qdrive-3)
+Message-ID: <20221102184027.236affysihqnivh5@echanude>
+References: <20221102103552.29388-1-quic_ppareek@quicinc.com>
+ <20221102103552.29388-3-quic_ppareek@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221102103552.29388-3-quic_ppareek@quicinc.com>
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/10/2022 14:24, Luca Weiss wrote:
-> As in other bindings, let's use specific compatibles together with the
-> fallback compatible. Adjust the bindings for it.
+On Wed, Nov 02, 2022 at 04:05:52PM +0530, Parikshit Pareek wrote:
+> Introduce the Qualcomm SA8540P ride automotive platform, also known as
+> Qdrive-3 development board.
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
-> Changes in v2:
-> * New patch
+> This initial contribution supports SMP, CPUFreq, cluster idle, UFS, RPMh
+> regulators, debug UART, PMICs, remoteprocs and USB.
+> 
+> The SA8540P ride contains four PM8450 PMICs. A separate DTSI file has
+> been created for PMIC, so that it can be used for future SA8540P based
+> boards.
+> 
+> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+> Tested-by: Brian Masney <bmasney@redhat.com>
+> Reviewed-by: Brian Masney <bmasney@redhat.com>
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Using the default defconfig on next-20221102, preventing
+qcom_q6v5_pas.ko to load avoids the board crash observed in v5, as
+found during v6 review by Brian.
 
-Best regards,
-Krzysztof
+Tested-by: Eric Chanudet <echanude@redhat.com>
+Reviewed-by: Eric Chanudet <echanude@redhat.com>
+
+-- 
+Eric Chanudet
 
