@@ -2,412 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2CD4615672
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 01:13:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 927906156B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 01:45:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229770AbiKBANb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Nov 2022 20:13:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44584 "EHLO
+        id S230118AbiKBApd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Nov 2022 20:45:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229471AbiKBANa (ORCPT
+        with ESMTP id S230027AbiKBApV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Nov 2022 20:13:30 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64AF1CC6;
-        Tue,  1 Nov 2022 17:13:27 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A1MiRXB001653;
-        Wed, 2 Nov 2022 00:13:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=JfppMY0X0fYI0iXcP7M2po93gSaKxuFL5ujKH3pEeeg=;
- b=AHIsYmwT4yZf6FuHnT6RqAGS66FpLn0jogPpmku51l8J+g7t/9aX6EpEzbJKjT6KaEL1
- An3dckKeJ4/CulRKuFl8D+ggfzu0/Md0xL8zIB/vWBqwwaw4CNZnN5G/WkNqnMgvGe6u
- Y7nrnSD4zI08oB5kFUFAv26wiclhnjCOS/wC60oK2XhSuh2GwPMuPOGaWwVE5JiRzyDy
- vFjr8sZAigDPS1+EA5q3E4NUUZmBFAoSEZL9iMwiUolb6RAgn08TNgnj/bwTr5i9WqZe
- NCR91MmaeB7aXRwF7WtFqaQIn6TKWV1kLycDpZ5s4QccWjNfJ/YUaS/0e1zdzeMVQN/H 1Q== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kk7nfgpe8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 02 Nov 2022 00:13:01 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A20D0j6029653
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 2 Nov 2022 00:13:00 GMT
-Received: from [10.134.65.5] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 1 Nov 2022
- 17:12:59 -0700
-Message-ID: <3d2858fe-ea3e-159c-faff-5052cba1e08c@quicinc.com>
-Date:   Tue, 1 Nov 2022 17:12:58 -0700
+        Tue, 1 Nov 2022 20:45:21 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33AD018E31
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Nov 2022 17:45:20 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id bj12so41264500ejb.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Nov 2022 17:45:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=eSaSz/Z4qDcGiTl8x7mCllVE7aLOvaKXoGQ851RVNJk=;
+        b=AfgzHUqFn7VGV4Kz8Fi8rM1Hwq5OyFKM90jljZgJl17I9Ubqo0jCjbpO4e5kuB579S
+         qM6aPojZ5+HAqmj/1DU8AkQMDrQbOCzgHyS007RwUMkW9iE7lGfZ0+aQddSXZZsVixSE
+         R/G9WJ8YXjy7TaD2ShD2tdlUyQhK42JfXZ0EA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eSaSz/Z4qDcGiTl8x7mCllVE7aLOvaKXoGQ851RVNJk=;
+        b=POJ5kbt6swV4s6xfF7Nf8vvpfINVB5HR3XKeWZj1bMtkdF0a04XQ3anXjI53MjeuHk
+         Lod4ZekmSBlG2fL4TIfZzoKb+rvAWEyBJCACXgttzpDjk77WW2DWHP3ZiZj02UBl3oTx
+         tHrtvFFAWDVkGYJg3hSh0649MFHJENaDXf20eSLg8PHFHbkIY+WDT1Ltv88d2oKY2rGc
+         7t1EbTQm0QlFY7Vadh94qy/tC8gVVZl9NhnYAJnyZw++wNtMnW9Fe8ijmO87swS1AJtv
+         riASsio+FHijNUgZtW672jg/xyrQ1i7JEoOHy9ajTJUA1xyXw8ofVRq0YJeheeJbH3G6
+         Kv1g==
+X-Gm-Message-State: ACrzQf1JIBMRZVFH5GKi6DWVYepZKmPC6kfrWVn5Npv2q0Ss8rsZ512K
+        2zG/NSq5+I+slj+I6y+lF+eGj8ezX3JQ3LfG
+X-Google-Smtp-Source: AMsMyM5yYGod/b9eInqeIpvhYASby6GhLASUGNB4DVbez+oZ+ZZHJA3nqJDxLOeTKp4TOvaCdx4oMw==
+X-Received: by 2002:a17:907:9717:b0:78d:9fb4:16dd with SMTP id jg23-20020a170907971700b0078d9fb416ddmr21355702ejc.720.1667349918436;
+        Tue, 01 Nov 2022 17:45:18 -0700 (PDT)
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com. [209.85.128.54])
+        by smtp.gmail.com with ESMTPSA id re21-20020a170906d8d500b007415f8ffcbbsm4793067ejb.98.2022.11.01.17.45.15
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Nov 2022 17:45:16 -0700 (PDT)
+Received: by mail-wm1-f54.google.com with SMTP id v124-20020a1cac82000000b003cf7a4ea2caso325696wme.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Nov 2022 17:45:15 -0700 (PDT)
+X-Received: by 2002:a1c:4c16:0:b0:3cf:6f1a:9038 with SMTP id
+ z22-20020a1c4c16000000b003cf6f1a9038mr10071773wmf.151.1667349915421; Tue, 01
+ Nov 2022 17:45:15 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH v6 10/21] gunyah: rsc_mgr: Add resource manager RPC core
-Content-Language: en-US
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+References: <20221101233421.997149-1-swboyd@chromium.org>
+In-Reply-To: <20221101233421.997149-1-swboyd@chromium.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 1 Nov 2022 17:45:03 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XkhtgL_4-cpj-Xi3uH6FAtmWhk5u6sfakXABTnv5eYvw@mail.gmail.com>
+Message-ID: <CAD=FV=XkhtgL_4-cpj-Xi3uH6FAtmWhk5u6sfakXABTnv5eYvw@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, patches@lists.linux.dev,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        "Will Deacon" <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        "Arnd Bergmann" <arnd@arndb.de>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Kalle Valo <kvalo@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20221026185846.3983888-1-quic_eberman@quicinc.com>
- <20221026185846.3983888-11-quic_eberman@quicinc.com>
- <Y2FfKCKZ3N8rOqcT@kroah.com>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <Y2FfKCKZ3N8rOqcT@kroah.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: v9smqBA09ubC9IbLN910FsFMUxKYYyx0
-X-Proofpoint-GUID: v9smqBA09ubC9IbLN910FsFMUxKYYyx0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-01_11,2022-11-01_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- spamscore=0 malwarescore=0 bulkscore=0 adultscore=0 suspectscore=0
- lowpriorityscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211010163
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Johan Hovold <johan+linaro@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        GUARANTEED_100_PERCENT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
+
+On Tue, Nov 1, 2022 at 4:34 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> We shouldn't be calling runtime PM APIs from within the genpd
+> enable/disable path for a couple reasons.
+>
+> First, this causes an AA lockdep splat because genpd can call into genpd
+> code again while holding the genpd lock.
+>
+> WARNING: possible recursive locking detected
+> 5.19.0-rc2-lockdep+ #7 Not tainted
+> --------------------------------------------
+> kworker/2:1/49 is trying to acquire lock:
+> ffffffeea0370788 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+>
+> but task is already holding lock:
+> ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+>
+> other info that might help us debug this:
+>  Possible unsafe locking scenario:
+>
+>        CPU0
+>        ----
+>   lock(&genpd->mlock);
+>   lock(&genpd->mlock);
+>
+>  *** DEADLOCK ***
+>
+>  May be due to missing lock nesting notation
+>
+> 3 locks held by kworker/2:1/49:
+>  #0: 74ffff80811a5748 ((wq_completion)pm){+.+.}-{0:0}, at: process_one_work+0x320/0x5fc
+>  #1: ffffffc008537cf8 ((work_completion)(&genpd->power_off_work)){+.+.}-{0:0}, at: process_one_work+0x354/0x5fc
+>  #2: ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+>
+> stack backtrace:
+> CPU: 2 PID: 49 Comm: kworker/2:1 Not tainted 5.19.0-rc2-lockdep+ #7
+> Hardware name: Google Lazor (rev3 - 8) with KB Backlight (DT)
+> Workqueue: pm genpd_power_off_work_fn
+> Call trace:
+>  dump_backtrace+0x1a0/0x200
+>  show_stack+0x24/0x30
+>  dump_stack_lvl+0x7c/0xa0
+>  dump_stack+0x18/0x44
+>  __lock_acquire+0xb38/0x3634
+>  lock_acquire+0x180/0x2d4
+>  __mutex_lock_common+0x118/0xe30
+>  mutex_lock_nested+0x70/0x7c
+>  genpd_lock_mtx+0x24/0x30
+>  genpd_runtime_suspend+0x2f0/0x414
+>  __rpm_callback+0xdc/0x1b8
+>  rpm_callback+0x4c/0xcc
+>  rpm_suspend+0x21c/0x5f0
+>  rpm_idle+0x17c/0x1e0
+>  __pm_runtime_idle+0x78/0xcc
+>  gdsc_disable+0x24c/0x26c
+>  _genpd_power_off+0xd4/0x1c4
+>  genpd_power_off+0x2d8/0x41c
+>  genpd_power_off_work_fn+0x60/0x94
+>  process_one_work+0x398/0x5fc
+>  worker_thread+0x42c/0x6c4
+>  kthread+0x194/0x1b4
+>  ret_from_fork+0x10/0x20
+>
+> Second, this confuses runtime PM on CoachZ for the camera devices by
+> causing the camera clock controller's runtime PM usage_count to go
+> negative after resuming from suspend. This is because runtime PM is
+> being used on the clock controller while runtime PM is disabled for the
+> device.
+>
+> The reason for the negative count is because a GDSC is represented as a
+> genpd and each genpd that is attached to a device is resumed during the
+> noirq phase of system wide suspend/resume (see the noirq suspend ops
+> assignment in pm_genpd_init() for more details). The camera GDSCs are
+> attached to camera devices with the 'power-domains' property in DT.
+> Every device has runtime PM disabled in the late system suspend phase
+> via __device_suspend_late(). Runtime PM is not usable until runtime PM
+> is enabled in device_resume_early(). The noirq phases run after the
+> 'late' and before the 'early' phase of suspend/resume. When the genpds
+> are resumed in genpd_resume_noirq(), we call down into gdsc_enable()
+> that calls pm_runtime_resume_and_get() and that returns -EACCES to
+> indicate failure to resume because runtime PM is disabled for all
+> devices.
+>
+> Upon closer inspection, calling runtime PM APIs like this in the GDSC
+> driver doesn't make sense. It was intended to make sure the GDSC for the
+> clock controller providing other GDSCs was enabled, specifically the
+> MMCX GDSC for the display clk controller on SM8250 (sm8250-dispcc), so
+> that GDSC register accesses succeeded. That will already happen because
+> we make the 'dev->pm_domain' a parent domain of each GDSC we register in
+> gdsc_register() via pm_genpd_add_subdomain(). When any of these GDSCs
+> are accessed, we'll enable the parent domain (in this specific case
+> MMCX).
+>
+> We also remove any getting of runtime PM during registration, because
+> when a genpd is registered it increments the count on the parent if the
+> genpd itself is already enabled. And finally, the runtime PM state of
+> the clk controller registering the GDSC shouldn't matter to the
+> subdomain setup. Therefore we always assign 'dev' unconditionally so
+> when GDSCs are removed we properly unlink the GDSC from the clk
+> controller's pm_domain.
+>
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: Johan Hovold <johan+linaro@kernel.org>
+> Cc: Ulf Hansson <ulf.hansson@linaro.org>
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+> Cc: Satya Priya <quic_c_skakit@quicinc.com>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Matthias Kaehlcke <mka@chromium.org>
+> Reported-by: Stephen Boyd <swboyd@chromium.org>
+> Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  drivers/clk/qcom/gdsc.c | 64 ++++++-----------------------------------
+>  1 file changed, 8 insertions(+), 56 deletions(-)
+
+One small nit is that the kernel doc for "@dev" in "struct gdsc" is
+incorrect after your patch. It still says this even though we're not
+using it for pm_runtime calls anymore:
+
+ * @dev: the device holding the GDSC, used for pm_runtime calls
+
+Other than that, this seems OK to me. I don't feel like I have a lot
+of good intuition around PM Clocks and genpd and all the topics talked
+about here, but I tried to look at the diff from before all the
+"recent" patches to "drivers/clk/qcom/gdsc.c" till the state after
+your patch. In other words the combined diff of these 4 patches:
+
+clk: qcom: gdsc: Remove direct runtime PM calls
+clk: qcom: gdsc: add missing error handling
+clk: qcom: gdsc: Bump parent usage count when GDSC is found enabled
+clk: qcom: gdsc: enable optional power domain support
+
+That basically shows a combined change that does two things:
+
+a) Adds error handling if pm_genpd_init() returns an error.
+
+b) Says that if "scs[i]->parent" wasn't provided that we can imply a
+parent from "dev->pm_domain".
+
+That seems to make sense, but one thing I'm wondering about for "b)"
+is how you know that "dev->pm_domain" can be safely upcast to a genpd.
+In other words, I'm hesitant about the "pd_to_genpd(dev->pm_domain)"
+call. I'll assume that "dev->pm_domain" isn't 100% guaranteed to be a
+genpd or else (presumably) we would have stored a genpd. Is there
+something about the "dev" that's passed in with "struct gdsc_desc"
+that gives the stronger guarantee about this being a genpd?
 
 
-On 11/1/2022 11:02 AM, Greg Kroah-Hartman wrote:
-> On Wed, Oct 26, 2022 at 11:58:35AM -0700, Elliot Berman wrote:
->> The resource manager is a special virtual machine which is always
->> running on a Gunyah system. It provides APIs for creating and destroying
->> VMs, secure memory management, sharing/lending of memory between VMs,
->> and setup of inter-VM communication. Calls to the resource manager are
->> made via message queues.
->>
->> This patch implements the basic probing and RPC mechanism to make those
->> API calls. Request/response calls can be made with gh_rm_call.
->> Drivers can also register to notifications pushed by RM via
->> gh_rm_register_notifier
->>
->> Specific API calls that resource manager supports will be implemented in
->> subsequent patches.
->>
->> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
->> ---
->>   MAINTAINERS                    |   2 +-
->>   drivers/virt/gunyah/Kconfig    |  15 +
->>   drivers/virt/gunyah/Makefile   |   3 +
->>   drivers/virt/gunyah/rsc_mgr.c  | 602 +++++++++++++++++++++++++++++++++
->>   drivers/virt/gunyah/rsc_mgr.h  |  34 ++
->>   include/linux/gunyah_rsc_mgr.h |  26 ++
->>   6 files changed, 681 insertions(+), 1 deletion(-)
->>   create mode 100644 drivers/virt/gunyah/rsc_mgr.c
->>   create mode 100644 drivers/virt/gunyah/rsc_mgr.h
->>   create mode 100644 include/linux/gunyah_rsc_mgr.h
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 586539eadd3b..e072a0d2e553 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -8945,7 +8945,7 @@ F:	Documentation/virt/gunyah/
->>   F:	arch/arm64/gunyah/
->>   F:	drivers/mailbox/gunyah-msgq.c
->>   F:	drivers/virt/gunyah/
->> -F:	include/linux/gunyah.h
->> +F:	include/linux/gunyah*.h
->>   
->>   HABANALABS PCI DRIVER
->>   M:	Oded Gabbay <ogabbay@kernel.org>
->> diff --git a/drivers/virt/gunyah/Kconfig b/drivers/virt/gunyah/Kconfig
->> index 127156a678a6..4de88d80aa7b 100644
->> --- a/drivers/virt/gunyah/Kconfig
->> +++ b/drivers/virt/gunyah/Kconfig
->> @@ -10,3 +10,18 @@ config GUNYAH
->>   
->>   	  Say Y/M here to enable the drivers needed to interact in a Gunyah
->>   	  virtual environment.
->> +
->> +config GUNYAH_RESORUCE_MANAGER
->> +	tristate "Gunyah Resource Manager"
->> +	select MAILBOX
->> +	select GUNYAH_MESSAGE_QUEUES
->> +	depends on GUNYAH
->> +	default y
-> 
-> You only have "default y" if your machine can not boot without it.
-> Please do not add that here.
-> 
+In any case, I will note that this seems to make the hang that I
+described [1] go away. I never totally dug into why the patch was
+tickling it, but I'm happy for now that it's back to not reproducing.
+:-)
 
-There's a guideline in Documentation/kbuild/kconfig-language.rst to 
-provide some sane defaults for subdriver behavior. Here, CONFIG_GUNYAH 
-is default n. It's unlikely for someone to want to have Linux with base 
-Gunyah support (hypercalls and hypervisor detection) without also having 
-the Resource Manager driver. If it's better, I could change to default m?
 
->> +	help
->> +	  The resource manager (RM) is a privileged application VM supporting
->> +	  the Gunyah Hypervisor. Enable this driver to support communicating
->> +	  with Gunyah RM. This is typically required for a VM running under
->> +	  Gunyah wanting to have Gunyah-awareness.
->> +
->> +	  Say Y/M here if unsure.
->> +
->> diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
->> index 2ac4ee64b89d..2c18b0a56413 100644
->> --- a/drivers/virt/gunyah/Makefile
->> +++ b/drivers/virt/gunyah/Makefile
->> @@ -1 +1,4 @@
->>   obj-$(CONFIG_GUNYAH) += gunyah.o
->> +
->> +gunyah_rsc_mgr-y += rsc_mgr.o
->> +obj-$(CONFIG_GUNYAH_RESORUCE_MANAGER) += gunyah_rsc_mgr.o
->> diff --git a/drivers/virt/gunyah/rsc_mgr.c b/drivers/virt/gunyah/rsc_mgr.c
->> new file mode 100644
->> index 000000000000..a9fde703cbbe
->> --- /dev/null
->> +++ b/drivers/virt/gunyah/rsc_mgr.c
->> @@ -0,0 +1,602 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +#define pr_fmt(fmt) "gh_rsc_mgr: " fmt
-> 
-> This is a driver, you should never need this as you should be using the
-> dev_*() calls, not pr_*() calls as you always have access to a struct
-> device, right?
-> 
-> So you can drop this.
-> 
-> 
+[1] https://lore.kernel.org/r/20220922154354.2486595-1-dianders@chromium.org
 
-Ack
 
->> +
->> +#include <linux/of.h>
->> +#include <linux/slab.h>
->> +#include <linux/mutex.h>
->> +#include <linux/sched.h>
->> +#include <linux/gunyah.h>
->> +#include <linux/module.h>
->> +#include <linux/of_irq.h>
->> +#include <linux/kthread.h>
->> +#include <linux/notifier.h>
->> +#include <linux/workqueue.h>
->> +#include <linux/completion.h>
->> +#include <linux/gunyah_rsc_mgr.h>
->> +#include <linux/platform_device.h>
->> +
->> +#include "rsc_mgr.h"
->> +
->> +/* Resource Manager Header */
->> +struct gh_rm_rpc_hdr {
->> +	u8 version : 4, hdr_words : 4;
->> +	u8 type : 2, fragments : 6;
-> 
-> Ick, that's hard to read.  One variable per line please?
-
-Ack.
-
-> And why the bit packed stuff?  Are you sure this is the way to do this?
-> Why not use a bitmask instead?
-> 
-
-I felt bit packed implementation is cleaner and easier to map to 
-understanding what the fields are used for.
-
->> +	u16 seq;
->> +	u32 msg_id;
->> +} __packed;
->> +
->> +/* Standard reply header */
->> +struct gh_rm_rpc_reply_hdr {
->> +	struct gh_rm_rpc_hdr rpc_hdr;
->> +	u32 err_code;
->> +} __packed;
->> +
->> +/* RPC Header versions */
->> +#define GH_RM_RPC_HDR_VERSION_ONE	0x1
->> +
->> +/* RPC Header words */
->> +#define GH_RM_RPC_HDR_WORDS		0x2
->> +
->> +/* RPC Message types */
->> +#define GH_RM_RPC_TYPE_CONT		0x0
->> +#define GH_RM_RPC_TYPE_REQ		0x1
->> +#define GH_RM_RPC_TYPE_RPLY		0x2
->> +#define GH_RM_RPC_TYPE_NOTIF		0x3
->> +
->> +#define GH_RM_MAX_NUM_FRAGMENTS		62
->> +
->> +#define GH_RM_MAX_MSG_SIZE	(GH_MSGQ_MAX_MSG_SIZE - sizeof(struct gh_rm_rpc_hdr))
->> +
->> +/**
->> + * struct gh_rm_connection - Represents a complete message from resource manager
->> + * @payload: Combined payload of all the fragments (msg headers stripped off).
->> + * @size: Size of the payload.
->> + * @ret: Linux return code, set in case there was an error processing connection
->> + * @msg_id: Message ID from the header.
->> + * @type: GH_RM_RPC_TYPE_RPLY or GH_RM_RPC_TYPE_NOTIF.
->> + * @num_fragments: total number of fragments expected to be received.
->> + * @fragments_received: fragments received so far.
->> + * @rm_error: For request/reply sequences with standard replies.
->> + * @seq: Sequence ID for the main message.
->> + * @seq_done: Signals caller that the RM reply has been received
->> + */
->> +struct gh_rm_connection {
->> +	void *payload;
->> +	size_t size;
->> +	int ret;
->> +	u32 msg_id;
->> +	u8 type;
->> +
->> +	u8 num_fragments;
->> +	u8 fragments_received;
->> +
->> +	/* only for req/reply sequence */
->> +	u32 rm_error;
->> +	u16 seq;
->> +	struct completion seq_done;
->> +};
->> +
->> +struct gh_rm_notif_complete {
->> +	struct gh_rm_connection *conn;
->> +	struct work_struct work;
->> +};
->> +
->> +struct gh_rsc_mgr {
->> +	struct gunyah_resource tx_ghrsc, rx_ghrsc;
->> +	struct gh_msgq msgq;
->> +	struct mbox_client msgq_client;
->> +	struct gh_rm_connection *active_rx_connection;
->> +	int last_tx_ret;
->> +
->> +	struct idr call_idr;
->> +	struct mutex call_idr_lock;
->> +
->> +	struct mutex send_lock;
->> +
->> +	struct work_struct recv_work;
->> +};
->> +
->> +static struct gh_rsc_mgr *__rsc_mgr;
-> 
-> Sorry, no, you don't get to just limit yourself to one of these.  Please
-> make this properly handle any number of "resource managers", static
-> variables like this is not ok.
-> 
-
-There will only ever be one resource manager. optee, psci, and qcom_scm 
-use a similar approach.
-
->> +SRCU_NOTIFIER_HEAD_STATIC(gh_rm_notifier);
-> 
-> Why do you need a notifier list?
-> 
-> Who will register for this?  For what?  Why?
-> 
-
-The majority of notifications that RM sends to Linux will be related to 
-VM state, e.g. "VM crashed." I've not added the handling in VM manager 
-yet to reduce the number of patches in this series. It was used in the 
-previous series for the console driver. I can remove for now and 
-re-introduce it once VM manager makes use?
-
->> +static int gh_rm_drv_probe(struct platform_device *pdev)
->> +{
->> +	struct gh_rsc_mgr *rsc_mgr;
->> +	int ret;
->> +
->> +	rsc_mgr = devm_kzalloc(&pdev->dev, sizeof(*rsc_mgr), GFP_KERNEL);
->> +	if (!rsc_mgr)
->> +		return -ENOMEM;
->> +	platform_set_drvdata(pdev, rsc_mgr);
->> +
->> +	mutex_init(&rsc_mgr->call_idr_lock);
->> +	idr_init(&rsc_mgr->call_idr);
->> +	mutex_init(&rsc_mgr->send_lock);
->> +
->> +	ret = gh_msgq_platform_probe_direction(pdev, GUNYAH_RESOURCE_TYPE_MSGQ_TX, 0,
->> +						&rsc_mgr->tx_ghrsc);
->> +	if (ret)
->> +		return ret;
->> +
->> +	ret = gh_msgq_platform_probe_direction(pdev, GUNYAH_RESOURCE_TYPE_MSGQ_RX, 1,
->> +						&rsc_mgr->rx_ghrsc);
->> +	if (ret)
->> +		return ret;
->> +
->> +	rsc_mgr->msgq_client.dev = &pdev->dev;
-> 
-> So your client device is the platform device, and not a new bridge
-> device that you create instead?  Why?
-> 
-
-Answered below
-
->> +	rsc_mgr->msgq_client.tx_block = true;
->> +	rsc_mgr->msgq_client.rx_callback = gh_rm_msgq_rx_data;
->> +	rsc_mgr->msgq_client.tx_done = gh_rm_msgq_tx_done;
->> +
->> +	ret = gh_msgq_init(&pdev->dev, &rsc_mgr->msgq, &rsc_mgr->msgq_client,
->> +				&rsc_mgr->tx_ghrsc, &rsc_mgr->rx_ghrsc);
->> +	if (ret)
->> +		return ret;
->> +
->> +	__rsc_mgr = rsc_mgr;
->> +
->> +	return 0;
->> +}
->> +static struct platform_driver gh_rm_driver = {
->> +	.probe = gh_rm_drv_probe,
->> +	.remove = gh_rm_drv_remove,
->> +	.driver = {
->> +		.name = "gh_rsc_mgr",
->> +		.of_match_table = gh_rm_of_match,
->> +	},
-> 
-> Wait, why is this a platform driver?  This is binding to a real device
-> on a real bus, not a random platform description in DT, right?
-
-This a binding for a real device and not a "random platform description" 
-in DT to get the driver probed.
-
-> Or is it controlled by your DT?  I can't figure that out here, sorry.
-
-There is some info in Patch 2 about why the DT node exists and how it 
-looks. Essentially, The DT node is provided by Gunyah during boot and 
-describes how Linux can communicate with resource manager.
-
-Thanks,
-Elliot
+-Doug
