@@ -2,194 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8BB4615FD5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 10:33:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 704E7615FE0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 10:34:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230306AbiKBJdO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 05:33:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43860 "EHLO
+        id S230102AbiKBJeg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 05:34:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230241AbiKBJdN (ORCPT
+        with ESMTP id S230046AbiKBJef (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 05:33:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5745B6582
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 02:32:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1667381536;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=qCDrX0xKXyu8erIDNjxDiJKuT0hxZZKKE3HXuUGBVDQ=;
-        b=g86kVOmVqcJ3jvx7QLkap7dOJqWx4Jkz4xwCyM5E3D5uU39i8xAefQvqxOKN5H5LoxvUsS
-        PIC72S+nNsAaw1AjBB0WT2jmkEDsxqvhrcNE9IXrbtcn7F5l8j3iSkrfnqjMOP901MtXZm
-        CJcXGUj8XU5QGMG0V3YLjmFRZQfk710=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-653-0JSQOKi0MjC-1l3yXKVjlw-1; Wed, 02 Nov 2022 05:32:15 -0400
-X-MC-Unique: 0JSQOKi0MjC-1l3yXKVjlw-1
-Received: by mail-wm1-f72.google.com with SMTP id v188-20020a1cacc5000000b003cf76c4ae66so826573wme.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 02:32:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qCDrX0xKXyu8erIDNjxDiJKuT0hxZZKKE3HXuUGBVDQ=;
-        b=El8dEwCdHQF1gArqF9iQ0ulNURh7Uoves/iNhr+nBXCl48w3DI2HceY/YKu+n9zp+5
-         3sgg4Xe4+3G46okWyoQBOPOYiU9IkZ2MC4aDJF8a5CN1XVEyrGaGx516H+hF6HeEG7fg
-         lrvZcqkJabCFBtN+U2wN85r8wcTl3vNlNh15eSchQz45flKQtiWVzBQ9O6kf1oyz5lYU
-         5TzSScQPfQlFKs/KaZ9s2hvxKoA1kmmZM8Rbh3jpUPVU6+YqZzy9DTAGScscEwrF8+5w
-         By/rZ2GsIOCvqdItnfl7l3gfD2BWY7Pj9057Dlu836lF6nsrwegtvIReBvvfWnl4naZV
-         fHLw==
-X-Gm-Message-State: ACrzQf0sZbiDRoZWms10MP7UZ8dVdocNV4g7FYKV6d2jg0Ac1TtdIyLz
-        ki5FeB/qzViHE7hxOgsCt9r9K66+v1yOHKsC8RXHrgBwnxgHmGHctSbXgozpWbMJPkR/qanfwdk
-        kMQFanJMym5DPKXs/BsHq5NWc4Q==
-X-Received: by 2002:a05:600c:6023:b0:3cf:7dc1:e08e with SMTP id az35-20020a05600c602300b003cf7dc1e08emr5443616wmb.154.1667381534284;
-        Wed, 02 Nov 2022 02:32:14 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM7iks5yFnak5X2iZPcs6wSoPN4c8RmVdgyjVaQzUQOEwDY0j8GZM7MD/vLKrS0XyFefd22bEw==
-X-Received: by 2002:a05:600c:6023:b0:3cf:7dc1:e08e with SMTP id az35-20020a05600c602300b003cf7dc1e08emr5443583wmb.154.1667381533975;
-        Wed, 02 Nov 2022 02:32:13 -0700 (PDT)
-Received: from [192.168.1.130] (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
-        by smtp.gmail.com with ESMTPSA id x21-20020a1c7c15000000b003b492753826sm1361990wmc.43.2022.11.02.02.32.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Nov 2022 02:32:13 -0700 (PDT)
-Message-ID: <3ab32fc3-f2aa-1b42-fd87-557482ab56d5@redhat.com>
-Date:   Wed, 2 Nov 2022 10:32:11 +0100
+        Wed, 2 Nov 2022 05:34:35 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 977201F9FF;
+        Wed,  2 Nov 2022 02:34:34 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A29XOvg023051;
+        Wed, 2 Nov 2022 09:34:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=xvhHTRLinGK22kcrKek3TiAroXbx/H/5wcK4HwrMd74=;
+ b=nK+iJOCNjqHpUyHUUv2wlbaLGlvkvDkvY2vQxfC/HbqsnLcCenFbmf+SWGoWUYHjl7tK
+ 4bOQtVcDIXvShqCui/68nEewW8V8vBpTzOgyGX9dlGXguwdwSpu6FMsBKtJd+c5AjX0W
+ jEsokuvE9gEmQ3LB/drUBZcQdfnoPeaSAiGALQNuRARCxqfwm27K2g1N/MCzilrHt0Ga
+ DZXdCDvxMYtpRqRy/6GmAXZj51pp+RXLoJA7zmKZU8FwFj2JCagY+L0gk9MWOkfNcc80
+ VqMArJwCwvEjszk/mAqThlC6/WHfoBJ7Iwv0kEs60NaziqOnEWgaNVhK3qC4ZzU6x44d Qw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kk7nfhtj2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 02 Nov 2022 09:34:22 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A29YLdn028484
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 2 Nov 2022 09:34:21 GMT
+Received: from [10.253.74.174] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 2 Nov 2022
+ 02:34:18 -0700
+Message-ID: <03d7c51d-4c86-ecab-d775-0e677ac73770@quicinc.com>
+Date:   Wed, 2 Nov 2022 17:34:16 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH v2 17/21] drm/fb-helper: Perform all fbdev I/O with the
- same implementation
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH] stm class: Fix double add issue when store source_link
 Content-Language: en-US
-To:     Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
-        airlied@gmail.com, sam@ravnborg.org, mripard@kernel.org,
-        maarten.lankhorst@linux.intel.com
-Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        linux-aspeed@lists.ozlabs.org,
-        linux-arm-kernel@lists.infradead.org,
-        etnaviv@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
-        linux-hyperv@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-mips@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        spice-devel@lists.freedesktop.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        xen-devel@lists.xenproject.org
-References: <20221024111953.24307-1-tzimmermann@suse.de>
- <20221024111953.24307-18-tzimmermann@suse.de>
-From:   Javier Martinez Canillas <javierm@redhat.com>
-In-Reply-To: <20221024111953.24307-18-tzimmermann@suse.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+From:   Jinlong Mao <quic_jinlmao@quicinc.com>
+To:     Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>
+CC:     <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>
+References: <20220418114658.6491-1-quic_jinlmao@quicinc.com>
+ <61028345-234b-6e5e-6bd5-e10165dbdf52@quicinc.com>
+In-Reply-To: <61028345-234b-6e5e-6bd5-e10165dbdf52@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: vaaZ_6CauvEKzhEQiyw9yBhjGm9U6LNP
+X-Proofpoint-GUID: vaaZ_6CauvEKzhEQiyw9yBhjGm9U6LNP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-02_06,2022-11-01_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ spamscore=0 malwarescore=0 bulkscore=0 adultscore=0 suspectscore=0
+ lowpriorityscore=0 impostorscore=0 clxscore=1011 priorityscore=1501
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211020056
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/24/22 13:19, Thomas Zimmermann wrote:
-> Implement the fbdev's read/write helpers with the same functions. Use
-> the generic fbdev's code as template. Convert all drivers.
-> 
-> DRM's fb helpers must implement regular I/O functionality in struct
-> fb_ops and possibly perform a damage update. Handle all this in the
-> same functions and convert drivers. The functionality has been used
-> as part of the generic fbdev code for some time. The drivers don't
-> set struct drm_fb_helper.fb_dirty, so they will not be affected by
-> damage handling.
-> 
-> For I/O memory, fb helpers now provide drm_fb_helper_cfb_read() and
-> drm_fb_helper_cfb_write(). Several drivers require these. Until now
-> tegra used I/O read and write, although the memory buffer appears to
-> be in system memory. So use _sys_ helpers now.
-> 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> ---
+Hi all,
 
-[...]
+Please help to review this patch.
 
-> +static ssize_t __drm_fb_helper_write(struct fb_info *info, const char __user *buf, size_t count,
-> +				     loff_t *ppos, drm_fb_helper_write_screen write_screen)
-> +{
+Thanks
 
-[...]
+Jinlong Mao
 
-> +	/*
-> +	 * Copy to framebuffer even if we already logged an error. Emulates
-> +	 * the behavior of the original fbdev implementation.
-> +	 */
-> +	ret = write_screen(info, buf, count, pos);
-> +	if (ret < 0)
-> +		return ret; /* return last error, if any */
-> +	else if (!ret)
-> +		return err; /* return previous error, if any */
-> +
-> +	*ppos += ret;
-> +
-
-Should *ppos be incremented even if the previous error is returned?
-
-The write_screen() succeeded anyways, even when the count written was
-smaller than what the caller asked for.
-
->  /**
-> - * drm_fb_helper_sys_read - wrapper around fb_sys_read
-> + * drm_fb_helper_sys_read - Implements struct &fb_ops.fb_read for system memory
->   * @info: fb_info struct pointer
->   * @buf: userspace buffer to read from framebuffer memory
->   * @count: number of bytes to read from framebuffer memory
->   * @ppos: read offset within framebuffer memory
->   *
-> - * A wrapper around fb_sys_read implemented by fbdev core
-> + * Returns:
-> + * The number of read bytes on success, or an error code otherwise.
->   */
-
-This sentence sounds a little bit off to me. Shouldn't be "number of bytes read"
-instead? I'm not a native English speaker though, so feel free to just ignore me.
-
-[...]
-
->  
-> +static ssize_t fb_read_screen_base(struct fb_info *info, char __user *buf, size_t count,
-> +				   loff_t pos)
-> +{
-> +	const char __iomem *src = info->screen_base + pos;
-> +	size_t alloc_size = min_t(size_t, count, PAGE_SIZE);
-> +	ssize_t ret = 0;
-> +	int err = 0;
-
-Do you really need these two? AFAIK ssize_t is a signed type
-so you can just use the ret variable to store and return the
-errno value.
-
-[...]
-
-> +static ssize_t fb_write_screen_base(struct fb_info *info, const char __user *buf, size_t count,
-> +				    loff_t pos)
-> +{
-> +	char __iomem *dst = info->screen_base + pos;
-> +	size_t alloc_size = min_t(size_t, count, PAGE_SIZE);
-> +	ssize_t ret = 0;
-> +	int err = 0;
-
-Same here.
-
--- 
-Best regards,
-
-Javier Martinez Canillas
-Core Platforms
-Red Hat
-
+On 5/16/2022 3:14 PM, Jinlong Mao wrote:
+> Hi Reviewers,
+>
+> Could you please help to review this patch ?
+>
+> Thanks
+>
+> Jinlong Mao
+>
+> On 4/18/2022 7:46 PM, Mao Jinlong wrote:
+>> If two threads store the same stm device to stm_source_link
+>> at the same time when stm->link_list is empty, it is possible
+>> that stm_source_link_add will be called for both of these two
+>> threads. Then double add issue below will happen. Add mutex
+>> lock for stm_source_link drop and stm_source_link add to avoid
+>> this race condition.
+>>
+>> [ 12.386579][ T1024] list_add double add: new=ffffff87b73ebd90,
+>> prev=ffffff87b73ebd90, next=ffffffc012737700.
+>> [ 12.386657][ T1024] -----------[ cut here ]-----------
+>> [ 12.386671][ T1024] kernel BUG at lib/list_debug.c:31!
+>> [ 12.388845][ T1024] CPU: 2 PID: 1024 Comm: sh
+>> [ 12.389162][ T1024] Call trace:
+>> [ 12.389174][ T1024] __list_add_valid+0x68/0x98
+>> [ 12.389199][ T1024] stm_source_link_store+0xcc/0x314 [stm_core]
+>> [ 12.389213][ T1024] dev_attr_store+0x38/0x8c
+>> [ 12.389228][ T1024] sysfs_kf_write+0xa0/0x100
+>> [ 12.389239][ T1024] kernfs_fop_write_iter+0x1b0/0x2f8
+>> [ 12.389253][ T1024] vfs_write+0x300/0x37c
+>> [ 12.389264][ T1024] ksys_write+0x84/0x12c
+>>
+>> Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>> ---
+>>   drivers/hwtracing/stm/core.c | 7 ++++++-
+>>   drivers/hwtracing/stm/stm.h  | 1 +
+>>   2 files changed, 7 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/hwtracing/stm/core.c b/drivers/hwtracing/stm/core.c
+>> index 2712e699ba08..e73ac961acb2 100644
+>> --- a/drivers/hwtracing/stm/core.c
+>> +++ b/drivers/hwtracing/stm/core.c
+>> @@ -1171,11 +1171,14 @@ static ssize_t stm_source_link_store(struct 
+>> device *dev,
+>>       struct stm_device *link;
+>>       int err;
+>>   +    mutex_lock(&src->link_mutex);
+>>       stm_source_link_drop(src);
+>>         link = stm_find_device(buf);
+>> -    if (!link)
+>> +    if (!link) {
+>> +        mutex_lock(&src->link_mutex);
+>>           return -EINVAL;
+>> +    }
+>>         pm_runtime_get(&link->dev);
+>>   @@ -1185,6 +1188,7 @@ static ssize_t stm_source_link_store(struct 
+>> device *dev,
+>>           /* matches the stm_find_device() above */
+>>           stm_put_device(link);
+>>       }
+>> +    mutex_unlock(&src->link_mutex);
+>>         return err ? : count;
+>>   }
+>> @@ -1251,6 +1255,7 @@ int stm_source_register_device(struct device 
+>> *parent,
+>>         stm_output_init(&src->output);
+>>       spin_lock_init(&src->link_lock);
+>> +    mutex_init(&src->link_mutex);
+>>       INIT_LIST_HEAD(&src->link_entry);
+>>       src->data = data;
+>>       data->src = src;
+>> diff --git a/drivers/hwtracing/stm/stm.h b/drivers/hwtracing/stm/stm.h
+>> index a9be49fc7a6b..60b814cc00e0 100644
+>> --- a/drivers/hwtracing/stm/stm.h
+>> +++ b/drivers/hwtracing/stm/stm.h
+>> @@ -79,6 +79,7 @@ void stm_put_device(struct stm_device *stm);
+>>   struct stm_source_device {
+>>       struct device        dev;
+>>       struct stm_source_data    *data;
+>> +    struct mutex        link_mutex;
+>>       spinlock_t        link_lock;
+>>       struct stm_device __rcu    *link;
+>>       struct list_head    link_entry;
