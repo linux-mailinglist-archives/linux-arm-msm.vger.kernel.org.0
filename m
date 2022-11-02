@@ -2,59 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D27866168BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 17:28:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1727F6168CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 17:29:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231417AbiKBQ2V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 12:28:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44556 "EHLO
+        id S231499AbiKBQ3W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 12:29:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231419AbiKBQ2E (ORCPT
+        with ESMTP id S231569AbiKBQ26 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 12:28:04 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D2AA11C11;
-        Wed,  2 Nov 2022 09:23:31 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 65F08B823C0;
-        Wed,  2 Nov 2022 16:23:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18EACC433C1;
-        Wed,  2 Nov 2022 16:23:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667406209;
-        bh=KAUYkNDElfqZbLWslfyhLBCbvIgG2boL2USce5w0SuM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=FNU/w5LmJ90ySCfOHvrPDP6sRkqfmFtNG4on+782B7kLkKejL9BAytAXWZrAWAfey
-         cKGVROHBDvbVGrjUqSOVGW/ZGAS5DWu8LxPs9jVKysFgBtECNHmqufUMZyUOYeAR85
-         7CQwrEX5ZMhB74+uvKHCz/NHVsX0+Zoe6tF4LqMvLCek73AA+p+MdB8nvrzvZc7Ed0
-         OTw580ieh9+oJL/kTKZUEQgRA2flPodlhHRtBnAIkgkniIA9BDoXuCaq4G7Ei/+te1
-         sUeDk7Bh6F0cvI1AJJOmP26rU/xDXIl8T1Psbxmagvv3qWTgvZFnrEbKaMy5LCRMYQ
-         Ahx3IphMCRJ2w==
-Date:   Wed, 2 Nov 2022 21:53:16 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
+        Wed, 2 Nov 2022 12:28:58 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF9BCFF7
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 09:24:52 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id h10so12797799qvq.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 09:24:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tuoDnnVv76RyGEtzHMw//0KDleT7U6eMFG86EI/URpc=;
+        b=Q8uIZ5gqMaQoPmhInawrziI+aObzfvod/P0ki9uNHkaYMiggqiYKtIH5UVGGbdw5fw
+         GMJ35kWfPqUGigwxlhVKy/8WNyHCnuh1eXIk2y7Gzy+GiFvil+2o5quayd5OZWw1ntFM
+         NnS6VYE9F/zxdxeNvc3EdbwHnRTgdTmjZ04rEZsvDuMriXN8XZMsF5wh5Yf7oSqT1nQo
+         cR6JKfZtFrXxCrdYcR4JK/DewZqsqjLYB2EWKd5uktwXK3JXmMhCRjpZoQ8HMfVxCwDu
+         iHQPPkjYhpK7H1tF0Iit4LxCM8YgppOsmoTNL3zfKffTqfFoCCC7liMUHwV2OqBxOd7a
+         YRGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tuoDnnVv76RyGEtzHMw//0KDleT7U6eMFG86EI/URpc=;
+        b=DP/fsguNn4VBMsRh1Y0M/lOfN+Ns5kuxAxDxuqqZQhizI7VnL1CLhURq4NyN6G7+da
+         L+L7YZ3e0iKXJ1UuAKaUwR59Y5tunsn+K5rUU7Nq2O+qJHRCiLvRvt3D1f/etChE24Fx
+         hwje2b3+LkREDxUcjYo3UDTwJwA7zILW6XNzOlBRbuo6r1xfH/hmQ/+sFUBbKtaZYmec
+         t8lEXDhQX2XRiAuvGJdnraVBDQJVr1TTafa1Mkx8HLVXRg8VTvQUA1t87tvVJKyjNrEq
+         Sb5B1N55KBBBUhCj3u0P3/XfGCkXw+yMqW/thJFx6VwKwBzdb6S4Z9RuNpn7x6aQUcqV
+         Io4Q==
+X-Gm-Message-State: ACrzQf0OTqPw3XeU4SzRA4aJYD6Wkzha7McW92Zp95S02RsXBxJGtQZo
+        nySw73HYgqe6nUorAuIVuJaDIQ==
+X-Google-Smtp-Source: AMsMyM4zyn3gZcLVKtr11Kk1v4FVIyTwmw/ej5XrKzys8i6iKp6Jv77hCF3ggOpOKXs2+L2ZEMW/1Q==
+X-Received: by 2002:a05:6214:2485:b0:4bb:68f6:afd3 with SMTP id gi5-20020a056214248500b004bb68f6afd3mr22083058qvb.1.1667406291858;
+        Wed, 02 Nov 2022 09:24:51 -0700 (PDT)
+Received: from ?IPV6:2601:586:5000:570:28d9:4790:bc16:cc93? ([2601:586:5000:570:28d9:4790:bc16:cc93])
+        by smtp.gmail.com with ESMTPSA id t18-20020a05622a181200b003a527d29a41sm4311476qtc.75.2022.11.02.09.24.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Nov 2022 09:24:48 -0700 (PDT)
+Message-ID: <9eaaf256-8de2-ddc9-ac95-aed9b0670f5e@linaro.org>
+Date:   Wed, 2 Nov 2022 12:24:47 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
+Content-Language: en-US
+To:     Melody Olvera <quic_molvera@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] thermal: qcom-spmi-adc-tm5: suppress probe-deferral
- error message
-Message-ID: <20221102162316.GB10650@thinkpad>
-References: <20221102152630.696-1-johan+linaro@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221102152630.696-1-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221026200429.162212-1-quic_molvera@quicinc.com>
+ <20221026200429.162212-4-quic_molvera@quicinc.com>
+ <ae4b2333-d243-17ee-1ebd-6b1c89eef9f3@linaro.org>
+ <d109cbdf-1b0e-ff67-879c-d0955da4898e@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <d109cbdf-1b0e-ff67-879c-d0955da4898e@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,49 +81,128 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 02, 2022 at 04:26:30PM +0100, Johan Hovold wrote:
-> Drivers should not be logging errors on probe deferral. Switch to using
-> dev_err_probe() to log failures when parsing the devicetree to avoid
-> errors like:
+On 31/10/2022 17:49, Melody Olvera wrote:
 > 
-> 	qcom-spmi-adc-tm5 c440000.spmi:pmic@0:adc-tm@3400: get dt data failed: -517
 > 
-> when a channel is not yet available.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> On 10/27/2022 8:21 AM, Krzysztof Kozlowski wrote:
+>> On 26/10/2022 16:04, Melody Olvera wrote:
+>>> Add the base DTSI files for QDU1000 and QRU1000 SoCs, including base
+>>> descriptions of CPUs, GCC, RPMHCC, QUP, TLMM, and interrupt-controller
+>>> to boot to shell with console on these SoCs.
+>>>
+>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>>> ---
+>>>  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 1406 +++++++++++++++++++++++++
+>> Please use scripts/get_maintainers.pl to get a list of necessary people
+>> and lists to CC.  It might happen, that command when run on an older
+>> kernel, gives you outdated entries.  Therefore please be sure you base
+>> your patches on recent Linux kernel.
+> Sure thing; we talked about this on a different patch.
+>>
+>>>  arch/arm64/boot/dts/qcom/qru1000.dtsi |   27 +
+>>>  2 files changed, 1433 insertions(+)
+>>>  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>>>  create mode 100644 arch/arm64/boot/dts/qcom/qru1000.dtsi
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>>> new file mode 100644
+>>> index 000000000000..76474106e931
+>>> --- /dev/null
+>>> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>>> @@ -0,0 +1,1406 @@
+>>> +// SPDX-License-Identifier: BSD-3-Clause
+>>> +/*
+>>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>>> + */
+>> (...)
+>>
+>>> +
+>>> +	soc: soc@0 {
+>>> +		#address-cells = <2>;
+>>> +		#size-cells = <2>;
+>>> +		ranges = <0 0 0 0 0x10 0>;
+>>> +		dma-ranges = <0 0 0 0 0x10 0>;
+>>> +		compatible = "simple-bus";
+>>> +
+>>> +		gcc: clock-controller@80000 {
+>>> +			compatible = "qcom,gcc-qdu1000", "syscon";
+>>> +			reg = <0x0 0x80000 0x0 0x1f4200>;
+>>> +			#clock-cells = <1>;
+>>> +			#reset-cells = <1>;
+>>> +			#power-domain-cells = <1>;
+>>> +			clocks = <&rpmhcc RPMH_CXO_CLK>, <&sleep_clk>;
+>>> +			clock-names = "bi_tcxo", "sleep_clk";
+>>> +		};
+>>> +
+>>> +		gpi_dma0: dma-controller@900000  {
+>>> +			compatible = "qcom,sm6350-gpi-dma";
+>> You should add here a specific compatible as well. Same in other places.
+>> All places. I had impression we talked about this few times, so I don't
+>> know what is missing on your side.
+>>
+>> This must be:
+>> "qcom,qdu1000-gpi-dma", "qcom,sm6350-gpi-dma"
+> Got it. I talked to Stephan and he said either your suggestion or just using
+> preexisting compatibles would be ok. I thought it might be cleaner to not
+> have the qdu compats, but I'm fine either way.
+>>
+>>> +			#dma-cells = <3>;
+>>> +			reg = <0x0 0x900000 0x0 0x60000>;
+>>> +			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 251 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
+>>> +				     <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
+>>> +			dma-channels = <12>;
+>>> +			dma-channel-mask = <0x3f>;
+>>> +			iommus = <&apps_smmu 0xf6 0x0>;
+>>> +		};
+>>> +
+>> (...)
+>>
+>>
+>>> +
+>>> +		tlmm: pinctrl@f000000 {
+>>> +			compatible = "qcom,qdu1000-tlmm";
+>>> +			reg = <0x0 0xf000000 0x0 0x1000000>;
+>>> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+>>> +			gpio-controller;
+>>> +			#gpio-cells = <2>;
+>>> +			interrupt-controller;
+>>> +			#interrupt-cells = <2>;
+>>> +			gpio-ranges = <&tlmm 0 0 151>;
+>>> +			wakeup-parent = <&pdc>;
+>>> +
+>>> +			qup_uart0_default: qup-uart0-default-state {
+>>> +				pins = "gpio6", "gpio7", "gpio8", "gpio9";
+>>> +				function = "qup00";
+>>> +			};
+>>> +
+>>> +			qup_i2c1_data_clk: qup-i2c1-data-clk-state {
+>>> +				pins = "gpio10", "gpio11";
+>>> +				function = "qup01";
+>>> +				drive-strength = <2>;
+>> Can we have some generic agreement where to put drive-strengths and bias?
+>>
+>> See also:
+>> https://lore.kernel.org/linux-devicetree/20221026200357.391635-2-krzysztof.kozlowski@linaro.org/
+>>
+>> https://lore.kernel.org/lkml/CAD=FV=VUL4GmjaibAMhKNdpEso_Hg_R=XeMaqah1LSj_9-Ce4Q@mail.gmail.com/
+> Not sure how much two-sense I have for the conversation at large, but generally I agree with Doug's
+> point in the first paragraph. Pulls for this soc are consistent across boards so I don't think it makes
+> sense to move them to the board files here. I vote that these stay here.
+>>
 
-I did send a patch earlier for fixing this same issue but I did not use
-dev_err_probe(). So yours is better.
+I would be great if Konrad and Bjorn shared their opinion on this... but
+wait, you did not Cc all maintainers... Eh.
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Best regards,
+Krzysztof
 
-Thanks,
-Mani
-
-> ---
->  drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> index a3310bf061cb..c70615d2d771 100644
-> --- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> @@ -1031,10 +1031,8 @@ static int adc_tm5_probe(struct platform_device *pdev)
->  		return irq;
->  
->  	ret = adc_tm5_get_dt_data(adc_tm, node);
-> -	if (ret) {
-> -		dev_err(dev, "get dt data failed: %d\n", ret);
-> -		return ret;
-> -	}
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "get dt data failed\n");
->  
->  	ret = adc_tm->data->init(adc_tm);
->  	if (ret) {
-> -- 
-> 2.37.3
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
