@@ -2,196 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FB62615E9B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 10:01:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7551615EA1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 10:02:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231220AbiKBJBZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 05:01:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34304 "EHLO
+        id S231310AbiKBJCh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 05:02:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231238AbiKBJBI (ORCPT
+        with ESMTP id S231355AbiKBJCD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 05:01:08 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A3A6286C7
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 02:01:05 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id y4so15969913plb.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 02:01:05 -0700 (PDT)
+        Wed, 2 Nov 2022 05:02:03 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DEE927FF3
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 02:01:47 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id l14so23507121wrw.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 02:01:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TCbesr7t22BH12koAKaq07PLsfL/CZLX5cbu8l4PC8k=;
-        b=MDGtYph3exFjeCg9VqNZzVzu3Vumc0ZwkNtXfKqvGqA0BSAzU1mop8s97+EujGQVla
-         BNZJxwW1pPWMa4xpHTzHj0o3RJDIcYEOoM4r/XpG2AY2z1Af5t+GA3ASTdPsSvdAmhLF
-         KH2v8yLW13suU86jRHH5EmYzpVX0TArdHKs70YhEYsoVB66y1XZKpNpf7JfujxTehMdz
-         lDT+2gmlRAjjycDhG46ZhhwShvUlYruDZbimedwd5yDh0/Ao4xoamKioRjItIVlhv2WB
-         kNP7nGE2cVidcRSGdr/lCmIcmbL3m+qvr8sNBxeXRSSVRsCVS6UxPCCPVT8qmLDnzldr
-         Re4Q==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fb2K4qbqcK2Y2tqiEOJiLZAT+uIy0/dc8UaXQsewLwA=;
+        b=dpnucKdFfRb01PE7FC9/sLijd6yiEF2ZNHCqNyOYl92jBQD+liWzbseCZ9znCF6DKu
+         uW5Ca3Hdg7TjaTDw58WkAMxEfqQ38ZR8kaM1szRZOjMF05KhBL48MpXZkuZPHi9NCmaW
+         d580Ib0D2Fkg++vdNldRtu/mbdgTZiR2cXJC3jtF3O5wobJATlNzZ8ZaBGZpkuGRmTBd
+         YY6RF2ZHGOyT4kd/v1p8mP9zlhJj9B0gyyEvg44aHUQoQgJ5SSzHUdIwiLDiClZf66tL
+         j23f3qEDpbQVdcYN7CDeyR5ykf0c9Hok/fj+4fiXQpNUFYYnp7Mvb5IU6RMg5dRsPFBj
+         Hzfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TCbesr7t22BH12koAKaq07PLsfL/CZLX5cbu8l4PC8k=;
-        b=IDJQiqh2QupvHr9T0zQG9TEeCKfMF4FTC+EcJ9ClmnT+IpAWRWGPoIuBCX7EvZqIrU
-         QLf4ZF0fPjneLEdVmH4sbqzOwHE0C3uqx626ut6KSFDUkUz+0VmqW/URwaa2vqaQskZL
-         j51XGQdNDtCDj+Nk+BjFbk34diCcxNZdVmkY/FYuqvmZsXYeg1Sz8KyDx14DwpCmbrL3
-         MaK1omthgiVcEZiJ0TxLWo+V15XCI/Kdm1Vfs+tAhDsvaLyF4SH/ig9Ma+qFQDluXasW
-         CkYs03vS00tv2j4WoM/eOkRqcpBDz66h46h6fCMgg6NQqh3/zhOYpnfYmzyur3fezqv0
-         ziRA==
-X-Gm-Message-State: ACrzQf1Y6TkVUvZU2VE2EC4mynEmK8en9y+NDe7KVzHGH35r97dwX+cv
-        v2NYaGxmja8nxlPr3oUvZu7P
-X-Google-Smtp-Source: AMsMyM7kWzjgmWgi2JYTCNHRGMGFCkgT5IlBpTNmkAhrr2N7dB+zScr1peUE1BOXig/x7+qWL8z6+A==
-X-Received: by 2002:a17:903:444:b0:187:428:1317 with SMTP id iw4-20020a170903044400b0018704281317mr23647290plb.151.1667379664568;
-        Wed, 02 Nov 2022 02:01:04 -0700 (PDT)
-Received: from localhost.localdomain ([117.193.209.178])
-        by smtp.gmail.com with ESMTPSA id z10-20020a63d00a000000b0046f7b0f504esm7136389pgf.58.2022.11.02.02.01.00
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fb2K4qbqcK2Y2tqiEOJiLZAT+uIy0/dc8UaXQsewLwA=;
+        b=SnaDTlEQWk9Y0B6m5Kx/Se9/8eLqKDy2Vxq3IpGmYUMwBPolk+x9GLR32778KRSIME
+         hsWzV+7tjZgVbhPOjhgnQDe69fmdcNtE2uN8JVIv0yAuoHCsBBKdTPYSCwuGqrP14Pd8
+         K2nMCyuEXot+mWrNvb0mPr0M6+GQv30VpCjhY+2Ix+v1bLl/sx1PINiR/HlzRs+g55Rz
+         CeMg3btoY9rd9OjGCq6khKOz7nEbsGL3JBkRWmW2gjVSFmDCWSl5XOJjRlEmgwT5Sq9B
+         4anmHj3cHbMe/HnG1l/5OXqJrGnVlsKRWYFOiQAR2mrna9qjZRBsr/YVhvfzCmeLeiOr
+         jL0A==
+X-Gm-Message-State: ACrzQf1VLB7ii8SUBqcPW0DUvbS58Ul9upz9ByR42owcvvb6Pj0onmG5
+        Z4WlzvBf2fmY0sPqBGVmgM52Ng==
+X-Google-Smtp-Source: AMsMyM758pxlcdQy009VmDr37vEIEa83qOgREZR/iULTELuI83RtVabMOnQnI4amuQuknTNLk3Zt8A==
+X-Received: by 2002:a05:6000:88:b0:236:b36c:a0d8 with SMTP id m8-20020a056000008800b00236b36ca0d8mr12982433wrx.459.1667379705547;
+        Wed, 02 Nov 2022 02:01:45 -0700 (PDT)
+Received: from prec5560.. (freifunk-gw.bsa1-cpe1.syseleven.net. [176.74.57.43])
+        by smtp.gmail.com with ESMTPSA id bd26-20020a05600c1f1a00b003cf6c2f9513sm1425322wmb.2.2022.11.02.02.01.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 02:01:03 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     andersson@kernel.org, viresh.kumar@linaro.org, rafael@kernel.org
-Cc:     johan@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2 3/3] cpufreq: qcom-hw: Move soc_data to struct qcom_cpufreq
-Date:   Wed,  2 Nov 2022 14:30:38 +0530
-Message-Id: <20221102090038.64541-4-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221102090038.64541-1-manivannan.sadhasivam@linaro.org>
-References: <20221102090038.64541-1-manivannan.sadhasivam@linaro.org>
+        Wed, 02 Nov 2022 02:01:44 -0700 (PDT)
+From:   Robert Foss <robert.foss@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, mturquette@baylibre.com,
+        sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        dmitry.baryshkov@linaro.org, Jonathan Marek <jonathan@marek.ca>
+Cc:     Robert Foss <robert.foss@linaro.org>
+Subject: [PATCH v2 0/5] dispcc-sm8250 misc fixes
+Date:   Wed,  2 Nov 2022 10:01:35 +0100
+Message-Id: <20221102090140.965450-1-robert.foss@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-soc_data is a static info of the driver and thus no need to cache it inside
-the qcom_cpufreq_data struct which is allocated per frequency domain. So,
-move it inside qcom_cpufreq struct.
+Changes since v1:
+ - Added new a-b/r-b tags
+ - Improved commit message - Dmitry
+ - Configure dp/edp link parent_hw for sm8150/sc8180
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/cpufreq/qcom-cpufreq-hw.c | 27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+Robert Foss (5):
+  clk: qcom: dispcc-sm8250: Disable EDP_GTC for sm8350
+  clk: qcom: dispcc-sm8250: Add RETAIN_FF_ENABLE flag for mdss_gdsc
+  dt-bindings: clock: dispcc-sm8250: Add EDP_LINK_DIV_CLK_SRC index
+  clk: qcom: dispcc-sm8250: Add missing EDP clocks for sm8350
+  clk: qcom: dispcc-sm8250: Disable link_div_clk_src for sm8150
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 6d807956aaf6..5e0598730a04 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -43,7 +43,6 @@ struct qcom_cpufreq_soc_data {
- struct qcom_cpufreq_data {
- 	void __iomem *base;
- 	struct resource *res;
--	const struct qcom_cpufreq_soc_data *soc_data;
- 
- 	/*
- 	 * Mutex to synchronize between de-init sequence and re-starting LMh
-@@ -63,6 +62,7 @@ struct qcom_cpufreq_data {
- 
- static struct {
- 	struct qcom_cpufreq_data *data;
-+	const struct qcom_cpufreq_soc_data *soc_data;
- } qcom_cpufreq;
- 
- static unsigned long cpu_hw_rate, xo_rate;
-@@ -113,7 +113,7 @@ static int qcom_cpufreq_hw_target_index(struct cpufreq_policy *policy,
- 					unsigned int index)
- {
- 	struct qcom_cpufreq_data *data = policy->driver_data;
--	const struct qcom_cpufreq_soc_data *soc_data = data->soc_data;
-+	const struct qcom_cpufreq_soc_data *soc_data = qcom_cpufreq.soc_data;
- 	unsigned long freq = policy->freq_table[index].frequency;
- 	unsigned int i;
- 
-@@ -141,7 +141,7 @@ static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
- 		return 0;
- 
- 	data = policy->driver_data;
--	soc_data = data->soc_data;
-+	soc_data = qcom_cpufreq.soc_data;
- 
- 	index = readl_relaxed(data->base + soc_data->reg_perf_state);
- 	index = min(index, LUT_MAX_ENTRIES - 1);
-@@ -153,7 +153,7 @@ static unsigned int qcom_cpufreq_hw_fast_switch(struct cpufreq_policy *policy,
- 						unsigned int target_freq)
- {
- 	struct qcom_cpufreq_data *data = policy->driver_data;
--	const struct qcom_cpufreq_soc_data *soc_data = data->soc_data;
-+	const struct qcom_cpufreq_soc_data *soc_data = qcom_cpufreq.soc_data;
- 	unsigned int index;
- 	unsigned int i;
- 
-@@ -177,7 +177,7 @@ static int qcom_cpufreq_hw_read_lut(struct device *cpu_dev,
- 	unsigned long rate;
- 	int ret;
- 	struct qcom_cpufreq_data *drv_data = policy->driver_data;
--	const struct qcom_cpufreq_soc_data *soc_data = drv_data->soc_data;
-+	const struct qcom_cpufreq_soc_data *soc_data = qcom_cpufreq.soc_data;
- 
- 	table = kcalloc(LUT_MAX_ENTRIES + 1, sizeof(*table), GFP_KERNEL);
- 	if (!table)
-@@ -294,10 +294,10 @@ static unsigned long qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
- {
- 	unsigned int lval;
- 
--	if (data->soc_data->reg_current_vote)
--		lval = readl_relaxed(data->base + data->soc_data->reg_current_vote) & 0x3ff;
-+	if (qcom_cpufreq.soc_data->reg_current_vote)
-+		lval = readl_relaxed(data->base + qcom_cpufreq.soc_data->reg_current_vote) & 0x3ff;
- 	else
--		lval = readl_relaxed(data->base + data->soc_data->reg_domain_state) & 0xff;
-+		lval = readl_relaxed(data->base + qcom_cpufreq.soc_data->reg_domain_state) & 0xff;
- 
- 	return lval * xo_rate;
- }
-@@ -371,9 +371,9 @@ static irqreturn_t qcom_lmh_dcvs_handle_irq(int irq, void *data)
- 	disable_irq_nosync(c_data->throttle_irq);
- 	schedule_delayed_work(&c_data->throttle_work, 0);
- 
--	if (c_data->soc_data->reg_intr_clr)
-+	if (qcom_cpufreq.soc_data->reg_intr_clr)
- 		writel_relaxed(GT_IRQ_STATUS,
--			       c_data->base + c_data->soc_data->reg_intr_clr);
-+			       c_data->base + qcom_cpufreq.soc_data->reg_intr_clr);
- 
- 	return IRQ_HANDLED;
- }
-@@ -528,16 +528,15 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 		return ret;
- 
- 	index = args.args[0];
--	data->soc_data = of_device_get_match_data(&pdev->dev);
- 	data = &qcom_cpufreq.data[index];
- 
- 	/* HW should be in enabled state to proceed */
--	if (!(readl_relaxed(data->base + data->soc_data->reg_enable) & 0x1)) {
-+	if (!(readl_relaxed(data->base + qcom_cpufreq.soc_data->reg_enable) & 0x1)) {
- 		dev_err(dev, "Domain-%d cpufreq hardware not enabled\n", index);
- 		return -ENODEV;
- 	}
- 
--	if (readl_relaxed(data->base + data->soc_data->reg_dcvs_ctrl) & 0x1)
-+	if (readl_relaxed(data->base + qcom_cpufreq.soc_data->reg_dcvs_ctrl) & 0x1)
- 		data->per_core_dcvs = true;
- 
- 	qcom_get_related_cpus(index, policy->cpus);
-@@ -658,6 +657,8 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
- 	if (!qcom_cpufreq.data)
- 		return -ENOMEM;
- 
-+	qcom_cpufreq.soc_data = of_device_get_match_data(dev);
-+
- 	for (i = 0; i < num_domains; i++) {
- 		struct qcom_cpufreq_data *data = &qcom_cpufreq.data[i];
- 		struct resource *res;
+ drivers/clk/qcom/dispcc-sm8250.c              | 38 ++++++++++++++++++-
+ .../dt-bindings/clock/qcom,dispcc-sm8250.h    |  1 +
+ 2 files changed, 37 insertions(+), 2 deletions(-)
+
 -- 
-2.25.1
+2.34.1
 
