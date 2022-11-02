@@ -2,136 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FCB16162C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 13:35:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0041D6162E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 13:44:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229871AbiKBMfO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 08:35:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46362 "EHLO
+        id S230317AbiKBMos (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 08:44:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230087AbiKBMfO (ORCPT
+        with ESMTP id S230515AbiKBMon (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 08:35:14 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 954062936E;
-        Wed,  2 Nov 2022 05:35:08 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id b62so5742993pgc.0;
-        Wed, 02 Nov 2022 05:35:08 -0700 (PDT)
+        Wed, 2 Nov 2022 08:44:43 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 167652A42B
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 05:44:39 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id p141so14884423iod.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 05:44:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ytob8zx1SKLrpfmFHLBokxWlh3AKyd6aWp40MhHR3AA=;
-        b=L+WGEPxtjHZGG+0/03qhtcLzwTWa0RZvC6ENbtnYYEmGdOdqzORyCYWGHiiKGwBbZp
-         KslMkod7TDhB8M0NXP2k/nLbt9OCY3e+3cdkqW9y+YimCUIenhZoL3a6OXgPowGILUxX
-         gRjl7Jb0Ux1nGP34bMqyiSWOkaugy4IC1/m8vql7oRWtS/IoOeOQatQafP+Pg96OhfSn
-         Q7fv7twRUQVxEMmym8IOEfYsAnBx/udNvUVEpKWpif7oh5++Jt6I+7+7RvHE3v+F3O3v
-         lSCqoLRINb8GEybY6rkPROmwAkKFlBNnIaYSLWx0tZAYhd/+7HZJfiiX2URPxsihLRxE
-         3PlA==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RJo91bgThDZYuB3vQ95X53c7qStB+JG3e9Cb+LQ28g4=;
+        b=eu+6eNC2KNy9tJO7miJCz9Bz7xwutFsz8mb3HbpuHr2tVwu2CBIfSRUWMqFwI1NSkG
+         AbczpR8JqXwnPlYfbPW0v9xu2eI0n8qnrxZnlvBCHbpVQaKRKoCU3tcjJ5DaEFrxvei3
+         gaqS71r9TrfL1+XGJdAhbmR9kNc2bIll8tIcgUHOMYelprOJDpiUSwA4nvr64j/HrMhJ
+         w0rQNHaqe/dcMzhWf5Ga1fyuqKYnvi+iww2vjlQCGTTyFblmAJ0boNZG1AgW6i6IpQMG
+         hBTt6pidMW5cqrdGiQ/xgDkwPMaRSIeFzafLNljBTUOWf0vecn+RrW1ETbm96Wrh8PY2
+         9nWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ytob8zx1SKLrpfmFHLBokxWlh3AKyd6aWp40MhHR3AA=;
-        b=tZ8WDbgXfytWV8O1xzh4ttT03dkghL2vofQteC3l6PKETnJVBsSgI62ia3cWcKqdot
-         z653DJx3NTvRV7VsEWQA/2zhAdDW3ZiBD/T/pZum7knvAxqULno57rOo3sXQUJAHJqyX
-         z3NxwzlJShsIVT7RmbZTHXdWvDagIt2R2FtkofPGU/f3OhQxLkbOWqt3fwcryhN3PVkS
-         3X0OJzuz2aWPZ5HyFaDbssX6hU1TkT9qo99hJfHNVAQgIL0gaPw1vC8f1S5D4rG/xWTj
-         zAVwmuTYsf1X6hbOCbvnOdmseJltPW2v2XsRhyqrJCSfyz9wzZoRYAxtZPJlXCMcHTMp
-         CZSA==
-X-Gm-Message-State: ACrzQf0IjXHkHF3U644wzGI/o+xyq1B3DVZDQzvcONTKgEHQJMZNXH58
-        U19V5uUPjakY5kleW0DzzxA=
-X-Google-Smtp-Source: AMsMyM4jOx9/ITQnqPBGYtd6ydBNmq2RMw1l33fg34hHBYM3Z1Lk8t/v3pEbA7l6diIXB1ayvFtrbw==
-X-Received: by 2002:a05:6a00:1a8f:b0:56d:f7c2:959 with SMTP id e15-20020a056a001a8f00b0056df7c20959mr4269897pfv.71.1667392508049;
-        Wed, 02 Nov 2022 05:35:08 -0700 (PDT)
-Received: from debian.me (subs32-116-206-28-50.three.co.id. [116.206.28.50])
-        by smtp.gmail.com with ESMTPSA id m20-20020a6562d4000000b00462ae17a1c4sm7529521pgv.33.2022.11.02.05.35.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 05:35:07 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-        id 01518103835; Wed,  2 Nov 2022 19:35:04 +0700 (WIB)
-Date:   Wed, 2 Nov 2022 19:35:04 +0700
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Kalle Valo <kvalo@kernel.org>, devicetree@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 01/21] docs: gunyah: Introduce Gunyah Hypervisor
-Message-ID: <Y2Jj+FLcL8pYLv+q@debian.me>
-References: <20221026185846.3983888-1-quic_eberman@quicinc.com>
- <20221026185846.3983888-2-quic_eberman@quicinc.com>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RJo91bgThDZYuB3vQ95X53c7qStB+JG3e9Cb+LQ28g4=;
+        b=0BA3R4WYgtRaZH+wpZUCrvNt2qmKZ51hCDZVWQDvZwxAKcc9MPO25FAunkgb/Ksoz8
+         hr9dV7/M+o+YAJ+/RJmk48QNXEBVjIElvY0AM+TPtCF3EpZqCPiNzyeZHzW/OOIq1mqs
+         zpHbYU8mNC2Hkx5KOfabsc8u641PxvYgQIaLp8e3j83yuazrr0Cw1gUNbMWgHTcEmAG+
+         vhRc4cn+SoslhsLl7hXXo436YlHTrnZrNEou+Gye5FNRytHobABiJEoDZZr2le2ZvITc
+         kSaDQYMG7Y4NMj35odZ7MKDG2QF3XXQ0gs3M0fbEEXAVscjOlFDahyqvcSmoVyF+dHlb
+         TKSA==
+X-Gm-Message-State: ACrzQf3WpgXii7oIwrAtLFZHjDoDoF9wzHCPatG7+MR0xKqU8/du3SDJ
+        VFUDPfHHCiJrY3xctKsz1k0yj9m064C1/Q==
+X-Google-Smtp-Source: AMsMyM4kCjiARMSuxz+HYP8JVizh7CfbjS53Gov9bfb7Fx5trPZC4UQW7cykCO2KseaAdBfRWiTP+Q==
+X-Received: by 2002:a05:6638:1450:b0:363:7052:9c30 with SMTP id l16-20020a056638145000b0036370529c30mr15761229jad.53.1667393078374;
+        Wed, 02 Nov 2022 05:44:38 -0700 (PDT)
+Received: from [172.22.22.4] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id r11-20020a92d98b000000b002ffdb341ef9sm4442119iln.88.2022.11.02.05.44.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Nov 2022 05:44:37 -0700 (PDT)
+Message-ID: <0ba56650-e1bf-5a8f-86cd-8406f3dc75be@linaro.org>
+Date:   Wed, 2 Nov 2022 07:44:35 -0500
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="lcWsjmNz5hWimLOD"
-Content-Disposition: inline
-In-Reply-To: <20221026185846.3983888-2-quic_eberman@quicinc.com>
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH net-next 9/9] net: ipa: use a bitmap for enabled endpoints
+Content-Language: en-US
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+        mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221030001828.754010-1-elder@linaro.org>
+ <20221030001828.754010-10-elder@linaro.org>
+ <20221101213404.3e4c3b8f@kernel.org>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <20221101213404.3e4c3b8f@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 11/1/22 11:34 PM, Jakub Kicinski wrote:
+> On Sat, 29 Oct 2022 19:18:28 -0500 Alex Elder wrote:
+>>   	/* Set up the defined endpoint bitmap */
+>>   	ipa->defined = bitmap_zalloc(ipa->endpoint_count, GFP_KERNEL);
+>>   	ipa->set_up = bitmap_zalloc(ipa->endpoint_count, GFP_KERNEL);
+>> +	ipa->enabled = bitmap_zalloc(ipa->endpoint_count, GFP_KERNEL);
+>>   	if (!ipa->defined || !ipa->set_up) {
+> 
+> This condition should now check if ipa->enabled
 
---lcWsjmNz5hWimLOD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+You're right.
 
-On Wed, Oct 26, 2022 at 11:58:26AM -0700, Elliot Berman wrote:
-> Gunyah is an open-source Type-1 hypervisor developed by Qualcomm. It
-> does not depend on any lower-privileged OS/kernel code for its core
-> functionality. This increases its security and can support a smaller
-> trusted computing based when compared to Type-2 hypervisors.
->=20
-> Add documentation describing the Gunyah hypervisor and the main
-> components of the Gunyah hypervisor which are of interest to Linux
-> virtualization development.
->=20
+> And the error handling patch needs to free it, in case it was something
+> else that didn't get allocated?
 
-LGTM, thanks.
+See below, but in any case, I'll make sure this is right.
 
-Reviewed-by: Bagas Sanjaya <bagasdotme@gmail.com>
+> Frankly I have gotten mass-NULL-checks wrong more than once myself so
+> I'd steer clear of those, they are strangely error prone.
 
---=20
-An old man doll... just what I always wanted! - Clara
+I don't typically do it, and generally don't like it,
+but I think I was trying to make it look cleaner
+somehow.  I'll check every one in separately in v2.
 
---lcWsjmNz5hWimLOD
-Content-Type: application/pgp-signature; name="signature.asc"
+>>   		dev_err(dev, "unable to allocate endpoint bitmaps\n");
+> 
+> this error message should not be here (patch 5 adds it I think)
+> memory allocation failures produce a splat, no need to print errors
 
------BEGIN PGP SIGNATURE-----
+At the end of the series, the structure of this
+error handling changes, and I think this is
+correct.  But now that you point this out I
+think the way this evolves in the series could
+use some improvement so I'll take another look
+at it and hopefully make it better.
 
-iHUEABYIAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCY2Jj9QAKCRD2uYlJVVFO
-o8iZAP9ne1/t0CSHYZJHKuMWjnNVF9v2tjatTGFij3brCK5ccgEA6ZehG9xndGC0
-Ga0PcJr9HBhqMNopmGgdNKin3IzhMAs=
-=VAEi
------END PGP SIGNATURE-----
+I don't normally report anything on allocation
+failures for that reason; thanks for pointing
+this out.
 
---lcWsjmNz5hWimLOD--
+I really appreciate your feedback.  I'll send
+out version 2 today.
+
+					-Alex
+
+>> +		bitmap_free(ipa->set_up);
+>> +		ipa->set_up = NULL;
+>>   		bitmap_free(ipa->defined);
+
