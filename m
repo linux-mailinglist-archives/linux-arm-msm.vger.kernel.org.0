@@ -2,189 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 17B00615DF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 09:38:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E40C9615DFC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 09:39:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231140AbiKBIid (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 04:38:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45160 "EHLO
+        id S231183AbiKBIjH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 04:39:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230505AbiKBIi3 (ORCPT
+        with ESMTP id S231147AbiKBIix (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 04:38:29 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4BA827B19
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 01:38:23 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id r18so15605226pgr.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 01:38:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0dhoFn1ZtCyAs/+qCp2eCTiNCa1Q3Al3mgUmbiNZfxI=;
-        b=UWRy0RPpNm7wlerLKGEhAZXzXLeA8etRLack1Pq/khiT5F466cWJeQQvGYdXYFdixO
-         uiygCzzZwkiAi1s1mrxuUEuwfVNO6qq8nkCF43i+stFxMWFXGp8ZnVypP0HFl/SEh/Ef
-         STHgrvN7SRvthn555mrWqdlSjzQOrSx+wo2FeOFrOPyad8sjCoWzN0wkMUZkHFH/XeL2
-         vrfbzKNq3P/RC9Uje5+pjZ6ISGo5C5NpJgTD/DgKl/Qz4HCjwsbyhGIxFktnbrAMF5hK
-         4XKI/fX8bFG6I3jAbV13HHCcIqdte6ScTkcedLDj3pBkQdbVnorjzjAhcBRo/0JWZ40o
-         PgTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0dhoFn1ZtCyAs/+qCp2eCTiNCa1Q3Al3mgUmbiNZfxI=;
-        b=V63gA1BQ/OX0BbG06LgTA4aB1R2RGjP5sQG/qCuym5GOB/tyrSW7G9E7C5eHWSXhWH
-         fAQmTn3k8eqEq/ZuNI0peMHUyyAXDOppJYtwAG9yaWdMIM0nBXUGVFdJAV/aEO8JJZT6
-         D6NyDL7ilHGSINM7HL7vfxTs1IS5v8xSyhg3flUFjygyzutTMdt9Imrh9ERxVGL57Bb1
-         1TxqR0PYR7i7FUCFMjShl7egETSlOGrsqgbv0c39Cq0gdOJV5a9QeykelKY2cOax0s/9
-         S4j+mMeBs70YSsJovJdOwtUBaJt+H01HjDjva5G8eITHh0MrTg5YwI4BK67GBKlEBZiV
-         xquw==
-X-Gm-Message-State: ACrzQf22AYoXfyNo6lvclsbnO4pnyv6c6Dt7D4Z/rM+tunp3Ak3D0TQa
-        jlF0MuP79AiC+PvlFBN77HTI
-X-Google-Smtp-Source: AMsMyM5bOfAILnTTDp4H4LLMEeXBSxnsGtZCnI32rlTDQ9LMkVksrCprUFCbuCQ3SKrULvt1UPd2mw==
-X-Received: by 2002:a63:2a8b:0:b0:46e:9fda:2171 with SMTP id q133-20020a632a8b000000b0046e9fda2171mr20798235pgq.106.1667378303216;
-        Wed, 02 Nov 2022 01:38:23 -0700 (PDT)
-Received: from localhost.localdomain ([117.193.209.178])
-        by smtp.gmail.com with ESMTPSA id x19-20020aa79573000000b0056bcb102e7bsm7887770pfq.68.2022.11.02.01.38.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 01:38:22 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     andersson@kernel.org, viresh.kumar@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, rafael@kernel.org,
-        robh+dt@kernel.org
-Cc:     johan@kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v3 3/3] cpufreq: qcom-hw: Add CPU clock provider support
-Date:   Wed,  2 Nov 2022 14:07:51 +0530
-Message-Id: <20221102083751.56330-4-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221102083751.56330-1-manivannan.sadhasivam@linaro.org>
-References: <20221102083751.56330-1-manivannan.sadhasivam@linaro.org>
+        Wed, 2 Nov 2022 04:38:53 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A7A124F1C;
+        Wed,  2 Nov 2022 01:38:50 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 23CB8B82150;
+        Wed,  2 Nov 2022 08:38:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED05C433C1;
+        Wed,  2 Nov 2022 08:38:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667378327;
+        bh=5tIOilhXJzbK3/vyyGeg8c8YvcxszLaehkHfuDnIWBU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=oes3hak5XcG2JoCfEKV/oqEhhdNxEL7VWmnvyy53smF+dOz9dMQ4AgkV2ookUlVZZ
+         duka9et+fYPbSAQQ9cDB++VBGJDkDV2EXAA4lJMA2udhvSqOaMm3b5QKGB2eb2ab5l
+         3t4GSgImcdNbi+CoAnBu4HR8OHiA/MsIa25dfVOuN0Wr+lY0eE/eDb+b1Xtql7K9s4
+         TLX9cRJAGID+fdqpJeAHaBchWChttlIA290zBQtThRoWCsY9k1RTAYjAQJgHAiVH9l
+         fOTzRQ+DodXhjOjUq29yaR6AzLtA7EAR64cR4EaKhiQKLAF8iYgitL3t/rqLSZtkPD
+         L+UZ9kJN/udKg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oq9GY-0002r2-MB; Wed, 02 Nov 2022 09:38:31 +0100
+Date:   Wed, 2 Nov 2022 09:38:30 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        quic_vbadigan@quicinc.com, Brian Masney <bmasney@redhat.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] PCI: qcom: Add basic interconnect support
+Message-ID: <Y2IshhNv6JlhCbkp@hovoldconsulting.com>
+References: <20221021064616.6380-1-johan+linaro@kernel.org>
+ <20221021064616.6380-3-johan+linaro@kernel.org>
+ <20221101143529.GA244012@thinkpad>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221101143529.GA244012@thinkpad>
+X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qcom CPUFreq hardware (EPSS/OSM) controls clock and voltage to the CPU
-cores. But this relationship is not represented with the clk framework
-so far.
+On Tue, Nov 01, 2022 at 08:05:29PM +0530, Manivannan Sadhasivam wrote:
+> On Fri, Oct 21, 2022 at 08:46:16AM +0200, Johan Hovold wrote:
+> > On Qualcomm platforms like SC8280XP and SA8540P, interconnect bandwidth
+> > must be requested before enabling interconnect clocks.
+> > 
+> > Add basic support for managing an optional "pcie-mem" interconnect path
+> > by setting a low constraint before enabling clocks and updating it after
+> > the link is up.
+> > 
+> > Note that it is not possible for a controller driver to set anything but
+> > a maximum peak bandwidth as expected average bandwidth will vary with
+> > use case and actual use (and power policy?). This very much remains an
+> > unresolved problem with the interconnect framework.
+> > 
+> > Also note that no constraint is set for the SC8280XP/SA8540P "cpu-pcie"
+> > path for now as it is not clear what an appropriate constraint would be
+> > (and the system does not crash when left unspecified).
+ 
+> > +static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
+> > +{
+> > +	struct dw_pcie *pci = pcie->pci;
+> > +	int ret;
+> > +
+> > +	pcie->icc_mem = devm_of_icc_get(pci->dev, "pcie-mem");
+> > +	if (IS_ERR(pcie->icc_mem)) {
+> > +		ret = PTR_ERR(pcie->icc_mem);
+> > +		return ret;
+> 
+> return PTR_ERR(pcie->icc_mem);
 
-So, let's make the qcom-cpufreq-hw driver a clock provider. This makes the
-clock producer/consumer relationship cleaner and is also useful for CPU
-related frameworks like OPP to know the frequency at which the CPUs are
-running.
+Sure.
 
-The clock frequency provided by the driver is for each frequency domain.
-We cannot get the frequency of each CPU core because, not all platforms
-support per-core DCVS feature.
+> > +	}
+> > +
+> > +	/*
+> > +	 * Some Qualcomm platforms require interconnect bandwidth constraints
+> > +	 * to be set before enabling interconnect clocks.
+> > +	 *
+> > +	 * Set an initial peak bandwidth corresponding to single-lane Gen 1
+> > +	 * for the pcie-mem path.
+> > +	 */
+> > +	ret = icc_set_bw(pcie->icc_mem, 0, MBps_to_icc(250));
+> > +	if (ret) {
+> > +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> > +			ret);
+> 
+> Move "ret);" to prior line. No need to keep up within 80 columns.
 
-Also the frequency supplied by the driver is the actual frequency that
-comes out of the EPSS/OSM block after the DCVS operation. This frequency is
-not same as what the CPUFreq framework has set but it is the one that gets
-supplied to the CPUs after throttling by LMh.
+80 chars is still a soft limit and in this case there's no real gain in
+terms of readability from breaking it.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/cpufreq/qcom-cpufreq-hw.c | 43 +++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+But sure, I can remove the line break.
+ 
+> > +		return ret;
+> > +	}
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
+> > +{
+> > +	struct dw_pcie *pci = pcie->pci;
+> > +	u32 offset, status, bw;
+> > +	int speed, width;
+> > +	int ret;
+> > +
+> > +	if (!pcie->icc_mem)
+> > +		return;
+> > +
+> > +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> > +	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
+> > +
+> > +	/* Only update constraints if link is up. */
+> > +	if (!(status & PCI_EXP_LNKSTA_DLLLA))
+> > +		return;
+> 
+> What if the link comes back later? I'd suggest to call this function from
+> qcom_pcie_link_up(), whenever link is up.
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 76f840636828..b824f1bb04f4 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -4,6 +4,7 @@
-  */
- 
- #include <linux/bitfield.h>
-+#include <linux/clk-provider.h>
- #include <linux/cpufreq.h>
- #include <linux/init.h>
- #include <linux/interconnect.h>
-@@ -53,6 +54,7 @@ struct qcom_cpufreq_data {
- 	bool cancel_throttle;
- 	struct delayed_work throttle_work;
- 	struct cpufreq_policy *policy;
-+	struct clk_hw cpu_clk;
- 
- 	bool per_core_dcvs;
- };
-@@ -601,8 +603,20 @@ static struct cpufreq_driver cpufreq_qcom_hw_driver = {
- 	.ready		= qcom_cpufreq_ready,
- };
- 
-+static unsigned long qcom_cpufreq_hw_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-+{
-+	struct qcom_cpufreq_data *data = container_of(hw, struct qcom_cpufreq_data, cpu_clk);
-+
-+	return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
-+}
-+
-+static const struct clk_ops qcom_cpufreq_hw_clk_ops = {
-+	.recalc_rate = qcom_cpufreq_hw_recalc_rate,
-+};
-+
- static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
- {
-+	struct clk_hw_onecell_data *clk_data;
- 	struct device *dev = &pdev->dev;
- 	struct device *cpu_dev;
- 	struct clk *clk;
-@@ -645,8 +659,16 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
- 
- 	qcom_cpufreq.soc_data = of_device_get_match_data(dev);
- 
-+	clk_data = devm_kzalloc(dev, struct_size(clk_data, hws, num_domains), GFP_KERNEL);
-+	if (!clk_data)
-+		return -ENOMEM;
-+
-+	clk_data->num = num_domains;
-+
- 	for (i = 0; i < num_domains; i++) {
- 		struct qcom_cpufreq_data *data = &qcom_cpufreq.data[i];
-+		struct clk_init_data init = {};
-+		const char *clk_name;
- 		struct resource *res;
- 		void __iomem *base;
- 
-@@ -658,6 +680,27 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
- 
- 		data->base = base;
- 		data->res = res;
-+
-+		/* Register CPU clock for each frequency domain */
-+		clk_name = devm_kasprintf(dev, GFP_KERNEL, "qcom_cpufreq%d", i);
-+		init.name = clk_name;
-+		init.flags = CLK_GET_RATE_NOCACHE;
-+		init.ops = &qcom_cpufreq_hw_clk_ops;
-+		data->cpu_clk.init = &init;
-+
-+		ret = devm_clk_hw_register(dev, &data->cpu_clk);
-+		if (ret < 0) {
-+			dev_err(dev, "Failed to register Qcom CPUFreq clock\n");
-+			return ret;
-+		}
-+
-+		clk_data->hws[i] = &data->cpu_clk;
-+	}
-+
-+	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, clk_data);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to add Qcom CPUFreq clock provider\n");
-+		return ret;
- 	}
- 
- 	ret = cpufreq_register_driver(&cpufreq_qcom_hw_driver);
--- 
-2.25.1
+I actually tried that initially but realised it doesn't work.
 
+First, the link-up callback can be called in atomic context which
+prevents using icc_set_bw() directly (this can be worked around of
+course).
+
+Second, the link-up callback isn't even called if the link comes up
+later.
+
+If anyone needs this to deal with FPGA-type use cases when the link
+comes up later, then dwc3 core would need to be extended first. 
+ 
+> > +
+> > +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
+> > +	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
+> > +
+> > +	switch (speed) {
+> > +	case 1:
+> > +		bw = MBps_to_icc(250);
+> > +		break;
+> > +	case 2:
+> > +		bw = MBps_to_icc(500);
+> > +		break;
+> > +	default:
+> > +	case 3:
+> 
+> Why do you need explicit "case 3" and not just default case?
+
+Because it's the gen3 bandwidth which is set in case the controller
+ever reports anything else but the supported gen1, gen2 or gen3 speed
+here.
+
+I first had a WARN_ON_ONCE() here as an aid to anyone ever extending the
+driver with support for gen4, but then removed it in case there are any
+misbehaving controllers out there. I guess I can add it back and see if
+anyone complains.
+
+> > +		bw = MBps_to_icc(985);
+> > +		break;
+> > +	}
+> > +
+> > +	ret = icc_set_bw(pcie->icc_mem, 0, width * bw);
+> > +	if (ret) {
+> > +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> > +			ret);
+
+Johan
