@@ -2,75 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 118DE616A03
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 18:08:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 147CC616A3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 18:12:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231234AbiKBRIJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 13:08:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34416 "EHLO
+        id S230372AbiKBRMY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 13:12:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230292AbiKBRIC (ORCPT
+        with ESMTP id S230300AbiKBRMW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 13:08:02 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4A0B13DFB
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 10:07:59 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id t10so2235903ljj.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 10:07:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kyXR4AZe5V/4jtBvgZTO2g/zo75HfHyox2eOY6fukfE=;
-        b=EZ5fXZ/T6cQIHYqYts4/sZPyfhiduno9I7y7q8/Gg8zjZyRfdYhnPmqzR/YUgl9fJA
-         dXgHI1h+v+vjpBV4M7n6PrB1YrjVvLjzpolgwesg3h5Z/22EEbL92IcMQE+gSHdlRkR5
-         OIRbpGJySfksVOWgdifuCPFOBlmzqI0eL6jiMmh6exyiHBYN9e8BUNGCeOKm5Cpieors
-         B0ZQ0zauWC/3gBeMv3Yl/V1W6qAd1WjY/sw50d82pkeoaUlUbDtgQeNFGTQi2IbpJjIL
-         kcJ+WfGIZqnmaKiAoQO1T+7OvNN79ljYe1Ig7FBqNNVbyrX0eqkPWswRDPdDHFLzs8Ul
-         BMEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kyXR4AZe5V/4jtBvgZTO2g/zo75HfHyox2eOY6fukfE=;
-        b=Y7tze1ihT8IPyBY3m7WW3EXWkzhgm+ahD1oLhXgPNxegMSA5ZgQ8WXDngY9IljDYO1
-         S9gvHhtfM496uqNjYjqSw693elf8dC4rSTIF6ajdSh8bXCwDvymF7BVN2jrpk+S3jp5i
-         JU2N3NPX/2/fNBnwC+l5ZgFdPCRNXkyLnJwCh7uZy4YlOyPvxjE58sA9WffTcqw2MCr3
-         Xsj6b1AWKBrNgytQ0hwSWgCD+oZVV9GD48wuq88Rh3SGFhB7XgrTPDXdDhetIymVaNyL
-         eYf6oyELC3f1LeZMuD5436tX2MixTJKs5PZy0r/KPEAm6sl93WqDgZpz/8p5JVfjZqju
-         xVDw==
-X-Gm-Message-State: ACrzQf0H5rG5ZFDaPKqr7Wr/fepgQinX6msgNm96ciQv8m7JTCVViirb
-        ns8nIe1/+8JpsaRa9+W3J0nfXQ==
-X-Google-Smtp-Source: AMsMyM7l3cmc81phjhM94OiOlHQabL+MkoQsLl3UWuETm5HnK3TdXMpQFwwBLD2Q2msziF2Towml1w==
-X-Received: by 2002:a05:651c:b0b:b0:277:5c0a:f016 with SMTP id b11-20020a05651c0b0b00b002775c0af016mr5714901ljr.173.1667408877872;
-        Wed, 02 Nov 2022 10:07:57 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id s15-20020a056512314f00b00497b198987bsm2075905lfi.26.2022.11.02.10.07.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Nov 2022 10:07:57 -0700 (PDT)
-Message-ID: <863b4c93-1770-ecd4-9eb6-333b3e8ab7d2@linaro.org>
-Date:   Wed, 2 Nov 2022 20:07:56 +0300
+        Wed, 2 Nov 2022 13:12:22 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70F221707A;
+        Wed,  2 Nov 2022 10:12:20 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A2Gk4S3026130;
+        Wed, 2 Nov 2022 17:12:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=kztBA4QgpFO/OFQcyw3N+l1k3F3fC0peD9KXSrCAEAc=;
+ b=L3Z6ka0kxQndRgy4suU1p0Zlio6jddaHmc+LUTv+CcBRmLp+5wKjDQYi/IaGnclnqVdT
+ /us8utMuuUCGrRMzMAC2dx9IGN5pAxNN3BONA/vtgqmlmXXkFFrASdCVDkvu1epMtSHm
+ 5niLvPiV7pQ/ND596yw0wIrNNMpTQu5HUkj9FQM9l/beS5URWvnf9m86aM02brHDeiDg
+ Yn5uXtL6nGbPzUQZghzgIUcNTN+g/5s+Ip9UVnF8QGGgQ7jYwzXrJUZSSFZGBi5Re/C5
+ dVGM672f92u3Yhbx57qHsdyexDx3DvjEq5CT21MpPqorCcXvExGO031DC9imE+Yw8eQD uA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kkvbg84ef-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 02 Nov 2022 17:12:19 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A2HCJlj029459
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 2 Nov 2022 17:12:19 GMT
+Received: from hu-ylal-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Wed, 2 Nov 2022 10:12:16 -0700
+From:   Yogesh Lal <quic_ylal@quicinc.com>
+To:     <bjorn.andersson@linaro.org>, <quic_sibis@quicinc.com>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Yogesh Lal <quic_ylal@quicinc.com>
+Subject: [PATCH V3] remoteproc: qcom: pas: Adjust the phys addr wrt the mem region
+Date:   Wed, 2 Nov 2022 22:42:09 +0530
+Message-ID: <1667409129-6254-1-git-send-email-quic_ylal@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH] drm/msm/disp/dpu1: register crtc color management to
- first crtc in the list
-Content-Language: en-GB
-To:     Kalyan Thota <quic_kalyant@quicinc.com>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        dianders@chromium.org, swboyd@chromium.org,
-        quic_vpolimer@quicinc.com, quic_abhinavk@quicinc.com
-References: <1667300361-14572-1-git-send-email-quic_kalyant@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1667300361-14572-1-git-send-email-quic_kalyant@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: fl_d_oZe-8U5zlScz1bQwcGBKxeP-2M_
+X-Proofpoint-ORIG-GUID: fl_d_oZe-8U5zlScz1bQwcGBKxeP-2M_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-02_13,2022-11-02_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1011
+ spamscore=0 mlxscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ adultscore=0 phishscore=0 malwarescore=0 mlxlogscore=999
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211020113
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,339 +73,116 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/11/2022 13:59, Kalyan Thota wrote:
-> This patch does the following:
-> 
-> 1) Registers crtc color management to the first crtc in the list and
-> attach to an encoder which is neither pluggable nor virtual
-> 2) Pin 1 crtc to 1 encoder
-> 3) Assign dspp block if crtc supports color processing.
+The minidump table in the toc contains physical addresses that may lie
+before the physical address of the first elf segment in relocatable
+images. This change adds a custom dump function for minidumps which
+calculates the offset into the carveout region using the start of
+the physical address instead of the start of the first elf segment.
 
-A clear identifier that the patch should be split.
+Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
+Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
+---
+ drivers/remoteproc/qcom_common.c   | 13 +++++++++----
+ drivers/remoteproc/qcom_common.h   |  5 ++++-
+ drivers/remoteproc/qcom_q6v5_pas.c | 20 +++++++++++++++++++-
+ 3 files changed, 32 insertions(+), 6 deletions(-)
 
-> 
-> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 17 +++++++++++-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    | 23 ++++++++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 42 ++++++++++++++++++++++-------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 16 ++++++++++-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 14 +++++++---
->   drivers/gpu/drm/msm/dp/dp_display.c         |  5 ++++
->   drivers/gpu/drm/msm/msm_drv.h               |  7 ++++-
->   7 files changed, 109 insertions(+), 15 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 4170fbe..14ff7ca 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -18,6 +18,7 @@
->   #include <drm/drm_flip_work.h>
->   #include <drm/drm_framebuffer.h>
->   #include <drm/drm_mode.h>
-> +#include <drm/drm_mode_object.h>
->   #include <drm/drm_probe_helper.h>
->   #include <drm/drm_rect.h>
->   #include <drm/drm_vblank.h>
-> @@ -553,6 +554,17 @@ static void _dpu_crtc_complete_flip(struct drm_crtc *crtc)
->   	spin_unlock_irqrestore(&dev->event_lock, flags);
->   }
->   
-> +bool dpu_crtc_has_color_enabled(struct drm_crtc *crtc)
-> +{
-> +	u32 gamma_id = crtc->dev->mode_config.gamma_lut_property->base.id;
-> +	u32 degamma_id = crtc->dev->mode_config.degamma_lut_property->base.id;
-> +	u32 ctm_id = crtc->dev->mode_config.ctm_property->base.id;
-> +
-> +	return !!(find_prop_id(&crtc->base, gamma_id) ||
-> +		  find_prop_id(&crtc->base, degamma_id) ||
-> +		  find_prop_id(&crtc->base, ctm_id));
-> +}
-> +
->   enum dpu_intf_mode dpu_crtc_get_intf_mode(struct drm_crtc *crtc)
->   {
->   	struct drm_encoder *encoder;
-> @@ -1575,6 +1587,8 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
->   {
->   	struct drm_crtc *crtc = NULL;
->   	struct dpu_crtc *dpu_crtc = NULL;
-> +	struct msm_drm_private *priv = dev->dev_private;
-> +	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
->   	int i;
->   
->   	dpu_crtc = kzalloc(sizeof(*dpu_crtc), GFP_KERNEL);
-> @@ -1604,7 +1618,8 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
->   
->   	drm_crtc_helper_add(crtc, &dpu_crtc_helper_funcs);
->   
-> -	drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
-> +	if (dpu_kms->catalog->dspp && drm_crtc_index(crtc) == 0)
-
-This would limit color management to first CRTC. As each CRTC can use 
-not more than two LMs (and two DSPPs), we can support up to num_dspps / 
-2 color-mgmt-enabled CRTCs.
-
-A side note: ideally we need a way to change color mgtm enablement in 
-runtime. Unfortunately with the current API this doesn't seem possible.
-
-> +		drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
->   
->   	/* save user friendly CRTC name for later */
->   	snprintf(dpu_crtc->name, DPU_CRTC_NAME_SIZE, "crtc%u", crtc->base.id);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> index 539b68b..164208e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> @@ -240,6 +240,29 @@ static inline int dpu_crtc_frame_pending(struct drm_crtc *crtc)
->   }
->   
->   /**
-> + * find_prop_id - find the property for the drm object
-> + * @obj: Pointer to drm object
-> + * @prop_id: Property id.
-> + */
-> +static inline struct drm_property *find_prop_id(struct drm_mode_object *obj,
-> +					       uint32_t prop_id)
-> +{
-> +	int i;
-> +
-> +	for (i = 0; i < obj->properties->count; i++)
-> +		if (obj->properties->properties[i]->base.id == prop_id)
-> +			return obj->properties->properties[i];
-> +
-> +	return NULL;
-> +}
-
-Generic helper should go to drm core code.
-
-> +
-> +/**
-> + * dpu_crtc_has_color_enabled - check if the crtc has color management enabled
-> + * @crtc: Pointer to drm crtc object
-> + */
-> +bool dpu_crtc_has_color_enabled(struct drm_crtc *crtc);
-> +
-> +/**
->    * dpu_crtc_vblank - enable or disable vblanks for this crtc
->    * @crtc: Pointer to drm crtc object
->    * @en: true to enable vblanks, false to disable
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 9c6817b..f09b957 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -545,7 +545,8 @@ bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
->   static struct msm_display_topology dpu_encoder_get_topology(
->   			struct dpu_encoder_virt *dpu_enc,
->   			struct dpu_kms *dpu_kms,
-> -			struct drm_display_mode *mode)
-> +			struct drm_display_mode *mode,
-> +			struct drm_crtc *crtc)
->   {
->   	struct msm_display_topology topology = {0};
->   	int i, intf_count = 0;
-> @@ -573,11 +574,9 @@ static struct msm_display_topology dpu_encoder_get_topology(
->   	else
->   		topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
->   
-> -	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
-> -		if (dpu_kms->catalog->dspp &&
-> -			(dpu_kms->catalog->dspp_count >= topology.num_lm))
-> +	if (dpu_crtc_has_color_enabled(crtc) &&
-> +		(dpu_kms->catalog->dspp_count >= topology.num_lm))
->   			topology.num_dspp = topology.num_lm;
-
-This is incorect. We should check if there are enough spare DSPPs, not 
-if there are enough DSPPs at all. And no, telling that there is just a 
-single CTM-enabled CRTC is not an answer.
-
-> -	}
->   
->   	topology.num_enc = 0;
->   	topology.num_intf = intf_count;
-> @@ -643,7 +642,7 @@ static int dpu_encoder_virt_atomic_check(
->   		}
->   	}
->   
-> -	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
-> +	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state->crtc);
->   
->   	/* Reserve dynamic resources now. */
->   	if (!ret) {
-> @@ -2412,7 +2411,7 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
->   	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
->   	struct drm_encoder *drm_enc = NULL;
->   	struct dpu_encoder_virt *dpu_enc = NULL;
-> -	int ret = 0;
-> +	int ret = 0, intf_i;
->   
->   	dpu_enc = to_dpu_encoder_virt(enc);
->   
-> @@ -2424,13 +2423,16 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
->   	timer_setup(&dpu_enc->frame_done_timer,
->   			dpu_encoder_frame_done_timeout, 0);
->   
-> +	intf_i = disp_info->h_tile_instance[0];
->   	if (disp_info->intf_type == DRM_MODE_ENCODER_DSI)
->   		timer_setup(&dpu_enc->vsync_event_timer,
->   				dpu_encoder_vsync_event_handler,
->   				0);
-> -	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS)
-> +	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS) {
->   		dpu_enc->wide_bus_en = msm_dp_wide_bus_available(
-> -				priv->dp[disp_info->h_tile_instance[0]]);
-> +				priv->dp[intf_i]);
-> +		disp_info->is_pluggable = msm_dp_is_pluggable(priv->dp[intf_i]);
-> +	}
-
-And DSI can be pluggable too. Please enumerate connector types here 
-rather than doing that in DP driver.
-
->   
->   	INIT_DELAYED_WORK(&dpu_enc->delayed_off_work,
->   			dpu_encoder_off_work);
-> @@ -2455,6 +2457,28 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
->   
->   }
->   
-> +bool dpu_encoder_is_pluggable(struct drm_encoder *drm_enc)
-> +{
-> +	struct dpu_encoder_virt *dpu_enc;
-> +
-> +	if (!drm_enc)
-> +		return false;
-> +
-> +	dpu_enc = to_dpu_encoder_virt(drm_enc);
-> +	return dpu_enc->disp_info.is_pluggable;
-> +}
-> +
-> +bool dpu_encoder_is_virtual(struct drm_encoder *drm_enc)
-> +{
-> +	struct dpu_encoder_virt *dpu_enc;
-> +
-> +	if (!drm_enc)
-> +		return false;
-> +
-> +	dpu_enc = to_dpu_encoder_virt(drm_enc);
-> +	return (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_VIRTUAL);
-> +}
-> +
->   struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
->   		int drm_enc_mode)
->   {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> index 9e7236e..209adb4 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> @@ -25,7 +25,8 @@
->    * @num_of_h_tiles:     Number of horizontal tiles in case of split interface
->    * @h_tile_instance:    Controller instance used per tile. Number of elements is
->    *                      based on num_of_h_tiles
-> - * @is_cmd_mode		Boolean to indicate if the CMD mode is requested
-> + * @is_cmd_mode:	Boolean to indicate if the CMD mode is requested
-> + * @is_pluggable:	Boolean to indicate if the intf is pluggable
->    * @is_te_using_watchdog_timer:  Boolean to indicate watchdog TE is
->    *				 used instead of panel TE in cmd mode panels
->    * @dsc:		DSC configuration data for DSC-enabled displays
-> @@ -35,6 +36,7 @@ struct msm_display_info {
->   	uint32_t num_of_h_tiles;
->   	uint32_t h_tile_instance[MAX_H_TILES_PER_DISPLAY];
->   	bool is_cmd_mode;
-> +	bool is_pluggable;
->   	bool is_te_using_watchdog_timer;
->   	struct drm_dsc_config *dsc;
->   };
-> @@ -128,6 +130,18 @@ enum dpu_intf_mode dpu_encoder_get_intf_mode(struct drm_encoder *encoder);
->   void dpu_encoder_virt_runtime_resume(struct drm_encoder *encoder);
->   
->   /**
-> + * dpu_encoder_is_pluggable - get pluggable info from the encoder.
-> + * @drm_enc:    Pointer to previously created drm encoder structure
-> + */
-> +bool dpu_encoder_is_pluggable(struct drm_encoder *drm_enc);
-> +
-> +/**
-> + * dpu_encoder_is_virtual - find if the encoder is of type virtual.
-> + * @drm_enc:    Pointer to previously created drm encoder structure
-> + */
-> +bool dpu_encoder_is_virtual(struct drm_encoder *drm_enc);
-> +
-> +/**
->    * dpu_encoder_init - initialize virtual encoder object
->    * @dev:        Pointer to drm device structure
->    * @disp_info:  Pointer to display information structure
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 7a5fabc..2b9c316 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -807,9 +807,17 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
->   		priv->crtcs[priv->num_crtcs++] = crtc;
->   	}
->   
-> -	/* All CRTCs are compatible with all encoders */
-> -	drm_for_each_encoder(encoder, dev)
-> -		encoder->possible_crtcs = (1 << priv->num_crtcs) - 1;
-> +	/* Pin 1 crtc for 1 encoder and crtc 0 for primary display as it has
-> +	 * color management registered
-> +	 */
-> +	i = 1;
-> +	drm_for_each_encoder(encoder, dev) {
-> +		if ((!dpu_encoder_is_pluggable(encoder) &&
-> +			!dpu_encoder_is_virtual(encoder)) || (num_encoders == 1))
-> +			encoder->possible_crtcs = 1 << drm_crtc_index(priv->crtcs[0]);
-> +		else
-> +			encoder->possible_crtcs = 1 << drm_crtc_index(priv->crtcs[i++]);
-
-This can be made much simpler. Allocate a single CRTC for each encoder, 
-disallowing CRTC switching. Then allocate as many CTM-enabled for 
-non-pluggable encoder-CRTC pairs as possible.
-
-> +	}
->   
->   	return 0;
->   }
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index bfd0aef..5690ea3 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1509,6 +1509,11 @@ bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
->   	return dp->wide_bus_en;
->   }
->   
-> +bool msm_dp_is_pluggable(const struct msm_dp *dp_display)
-> +{
-> +	return (dp_display->connector_type == DRM_MODE_CONNECTOR_DisplayPort);
-> +}
-> +
->   void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
->   {
->   	struct dp_display_private *dp;
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index ea80846..b0d0546 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -331,7 +331,7 @@ void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_displa
->   
->   void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor);
->   bool msm_dp_wide_bus_available(const struct msm_dp *dp_display);
-> -
-> +bool msm_dp_is_pluggable(const struct msm_dp *dp_display);
->   #else
->   static inline int __init msm_dp_register(void)
->   {
-> @@ -365,6 +365,11 @@ static inline bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
->   	return false;
->   }
->   
-> +static inline bool msm_dp_is_pluggable(const struct msm_dp *dp_display)
-> +{
-> +	return false;
-> +}
-> +
->   #endif
->   
->   #ifdef CONFIG_DRM_MSM_MDP4
-
+diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
+index 4b91e3c..db8d72e 100644
+--- a/drivers/remoteproc/qcom_common.c
++++ b/drivers/remoteproc/qcom_common.c
+@@ -101,7 +101,9 @@ static void qcom_minidump_cleanup(struct rproc *rproc)
+ 	}
+ }
+ 
+-static int qcom_add_minidump_segments(struct rproc *rproc, struct minidump_subsystem *subsystem)
++static int qcom_add_minidump_segments(struct rproc *rproc, struct minidump_subsystem *subsystem,
++			void (*rproc_dumpfn_t)(struct rproc *rproc, struct rproc_dump_segment *segment,
++				void *dest, size_t offset, size_t size))
+ {
+ 	struct minidump_region __iomem *ptr;
+ 	struct minidump_region region;
+@@ -131,7 +133,7 @@ static int qcom_add_minidump_segments(struct rproc *rproc, struct minidump_subsy
+ 			}
+ 			da = le64_to_cpu(region.address);
+ 			size = le32_to_cpu(region.size);
+-			rproc_coredump_add_custom_segment(rproc, da, size, NULL, name);
++			rproc_coredump_add_custom_segment(rproc, da, size, rproc_dumpfn_t, name);
+ 		}
+ 	}
+ 
+@@ -139,7 +141,10 @@ static int qcom_add_minidump_segments(struct rproc *rproc, struct minidump_subsy
+ 	return 0;
+ }
+ 
+-void qcom_minidump(struct rproc *rproc, unsigned int minidump_id)
++void qcom_minidump(struct rproc *rproc, unsigned int minidump_id,
++		void (*rproc_dumpfn_t)(struct rproc *rproc,
++		struct rproc_dump_segment *segment, void *dest, size_t offset,
++		size_t size))
+ {
+ 	int ret;
+ 	struct minidump_subsystem *subsystem;
+@@ -169,7 +174,7 @@ void qcom_minidump(struct rproc *rproc, unsigned int minidump_id)
+ 		return;
+ 	}
+ 
+-	ret = qcom_add_minidump_segments(rproc, subsystem);
++	ret = qcom_add_minidump_segments(rproc, subsystem, rproc_dumpfn_t);
+ 	if (ret) {
+ 		dev_err(&rproc->dev, "Failed with error: %d while adding minidump entries\n", ret);
+ 		goto clean_minidump;
+diff --git a/drivers/remoteproc/qcom_common.h b/drivers/remoteproc/qcom_common.h
+index c35adf7..c3cc619 100644
+--- a/drivers/remoteproc/qcom_common.h
++++ b/drivers/remoteproc/qcom_common.h
+@@ -33,7 +33,10 @@ struct qcom_rproc_ssr {
+ 	struct qcom_ssr_subsystem *info;
+ };
+ 
+-void qcom_minidump(struct rproc *rproc, unsigned int minidump_id);
++void qcom_minidump(struct rproc *rproc, unsigned int minidump_id,
++			void (*rproc_dumpfn_t)(struct rproc *rproc,
++				struct rproc_dump_segment *segment, void *dest, size_t offset,
++				size_t size));
+ 
+ void qcom_add_glink_subdev(struct rproc *rproc, struct qcom_rproc_glink *glink,
+ 			   const char *ssr_name);
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 401b1ec..785e2d1 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -83,11 +83,29 @@ struct qcom_adsp {
+ 	struct qcom_sysmon *sysmon;
+ };
+ 
++void adsp_segment_dump(struct rproc *rproc, struct rproc_dump_segment *segment,
++						void *dest, size_t offset, size_t size)
++{
++	struct qcom_adsp *adsp = rproc->priv;
++	int total_offset;
++
++	total_offset = segment->da + segment->offset + offset - adsp->mem_phys;
++	if (total_offset < 0 || total_offset + size > adsp->mem_size) {
++		dev_err(adsp->dev,
++			"invalid copy request for segment %pad with offset %zu and size %zu)\n",
++			&segment->da, offset, size);
++		memset(dest, 0xff, size);
++		return;
++	}
++
++	memcpy_fromio(dest, adsp->mem_region + total_offset, size);
++}
++
+ static void adsp_minidump(struct rproc *rproc)
+ {
+ 	struct qcom_adsp *adsp = rproc->priv;
+ 
+-	qcom_minidump(rproc, adsp->minidump_id);
++	qcom_minidump(rproc, adsp->minidump_id, adsp_segment_dump);
+ }
+ 
+ static int adsp_pds_enable(struct qcom_adsp *adsp, struct device **pds,
 -- 
-With best wishes
-Dmitry
+2.7.4
 
