@@ -2,88 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E568615FA8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 10:27:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C8BB4615FD5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 10:33:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230414AbiKBJ1p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 05:27:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34416 "EHLO
+        id S230306AbiKBJdO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 05:33:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231186AbiKBJ1a (ORCPT
+        with ESMTP id S230241AbiKBJdN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 05:27:30 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B42011EEEF;
-        Wed,  2 Nov 2022 02:26:33 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 5CBE6CE200A;
-        Wed,  2 Nov 2022 09:26:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7516AC433D6;
-        Wed,  2 Nov 2022 09:26:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667381189;
-        bh=mSmVuNa2iVDMcz+0i0b55GRgIdK4V6DaNIrH02lHInY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Q0ZqnIl7ITyNb8t/Z6wirSZHpRM9fmnk9SwW0HbPbDNEw9djBZS8FmSUDNU14vf/K
-         ByHyWYJS72Ai19W3mlLZ4AO0Ayn1z2U3OjrMo2NEmtuQnLBgygkYlESQM0/UoN/dTl
-         LQy43pECrao9oYusKOvejSJwer6NYm3saPTgTTP3bOC/nRpZsqPNuv6DDz6u4cE9Bb
-         sXB1s2t6vRwJqcl8utU850F8Qv/UqWzuWtmPy6KqjlBRhAcs6m84Ws7Jkrfbem6VZo
-         fFVB4wkCQcMRe6b3kD35vLuMkZ/S4BOHQVdmZOZGN1oK59CoPE0JjxSwljvZQvRceP
-         OBERs9G78BlKw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oqA0j-0008R1-MK; Wed, 02 Nov 2022 10:26:13 +0100
-Date:   Wed, 2 Nov 2022 10:26:13 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Shazad Hussain <quic_shazhuss@quicinc.com>
-Cc:     Stephen Boyd <sboyd@kernel.org>, andersson@kernel.org,
-        bmasney@redhat.com, Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1] clk: qcom: gcc-sc8280xp: add cxo as parent for
- gcc_ufs_ref_clkref_clk
-Message-ID: <Y2I3tekSAO42r0xR@hovoldconsulting.com>
-References: <20221030142333.31019-1-quic_shazhuss@quicinc.com>
- <20221101182402.32CE5C433C1@smtp.kernel.org>
- <Y2IZaxukERXNcPGR@hovoldconsulting.com>
- <c96304da-f57e-4926-2f3f-665c2054fb00@quicinc.com>
- <Y2Imnf1+v5j5CH9r@hovoldconsulting.com>
- <bb590bfb-07a4-97c1-e5c0-d00d840e2e11@quicinc.com>
+        Wed, 2 Nov 2022 05:33:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5745B6582
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 02:32:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1667381536;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=qCDrX0xKXyu8erIDNjxDiJKuT0hxZZKKE3HXuUGBVDQ=;
+        b=g86kVOmVqcJ3jvx7QLkap7dOJqWx4Jkz4xwCyM5E3D5uU39i8xAefQvqxOKN5H5LoxvUsS
+        PIC72S+nNsAaw1AjBB0WT2jmkEDsxqvhrcNE9IXrbtcn7F5l8j3iSkrfnqjMOP901MtXZm
+        CJcXGUj8XU5QGMG0V3YLjmFRZQfk710=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-653-0JSQOKi0MjC-1l3yXKVjlw-1; Wed, 02 Nov 2022 05:32:15 -0400
+X-MC-Unique: 0JSQOKi0MjC-1l3yXKVjlw-1
+Received: by mail-wm1-f72.google.com with SMTP id v188-20020a1cacc5000000b003cf76c4ae66so826573wme.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 02:32:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qCDrX0xKXyu8erIDNjxDiJKuT0hxZZKKE3HXuUGBVDQ=;
+        b=El8dEwCdHQF1gArqF9iQ0ulNURh7Uoves/iNhr+nBXCl48w3DI2HceY/YKu+n9zp+5
+         3sgg4Xe4+3G46okWyoQBOPOYiU9IkZ2MC4aDJF8a5CN1XVEyrGaGx516H+hF6HeEG7fg
+         lrvZcqkJabCFBtN+U2wN85r8wcTl3vNlNh15eSchQz45flKQtiWVzBQ9O6kf1oyz5lYU
+         5TzSScQPfQlFKs/KaZ9s2hvxKoA1kmmZM8Rbh3jpUPVU6+YqZzy9DTAGScscEwrF8+5w
+         By/rZ2GsIOCvqdItnfl7l3gfD2BWY7Pj9057Dlu836lF6nsrwegtvIReBvvfWnl4naZV
+         fHLw==
+X-Gm-Message-State: ACrzQf0sZbiDRoZWms10MP7UZ8dVdocNV4g7FYKV6d2jg0Ac1TtdIyLz
+        ki5FeB/qzViHE7hxOgsCt9r9K66+v1yOHKsC8RXHrgBwnxgHmGHctSbXgozpWbMJPkR/qanfwdk
+        kMQFanJMym5DPKXs/BsHq5NWc4Q==
+X-Received: by 2002:a05:600c:6023:b0:3cf:7dc1:e08e with SMTP id az35-20020a05600c602300b003cf7dc1e08emr5443616wmb.154.1667381534284;
+        Wed, 02 Nov 2022 02:32:14 -0700 (PDT)
+X-Google-Smtp-Source: AMsMyM7iks5yFnak5X2iZPcs6wSoPN4c8RmVdgyjVaQzUQOEwDY0j8GZM7MD/vLKrS0XyFefd22bEw==
+X-Received: by 2002:a05:600c:6023:b0:3cf:7dc1:e08e with SMTP id az35-20020a05600c602300b003cf7dc1e08emr5443583wmb.154.1667381533975;
+        Wed, 02 Nov 2022 02:32:13 -0700 (PDT)
+Received: from [192.168.1.130] (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
+        by smtp.gmail.com with ESMTPSA id x21-20020a1c7c15000000b003b492753826sm1361990wmc.43.2022.11.02.02.32.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Nov 2022 02:32:13 -0700 (PDT)
+Message-ID: <3ab32fc3-f2aa-1b42-fd87-557482ab56d5@redhat.com>
+Date:   Wed, 2 Nov 2022 10:32:11 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bb590bfb-07a4-97c1-e5c0-d00d840e2e11@quicinc.com>
-X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH v2 17/21] drm/fb-helper: Perform all fbdev I/O with the
+ same implementation
+Content-Language: en-US
+To:     Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
+        airlied@gmail.com, sam@ravnborg.org, mripard@kernel.org,
+        maarten.lankhorst@linux.intel.com
+Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        linux-aspeed@lists.ozlabs.org,
+        linux-arm-kernel@lists.infradead.org,
+        etnaviv@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
+        linux-hyperv@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mips@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        spice-devel@lists.freedesktop.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org
+References: <20221024111953.24307-1-tzimmermann@suse.de>
+ <20221024111953.24307-18-tzimmermann@suse.de>
+From:   Javier Martinez Canillas <javierm@redhat.com>
+In-Reply-To: <20221024111953.24307-18-tzimmermann@suse.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 02, 2022 at 02:15:26PM +0530, Shazad Hussain wrote:
-> On 11/2/2022 1:43 PM, Johan Hovold wrote:
+On 10/24/22 13:19, Thomas Zimmermann wrote:
+> Implement the fbdev's read/write helpers with the same functions. Use
+> the generic fbdev's code as template. Convert all drivers.
+> 
+> DRM's fb helpers must implement regular I/O functionality in struct
+> fb_ops and possibly perform a damage update. Handle all this in the
+> same functions and convert drivers. The functionality has been used
+> as part of the generic fbdev code for some time. The drivers don't
+> set struct drm_fb_helper.fb_dirty, so they will not be affected by
+> damage handling.
+> 
+> For I/O memory, fb helpers now provide drm_fb_helper_cfb_read() and
+> drm_fb_helper_cfb_write(). Several drivers require these. Until now
+> tegra used I/O read and write, although the memory buffer appears to
+> be in system memory. So use _sys_ helpers now.
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
 
-> > Right, but if the PHYs really requires CX and it is not an ancestor of
-> > the refclk then this should be described by the binding (and not be
-> > hidden away in the clock driver).
+[...]
 
-> This makes sense, will be posting v2 post for the same.
-> I assume this should use the Fixes tag then !
+> +static ssize_t __drm_fb_helper_write(struct fb_info *info, const char __user *buf, size_t count,
+> +				     loff_t *ppos, drm_fb_helper_write_screen write_screen)
+> +{
 
-Yeah, I guess to you can add a fixes tag for the commits adding support
-for sc8280xp to the UFS PHY binding and driver.
+[...]
 
-But please do check with the hardware documentation first so we get this
-right this time.
+> +	/*
+> +	 * Copy to framebuffer even if we already logged an error. Emulates
+> +	 * the behavior of the original fbdev implementation.
+> +	 */
+> +	ret = write_screen(info, buf, count, pos);
+> +	if (ret < 0)
+> +		return ret; /* return last error, if any */
+> +	else if (!ret)
+> +		return err; /* return previous error, if any */
+> +
+> +	*ppos += ret;
+> +
 
-I've already asked Bjorn to see what he can dig out as it is still not
-clear how the two "card" refclocks (GCC_UFS_CARD_CLKREF_CLK and
-GCC_UFS_1_CARD_CLKREF_CLK) are supposed to be used.
+Should *ppos be incremented even if the previous error is returned?
 
-Johan
+The write_screen() succeeded anyways, even when the count written was
+smaller than what the caller asked for.
+
+>  /**
+> - * drm_fb_helper_sys_read - wrapper around fb_sys_read
+> + * drm_fb_helper_sys_read - Implements struct &fb_ops.fb_read for system memory
+>   * @info: fb_info struct pointer
+>   * @buf: userspace buffer to read from framebuffer memory
+>   * @count: number of bytes to read from framebuffer memory
+>   * @ppos: read offset within framebuffer memory
+>   *
+> - * A wrapper around fb_sys_read implemented by fbdev core
+> + * Returns:
+> + * The number of read bytes on success, or an error code otherwise.
+>   */
+
+This sentence sounds a little bit off to me. Shouldn't be "number of bytes read"
+instead? I'm not a native English speaker though, so feel free to just ignore me.
+
+[...]
+
+>  
+> +static ssize_t fb_read_screen_base(struct fb_info *info, char __user *buf, size_t count,
+> +				   loff_t pos)
+> +{
+> +	const char __iomem *src = info->screen_base + pos;
+> +	size_t alloc_size = min_t(size_t, count, PAGE_SIZE);
+> +	ssize_t ret = 0;
+> +	int err = 0;
+
+Do you really need these two? AFAIK ssize_t is a signed type
+so you can just use the ret variable to store and return the
+errno value.
+
+[...]
+
+> +static ssize_t fb_write_screen_base(struct fb_info *info, const char __user *buf, size_t count,
+> +				    loff_t pos)
+> +{
+> +	char __iomem *dst = info->screen_base + pos;
+> +	size_t alloc_size = min_t(size_t, count, PAGE_SIZE);
+> +	ssize_t ret = 0;
+> +	int err = 0;
+
+Same here.
+
+-- 
+Best regards,
+
+Javier Martinez Canillas
+Core Platforms
+Red Hat
+
