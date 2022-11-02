@@ -2,145 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3065261601B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 10:42:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D0E961605C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 11:02:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229598AbiKBJmM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 05:42:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53258 "EHLO
+        id S229688AbiKBKCZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 06:02:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229877AbiKBJmK (ORCPT
+        with ESMTP id S229459AbiKBKCY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 05:42:10 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 368E122BDC;
-        Wed,  2 Nov 2022 02:42:06 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A29Ivv7010134;
-        Wed, 2 Nov 2022 09:41:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=/QZZc3grguwORo1yJe+PG5HwABOwaG+12JG/N0MDOc4=;
- b=MdsR+E7VHLfs0sumt1hUK6gVYgfwgsS89uX0HMSy8n/K87FXAWReDQOmMw3NLbdspaB0
- onJ2YrMa6Cp+qJjbx5oewlcYzyYyff/SsN/tm0VvRWV0jtZJYvvE6Jq9OHCBsucKAuiE
- ZU6K7+47kvGKWdqA+kJCNiaiVLnzU75xunIbsENru+0u/LZyArwEyXyb0SCPmyRq127r
- T/x3no2uVE7ChAIUlFZU9W7yCPnnHeOgf4pXJMhHpS/wmDfHv9kOBZm74Iw6dsYf/Pvh
- 3j4ekeWg319bJdIm6LYueGN2yiKYWdKRbVdGwZLnSriNd87Lo6p/Ye8YSKKuPfGWvb+R ow== 
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kkja3ggk2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 02 Nov 2022 09:41:55 +0000
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2A29fqgd026445;
-        Wed, 2 Nov 2022 09:41:52 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 3khdq7sex1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 02 Nov 2022 09:41:52 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2A29fp2u026440;
-        Wed, 2 Nov 2022 09:41:51 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 2A29fpLI026439;
-        Wed, 02 Nov 2022 09:41:51 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
-        id C20ED36CB; Wed,  2 Nov 2022 17:41:49 +0800 (CST)
-From:   Qiang Yu <quic_qianyu@quicinc.com>
-To:     mani@kernel.org, loic.poulain@linaro.org
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>
-Subject: [PATCH v2] bus: mhi: host: Add session ID to MHI controller
-Date:   Wed,  2 Nov 2022 17:41:47 +0800
-Message-Id: <1667382107-14306-1-git-send-email-quic_qianyu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 2ow7Dv-jBa3d3Ro5nMJVrfijwG-et0e-
-X-Proofpoint-GUID: 2ow7Dv-jBa3d3Ro5nMJVrfijwG-et0e-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-02_06,2022-11-02_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- priorityscore=1501 suspectscore=0 mlxlogscore=999 bulkscore=0 adultscore=0
- clxscore=1011 phishscore=0 mlxscore=0 malwarescore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
- definitions=main-2211020058
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=no
-        autolearn_force=no version=3.4.6
+        Wed, 2 Nov 2022 06:02:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 965D7233B8
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 03:01:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1667383286;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=QoVTRIE06q1gLaA+FiGPh2NoY5TNtlfidxMdk3t+aTM=;
+        b=fuSs/eA4/7vZhV+X35FsnJlEhJ/20+W2k2LZenlQ7FIAvrb5mWjQpHZEEE3G7/vkuBezcY
+        ci/Smj7q/Z7hIgWVlQx1F2hNiJZQuFSvdEElWEudDf6CzncUGzYGNXoMcPmOQDpm4N2pDn
+        leC3TPAoQgZGNS5Qf5k3LtPYa4n+dVI=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-363-DynHv0viPT659BaG2_KgIg-1; Wed, 02 Nov 2022 06:01:25 -0400
+X-MC-Unique: DynHv0viPT659BaG2_KgIg-1
+Received: by mail-wr1-f69.google.com with SMTP id p7-20020adfba87000000b0022cc6f805b1so4682378wrg.21
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 03:01:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QoVTRIE06q1gLaA+FiGPh2NoY5TNtlfidxMdk3t+aTM=;
+        b=AMe99VJkn0eRY3x4Zwzx72bpsLWwy1vNxNDtZ6iJW66EclHpMAvhdLN1/NsAmsxEkg
+         3Km/sKlo2dLMB4npbPDdNiuU9tWAF3nHi8/36QKqxjQQI9ZCGdSNBK4cIY9+LqAwMfKI
+         3iVyQWv6LV7qLPRRAq929X4h8KCKr0x/CryVFay719tt5h7SSj4Z5/19GSh4h1tJsvms
+         wJuqfGYVJHON8ZNoUXnL+jIG2C9GpODUmHnIJP/pax65+NZmACQ1kctrMEnP+52+2twJ
+         wmCWbPViR5wIAp7i7YEzTlABYgPq9woioMsOadOmbau40EYZ0QdaqIYcYaNVw/gt3Zo9
+         zb6Q==
+X-Gm-Message-State: ACrzQf25ZqVXZiSLTkGQVzCPG/BJX6bQu81qY/cbfAp0GodkIGFooFT2
+        ptCqCD9PwqvxugpsV3XFn6HHeuez5lsyKLou+IOLqnAenrd4xxJtJsX7TrOY+U+gJ1Du3/HwUCv
+        ofNulDYYdZ1eoK9Dy69dPnkKJ5g==
+X-Received: by 2002:a5d:5505:0:b0:236:582b:7eb0 with SMTP id b5-20020a5d5505000000b00236582b7eb0mr14405771wrv.68.1667383284450;
+        Wed, 02 Nov 2022 03:01:24 -0700 (PDT)
+X-Google-Smtp-Source: AMsMyM5ieiweFPtXW5w3c0VZoUXMoQohTPuy1WtQBfT29g+UzlDhvHMzFOjUUUPFpm0LZwMa5DV8ag==
+X-Received: by 2002:a5d:5505:0:b0:236:582b:7eb0 with SMTP id b5-20020a5d5505000000b00236582b7eb0mr14405736wrv.68.1667383284200;
+        Wed, 02 Nov 2022 03:01:24 -0700 (PDT)
+Received: from [192.168.1.130] (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
+        by smtp.gmail.com with ESMTPSA id b13-20020a5d550d000000b002366b17ca8bsm14230263wrv.108.2022.11.02.03.01.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Nov 2022 03:01:23 -0700 (PDT)
+Message-ID: <1d2b9809-857f-48cc-1177-72e6fc67b8e5@redhat.com>
+Date:   Wed, 2 Nov 2022 11:01:22 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH v2 20/21] drm/fb-helper: Move generic fbdev emulation into
+ separate source file
+Content-Language: en-US
+To:     Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
+        airlied@gmail.com, sam@ravnborg.org, mripard@kernel.org,
+        maarten.lankhorst@linux.intel.com
+Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        linux-aspeed@lists.ozlabs.org,
+        linux-arm-kernel@lists.infradead.org,
+        etnaviv@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
+        linux-hyperv@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mips@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        spice-devel@lists.freedesktop.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org
+References: <20221024111953.24307-1-tzimmermann@suse.de>
+ <20221024111953.24307-21-tzimmermann@suse.de>
+From:   Javier Martinez Canillas <javierm@redhat.com>
+In-Reply-To: <20221024111953.24307-21-tzimmermann@suse.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Session ID to be used during BHI transfers to recognize a
-particular session are currently not being stored in the MHI
-controller structure. Store them to allow for debug enhancement
-described below.
+On 10/24/22 13:19, Thomas Zimmermann wrote:
+> Move the generic fbdev implementation into its own source and header
+> file. Adapt drivers. No functonal changes, but some of the internal
+> helpers have been renamed to fit into the drm_fbdev_ naming scheme.
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
 
-Sometimes, we may find some error logs and want to see what
-happens on device side when host is printing these error logs.
-Session id can help us find the logs we want on device side
-quickly, especially when we are faced with a huge amount of logs.
-
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
----
-v1->v2: modify commit message.
-
- drivers/bus/mhi/host/boot.c | 8 ++++----
- include/linux/mhi.h         | 1 +
- 2 files changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-index 1c69fee..79a0eec 100644
---- a/drivers/bus/mhi/host/boot.c
-+++ b/drivers/bus/mhi/host/boot.c
-@@ -229,7 +229,7 @@ static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
- 			   dma_addr_t dma_addr,
- 			   size_t size)
- {
--	u32 tx_status, val, session_id;
-+	u32 tx_status, val;
- 	int i, ret;
- 	void __iomem *base = mhi_cntrl->bhi;
- 	rwlock_t *pm_lock = &mhi_cntrl->pm_lock;
-@@ -251,16 +251,16 @@ static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
- 		goto invalid_pm_state;
- 	}
- 
--	session_id = MHI_RANDOM_U32_NONZERO(BHI_TXDB_SEQNUM_BMSK);
-+	mhi_cntrl->session_id = MHI_RANDOM_U32_NONZERO(BHI_TXDB_SEQNUM_BMSK);
- 	dev_dbg(dev, "Starting image download via BHI. Session ID: %u\n",
--		session_id);
-+		mhi_cntrl->session_id);
- 	mhi_write_reg(mhi_cntrl, base, BHI_STATUS, 0);
- 	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_HIGH,
- 		      upper_32_bits(dma_addr));
- 	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_LOW,
- 		      lower_32_bits(dma_addr));
- 	mhi_write_reg(mhi_cntrl, base, BHI_IMGSIZE, size);
--	mhi_write_reg(mhi_cntrl, base, BHI_IMGTXDB, session_id);
-+	mhi_write_reg(mhi_cntrl, base, BHI_IMGTXDB, mhi_cntrl->session_id);
- 	read_unlock_bh(pm_lock);
- 
- 	/* Wait for the image download to complete */
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index a5441ad..8b3c934 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -405,6 +405,7 @@ struct mhi_controller {
- 	u32 minor_version;
- 	u32 serial_number;
- 	u32 oem_pk_hash[MHI_MAX_OEM_PK_HASH_SEGMENTS];
-+	u32 session_id;
- 
- 	struct mhi_event *mhi_event;
- 	struct mhi_cmd *mhi_cmd;
 -- 
-2.7.4
+Best regards,
+
+Javier Martinez Canillas
+Core Platforms
+Red Hat
 
