@@ -2,122 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06FDE616AAE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 18:28:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 50CCE616ABB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 18:29:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230179AbiKBR2m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 13:28:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53510 "EHLO
+        id S231530AbiKBR3d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 13:29:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230077AbiKBR2l (ORCPT
+        with ESMTP id S231546AbiKBR33 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 13:28:41 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15E35BAD
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 10:28:40 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id k2so47251206ejr.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 10:28:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=X2+9yxVt9jWEvW8G1POIGEGcQSupOLAIpJg0gweghVs=;
-        b=EgGB89Zg2h2E8cHoQjjgPCz2n0IaFrtoRPxndhM06adDo28bUdZZyYjM7q7PGcAuCO
-         qrK1/JRrMVIgQ54XSYURFj9EiicVAjN1F6gMP1c632DyLUMlyDJIn0yQ1+VaCn4KYaHU
-         OW4PLBRpp/FdhTOokAVnaOpXhTYDriLrSphdI=
+        Wed, 2 Nov 2022 13:29:29 -0400
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C6955FD5;
+        Wed,  2 Nov 2022 10:29:22 -0700 (PDT)
+Received: by mail-ot1-f53.google.com with SMTP id 16-20020a9d0490000000b0066938311495so10654217otm.4;
+        Wed, 02 Nov 2022 10:29:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=X2+9yxVt9jWEvW8G1POIGEGcQSupOLAIpJg0gweghVs=;
-        b=vuMGgiwp+SGf5Nm3ieZLvB0RLS5dHZL063jyLi5DCSi46JUwexFO04sJGcF6ouNRCw
-         Tmpu2qRz+4a5EaLKx5HXLxdiOhkfbOH7Zg2f1BFVmUQDmUtI0s0FdezrdC0UnDVU2P3p
-         t+F77nePhE9rWyYfmbc4hcmgMLD8OVFKzR9SVSxDzsWb1ufasMGfgNp9Mqf5F8TQupME
-         s1GEdJDHR6mLom+izdkhYM7hX74oWVKU1DDb47zHNyZAEGS5T9iMTthwCeIrsKNwlkaT
-         W2nFUGc9JqNVhI3Y8dIUPRWaF7dpeTLQz+jne1lZKxkuxKsILsjqazdcv2PjRprtE1GQ
-         3hEg==
-X-Gm-Message-State: ACrzQf1VAcN4kNoXWrb8zbA8qC9ZHxfP6jN4885P3urtpSf4LuDTGh65
-        12KYzmcie6DME+dCBdZOv7kfAkrgWXadPlu6
-X-Google-Smtp-Source: AMsMyM6q9CmwZ4EahGPZhgD1vp+mENqhgSKe61eXimM54Bp2Zj4+MIYn9qqA4hL+z4H7k1Guy56uIw==
-X-Received: by 2002:a17:906:4717:b0:7ad:c606:349f with SMTP id y23-20020a170906471700b007adc606349fmr19297294ejq.214.1667410118418;
-        Wed, 02 Nov 2022 10:28:38 -0700 (PDT)
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com. [209.85.128.52])
-        by smtp.gmail.com with ESMTPSA id f15-20020a50ee8f000000b00462e4de6891sm6094135edr.35.2022.11.02.10.28.36
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Nov 2022 10:28:37 -0700 (PDT)
-Received: by mail-wm1-f52.google.com with SMTP id r186-20020a1c44c3000000b003cf4d389c41so1736244wma.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 10:28:36 -0700 (PDT)
-X-Received: by 2002:a05:600c:2212:b0:3cf:6068:3c40 with SMTP id
- z18-20020a05600c221200b003cf60683c40mr16617338wml.57.1667410116349; Wed, 02
- Nov 2022 10:28:36 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LEpRB2dhc51/gCDHhrS4K+eUaEu05u03r4bcPUfjBNY=;
+        b=bwIekMpFoAYtBrfBQ5QNSBKvxaFcBeRucYijLCjwArwAHEXj2Tlo8ODcxHKkm9VCKw
+         aIldED8yyBmcKtJ5z7oCTMJ5yoTB46aF4SwB36csYABd5efz4k6THqomvxaDalLmsN9i
+         8HNSJxM2sQDDU5FTtkIciXtG8e9LrPX241lAGnJpCDGP0goFdQsjQ1BLoB0NFzk/R0Pz
+         r3IDDL3In8W28icedCzXCQi4FH5+pIVYP8SnSrtIIUg/0OUxk4cIEdsdSBvs6ywhXk0n
+         iQYjg0tAkY+RLXI7bTzXK7zSPNATU3udmDwlCOpPmNx2ASVr0x3KVhXluGi7wP3ZbTrr
+         U9Uw==
+X-Gm-Message-State: ACrzQf2ZsFxfNytskQ6ixsvABtJ6HZIc8R9v2dS3y6eo3WMSVIWUno51
+        TO9mjQ2P06EubBycnH0gaw==
+X-Google-Smtp-Source: AMsMyM70U1ELYK0+O7pqLeORhCvc6X7y6ep05YXLtd19VAaeHVJOLJpBotoWzAb5C71Jea3ggzrG6Q==
+X-Received: by 2002:a05:6830:6203:b0:65c:39a9:4007 with SMTP id cd3-20020a056830620300b0065c39a94007mr12686538otb.92.1667410161329;
+        Wed, 02 Nov 2022 10:29:21 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id bl8-20020a056808308800b0035028730c90sm4724159oib.1.2022.11.02.10.29.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Nov 2022 10:29:20 -0700 (PDT)
+Received: (nullmailer pid 4192956 invoked by uid 1000);
+        Wed, 02 Nov 2022 17:29:22 -0000
+Date:   Wed, 2 Nov 2022 12:29:22 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     Lee Jones <lee@kernel.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        phone-devel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Jingoo Han <jingoohan1@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>, Pavel Machek <pavel@ucw.cz>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Bjorn Andersson <andersson@kernel.org>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-leds@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] dt-bindings: backlight: qcom-wled: Add PMI8950
+ compatible
+Message-ID: <166741016166.4192902.16881683175503637947.robh@kernel.org>
+References: <20221101161801.1058969-1-luca@z3ntu.xyz>
 MIME-Version: 1.0
-References: <1667237245-24988-1-git-send-email-quic_khsieh@quicinc.com>
- <94b507e8-5b94-12ae-4c81-95f5d36279d5@linaro.org> <deb60200-5a37-ec77-9515-0c0c89022174@quicinc.com>
- <CAD=FV=X_fs_4JYcRvAwkU9mAafOten9WdyzPfSVWdAU=ZMo8zg@mail.gmail.com>
- <155e4171-187c-4ecf-5a9b-12f0c2207524@linaro.org> <CAD=FV=Wk5rBSq9Mx1GCO0QFYckKV9KUFKL36Ld7dQX1ypHVcYw@mail.gmail.com>
- <CAD=FV=XTOUjVAGFWZ6xTkcNOrCT1p73aU-=KJNYUOxsS-BQsyA@mail.gmail.com> <c5aedb31-3881-50e7-f747-e75b18c3f4b8@linaro.org>
-In-Reply-To: <c5aedb31-3881-50e7-f747-e75b18c3f4b8@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 2 Nov 2022 10:28:22 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WPde5wVOGCKQYGuGwgCwRebox4FF0MgV_2pPCTsfo_UA@mail.gmail.com>
-Message-ID: <CAD=FV=WPde5wVOGCKQYGuGwgCwRebox4FF0MgV_2pPCTsfo_UA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dp: remove limitation of link rate at 5.4G to
- support HBR3
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, vkoul@kernel.org,
-        daniel@ffwll.ch, airlied@linux.ie, agross@kernel.org,
-        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221101161801.1058969-1-luca@z3ntu.xyz>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Wed, Nov 2, 2022 at 10:23 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> > 1. Someone figures out how to model this with the bridge chain and
-> > then we only allow HBR3 if we detect we've got a TCPC that supports
-> > it. This seems like the cleanest / best but feels like a long pole.
-> > Not only have we been trying to get the TCPC-modeled-as-a-bridge stuff
-> > landed for a long time but even when we do it we still don't have a
-> > solution for how to communicate the number of lanes and other stuff
-> > between the TCPC and the DP controller so we have to enrich the bridge
-> > interface.
->
-> I think we'd need some OOB interface. For example for DSI interfaces we
-> have mipi_dsi_device struct to communicate such OOB data.
->
-> Also take a note regarding data-lanes from my previous email.
+On Tue, 01 Nov 2022 17:17:59 +0100, Luca Weiss wrote:
+> Document the compatible for the wled block found in PMI8950.
+> 
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+> Changes since v2:
+> * New patch
+> 
+>  Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-Right, we can somehow communicate the max link rate through the bridge
-chain to the DP controller in an OOB manner that would work.
-
-
-> > 2. We add in a DT property to the display controller node that says
-> > the max link rate for use on this board. This feels like a hack, but
-> > maybe it's not too bad. Certainly it would be incredibly simple to
-> > implement. Actually... ...one could argue that even if we later model
-> > the TCPC as a bridge that this property would still be valid / useful!
-> > You could certainly imagine that the SoC supports HBR3 and the TCPC
-> > supports HBR3 but that the board routing between the SoC and the TCPC
-> > is bad and only supports HBR2. In this case the only way out is
-> > essentially a "board constraint" AKA a DT property in the DP
-> > controller.
->
-> We have been discussing similar topics with Abhinav. Krzysztof suggested
-> using link-frequencies property to provide max and min values.
-
-This sounds good to me and seems worth doing even if we eventually do #1.
+Acked-by: Rob Herring <robh@kernel.org>
