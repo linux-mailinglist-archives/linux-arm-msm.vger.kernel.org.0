@@ -2,97 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 844BD61671B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 17:08:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 909B66167F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 17:14:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230159AbiKBQIK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 12:08:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47324 "EHLO
+        id S231410AbiKBQNI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 12:13:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230499AbiKBQII (ORCPT
+        with ESMTP id S231559AbiKBQMC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 12:08:08 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06D4F2CC97
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 09:08:04 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id z24so25669297ljn.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 09:08:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0I/ROXPneInb/MGZ/Nkeqw8uPPG8K3m2UvjVJMSd+70=;
-        b=DyRbaApygVrXJkd7rDhA17TXgTM8qZGDpV0ZixOzyhL+ihS++mbs2tMfh70u97VEyQ
-         WsBXCvglwmSJp5likmQuSY9dR640qAqrf55JQUnG4QbgBeA7TM/NKo+3mCh4v2kPJ/2U
-         XleqdzJkpJngIp8pZilmw9CKU2OSxMWSPu8BD95womQt147bfrADoJhJWPGmCBjxyN+l
-         pPMmt9/l4aElNauCvyltO12mamCd6HOlpyXFaqn2/QvpZA/PjvkkzwE0Zw+B2SugbTYk
-         pdYjWR0rocQnCPJU3gs6K2DHJcq5JjCi/u5NqBYaL88JDzIg1QDAGvFsod20obUw7t+C
-         /hbg==
+        Wed, 2 Nov 2022 12:12:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 973492B1AF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 09:10:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1667405458;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=818fkauCT2wdZz4+yrO04ax3xbhchL67Khz2gBKnDvo=;
+        b=cpTfzeMF/jyFZiVa7xy+nMaE24YgZbQYdy4NDwu/hKSuEZTUA1w4eRTQlCYWLUzsS5FGkv
+        Rfor/3NvfODt8rah0vGspM5P0ixc58OD5+pzZLV/XepqM0kWk8ss1WBJZ/4e37/ojHr79A
+        d9M1cQm3yIXLi1p9xJWRdBD+nh2jlWY=
+Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
+ [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-400-0aaR8DPZOziJl7_nfZmzMg-1; Wed, 02 Nov 2022 12:10:57 -0400
+X-MC-Unique: 0aaR8DPZOziJl7_nfZmzMg-1
+Received: by mail-oa1-f69.google.com with SMTP id 586e51a60fabf-13d553369a0so2234227fac.22
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 09:10:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0I/ROXPneInb/MGZ/Nkeqw8uPPG8K3m2UvjVJMSd+70=;
-        b=RnTFazwzLwvSvqct1fLB8XNkt1OPsdknJlm117MHrXVopK0aTCuSjFHtQf0VgPUen/
-         pmQuZURBJsAYTBmYFbYFdgH98Pow4YC/qvb490v0eM2bdYr5jmZhBwza298yvbm7WsKu
-         E5F9x8JH0zHMdwJ/zn6IDAPqqf4odFWhpWS9hnWqSoGh4uKcYfkHIPxI8Cql2YPYGPFZ
-         +WemW2GWajkhMP363pnfeLzhPmDP7+hRmRa5WEyIcu2urD8WDNvoYT2Yl4edAapcyOvV
-         tAqAPME9Qjokj9OOD/QbnDVAt842l5roX5pSnEEvPduwuqbrXrZxTkWSvg4E5Ru0gyhu
-         hvbQ==
-X-Gm-Message-State: ACrzQf11Sucq4V/Q8X/3Zb0tdckA+ZtDApddVE3P9r6F6QlWUOamGPDt
-        vmdB5ps9YzDbh74O/WtG7jKWHchog6y10NCD4q4=
-X-Google-Smtp-Source: AMsMyM7eI3+VrOSND/7sen8ZMjN46C8wNN5N4+3XABwphMWhOTEit16bGY7lU052Pv/qcT+cOXqGtA==
-X-Received: by 2002:a2e:a490:0:b0:277:e5b:ec07 with SMTP id h16-20020a2ea490000000b002770e5bec07mr10176814lji.371.1667405282393;
-        Wed, 02 Nov 2022 09:08:02 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id c7-20020a2e9d87000000b0026dcfc2bf4csm2221525ljj.57.2022.11.02.09.08.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Nov 2022 09:08:02 -0700 (PDT)
-Message-ID: <ff01677d-b236-fa16-fde9-98cfe8a0722c@linaro.org>
-Date:   Wed, 2 Nov 2022 19:08:01 +0300
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=818fkauCT2wdZz4+yrO04ax3xbhchL67Khz2gBKnDvo=;
+        b=eEQNtB4fPXdU7xfRAX3q7kwq0gpcmWs3g7hvTGOBapConPh90XIZAihQvRUEfwYGdW
+         VqhsRwNZX/PZ+snU3OheqNKWsg/ZTKAhyhpLu2jY9ucEfMv6niXBmpqD/FdWAwBgpa1v
+         rke2n2sS8jjYY/zlCR1LvlW/sgPbGkCiG4KAactifw4zlaWN3LugXAnvSIXlbRoZ7cqN
+         0EuoIZGCC2KFEhPEa4loKl2mfii38xoYk97QtPbH1TiPAdcj2bxEV+3uJFQKqQy6Vngq
+         JgRE/f/YWAVaTTKj6y+Eo66vMZg6t1c+tu6Dx/47x/hYdHfI1L3ExqLN3zpv2zb+U+a1
+         afdA==
+X-Gm-Message-State: ACrzQf3Y+6aILB6T4AnBGFSyJ3zIKrZ4nxtZ6BKAa06bc5j0RdyDc/lP
+        74aD3dI5uGLGq19FoA+LsgsW/d/kHgqpAyv7mE4N8laM7CZLifEsnYTEqRJi2Th5OwHvHzRSmzQ
+        tEIZqsJgCiA8bTotHDZtt8/rhmA==
+X-Received: by 2002:a05:6870:d107:b0:13c:b7de:ed24 with SMTP id e7-20020a056870d10700b0013cb7deed24mr13325201oac.41.1667405455667;
+        Wed, 02 Nov 2022 09:10:55 -0700 (PDT)
+X-Google-Smtp-Source: AMsMyM4FieKkr532FessZ6Ca/K73+gPVeRaDL1sIRNXwQUYUk+qc5sJ3R2bzyDCiDORWw+yibzS7Nw==
+X-Received: by 2002:a05:6870:d107:b0:13c:b7de:ed24 with SMTP id e7-20020a056870d10700b0013cb7deed24mr13325186oac.41.1667405455472;
+        Wed, 02 Nov 2022 09:10:55 -0700 (PDT)
+Received: from halaney-x13s ([2600:1700:1ff0:d0e0::41])
+        by smtp.gmail.com with ESMTPSA id bx25-20020a056830601900b0066c312b044dsm5207253otb.27.2022.11.02.09.10.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Nov 2022 09:10:55 -0700 (PDT)
+Date:   Wed, 2 Nov 2022 11:10:52 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] thermal: qcom-spmi-adc-tm5: suppress probe-deferral
+ error message
+Message-ID: <20221102161052.eox4sxhvfzl6dhfn@halaney-x13s>
+References: <20221102152630.696-1-johan+linaro@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH] drm/msm: Add MSM_INFO_GET_FLAGS
-Content-Language: en-GB
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20220923173307.2429872-1-robdclark@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220923173307.2429872-1-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221102152630.696-1-johan+linaro@kernel.org>
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/09/2022 20:33, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On Wed, Nov 02, 2022 at 04:26:30PM +0100, Johan Hovold wrote:
+> Drivers should not be logging errors on probe deferral. Switch to using
+> dev_err_probe() to log failures when parsing the devicetree to avoid
+> errors like:
 > 
-> In some cases crosvm needs a way to query the cache flags to communicate
-> them to the guest kernel for guest userspace mapping.
+> 	qcom-spmi-adc-tm5 c440000.spmi:pmic@0:adc-tm@3400: get dt data failed: -517
 > 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> when a channel is not yet available.
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+
 > ---
->   drivers/gpu/drm/msm/msm_drv.c | 10 ++++++++++
->   include/uapi/drm/msm_drm.h    |  1 +
->   2 files changed, 11 insertions(+)
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
--- 
-With best wishes
-Dmitry
+>  drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+> index a3310bf061cb..c70615d2d771 100644
+> --- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+> @@ -1031,10 +1031,8 @@ static int adc_tm5_probe(struct platform_device *pdev)
+>  		return irq;
+>  
+>  	ret = adc_tm5_get_dt_data(adc_tm, node);
+> -	if (ret) {
+> -		dev_err(dev, "get dt data failed: %d\n", ret);
+> -		return ret;
+> -	}
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "get dt data failed\n");
+>  
+>  	ret = adc_tm->data->init(adc_tm);
+>  	if (ret) {
+> -- 
+> 2.37.3
+> 
 
