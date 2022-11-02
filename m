@@ -2,358 +2,415 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C36AA6169FB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 18:07:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 118DE616A03
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 18:08:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231144AbiKBRHY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 13:07:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33964 "EHLO
+        id S231234AbiKBRIJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 13:08:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230505AbiKBRHW (ORCPT
+        with ESMTP id S230292AbiKBRIC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 13:07:22 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7987212754
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 10:07:20 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id d24so17175728pls.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 10:07:20 -0700 (PDT)
+        Wed, 2 Nov 2022 13:08:02 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4A0B13DFB
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 10:07:59 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id t10so2235903ljj.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 10:07:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=z60DP3IMVx0PgF9XoRWoSbcT5zhGjG4qF0GcGyDN/6s=;
-        b=dvi2lMLG9DYOkxlDlG+HeXOP5KkxvRZBS+MOB8MTFmsk3QF8Lh/Ro4/mVsgpL3Aunr
-         AsMjm0RamScqgwwyFA7tgIy3o0mrT6S911XO3cuvQmMZ1Ok5Zq7sB18wZ7vyTZJPD+2r
-         qMw+fBY8W8hCAM2urjRUmMSa98yJwipB6d+Xc=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kyXR4AZe5V/4jtBvgZTO2g/zo75HfHyox2eOY6fukfE=;
+        b=EZ5fXZ/T6cQIHYqYts4/sZPyfhiduno9I7y7q8/Gg8zjZyRfdYhnPmqzR/YUgl9fJA
+         dXgHI1h+v+vjpBV4M7n6PrB1YrjVvLjzpolgwesg3h5Z/22EEbL92IcMQE+gSHdlRkR5
+         OIRbpGJySfksVOWgdifuCPFOBlmzqI0eL6jiMmh6exyiHBYN9e8BUNGCeOKm5Cpieors
+         B0ZQ0zauWC/3gBeMv3Yl/V1W6qAd1WjY/sw50d82pkeoaUlUbDtgQeNFGTQi2IbpJjIL
+         kcJ+WfGIZqnmaKiAoQO1T+7OvNN79ljYe1Ig7FBqNNVbyrX0eqkPWswRDPdDHFLzs8Ul
+         BMEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=z60DP3IMVx0PgF9XoRWoSbcT5zhGjG4qF0GcGyDN/6s=;
-        b=F7LZVHUt4R1xgfwlWT+deF21B7RzpGFFqFsW19tRmP9QKcm+PIWc9k+dOY7cadc4H/
-         bl9rpJifIqoQ2mvSYg+MMFS5FzE0eOSTtIEvgcvd1VGBm1meNtIO/own4rxjSP8bv5bn
-         y8jt50NzNiSwo0+qcD0mcrk2u4UuVUur04B0ixbE/MMnrV9CmbkyKqXYCT5fxDLfxgrx
-         lpvrC4NYEn+lwPkvvGEBcFCpXo6vpGrLJffoA8UqmgFZtyqmSORIhv63H91QmJeygEv2
-         EsVCgya2KWTIirmB1aYXDVEuNWQfl68rXRSkpsCCar9NcuudqqFx64VJS3f/40h+uJUZ
-         dGCA==
-X-Gm-Message-State: ACrzQf0vu067yV+gW4s4EMV4p55s1pkBLtiXG+oMIk4GwHiRoqd3a0p2
-        ncP32D1bpH75haPhVdIAQbOGUw==
-X-Google-Smtp-Source: AMsMyM6AKNnkgiRFAAD+XCA6VVUXb4HIYP5FrlTYKEIt8bl3YKcjm6xD5pfY3uA8JhL9icd3Hx4X4A==
-X-Received: by 2002:a17:902:dac3:b0:186:a437:f4b8 with SMTP id q3-20020a170902dac300b00186a437f4b8mr25604701plx.70.1667408839962;
-        Wed, 02 Nov 2022 10:07:19 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:11a:201:4437:8d79:dd1:7eb8])
-        by smtp.gmail.com with ESMTPSA id j6-20020a17090a2a8600b002137d3da760sm1685034pjd.39.2022.11.02.10.07.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 10:07:19 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        patches@lists.linux.dev, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH v2] clk: qcom: gdsc: Remove direct runtime PM calls
-Date:   Wed,  2 Nov 2022 10:07:17 -0700
-Message-Id: <20221102170717.1262547-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.38.1.273.g43a17bfeac-goog
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kyXR4AZe5V/4jtBvgZTO2g/zo75HfHyox2eOY6fukfE=;
+        b=Y7tze1ihT8IPyBY3m7WW3EXWkzhgm+ahD1oLhXgPNxegMSA5ZgQ8WXDngY9IljDYO1
+         S9gvHhtfM496uqNjYjqSw693elf8dC4rSTIF6ajdSh8bXCwDvymF7BVN2jrpk+S3jp5i
+         JU2N3NPX/2/fNBnwC+l5ZgFdPCRNXkyLnJwCh7uZy4YlOyPvxjE58sA9WffTcqw2MCr3
+         Xsj6b1AWKBrNgytQ0hwSWgCD+oZVV9GD48wuq88Rh3SGFhB7XgrTPDXdDhetIymVaNyL
+         eYf6oyELC3f1LeZMuD5436tX2MixTJKs5PZy0r/KPEAm6sl93WqDgZpz/8p5JVfjZqju
+         xVDw==
+X-Gm-Message-State: ACrzQf0H5rG5ZFDaPKqr7Wr/fepgQinX6msgNm96ciQv8m7JTCVViirb
+        ns8nIe1/+8JpsaRa9+W3J0nfXQ==
+X-Google-Smtp-Source: AMsMyM7l3cmc81phjhM94OiOlHQabL+MkoQsLl3UWuETm5HnK3TdXMpQFwwBLD2Q2msziF2Towml1w==
+X-Received: by 2002:a05:651c:b0b:b0:277:5c0a:f016 with SMTP id b11-20020a05651c0b0b00b002775c0af016mr5714901ljr.173.1667408877872;
+        Wed, 02 Nov 2022 10:07:57 -0700 (PDT)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id s15-20020a056512314f00b00497b198987bsm2075905lfi.26.2022.11.02.10.07.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Nov 2022 10:07:57 -0700 (PDT)
+Message-ID: <863b4c93-1770-ecd4-9eb6-333b3e8ab7d2@linaro.org>
+Date:   Wed, 2 Nov 2022 20:07:56 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Subject: Re: [PATCH] drm/msm/disp/dpu1: register crtc color management to
+ first crtc in the list
+Content-Language: en-GB
+To:     Kalyan Thota <quic_kalyant@quicinc.com>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_vpolimer@quicinc.com, quic_abhinavk@quicinc.com
+References: <1667300361-14572-1-git-send-email-quic_kalyant@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1667300361-14572-1-git-send-email-quic_kalyant@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We shouldn't be calling runtime PM APIs from within the genpd
-enable/disable path for a couple reasons.
+On 01/11/2022 13:59, Kalyan Thota wrote:
+> This patch does the following:
+> 
+> 1) Registers crtc color management to the first crtc in the list and
+> attach to an encoder which is neither pluggable nor virtual
+> 2) Pin 1 crtc to 1 encoder
+> 3) Assign dspp block if crtc supports color processing.
 
-First, this causes an AA lockdep splat because genpd can call into genpd
-code again while holding the genpd lock.
+A clear identifier that the patch should be split.
 
-WARNING: possible recursive locking detected
-5.19.0-rc2-lockdep+ #7 Not tainted
---------------------------------------------
-kworker/2:1/49 is trying to acquire lock:
-ffffffeea0370788 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+> 
+> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 17 +++++++++++-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    | 23 ++++++++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 42 ++++++++++++++++++++++-------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 16 ++++++++++-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 14 +++++++---
+>   drivers/gpu/drm/msm/dp/dp_display.c         |  5 ++++
+>   drivers/gpu/drm/msm/msm_drv.h               |  7 ++++-
+>   7 files changed, 109 insertions(+), 15 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index 4170fbe..14ff7ca 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -18,6 +18,7 @@
+>   #include <drm/drm_flip_work.h>
+>   #include <drm/drm_framebuffer.h>
+>   #include <drm/drm_mode.h>
+> +#include <drm/drm_mode_object.h>
+>   #include <drm/drm_probe_helper.h>
+>   #include <drm/drm_rect.h>
+>   #include <drm/drm_vblank.h>
+> @@ -553,6 +554,17 @@ static void _dpu_crtc_complete_flip(struct drm_crtc *crtc)
+>   	spin_unlock_irqrestore(&dev->event_lock, flags);
+>   }
+>   
+> +bool dpu_crtc_has_color_enabled(struct drm_crtc *crtc)
+> +{
+> +	u32 gamma_id = crtc->dev->mode_config.gamma_lut_property->base.id;
+> +	u32 degamma_id = crtc->dev->mode_config.degamma_lut_property->base.id;
+> +	u32 ctm_id = crtc->dev->mode_config.ctm_property->base.id;
+> +
+> +	return !!(find_prop_id(&crtc->base, gamma_id) ||
+> +		  find_prop_id(&crtc->base, degamma_id) ||
+> +		  find_prop_id(&crtc->base, ctm_id));
+> +}
+> +
+>   enum dpu_intf_mode dpu_crtc_get_intf_mode(struct drm_crtc *crtc)
+>   {
+>   	struct drm_encoder *encoder;
+> @@ -1575,6 +1587,8 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
+>   {
+>   	struct drm_crtc *crtc = NULL;
+>   	struct dpu_crtc *dpu_crtc = NULL;
+> +	struct msm_drm_private *priv = dev->dev_private;
+> +	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
+>   	int i;
+>   
+>   	dpu_crtc = kzalloc(sizeof(*dpu_crtc), GFP_KERNEL);
+> @@ -1604,7 +1618,8 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
+>   
+>   	drm_crtc_helper_add(crtc, &dpu_crtc_helper_funcs);
+>   
+> -	drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
+> +	if (dpu_kms->catalog->dspp && drm_crtc_index(crtc) == 0)
 
-but task is already holding lock:
-ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+This would limit color management to first CRTC. As each CRTC can use 
+not more than two LMs (and two DSPPs), we can support up to num_dspps / 
+2 color-mgmt-enabled CRTCs.
 
-other info that might help us debug this:
- Possible unsafe locking scenario:
+A side note: ideally we need a way to change color mgtm enablement in 
+runtime. Unfortunately with the current API this doesn't seem possible.
 
-       CPU0
-       ----
-  lock(&genpd->mlock);
-  lock(&genpd->mlock);
+> +		drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
+>   
+>   	/* save user friendly CRTC name for later */
+>   	snprintf(dpu_crtc->name, DPU_CRTC_NAME_SIZE, "crtc%u", crtc->base.id);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> index 539b68b..164208e 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> @@ -240,6 +240,29 @@ static inline int dpu_crtc_frame_pending(struct drm_crtc *crtc)
+>   }
+>   
+>   /**
+> + * find_prop_id - find the property for the drm object
+> + * @obj: Pointer to drm object
+> + * @prop_id: Property id.
+> + */
+> +static inline struct drm_property *find_prop_id(struct drm_mode_object *obj,
+> +					       uint32_t prop_id)
+> +{
+> +	int i;
+> +
+> +	for (i = 0; i < obj->properties->count; i++)
+> +		if (obj->properties->properties[i]->base.id == prop_id)
+> +			return obj->properties->properties[i];
+> +
+> +	return NULL;
+> +}
 
- *** DEADLOCK ***
+Generic helper should go to drm core code.
 
- May be due to missing lock nesting notation
+> +
+> +/**
+> + * dpu_crtc_has_color_enabled - check if the crtc has color management enabled
+> + * @crtc: Pointer to drm crtc object
+> + */
+> +bool dpu_crtc_has_color_enabled(struct drm_crtc *crtc);
+> +
+> +/**
+>    * dpu_crtc_vblank - enable or disable vblanks for this crtc
+>    * @crtc: Pointer to drm crtc object
+>    * @en: true to enable vblanks, false to disable
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 9c6817b..f09b957 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -545,7 +545,8 @@ bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
+>   static struct msm_display_topology dpu_encoder_get_topology(
+>   			struct dpu_encoder_virt *dpu_enc,
+>   			struct dpu_kms *dpu_kms,
+> -			struct drm_display_mode *mode)
+> +			struct drm_display_mode *mode,
+> +			struct drm_crtc *crtc)
+>   {
+>   	struct msm_display_topology topology = {0};
+>   	int i, intf_count = 0;
+> @@ -573,11 +574,9 @@ static struct msm_display_topology dpu_encoder_get_topology(
+>   	else
+>   		topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
+>   
+> -	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
+> -		if (dpu_kms->catalog->dspp &&
+> -			(dpu_kms->catalog->dspp_count >= topology.num_lm))
+> +	if (dpu_crtc_has_color_enabled(crtc) &&
+> +		(dpu_kms->catalog->dspp_count >= topology.num_lm))
+>   			topology.num_dspp = topology.num_lm;
 
-3 locks held by kworker/2:1/49:
- #0: 74ffff80811a5748 ((wq_completion)pm){+.+.}-{0:0}, at: process_one_work+0x320/0x5fc
- #1: ffffffc008537cf8 ((work_completion)(&genpd->power_off_work)){+.+.}-{0:0}, at: process_one_work+0x354/0x5fc
- #2: ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+This is incorect. We should check if there are enough spare DSPPs, not 
+if there are enough DSPPs at all. And no, telling that there is just a 
+single CTM-enabled CRTC is not an answer.
 
-stack backtrace:
-CPU: 2 PID: 49 Comm: kworker/2:1 Not tainted 5.19.0-rc2-lockdep+ #7
-Hardware name: Google Lazor (rev3 - 8) with KB Backlight (DT)
-Workqueue: pm genpd_power_off_work_fn
-Call trace:
- dump_backtrace+0x1a0/0x200
- show_stack+0x24/0x30
- dump_stack_lvl+0x7c/0xa0
- dump_stack+0x18/0x44
- __lock_acquire+0xb38/0x3634
- lock_acquire+0x180/0x2d4
- __mutex_lock_common+0x118/0xe30
- mutex_lock_nested+0x70/0x7c
- genpd_lock_mtx+0x24/0x30
- genpd_runtime_suspend+0x2f0/0x414
- __rpm_callback+0xdc/0x1b8
- rpm_callback+0x4c/0xcc
- rpm_suspend+0x21c/0x5f0
- rpm_idle+0x17c/0x1e0
- __pm_runtime_idle+0x78/0xcc
- gdsc_disable+0x24c/0x26c
- _genpd_power_off+0xd4/0x1c4
- genpd_power_off+0x2d8/0x41c
- genpd_power_off_work_fn+0x60/0x94
- process_one_work+0x398/0x5fc
- worker_thread+0x42c/0x6c4
- kthread+0x194/0x1b4
- ret_from_fork+0x10/0x20
+> -	}
+>   
+>   	topology.num_enc = 0;
+>   	topology.num_intf = intf_count;
+> @@ -643,7 +642,7 @@ static int dpu_encoder_virt_atomic_check(
+>   		}
+>   	}
+>   
+> -	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
+> +	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state->crtc);
+>   
+>   	/* Reserve dynamic resources now. */
+>   	if (!ret) {
+> @@ -2412,7 +2411,7 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
+>   	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
+>   	struct drm_encoder *drm_enc = NULL;
+>   	struct dpu_encoder_virt *dpu_enc = NULL;
+> -	int ret = 0;
+> +	int ret = 0, intf_i;
+>   
+>   	dpu_enc = to_dpu_encoder_virt(enc);
+>   
+> @@ -2424,13 +2423,16 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
+>   	timer_setup(&dpu_enc->frame_done_timer,
+>   			dpu_encoder_frame_done_timeout, 0);
+>   
+> +	intf_i = disp_info->h_tile_instance[0];
+>   	if (disp_info->intf_type == DRM_MODE_ENCODER_DSI)
+>   		timer_setup(&dpu_enc->vsync_event_timer,
+>   				dpu_encoder_vsync_event_handler,
+>   				0);
+> -	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS)
+> +	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS) {
+>   		dpu_enc->wide_bus_en = msm_dp_wide_bus_available(
+> -				priv->dp[disp_info->h_tile_instance[0]]);
+> +				priv->dp[intf_i]);
+> +		disp_info->is_pluggable = msm_dp_is_pluggable(priv->dp[intf_i]);
+> +	}
 
-Second, this confuses runtime PM on CoachZ for the camera devices by
-causing the camera clock controller's runtime PM usage_count to go
-negative after resuming from suspend. This is because runtime PM is
-being used on the clock controller while runtime PM is disabled for the
-device.
+And DSI can be pluggable too. Please enumerate connector types here 
+rather than doing that in DP driver.
 
-The reason for the negative count is because a GDSC is represented as a
-genpd and each genpd that is attached to a device is resumed during the
-noirq phase of system wide suspend/resume (see the noirq suspend ops
-assignment in pm_genpd_init() for more details). The camera GDSCs are
-attached to camera devices with the 'power-domains' property in DT.
-Every device has runtime PM disabled in the late system suspend phase
-via __device_suspend_late(). Runtime PM is not usable until runtime PM
-is enabled in device_resume_early(). The noirq phases run after the
-'late' and before the 'early' phase of suspend/resume. When the genpds
-are resumed in genpd_resume_noirq(), we call down into gdsc_enable()
-that calls pm_runtime_resume_and_get() and that returns -EACCES to
-indicate failure to resume because runtime PM is disabled for all
-devices.
+>   
+>   	INIT_DELAYED_WORK(&dpu_enc->delayed_off_work,
+>   			dpu_encoder_off_work);
+> @@ -2455,6 +2457,28 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
+>   
+>   }
+>   
+> +bool dpu_encoder_is_pluggable(struct drm_encoder *drm_enc)
+> +{
+> +	struct dpu_encoder_virt *dpu_enc;
+> +
+> +	if (!drm_enc)
+> +		return false;
+> +
+> +	dpu_enc = to_dpu_encoder_virt(drm_enc);
+> +	return dpu_enc->disp_info.is_pluggable;
+> +}
+> +
+> +bool dpu_encoder_is_virtual(struct drm_encoder *drm_enc)
+> +{
+> +	struct dpu_encoder_virt *dpu_enc;
+> +
+> +	if (!drm_enc)
+> +		return false;
+> +
+> +	dpu_enc = to_dpu_encoder_virt(drm_enc);
+> +	return (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_VIRTUAL);
+> +}
+> +
+>   struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
+>   		int drm_enc_mode)
+>   {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> index 9e7236e..209adb4 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> @@ -25,7 +25,8 @@
+>    * @num_of_h_tiles:     Number of horizontal tiles in case of split interface
+>    * @h_tile_instance:    Controller instance used per tile. Number of elements is
+>    *                      based on num_of_h_tiles
+> - * @is_cmd_mode		Boolean to indicate if the CMD mode is requested
+> + * @is_cmd_mode:	Boolean to indicate if the CMD mode is requested
+> + * @is_pluggable:	Boolean to indicate if the intf is pluggable
+>    * @is_te_using_watchdog_timer:  Boolean to indicate watchdog TE is
+>    *				 used instead of panel TE in cmd mode panels
+>    * @dsc:		DSC configuration data for DSC-enabled displays
+> @@ -35,6 +36,7 @@ struct msm_display_info {
+>   	uint32_t num_of_h_tiles;
+>   	uint32_t h_tile_instance[MAX_H_TILES_PER_DISPLAY];
+>   	bool is_cmd_mode;
+> +	bool is_pluggable;
+>   	bool is_te_using_watchdog_timer;
+>   	struct drm_dsc_config *dsc;
+>   };
+> @@ -128,6 +130,18 @@ enum dpu_intf_mode dpu_encoder_get_intf_mode(struct drm_encoder *encoder);
+>   void dpu_encoder_virt_runtime_resume(struct drm_encoder *encoder);
+>   
+>   /**
+> + * dpu_encoder_is_pluggable - get pluggable info from the encoder.
+> + * @drm_enc:    Pointer to previously created drm encoder structure
+> + */
+> +bool dpu_encoder_is_pluggable(struct drm_encoder *drm_enc);
+> +
+> +/**
+> + * dpu_encoder_is_virtual - find if the encoder is of type virtual.
+> + * @drm_enc:    Pointer to previously created drm encoder structure
+> + */
+> +bool dpu_encoder_is_virtual(struct drm_encoder *drm_enc);
+> +
+> +/**
+>    * dpu_encoder_init - initialize virtual encoder object
+>    * @dev:        Pointer to drm device structure
+>    * @disp_info:  Pointer to display information structure
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 7a5fabc..2b9c316 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -807,9 +807,17 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
+>   		priv->crtcs[priv->num_crtcs++] = crtc;
+>   	}
+>   
+> -	/* All CRTCs are compatible with all encoders */
+> -	drm_for_each_encoder(encoder, dev)
+> -		encoder->possible_crtcs = (1 << priv->num_crtcs) - 1;
+> +	/* Pin 1 crtc for 1 encoder and crtc 0 for primary display as it has
+> +	 * color management registered
+> +	 */
+> +	i = 1;
+> +	drm_for_each_encoder(encoder, dev) {
+> +		if ((!dpu_encoder_is_pluggable(encoder) &&
+> +			!dpu_encoder_is_virtual(encoder)) || (num_encoders == 1))
+> +			encoder->possible_crtcs = 1 << drm_crtc_index(priv->crtcs[0]);
+> +		else
+> +			encoder->possible_crtcs = 1 << drm_crtc_index(priv->crtcs[i++]);
 
-Upon closer inspection, calling runtime PM APIs like this in the GDSC
-driver doesn't make sense. It was intended to make sure the GDSC for the
-clock controller providing other GDSCs was enabled, specifically the
-MMCX GDSC for the display clk controller on SM8250 (sm8250-dispcc), so
-that GDSC register accesses succeeded. That will already happen because
-we make the 'dev->pm_domain' a parent domain of each GDSC we register in
-gdsc_register() via pm_genpd_add_subdomain(). When any of these GDSCs
-are accessed, we'll enable the parent domain (in this specific case
-MMCX).
+This can be made much simpler. Allocate a single CRTC for each encoder, 
+disallowing CRTC switching. Then allocate as many CTM-enabled for 
+non-pluggable encoder-CRTC pairs as possible.
 
-We also remove any getting of runtime PM during registration, because
-when a genpd is registered it increments the count on the parent if the
-genpd itself is already enabled. And finally, the runtime PM state of
-the clk controller registering the GDSC shouldn't matter to the
-subdomain setup. Therefore we always assign 'dev' unconditionally so
-when GDSCs are removed we properly unlink the GDSC from the clk
-controller's pm_domain.
+> +	}
+>   
+>   	return 0;
+>   }
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index bfd0aef..5690ea3 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1509,6 +1509,11 @@ bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
+>   	return dp->wide_bus_en;
+>   }
+>   
+> +bool msm_dp_is_pluggable(const struct msm_dp *dp_display)
+> +{
+> +	return (dp_display->connector_type == DRM_MODE_CONNECTOR_DisplayPort);
+> +}
+> +
+>   void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
+>   {
+>   	struct dp_display_private *dp;
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index ea80846..b0d0546 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -331,7 +331,7 @@ void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_displa
+>   
+>   void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor);
+>   bool msm_dp_wide_bus_available(const struct msm_dp *dp_display);
+> -
+> +bool msm_dp_is_pluggable(const struct msm_dp *dp_display);
+>   #else
+>   static inline int __init msm_dp_register(void)
+>   {
+> @@ -365,6 +365,11 @@ static inline bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
+>   	return false;
+>   }
+>   
+> +static inline bool msm_dp_is_pluggable(const struct msm_dp *dp_display)
+> +{
+> +	return false;
+> +}
+> +
+>   #endif
+>   
+>   #ifdef CONFIG_DRM_MSM_MDP4
 
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Taniya Das <quic_tdas@quicinc.com>
-Cc: Satya Priya <quic_c_skakit@quicinc.com>
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Reported-by: Stephen Boyd <swboyd@chromium.org>
-Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
-
-Changes from v1 (https://lore.kernel.org/r/20221101233421.997149-1-swboyd@chromium.org):
- * Fix ret thinko
- * Update kerneldoc on 'dev' member
-
- drivers/clk/qcom/gdsc.c | 62 +++++------------------------------------
- drivers/clk/qcom/gdsc.h |  2 +-
- 2 files changed, 8 insertions(+), 56 deletions(-)
-
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index 7cf5e130e92f..36d44eec03b6 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -11,7 +11,6 @@
- #include <linux/kernel.h>
- #include <linux/ktime.h>
- #include <linux/pm_domain.h>
--#include <linux/pm_runtime.h>
- #include <linux/regmap.h>
- #include <linux/regulator/consumer.h>
- #include <linux/reset-controller.h>
-@@ -56,22 +55,6 @@ enum gdsc_status {
- 	GDSC_ON
- };
- 
--static int gdsc_pm_runtime_get(struct gdsc *sc)
--{
--	if (!sc->dev)
--		return 0;
--
--	return pm_runtime_resume_and_get(sc->dev);
--}
--
--static int gdsc_pm_runtime_put(struct gdsc *sc)
--{
--	if (!sc->dev)
--		return 0;
--
--	return pm_runtime_put_sync(sc->dev);
--}
--
- /* Returns 1 if GDSC status is status, 0 if not, and < 0 on error */
- static int gdsc_check_status(struct gdsc *sc, enum gdsc_status status)
- {
-@@ -271,8 +254,9 @@ static void gdsc_retain_ff_on(struct gdsc *sc)
- 	regmap_update_bits(sc->regmap, sc->gdscr, mask, mask);
- }
- 
--static int _gdsc_enable(struct gdsc *sc)
-+static int gdsc_enable(struct generic_pm_domain *domain)
- {
-+	struct gdsc *sc = domain_to_gdsc(domain);
- 	int ret;
- 
- 	if (sc->pwrsts == PWRSTS_ON)
-@@ -328,22 +312,11 @@ static int _gdsc_enable(struct gdsc *sc)
- 	return 0;
- }
- 
--static int gdsc_enable(struct generic_pm_domain *domain)
-+static int gdsc_disable(struct generic_pm_domain *domain)
- {
- 	struct gdsc *sc = domain_to_gdsc(domain);
- 	int ret;
- 
--	ret = gdsc_pm_runtime_get(sc);
--	if (ret)
--		return ret;
--
--	return _gdsc_enable(sc);
--}
--
--static int _gdsc_disable(struct gdsc *sc)
--{
--	int ret;
--
- 	if (sc->pwrsts == PWRSTS_ON)
- 		return gdsc_assert_reset(sc);
- 
-@@ -388,18 +361,6 @@ static int _gdsc_disable(struct gdsc *sc)
- 	return 0;
- }
- 
--static int gdsc_disable(struct generic_pm_domain *domain)
--{
--	struct gdsc *sc = domain_to_gdsc(domain);
--	int ret;
--
--	ret = _gdsc_disable(sc);
--
--	gdsc_pm_runtime_put(sc);
--
--	return ret;
--}
--
- static int gdsc_init(struct gdsc *sc)
- {
- 	u32 mask, val;
-@@ -447,11 +408,6 @@ static int gdsc_init(struct gdsc *sc)
- 				return ret;
- 		}
- 
--		/* ...and the power-domain */
--		ret = gdsc_pm_runtime_get(sc);
--		if (ret)
--			goto err_disable_supply;
--
- 		/*
- 		 * Votable GDSCs can be ON due to Vote from other masters.
- 		 * If a Votable GDSC is ON, make sure we have a Vote.
-@@ -459,14 +415,14 @@ static int gdsc_init(struct gdsc *sc)
- 		if (sc->flags & VOTABLE) {
- 			ret = gdsc_update_collapse_bit(sc, false);
- 			if (ret)
--				goto err_put_rpm;
-+				goto err_disable_supply;
- 		}
- 
- 		/* Turn on HW trigger mode if supported */
- 		if (sc->flags & HW_CTRL) {
- 			ret = gdsc_hwctrl(sc, true);
- 			if (ret < 0)
--				goto err_put_rpm;
-+				goto err_disable_supply;
- 		}
- 
- 		/*
-@@ -496,13 +452,10 @@ static int gdsc_init(struct gdsc *sc)
- 
- 	ret = pm_genpd_init(&sc->pd, NULL, !on);
- 	if (ret)
--		goto err_put_rpm;
-+		goto err_disable_supply;
- 
- 	return 0;
- 
--err_put_rpm:
--	if (on)
--		gdsc_pm_runtime_put(sc);
- err_disable_supply:
- 	if (on && sc->rsupply)
- 		regulator_disable(sc->rsupply);
-@@ -541,8 +494,7 @@ int gdsc_register(struct gdsc_desc *desc,
- 	for (i = 0; i < num; i++) {
- 		if (!scs[i])
- 			continue;
--		if (pm_runtime_enabled(dev))
--			scs[i]->dev = dev;
-+		scs[i]->dev = dev;
- 		scs[i]->regmap = regmap;
- 		scs[i]->rcdev = rcdev;
- 		ret = gdsc_init(scs[i]);
-diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
-index 981a12c8502d..47de72834a85 100644
---- a/drivers/clk/qcom/gdsc.h
-+++ b/drivers/clk/qcom/gdsc.h
-@@ -30,7 +30,7 @@ struct reset_controller_dev;
-  * @resets: ids of resets associated with this gdsc
-  * @reset_count: number of @resets
-  * @rcdev: reset controller
-- * @dev: the device holding the GDSC, used for pm_runtime calls
-+ * @dev: the device providing the GDSC
-  */
- struct gdsc {
- 	struct generic_pm_domain	pd;
-
-base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
 -- 
-https://chromeos.dev
+With best wishes
+Dmitry
 
