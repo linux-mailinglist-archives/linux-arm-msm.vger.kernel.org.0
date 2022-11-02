@@ -2,68 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 809BE615EE4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 10:07:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CAE4615F08
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 10:09:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230161AbiKBJH3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 05:07:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39490 "EHLO
+        id S231312AbiKBJJe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 05:09:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229513AbiKBJGy (ORCPT
+        with ESMTP id S230395AbiKBJI7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 05:06:54 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC62CDE0
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 02:05:15 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id p15-20020a17090a348f00b002141615576dso1490441pjb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 02:05:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mOYHShxj2Z09W+c7tLCPouxAq6KkaYZ6y3Ma3yqAsuE=;
-        b=FPfSy8F51NgBPac6q89WdfCkOIziZrv4V1dJdqSeH+hBUnZ/gvmevz01ZujdBT8+mM
-         DxtawPUVvSu3MCAwMH7WuQUqHa2BlJe+uX3yTM1nB0AHi0K5Pds02nuOpi590Hm+Hg2v
-         wBc+IPYUmcbQiZk2LctEm8preTqbK8XzK366cUOc3w7P+Wvou/KbzcM3KinQDpi1mGc/
-         p+HwwUsfPqWeMVNFL/muozyPGsUOFJS8jZQI7a6UChl46Uw3WWyu/5KDY3zmjxW6dsbW
-         oHaZyv9l7xCwbz5FJPmrA5Zzfyu+d6uGFvyv1bTCRJ+HfJgFouUi1hVcm35M6nC/VIG7
-         3ZCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mOYHShxj2Z09W+c7tLCPouxAq6KkaYZ6y3Ma3yqAsuE=;
-        b=gFtcjkAvJgHf6OAH3ZlJ3zkhTBBsrAjc/UvL32T2mdqo4s20QQfJqGGxOFUzI2y1MO
-         a0F31f46xIuQDu8n1u9OwMyXhqKxpNBx9lyNtAMdPywMhe9q584YV8uKhxc2et6/48o8
-         ez54/nmwYnZ4CaJsn3oJY9QSpP+mbsANrlBE/1qSi9KP8Kc/xDJm8eJQrfUAyBqLfPtT
-         rhetwQcFlsS0moKs8vM6Uli/W+iwiK5fFZ8j9SSloumPB1fM1tioBII/H3VlDCiaiXvp
-         CYFCgtrOR75z4p0fa58AIdCNSCot7TJ/R39ZamkiCMbi2M9mM8x92klwjg6W7xkbiGec
-         WXPg==
-X-Gm-Message-State: ACrzQf1UwJpNzQa7GjYp6XptopvQPAxejNZnWrtmxUKz4j71h49I1Yg+
-        27bBN7f5lYco1hksIrGN0SerPQ==
-X-Google-Smtp-Source: AMsMyM7v0it+37mFtxOllnwCsi/EUsAK42mTUgpX7+cma6Gfcodtgzdt/i8z0FCpcYG5Mrh/zbrXbw==
-X-Received: by 2002:a17:90a:9404:b0:213:765c:779f with SMTP id r4-20020a17090a940400b00213765c779fmr33905553pjo.127.1667379915248;
-        Wed, 02 Nov 2022 02:05:15 -0700 (PDT)
-Received: from localhost ([122.172.84.80])
-        by smtp.gmail.com with ESMTPSA id i26-20020a63585a000000b0046ffe3fea77sm1620462pgm.76.2022.11.02.02.05.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 02:05:14 -0700 (PDT)
-Date:   Wed, 2 Nov 2022 14:35:12 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, rafael@kernel.org, johan@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH v2 0/3] Qcom CPUFreq HW driver cleanups
-Message-ID: <20221102090512.sfj5fuefzkcl24co@vireshk-i7>
-References: <20221102090038.64541-1-manivannan.sadhasivam@linaro.org>
+        Wed, 2 Nov 2022 05:08:59 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A1B627FD7;
+        Wed,  2 Nov 2022 02:08:58 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 2B682B8216B;
+        Wed,  2 Nov 2022 09:08:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8E4C4347C;
+        Wed,  2 Nov 2022 09:08:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667380135;
+        bh=yCSCxjzajthdmPJ8tWpzFvpFs/HfIn7P3OIoIHFX8Yc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=cdiIyNAnbpgYuvziORkO0gsy0wiP2sZxWEIKQ6YIUMtFojihOiCAWGlxFgCZBudl7
+         vyeCnhujvK1a67Fl9R/KX5vGa/TDYgDY4O355gfidC7ueak9GWdCGOpEtUD56KVvCp
+         mjcUyMHhXvdSybUXQlMB42Cy0AltdoXzvevclHDwrHDPDhjIKkWil5GUZ3RFNPWTR+
+         VMB8MXxw+okc90mSi83nhHA7grTU6l+P51lO1dAoESX4LW/BrzNUJbzGxeRJRvSzqB
+         h1yVY24ArbFGRipMSg/zPO/i0UPZ1JCl49LaJEMWkaIvSS6sDZweI/llJCTOOxpTbO
+         AvQFI3J28VfNA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1oq9ji-0006B3-S2; Wed, 02 Nov 2022 10:08:39 +0100
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        stanimir.k.varbanov@gmail.com
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Brian Masney <bmasney@redhat.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v3 0/2] PCI: qcom: Add basic interconnect support
+Date:   Wed,  2 Nov 2022 10:07:03 +0100
+Message-Id: <20221102090705.23634-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221102090038.64541-1-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,22 +65,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02-11-22, 14:30, Manivannan Sadhasivam wrote:
-> Hello,
-> 
-> This series contains cleanup patches targeting the Qcom CPUFreq HW driver.
-> This is a spun off of the clock provier series [1].
-> 
-> Thanks,
-> Mani
-> 
-> [1] https://lore.kernel.org/lkml/20221025073254.1564622-2-manivannan.sadhasivam@linaro.org/T/
-> 
-> Changes in v2:
-> 
-> * Rebased on top of cpufreq/arm/linux-next branch
+On Qualcomm platforms like SC8280XP and SA8540P interconnect bandwidth
+must be requested before enabling interconnect clocks.
 
-Applied. Thanks.
+Add basic support for managing an optional "pcie-mem" interconnect path
+by setting a low constraint before enabling clocks and updating it after
+the link is up.
+
+This is specifically needed to prevent a crash on SC8280XP/SA8540P when
+the interconnect constraints are enforced during boot.
+
+As support for these platforms was added in 6.1-rc1 it would be nice to
+have this merged as a fix for 6.1, but deferring for 6.2 works as well.
+
+Johan
+
+
+Changes in v3
+ - remove intermediate assignment in error path (Mani)
+ - add WARN_ON_ONCE() as a reminder to anyone ever extending the
+   driver with support for higher speeds to update the bandwidth table
+
+Changes in v2
+ - update the bindings so that the interconnect-names constraints apply
+   to all platforms (Krzysztof)
+
+
+Johan Hovold (2):
+  dt-bindings: PCI: qcom: Add SC8280XP/SA8540P interconnects
+  PCI: qcom: Add basic interconnect support
+
+ .../devicetree/bindings/pci/qcom,pcie.yaml    | 20 +++++
+ drivers/pci/controller/dwc/pcie-qcom.c        | 76 +++++++++++++++++++
+ 2 files changed, 96 insertions(+)
 
 -- 
-viresh
+2.37.3
+
