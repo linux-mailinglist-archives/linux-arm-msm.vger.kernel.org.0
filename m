@@ -2,84 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBE00616B98
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 19:07:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A09F4616BAB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 19:08:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231180AbiKBSHQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 14:07:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36070 "EHLO
+        id S230296AbiKBSIM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 14:08:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231217AbiKBSHO (ORCPT
+        with ESMTP id S230199AbiKBSIL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 14:07:14 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B27E2EF69
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 11:07:13 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id j4so29584445lfk.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 11:07:13 -0700 (PDT)
+        Wed, 2 Nov 2022 14:08:11 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ADF22EF71
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 11:08:10 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id be13so29549873lfb.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 11:08:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XIWyUY4t9cfdrarJHXAihf6iaXZwwU1KNPGYvwDevnI=;
-        b=i3xbLMfpo4u/j3vNZgefupyMkFAAbJ96c/pOf24fBNy7HrB/ysVdgzBAXPVzzHlx9j
-         P+5miB9oSd646vEYdznGFwq4V/Tp/sSlSu1Wce/hZOWOzyI+WMsLAPAIXEgjZyItq1sV
-         4Dl2jrhU1whajHLdxFLsBIF9nJI21BLhUqh14i9PNDrYXT+/OCgE9OU6jj1jsiI8osXh
-         b9oCInof8Ky9g0oy3MtJ1FWowD8Yh2yKyz72kFLkcOCO0vSmmElhraj3Pi9bN8f5obSk
-         AEccIEkuCF0+WjoIqE26i7p8WsgF+w+Lhs4nGpM5RJ/atOlrW2yXtYlOwPfZSf0JA95N
-         QirQ==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=m6s+mDwTFEybSnfsv9FLfpZxULcbiJ7Ktz0jYPN4zbg=;
+        b=oZ190qKXbUdI3pa/TkZ7GnFQDtDHYWG8bjZi1njg37scSepa9KpKnNxCF5ZM/IM+KQ
+         Np/CHo9hpZWYYqOyMwWGXHorI5H2uxm7feX7c3TtuTfuYs5myB2q7dizQUWdWBfEbsKE
+         fwoSJGuEqhARSqpzkQV8FkHnpWPtOw232JAeI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XIWyUY4t9cfdrarJHXAihf6iaXZwwU1KNPGYvwDevnI=;
-        b=RjAHFuzgGi1gDee2T6wJqMqSf/lhR/TJprGBcyIjLcH4nJtsD5/usPvrwvszd9rw7e
-         gN0KdmayIrnr1BDDXJs4RHyTkxx4SwhVvUVEMepVCG7XEURvWK/nq28QJnFYnavryrA2
-         22Mnv00XTTS7hS+4d0SLioCfSu9jYD9HLBErHa00wE1T4KAAjUqpXNae/F21gSs/l/N7
-         MiDoScSDOPtKjNJ4iAf3c/v4ad8hSVWD8iQrTTOh8l57XCmnQiW07Xmz0Ji7LjV3Ja7A
-         /Zav68qZBt3A0bvPN1H1epCbWjJx3aB+oTnmGOQ9++DaeC+6XXiRZPesofFun1bKz0Kg
-         pgvg==
-X-Gm-Message-State: ACrzQf3q6hrFy75xVEhqV7xeTJ9nJbC6j/h/+a0UqvNnogK+NtsJqOtH
-        boCSIY+IggE1arIncFncYqoh1Q==
-X-Google-Smtp-Source: AMsMyM7/ORTdXneoE6DaN9PIj1JPI/RyzxtgQE2m3Ivv/Jm4Eq/tj5/cUKwkaFcOmUugbOJSqvxr9A==
-X-Received: by 2002:a05:6512:1156:b0:4a2:7e73:1f28 with SMTP id m22-20020a056512115600b004a27e731f28mr10847502lfg.38.1667412431525;
-        Wed, 02 Nov 2022 11:07:11 -0700 (PDT)
-Received: from eriador.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id r15-20020ac24d0f000000b00485caa0f5dfsm2085232lfi.44.2022.11.02.11.07.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 11:07:11 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Tomi Valkeinen <tomba@kernel.org>
-Cc:     dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: [PATCH v3 7/7] drm/bridge_connector: drop drm_bridge_connector_en/disable_hpd()
-Date:   Wed,  2 Nov 2022 21:07:05 +0300
-Message-Id: <20221102180705.459294-8-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
-References: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m6s+mDwTFEybSnfsv9FLfpZxULcbiJ7Ktz0jYPN4zbg=;
+        b=qQ0VTehvzAx8wk+o8t5MsrId+AcXAQqQc6zTGYIlZCd/fDWtzBGZMIeZ8eCmthcwMB
+         b+8OrjFx60gAkez40V/gh5Vb8DRkSbQ8/NMP9b0ItFthPOrh+X+JYm2CItkpOhUt14ba
+         gWHmv+Ez4kH9a0QBuM46ZbbH4grZOixKx+aMsfZsdSJ9lilYdkEdzBU7ZCtoPUN69va5
+         WSRg86+1u6ZbHqgWRLwZckFBl4QtWU8tTXGKahxBQ0ZK4TpQoidhWcUkKz9Ym8p3KMm2
+         QrQVf8nhMb2xyHIxXd7aMKm/59fQ7BbOiIRDvmRU8kPUs4kWrxUKyrUSiODPisUlfAJz
+         M8Fg==
+X-Gm-Message-State: ACrzQf1C5Y5uRPA3uqjTp02IQwD7O2DY7a8a03YcqSDuTnP1SmjbicKb
+        LrZ2T/urMR16g81IlJFP9xA7vWm8nNse8/MdkJw0dg==
+X-Google-Smtp-Source: AMsMyM74PhTMtaDdojPE3Gl+8/j0gbeo2ZUKzdZSx7kiyQHT7FwZ/NQ9JAOxrEN2lb9nIwl2MLZuQl03p4TzbuBym/Y=
+X-Received: by 2002:a05:6512:3dac:b0:4a4:8044:9c3 with SMTP id
+ k44-20020a0565123dac00b004a4804409c3mr9462216lfv.145.1667412488653; Wed, 02
+ Nov 2022 11:08:08 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 2 Nov 2022 11:08:08 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <20221102042933.mdlfknp45ajyrrpn@builder.lan>
+References: <20221101233421.997149-1-swboyd@chromium.org> <20221102024927.n5mjyzyqyapveapa@builder.lan>
+ <CAE-0n50uVf-xapfX5A_c7XU7gV58HrKBOf5DCUPCcahPrgkU0Q@mail.gmail.com> <20221102042933.mdlfknp45ajyrrpn@builder.lan>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Wed, 2 Nov 2022 11:08:08 -0700
+Message-ID: <CAE-0n52389Pmp1dxHbtGijK_x+0xGyJ4q4rFRpa6L2KkZHKX5Q@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, patches@lists.linux.dev,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,87 +79,105 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now as all drivers stopped calling drm_bridge_connector_enable_hpd() and
-drm_bridge_connector_disable_hpd() it is safe to remove them complelely.
-Rename our internal helpers to remove the underscore prefix.
+Quoting Bjorn Andersson (2022-11-01 21:29:33)
+> On Tue, Nov 01, 2022 at 08:29:20PM -0700, Stephen Boyd wrote:
+> > Quoting Bjorn Andersson (2022-11-01 19:49:27)
+> > >
+> > > It's correct that adding the GDSCs as subdomains for the device's
+> > > parent-domain will ensure that enabling a GDSC will propagate up and
+> > > turn on the (typically) rpmhpd resource.
+> > >
+> > > But the purpose for the explicit calls was to ensure that the clock
+> > > controller itself is accessible. It's been a while since I looked at
+> > > this, but iirc letting MMCX to turn off would cause the register access
+> > > during dispcc probing to fail - similar to how
+> > > clk_pm_runtime_get()/put() ensures the clock registers are accessible.
+> >
+> > The dispcc and videocc on sm8250 don't use pm_clk APIs. They do use
+> > pm_runtime APIs during probe (i.e. pm_runtime_resume_and_get()). That
+> > will enable the MMCX domain and keep it on.
+>
+> There's a corresponding pm_runtime_put() at the end of
+> disp_cc_sm8250_probe(), so this vote should be released.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/drm_bridge_connector.c | 33 ++++----------------------
- include/drm/drm_bridge_connector.h     |  2 --
- 2 files changed, 4 insertions(+), 31 deletions(-)
+Correct.
 
-diff --git a/drivers/gpu/drm/drm_bridge_connector.c b/drivers/gpu/drm/drm_bridge_connector.c
-index 0e13bc87a6ac..19ae4a177ac3 100644
---- a/drivers/gpu/drm/drm_bridge_connector.c
-+++ b/drivers/gpu/drm/drm_bridge_connector.c
-@@ -128,19 +128,7 @@ static void drm_bridge_connector_hpd_cb(void *cb_data,
- 	drm_kms_helper_hotplug_event(dev);
- }
- 
--/**
-- * drm_bridge_connector_enable_hpd - Enable hot-plug detection for the connector
-- * @connector: The DRM bridge connector
-- *
-- * This function enables hot-plug detection for the given bridge connector.
-- * This is typically used by display drivers in their resume handler.
-- */
--void drm_bridge_connector_enable_hpd(struct drm_connector *connector)
--{
--}
--EXPORT_SYMBOL_GPL(drm_bridge_connector_enable_hpd);
--
--static void _drm_bridge_connector_enable_hpd(struct drm_connector *connector)
-+static void drm_bridge_connector_enable_hpd(struct drm_connector *connector)
- {
- 	struct drm_bridge_connector *bridge_connector =
- 		to_drm_bridge_connector(connector);
-@@ -151,20 +139,7 @@ static void _drm_bridge_connector_enable_hpd(struct drm_connector *connector)
- 				      bridge_connector);
- }
- 
--/**
-- * drm_bridge_connector_disable_hpd - Disable hot-plug detection for the
-- * connector
-- * @connector: The DRM bridge connector
-- *
-- * This function disables hot-plug detection for the given bridge connector.
-- * This is typically used by display drivers in their suspend handler.
-- */
--void drm_bridge_connector_disable_hpd(struct drm_connector *connector)
--{
--}
--EXPORT_SYMBOL_GPL(drm_bridge_connector_disable_hpd);
--
--static void _drm_bridge_connector_disable_hpd(struct drm_connector *connector)
-+static void drm_bridge_connector_disable_hpd(struct drm_connector *connector)
- {
- 	struct drm_bridge_connector *bridge_connector =
- 		to_drm_bridge_connector(connector);
-@@ -313,8 +288,8 @@ static int drm_bridge_connector_get_modes(struct drm_connector *connector)
- static const struct drm_connector_helper_funcs drm_bridge_connector_helper_funcs = {
- 	.get_modes = drm_bridge_connector_get_modes,
- 	/* No need for .mode_valid(), the bridges are checked by the core. */
--	.enable_hpd = _drm_bridge_connector_enable_hpd,
--	.disable_hpd = _drm_bridge_connector_disable_hpd,
-+	.enable_hpd = drm_bridge_connector_enable_hpd,
-+	.disable_hpd = drm_bridge_connector_disable_hpd,
- };
- 
- /* -----------------------------------------------------------------------------
-diff --git a/include/drm/drm_bridge_connector.h b/include/drm/drm_bridge_connector.h
-index 33f6c3bbdb4a..69630815fb09 100644
---- a/include/drm/drm_bridge_connector.h
-+++ b/include/drm/drm_bridge_connector.h
-@@ -10,8 +10,6 @@ struct drm_connector;
- struct drm_device;
- struct drm_encoder;
- 
--void drm_bridge_connector_enable_hpd(struct drm_connector *connector);
--void drm_bridge_connector_disable_hpd(struct drm_connector *connector);
- struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
- 						struct drm_encoder *encoder);
- 
--- 
-2.35.1
+>
+> While registering clocks, the framework will clk_pm_runtime_get()/put()
+> while accessing registers. The argument that was given when introducing
+> the calls in the probe was the same, covering the direct regmap
+> accesses...
+>
+> And I guess it avoids flipping the genpd on/off for each resource being
+> accessed.
 
+I don't think the genpd framework accesses anything when a genpd is
+registered. The clock controller is pm_runtime_resume_and_get() during
+the time the gdscs are registered with genpd, so there isn't any more
+need to get the runtime PM state of the clock controller during this
+time. The PM runtime put comes after qcom_cc_probe(). We should be good.
+
+>
+> > Then when the GDSCs are
+> > registered it will create genpds for each GDSC and make them subdomains
+> > of the 'dev->pm_domain' genpd for MMCX. If the GDSCs are enabled at
+> > probe time they will increment the count on MMCX to put the count into
+> > sync between MMCX and the GDSC provided.
+> >
+>
+> This does not fit my argument; if the purpose is for pm_runtime to
+> provide access to the registers (and the subdomain ensuring that the
+> GDSC is powered), we should have a pm_runtime_put() after each operation
+> (analog to clk_pm_runtime_put()).
+
+I believe registration/probe of the GDSCs is covered, the device is
+runtime resumed there. After that I'm not 100% positive, but with the
+GDSC as a subdomain of the clock controller's domain it will at least
+turn on MMCX before trying to enable the GDSC.
+
+>
+> > The clk framework also has runtime PM calls throughout the code to make
+> > sure the device is runtime resumed when it is accessed. Maybe the
+> > problem is if probe defers and enough runtime puts are called to runtime
+> > suspend the device thus disabling MMCX?
+>
+> Iirc the problem at hand was really that without any other votes for
+> MMCX, the register accesses during probe, gdsc and reset registration
+> would access registers without power.
+
+Makes sense. The runtime PM get call for the clock controller in the
+probe will keep MMCX enabled.
+
+>
+> > Can MMCX really ever be disabled
+> > or does disabling it act as a one way disable where you can never enable
+> > it again?
+> >
+>
+> I've not seen any indications of that.
+>
+> Only the side effect that if you set_performance_state() MMCX lower than
+> required during continuous splash the whole SoC get hosed.
+
+I see. That sounds different.
+
+>
+> > Or maybe this is the problem where not all constraints are determined
+> > yet but we're letting runtime PM put calls from the dispcc device shut
+> > down the entire multimedia subsystem while other devices that are within
+> > the same domain haven't probed and been able to sync their state but
+> > they're actively accessing the bus (i.e. continuous splash screen). I
+> > could see this problem being avoided by the pm_runtime_get() call in
+> > gdsc registration keeping MMCX on forever because there isn't a matching
+> > put anywhere.
+> >
+>
+> This implementation predates 41fff779d794 ("clk: qcom: gdsc: Bump parent
+> usage count when GDSC is found enabled"), so no this was not introduced
+> to hide the issue of
+> yet-to-be-probed-devices-not-voting-for-their-resources.
+>
+> This problem has been avoided by tying rpmhpd to sync_state and
+> requiring that people boot their systems with pd_ignore_unused.
+
+Heh ok.
