@@ -2,142 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E8466166C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 17:00:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 844BD61671B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 17:08:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229516AbiKBQAN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 12:00:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39094 "EHLO
+        id S230159AbiKBQIK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 12:08:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231163AbiKBP7w (ORCPT
+        with ESMTP id S230499AbiKBQII (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 11:59:52 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F409B2C108;
-        Wed,  2 Nov 2022 08:59:50 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id i9so9241564qki.10;
-        Wed, 02 Nov 2022 08:59:50 -0700 (PDT)
+        Wed, 2 Nov 2022 12:08:08 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06D4F2CC97
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 09:08:04 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id z24so25669297ljn.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 09:08:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=F/1grPaD+xMIby1Txd3zoCjkj1cuL2trjeEvsrdeQYk=;
-        b=pE+d2BMuxQjQYzxQqj4PXTA8MdpkV/KJe2dAN8yPM0xASyxTbxq9if/GzGXIwkEnkm
-         Zhq28XdD6jQ/2Ix6oTGL+2kJW+/C9S8DXs0WmmtbOwWoF4Fc/9Q2VlLDHMjAYS0aBhOI
-         8QrjLRVd9u5A9F0OF6DkrHbdoqLDQQzShm7+B0hYX/wvOUoGswqKQt4l7RXX+gEwCpu9
-         h9Mtj97CQnB26geCAwTJr+LTcXYOQCqOISPZNaTmK3RCJKbGO2QgW9zjwgAQFBxAA2WW
-         Urz83q4xaNSKPMWBsS15Pju/tNWJnjU7O7ktboSF+MB3PDFm7tZw69e7zYLw8VeOiXJD
-         CT3g==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0I/ROXPneInb/MGZ/Nkeqw8uPPG8K3m2UvjVJMSd+70=;
+        b=DyRbaApygVrXJkd7rDhA17TXgTM8qZGDpV0ZixOzyhL+ihS++mbs2tMfh70u97VEyQ
+         WsBXCvglwmSJp5likmQuSY9dR640qAqrf55JQUnG4QbgBeA7TM/NKo+3mCh4v2kPJ/2U
+         XleqdzJkpJngIp8pZilmw9CKU2OSxMWSPu8BD95womQt147bfrADoJhJWPGmCBjxyN+l
+         pPMmt9/l4aElNauCvyltO12mamCd6HOlpyXFaqn2/QvpZA/PjvkkzwE0Zw+B2SugbTYk
+         pdYjWR0rocQnCPJU3gs6K2DHJcq5JjCi/u5NqBYaL88JDzIg1QDAGvFsod20obUw7t+C
+         /hbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=F/1grPaD+xMIby1Txd3zoCjkj1cuL2trjeEvsrdeQYk=;
-        b=UaKApcZZVVap+j7XxDR9L/nBkwQNpv2v4G4EbBMiHR7DSe41mZ1tMvGAJ/GzzLtltV
-         /lPRyIemdHJkSzN/WPNiGWpDgicaAJIcRhs26PON8E+yrGHhIMQmjIXjvBC4xw6u0tou
-         VXVB7bpDzD8Vs3wOMGn0K60RZNsSY7W/f/7ycPTPBoiLwWPOpSmNyoQuy9UKkI7JzLU8
-         AEYZtz1i3voJafMWUYRDYZJSMj6c0BN13lvLWKD4UBLGVAqSvlReJgtXOrNk2vWGwGHu
-         Tya+eB8abh22RmwdiKnBVAQkK5hDDJULluxKHHLu5Hg8cYxjNUG6r+jfgQQASI4pjh/0
-         aAHg==
-X-Gm-Message-State: ACrzQf3XUs46P9nj9akgDT4lKC8ijL4LNHai/uw8ZWIu3rw/iXYf5vU1
-        /JpDEBjSAw1T/DNR3fhKBaC3EtFmtTec+mVh6zc=
-X-Google-Smtp-Source: AMsMyM4hLVYbFgPOuL0CR9Bpu/6eSDfsMz83d21/2tJDZhIHfJzJSngYiCH/QQcArG+V4Qg/WyZljtSopOCAqV2gAII=
-X-Received: by 2002:a05:620a:254e:b0:6c7:855c:6eb with SMTP id
- s14-20020a05620a254e00b006c7855c06ebmr18731720qko.39.1667404790104; Wed, 02
- Nov 2022 08:59:50 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0I/ROXPneInb/MGZ/Nkeqw8uPPG8K3m2UvjVJMSd+70=;
+        b=RnTFazwzLwvSvqct1fLB8XNkt1OPsdknJlm117MHrXVopK0aTCuSjFHtQf0VgPUen/
+         pmQuZURBJsAYTBmYFbYFdgH98Pow4YC/qvb490v0eM2bdYr5jmZhBwza298yvbm7WsKu
+         E5F9x8JH0zHMdwJ/zn6IDAPqqf4odFWhpWS9hnWqSoGh4uKcYfkHIPxI8Cql2YPYGPFZ
+         +WemW2GWajkhMP363pnfeLzhPmDP7+hRmRa5WEyIcu2urD8WDNvoYT2Yl4edAapcyOvV
+         tAqAPME9Qjokj9OOD/QbnDVAt842l5roX5pSnEEvPduwuqbrXrZxTkWSvg4E5Ru0gyhu
+         hvbQ==
+X-Gm-Message-State: ACrzQf11Sucq4V/Q8X/3Zb0tdckA+ZtDApddVE3P9r6F6QlWUOamGPDt
+        vmdB5ps9YzDbh74O/WtG7jKWHchog6y10NCD4q4=
+X-Google-Smtp-Source: AMsMyM7eI3+VrOSND/7sen8ZMjN46C8wNN5N4+3XABwphMWhOTEit16bGY7lU052Pv/qcT+cOXqGtA==
+X-Received: by 2002:a2e:a490:0:b0:277:e5b:ec07 with SMTP id h16-20020a2ea490000000b002770e5bec07mr10176814lji.371.1667405282393;
+        Wed, 02 Nov 2022 09:08:02 -0700 (PDT)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id c7-20020a2e9d87000000b0026dcfc2bf4csm2221525ljj.57.2022.11.02.09.08.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Nov 2022 09:08:02 -0700 (PDT)
+Message-ID: <ff01677d-b236-fa16-fde9-98cfe8a0722c@linaro.org>
+Date:   Wed, 2 Nov 2022 19:08:01 +0300
 MIME-Version: 1.0
-References: <20221101214051.159988-1-robdclark@gmail.com> <044540cc-1d8b-45da-ac8b-ecc133b45dc1@amd.com>
-In-Reply-To: <044540cc-1d8b-45da-ac8b-ecc133b45dc1@amd.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 2 Nov 2022 09:00:06 -0700
-Message-ID: <CAF6AEGvFxU10Uu+eBRm0ChyVDPg3DMNoeHd4zCWHWwRzRBvP3Q@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Remove exclusive-fence hack
-To:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Subject: Re: [PATCH] drm/msm: Add MSM_INFO_GET_FLAGS
+Content-Language: en-GB
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Rob Clark <robdclark@chromium.org>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        open list <linux-kernel@vger.kernel.org>
+References: <20220923173307.2429872-1-robdclark@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220923173307.2429872-1-robdclark@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 2, 2022 at 3:46 AM Christian K=C3=B6nig <christian.koenig@amd.c=
-om> wrote:
->
-> Am 01.11.22 um 22:40 schrieb Rob Clark:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > The workaround was initially necessary due to dma_resv having only a
-> > single exclusive fence slot, yet whe don't necessarily know what order
-> > the gpu scheduler will schedule jobs.  Unfortunately this workaround
-> > also has the result of forcing implicit sync, even when userspace does
-> > not want it.
-> >
-> > However, since commit 047a1b877ed4 ("dma-buf & drm/amdgpu: remove
-> > dma_resv workaround") the workaround is no longer needed.  So remove
-> > it.  This effectively reverts commit f1b3f696a084 ("drm/msm: Don't
-> > break exclusive fence ordering")
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
->
-> Oh, yes please. I had that on my todo list for after the initial patch
-> had landed, but couldn't find the time to look into it once more.
->
-> There was another case with one of the other ARM drivers which could be
-> cleaned up now, but I can't find it any more of hand.
->
-> Anyway this patch here is Acked-by: Christian K=C3=B6nig
-> <christian.koenig@amd.com>.
+On 23/09/2022 20:33, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> In some cases crosvm needs a way to query the cache flags to communicate
+> them to the guest kernel for guest userspace mapping.
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>   drivers/gpu/drm/msm/msm_drv.c | 10 ++++++++++
+>   include/uapi/drm/msm_drm.h    |  1 +
+>   2 files changed, 11 insertions(+)
 
-Thanks.. I had a quick look for the other driver but couldn't spot
-anything, so perhaps it has already been fixed?
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-BR,
--R
+-- 
+With best wishes
+Dmitry
 
->
-> Regards,
-> Christian.
->
-> > ---
-> >   drivers/gpu/drm/msm/msm_gem_submit.c | 3 +--
-> >   1 file changed, 1 insertion(+), 2 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm=
-/msm_gem_submit.c
-> > index 5599d93ec0d2..cc48f73adadf 100644
-> > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> > @@ -334,8 +334,7 @@ static int submit_fence_sync(struct msm_gem_submit =
-*submit, bool no_implicit)
-> >               if (ret)
-> >                       return ret;
-> >
-> > -             /* exclusive fences must be ordered */
-> > -             if (no_implicit && !write)
-> > +             if (no_implicit)
-> >                       continue;
-> >
-> >               ret =3D drm_sched_job_add_implicit_dependencies(&submit->=
-base,
->
