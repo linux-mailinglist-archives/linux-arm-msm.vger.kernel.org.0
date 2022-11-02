@@ -2,113 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34D73615EB6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 10:02:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4128F615EED
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 10:07:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231364AbiKBJC5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 05:02:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34150 "EHLO
+        id S231218AbiKBJHo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 05:07:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230304AbiKBJCN (ORCPT
+        with ESMTP id S231251AbiKBJHD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 05:02:13 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8292286E8
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 02:01:53 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id o4so23513659wrq.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 02:01:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=x+YHM0pGhXAq8BaBOttBEEtqDW7ExLHDNR0HEMCbnXc=;
-        b=z35Sr/T7LbEhakVjwgcubvdYh+BgpSUqV6W3puGRRcjPDLeyvrOf2K1/AUX1AfGLUs
-         gTucUdlvqDb0VW5rugZZHzH26Fz/W08qN7RWoojeLQg6UldOBIkyaFVH1NNCqFM5YLAq
-         j6l6zhKcFAVVtbofvzd9MmrluDydeVfWfFTOtwBTXA98bcyz7JyXQusLkJHAUfLcngR8
-         9GKkr4TKUUhvL98YynEM8tjoe+Y6Y/JvJD1ubmZyS2VibvAsdQsg6sGgkeioKa5Ttofm
-         olALg3say8A+J8FQ2Xu0lOGvqkAG9zabDNsS5zjoXAUM7angezUUVLgXtWiNOKS9mguB
-         AaZQ==
+        Wed, 2 Nov 2022 05:07:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 083CB2870D
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 02:04:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1667379843;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=XBlp2DOijU5hXQ9AriUwp9vEVLgfxcCQxHX+sSZSvOs=;
+        b=cU6CaU/T3cRlN3WmIu3UEc7d6/fczr3AsteLEeSis2kQhSs1jBTSH6BOdcbi98+L1CS4Ff
+        dKMMJcQ9Qorjv5Px2oNHPiQBogLkzL3IpXhZQ2qdQ7DSS4cLXg+T1b+/c8PHb2DjBMo67F
+        JpmKjCMX4nYr+UYWvXcW7BFgqEGjVdg=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-583-iMcpoKWaPyO0DEcKOPYAFQ-1; Wed, 02 Nov 2022 05:04:01 -0400
+X-MC-Unique: iMcpoKWaPyO0DEcKOPYAFQ-1
+Received: by mail-wr1-f70.google.com with SMTP id w23-20020adf8bd7000000b002358f733307so4605848wra.17
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 02:04:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=x+YHM0pGhXAq8BaBOttBEEtqDW7ExLHDNR0HEMCbnXc=;
-        b=SmUq0CkuW4FwfpU4PMbiQ9lmR04h+HL1fmzbm+QQFj84eeEXJPzOWS1wtQ+Vu9abne
-         LHsd5GMpKgc/l06q4zuOA/G+Qy5TwtqmzjrCBewIbICDjPekmWvLZtbEZmZ2SrBtLLy0
-         VgrxDTeCN2mILe0sYc/O6F/E2VBXUL1cBMQeRYRRWiSl68wRzV+hA4MmhnK6ksRR4YoR
-         HKXacJadZSL1eZujyiJiFG2z4Wz/+pK/aNnPg6irT1Vg+hCz0oHOSH2KX/KWwBfOigxT
-         pmq+Iplm1maGzf4Z4DgQsS0CA9gyY6BupomgoBBjeFQUmKROBb+RLeRYiDqQ964GmXA9
-         iVSw==
-X-Gm-Message-State: ACrzQf2hcxfmdtErf16+A2l5QSi28NNPfo56rqH7kwTlARodk5SJ1bIA
-        oUrxZ9mQ+UH9lB5cUTDKjilNpA==
-X-Google-Smtp-Source: AMsMyM4XOfPfjszGjMvrKXFh1ihxoJEML1qHCmRN5ROf2nY4i8a8wpzY+1JUoa8+rVrHNOuk2/wOWA==
-X-Received: by 2002:a05:6000:18d:b0:236:8f9d:6d41 with SMTP id p13-20020a056000018d00b002368f9d6d41mr14988747wrx.658.1667379713299;
-        Wed, 02 Nov 2022 02:01:53 -0700 (PDT)
-Received: from prec5560.. (freifunk-gw.bsa1-cpe1.syseleven.net. [176.74.57.43])
-        by smtp.gmail.com with ESMTPSA id bd26-20020a05600c1f1a00b003cf6c2f9513sm1425322wmb.2.2022.11.02.02.01.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 02:01:52 -0700 (PDT)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, mturquette@baylibre.com,
-        sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        dmitry.baryshkov@linaro.org, Jonathan Marek <jonathan@marek.ca>
-Cc:     Robert Foss <robert.foss@linaro.org>
-Subject: [PATCH v2 5/5] clk: qcom: dispcc-sm8250: Disable link_div_clk_src for sm8150
-Date:   Wed,  2 Nov 2022 10:01:40 +0100
-Message-Id: <20221102090140.965450-6-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221102090140.965450-1-robert.foss@linaro.org>
-References: <20221102090140.965450-1-robert.foss@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XBlp2DOijU5hXQ9AriUwp9vEVLgfxcCQxHX+sSZSvOs=;
+        b=w4B0kQsWO+CJ51QZ5srGa/o5OWzbtSfSXIOJgd07atoyhRJ1BPhuZ74p6aGjekmd3S
+         NeHZuoj7bEubTceX/R3unsVX+swVa/vR026wURtuE9e4hhVbQvFvlogmVXKqcRbZ1Dkq
+         UMHL96lrqezn+VBScg0uTW4Z9Zg3wuJYkwVuVB+T7JZrCN1YjeQPSaQgrZvE/syxBn15
+         TDTSYfc4C28L2lqop4KREihKs5TYqJcJyKmM0uNOaXia3TPF5E/jqLt6ZLIa7F0mIahp
+         YKoC5eAJntTiiKPWkeAbq9INWLui1DWcuWCMWOEhMwK9Uz2j0tyIlDOoW8xTS4h8qvUJ
+         X2Og==
+X-Gm-Message-State: ACrzQf1hZJjsEU2PCp5qZl0YcUpLY409gHxlUeGijKtG4dn4B0SeqbAk
+        KUCVq0QM5cAsNdVTwggp0066MwnhYoh9Dfv5yCEXhru430xP/lX9rwFXWRyPeaNLPf9r3tORlj+
+        xpwslSjqLZuNyyADYZvfQXpFwnw==
+X-Received: by 2002:a7b:c409:0:b0:3cf:4c81:8936 with SMTP id k9-20020a7bc409000000b003cf4c818936mr24380799wmi.38.1667379840251;
+        Wed, 02 Nov 2022 02:04:00 -0700 (PDT)
+X-Google-Smtp-Source: AMsMyM72ckpdUoZR+NwXtu1sv2+7NmgS+YMIWWHB7QdeKnWTKduGDRl7tg4bkpenTZv0mX1kFf34kw==
+X-Received: by 2002:a7b:c409:0:b0:3cf:4c81:8936 with SMTP id k9-20020a7bc409000000b003cf4c818936mr24380784wmi.38.1667379840046;
+        Wed, 02 Nov 2022 02:04:00 -0700 (PDT)
+Received: from [192.168.1.130] (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
+        by smtp.gmail.com with ESMTPSA id b13-20020a5d550d000000b002366b17ca8bsm14083933wrv.108.2022.11.02.02.03.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Nov 2022 02:03:59 -0700 (PDT)
+Message-ID: <87284e5e-859e-3b1c-7142-28d4fa7a7939@redhat.com>
+Date:   Wed, 2 Nov 2022 10:03:57 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: *
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH v2 15/21] drm/fb-helper: Disconnect damage worker from
+ update logic
+Content-Language: en-US
+To:     Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
+        airlied@gmail.com, sam@ravnborg.org, mripard@kernel.org,
+        maarten.lankhorst@linux.intel.com
+Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        linux-aspeed@lists.ozlabs.org,
+        linux-arm-kernel@lists.infradead.org,
+        etnaviv@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
+        linux-hyperv@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mips@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        spice-devel@lists.freedesktop.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org
+References: <20221024111953.24307-1-tzimmermann@suse.de>
+ <20221024111953.24307-16-tzimmermann@suse.de>
+From:   Javier Martinez Canillas <javierm@redhat.com>
+In-Reply-To: <20221024111953.24307-16-tzimmermann@suse.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SM8150 does not have any of the link_div_clk_src clocks, so
-let's disable them for this SoC.
+On 10/24/22 13:19, Thomas Zimmermann wrote:
+> The fbdev helpers implement a damage worker that forwards fbdev
+> updates to the DRM driver. The worker's update logic depends on
+> the generic fbdev emulation. Separate the two via function pointer.
+> 
+> The generic fbdev emulation sets struct drm_fb_helper_funcs.fb_dirty,
+> a new callback that hides the update logic from the damage worker.
+> It's not possible to use the generic logic with other fbdev emulation,
+> because it contains additional code for the shadow buffering that
+> the generic emulation employs.
+> 
+> DRM drivers with internal fbdev emulation can set fb_dirty to their
+> own implementation if they require damage handling; although no such
+> drivers currently exist.
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
----
- drivers/clk/qcom/dispcc-sm8250.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+[...]
 
-diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
-index d2aaa44ed3d4..382dbd8ba250 100644
---- a/drivers/clk/qcom/dispcc-sm8250.c
-+++ b/drivers/clk/qcom/dispcc-sm8250.c
-@@ -1289,6 +1289,17 @@ static int disp_cc_sm8250_probe(struct platform_device *pdev)
- 		disp_cc_pll1_config.config_ctl_hi1_val = 0x00000024;
- 		disp_cc_pll1_config.user_ctl_hi1_val = 0x000000D0;
- 		disp_cc_pll1_init.ops = &clk_alpha_pll_trion_ops;
-+
-+		disp_cc_mdss_dp_link_intf_clk.clkr.hw.init->parent_hws[0] =
-+			&disp_cc_mdss_dp_link_clk_src.clkr.hw;
-+		disp_cc_mdss_dp_link1_intf_clk.clkr.hw.init->parent_hws[0] =
-+			&disp_cc_mdss_dp_link1_clk_src.clkr.hw;
-+		disp_cc_mdss_edp_link_intf_clk.clkr.hw.init->parent_hws[0] =
-+			&disp_cc_mdss_edp_link_clk_src.clkr.hw;
-+
-+		disp_cc_sm8250_clocks[DISP_CC_MDSS_DP_LINK1_DIV_CLK_SRC] = NULL;
-+		disp_cc_sm8250_clocks[DISP_CC_MDSS_DP_LINK_DIV_CLK_SRC] = NULL;
-+		disp_cc_sm8250_clocks[DISP_CC_MDSS_EDP_LINK_DIV_CLK_SRC] = NULL;
- 	} else if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8350-dispcc")) {
- 		static struct clk_rcg2 * const rcgs[] = {
- 			&disp_cc_mdss_byte0_clk_src,
+>  static void drm_fb_helper_damage_work(struct work_struct *work)
+>  {
+> -	struct drm_fb_helper *helper = container_of(work, struct drm_fb_helper,
+> -						    damage_work);
+> -	struct drm_device *dev = helper->dev;
+> +	struct drm_fb_helper *helper = container_of(work, struct drm_fb_helper, damage_work);
+
+This line is an unrelated code style change. But I guess it's OK.
+
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+
 -- 
-2.34.1
+Best regards,
+
+Javier Martinez Canillas
+Core Platforms
+Red Hat
 
