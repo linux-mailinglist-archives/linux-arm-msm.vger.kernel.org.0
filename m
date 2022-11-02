@@ -2,140 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FCBC616DB6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 20:20:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D8A12616DC9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 20:26:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230295AbiKBTUX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 15:20:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46578 "EHLO
+        id S230518AbiKBT0F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 15:26:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230381AbiKBTUV (ORCPT
+        with ESMTP id S229531AbiKBT0D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 15:20:21 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D969EDFE2
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 12:20:20 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id g10so5899746qkl.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 12:20:20 -0700 (PDT)
+        Wed, 2 Nov 2022 15:26:03 -0400
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74931E9
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 12:26:02 -0700 (PDT)
+Received: by mail-qv1-xf2e.google.com with SMTP id o8so13168237qvw.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 12:26:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=P7DzY3flKN/IpybPJ+aNMlwaIPUzPDi/AXVTF+yXVtg=;
-        b=AUVQvakkgdtd6Ucua94NDfZheJbQoUZUUGgBmjJJSyhbyRr6aiM/l9Y9CJ0JocoXJb
-         nh5lUAr1/U4VONjn0DNV82cFxP4lvdyqK6w0da+LQv8PVOgTjqx8xTWavJVez53QTcNg
-         89w12zTVsn8dQ+tEmfmkRMzY7GVT02OD7rR+ZwemjZznX7NQzNmtFbRXWw95br/DCXv3
-         by0MoapJqpgw4OIg3gulx4JdfUQ2CtN85QbQrDLx0zxBgLQWXL39XDcbLwi2drp5PEFA
-         ylMYFtSmusVeT5Rn/nmPElKnROzDnZZS+mn0nGns1QclM0XtHfq+5zrxD5H9xfnxH2Bp
-         qhLg==
+        bh=bZ0c9n3S/7R/juAKL/MuQmyZ52QEpr04qFxA/MunVX4=;
+        b=MY+dEW0wPbHYY6f/JC/JnMp+6uroYZomjMRscKoUq6BxwMFbFjj+DOp2TcG48TQidw
+         ++iqOOnhC5OtFyrEjofDZKkOqYkoP8GaxYNkpxR48rDubtqxit4hIpQsEy3pjeFVVBqx
+         DoGJgbrM0Y3zd9UoHaLDbeCzblFurOhmg0UXnUiYYjRCp/6alURNVgqkxPG/wmIu00Dh
+         mdbyaTI05vnqPLZuyw3IiBslvc2GcBUjLsIq0oIa/f8A3TcrOhhi3mzl5Gg6rdqlX1KG
+         aTKuu+l0MZ3yvNtvgN0RQKvPpndgwPRyNv3/MQMN4BbEE0OjX72E5QRvXygjJ0OFNkM/
+         edMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=P7DzY3flKN/IpybPJ+aNMlwaIPUzPDi/AXVTF+yXVtg=;
-        b=q3ZjyzK7u3x+f46fAxD/KWRy4M8PXK+H0+bDS+ZS0YXs+Sn6u6PMyYeJKIgHKOCuTQ
-         h1ZAhRWj4O13RIZNX6jzhgOJyI/gJmCSg8K82FWki35UnenKs8cd5F6u3Adr6r2vpmyP
-         r65wG/W4Bmyl10G2HhCpdq2cVbbIyun63Q08r51FWDSgf0EurdyvnZoms/AEa5O2ixAv
-         leCA/+g+3VQ54E3jaEFaoZgx34jD43XtFjXM4+yrJTSfILbulHym+jjT04TDDk6Olq7I
-         6eSDXz67IY8jdOn+tpN1c5vkCPGNTPi9bePgLd8TDKxZEIfm4hqSBitO0u+exGaSxULn
-         JERQ==
-X-Gm-Message-State: ACrzQf2wKNLuTvy3b2zxWDo51eWaWNAl49M1MIxChiMrdaHZa1ZclmqZ
-        IvHO0ZJ7AVthhSRPSKdgQQnrZA==
-X-Google-Smtp-Source: AMsMyM42nja1y3Ce02aFRPqpX8h8vuMLN2/7sgBMjWDNKce78YBCG+ayNZ6L7Ps8tVVz/BOlp/7Ltg==
-X-Received: by 2002:a05:620a:b14:b0:6fa:5e0b:d9fe with SMTP id t20-20020a05620a0b1400b006fa5e0bd9femr3596189qkg.594.1667416820026;
-        Wed, 02 Nov 2022 12:20:20 -0700 (PDT)
+        bh=bZ0c9n3S/7R/juAKL/MuQmyZ52QEpr04qFxA/MunVX4=;
+        b=xPGB6skLi31L+iVXtO8WIjf4aGmmdVqSlbwRqhK4G8T26PHH0yMWNlTcKhOLKWZtnw
+         IL9KhNFnEWSgWgAz7TmHds7nDZRiru7AEA7m7lNPDbl8gJedlFlrZnKLpz/5TM33Rf03
+         GR556GGkv+l5R3LGio2E3FIaPRKJ/Afh7FEdrkhbE/5dFTRzo2YW481fucnrsMEAyXbb
+         bSIKRtJNoR6EYsiWAIJ+YEfLlDGzEmhOjNJNBFm4WaO2iG7/fksMQTAIm8B6OntEF86f
+         XchoQC5p/MYvJcIMmr5lCq7QtDfEdetriaqL3Q81uhS4uMi3FXE8bLR6I0aDhRsR0fYF
+         Y7qw==
+X-Gm-Message-State: ACrzQf1SIJ+M1nZIhFC2+KlLPJF31WHZMOF7CxarJnmXfra7w/FxXhVN
+        /QZPG8mHZfn/wtCrZPxb3VCFqw==
+X-Google-Smtp-Source: AMsMyM5vSN7AXGv7p2SjYikwAFRsnviWIYWPLTa+O5bLfxdrMR2RwAa4LE6i3kp35nDNdEbhEELSiQ==
+X-Received: by 2002:a05:6214:d6e:b0:4b9:692d:c486 with SMTP id 14-20020a0562140d6e00b004b9692dc486mr23080087qvs.104.1667417161687;
+        Wed, 02 Nov 2022 12:26:01 -0700 (PDT)
 Received: from ?IPV6:2601:586:5000:570:28d9:4790:bc16:cc93? ([2601:586:5000:570:28d9:4790:bc16:cc93])
-        by smtp.gmail.com with ESMTPSA id ew12-20020a05622a514c00b003a51e8ef03dsm5774543qtb.62.2022.11.02.12.20.18
+        by smtp.gmail.com with ESMTPSA id r17-20020a05620a03d100b006eee3a09ff3sm8872607qkm.69.2022.11.02.12.25.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Nov 2022 12:20:19 -0700 (PDT)
-Message-ID: <1a8bab07-46c4-1585-45ff-8780c02afd4e@linaro.org>
-Date:   Wed, 2 Nov 2022 15:20:18 -0400
+        Wed, 02 Nov 2022 12:26:00 -0700 (PDT)
+Message-ID: <e1233b16-4289-f193-2084-40ea0e587ef8@linaro.org>
+Date:   Wed, 2 Nov 2022 15:25:59 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.1
-Subject: Re: [PATCH v11 2/2] arm64: dts: qcom: sagit: add initial device tree
- for sagit
+Subject: Re: [PATCH v2 1/2] dt-bindings: clock: qcom,gcc-ipq8074: Use common
+ GCC schema
 Content-Language: en-US
-To:     Dzmitry Sankouski <dsankouski@gmail.com>,
-        linux-kernel@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Del Regno <angelogioacchino.delregno@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Govind Singh <govinds@codeaurora.org>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Jonathan Marek <jonathan@marek.ca>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-References: <20221102155558.1895829-1-dsankouski@gmail.com>
- <20221102155558.1895829-3-dsankouski@gmail.com>
+        Loic Poulain <loic.poulain@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Taniya Das <tdas@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>, devicetree@vger.kernel.org,
+        krishna Lanka <quic_vamslank@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Rob Herring <robh@kernel.org>
+References: <20221102163153.55460-1-krzysztof.kozlowski@linaro.org>
+ <20221102191441.5EE6EC433D6@smtp.kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221102155558.1895829-3-dsankouski@gmail.com>
+In-Reply-To: <20221102191441.5EE6EC433D6@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/11/2022 11:55, Dzmitry Sankouski wrote:
-> New device support - Xiaomi Mi6 phone
+On 02/11/2022 15:14, Stephen Boyd wrote:
+> Quoting Krzysztof Kozlowski (2022-11-02 09:31:52)
+>> Reference common Qualcomm GCC schema to remove common pieces.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Acked-by: Rob Herring <robh@kernel.org>
+>>
+>> ---
 > 
-> What works:
-> - storage
-> - usb
-> - power regulators
+> Acked-by: Stephen Boyd <sboyd@kernel.org>
 > 
-> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-> ---
+> I figure Bjorn will apply them with other qcom clk patches.
 
-(...)
+Bjorn,
 
-> +
-> +&blsp1_i2c5_sleep {
-> +	/delete-property/ bias-pull-up;
-> +	bias-disable;
-> +};
-> +
-> +&blsp1_uart3 {
-> +	status = "okay";
-> +
-> +	bluetooth {
-> +		compatible = "qcom,wcn3990-bt";
-> +
-> +		vddio-supply = <&vreg_s4a_1p8>;
-> +		vddxo-supply = <&vreg_l7a_1p8>;
-> +		vddrf-supply = <&vreg_l17a_1p3>;
-> +		vddch0-supply = <&vreg_l25a_3p3>;
-> +		max-speed = <3200000>;
-> +	};
-> +};
-> +
-> +&blsp1_uart3_on {
-> +	rx {
-
-This is a friendly reminder during the review process.
-
-It seems my previous comments were not fully addressed. Maybe my
-feedback got lost between the quotes, maybe you just forgot to apply it.
-Please go back to the previous discussion and either implement all
-requested changes or keep discussing them.
-
-Thank you.
-
-6.1-rc3 is not a proper rebase... You *must* include maintainers'
-entries. This *must* align with stuff has Bjorn. Also I expect it passes
-dtbs_check on stuff in the next.
+I think you need to update your scripts:
+https://patchwork.ozlabs.org/project/devicetree-bindings/list/?series=325924
 
 Best regards,
 Krzysztof
