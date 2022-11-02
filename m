@@ -2,130 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D5A68616CF3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 19:45:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D0A6616D13
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 19:47:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231640AbiKBSpk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 14:45:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40530 "EHLO
+        id S231739AbiKBSrc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 14:47:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231636AbiKBSpe (ORCPT
+        with ESMTP id S231693AbiKBSrS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 14:45:34 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D4E82DA9D;
-        Wed,  2 Nov 2022 11:45:34 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A2Hx4Nv023382;
-        Wed, 2 Nov 2022 18:45:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=64cDp4XZK7MDRsKDrR2aIMGpGCvaBZIPsLm49hh6sCY=;
- b=D5A5uGIN/PW1hE/eNPEUV9u91IJZ4WMKc9pDD+YsWv4JNAcHcP/ZgrV1jStxGf5M0lpL
- uRje1cDue6LjvIN2tDSJWg4JPA+ru9qMn7IHRBoKraoQ70wLaJYFocnVk2irrpMJ6/VW
- 19yIVRveU0jGSjVwtz2GnjKy1UmnKe1z8YaPjUB5jlvnr7RWDUSMso9IfZqX2WGJJHDU
- I2R2mlZCiNwwUPtYb2jTLzTl1WX1PsbJc/HAlCnjiLe8q6wU4goAbptmcuEKctOJPuc1
- hAYeizhfXZc72hmOfwRAyvrxGVLBNAOLroTeaOs+tMp2mDqULR66g/n6P1GFRTEIPhFU mg== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kkwe3r5q1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 02 Nov 2022 18:45:16 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A2IjFbU003849
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 2 Nov 2022 18:45:15 GMT
-Received: from [10.134.65.5] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 2 Nov 2022
- 11:45:15 -0700
-Message-ID: <722b05a1-4bf5-0837-baea-b1d0a9cc1e43@quicinc.com>
-Date:   Wed, 2 Nov 2022 11:45:12 -0700
+        Wed, 2 Nov 2022 14:47:18 -0400
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE8452FFDF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 11:47:12 -0700 (PDT)
+Received: by mail-qt1-x82a.google.com with SMTP id h24so11919232qta.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 11:47:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wtKcJi4R+48TsMqCQH8XbgPczt6c7dDfQAB3HD59hhY=;
+        b=pfumJRZiHgyJtXnF8PDr9lKiJtTxPbqBr1M1hCs6+w3gsHb3qhj7zcyp30HmvnyZjt
+         nY51eJMa4l0wv1s/JGywDrh7oO19aAsyEiieQ/7q0RntsmIjE90KfUtY4kzzlCmTgaCk
+         IqaVAr0069VGzZNijegHpWaNlTeHpIaGa7TuPDAkkc3cEngVPMx3+/JgNezm9OHrqyqJ
+         v+fCkElj1RSKTTZ2m9UwiTZ0Q4c3lsr63S7Kf8juhl9tWLLge9nZKtwbIrcZeb/ynqId
+         AZ8ImC5YP698K5O0sEHzd/xM8KXBr/L6ovJoW1TQcVHE21bHXw33jqHqoB68nyEBMPTn
+         +5tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wtKcJi4R+48TsMqCQH8XbgPczt6c7dDfQAB3HD59hhY=;
+        b=y7s15FLAx4UwxMYoZ+6Myv1YUKDO0x8G0fsGLOghRwRl0e+N4Sl4g/QhD494TqbQFy
+         EH+KqQd4zmhNeRDN2mwrTIG5Fw9qqDO6uJADLEkJpBDsFjC/RXjeX/s4j1zOH6htJMvk
+         8YNne3GditjOjfkEyplQqf46Kn7U8gkwvy8Fp2IJBW42Zph4wTwITUBZLyacTa3Q46z/
+         qBNOO3033ivtZH423CRJkC8KtCjdergzSIAkLkfonxZZcH49dSEXZEPBfwOl+uzgzywS
+         1obxGlRvCwUAF45uIf6Hg6gFp7vqU/OUBx4JGdG/b1o/8M0qq7feZxsZxpqzqyDQbRRz
+         LuGg==
+X-Gm-Message-State: ACrzQf0xsZJ5leY85K0hJtaNQoJubFZVONz/4yHiWoAFdy2brX9TkIdT
+        qiK63s6WWV/pk+pE2yFx+IkZoA==
+X-Google-Smtp-Source: AMsMyM7tImKnGk9XhaAiOo0zzhJ2EQR6Zs464t+GgKh7kg2gdsVZ7zA3dCADMCh4CvutPud+rvmN1A==
+X-Received: by 2002:a05:622a:64f:b0:3a5:d40:b58d with SMTP id a15-20020a05622a064f00b003a50d40b58dmr21547399qtb.308.1667414832073;
+        Wed, 02 Nov 2022 11:47:12 -0700 (PDT)
+Received: from ?IPV6:2601:586:5000:570:28d9:4790:bc16:cc93? ([2601:586:5000:570:28d9:4790:bc16:cc93])
+        by smtp.gmail.com with ESMTPSA id g19-20020a05620a40d300b006eea4b5abcesm9162922qko.89.2022.11.02.11.47.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Nov 2022 11:47:11 -0700 (PDT)
+Message-ID: <c9c3bffc-0d2a-ef67-ccab-ee040608405a@linaro.org>
+Date:   Wed, 2 Nov 2022 14:47:09 -0400
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH v6 13/21] gunyah: vm_mgr: Introduce basic VM Manager
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [PATCH v5 02/13] dt-bindings: Add binding for gunyah hypervisor
 Content-Language: en-US
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <mec@shout.net>
-CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Rob Herring <robh@kernel.org>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Murali Nalajala <quic_mnalajal@quicinc.com>,
         Trilok Soni <quic_tsoni@quicinc.com>,
-        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
         Carl van Schaik <quic_cvanscha@quicinc.com>,
         Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Jassi Brar <jassisinghbrar@gmail.com>,
-        <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-kernel@lists.infradead.org,
         Mark Rutland <mark.rutland@arm.com>,
         Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
         Sudeep Holla <sudeep.holla@arm.com>,
         Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Jonathan Corbet <corbet@lwn.net>,
-        "Will Deacon" <will@kernel.org>,
+        Will Deacon <will@kernel.org>,
         Catalin Marinas <catalin.marinas@arm.com>,
-        "Arnd Bergmann" <arnd@arndb.de>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Kalle Valo <kvalo@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20221026185846.3983888-1-quic_eberman@quicinc.com>
- <20221026185846.3983888-14-quic_eberman@quicinc.com>
- <Y2H8oh7AvYDiMqKs@kroah.com>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <Y2H8oh7AvYDiMqKs@kroah.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221011000840.289033-1-quic_eberman@quicinc.com>
+ <20221011000840.289033-3-quic_eberman@quicinc.com>
+ <20221012155645.GA2173829-robh@kernel.org>
+ <ca13eb92-9b5b-19fd-27a5-f91f5048b142@quicinc.com>
+ <CAL_Jsq+cR5AEa5i1u-_L6sP6nYXS6qgaVWZ=KwxpUbxV3ZW-BA@mail.gmail.com>
+ <75ef3cc5-3b19-9eab-b3eb-56fa254d92bd@quicinc.com>
+ <79673829-a079-201f-91e1-790eb7cc3a4b@linaro.org>
+ <df09560d-803b-33f6-69ed-6d377d05d336@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <df09560d-803b-33f6-69ed-6d377d05d336@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Lyc7CpRPI46t50CA9QxhFyVNsGbRVUPl
-X-Proofpoint-ORIG-GUID: Lyc7CpRPI46t50CA9QxhFyVNsGbRVUPl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-02_14,2022-11-02_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=604 mlxscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
- spamscore=0 malwarescore=0 bulkscore=0 priorityscore=1501 clxscore=1011
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211020122
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+Michael
-
-On 11/1/2022 10:14 PM, Greg Kroah-Hartman wrote:
-> On Wed, Oct 26, 2022 at 11:58:38AM -0700, Elliot Berman wrote:
->> +#define GH_CREATE_VM			_IO(GH_IOCTL_TYPE, 0x40) /* Returns a Gunyah VM fd */
+On 31/10/2022 23:19, Elliot Berman wrote:
 > 
-> Why 0x40?  Why not just use the same KVM ioctl numbers and names as you
-> are doing the same thing as them, right?
-
-We've designed so that there are a few ioctls that will feel similar to 
-KVM ioctls since we know this design has been successful, but we don't 
-intend to support KVM ioctls 1:1. Gunyah has different semantics for 
-many of the name-identical ioctls. It seems odd to mix some re-used KVM 
-ioctls with novel Gunyah ioctls?
-
 > 
-> Normally your first ioctl is "0x01", not "0x40", so this feels really
-> odd.
+> On 10/27/2022 12:55 PM, Krzysztof Kozlowski wrote:
+>> On 27/10/2022 12:17, Elliot Berman wrote:
+>>> Hi Rob,
+>>>
+>>> On 10/26/2022 2:16 PM, Rob Herring wrote:
+>>>> On Thu, Oct 13, 2022 at 6:59 PM Elliot Berman <quic_eberman@quicinc.com> wrote:
+>>>>>
+>>>>>
+>>>>> On 10/12/2022 8:56 AM, Rob Herring wrote:
+>>>>>> On Mon, Oct 10, 2022 at 05:08:29PM -0700, Elliot Berman wrote:
+>>>>>>> When Linux is booted as a guest under the Gunyah hypervisor, the Gunyah
+>>>>>>> Resource Manager applies a devicetree overlay describing the virtual
+>>>>>>> platform configuration of the guest VM, such as the message queue
+>>>>>>> capability IDs for communicating with the Resource Manager. This
+>>>>>>> information is not otherwise discoverable by a VM: the Gunyah hypervisor
+>>>>>>> core does not provide a direct interface to discover capability IDs nor
+>>>>>>> a way to communicate with RM without having already known the
+>>>>>>> corresponding message queue capability ID. Add the DT bindings that
+>>>>>>> Gunyah adheres for the hypervisor node and message queues.
+>>>>>>>
+>>>>>>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+>>>>>>> ---
+>>>>>>>     .../bindings/firmware/gunyah-hypervisor.yaml  | 87 +++++++++++++++++++
+>>>>>>>     MAINTAINERS                                   |  1 +
+>>>>>>>     2 files changed, 88 insertions(+)
+>>>>>>>     create mode 100644 Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
+>>>>>>>
+>>>>>>> diff --git a/Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml b/Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
+>>>>>>> new file mode 100644
+>>>>>>> index 000000000000..f0a14101e2fd
+>>>>>>> --- /dev/null
+>>>>>>> +++ b/Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
+>>>>>>> @@ -0,0 +1,87 @@
+>>>>>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>>>>>>> +%YAML 1.2
+>>>>>>> +---
+>>>>>>> +$id: http://devicetree.org/schemas/firmware/gunyah-hypervisor.yaml#
+>>>>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>>>>>> +
+>>>>>>> +title: Gunyah Hypervisor
+>>>>>>> +
+>>>>>>> +maintainers:
+>>>>>>> +  - Murali Nalajala <quic_mnalajal@quicinc.com>
+>>>>>>> +  - Elliot Berman <quic_eberman@quicinc.com>
+>>>>>>> +
+>>>>>>> +description: |+
+>>>>>>> +  On systems which support devicetree, Gunyah generates and overlays a deviceetree overlay which
+>>>>>>
+>>>>>> How you end up with the node (applying an overlay) is not relavent to
+>>>>>> the binding.
+>>>>>>
+>>>>>>> +  describes the basic configuration of the hypervisor. Virtual machines use this information to determine
+>>>>>>> +  the capability IDs of the message queues used to communicate with the Gunyah Resource Manager.
+>>>>>>
+>>>>>> Wrap at 80. That is the coding standard still though 100 is deemed
+>>>>>> allowed. And yamllint only complains at 110 because I didn't care to fix
+>>>>>> everyones lines over 100.
+>>>>>>
+>>>>>>> +  See also: https://github.com/quic/gunyah-resource-manager/blob/develop/src/vm_creation/dto_construct.c
+>>>>>>> +
+>>>>>>> +properties:
+>>>>>>> +  compatible:
+>>>>>>> +    items:
+>>>>>>> +      - const: gunyah-hypervisor-1.0
+>>>>>>> +      - const: gunyah-hypervisor
+>>>>>>
+>>>>>> 2 compatibles implies a difference between the 2. What's the difference?
+>>>>>> Where does '1.0' come from?
+>>>>>>
+>>>>>
+>>>>> There's no difference. I thought the convention was to have
+>>>>> device-specific compatible and the generic compatible. "device-specific"
+>>>>> here would be specific to version of Gunyah since it's software.
+>>>>
+>>>> No, that's just what people do because "vendor,new-soc",
+>>>> "vendor,old-soc" seems to bother them for some reason. At the end of
+>>>> the day, it's just a string identifier that means something. If
+>>>> there's no difference in that 'something', then there is no point in
+>>>> having more than one string.
+>>>>
+>>>> You only need something specific enough to discover the rest from the
+>>>> firmware. When that changes, then you add a new compatible. Of course,
+>>>> if you want existing OSs to work, then better not change the
+>>>> compatible.
+>>>>
+>>>
+>>> Thanks for the info, I'll drop the "-1.0" suffix.
+>>
+>> You still did not answer from where does 1.0 come from... Compatibles
+>> are usually expected to be specific.
+>>
 > 
+> The 1.0 comes from the Gunyah version. This is the same version returned 
+> by "hyp_identify" hypercall.
 
-Documentation/userspace-api/ioctl/iocl-number.rst advises to pick an 
-unused block. We picked ioctl code 'G' and unused sequence numbers under 
-that code. I'm ok to move the block around.
+Then dropping 1.0 makes sense - your SW provides auto-detection.
 
-Thanks,
-Elliot
+Best regards,
+Krzysztof
+
