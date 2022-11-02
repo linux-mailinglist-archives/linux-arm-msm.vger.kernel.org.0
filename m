@@ -2,137 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1E006158A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 03:55:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ABD88615852
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Nov 2022 03:49:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230505AbiKBCz0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Nov 2022 22:55:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45424 "EHLO
+        id S230442AbiKBCtf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Nov 2022 22:49:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231166AbiKBCzX (ORCPT
+        with ESMTP id S230448AbiKBCte (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Nov 2022 22:55:23 -0400
-X-Greylist: delayed 528 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 01 Nov 2022 19:55:20 PDT
-Received: from mxus.zte.com.cn (mxus.zte.com.cn [20.69.78.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 780EF22285
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Nov 2022 19:55:20 -0700 (PDT)
-Received: from mxhk.zte.com.cn (unknown [192.168.250.138])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mxus.zte.com.cn (FangMail) with ESMTPS id 4N2B9L3dS3zdmJQy;
-        Wed,  2 Nov 2022 10:46:30 +0800 (CST)
-Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
+        Tue, 1 Nov 2022 22:49:34 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 882D31FFA7;
+        Tue,  1 Nov 2022 19:49:33 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mxhk.zte.com.cn (FangMail) with ESMTPS id 4N2B9G5KSCz4xVnK;
-        Wed,  2 Nov 2022 10:46:26 +0800 (CST)
-Received: from xaxapp01.zte.com.cn ([10.88.40.50])
-        by mse-fl2.zte.com.cn with SMTP id 2A22kJMg065436;
-        Wed, 2 Nov 2022 10:46:19 +0800 (+08)
-        (envelope-from zhang.songyi@zte.com.cn)
-Received: from mapi (xaxapp01[null])
-        by mapi (Zmail) with MAPI id mid31;
-        Wed, 2 Nov 2022 10:46:20 +0800 (CST)
-Date:   Wed, 2 Nov 2022 10:46:20 +0800 (CST)
-X-Zmail-TransId: 2af96361d9fcffffffffc2aa439d
-X-Mailer: Zmail v1.0
-Message-ID: <202211021046202606659@zte.com.cn>
-Mime-Version: 1.0
-From:   <zhang.songyi@zte.com.cn>
-To:     <andersson@kernel.org>, <agross@kernel.org>,
-        <konrad.dybcio@somainline.org>
-Cc:     <linus.walleij@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <xue.zhihong@zte.com.cn>,
-        <jiang.xuexin@zte.com.cn>
-Subject: =?UTF-8?B?W1BBVENIIGxpbnV4LW5leHRdIHBpbmN0cmw6IHFjb206IHJlbW92ZSBkdXBsaWNhdGUgaW5jbHVkZQ==?=
-Content-Type: text/plain;
-        charset="UTF-8"
-X-MAIL: mse-fl2.zte.com.cn 2A22kJMg065436
-X-Fangmail-Gw-Spam-Type: 0
-X-FangMail-Miltered: at 10-207-168-8 with ID 6361DA05.000 by FangMail milter!
-X-FangMail-Envelope: 1667357190/4N2B9L3dS3zdmJQy/6361DA05.000/192.168.250.138/[192.168.250.138]/mxhk.zte.com.cn/<zhang.songyi@zte.com.cn>
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 6361DA05.000/4N2B9L3dS3zdmJQy
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,UNPARSEABLE_RELAY autolearn=ham autolearn_force=no
-        version=3.4.6
+        by ams.source.kernel.org (Postfix) with ESMTPS id 070D9B82072;
+        Wed,  2 Nov 2022 02:49:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F206C433C1;
+        Wed,  2 Nov 2022 02:49:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667357370;
+        bh=W4fAhnKbB727M/BBd7ZkvwyarygTC85F2EeJtyYUMec=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hvbtbU6E38Y8CQ1GJX/u7/GDZTJHDaRxGZPkNR8g/2SDCyeCVX2JhV/PzMO5LTcJa
+         rTDRkc0lPxIVjIGfpF38bwThUYCS4wiUpyE37ZHDX2IzapaZWA5dXmhiQWX3WzXbAI
+         kBKRIHR6Nz+qy4gjr/ZFmsu++QCrzvGVU6lT/uPNPrlBjrYnjhfTiMG4/faK0wSP3w
+         nyr4VXFUxqyirIXSv5uyfCOKJLluzF5a9pTbsaJaEIGG4+hS2qSrfSymwNfeHlcLtR
+         SyldkVAXhNW98BRCwZSZjBZDh3IhqnEUoEvxmWz6wkEsvb6X7xOTpx85uaRdELQffi
+         6RNvz62EWserA==
+Date:   Tue, 1 Nov 2022 21:49:27 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, patches@lists.linux.dev,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
+Message-ID: <20221102024927.n5mjyzyqyapveapa@builder.lan>
+References: <20221101233421.997149-1-swboyd@chromium.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221101233421.997149-1-swboyd@chromium.org>
+X-Spam-Status: No, score=-8.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From 6b941a80348b4d8b862072ecec4df41a43368c60 Mon Sep 17 00:00:00 2001
-From: zhang songyi <zhang.songyi@zte.com.cn>
-Date: Wed, 2 Nov 2022 10:21:53 +0800
-Subject: [PATCH linux-next] pinctrl: qcom: remove duplicate include
+On Tue, Nov 01, 2022 at 04:34:21PM -0700, Stephen Boyd wrote:
+> We shouldn't be calling runtime PM APIs from within the genpd
+> enable/disable path for a couple reasons.
+[..][
+> Upon closer inspection, calling runtime PM APIs like this in the GDSC
+> driver doesn't make sense. It was intended to make sure the GDSC for the
+> clock controller providing other GDSCs was enabled, specifically the
+> MMCX GDSC for the display clk controller on SM8250 (sm8250-dispcc), so
+> that GDSC register accesses succeeded. That will already happen because
+> we make the 'dev->pm_domain' a parent domain of each GDSC we register in
+> gdsc_register() via pm_genpd_add_subdomain(). When any of these GDSCs
+> are accessed, we'll enable the parent domain (in this specific case
+> MMCX).
+> 
 
-'linux/seq_file.h' included in
-'drivers/pinctrl/qcom/pinctrl-lpass-lpi.c,
-drivers/pinctrl/qcom/pinctrl-msm.c,
-drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c,
-drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c' is duplicated.
+It's correct that adding the GDSCs as subdomains for the device's
+parent-domain will ensure that enabling a GDSC will propagate up and
+turn on the (typically) rpmhpd resource.
 
-Reported-by: Zeal Robot <zealci@zte.com.cn>
-Signed-off-by: zhang songyi <zhang.songyi@zte.com.cn>
----
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 2 --
- drivers/pinctrl/qcom/pinctrl-msm.c       | 2 --
- drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c | 2 --
- drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c  | 2 --
- 4 files changed, 8 deletions(-)
-
-diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-index d5cfa91e2eff..90648fc11647 100644
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-@@ -283,8 +283,6 @@ static void lpi_gpio_set(struct gpio_chip *chip, unsigned int pin, int value)
- }
-
- #ifdef CONFIG_DEBUG_FS
--#include <linux/seq_file.h>
--
- static unsigned int lpi_regval_to_drive(u32 val)
- {
-    return (val + 1) * 2;
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 8fbb953c4bbe..0d2d3e83e929 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -622,8 +622,6 @@ static void msm_gpio_set(struct gpio_chip *chip, unsigned offset, int value)
- }
-
- #ifdef CONFIG_DEBUG_FS
--#include <linux/seq_file.h>
--
- static void msm_gpio_dbg_show_one(struct seq_file *s,
-                  struct pinctrl_dev *pctldev,
-                  struct gpio_chip *chip,
-diff --git a/drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c b/drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c
-index b1748791a01e..cf69f208dfb8 100644
---- a/drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c
-@@ -536,8 +536,6 @@ static int pm8xxx_gpio_of_xlate(struct gpio_chip *chip,
+But the purpose for the explicit calls was to ensure that the clock
+controller itself is accessible. It's been a while since I looked at
+this, but iirc letting MMCX to turn off would cause the register access
+during dispcc probing to fail - similar to how
+clk_pm_runtime_get()/put() ensures the clock registers are accessible.
 
 
- #ifdef CONFIG_DEBUG_FS
--#include <linux/seq_file.h>
--
- static void pm8xxx_gpio_dbg_show_one(struct seq_file *s,
-                  struct pinctrl_dev *pctldev,
-                  struct gpio_chip *chip,
-diff --git a/drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c b/drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c
-index 30a934245c1b..71bbf1f1599a 100644
---- a/drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c
-@@ -536,8 +536,6 @@ static int pm8xxx_mpp_of_xlate(struct gpio_chip *chip,
+Perhaps I misunderstood something in the process, or lost track of the
+actual issues?
 
-
- #ifdef CONFIG_DEBUG_FS
--#include <linux/seq_file.h>
--
- static void pm8xxx_mpp_dbg_show_one(struct seq_file *s,
-                  struct pinctrl_dev *pctldev,
-                  struct gpio_chip *chip,
---
-2.15.2
+Regards,
+Bjorn
