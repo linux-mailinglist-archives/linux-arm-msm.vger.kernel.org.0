@@ -2,218 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 557FC617CA0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 13:35:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BB6B617CAA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 13:35:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230261AbiKCMe7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 08:34:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52462 "EHLO
+        id S231671AbiKCMfs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 08:35:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230194AbiKCMe6 (ORCPT
+        with ESMTP id S231674AbiKCMfr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 08:34:58 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49D4EBF44;
-        Thu,  3 Nov 2022 05:34:57 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id DBD9EB82531;
-        Thu,  3 Nov 2022 12:34:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB3EC433D7;
-        Thu,  3 Nov 2022 12:34:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667478894;
-        bh=kwC8c9iT4n97Y2z/Aic1ez2OXO1eBSULeJPMuCVAFHk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=i+lBS+leXHEf+hVhQsl2MUuothos7zrXn3fV78WVA7Rz1NdP++RewaodJWcx0wGqw
-         KNJOiKhjMHxW91ky6p7QwsCMz3/TVgfyO0C1895eCJXJL0jU3DxtzB7RgH6k3C2vMe
-         ASP6ieuPaYsu3NlxmoOL2d0r+fazbakWt8HIBOpOSQzmSnicSCbj/0oHG0dcBdUwWw
-         S6CHDDGkCIEa/lBwbsZEmES6GKVK5XZ2afcSajObfyNZlXwBQJS8IzvhT1++nKxh5I
-         58KiqO4Ffz/96ArZM0fbkHj8xo6ZHla8KXJAmBb5NAAzmro5wAhgc2gG4mV6k76EoG
-         QLARRfpFtkaWA==
-Date:   Thu, 3 Nov 2022 18:04:44 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        stanimir.k.varbanov@gmail.com, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Brian Masney <bmasney@redhat.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Georgi Djakov <djakov@kernel.org>
-Subject: Re: [PATCH v3 2/2] PCI: qcom: Add basic interconnect support
-Message-ID: <20221103123444.GE8434@thinkpad>
-References: <20221102090705.23634-1-johan+linaro@kernel.org>
- <20221102090705.23634-3-johan+linaro@kernel.org>
+        Thu, 3 Nov 2022 08:35:47 -0400
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BE7FCE34;
+        Thu,  3 Nov 2022 05:35:45 -0700 (PDT)
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-13b103a3e5dso1960563fac.2;
+        Thu, 03 Nov 2022 05:35:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Yt3Or6Hc5rWqEW44VauNHB/7Tdn75AHTUvKCFRqx6Wc=;
+        b=2WjMeBbPdh3AlSBURB/riF+SbSUaANbXERUrLPBWYN/BIbwkS2em62UA13Iv2YumRq
+         OiBkah3bYPr/PZOPpyKbE0M0B4DmUr9pB1Q+mfvVNvnts+pYv4kMmOR9TqqV/6SZEhz+
+         /Dl87guf/UXjZwg7Sctm6JpkTGCzX0SJkV1YbnIgnCoT9FBPi+5IkZnjkfljDU2X8bS/
+         APzb/ibQW+0ZKGT9LPi20Y7d66bJZyaFbrX7+tZs6mWXKhV8W5gLGPlYh1go5lLE2Dzy
+         A5YNpyi96rVraEEfDNH85roH7Q7gpWUNMjtNKK1qoyvEP4ZfJfbfYS4iUJB3wkm5Axku
+         y9Hw==
+X-Gm-Message-State: ACrzQf3L4jcQFthKCs6uYVnXJrY4f4PBJmD0nArOQKggmB8QVSExmNz0
+        iiQqkzFCifFhRq8ZSDDSbA==
+X-Google-Smtp-Source: AMsMyM5EZi2Ftm7ol57J/diP8OEESwv2NPojF/XnBc6X1Sc0OTdJguH3vf/QhIAZetkm6LiKQlU1qg==
+X-Received: by 2002:a05:6870:f59e:b0:132:bcd:565f with SMTP id eh30-20020a056870f59e00b001320bcd565fmr26806687oab.254.1667478944707;
+        Thu, 03 Nov 2022 05:35:44 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id u11-20020a056871008b00b0013d7fffbc3csm261177oaa.58.2022.11.03.05.35.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Nov 2022 05:35:44 -0700 (PDT)
+Received: (nullmailer pid 2140210 invoked by uid 1000);
+        Thu, 03 Nov 2022 12:35:43 -0000
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221102090705.23634-3-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@somainline.org,
+        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
+        andersson@kernel.org, agross@kernel.org, robh+dt@kernel.org,
+        linux-kernel@vger.kernel.org, cristian.marussi@arm.com,
+        devicetree@vger.kernel.org, quic_avajid@quicinc.com
+In-Reply-To: <1667451512-9655-2-git-send-email-quic_sibis@quicinc.com>
+References: <1667451512-9655-1-git-send-email-quic_sibis@quicinc.com>
+ <1667451512-9655-2-git-send-email-quic_sibis@quicinc.com>
+Message-Id: <166747792111.2121881.1520386544436651390.robh@kernel.org>
+Subject: Re: [RFC 1/2] dt-bindings: firmware: arm,scmi: Add support for memlat
+ vendor protocol
+Date:   Thu, 03 Nov 2022 07:35:43 -0500
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 02, 2022 at 10:07:05AM +0100, Johan Hovold wrote:
-> On Qualcomm platforms like SC8280XP and SA8540P, interconnect bandwidth
-> must be requested before enabling interconnect clocks.
-> 
-> Add basic support for managing an optional "pcie-mem" interconnect path
-> by setting a low constraint before enabling clocks and updating it after
-> the link is up.
-> 
-> Note that it is not possible for a controller driver to set anything but
-> a maximum peak bandwidth as expected average bandwidth will vary with
-> use case and actual use (and power policy?). This very much remains an
-> unresolved problem with the interconnect framework.
-> 
-> Also note that no constraint is set for the SC8280XP/SA8540P "cpu-pcie"
-> path for now as it is not clear what an appropriate constraint would be
-> (and the system does not crash when left unspecified).
-> 
-> Fixes: 70574511f3fc ("PCI: qcom: Add support for SC8280XP")
-> Reviewed-by: Brian Masney <bmasney@redhat.com>
-> Acked-by: Georgi Djakov <djakov@kernel.org>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-
-Thanks,
-Mani
-
+On Thu, 03 Nov 2022 10:28:31 +0530, Sibi Sankar wrote:
+> Add bindings support for the SCMI QTI memlat (memory latency) vendor
+> protocol. The memlat vendor protocol enables the frequency scaling of
+> various buses (L3/LLCC/DDR) based on the memory latency governor
+> running on the CPUSS Control Processor.
+> 
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 > ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 76 ++++++++++++++++++++++++++
->  1 file changed, 76 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 7db94a22238d..91b113d0c02a 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -12,6 +12,7 @@
->  #include <linux/crc8.h>
->  #include <linux/delay.h>
->  #include <linux/gpio/consumer.h>
-> +#include <linux/interconnect.h>
->  #include <linux/interrupt.h>
->  #include <linux/io.h>
->  #include <linux/iopoll.h>
-> @@ -224,6 +225,7 @@ struct qcom_pcie {
->  	union qcom_pcie_resources res;
->  	struct phy *phy;
->  	struct gpio_desc *reset;
-> +	struct icc_path *icc_mem;
->  	const struct qcom_pcie_cfg *cfg;
->  };
->  
-> @@ -1644,6 +1646,74 @@ static const struct dw_pcie_ops dw_pcie_ops = {
->  	.start_link = qcom_pcie_start_link,
->  };
->  
-> +static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
-> +{
-> +	struct dw_pcie *pci = pcie->pci;
-> +	int ret;
-> +
-> +	pcie->icc_mem = devm_of_icc_get(pci->dev, "pcie-mem");
-> +	if (IS_ERR(pcie->icc_mem))
-> +		return PTR_ERR(pcie->icc_mem);
-> +
-> +	/*
-> +	 * Some Qualcomm platforms require interconnect bandwidth constraints
-> +	 * to be set before enabling interconnect clocks.
-> +	 *
-> +	 * Set an initial peak bandwidth corresponding to single-lane Gen 1
-> +	 * for the pcie-mem path.
-> +	 */
-> +	ret = icc_set_bw(pcie->icc_mem, 0, MBps_to_icc(250));
-> +	if (ret) {
-> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
-> +			ret);
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
-> +{
-> +	struct dw_pcie *pci = pcie->pci;
-> +	u32 offset, status, bw;
-> +	int speed, width;
-> +	int ret;
-> +
-> +	if (!pcie->icc_mem)
-> +		return;
-> +
-> +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> +	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
-> +
-> +	/* Only update constraints if link is up. */
-> +	if (!(status & PCI_EXP_LNKSTA_DLLLA))
-> +		return;
-> +
-> +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
-> +	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
-> +
-> +	switch (speed) {
-> +	case 1:
-> +		bw = MBps_to_icc(250);
-> +		break;
-> +	case 2:
-> +		bw = MBps_to_icc(500);
-> +		break;
-> +	default:
-> +		WARN_ON_ONCE(1);
-> +		fallthrough;
-> +	case 3:
-> +		bw = MBps_to_icc(985);
-> +		break;
-> +	}
-> +
-> +	ret = icc_set_bw(pcie->icc_mem, 0, width * bw);
-> +	if (ret) {
-> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
-> +			ret);
-> +	}
-> +}
-> +
->  static int qcom_pcie_probe(struct platform_device *pdev)
->  {
->  	struct device *dev = &pdev->dev;
-> @@ -1704,6 +1774,10 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  		goto err_pm_runtime_put;
->  	}
->  
-> +	ret = qcom_pcie_icc_init(pcie);
-> +	if (ret)
-> +		goto err_pm_runtime_put;
-> +
->  	ret = pcie->cfg->ops->get_resources(pcie);
->  	if (ret)
->  		goto err_pm_runtime_put;
-> @@ -1722,6 +1796,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  		goto err_phy_exit;
->  	}
->  
-> +	qcom_pcie_icc_update(pcie);
-> +
->  	return 0;
->  
->  err_phy_exit:
-> -- 
-> 2.37.3
+>  .../devicetree/bindings/firmware/arm,scmi.yaml     | 164 +++++++++++++++++++++
+>  1 file changed, 164 insertions(+)
 > 
 
--- 
-மணிவண்ணன் சதாசிவம்
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/firmware/arm,scmi.example.dtb: scmi: mbox-names: ['tx'] is too short
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+Documentation/devicetree/bindings/firmware/arm,scmi.example.dtb:0:0: /example-3/soc/mailbox@17400000: failed to match any schema with compatible: ['qcom,cpucp-mbox']
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
