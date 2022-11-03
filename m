@@ -2,81 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E71B6183D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 17:09:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0088E618564
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 17:55:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232317AbiKCQJx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 12:09:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36866 "EHLO
+        id S231636AbiKCQzu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 12:55:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231778AbiKCQJf (ORCPT
+        with ESMTP id S230099AbiKCQzt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 12:09:35 -0400
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9AA91D0D5
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 09:09:08 -0700 (PDT)
-Received: by mail-qv1-xf2c.google.com with SMTP id ml12so1465322qvb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 09:09:08 -0700 (PDT)
+        Thu, 3 Nov 2022 12:55:49 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8482A627F
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 09:55:47 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id x21so2962968ljg.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 09:55:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rdupXZP9IFvwGILZVl/bXkxyiQBrd2eY1VoR9aqF3f8=;
-        b=kU9c5IXpOAFVRhtLb9VD0DkbGRRrvofFv5ZaV90ha/Z5Pjkds75ssplzse/sexzY2G
-         t4ryGbivPIq5eSqm2hV/0dAwUzPEMCCIJ7IJRnzOREaD1PNNjDgXONaIUuG5SH/QjqQR
-         3dv/jK1oPs2gFsxHCbY/35BjVKfQcu1hH2SrX4u02/Pgev80Go7zikIubUdilCydjnb4
-         uS+ZTwvF+YU7OOrP+9J53OwRZvWgphfr/OKoqL8LwDCAjuNGqCtpBaTKOeVQdumMuMzl
-         DuT9fb/j515nbCluQBt4Ica6G2qsI6tmDSlLeDAcXAD2dMbVsBU2/uToc6o34YF6j2Zl
-         38WA==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UfNKvOanyjhHXBelrkaChFOyOSO1zGtjsNg5Ut58HCY=;
+        b=l8L5GV5CeR9wDYO+5JynTcHeJOpgCRiyXIH0gjfjyzpIYPBguREKcqoOHAxE9yxwcp
+         lsTsT2CcIczlSniwSfhfBeCvg+XNVj5J7fyDcwS2HIuZeNMJ9hxfjr88MBOgvMH/BTaV
+         nVU7d3mVSTMTgAT4Cw4Wh4IOS3OEw8YEr61m4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rdupXZP9IFvwGILZVl/bXkxyiQBrd2eY1VoR9aqF3f8=;
-        b=ikGTf5GSwptFb5gvU+LWnb5VB8pYDNcRGIpAt5iXwW00o99OP2u1KVZBVAupWPrSRm
-         66z+pOaW4MH0rPJAaKbA3qgzNbfV5sngeniajDDGlLNBJ4qZUQLVypH29Sz8MEoLjTNK
-         nv7EEl7vYWRekemxLeuHZ9XrvYbw/FQPT2lW7VJTXvIO7ZPKfEzBj+G1OjuOgLXExzyu
-         CuHHcRpe4AaO2X5R85c33sxZyy0rEL0jS6XpNLlN/guCVvmd7nUkksmp6x3MRGPHFEuW
-         b5Na7r2HOHPq8MCnRQbU545QfL8knyOXmvtSS8IgWUg9//Rw3u3I6V0h9ZKVXOSGagHr
-         Srdw==
-X-Gm-Message-State: ACrzQf3pLVM9PzUCKKRQOwIxlb+qDAYSlZXMK0U/q3R5ps2wfC1o3vuM
-        IvgDdSpChq1QM3+pgJiparjNzrjCtUpYQw==
-X-Google-Smtp-Source: AMsMyM4Na22MQCEkYmNGL/H4cHE5jOAZx/Jxn3T2uL4LmjrXMvv/w3qjaGdleg7s97ZnEYStiL1OmA==
-X-Received: by 2002:a05:6214:194c:b0:4bb:6d2f:3e7c with SMTP id q12-20020a056214194c00b004bb6d2f3e7cmr27602892qvk.4.1667491747673;
-        Thu, 03 Nov 2022 09:09:07 -0700 (PDT)
-Received: from ?IPV6:2601:586:5000:570:a35d:9f85:e3f7:d9fb? ([2601:586:5000:570:a35d:9f85:e3f7:d9fb])
-        by smtp.gmail.com with ESMTPSA id h18-20020a05620a401200b006ee8874f5fasm1018291qko.53.2022.11.03.09.09.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Nov 2022 09:09:07 -0700 (PDT)
-Message-ID: <287a41ec-b004-54a7-1ac3-07cc4db5fbbf@linaro.org>
-Date:   Thu, 3 Nov 2022 12:09:05 -0400
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UfNKvOanyjhHXBelrkaChFOyOSO1zGtjsNg5Ut58HCY=;
+        b=m7o4h7CXE4JAqqPtaba8mil5Rkhr/0qz3Lx/0u9mp3nv/2WaBEgK8mhdCaLC+1akQr
+         TaOx1i5FF5SqQ5sa6uQRxxZsHlZS0gCRlyLM00b8nV/AfKhEtXKMOcjiM147SohyA0tP
+         Qxnj1MUAAczTWYf1SkSBlW8ASZSj8Y21Y9KQVXjFNCZD6RvurHSrA8i9PmL1STjTtChE
+         vOZNOChCqu1NgC8r77J7Mb1KeeOl5VtAlHiGpMiO/Ke/GKjejHsFBwNkyf5aTNM5sXXD
+         uLTFDKZauJO7hsZbyA+rMtw5qlMMNzAV4mbNuuw7tGNMwIz7Uk3dm3qHkqhe3SOeSbSF
+         a9Kw==
+X-Gm-Message-State: ACrzQf0Py95SOVV6DjHP8wVe/UlrSjCs9jHt3LL3C7+7SN6QmhFLOJsQ
+        WboiSWlw9uQN0AS5iXen3/Fx+zRejuk2g8k7nQnPzA==
+X-Google-Smtp-Source: AMsMyM7F6w1WR1rSV9GSlSeTP7m094zPjzqZZijj6DLJBRqC4jr2/5t8eFRsP4KqYMeT2vVp5eZ7kbdeNtIZBiT0/mg=
+X-Received: by 2002:a05:651c:222c:b0:26b:dec5:a4f0 with SMTP id
+ y44-20020a05651c222c00b0026bdec5a4f0mr12924242ljq.359.1667494545853; Thu, 03
+ Nov 2022 09:55:45 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 3 Nov 2022 09:55:45 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v4 1/3] dt-bindings: qcom-iommu: Add Qualcomm MSM8953
- compatible
-Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+In-Reply-To: <Y2PQrRkGTEE40m4Q@hovoldconsulting.com>
+References: <20221102170717.1262547-1-swboyd@chromium.org> <Y2PQrRkGTEE40m4Q@hovoldconsulting.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Thu, 3 Nov 2022 09:55:45 -0700
+Message-ID: <CAE-0n52zxYSdbQg5VqVQ9gboZy2BSgJUgJ5orvNkzrz-3-81SA@mail.gmail.com>
+Subject: Re: [PATCH v2] clk: qcom: gdsc: Remove direct runtime PM calls
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, patches@lists.linux.dev,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        iommu@lists.linux.dev, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221016161554.673006-1-luca@z3ntu.xyz>
- <20221016161554.673006-2-luca@z3ntu.xyz> <5615419.DvuYhMxLoT@g550jk>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <5615419.DvuYhMxLoT@g550jk>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,24 +80,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/10/2022 12:26, Luca Weiss wrote:
-> Hi all,
-> 
-> On Sonntag, 16. Oktober 2022 18:15:51 CET Luca Weiss wrote:
->> Document the compatible used for IOMMU on the msm8953 SoC.
->>
->> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
->> Acked-by: Rob Herring <robh@kernel.org>
-> 
-> Could someone please pick up this patch?
-> 
-> Looking at the file history, there's not much but maybe @Rob could you take 
-> this? Or maybe Bjorn?
-> 
+Quoting Johan Hovold (2022-11-03 07:31:09)
+> On Wed, Nov 02, 2022 at 10:07:17AM -0700, Stephen Boyd wrote:
+> > We shouldn't be calling runtime PM APIs from within the genpd
+> > enable/disable path for a couple reasons.
+> >
+> > First, this causes an AA lockdep splat because genpd can call into genpd
+> > code again while holding the genpd lock.
+> >
+> > WARNING: possible recursive locking detected
+>
+> > Second, this confuses runtime PM on CoachZ for the camera devices by
+> > causing the camera clock controller's runtime PM usage_count to go
+> > negative after resuming from suspend. This is because runtime PM is
+> > being used on the clock controller while runtime PM is disabled for the
+> > device.
+> >
+> > The reason for the negative count is because a GDSC is represented as a
+> > genpd and each genpd that is attached to a device is resumed during the
+> > noirq phase of system wide suspend/resume (see the noirq suspend ops
+> > assignment in pm_genpd_init() for more details). The camera GDSCs are
+> > attached to camera devices with the 'power-domains' property in DT.
+> > Every device has runtime PM disabled in the late system suspend phase
+> > via __device_suspend_late(). Runtime PM is not usable until runtime PM
+> > is enabled in device_resume_early(). The noirq phases run after the
+> > 'late' and before the 'early' phase of suspend/resume. When the genpds
+> > are resumed in genpd_resume_noirq(), we call down into gdsc_enable()
+> > that calls pm_runtime_resume_and_get() and that returns -EACCES to
+> > indicate failure to resume because runtime PM is disabled for all
+> > devices.
+>
+> Probably worth mentioning the fact that those runtime PM calls
+> unconditionally failing during resume means that the GDSCs are never
+> even enabled.
+>
+> Seems like the PM runtime usage counters would still be balanced after
+> this though as they are decremented also on failure during suspend (i.e.
+> domain remains off and no usage counter is incremented during resume).
+>
 
-Use "iommu:" in the subject (dt-bindings: iommu: qcom:) so IOMMU
-maintainers notice it...
+I'm seeing negative usage counts.
 
-Best regards,
-Krzysztof
+> But this is clearly just very broken.
+>
+> > Upon closer inspection, calling runtime PM APIs like this in the GDSC
+> > driver doesn't make sense. It was intended to make sure the GDSC for the
+> > clock controller providing other GDSCs was enabled, specifically the
+> > MMCX GDSC for the display clk controller on SM8250 (sm8250-dispcc), so
+> > that GDSC register accesses succeeded. That will already happen because
+> > we make the 'dev->pm_domain' a parent domain of each GDSC we register in
+> > gdsc_register() via pm_genpd_add_subdomain(). When any of these GDSCs
+> > are accessed, we'll enable the parent domain (in this specific case
+> > MMCX).
+> >
+> > We also remove any getting of runtime PM during registration, because
+> > when a genpd is registered it increments the count on the parent if the
+> > genpd itself is already enabled. And finally, the runtime PM state of
+> > the clk controller registering the GDSC shouldn't matter to the
+> > subdomain setup. Therefore we always assign 'dev' unconditionally so
+> > when GDSCs are removed we properly unlink the GDSC from the clk
+> > controller's pm_domain.
+>
+> This last bit makes no sense as 'dev' was only used for the runtime PM
+> management and should be removed by this patch.
 
+Oh sheesh, the name 'gdsc_register()' really throws me off. I think it's
+one gdsc being registered, but it's actually plural gdscs, sigh. I will
+fix it.
