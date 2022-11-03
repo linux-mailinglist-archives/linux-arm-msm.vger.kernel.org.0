@@ -2,148 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0088E618564
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 17:55:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD788618604
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 18:17:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231636AbiKCQzu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 12:55:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54472 "EHLO
+        id S231140AbiKCRRK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 13:17:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230099AbiKCQzt (ORCPT
+        with ESMTP id S230473AbiKCRRJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 12:55:49 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8482A627F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 09:55:47 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id x21so2962968ljg.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 09:55:47 -0700 (PDT)
+        Thu, 3 Nov 2022 13:17:09 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF22A2F4;
+        Thu,  3 Nov 2022 10:17:08 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id d59-20020a17090a6f4100b00213202d77e1so5875565pjk.2;
+        Thu, 03 Nov 2022 10:17:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UfNKvOanyjhHXBelrkaChFOyOSO1zGtjsNg5Ut58HCY=;
-        b=l8L5GV5CeR9wDYO+5JynTcHeJOpgCRiyXIH0gjfjyzpIYPBguREKcqoOHAxE9yxwcp
-         lsTsT2CcIczlSniwSfhfBeCvg+XNVj5J7fyDcwS2HIuZeNMJ9hxfjr88MBOgvMH/BTaV
-         nVU7d3mVSTMTgAT4Cw4Wh4IOS3OEw8YEr61m4=
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jMLMgTZnXG3qE89gvGIdlg9xWS4kfSGRYT+JSAUdRFU=;
+        b=BgB2QdomzPzge4VbrqFYuwzmD3h1QhxfbsY4GqKYtF5a7n/NJTfmNYMPOXy/hbqOWI
+         UOogT5U8gyicW6RQR/+0gY1M5xA06FG71qdz5iPYkpXjkd8COGd6E2KRPV/wJhK/hn0T
+         91kPejzsqsK6/+/s8S3Ya4F6JXYNJCFwcE0RmL9LN4LgpLulk8sGgCby2gcfyRjPHGoe
+         dNGSpDbtye5tFxt1gNOkjao1EjHsmyUC3l2C0CqCKRCZwq9rWrfOQdV4Um3RsRQ6Lvq/
+         98nWPLYjLm7G2YQ3inoFWS4IrlRIm5o311J2uVLnqg75THYPSf2Ql8OZ0HAVZrMVTTcN
+         6ltw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UfNKvOanyjhHXBelrkaChFOyOSO1zGtjsNg5Ut58HCY=;
-        b=m7o4h7CXE4JAqqPtaba8mil5Rkhr/0qz3Lx/0u9mp3nv/2WaBEgK8mhdCaLC+1akQr
-         TaOx1i5FF5SqQ5sa6uQRxxZsHlZS0gCRlyLM00b8nV/AfKhEtXKMOcjiM147SohyA0tP
-         Qxnj1MUAAczTWYf1SkSBlW8ASZSj8Y21Y9KQVXjFNCZD6RvurHSrA8i9PmL1STjTtChE
-         vOZNOChCqu1NgC8r77J7Mb1KeeOl5VtAlHiGpMiO/Ke/GKjejHsFBwNkyf5aTNM5sXXD
-         uLTFDKZauJO7hsZbyA+rMtw5qlMMNzAV4mbNuuw7tGNMwIz7Uk3dm3qHkqhe3SOeSbSF
-         a9Kw==
-X-Gm-Message-State: ACrzQf0Py95SOVV6DjHP8wVe/UlrSjCs9jHt3LL3C7+7SN6QmhFLOJsQ
-        WboiSWlw9uQN0AS5iXen3/Fx+zRejuk2g8k7nQnPzA==
-X-Google-Smtp-Source: AMsMyM7F6w1WR1rSV9GSlSeTP7m094zPjzqZZijj6DLJBRqC4jr2/5t8eFRsP4KqYMeT2vVp5eZ7kbdeNtIZBiT0/mg=
-X-Received: by 2002:a05:651c:222c:b0:26b:dec5:a4f0 with SMTP id
- y44-20020a05651c222c00b0026bdec5a4f0mr12924242ljq.359.1667494545853; Thu, 03
- Nov 2022 09:55:45 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 3 Nov 2022 09:55:45 -0700
+        bh=jMLMgTZnXG3qE89gvGIdlg9xWS4kfSGRYT+JSAUdRFU=;
+        b=2FgAn38WhSWWw+eHyrTO1A3zNlSOMLPNNLMvY2Fkg8zJ02J3VfSj0AOicpTAXfEdmd
+         rhwWmAPpz2sLhdI/OvI3TlUFD7xMuTmVxU2otZoLbIAJo5ZLApLizBaLp1o0pfpy4fGV
+         2qRIXXZChmOP34IvkhySQ081I6PzUonS3/2jWbar4kP//71G21o9B4nXeSVWCi8pKo5h
+         jfXDr86GNec6I9y2Hd+bMXOfSUNjywkxGQkUWnWKbn0nYLSnAfYmpSKQLB9M1Qntiw84
+         Bq4psa7VvK5C89nhGUjCcvpj+8UOm/0DuEKO6Ug8w34P+uBF/WvHCXq7+jkG9Fg4cHm5
+         1e0g==
+X-Gm-Message-State: ACrzQf3XUzLRveE5Lz8yZv5dPDOdWStjIstJWd5Ay8Jwb8bIEevlNgE3
+        z3SYNH5cNNg5+Txzp4PihCk=
+X-Google-Smtp-Source: AMsMyM4KXsk3pLBuAZJaQZE/nBZ7r1WJ0vPUvs2KpVzcs1jk2iH8wiq9zdv9D3GGG8xHFXhOLj6fbw==
+X-Received: by 2002:a17:90b:70a:b0:211:f163:ddff with SMTP id s10-20020a17090b070a00b00211f163ddffmr31949799pjz.202.1667495827938;
+        Thu, 03 Nov 2022 10:17:07 -0700 (PDT)
+Received: from google.com ([2620:15c:9d:2:a6ae:11ff:fe11:fcc3])
+        by smtp.gmail.com with ESMTPSA id d14-20020aa797ae000000b0056ddd2ac8f1sm960026pfq.211.2022.11.03.10.17.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Nov 2022 10:17:07 -0700 (PDT)
+Date:   Thu, 3 Nov 2022 10:17:03 -0700
+From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To:     Quentin Schulz <foss+kernel@0leil.net>
+Cc:     hadess@hadess.net, hdegoede@redhat.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, shawnguo@kernel.org,
+        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
+        linux-imx@nxp.com, wens@csie.org, jernej.skrabec@gmail.com,
+        samuel@sholland.org, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, heiko@sntech.de,
+        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        Quentin Schulz <quentin.schulz@theobroma-systems.com>
+Subject: Re: [RFC PATCH 0/7] fix reset line polarity for Goodix touchscreen
+ controllers
+Message-ID: <Y2P3jyz1L0yKsCk8@google.com>
+References: <20221103-upstream-goodix-reset-v1-0-87b49ae589f1@theobroma-systems.com>
 MIME-Version: 1.0
-In-Reply-To: <Y2PQrRkGTEE40m4Q@hovoldconsulting.com>
-References: <20221102170717.1262547-1-swboyd@chromium.org> <Y2PQrRkGTEE40m4Q@hovoldconsulting.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 3 Nov 2022 09:55:45 -0700
-Message-ID: <CAE-0n52zxYSdbQg5VqVQ9gboZy2BSgJUgJ5orvNkzrz-3-81SA@mail.gmail.com>
-Subject: Re: [PATCH v2] clk: qcom: gdsc: Remove direct runtime PM calls
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, patches@lists.linux.dev,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221103-upstream-goodix-reset-v1-0-87b49ae589f1@theobroma-systems.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FSL_HELO_FAKE,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Johan Hovold (2022-11-03 07:31:09)
-> On Wed, Nov 02, 2022 at 10:07:17AM -0700, Stephen Boyd wrote:
-> > We shouldn't be calling runtime PM APIs from within the genpd
-> > enable/disable path for a couple reasons.
-> >
-> > First, this causes an AA lockdep splat because genpd can call into genpd
-> > code again while holding the genpd lock.
-> >
-> > WARNING: possible recursive locking detected
->
-> > Second, this confuses runtime PM on CoachZ for the camera devices by
-> > causing the camera clock controller's runtime PM usage_count to go
-> > negative after resuming from suspend. This is because runtime PM is
-> > being used on the clock controller while runtime PM is disabled for the
-> > device.
-> >
-> > The reason for the negative count is because a GDSC is represented as a
-> > genpd and each genpd that is attached to a device is resumed during the
-> > noirq phase of system wide suspend/resume (see the noirq suspend ops
-> > assignment in pm_genpd_init() for more details). The camera GDSCs are
-> > attached to camera devices with the 'power-domains' property in DT.
-> > Every device has runtime PM disabled in the late system suspend phase
-> > via __device_suspend_late(). Runtime PM is not usable until runtime PM
-> > is enabled in device_resume_early(). The noirq phases run after the
-> > 'late' and before the 'early' phase of suspend/resume. When the genpds
-> > are resumed in genpd_resume_noirq(), we call down into gdsc_enable()
-> > that calls pm_runtime_resume_and_get() and that returns -EACCES to
-> > indicate failure to resume because runtime PM is disabled for all
-> > devices.
->
-> Probably worth mentioning the fact that those runtime PM calls
-> unconditionally failing during resume means that the GDSCs are never
-> even enabled.
->
-> Seems like the PM runtime usage counters would still be balanced after
-> this though as they are decremented also on failure during suspend (i.e.
-> domain remains off and no usage counter is incremented during resume).
->
+Hi Quentin,
 
-I'm seeing negative usage counts.
+On Thu, Nov 03, 2022 at 03:43:45PM +0100, Quentin Schulz wrote:
+> The Goodix touchscreen controller has a reset line active low. It happens to
+> also be used to configure its i2c address at runtime. If the reset line is
+> incorrectly asserted, the address will be wrongly configured. This cost me a few
+> hours yesterday, trying to figure out why the touchscreen wouldn't work.
+> 
+> The driver is "asserting" this reset GPIO by setting its output to 0, probably
+> to reflect the physical state of the line. However, this relies on the fact that
+> the Device Tree node setting the reset line polarity to active high, which is
+> incorrect since the reset is active low in hardware.
+> 
+> To fix this inconsistency, the polarity is inverted to not confuse the user
+> about the reset line polarity.
+> 
+> This is marked as RFC because it breaks DT compatibility and also the Google
+> CoachZ device is the only one with an active low polarity for the reset GPIO
+> in DT, so not sure if it is a typo or its state is actually inverted (so GPIO
+> active high to drive the reset line low). Changing it anyways since the polarity
+> is changed in the driver so it needs to be changed in DT too.
 
-> But this is clearly just very broken.
->
-> > Upon closer inspection, calling runtime PM APIs like this in the GDSC
-> > driver doesn't make sense. It was intended to make sure the GDSC for the
-> > clock controller providing other GDSCs was enabled, specifically the
-> > MMCX GDSC for the display clk controller on SM8250 (sm8250-dispcc), so
-> > that GDSC register accesses succeeded. That will already happen because
-> > we make the 'dev->pm_domain' a parent domain of each GDSC we register in
-> > gdsc_register() via pm_genpd_add_subdomain(). When any of these GDSCs
-> > are accessed, we'll enable the parent domain (in this specific case
-> > MMCX).
-> >
-> > We also remove any getting of runtime PM during registration, because
-> > when a genpd is registered it increments the count on the parent if the
-> > genpd itself is already enabled. And finally, the runtime PM state of
-> > the clk controller registering the GDSC shouldn't matter to the
-> > subdomain setup. Therefore we always assign 'dev' unconditionally so
-> > when GDSCs are removed we properly unlink the GDSC from the clk
-> > controller's pm_domain.
->
-> This last bit makes no sense as 'dev' was only used for the runtime PM
-> management and should be removed by this patch.
+I would like to get gpio handling into a better shape, but the above is
+completely incorrect. "goodix,gt7375p" that is used in CoachZ and other
+Google designs is using i2c-hid compatible firmware and is not being
+driven by drivers/input/touchscreen/goodix.c driver, but rather by
+i2c-hid + hid-multitouch combo.
 
-Oh sheesh, the name 'gdsc_register()' really throws me off. I think it's
-one gdsc being registered, but it's actually plural gdscs, sigh. I will
-fix it.
+You should not be touching arch/arm64/boot/dts/qcom/sc7180* at all.
+
+> 
+> I'm all ears if there's a better way to handle this. We could document this in
+> the DT binding but this kinda breaks the promise we make that the DT is not
+> bound to the driver implementation.
+
+I think Hans has already voiced concerns about x86 devices using these
+devices and having GPIO data encoded in the driver, so we need to
+accommodate them. On DT side we can add a quirk to gpiolib-of.c to
+[maybe temporary] override polarity of reset GPIO lines, then update DTS
+to match the reality.
+
+Thanks.
+
+-- 
+Dmitry
