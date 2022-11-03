@@ -2,505 +2,365 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2FE8618760
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 19:22:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EE7ED61877A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 19:30:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231526AbiKCSWz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 14:22:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55552 "EHLO
+        id S231661AbiKCSau (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 14:30:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231490AbiKCSWx (ORCPT
+        with ESMTP id S231597AbiKCSar (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 14:22:53 -0400
-Received: from EUR03-AM7-obe.outbound.protection.outlook.com (mail-am7eur03on2043.outbound.protection.outlook.com [40.107.105.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DC721408C;
-        Thu,  3 Nov 2022 11:22:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=NKtm0ahJRkrD+1qlAlBzs1XYoIepzTyV+upmqR48Iyh5EcIW3cjRvjq4pbjYy/qBVfTcMUKK8Cbq4DDLSEyoYPiVYU03Fa0lAotWK6Jn6bYe6xZiLVu4l2d6u2uBQG7WS3cifePM5JtLvdewjepASbKG1/fvIfv0NMief38FId358+wyvlS4TJTxePuVnl/PL0zGn0Mxkcl1RDW/0xIPuVOwKTu2nK1NXTSFWvdwPTcUj9PlBdR4vPehZxijl/TNIvWQgMs/+8yFESTBOYDrVxQnKJ32VvEokOAcHR76UYkdmUr4Gj2X/Ie0rtrZtrj/w3G6PttB/UjC94Dlpm9ONA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xEypwbDE72PNOSHsQ4KOrIxfmlBzUI43Xxc+/tlLyGE=;
- b=K4k8B4JlyFuxNSCYOZA49L50oeehgo0alCLZkr5T2613xfPpk3YSJXBE1YQ5mg6dpsvLt5Ji25EQ1cr9tEZAv2TCr5xZ2QFKO6CR3usKQMuBir9l3+a20JeWHOyCCiahJU69NrBH9kHoZ+Wx0bcLCU9YaxQS1OszPE3piXPhOhHtvzhJ3pAwaFBgNeCoQSYsw4L3jY4mKYmGCIwZ7YbidGv4qqrNvsQTkW8TaKBOUmmEfpnrZoVS+cg6loU8JuA8XhXJLPoVzLv4kg0ILvgcM/LJ5iheIXH2hu0PDZ7YVTDuWTg4Mq86qA0SNkYgEu/jn/bkpT2aLw++Bo/1dVrqOQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=seco.com; dmarc=pass action=none header.from=seco.com;
- dkim=pass header.d=seco.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seco.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xEypwbDE72PNOSHsQ4KOrIxfmlBzUI43Xxc+/tlLyGE=;
- b=zINUvUtTaKwFtxGvHUvnSMkoQQwbQGaAhKAvVo9ATVN+gm2aeX24/R37EM5QKvA72yjMToSK89U2ckmjJqv//CBDs3ft87b9aTicytDJCrl6eHga1c1l6FnEFRXA83AZEb19iwyTZYb4UAznpFIm2/5p0SY3iHeHxlKwKWMdEVUsB2ukzV6hJcL2GBPig8wW1k7/we/uCTwSKP8j8vsGHVMZgKSEEmQqafthOuv+BuoLOaVG69ob+zngH7CMywCRKt0oRebvmA45w61vOSrQgmQptj/3Cojbav0ulqAzXc4jDZTjwWeFBCy32KeKInkIPI3rs6arvsPXp+Ab9638IA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=seco.com;
-Received: from DB7PR03MB4972.eurprd03.prod.outlook.com (2603:10a6:10:7d::22)
- by AM0PR03MB6195.eurprd03.prod.outlook.com (2603:10a6:20b:159::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5769.19; Thu, 3 Nov
- 2022 18:22:49 +0000
-Received: from DB7PR03MB4972.eurprd03.prod.outlook.com
- ([fe80::e9d6:22e1:489a:c23d]) by DB7PR03MB4972.eurprd03.prod.outlook.com
- ([fe80::e9d6:22e1:489a:c23d%4]) with mapi id 15.20.5791.022; Thu, 3 Nov 2022
- 18:22:49 +0000
-From:   Sean Anderson <sean.anderson@seco.com>
-To:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        dri-devel@lists.freedesktop.org
-Cc:     linux-kernel@vger.kernel.org,
-        Sean Anderson <sean.anderson@seco.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        Brian Starkey <brian.starkey@arm.com>,
-        Chen Feng <puck.chen@hisilicon.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Christian Gmeiner <christian.gmeiner@gmail.com>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Thu, 3 Nov 2022 14:30:47 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63EC712AE2
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 11:30:34 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id r18so2389497pgr.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 11:30:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TDOYrT1aiWJGxrv6BRAem0JFk91bj7PzXDhoApaXwO8=;
+        b=D7ZGfSOj/qtrzusHPX590eFqJeVg3VGN8nwEpQOe3wSudDV2YMcBEgiOqJnaPfQMf3
+         wPKpM6jUawNuNE7HYJmgfP96KVcfyjjRR7XLv4jf1GoaQsidgk6AExs3oaOJ/W0yLXjG
+         tDipkSGVsb0yRvIKDTKLFobr5aHP4nWweK94U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TDOYrT1aiWJGxrv6BRAem0JFk91bj7PzXDhoApaXwO8=;
+        b=LmEAgDRFVz5P9j8TcT9OQQFYOCdPdvp5hPe/E+vnNEn/aUwnzs6r6W8OTRdDbcNe2t
+         Ep2N1a6kJT9WikDmlcu57kASfpKxVR2HpW3pfvtfeEnnS1lnlBV2AMmcdihD3rWnG0BD
+         epBDb/fUgiK+cWsiDsrZfqRmAVs6elX7Gj0ubXBaWT35hb4tYclCT0QtCqO//nup9DCJ
+         5lLp44f1X5PuCug49wfxTpqqXwbkn9RrEm5xvObqpD0mohNvyMbagTnVWA4kInwPGuJu
+         bT9Og82LdBiB55u1FBJAGQsQkjIcRdx3kDpb2VPC+9QZ/HTOUVtHjGzoHTXC9TTZ7xmR
+         OG+A==
+X-Gm-Message-State: ACrzQf2qRGoeDeD6IhX4HMXPvZpuDI0JXR/GVVO/KdL05RWssoaPmLcQ
+        DcP9YZ+s+BOY6f8qWXZ14lUsVQ==
+X-Google-Smtp-Source: AMsMyM5Lrlv/yvNWbwjH93LEqgF7lyiKnwbXAK83y4hlvCQYhtaZvb/vYiL6XNs8ZQgJoGsqzbmabg==
+X-Received: by 2002:a65:5809:0:b0:46f:6afe:77a8 with SMTP id g9-20020a655809000000b0046f6afe77a8mr26679846pgr.206.1667500233697;
+        Thu, 03 Nov 2022 11:30:33 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:11a:201:4b5a:4cb1:40d2:6d1d])
+        by smtp.gmail.com with ESMTPSA id h136-20020a62838e000000b0056283e2bdbdsm1049198pfe.138.2022.11.03.11.30.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Nov 2022 11:30:32 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        patches@lists.linux.dev, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        John Stultz <jstultz@google.com>,
-        Jyri Sarha <jyri.sarha@iki.fi>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Mali DP Maintainers <malidp@foss.arm.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Mihail Atanassov <mihail.atanassov@arm.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Samuel Holland <samuel@sholland.org>,
-        Sean Paul <sean@poorly.run>, Tian Tao <tiantao6@hisilicon.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        etnaviv@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-mips@vger.kernel.org, linux-sunxi@lists.linux.dev
-Subject: [PATCH 2/2] drm: Convert users of drm_of_component_match_add to component_match_add_of
-Date:   Thu,  3 Nov 2022 14:22:22 -0400
-Message-Id: <20221103182222.2247724-3-sean.anderson@seco.com>
-X-Mailer: git-send-email 2.35.1.1320.gc452695387.dirty
-In-Reply-To: <20221103182222.2247724-1-sean.anderson@seco.com>
-References: <20221103182222.2247724-1-sean.anderson@seco.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BL0PR0102CA0027.prod.exchangelabs.com
- (2603:10b6:207:18::40) To DB7PR03MB4972.eurprd03.prod.outlook.com
- (2603:10a6:10:7d::22)
+        Johan Hovold <johan+linaro@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH v3] clk: qcom: gdsc: Remove direct runtime PM calls
+Date:   Thu,  3 Nov 2022 11:30:30 -0700
+Message-Id: <20221103183030.3594899-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.38.1.431.g37b22c650d-goog
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DB7PR03MB4972:EE_|AM0PR03MB6195:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2c5c91ea-a2b7-43f7-db18-08dabdc86995
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: amDTUUEjnKENVBi/YXX+yw61yWN/UWqjQTYltOHhK2bTkUHlYynL8FhsPXNKupuQfdMtA4Q2I6h5YPoyxbaBt2QeN6pqb8wcMhv47M6skqtoZs20EbQSphAGN6DGGpAucx/Cm9jANZzXUN+uBEURpvbZtFb/msR5FGH/Mg3Esz0C0WHWi3cMrIIMHMSwwPyL5eYMVN+UXO5EuD4qT6A8ecHcKE8ed1Tat6a5vYIfKgVxZXE3BQziFs/ERF2tyBbzDJbTcDm7BbQ8IQbXtps08Ulk15nunOzQI+kFvXYK8L/RQKPdtakarFpdmNMEKjdu+C7sxCawe1YuRdPsIaqcjEWDaEu1AAlCHv9xTzfwIgW4HM8lo2YlTUC288nx6bWCHOwFzdBUhSgtsonShv519eMRisfmzdWxH6cTbXf/8SnhQTl+4TUp6H8E0mHZCtevXI0Fz1rc+2uwFb8yCjt7GqwLves//5hirMmeB9yBaOeQe/IKTFi19z2kV066yUF97UUFLuiO2hpA6gPAiCXM9UH6uG+/8uvyZ5vdKS+jwYPT+c3oIeTqpaMHI0FZ9cQgOmO2Zp/2XgLCyL2oQ144ZWL5hVUzjhBjewDfTOMbbjoPPpRmOwyhuQst6bMlsJo/InGj73a0oU2HjozCgkTLblEawuLc786dGyW1NNkkgJjhjT4df2g6ofngPOFJ274iOcYm+Sq7P+FS/+DsVXCG8pvYOg/Kr0ihsPd+aDm3x1Beh8chUK8q1pQRurRetdzG
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB7PR03MB4972.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(346002)(366004)(136003)(396003)(39850400004)(376002)(451199015)(2906002)(8676002)(66556008)(66476007)(66946007)(4326008)(316002)(26005)(6506007)(6512007)(8936002)(36756003)(30864003)(110136005)(44832011)(54906003)(41300700001)(86362001)(5660300002)(7416002)(7406005)(478600001)(6666004)(6486002)(38100700002)(83380400001)(38350700002)(52116002)(186003)(2616005)(1076003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?DxCnKaejCp/3Y/AOexMoAwSH9u9isLnVxMwzpqxTdPtoUGsHFIftqMmL1hhK?=
- =?us-ascii?Q?9SEt1SMd1J9IfGxRB0ALbjETM4vja3g2DGsFVXu4lo749oZ06kN+ViUQ7s1n?=
- =?us-ascii?Q?25yxbBuRHHaloRi4o0UF7mDPwXE+44o3nx/Si/glWQOLmoahy1SFXsyTbH4v?=
- =?us-ascii?Q?oSTdq6e9uDc8za1llH3yz6xNnMTgZgm8dZ0fTj1U47n05WV9RZHIIstM3ocw?=
- =?us-ascii?Q?6cpxv0/v8eozCEqVgi6t74YyIh03WbGSQ3kIEHXikuUpVtOX6njGtUYYAPyj?=
- =?us-ascii?Q?gcObb2Kk4Hl4Z8gVtRoQqb3a5pPfoCk3wMCSY1q4GKqsu+YuN8n7Dbz6LCno?=
- =?us-ascii?Q?IqEIuV38wuswQG9eDbBpD3f41sxFrePHjZRwvgQbpO2SV7Oxj7LYMmkeivSe?=
- =?us-ascii?Q?RvP/dmfPC6fdOAU1JV8dcqNQfJBwuOg/Frn1ULV//Hn0/c6GRb4do1yFvu+I?=
- =?us-ascii?Q?vuL73mPawPGWSJV08iMcr3a0z7GD0cWYZJ1beKrVxNmradtX9+GU2rA8XfWB?=
- =?us-ascii?Q?v4DU93idpFovKVwQzxjsj9vFHnYeSjLa1r/jviqwYZf/WbiFCu16HO5y7ZxC?=
- =?us-ascii?Q?CAccjKM8vNUkMsl+HO+k3VVRYcpfw1/ltJw3ycNUMySthJACgwamoBIKKdPr?=
- =?us-ascii?Q?SfBBMbzT2SJim2ES2/DRHqQYjysH4ugjHnpzEQ0RwzuaX3A4cYnWWlDigpEe?=
- =?us-ascii?Q?JxjaTgk/dtLEh034jzrlN1Z6b/t6hR1nZ/eov1UlPMapPKiN5Z0aMXafESEM?=
- =?us-ascii?Q?Y2fTCY7L/iFJC4epHK/fR8TuG6McZdXwaveFItK11dmtwUE2WHKqcJ0tm5Ur?=
- =?us-ascii?Q?bgMEVroYMypoinbyBZ86y0ExGCk6HzUUcGSPOZIpwcmypxf+v/f/mjeXBrZ0?=
- =?us-ascii?Q?zt8qAn60TfdUFqzcE3sRgEGf40mFxkUbHf0FNRkxlJbX35kqRzqsXkIz4+9B?=
- =?us-ascii?Q?uaMiiJSe3NQbZTNpXsuv7v2MjMHxHydzz8jHa8MkJgTgnRbn2+CkSCvtvjnt?=
- =?us-ascii?Q?YHWRBgi688uv0zFJs7Q7ITl2PVR2G6v5xi00h9mA59oMI1veDb2GlsBQcia4?=
- =?us-ascii?Q?lLFisan4iK+MvZ7KxvejRmWocitq8GCPzDR/lTcSHsFhjty6zxnd9LUDlMQ4?=
- =?us-ascii?Q?jW50l4NC8jA+duR7TI5QiXSvYSifSdUIrTvEXsBuWF7DB6nLozElbbpWzStA?=
- =?us-ascii?Q?iiEd+JDZW/kZixwVCoRKl636iEji+wIt0RF1SkcA+BlE2LEqRmdaJPtA6Qrn?=
- =?us-ascii?Q?ca1lJ74Hre6XSR01GsWzDxVP8T1Me2BTjnswRCoHrHBIujvU+z2+heTOfhkm?=
- =?us-ascii?Q?U+kHrdKi6D4pCPFOCIKpr4jfdd5eEaU9LnK+Wt1IegpI7QvwdPzGa/7U9frX?=
- =?us-ascii?Q?o8zJO2Ge5HehSNt/wJcOQxo5r+xB6CA4IQ2i0XjecHrfUN4yuB8VmWID39yv?=
- =?us-ascii?Q?03h4L8NOwpqyAnWMtaSD5aY+if9DZHJAQ0ZfBCkySWi4QlELOugnWaX4UYAS?=
- =?us-ascii?Q?tUlp0mWnwS+pvCsqiuvRF1F0EnxiIxzgAZAZO75gH+EXdXViqcpNvp22MRJi?=
- =?us-ascii?Q?YPhhIROHAliR25RVEc00UkXt+jvmbMP7N+MKEqHLdkW/kjLFfkyxxT77sX31?=
- =?us-ascii?Q?gg=3D=3D?=
-X-OriginatorOrg: seco.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2c5c91ea-a2b7-43f7-db18-08dabdc86995
-X-MS-Exchange-CrossTenant-AuthSource: DB7PR03MB4972.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Nov 2022 18:22:49.0446
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bebe97c3-6438-442e-ade3-ff17aa50e733
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: j0dMgfXQ7kAoHa7NHfZwmxl9quhp5U6+2XkguCWVQjY4uWcpM/de2RBtbkjVEF6mlExF/DV50w8+Ltf/l8TWhQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR03MB6195
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Every user of this function either uses component_compare_of or
-something equivalent. Most of them immediately put the device node as
-well. Convert these users to component_match_add_of and remove
-drm_of_component_match_add.
+We shouldn't be calling runtime PM APIs from within the genpd
+enable/disable path for a couple reasons.
 
-Signed-off-by: Sean Anderson <sean.anderson@seco.com>
+First, this causes an AA lockdep splat[1] because genpd can call into
+genpd code again while holding the genpd lock.
+
+WARNING: possible recursive locking detected
+5.19.0-rc2-lockdep+ #7 Not tainted
+--------------------------------------------
+kworker/2:1/49 is trying to acquire lock:
+ffffffeea0370788 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+
+but task is already holding lock:
+ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+
+other info that might help us debug this:
+ Possible unsafe locking scenario:
+
+       CPU0
+       ----
+  lock(&genpd->mlock);
+  lock(&genpd->mlock);
+
+ *** DEADLOCK ***
+
+ May be due to missing lock nesting notation
+
+3 locks held by kworker/2:1/49:
+ #0: 74ffff80811a5748 ((wq_completion)pm){+.+.}-{0:0}, at: process_one_work+0x320/0x5fc
+ #1: ffffffc008537cf8 ((work_completion)(&genpd->power_off_work)){+.+.}-{0:0}, at: process_one_work+0x354/0x5fc
+ #2: ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+
+stack backtrace:
+CPU: 2 PID: 49 Comm: kworker/2:1 Not tainted 5.19.0-rc2-lockdep+ #7
+Hardware name: Google Lazor (rev3 - 8) with KB Backlight (DT)
+Workqueue: pm genpd_power_off_work_fn
+Call trace:
+ dump_backtrace+0x1a0/0x200
+ show_stack+0x24/0x30
+ dump_stack_lvl+0x7c/0xa0
+ dump_stack+0x18/0x44
+ __lock_acquire+0xb38/0x3634
+ lock_acquire+0x180/0x2d4
+ __mutex_lock_common+0x118/0xe30
+ mutex_lock_nested+0x70/0x7c
+ genpd_lock_mtx+0x24/0x30
+ genpd_runtime_suspend+0x2f0/0x414
+ __rpm_callback+0xdc/0x1b8
+ rpm_callback+0x4c/0xcc
+ rpm_suspend+0x21c/0x5f0
+ rpm_idle+0x17c/0x1e0
+ __pm_runtime_idle+0x78/0xcc
+ gdsc_disable+0x24c/0x26c
+ _genpd_power_off+0xd4/0x1c4
+ genpd_power_off+0x2d8/0x41c
+ genpd_power_off_work_fn+0x60/0x94
+ process_one_work+0x398/0x5fc
+ worker_thread+0x42c/0x6c4
+ kthread+0x194/0x1b4
+ ret_from_fork+0x10/0x20
+
+Second, this confuses runtime PM on CoachZ for the camera devices by
+causing the camera clock controller's runtime PM usage_count to go
+negative after resuming from suspend. This is because runtime PM is
+being used on the clock controller while runtime PM is disabled for the
+device.
+
+The reason for the negative count is because a GDSC is represented as a
+genpd and each genpd that is attached to a device is resumed during the
+noirq phase of system wide suspend/resume (see the noirq suspend ops
+assignment in pm_genpd_init() for more details). The camera GDSCs are
+attached to camera devices with the 'power-domains' property in DT.
+Every device has runtime PM disabled in the late system suspend phase
+via __device_suspend_late(). Runtime PM is not usable until runtime PM
+is enabled in device_resume_early(). The noirq phases run after the
+'late' and before the 'early' phase of suspend/resume. When the genpds
+are resumed in genpd_resume_noirq(), we call down into gdsc_enable()
+that calls pm_runtime_resume_and_get() and that returns -EACCES to
+indicate failure to resume because runtime PM is disabled for all
+devices.
+
+Upon closer inspection, calling runtime PM APIs like this in the GDSC
+driver doesn't make sense. It was intended to make sure the GDSC for the
+clock controller providing other GDSCs was enabled, specifically the
+MMCX GDSC for the display clk controller on SM8250 (sm8250-dispcc), so
+that GDSC register accesses succeeded. That will already happen because
+we make the 'dev->pm_domain' a parent domain of each GDSC we register in
+gdsc_register() via pm_genpd_add_subdomain(). When any of these GDSCs
+are accessed, we'll enable the parent domain (in this specific case
+MMCX).
+
+We also remove any getting of runtime PM during registration, because
+when a genpd is registered it increments the count on the parent if the
+genpd itself is already enabled.
+
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Taniya Das <quic_tdas@quicinc.com>
+Cc: Satya Priya <quic_c_skakit@quicinc.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Reported-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/CAE-0n52xbZeJ66RaKwggeRB57fUAwjvxGxfFMKOKJMKVyFTe+w@mail.gmail.com [1]
+Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
 
- .../gpu/drm/arm/display/komeda/komeda_drv.c   |  6 ++--
- drivers/gpu/drm/arm/hdlcd_drv.c               |  9 +-----
- drivers/gpu/drm/arm/malidp_drv.c              | 11 +------
- drivers/gpu/drm/armada/armada_drv.c           | 10 ++++---
- drivers/gpu/drm/drm_of.c                      | 29 +++----------------
- drivers/gpu/drm/etnaviv/etnaviv_drv.c         |  4 +--
- .../gpu/drm/hisilicon/kirin/kirin_drm_drv.c   |  3 +-
- drivers/gpu/drm/ingenic/ingenic-drm-drv.c     |  3 +-
- drivers/gpu/drm/mediatek/mtk_drm_drv.c        |  4 +--
- drivers/gpu/drm/msm/msm_drv.c                 | 14 ++++-----
- drivers/gpu/drm/sti/sti_drv.c                 |  3 +-
- drivers/gpu/drm/sun4i/sun4i_drv.c             |  3 +-
- drivers/gpu/drm/tilcdc/tilcdc_external.c      | 10 ++-----
- include/drm/drm_of.h                          | 12 --------
- 14 files changed, 33 insertions(+), 88 deletions(-)
+Changes from v2 (https://lore.kernel.org/r/20221102170717.1262547-1-swboyd@chromium.org):
+ * Drop dev assignment and remove struct member
+ * Update commit text, add link to report
 
-diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
-index 9fce4239d4ad..e5bf439b799f 100644
---- a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
-+++ b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
-@@ -103,10 +103,8 @@ static void komeda_add_slave(struct device *master,
- 	struct device_node *remote;
- 
- 	remote = of_graph_get_remote_node(np, port, endpoint);
--	if (remote) {
--		drm_of_component_match_add(master, match, component_compare_of, remote);
--		of_node_put(remote);
--	}
-+	if (remote)
-+		component_match_add_of(master, match, remote);
- }
- 
- static int komeda_platform_probe(struct platform_device *pdev)
-diff --git a/drivers/gpu/drm/arm/hdlcd_drv.c b/drivers/gpu/drm/arm/hdlcd_drv.c
-index a032003c340c..18e58863a2f1 100644
---- a/drivers/gpu/drm/arm/hdlcd_drv.c
-+++ b/drivers/gpu/drm/arm/hdlcd_drv.c
-@@ -352,11 +352,6 @@ static const struct component_master_ops hdlcd_master_ops = {
- 	.unbind		= hdlcd_drm_unbind,
+Changes from v1 (https://lore.kernel.org/r/20221101233421.997149-1-swboyd@chromium.org):
+ * Fix ret thinko
+ * Update kerneldoc on 'dev' member
+
+ drivers/clk/qcom/gdsc.c | 61 ++++-------------------------------------
+ drivers/clk/qcom/gdsc.h |  2 --
+ 2 files changed, 6 insertions(+), 57 deletions(-)
+
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index 7cf5e130e92f..0f21a8a767ac 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -11,7 +11,6 @@
+ #include <linux/kernel.h>
+ #include <linux/ktime.h>
+ #include <linux/pm_domain.h>
+-#include <linux/pm_runtime.h>
+ #include <linux/regmap.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/reset-controller.h>
+@@ -56,22 +55,6 @@ enum gdsc_status {
+ 	GDSC_ON
  };
  
--static int compare_dev(struct device *dev, void *data)
+-static int gdsc_pm_runtime_get(struct gdsc *sc)
 -{
--	return dev->of_node == data;
+-	if (!sc->dev)
+-		return 0;
+-
+-	return pm_runtime_resume_and_get(sc->dev);
 -}
 -
- static int hdlcd_probe(struct platform_device *pdev)
+-static int gdsc_pm_runtime_put(struct gdsc *sc)
+-{
+-	if (!sc->dev)
+-		return 0;
+-
+-	return pm_runtime_put_sync(sc->dev);
+-}
+-
+ /* Returns 1 if GDSC status is status, 0 if not, and < 0 on error */
+ static int gdsc_check_status(struct gdsc *sc, enum gdsc_status status)
  {
- 	struct device_node *port;
-@@ -367,9 +362,7 @@ static int hdlcd_probe(struct platform_device *pdev)
- 	if (!port)
- 		return -ENODEV;
- 
--	drm_of_component_match_add(&pdev->dev, &match, compare_dev, port);
--	of_node_put(port);
--
-+	component_match_add_of(&pdev->dev, &match, port);
- 	return component_master_add_with_match(&pdev->dev, &hdlcd_master_ops,
- 					       match);
+@@ -271,8 +254,9 @@ static void gdsc_retain_ff_on(struct gdsc *sc)
+ 	regmap_update_bits(sc->regmap, sc->gdscr, mask, mask);
  }
-diff --git a/drivers/gpu/drm/arm/malidp_drv.c b/drivers/gpu/drm/arm/malidp_drv.c
-index 1d0b0c54ccc7..aace8b87c6d3 100644
---- a/drivers/gpu/drm/arm/malidp_drv.c
-+++ b/drivers/gpu/drm/arm/malidp_drv.c
-@@ -926,13 +926,6 @@ static const struct component_master_ops malidp_master_ops = {
- 	.unbind = malidp_unbind,
- };
  
--static int malidp_compare_dev(struct device *dev, void *data)
--{
--	struct device_node *np = data;
--
--	return dev->of_node == np;
--}
--
- static int malidp_platform_probe(struct platform_device *pdev)
+-static int _gdsc_enable(struct gdsc *sc)
++static int gdsc_enable(struct generic_pm_domain *domain)
  {
- 	struct device_node *port;
-@@ -946,9 +939,7 @@ static int malidp_platform_probe(struct platform_device *pdev)
- 	if (!port)
- 		return -ENODEV;
++	struct gdsc *sc = domain_to_gdsc(domain);
+ 	int ret;
  
--	drm_of_component_match_add(&pdev->dev, &match, malidp_compare_dev,
--				   port);
--	of_node_put(port);
-+	component_match_add_of(&pdev->dev, &match, port);
- 	return component_master_add_with_match(&pdev->dev, &malidp_master_ops,
- 					       match);
- }
-diff --git a/drivers/gpu/drm/armada/armada_drv.c b/drivers/gpu/drm/armada/armada_drv.c
-index 0643887800b4..c0211ad7a45d 100644
---- a/drivers/gpu/drm/armada/armada_drv.c
-+++ b/drivers/gpu/drm/armada/armada_drv.c
-@@ -184,10 +184,12 @@ static void armada_add_endpoints(struct device *dev,
- 
- 	for_each_endpoint_of_node(dev_node, ep) {
- 		remote = of_graph_get_remote_port_parent(ep);
--		if (remote && of_device_is_available(remote))
--			drm_of_component_match_add(dev, match, component_compare_of,
--						   remote);
--		of_node_put(remote);
-+		if (remote) {
-+			if (of_device_is_available(remote))
-+				component_match_add_of(dev, match, remote);
-+			else
-+				of_node_put(remote);
-+		}
- 	}
+ 	if (sc->pwrsts == PWRSTS_ON)
+@@ -328,22 +312,11 @@ static int _gdsc_enable(struct gdsc *sc)
+ 	return 0;
  }
  
-diff --git a/drivers/gpu/drm/drm_of.c b/drivers/gpu/drm/drm_of.c
-index 7bbcb999bb75..0a474729ddf6 100644
---- a/drivers/gpu/drm/drm_of.c
-+++ b/drivers/gpu/drm/drm_of.c
-@@ -78,24 +78,6 @@ uint32_t drm_of_find_possible_crtcs(struct drm_device *dev,
- }
- EXPORT_SYMBOL(drm_of_find_possible_crtcs);
+-static int gdsc_enable(struct generic_pm_domain *domain)
++static int gdsc_disable(struct generic_pm_domain *domain)
+ {
+ 	struct gdsc *sc = domain_to_gdsc(domain);
+ 	int ret;
  
--/**
-- * drm_of_component_match_add - Add a component helper OF node match rule
-- * @master: master device
-- * @matchptr: component match pointer
-- * @compare: compare function used for matching component
-- * @node: of_node
-- */
--void drm_of_component_match_add(struct device *master,
--				struct component_match **matchptr,
--				int (*compare)(struct device *, void *),
--				struct device_node *node)
--{
--	of_node_get(node);
--	component_match_add_release(master, matchptr, component_release_of,
--				    compare, node);
+-	ret = gdsc_pm_runtime_get(sc);
+-	if (ret)
+-		return ret;
+-
+-	return _gdsc_enable(sc);
 -}
--EXPORT_SYMBOL_GPL(drm_of_component_match_add);
 -
- /**
-  * drm_of_component_probe - Generic probe function for a component based master
-  * @dev: master device containing the OF node
-@@ -130,10 +112,9 @@ int drm_of_component_probe(struct device *dev,
- 			break;
- 
- 		if (of_device_is_available(port->parent))
--			drm_of_component_match_add(dev, &match, compare_of,
--						   port);
+-static int _gdsc_disable(struct gdsc *sc)
+-{
+-	int ret;
 -
--		of_node_put(port);
-+			component_match_add_of(dev, &match, port);
-+		else
-+			of_node_put(port);
- 	}
+ 	if (sc->pwrsts == PWRSTS_ON)
+ 		return gdsc_assert_reset(sc);
  
- 	if (i == 0) {
-@@ -171,9 +152,7 @@ int drm_of_component_probe(struct device *dev,
- 				continue;
- 			}
- 
--			drm_of_component_match_add(dev, &match, compare_of,
--						   remote);
--			of_node_put(remote);
-+			component_match_add_of(dev, &match, remote);
- 		}
- 		of_node_put(port);
- 	}
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_drv.c b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
-index 1d2b4fb4bcf8..4a0dba34a6e7 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_drv.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
-@@ -590,8 +590,8 @@ static int etnaviv_pdev_probe(struct platform_device *pdev)
- 			if (!first_node)
- 				first_node = core_node;
- 
--			drm_of_component_match_add(&pdev->dev, &match,
--						   component_compare_of, core_node);
-+			of_node_get(core_node);
-+			component_match_add_of(&pdev->dev, &match, core_node);
- 		}
- 	} else {
- 		char **names = dev->platform_data;
-diff --git a/drivers/gpu/drm/hisilicon/kirin/kirin_drm_drv.c b/drivers/gpu/drm/hisilicon/kirin/kirin_drm_drv.c
-index 73ee7f25f734..fc736759274f 100644
---- a/drivers/gpu/drm/hisilicon/kirin/kirin_drm_drv.c
-+++ b/drivers/gpu/drm/hisilicon/kirin/kirin_drm_drv.c
-@@ -273,8 +273,7 @@ static int kirin_drm_platform_probe(struct platform_device *pdev)
- 	if (!remote)
- 		return -ENODEV;
- 
--	drm_of_component_match_add(dev, &match, component_compare_of, remote);
--	of_node_put(remote);
-+	component_match_add_of(dev, &match, remote);
- 
- 	return component_master_add_with_match(dev, &kirin_drm_ops, match);
+@@ -388,18 +361,6 @@ static int _gdsc_disable(struct gdsc *sc)
+ 	return 0;
  }
-diff --git a/drivers/gpu/drm/ingenic/ingenic-drm-drv.c b/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
-index ab0515d2c420..75a19e6b85c0 100644
---- a/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
-+++ b/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
-@@ -1445,8 +1445,7 @@ static int ingenic_drm_probe(struct platform_device *pdev)
- 	if (!np)
- 		return ingenic_drm_bind(dev, false);
  
--	drm_of_component_match_add(dev, &match, component_compare_of, np);
--	of_node_put(np);
-+	component_match_add_of(dev, &match, np);
- 
- 	return component_master_add_with_match(dev, &ingenic_master_ops, match);
- }
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-index 91f58db5915f..9ca265129659 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -779,8 +779,8 @@ static int mtk_drm_probe(struct platform_device *pdev)
- 		    comp_type == MTK_DSI) {
- 			dev_info(dev, "Adding component match for %pOF\n",
- 				 node);
--			drm_of_component_match_add(dev, &match, component_compare_of,
--						   node);
-+			of_node_get(node);
-+			component_match_add_of(dev, &match, node);
+-static int gdsc_disable(struct generic_pm_domain *domain)
+-{
+-	struct gdsc *sc = domain_to_gdsc(domain);
+-	int ret;
+-
+-	ret = _gdsc_disable(sc);
+-
+-	gdsc_pm_runtime_put(sc);
+-
+-	return ret;
+-}
+-
+ static int gdsc_init(struct gdsc *sc)
+ {
+ 	u32 mask, val;
+@@ -447,11 +408,6 @@ static int gdsc_init(struct gdsc *sc)
+ 				return ret;
  		}
  
- 		ret = mtk_ddp_comp_init(node, &private->ddp_comp[comp_id], comp_id);
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 28034c21f6bc..1152da3d58dc 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -5,6 +5,7 @@
-  * Author: Rob Clark <robdclark@gmail.com>
-  */
+-		/* ...and the power-domain */
+-		ret = gdsc_pm_runtime_get(sc);
+-		if (ret)
+-			goto err_disable_supply;
+-
+ 		/*
+ 		 * Votable GDSCs can be ON due to Vote from other masters.
+ 		 * If a Votable GDSC is ON, make sure we have a Vote.
+@@ -459,14 +415,14 @@ static int gdsc_init(struct gdsc *sc)
+ 		if (sc->flags & VOTABLE) {
+ 			ret = gdsc_update_collapse_bit(sc, false);
+ 			if (ret)
+-				goto err_put_rpm;
++				goto err_disable_supply;
+ 		}
  
-+#include <linux/component.h>
- #include <linux/dma-mapping.h>
- #include <linux/fault-inject.h>
- #include <linux/kthread.h>
-@@ -1148,10 +1149,9 @@ static int add_components_mdp(struct device *master_dev,
+ 		/* Turn on HW trigger mode if supported */
+ 		if (sc->flags & HW_CTRL) {
+ 			ret = gdsc_hwctrl(sc, true);
+ 			if (ret < 0)
+-				goto err_put_rpm;
++				goto err_disable_supply;
+ 		}
+ 
+ 		/*
+@@ -496,13 +452,10 @@ static int gdsc_init(struct gdsc *sc)
+ 
+ 	ret = pm_genpd_init(&sc->pd, NULL, !on);
+ 	if (ret)
+-		goto err_put_rpm;
++		goto err_disable_supply;
+ 
+ 	return 0;
+ 
+-err_put_rpm:
+-	if (on)
+-		gdsc_pm_runtime_put(sc);
+ err_disable_supply:
+ 	if (on && sc->rsupply)
+ 		regulator_disable(sc->rsupply);
+@@ -541,8 +494,6 @@ int gdsc_register(struct gdsc_desc *desc,
+ 	for (i = 0; i < num; i++) {
+ 		if (!scs[i])
  			continue;
+-		if (pm_runtime_enabled(dev))
+-			scs[i]->dev = dev;
+ 		scs[i]->regmap = regmap;
+ 		scs[i]->rcdev = rcdev;
+ 		ret = gdsc_init(scs[i]);
+diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+index 981a12c8502d..803512688336 100644
+--- a/drivers/clk/qcom/gdsc.h
++++ b/drivers/clk/qcom/gdsc.h
+@@ -30,7 +30,6 @@ struct reset_controller_dev;
+  * @resets: ids of resets associated with this gdsc
+  * @reset_count: number of @resets
+  * @rcdev: reset controller
+- * @dev: the device holding the GDSC, used for pm_runtime calls
+  */
+ struct gdsc {
+ 	struct generic_pm_domain	pd;
+@@ -74,7 +73,6 @@ struct gdsc {
  
- 		if (of_device_is_available(intf))
--			drm_of_component_match_add(master_dev, matchptr,
--						   component_compare_of, intf);
--
--		of_node_put(intf);
-+			component_match_add_of(master_dev, matchptr, intf);
-+		else
-+			of_node_put(intf);
- 	}
+ 	const char 			*supply;
+ 	struct regulator		*rsupply;
+-	struct device			*dev;
+ };
  
- 	return 0;
-@@ -1180,9 +1180,9 @@ static int add_gpu_components(struct device *dev,
- 		return 0;
- 
- 	if (of_device_is_available(np))
--		drm_of_component_match_add(dev, matchptr, component_compare_of, np);
--
--	of_node_put(np);
-+		component_match_add_of(dev, matchptr, np);
-+	else
-+		of_node_put(np);
- 
- 	return 0;
- }
-diff --git a/drivers/gpu/drm/sti/sti_drv.c b/drivers/gpu/drm/sti/sti_drv.c
-index 7abf010a3293..3ae4b73dfa92 100644
---- a/drivers/gpu/drm/sti/sti_drv.c
-+++ b/drivers/gpu/drm/sti/sti_drv.c
-@@ -238,8 +238,7 @@ static int sti_platform_probe(struct platform_device *pdev)
- 	child_np = of_get_next_available_child(node, NULL);
- 
- 	while (child_np) {
--		drm_of_component_match_add(dev, &match, component_compare_of,
--					   child_np);
-+		component_match_add_of(dev, &match, child_np);
- 		child_np = of_get_next_available_child(node, child_np);
- 	}
- 
-diff --git a/drivers/gpu/drm/sun4i/sun4i_drv.c b/drivers/gpu/drm/sun4i/sun4i_drv.c
-index d06ffd99d86e..a67c2010c7a2 100644
---- a/drivers/gpu/drm/sun4i/sun4i_drv.c
-+++ b/drivers/gpu/drm/sun4i/sun4i_drv.c
-@@ -323,7 +323,8 @@ static int sun4i_drv_add_endpoints(struct device *dev,
- 	     of_device_is_available(node))) {
- 		/* Add current component */
- 		DRM_DEBUG_DRIVER("Adding component %pOF\n", node);
--		drm_of_component_match_add(dev, match, component_compare_of, node);
-+		of_node_get(node);
-+		component_match_add_of(dev, match, node);
- 		count++;
- 	}
- 
-diff --git a/drivers/gpu/drm/tilcdc/tilcdc_external.c b/drivers/gpu/drm/tilcdc/tilcdc_external.c
-index 3b86d002ef62..0138ce02a64f 100644
---- a/drivers/gpu/drm/tilcdc/tilcdc_external.c
-+++ b/drivers/gpu/drm/tilcdc/tilcdc_external.c
-@@ -155,11 +155,6 @@ int tilcdc_attach_external_device(struct drm_device *ddev)
- 	return ret;
- }
- 
--static int dev_match_of(struct device *dev, void *data)
--{
--	return dev->of_node == data;
--}
--
- int tilcdc_get_external_components(struct device *dev,
- 				   struct component_match **match)
- {
-@@ -173,7 +168,8 @@ int tilcdc_get_external_components(struct device *dev,
- 	}
- 
- 	if (match)
--		drm_of_component_match_add(dev, match, dev_match_of, node);
--	of_node_put(node);
-+		component_match_add_of(dev, match, node);
-+	else
-+		of_node_put(node);
- 	return 1;
- }
-diff --git a/include/drm/drm_of.h b/include/drm/drm_of.h
-index 10ab58c40746..685c44dc1dae 100644
---- a/include/drm/drm_of.h
-+++ b/include/drm/drm_of.h
-@@ -33,10 +33,6 @@ uint32_t drm_of_crtc_port_mask(struct drm_device *dev,
- 			    struct device_node *port);
- uint32_t drm_of_find_possible_crtcs(struct drm_device *dev,
- 				    struct device_node *port);
--void drm_of_component_match_add(struct device *master,
--				struct component_match **matchptr,
--				int (*compare)(struct device *, void *),
--				struct device_node *node);
- int drm_of_component_probe(struct device *dev,
- 			   int (*compare_of)(struct device *, void *),
- 			   const struct component_master_ops *m_ops);
-@@ -69,14 +65,6 @@ static inline uint32_t drm_of_find_possible_crtcs(struct drm_device *dev,
- 	return 0;
- }
- 
--static inline void
--drm_of_component_match_add(struct device *master,
--			   struct component_match **matchptr,
--			   int (*compare)(struct device *, void *),
--			   struct device_node *node)
--{
--}
--
- static inline int
- drm_of_component_probe(struct device *dev,
- 		       int (*compare_of)(struct device *, void *),
+ struct gdsc_desc {
+
+base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
 -- 
-2.35.1.1320.gc452695387.dirty
+https://chromeos.dev
 
