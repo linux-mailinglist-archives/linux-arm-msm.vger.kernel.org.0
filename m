@@ -2,72 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 81A56618724
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 19:11:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D685461874B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 19:19:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229595AbiKCSLM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 14:11:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48714 "EHLO
+        id S230396AbiKCSTN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 14:19:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229764AbiKCSLK (ORCPT
+        with ESMTP id S229551AbiKCSTM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 14:11:10 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AD48BC6;
-        Thu,  3 Nov 2022 11:11:05 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A3EGMxv018288;
-        Thu, 3 Nov 2022 18:10:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=OG3ZTVkiPmyvpPF5mJKUEJHl0NC19XqSJrIaLunOOLI=;
- b=aQdody+5AW4ELl+RJ+vKsU3uRtZqsxe3OKiBi3CEMwl5a5PebEugYri7sF4FdwnUJkGy
- l+vJIdb3+mZi8FDzNjE5pV1x8nF4U3J/Fz1sfSBtRhkJZivoqYWImgw7NLP5cAXyCjzH
- 5ORdQGpLSa+JCvGmmo2pwnmEKyGwRGpBH2auHeOJ6GYc0yaHDqkU2iD6oVESVYoiHOGx
- /Ldjyfe+jqUNXT6TK+1YBs36S3eHEhqWkbhpDPMBTK3GVouDG3b8Bb3ZFQmZgA2aaanh
- zmlFK8g+vJuLyRa9epWICMSCWgKa7oP6sZBNmgAsB6UP6WFigYJk6W7Za0MKDyeInbB5 VA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3km6yjjd6v-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 03 Nov 2022 18:10:58 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A3IAvPD027804
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 3 Nov 2022 18:10:57 GMT
-Received: from th-lint-050.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Thu, 3 Nov 2022 11:10:56 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>
-CC:     Johan Hovold <johan@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH] pinctrl: qcom: sc8280xp: Rectify UFS reset pins
-Date:   Thu, 3 Nov 2022 11:10:51 -0700
-Message-ID: <20221103181051.26912-1-quic_bjorande@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Thu, 3 Nov 2022 14:19:12 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 053BBBE18
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 11:19:11 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id b3so4251742lfv.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 11:19:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gkYzItvrSUXCjUZclqVlz4B1VRMJvcHSmP7Vz+/CqCc=;
+        b=Ql3Wst5IDeTBu02tDij8+8WotMSKPkvfwkpBGQrs5DCDmlReH9R39/cKMIGZ9nQTw4
+         CTNpSr+1rRsxJju1xOVWyv58dG7vruDtKj2QiyrwZZlt55RVpxRZMSd1GUviTtWFTlQt
+         bE6yo4OanX1qxxPqrtbBfkv3g2/e5P7r/JJ4c=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gkYzItvrSUXCjUZclqVlz4B1VRMJvcHSmP7Vz+/CqCc=;
+        b=NTXoO06El0nJpn5XOaaDnF8dvx2cRRzCZDW3hOzAPHK0EBR7XMRlmIfuZ5Wiq6UAnr
+         T3JB4jsnTMWpiwQDEwnVDWaAxMuKvmpxS9JZeVyRqgMuNMyirv/JELIXkak8fSkCoNS7
+         +ViuuWCNBp6fx+2/LM6JZkW5x7tkPaDIeem2E0lvXpizdJULXjt/HsY/t7xvG8j47qnJ
+         WS9erKlCq8XanoeoachQA8VSHDfUqGfkp38259G+kSn8TItnGzl2uTXCSn6ayHF4IMuv
+         l/jY4Aa/1Le7QlKt3FAN2ReV69TvK9aFpU7CAqs24JfSHA0+KMmM0OEJR6h6c3+JB5Uv
+         vEIQ==
+X-Gm-Message-State: ACrzQf1eCee0TLoMvIwWcRr0nTQkUJKPwetvMsc45kPh46s2Zittb5JZ
+        jHIdOTOLZEoPv4oeR2ZiLcuADGZx2hT7M7pAIPyJqA==
+X-Google-Smtp-Source: AMsMyM50DKyuqpFk3z0RRrS/jQXXsTcb+YgJ2uT1ZBFhUVkjX0OEggksGtq8mwZhheS/vIGyWyzlrWJVtBWPTzBnqNs=
+X-Received: by 2002:a05:6512:3403:b0:48c:9727:50b0 with SMTP id
+ i3-20020a056512340300b0048c972750b0mr11849146lfr.309.1667499549321; Thu, 03
+ Nov 2022 11:19:09 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 3 Nov 2022 11:19:08 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 4Iq4sCA--5RnHfNi21eqtdGhJXNZ8Csr
-X-Proofpoint-GUID: 4Iq4sCA--5RnHfNi21eqtdGhJXNZ8Csr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-03_04,2022-11-03_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 adultscore=0 clxscore=1011 phishscore=0 bulkscore=0
- suspectscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211030123
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <Y2PAXX2oYL6iFTlB@hovoldconsulting.com>
+References: <20221101233421.997149-1-swboyd@chromium.org> <Y2JL9/HFrb3E+CYY@hovoldconsulting.com>
+ <CAE-0n51Wuc6gVmsTOu4Nf4yx+6Wp-Oi3XZy06syhCMVmePWPEw@mail.gmail.com> <Y2PAXX2oYL6iFTlB@hovoldconsulting.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Thu, 3 Nov 2022 11:19:08 -0700
+Message-ID: <CAE-0n5319JSX16Z3H5vKQSL9UDetOdfb38zo_vp0C=uX1jddWQ@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, patches@lists.linux.dev,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,32 +80,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Anjana Hari <quic_ahari@quicinc.com>
+Quoting Johan Hovold (2022-11-03 06:21:33)
+> On Wed, Nov 02, 2022 at 09:53:49AM -0700, Stephen Boyd wrote:
+> > Quoting Johan Hovold (2022-11-02 03:52:39)
+>
+> > > > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > Cc: Johan Hovold <johan+linaro@kernel.org>
+> > > > Cc: Ulf Hansson <ulf.hansson@linaro.org>
+> > > > Cc: Taniya Das <quic_tdas@quicinc.com>
+> > > > Cc: Satya Priya <quic_c_skakit@quicinc.com>
+> > > > Cc: Douglas Anderson <dianders@chromium.org>
+> > > > Cc: Matthias Kaehlcke <mka@chromium.org>
+> > > > Reported-by: Stephen Boyd <swboyd@chromium.org>
+> > >
+> > > We typically don't add Reported-by tags for bugs we find and fix
+> > > ourselves.
+> >
+> > Heh, I didn't see anything like that in Documentation/ so it seems fine.
+> > I debugged my problem and reported it.
+>
+> I'd say the documentation is pretty clear on this matter:
+>
+>   Reported-by: names a user who reported a problem which is fixed by this
+>   patch; this tag is used to give credit to the (often underappreciated)
+>   people who test our code and let us know when things do not work
+>   correctly.
+>
+>   - Documentation/process/5.Posting.rst
+>
+>   The Reported-by tag gives credit to people who find bugs and report
+>   them and it hopefully inspires them to help us again in the future.
+>   Please note that if the bug was reported in private, then ask for
+>   permission first before using the Reported-by tag.
+>
+>   - Documentation/process/submitting-patches.rst
 
-UFS reset pin offsets are wrongly configured for SC8280XP,
-correcting the same for both UFS instances here.
+I don't see anything above that says I can't add this tag if I reported
+(by sending an email about the problem to the list), debugged, and
+solved the problem by sending a patch.
 
-Signed-off-by: Anjana Hari <quic_ahari@quicinc.com>
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
- drivers/pinctrl/qcom/pinctrl-sc8280xp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> Just like you don't add a Tested-by tag for every patch you submit, it
+> is implied that you found the issue you fix unless you explicitly
+> attribute that to a third party using Reported-by.
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
-index aa2075390f3e..e96c00686a25 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
-@@ -1873,8 +1873,8 @@ static const struct msm_pingroup sc8280xp_groups[] = {
- 	[225] = PINGROUP(225, hs3_mi2s, phase_flag, _, _, _, _, egpio),
- 	[226] = PINGROUP(226, hs3_mi2s, phase_flag, _, _, _, _, egpio),
- 	[227] = PINGROUP(227, hs3_mi2s, phase_flag, _, _, _, _, egpio),
--	[228] = UFS_RESET(ufs_reset, 0xf1004),
--	[229] = UFS_RESET(ufs1_reset, 0xf3004),
-+	[228] = UFS_RESET(ufs_reset, 0xf1000),
-+	[229] = UFS_RESET(ufs1_reset, 0xf3000),
- 	[230] = SDC_QDSD_PINGROUP(sdc2_clk, 0xe8000, 14, 6),
- 	[231] = SDC_QDSD_PINGROUP(sdc2_cmd, 0xe8000, 11, 3),
- 	[232] = SDC_QDSD_PINGROUP(sdc2_data, 0xe8000, 9, 0),
--- 
-2.17.1
+I don't see how this is the same. It certainly is not explicit, as you
+say.
 
+I wouldn't have added the tag if I didn't send an email to the list with
+the lockdep splat and follow that up with a bisection report for
+suspend/resume being broken. Shouldn't we value those sorts of bug
+report emails? I will add a link to the report in the commit text to
+clarify.
+
+>
+> This is the first time I see anyone trying to use Reported-by this way,
+> and even if you think the documentation isn't clear enough on this, our
+> praxis is.
+>
+
+Ok, so is it just a shock to see this for the first time? What is the
+problem with the tag? Can you elaborate on your concerns? I would like
+to understand.
