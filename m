@@ -2,175 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DA9D617655
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 06:50:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BEC0E61772B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 08:09:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229493AbiKCFu1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 01:50:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35746 "EHLO
+        id S230072AbiKCHJe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 03:09:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbiKCFu0 (ORCPT
+        with ESMTP id S230011AbiKCHJd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 01:50:26 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A273A13F20
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 22:50:25 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id l2so922311pld.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 22:50:25 -0700 (PDT)
+        Thu, 3 Nov 2022 03:09:33 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75FE8B03
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 00:09:30 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id g129so909444pgc.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 00:09:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=tqq4iqiPBYJJ3mdt9KquYmKxY1vZtBAAJB2JNp407Ak=;
-        b=HSQqN9AVu2zGja3ueWjG9fRCGn+YZWng/jhr216FHRYdPp9ynTbFQxH/Nwwuvfeelg
-         h2r0LlZmHVpXrhlDk3mkv95fmzA2EohQp+nNsIFLQkKRs+mLJqnlAV8s/ESeMuUVTfRQ
-         ERTV4rtQeqvPfsaYWyomv1172LAVsEWDX2nnTJ1fiHn/4HvWHPOXESVD1xqoBjSAT1Be
-         D6sOW7KtfvWMZ/qmmwj4+l9g95aEi8BNNMT3fcmJxgXU5MDWlVcGnS1P2rhkCcsysxnN
-         mgARjT7fvHsk7Vcusl2E9c9/3v0NKusVICHifwFVwc74+SRBgv30t8d1Xfzadjmk/3Bn
-         ZkOw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LkHnq8wlBfVlfriOmpPxlarX6Xf3b38smcgL/6sjikk=;
+        b=wS2uOLCGL26kIPInJbuPEphCBlVt9LYrHO5YFaJZW8jNi1oRmOIMF5llWI+ea7hIHh
+         Qs6+HZ5pGkKYGqCgNuGhsN5lYxkOaWY+L8GFuVR6reQ6ZkgUCUCcmENSuWq9BWtosvJc
+         BJwPqF3DwiWgrVlkjgG6CE7j6hUgtuRQdmbyEzyAoNVtOezBhvn5TE6po5uKLxluSsiM
+         Dx2Bc7WHqcG6Cefat8nuFFg6hYpPC2VNPLTezH1IuLY1lxKbmlJR9v+58iCkKjVosWLS
+         iqKMWYcCOWZ5KvNsFKYLfucvu7W3L2pwYBsgFyLXZcm/SzDRpOFWLZiJVQbjI4YZJDtT
+         wOog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tqq4iqiPBYJJ3mdt9KquYmKxY1vZtBAAJB2JNp407Ak=;
-        b=tyCk9jkC0Ugpl3xhX/8wwiL3X9afCNLg8cTT420mRMWdxL4YZdGp7X7IuTIHlW+lim
-         MnKQuYuBqvaHyQm+C9B+PjYU8THIbLi1oRe72N++fGIoKH2QFK2VnCq95EQALgUyj9mi
-         53iI3y+U+2mmquLcEBaNjEuRQMvzTajxnoBMLYOT2Okcl9i/4YO7xc1mDc3EhCIdyk8u
-         xBMj2jWJTy0RekuzmGhf0IpP+mSkRwSaMMmx8aqni62lqawfsoDbyOqOGh5qwJYYkrYB
-         hRvsFW6zXL6Q4J47K4TIvnalC0qeEY7izSShLM78LHQuCI5sczbY0YzyGy2dsc+b+RWX
-         UEEA==
-X-Gm-Message-State: ACrzQf2Y/ByGq/TAl2USjjNtC6kfw6zaetwHSy+jnaInHUPLfytxey9J
-        8dlIEHkhgtQOJbX0uINprExI
-X-Google-Smtp-Source: AMsMyM633tSmnT857qtz/X+kw29fK+4EAbXvmYJRfLM2ldyfB280rQAAIgPd1fO/Jj/BzNS+eJDx6w==
-X-Received: by 2002:a17:903:2342:b0:17c:ae18:1c86 with SMTP id c2-20020a170903234200b0017cae181c86mr27723709plh.5.1667454625017;
-        Wed, 02 Nov 2022 22:50:25 -0700 (PDT)
-Received: from thinkpad ([117.193.208.64])
-        by smtp.gmail.com with ESMTPSA id i127-20020a625485000000b0056e32a2b88esm1080377pfb.219.2022.11.02.22.50.19
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LkHnq8wlBfVlfriOmpPxlarX6Xf3b38smcgL/6sjikk=;
+        b=K9DSXygt8KEK7G4vvune8rIAQRNSimN8i8Gw/wGTmXoJm+llU9dQJmMy1D4c5XSfnp
+         u/cJh1m+tybzuNlm7iWRmsgiYGXPYduJF9KpApWaai5ieJVoSymrc/+t0IbgYc2mXGiJ
+         CPb0vx/Y8MwN7oVPFOxtLLK9qkCmf0QeM+PnfISpM4+bl8pO8fEZflMiZF+Fh9uJFydb
+         LfrY72y44r4FBUNVkl6wd53IdZRhBnbSFzzlKaUkXkrs51iLrzOUCq7neZlco8eOtifP
+         jWcz4pULRfrEHnTDqAj3KsekDibOfBbz+8tS/1/1bsYhiK3lUrzLMJlsj3NrT+iSp9zO
+         rz8A==
+X-Gm-Message-State: ACrzQf38yvE1Oo/V4aASXea+URB0xUjWLNU/89aJgmejPO3jxltf1pLe
+        VSPnMSvxAsN/oqloGpbjJtGNaMGKKWYr
+X-Google-Smtp-Source: AMsMyM7jg3itAXy7IHb+R1SjQ46Pz5fBBfKvaFnZurczcTzD3RIEfyMsxzGdTcAzH6bE2QZ5QTPK4g==
+X-Received: by 2002:a63:5853:0:b0:46f:fdfc:a651 with SMTP id i19-20020a635853000000b0046ffdfca651mr8243896pgm.385.1667459369822;
+        Thu, 03 Nov 2022 00:09:29 -0700 (PDT)
+Received: from localhost.localdomain ([117.193.208.64])
+        by smtp.gmail.com with ESMTPSA id s9-20020a170903214900b00186748fe6ccsm9451244ple.214.2022.11.03.00.09.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 22:50:23 -0700 (PDT)
-Date:   Thu, 3 Nov 2022 11:20:14 +0530
+        Thu, 03 Nov 2022 00:09:28 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     andersson@kernel.org, robh+dt@kernel.org,
+To:     andersson@kernel.org
+Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, johan+linaro@kernel.org,
         quic_jprakash@quicinc.com, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        steev@kali.org
-Subject: Re: [PATCH v2 12/12] arm64: dts: qcom: sc8280xp-x13s: Add thermal
- zone support
-Message-ID: <20221103055014.GA8434@thinkpad>
-References: <20221029051449.30678-1-manivannan.sadhasivam@linaro.org>
- <20221029051449.30678-13-manivannan.sadhasivam@linaro.org>
- <90b7e0e0-a354-f64d-8c53-aa80df684a3a@somainline.org>
+        steev@kali.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 00/12] sc8280xp-pmic updates and X13s thermal zone support
+Date:   Thu,  3 Nov 2022 12:38:59 +0530
+Message-Id: <20221103070911.20019-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <90b7e0e0-a354-f64d-8c53-aa80df684a3a@somainline.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Oct 29, 2022 at 04:29:05PM +0200, Konrad Dybcio wrote:
-> 
-> 
-> On 29.10.2022 07:14, Manivannan Sadhasivam wrote:
-> > Add thermal zone support by making use of the thermistor SYS_THERM6.
-> > Based on experiments, this thermistor seems to reflect the actual
-> > surface temperature of the laptop.
-> > 
-> > For the cooling device, all BIG CPU cores are throttle down to keep the
-> s/throttle/throttled
-> 
-> Is it okay to let the 4xA78C run at full throttle in thermal emergencies though?
+Hello,
 
-I don't get it. Can you elaborate?
+This series adds below updates to sc8280xp-pmics:
 
-> > temperature at a sane level.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 46 +++++++++++++++++++
-> >  1 file changed, 46 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > index ca77c19c6d0d..96e2fa72f782 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > @@ -29,6 +29,52 @@ backlight {
-> >  		pinctrl-0 = <&edp_bl_en>, <&edp_bl_pwm>;
-> >  	};
-> >  
-> > +	thermal-zones {
-> > +		skin-temp-thermal {
-> > +			polling-delay-passive = <250>;
-> > +			polling-delay = <0>;
-> > +			thermal-sensors = <&pmk8280_adc_tm 5>;
-> > +
-> > +			trips {
-> > +				skin_temp_alert0: trip-point0 {
-> > +					temperature = <55000>;
-> > +					hysteresis = <1000>;
-> > +					type = "passive";
-> > +				};
-> > +
-> > +				skin_temp_alert1: trip-point1 {
-> > +					temperature = <58000>;
-> > +					hysteresis = <1000>;
-> > +					type = "passive";
-> > +				};
-> > +
-> > +				skin-temp-crit {
-> > +					temperature = <73000>;
-> Ouch, I didn't know we were serving burnt fingers at the cafeteria today :D
-> 
-> Or maybe this just looks scary.. The laptop looks plastic, so maybe it won't cause instant
-> burns?
-> 
+PM8280_{1/2}:
+- Temp alarm
+- Thermal zones
+- VADC channels
+- ADC_TM5 channels
 
-73c is what the reasonable number I came up with after some experiments. At
-this point the temperature won't burn your finger but crossing this surely
-would (that's what happening without this series).
+PMK8280:
+- ADC7 block
+- VADC channels
+- TM5 block
+
+PMR735A:
+- VADC channels
+
+Also adds the thermal zone support to Lenovo X13s based on the thermistor
+SYS_THERM6 that provides the laptop skin temperature.
+
+The sc8280xp-pmics is based on the new PMIC7 architecture. In this, all the
+ADC/TM5 measurements are collected by the primary PMIC PMK8280 from other
+slave PMICs PM8280_{1/2}, PMR735A using the Programmable Boot Sequence (PBS)
+and exposed them over the individual channels.
+
+PMK8280 uses the Slave ID (SID) for identifying each slave PMICs in a system.
+This ID is not static for each PMIC but rather set for each platform by the
+hardware designers. So this series allows the configurable SID by modifying the
+binding to accept SID values instead of hardcoding them.
+
+This series is tested on Lenovo X13s laptop by monitoring the temperature of
+the 8 on-board thermistors through IIO interface. The thermal zone support is
+validated by adding loads to the CPUs and making sure the skin temperature stays
+below the threshold provided in DT.
 
 Thanks,
 Mani
 
-> Konrad
-> > +					hysteresis = <1000>;
-> > +					type = "critical";
-> > +				};
-> > +			};
-> > +
-> > +			cooling-maps {
-> > +				map0 {
-> > +					trip = <&skin_temp_alert0>;
-> > +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> > +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> > +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> > +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> > +				};
-> > +
-> > +				map1 {
-> > +					trip = <&skin_temp_alert1>;
-> > +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> > +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> > +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> > +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-> > +				};
-> > +			};
-> > +		};
-> > +	};
-> > +
-> >  	vreg_edp_bl: regulator-edp-bl {
-> >  		compatible = "regulator-fixed";
-> >  
+Changes in v3:
+
+* Used thermistor index in node names for VADC channels. This is required by IIO
+* Collected reviews
+* Rearranged the dt properties (Konrad)
+
+Changes in v2:
+
+* Fixed issues reported by Krzysztof and "make dtbs_check"
+* Collected reviews from Krzysztof
+* Added the Lenovo X13s thermal zone patch
+
+Manivannan Sadhasivam (12):
+  dt-bindings: iio: qcom: adc7-pm8350: Allow specifying SID for channels
+  arm64: dts: qcom: sc8280xp-pmics: Add temp alarm for PM8280_{1/2}
+    PMICs
+  arm64: dts: qcom: sc8280xp-pmics: Add thermal zones for PM8280_{1/2}
+    PMICs
+  arm64: dts: qcom: sc8280xp-pmics: Add support for PMK8280 RESIN input
+  arm64: dts: qcom: sc8280xp-pmics: Add PMK8280 ADC7 block
+  arm64: dts: qcom: sc8280xp-pmics: Add support for TM5 block in PMK8280
+  arm64: dts: qcom: sc8280xp-x13s: Enable PMK8280 RESIN input
+  arm64: dts: qcom: sc8280xp-x13s: Add PMK8280 VADC channels
+  arm64: dts: qcom: sc8280xp-x13s: Add PM8280_{1/2} VADC channels
+  arm64: dts: qcom: sc8280xp-x13s: Add PMR735A VADC channel
+  arm64: dts: qcom: sc8280xp-x13s: Add PM8280_{1/2} ADC_TM5 channels
+  arm64: dts: qcom: sc8280xp-x13s: Add thermal zone support
+
+ .../bindings/thermal/qcom-spmi-adc-tm5.yaml   |   6 +-
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 204 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi  |  84 ++++++++
+ .../dt-bindings/iio/qcom,spmi-adc7-pm8350.h   |  90 ++++----
+ 4 files changed, 334 insertions(+), 50 deletions(-)
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.25.1
+
