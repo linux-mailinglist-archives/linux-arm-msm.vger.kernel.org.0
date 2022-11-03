@@ -2,72 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B737617B49
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 12:03:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A37B6617B8D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 12:33:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230242AbiKCLDB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 07:03:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36266 "EHLO
+        id S229850AbiKCLdA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 07:33:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231623AbiKCLCo (ORCPT
+        with ESMTP id S229823AbiKCLc7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 07:02:44 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 0E640B7EB;
-        Thu,  3 Nov 2022 04:02:44 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1D90F1FB;
-        Thu,  3 Nov 2022 04:02:50 -0700 (PDT)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 46DE73F5A1;
-        Thu,  3 Nov 2022 04:02:42 -0700 (PDT)
-Date:   Thu, 3 Nov 2022 11:02:39 +0000
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        robh+dt@kernel.org, jassisinghbrar@gmail.com,
-        manivannan.sadhasivam@linaro.org, agross@kernel.org,
+        Thu, 3 Nov 2022 07:32:59 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C92C411A32;
+        Thu,  3 Nov 2022 04:32:58 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 27025CE257D;
+        Thu,  3 Nov 2022 11:32:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E85BC433B5;
+        Thu,  3 Nov 2022 11:32:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667475175;
+        bh=uiqDMEcOZwxNGgwDvcubrHmOWMlm8hOhW9gFyMNNyPY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=r0NkacfzR2k1n5fDpBBmGuncSGs0MH0QZrO5qNaUx3jd+LjIXankFdyHLEO68UxAG
+         PK2IIKCwj7OOXynyd7o/b5XXseG5Nt1cEQyUE6cCHY6czxN/I7AYEXCM26IOQlRsWL
+         900z0KtlkbOK6XwvYQKfk00GMMxvjeL7FyBb/cKkG7nI7K9TV7SPFpVX+Xzp/rF08N
+         ySrkqOn1jEZL0HSsB9ldMPm37hDjwRtz/GCbrYCRO7VxjZjgrJGcL0NS70ZCUpyOeS
+         kLK4QT4tTUDR6UrmydH4vkTqftGlU9M1Pg8u4g1xw94NpCY5XOuvoYfqxqoU++f29O
+         IbaV7uK8L6XNw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oqYSa-0006lO-TC; Thu, 03 Nov 2022 12:32:37 +0100
+Date:   Thu, 3 Nov 2022 12:32:36 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     andersson@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        johan+linaro@kernel.org, quic_jprakash@quicinc.com,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
-        Gaurav Kohli <gkohli@codeaurora.org>
-Subject: Re: [PATCH 2/2] mailbox: Add support for QTI CPUCP mailbox controller
-Message-ID: <20221103110239.lkb7a5a4fpk2ggrs@bogus>
-References: <1663135386-26270-1-git-send-email-quic_sibis@quicinc.com>
- <1663135386-26270-3-git-send-email-quic_sibis@quicinc.com>
+        linux-kernel@vger.kernel.org, steev@kali.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v4 11/12] arm64: dts: qcom: sc8280xp-x13s: Add
+ PM8280_{1/2} ADC_TM5 channels
+Message-ID: <Y2Om1N8X/Qkr9rYI@hovoldconsulting.com>
+References: <20221103095810.64606-1-manivannan.sadhasivam@linaro.org>
+ <20221103095810.64606-12-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1663135386-26270-3-git-send-email-quic_sibis@quicinc.com>
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20221103095810.64606-12-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 14, 2022 at 11:33:06AM +0530, Sibi Sankar wrote:
-> Add support for CPUSS Control Processor (CPUCP) mailbox controller,
-> this driver enables communication between AP and CPUCP by acting as
-> a doorbell between them.
+On Thu, Nov 03, 2022 at 03:28:09PM +0530, Manivannan Sadhasivam wrote:
+> Add ADC_TM5 channels of PM8280_{1/2} for monitoring the temperature from
+> external thermistors connected to AMUX pins. The temperature measurements
+> are collected from the PMK8280's VADC channels that expose the
+> measurements from secondary PMICs PM8280_{1/2}.
 > 
-> Signed-off-by: Gaurav Kohli <gkohli@codeaurora.org>
-> [sibis: moved to mailbox and misc. cleanups]
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
+>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 68 +++++++++++++++++++
+>  1 file changed, 68 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> index 7677fe5cf28e..bdaacf1abf9f 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> @@ -254,6 +254,74 @@ pmic-die-temp@403 {
+>  	};
+>  };
+>  
+> +&pmk8280_adc_tm {
 
-[...]
+Please try to keep the nodes sorted alphabetically (e.g. this one should
+go before &pmk8280_pon_pwrkey).
 
-> +
-> +	ret = devm_request_irq(&pdev->dev, cpucp->irq, qcom_cpucp_mbox_irq_fn,
-> +			       IRQF_TRIGGER_HIGH | IRQF_NO_SUSPEND, "qcom_cpucp_mbox", cpucp);
-
-1. Do you plan to use this mailbox during noirq phase of system suspend ?
-   If not why do you have IRQF_NO_SUSPEND ? If yes, how will it be used ?
-2. Why are you setting IRQF_TRIGGER_HIGH here ? Won't platform_get_irq()
-   take care of that ? Otherwise how would you use this driver on the
-   platform that need say IRQF_TRIGGER_LOW ?
-
--- 
-Regards,
-Sudeep
+Johan
