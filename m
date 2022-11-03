@@ -2,155 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 946BC617A86
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 11:03:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF6F6617AB5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 11:19:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230508AbiKCKCh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 06:02:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40530 "EHLO
+        id S229994AbiKCKTR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 06:19:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230487AbiKCKCe (ORCPT
+        with ESMTP id S229754AbiKCKTQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 06:02:34 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D30AF1098
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 03:02:32 -0700 (PDT)
-Received: from [192.168.31.208] (unknown [194.29.137.22])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id C26BA20240;
-        Thu,  3 Nov 2022 11:02:29 +0100 (CET)
-Message-ID: <e46c817b-1a3b-d20c-22e7-a67b7684f17b@somainline.org>
-Date:   Thu, 3 Nov 2022 11:02:30 +0100
+        Thu, 3 Nov 2022 06:19:16 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 2480C65FE;
+        Thu,  3 Nov 2022 03:19:16 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1D1491FB;
+        Thu,  3 Nov 2022 03:19:22 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2A6B43F5A1;
+        Thu,  3 Nov 2022 03:19:14 -0700 (PDT)
+Date:   Thu, 3 Nov 2022 10:19:11 +0000
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        robh+dt@kernel.org, cristian.marussi@arm.com, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        quic_avajid@quicinc.com, Souvik.Chakravarty@arm.com,
+        Sudeep Holla <sudeep.holla@arm.com>
+Subject: Re: [RFC 1/2] dt-bindings: firmware: arm,scmi: Add support for
+ memlat vendor protocol
+Message-ID: <20221103101911.2qr3cla5mm4ctoe3@bogus>
+References: <1667451512-9655-1-git-send-email-quic_sibis@quicinc.com>
+ <1667451512-9655-2-git-send-email-quic_sibis@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH v2 12/12] arm64: dts: qcom: sc8280xp-x13s: Add thermal
- zone support
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, johan+linaro@kernel.org,
-        quic_jprakash@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        steev@kali.org
-References: <20221029051449.30678-1-manivannan.sadhasivam@linaro.org>
- <20221029051449.30678-13-manivannan.sadhasivam@linaro.org>
- <90b7e0e0-a354-f64d-8c53-aa80df684a3a@somainline.org>
- <20221103055014.GA8434@thinkpad>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20221103055014.GA8434@thinkpad>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1667451512-9655-2-git-send-email-quic_sibis@quicinc.com>
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Nov 03, 2022 at 10:28:31AM +0530, Sibi Sankar wrote:
+> Add bindings support for the SCMI QTI memlat (memory latency) vendor
+> protocol. The memlat vendor protocol enables the frequency scaling of
+> various buses (L3/LLCC/DDR) based on the memory latency governor
+> running on the CPUSS Control Processor.
+> 
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+>  .../devicetree/bindings/firmware/arm,scmi.yaml     | 164 +++++++++++++++++++++
+>  1 file changed, 164 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+> index 1c0388da6721..efc8a5a8bffe 100644
+> --- a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+> +++ b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+> @@ -189,6 +189,47 @@ properties:
+>        reg:
+>          const: 0x18
+>  
+> +  protocol@80:
+> +    type: object
+> +    properties:
+> +      reg:
+> +        const: 0x80
+> +
+> +      qcom,bus-type:
+> +        $ref: /schemas/types.yaml#/definitions/uint32-array
+> +        items:
+> +          minItems: 1
+> +        description:
+> +          Identifier of the bus type to be scaled by the memlat protocol.
+> +
 
-On 03/11/2022 06:50, Manivannan Sadhasivam wrote:
-> On Sat, Oct 29, 2022 at 04:29:05PM +0200, Konrad Dybcio wrote:
->>
->> On 29.10.2022 07:14, Manivannan Sadhasivam wrote:
->>> Add thermal zone support by making use of the thermistor SYS_THERM6.
->>> Based on experiments, this thermistor seems to reflect the actual
->>> surface temperature of the laptop.
->>>
->>> For the cooling device, all BIG CPU cores are throttle down to keep the
->> s/throttle/throttled
->>
->> Is it okay to let the 4xA78C run at full throttle in thermal emergencies though?
-> I don't get it. Can you elaborate?
+Why is this part of the provider of the service ?
 
-8280xp has 4xA78C and 4xX1C. You only added the latter ones to the 
-cooling map.
+> +      cpu-map:
+> +        type: object
+> +        description:
+> +          The list of all cpu cluster configurations to be tracked by the memlat protocol
+> +
+> +        patternProperties:
+> +          '^cluster[0-9]':
+> +            type: object
+> +            description:
+> +              Each cluster node describes the frequency domain associated with the
+> +              CPUFREQ HW engine and bandwidth requirements of the buses to be scaled.
+> +
+> +            properties:
+> +              operating-points-v2: true
+> +
+> +              qcom,freq-domain:
+> +                $ref: /schemas/types.yaml#/definitions/phandle-array
+> +                description:
+> +                  Reference to the frequency domain of the CPUFREQ HW engine
+> +                items:
+> +                  - items:
+> +                      - description: phandle to CPUFREQ HW engine
+> +                      - description: frequency domain associated with the cluster
+> +
+> +            required:
+> +              - qcom,freq-domain
+> +              - operating-points-v2
+> +
 
+I would avoid all these here as part of provider node. It should be part
+of the consumer to have all these details and do what it needs to do with
+any such information.
 
->
->>> temperature at a sane level.
->>>
->>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>> ---
->>>   .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 46 +++++++++++++++++++
->>>   1 file changed, 46 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
->>> index ca77c19c6d0d..96e2fa72f782 100644
->>> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
->>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
->>> @@ -29,6 +29,52 @@ backlight {
->>>   		pinctrl-0 = <&edp_bl_en>, <&edp_bl_pwm>;
->>>   	};
->>>   
->>> +	thermal-zones {
->>> +		skin-temp-thermal {
->>> +			polling-delay-passive = <250>;
->>> +			polling-delay = <0>;
->>> +			thermal-sensors = <&pmk8280_adc_tm 5>;
->>> +
->>> +			trips {
->>> +				skin_temp_alert0: trip-point0 {
->>> +					temperature = <55000>;
->>> +					hysteresis = <1000>;
->>> +					type = "passive";
->>> +				};
->>> +
->>> +				skin_temp_alert1: trip-point1 {
->>> +					temperature = <58000>;
->>> +					hysteresis = <1000>;
->>> +					type = "passive";
->>> +				};
->>> +
->>> +				skin-temp-crit {
->>> +					temperature = <73000>;
->> Ouch, I didn't know we were serving burnt fingers at the cafeteria today :D
->>
->> Or maybe this just looks scary.. The laptop looks plastic, so maybe it won't cause instant
->> burns?
->>
-> 73c is what the reasonable number I came up with after some experiments. At
-> this point the temperature won't burn your finger but crossing this surely
-> would (that's what happening without this series).
-
-Ok, then I suppose it's fine. Thanks!
-
-
-Konrad
-
->
-> Thanks,
-> Mani
->
->> Konrad
->>> +					hysteresis = <1000>;
->>> +					type = "critical";
->>> +				};
->>> +			};
->>> +
->>> +			cooling-maps {
->>> +				map0 {
->>> +					trip = <&skin_temp_alert0>;
->>> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->>> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->>> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->>> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->>> +				};
->>> +
->>> +				map1 {
->>> +					trip = <&skin_temp_alert1>;
->>> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->>> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->>> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
->>> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->>> +				};
->>> +			};
->>> +		};
->>> +	};
->>> +
->>>   	vreg_edp_bl: regulator-edp-bl {
->>>   		compatible = "regulator-fixed";
->>>   
+-- 
+Regards,
+Sudeep
