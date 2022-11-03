@@ -2,107 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BB6B617CAA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 13:35:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18316617CDC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 13:42:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231671AbiKCMfs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 08:35:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53154 "EHLO
+        id S230389AbiKCMmk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 08:42:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231674AbiKCMfr (ORCPT
+        with ESMTP id S230338AbiKCMmk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 08:35:47 -0400
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BE7FCE34;
-        Thu,  3 Nov 2022 05:35:45 -0700 (PDT)
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-13b103a3e5dso1960563fac.2;
-        Thu, 03 Nov 2022 05:35:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Yt3Or6Hc5rWqEW44VauNHB/7Tdn75AHTUvKCFRqx6Wc=;
-        b=2WjMeBbPdh3AlSBURB/riF+SbSUaANbXERUrLPBWYN/BIbwkS2em62UA13Iv2YumRq
-         OiBkah3bYPr/PZOPpyKbE0M0B4DmUr9pB1Q+mfvVNvnts+pYv4kMmOR9TqqV/6SZEhz+
-         /Dl87guf/UXjZwg7Sctm6JpkTGCzX0SJkV1YbnIgnCoT9FBPi+5IkZnjkfljDU2X8bS/
-         APzb/ibQW+0ZKGT9LPi20Y7d66bJZyaFbrX7+tZs6mWXKhV8W5gLGPlYh1go5lLE2Dzy
-         A5YNpyi96rVraEEfDNH85roH7Q7gpWUNMjtNKK1qoyvEP4ZfJfbfYS4iUJB3wkm5Axku
-         y9Hw==
-X-Gm-Message-State: ACrzQf3L4jcQFthKCs6uYVnXJrY4f4PBJmD0nArOQKggmB8QVSExmNz0
-        iiQqkzFCifFhRq8ZSDDSbA==
-X-Google-Smtp-Source: AMsMyM5EZi2Ftm7ol57J/diP8OEESwv2NPojF/XnBc6X1Sc0OTdJguH3vf/QhIAZetkm6LiKQlU1qg==
-X-Received: by 2002:a05:6870:f59e:b0:132:bcd:565f with SMTP id eh30-20020a056870f59e00b001320bcd565fmr26806687oab.254.1667478944707;
-        Thu, 03 Nov 2022 05:35:44 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id u11-20020a056871008b00b0013d7fffbc3csm261177oaa.58.2022.11.03.05.35.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Nov 2022 05:35:44 -0700 (PDT)
-Received: (nullmailer pid 2140210 invoked by uid 1000);
-        Thu, 03 Nov 2022 12:35:43 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        Thu, 3 Nov 2022 08:42:40 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CFC2F33;
+        Thu,  3 Nov 2022 05:42:39 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B9B0AB823C1;
+        Thu,  3 Nov 2022 12:42:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D476DC433C1;
+        Thu,  3 Nov 2022 12:42:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667479356;
+        bh=W1nkZxNszhwNsoEA2MBJEvw/bRH0X3776BIDQFXqokQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=sFEr2kmPEzXraDtriYkdQG65Oubcpzetp8dV2XdVEv+YxEJXaxDvS65VB5NnqGka0
+         x+/dUWCGaXj3OpjOcjaAUJgwClI4YaK4iCg/ND/Ovwsg4DdajyUwz3Se0TKQze4HtT
+         3QFxtNQqNFv0QSZ3bBIF6/PeDiyCTE31gGU5ZHgNdAnvhOaziXbwDeFlUZLU1av88D
+         Gwxwll5+a23anF0/gFW8vozHlUvcU8CDLezw3KKg1pCQpZiUZsR5O8dlRmLoZpROU/
+         0WqeCzC2kY3rFconED+86Dz+5LJNZXbK6WQ0q+nX8jzgiOulY/oX1gRdcaOc7rVzXZ
+         EhZK7AWmaAbjw==
+Date:   Thu, 3 Nov 2022 18:12:29 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Hemant Kumar <quic_hemantk@quicinc.com>, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mhi: pci_generic: add support for sc8280xp-crd SDX55
+ variant
+Message-ID: <20221103124229.GF8434@thinkpad>
+References: <20221031083429.18971-1-johan+linaro@kernel.org>
+ <20221101114258.GB54667@thinkpad>
+ <Y2Jp/wNPmTrC6sEy@hovoldconsulting.com>
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@somainline.org,
-        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
-        andersson@kernel.org, agross@kernel.org, robh+dt@kernel.org,
-        linux-kernel@vger.kernel.org, cristian.marussi@arm.com,
-        devicetree@vger.kernel.org, quic_avajid@quicinc.com
-In-Reply-To: <1667451512-9655-2-git-send-email-quic_sibis@quicinc.com>
-References: <1667451512-9655-1-git-send-email-quic_sibis@quicinc.com>
- <1667451512-9655-2-git-send-email-quic_sibis@quicinc.com>
-Message-Id: <166747792111.2121881.1520386544436651390.robh@kernel.org>
-Subject: Re: [RFC 1/2] dt-bindings: firmware: arm,scmi: Add support for memlat
- vendor protocol
-Date:   Thu, 03 Nov 2022 07:35:43 -0500
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Y2Jp/wNPmTrC6sEy@hovoldconsulting.com>
+X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Thu, 03 Nov 2022 10:28:31 +0530, Sibi Sankar wrote:
-> Add bindings support for the SCMI QTI memlat (memory latency) vendor
-> protocol. The memlat vendor protocol enables the frequency scaling of
-> various buses (L3/LLCC/DDR) based on the memory latency governor
-> running on the CPUSS Control Processor.
+On Wed, Nov 02, 2022 at 02:00:47PM +0100, Johan Hovold wrote:
+> On Tue, Nov 01, 2022 at 05:12:58PM +0530, Manivannan Sadhasivam wrote:
+> > On Mon, Oct 31, 2022 at 09:34:29AM +0100, Johan Hovold wrote:
+> > > The SC8280XP Compute Reference Design (CRD) has an on-PCB SDX55 modem
+> > > which uses MBIM.
+> > > 
+> > > The exact channel configuration is not known but the Foxconn SDX55
+> > > configuration allows the modem to be used so reuse that one for now.
+> > > 
+> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > > ---
+> > >  drivers/bus/mhi/host/pci_generic.c | 3 +++
+> > >  1 file changed, 3 insertions(+)
+> > > 
+> > > diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> > > index caa4ce28cf9e..f9f4345d472d 100644
+> > > --- a/drivers/bus/mhi/host/pci_generic.c
+> > > +++ b/drivers/bus/mhi/host/pci_generic.c
+> > > @@ -542,6 +542,9 @@ static const struct mhi_pci_dev_info mhi_telit_fn990_info = {
+> > >  static const struct pci_device_id mhi_pci_id_table[] = {
+> > >  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
+> > >  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx24_info },
+> > > +	/* SC8280XP-CRD (sdx55) */
+> > 
+> > Platform device name is not needed.
 > 
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
->  .../devicetree/bindings/firmware/arm,scmi.yaml     | 164 +++++++++++++++++++++
->  1 file changed, 164 insertions(+)
+> Ok, only added it because the other entries had a description.
+>  
+
+Those descriptions are for the modems itself, like Telit FN980m. But
+SC8280XP-CRD is the platform that makes use of *some* sdx55 based modem. So it
+is not required.
+
+> > > +	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, PCI_VENDOR_ID_QCOM, 0x010c),
+> > 
+> > Sub ID looks wierd. Did you test with mhi_qcom_sdx55_info? If it didn't
+> > work, what was the issue?
+> 
+> I obviously added the new entry because the default match did not work.
+> 
+> I haven't had time to look at this since before the summer, but based on
+> my notes and a quick test now it seems that the QMI channel is not
+> supported and ModemManager takes forever to enumerate with a bunch of
+> failed transactions every second:
+> 
+>   ModemManager[469]: [/dev/wwan0qmi0] Checking version info (45 retries)...
+>   ...
+>   ModemManager[469]: transaction 0x2 aborted, but message is not abortable
+>   ...
+>   ModemManager[469]: transaction 0x2e aborted, but message is not abortable
+>   ...
+>   ModemManager[469]: <warn>  [plugin/generic] could not grab port wwan0qmi0: Cannot add port 'wwan/wwan0qmi0', unhandled port type
+> 
+> According to my notes I could connect to the provider after the (~45 s)
+> timeout, but no data was coming through with the default config which I
+> attributed to the differences in the data channel configuration (i.e.
+> "IP_HW0" and "IP_HW0_MBIM" are handled by different drivers).
+>  
+
+Okay, this makes it clear.
+
+Thanks,
+Mani
+
+> > > +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+> > >  	/* EM919x (sdx55), use the same vid:pid as qcom-sdx55m */
+> > >  	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, 0x18d7, 0x0200),
+> > >  		.driver_data = (kernel_ulong_t) &mhi_sierra_em919x_info },
+> > > -- 
+> > > 2.37.3
+> 
+> Johan
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/firmware/arm,scmi.example.dtb: scmi: mbox-names: ['tx'] is too short
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
-Documentation/devicetree/bindings/firmware/arm,scmi.example.dtb:0:0: /example-3/soc/mailbox@17400000: failed to match any schema with compatible: ['qcom,cpucp-mbox']
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+-- 
+மணிவண்ணன் சதாசிவம்
