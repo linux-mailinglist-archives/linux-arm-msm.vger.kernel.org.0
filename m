@@ -2,115 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D50D36172EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 00:41:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 63C7A61734E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 01:19:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231396AbiKBXlZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 19:41:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57936 "EHLO
+        id S230244AbiKCAT6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 20:19:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231313AbiKBXkw (ORCPT
+        with ESMTP id S230280AbiKCAT4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 19:40:52 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D91214017
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 16:36:54 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id bp15so195013lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 16:36:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hVXT9xKOOQjMytFsPaMld5kkYAuqoQzWwoJxXPr+vis=;
-        b=qq8uqswx+dq+fX6MQXKZl6KoVs/QJOKnrUR21/QGaU6BhmZyhop5mTLTMcB2X1PFDd
-         f1EZKnHUbAaTDwqFK6CDEgmHT3QaWkO2Go4US8Uzmgve6OwhREBDpdTm2NuHcvVaJEa/
-         XG/YO4EFStcH/Fw12QgGMcXXAlTmI80b2B03c+oCCYhCRfCOO+n+2K4aESl8w96LVBF1
-         dvMPEDTp3LjBwX7H2N5lhMPGF95Fupvgiosxv9/Phyhuhn0iH3W15IWQb79RumpV0a+h
-         p45tZIP4CAp5DvpvZ5yw7fHBIuKQxhFyo9VX9+r7+iAtxsyAYFdXdqU3khLDm4ajWozj
-         13/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hVXT9xKOOQjMytFsPaMld5kkYAuqoQzWwoJxXPr+vis=;
-        b=sssVSPKQFdHDwYvDnIyegGi+6mz0z+xDFSIWWvwLb+HGr3JEY6SEuMmnrJV1c9gg2T
-         x8Fyd0jioej9z1zxPDOG5wT1OgZQ4fCWfFklix/nmco4PeWAM+wCVxKMKEj3ibna8LHP
-         LCxeaqH2ABlpeMdGVvwTcCq0a18eyKh05X2Bgd3WiEANpOTIsr4m9iecs0IMhbPkb/xp
-         j6JU2HNbRQZC5zTfvlgBY2S1RxNt0n3eZb2x3fHd5NCZrBW2f3ypfSad8yjt4hUzJuyO
-         qP1/VAhW7ZbqepaQrExAHe2s9K7ruOSI6u9RpmJNkdp0sBUgJNjyEFhRTWXl9FgLpuYf
-         dmhw==
-X-Gm-Message-State: ACrzQf1FpBEFPPKhho7KYLvxHTaaTJd41BMSCXu7rbkpj5k+AgXOIgd1
-        b8SfYCekkdko8XfCn+S+jy3J6Q==
-X-Google-Smtp-Source: AMsMyM5g0cJ6EynJYUzGsGjtwQSJNbnVjoJzqN+ZnX7lGyY2p2L9E9jV//Lks8s5mnLud82ZcRO4mw==
-X-Received: by 2002:ac2:4bcf:0:b0:4a2:c241:1979 with SMTP id o15-20020ac24bcf000000b004a2c2411979mr10626606lfq.89.1667432212678;
-        Wed, 02 Nov 2022 16:36:52 -0700 (PDT)
-Received: from [10.27.10.248] ([195.165.23.90])
-        by smtp.gmail.com with ESMTPSA id q12-20020a2eb4ac000000b0026e90b478c6sm2364290ljm.114.2022.11.02.16.36.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Nov 2022 16:36:52 -0700 (PDT)
-Message-ID: <9f11fad1-2ecc-39a0-33c5-8fb28750686c@linaro.org>
-Date:   Thu, 3 Nov 2022 02:36:51 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH v3 04/12] drm/msm/dp: Stop using DP id as index in desc
-Content-Language: en-GB
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Wed, 2 Nov 2022 20:19:56 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 831909FEC;
+        Wed,  2 Nov 2022 17:19:55 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3C96FB82521;
+        Thu,  3 Nov 2022 00:19:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43080C433C1;
+        Thu,  3 Nov 2022 00:19:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1667434792;
+        bh=Tst9FZn+PSNvZMX9r7WTW29UtRFXetjshyspQF5HoVg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=lbCp5Ez2LUzxaW6vzzzQG5CEC+aJfHviHZBhbml/Jr6xAa4IaGLlLO/KXub/ZUnk7
+         D52q7DFLkrKw/pgLQqI7sB00OUfUiWLuHy5+Whve8McIREr4unOSxLOcrSLtohQ1PD
+         Wda5XdSeeAznGV3U5S2KZTPNemCoGXtw8sw8+qak=
+Date:   Thu, 3 Nov 2022 01:20:48 +0100
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221026032624.30871-1-quic_bjorande@quicinc.com>
- <20221026032624.30871-5-quic_bjorande@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221026032624.30871-5-quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Jonathan Corbet <corbet@lwn.net>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Kalle Valo <kvalo@kernel.org>, devicetree@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 13/21] gunyah: vm_mgr: Introduce basic VM Manager
+Message-ID: <Y2MJYEqnJONvH0fY@kroah.com>
+References: <20221026185846.3983888-1-quic_eberman@quicinc.com>
+ <20221026185846.3983888-14-quic_eberman@quicinc.com>
+ <c1f86c53-1d9f-4faf-9313-de86d33e3739@app.fastmail.com>
+ <7c59a115-36c5-c954-5610-ef5ef1dbb83e@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7c59a115-36c5-c954-5610-ef5ef1dbb83e@quicinc.com>
+X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/10/2022 06:26, Bjorn Andersson wrote:
-> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+On Wed, Nov 02, 2022 at 11:44:51AM -0700, Elliot Berman wrote:
 > 
-> In the SC8280XP platform there are two identical MDSS instances, each
-> with the same set of DisplayPort instances, at different addresses.
 > 
-> By not relying on the index to define the instance id it's possible to
-> describe them both in the same table and hence have a single compatible.
+> On 11/2/2022 12:31 AM, Arnd Bergmann wrote:
+> > On Wed, Oct 26, 2022, at 20:58, Elliot Berman wrote:
+> > 
+> > > +static const struct file_operations gh_vm_fops = {
+> > > +	.unlocked_ioctl = gh_vm_ioctl,
+> > > +	.release = gh_vm_release,
+> > > +	.llseek = noop_llseek,
+> > > +};
+> > 
+> > There should be a .compat_ioctl entry here, otherwise it is
+> > impossible to use from 32-bit tasks. If all commands have
+> > arguments passed through a pointer to a properly defined
+> > structure, you can just set it to compat_ptr_ioctl.
+> > 
 > 
-> While at it, flatten the cfg/desc structure so that the match data is
-> just an array of descs.
+> Ack.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > > +static long gh_dev_ioctl_create_vm(unsigned long arg)
+> > > +{
+> > > +	struct gunyah_vm *ghvm;
+> > > +	struct file *file;
+> > > +	int fd, err;
+> > > +
+> > > +	/* arg reserved for future use. */
+> > > +	if (arg)
+> > > +		return -EINVAL;
+> > 
+> > Do you have something specific in mind here? If 'create'
+> > is the only command you support, and it has no arguments,
+> > it would be easier to do it implicitly during open() and
+> > have each fd opened from /dev/gunyah represent a new VM.
+> > 
+> 
+> I'd like the argument here to support different types of virtual machines. I
+> want to leave open what "different types" can be in case something new comes
+> up in the future, but immediately "different type" would correspond to a few
+> different authentication mechanisms for virtual machines that Gunyah
+> supports.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Please don't add code that does not actually do something now, as that
+makes it impossible to review properly, _AND_ no one knows what is going
+to happen in the future.  In the future, you can just add a new ioctl
+and all is good, no need to break working userspace by suddenly looking
+at the arg value and doing something with it.
 
-> ---
-> 
-> Changes since v2:
-> - None
-> 
->   drivers/gpu/drm/msm/dp/dp_display.c | 72 ++++++++++-------------------
->   1 file changed, 25 insertions(+), 47 deletions(-)-- 
-With best wishes
-Dmitry
+thanks,
 
+greg k-h
