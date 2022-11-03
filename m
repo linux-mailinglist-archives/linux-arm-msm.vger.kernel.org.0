@@ -2,76 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01CF9618B50
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 23:21:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E68AD618B95
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 23:33:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230419AbiKCWVl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 18:21:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43316 "EHLO
+        id S230273AbiKCWdn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 18:33:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230153AbiKCWVk (ORCPT
+        with ESMTP id S229863AbiKCWdm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 18:21:40 -0400
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 690051F2FC
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 15:21:39 -0700 (PDT)
-Received: by mail-qt1-x82a.google.com with SMTP id cg5so2117245qtb.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 15:21:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Vi/pWwgGFs4pXzg7F1f4rBtGcIgo+CI+e4hAiYlYSug=;
-        b=gCQrA1mESAHroZExu5yboI7YitKs8V66ouZfsz1dAghoX9z/eu7dcqx7XxwzfGYq9i
-         dqFz3S3xkBhQWa8DNRIxGDsNVVTFf7ujh1Gl2oFDfdhmI3Z7JY9KTazDjbvMWT6Emqer
-         Eg3U7XlfoN0f6RXzeEZ05D7fWJZ2Is+T/Sdof72bjT5lW3YT5IdwaLgLF1gP57ysFb3x
-         wmUhMCtakRcaI3Mei5/02Q7CYwzXBjwSvUhM8uwZyKusaQs1JeatXu/Lfm0+GrQE4k2x
-         wxYCiGVkcJyA9+YhIC9Qy5+9wdjBQC1yfpGNsYSfRajgctIk7bYVQRSjPXO1YO53tYWA
-         PAzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vi/pWwgGFs4pXzg7F1f4rBtGcIgo+CI+e4hAiYlYSug=;
-        b=vZn0lVWvRclZjNhkqA25VT2qtS3lA4MXFhd3hE4lP3QpyyKQSG4JYMH9q6FQFgefzU
-         IeX1aox0V5nNIsawD1VKqG2ddNAj4ud7GeZdzoq2C4vRTp+DLYkbz/BQHmHTQiwRa41p
-         PuXnxplKW70D2ncpQiNcim34WKhicqU9G74nmgBzzAAL5f4rNW0RfsbR+RvR6BXmVOKc
-         h9f8j4eFTRfgbrFeNb14r1N5RHhTibptGCerqbJi4mMSq/RUUOXpUJ32M9MyrdB+1S8x
-         w92dLn3ShYCAlRjHJ67xXji40J6Qo5eAkcBsLvg9vpc5/PxOK0JjKVzvXxx9GImA4P50
-         hJcg==
-X-Gm-Message-State: ACrzQf2xVXFig4q2bCsWks19Np4B/XoO5N4+MqDCum2hxchCVj+LU6DI
-        uQIeoJFGJvTNgtbtWw8Y4Iuzww==
-X-Google-Smtp-Source: AMsMyM4dV+l3qpT2GaeRAl+EKAxXhDQLiMQslAFWNumDisNbRwbsB45L9HEavd86pL52uLDz5fe2Dg==
-X-Received: by 2002:ac8:7651:0:b0:3a5:528c:f326 with SMTP id i17-20020ac87651000000b003a5528cf326mr4491581qtr.586.1667514098561;
-        Thu, 03 Nov 2022 15:21:38 -0700 (PDT)
-Received: from ?IPV6:2601:586:5000:570:a35d:9f85:e3f7:d9fb? ([2601:586:5000:570:a35d:9f85:e3f7:d9fb])
-        by smtp.gmail.com with ESMTPSA id k7-20020ac81407000000b0039cd4d87aacsm1264139qtj.15.2022.11.03.15.21.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Nov 2022 15:21:37 -0700 (PDT)
-Message-ID: <035a66e3-0b21-18de-0899-fb2ee22df15f@linaro.org>
-Date:   Thu, 3 Nov 2022 18:21:36 -0400
+        Thu, 3 Nov 2022 18:33:42 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A2C61FCE7;
+        Thu,  3 Nov 2022 15:33:41 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A3MWa4N020807;
+        Thu, 3 Nov 2022 22:33:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ojVz6+kfupsCAHfqd+jwQYHHjRd1Sj2lQ0/Cs05oazE=;
+ b=LkdqzMfJ93AdRhxbWol/fmuJlpLghVdOFB3XzaescAeQX+LAUJ1igua1AjNnUpCQTwj/
+ ljrVkFn25suqv+8wbm4uayIHIJtpfGDXEVquZnLf/wQuUiKxdFo/89x/eA7lWuCdSPiZ
+ GqgpTxgJna40ta5gfUnO6tyKryK9YBWI9DH7Ul3V/u/KaOmC+K5th6rx96Wz71pEEe8T
+ 8pI78PuMgjuuDcQ570Sz1op9QpfQ1283fdiBG8dqfKdE9Dqdb/7EAk5fjj6oZnsNmFAI
+ wHyQ527MJMZnWRuIBEeiadMP6TD7sW9EcKNCZGjMXZwJK5vBqgGOt0InLHbAoAiAo6+S eA== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kmpgx803a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 03 Nov 2022 22:33:25 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A3MXOVt006920
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 3 Nov 2022 22:33:24 GMT
+Received: from [10.110.42.219] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 3 Nov 2022
+ 15:33:23 -0700
+Message-ID: <ab7184f6-09e4-4b1c-bebe-30119b8da46c@quicinc.com>
+Date:   Thu, 3 Nov 2022 15:33:22 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v1 2/2] arm64: dts: qcom: msm8916-alcatel-idol347: add LED
- indicator
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Subject: Re: [PATCH v6 13/21] gunyah: vm_mgr: Introduce basic VM Manager
 Content-Language: en-US
-To:     Vincent Knecht <vincent.knecht@mailoo.org>,
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     Arnd Bergmann <arnd@arndb.de>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221029145557.106920-1-vincent.knecht@mailoo.org>
- <20221029145557.106920-2-vincent.knecht@mailoo.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221029145557.106920-2-vincent.knecht@mailoo.org>
-Content-Type: text/plain; charset=UTF-8
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        "Mark Rutland" <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        "Marc Zyngier" <maz@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Kalle Valo <kvalo@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20221026185846.3983888-1-quic_eberman@quicinc.com>
+ <20221026185846.3983888-14-quic_eberman@quicinc.com>
+ <c1f86c53-1d9f-4faf-9313-de86d33e3739@app.fastmail.com>
+ <7c59a115-36c5-c954-5610-ef5ef1dbb83e@quicinc.com>
+ <Y2MJYEqnJONvH0fY@kroah.com>
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <Y2MJYEqnJONvH0fY@kroah.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: bjBicJSDzvATZudAaAiSrBktCr4v1hol
+X-Proofpoint-ORIG-GUID: bjBicJSDzvATZudAaAiSrBktCr4v1hol
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-03_04,2022-11-03_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=909 impostorscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
+ suspectscore=0 adultscore=0 clxscore=1015 mlxscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211030154
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -81,66 +104,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/10/2022 10:55, Vincent Knecht wrote:
-> Add si-en,sn3190 LED controller to enable white LED indicator.
+
+
+On 11/2/2022 5:20 PM, Greg Kroah-Hartman wrote:
+> On Wed, Nov 02, 2022 at 11:44:51AM -0700, Elliot Berman wrote:
+>>
+>>
+>> On 11/2/2022 12:31 AM, Arnd Bergmann wrote:
+>>> On Wed, Oct 26, 2022, at 20:58, Elliot Berman wrote:
+>>>
+>>>> +static const struct file_operations gh_vm_fops = {
+>>>> +	.unlocked_ioctl = gh_vm_ioctl,
+>>>> +	.release = gh_vm_release,
+>>>> +	.llseek = noop_llseek,
+>>>> +};
+>>>
+>>> There should be a .compat_ioctl entry here, otherwise it is
+>>> impossible to use from 32-bit tasks. If all commands have
+>>> arguments passed through a pointer to a properly defined
+>>> structure, you can just set it to compat_ptr_ioctl.
+>>>
+>>
+>> Ack.
+>>
+>>>> +static long gh_dev_ioctl_create_vm(unsigned long arg)
+>>>> +{
+>>>> +	struct gunyah_vm *ghvm;
+>>>> +	struct file *file;
+>>>> +	int fd, err;
+>>>> +
+>>>> +	/* arg reserved for future use. */
+>>>> +	if (arg)
+>>>> +		return -EINVAL;
+>>>
+>>> Do you have something specific in mind here? If 'create'
+>>> is the only command you support, and it has no arguments,
+>>> it would be easier to do it implicitly during open() and
+>>> have each fd opened from /dev/gunyah represent a new VM.
+>>>
+>>
+>> I'd like the argument here to support different types of virtual machines. I
+>> want to leave open what "different types" can be in case something new comes
+>> up in the future, but immediately "different type" would correspond to a few
+>> different authentication mechanisms for virtual machines that Gunyah
+>> supports.
 > 
-> This requires adding the additional "enable" gpio that the OEM
-> choose to use, despite it not being mentioned in si-en,sn3190
-> datasheet nor supported by the driver.
+> Please don't add code that does not actually do something now, as that
+> makes it impossible to review properly, _AND_ no one knows what is going
+> to happen in the future.  In the future, you can just add a new ioctl
+> and all is good, no need to break working userspace by suddenly looking
+> at the arg value and doing something with it.
 > 
-> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
-> ---
->  .../boot/dts/qcom/msm8916-alcatel-idol347.dts | 44 +++++++++++++++++++
->  1 file changed, 44 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts b/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
-> index 3a0a593899ae..952ae092e6ae 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
-> @@ -130,6 +130,27 @@ gyroscope@68 {
->  	};
->  };
->  
-> +&blsp_i2c6 {
-> +	status = "okay";
-> +
-> +	led-controller@68 {
-> +		compatible = "si-en,sn3190";
-> +		reg = <0x68>;
-> +		shutdown-gpios = <&msmgpio 89 GPIO_ACTIVE_HIGH>;
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&led_enable_default &led_shutdown_default>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		led@1 {
-> +			reg = <1>;
-> +			led-max-microamp = <5000>;
-> +			function = LED_FUNCTION_INDICATOR;
-> +			color = <LED_COLOR_ID_WHITE>;
-> +		};
-> +	};
-> +};
-> +
->  &pm8916_resin {
->  	status = "okay";
->  	linux,code = <KEY_VOLUMEDOWN>;
-> @@ -306,6 +327,29 @@ gyro_int_default: gyro-int-default {
->  		bias-disable;
->  	};
->  
-> +	/*
-> +	 * The OEM wired an additional GPIO to be asserted so that
-> +	 * the si-en,sn3190 LED IC works. Since this GPIO is not
-> +	 * part of the IC datasheet nor supported by the driver,
-> +	 * force it asserted here.
-> +	 */
-> +	led_enable_default: led-enable-default {
 
-Add suffix to node name: "-state"
+I think the argument does something today and it's documented to need to 
+be 0. If a userspace from the future provides non-zero value, Linux will 
+correctly reject it because it doesn't know how to interpret the 
+different VM types.
 
-Same in other places. Bindings require it now.
+I can document it more clearly as the VM type field and support only the 
+one VM type today.
 
-Best regards,
-Krzysztof
+Creating new ioctl for each VM type feels to me like I didn't design 
+CREATE_VM ioctl right in first place.
 
+Thanks,
+Elliot
