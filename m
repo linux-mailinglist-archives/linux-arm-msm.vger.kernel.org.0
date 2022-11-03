@@ -2,149 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7772F61795A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 10:06:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C760617A19
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 10:39:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230214AbiKCJGp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 05:06:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60110 "EHLO
+        id S229591AbiKCJjm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 05:39:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbiKCJGo (ORCPT
+        with ESMTP id S229493AbiKCJjl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 05:06:44 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1220BE2D;
-        Thu,  3 Nov 2022 02:06:42 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B5CE1B823C1;
-        Thu,  3 Nov 2022 09:06:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472E2C433D6;
-        Thu,  3 Nov 2022 09:06:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667466399;
-        bh=mq89lDSCjzvWLmDVVgCplEqijbSaS32v3s0UtQjTo6w=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SdoWxSg/odQ8/yEIYEb5jT4AS7KkEdZC4DtJbcj3LedphlBZDJ/uTOE1WNExEhur2
-         bv3bfuV7kup2ls0ldwSnV8UAKUzkM2r2FDWbtqFJd/l5F57MA2jKoIsRzC+DxLbekA
-         FXWxCTTGVdZzpKu8iK1DNHUiUzjHdOaXUN3tbkb+gsPv9EWpE5S5KcLYbJFcTItg9q
-         4WAsyAeGmTzHGbtbnwV9S6zcBZOwA3Fs1L1GtpSRuV5xvOPdfrf4gnPD/qZm86cZUW
-         6bsYpjd4b/K7g6nMf1J6GJOadtRrGgkQjEPV2w2phM7WOs12+jhiSEyX6n0rEmldVE
-         m4Ga3S3UuHpyg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oqWB2-0000EN-FY; Thu, 03 Nov 2022 10:06:21 +0100
-Date:   Thu, 3 Nov 2022 10:06:20 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Shazad Hussain <quic_shazhuss@quicinc.com>,
-        Stephen Boyd <sboyd@kernel.org>, bmasney@redhat.com,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Thu, 3 Nov 2022 05:39:41 -0400
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAD1F10B5;
+        Thu,  3 Nov 2022 02:39:40 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id 507F15C01E2;
+        Thu,  3 Nov 2022 05:39:40 -0400 (EDT)
+Received: from imap51 ([10.202.2.101])
+  by compute3.internal (MEProxy); Thu, 03 Nov 2022 05:39:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm3; t=1667468380; x=1667554780; bh=pq/dGHH7V9
+        vQT6il3oQy+WRKjBkAdF1iwzEfdpBBAcM=; b=h82CMvLjI4pEqGK5Z6rVCRoZv7
+        7pTlIaSBYqIjWxZcUYFbuy/gcy++JmAv2r//H+GrR/WODosjTa7ncunOlqFP7Wk4
+        F6K1HsiHvMCG642I52eDomwVEipur5kW2pnUy8N/TCaw3DuNznhO6sMjm0ptnVrh
+        43VvSyaxdlFzSuuc5tduOaOKTeIoZF8tGALTVMM/JkCRp4PzowPbECTkm61Sv+Jh
+        nVdNN3d1S2Cu2+asamQT5FW/wHLG42t5vtelBX3VibkNWYYUR4jnfGjKu5SyKjWu
+        NmZVjAZPO1hNJ5vrAXKufLHSnTrne3qv5EnIbsJqkP1DIUEiojM1fNkPifqA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; t=1667468380; x=1667554780; bh=pq/dGHH7V9vQT6il3oQy+WRKjBkA
+        dF1iwzEfdpBBAcM=; b=i3hyaQtYrvJeFd2m2ROzmrJaw9BZCshfWCyJni/Ta6PV
+        L4BeHtGKU9JlDUvhDYeLCjF2gPsEB3nWEEmVptJt14efkDCLtWlP+vg47IjycGjo
+        Bj7oJjB7A5KMKOGSxFTATfXAFrnOFLw3/bjjg0EpJlzS/7AaugtUR3QWokxUepbI
+        TrCns3kpX6Hl+oXUkOHWeFWeuuvWD1MAaWXo9kTaRwpsmoqHx5TJdgdsMXl1iepq
+        F5dST8hYuIuQcA/2LuYXOAMc8LmCUSW7BU2A6LgZ2MDwwsFxO57EHO5XQW9UCdOf
+        2mAlZiy/aSqS+s7OlUg/7tJp6npfqXTvtgxatHT9hw==
+X-ME-Sender: <xms:XIxjY4ooMqCM_Uq-CY8kkAWyGJrgMg1RRICbXa6Mgeen5EVGrhQBpg>
+    <xme:XIxjY-pa9ZhzWp4Pz3td-4SWGPVUuFD9u21ZcBl_m1mHsaS73wb3yXlrjdl5MQrbp
+    YbV3DBua0QHZWalmrA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrudelgddtudcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdetrhhn
+    ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
+    gvrhhnpeevhfffledtgeehfeffhfdtgedvheejtdfgkeeuvefgudffteettdekkeeufeeh
+    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomheprghrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:XIxjY9NJPkNLNumhOinsc7eegHv3sJ2jDeoL5CypcX9kbCSfedwZVg>
+    <xmx:XIxjY_5sQOVcPRqD5OR1DslPYclFMom0GWqE1VWYtAO94PNPpSRT6w>
+    <xmx:XIxjY35gxnh3Jo0bBKZpckUqbt8g8OkvqSRYEwKDAwtaJGo6uZr2Vw>
+    <xmx:XIxjY-xJgA8bgFZ4arLsUqXS3-TX9GnqsMK66mWxx6I8o-D5HgJSyQ>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 0B0CEB603ED; Thu,  3 Nov 2022 05:39:40 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-1087-g968661d8e1-fm-20221021.001-g968661d8
+Mime-Version: 1.0
+Message-Id: <a3754259-9989-495e-a6bd-5501daff06a2@app.fastmail.com>
+In-Reply-To: <7c59a115-36c5-c954-5610-ef5ef1dbb83e@quicinc.com>
+References: <20221026185846.3983888-1-quic_eberman@quicinc.com>
+ <20221026185846.3983888-14-quic_eberman@quicinc.com>
+ <c1f86c53-1d9f-4faf-9313-de86d33e3739@app.fastmail.com>
+ <7c59a115-36c5-c954-5610-ef5ef1dbb83e@quicinc.com>
+Date:   Thu, 03 Nov 2022 10:39:21 +0100
+From:   "Arnd Bergmann" <arnd@arndb.de>
+To:     "Elliot Berman" <quic_eberman@quicinc.com>,
+        "Bjorn Andersson" <quic_bjorande@quicinc.com>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
+Cc:     "Murali Nalajala" <quic_mnalajal@quicinc.com>,
+        "Trilok Soni" <quic_tsoni@quicinc.com>,
+        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
+        "Carl van Schaik" <quic_cvanscha@quicinc.com>,
+        "Prakruthi Deepak Heragu" <quic_pheragu@quicinc.com>,
+        "Andy Gross" <agross@kernel.org>,
+        "Jassi Brar" <jassisinghbrar@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        "Mark Rutland" <mark.rutland@arm.com>,
+        "Lorenzo Pieralisi" <lorenzo.pieralisi@arm.com>,
+        "Sudeep Holla" <sudeep.holla@arm.com>,
+        "Marc Zyngier" <maz@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Jonathan Corbet" <corbet@lwn.net>,
+        "Will Deacon" <will@kernel.org>,
+        "Catalin Marinas" <catalin.marinas@arm.com>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
+        "Amol Maheshwari" <amahesh@qti.qualcomm.com>,
+        "Kalle Valo" <kvalo@kernel.org>, devicetree@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1] clk: qcom: gcc-sc8280xp: add cxo as parent for
- gcc_ufs_ref_clkref_clk
-Message-ID: <Y2OEjNAPXg5BfOxH@hovoldconsulting.com>
-References: <20221030142333.31019-1-quic_shazhuss@quicinc.com>
- <20221101182402.32CE5C433C1@smtp.kernel.org>
- <Y2IZaxukERXNcPGR@hovoldconsulting.com>
- <c96304da-f57e-4926-2f3f-665c2054fb00@quicinc.com>
- <Y2Imnf1+v5j5CH9r@hovoldconsulting.com>
- <bb590bfb-07a4-97c1-e5c0-d00d840e2e11@quicinc.com>
- <Y2I3tekSAO42r0xR@hovoldconsulting.com>
- <20221103024949.lw4g2tavk7uw5xt4@builder.lan>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221103024949.lw4g2tavk7uw5xt4@builder.lan>
-X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Subject: Re: [PATCH v6 13/21] gunyah: vm_mgr: Introduce basic VM Manager
+Content-Type: text/plain
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 02, 2022 at 09:49:49PM -0500, Bjorn Andersson wrote:
-> On Wed, Nov 02, 2022 at 10:26:13AM +0100, Johan Hovold wrote:
-> > On Wed, Nov 02, 2022 at 02:15:26PM +0530, Shazad Hussain wrote:
-> > > On 11/2/2022 1:43 PM, Johan Hovold wrote:
-> > 
-> > > > Right, but if the PHYs really requires CX and it is not an ancestor of
-> > > > the refclk then this should be described by the binding (and not be
-> > > > hidden away in the clock driver).
-> > 
-> > > This makes sense, will be posting v2 post for the same.
-> > > I assume this should use the Fixes tag then !
-> > 
-> > Yeah, I guess to you can add a fixes tag for the commits adding support
-> > for sc8280xp to the UFS PHY binding and driver.
-> > 
-> > But please do check with the hardware documentation first so we get this
-> > right this time.
-> > 
-> > I've already asked Bjorn to see what he can dig out as it is still not
-> > clear how the two "card" refclocks (GCC_UFS_CARD_CLKREF_CLK and
-> > GCC_UFS_1_CARD_CLKREF_CLK) are supposed to be used.
-> > 
-> 
-> We've come full circle and Shazad's patch came from that discussion :)
+On Wed, Nov 2, 2022, at 19:44, Elliot Berman wrote:
+> On 11/2/2022 12:31 AM, Arnd Bergmann wrote:
+>>> +static long gh_dev_ioctl_create_vm(unsigned long arg)
+>>> +{
+>>> +	struct gunyah_vm *ghvm;
+>>> +	struct file *file;
+>>> +	int fd, err;
+>>> +
+>>> +	/* arg reserved for future use. */
+>>> +	if (arg)
+>>> +		return -EINVAL;
+>> 
+>> Do you have something specific in mind here? If 'create'
+>> is the only command you support, and it has no arguments,
+>> it would be easier to do it implicitly during open() and
+>> have each fd opened from /dev/gunyah represent a new VM.
+>> 
+>
+> I'd like the argument here to support different types of virtual 
+> machines. I want to leave open what "different types" can be in case 
+> something new comes up in the future, but immediately "different type" 
+> would correspond to a few different authentication mechanisms for 
+> virtual machines that Gunyah supports.
+>
+> In this series, I'm only supporting unauthenticated virtual machines 
+> because they are the simplest to get up and running from a Linux 
+> userspace. When I introduce the other authentication mechanisms, I'll 
+> expand much more on how they work, but I'll give quick overview here. 
+> Other authentication mechanisms that are currently supported by Gunyah 
+> are "protected VM" and, on Qualcomm platforms, "PIL/carveout VMs". 
+> Protected VMs are *loosely* similar to the protected firmware design for 
+> KVM and intended to support Android virtualization use cases. 
+> PIL/carevout VMs are special virtual machines that can run on Qualcomm 
+> firmware which authenticate in a way similar to remoteproc firmware (MDT 
+> loader).
 
-Ah, good. :)
+Ok, thanks for the background. Having different types of virtual
+machines does mean that you may need some complexity, but I would
+still lean towards using the simpler context management of opening
+the /dev/gunyah device node to get a new context, and then using
+ioctls on each fd to manage that context, instead of going through
+the extra indirection of having a secondary 'open context' command
+that always requires opening two file descriptors.
 
-> In line with the downstream dts, we have GCC_UFS{,_1}_CARD_CLKREF_CLK
-> providing a reference clock to the two phys. Then GCC_UFS_REF_CLKREF_CLK
-> feeds the UFS refclock pads (both of them), which connect to the memory
-> device(s).
-> 
-> In other words, GCC_UFS{,_1}_CARD_CLKREF_CLK should be "ref" in
-> respective phy.
-> 
-> GCC_UFS_REF_CLKREF_CLK is the clock to the devices, but as we don't
-> represent the memory device explicitly it seems suitable to use as
-> "ref_clk" in the ufshc nodes - which would then match the special
-> handling of the "link clock" in the UFS driver.
+>> I'm correct, you can just turn the entire bus/device/driver
+>> structure within your code into simple function calls, where
+>> the main code calls vm_mgr_probe() as an exported function
+>> instead of creating a device.
+>
+> Ack. I can do this, although I am nervous about this snowballing into a 
+> situation where I have a mega-module.
+>
+>  > Please stop beating everything in a single module.
+>
+> https://lore.kernel.org/all/250945d2-3940-9830-63e5-beec5f44010b@linaro.org/
 
-Thanks for clearing that up. Using GCC_UFS_REF_CLKREF_CLK as ref_clk for
-the controller sounds reasonable.
+I see you concern, but I wasn't suggesting having everything
+in one module either. There are three common ways of splitting
+things into separate modules:
 
-I guess the only missing piece is which "card" ref clock is used by
-which PHY.
+- I suggested having the vm_mgr module as a library block that
+  exports a few symbols which get used by the core module. The
+  module doesn't do anything on its own, but loading the core
+  module forces loading the vm_mgr.
 
-The ADP dts uses:
+- Alternatively one can do the opposite, and have symbols
+  exported by the core module, with the vm_mgr module using
+  it. This would make sense if you commonly have the core
+  module loaded on virtual machines that do not need to manage
+  other VMs.
 
-	phy			ref clock
+- The method you have is to have a lower "bus" level that
+  abstracts device providers from consumers, with both sides
+  hooking into the bus. This makes sense for physical buses
+  like PCI or USB where both the host driver and the function
+  driver are unaware of implementation details of the other,
+  but in your case it does not seem like a good fit.
 
-	phy@1d87000 (UFS_PHY)	GCC_UFS_CARD_CLKREF_CLK
-	phy@1da7000 (UFS_CARD)	GCC_UFS_1_CARD_CLKREF_CLK
-
-but that is not what the firmware on ADP and CRD seem to enable.
-
-Both the ADP and CRD fw leaves GCC_UFS_1_CARD_CLKREF_CLK enabled, while
-GCC_UFS_CARD_CLKREF_CLK is only enabled on ADP (which unlike the CRD
-also uses the UFS_CARD controller).
-
-Does the ADP dts have these clocks switched or is the firmware confused?
-
-(Also note that experiments suggest that neither refclock appears to
-has to be explicitly enabled for the controllers to function.)
-
-> All three clocks are sourced off the CXO pad, so I would like this patch
-> to cover at least all of these. And
-> 
-> Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
-> 
-> seems to be in order for such patch.
-> 
-> 
-> @Johan, would you mind writing a dts patch flipping the clocks around
-> and Shazad can update this patch?
-
-I'll do so, but I'll wait with posting until you can confirm which
-clkref is which.
-
-Johan
+        Arnd
