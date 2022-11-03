@@ -2,111 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 24DCF617F47
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 15:19:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EDA7617F60
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 15:24:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230525AbiKCOTu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 10:19:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37040 "EHLO
+        id S230194AbiKCOYv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 10:24:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231358AbiKCOTa (ORCPT
+        with ESMTP id S229667AbiKCOYv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 10:19:30 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BBA6193F5
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 07:19:11 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id p8so3033633lfu.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 07:19:11 -0700 (PDT)
+        Thu, 3 Nov 2022 10:24:51 -0400
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EF2726DC;
+        Thu,  3 Nov 2022 07:24:50 -0700 (PDT)
+Received: by mail-oo1-xc35.google.com with SMTP id v7-20020a4aa507000000b00496e843fdfeso281177ook.7;
+        Thu, 03 Nov 2022 07:24:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eQeJmfmldXG6hvj59+k+TbhmV1qXG3RlPlcNF3t/Ui4=;
-        b=eIfFSn41vRIjqtDk+mjUsF7IHFNarF4VsRCOuE8POYhXnp6oyBT+6h9EQ1bjtm5BWh
-         AZ+EbEpHlwSptAfm8e1snxWMK+7TlKekN7dEgqanRoSeyPN5aTtMofJ13dBGwQsr80Ez
-         wBcE5Jn9tDj00EqMtqXabzEmRFMzQ0WOW9aavZ0tJ/f5n8H0HzJLt79JwtfTc76HeF36
-         TKy1YClxtnIW6Dd/gNcrQBanCHacDuJsOzBzmTKY6dyC8+fNm1Zj1cWneI9kpuL25iyv
-         PgnXfvXtdFp0Mbb5x//hk1sNCLRL4BpRs6BfgqjR3yNsSUQbyeYjSWa41lJ7Zjeq9GG/
-         iakQ==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=u/xSN01Y9d0jDzJ8OY9Uml07yt5pXMZDHAA6O3LIwM4=;
+        b=NNfn/U3u6fGUpwAIsw3QI8vNRnfExdw5AISKpSm4hA6ez4yskkICLV8O8q13vBNKGy
+         LBoq/BR7pVxnBdmFGt3N2K+QjSb67MZKOkjy/6Cpcp6i0HveRrVB87dbnQpHrpRVp5CA
+         VGRXD5zRtwfjbHGuS01PUBwws170k6uz3M7FF45R1A2x3CYKOpYY9fQYmV4vyxg3cUFu
+         uMkh4HmUbnTHjukHQ5YYvKPAqXRMwLy6pw/asV0tJBah6yMnfKUGyvEjznb1A6P62YX9
+         5s9pr6+zOe7WD8wmYtuovrLYL6CjXWg1i6hiFt0Yqovv681rh6t0OqM/LQXQElYc5sGI
+         FUlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eQeJmfmldXG6hvj59+k+TbhmV1qXG3RlPlcNF3t/Ui4=;
-        b=rSFnn3DFbnTx1dGNnTfl19D10T8Ww/v0guT1x/sZyTFguk3qBt1zL3j1DLNG0qZJka
-         YrS2mnqXFAOmAp9C2u33tlS5KZ3xLH7UjXAJnC6sjy2KQRitGAr91Mmg86jPzXVxOiHA
-         MvcRxY+S27KQfYgUX6nhwLU4BMKOxB908tqMat1L3n9ANwrMs4gEqtaj3kRByUydCRha
-         pWnaBPMNzPeVXDUHTRoCLQ1pd/y8p5AOrRQZVvnFFGRtX8SghCWbfQB7k1TxJuw5zeWm
-         28Zm9RulNx6Uj/ImALFh6Dwk5/p3RQBbvdsTbBGl2+7avfVV5doi6yVE1d+MdTJ05Ya+
-         antg==
-X-Gm-Message-State: ACrzQf1sDDM83qybZHBFSLYLV6viMl3snQO83JpNS9rN73Y46vKELV6w
-        wTTuTQUDAVpI5g7hnx9fj+Qw2w==
-X-Google-Smtp-Source: AMsMyM65B2GojMWZBZ7SW9Nj3gk8ZeKbb0JxUBUaGHgAfQk1+agMmGU6PEhntoiaifEbaTv7V4bKUQ==
-X-Received: by 2002:ac2:4842:0:b0:4a0:53a0:51c with SMTP id 2-20020ac24842000000b004a053a0051cmr11288589lfy.202.1667485150143;
-        Thu, 03 Nov 2022 07:19:10 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id b24-20020a056512061800b0049876c1bb24sm144454lfe.225.2022.11.03.07.19.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Nov 2022 07:19:09 -0700 (PDT)
-Message-ID: <b1aea0c6-1f62-57bd-3ea2-6e4334e1003e@linaro.org>
-Date:   Thu, 3 Nov 2022 17:19:08 +0300
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=u/xSN01Y9d0jDzJ8OY9Uml07yt5pXMZDHAA6O3LIwM4=;
+        b=8RQIHLAEFG9ncEQANCddvXBa9jGL3gYJaAzMjacrOJxDCpVzELbISKSj2v0QZJYrmY
+         yY/eWrNao9z4x0njFID/QmlUOr+JCPpgn56/H9TofYfVOMTkZim6aASIMiu9Xotezb8I
+         vEyBqCrzb2fhNggDjgyo7mAHLbrVhP9MZiValesyUb7V89J8uq7/Ne8D2+SF9g7mc/Ad
+         DiuOfES3wx6sbkQA4PW+jsAnh7qoyavnlsYD84lmiYV1OWy9qpOyzIYp54L04AJz+76I
+         XP2x1Nj4eCYrrtKG54ViINg4AewAZtFyBK1dMe4CSNJDj0KHl6hs3OImTKQlD6IpPlcQ
+         Wi3g==
+X-Gm-Message-State: ACrzQf3QcmL6U9PwLpZztw4NPliyYjp/fMBvFIQ9Z+xBj9bChGM5plBm
+        ambj7lGwIP3aJxXWsbhcm+YWx3LpOjh8bkTeiGE=
+X-Google-Smtp-Source: AMsMyM6J5QRMxRp64kRAdhF5yjjfT9WHNQctflNk+E6Xp1u2gW/bCaFAXyDhIRKAHdTzy+3zP3AgCHbpg71s/ISYB+o=
+X-Received: by 2002:a4a:a68b:0:b0:496:2521:c81d with SMTP id
+ f11-20020a4aa68b000000b004962521c81dmr12952579oom.80.1667485489693; Thu, 03
+ Nov 2022 07:24:49 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH v1 9/9] arm64: dts: qcom: sm8350-hdk: Enable lt9611uxc
- dsi-hdmi bridge
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Robert Foss <robert.foss@linaro.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
-        airlied@linux.ie, daniel@ffwll.ch, quic_kalyant@quicinc.com,
-        swboyd@chromium.org, angelogioacchino.delregno@somainline.org,
-        loic.poulain@linaro.org, quic_vpolimer@quicinc.com,
-        vkoul@kernel.org, dianders@chromium.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Jonathan Marek <jonathan@marek.ca>, vinod.koul@linaro.org,
-        quic_jesszhan@quicinc.com
-References: <20221028120812.339100-1-robert.foss@linaro.org>
- <20221028120812.339100-10-robert.foss@linaro.org>
- <bbce3d37-019b-a652-4f1d-18fb9493f7de@linaro.org>
-In-Reply-To: <bbce3d37-019b-a652-4f1d-18fb9493f7de@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20221101223319.165493-1-robdclark@gmail.com> <20221101223319.165493-3-robdclark@gmail.com>
+ <bf5fb954-c71b-f02f-5300-4e030b10811a@linaro.org>
+In-Reply-To: <bf5fb954-c71b-f02f-5300-4e030b10811a@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 3 Nov 2022 07:25:07 -0700
+Message-ID: <CAF6AEGtzfoxKLi7FrHRgdp-ft32rFH1XzEeu11SeH3c0Lodj0w@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] drm/msm: Hangcheck progress detection
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Chia-I Wu <olvaffe@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/10/2022 16:56, Dmitry Baryshkov wrote:
-> On 28/10/2022 15:08, Robert Foss wrote:
->> The sm8350-hdk ships with the LT9611 UXC DSI/HDMI bridge chip.
->>
->> In order to toggle the board to enable the HDMI output,
->> switch #7 & #8 on the rightmost multi-switch package have
->> to be toggled to On.
-> 
-> Since this doesn't look like a default setup, it would probably make 
-> sense to move this to new sm8350-hdk-hdmi.dts with the comment regarding 
-> necessary switch changes at the top of the file.
-> 
+On Wed, Nov 2, 2022 at 4:26 PM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On 02/11/2022 01:33, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > If the hangcheck timer expires, check if the fw's position in the
+> > cmdstream has advanced (changed) since last timer expiration, and
+> > allow it up to three additional "extensions" to it's alotted time.
+> > The intention is to continue to catch "shader stuck in a loop" type
+> > hangs quickly, but allow more time for things that are actually
+> > making forward progress.
+>
+> Just out of curiosity: wouldn't position also change for a 'shader stuck
+> in a loop'?
 
-Please excuse me here. I checked the Lantronix site. It clearly names 
-'Optional Display/Expansion board mates to DSI connectors'. So, you were 
-correct, the HDMI should be in the base setup, while DSI panel should 
-come as the extending DT file.
+There is some pipelining, in that there can be a couple draws in
+flight at the same time, and SQE is running ahead of that, but with a
+shader stuck in a loop the associated draw will not complete, and that
+will halt forward progress through the cmdstream.  Basically what this
+is doing is detecting that forward progress through the cmdstream has
+stopped.
 
+BR,
+-R
 
--- 
-With best wishes
-Dmitry
-
+>
+> > Because we need to sample the CP state twice to detect if there has
+> > not been progress, this also cuts the the timer's duration in half.
+> >
+> > v2: Fix typo (REG_A6XX_CP_CSQ_IB2_STAT), add comment
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>
+>
+>
+> --
+> With best wishes
+> Dmitry
+>
