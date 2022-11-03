@@ -2,138 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C7FAC618288
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 16:23:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2187B618292
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 16:24:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231312AbiKCPXX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 11:23:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33208 "EHLO
+        id S231375AbiKCPYG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 11:24:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231524AbiKCPXW (ORCPT
+        with ESMTP id S232161AbiKCPYC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 11:23:22 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7F4DFED
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 08:23:20 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id z30so1308552qkz.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 08:23:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=f7W935H1KbRw0Ag8QHM/Yn3lqfyL9ka2fjOWNd1WB1I=;
-        b=c6nzyMKW9ZnRtwa3zp76mKQ0QUn6sfJTsCuR8G4mpyrAxY54i5HSj7n6qSXMzftZ17
-         80m8TF5uOv4YXZFb5VC0HmjwMnd6inedHNSNgA/GcUaOnKei0IiD8BOi1vbZsOT3tCrI
-         2rYW/hQUTMKwCfn/T+utoFWvmmllBQXjZ2ykiqhGEKoT+MMUr/5ktX6RzNjmD+Ui3/H9
-         fy2n71ovs22yMfa2zo0wpjYYsPnfkDH99eq4X9KS1qirEdUCL8ckTwy/BMhKjCVuj5pf
-         aQFXgOmQYassXRfNcYJx49mTSK1RIhc+rbvLzJdyLlYLDfmWSt5LntqoE0eIHTUc7aCs
-         aKTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=f7W935H1KbRw0Ag8QHM/Yn3lqfyL9ka2fjOWNd1WB1I=;
-        b=7I9hRSNNQEwE4My1LvxB7QIzwinYpeLaJ63C2H+ly6ECe+NKQBqlpY+3IPUjTWLL4+
-         wbJ4rh0yxc+eNjBw+VDr2AuMXKziKhDKOo26mcJYR4Vk5sd4F2+zqwNUdc0aSVm/dTDT
-         1PeKSm/TlOnWEyDEQ+5D69HXbNnPNvdxek9mMDfgHVlIVI+RCdg1++0QHf5Gg4bgfh2g
-         5SiqmFwO/bVs95ODhJBQM6WqE4pSq/xDNk48oEKolzMCJhk67eM4YTlu1SJ6pzCWRnHS
-         1LzWWw37dWW3mOOZr1dik2L8yuoJl9/85EBXOttc0OOTqafjZT94u/ZbRCbuCcJ35ihb
-         56Rw==
-X-Gm-Message-State: ACrzQf2J0FHreqW3qvZgA1wCEqyeiP+h5pcyvLxCyjBakITorpfkNlMb
-        +ZK7mJSpXGqFcCNH7EXVXL5dVQ==
-X-Google-Smtp-Source: AMsMyM5I530rv1Yc4w34Zr+5MBIkr1bF9RF9uIG79s0fyenDsdb3MXMg/hmpxWiucjGppUIk5oaTNg==
-X-Received: by 2002:a37:de03:0:b0:6ee:88a2:eb9a with SMTP id h3-20020a37de03000000b006ee88a2eb9amr22330615qkj.241.1667488999874;
-        Thu, 03 Nov 2022 08:23:19 -0700 (PDT)
-Received: from ?IPV6:2601:586:5000:570:a35d:9f85:e3f7:d9fb? ([2601:586:5000:570:a35d:9f85:e3f7:d9fb])
-        by smtp.gmail.com with ESMTPSA id h6-20020ac85046000000b003a494b61e67sm675911qtm.46.2022.11.03.08.23.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Nov 2022 08:23:19 -0700 (PDT)
-Message-ID: <a170e4e8-fc9d-9be1-35ba-733f24cb93e8@linaro.org>
-Date:   Thu, 3 Nov 2022 11:23:17 -0400
+        Thu, 3 Nov 2022 11:24:02 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 309CA11162;
+        Thu,  3 Nov 2022 08:24:01 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id DA425B828E9;
+        Thu,  3 Nov 2022 15:23:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9223C433D6;
+        Thu,  3 Nov 2022 15:23:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667489038;
+        bh=fg7hNvJiWPNnBMDzywvHNR7sYaua2ncK141ddfpOrdo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=EQZzYkkUo2mOJJMcmlIl6A+bPZI4PMPBAwR7yQcBCWcvLZd8GR0o3rMY7/jG6yWab
+         OAh94msJVke3pTVCe0e+GmvKKr2oX54eoqO3aeVtEPy3OQ4TFDxx1lCJRAo3lQF1ys
+         /N9IrOe1t+3YlM2/XyBVq3xZLAOEK+XtdRH8XBRQEEU7+BPmrg3NM1nPGa4z+qeJgU
+         TnvsuyC890esfZn1ylZE8aig0/cGtbqiiD+HsKlBcGe9NXQ5IUd0IBpYroOWSMtaXr
+         sueqLf5HrHsArx9rZJuy1ojtPSi3ZcEueKhzEjAWlIdiXv/0kngawtnNlBthRZnOdz
+         v1+9XAS+x7rYw==
+Date:   Thu, 3 Nov 2022 10:23:55 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Shazad Hussain <quic_shazhuss@quicinc.com>,
+        Stephen Boyd <sboyd@kernel.org>, bmasney@redhat.com,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1] clk: qcom: gcc-sc8280xp: add cxo as parent for
+ gcc_ufs_ref_clkref_clk
+Message-ID: <20221103152355.5sfbkpsfvjzgeixi@builder.lan>
+References: <20221030142333.31019-1-quic_shazhuss@quicinc.com>
+ <20221101182402.32CE5C433C1@smtp.kernel.org>
+ <Y2IZaxukERXNcPGR@hovoldconsulting.com>
+ <c96304da-f57e-4926-2f3f-665c2054fb00@quicinc.com>
+ <Y2Imnf1+v5j5CH9r@hovoldconsulting.com>
+ <bb590bfb-07a4-97c1-e5c0-d00d840e2e11@quicinc.com>
+ <Y2I3tekSAO42r0xR@hovoldconsulting.com>
+ <20221103024949.lw4g2tavk7uw5xt4@builder.lan>
+ <Y2OEjNAPXg5BfOxH@hovoldconsulting.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v2 06/15] dt-bindings: ufs: Add "max-device-gear" property
- for UFS device
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
-        andersson@kernel.org, vkoul@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, quic_cang@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-scsi@vger.kernel.org, dmitry.baryshkov@linaro.org,
-        ahalaney@redhat.com
-References: <20221031180217.32512-1-manivannan.sadhasivam@linaro.org>
- <20221031180217.32512-7-manivannan.sadhasivam@linaro.org>
- <1fe8fd96-7770-0bda-c970-aa38d030ff3b@linaro.org>
- <20221103122850.GD8434@thinkpad>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221103122850.GD8434@thinkpad>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y2OEjNAPXg5BfOxH@hovoldconsulting.com>
+X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/11/2022 08:28, Manivannan Sadhasivam wrote:
-> On Wed, Nov 02, 2022 at 03:09:50PM -0400, Krzysztof Kozlowski wrote:
->> On 31/10/2022 14:02, Manivannan Sadhasivam wrote:
->>> The maximum gear supported by the UFS device can be specified using the
->>> "max-device-gear" property. This allows the UFS controller to configure the
->>> TX/RX gear before starting communication with the UFS device.
->>
->> This is confusing. The UFS PHY provides gear capability, so what is the
->> "device" here? The attached memory? How could it report something else
->> than phy?
->>
+On Thu, Nov 03, 2022 at 10:06:20AM +0100, Johan Hovold wrote:
+> On Wed, Nov 02, 2022 at 09:49:49PM -0500, Bjorn Andersson wrote:
+> > On Wed, Nov 02, 2022 at 10:26:13AM +0100, Johan Hovold wrote:
+> > > On Wed, Nov 02, 2022 at 02:15:26PM +0530, Shazad Hussain wrote:
+> > > > On 11/2/2022 1:43 PM, Johan Hovold wrote:
+> > > 
+> > > > > Right, but if the PHYs really requires CX and it is not an ancestor of
+> > > > > the refclk then this should be described by the binding (and not be
+> > > > > hidden away in the clock driver).
+> > > 
+> > > > This makes sense, will be posting v2 post for the same.
+> > > > I assume this should use the Fixes tag then !
+> > > 
+> > > Yeah, I guess to you can add a fixes tag for the commits adding support
+> > > for sc8280xp to the UFS PHY binding and driver.
+> > > 
+> > > But please do check with the hardware documentation first so we get this
+> > > right this time.
+> > > 
+> > > I've already asked Bjorn to see what he can dig out as it is still not
+> > > clear how the two "card" refclocks (GCC_UFS_CARD_CLKREF_CLK and
+> > > GCC_UFS_1_CARD_CLKREF_CLK) are supposed to be used.
+> > > 
+> > 
+> > We've come full circle and Shazad's patch came from that discussion :)
 > 
-> This is the norm with any storage protocol, right? Both host and device
-> (memory) can support different speeds and the OEM can choose to put any
-> combinations (even though it might not be very efficient).
+> Ah, good. :)
 > 
-> For instance,
+> > In line with the downstream dts, we have GCC_UFS{,_1}_CARD_CLKREF_CLK
+> > providing a reference clock to the two phys. Then GCC_UFS_REF_CLKREF_CLK
+> > feeds the UFS refclock pads (both of them), which connect to the memory
+> > device(s).
+> > 
+> > In other words, GCC_UFS{,_1}_CARD_CLKREF_CLK should be "ref" in
+> > respective phy.
+> > 
+> > GCC_UFS_REF_CLKREF_CLK is the clock to the devices, but as we don't
+> > represent the memory device explicitly it seems suitable to use as
+> > "ref_clk" in the ufshc nodes - which would then match the special
+> > handling of the "link clock" in the UFS driver.
 > 
-> PHY (G4) -> Device (G3)
-
-Yes and look at MMC - no need to define "max mode" supported by eMMC.
-You define the modes supported by controller but the memory capabilities
-are being autodetected and negotiated.
-
+> Thanks for clearing that up. Using GCC_UFS_REF_CLKREF_CLK as ref_clk for
+> the controller sounds reasonable.
 > 
-> From the host perspective we know what the PHY can support but that's not the
-> same with the device until probing it. And probing requires using a minimum
-> supported gear. For sure we can use something like G2/G3 and reinit later but
-> as I learnt, that approach was rejected by the community when submitted
-> by Qualcomm earlier.
-
-It should be then referenced somewhere as it might be a reason to accept
-the property.
-
+> I guess the only missing piece is which "card" ref clock is used by
+> which PHY.
 > 
->> The last sentence also suggests that you statically encode gear to avoid
->> runtime negotiation.
->>
+> The ADP dts uses:
 > 
-> Yes, the OEM should know what the max gear speed they want to run, so getting
-> this info from DT makes sense.
+> 	phy			ref clock
+> 
+> 	phy@1d87000 (UFS_PHY)	GCC_UFS_CARD_CLKREF_CLK
+> 	phy@1da7000 (UFS_CARD)	GCC_UFS_1_CARD_CLKREF_CLK
+> 
 
-Not really if it is auto-detectable. Just because things are static is
-not the sole reason to put them into DT. The reason is - they are not
-detectable by OS/firmware thus we must have them in DT to be able to
-know it.
+This matches the documentation.
 
+Regards,
+Bjorn
 
-
-Best regards,
-Krzysztof
-
+> but that is not what the firmware on ADP and CRD seem to enable.
+> 
+> Both the ADP and CRD fw leaves GCC_UFS_1_CARD_CLKREF_CLK enabled, while
+> GCC_UFS_CARD_CLKREF_CLK is only enabled on ADP (which unlike the CRD
+> also uses the UFS_CARD controller).
+> 
+> Does the ADP dts have these clocks switched or is the firmware confused?
+> 
+> (Also note that experiments suggest that neither refclock appears to
+> has to be explicitly enabled for the controllers to function.)
+> 
+> > All three clocks are sourced off the CXO pad, so I would like this patch
+> > to cover at least all of these. And
+> > 
+> > Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
+> > 
+> > seems to be in order for such patch.
+> > 
+> > 
+> > @Johan, would you mind writing a dts patch flipping the clocks around
+> > and Shazad can update this patch?
+> 
+> I'll do so, but I'll wait with posting until you can confirm which
+> clkref is which.
+> 
+> Johan
