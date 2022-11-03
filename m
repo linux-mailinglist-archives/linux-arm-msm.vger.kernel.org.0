@@ -2,110 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F208A618A77
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 22:22:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 747D1618B1F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 23:08:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231539AbiKCVVw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 17:21:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41642 "EHLO
+        id S229770AbiKCWIG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 18:08:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231589AbiKCVVr (ORCPT
+        with ESMTP id S229764AbiKCWIF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 17:21:47 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20DB921818;
-        Thu,  3 Nov 2022 14:21:44 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id o30so1941775wms.2;
-        Thu, 03 Nov 2022 14:21:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EBi1xTEb0SF667Jza54gm5V6cR58OHc1YhW84qRd8ZY=;
-        b=pEpBEi9mvFUmu+V8wv+E4uWSllh8HKI11O/WhiLwohawSDkKp3f4WiHG8k6eFuQupN
-         1Fo8hWGbqymC4ZYnuLbxp1OwsD92umaBOaVFejXTmpHluITjQjDFKqsW/ODtfSY+jbUi
-         fSYENdAOuVrOVUr5wX+IvPtt+B3ny1puRwGTi3dTukpwSm71z9rJZWiOMKpV9RZCMBZK
-         tXi7iDW1ggE+JLPczofCGcUJ5IIB7EcmU+Yo7njOlXjg6kPRHxjurd7NIYTpsQDvSJNi
-         aZn1cpJKIKi2sOoDYny5eCU6lu49qXlEOLMEw9dczZB17MHKx+M2NAZFyP0ejK4tGqiy
-         J6wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EBi1xTEb0SF667Jza54gm5V6cR58OHc1YhW84qRd8ZY=;
-        b=4b/tgToTjvL1mv3k8S83NI+jtDWDPFHm6myMTYSvqxi9cG2U6ow4wkaEhA2K5pFOOW
-         W9da95S2nt1hbMCi14RcK4b/YZ/v/6ZLtgv4Zr0MxgSkuQ4xKm1PEdKRhCbazioa77Ap
-         1nHynZQ8fWKeAEz9yLQ330Go8mpAybNQuJ+6eX2SX738556/k+SMcvOd5TevJ5ZOLQOM
-         e3bwP5r4ZJLGafsnwNc8sVxnNkDGrV2cWUpcbnU6N76dKDBhunlaHoxRyQwmXabaIhMF
-         nrcGKnVeaeYDi+z0e16LYrG3aQONV3RbgSZdUaiNLUm5b+FsibtSwA+eFLShKpAj9THX
-         7IvA==
-X-Gm-Message-State: ACrzQf2gOMYy4wX/7JDJWK2FKwxFz+HSKWDvN8k3MlHMwmfqWhMIJnLv
-        wFjxHjlwtyqhLUbv4/4bYI3CIKr/MXM=
-X-Google-Smtp-Source: AMsMyM5z2kO3XboxYINuKbpi6PqUYVuHI6ShBZBQbgTxcJLiIelbbB1yygyhNZLsHD0YytDk2cIUww==
-X-Received: by 2002:a05:600c:4486:b0:3cf:6e1d:f4a5 with SMTP id e6-20020a05600c448600b003cf6e1df4a5mr18119129wmo.85.1667510502516;
-        Thu, 03 Nov 2022 14:21:42 -0700 (PDT)
-Received: from localhost.localdomain (93-42-71-18.ip85.fastwebnet.it. [93.42.71.18])
-        by smtp.googlemail.com with ESMTPSA id m29-20020a05600c3b1d00b003b47b913901sm6968320wms.1.2022.11.03.14.21.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Nov 2022 14:21:42 -0700 (PDT)
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Thu, 3 Nov 2022 18:08:05 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E45C121E36;
+        Thu,  3 Nov 2022 15:08:03 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A3LfvN7021100;
+        Thu, 3 Nov 2022 22:07:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=0Q4UYJo0r4CAvLo84TRF+qOpG8p4iPvKnthKy/ejt7k=;
+ b=RlcfmzbFyO9u35F10nQ6EgqBj45EHHMPr/a1igEh8DGR+qO0bXKgrQlbSQBS8wuhvHoy
+ qwkndz98dqyfJTDt99rwTjOwIJ/g+konDnvEkbm/JhzJVk58Uil6SZfCBUAeP0z5y0vX
+ 0WjevBkC/FWUkS4mHfJpgXLX1YwrEknAobUtlHzP+1x/EPp9AlrAg6csYWFlKz/oXEBQ
+ fmfKSRD548oLvKqKMvo2GApMvDbqGyq5UX/CcL+EjrMOOddRSBXZHXUXY4srtJm9eXAQ
+ Cq9f8ZBX1bxMkzAZNA9vmCPzVbOMlhKOoHPAWNfGt39MzD4xteq6EJlX24VoTQG1XFFR tQ== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kmhuerpqh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 03 Nov 2022 22:07:47 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A3M7kmK009283
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 3 Nov 2022 22:07:46 GMT
+Received: from [10.110.42.219] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 3 Nov 2022
+ 15:07:45 -0700
+Message-ID: <032eeabb-28a5-9568-6aee-5631acb72a7b@quicinc.com>
+Date:   Thu, 3 Nov 2022 15:07:44 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Subject: Re: [PATCH v6 10/21] gunyah: rsc_mgr: Add resource manager RPC core
+Content-Language: en-US
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     Jassi Brar <jassisinghbrar@gmail.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org
-Cc:     Christian Marangi <ansuelsmth@gmail.com>
-Subject: [PATCH 2/2] arm64: dts: qcom: ipq6018: improve pcie phy pcs reg table
-Date:   Thu,  3 Nov 2022 22:21:25 +0100
-Message-Id: <20221103212125.17156-2-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <20221103212125.17156-1-ansuelsmth@gmail.com>
-References: <20221103212125.17156-1-ansuelsmth@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Jonathan Corbet <corbet@lwn.net>,
+        "Will Deacon" <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        "Arnd Bergmann" <arnd@arndb.de>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Kalle Valo <kvalo@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20221026185846.3983888-1-quic_eberman@quicinc.com>
+ <20221026185846.3983888-11-quic_eberman@quicinc.com>
+ <Y2FfKCKZ3N8rOqcT@kroah.com>
+ <3d2858fe-ea3e-159c-faff-5052cba1e08c@quicinc.com>
+ <Y2Hbl4y9Hioybxmq@kroah.com>
+ <28eaa4bd-a9ee-c415-57c4-a9a56ffeef18@quicinc.com>
+ <Y2MJ43oVYfNgBZsQ@kroah.com>
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <Y2MJ43oVYfNgBZsQ@kroah.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 1-FvWOgjVbh2h8A49qQZ54Ga2lNccyoG
+X-Proofpoint-ORIG-GUID: 1-FvWOgjVbh2h8A49qQZ54Ga2lNccyoG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-03_04,2022-11-03_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ malwarescore=0 impostorscore=0 mlxlogscore=751 priorityscore=1501
+ phishscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211030151
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is not a fix on its own but more a cleanup. Phy qmp pcie driver
-currently have a workaround to handle pcs_misc not declared and add
-0x400 offset to the pcs reg if pcs_misc is not declared.
 
-Correctly declare pcs_misc reg and reduce PCS size to the common value
-of 0x1f0 as done for every other qmp based pcie phy device.
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+On 11/2/2022 5:22 PM, Greg Kroah-Hartman wrote:
+> On Wed, Nov 02, 2022 at 11:04:45AM -0700, Elliot Berman wrote:
+>>>>>> +/* Resource Manager Header */
+>>>>>> +struct gh_rm_rpc_hdr {
+>>>>>> +	u8 version : 4, hdr_words : 4;
+>>>>>> +	u8 type : 2, fragments : 6;
+>>>>>
+>>>>> Ick, that's hard to read.  One variable per line please?
+>>>>
+>>>> Ack.
+>>>>
+>>>>> And why the bit packed stuff?  Are you sure this is the way to do this?
+>>>>> Why not use a bitmask instead?
+>>>>>
+>>>>
+>>>> I felt bit packed implementation is cleaner and easier to map to
+>>>> understanding what the fields are used for.
+>>>
+>>> Ah, so this isn't what is on the "wire", then don't use a bitfield like
+>>> this, use a real variable and that will be faster and simpler to
+>>> understand.
+>>>
+>>
+>> This is what's on the "wire". Whether I use bitfield or bit packed would be
+>> functionally the same and is just a cosmetic change IMO.
+> 
+> Ah, that wasn't obvious at all.
+> 
+> Usually using bitfields like this for "wire" protocols is not a good
+> idea (endian issues and all of that.)  Please use a bitmask instead, as
+> that way you know exactly what is happening, and the compiler can
+> usually generate much better code overall.
+> 
+> And as this is on the wire, please specify the endian values, _AND_ use
+> the proper kernel types for stuff that goes between user/kernel or
+> kernel/hardware, as you are not doing that here.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 9ebb9e2371b1..95d7f49bc61a 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -406,7 +406,8 @@ pcie_phy: phy@84000 {
- 			pcie_phy0: phy@84200 {
- 				reg = <0x0 0x84200 0x0 0x16c>, /* Serdes Tx */
- 				      <0x0 0x84400 0x0 0x200>, /* Serdes Rx */
--				      <0x0 0x84800 0x0 0x4f4>; /* PCS: Lane0, COM, PCIE */
-+				      <0x0 0x84800 0x0 0x1f0>; /* PCS: Lane0, COM, PCIE */
-+				      <0x0 0x84c00 0x0 0xf4>; /* pcs_misc */
- 				#phy-cells = <0>;
- 
- 				clocks = <&gcc GCC_PCIE0_PIPE_CLK>;
--- 
-2.37.2
-
+Ack
