@@ -2,113 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36AA061781D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 08:56:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7772F61795A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 10:06:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230273AbiKCH4g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 03:56:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45194 "EHLO
+        id S230214AbiKCJGp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 05:06:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230363AbiKCH4O (ORCPT
+        with ESMTP id S229450AbiKCJGo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 03:56:14 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D9BA2733;
-        Thu,  3 Nov 2022 00:55:30 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A3597J0021633;
-        Thu, 3 Nov 2022 07:55:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=+wzkJVLIOkoBK9Vz/nKnFDV5e28DxONxhT48KGJaUR0=;
- b=S4nrabBmU3oM+sLTsUd1Fxub+4NqRz7qGMmr78Yw3GXPJ0puIvz8/XU7NgRX30bW9eVr
- WakPtXqvDZ+K/GWugOnOkzfZLzq2XuSOOeK0I0XNekJjm/BU1HzW3GjHdYyttOCqgmKD
- 4G5MqIOwQpef1arCjJxupeHRql/8OVuA6edxZrnIqAPIGVOqAvDjOwLerGdXLUT07ZEg
- 8sMCRDpC36OmOHW328B5WY0YmRvNPII2SWCJYG6Hnvd6+iZisSEyHqP2Mztwodtp9Fag
- zw0OyGZNSGS9mqKtrum02frEPJIBYOI4o4BzXPJJqfODiXFyNjz8J6eXcpirxAxzHDjH xw== 
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3km6wj0p01-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 03 Nov 2022 07:55:18 +0000
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-        by APTAIPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2A37tFu3012235;
-        Thu, 3 Nov 2022 07:55:15 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 3khdm1m235-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 03 Nov 2022 07:55:15 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2A37tFkQ012229;
-        Thu, 3 Nov 2022 07:55:15 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-        by APTAIPPMTA02.qualcomm.com (PPS) with ESMTP id 2A37tEJ5012226;
-        Thu, 03 Nov 2022 07:55:15 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
-        id E8BC936E0; Thu,  3 Nov 2022 15:55:12 +0800 (CST)
-From:   Qiang Yu <quic_qianyu@quicinc.com>
-To:     mani@kernel.org, loic.poulain@linaro.org
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>
-Subject: [PATCH] bus: mhi: host: Disable preemption while processing data events
-Date:   Thu,  3 Nov 2022 15:55:11 +0800
-Message-Id: <1667462111-55496-1-git-send-email-quic_qianyu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: WKP4IfvNt9itNbE4Tv1EtCcPdrJq3BYn
-X-Proofpoint-GUID: WKP4IfvNt9itNbE4Tv1EtCcPdrJq3BYn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-02_15,2022-11-02_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=684 priorityscore=1501 phishscore=0 mlxscore=0 clxscore=1015
- malwarescore=0 adultscore=0 bulkscore=0 spamscore=0 suspectscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211030055
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=no
-        autolearn_force=no version=3.4.6
+        Thu, 3 Nov 2022 05:06:44 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1220BE2D;
+        Thu,  3 Nov 2022 02:06:42 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B5CE1B823C1;
+        Thu,  3 Nov 2022 09:06:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472E2C433D6;
+        Thu,  3 Nov 2022 09:06:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667466399;
+        bh=mq89lDSCjzvWLmDVVgCplEqijbSaS32v3s0UtQjTo6w=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SdoWxSg/odQ8/yEIYEb5jT4AS7KkEdZC4DtJbcj3LedphlBZDJ/uTOE1WNExEhur2
+         bv3bfuV7kup2ls0ldwSnV8UAKUzkM2r2FDWbtqFJd/l5F57MA2jKoIsRzC+DxLbekA
+         FXWxCTTGVdZzpKu8iK1DNHUiUzjHdOaXUN3tbkb+gsPv9EWpE5S5KcLYbJFcTItg9q
+         4WAsyAeGmTzHGbtbnwV9S6zcBZOwA3Fs1L1GtpSRuV5xvOPdfrf4gnPD/qZm86cZUW
+         6bsYpjd4b/K7g6nMf1J6GJOadtRrGgkQjEPV2w2phM7WOs12+jhiSEyX6n0rEmldVE
+         m4Ga3S3UuHpyg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oqWB2-0000EN-FY; Thu, 03 Nov 2022 10:06:21 +0100
+Date:   Thu, 3 Nov 2022 10:06:20 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Shazad Hussain <quic_shazhuss@quicinc.com>,
+        Stephen Boyd <sboyd@kernel.org>, bmasney@redhat.com,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1] clk: qcom: gcc-sc8280xp: add cxo as parent for
+ gcc_ufs_ref_clkref_clk
+Message-ID: <Y2OEjNAPXg5BfOxH@hovoldconsulting.com>
+References: <20221030142333.31019-1-quic_shazhuss@quicinc.com>
+ <20221101182402.32CE5C433C1@smtp.kernel.org>
+ <Y2IZaxukERXNcPGR@hovoldconsulting.com>
+ <c96304da-f57e-4926-2f3f-665c2054fb00@quicinc.com>
+ <Y2Imnf1+v5j5CH9r@hovoldconsulting.com>
+ <bb590bfb-07a4-97c1-e5c0-d00d840e2e11@quicinc.com>
+ <Y2I3tekSAO42r0xR@hovoldconsulting.com>
+ <20221103024949.lw4g2tavk7uw5xt4@builder.lan>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221103024949.lw4g2tavk7uw5xt4@builder.lan>
+X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If data processing of an event is scheduled out because core
-is busy handling multiple irqs, this can starves the processing
-of MHI M0 state change event on another core. Fix this issue by
-disabling irq on the core processing data events.
+On Wed, Nov 02, 2022 at 09:49:49PM -0500, Bjorn Andersson wrote:
+> On Wed, Nov 02, 2022 at 10:26:13AM +0100, Johan Hovold wrote:
+> > On Wed, Nov 02, 2022 at 02:15:26PM +0530, Shazad Hussain wrote:
+> > > On 11/2/2022 1:43 PM, Johan Hovold wrote:
+> > 
+> > > > Right, but if the PHYs really requires CX and it is not an ancestor of
+> > > > the refclk then this should be described by the binding (and not be
+> > > > hidden away in the clock driver).
+> > 
+> > > This makes sense, will be posting v2 post for the same.
+> > > I assume this should use the Fixes tag then !
+> > 
+> > Yeah, I guess to you can add a fixes tag for the commits adding support
+> > for sc8280xp to the UFS PHY binding and driver.
+> > 
+> > But please do check with the hardware documentation first so we get this
+> > right this time.
+> > 
+> > I've already asked Bjorn to see what he can dig out as it is still not
+> > clear how the two "card" refclocks (GCC_UFS_CARD_CLKREF_CLK and
+> > GCC_UFS_1_CARD_CLKREF_CLK) are supposed to be used.
+> > 
+> 
+> We've come full circle and Shazad's patch came from that discussion :)
 
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
----
- drivers/bus/mhi/host/main.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Ah, good. :)
 
-diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-index f3aef77a..b58698d 100644
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -1027,13 +1027,14 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
- 
- void mhi_ev_task(unsigned long data)
- {
-+	unsigned long flags;
- 	struct mhi_event *mhi_event = (struct mhi_event *)data;
- 	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
- 
- 	/* process all pending events */
--	spin_lock_bh(&mhi_event->lock);
-+	spin_lock_irqsave(&mhi_event->lock, flags);
- 	mhi_event->process_event(mhi_cntrl, mhi_event, U32_MAX);
--	spin_unlock_bh(&mhi_event->lock);
-+	spin_unlock_irqrestore(&mhi_event->lock, flags);
- }
- 
- void mhi_ctrl_ev_task(unsigned long data)
--- 
-2.7.4
+> In line with the downstream dts, we have GCC_UFS{,_1}_CARD_CLKREF_CLK
+> providing a reference clock to the two phys. Then GCC_UFS_REF_CLKREF_CLK
+> feeds the UFS refclock pads (both of them), which connect to the memory
+> device(s).
+> 
+> In other words, GCC_UFS{,_1}_CARD_CLKREF_CLK should be "ref" in
+> respective phy.
+> 
+> GCC_UFS_REF_CLKREF_CLK is the clock to the devices, but as we don't
+> represent the memory device explicitly it seems suitable to use as
+> "ref_clk" in the ufshc nodes - which would then match the special
+> handling of the "link clock" in the UFS driver.
 
+Thanks for clearing that up. Using GCC_UFS_REF_CLKREF_CLK as ref_clk for
+the controller sounds reasonable.
+
+I guess the only missing piece is which "card" ref clock is used by
+which PHY.
+
+The ADP dts uses:
+
+	phy			ref clock
+
+	phy@1d87000 (UFS_PHY)	GCC_UFS_CARD_CLKREF_CLK
+	phy@1da7000 (UFS_CARD)	GCC_UFS_1_CARD_CLKREF_CLK
+
+but that is not what the firmware on ADP and CRD seem to enable.
+
+Both the ADP and CRD fw leaves GCC_UFS_1_CARD_CLKREF_CLK enabled, while
+GCC_UFS_CARD_CLKREF_CLK is only enabled on ADP (which unlike the CRD
+also uses the UFS_CARD controller).
+
+Does the ADP dts have these clocks switched or is the firmware confused?
+
+(Also note that experiments suggest that neither refclock appears to
+has to be explicitly enabled for the controllers to function.)
+
+> All three clocks are sourced off the CXO pad, so I would like this patch
+> to cover at least all of these. And
+> 
+> Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
+> 
+> seems to be in order for such patch.
+> 
+> 
+> @Johan, would you mind writing a dts patch flipping the clocks around
+> and Shazad can update this patch?
+
+I'll do so, but I'll wait with posting until you can confirm which
+clkref is which.
+
+Johan
