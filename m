@@ -2,272 +2,251 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 228A16188C3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 20:29:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC85A6188E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 20:45:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230011AbiKCT3N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 15:29:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38246 "EHLO
+        id S230199AbiKCTps (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 15:45:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229994AbiKCT3M (ORCPT
+        with ESMTP id S229493AbiKCTpr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 15:29:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 637CACD1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 12:28:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1667503697;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=gz4zS1KdXNqNJZTibUfSdn0hVdKZM6F53BZQrYWL0P8=;
-        b=Frx+z/QA/9gzgDZ88gpzPUKB1R72w+bt9wJ0B78yXgKVnRZzOJjSeeTl3GdMiBpCAWBnd6
-        S0FlB9zNyG6fOkbT7JHf+bVxmR9NnuQnhhHVOAyzNrmiJj5V01wxoZmdaCtKDGuaPV93Wi
-        RotxgcCVvZTYq6d8H1GqSvRi+ncv8o4=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-636-9mDNjEEhNO2L8XWYC_N2Sg-1; Thu, 03 Nov 2022 15:28:16 -0400
-X-MC-Unique: 9mDNjEEhNO2L8XWYC_N2Sg-1
-Received: by mail-ed1-f70.google.com with SMTP id y14-20020a056402440e00b0044301c7ccd9so2013158eda.19
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 12:28:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gz4zS1KdXNqNJZTibUfSdn0hVdKZM6F53BZQrYWL0P8=;
-        b=COfwLyJdcUbhuyjReSV4jnyXgWS7ZBiZ0Fxfdtaa55RVcxlD0Gt3miphAFkWgrAEHJ
-         VQavGiBraQtvLPgtrrrp+0BqDOkx5KkMvVflfKIrprU19/o9Wn6si/hRAcT+ryTzalzZ
-         qzP220GlyejT1hxncfpgPLoJRjNHy6ixPKuLZ7ys/WKH69xwBhhFCcRLqgisyn97HESF
-         ApXy2YNL6Nw/WrbFHK2Mu+kJ3W1oFMyF67XsYU1Z+0Xslgaf1k/9Y28Hble27F/TRrAc
-         RwpAXpdo6unDvUh6D5fltBXwk3XNt7k6gbcc6RKBQgXv8Y+brcpCEABaUDIz+gkHMeIs
-         7i/A==
-X-Gm-Message-State: ACrzQf29ac0FumK3MaXJ+peZPqpGzDM/OY6n+LbMaCJcLmFrQSUOWP7V
-        uA+jfqSqPqTZKV1icRfqb7FiQ+PFyZdk184iTI0UPRin987guCYbacSNsTdKGxPBn/rqY/zWIwE
-        HMgz+EG85X6IO29YNU/JCK4iCsg==
-X-Received: by 2002:a17:907:1c10:b0:791:a716:5089 with SMTP id nc16-20020a1709071c1000b00791a7165089mr30674811ejc.672.1667503691372;
-        Thu, 03 Nov 2022 12:28:11 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM4FFvhMMcWk6ugM5YzsdFgcwYIF01cv7PrvQbzStqZS4m950VhbZ7UFRMRaUZYFgCAHzSFMSQ==
-X-Received: by 2002:a17:907:1c10:b0:791:a716:5089 with SMTP id nc16-20020a1709071c1000b00791a7165089mr30674767ejc.672.1667503691090;
-        Thu, 03 Nov 2022 12:28:11 -0700 (PDT)
-Received: from ?IPV6:2001:1c00:c1e:bf00:d69d:5353:dba5:ee81? (2001-1c00-0c1e-bf00-d69d-5353-dba5-ee81.cable.dynamic.v6.ziggo.nl. [2001:1c00:c1e:bf00:d69d:5353:dba5:ee81])
-        by smtp.gmail.com with ESMTPSA id qo14-20020a170907874e00b00770880dfc4fsm871702ejc.29.2022.11.03.12.28.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Nov 2022 12:28:10 -0700 (PDT)
-Message-ID: <16c7f876-102c-60e1-4a81-3378b6c726fb@redhat.com>
-Date:   Thu, 3 Nov 2022 20:28:09 +0100
+        Thu, 3 Nov 2022 15:45:47 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 046311F9C5;
+        Thu,  3 Nov 2022 12:45:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1667504743; x=1699040743;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=OS+/+xZt1QdTJvH8RPAr0SDIsAedYTAz4C3sGWMmzrg=;
+  b=APqBo4kDberOYEAq+cOzShQ+Y024ukW7sz+imBchwAMWU9IzjPdw8ULC
+   uyMONsBPW/xh80JbYcLPqN+azY4s+HquXxFrsUOXAj/DBn+ZjCOO7Ty75
+   +30ImCndaBLPNwP4KYADl2LSwVoo44hOL+FFr750r1St3as746QAdrx3J
+   8=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 03 Nov 2022 12:45:42 -0700
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2022 12:45:41 -0700
+Received: from [10.110.88.98] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 3 Nov 2022
+ 12:45:40 -0700
+Message-ID: <4bf14665-3303-2449-a5d7-5b7cf01ccc29@quicinc.com>
+Date:   Thu, 3 Nov 2022 12:45:39 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [RFC PATCH 1/7] Input: goodix - fix reset polarity
-Content-Language: en-US, nl
-To:     Quentin Schulz <quentin.schulz@theobroma-systems.com>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc:     Quentin Schulz <foss+kernel@0leil.net>, hadess@hadess.net,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
-        festevam@gmail.com, linux-imx@nxp.com, wens@csie.org,
-        jernej.skrabec@gmail.com, samuel@sholland.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@somainline.org,
-        heiko@sntech.de, linux-input@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        arm-mail-list <linux-arm-kernel@lists.infradead.org>,
-        linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>
-References: <20221103-upstream-goodix-reset-v1-0-87b49ae589f1@theobroma-systems.com>
- <20221103-upstream-goodix-reset-v1-1-87b49ae589f1@theobroma-systems.com>
- <1fa371bd-78a6-bb7c-4692-1d8132ec2ab1@redhat.com>
- <Y2P7SsPa04975Rkm@google.com>
- <692fd16e-4183-d58d-802e-2b83563aee4b@redhat.com>
- <267de96a-0129-a97d-9bf6-e1001b422a1a@theobroma-systems.com>
-From:   Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <267de96a-0129-a97d-9bf6-e1001b422a1a@theobroma-systems.com>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Subject: Re: [PATCH v6 02/21] dt-bindings: Add binding for gunyah hypervisor
+To:     Jassi Brar <jassisinghbrar@gmail.com>
+CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        "Mark Rutland" <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        "Marc Zyngier" <maz@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        "Amol Maheshwari" <amahesh@qti.qualcomm.com>,
+        Kalle Valo <kvalo@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20221026185846.3983888-1-quic_eberman@quicinc.com>
+ <20221026185846.3983888-3-quic_eberman@quicinc.com>
+ <CABb+yY3JVNPG3dcyHNFxEeGEu3MN_pAOh3+cwexPPe2YG6SNUg@mail.gmail.com>
+ <fb7e101f-8de0-d77e-30e1-74b882b19583@quicinc.com>
+ <CABb+yY08jP+Q5xvzLf=7F1tULP6-eZz5EDiK9mBj2fAv=iZa_A@mail.gmail.com>
+ <4cb58489-cd42-1868-9add-0c360065de23@quicinc.com>
+ <CABb+yY2GA90RLazHZL7sLtC+ka-P8y6s00V2BVF4OMPTDi-rKg@mail.gmail.com>
+ <62f7402d-f0e7-8e8a-e1a4-958ddbcf8d8b@quicinc.com>
+ <CABb+yY0-rtt5CfzGA_D3THnfTO1pgstmVo2_1McEJ=JMdTcD2Q@mail.gmail.com>
+ <840d876c-6a09-59cf-fc66-c5752ad22d7e@quicinc.com>
+ <CABb+yY1rd2mzNz-ovaO2Di=9qeAKp4XeUUE+6yPbBiv7YjTCfw@mail.gmail.com>
+ <10525d0d-b887-6960-5fbc-933b91e2e97c@quicinc.com>
+ <CABb+yY2fBa3up8Byu8axagwTEoidW+mbwene1qFyh=qJxPLJ=Q@mail.gmail.com>
+Content-Language: en-US
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <CABb+yY2fBa3up8Byu8axagwTEoidW+mbwene1qFyh=qJxPLJ=Q@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Quentin,
 
-On 11/3/22 19:41, Quentin Schulz wrote:
-> Hi all,
-> 
-> On 11/3/22 18:45, Hans de Goede wrote:
->> Hi,
+
+On 11/2/2022 8:21 PM, Jassi Brar wrote:
+> On Wed, Nov 2, 2022 at 6:23 PM Elliot Berman <quic_eberman@quicinc.com> wrote:
 >>
->> On 11/3/22 18:32, Dmitry Torokhov wrote:
->>> Hi Hans,
->>>
->>> On Thu, Nov 03, 2022 at 03:58:47PM +0100, Hans de Goede wrote:
->>>> Hi Quentin,
+>>
+>>
+>> On 11/2/2022 11:24 AM, Jassi Brar wrote:
+>>> On Wed, Nov 2, 2022 at 1:06 PM Elliot Berman <quic_eberman@quicinc.com> wrote:
 >>>>
->>>> On 11/3/22 15:43, Quentin Schulz wrote:
->>>>> From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
->>>>>
->>>>> The reset line is asserted for selecting the I2C target address and then
->>>>> deasserted.
+>>>> Hi Jassi,
 >>>>
->>>> It is not asserted/deasserted, asserted/deasserted is reset-controller/
->>>> reset-framework (drivers/reset/*) terminology.
+>>>> On 11/1/2022 7:01 PM, Jassi Brar wrote:
+>>>>> On Tue, Nov 1, 2022 at 7:12 PM Elliot Berman <quic_eberman@quicinc.com> wrote:
+>>>>>>
+>>>>>>
+>>>>>>
+>>>>>> On 11/1/2022 2:58 PM, Jassi Brar wrote:
+>>>>>>> On Tue, Nov 1, 2022 at 3:35 PM Elliot Berman <quic_eberman@quicinc.com> wrote:
+>>>>>>>>
+>>>>>>>>
+>>>>>>>>
+>>>>>>>> On 11/1/2022 9:23 AM, Jassi Brar wrote:
+>>>>>>>>> On Mon, Oct 31, 2022 at 10:20 PM Elliot Berman <quic_eberman@quicinc.com> wrote:
+>>>>>>>>>>
+>>>>>>>>>> Hi Jassi,
+>>>>>>>>>>
+>>>>>>>>>> On 10/27/2022 7:33 PM, Jassi Brar wrote:
+>>>>>>>>>>       > On Wed, Oct 26, 2022 at 1:59 PM Elliot Berman
+>>>>>>>>>> <quic_eberman@quicinc.com> wrote:
+>>>>>>>>>>       > .....
+>>>>>>>>>>       >> +
+>>>>>>>>>>       >> +        gunyah-resource-mgr@0 {
+>>>>>>>>>>       >> +            compatible = "gunyah-resource-manager-1-0",
+>>>>>>>>>> "gunyah-resource-manager";
+>>>>>>>>>>       >> +            interrupts = <GIC_SPI 3 IRQ_TYPE_EDGE_RISING>, /* TX
+>>>>>>>>>> full IRQ */
+>>>>>>>>>>       >> +                         <GIC_SPI 4 IRQ_TYPE_EDGE_RISING>; /* RX
+>>>>>>>>>> empty IRQ */
+>>>>>>>>>>       >> +            reg = <0x00000000 0x00000000>, <0x00000000 0x00000001>;
+>>>>>>>>>>       >> +                  /* TX, RX cap ids */
+>>>>>>>>>>       >> +        };
+>>>>>>>>>>       >>
+>>>>>>>>>>       > All these resources are used only by the mailbox controller driver.
+>>>>>>>>>>       > So, this should be the mailbox controller node, rather than the
+>>>>>>>>>>       > mailbox user.> One option is to load gunyah-resource-manager as a
+>>>>>>>>>> module that relies
+>>>>>>>>>>       > on the gunyah-mailbox provider. That would also avoid the "Allow
+>>>>>>>>>>       > direct registration to a channel" hack patch.
+>>>>>>>>>>
+>>>>>>>>>> A message queue to another guest VM wouldn't be known at boot time and
+>>>>>>>>>> thus couldn't be described on the devicetree.
+>>>>>>>>>>
+>>>>>>>>> I think you need to implement of_xlate() ... or please tell me what
+>>>>>>>>> exactly you need to specify in the dt.
+>>>>>>>>
+>>>>>>>> Dynamically created virtual machines can't be known on the dt, so there
+>>>>>>>> is nothing to specify in the DT. There couldn't be a devicetree node for
+>>>>>>>> the message queue client because that client is only exists once the VM
+>>>>>>>> is created by userspace.
+>>>>>>>>
+>>>>>>> The underlying "physical channel" is the synchronous SMC instruction,
+>>>>>>> which remains 1 irrespective of the number of mailbox instances
+>>>>>>> created.
+>>>>>>
+>>>>>> I disagree that the physical channel is the SMC instruction. Regardless
+>>>>>> though, there are num_online_cpus() "physical channels" with this
+>>>>>> perspective.
+>>>>>>
+>>>>>>> So basically you are sharing one resource among users. Why doesn't the
+>>>>>>> RM request the "smc instruction" channel once and share it among
+>>>>>>> users?
+>>>>>>
+>>>>>> I suppose in this scenario, a single mailbox channel would represent all
+>>>>>> message queues? This would cause Linux to serialize *all* message queue
+>>>>>> hypercalls. Sorry, I can only think negative implications.
+>>>>>>
+>>>>>> Error handling needs to move into clients: if a TX message queue becomes
+>>>>>> full or an RX message queue becomes empty, then we'll need to return
+>>>>>> error back to the client right away. The clients would need to register
+>>>>>> for the RTS/RTR interrupts to know when to send/receive messages and
+>>>>>> have retry error handling. If the mailbox controller retried for the
+>>>>>> clients as currently proposed, then we could get into a scenario where a
+>>>>>> message queue could never be ready to send/receive and thus stuck
+>>>>>> forever trying to process that message. The effect here would be that
+>>>>>> the mailbox controller becomes a wrapper to some SMC instructions that
+>>>>>> aren't related at the SMC instruction level.
+>>>>>>
+>>>>>> A single channel would limit performance of SMP systems because only one
+>>>>>> core could send/receive a message. There is no such limitation for
+>>>>>> message queues to behave like this.
+>>>>>>
+>>>>> This is just an illusion. If Gunyah can handle multiple calls from a
+>>>>> VM parallely, even with the "bind-client-to-channel" hack you can't
+>>>>> make sure different channels run on different cpu cores.  If you are
+>>>>> ok with that, you could simply populate a mailbox controller with N
+>>>>> channels and allocate them in any order the clients ask.
 >>>>
->>>> We are driving GPIOs here and those are driven low/high.
->>>
->>> Not quite. GPIOD API operates on a logival level (think of them as
->>> active/inactive) and allows platform/firmware to specify polarity from
->>> the AP point of view (as opposed to device). This important if the
->>> peripheral is not attached directly, but potentially through an inverter
->>> or something similar).
+>>>> I wanted to make sure I understood the ask here completely. On what
+>>>> basis is N chosen? Who would be the mailbox clients?
+>>>>
+>>> A channel structure is cheap, so any number that is not likely to run
+>>> out. Say you have 10 possible users in a VM, set N=16. I know ideally
+>>> it should be precise and flexible but the gain in simplicity makes the
+>>> trade-off very acceptable.
 >>
->> Right and if a line runs through an inverting buffer then marking
->> the pin as active-low in the DT makes a lot of sense here.
+>> I think I get the direction you are thinking now. N is chosen based off
+>> of how many clients there might be. One mailbox controller will
+>> represent all message queues and each channel will be one message queue.
+>> There are some limitations that might make it more complex to implement
+>> than having 1 message queue per controller like I have now.
 >>
-> 
-> It doesn't to me. /me shrugs
-> 
->> But as I mentioned before the datasheet spells out a very specific
->> init-sequence.
+>> My interpretation is that mailbox controller knows the configuration of
+>> its channels before being bound to a client. For dynamically created
+>> message queues, the client would need tell the controller about the
+>> message queue configuration. I didn't find example where client is
+>> providing information about a channel to the controller.
 >>
-> 
-> As Dmitry pointed out, we're talking about logical vs physical level. The driver tries to enforce physical level (on the touchscreen controller side) by expecting the logical level (of the gpio controller) to match.
-> 
->> By default marking all the direct-attached RST pin connections as
->> active-low (1) to then invert the value again in the driver
->> (from the datasheet init sequence specified values pov) IMHO
->> just makes the driver code harder to read when putting it side
->> to side by the init-sequence specified in the datasheet.
+>>    1. need a mechanism to allow the client to provide the
+>> gunyah_resources for the channel (i.e. the irqs and cap ids).
 >>
+> IIUC there is exactly one resource-manager in a VM. Right?
+> Looking at your code, TX and RX irq are used only by the mailbox
+> driver and are the same for all clients/users. So that should be a
+> property under the mailbox controller node. Not sure what cap ids are.
 > 
-> When I want to put a device into reset mode, I activate/assert the line so that its logical state is "active". For Goodix, its reset line is active low. I do a "positive" action, so I activate something. If it was called nreset, that would be a different story. If it was named enable-gpios, I would understand. I just don't get the current implementation with reset-gpios in DT.
-> 
-> Reading:
-> reset-gpios = <&gpio0 1 GPIO_ACTIVE_HIGH>;
-> means that I need to set the logical output to HIGH to have a HW reset, which is not what happens for this driver.
-> 
->> I don't see how playing this double-invert game is going to help
->> us / gives us any added value, in any way.
+
+Ah -- "message queues" are a generic inter-VM communication mechanism 
+offered by Gunyah. One use case for message queues is to communicate 
+with the resource-manager, but other message queues can exist between 
+other virtual machines. Those other message queues use different TX and 
+RX irq and have different client protocols.
+
+In mailbox terminology, we have one known channel at boot-up time (the 
+resource manager). That known channel can inform Linux about other 
+channels at runtime. The client (not the controller) decodes received 
+data from the channel to discover the new channels.
+
+One approach we found was coming from pcc.c, which has their own 
+request_channel function (pcc_mbox_request_channel). We could follow 
+this approach as well...
+
+>>    2. Still need to have bind-client-to-channel patch since clients
+>> aren't real devices and so shouldn't be on DT.
 >>
-> 
-> The current implementation is playing the double-invert game for me.
-> 
-> So clearly, we do not agree on what, at least in the DT, the level of a reset gpio should mean.
+> the clients may be virtual (serial, gpio etc) but the resource-manager
+> requires some mailbox hardware to communicate, so the resource-manager
+> should be the mailbox client (that further spawns virtual devices)
 
-It would seem that way. Anyways lets agree to disagree here.
+Yes, this the design I'm aiming for. Also want to highlight that the 
+resource-manager spawns Gunyah virtual devices such as message queue 
+channels.
 
-It seems that Dmitry is in favor of the change you suggest, so
-lets just focus on making sure these changes don't break AcPI
-support.
-
->> And in all the ACPI tables the GPIOs are marked as active-high
->> so changing this to have the driver now all of a sudden expect
->> the reset-gpio to be marked as active-low at the gpio-subsys
->> level will be quite cumbersome since normally the active-low vs
->> -high info comes from the firmware-tables and now all of a sudden
->> we need to override this.
->>
-> 
-> We have the information from which standard we got the GPIO, so we could always invert the flag we get from DT to match whatever is in ACPI.
-> 
-> Blindly ignoring the DT flag is not an option since the HW design could actually require an inversion (GPIO connected to a transistor for example). I'm not sure what exactly could be done on the gpio-subsys level to deal with this. I think we just disagree on what the reset "active state" should mean and no amount of code would fix that?
-
-I would prefer for the gpiod_direction_output(ts->gpiod_rst, x)
-calls to have x actually matching the timing diagrams in
-the datasheet.
-
-At a minimum when you invert those from the datasheet, please
-add a comment that the values are inverted from the timing
-diagram because the GPIO is marked as active-low in their
-gpio_desc ?
-
->> During all my work on the goodix driver I have always been very
->> careful to not introduce any behavior changes for the DT users
->> of the drivers. It would be nice if this courtesy could also
->> be extended in the other direction.
->>
-> 
-> This RFC is clearly breaking ACPI support. I have zero knowledge about ACPI and didn't know that devm_gpiod_get_optional fetches from OF or ACPI. It was not my intention to break ACPI, sorry if it came this way.
-> 
-> I frankly didn't expect this to be an easy discussion, since changing the DT is usually a no-go, but as is making the DT binding implementation-specific (which is the current state of affairs), e.g. we'll need U-Boot/BSD/whatever driver to also use the same logic. I want to be noted that I like none of the options I offered so far.
-
-Yes breaking the existing DT bindings / existing DTB files is
-probably also going to be a problem. I'm going to defer reviewing
-that part of these changes to other people.
-
-> As I was surprised by the (for me) inverted logic of the GPIO state, I preferred fixing the driver and DT to match what my expectations were.
-> 
-> I'm looking for guidance on how we can deal with this, I do not claim what I suggest is what we should absolutely go for.
-
-Ok, so I've been taking a look at how we can invert the 'x' passed
-to the gpiod_direction_output(ts->gpiod_rst, x) calls and not break
-things with ACPI.
-
-The rst pin is looked up through a acpi_gpio_mapping which
-contains acpi_gpio_params as one of the per pin parameters
-and that does have an active_low flag.
-
-After (re)reading the gpiolib code to fresh up my memory
-of how this all fits together that flag should do what it
-says on the tin.
-
-So if we want to revert the value of x for all the:
-
-gpiod_direction_output(ts->gpiod_rst, x);
-
-calls, then something like the following should work to get
-gpiolib to invert that again to turn it into a no-op:
-
-diff --git a/drivers/input/touchscreen/goodix.c b/drivers/input/touchscreen/goodix.c
-index a33cc7950cf5..5c294c56a20d 100644
---- a/drivers/input/touchscreen/goodix.c
-+++ b/drivers/input/touchscreen/goodix.c
-@@ -797,23 +797,26 @@ static int goodix_reset(struct goodix_ts_data *ts)
- }
- 
- #ifdef ACPI_GPIO_SUPPORT
--static const struct acpi_gpio_params first_gpio = { 0, 0, false };
--static const struct acpi_gpio_params second_gpio = { 1, 0, false };
-+static const struct acpi_gpio_params int_first_gpio = { 0, 0, false };
-+static const struct acpi_gpio_params int_second_gpio = { 1, 0, false };
-+
-+static const struct acpi_gpio_params rst_first_gpio = { 0, 0, true };
-+static const struct acpi_gpio_params rst_second_gpio = { 1, 0, true };
- 
- static const struct acpi_gpio_mapping acpi_goodix_int_first_gpios[] = {
--	{ GOODIX_GPIO_INT_NAME "-gpios", &first_gpio, 1 },
--	{ GOODIX_GPIO_RST_NAME "-gpios", &second_gpio, 1 },
-+	{ GOODIX_GPIO_INT_NAME "-gpios", &int_first_gpio, 1 },
-+	{ GOODIX_GPIO_RST_NAME "-gpios", &rst_second_gpio, 1 },
- 	{ },
- };
- 
- static const struct acpi_gpio_mapping acpi_goodix_int_last_gpios[] = {
--	{ GOODIX_GPIO_RST_NAME "-gpios", &first_gpio, 1 },
--	{ GOODIX_GPIO_INT_NAME "-gpios", &second_gpio, 1 },
-+	{ GOODIX_GPIO_RST_NAME "-gpios", &rst_first_gpio, 1 },
-+	{ GOODIX_GPIO_INT_NAME "-gpios", &int_second_gpio, 1 },
- 	{ },
- };
- 
- static const struct acpi_gpio_mapping acpi_goodix_reset_only_gpios[] = {
--	{ GOODIX_GPIO_RST_NAME "-gpios", &first_gpio, 1 },
-+	{ GOODIX_GPIO_RST_NAME "-gpios", &rst_first_gpio, 1 },
- 	{ },
- };
- 
-Note this is missing the actual inverting of the
-gpiod_direction_output(ts->gpiod_rst, x) calls!
-
-Regards,
-
-Hans
-
-
+Thanks,
+Elliot
