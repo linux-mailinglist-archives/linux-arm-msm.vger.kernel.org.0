@@ -2,1883 +2,538 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 18E816173A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 02:19:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36C546173FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 03:06:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230364AbiKCBTc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Nov 2022 21:19:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35294 "EHLO
+        id S230433AbiKCCGQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Nov 2022 22:06:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbiKCBTb (ORCPT
+        with ESMTP id S230197AbiKCCGP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Nov 2022 21:19:31 -0400
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0663F12745;
-        Wed,  2 Nov 2022 18:19:28 -0700 (PDT)
-Received: by mail-il1-x134.google.com with SMTP id q18so331701ils.12;
-        Wed, 02 Nov 2022 18:19:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5KrzXqmFMRMtUyetWBIo/dn0yrlr/F5hRG28kzklVaE=;
-        b=Ezk1RnYGVwNSi9+OioEv8U/8mLcGpbNPmKzhYPbpITjaoy4iaAmaw3hwFc85qpTT0O
-         pjdogEyvEK2sJKO0+8kTzcWryvKQYbASbNoWHGM1I0e2OEANwcEH8wVqO7/p76KPQsIv
-         PsYcyZbEDP8unYuYdyNeM3fnDtkfYmysmOxRAiEknCtwT/hYFzHK0k9NEtWNv1pR/Ynq
-         KY1qr4m2ClEX+MWPQSLr1zfFUxV4l6FaqygGOgviCtZF5/uZjU9ONWvOT7Gku8jyz+kP
-         nAVqG/5Bi3yoxRyHzuZ4bOIGBj/E/LFKU09nV3Y1M6rNPSwjcW2XzwdSqlkzBXoQ1JRe
-         S9CA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5KrzXqmFMRMtUyetWBIo/dn0yrlr/F5hRG28kzklVaE=;
-        b=HCNAqak9ktfk6FFkt3n6algO4JftfzQoDnW5sH/ouQSGn+Ko6CNGIeEEmiYutnl3bK
-         2+EM5sMmYvL3+Ig2qsVOFNPxmJMrO3s9JtU73L91G7vxo/TuQlLDdru6BuAtlnbiEyYR
-         WCPgFBIxkBnojIB45/bhV8KY6W402bnX3GW+emlFsFELUy3NS+4L8Lq4DR2f/jKUoQQL
-         9sPz9M/ZbY8ehbIZQHx1BVPh7zbhQtXDGMRpl1J7h7Ds3fR8pJSnYYvQLIZrSGBiGx8E
-         Kl1wxKf+KFJ3YJOKB0Qn8dk4VGJHS1zHkgZygz/hF98LDEXIKfklZrA+SNehbiwA134t
-         UZPg==
-X-Gm-Message-State: ACrzQf3nwjqfqoh0abH6JZDBX47kIAfSomWs0OUyQsA7PpeSrnKj2GR4
-        MiPW5s+2rGCsTMlHSl7tWQQ=
-X-Google-Smtp-Source: AMsMyM4nzXKOEexuvg1zwM4yT/J2Zypwlj0EtxLMNnxr+97YXCzvoZ4abWQRtXxQ0R3yoBLt5pitKQ==
-X-Received: by 2002:a92:c5d4:0:b0:300:d9d7:fe2e with SMTP id s20-20020a92c5d4000000b00300d9d7fe2emr470024ilt.212.1667438367099;
-        Wed, 02 Nov 2022 18:19:27 -0700 (PDT)
-Received: from localhost ([2607:fea8:a2e2:2d00:f1f0:c4d7:e39e:e2f])
-        by smtp.gmail.com with ESMTPSA id d7-20020a92d5c7000000b00300c4b978c9sm1896404ilq.29.2022.11.02.18.19.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 18:19:26 -0700 (PDT)
-Date:   Wed, 2 Nov 2022 21:19:24 -0400
-From:   Richard Acayan <mailingradian@gmail.com>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Chanho Park <chanho61.park@samsung.com>,
-        Thierry Reding <treding@nvidia.com>,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Das Srinagesh <quic_gurus@quicinc.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: add sdm670 and pixel 3a device
- trees
-Message-ID: <Y2MXHLaY8LcO9KHV@mailingradian>
-References: <20221101235722.53955-1-mailingradian@gmail.com>
- <20221101235722.53955-5-mailingradian@gmail.com>
+        Wed, 2 Nov 2022 22:06:15 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DF5512088;
+        Wed,  2 Nov 2022 19:06:14 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A31JVcO009943;
+        Thu, 3 Nov 2022 02:03:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=72KDNuupBPGKoKW78QBTx074DshTW2VMfUNeXhgAIV0=;
+ b=kQUwEiA8VQxOOyh5Y5uf2SD0qLZPlwmRJlLC4GTpyjTciwc8eSbCU5aTzuQ20n3QRjLg
+ 6U4h4hB34wN9UxeV5yy5jPviWtYmmPH7Mw49KesHF6r+h2ieuDZctGBDLzDHP4S2/0+9
+ U/NOrC2NQdZFW61vBFWkAaKxVKY32Sbjo6NaKdWM9Ar9VYpsbUBits9NbwN4IH5s3otN
+ HvKRyhTrYXUnnwWS7DmlgdQPngTP0Tm6S0rI4/nmYBKyJ33dnTDRjcj5Tyyh91xRZ7cM
+ 8FLMH7ZgUXXXdnWdSCP6ebxNrU3hzTqtQ+I+s0bF3E5uBRx9vo8FK5nr3y1faclD1omZ KQ== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kky27rsas-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 03 Nov 2022 02:03:54 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A323rD3008974
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 3 Nov 2022 02:03:53 GMT
+Received: from [10.239.133.73] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 2 Nov 2022
+ 19:03:51 -0700
+Message-ID: <4c3d38c9-a43e-97bd-c7f9-3d21240e9d0e@quicinc.com>
+Date:   Thu, 3 Nov 2022 10:03:49 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221101235722.53955-5-mailingradian@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [PATCH v4] remoteproc: core: do pm relax when in RPROC_OFFLINE
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+CC:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_clew@quicinc.com>
+References: <20221012204344.GA1178915@p14s>
+ <792f05fc-995e-9a87-ab7d-bee03f15bc79@quicinc.com>
+ <20221013173442.GA1279972@p14s> <20221013180334.GB1279972@p14s>
+ <8807a9a6-d93d-aef5-15f4-88648a6ecbe2@quicinc.com>
+ <CANLsYkx8Vcha9FpfRvJEkq2pd+mSYFeZQBXj65YoiSBv+WEY4A@mail.gmail.com>
+ <70828854-8427-8ce1-1535-e14261fd122d@quicinc.com>
+ <420faf00-d59e-57c6-55a5-fae08a411517@foss.st.com>
+ <CANLsYkw1Ex0TfmG-tRhHJgn3LsdvNhS_6HjJXn=ogwcCOWbH_A@mail.gmail.com>
+ <414aacb1-e68b-a9a7-3b99-12bc56494f6f@quicinc.com>
+ <20221102180350.GA1733006@p14s>
+From:   "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
+In-Reply-To: <20221102180350.GA1733006@p14s>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: aWmklg0iXEhYdI0CvwfgO7GIqtjRGywc
+X-Proofpoint-ORIG-GUID: aWmklg0iXEhYdI0CvwfgO7GIqtjRGywc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-02_15,2022-11-02_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ mlxscore=0 mlxlogscore=999 spamscore=0 phishscore=0 malwarescore=0
+ clxscore=1015 lowpriorityscore=0 impostorscore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211030012
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 01, 2022 at 07:57:22PM -0400, Richard Acayan wrote:
-> The Qualcomm Snapdragon 670 has been out for a while. Add a device tree
-> for it and the Google Pixel 3a as the first device.
+On 11/3/2022 2:03 AM, Mathieu Poirier wrote:
+> On Wed, Nov 02, 2022 at 06:53:49PM +0800, Aiqun(Maria) Yu wrote:
+>> Hi,
+>>
+>> Let me think about this carefully.
+>>
+>> When in RPROC_RECOVERY_FAIL case we want to re-do the recovery process again
+>> or just leave the pm_relax?
 > 
-> The Pixel 3a has the same bootloader issue as the Pixel 3 and will not work
-> on Android 10 bootloaders or later until it gets fixed for the Pixel 3.
+> Neither.
 > 
-> SoC Initial Features:
->  - power management
->  - clocks
->  - pinctrl
->  - eMMC
->  - USB 2.0
->  - GENI I2C
->  - IOMMU
->  - RPMh
->  - interrupts
+> When a recovery fail we don't want to call pm_relax().  The code in
+> rproc_crash_handler_work() becomes:
 > 
-> Device-Specific Initial Features:
->  - side buttons (keys)
->  - regulators
->  - touchscreen
+>          
+> 	if (rproc->state == RPROC_OFFLINE) {
+>                  /* We have raced with rproc_shutdown() */
+>                  pm_relax()
+> 		mutex_unlock(&rproc->lock);
+> 		return;
+>          }
 > 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |    1 +
->  .../boot/dts/qcom/sdm670-google-sargo.dts     |  519 +++++++
->  arch/arm64/boot/dts/qcom/sdm670.dtsi          | 1216 +++++++++++++++++
->  3 files changed, 1736 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sdm670.dtsi
+> 	if (rproc->state == RPROC_CRASHED ||
+>              rproc->state == RPROC_RECOVERY_FAILED) {
+> 		/* handle only the first crash detected */
+> 		mutex_unlock(&rproc->lock);
+> 		return;
+> 	}
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index b0558d3389e5..4eb5d8829efb 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -124,6 +124,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-voyager.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm632-fairphone-fp3.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm636-sony-xperia-ganges-mermaid.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm660-xiaomi-lavender.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm670-google-sargo.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts b/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-> new file mode 100644
-> index 000000000000..fa3dee78e442
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-> @@ -0,0 +1,519 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Device tree for Google Pixel 3a, adapted from google-blueline device tree,
-> + * xiaomi-lavender device tree, and oneplus-common device tree.
-> + *
-> + * Copyright (c) 2022, Richard Acayan. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/input/input.h>
-> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> +#include <dt-bindings/power/qcom-rpmpd.h>
-> +#include "sdm670.dtsi"
-> +#include "pm660.dtsi"
-> +#include "pm660l.dtsi"
-> +
-> +/delete-node/ &mpss_region;
-> +/delete-node/ &venus_mem;
-> +/delete-node/ &wlan_msa_mem;
-> +/delete-node/ &cdsp_mem;
-> +/delete-node/ &mba_region;
-> +/delete-node/ &adsp_mem;
-> +/delete-node/ &ipa_fw_mem;
-> +/delete-node/ &ipa_gsi_mem;
-> +/delete-node/ &gpu_mem;
-> +
-> +/ {
-> +	model = "Google Pixel 3a";
-> +	compatible = "google,sargo", "qcom,sdm670";
-> +	qcom,board-id = <0x00041e05 0>;
-> +	qcom,msm-id = <321 0x20001>;
-> +
-> +	aliases { };
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		framebuffer@9c000000 {
-> +			compatible = "simple-framebuffer";
-> +			reg = <0x0 0x9c000000 0x0 (1080 * 2220 * 4)>;
-> +			width = <1080>;
-> +			height = <2220>;
-> +			stride = <(1080 * 4)>;
-> +			format = "a8r8g8b8";
-> +		};
-> +	};
-> +
-> +	reserved-memory {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +
-> +		mpss_region: mpss@8b000000 {
-> +			reg = <0 0x8b000000 0 0x9800000>;
-> +			no-map;
-> +		};
-> +
-> +		venus_mem: venus@94800000 {
-> +			reg = <0 0x94800000 0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		wlan_msa_mem: wlan-msa@94d00000 {
-> +			reg = <0 0x94d00000 0 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		cdsp_mem: cdsp@94e00000 {
-> +			reg = <0 0x94e00000 0 0x800000>;
-> +			no-map;
-> +		};
-> +
-> +		mba_region: mba@95600000 {
-> +			reg = <0 0x95600000 0 0x200000>;
-> +			no-map;
-> +		};
-> +
-> +		adsp_mem: adsp@95800000 {
-> +			reg = <0 0x95800000 0 0x2200000>;
-> +			no-map;
-> +		};
-> +
-> +		ipa_fw_mem: ipa-fw@97a00000 {
-> +			reg = <0 0x97a00000 0 0x10000>;
-> +			no-map;
-> +		};
-> +
-> +		ipa_gsi_mem: ipa-gsi@97a10000 {
-> +			reg = <0 0x97a10000 0 0x5000>;
-> +			no-map;
-> +		};
-> +
-> +		gpu_mem: gpu@97a15000 {
-> +			reg = <0 0x97a15000 0 0x2000>;
-> +			no-map;
-> +		};
-> +
-> +		framebuffer-region@9c000000 {
-> +			reg = <0 0x9c000000 0 0x2400000>;
-> +			no-map;
-> +		};
-> +
-> +		/* Also includes ramoops regions */
-> +		debug_info_mem: debug-info@a1800000 {
-> +			reg = <0 0xa1800000 0 0x411000>;
-> +			no-map;
-> +		};
-> +	};
-> +
-> +	/*
-> +	 * Supply map from xiaomi-lavender specifies this as the supply for
-> +	 * ldob1, ldob9, ldob10, ldoa2, and ldoa3, while downstream specifies
-> +	 * this as a power domain. Set this as a fixed regulator with the same
-> +	 * voltage as lavender until display is needed to avoid unneccessarily
-> +	 * using a deprecated binding (regulator-fixed-domain).
-> +	 */
-> +	vreg_s2b_1p05: vreg-s2b-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vreg_s2b";
-> +		regulator-min-microvolt = <1050000>;
-> +		regulator-max-microvolt = <1050000>;
-> +	};
-> +
-> +	vph_pwr: vph-pwr-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-min-microvolt = <3312000>;
-> +		regulator-max-microvolt = <3312000>;
-> +
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +		autorepeat;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&vol_up_pin>;
-> +
-> +		key-vol-up {
-> +			label = "Volume Up";
-> +			linux,code = <KEY_VOLUMEUP>;
-> +			gpios = <&pm660l_gpios 7 GPIO_ACTIVE_LOW>;
-> +		};
-> +	};
-> +
-> +	/*
-> +	 * The touchscreen regulator seems to be controlled somehow by a gpio.
-> +	 * Model it as a fixed regulator and keep it on. Without schematics we
-> +	 * don't know how this is actually wired up...
-> +	 */
-> +	ts_1p8_supply: ts-1p8-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "ts_1p8_supply";
-> +
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +
-> +		gpio = <&pm660_gpios 12 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +	};
-> +};
-> +
-> +&apps_rsc {
-> +	pm660l-regulators {
-> +		compatible = "qcom,pm660l-rpmh-regulators";
-> +		qcom,pmic-id = "b";
-> +
-> +		vdd-s1-supply = <&vph_pwr>;
-> +		vdd-s2-supply = <&vph_pwr>;
-> +		vdd-s3-s4-supply = <&vph_pwr>;
-> +		vdd-s5-supply = <&vph_pwr>;
-> +
-> +		vdd-l1-l9-l10-supply = <&vreg_s2b_1p05>;
-> +		vdd-l2-supply = <&vreg_bob>;
-> +		vdd-l3-l5-l7-l8-supply = <&vreg_bob>;
-> +		vdd-l4-l6-supply = <&vreg_bob>;
-> +		vdd-bob-supply = <&vph_pwr>;
-> +
-> +		/* LDOs */
-> +		vreg_l1b_0p89: ldo1 {
-> +			regulator-min-microvolt = <880000>;
-> +			regulator-max-microvolt = <900000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l2b_2p38: ldo2 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2960000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l3b_2p93: ldo3 {
-> +			regulator-min-microvolt = <2850000>;
-> +			regulator-max-microvolt = <3008000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l4b_2p96: ldo4 {
-> +			regulator-min-microvolt = <2960000>;
-> +			regulator-max-microvolt = <2960000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l5b_2p96: ldo5 {
-> +			regulator-min-microvolt = <2960000>;
-> +			regulator-max-microvolt = <2960000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l6b_3p15: ldo6 {
-> +			regulator-min-microvolt = <3008000>;
-> +			regulator-max-microvolt = <3300000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l7b_3p1: ldo7 {
-> +			regulator-min-microvolt = <3088000>;
-> +			regulator-max-microvolt = <3100000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l8b_3p3: ldo8 {
-> +			regulator-min-microvolt = <3300000>;
-> +			regulator-max-microvolt = <3312000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		/*
-> +		 * Downstream specifies a fixed voltage of 3.312 V, but the
-> +		 * PMIC4 BOB ranges don't support that. Widen the range a
-> +		 * little to avoid adding a new BOB regulator type.
-> +		 */
-> +		vreg_bob: bob {
-> +			regulator-min-microvolt = <3296000>;
-> +			regulator-max-microvolt = <3328000>;
-> +			regulator-enable-ramp-delay = <500>;
-> +		};
-> +	};
-> +
-> +	pm660-regulators {
-> +		compatible = "qcom,pm660-rpmh-regulators";
-> +		qcom,pmic-id = "a";
-> +
-> +		vdd-s1-supply = <&vph_pwr>;
-> +		vdd-s2-supply = <&vph_pwr>;
-> +		vdd-s3-supply = <&vph_pwr>;
-> +		vdd-s4-supply = <&vph_pwr>;
-> +		vdd-s5-supply = <&vph_pwr>;
-> +		vdd-s6-supply = <&vph_pwr>;
-> +
-> +		vdd-l1-l6-l7-supply = <&vreg_s6a_1p29>;
-> +		vdd-l2-l3-supply = <&vreg_s2b_1p05>;
-> +		vdd-l5-supply = <&vreg_s2b_1p05>;
-> +		vdd-l8-l9-l10-l11-l12-l13-l14-supply = <&vreg_s4a_1p92>;
-> +		vdd-l15-l16-l17-l18-l19-supply = <&vreg_bob>;
-> +
-> +		/*
-> +		 * S1A (FTAPC0), S2A (FTAPC1), S3A (HFAPC1) are managed
-> +		 * by the Core Power Reduction hardened (CPRh) and the
-> +		 * Operating State Manager (OSM) HW automatically.
-> +		 */
-> +
-> +		vreg_s4a_1p92: smps4 {
-> +			regulator-min-microvolt = <1808000>;
-> +			regulator-max-microvolt = <2040000>;
-> +			regulator-enable-ramp-delay = <200>;
-> +		};
-> +
-> +		vreg_s6a_1p29: smps6 {
-> +			regulator-min-microvolt = <1224000>;
-> +			regulator-max-microvolt = <1352000>;
-> +			regulator-enable-ramp-delay = <150>;
-> +		};
-> +
-> +		/* LDOs */
-> +		vreg_l1a_1p225: ldo1 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1250000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l2a_1p0: ldo2 {
-> +			regulator-min-microvolt = <1000000>;
-> +			regulator-max-microvolt = <1000000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l3a_1p0: ldo3 {
-> +			regulator-min-microvolt = <1000000>;
-> +			regulator-max-microvolt = <1000000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l5a_0p8: ldo5 {
-> +			regulator-min-microvolt = <800000>;
-> +			regulator-max-microvolt = <800000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l6a_1p28: ldo6 {
-> +			regulator-min-microvolt = <1248000>;
-> +			regulator-max-microvolt = <1304000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l7a_1p2: ldo7 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l8a_1p8: ldo8 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l9a_1p8: ldo9 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l10a_1p8: ldo10 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l11a_1p8: ldo11 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l12a_1p8: ldo12 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l13a_1p8: ldo13 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l14a_1p8: ldo14 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l15a_2p38: ldo15 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2950000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l16a_2p7: ldo16 {
-> +			regulator-min-microvolt = <2696000>;
-> +			regulator-max-microvolt = <2696000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l17a_2p38: ldo17 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2950000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +
-> +		vreg_l19a_3p3: ldo19 {
-> +			regulator-min-microvolt = <3000000>;
-> +			regulator-max-microvolt = <3312000>;
-> +			regulator-enable-ramp-delay = <250>;
-> +		};
-> +	};
-> +};
-> +
-> +&gpi_dma1 {
-> +	status = "okay";
-> +};
-> +
-> +&qupv3_id_1 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c9 {
-> +	status = "okay";
-> +	clock-frequency = <100000>;
-> +
-> +	synaptics-rmi4-i2c@20 {
-> +		compatible = "syna,rmi4-i2c";
-> +		reg = <0x20>;
-> +		#address-cells = <0x1>;
-> +		#size-cells = <0x0>;
-> +		interrupts-extended = <&tlmm 125 IRQ_TYPE_EDGE_FALLING>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&touchscreen_default>;
-> +
-> +		/* VDD supply isn't specified, bind it to power */
-> +		vdd-supply = <&vph_pwr>;
-> +		vio-supply = <&ts_1p8_supply>;
-> +
-> +		syna,reset-delay-ms = <200>;
-> +		syna,startup-delay-ms = <200>;
-> +
-> +		rmi4-f01@1 {
-> +			reg = <0x01>;
-> +			syna,nosleep-mode = <1>;
-> +		};
-> +
-> +		rmi4-f12@12 {
-> +			reg = <0x12>;
-> +			touchscreen-x-mm = <62>;
-> +			touchscreen-y-mm = <127>;
-> +			syna,sensor-type = <1>;
-> +		};
-> +	};
-> +};
-> +
-> +&gcc {
-> +	protected-clocks = <GCC_QSPI_CORE_CLK>,
-> +			   <GCC_QSPI_CORE_CLK_SRC>,
-> +			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>;
-> +};
-> +
-> +&pm660l_gpios {
-> +	vol_up_pin: vol-up-state {
-> +		pins = "gpio7";
-> +		function = "normal";
-> +		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
-> +		input-enable;
-> +		bias-pull-up;
-> +	};
-> +};
-> +
-> +&pon_pwrkey {
-> +	status = "okay";
-> +};
-> +
-> +&pon_resin {
-> +	status = "okay";
-> +	linux,code = <KEY_VOLUMEDOWN>;
-> +};
-> +
-> +&sdhc_1 {
-> +	status = "okay";
-> +	supports-cqe;
-> +	mmc-hs200-1_8v;
-> +	mmc-hs400-1_8v;
-> +	mmc-ddr-1_8v;
-> +
-> +	qcom,ddr-config = <0xc3040873>;
-> +
-> +	vmmc-supply = <&vreg_l4b_2p96>;
-> +	vqmmc-supply = <&vreg_l8a_1p8>;
-> +};
-> +
-> +&tlmm {
-> +	gpio-reserved-ranges = <0 4>, <81 4>;
-> +
-> +	touchscreen_default: ts-default-state {
-> +		ts-reset-pins {
-> +			pins = "gpio99";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +			output-high;
-> +		};
-> +
-> +		ts-irq-pins {
-> +			pins = "gpio125";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-> +
-> +		ts-switch-pins {
-> +			pins = "gpio135";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +			output-low;
-> +		};
-> +	};
-> +};
-> +
-> +&usb_1_hsphy {
-> +	status = "okay";
-> +
-> +	vdd-supply = <&vreg_l1b_0p89>;
-> +	vdda-pll-supply = <&vreg_l10a_1p8>;
-> +	vdda-phy-dpdm-supply = <&vreg_l7b_3p1>;
-> +};
-> +
-> +&usb_1 {
-> +	status = "okay";
-> +
-> +	qcom,select-utmi-as-pipe-clk;
-> +};
-> +
-> +&usb_1_dwc3 {
-> +	/* Only peripheral works for now */
-> +	dr_mode = "peripheral";
-> +
-> +	/* Do not assume that sdm670.dtsi will never support USB 3.0 */
-> +	phys = <&usb_1_hsphy>;
-> +	phy-names = "usb2-phy";
-> +	maximum-speed = "high-speed";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> new file mode 100644
-> index 000000000000..4450ece839a0
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> @@ -0,0 +1,1216 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * SDM670 SoC device tree source, adapted from SDM845 SoC device tree
-> + *
-> + * Copyright (c) 2018, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2022, Richard Acayan. All rights reserved.
-> + */
-> +
-> +#include <dt-bindings/clock/qcom,gcc-sdm845.h>
-> +#include <dt-bindings/clock/qcom,rpmh.h>
-> +#include <dt-bindings/dma/qcom-gpi.h>
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/phy/phy-qcom-qusb2.h>
-> +#include <dt-bindings/power/qcom-rpmpd.h>
-> +#include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> +
-> +/ {
-> +	interrupt-parent = <&intc>;
-> +
-> +	#address-cells = <2>;
-> +	#size-cells = <2>;
-> +
-> +	aliases { };
-> +
-> +	chosen { };
-> +
-> +	memory@80000000 {
-> +		device_type = "memory";
-> +		/* We expect the bootloader to fill in the size */
-> +		reg = <0 0x80000000 0 0>;
-> +	};
-> +
-> +	reserved-memory {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		hyp_mem: hyp-mem@85700000 {
-> +			reg = <0 0x85700000 0 0x600000>;
-> +			no-map;
-> +		};
-> +
-> +		xbl_mem: xbl-mem@85e00000 {
-> +			reg = <0 0x85e00000 0 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		aop_mem: aop-mem@85fc0000 {
-> +			reg = <0 0x85fc0000 0 0x20000>;
-> +			no-map;
-> +		};
-> +
-> +		aop_cmd_db_mem: aop-cmd-db-mem@85fe0000 {
-> +			compatible = "qcom,cmd-db";
-> +			reg = <0x0 0x85fe0000 0 0x20000>;
-> +			no-map;
-> +		};
-> +
-> +		camera_mem: camera-mem@8ab00000 {
-> +			reg = <0 0x8ab00000 0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		mpss_region: mpss@8b000000 {
-> +			reg = <0 0x8b000000 0 0x7e00000>;
-> +			no-map;
-> +		};
-> +
-> +		venus_mem: venus@92e00000 {
-> +			reg = <0 0x92e00000 0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		wlan_msa_mem: wlan-msa@93300000 {
-> +			reg = <0 0x93300000 0 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		cdsp_mem: cdsp@93400000 {
-> +			reg = <0 0x93400000 0 0x800000>;
-> +			no-map;
-> +		};
-> +
-> +		mba_region: mba@93c00000 {
-> +			reg = <0 0x93c00000 0 0x200000>;
-> +			no-map;
-> +		};
-> +
-> +		adsp_mem: adsp@93e00000 {
-> +			reg = <0 0x93e00000 0 0x1e00000>;
-> +			no-map;
-> +		};
-> +
-> +		ipa_fw_mem: ipa-fw@95c00000 {
-> +			reg = <0 0x95c00000 0 0x10000>;
-> +			no-map;
-> +		};
-> +
-> +		ipa_gsi_mem: ipa-gsi@95c10000 {
-> +			reg = <0 0x95c10000 0 0x5000>;
-> +			no-map;
-> +		};
-> +
-> +		gpu_mem: gpu@95c15000 {
-> +			reg = <0 0x95c15000 0 0x2000>;
-> +			no-map;
-> +		};
-> +
-> +		spss_mem: spss@97b00000 {
-> +			reg = <0 0x97b00000 0 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		qseecom_mem: qseecom@9e400000 {
-> +			reg = <0 0x9e400000 0 0x1400000>;
-> +			no-map;
-> +		};
-> +	};
-> +
-> +	cpus {
-> +		#address-cells = <2>;
-> +		#size-cells = <0>;
-> +
-> +		CPU0: cpu@0 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo360";
-> +			reg = <0x0 0x0>;
-> +			enable-method = "psci";
-> +			power-domains = <&CPU_PD0>;
-> +			power-domain-names = "psci";
-> +			next-level-cache = <&L2_0>;
-> +			L2_0: l2-cache {
-> +				compatible = "cache";
-> +				next-level-cache = <&L3_0>;
-> +				L3_0: l3-cache {
-> +				      compatible = "cache";
-> +				};
-> +			};
-> +		};
-> +
-> +		CPU1: cpu@100 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo360";
-> +			reg = <0x0 0x100>;
-> +			enable-method = "psci";
-> +			power-domains = <&CPU_PD1>;
-> +			power-domain-names = "psci";
-> +			next-level-cache = <&L2_100>;
-> +			L2_100: l2-cache {
-> +				compatible = "cache";
-> +				next-level-cache = <&L3_0>;
-> +			};
-> +		};
-> +
-> +		CPU2: cpu@200 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo360";
-> +			reg = <0x0 0x200>;
-> +			enable-method = "psci";
-> +			power-domains = <&CPU_PD2>;
-> +			power-domain-names = "psci";
-> +			next-level-cache = <&L2_200>;
-> +			L2_200: l2-cache {
-> +				compatible = "cache";
-> +				next-level-cache = <&L3_0>;
-> +			};
-> +		};
-> +
-> +		CPU3: cpu@300 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo360";
-> +			reg = <0x0 0x300>;
-> +			enable-method = "psci";
-> +			power-domains = <&CPU_PD3>;
-> +			power-domain-names = "psci";
-> +			next-level-cache = <&L2_300>;
-> +			L2_300: l2-cache {
-> +				compatible = "cache";
-> +				next-level-cache = <&L3_0>;
-> +			};
-> +		};
-> +
-> +		CPU4: cpu@400 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo360";
-> +			reg = <0x0 0x400>;
-> +			enable-method = "psci";
-> +			power-domains = <&CPU_PD4>;
-> +			power-domain-names = "psci";
-> +			next-level-cache = <&L2_400>;
-> +			L2_400: l2-cache {
-> +				compatible = "cache";
-> +				next-level-cache = <&L3_0>;
-> +			};
-> +		};
-> +
-> +		CPU5: cpu@500 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo360";
-> +			reg = <0x0 0x500>;
-> +			enable-method = "psci";
-> +			power-domains = <&CPU_PD5>;
-> +			power-domain-names = "psci";
-> +			next-level-cache = <&L2_500>;
-> +			L2_500: l2-cache {
-> +				compatible = "cache";
-> +				next-level-cache = <&L3_0>;
-> +			};
-> +		};
-> +
-> +		CPU6: cpu@600 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo360";
-> +			reg = <0x0 0x600>;
-> +			enable-method = "psci";
-> +			power-domains = <&CPU_PD6>;
-> +			power-domain-names = "psci";
-> +			next-level-cache = <&L2_600>;
-> +			L2_600: l2-cache {
-> +				compatible = "cache";
-> +				next-level-cache = <&L3_0>;
-> +			};
-> +		};
-> +
-> +		CPU7: cpu@700 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,kryo360";
-> +			reg = <0x0 0x700>;
-> +			enable-method = "psci";
-> +			power-domains = <&CPU_PD7>;
-> +			power-domain-names = "psci";
-> +			next-level-cache = <&L2_700>;
-> +			L2_700: l2-cache {
-> +				compatible = "cache";
-> +				next-level-cache = <&L3_0>;
-> +			};
-> +		};
-> +
-> +		cpu-map {
-> +			cluster0 {
-> +				core0 {
-> +					cpu = <&CPU0>;
-> +				};
-> +
-> +				core1 {
-> +					cpu = <&CPU1>;
-> +				};
-> +
-> +				core2 {
-> +					cpu = <&CPU2>;
-> +				};
-> +
-> +				core3 {
-> +					cpu = <&CPU3>;
-> +				};
-> +
-> +				core4 {
-> +					cpu = <&CPU4>;
-> +				};
-> +
-> +				core5 {
-> +					cpu = <&CPU5>;
-> +				};
-> +
-> +				core6 {
-> +					cpu = <&CPU6>;
-> +				};
-> +
-> +				core7 {
-> +					cpu = <&CPU7>;
-> +				};
-> +			};
-> +		};
-> +
-> +		idle-states {
-> +			entry-method = "psci";
-> +
-> +			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
-> +				compatible = "arm,idle-state";
-> +				idle-state-name = "little-rail-power-collapse";
-> +				arm,psci-suspend-param = <0x40000004>;
-> +				entry-latency-us = <702>;
-> +				exit-latency-us = <915>;
-> +				min-residency-us = <1617>;
-> +				local-timer-stop;
-> +			};
-> +
-> +			BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
-> +				compatible = "arm,idle-state";
-> +				idle-state-name = "big-rail-power-collapse";
-> +				arm,psci-suspend-param = <0x40000004>;
-> +				entry-latency-us = <526>;
-> +				exit-latency-us = <1854>;
-> +				min-residency-us = <2380>;
-> +				local-timer-stop;
-> +			};
-> +		};
-> +
-> +		domain-idle-states {
-> +			CLUSTER_SLEEP_0: cluster-sleep-0 {
-> +				compatible = "domain-idle-state";
-> +				arm,psci-suspend-param = <0x4100c244>;
-> +				entry-latency-us = <3263>;
-> +				exit-latency-us = <6562>;
-> +				min-residency-us = <9825>;
-> +			};
-> +		};
-> +	};
-> +
-> +	timer {
-> +		compatible = "arm,armv8-timer";
-> +		interrupts = <GIC_PPI 1 IRQ_TYPE_LEVEL_LOW>,
-> +			     <GIC_PPI 2 IRQ_TYPE_LEVEL_LOW>,
-> +			     <GIC_PPI 3 IRQ_TYPE_LEVEL_LOW>,
-> +			     <GIC_PPI 0 IRQ_TYPE_LEVEL_LOW>;
-> +	};
-> +
-> +	clocks {
-> +		xo_board: xo-board {
-> +			compatible = "fixed-clock";
-> +			#clock-cells = <0>;
-> +			clock-frequency = <38400000>;
-> +			clock-output-names = "xo_board";
-> +		};
-> +
-> +		sleep_clk: sleep-clk {
-> +			compatible = "fixed-clock";
-> +			#clock-cells = <0>;
-> +			clock-frequency = <32764>;
-> +		};
-> +	};
-> +
-> +	firmware {
-> +		scm {
-> +			compatible = "qcom,scm-sdm670", "qcom,scm";
-> +		};
-> +	};
-> +
-> +	psci {
-> +		compatible = "arm,psci-1.0";
-> +		method = "smc";
-> +
-> +		CPU_PD0: power-domain-cpu0 {
-> +			#power-domain-cells = <0>;
-> +			power-domains = <&CLUSTER_PD>;
-> +			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-> +		};
-> +
-> +		CPU_PD1: power-domain-cpu1 {
-> +			#power-domain-cells = <0>;
-> +			power-domains = <&CLUSTER_PD>;
-> +			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-> +		};
-> +
-> +		CPU_PD2: power-domain-cpu2 {
-> +			#power-domain-cells = <0>;
-> +			power-domains = <&CLUSTER_PD>;
-> +			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-> +		};
-> +
-> +		CPU_PD3: power-domain-cpu3 {
-> +			#power-domain-cells = <0>;
-> +			power-domains = <&CLUSTER_PD>;
-> +			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-> +		};
-> +
-> +		CPU_PD4: power-domain-cpu4 {
-> +			#power-domain-cells = <0>;
-> +			power-domains = <&CLUSTER_PD>;
-> +			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-> +		};
-> +
-> +		CPU_PD5: power-domain-cpu5 {
-> +			#power-domain-cells = <0>;
-> +			power-domains = <&CLUSTER_PD>;
-> +			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-> +		};
-> +
-> +		CPU_PD6: power-domain-cpu6 {
-> +			#power-domain-cells = <0>;
-> +			power-domains = <&CLUSTER_PD>;
-> +			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-> +		};
-> +
-> +		CPU_PD7: power-domain-cpu7 {
-> +			#power-domain-cells = <0>;
-> +			power-domains = <&CLUSTER_PD>;
-> +			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-> +		};
-> +
-> +		CLUSTER_PD: power-domain-cluster {
-> +			#power-domain-cells = <0>;
-> +			domain-idle-states = <&CLUSTER_SLEEP_0>;
-> +		};
-> +	};
-> +
-> +	soc: soc@0 {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges = <0 0 0 0 0x10 0>;
-> +		dma-ranges = <0 0 0 0 0x10 0>;
-> +		compatible = "simple-bus";
-> +
-> +		gcc: clock-controller@100000 {
-> +			compatible = "qcom,gcc-sdm670";
-> +			reg = <0 0x00100000 0 0x1f0000>;
-> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK_A>,
-> +				 <&sleep_clk>;
-> +			clock-names = "bi_tcxo",
-> +				      "bi_tcxo_ao",
-> +				      "sleep_clk";
-> +			#clock-cells = <1>;
-> +			#reset-cells = <1>;
-> +			#power-domain-cells = <1>;
-> +		};
-> +
-> +		sdhc_1: mmc@7c4000 {
-> +			compatible = "qcom,sdm670-sdhci", "qcom,sdhci-msm-v5";
-> +			reg = <0 0x007c4000 0 0x1000>,
-> +			      <0 0x007c5000 0 0x1000>,
-> +			      <0 0x007c8000 0 0x8000>;
-> +			reg-names = "hc", "cqhci", "ice";
-> +
-> +			interrupts = <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 644 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "hc_irq", "pwr_irq";
-> +
-> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-> +				 <&gcc GCC_SDCC1_APPS_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&gcc GCC_SDCC1_ICE_CORE_CLK>,
-> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>;
-> +			clock-names = "iface", "core", "xo", "ice", "bus";
-> +
-> +			iommus = <&apps_smmu 0x140 0xf>;
-> +
-> +			pinctrl-names = "default", "sleep";
-> +			pinctrl-0 = <&sdc1_state_on>;
-> +			pinctrl-1 = <&sdc1_state_off>;
-> +			power-domains = <&rpmhpd SDM670_CX>;
-> +
-> +			bus-width = <8>;
-> +			non-removable;
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		gpi_dma0: dma-controller@800000 {
-> +			#dma-cells = <3>;
-> +			compatible = "qcom,sdm670-gpi-dma", "qcom,sdm845-gpi-dma";
-> +			reg = <0 0x00800000 0 0x60000>;
-> +			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 251 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 256 IRQ_TYPE_LEVEL_HIGH>;
-> +			dma-channels = <13>;
-> +			dma-channel-mask = <0xfa>;
-> +			iommus = <&apps_smmu 0x0016 0x0>;
-> +			status = "disabled";
-> +		};
-> +
-> +		qupv3_id_0: geniqup@8c0000 {
-> +			compatible = "qcom,geni-se-qup";
-> +			reg = <0 0x008c0000 0 0x6000>;
-> +			clock-names = "m-ahb", "s-ahb";
-> +			clocks = <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
-> +				 <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
-> +			iommus = <&apps_smmu 0x3 0x0>;
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +			interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>;
-> +			interconnect-names = "qup-core";
-Another thing to fix: these interconnects are excluded in this series.
-Will drop.
-> +			status = "disabled";
-> +
-> +			i2c0: i2c@880000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x00880000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_i2c0_default>;
-> +				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
-> +						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>,
-> +						<&aggre1_noc MASTER_QUP_1 0 &mem_noc SLAVE_EBI1 0>;
-> +				interconnect-names = "qup-core", "qup-config", "qup-memory";
-> +				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C>,
-> +				       <&gpi_dma0 1 0 QCOM_GPI_I2C>;
-> +				dma-names = "tx", "rx";
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c1: i2c@884000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x00884000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP0_S1_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_i2c1_default>;
-> +				interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
-> +						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>,
-> +						<&aggre1_noc MASTER_QUP_1 0 &mem_noc SLAVE_EBI1 0>;
-> +				interconnect-names = "qup-core", "qup-config", "qup-memory";
-> +				dmas = <&gpi_dma0 0 1 QCOM_GPI_I2C>,
-> +				       <&gpi_dma0 1 1 QCOM_GPI_I2C>;
-> +				dma-names = "tx", "rx";
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c2: i2c@888000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x00888000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP0_S2_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_i2c2_default>;
-> +				interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
-> +						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>,
-> +						<&aggre1_noc MASTER_QUP_1 0 &mem_noc SLAVE_EBI1 0>;
-> +				interconnect-names = "qup-core", "qup-config", "qup-memory";
-> +				dmas = <&gpi_dma0 0 2 QCOM_GPI_I2C>,
-> +				       <&gpi_dma0 1 2 QCOM_GPI_I2C>;
-> +				dma-names = "tx", "rx";
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c3: i2c@88c000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x0088c000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP0_S3_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_i2c3_default>;
-> +				interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
-> +						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>,
-> +						<&aggre1_noc MASTER_QUP_1 0 &mem_noc SLAVE_EBI1 0>;
-> +				interconnect-names = "qup-core", "qup-config", "qup-memory";
-> +				dmas = <&gpi_dma0 0 3 QCOM_GPI_I2C>,
-> +				       <&gpi_dma0 1 3 QCOM_GPI_I2C>;
-> +				dma-names = "tx", "rx";
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c4: i2c@890000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x00890000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP0_S4_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_i2c4_default>;
-> +				interrupts = <GIC_SPI 605 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
-> +						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>,
-> +						<&aggre1_noc MASTER_QUP_1 0 &mem_noc SLAVE_EBI1 0>;
-> +				interconnect-names = "qup-core", "qup-config", "qup-memory";
-> +				dmas = <&gpi_dma0 0 4 QCOM_GPI_I2C>,
-> +				       <&gpi_dma0 1 4 QCOM_GPI_I2C>;
-> +				dma-names = "tx", "rx";
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c5: i2c@894000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x00894000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP0_S5_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_i2c5_default>;
-> +				interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
-> +						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>,
-> +						<&aggre1_noc MASTER_QUP_1 0 &mem_noc SLAVE_EBI1 0>;
-> +				interconnect-names = "qup-core", "qup-config", "qup-memory";
-> +				dmas = <&gpi_dma0 0 5 QCOM_GPI_I2C>,
-> +				       <&gpi_dma0 1 5 QCOM_GPI_I2C>;
-> +				dma-names = "tx", "rx";
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c6: i2c@898000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x00898000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP0_S6_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_i2c6_default>;
-> +				interrupts = <GIC_SPI 607 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
-> +						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>,
-> +						<&aggre1_noc MASTER_QUP_1 0 &mem_noc SLAVE_EBI1 0>;
-> +				interconnect-names = "qup-core", "qup-config", "qup-memory";
-> +				dmas = <&gpi_dma0 0 6 QCOM_GPI_I2C>,
-> +				       <&gpi_dma0 1 6 QCOM_GPI_I2C>;
-> +				dma-names = "tx", "rx";
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c7: i2c@89c000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x0089c000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP0_S7_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_i2c7_default>;
-> +				interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
-> +						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>,
-> +						<&aggre1_noc MASTER_QUP_1 0 &mem_noc SLAVE_EBI1 0>;
-> +				interconnect-names = "qup-core", "qup-config", "qup-memory";
-> +				dmas = <&gpi_dma0 0 7 QCOM_GPI_I2C>,
-> +				       <&gpi_dma0 1 7 QCOM_GPI_I2C>;
-> +				dma-names = "tx", "rx";
-> +				status = "disabled";
-> +			};
-> +		};
-> +
-> +		gpi_dma1: dma-controller@a00000 {
-> +			#dma-cells = <3>;
-> +			compatible = "qcom,sdm670-gpi-dma", "qcom,sdm845-gpi-dma";
-> +			reg = <0 0x00a00000 0 0x60000>;
-> +			interrupts = <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 280 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 281 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 282 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 283 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 284 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 293 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 294 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 295 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 296 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 297 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 298 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 299 IRQ_TYPE_LEVEL_HIGH>;
-> +			dma-channels = <13>;
-> +			dma-channel-mask = <0xfa>;
-> +			iommus = <&apps_smmu 0x06d6 0x0>;
-> +			status = "disabled";
-> +		};
-> +
-> +		qupv3_id_1: geniqup@ac0000 {
-> +			compatible = "qcom,geni-se-qup";
-> +			reg = <0 0x00ac0000 0 0x6000>;
-> +			clock-names = "m-ahb", "s-ahb";
-> +			clocks = <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
-> +				 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
-> +			iommus = <&apps_smmu 0x6c3 0x0>;
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +			status = "disabled";
-> +
-> +			i2c8: i2c@a80000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x00a80000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP1_S0_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_i2c8_default>;
-> +				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +				dmas = <&gpi_dma1 0 0 QCOM_GPI_I2C>,
-> +				       <&gpi_dma1 1 0 QCOM_GPI_I2C>;
-> +				dma-names = "tx", "rx";
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c9: i2c@a84000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x00a84000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP1_S1_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_i2c9_default>;
-> +				interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +				dmas = <&gpi_dma1 0 1 QCOM_GPI_I2C>,
-> +				       <&gpi_dma1 1 1 QCOM_GPI_I2C>;
-> +				dma-names = "tx", "rx";
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c10: i2c@a88000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x00a88000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP1_S2_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_i2c10_default>;
-> +				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +				dmas = <&gpi_dma1 0 2 QCOM_GPI_I2C>,
-> +				       <&gpi_dma1 1 2 QCOM_GPI_I2C>;
-> +				dma-names = "tx", "rx";
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c11: i2c@a8c000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x00a8c000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP1_S3_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_i2c11_default>;
-> +				interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +				dmas = <&gpi_dma1 0 3 QCOM_GPI_I2C>,
-> +				       <&gpi_dma1 1 3 QCOM_GPI_I2C>;
-> +				dma-names = "tx", "rx";
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c12: i2c@a90000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x00a90000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP1_S4_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_i2c12_default>;
-> +				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +				dmas = <&gpi_dma1 0 4 QCOM_GPI_I2C>,
-> +				       <&gpi_dma1 1 4 QCOM_GPI_I2C>;
-> +				dma-names = "tx", "rx";
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c13: i2c@a94000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x00a94000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_i2c13_default>;
-> +				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +				dmas = <&gpi_dma1 0 5 QCOM_GPI_I2C>,
-> +				       <&gpi_dma1 1 5 QCOM_GPI_I2C>;
-> +				dma-names = "tx", "rx";
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c14: i2c@a98000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x00a98000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP1_S6_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_i2c14_default>;
-> +				interrupts = <GIC_SPI 359 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +				dmas = <&gpi_dma1 0 6 QCOM_GPI_I2C>,
-> +				       <&gpi_dma1 1 6 QCOM_GPI_I2C>;
-> +				dma-names = "tx", "rx";
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c15: i2c@a9c000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0 0x00a9c000 0 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP1_S7_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_i2c15_default>;
-> +				interrupts = <GIC_SPI 360 IRQ_TYPE_LEVEL_HIGH>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				power-domains = <&rpmhpd SDM670_CX>;
-> +				dmas = <&gpi_dma1 0 7 QCOM_GPI_I2C>,
-> +				       <&gpi_dma1 1 7 QCOM_GPI_I2C>;
-> +				dma-names = "tx", "rx";
-> +				status = "disabled";
-> +			};
-> +		};
-> +
-> +		tlmm: pinctrl@3400000 {
-> +			compatible = "qcom,sdm670-tlmm";
-> +			reg = <0 0x03400000 0 0xc00000>;
-> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +			gpio-ranges = <&tlmm 0 0 151>;
-> +
-> +			qup_i2c0_default: qup-i2c0-default-state {
-> +				pins = "gpio0", "gpio1";
-> +				function = "qup0";
-> +			};
-> +
-> +			qup_i2c1_default: qup-i2c1-default-state {
-> +				pins = "gpio17", "gpio18";
-> +				function = "qup1";
-> +			};
-> +
-> +			qup_i2c2_default: qup-i2c2-default-state {
-> +				pins = "gpio27", "gpio28";
-> +				function = "qup2";
-> +			};
-> +
-> +			qup_i2c3_default: qup-i2c3-default-state {
-> +				pins = "gpio41", "gpio42";
-> +				function = "qup3";
-> +			};
-> +
-> +			qup_i2c4_default: qup-i2c4-default-state {
-> +				pins = "gpio89", "gpio90";
-> +				function = "qup4";
-> +			};
-> +
-> +			qup_i2c5_default: qup-i2c5-default-state {
-> +				pins = "gpio85", "gpio86";
-> +				function = "qup5";
-> +			};
-> +
-> +			qup_i2c6_default: qup-i2c6-default-state {
-> +				pins = "gpio45", "gpio46";
-> +				function = "qup6";
-> +			};
-> +
-> +			qup_i2c7_default: qup-i2c7-default-state {
-> +				pins = "gpio93", "gpio94";
-> +				function = "qup7";
-> +			};
-> +
-> +			qup_i2c8_default: qup-i2c8-default-state {
-> +				pins = "gpio65", "gpio66";
-> +				function = "qup8";
-> +			};
-> +
-> +			qup_i2c9_default: qup-i2c9-default-state {
-> +				pins = "gpio6", "gpio7";
-> +				function = "qup9";
-> +			};
-> +
-> +			qup_i2c10_default: qup-i2c10-default-state {
-> +				pins = "gpio55", "gpio56";
-> +				function = "qup10";
-> +			};
-> +
-> +			qup_i2c11_default: qup-i2c11-default-state {
-> +				pins = "gpio31", "gpio32";
-> +				function = "qup11";
-> +			};
-> +
-> +			qup_i2c12_default: qup-i2c12-default-state {
-> +				pins = "gpio49", "gpio50";
-> +				function = "qup12";
-> +			};
-> +
-> +			qup_i2c13_default: qup-i2c13-default-state {
-> +				pins = "gpio105", "gpio106";
-> +				function = "qup13";
-> +			};
-> +
-> +			qup_i2c14_default: qup-i2c14-default-state {
-> +				pins = "gpio33", "gpio34";
-> +				function = "qup14";
-> +			};
-> +
-> +			qup_i2c15_default: qup-i2c15-default-state {
-> +				pins = "gpio81", "gpio82";
-> +				function = "qup15";
-> +			};
-> +
-> +			sdc1_state_on: sdc1-on-state {
-> +				clk-pins {
-> +					pins = "sdc1_clk";
-> +					bias-disable;
-> +					drive-strength = <16>;
-> +				};
-> +
-> +				cmd-pins {
-> +					pins = "sdc1_cmd";
-> +					bias-pull-up;
-> +					drive-strength = <10>;
-> +				};
-> +
-> +				data-pins {
-> +					pins = "sdc1_data";
-> +					bias-pull-up;
-> +					drive-strength = <10>;
-> +				};
-> +
-> +				rclk-pins {
-> +					pins = "sdc1_rclk";
-> +					bias-pull-down;
-> +				};
-> +			};
-> +
-> +			sdc1_state_off: sdc1-off-state {
-> +				clk-pins {
-> +					pins = "sdc1_clk";
-> +					bias-disable;
-> +					drive-strength = <2>;
-> +				};
-> +
-> +				cmd-pins {
-> +					pins = "sdc1_cmd";
-> +					bias-pull-up;
-> +					drive-strength = <2>;
-> +				};
-> +
-> +				data-pins {
-> +					pins = "sdc1_data";
-> +					bias-pull-up;
-> +					drive-strength = <2>;
-> +				};
-> +
-> +				rclk-pins {
-> +					pins = "sdc1_rclk";
-> +					bias-pull-down;
-> +				};
-> +			};
-> +		};
-> +
-> +		usb_1_hsphy: phy@88e2000 {
-> +			compatible = "qcom,sdm670-qusb2-phy", "qcom,qusb2-v2-phy";
-> +			reg = <0 0x088e2000 0 0x400>;
-> +			status = "disabled";
-> +			#phy-cells = <0>;
-> +
-> +			clocks = <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK>;
-> +			clock-names = "cfg_ahb", "ref";
-> +
-> +			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
-> +		};
-> +
-> +		usb_1: usb@a6f8800 {
-> +			compatible = "qcom,sdm670-dwc3", "qcom,dwc3";
-> +			reg = <0 0x0a6f8800 0 0x400>;
-> +			status = "disabled";
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +			dma-ranges;
-> +
-> +			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
-> +				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
-> +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
-> +				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>,
-> +				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>;
-> +			clock-names = "cfg_noc",
-> +				      "core",
-> +				      "iface",
-> +				      "sleep",
-> +				      "mock_utmi";
-> +
-> +			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
-> +					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
-> +			assigned-clock-rates = <19200000>, <150000000>;
-> +
-> +			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "hs_phy_irq", "ss_phy_irq",
-> +					  "dm_hs_phy_irq", "dp_hs_phy_irq";
-> +
-> +			power-domains = <&gcc USB30_PRIM_GDSC>;
-> +
-> +			resets = <&gcc GCC_USB30_PRIM_BCR>;
-> +
-> +			usb_1_dwc3: usb@a600000 {
-> +				compatible = "snps,dwc3";
-> +				reg = <0 0x0a600000 0 0xcd00>;
-> +				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-> +				iommus = <&apps_smmu 0x740 0>;
-> +				snps,dis_u2_susphy_quirk;
-> +				snps,dis_enblslpm_quirk;
-> +				phys = <&usb_1_hsphy>;
-> +				phy-names = "usb2-phy";
-> +			};
-> +		};
-> +
-> +		spmi_bus: spmi@c440000 {
-> +			compatible = "qcom,spmi-pmic-arb";
-> +			reg = <0 0x0c440000 0 0x1100>,
-> +			      <0 0x0c600000 0 0x2000000>,
-> +			      <0 0x0e600000 0 0x100000>,
-> +			      <0 0x0e700000 0 0xa0000>,
-> +			      <0 0x0c40a000 0 0x26000>;
-> +			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
-> +			interrupt-names = "periph_irq";
-> +			interrupts = <GIC_SPI 481 IRQ_TYPE_LEVEL_HIGH>;
-> +			qcom,ee = <0>;
-> +			qcom,channel = <0>;
-> +			#address-cells = <2>;
-> +			#size-cells = <0>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <4>;
-> +		};
-> +
-> +		apps_smmu: iommu@15000000 {
-> +			/*
-> +			 * The hardware tolerates the SDM845 reset quirk. The
-> +			 * iommu maintainers aren't responding to any patches
-> +			 * that would add support for new platforms. Set this
-> +			 * compatible so this dtsi is valid and functional.
-> +			 */
-> +			compatible = "qcom,sdm845-smmu-500", "qcom,smmu-500", "arm,mmu-500";
-> +			reg = <0 0x15000000 0 0x80000>;
-> +			#iommu-cells = <2>;
-> +			#global-interrupts = <1>;
-> +			interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 105 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 106 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 107 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 108 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 111 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 113 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 115 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 181 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 182 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 185 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 186 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 187 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 188 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 189 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 190 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 191 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 192 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 315 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 316 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 317 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 318 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 319 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 320 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 321 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 322 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 323 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 324 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 325 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 327 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 328 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 329 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 330 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 331 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 332 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 333 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 334 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 335 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 336 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 337 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 338 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 339 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 340 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 341 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 342 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 343 IRQ_TYPE_LEVEL_HIGH>;
-> +		};
-> +
-> +		apps_rsc: rsc@179c0000 {
-> +			label = "apps_rsc";
-> +			compatible = "qcom,rpmh-rsc";
-> +			reg = <0 0x179c0000 0 0x10000>,
-> +			      <0 0x179d0000 0 0x10000>,
-> +			      <0 0x179e0000 0 0x10000>;
-> +			reg-names = "drv-0", "drv-1", "drv-2";
-> +			interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
-> +			qcom,tcs-offset = <0xd00>;
-> +			qcom,drv-id = <2>;
-> +			qcom,tcs-config = <ACTIVE_TCS  2>,
-> +					  <SLEEP_TCS   3>,
-> +					  <WAKE_TCS    3>,
-> +					  <CONTROL_TCS 1>;
-> +
-> +			apps_bcm_voter: bcm-voter {
-> +				compatible = "qcom,bcm-voter";
-> +			};
-> +
-> +			rpmhcc: clock-controller {
-> +				compatible = "qcom,sdm670-rpmh-clk";
-> +				#clock-cells = <1>;
-> +				clock-names = "xo";
-> +				clocks = <&xo_board>;
-> +			};
-> +
-> +			rpmhpd: power-controller {
-> +				compatible = "qcom,sdm670-rpmhpd";
-> +				#power-domain-cells = <1>;
-> +				operating-points-v2 = <&rpmhpd_opp_table>;
-> +
-> +				rpmhpd_opp_table: opp-table {
-> +					compatible = "operating-points-v2";
-> +
-> +					rpmhpd_opp_ret: opp1 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_RETENTION>;
-> +					};
-> +
-> +					rpmhpd_opp_min_svs: opp2 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-> +					};
-> +
-> +					rpmhpd_opp_low_svs: opp3 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-> +					};
-> +
-> +					rpmhpd_opp_svs: opp4 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-> +					};
-> +
-> +					rpmhpd_opp_svs_l1: opp5 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-> +					};
-> +
-> +					rpmhpd_opp_nom: opp6 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
-> +					};
-> +
-> +					rpmhpd_opp_nom_l1: opp7 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
-> +					};
-> +
-> +					rpmhpd_opp_nom_l2: opp8 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_NOM_L2>;
-> +					};
-> +
-> +					rpmhpd_opp_turbo: opp9 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
-> +					};
-> +
-> +					rpmhpd_opp_turbo_l1: opp10 {
-> +						opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		intc: interrupt-controller@17a00000 {
-> +			compatible = "arm,gic-v3";
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +			#interrupt-cells = <3>;
-> +			interrupt-controller;
-> +			reg = <0 0x17a00000 0 0x10000>,     /* GICD */
-> +			      <0 0x17a60000 0 0x100000>;    /* GICR * 8 */
-> +			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
-> +		};
-> +	};
-> +};
-> -- 
-> 2.38.1
 > 
+> RPROC_RECOVERY_FAILED gets set in rproc_boot_recovery() if request_firmware() or
+> rproc_start() fail.  Function rproc_trigger_recovery() needs to allow for the
+> recovery the the remote processor is in RPROC_RECOVERY_FAILED state.  As such
+> the condition becomes:
+> 
+>          /* State could have changed before we got the mutex */
+> 	if (rproc->state != RPROC_CRASHED &&
+>              rproc->state != RPROC_RECOVERY_FAILED)
+> 		goto unlock_mutex;
+> 
+> Start with that and we can look at corner cases (if some exists) with a fresh
+> patchset.  Note that I have not addressed the attach/detach() scenario in the
+> above.
+
+If we didn't deal with the recovery failed case with correct pm_relax 
+call, it may left the device in a state that cannot enter to suspend state.
+Because first PROC_RECOVERY_FAIL case cannot ensure it have pm_relax 
+called before the second crash handler call pm_stay_awake or not.
+
+So, What about the atomic count along with pm_relax and pm_stay_awake ?
+
+struct rproc{
+...
+atomic_t wake_count;
+...
+}
+
+rproc_pm_stay_awake()
+{
+	atomic_inc(&wake_count);
+	pm_stay_awake();
+}
+
+rproc_pm_relax()
+{
+	if (atomic_dec_return(&wake_count) == 0)
+		pm_stay_awake();
+}
+
+can refer code like:
+
+rproc_report_crash()
+{
+	...
+	rproc_pm_stay_awake();
+	queue_work();
+	...
+}
+
+rproc_crash_handler_work()
+{
+	...
+	if (rproc->state == RPROC_OFFLINE || rproc->state == RPROC_CRASHED) {
+                   /* We have raced with rproc_shutdown() */
+                   rproc_pm_relax();
+  		mutex_unlock(&rproc->lock);
+  		return;
+           }
+	...
+}
+
+> 
+> Thanks,
+> Mathieu
+> 
+>>
+>> recovery fail case 1:
+>> |                                      |firstcrash interrupt issued
+>> | second crashed interrupt issued      | rproc_report_crash()
+>> | rproc_report_crash()                 |          pm_stay_awake()
+>> |          pm_stay_awake()             |          queue_work()
+>> |          queue_work()                |rproc_crash_handler_work()
+>> |                                      |mutex_lock(&rproc->lock);
+>> |                                      |rproc_stop()
+>> |rproc_crash_handler_work()            |rproc->state = RPROC_OFFLINE;
+>> |                                      |RPROC_RECOVERY_FAIL //new
+>> |                                      |mutex_unlock(&rproc->lock);
+>> |mutex_lock(&rproc->lock);             |pm_relax()
+>> |if (rproc->state == RPROC_OFFLINE)    |
+>> |return // shouldn't do pm_relax if RPROC_RECOVERY_FAIL?  |
+>> |mutex_unlock(&rproc->lock);           |
+>> |                                      |
+>> |                                      |
+>> |                                      |
+>>
+>> recovery fail case 2:
+>> |                                      |firstcrash interrupt issued
+>> |                                      | rproc_report_crash()
+>> |                                      |          pm_stay_awake()
+>> |                                      |          queue_work()
+>> |                                      |rproc_crash_handler_work()
+>> |                                      |mutex_lock(&rproc->lock);
+>> |                                      |rproc_stop()
+>> |                                      |rproc->state = RPROC_OFFLINE;
+>> |                                      |RPROC_RECOVERY_FAIL //new
+>> |                                      |mutex_unlock(&rproc->lock);
+>> |                                      |pm_relax()
+>> |
+>> | second crashed interrupt issued      |
+>> | rproc_report_crash()                 |
+>> |          pm_stay_awake()             |
+>> |          queue_work()                |
+>> |pm_stay_awake()
+>> |mutex_lock(&rproc->lock);
+>> |if (rproc->state == RPROC_OFFLINE)    |
+>> |return // still need do pm_relax if RPROC_RECOVERY_FAIL?  |
+>> |mutex_unlock(&rproc->lock);           |
+>> |                                      |
+>> |                                      |
+>> |                                      |
+>>
+>> Maybe I can have:
+>> 1. the pm_stay_awake and pm_relax with count based and call with paired for
+>> fix current concurency issue.
+>> 2. RPROC_RECOVERY_FAIL can be another patch for continue try to do recovery
+>> work.
+>> 3. handle RPROC_DETACHED case.
+>>
+>> On 11/2/2022 4:11 AM, Mathieu Poirier wrote:
+>>> On Fri, 28 Oct 2022 at 09:31, Arnaud POULIQUEN
+>>> <arnaud.pouliquen@foss.st.com> wrote:
+>>>>
+>>>> Hi,
+>>>>
+>>>> On 10/24/22 05:17, Aiqun(Maria) Yu wrote:
+>>>>> On 10/22/2022 3:34 AM, Mathieu Poirier wrote:
+>>>>>> On Wed, 19 Oct 2022 at 23:52, Aiqun(Maria) Yu <quic_aiquny@quicinc.com> wrote:
+>>>>>>>
+>>>>>>> On 10/14/2022 2:03 AM, Mathieu Poirier wrote:
+>>>>>>>> On Thu, Oct 13, 2022 at 11:34:42AM -0600, Mathieu Poirier wrote:
+>>>>>>>>> On Thu, Oct 13, 2022 at 09:40:09AM +0800, Aiqun(Maria) Yu wrote:
+>>>>>>>>>> Hi Mathieu,
+>>>>>>>>>>
+>>>>>>>>>> On 10/13/2022 4:43 AM, Mathieu Poirier wrote:
+>>>>>>>>>>> Please add what has changed from one version to another, either in a cover
+>>>>>>>>>>> letter or after the "Signed-off-by".  There are many examples on how to
+>>>>>>>>>>> do that
+>>>>>>>>>>> on the mailing list.
+>>>>>>>>>>>
+>>>>>>>>>> Thx for the information, will take a note and benefit for next time.
+>>>>>>>>>>
+>>>>>>>>>>> On Fri, Sep 16, 2022 at 03:12:31PM +0800, Maria Yu wrote:
+>>>>>>>>>>>> RPROC_OFFLINE state indicate there is no recovery process
+>>>>>>>>>>>> is in progress and no chance to do the pm_relax.
+>>>>>>>>>>>> Because when recovering from crash, rproc->lock is held and
+>>>>>>>>>>>> state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
+>>>>>>>>>>>> and then unlock rproc->lock.
+>>>>>>>>>>>
+>>>>>>>>>>> You are correct - because the lock is held rproc->state should be set to
+>>>>>>>>>>> RPROC_RUNNING
+>>>>>>>>>>> when rproc_trigger_recovery() returns.  If that is not the case then
+>>>>>>>>>>> something
+>>>>>>>>>>> went wrong.
+>>>>>>>>>>>
+>>>>>>>>>>> Function rproc_stop() sets rproc->state to RPROC_OFFLINE just before
+>>>>>>>>>>> returning,
+>>>>>>>>>>> so we know the remote processor was stopped.  Therefore if rproc->state
+>>>>>>>>>>> is set
+>>>>>>>>>>> to RPROC_OFFLINE something went wrong in either request_firmware() or
+>>>>>>>>>>> rproc_start().  Either way the remote processor is offline and the system
+>>>>>>>>>>> probably
+>>>>>>>>>>> in an unknown/unstable.  As such I don't see how calling pm_relax() can help
+>>>>>>>>>>> things along.
+>>>>>>>>>>>
+>>>>>>>>>> PROC_OFFLINE is possible that rproc_shutdown is triggered and successfully
+>>>>>>>>>> finished.
+>>>>>>>>>> Even if it is multi crash rproc_crash_handler_work contention issue, and
+>>>>>>>>>> last rproc_trigger_recovery bailed out with only
+>>>>>>>>>> rproc->state==RPROC_OFFLINE, it is still worth to do pm_relax in pair.
+>>>>>>>>>> Since the subsystem may still can be recovered with customer's next trigger
+>>>>>>>>>> of rproc_start, and we can make each error out path clean with pm resources.
+>>>>>>>>>>
+>>>>>>>>>>> I suggest spending time understanding what leads to the failure when
+>>>>>>>>>>> recovering
+>>>>>>>>>>> from a crash and address that problem(s).
+>>>>>>>>>>>
+>>>>>>>>>> In current case, the customer's information is that the issue happened when
+>>>>>>>>>> rproc_shutdown is triggered at similar time. So not an issue from error out
+>>>>>>>>>> of rproc_trigger_recovery.
+>>>>>>>>>
+>>>>>>>>> That is a very important element to consider and should have been mentioned
+>>>>>>>>> from
+>>>>>>>>> the beginning.  What I see happening is the following:
+>>>>>>>>>
+>>>>>>>>> rproc_report_crash()
+>>>>>>>>>             pm_stay_awake()
+>>>>>>>>>             queue_work() // current thread is suspended
+>>>>>>>>>
+>>>>>>>>> rproc_shutdown()
+>>>>>>>>>             rproc_stop()
+>>>>>>>>>                     rproc->state = RPROC_OFFLINE;
+>>>>>>>>>
+>>>>>>>>> rproc_crash_handler_work()
+>>>>>>>>>             if (rproc->state == RPROC_OFFLINE)
+>>>>>>>>>                     return // pm_relax() is not called
+>>>>>>>>>
+>>>>>>>>> The right way to fix this is to add a pm_relax() in rproc_shutdown() and
+>>>>>>>>> rproc_detach(), along with a very descriptive comment as to why it is needed.
+>>>>>>>>
+>>>>>>>> Thinking about this further there are more ramifications to consider.  Please
+>>>>>>>> confirm the above scenario is what you are facing.  I will advise on how to
+>>>>>>>> move
+>>>>>>>> forward if that is the case.
+>>>>>>>>
+>>>>>>> Not sure if the situation is clear or not. So resend the email again.
+>>>>>>>
+>>>>>>> The above senario is what customer is facing. crash hanppened while at
+>>>>>>> the same time shutdown is triggered.
+>>>>>>
+>>>>>> Unfortunately this is not enough details to address a problem as
+>>>>>> complex as this one.
+>>>>>>
+>>>>>>> And the device cannto goes to suspend state after that.
+>>>>>>> the subsystem can still be start normally after this.
+>>>>>>
+>>>>>> If the code flow I pasted above reflects the problem at hand, the
+>>>>>> current patch will not be sufficient to address the issue.  If Arnaud
+>>>>>> confirms my suspicions we will have to think about a better solution.
+>>>>>>
+>>>>>
+>>>>> Hi Mathiew,
+>>>>>
+>>>>> Could you pls have more details of any side effects other then power issue of
+>>>>> the current senario?
+>>>>> Why the current patch is not sufficient pls?
+>>>>>
+>>>>>
+>>>>> Have the current senario in details with rproc->lock information in details:
+>>>>>
+>>>>> | subsystem crashed interrupt issued      | user trigger shutdown
+>>>>> | rproc_report_crash()                    |
+>>>>> |          pm_stay_awake()                |
+>>>>> |          queue_work()                   |
+>>>>> |                                         |rproc_shutdown
+>>>>> |                                         |mutex_lock(&rproc->lock);
+>>>>> |                                         |rproc_stop()
+>>>>> |rproc_crash_handler_work()               |rproc->state = RPROC_OFFLINE;
+>>>>> |                                         |mutex_unlock(&rproc->lock);
+>>>>> |mutex_lock(&rproc->lock);                |
+>>>>> |if (rproc->state == RPROC_OFFLINE)       |
+>>>>> |return // pm_relax() is not called       |rproc_boot
+>>>>> |mutex_unlock(&rproc->lock);              |
+>>>>> |                                         |mutex_lock(&rproc->lock);
+>>>>> |                                         |rproc_start()
+>>>>> |                                         |mutex_unlock(&rproc->lock);
+>>>>>
+>>>>>
+>>>>
+>>>> Agree with Mathieu, this is not so simple.
+>>>>
+>>>
+>>> Thanks for looking into this.
+>>>
+>>>> Here is my view  hoping I haven't missed a point in your discussion or
+>>>> an other corner cases.
+>>>>
+>>>> I tried to analyze the issues (in what follows, the term "condition" means
+>>>> the "if" condition in which Aiqun proposes to add the fix) :
+>>>>
+>>>> I can see 4 use cases with race condition
+>>>>
+>>>> 1) crash report while already one is treated (rproc_boot_recovery called)
+>>>>        => not a real use case as if the remote processor is crashed we
+>>>>                 should not have a second crash report
+>>>>
+>>>
+>>> That part is of great concern to me.  *Theoretically* we should not
+>>> get a new crash report while one has already been dispatched but the
+>>> current code accounts for this scenario and as such the possibility
+>>> can't be dismissed.  Therefore we need to expect rproc_report_crash()
+>>> to be called multiple times before a single instance of
+>>> rproc_boot_recovery() is scheduled.
+>>
+>>
+>>>
+>>>> 2) rproc_stop executed between the queuing of the crash work and the call of
+>>>>     rproc_crash_handler_work
+>>>>      => rproc->state = RPROC_OFFLINE
+>>>>      => we enter in the "condition" and the pm_relax has to be called
+>>>>      => This commit fix should solve this use case
+>>>>
+>>>> 3) rproc_detach executed between the queue of the crash work and the call of
+>>>>     rproc_crash_handler_work
+>>>>      => rproc->state = RPROC_DETACHED;
+>>>>      => we don't go in "the condition" and issue because the recovery reattach
+>>>>         to the remote processor
+>>>>      => but pm_relax is called
+>>>>      => probably need an extra fix to avoid to re-attach
+>>>>
+>>>> 4) crash report while already one is treated (rproc_attach_recovery called)
+>>>>      this one corresponds to an auto reboot of the remote processor, with a
+>>>>      new crash
+>>>>      => rproc->state = RPROC_CRASHED or rproc->state = RPROC_DETACHED;
+>>>>      4)a) rproc->state = RPROC_CRASHED if rproc->recovery_disabled = true
+>>>>           => should call pm_relax if rproc->recovery_disabled = true
+>>>>           => commit does not work for this use case
+>>>>
+>>>>      4)b) rproc->state = RPROC_DETACHED if recovery fails
+>>>>          => error case with an unstable state
+>>>>          => how to differentiate it from the use case 3) ?
+>>>>          => introduce a RPROC_RECOVERY_FAIL state?
+>>>>
+>>>
+>>> The case where a recovery fails needs to be considered and is the
+>>> reason the original patch doesn't work.  Right now in
+>>> rproc_crash_handler_work(), it is not possible to differentiate
+>>> between a legitimate shutdown request (scenario #2 above) and a
+>>> recovery that went wrong.  I think introducing RPROC_RECOVERY_FAIL
+>>> would greatly simplify things.
+>>>
+>>> My initial evaluation had not considered the attach/detach scenarios -
+>>> thanks for adding that in the mix.
+>>>
+>>> Aiqun, please send a new patchset that adds a new remote processor
+>>> state, i.e RPROC_RECOVERY_FAIL.  There should also be another patch in
+>>> that set that takes attach/detach scenarios into account.  The code
+>>> between the v6.0 and v6.1 cycle has changed a lot in that area so make
+>>> sure to properly rebase.
+>>>
+>> I will try.
+>>
+>>>>
+>>>> Then pm_stay_awake is called when the crash work is queued.
+>>>> It seems to me coherent to call the pm_relax in the work handler.
+>>>>
+>>>>
+>>>>
+>>>> Here is a quick and dirty patch (not tested) that should take into account the
+>>>> main use cases ( except 1) and 4)b) )
+>>>>
+>>>> @@ -2009,8 +2009,18 @@ static void rproc_crash_handler_work(struct work_struct *work)
+>>>>
+>>>>           mutex_lock(&rproc->lock);
+>>>>
+>>>> -       if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
+>>>> +       if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE ||
+>>>> +           rproc->state == RPROC_DETACHED) {
+>>>>                   /* handle only the first crash detected */
+>>>> +
+>>>> +               /*
+>>>> +                * call pm-relax in following use cases:
+>>>> +                * - the remote processor has been stopped by the user
+>>>> +                * - the remote processor is detached
+>>>> +                + - the remote proc has an autonomous reset but recovery_disabled is true.
+>>>> +                */
+>>>> +               if(rproc->state != RPROC_CRASHED || rproc->recovery_disabled)
+>>>> +                       pm_relax(rproc->dev.parent);
+>>>>                   mutex_unlock(&rproc->lock);
+>>>>                   return;
+>>>>           }
+>>>>
+>>>> Regards,
+>>>> Arnaud
+>>>>
+>>>>>>>
+>>>>>>>>>
+>>>>>>>>>
+>>>>>>>>>>> Thanks,
+>>>>>>>>>>> Mathieu
+>>>>>>>>>>>
+>>>>>>>>>>>
+>>>>>>>>>>>> When the state is in RPROC_OFFLINE it means separate request
+>>>>>>>>>>>> of rproc_stop was done and no need to hold the wakeup source
+>>>>>>>>>>>> in crash handler to recover any more.
+>>>>>>>>>>>>
+>>>>>>>>>>>> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+>>>>>>>>>>>> ---
+>>>>>>>>>>>>       drivers/remoteproc/remoteproc_core.c | 11 +++++++++++
+>>>>>>>>>>>>       1 file changed, 11 insertions(+)
+>>>>>>>>>>>>
+>>>>>>>>>>>> diff --git a/drivers/remoteproc/remoteproc_core.c
+>>>>>>>>>>>> b/drivers/remoteproc/remoteproc_core.c
+>>>>>>>>>>>> index e5279ed9a8d7..6bc7b8b7d01e 100644
+>>>>>>>>>>>> --- a/drivers/remoteproc/remoteproc_core.c
+>>>>>>>>>>>> +++ b/drivers/remoteproc/remoteproc_core.c
+>>>>>>>>>>>> @@ -1956,6 +1956,17 @@ static void rproc_crash_handler_work(struct
+>>>>>>>>>>>> work_struct *work)
+>>>>>>>>>>>>              if (rproc->state == RPROC_CRASHED || rproc->state ==
+>>>>>>>>>>>> RPROC_OFFLINE) {
+>>>>>>>>>>>>                      /* handle only the first crash detected */
+>>>>>>>>>>>>                      mutex_unlock(&rproc->lock);
+>>>>>>>>>>>> +         /*
+>>>>>>>>>>>> +          * RPROC_OFFLINE state indicate there is no recovery process
+>>>>>>>>>>>> +          * is in progress and no chance to have pm_relax in place.
+>>>>>>>>>>>> +          * Because when recovering from crash, rproc->lock is held and
+>>>>>>>>>>>> +          * state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
+>>>>>>>>>>>> +          * and then unlock rproc->lock.
+>>>>>>>>>>>> +          * RPROC_OFFLINE is only an intermediate state in recovery
+>>>>>>>>>>>> +          * process.
+>>>>>>>>>>>> +          */
+>>>>>>>>>>>> +         if (rproc->state == RPROC_OFFLINE)
+>>>>>>>>>>>> +                 pm_relax(rproc->dev.parent);
+>>>>>>>>>>>>                      return;
+>>>>>>>>>>>>              }
+>>>>>>>>>>>> --
+>>>>>>>>>>>> 2.7.4
+>>>>>>>>>>>>
+>>>>>>>>>>
+>>>>>>>>>>
+>>>>>>>>>> --
+>>>>>>>>>> Thx and BRs,
+>>>>>>>>>> Aiqun(Maria) Yu
+>>>>>>>
+>>>>>>>
+>>>>>>> --
+>>>>>>> Thx and BRs,
+>>>>>>> Aiqun(Maria) Yu
+>>>>>
+>>>>>
+>>
+>>
+>> -- 
+>> Thx and BRs,
+>> Aiqun(Maria) Yu
+
+
+-- 
+Thx and BRs,
+Aiqun(Maria) Yu
