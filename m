@@ -2,67 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1BAC617DC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 14:22:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD2D2617E53
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 14:47:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231346AbiKCNV6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 09:21:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58546 "EHLO
+        id S230193AbiKCNrt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 09:47:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231759AbiKCNVz (ORCPT
+        with ESMTP id S229704AbiKCNrr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 09:21:55 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C8FB64EA;
-        Thu,  3 Nov 2022 06:21:54 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 56EEBB827CE;
-        Thu,  3 Nov 2022 13:21:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B94C433D7;
-        Thu,  3 Nov 2022 13:21:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667481712;
-        bh=Z0XmaPzB8/5OxlKcz/hqxjFMPGgVEHY0wHqktG+DZyw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=QMJhet3iZ569LqI2RxhJ5QYzFlGVAz2fMhJvGFncZ9+TDlBN8IsBWwRbCsWNl62rV
-         v3NXT0pBKTJ40xjG8hV4CrITh2ZH2vyuPJFFAFEtT1y3SE7/UfQjdHEZBDpdHOvhDt
-         viiBZPXECITtsksc5raOEclCxfXcbZG0Q02CT79apotPc37nIMwQNOaUemfYUs4SoU
-         FzDeUx9vYw/xVnY7VDJhWzvW2gumGTRAcOx1NqRphIXdFcfhXdmDKxCbdgbZs3MYDn
-         ReUZ7bHw3NeZRPiXZtDR6y02Ri9IzqeyJR+N910XuYeIyn5DjS8qUZGTY8AfpDPU6c
-         pGBWE0xPv4rVA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oqaA1-00082F-KI; Thu, 03 Nov 2022 14:21:34 +0100
-Date:   Thu, 3 Nov 2022 14:21:33 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, patches@lists.linux.dev,
+        Thu, 3 Nov 2022 09:47:47 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 998EDF50
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 06:47:46 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id h10so1118561qvq.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 06:47:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/2Nr5wIdGbAWm3WH/I4UVUKpbhCh82dprUQ26IZeMhc=;
+        b=qPv7iGDsarIyeVkPtASpJ9T0zxFA9vMYe5noup38EWHE174XLESSO8pOb+cAor4t9T
+         ohhqAr79b6QEkwtwsx1unZIDNieHhMgFD9w9spQ4q/VBD5K4xYW68UL2J9qaz1sr6Qt9
+         azDBNxlr5M/IQ4Ff9DHEhfwoCRVapzw1g0YsApKJoFs0cSqXJ2Q7SHX/X0YoeZbRbzOx
+         BymutPAUVmDMaT8ZbF4AFM7Ajszy/g2+5VFI3IeKTLVfTKsjqPpXt6WrbOUBszbc7IAe
+         /5k9YdNLB5XOFmjitCa51wUbm3bUWV+u5wZwSVmsl8M9vNCHMCGUzZFSZWkv8rLhmt9H
+         ye/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/2Nr5wIdGbAWm3WH/I4UVUKpbhCh82dprUQ26IZeMhc=;
+        b=mGQBDCf2iAOYNy2vrPK52wG17W+a94a3SB4lq2pGGQ2pgwae3Aaz28FArOUq3jAevN
+         6JjVuTluEObMJTkhiEgDewY08NLyfH8y6voDH/1sHe2oG/7cz6ZD8zfm4RU5A8k8jAQ3
+         zUPNNnJlUfRLAXmOaveZdwiN34pI23FEHQNgOXkTXalvxmAdJNyammCSULSwfpbzW9+0
+         F+/MW8PkWjrfrr7Ryu6ZwMhTT1ha4SikeYuav9B2Gsu6b5yTsWkYLeBloNOZVc7eCegZ
+         T4x0KFF8VRtQcjw3SfsNvD0AkSFnPmbVCzpTeH8pMTdDtbj2kFAjHCutiIwumpjzmaBy
+         KqVA==
+X-Gm-Message-State: ACrzQf1MtFhC9I8BDFAFrGwMaz1TogA8RL1TRWA/SygPNGOp+7KAKKyf
+        ok8GkDTxOIaLnOZEcbdGAh9J4g==
+X-Google-Smtp-Source: AMsMyM4EEMjML/TvKjG45RThBKF8f13QmyxMU3XEC+DuAu8ouWpZko/uukZBffWcUYkLAXPI5btEJw==
+X-Received: by 2002:a05:6214:20aa:b0:4bb:7e1a:9df0 with SMTP id 10-20020a05621420aa00b004bb7e1a9df0mr26673735qvd.34.1667483265779;
+        Thu, 03 Nov 2022 06:47:45 -0700 (PDT)
+Received: from ?IPV6:2601:586:5000:570:a35d:9f85:e3f7:d9fb? ([2601:586:5000:570:a35d:9f85:e3f7:d9fb])
+        by smtp.gmail.com with ESMTPSA id x17-20020a05620a449100b006fa31bf2f3dsm802424qkp.47.2022.11.03.06.47.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Nov 2022 06:47:45 -0700 (PDT)
+Message-ID: <07fca6e0-994f-ed08-632c-dd26bc7086b8@linaro.org>
+Date:   Thu, 3 Nov 2022 09:47:43 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [RESEND PATCH v1] dt-bindings: display/msm: convert MDP5 schema
+ to YAML format
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
-Message-ID: <Y2PAXX2oYL6iFTlB@hovoldconsulting.com>
-References: <20221101233421.997149-1-swboyd@chromium.org>
- <Y2JL9/HFrb3E+CYY@hovoldconsulting.com>
- <CAE-0n51Wuc6gVmsTOu4Nf4yx+6Wp-Oi3XZy06syhCMVmePWPEw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n51Wuc6gVmsTOu4Nf4yx+6Wp-Oi3XZy06syhCMVmePWPEw@mail.gmail.com>
-X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20221102220844.569977-1-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221102220844.569977-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,46 +85,107 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 02, 2022 at 09:53:49AM -0700, Stephen Boyd wrote:
-> Quoting Johan Hovold (2022-11-02 03:52:39)
-
-> > > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > Cc: Johan Hovold <johan+linaro@kernel.org>
-> > > Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> > > Cc: Taniya Das <quic_tdas@quicinc.com>
-> > > Cc: Satya Priya <quic_c_skakit@quicinc.com>
-> > > Cc: Douglas Anderson <dianders@chromium.org>
-> > > Cc: Matthias Kaehlcke <mka@chromium.org>
-> > > Reported-by: Stephen Boyd <swboyd@chromium.org>
-> >
-> > We typically don't add Reported-by tags for bugs we find and fix
-> > ourselves.
+On 02/11/2022 18:08, Dmitry Baryshkov wrote:
+> Convert the mdp5.txt into the yaml format. Changes to the existing (txt) schema:
+>  - MSM8996 has additional "iommu" clock, define it separately
+>  - Add new properties used on some of platforms:
+>    - interconnects, interconnect-names
+>    - iommus
+>    - power-domains
+>    - operating-points-v2, opp-table
 > 
-> Heh, I didn't see anything like that in Documentation/ so it seems fine.
-> I debugged my problem and reported it.
 
-I'd say the documentation is pretty clear on this matter:
+Thank you for your patch. There is something to discuss/improve.
 
-  Reported-by: names a user who reported a problem which is fixed by this
-  patch; this tag is used to give credit to the (often underappreciated)
-  people who test our code and let us know when things do not work
-  correctly.
+> +
+> +  clock-names:
+> +    oneOf:
+> +      - minItems: 4
+> +        items:
+> +          - const: iface
+> +          - const: bus
+> +          - const: core
+> +          - const: vsync
+> +          - const: lut
+> +          - const: tbu
+> +          - const: tbu_rt
+> +        #MSM8996 has additional iommu clock
+> +      - items:
+> +          - const: iface
+> +          - const: bus
+> +          - const: core
+> +          - const: iommu
+> +          - const: vsync
+> +
+> +  interconnects:
+> +    minItems: 1
+> +    items:
+> +      - description: Interconnect path from mdp0 (or a single mdp) port to the data bus
+> +      - description: Interconnect path from mdp1 port to the data bus
+> +      - description: Interconnect path from rotator port to the data bus
+> +
+> +  interconnect-names:
+> +    minItems: 1
+> +    items:
+> +      - const: mdp0-mem
+> +      - const: mdp1-mem
+> +      - const: rotator-mem
+> +
+> +  iommus:
+> +    items:
+> +      - description: Phandle to apps_smmu node with SID mask for Hard-Fail port0
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  operating-points-v2: true
+> +  opp-table:
+> +    type: object
+> +
+> +  ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +    description: |
+> +      Contains the list of output ports from DPU device. These ports
+> +      connect to interfaces that are external to the DPU hardware,
+> +      such as DSI, DP etc.
 
-  - Documentation/process/5.Posting.rst
+You could include here information about number of ports per variant.
 
-  The Reported-by tag gives credit to people who find bugs and report
-  them and it hopefully inspires them to help us again in the future.
-  Please note that if the bug was reported in private, then ask for
-  permission first before using the Reported-by tag.
+> +
+> +    patternProperties:
+> +      "^port@[0-9a-f]+$":
 
-  - Documentation/process/submitting-patches.rst
+[0-3]
 
-Just like you don't add a Tested-by tag for every patch you submit, it
-is implied that you found the issue you fix unless you explicitly
-attribute that to a third party using Reported-by.
+> +        $ref: /schemas/graph.yaml#/properties/port
+> +
+> +    # at least one port is required
+> +    required:
+> +      - port@0
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - clocks
+> +  - clock-names
+> +  - ports
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-msm8916.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    mdp@1a01000 {
 
-This is the first time I see anyone trying to use Reported-by this way,
-and even if you think the documentation isn't clear enough on this, our
-praxis is.
+display-controller@......
 
-Johan
+> +        compatible = "qcom,mdp5";
+> +        reg = <0x1a01000 0x90000>;
+> +        reg-names = "mdp_phys";
+> +
+
+Best regards,
+Krzysztof
+
