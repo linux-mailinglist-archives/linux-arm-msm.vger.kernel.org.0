@@ -2,190 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD2D2617E53
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 14:47:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 537EB617E5F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 14:50:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230193AbiKCNrt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 09:47:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47098 "EHLO
+        id S231146AbiKCNuJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 09:50:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229704AbiKCNrr (ORCPT
+        with ESMTP id S230139AbiKCNuH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 09:47:47 -0400
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 998EDF50
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 06:47:46 -0700 (PDT)
-Received: by mail-qv1-xf2b.google.com with SMTP id h10so1118561qvq.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 06:47:46 -0700 (PDT)
+        Thu, 3 Nov 2022 09:50:07 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8121495B2;
+        Thu,  3 Nov 2022 06:50:05 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id bs21so2877965wrb.4;
+        Thu, 03 Nov 2022 06:50:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/2Nr5wIdGbAWm3WH/I4UVUKpbhCh82dprUQ26IZeMhc=;
-        b=qPv7iGDsarIyeVkPtASpJ9T0zxFA9vMYe5noup38EWHE174XLESSO8pOb+cAor4t9T
-         ohhqAr79b6QEkwtwsx1unZIDNieHhMgFD9w9spQ4q/VBD5K4xYW68UL2J9qaz1sr6Qt9
-         azDBNxlr5M/IQ4Ff9DHEhfwoCRVapzw1g0YsApKJoFs0cSqXJ2Q7SHX/X0YoeZbRbzOx
-         BymutPAUVmDMaT8ZbF4AFM7Ajszy/g2+5VFI3IeKTLVfTKsjqPpXt6WrbOUBszbc7IAe
-         /5k9YdNLB5XOFmjitCa51wUbm3bUWV+u5wZwSVmsl8M9vNCHMCGUzZFSZWkv8rLhmt9H
-         ye/g==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xw5SU3w05rjbRP0n5l4+pjIOuu6FqjPKGh7fv85xNvk=;
+        b=J6SLq9GRvKPBMDAzpU3p79DKrXjKyCU7xehsz/4TTspVGr1em+rH21FdMNK32Lym4B
+         wG+rndEHp8/iZ8rksQs8Bo8H9hJ0x+jJfkXY3D0nizY0Lh4RUgMcsiwr3BvhMWjUpMNT
+         Xj1sSTjL7gOrN0XDs2OUtkc02uyedzuWgthwKzo9ldtpXADhbpcc/cKF9nfuETZdKOow
+         1ZFccTFFi1lhdq8XNWZ4g/Cjytfppgi2TIOk8qH9IeXROOBvXh6EuXZs1b5UDmhCFyaa
+         8wfWSeJqPJi5Y2rVtqnIrwlCVwzRfT8xuinJQJQETqar5pB2dKBgKIU4k/lY/ABPlsq3
+         /6dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/2Nr5wIdGbAWm3WH/I4UVUKpbhCh82dprUQ26IZeMhc=;
-        b=mGQBDCf2iAOYNy2vrPK52wG17W+a94a3SB4lq2pGGQ2pgwae3Aaz28FArOUq3jAevN
-         6JjVuTluEObMJTkhiEgDewY08NLyfH8y6voDH/1sHe2oG/7cz6ZD8zfm4RU5A8k8jAQ3
-         zUPNNnJlUfRLAXmOaveZdwiN34pI23FEHQNgOXkTXalvxmAdJNyammCSULSwfpbzW9+0
-         F+/MW8PkWjrfrr7Ryu6ZwMhTT1ha4SikeYuav9B2Gsu6b5yTsWkYLeBloNOZVc7eCegZ
-         T4x0KFF8VRtQcjw3SfsNvD0AkSFnPmbVCzpTeH8pMTdDtbj2kFAjHCutiIwumpjzmaBy
-         KqVA==
-X-Gm-Message-State: ACrzQf1MtFhC9I8BDFAFrGwMaz1TogA8RL1TRWA/SygPNGOp+7KAKKyf
-        ok8GkDTxOIaLnOZEcbdGAh9J4g==
-X-Google-Smtp-Source: AMsMyM4EEMjML/TvKjG45RThBKF8f13QmyxMU3XEC+DuAu8ouWpZko/uukZBffWcUYkLAXPI5btEJw==
-X-Received: by 2002:a05:6214:20aa:b0:4bb:7e1a:9df0 with SMTP id 10-20020a05621420aa00b004bb7e1a9df0mr26673735qvd.34.1667483265779;
-        Thu, 03 Nov 2022 06:47:45 -0700 (PDT)
-Received: from ?IPV6:2601:586:5000:570:a35d:9f85:e3f7:d9fb? ([2601:586:5000:570:a35d:9f85:e3f7:d9fb])
-        by smtp.gmail.com with ESMTPSA id x17-20020a05620a449100b006fa31bf2f3dsm802424qkp.47.2022.11.03.06.47.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Nov 2022 06:47:45 -0700 (PDT)
-Message-ID: <07fca6e0-994f-ed08-632c-dd26bc7086b8@linaro.org>
-Date:   Thu, 3 Nov 2022 09:47:43 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [RESEND PATCH v1] dt-bindings: display/msm: convert MDP5 schema
- to YAML format
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xw5SU3w05rjbRP0n5l4+pjIOuu6FqjPKGh7fv85xNvk=;
+        b=t/V0L9YEV3a1FdL3q9v84F1rgyXfjOLH5J0MumEvMELI1R17NSWkkHtISZGpOOqxqZ
+         w73SHtlGjbXdZrHjP49FP9dYk2FBidQZzeFl4lPTc4Jsm7HdTowWTO36Zmat9/+4JnRe
+         IT7lBpBcqyRotM/mS1cMZC6QrRjT9/01lWqc0wrfxFigqGYT2nWGCvjx77G5ljVOdzpd
+         4usxXiseaD20osZoGfBKh1SDtKiUk/ljADNppYQZTvFETd5UwFROyOxoz/tLHS24jV38
+         ekDkhaBCXzQqx3diSEm+UvVTiRkNvEZ3jmEWod8p7Ziw9NOIi7E9Hg3jxCD7VWuOv2e3
+         59VQ==
+X-Gm-Message-State: ACrzQf3xYn3BRwIfEFwOvl4Fbrxyy2tB9ckpPIHNEgEm11Bzi82vEjLf
+        g9TcGO4smYX3qKVtxQP4ahQ=
+X-Google-Smtp-Source: AMsMyM60Q+Y3yVqxFIrOA1BZ2uh/ZnloKO2ydMmVD3+gzrSS46caSOuUDpvY/D9xxiqnDOa9hN/v+g==
+X-Received: by 2002:adf:fd87:0:b0:236:7ad7:d3c4 with SMTP id d7-20020adffd87000000b002367ad7d3c4mr18874993wrr.687.1667483403550;
+        Thu, 03 Nov 2022 06:50:03 -0700 (PDT)
+Received: from localhost.localdomain (93-42-71-18.ip85.fastwebnet.it. [93.42.71.18])
+        by smtp.googlemail.com with ESMTPSA id bt12-20020a056000080c00b00236576c8eddsm957414wrb.12.2022.11.03.06.50.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Nov 2022 06:50:02 -0700 (PDT)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20221102220844.569977-1-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221102220844.569977-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Christian Marangi <ansuelsmth@gmail.com>
+Subject: [PATCH v2 0/4] clk: qcom: clk-rcg2: introduce support for multiple conf for same freq
+Date:   Thu,  3 Nov 2022 14:49:40 +0100
+Message-Id: <20221103134944.23275-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.37.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/11/2022 18:08, Dmitry Baryshkov wrote:
-> Convert the mdp5.txt into the yaml format. Changes to the existing (txt) schema:
->  - MSM8996 has additional "iommu" clock, define it separately
->  - Add new properties used on some of platforms:
->    - interconnects, interconnect-names
->    - iommus
->    - power-domains
->    - operating-points-v2, opp-table
-> 
+This small series fix a current problem with ipq8074 where the 2 uniphy
+port doesn't work in some corner case with some clk configuration. The
+port to correctly work require a specific frequency, using the wrong one
+results in the port not transmitting data.
 
-Thank you for your patch. There is something to discuss/improve.
+With the current code with a requested freq of 125MHz, the frequency is
+set to 105MHz. This is caused by the fact that there are 2 different
+configuration to set 125MHz and it's always selected the first one that
+results in 105MHz.
 
-> +
-> +  clock-names:
-> +    oneOf:
-> +      - minItems: 4
-> +        items:
-> +          - const: iface
-> +          - const: bus
-> +          - const: core
-> +          - const: vsync
-> +          - const: lut
-> +          - const: tbu
-> +          - const: tbu_rt
-> +        #MSM8996 has additional iommu clock
-> +      - items:
-> +          - const: iface
-> +          - const: bus
-> +          - const: core
-> +          - const: iommu
-> +          - const: vsync
-> +
-> +  interconnects:
-> +    minItems: 1
-> +    items:
-> +      - description: Interconnect path from mdp0 (or a single mdp) port to the data bus
-> +      - description: Interconnect path from mdp1 port to the data bus
-> +      - description: Interconnect path from rotator port to the data bus
-> +
-> +  interconnect-names:
-> +    minItems: 1
-> +    items:
-> +      - const: mdp0-mem
-> +      - const: mdp1-mem
-> +      - const: rotator-mem
-> +
-> +  iommus:
-> +    items:
-> +      - description: Phandle to apps_smmu node with SID mask for Hard-Fail port0
-> +
-> +  power-domains:
-> +    maxItems: 1
-> +
-> +  operating-points-v2: true
-> +  opp-table:
-> +    type: object
-> +
-> +  ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +    description: |
-> +      Contains the list of output ports from DPU device. These ports
-> +      connect to interfaces that are external to the DPU hardware,
-> +      such as DSI, DP etc.
+In the original QSDK code, the frequency configuration selection is
+different and the CEIL FLOOR logic is not present. Instead it's used a
+BEST approach where the frequency table is checked and then it's checked
+if there are duplicate entry.
 
-You could include here information about number of ports per variant.
+This proposed implementation is more specific and keep the CEIL FLOOR
+logic while maitaining the possibility to provide multiple
+configuration.
 
-> +
-> +    patternProperties:
-> +      "^port@[0-9a-f]+$":
+The first 2 patch drop redundant F entry redefinition.
 
-[0-3]
+The 3rd one implement the change with also some macro description on how
+this new implementation works
 
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +
-> +    # at least one port is required
-> +    required:
-> +      - port@0
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - clocks
-> +  - clock-names
-> +  - ports
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-msm8916.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    mdp@1a01000 {
+The 4th one migrate the gcc-ipq8074 driver to this new implementation.
 
-display-controller@......
+Changes v2:
+- Out of RFC
+- Fix compile warning from buildbot related to F redefinition
 
-> +        compatible = "qcom,mdp5";
-> +        reg = <0x1a01000 0x90000>;
-> +        reg-names = "mdp_phys";
-> +
+Christian Marangi (4):
+  clk: qcom: gcc-ipq6018: drop redundant F define
+  clk: qcom: gcc-sdm660: drop redundant F define
+  clk: qcom: clk-rcg2: introduce support for multiple conf for same freq
+  clk: qcom: gcc-ipq8074: rework nss_port5/6 clock to multiple conf
 
-Best regards,
-Krzysztof
+ drivers/clk/qcom/clk-rcg.h     | 14 +++++-
+ drivers/clk/qcom/clk-rcg2.c    | 84 ++++++++++++++++++++++++++++++----
+ drivers/clk/qcom/gcc-ipq6018.c |  2 -
+ drivers/clk/qcom/gcc-ipq8074.c | 64 +++++++++++++++++++-------
+ drivers/clk/qcom/gcc-sdm660.c  |  2 -
+ 5 files changed, 136 insertions(+), 30 deletions(-)
+
+-- 
+2.37.2
 
