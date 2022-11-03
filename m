@@ -2,138 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 146FC617C5D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 13:18:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 022C1617C6E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 13:21:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230415AbiKCMSl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 08:18:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44466 "EHLO
+        id S231621AbiKCMVz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 08:21:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231582AbiKCMSk (ORCPT
+        with ESMTP id S229994AbiKCMVt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 08:18:40 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 552E125D1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 05:18:39 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id p21so1730901plr.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 05:18:39 -0700 (PDT)
+        Thu, 3 Nov 2022 08:21:49 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DA51B5B
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 05:21:48 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id l9so929209qkk.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 05:21:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ygNaIetYDLkI+evDCg3dhQCdfjyfTMAjhVLdsT971NY=;
-        b=mKz/1aczMZ67kTZ72O3gcxFhmzopOSkKcpsO+Zp+R7ACs0+SVrXT34MSkh0JnSvUJN
-         pRes/DTOnYOA8IDbUkq/gJQLe1wzu6wqXPbIEf8Z5j2U4Oussq9WhGVLvmbqCQl7KWko
-         rB5FUMv/+nw/R55JC15gAsLd1ax+R+4DY+WziYtSTAeHYUiYbXjgJoSXwD13wiftzrB7
-         1p5mIBQCHHzjZq7Jvp8h6WCuOTgBx33PKq9wiCsAH7lleXn9pxW4jZE6H3Z69RiVsGEN
-         yy1Kvp/t9VIWZrElYKgL3xf/ahnl3wOZnhXoyqhT6B7i1YydkW/foSQxDOO5P8fLGW3h
-         uG+g==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=P+5YUCvZqbd7CB2bQQ6MOe7ruJKblRITAjPMVct4pI8=;
+        b=CO/f0A0UqCf3wCwPKnaBeTqdgR6dBumZAGDTOy0GPfBAk5+rSxhjYmofU5K1KyJHkp
+         bQyvFZSpUmpU7EU32AtkXmOH+YUqkO0wCQVAXj6hRkJlUlGjZyI1U1Juy+GHmBg5ztKs
+         CpFVbEqN3F0rO6soGDKfnafyjrgbVh7rwGF/DvRWV7EwaS87hgEqkKoZOEHbbntSFtvV
+         wX9fFHnuskwD2YM3PQX53UFKeGDcnv7gCWFo2ApNWPKd/6DHJm7u8Tz2L+ff2M4zdIWQ
+         8myc7gDWb3DMVbw62yk+cAxfoED7cJAZhrpKrLeoNIAoGIH9mQU9e7eoFWrdFGfi0Xb2
+         62GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ygNaIetYDLkI+evDCg3dhQCdfjyfTMAjhVLdsT971NY=;
-        b=0mNhkoOwMHYxs85atSqwbw6AAhh9EOEE8EqZSO1ueCEAeosBnYIHQOFLDmtix/00pC
-         L85eXnubpihN3Gln7eP14ZEXlb8LO7Igg6lvri74kYuH8OBWo7fHj1G/1BCqkGW7QJs+
-         DmNEk8WqKlJBbjsb6DkTI0lKYruScV0vRrFG/GvfGeOXwoiyc4nXow4xAYms/aUubkUk
-         CL8PNMWVz+xaMATDRBW2aYkmXuI0m9EdJfbwbmVa26dic0huJ9Uf+kEP9vTkldbISGd7
-         pG3GfLVofEOvQUytYKAZIlpwegI0JkDIR1YpFGYGbv86hjiJl58WpM4SJXKVji5F+DQj
-         xzNQ==
-X-Gm-Message-State: ACrzQf299CEeOiTv8NoEuQFdju2ZnqzsDZZVFu+KNz8O4bPkp4ZTPrWc
-        czLDLgXrBYmwWwGTqK4dn4I6
-X-Google-Smtp-Source: AMsMyM7l5kGXg75re2lQpzMr+ympZfelYvdDLHbZqWdB90Zy+RAplKpykYidN+wfIs5fosIq4Kwf2Q==
-X-Received: by 2002:a17:902:cec8:b0:186:8553:79c8 with SMTP id d8-20020a170902cec800b00186855379c8mr29444683plg.160.1667477918804;
-        Thu, 03 Nov 2022 05:18:38 -0700 (PDT)
-Received: from thinkpad ([59.92.102.81])
-        by smtp.gmail.com with ESMTPSA id w189-20020a6282c6000000b0056c04dee930sm614950pfd.120.2022.11.03.05.18.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Nov 2022 05:18:37 -0700 (PDT)
-Date:   Thu, 3 Nov 2022 17:48:30 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        martin.petersen@oracle.com, jejb@linux.ibm.com,
-        andersson@kernel.org, vkoul@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, quic_cang@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-scsi@vger.kernel.org
-Subject: Re: [PATCH 14/15] scsi: ufs: ufs-qcom: Add support for finding HS
- gear on new UFS versions
-Message-ID: <20221103121830.GC8434@thinkpad>
-References: <20221029141633.295650-1-manivannan.sadhasivam@linaro.org>
- <20221029141633.295650-15-manivannan.sadhasivam@linaro.org>
- <cf8dcf53-f131-68f4-c6aa-d41e02ac6d5c@linaro.org>
- <20221031145647.GC10515@thinkpad>
- <d11609d5-963a-de41-86f9-7451f460b6fa@linaro.org>
+        bh=P+5YUCvZqbd7CB2bQQ6MOe7ruJKblRITAjPMVct4pI8=;
+        b=DtSDPbib2YLc2ohYZmiBBrHzqd7XaH6BmyS/KC/0PoeTJStJZDj0CJ5bRXNVilB58Y
+         glmDaJHNl9nYFsWNzaJiNqp0ud7tUARCsN+RiShJFuWM8lsmKCH6r3YWkyfo0wP2JDiS
+         7Q+IjYXHSnXYI792TfMSj3hVYQm+v+YBYDvCCacJ0u0rQ03YFCWbAej5q8svQ2y9Ay0J
+         qRtXfc34NzioTfLPm5lMwAamiXAPCyhwQOTv42flgxrxQ0ITBu2nWkoVjmkH393FkwYR
+         aRJXEPqALkyqkG843H/+jw2DFwX+sWVvrHVJ9/T8z1gUcYsLCtpbyxr0oY+FdkmPkJ1i
+         JYfw==
+X-Gm-Message-State: ACrzQf3W6vQnfPsGOt60z/zlM6sjYxeWRjfJPmXZgQ/AbINh1ZQdljKo
+        eKTJecZDccaj24Vz1Wig3T4pUQ==
+X-Google-Smtp-Source: AMsMyM6SDfF7cMxptMVQxQuncXmO78QNH8O+ogTcFC6KAzOv0cS/F4ORrpJhJoSy97C4UYtYyZxdXQ==
+X-Received: by 2002:a37:5e41:0:b0:6ce:79e2:68af with SMTP id s62-20020a375e41000000b006ce79e268afmr21736389qkb.239.1667478107634;
+        Thu, 03 Nov 2022 05:21:47 -0700 (PDT)
+Received: from ?IPV6:2601:586:5000:570:a35d:9f85:e3f7:d9fb? ([2601:586:5000:570:a35d:9f85:e3f7:d9fb])
+        by smtp.gmail.com with ESMTPSA id r23-20020ae9d617000000b006f474e6a715sm606366qkk.131.2022.11.03.05.21.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Nov 2022 05:21:46 -0700 (PDT)
+Message-ID: <10086127-c733-364c-25da-0332c2336925@linaro.org>
+Date:   Thu, 3 Nov 2022 08:21:45 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d11609d5-963a-de41-86f9-7451f460b6fa@linaro.org>
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [PATCH 09/10] dt-bindings: interconnect: qcom,msm8998-bwmon: Add
+ sc8280xp bwmon instances
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mike Tipton <quic_mdtipton@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221028034155.5580-1-quic_bjorande@quicinc.com>
+ <20221028034155.5580-10-quic_bjorande@quicinc.com>
+ <0ada5a42-02f4-50ce-e65c-1a5fa9966900@linaro.org>
+ <20221103033741.GA5525@core-thresher1.qualcomm.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221103033741.GA5525@core-thresher1.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 02, 2022 at 04:05:34PM -0400, Krzysztof Kozlowski wrote:
-> On 31/10/2022 10:56, Manivannan Sadhasivam wrote:
-> >>>   		if (hs_gear > UFS_HS_G2)
-> >>>   			return UFS_HS_G2;
-> >>> +	} else if (host->hw_ver.major > 0x3) {
-> >>> +		/*
-> >>> +		 * Starting from UFS controller v4, Qcom supports dual gear mode (i.e., the
-> >>> +		 * controller/PHY can be configured to run in two gear speeds). But that
-> >>> +		 * requires an agreement between the UFS controller and the device. Below
-> >>> +		 * code tries to find the max gear of both and decides which gear to use.
-> >>> +		 *
-> >>> +		 * First get the max gear supported by the UFS device if available.
-> >>> +		 * If the property is not defined in devicetree, then use the default gear.
-> >>> +		 */
-> >>> +		ret = of_property_read_u32(dev->of_node, "max-gear", &max_gear);
-> >>> +		if (ret)
-> >>> +			goto err_out;
-> >>
-> >> Can we detect the UFS device's max gear somehow? If not, the 'max-gear'
-> >> property name doesn't sound good. Maybe calling it 'device-gear' would be
-> >> better.
-> >>
-> > 
-> > UFS device probing depends on PHY init sequence. So technically we cannot know
-> > the max gear of the device without using an init sequence, but this information
-> > is static and should be known to a board manufacturer. That's why I decided to
-> > use this property. Another option is to use a fixed init sequence for probing
-> > the device and do a re-init after knowing it's max gear but that is not
-> > recommended.
-> > 
+On 02/11/2022 23:37, Bjorn Andersson wrote:
+> On Fri, Oct 28, 2022 at 06:15:50PM -0400, Krzysztof Kozlowski wrote:
+>> On 27/10/2022 23:41, Bjorn Andersson wrote:
+>>> The sc8280xp platform has two BWMON instances, one v4 and one v5. Extend
+>>> the existing qcom,msm8998-bwmon and qcom,sc7280-llcc-bwmon to describe
+>>> these.
+>>>
+>>> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+>>> ---
+>>>  .../devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml | 5 +++++
+>>>  1 file changed, 5 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
+>>> index be29e0b80995..223cd6ecf279 100644
+>>> --- a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
+>>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
+>>> @@ -25,9 +25,14 @@ properties:
+>>>        - items:
+>>>            - enum:
+>>>                - qcom,sc7280-cpu-bwmon
+>>> +              - qcom,sc8280xp-bwmon
+>>
+>> qcom,sc8280xp-cpu-bwmon
+>> To match sc7280. I think it's better than my initial choice for
+>> qcom,sdm845-bwmon without the cpu part.
+>>
 > 
-> Why it is not recommended? By whom? You init on some default low gear
-> (support for some is mandated by UFS spec) and then allow faster gears
-> while you know the capabilities.
-> 
+> As discussed back then, we omitted "cpu" because there where multiple instances
+> of the bwmon block. Would you prefer we give it the "cpu" compatible and
+> potentially us it for non-cpu measurements?
 
-This approach is what used in Qcom downstream. I learned that when they tried
-submitting to mailing list, it got rejected. So I came up with this approach.
+I think yes, because we actually do not know whether measuring on
+non-cpu instances would work without some adjustments...
 
-Thanks,
-Mani
+Best regards,
+Krzysztof
 
-> > We need "max" keyword because this property specifies the maximum gear at which
-> > the device could operate and not necessarily the gear at which it operates.
-> > Maybe, "max-device-gear" would make it clear.
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
