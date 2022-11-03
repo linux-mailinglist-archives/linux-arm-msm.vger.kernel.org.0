@@ -2,148 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DB04617751
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 08:11:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36AA061781D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 08:56:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230511AbiKCHLT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 03:11:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45630 "EHLO
+        id S230273AbiKCH4g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 03:56:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231134AbiKCHKr (ORCPT
+        with ESMTP id S230363AbiKCH4O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 03:10:47 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D42D0B7F7
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 00:10:35 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id h14so821644pjv.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 00:10:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mH8K/6eg5Lh08TfiTAW9SH/au0kXMjW1a4OsBDcVWqM=;
-        b=ZrpmvktuoNhallTRgxhKQWglgv0B8LbAU1PTDwPFaf4kgpbfOwqNdrjuUyEYePAhmn
-         v4ka3TNaMdkeY8ZVY2T2rQ0f8guNpPWfWma2a9Yvp85ab9hutZ6UK3cy7HUmFdgqOCfd
-         GnKXbWoyhIecHnsbgAYaKyOxfc5gZfd8rk9quMhI4WpVKYLgV53MWkF+opti+4DIs2LD
-         xlUsF7jtqt98uNmlEs9MrQUhTBg7WgBXzFR+yP0j8yfbq/TYfaCvo5wJl/I7SqYuE/0p
-         92zAmBBlwYZYtT5WTc+4WwHUSjSJTho/+IY30WbkLUmdhQwzfPTtzMVjvrNqMJ7rPt/M
-         GOEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mH8K/6eg5Lh08TfiTAW9SH/au0kXMjW1a4OsBDcVWqM=;
-        b=FXI9lA2D4aGLIP0KCFTyxhe9Ea5pCOydRdMgm9yY23n9S81O+Yr+FJCnVKynT6+5aE
-         3k++FlXjXZilRi27OTQFKoKD/zL8hcGvtuvfEyzgqmuYX6rzErcgeDOKlKck51fSd5g7
-         Ln834hTjtjUngUo1AlB/gYp9I56d24/7cTIovibA7epXWRcEIApqo3Ud6yUpJ1SscJ6t
-         R2jOigWx7copBFbRjyFNtXL3f/032rZQJYoK0aS28sT4D6uhcj1pRCOLNm+pk1h6zQ4m
-         i4cIlZCLAwKYISN8fTzKyHTljmXhXc5SAkE0SKAYKlR2Gs8k6lPQYG0+sDHfmPNZx33O
-         oqgw==
-X-Gm-Message-State: ACrzQf2C5Y79hN18aZzNLfUy/wHWpHc/lvZKtIi4Y3kj5nHf44kpIQhD
-        N+wrOy8zxGzbLlnvirv4gfbn
-X-Google-Smtp-Source: AMsMyM54CWyBk4TvLqKM0kCdmNpeBWyLDMlWh55Ntk+biSUah5rCsEOht738OFK0w9dK2KGfEeYZzA==
-X-Received: by 2002:a17:903:2c2:b0:182:df88:e6d3 with SMTP id s2-20020a17090302c200b00182df88e6d3mr28273709plk.81.1667459435320;
-        Thu, 03 Nov 2022 00:10:35 -0700 (PDT)
-Received: from localhost.localdomain ([117.193.208.64])
-        by smtp.gmail.com with ESMTPSA id s9-20020a170903214900b00186748fe6ccsm9451244ple.214.2022.11.03.00.10.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Nov 2022 00:10:34 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     andersson@kernel.org
-Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, johan+linaro@kernel.org,
-        quic_jprakash@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        steev@kali.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v3 12/12] arm64: dts: qcom: sc8280xp-x13s: Add thermal zone support
-Date:   Thu,  3 Nov 2022 12:39:11 +0530
-Message-Id: <20221103070911.20019-13-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221103070911.20019-1-manivannan.sadhasivam@linaro.org>
-References: <20221103070911.20019-1-manivannan.sadhasivam@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Thu, 3 Nov 2022 03:56:14 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D9BA2733;
+        Thu,  3 Nov 2022 00:55:30 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A3597J0021633;
+        Thu, 3 Nov 2022 07:55:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=+wzkJVLIOkoBK9Vz/nKnFDV5e28DxONxhT48KGJaUR0=;
+ b=S4nrabBmU3oM+sLTsUd1Fxub+4NqRz7qGMmr78Yw3GXPJ0puIvz8/XU7NgRX30bW9eVr
+ WakPtXqvDZ+K/GWugOnOkzfZLzq2XuSOOeK0I0XNekJjm/BU1HzW3GjHdYyttOCqgmKD
+ 4G5MqIOwQpef1arCjJxupeHRql/8OVuA6edxZrnIqAPIGVOqAvDjOwLerGdXLUT07ZEg
+ 8sMCRDpC36OmOHW328B5WY0YmRvNPII2SWCJYG6Hnvd6+iZisSEyHqP2Mztwodtp9Fag
+ zw0OyGZNSGS9mqKtrum02frEPJIBYOI4o4BzXPJJqfODiXFyNjz8J6eXcpirxAxzHDjH xw== 
+Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3km6wj0p01-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 03 Nov 2022 07:55:18 +0000
+Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+        by APTAIPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2A37tFu3012235;
+        Thu, 3 Nov 2022 07:55:15 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 3khdm1m235-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 03 Nov 2022 07:55:15 +0000
+Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2A37tFkQ012229;
+        Thu, 3 Nov 2022 07:55:15 GMT
+Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
+        by APTAIPPMTA02.qualcomm.com (PPS) with ESMTP id 2A37tEJ5012226;
+        Thu, 03 Nov 2022 07:55:15 +0000
+Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
+        id E8BC936E0; Thu,  3 Nov 2022 15:55:12 +0800 (CST)
+From:   Qiang Yu <quic_qianyu@quicinc.com>
+To:     mani@kernel.org, loic.poulain@linaro.org
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+        mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>
+Subject: [PATCH] bus: mhi: host: Disable preemption while processing data events
+Date:   Thu,  3 Nov 2022 15:55:11 +0800
+Message-Id: <1667462111-55496-1-git-send-email-quic_qianyu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: WKP4IfvNt9itNbE4Tv1EtCcPdrJq3BYn
+X-Proofpoint-GUID: WKP4IfvNt9itNbE4Tv1EtCcPdrJq3BYn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-02_15,2022-11-02_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=684 priorityscore=1501 phishscore=0 mlxscore=0 clxscore=1015
+ malwarescore=0 adultscore=0 bulkscore=0 spamscore=0 suspectscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211030055
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add thermal zone support by making use of the thermistor SYS_THERM6.
-Based on experiments, this thermistor seems to reflect the actual
-surface temperature of the laptop.
+If data processing of an event is scheduled out because core
+is busy handling multiple irqs, this can starves the processing
+of MHI M0 state change event on another core. Fix this issue by
+disabling irq on the core processing data events.
 
-For the cooling device, all BIG CPU cores are throttle down to keep the
-temperature at a sane level.
-
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
 ---
- .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 46 +++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ drivers/bus/mhi/host/main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index fdeb7718a596..7d2b53ceaa54 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -29,6 +29,52 @@ backlight {
- 		pinctrl-0 = <&edp_bl_en>, <&edp_bl_pwm>;
- 	};
+diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+index f3aef77a..b58698d 100644
+--- a/drivers/bus/mhi/host/main.c
++++ b/drivers/bus/mhi/host/main.c
+@@ -1027,13 +1027,14 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
  
-+	thermal-zones {
-+		skin-temp-thermal {
-+			polling-delay-passive = <250>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pmk8280_adc_tm 5>;
-+
-+			trips {
-+				skin_temp_alert0: trip-point0 {
-+					temperature = <55000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+
-+				skin_temp_alert1: trip-point1 {
-+					temperature = <58000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+
-+				skin-temp-crit {
-+					temperature = <73000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&skin_temp_alert0>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+
-+				map1 {
-+					trip = <&skin_temp_alert1>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
-+		};
-+	};
-+
- 	vreg_edp_bl: regulator-edp-bl {
- 		compatible = "regulator-fixed";
+ void mhi_ev_task(unsigned long data)
+ {
++	unsigned long flags;
+ 	struct mhi_event *mhi_event = (struct mhi_event *)data;
+ 	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
  
+ 	/* process all pending events */
+-	spin_lock_bh(&mhi_event->lock);
++	spin_lock_irqsave(&mhi_event->lock, flags);
+ 	mhi_event->process_event(mhi_cntrl, mhi_event, U32_MAX);
+-	spin_unlock_bh(&mhi_event->lock);
++	spin_unlock_irqrestore(&mhi_event->lock, flags);
+ }
+ 
+ void mhi_ctrl_ev_task(unsigned long data)
 -- 
-2.25.1
+2.7.4
 
