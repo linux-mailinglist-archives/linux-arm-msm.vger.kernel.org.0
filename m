@@ -2,80 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4A49618354
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 16:56:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E71B6183D9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 17:09:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231983AbiKCP41 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 11:56:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58562 "EHLO
+        id S232317AbiKCQJx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 12:09:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231881AbiKCP4Z (ORCPT
+        with ESMTP id S231778AbiKCQJf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 11:56:25 -0400
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8147613E3D
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 08:56:23 -0700 (PDT)
-Received: by mail-qk1-x736.google.com with SMTP id x18so1408387qki.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 08:56:23 -0700 (PDT)
+        Thu, 3 Nov 2022 12:09:35 -0400
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9AA91D0D5
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 09:09:08 -0700 (PDT)
+Received: by mail-qv1-xf2c.google.com with SMTP id ml12so1465322qvb.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 09:09:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=tEdlO2eJHCWVqpq9ZVmfFrHoK+b5oUGHwUErbKgRbJo=;
-        b=ehxT8BnUuWvvgFR/WyjOn0EeBKCALG1yZXrAqTz8QVo/bXbWOKQimZ7PSY02mWw3eR
-         6Gyd99eRGa1Ay7XFHF5zwJ4JKbJtqYcY2es1g8JbRs0H6VceGJqd89HZq8RLTN3a8pRC
-         aZAM2E+sh9MkRwyXCuO1zVngZotQEmRnkr6oZclSbcdxB1lG1+dVicvR0lDkjNrteQ1h
-         ODlv68plAFnp9sDypLOyy3KbFtrCEqIdLS62H2tdQR4rsb4haernYYt11LUnH7vfimht
-         3dGZJUx0NVimXDkQsJWV5xJR0RXfkaQ0QLf1E9ellUyKCsmJRGrKQWstv7TjA8/OuKBy
-         58/Q==
+        bh=rdupXZP9IFvwGILZVl/bXkxyiQBrd2eY1VoR9aqF3f8=;
+        b=kU9c5IXpOAFVRhtLb9VD0DkbGRRrvofFv5ZaV90ha/Z5Pjkds75ssplzse/sexzY2G
+         t4ryGbivPIq5eSqm2hV/0dAwUzPEMCCIJ7IJRnzOREaD1PNNjDgXONaIUuG5SH/QjqQR
+         3dv/jK1oPs2gFsxHCbY/35BjVKfQcu1hH2SrX4u02/Pgev80Go7zikIubUdilCydjnb4
+         uS+ZTwvF+YU7OOrP+9J53OwRZvWgphfr/OKoqL8LwDCAjuNGqCtpBaTKOeVQdumMuMzl
+         DuT9fb/j515nbCluQBt4Ica6G2qsI6tmDSlLeDAcXAD2dMbVsBU2/uToc6o34YF6j2Zl
+         38WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tEdlO2eJHCWVqpq9ZVmfFrHoK+b5oUGHwUErbKgRbJo=;
-        b=5w16bUs5WI6Y+9v7HAbIC1HFAQpLI1YzBbYOF5O+zQ2g8J8mM148g+y6NNapp/kgsd
-         OMaBd1Weg09R8dcOZ1qB5F4dUSCGP8YW3X9285WcOB58zZ2wbDhbUs27DXDPW/Dure95
-         r8JvrIyPVQpROda9a6eXWwCLoRIVg6hKDVeBbwOSNBq0deDQAbInd8eB+on3KhVn8CS2
-         jmWlEEV197h9zVW71jLG7/ckPVmo6mCNQo00Wx0uFkG4qGjROOtvO07xESIxRZWKOblq
-         tATOY/5MwDCkp6wKWjKulrovE5k46ahA/bnOWZxOHazE/XX39rEimZ4qBdT88fff4QVC
-         Evhg==
-X-Gm-Message-State: ACrzQf2GCpeJlVF4IkHsltWgnLPDy/dS31KVkaawkPpYkzSglmQbFhKS
-        BcXttrrH72uXtr8txr2vtaT3/g==
-X-Google-Smtp-Source: AMsMyM49ONOs/YLVOtSG+GQhfYXHOv4K5GNKWD8MYoE8uTvwxAimwbp/ySZ0z8Zm/a1vmY+uuIF0BA==
-X-Received: by 2002:a37:6588:0:b0:6fa:3046:7f8b with SMTP id z130-20020a376588000000b006fa30467f8bmr15690041qkb.752.1667490982649;
-        Thu, 03 Nov 2022 08:56:22 -0700 (PDT)
+        bh=rdupXZP9IFvwGILZVl/bXkxyiQBrd2eY1VoR9aqF3f8=;
+        b=ikGTf5GSwptFb5gvU+LWnb5VB8pYDNcRGIpAt5iXwW00o99OP2u1KVZBVAupWPrSRm
+         66z+pOaW4MH0rPJAaKbA3qgzNbfV5sngeniajDDGlLNBJ4qZUQLVypH29Sz8MEoLjTNK
+         nv7EEl7vYWRekemxLeuHZ9XrvYbw/FQPT2lW7VJTXvIO7ZPKfEzBj+G1OjuOgLXExzyu
+         CuHHcRpe4AaO2X5R85c33sxZyy0rEL0jS6XpNLlN/guCVvmd7nUkksmp6x3MRGPHFEuW
+         b5Na7r2HOHPq8MCnRQbU545QfL8knyOXmvtSS8IgWUg9//Rw3u3I6V0h9ZKVXOSGagHr
+         Srdw==
+X-Gm-Message-State: ACrzQf3pLVM9PzUCKKRQOwIxlb+qDAYSlZXMK0U/q3R5ps2wfC1o3vuM
+        IvgDdSpChq1QM3+pgJiparjNzrjCtUpYQw==
+X-Google-Smtp-Source: AMsMyM4Na22MQCEkYmNGL/H4cHE5jOAZx/Jxn3T2uL4LmjrXMvv/w3qjaGdleg7s97ZnEYStiL1OmA==
+X-Received: by 2002:a05:6214:194c:b0:4bb:6d2f:3e7c with SMTP id q12-20020a056214194c00b004bb6d2f3e7cmr27602892qvk.4.1667491747673;
+        Thu, 03 Nov 2022 09:09:07 -0700 (PDT)
 Received: from ?IPV6:2601:586:5000:570:a35d:9f85:e3f7:d9fb? ([2601:586:5000:570:a35d:9f85:e3f7:d9fb])
-        by smtp.gmail.com with ESMTPSA id ey21-20020a05622a4c1500b003988b3d5280sm725662qtb.70.2022.11.03.08.56.21
+        by smtp.gmail.com with ESMTPSA id h18-20020a05620a401200b006ee8874f5fasm1018291qko.53.2022.11.03.09.09.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Nov 2022 08:56:22 -0700 (PDT)
-Message-ID: <910c152d-5e1a-4667-2f0a-a1524f51958c@linaro.org>
-Date:   Thu, 3 Nov 2022 11:56:20 -0400
+        Thu, 03 Nov 2022 09:09:07 -0700 (PDT)
+Message-ID: <287a41ec-b004-54a7-1ac3-07cc4db5fbbf@linaro.org>
+Date:   Thu, 3 Nov 2022 12:09:05 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.1
-Subject: Re: [PATCH 05/10] dt-bindings: interconnect: Add sm8350, sc8280xp and
- generic OSM L3 compatibles
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mike Tipton <quic_mdtipton@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221028034155.5580-1-quic_bjorande@quicinc.com>
- <20221028034155.5580-6-quic_bjorande@quicinc.com>
- <a364b343-fa19-348c-bc38-e8b44061890b@linaro.org>
- <20221103034410.GB5525@core-thresher1.qualcomm.com>
- <f3882934-9f95-39f1-83e4-6ce9efeb089c@linaro.org>
- <20221103154653.67mgsey57uvdcvx3@builder.lan>
+Subject: Re: [PATCH v4 1/3] dt-bindings: qcom-iommu: Add Qualcomm MSM8953
+ compatible
 Content-Language: en-US
+To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        iommu@lists.linux.dev, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221016161554.673006-1-luca@z3ntu.xyz>
+ <20221016161554.673006-2-luca@z3ntu.xyz> <5615419.DvuYhMxLoT@g550jk>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221103154653.67mgsey57uvdcvx3@builder.lan>
+In-Reply-To: <5615419.DvuYhMxLoT@g550jk>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,103 +85,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/11/2022 11:46, Bjorn Andersson wrote:
-> On Thu, Nov 03, 2022 at 08:25:17AM -0400, Krzysztof Kozlowski wrote:
->> On 02/11/2022 23:44, Bjorn Andersson wrote:
->>> On Fri, Oct 28, 2022 at 06:12:29PM -0400, Krzysztof Kozlowski wrote:
->>>> On 27/10/2022 23:41, Bjorn Andersson wrote:
->>>>> Add EPSS L3 compatibles for sm8350 and sc8280xp, but while at it also
->>>>> introduce generic compatible for both qcom,osm-l3 and qcom,epss-l3.
->>>>>
->>>>> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
->>>>> ---
->>>>>  .../bindings/interconnect/qcom,osm-l3.yaml    | 22 +++++++++++++------
->>>>>  1 file changed, 15 insertions(+), 7 deletions(-)
->>>>>
->>>>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
->>>>> index bf538c0c5a81..ae0995341a78 100644
->>>>> --- a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
->>>>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
->>>>> @@ -16,13 +16,21 @@ description:
->>>>>  
->>>>>  properties:
->>>>>    compatible:
->>>>> -    enum:
->>>>> -      - qcom,sc7180-osm-l3
->>>>> -      - qcom,sc7280-epss-l3
->>>>> -      - qcom,sc8180x-osm-l3
->>>>> -      - qcom,sdm845-osm-l3
->>>>> -      - qcom,sm8150-osm-l3
->>>>> -      - qcom,sm8250-epss-l3
->>>>> +    oneOf:
->>>>> +      items:
->>>>
->>>> oneOf expects a list, so this should be "    - items"
->>>>
->>>
->>> Ahh, thanks. Must have missed running the dt_binding_check on this one.
->>>
->>>>> +        - enum:
->>>>> +            - qcom,sc7180-osm-l3
->>>>> +            - qcom,sc8180x-osm-l3
->>>>> +            - qcom,sdm845-osm-l3
->>>>> +            - qcom,sm8150-osm-l3
->>>>> +        - const: qcom,osm-l3
->>>>
->>>> The concept is good, but are you sure all SoCs will be compatible with
->>>> generic osm-l3?
->>>
->>> Per the current implementation yes, worst case if one or more of them isn't the
->>> more specific compatible can be used to alter the behavior of that platform.
->>>
->>>> Why not using dedicated compatible of one soc, e.g. the
->>>> oldest here? We already did like that for BWMON, DMA and few others.
->>>>
->>>
->>> Because if we say compatible = "qcom,sc8180x-osm-l3", "qcom,sdm845-osm-l3" and
->>> there is a quirk needed for "qcom,sdm845-osm-l3" we're forced to add a "special
->>> case" every other *-osm-l3 in the driver.
->>>
->>> This way we can have a generic implementation for the qcom,osm-l3 and if we
->>> realize that we need to quirk something for the oldest platform, we can do so
->>> without affecting the others.
+On 31/10/2022 12:26, Luca Weiss wrote:
+> Hi all,
+> 
+> On Sonntag, 16. Oktober 2022 18:15:51 CET Luca Weiss wrote:
+>> Document the compatible used for IOMMU on the msm8953 SoC.
 >>
->> True. This also means we do not really know which one is the generic
->> implementation :)
->>
+>> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+>> Acked-by: Rob Herring <robh@kernel.org>
 > 
-> There currently is an implementation without platform specific quirks, I
-> call that the generic implementation and suggest that we refer to that
-> using "qcom,osm-l3".>
-> If we instead were to use sdm845 as the generic compatible, and there
-> turns out to be a need for a quirk for this platform, you:
+> Could someone please pick up this patch?
 > 
-> 1) no longer have a generic implementation, but 4 platform-specific
->    implementations
-
-It's okay because there is no such thing anymore as "generic
-implementation". If this happened, your generic compatible is not
-specific enough. It does not represent any specific hardware.
-
-Adding generic compatibles just to make driver binding easier, is a bit
-in contrast with DT which should focus on hardware description.
-
+> Looking at the file history, there's not much but maybe @Rob could you take 
+> this? Or maybe Bjorn?
 > 
-> 2) have 3 platforms claiming to be compatible with the quirked (now
->    specialized) implementation, which they clearly aren't anymore
 
-Yes, that's the problem and this is why I mentioned that we do not know
-the generic implementation. If we knew that sdm845 is the generic, we
-would not expect specific quirks for it.
-
-If you cannot make sdm845 generic because of unknown quirk, then you
-just do not know which one is generic implementation and that compatible
-is not specific enough... Or it is specific only to current Linux driver.
-
-> Therefor I favor using generic names for generic compatibles.
-
-They make driver development easier but they hide the real match between
-hardware and compatible.
+Use "iommu:" in the subject (dt-bindings: iommu: qcom:) so IOMMU
+maintainers notice it...
 
 Best regards,
 Krzysztof
