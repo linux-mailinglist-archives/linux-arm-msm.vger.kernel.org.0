@@ -2,74 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 606216175DE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 05:59:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DA9D617655
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 06:50:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230150AbiKCE7k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 00:59:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41892 "EHLO
+        id S229493AbiKCFu1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 01:50:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229980AbiKCE7d (ORCPT
+        with ESMTP id S229436AbiKCFu0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 00:59:33 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19C8C1836A;
-        Wed,  2 Nov 2022 21:59:31 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A34gt0b004736;
-        Thu, 3 Nov 2022 04:59:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=NzgUakEGMn0LhkXTs+i0Knhm6d7cDmcSO4HligZApCY=;
- b=nXd7UinsJ3u/eHPtSL39GePnfNL5rU3g1zczTX7041mbHCzcUGWriwuYFgRVwZVc5Unv
- q3p60bwAl4zzu41cWYmKpF2ba6nWQL2bgHGPLff14Rj6ya7CncYdLp3mvQaRVsEWic3R
- bhSP7taFHYG2IQbLQtsM1GxFs4HfnYjhS9y2mjMQzUOj8aCUZmhFtqZGQRYycx0lafyf
- DE8K9/324gteiy79BHWxDRHUyUOP+utk1UJqxcWBBavbeOReeGJjbS69KHEPPCRX2AUC
- cMkQLw45k5W4rdbi8V6Iwkn+LFmRcxNisi6fnWfwUeT5KNx8QeyX99Uk2KZfMsxD6iV9 6w== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3km6tnr2fs-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 03 Nov 2022 04:59:22 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A34xLG1006663
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 3 Nov 2022 04:59:21 GMT
-Received: from blr-ubuntu-87.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Wed, 2 Nov 2022 21:59:17 -0700
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-To:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <robh+dt@kernel.org>, <sudeep.holla@arm.com>,
-        <cristian.marussi@arm.com>
-CC:     <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <konrad.dybcio@somainline.org>, <quic_avajid@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [RFC 2/2] firmware: arm_scmi: Add SCMI QTI Memlat vendor protocol
-Date:   Thu, 3 Nov 2022 10:28:32 +0530
-Message-ID: <1667451512-9655-3-git-send-email-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1667451512-9655-1-git-send-email-quic_sibis@quicinc.com>
-References: <1667451512-9655-1-git-send-email-quic_sibis@quicinc.com>
+        Thu, 3 Nov 2022 01:50:26 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A273A13F20
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Nov 2022 22:50:25 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id l2so922311pld.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Nov 2022 22:50:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=tqq4iqiPBYJJ3mdt9KquYmKxY1vZtBAAJB2JNp407Ak=;
+        b=HSQqN9AVu2zGja3ueWjG9fRCGn+YZWng/jhr216FHRYdPp9ynTbFQxH/Nwwuvfeelg
+         h2r0LlZmHVpXrhlDk3mkv95fmzA2EohQp+nNsIFLQkKRs+mLJqnlAV8s/ESeMuUVTfRQ
+         ERTV4rtQeqvPfsaYWyomv1172LAVsEWDX2nnTJ1fiHn/4HvWHPOXESVD1xqoBjSAT1Be
+         D6sOW7KtfvWMZ/qmmwj4+l9g95aEi8BNNMT3fcmJxgXU5MDWlVcGnS1P2rhkCcsysxnN
+         mgARjT7fvHsk7Vcusl2E9c9/3v0NKusVICHifwFVwc74+SRBgv30t8d1Xfzadjmk/3Bn
+         ZkOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tqq4iqiPBYJJ3mdt9KquYmKxY1vZtBAAJB2JNp407Ak=;
+        b=tyCk9jkC0Ugpl3xhX/8wwiL3X9afCNLg8cTT420mRMWdxL4YZdGp7X7IuTIHlW+lim
+         MnKQuYuBqvaHyQm+C9B+PjYU8THIbLi1oRe72N++fGIoKH2QFK2VnCq95EQALgUyj9mi
+         53iI3y+U+2mmquLcEBaNjEuRQMvzTajxnoBMLYOT2Okcl9i/4YO7xc1mDc3EhCIdyk8u
+         xBMj2jWJTy0RekuzmGhf0IpP+mSkRwSaMMmx8aqni62lqawfsoDbyOqOGh5qwJYYkrYB
+         hRvsFW6zXL6Q4J47K4TIvnalC0qeEY7izSShLM78LHQuCI5sczbY0YzyGy2dsc+b+RWX
+         UEEA==
+X-Gm-Message-State: ACrzQf2Y/ByGq/TAl2USjjNtC6kfw6zaetwHSy+jnaInHUPLfytxey9J
+        8dlIEHkhgtQOJbX0uINprExI
+X-Google-Smtp-Source: AMsMyM633tSmnT857qtz/X+kw29fK+4EAbXvmYJRfLM2ldyfB280rQAAIgPd1fO/Jj/BzNS+eJDx6w==
+X-Received: by 2002:a17:903:2342:b0:17c:ae18:1c86 with SMTP id c2-20020a170903234200b0017cae181c86mr27723709plh.5.1667454625017;
+        Wed, 02 Nov 2022 22:50:25 -0700 (PDT)
+Received: from thinkpad ([117.193.208.64])
+        by smtp.gmail.com with ESMTPSA id i127-20020a625485000000b0056e32a2b88esm1080377pfb.219.2022.11.02.22.50.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Nov 2022 22:50:23 -0700 (PDT)
+Date:   Thu, 3 Nov 2022 11:20:14 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, johan+linaro@kernel.org,
+        quic_jprakash@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        steev@kali.org
+Subject: Re: [PATCH v2 12/12] arm64: dts: qcom: sc8280xp-x13s: Add thermal
+ zone support
+Message-ID: <20221103055014.GA8434@thinkpad>
+References: <20221029051449.30678-1-manivannan.sadhasivam@linaro.org>
+ <20221029051449.30678-13-manivannan.sadhasivam@linaro.org>
+ <90b7e0e0-a354-f64d-8c53-aa80df684a3a@somainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: hMtAXVK4QTOwMn819pwFXitHtVUlOVbV
-X-Proofpoint-ORIG-GUID: hMtAXVK4QTOwMn819pwFXitHtVUlOVbV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-02_15,2022-11-02_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
- priorityscore=1501 lowpriorityscore=0 spamscore=0 mlxscore=0 bulkscore=0
- impostorscore=0 suspectscore=0 adultscore=0 malwarescore=0 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
- definitions=main-2211030035
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <90b7e0e0-a354-f64d-8c53-aa80df684a3a@somainline.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -79,383 +78,99 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the SCMI QTI memlat (memory latency) vendor protocol.
-The QTI memlat vendor protocol takes in several tuneables including the
-IPM ratio (Instructions Per Miss), bus bandwidth requirements and PMU
-maps to enable frequency scaling of various buses (L3/LLCC/DDR) performed
-by the memory latency governor running on the CPUSS Control Processor.
+On Sat, Oct 29, 2022 at 04:29:05PM +0200, Konrad Dybcio wrote:
+> 
+> 
+> On 29.10.2022 07:14, Manivannan Sadhasivam wrote:
+> > Add thermal zone support by making use of the thermistor SYS_THERM6.
+> > Based on experiments, this thermistor seems to reflect the actual
+> > surface temperature of the laptop.
+> > 
+> > For the cooling device, all BIG CPU cores are throttle down to keep the
+> s/throttle/throttled
+> 
+> Is it okay to let the 4xA78C run at full throttle in thermal emergencies though?
 
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
- drivers/firmware/arm_scmi/Kconfig              |  10 +
- drivers/firmware/arm_scmi/Makefile             |   1 +
- drivers/firmware/arm_scmi/qcom_memlat_vendor.c | 269 +++++++++++++++++++++++++
- include/linux/scmi_protocol.h                  |  36 ++++
- 4 files changed, 316 insertions(+)
- create mode 100644 drivers/firmware/arm_scmi/qcom_memlat_vendor.c
+I don't get it. Can you elaborate?
 
-diff --git a/drivers/firmware/arm_scmi/Kconfig b/drivers/firmware/arm_scmi/Kconfig
-index a14f65444b35..814a3fc37dc1 100644
---- a/drivers/firmware/arm_scmi/Kconfig
-+++ b/drivers/firmware/arm_scmi/Kconfig
-@@ -136,6 +136,16 @@ config ARM_SCMI_TRANSPORT_VIRTIO_ATOMIC_ENABLE
- 
- endif #ARM_SCMI_PROTOCOL
- 
-+config QTI_SCMI_MEMLAT_PROTOCOL
-+	tristate "Qualcomm Technologies, Inc. SCMI MEMLAT vendor Protocol"
-+	depends on ARM_SCMI_PROTOCOL && QCOM_CPUCP_MBOX
-+	help
-+	  The SCMI QTI memlat vendor protocol adds support for the frequency
-+	  scaling of buses (L3/LLCC/DDR) by the QTI HW memlat governor running
-+	  on the CPUSS Control Processor (CPUCP).
-+
-+	  Say Y here if you want to build this driver.
-+
- config ARM_SCMI_POWER_DOMAIN
- 	tristate "SCMI power domain driver"
- 	depends on ARM_SCMI_PROTOCOL || (COMPILE_TEST && OF)
-diff --git a/drivers/firmware/arm_scmi/Makefile b/drivers/firmware/arm_scmi/Makefile
-index 9ea86f8cc8f7..78e6d72fb9bb 100644
---- a/drivers/firmware/arm_scmi/Makefile
-+++ b/drivers/firmware/arm_scmi/Makefile
-@@ -11,6 +11,7 @@ scmi-protocols-y = base.o clock.o perf.o power.o reset.o sensors.o system.o volt
- scmi-module-objs := $(scmi-bus-y) $(scmi-driver-y) $(scmi-protocols-y) \
- 		    $(scmi-transport-y)
- obj-$(CONFIG_ARM_SCMI_PROTOCOL) += scmi-module.o
-+obj-$(CONFIG_QTI_SCMI_MEMLAT_PROTOCOL) += qcom_memlat_vendor.o
- obj-$(CONFIG_ARM_SCMI_POWER_DOMAIN) += scmi_pm_domain.o
- obj-$(CONFIG_ARM_SCMI_POWER_CONTROL) += scmi_power_control.o
- 
-diff --git a/drivers/firmware/arm_scmi/qcom_memlat_vendor.c b/drivers/firmware/arm_scmi/qcom_memlat_vendor.c
-new file mode 100644
-index 000000000000..4b7db309e633
---- /dev/null
-+++ b/drivers/firmware/arm_scmi/qcom_memlat_vendor.c
-@@ -0,0 +1,269 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#include <linux/module.h>
-+#include <linux/scmi_protocol.h>
-+
-+#include "protocols.h"
-+
-+#define MAX_MAP_ENTRIES 14
-+#define MAX_PMU_ENTRIES 24
-+
-+enum scmi_memlat_protocol_cmd {
-+	MEMLAT_SET_CPU_GROUP = 0x10,
-+	MEMLAT_SET_MONITOR = 0x11,
-+	MEMLAT_COMMON_PMU_MAP = 0x12,
-+	MEMLAT_MON_PMU_MAP = 0x13,
-+	MEMLAT_IPM_RATIO = 0x14,
-+	MEMLAT_STALL_RATIO = 0x15,
-+	MEMLAT_SAMPLE_MS = 0x18,
-+	MEMLAT_MON_FREQ_MAP = 0x19,
-+	MEMLAT_START_MONITOR = 0x1c,
-+	MEMLAT_STOP_MONITOR = 0x1d,
-+};
-+
-+struct node_msg {
-+	u32 cpumask;
-+	u32 mon_type;
-+};
-+
-+struct scalar_param_msg {
-+	u32 cpumask;
-+	u32 mon_type;
-+	u32 val;
-+};
-+
-+struct map_table {
-+	u32 v1;
-+	u32 v2;
-+};
-+
-+struct map_param_msg {
-+	u32 cpumask;
-+	u32 mon_type;
-+	u32 nr_rows;
-+	struct map_table tbl[MAX_MAP_ENTRIES];
-+};
-+
-+struct pmu_map_msg {
-+	u32 cpumask;
-+	u32 mon_type;
-+	u32 nr_entries;
-+	u32 pmu[MAX_PMU_ENTRIES];
-+};
-+
-+static int scmi_set_cpugrp_mon(const struct scmi_protocol_handle *ph,
-+			       u32 cpus_mpidr, u32 mon_type, u32 msg_id)
-+{
-+	int ret = 0;
-+	struct scmi_xfer *t;
-+	struct node_msg *msg;
-+
-+	ret = ph->xops->xfer_get_init(ph, msg_id, sizeof(*msg), sizeof(*msg), &t);
-+	if (ret)
-+		return ret;
-+
-+	msg = t->tx.buf;
-+	msg->cpumask = cpu_to_le32(cpus_mpidr);
-+	msg->mon_type = cpu_to_le32(mon_type);
-+	ret = ph->xops->do_xfer(ph, t);
-+	ph->xops->xfer_put(ph, t);
-+
-+	return ret;
-+}
-+
-+static int scmi_set_mon(const struct scmi_protocol_handle *ph, u32 cpus_mpidr, u32 mon_type)
-+{
-+	return scmi_set_cpugrp_mon(ph, cpus_mpidr, mon_type, MEMLAT_SET_MONITOR);
-+}
-+
-+static int scmi_set_cpu_grp(const struct scmi_protocol_handle *ph, u32 cpus_mpidr, u32 mon_type)
-+{
-+	return scmi_set_cpugrp_mon(ph, cpus_mpidr, mon_type, MEMLAT_SET_CPU_GROUP);
-+}
-+
-+static int scmi_send_pmu_map_command(const struct scmi_protocol_handle *ph, u32 cpus_mpidr,
-+				     u32 mon_type, u32 nr_entries, void *buf, u32 msg_id)
-+{
-+	u32 *dst;
-+	int ret, i = 0;
-+	struct scmi_xfer *t;
-+	struct pmu_map_msg *msg;
-+	struct map_table *src = buf;
-+
-+	if (nr_entries > MAX_PMU_ENTRIES)
-+		return -EINVAL;
-+
-+	ret = ph->xops->xfer_get_init(ph, msg_id, sizeof(*msg), sizeof(*msg), &t);
-+	if (ret)
-+		return ret;
-+
-+	msg = t->tx.buf;
-+	msg->cpumask = cpu_to_le32(cpus_mpidr);
-+	msg->mon_type = cpu_to_le32(mon_type);
-+	msg->nr_entries = cpu_to_le32(nr_entries);
-+	dst = msg->pmu;
-+
-+	for (i = 0; i < nr_entries; i++)
-+		dst[i] = cpu_to_le32(src[i].v2);
-+
-+	ret = ph->xops->do_xfer(ph, t);
-+	ph->xops->xfer_put(ph, t);
-+	return ret;
-+}
-+
-+static int scmi_common_pmu_map(const struct scmi_protocol_handle *ph, u32 cpus_mpidr,
-+			       u32 mon_type, u32 nr_entries, void *buf)
-+{
-+	return scmi_send_pmu_map_command(ph, cpus_mpidr, mon_type, nr_entries,
-+					 buf, MEMLAT_COMMON_PMU_MAP);
-+}
-+
-+static int scmi_mon_pmu_map(const struct scmi_protocol_handle *ph, u32 cpus_mpidr,
-+			    u32 mon_type, u32 nr_entries, void *buf)
-+{
-+	return scmi_send_pmu_map_command(ph, cpus_mpidr, mon_type, nr_entries,
-+					 buf, MEMLAT_MON_PMU_MAP);
-+}
-+
-+static int scmi_freq_map(const struct scmi_protocol_handle *ph, u32 cpus_mpidr,
-+			 u32 mon_type, u32 nr_rows, void *buf)
-+{
-+	int ret, i = 0;
-+	struct scmi_xfer *t;
-+	struct map_param_msg *msg;
-+	struct map_table *tbl, *src = buf;
-+
-+	if (nr_rows > MAX_MAP_ENTRIES)
-+		return -EINVAL;
-+
-+	ret = ph->xops->xfer_get_init(ph, MEMLAT_MON_FREQ_MAP, sizeof(*msg),
-+				      sizeof(*msg), &t);
-+	if (ret)
-+		return ret;
-+
-+	msg = t->tx.buf;
-+	msg->cpumask = cpu_to_le32(cpus_mpidr);
-+	msg->mon_type = cpu_to_le32(mon_type);
-+	msg->nr_rows = cpu_to_le32(nr_rows);
-+	tbl = msg->tbl;
-+
-+	for (i = 0; i < nr_rows; i++) {
-+		tbl[i].v1 = cpu_to_le32(src[i].v1);
-+		tbl[i].v2 = cpu_to_le32(src[i].v2);
-+	}
-+
-+	ret = ph->xops->do_xfer(ph, t);
-+	ph->xops->xfer_put(ph, t);
-+	return ret;
-+}
-+
-+static int scmi_set_tunable(const struct scmi_protocol_handle *ph, u32 cpus_mpidr,
-+			    u32 msg_id, u32 mon_type, u32 val)
-+{
-+	int ret = 0;
-+	struct scmi_xfer *t;
-+	struct scalar_param_msg *msg;
-+
-+	ret = ph->xops->xfer_get_init(ph, msg_id, sizeof(*msg), sizeof(*msg), &t);
-+	if (ret)
-+		return ret;
-+
-+	msg = t->tx.buf;
-+	msg->cpumask = cpu_to_le32(cpus_mpidr);
-+	msg->mon_type = cpu_to_le32(mon_type);
-+	msg->val = cpu_to_le32(val);
-+	ret = ph->xops->do_xfer(ph, t);
-+	ph->xops->xfer_put(ph, t);
-+
-+	return ret;
-+}
-+
-+static int scmi_ipm_ratio(const struct scmi_protocol_handle *ph, u32 cpus_mpidr,
-+			  u32 mon_type, u32 val)
-+{
-+	return scmi_set_tunable(ph, cpus_mpidr, MEMLAT_IPM_RATIO, mon_type, val);
-+}
-+
-+static int scmi_stall_ratio(const struct scmi_protocol_handle *ph, u32 cpus_mpidr,
-+			    u32 mon_type, u32 val)
-+{
-+	return scmi_set_tunable(ph, cpus_mpidr, MEMLAT_STALL_RATIO, mon_type, val);
-+}
-+
-+static int scmi_sample_ms(const struct scmi_protocol_handle *ph, u32 cpus_mpidr,
-+			  u32 mon_type, u32 val)
-+{
-+	return scmi_set_tunable(ph, cpus_mpidr, MEMLAT_SAMPLE_MS, mon_type, val);
-+}
-+
-+static int scmi_send_start_stop(const struct scmi_protocol_handle *ph,
-+				u32 cpus_mpidr, u32 mon_type, u32 msg_id)
-+{
-+	int ret = 0;
-+	struct scmi_xfer *t;
-+	struct scalar_param_msg *msg;
-+
-+	ret = ph->xops->xfer_get_init(ph, msg_id, sizeof(*msg), sizeof(*msg), &t);
-+	if (ret)
-+		return ret;
-+
-+	msg = t->tx.buf;
-+	msg->cpumask = cpu_to_le32(cpus_mpidr);
-+	msg->mon_type = cpu_to_le32(mon_type);
-+	ret = ph->xops->do_xfer(ph, t);
-+	ph->xops->xfer_put(ph, t);
-+
-+	return ret;
-+}
-+
-+static int scmi_stop_mon(const struct scmi_protocol_handle *ph, u32 cpus_mpidr, u32 mon_type)
-+{
-+	return scmi_send_start_stop(ph, cpus_mpidr, mon_type, MEMLAT_STOP_MONITOR);
-+}
-+
-+static int scmi_start_mon(const struct scmi_protocol_handle *ph, u32 cpus_mpidr, u32 mon_type)
-+{
-+	return scmi_send_start_stop(ph, cpus_mpidr, mon_type, MEMLAT_START_MONITOR);
-+}
-+
-+static struct scmi_vendor_memlat_ops memlat_ops = {
-+	.set_cpu_grp = scmi_set_cpu_grp,
-+	.freq_map = scmi_freq_map,
-+	.set_mon = scmi_set_mon,
-+	.common_pmu_map = scmi_common_pmu_map,
-+	.mon_pmu_map = scmi_mon_pmu_map,
-+	.ipm_ratio = scmi_ipm_ratio,
-+	.stall_ratio = scmi_stall_ratio,
-+	.sample_ms = scmi_sample_ms,
-+	.start_monitor = scmi_start_mon,
-+	.stop_monitor = scmi_stop_mon,
-+};
-+
-+static int scmi_vendor_memlat_protocol_init(const struct scmi_protocol_handle *ph)
-+{
-+	int ret;
-+	u32 version;
-+
-+	ret = ph->xops->version_get(ph, &version);
-+	if (ret)
-+		return ret;
-+
-+	dev_dbg(ph->dev, "Memlat Version %d.%d\n",
-+		PROTOCOL_REV_MAJOR(version), PROTOCOL_REV_MINOR(version));
-+
-+	return 0;
-+}
-+
-+static const struct scmi_protocol scmi_vendor_memlat = {
-+	.id = SCMI_VENDOR_PROTOCOL_MEMLAT,
-+	.owner = THIS_MODULE,
-+	.instance_init = &scmi_vendor_memlat_protocol_init,
-+	.ops = &memlat_ops,
-+};
-+module_scmi_protocol(scmi_vendor_memlat);
-+
-+MODULE_DESCRIPTION("Qualcomm Technologies, Inc. SCMI Memlat Protocol");
-+MODULE_LICENSE("GPL");
-diff --git a/include/linux/scmi_protocol.h b/include/linux/scmi_protocol.h
-index 4f765bc788ff..57abb5be45c9 100644
---- a/include/linux/scmi_protocol.h
-+++ b/include/linux/scmi_protocol.h
-@@ -677,6 +677,40 @@ struct scmi_powercap_proto_ops {
- };
- 
- /**
-+ * struct scmi_vendor_memlat_ops - represents the various operations provided
-+ * by SCMI QTI HW Memlat Vendor Protocol
-+ *
-+ * @cpu_grp: set the cpugrp
-+ * @set_mon: set the supported monitors
-+ * @common_pmu_map: sets the common PMU map supported by governor
-+ * @mon_pmu_map: sets the additional PMU map supported by governor
-+ * @ipm_ratio: sets the ratio_ceil needed for hw memlat governor
-+ * @stall_ratio: sets the stall_floor needed for hw memlat governor
-+ * @sample_ms: sets the poll iterval of the governor
-+ * @freq_map: sets the freq_map of the governor
-+ * @start_mon: starts the monitor in firmware
-+ * @stop_mon: stops the monitor in firmware
-+ */
-+struct scmi_vendor_memlat_ops {
-+	int (*set_cpu_grp)(const struct scmi_protocol_handle *ph, u32 cpus_mpidr, u32 mon_type);
-+	int (*set_mon)(const struct scmi_protocol_handle *ph, u32 cpus_mpidr, u32 mon_type);
-+	int (*common_pmu_map)(const struct scmi_protocol_handle *ph, u32 cpus_mpidr, u32 mon_type,
-+			      u32 nr_rows, void *buf);
-+	int (*mon_pmu_map)(const struct scmi_protocol_handle *ph, u32 cpus_mpidr, u32 mon_type,
-+			   u32 nr_rows, void *buf);
-+	int (*ipm_ratio)(const struct scmi_protocol_handle *ph, u32 cpus_mpidr,
-+			 u32 mon_type, u32 val);
-+	int (*stall_ratio)(const struct scmi_protocol_handle *ph, u32 cpus_mpidr,
-+			   u32 mon_type, u32 val);
-+	int (*sample_ms)(const struct scmi_protocol_handle *ph, u32 cpus_mpidr,
-+			 u32 mon_type, u32 val);
-+	int (*freq_map)(const struct scmi_protocol_handle *ph, u32 cpus_mpidr, u32 mon_type,
-+			u32 nr_rows, void *buf);
-+	int (*start_monitor)(const struct scmi_protocol_handle *ph, u32 cpus_mpidr, u32 mon_type);
-+	int (*stop_monitor)(const struct scmi_protocol_handle *ph, u32 cpus_mpidr, u32 mon_type);
-+};
-+
-+/**
-  * struct scmi_notify_ops  - represents notifications' operations provided by
-  * SCMI core
-  * @devm_event_notifier_register: Managed registration of a notifier_block for
-@@ -785,6 +819,8 @@ enum scmi_std_protocol {
- 	SCMI_PROTOCOL_POWERCAP = 0x18,
- };
- 
-+#define SCMI_VENDOR_PROTOCOL_MEMLAT    0x80
-+
- enum scmi_system_events {
- 	SCMI_SYSTEM_SHUTDOWN,
- 	SCMI_SYSTEM_COLDRESET,
+> > temperature at a sane level.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 46 +++++++++++++++++++
+> >  1 file changed, 46 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > index ca77c19c6d0d..96e2fa72f782 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > @@ -29,6 +29,52 @@ backlight {
+> >  		pinctrl-0 = <&edp_bl_en>, <&edp_bl_pwm>;
+> >  	};
+> >  
+> > +	thermal-zones {
+> > +		skin-temp-thermal {
+> > +			polling-delay-passive = <250>;
+> > +			polling-delay = <0>;
+> > +			thermal-sensors = <&pmk8280_adc_tm 5>;
+> > +
+> > +			trips {
+> > +				skin_temp_alert0: trip-point0 {
+> > +					temperature = <55000>;
+> > +					hysteresis = <1000>;
+> > +					type = "passive";
+> > +				};
+> > +
+> > +				skin_temp_alert1: trip-point1 {
+> > +					temperature = <58000>;
+> > +					hysteresis = <1000>;
+> > +					type = "passive";
+> > +				};
+> > +
+> > +				skin-temp-crit {
+> > +					temperature = <73000>;
+> Ouch, I didn't know we were serving burnt fingers at the cafeteria today :D
+> 
+> Or maybe this just looks scary.. The laptop looks plastic, so maybe it won't cause instant
+> burns?
+> 
+
+73c is what the reasonable number I came up with after some experiments. At
+this point the temperature won't burn your finger but crossing this surely
+would (that's what happening without this series).
+
+Thanks,
+Mani
+
+> Konrad
+> > +					hysteresis = <1000>;
+> > +					type = "critical";
+> > +				};
+> > +			};
+> > +
+> > +			cooling-maps {
+> > +				map0 {
+> > +					trip = <&skin_temp_alert0>;
+> > +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> > +				};
+> > +
+> > +				map1 {
+> > +					trip = <&skin_temp_alert1>;
+> > +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> > +				};
+> > +			};
+> > +		};
+> > +	};
+> > +
+> >  	vreg_edp_bl: regulator-edp-bl {
+> >  		compatible = "regulator-fixed";
+> >  
+
 -- 
-2.7.4
-
+மணிவண்ணன் சதாசிவம்
