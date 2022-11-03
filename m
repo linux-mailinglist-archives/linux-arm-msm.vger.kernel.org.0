@@ -2,69 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70A16617B99
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 12:35:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 29D15617C3B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 13:12:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231253AbiKCLfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 07:35:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48028 "EHLO
+        id S231499AbiKCMMj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 08:12:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230376AbiKCLfS (ORCPT
+        with ESMTP id S231411AbiKCMMh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 07:35:18 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F4A96401
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 04:35:17 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id bp15so2259592lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 04:35:17 -0700 (PDT)
+        Thu, 3 Nov 2022 08:12:37 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2590F7C
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 05:12:35 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id i3so1389525pfc.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 05:12:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FMfCMMBFOe9bcE0uhCdXWh0+bagJTHzdz2cxOm6mYl8=;
-        b=iNcjQzB4XnQMmNRivwf3hv9yptWVq4ZjEAoeEfe3d0olkPIFTXtygBmC/u/dbKArOu
-         5wvdBuRxKLPw4tTcNck2BlcLg+MdWTJKGagkQL5I1sSBfzaQgC2CvYjbHnHwSbK25X9z
-         pZIY3+IM7H08c0m3NQ881a9PL7oBgkLwbwwo0shAB/JbAIDbpPWYemxiALY9UOmQV+tc
-         939Pm90DVnjlX1vu5LTvZWZWpRFvHcVeMXWZ3xLmoQj1Oa/U9PaFrKVvrMI6by8pKY8r
-         R3G1mIFm9VBccaRBytsYImlmbemfRqR9IZMlT9+dPPWlzG8xG4CK5paqhG7/Ab35ncG0
-         0M+Q==
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=rieV2SdG8Mne1lxC+rYgGfokYn80pf6/u2BwWRn0Sa8=;
+        b=c0tT0ytkIGnqZS9md6cRj/skv0p3s9o9YUJ12rIVp0tf5XWrqoZpQ5jyc2bASunn08
+         avIYT7RBqtT9KBIrhIYDT8tiJuJwPppPNvui1v3S3QQXNz6k3Vd1rObtd6IgQ6AEumgH
+         I6P+N/0tDH6AVwNnv3ICutpmT4ETirJ404d5S3vEdysntZgqLcR5Io8DX3NIM/BVhRQA
+         ekjvNUflGxsTbQLgqH3dkh8BF9lOPk+dgSk5bdmTugtnNmfcbBsksse1sZTW9aEsaoGA
+         QKMUmTdvBmruOuLf4sCwi4ndNH9krFSE147UDQcYr/dJKYEbYfPlc2rgh9btp4sK/eib
+         gIcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FMfCMMBFOe9bcE0uhCdXWh0+bagJTHzdz2cxOm6mYl8=;
-        b=DfchWNjcaqlRVGC69Bia4NSMlSWk0RBJG3oZoOryfBGrB2WXJBRfWQgihk6oYNNUz7
-         EtsmOBmv3y3dbxRjEAM0YFQz310QDpW7Hikvqf7qsDoJcdJ6oQzvt109XZSe5lxZP/bA
-         UhgZntIxAL8/GiuVtNCU7UaT0O2oz0EDWhgawgYuXyz7ElP/g8q+lBBu6WrkQVzXQ9De
-         yMwfD1mDCMA+WOlNug5NpSF21xZl8o3jEewZ8Ps68zpNPiIaB79Kr3rlF3rY9Fu3lpWI
-         YpbJSxY9y1EvO0DH4mtal+mD9juOFeUZCgedhhR57rhYdvv8yTb/4csPqRIXsjTLQZX6
-         Znvw==
-X-Gm-Message-State: ACrzQf32gd/ex5ALM96zvaJaiXj8Ir4EKofpK18vTIkXQCL6sEYttgqv
-        o/CEZS7ap/EamtwXuco/efxnkBEzdy33V3bof4jQC9g7
-X-Google-Smtp-Source: AMsMyM5A6nuVW3A3mLSDk0LjKFa641aNeDJZSemvcrC0NLxhyfGaN0vc3CpPVwUAMthQ1B01u9aLQuoE0hrjCIMsPpQ=
-X-Received: by 2002:a05:6512:e9e:b0:4a2:1503:c2e7 with SMTP id
- bi30-20020a0565120e9e00b004a21503c2e7mr11902141lfb.476.1667475315085; Thu, 03
- Nov 2022 04:35:15 -0700 (PDT)
+        bh=rieV2SdG8Mne1lxC+rYgGfokYn80pf6/u2BwWRn0Sa8=;
+        b=YyFIekll5jhkFN0sonJ9UFTdUepM8E/NdFSToUIy8SaC0lAeQ/DMaK9A40GPk9JRsQ
+         dHTyUQuST1cMDmcDlOvSKeSB1zgB80S8VkhleJU5B+19Eiamr/+VO/sOZBKYsLoGYDd+
+         tkj9bR8Oe3JpIvUlB62r+DuW2TeYS0US/9ijAy8EUhMq5o1sEaOfD2Z/LrDhQuUgetId
+         vCG/Ojo/JL0jjG8Lom5Xxv1BBPAZxE+f9nNtVDFbTcKrd+o5+XXMGH+bC5RynRJPw/3y
+         IbNM81Ula+GFfQSfASZI8qeTqq4sXyc1lAvwMOPrx7h1rNfeczBp+Lu4VcNnd61K661V
+         ArtQ==
+X-Gm-Message-State: ACrzQf2GN1xYQWDJ1s+WDSEp9Z1LCOf+DTL2ptLY+fvzrZXT/YCK2Rct
+        K6upbpOyG/CE32yQO6+I7yeQxe4ne/ta
+X-Google-Smtp-Source: AMsMyM5MvSMm8DZRRoUBG8baRgK1tsDVj6xLuyNJi/jpppTIwzgYHsAlA4LC9r7rDPe2PErVWX/yCQ==
+X-Received: by 2002:a05:6a00:cd4:b0:56c:b47:a743 with SMTP id b20-20020a056a000cd400b0056c0b47a743mr29723853pfv.25.1667477555333;
+        Thu, 03 Nov 2022 05:12:35 -0700 (PDT)
+Received: from thinkpad ([59.92.102.81])
+        by smtp.gmail.com with ESMTPSA id d1-20020a17090a114100b0021358bd24b9sm3240468pje.21.2022.11.03.05.12.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Nov 2022 05:12:34 -0700 (PDT)
+Date:   Thu, 3 Nov 2022 17:42:28 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, johan+linaro@kernel.org,
+        quic_jprakash@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        steev@kali.org
+Subject: Re: [PATCH v2 12/12] arm64: dts: qcom: sc8280xp-x13s: Add thermal
+ zone support
+Message-ID: <20221103121228.GB8434@thinkpad>
+References: <20221029051449.30678-1-manivannan.sadhasivam@linaro.org>
+ <20221029051449.30678-13-manivannan.sadhasivam@linaro.org>
+ <90b7e0e0-a354-f64d-8c53-aa80df684a3a@somainline.org>
+ <20221103055014.GA8434@thinkpad>
+ <e46c817b-1a3b-d20c-22e7-a67b7684f17b@somainline.org>
 MIME-Version: 1.0
-Received: by 2002:a05:6504:1693:b0:200:906a:3589 with HTTP; Thu, 3 Nov 2022
- 04:35:14 -0700 (PDT)
-Reply-To: johndesousachambersgh@gmail.com
-From:   "Barr.John De Sousa" <lonatotogowestafricans2021@gmail.com>
-Date:   Thu, 3 Nov 2022 11:35:14 +0000
-Message-ID: <CAFoF2jtrqKkEHMaw7z4NGnPgC5J_uW=8EqayDE2E+LGM=45ksg@mail.gmail.com>
-Subject: hello,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e46c817b-1a3b-d20c-22e7-a67b7684f17b@somainline.org>
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I would like to have a word with you, it's very important that we
-discuss it as soon as possible.
+On Thu, Nov 03, 2022 at 11:02:30AM +0100, Konrad Dybcio wrote:
+> 
+> On 03/11/2022 06:50, Manivannan Sadhasivam wrote:
+> > On Sat, Oct 29, 2022 at 04:29:05PM +0200, Konrad Dybcio wrote:
+> > > 
+> > > On 29.10.2022 07:14, Manivannan Sadhasivam wrote:
+> > > > Add thermal zone support by making use of the thermistor SYS_THERM6.
+> > > > Based on experiments, this thermistor seems to reflect the actual
+> > > > surface temperature of the laptop.
+> > > > 
+> > > > For the cooling device, all BIG CPU cores are throttle down to keep the
+> > > s/throttle/throttled
+> > > 
+> > > Is it okay to let the 4xA78C run at full throttle in thermal emergencies though?
+> > I don't get it. Can you elaborate?
+> 
+> 8280xp has 4xA78C and 4xX1C. You only added the latter ones to the cooling
+> map.
+> 
+
+Right, that's because the first 4 cores doesn't contribute to thermal much and
+thottling them doesn't yield any thermal gain.
+
+Thanks,
+Mani
+
+> 
+> > 
+> > > > temperature at a sane level.
+> > > > 
+> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > ---
+> > > >   .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 46 +++++++++++++++++++
+> > > >   1 file changed, 46 insertions(+)
+> > > > 
+> > > > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > > > index ca77c19c6d0d..96e2fa72f782 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > > > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > > > @@ -29,6 +29,52 @@ backlight {
+> > > >   		pinctrl-0 = <&edp_bl_en>, <&edp_bl_pwm>;
+> > > >   	};
+> > > > +	thermal-zones {
+> > > > +		skin-temp-thermal {
+> > > > +			polling-delay-passive = <250>;
+> > > > +			polling-delay = <0>;
+> > > > +			thermal-sensors = <&pmk8280_adc_tm 5>;
+> > > > +
+> > > > +			trips {
+> > > > +				skin_temp_alert0: trip-point0 {
+> > > > +					temperature = <55000>;
+> > > > +					hysteresis = <1000>;
+> > > > +					type = "passive";
+> > > > +				};
+> > > > +
+> > > > +				skin_temp_alert1: trip-point1 {
+> > > > +					temperature = <58000>;
+> > > > +					hysteresis = <1000>;
+> > > > +					type = "passive";
+> > > > +				};
+> > > > +
+> > > > +				skin-temp-crit {
+> > > > +					temperature = <73000>;
+> > > Ouch, I didn't know we were serving burnt fingers at the cafeteria today :D
+> > > 
+> > > Or maybe this just looks scary.. The laptop looks plastic, so maybe it won't cause instant
+> > > burns?
+> > > 
+> > 73c is what the reasonable number I came up with after some experiments. At
+> > this point the temperature won't burn your finger but crossing this surely
+> > would (that's what happening without this series).
+> 
+> Ok, then I suppose it's fine. Thanks!
+> 
+> 
+> Konrad
+> 
+> > 
+> > Thanks,
+> > Mani
+> > 
+> > > Konrad
+> > > > +					hysteresis = <1000>;
+> > > > +					type = "critical";
+> > > > +				};
+> > > > +			};
+> > > > +
+> > > > +			cooling-maps {
+> > > > +				map0 {
+> > > > +					trip = <&skin_temp_alert0>;
+> > > > +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > > > +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > > > +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > > > +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> > > > +				};
+> > > > +
+> > > > +				map1 {
+> > > > +					trip = <&skin_temp_alert1>;
+> > > > +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > > > +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > > > +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+> > > > +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+> > > > +				};
+> > > > +			};
+> > > > +		};
+> > > > +	};
+> > > > +
+> > > >   	vreg_edp_bl: regulator-edp-bl {
+> > > >   		compatible = "regulator-fixed";
+
+-- 
+மணிவண்ணன் சதாசிவம்
