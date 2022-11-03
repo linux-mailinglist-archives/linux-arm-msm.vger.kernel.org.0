@@ -2,51 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0587617D11
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 13:50:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E5D79617D1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 13:55:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231497AbiKCMub (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 08:50:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37192 "EHLO
+        id S229994AbiKCMzm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 08:55:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230006AbiKCMuZ (ORCPT
+        with ESMTP id S229637AbiKCMzl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 08:50:25 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5D3812AE9;
-        Thu,  3 Nov 2022 05:50:24 -0700 (PDT)
+        Thu, 3 Nov 2022 08:55:41 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CDD926E8;
+        Thu,  3 Nov 2022 05:55:40 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 7F8BBB823C1;
-        Thu,  3 Nov 2022 12:50:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA41DC433D6;
-        Thu,  3 Nov 2022 12:50:16 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 337F761DD5;
+        Thu,  3 Nov 2022 12:55:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9FDC433D7;
+        Thu,  3 Nov 2022 12:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667479822;
-        bh=u7zq92KkM1JW1e0MCT8+S4MFg2O1zjgM8MB9fFopD8c=;
+        s=k20201202; t=1667480139;
+        bh=FQsgWu/Pnd3ynxozqQF9/wuhkpto1AVQEAGm/DwNevs=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rSnmaYrDBsjZq7ystKjIGqwH8CVbvgrMmgBThb/n4nmK36N0h3l6dGYHgG0GDEXia
-         5ECVzS0xx046NaD4aWleJcymEwsKCesAjmz/z2TkL0uen0VavmCFPoxknyTFzls41F
-         B6wdQ+XggSmUN4UoJjzq+jHC6MEDXY3l4druYSg3Ej34x9T8+xKCdKd5Qh+j06vE9K
-         H2HHNmIlpFc45ZbVXuWgjs7nXn/e2rYPZo2XaDy1oq08nKfh47/4Gu/H3DlJ4ByEpf
-         kQg1nrNwIjb91wyve2rWTLhqkb/IkYtPy8CHNuHF1mprwtyQgDh8x//LitWZnAWGM8
-         pO9dn/d20znZw==
-Date:   Thu, 3 Nov 2022 18:20:09 +0530
+        b=jUJDZ46i4KY5p8LXoeP/oMAGWPY8t90juY9t+cw+9gX7zv/9KQA7RgM7IVMggfcEe
+         8HRNKkKO9rFxahO+lA4UiLrfsS0eFhWoecc7LjPrUrx521pzehZk1J8HezkLWuLbDE
+         8gg/2qslvj9Xm726/egZ6hiBDrjg6a1qsZWYN7v13veBs5YYap36Y8pmxDvbb7P1q6
+         oto6VBjjlIjazLGhakP+iq/dEtTos9OYrQ6fEKOBeGadbLpAFPm4yx9hQCuN9QUZIz
+         r+9HLHrjJBWyvgcmsS5YaWc6gXbvbIIpjI3rHHc+PjnHzSAQlfk6acw/VYyD+5DrkT
+         cv7t/mWb4bWrQ==
+Date:   Thu, 3 Nov 2022 18:25:31 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Slark Xiao <slark_xiao@163.com>
-Cc:     gregkh@linuxfoundation.org, loic.poulain@linaro.org,
-        dnlplm@gmail.com, yonglin.tan@outlook.com,
-        fabio.porcedda@gmail.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add macro for some vids
-Message-ID: <20221103125009.GH8434@thinkpad>
-References: <20221102024437.15248-1-slark_xiao@163.com>
+To:     Qiang Yu <quic_qianyu@quicinc.com>
+Cc:     quic_hemantk@quicinc.com, loic.poulain@linaro.org,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+        mrana@quicinc.com
+Subject: Re: [PATCH] bus: mhi: host: Add session ID to MHI controller
+Message-ID: <20221103125531.GI8434@thinkpad>
+References: <1665376870-60668-1-git-send-email-quic_qianyu@quicinc.com>
+ <20221028172022.GC13880@thinkpad>
+ <7dc5b87a-1413-f7cb-4fdc-93828252c4f1@quicinc.com>
+ <20221101114554.GD54667@thinkpad>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221102024437.15248-1-slark_xiao@163.com>
+In-Reply-To: <20221101114554.GD54667@thinkpad>
 X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -56,96 +59,91 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 02, 2022 at 10:44:37AM +0800, Slark Xiao wrote:
-> To make code neat and for convenience purpose, using macro for
-> some vids.
-
-s/using/use
-s/vids/VIDs
-
-> Refer to previous patch in pci_ids.h side, they are
-> not allowed to add new entries of single driver needed. So we
-> add it in our local file.
->
-
-Reference to the previous patch has no relationship with this commit once
-merged. How about,
-
-"These macros are supposed to be added to pci_ids.h. But until the macros are
-used in multiple places, it is not recommended. So adding it locally for now."
- 
-> Signed-off-by: Slark Xiao <slark_xiao@163.com>
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 18 +++++++++++-------
->  1 file changed, 11 insertions(+), 7 deletions(-)
+On Tue, Nov 01, 2022 at 05:15:54PM +0530, Manivannan Sadhasivam wrote:
+> On Mon, Oct 31, 2022 at 04:54:55PM +0800, Qiang Yu wrote:
+> > 
+> > On 10/29/2022 1:20 AM, Manivannan Sadhasivam wrote:
+> > > On Mon, Oct 10, 2022 at 12:41:10PM +0800, Qiang Yu wrote:
+> > > > Session ID to be used during BHI transfers to recognize a
+> > > > particular session are currently not being stored in the MHI
+> > > > controller structure. Store them to allow for tracking and other
+> > > > future usage.
+> > > > 
+> > > > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> > > Who/what is going to use this session id?
+> > Sometimes, we may find some error logs and want to see what happens on
+> > device when host is printing these error logs.
+> > Session id can help us find the logs we want.
 > 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index c4259cb2d289..5abc778a5290 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -24,6 +24,10 @@
->  
->  #define HEALTH_CHECK_PERIOD (HZ * 2)
->  
+> Okay. Please add this info to the commit message.
+> 
 
-Add a comment,
+Wait. I asked who is going to use session_id cached in the MHI controller
+structure? session_id is already printed in debug log.
 
-/* PCI VID definitions */
-
-> +#define PCI_VENDOR_ID_THALES	0x1269
-> +
-
-No need of newline
-
-> +#define PCI_VENDOR_ID_QUECTEL	0x1eac
-> +
-
-Just use a space after PCI_VENDOR_ID_QUECTEL like above.
-
-Thanks,
-Mani
-
->  /**
->   * struct mhi_pci_dev_info - MHI PCI device specific information
->   * @config: MHI controller configuration
-> @@ -557,11 +561,11 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
->  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
-> -	{ PCI_DEVICE(0x1eac, 0x1001), /* EM120R-GL (sdx24) */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
->  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-> -	{ PCI_DEVICE(0x1eac, 0x1002), /* EM160R-GL (sdx24) */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
->  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-> -	{ PCI_DEVICE(0x1eac, 0x2001), /* EM120R-GL for FCCL (sdx24) */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x2001), /* EM120R-GL for FCCL (sdx24) */
->  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
->  	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
->  	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
-> @@ -585,16 +589,16 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0d9),
->  		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx65_info },
->  	/* MV31-W (Cinterion) */
-> -	{ PCI_DEVICE(0x1269, 0x00b3),
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_THALES, 0x00b3),
->  		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
->  	/* MV31-W (Cinterion), based on new baseline */
-> -	{ PCI_DEVICE(0x1269, 0x00b4),
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_THALES, 0x00b4),
->  		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
->  	/* MV32-WA (Cinterion) */
-> -	{ PCI_DEVICE(0x1269, 0x00ba),
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_THALES, 0x00ba),
->  		.driver_data = (kernel_ulong_t) &mhi_mv32_info },
->  	/* MV32-WB (Cinterion) */
-> -	{ PCI_DEVICE(0x1269, 0x00bb),
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_THALES, 0x00bb),
->  		.driver_data = (kernel_ulong_t) &mhi_mv32_info },
->  	{  }
->  };
+> Thanks,
+> Mani
+> 
+> > > 
+> > > Thanks,
+> > > Mani
+> > > 
+> > > > ---
+> > > >   drivers/bus/mhi/host/boot.c | 8 ++++----
+> > > >   include/linux/mhi.h         | 1 +
+> > > >   2 files changed, 5 insertions(+), 4 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
+> > > > index 26d0edd..5bed8b51 100644
+> > > > --- a/drivers/bus/mhi/host/boot.c
+> > > > +++ b/drivers/bus/mhi/host/boot.c
+> > > > @@ -231,7 +231,7 @@ static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
+> > > >   			   dma_addr_t dma_addr,
+> > > >   			   size_t size)
+> > > >   {
+> > > > -	u32 tx_status, val, session_id;
+> > > > +	u32 tx_status, val;
+> > > >   	int i, ret;
+> > > >   	void __iomem *base = mhi_cntrl->bhi;
+> > > >   	rwlock_t *pm_lock = &mhi_cntrl->pm_lock;
+> > > > @@ -253,16 +253,16 @@ static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
+> > > >   		goto invalid_pm_state;
+> > > >   	}
+> > > > -	session_id = MHI_RANDOM_U32_NONZERO(BHI_TXDB_SEQNUM_BMSK);
+> > > > +	mhi_cntrl->session_id = MHI_RANDOM_U32_NONZERO(BHI_TXDB_SEQNUM_BMSK);
+> > > >   	dev_dbg(dev, "Starting image download via BHI. Session ID: %u\n",
+> > > > -		session_id);
+> > > > +		mhi_cntrl->session_id);
+> > > >   	mhi_write_reg(mhi_cntrl, base, BHI_STATUS, 0);
+> > > >   	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_HIGH,
+> > > >   		      upper_32_bits(dma_addr));
+> > > >   	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_LOW,
+> > > >   		      lower_32_bits(dma_addr));
+> > > >   	mhi_write_reg(mhi_cntrl, base, BHI_IMGSIZE, size);
+> > > > -	mhi_write_reg(mhi_cntrl, base, BHI_IMGTXDB, session_id);
+> > > > +	mhi_write_reg(mhi_cntrl, base, BHI_IMGTXDB, mhi_cntrl->session_id);
+> > > >   	read_unlock_bh(pm_lock);
+> > > >   	/* Wait for the image download to complete */
+> > > > diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> > > > index a5441ad..8b3c934 100644
+> > > > --- a/include/linux/mhi.h
+> > > > +++ b/include/linux/mhi.h
+> > > > @@ -405,6 +405,7 @@ struct mhi_controller {
+> > > >   	u32 minor_version;
+> > > >   	u32 serial_number;
+> > > >   	u32 oem_pk_hash[MHI_MAX_OEM_PK_HASH_SEGMENTS];
+> > > > +	u32 session_id;
+> > > >   	struct mhi_event *mhi_event;
+> > > >   	struct mhi_cmd *mhi_cmd;
+> > > > -- 
+> > > > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> > > > a Linux Foundation Collaborative Project
+> > > > 
+> > > > 
+> > 
+> 
 > -- 
-> 2.17.1
+> மணிவண்ணன் சதாசிவம்
 > 
 
 -- 
