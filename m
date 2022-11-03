@@ -2,127 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD788618604
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 18:17:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 81A56618724
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 19:11:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231140AbiKCRRK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 13:17:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43738 "EHLO
+        id S229595AbiKCSLM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 14:11:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230473AbiKCRRJ (ORCPT
+        with ESMTP id S229764AbiKCSLK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 13:17:09 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF22A2F4;
-        Thu,  3 Nov 2022 10:17:08 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id d59-20020a17090a6f4100b00213202d77e1so5875565pjk.2;
-        Thu, 03 Nov 2022 10:17:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jMLMgTZnXG3qE89gvGIdlg9xWS4kfSGRYT+JSAUdRFU=;
-        b=BgB2QdomzPzge4VbrqFYuwzmD3h1QhxfbsY4GqKYtF5a7n/NJTfmNYMPOXy/hbqOWI
-         UOogT5U8gyicW6RQR/+0gY1M5xA06FG71qdz5iPYkpXjkd8COGd6E2KRPV/wJhK/hn0T
-         91kPejzsqsK6/+/s8S3Ya4F6JXYNJCFwcE0RmL9LN4LgpLulk8sGgCby2gcfyRjPHGoe
-         dNGSpDbtye5tFxt1gNOkjao1EjHsmyUC3l2C0CqCKRCZwq9rWrfOQdV4Um3RsRQ6Lvq/
-         98nWPLYjLm7G2YQ3inoFWS4IrlRIm5o311J2uVLnqg75THYPSf2Ql8OZ0HAVZrMVTTcN
-         6ltw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jMLMgTZnXG3qE89gvGIdlg9xWS4kfSGRYT+JSAUdRFU=;
-        b=2FgAn38WhSWWw+eHyrTO1A3zNlSOMLPNNLMvY2Fkg8zJ02J3VfSj0AOicpTAXfEdmd
-         rhwWmAPpz2sLhdI/OvI3TlUFD7xMuTmVxU2otZoLbIAJo5ZLApLizBaLp1o0pfpy4fGV
-         2qRIXXZChmOP34IvkhySQ081I6PzUonS3/2jWbar4kP//71G21o9B4nXeSVWCi8pKo5h
-         jfXDr86GNec6I9y2Hd+bMXOfSUNjywkxGQkUWnWKbn0nYLSnAfYmpSKQLB9M1Qntiw84
-         Bq4psa7VvK5C89nhGUjCcvpj+8UOm/0DuEKO6Ug8w34P+uBF/WvHCXq7+jkG9Fg4cHm5
-         1e0g==
-X-Gm-Message-State: ACrzQf3XUzLRveE5Lz8yZv5dPDOdWStjIstJWd5Ay8Jwb8bIEevlNgE3
-        z3SYNH5cNNg5+Txzp4PihCk=
-X-Google-Smtp-Source: AMsMyM4KXsk3pLBuAZJaQZE/nBZ7r1WJ0vPUvs2KpVzcs1jk2iH8wiq9zdv9D3GGG8xHFXhOLj6fbw==
-X-Received: by 2002:a17:90b:70a:b0:211:f163:ddff with SMTP id s10-20020a17090b070a00b00211f163ddffmr31949799pjz.202.1667495827938;
-        Thu, 03 Nov 2022 10:17:07 -0700 (PDT)
-Received: from google.com ([2620:15c:9d:2:a6ae:11ff:fe11:fcc3])
-        by smtp.gmail.com with ESMTPSA id d14-20020aa797ae000000b0056ddd2ac8f1sm960026pfq.211.2022.11.03.10.17.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Nov 2022 10:17:07 -0700 (PDT)
-Date:   Thu, 3 Nov 2022 10:17:03 -0700
-From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To:     Quentin Schulz <foss+kernel@0leil.net>
-Cc:     hadess@hadess.net, hdegoede@redhat.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
-        linux-imx@nxp.com, wens@csie.org, jernej.skrabec@gmail.com,
-        samuel@sholland.org, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, heiko@sntech.de,
-        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        Quentin Schulz <quentin.schulz@theobroma-systems.com>
-Subject: Re: [RFC PATCH 0/7] fix reset line polarity for Goodix touchscreen
- controllers
-Message-ID: <Y2P3jyz1L0yKsCk8@google.com>
-References: <20221103-upstream-goodix-reset-v1-0-87b49ae589f1@theobroma-systems.com>
+        Thu, 3 Nov 2022 14:11:10 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AD48BC6;
+        Thu,  3 Nov 2022 11:11:05 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A3EGMxv018288;
+        Thu, 3 Nov 2022 18:10:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=OG3ZTVkiPmyvpPF5mJKUEJHl0NC19XqSJrIaLunOOLI=;
+ b=aQdody+5AW4ELl+RJ+vKsU3uRtZqsxe3OKiBi3CEMwl5a5PebEugYri7sF4FdwnUJkGy
+ l+vJIdb3+mZi8FDzNjE5pV1x8nF4U3J/Fz1sfSBtRhkJZivoqYWImgw7NLP5cAXyCjzH
+ 5ORdQGpLSa+JCvGmmo2pwnmEKyGwRGpBH2auHeOJ6GYc0yaHDqkU2iD6oVESVYoiHOGx
+ /Ldjyfe+jqUNXT6TK+1YBs36S3eHEhqWkbhpDPMBTK3GVouDG3b8Bb3ZFQmZgA2aaanh
+ zmlFK8g+vJuLyRa9epWICMSCWgKa7oP6sZBNmgAsB6UP6WFigYJk6W7Za0MKDyeInbB5 VA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3km6yjjd6v-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 03 Nov 2022 18:10:58 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A3IAvPD027804
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 3 Nov 2022 18:10:57 GMT
+Received: from th-lint-050.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Thu, 3 Nov 2022 11:10:56 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>
+CC:     Johan Hovold <johan@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH] pinctrl: qcom: sc8280xp: Rectify UFS reset pins
+Date:   Thu, 3 Nov 2022 11:10:51 -0700
+Message-ID: <20221103181051.26912-1-quic_bjorande@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221103-upstream-goodix-reset-v1-0-87b49ae589f1@theobroma-systems.com>
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 4Iq4sCA--5RnHfNi21eqtdGhJXNZ8Csr
+X-Proofpoint-GUID: 4Iq4sCA--5RnHfNi21eqtdGhJXNZ8Csr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-03_04,2022-11-03_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 adultscore=0 clxscore=1011 phishscore=0 bulkscore=0
+ suspectscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211030123
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FSL_HELO_FAKE,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Quentin,
+From: Anjana Hari <quic_ahari@quicinc.com>
 
-On Thu, Nov 03, 2022 at 03:43:45PM +0100, Quentin Schulz wrote:
-> The Goodix touchscreen controller has a reset line active low. It happens to
-> also be used to configure its i2c address at runtime. If the reset line is
-> incorrectly asserted, the address will be wrongly configured. This cost me a few
-> hours yesterday, trying to figure out why the touchscreen wouldn't work.
-> 
-> The driver is "asserting" this reset GPIO by setting its output to 0, probably
-> to reflect the physical state of the line. However, this relies on the fact that
-> the Device Tree node setting the reset line polarity to active high, which is
-> incorrect since the reset is active low in hardware.
-> 
-> To fix this inconsistency, the polarity is inverted to not confuse the user
-> about the reset line polarity.
-> 
-> This is marked as RFC because it breaks DT compatibility and also the Google
-> CoachZ device is the only one with an active low polarity for the reset GPIO
-> in DT, so not sure if it is a typo or its state is actually inverted (so GPIO
-> active high to drive the reset line low). Changing it anyways since the polarity
-> is changed in the driver so it needs to be changed in DT too.
+UFS reset pin offsets are wrongly configured for SC8280XP,
+correcting the same for both UFS instances here.
 
-I would like to get gpio handling into a better shape, but the above is
-completely incorrect. "goodix,gt7375p" that is used in CoachZ and other
-Google designs is using i2c-hid compatible firmware and is not being
-driven by drivers/input/touchscreen/goodix.c driver, but rather by
-i2c-hid + hid-multitouch combo.
+Signed-off-by: Anjana Hari <quic_ahari@quicinc.com>
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+---
+ drivers/pinctrl/qcom/pinctrl-sc8280xp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-You should not be touching arch/arm64/boot/dts/qcom/sc7180* at all.
-
-> 
-> I'm all ears if there's a better way to handle this. We could document this in
-> the DT binding but this kinda breaks the promise we make that the DT is not
-> bound to the driver implementation.
-
-I think Hans has already voiced concerns about x86 devices using these
-devices and having GPIO data encoded in the driver, so we need to
-accommodate them. On DT side we can add a quirk to gpiolib-of.c to
-[maybe temporary] override polarity of reset GPIO lines, then update DTS
-to match the reality.
-
-Thanks.
-
+diff --git a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
+index aa2075390f3e..e96c00686a25 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
++++ b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
+@@ -1873,8 +1873,8 @@ static const struct msm_pingroup sc8280xp_groups[] = {
+ 	[225] = PINGROUP(225, hs3_mi2s, phase_flag, _, _, _, _, egpio),
+ 	[226] = PINGROUP(226, hs3_mi2s, phase_flag, _, _, _, _, egpio),
+ 	[227] = PINGROUP(227, hs3_mi2s, phase_flag, _, _, _, _, egpio),
+-	[228] = UFS_RESET(ufs_reset, 0xf1004),
+-	[229] = UFS_RESET(ufs1_reset, 0xf3004),
++	[228] = UFS_RESET(ufs_reset, 0xf1000),
++	[229] = UFS_RESET(ufs1_reset, 0xf3000),
+ 	[230] = SDC_QDSD_PINGROUP(sdc2_clk, 0xe8000, 14, 6),
+ 	[231] = SDC_QDSD_PINGROUP(sdc2_cmd, 0xe8000, 11, 3),
+ 	[232] = SDC_QDSD_PINGROUP(sdc2_data, 0xe8000, 9, 0),
 -- 
-Dmitry
+2.17.1
+
