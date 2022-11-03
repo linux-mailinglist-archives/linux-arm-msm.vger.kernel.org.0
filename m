@@ -2,123 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4E9B617C87
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 13:29:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 557FC617CA0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 13:35:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229791AbiKCM3A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 08:29:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49480 "EHLO
+        id S230261AbiKCMe7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 08:34:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230017AbiKCM27 (ORCPT
+        with ESMTP id S230194AbiKCMe6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 08:28:59 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A35FEBF44
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 05:28:58 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id h193so1505896pgc.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 05:28:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=pvgX6ikZPni7jkpkvXbOwi0lz3HvKft3SvDqE9pJ2xU=;
-        b=WyrnXRZT3Uw1ORHTuUhT8HNqidfzc/clXoM6HVa5dwhaCAmIj1oPOdCbKnG9YHBil7
-         eZ2jqBre98HZk2J35iQkISx7sC1/cOcB5nb+ZNqGNBQDjMdCrbPoB5S+tv6239aE8V1s
-         k89s6rvO0CtOC+GQC4xOk04j48iZ59MnDgK+RPP0DV6ANxWkmLwjOlo1pNYkmm+8KTHK
-         40UAHkuEOGZU/xlGA6kkT6iz1JPcu4UTjKgCsS0UmCSoqKLNBGa4I4MYSdQZ2UW9pKtn
-         rk3dVMHGJOzkCVFSXE0f/Vz1Klf4uCdnz+V5Ejnzclqgb2dT0fgs8ISNUimcD7ZK79Q/
-         6nlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pvgX6ikZPni7jkpkvXbOwi0lz3HvKft3SvDqE9pJ2xU=;
-        b=VoesGOVJh+vm65uVZMsEGMoaxhobvi+7SZI6sU2xxcCYedyf96TA0Zattdfa46150d
-         mtMOX93MLoMHsTXbKVFEpmvREGZNwTcu6NBks+vhsU87Nw/VtoJZB1Ud/gudv5jr4mf7
-         NtmGiAZt/DQduGwAk+Uo3TLjWlxAgVfNnT2ROQcCbRdfjpKXm3xxpdxylP3C6lCC1emY
-         Rxi61vuFpvB9aoN9GVi/lzpB/anI5HgaAGVdQCbE4D3NeDzxc5i5YHvsRW0cy689yCvR
-         21NytZ3aoqL2G6O1qgaHVcSW8PWQqa3p9fCG1qyn268TD1tl3/j5X9gVJX86DxYcVzyM
-         BfSQ==
-X-Gm-Message-State: ACrzQf2NaBySNOd26nrQciMMWjMpqwGI7lqkJSfq/2qFVIbkTVqEkxAg
-        uX0K3AtI7VzfwNb21OmjA1rZ
-X-Google-Smtp-Source: AMsMyM7IgbklEQwLyfEerx5Y4/DIC4P9MoC9GwY02mCKjFxupeSyqgi6vMMbfF4T4PW2ljR+mFibkA==
-X-Received: by 2002:a63:4f09:0:b0:440:4706:2299 with SMTP id d9-20020a634f09000000b0044047062299mr26472031pgb.115.1667478538121;
-        Thu, 03 Nov 2022 05:28:58 -0700 (PDT)
-Received: from thinkpad ([59.92.102.81])
-        by smtp.gmail.com with ESMTPSA id l12-20020a170903120c00b00172fad607b3sm510757plh.207.2022.11.03.05.28.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Nov 2022 05:28:57 -0700 (PDT)
-Date:   Thu, 3 Nov 2022 17:58:50 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
-        andersson@kernel.org, vkoul@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, quic_cang@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-scsi@vger.kernel.org, dmitry.baryshkov@linaro.org,
-        ahalaney@redhat.com
-Subject: Re: [PATCH v2 06/15] dt-bindings: ufs: Add "max-device-gear"
- property for UFS device
-Message-ID: <20221103122850.GD8434@thinkpad>
-References: <20221031180217.32512-1-manivannan.sadhasivam@linaro.org>
- <20221031180217.32512-7-manivannan.sadhasivam@linaro.org>
- <1fe8fd96-7770-0bda-c970-aa38d030ff3b@linaro.org>
+        Thu, 3 Nov 2022 08:34:58 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49D4EBF44;
+        Thu,  3 Nov 2022 05:34:57 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id DBD9EB82531;
+        Thu,  3 Nov 2022 12:34:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB3EC433D7;
+        Thu,  3 Nov 2022 12:34:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667478894;
+        bh=kwC8c9iT4n97Y2z/Aic1ez2OXO1eBSULeJPMuCVAFHk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=i+lBS+leXHEf+hVhQsl2MUuothos7zrXn3fV78WVA7Rz1NdP++RewaodJWcx0wGqw
+         KNJOiKhjMHxW91ky6p7QwsCMz3/TVgfyO0C1895eCJXJL0jU3DxtzB7RgH6k3C2vMe
+         ASP6ieuPaYsu3NlxmoOL2d0r+fazbakWt8HIBOpOSQzmSnicSCbj/0oHG0dcBdUwWw
+         S6CHDDGkCIEa/lBwbsZEmES6GKVK5XZ2afcSajObfyNZlXwBQJS8IzvhT1++nKxh5I
+         58KiqO4Ffz/96ArZM0fbkHj8xo6ZHla8KXJAmBb5NAAzmro5wAhgc2gG4mV6k76EoG
+         QLARRfpFtkaWA==
+Date:   Thu, 3 Nov 2022 18:04:44 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        stanimir.k.varbanov@gmail.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Brian Masney <bmasney@redhat.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Georgi Djakov <djakov@kernel.org>
+Subject: Re: [PATCH v3 2/2] PCI: qcom: Add basic interconnect support
+Message-ID: <20221103123444.GE8434@thinkpad>
+References: <20221102090705.23634-1-johan+linaro@kernel.org>
+ <20221102090705.23634-3-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1fe8fd96-7770-0bda-c970-aa38d030ff3b@linaro.org>
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20221102090705.23634-3-johan+linaro@kernel.org>
+X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 02, 2022 at 03:09:50PM -0400, Krzysztof Kozlowski wrote:
-> On 31/10/2022 14:02, Manivannan Sadhasivam wrote:
-> > The maximum gear supported by the UFS device can be specified using the
-> > "max-device-gear" property. This allows the UFS controller to configure the
-> > TX/RX gear before starting communication with the UFS device.
+On Wed, Nov 02, 2022 at 10:07:05AM +0100, Johan Hovold wrote:
+> On Qualcomm platforms like SC8280XP and SA8540P, interconnect bandwidth
+> must be requested before enabling interconnect clocks.
 > 
-> This is confusing. The UFS PHY provides gear capability, so what is the
-> "device" here? The attached memory? How could it report something else
-> than phy?
+> Add basic support for managing an optional "pcie-mem" interconnect path
+> by setting a low constraint before enabling clocks and updating it after
+> the link is up.
 > 
-
-This is the norm with any storage protocol, right? Both host and device
-(memory) can support different speeds and the OEM can choose to put any
-combinations (even though it might not be very efficient).
-
-For instance,
-
-PHY (G4) -> Device (G3)
-
-From the host perspective we know what the PHY can support but that's not the
-same with the device until probing it. And probing requires using a minimum
-supported gear. For sure we can use something like G2/G3 and reinit later but
-as I learnt, that approach was rejected by the community when submitted
-by Qualcomm earlier.
-
-> The last sentence also suggests that you statically encode gear to avoid
-> runtime negotiation.
+> Note that it is not possible for a controller driver to set anything but
+> a maximum peak bandwidth as expected average bandwidth will vary with
+> use case and actual use (and power policy?). This very much remains an
+> unresolved problem with the interconnect framework.
 > 
+> Also note that no constraint is set for the SC8280XP/SA8540P "cpu-pcie"
+> path for now as it is not clear what an appropriate constraint would be
+> (and the system does not crash when left unspecified).
+> 
+> Fixes: 70574511f3fc ("PCI: qcom: Add support for SC8280XP")
+> Reviewed-by: Brian Masney <bmasney@redhat.com>
+> Acked-by: Georgi Djakov <djakov@kernel.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-Yes, the OEM should know what the max gear speed they want to run, so getting
-this info from DT makes sense.
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
 Thanks,
 Mani
 
-> Best regards,
-> Krzysztof
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 76 ++++++++++++++++++++++++++
+>  1 file changed, 76 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 7db94a22238d..91b113d0c02a 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -12,6 +12,7 @@
+>  #include <linux/crc8.h>
+>  #include <linux/delay.h>
+>  #include <linux/gpio/consumer.h>
+> +#include <linux/interconnect.h>
+>  #include <linux/interrupt.h>
+>  #include <linux/io.h>
+>  #include <linux/iopoll.h>
+> @@ -224,6 +225,7 @@ struct qcom_pcie {
+>  	union qcom_pcie_resources res;
+>  	struct phy *phy;
+>  	struct gpio_desc *reset;
+> +	struct icc_path *icc_mem;
+>  	const struct qcom_pcie_cfg *cfg;
+>  };
+>  
+> @@ -1644,6 +1646,74 @@ static const struct dw_pcie_ops dw_pcie_ops = {
+>  	.start_link = qcom_pcie_start_link,
+>  };
+>  
+> +static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
+> +{
+> +	struct dw_pcie *pci = pcie->pci;
+> +	int ret;
+> +
+> +	pcie->icc_mem = devm_of_icc_get(pci->dev, "pcie-mem");
+> +	if (IS_ERR(pcie->icc_mem))
+> +		return PTR_ERR(pcie->icc_mem);
+> +
+> +	/*
+> +	 * Some Qualcomm platforms require interconnect bandwidth constraints
+> +	 * to be set before enabling interconnect clocks.
+> +	 *
+> +	 * Set an initial peak bandwidth corresponding to single-lane Gen 1
+> +	 * for the pcie-mem path.
+> +	 */
+> +	ret = icc_set_bw(pcie->icc_mem, 0, MBps_to_icc(250));
+> +	if (ret) {
+> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> +			ret);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
+> +{
+> +	struct dw_pcie *pci = pcie->pci;
+> +	u32 offset, status, bw;
+> +	int speed, width;
+> +	int ret;
+> +
+> +	if (!pcie->icc_mem)
+> +		return;
+> +
+> +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> +	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
+> +
+> +	/* Only update constraints if link is up. */
+> +	if (!(status & PCI_EXP_LNKSTA_DLLLA))
+> +		return;
+> +
+> +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
+> +	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
+> +
+> +	switch (speed) {
+> +	case 1:
+> +		bw = MBps_to_icc(250);
+> +		break;
+> +	case 2:
+> +		bw = MBps_to_icc(500);
+> +		break;
+> +	default:
+> +		WARN_ON_ONCE(1);
+> +		fallthrough;
+> +	case 3:
+> +		bw = MBps_to_icc(985);
+> +		break;
+> +	}
+> +
+> +	ret = icc_set_bw(pcie->icc_mem, 0, width * bw);
+> +	if (ret) {
+> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> +			ret);
+> +	}
+> +}
+> +
+>  static int qcom_pcie_probe(struct platform_device *pdev)
+>  {
+>  	struct device *dev = &pdev->dev;
+> @@ -1704,6 +1774,10 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  		goto err_pm_runtime_put;
+>  	}
+>  
+> +	ret = qcom_pcie_icc_init(pcie);
+> +	if (ret)
+> +		goto err_pm_runtime_put;
+> +
+>  	ret = pcie->cfg->ops->get_resources(pcie);
+>  	if (ret)
+>  		goto err_pm_runtime_put;
+> @@ -1722,6 +1796,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  		goto err_phy_exit;
+>  	}
+>  
+> +	qcom_pcie_icc_update(pcie);
+> +
+>  	return 0;
+>  
+>  err_phy_exit:
+> -- 
+> 2.37.3
 > 
 
 -- 
