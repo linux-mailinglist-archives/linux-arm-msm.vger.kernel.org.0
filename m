@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DABBC617A59
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 10:58:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 079D0617A5C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Nov 2022 10:58:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230433AbiKCJ6Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Nov 2022 05:58:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35776 "EHLO
+        id S231246AbiKCJ6g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Nov 2022 05:58:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230368AbiKCJ6Z (ORCPT
+        with ESMTP id S231280AbiKCJ6e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Nov 2022 05:58:25 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B41010E0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 02:58:23 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id l2so1395148pld.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 02:58:23 -0700 (PDT)
+        Thu, 3 Nov 2022 05:58:34 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEFE810544
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 02:58:29 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id y13so1127955pfp.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 02:58:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FblFuHeX62O54gDte9P0+RFishu5673s8IE4V3s7Dek=;
-        b=fQ/Bijpbz3QnQ6t7UgDN/8gHpBG5kkdUczACNrcYD2MInKuesA/4z5R1+cAVIU/dqo
-         aCJXdDlbKNQTr0mni0dzEViSJOMwRURg4f4HxCHZs4vtCGCLB/nnwPq1fIU40OVArKqu
-         kO0GmvHbLaMYyzcPaoNKb6ovb5hvvyfKZNuyPAI/Z7LcfbPxvZxTLTjk2+53Z5TmGh3R
-         Z5TurYqhFb77aF+myL18WIrLtvHlkyorKbXMFIhB+H7mWpkC9Eh9cAStzoJc8xuRwKMK
-         34NfI/zO2/EjqwZWL7aIp1bm3ke2B0ArEbWK02DuggGfSqfSRSP0+IzbHvOyfuKN+Fa2
-         GCEw==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=40naVKARUr+08oYaE5GmKk3fIXihHaNmVzCWvDtQ9NA=;
+        b=HtXcUyDXF2l6MVPIoreRjch0o5k0ZSFGH29ToD0h7Z4evGEqo9Fefir6X9o0h/nIwj
+         IPlgn5NK7DGoa0pWMVqFkCcCLUQfpzNvCoS427CKHLXUtqbel8XgEHmPtz93gPDI85ys
+         QKv/++AiCOyJaZdFQzfunl7VeV7Mm+RPphLHhpI0JHBPs+giHzV/vU3q+31/nQcpcTK3
+         C/XWCWYiDsz1KM6dgHbOPZOn5eSGEZWNHKc3zDSLIdIgjiCzDnKj4KEpwaZQd32tnwMh
+         uShbikcit6kW0plmz6lkiewPKlsHmGnbNSarZxZsYu7mEJy+HPogW0wQL++UxbNwZYqv
+         Bldw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FblFuHeX62O54gDte9P0+RFishu5673s8IE4V3s7Dek=;
-        b=6r94ZrsCNmlGndBd1lzKBTbgjbk4Kp5tW3zBFoiyfxAdwjaXCBzfqNnNCgfF0KoZiD
-         tPUU4JVuKrbQwG+5DgNvlI6MAB/lMqSFN8N7haaNIkM3ARZuUG4+mrQbasC9ZmYZgft3
-         drYe59AVRiS6C84k1nAG0E78/trIhOWCYOszrPDI9SQTv/FAniikgu2uUiq9n0KxPJ7e
-         ioAB5qty0JOXUX7ANBKiGQRB7MBqsarozBTM10Kag3+U8soRLonFhDTw+FqLTmaTo6do
-         woLA8sgtIZtoWQNiz2moD0wEBfePxRJ5bLrwC1E5D/aphaS9TUz8wCUazqCH7VT0UspU
-         DApw==
-X-Gm-Message-State: ACrzQf2dHgKWc/I/ZJXTryRHO3koc7IfcmzUGlrCH6TIUPYiwC7br1XN
-        YkHfjsCV3NjYlod+8WjxNLTT
-X-Google-Smtp-Source: AMsMyM5VVQeEhBGZzXmlQGDmk7tapy7IRVyUm5w6rqKsuXwgBueFhXsgiMcHmMGtKLxqF4BGbWwHRA==
-X-Received: by 2002:a17:902:690a:b0:17a:32d:7acc with SMTP id j10-20020a170902690a00b0017a032d7accmr29703452plk.18.1667469502831;
-        Thu, 03 Nov 2022 02:58:22 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=40naVKARUr+08oYaE5GmKk3fIXihHaNmVzCWvDtQ9NA=;
+        b=bu9CNJND/66Mwld+JAfHDWzuHK5NGN1s7Vy6HjXH4s4sqNC1D8akT46Rr7G4OomV1z
+         Dm0TlGOjw7pc3zmegmktshi7COhaiXYJeU2963C+mWTF9IR8grdwMw60Ku6+JAzPzRk2
+         XqiqV6G7AL03PWgA9deaScD/Wse8zrAwU+lRIEepoBg9SDHD4gNSkJupLV30E95o7W3n
+         jqFC/6hv7tJAAsLoxBx6wcl3QB67O6BPSDmW8PkjMZx1MfpuTwNmBOID6wKVqhK0EXKd
+         r5Y5X66xIdCsJzBqIHvcKGqkdGw0odx3frRgZjbPf3kq9f9nHM+UBUvYC9ULjF/QNSqk
+         j26Q==
+X-Gm-Message-State: ACrzQf2L34vORtzWvRI0FZKzIB1w4EVhsKqdL9Po2DezksMsnbPQikFo
+        HAzPUqKTs9ZW8N5T/U5g62GW
+X-Google-Smtp-Source: AMsMyM7vjyvS/2kAmBJZMMwio3+yVdtp1wvIu2ss4yihraFJiEvnnlPUDItDhCMETWa90fsgAayLJw==
+X-Received: by 2002:a65:5242:0:b0:46e:9bac:178 with SMTP id q2-20020a655242000000b0046e9bac0178mr25506910pgp.300.1667469509032;
+        Thu, 03 Nov 2022 02:58:29 -0700 (PDT)
 Received: from localhost.localdomain ([117.193.208.64])
-        by smtp.gmail.com with ESMTPSA id n6-20020a170902e54600b00186c54188b4sm161670plf.240.2022.11.03.02.58.17
+        by smtp.gmail.com with ESMTPSA id n6-20020a170902e54600b00186c54188b4sm161670plf.240.2022.11.03.02.58.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Nov 2022 02:58:21 -0700 (PDT)
+        Thu, 03 Nov 2022 02:58:28 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     andersson@kernel.org
 Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
@@ -56,11 +57,16 @@ Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
         quic_jprakash@quicinc.com, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         steev@kali.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v4 00/12] sc8280xp-pmic updates and X13s thermal zone support
-Date:   Thu,  3 Nov 2022 15:27:58 +0530
-Message-Id: <20221103095810.64606-1-manivannan.sadhasivam@linaro.org>
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v4 01/12] dt-bindings: iio: qcom: adc7-pm8350: Allow specifying SID for channels
+Date:   Thu,  3 Nov 2022 15:27:59 +0530
+Message-Id: <20221103095810.64606-2-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20221103095810.64606-1-manivannan.sadhasivam@linaro.org>
+References: <20221103095810.64606-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -72,92 +78,167 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+As per the new ADC7 architecture used by the Qualcomm PMICs, each PMIC
+has the static Slave ID (SID) assigned by default. The primary PMIC
+PMK8350 is responsible for collecting the temperature/voltage data from
+the slave PMICs and exposing them via it's registers.
 
-This series adds below updates to sc8280xp-pmics:
+For getting the measurements from the slave PMICs, PMK8350 uses the
+channel ID encoded with the SID of the relevant PMIC. So far, the
+dt-binding for the slave PMIC PM8350 assumed that there will be only
+one PM8350 in a system. So it harcoded SID 1 with channel IDs.
 
-PM8280_{1/2}:
-- Temp alarm
-- Thermal zones
-- VADC channels
-- ADC_TM5 channels
+But this got changed in platforms such as Lenovo X13s where there are a
+couple of PM8350 PMICs available. So to address multiple PM8350s, change
+the binding to accept the SID specified by the user and use it for
+encoding the channel ID.
 
-PMK8280:
-- ADC7 block
-- VADC channels
-- TM5 block
+It should be noted that, even though the SID is static it is not
+globally unique. Only the primary PMIC has the unique SID id 0.
 
-PMR735A:
-- VADC channels
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ .../bindings/thermal/qcom-spmi-adc-tm5.yaml   |  6 +-
+ .../dt-bindings/iio/qcom,spmi-adc7-pm8350.h   | 90 +++++++++----------
+ 2 files changed, 46 insertions(+), 50 deletions(-)
 
-Also adds the thermal zone support to Lenovo X13s based on the thermistor
-SYS_THERM6 that provides the laptop skin temperature.
-
-The sc8280xp-pmics is based on the new PMIC7 architecture. In this, all the
-ADC/TM5 measurements are collected by the primary PMIC PMK8280 from other
-slave PMICs PM8280_{1/2}, PMR735A using the Programmable Boot Sequence (PBS)
-and exposed them over the individual channels.
-
-PMK8280 uses the Slave ID (SID) for identifying each slave PMICs in a system.
-This ID is not static for each PMIC but rather set for each platform by the
-hardware designers. So this series allows the configurable SID by modifying the
-binding to accept SID values instead of hardcoding them.
-
-This series is tested on Lenovo X13s laptop by monitoring the temperature of
-the 8 on-board thermistors through IIO interface. The thermal zone support is
-validated by adding loads to the CPUs and making sure the skin temperature stays
-below the threshold provided in DT.
-
-NOTE: This series requires fwnode support to QCOM_SPMI_ADC5 driver [1] for making
-use of the full node name for IIO channels. Since the support is already in
-mainline, it should just work. But for older kernels, the IIO channels and
-thus the SPMI_ADC5 driver will fail to probe.
-
-Thanks,
-Mani
-
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/drivers/iio/adc/qcom-spmi-adc5.c?id=4f47a236a23d9f18d018a2f6639daad476d2a3f2
-
-Changes in v4:
-
-* Got rid of "label" properties from ADC nodes and used common node names. The
-  ADC5 driver in mainline now uses the full node name for registering the IIO
-  channels. So "label" or unique node name is not required.
-
-Changes in v3:
-
-* Used thermistor index in node names for VADC channels. This is required by IIO
-* Collected reviews
-* Rearranged the dt properties (Konrad)
-
-Changes in v2:
-
-* Fixed issues reported by Krzysztof and "make dtbs_check"
-* Collected reviews from Krzysztof
-* Added the Lenovo X13s thermal zone patch
-
-Manivannan Sadhasivam (12):
-  dt-bindings: iio: qcom: adc7-pm8350: Allow specifying SID for channels
-  arm64: dts: qcom: sc8280xp-pmics: Add temp alarm for PM8280_{1/2}
-    PMICs
-  arm64: dts: qcom: sc8280xp-pmics: Add thermal zones for PM8280_{1/2}
-    PMICs
-  arm64: dts: qcom: sc8280xp-pmics: Add support for PMK8280 RESIN input
-  arm64: dts: qcom: sc8280xp-pmics: Add PMK8280 ADC7 block
-  arm64: dts: qcom: sc8280xp-pmics: Add support for TM5 block in PMK8280
-  arm64: dts: qcom: sc8280xp-x13s: Enable PMK8280 RESIN input
-  arm64: dts: qcom: sc8280xp-x13s: Add PMK8280 VADC channels
-  arm64: dts: qcom: sc8280xp-x13s: Add PM8280_{1/2} VADC channels
-  arm64: dts: qcom: sc8280xp-x13s: Add PMR735A VADC channel
-  arm64: dts: qcom: sc8280xp-x13s: Add PM8280_{1/2} ADC_TM5 channels
-  arm64: dts: qcom: sc8280xp-x13s: Add thermal zone support
-
- .../bindings/thermal/qcom-spmi-adc-tm5.yaml   |   6 +-
- .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 199 ++++++++++++++++++
- arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi  |  84 ++++++++
- .../dt-bindings/iio/qcom,spmi-adc7-pm8350.h   |  90 ++++----
- 4 files changed, 329 insertions(+), 50 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
+index feb390d50696..d20569b9b763 100644
+--- a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
++++ b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
+@@ -222,8 +222,8 @@ examples:
+                 qcom,hw-settle-time = <200>;
+             };
+ 
+-            conn-therm@47 {
+-                reg = <PM8350_ADC7_AMUX_THM4_100K_PU>;
++            conn-therm@147 {
++                reg = <PM8350_ADC7_AMUX_THM4_100K_PU(1)>;
+                 qcom,ratiometric;
+                 qcom,hw-settle-time = <200>;
+             };
+@@ -247,7 +247,7 @@ examples:
+ 
+             conn-therm@1 {
+                 reg = <1>;
+-                io-channels = <&pmk8350_vadc PM8350_ADC7_AMUX_THM4_100K_PU>;
++                io-channels = <&pmk8350_vadc PM8350_ADC7_AMUX_THM4_100K_PU(1)>;
+                 qcom,avg-samples = <2>;
+                 qcom,ratiometric;
+                 qcom,hw-settle-time-us = <200>;
+diff --git a/include/dt-bindings/iio/qcom,spmi-adc7-pm8350.h b/include/dt-bindings/iio/qcom,spmi-adc7-pm8350.h
+index 9426f27a1946..09fd169ad18e 100644
+--- a/include/dt-bindings/iio/qcom,spmi-adc7-pm8350.h
++++ b/include/dt-bindings/iio/qcom,spmi-adc7-pm8350.h
+@@ -6,62 +6,58 @@
+ #ifndef _DT_BINDINGS_QCOM_SPMI_VADC_PM8350_H
+ #define _DT_BINDINGS_QCOM_SPMI_VADC_PM8350_H
+ 
+-#ifndef PM8350_SID
+-#define PM8350_SID					1
+-#endif
+-
+ /* ADC channels for PM8350_ADC for PMIC7 */
+-#define PM8350_ADC7_REF_GND			(PM8350_SID << 8 | 0x0)
+-#define PM8350_ADC7_1P25VREF			(PM8350_SID << 8 | 0x01)
+-#define PM8350_ADC7_VREF_VADC			(PM8350_SID << 8 | 0x02)
+-#define PM8350_ADC7_DIE_TEMP			(PM8350_SID << 8 | 0x03)
+-
+-#define PM8350_ADC7_AMUX_THM1			(PM8350_SID << 8 | 0x04)
+-#define PM8350_ADC7_AMUX_THM2			(PM8350_SID << 8 | 0x05)
+-#define PM8350_ADC7_AMUX_THM3			(PM8350_SID << 8 | 0x06)
+-#define PM8350_ADC7_AMUX_THM4			(PM8350_SID << 8 | 0x07)
+-#define PM8350_ADC7_AMUX_THM5			(PM8350_SID << 8 | 0x08)
+-#define PM8350_ADC7_GPIO1			(PM8350_SID << 8 | 0x0a)
+-#define PM8350_ADC7_GPIO2			(PM8350_SID << 8 | 0x0b)
+-#define PM8350_ADC7_GPIO3			(PM8350_SID << 8 | 0x0c)
+-#define PM8350_ADC7_GPIO4			(PM8350_SID << 8 | 0x0d)
++#define PM8350_ADC7_REF_GND(sid)			((sid) << 8 | 0x0)
++#define PM8350_ADC7_1P25VREF(sid)			((sid) << 8 | 0x01)
++#define PM8350_ADC7_VREF_VADC(sid)			((sid) << 8 | 0x02)
++#define PM8350_ADC7_DIE_TEMP(sid)			((sid) << 8 | 0x03)
++
++#define PM8350_ADC7_AMUX_THM1(sid)			((sid) << 8 | 0x04)
++#define PM8350_ADC7_AMUX_THM2(sid)			((sid) << 8 | 0x05)
++#define PM8350_ADC7_AMUX_THM3(sid)			((sid) << 8 | 0x06)
++#define PM8350_ADC7_AMUX_THM4(sid)			((sid) << 8 | 0x07)
++#define PM8350_ADC7_AMUX_THM5(sid)			((sid) << 8 | 0x08)
++#define PM8350_ADC7_GPIO1(sid)				((sid) << 8 | 0x0a)
++#define PM8350_ADC7_GPIO2(sid)				((sid) << 8 | 0x0b)
++#define PM8350_ADC7_GPIO3(sid)				((sid) << 8 | 0x0c)
++#define PM8350_ADC7_GPIO4(sid)				((sid) << 8 | 0x0d)
+ 
+ /* 30k pull-up1 */
+-#define PM8350_ADC7_AMUX_THM1_30K_PU		(PM8350_SID << 8 | 0x24)
+-#define PM8350_ADC7_AMUX_THM2_30K_PU		(PM8350_SID << 8 | 0x25)
+-#define PM8350_ADC7_AMUX_THM3_30K_PU		(PM8350_SID << 8 | 0x26)
+-#define PM8350_ADC7_AMUX_THM4_30K_PU		(PM8350_SID << 8 | 0x27)
+-#define PM8350_ADC7_AMUX_THM5_30K_PU		(PM8350_SID << 8 | 0x28)
+-#define PM8350_ADC7_GPIO1_30K_PU		(PM8350_SID << 8 | 0x2a)
+-#define PM8350_ADC7_GPIO2_30K_PU		(PM8350_SID << 8 | 0x2b)
+-#define PM8350_ADC7_GPIO3_30K_PU		(PM8350_SID << 8 | 0x2c)
+-#define PM8350_ADC7_GPIO4_30K_PU		(PM8350_SID << 8 | 0x2d)
++#define PM8350_ADC7_AMUX_THM1_30K_PU(sid)		((sid) << 8 | 0x24)
++#define PM8350_ADC7_AMUX_THM2_30K_PU(sid)		((sid) << 8 | 0x25)
++#define PM8350_ADC7_AMUX_THM3_30K_PU(sid)		((sid) << 8 | 0x26)
++#define PM8350_ADC7_AMUX_THM4_30K_PU(sid)		((sid) << 8 | 0x27)
++#define PM8350_ADC7_AMUX_THM5_30K_PU(sid)		((sid) << 8 | 0x28)
++#define PM8350_ADC7_GPIO1_30K_PU(sid)			((sid) << 8 | 0x2a)
++#define PM8350_ADC7_GPIO2_30K_PU(sid)			((sid) << 8 | 0x2b)
++#define PM8350_ADC7_GPIO3_30K_PU(sid)			((sid) << 8 | 0x2c)
++#define PM8350_ADC7_GPIO4_30K_PU(sid)			((sid) << 8 | 0x2d)
+ 
+ /* 100k pull-up2 */
+-#define PM8350_ADC7_AMUX_THM1_100K_PU		(PM8350_SID << 8 | 0x44)
+-#define PM8350_ADC7_AMUX_THM2_100K_PU		(PM8350_SID << 8 | 0x45)
+-#define PM8350_ADC7_AMUX_THM3_100K_PU		(PM8350_SID << 8 | 0x46)
+-#define PM8350_ADC7_AMUX_THM4_100K_PU		(PM8350_SID << 8 | 0x47)
+-#define PM8350_ADC7_AMUX_THM5_100K_PU		(PM8350_SID << 8 | 0x48)
+-#define PM8350_ADC7_GPIO1_100K_PU		(PM8350_SID << 8 | 0x4a)
+-#define PM8350_ADC7_GPIO2_100K_PU		(PM8350_SID << 8 | 0x4b)
+-#define PM8350_ADC7_GPIO3_100K_PU		(PM8350_SID << 8 | 0x4c)
+-#define PM8350_ADC7_GPIO4_100K_PU		(PM8350_SID << 8 | 0x4d)
++#define PM8350_ADC7_AMUX_THM1_100K_PU(sid)		((sid) << 8 | 0x44)
++#define PM8350_ADC7_AMUX_THM2_100K_PU(sid)		((sid) << 8 | 0x45)
++#define PM8350_ADC7_AMUX_THM3_100K_PU(sid)		((sid) << 8 | 0x46)
++#define PM8350_ADC7_AMUX_THM4_100K_PU(sid)		((sid) << 8 | 0x47)
++#define PM8350_ADC7_AMUX_THM5_100K_PU(sid)		((sid) << 8 | 0x48)
++#define PM8350_ADC7_GPIO1_100K_PU(sid)			((sid) << 8 | 0x4a)
++#define PM8350_ADC7_GPIO2_100K_PU(sid)			((sid) << 8 | 0x4b)
++#define PM8350_ADC7_GPIO3_100K_PU(sid)			((sid) << 8 | 0x4c)
++#define PM8350_ADC7_GPIO4_100K_PU(sid)			((sid) << 8 | 0x4d)
+ 
+ /* 400k pull-up3 */
+-#define PM8350_ADC7_AMUX_THM1_400K_PU		(PM8350_SID << 8 | 0x64)
+-#define PM8350_ADC7_AMUX_THM2_400K_PU		(PM8350_SID << 8 | 0x65)
+-#define PM8350_ADC7_AMUX_THM3_400K_PU		(PM8350_SID << 8 | 0x66)
+-#define PM8350_ADC7_AMUX_THM4_400K_PU		(PM8350_SID << 8 | 0x67)
+-#define PM8350_ADC7_AMUX_THM5_400K_PU		(PM8350_SID << 8 | 0x68)
+-#define PM8350_ADC7_GPIO1_400K_PU		(PM8350_SID << 8 | 0x6a)
+-#define PM8350_ADC7_GPIO2_400K_PU		(PM8350_SID << 8 | 0x6b)
+-#define PM8350_ADC7_GPIO3_400K_PU		(PM8350_SID << 8 | 0x6c)
+-#define PM8350_ADC7_GPIO4_400K_PU		(PM8350_SID << 8 | 0x6d)
++#define PM8350_ADC7_AMUX_THM1_400K_PU(sid)		((sid) << 8 | 0x64)
++#define PM8350_ADC7_AMUX_THM2_400K_PU(sid)		((sid) << 8 | 0x65)
++#define PM8350_ADC7_AMUX_THM3_400K_PU(sid)		((sid) << 8 | 0x66)
++#define PM8350_ADC7_AMUX_THM4_400K_PU(sid)		((sid) << 8 | 0x67)
++#define PM8350_ADC7_AMUX_THM5_400K_PU(sid)		((sid) << 8 | 0x68)
++#define PM8350_ADC7_GPIO1_400K_PU(sid)			((sid) << 8 | 0x6a)
++#define PM8350_ADC7_GPIO2_400K_PU(sid)			((sid) << 8 | 0x6b)
++#define PM8350_ADC7_GPIO3_400K_PU(sid)			((sid) << 8 | 0x6c)
++#define PM8350_ADC7_GPIO4_400K_PU(sid)			((sid) << 8 | 0x6d)
+ 
+ /* 1/3 Divider */
+-#define PM8350_ADC7_GPIO4_DIV3			(PM8350_SID << 8 | 0x8d)
++#define PM8350_ADC7_GPIO4_DIV3(sid)			((sid) << 8 | 0x8d)
+ 
+-#define PM8350_ADC7_VPH_PWR			(PM8350_SID << 8 | 0x8e)
++#define PM8350_ADC7_VPH_PWR(sid)			((sid) << 8 | 0x8e)
+ 
+ #endif /* _DT_BINDINGS_QCOM_SPMI_VADC_PM8350_H */
 -- 
 2.25.1
 
