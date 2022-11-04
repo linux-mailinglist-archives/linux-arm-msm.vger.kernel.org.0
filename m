@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75883619FE0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 19:29:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 187F5619FE7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 19:30:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232055AbiKDS3e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 14:29:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49870 "EHLO
+        id S232029AbiKDSai (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 14:30:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230376AbiKDS3e (ORCPT
+        with ESMTP id S232043AbiKDSag (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 14:29:34 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62A5DAE44
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 11:29:31 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id a27so3527089qtw.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 11:29:31 -0700 (PDT)
+        Fri, 4 Nov 2022 14:30:36 -0400
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90CBE40475
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 11:30:34 -0700 (PDT)
+Received: by mail-qv1-xf2e.google.com with SMTP id ml12so3787337qvb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 11:30:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Rw4BpqJZxha3Wydoc46zcEGyhFGGo7LUD5zP55YjGoc=;
-        b=dKzg1peGVvaOYb5V3V8Ci2QmNL55+dR23COoCJ7Zpfot4+5jLpVYwxo3aZMRPNFtkl
-         s++4gjsCvoyMl7XrO3eFL7b+vbwFxkiFqe7boar91f0rjUaT/OaPeDXw4w3X2QIgYNwy
-         3QeveHh9JlOq8hsCydzYxwfsOmWJLxK8QW6zCjgzTAJizGggTeCCdty7jqXNN1UAGZKr
-         /b7ym+jBmBKNu9z98LinObXcRoFGyzYLsfIuyfh1PubpsDEcPMpt2V9m+VLZPZsCa4iB
-         JSh9gSEa+YUUelVU5+Yxh60Prdbq5HCqI1dVQvfXcUdMaNZTze0n/Rj5b9Ged+GpvyCX
-         MRFQ==
+        bh=4f+TdJBplqLaGWi6pUvjWe3lL/EBFsiI/nvCrQqglxE=;
+        b=Z/9JIxp3NxduGud2z6d1et/+w8JnP82OYOKiXQYW5HfoYzwXG7js4MKh2xg1/N8ziZ
+         3aC0xew1zqZB0EN41h1ziv0rxWgskGxEokspDw41Ic1zeUuNvgInc165WZLn5l2eFi2x
+         UnSizrSFngMhsVG6p6EtgJceu/N5KeAipKbM+F9e+m0LknanKZ0blpqnKGzi8o+s+x+E
+         Q5x+TybEaKpwf+kyXDVRiphCjE0zYQpKAmtN22iPlTGDsWVc/VPI9bQCWoo6iiXjW+2N
+         UJYQQJcZ8WPWnaDA+eZZ6qhQligO940s3X8Eyv0atsA/uYHiLZbML1ZSK6nqfJ7j3rig
+         IfRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rw4BpqJZxha3Wydoc46zcEGyhFGGo7LUD5zP55YjGoc=;
-        b=rWnf2C13OZKKwAyRQXlgOZ+/4dQxPTtNKMha48aiQjdBSSp87tFa2+EbdHUptUg/iQ
-         +buMcETc+ZvcFgOnyOAO6/qZWA8nVZTCVBUgyQQ2v4RZ2D0r4I+qcKWxJVv80vT3FhO2
-         BNHIWQolqz93istnYceDFe1/NfeJfGxolpDnHBC0i3ZnPYK8stzgY7duK2olzxNouXIz
-         U8KAjMbvIya+DI454QEmIdmCkd1MLLpYiqB6zSJtpu3l0cv68PIkVkxG7d4uN7BwbKrA
-         8BwGYno3C1MPCPol/R+JIpFsulkNv1cZj4tozIOUQm1uvTrUdeYXzOQqLWcP9mwK1evu
-         SAmg==
-X-Gm-Message-State: ACrzQf0QrYBB7alF1LdoR06IT9kPlyF1gkBDLvtYuQ89s7lamtbzn0yc
-        oyeGMc+8E6j9p3yWXdMH0gNJIw==
-X-Google-Smtp-Source: AMsMyM4GJjWfktvfLHV6GWR02PPssI2BywrNwj37NdCyM/Q/Kk5BJKEqGr2Q1LpxU4TqrMItop4viw==
-X-Received: by 2002:a05:622a:5cd:b0:39c:fcaf:7b36 with SMTP id d13-20020a05622a05cd00b0039cfcaf7b36mr29603898qtb.117.1667586570572;
-        Fri, 04 Nov 2022 11:29:30 -0700 (PDT)
+        bh=4f+TdJBplqLaGWi6pUvjWe3lL/EBFsiI/nvCrQqglxE=;
+        b=0QpiP9NF3MvMTVvZYKDDq73yq2QfY9IOIcNudyEFIY0l3MTyjDSrzOqyglNcRYhAkZ
+         tnPig7SwK9MEa2HTV1mNZrlW25qki8kwBND8wWmZJwQ5/FYpF4G3yJbxdABzVGEVEeAU
+         NEfwAxYKAtE5oEgq1X+eoi4XHDW2DgWkSu1OYSSEB5Ppi9Hq7/ggWVkR/bAp2suuNRI0
+         RdqpWpWa6xbgg118CnIVpsZPtXsSnDBCYL5J35ppLOWNJDv8NXwW+njaEft2iYI+/Ged
+         CwvD9ImbudSDNP3g/joeRqWcYkdNEzIGBQbPep64wETTUOvPwMhB8VfE0K5TKDvCZK68
+         g5Nw==
+X-Gm-Message-State: ACrzQf1g7PuSSff1IvDCki5QcXToDQ6c9noU5EASY7bnCsPKRp88O4lI
+        zTjg/HLhDepWJOMd+aF/qqTAgA==
+X-Google-Smtp-Source: AMsMyM42APJRgy/7d00EwleDNtgqG3xbZHxlWN420O/pdIjc8qyAuxcbEbcos0UMsFf2CP/4XTpJgA==
+X-Received: by 2002:a0c:e3c7:0:b0:473:7d9a:6237 with SMTP id e7-20020a0ce3c7000000b004737d9a6237mr33006251qvl.37.1667586632993;
+        Fri, 04 Nov 2022 11:30:32 -0700 (PDT)
 Received: from ?IPV6:2601:586:5000:570:aad6:acd8:4ed9:299b? ([2601:586:5000:570:aad6:acd8:4ed9:299b])
-        by smtp.gmail.com with ESMTPSA id m17-20020ae9e711000000b006e42a8e9f9bsm3272968qka.121.2022.11.04.11.29.28
+        by smtp.gmail.com with ESMTPSA id fz27-20020a05622a5a9b00b0038b684a1642sm2470qtb.32.2022.11.04.11.30.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Nov 2022 11:29:29 -0700 (PDT)
-Message-ID: <ad221e40-cf88-e021-582d-7d992dce6c61@linaro.org>
-Date:   Fri, 4 Nov 2022 14:29:28 -0400
+        Fri, 04 Nov 2022 11:30:32 -0700 (PDT)
+Message-ID: <7e36e932-7dfb-bb0a-71fc-3f622d9b8f14@linaro.org>
+Date:   Fri, 4 Nov 2022 14:30:30 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH 3/9] dt-bindings: arm: qcom: Document msm8956 and msm8976
- SoC and devices
+Subject: Re: [PATCH 4/9] dt-bindings: soc: qcom: qcom,smd-rpm: Use
+ qcom,smd-channels on MSM8976
 Content-Language: en-US
 To:     AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@collabora.com>, agross@kernel.org
@@ -71,9 +71,9 @@ Cc:     andersson@kernel.org, konrad.dybcio@somainline.org,
         linux-hardening@vger.kernel.org, marijn.suijten@somainline.org,
         kernel@collabora.com, luca@z3ntu.xyz, a39.skl@gmail.com
 References: <20221104172122.252761-1-angelogioacchino.delregno@collabora.com>
- <20221104172122.252761-4-angelogioacchino.delregno@collabora.com>
+ <20221104172122.252761-5-angelogioacchino.delregno@collabora.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221104172122.252761-4-angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20221104172122.252761-5-angelogioacchino.delregno@collabora.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,20 +87,14 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 04/11/2022 13:21, AngeloGioacchino Del Regno wrote:
-> From: Marijn Suijten <marijn.suijten@somainline.org>
+> Like MSM8916 and some others, MSM8976 uses qcom,smd-channels and not
+> qcom,glink-channels.
 > 
-> Note that msm8976 is omitted as a compatible, since there are currently
-> no boards/devices using it.
-> 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 10 ++++++++++
->  1 file changed, 10 insertions(+)
 
-Actually, you should also change include/dt-bindings/arm/qcom,ids.h
 
-and add a patch for drivers/soc/qcom/socinfo.c
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
