@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C42CD6194DD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 11:54:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B6FA61958C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 12:44:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231810AbiKDKyP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 06:54:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34596 "EHLO
+        id S231583AbiKDLob (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 07:44:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231821AbiKDKyJ (ORCPT
+        with ESMTP id S231393AbiKDLob (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 06:54:09 -0400
+        Fri, 4 Nov 2022 07:44:31 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41AC52BB21;
-        Fri,  4 Nov 2022 03:54:07 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D9212CC88;
+        Fri,  4 Nov 2022 04:44:30 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D10F462152;
-        Fri,  4 Nov 2022 10:54:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30BA6C433C1;
-        Fri,  4 Nov 2022 10:54:06 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8A0996216C;
+        Fri,  4 Nov 2022 11:44:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA801C433D6;
+        Fri,  4 Nov 2022 11:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667559246;
-        bh=pvwG3Gm3N2eUyHgbPambsEuPVQ8R8/OOOxapou4YcUQ=;
+        s=k20201202; t=1667562268;
+        bh=Fm4RmkkjBKi2J3sh9v6S2aRSdhr880Xg3fJGdAcANDY=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cbBnPnYUkVl8HlirmjDewnnffVKehLHqlm1obIGLgPClQn+N8qpt6kVVeRv7jmkO8
-         pE7BDnwwVWraetTc50i8EYFTEP+BRLKvWFpiyw2Gs+LrYi2/9fCOWz7XWJBfFy+t+N
-         VUPPPDL7PDYnompJUihMxfpqHpM5QT45oSZ5IzRkkx4uYzpbz7+Gv+BVjPcpGO6D0h
-         EHGkwdAYVKkDvz+n0VT5S1PBTfxDR9q6nxMI2WHO3D8zYILp8VLd98rqj+kPqOMjW/
-         q1XTDuI5pJ+IMVj8PdQoZ6+dd96tvrhGWkjqbmv2oVa552CjRmOl1p1ptyfl2jnXxh
-         uWarmbCkIf6hg==
+        b=fZqwDZQyk1Q1KEHu25MzHSyi663H6WkbJvSC0fUc1SkBj6V/V9RxG0hj7CoIZN334
+         wlDV0LzbOXYuVsKx5kgTnP68F8U+TThWMjOga1xUJ/QnuwTqA+7hHV+6KeJVfHViWZ
+         ah8KggQkb7OcmFOObkBckGjKgGLRgPOxm+J+U7FJOftUVYAUS9YeJwPpaXxWqlord9
+         u/6Jz28LL96zcldHJRqN/vJmvAEesiVW/ZHUQ7NjXrN2D+HpFCQPmrKnGgEolYI/Sk
+         NUYdgAqfalUcSREn4DxpyiwwZKRcdyczYUt2nw4Gt+W1f/lwucP9IOfn0sx7BMMciK
+         qfB8IxVRm1v+Q==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1oquKZ-0001I6-77; Fri, 04 Nov 2022 11:53:47 +0100
-Date:   Fri, 4 Nov 2022 11:53:47 +0100
+        id 1oqv7K-0003KN-U9; Fri, 04 Nov 2022 12:44:11 +0100
+Date:   Fri, 4 Nov 2022 12:44:10 +0100
 From:   Johan Hovold <johan@kernel.org>
 To:     Stephen Boyd <swboyd@chromium.org>
 Cc:     Michael Turquette <mturquette@baylibre.com>,
@@ -52,17 +52,13 @@ Cc:     Michael Turquette <mturquette@baylibre.com>,
         Satya Priya <quic_c_skakit@quicinc.com>,
         Douglas Anderson <dianders@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>
-Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
-Message-ID: <Y2TvO875fYZTTNy9@hovoldconsulting.com>
-References: <20221101233421.997149-1-swboyd@chromium.org>
- <Y2JL9/HFrb3E+CYY@hovoldconsulting.com>
- <CAE-0n51Wuc6gVmsTOu4Nf4yx+6Wp-Oi3XZy06syhCMVmePWPEw@mail.gmail.com>
- <Y2PAXX2oYL6iFTlB@hovoldconsulting.com>
- <CAE-0n5319JSX16Z3H5vKQSL9UDetOdfb38zo_vp0C=uX1jddWQ@mail.gmail.com>
+Subject: Re: [PATCH v3] clk: qcom: gdsc: Remove direct runtime PM calls
+Message-ID: <Y2T7Cp2HMChRbS/f@hovoldconsulting.com>
+References: <20221103183030.3594899-1-swboyd@chromium.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAE-0n5319JSX16Z3H5vKQSL9UDetOdfb38zo_vp0C=uX1jddWQ@mail.gmail.com>
+In-Reply-To: <20221103183030.3594899-1-swboyd@chromium.org>
 X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -72,95 +68,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 03, 2022 at 11:19:08AM -0700, Stephen Boyd wrote:
-> Quoting Johan Hovold (2022-11-03 06:21:33)
-> > On Wed, Nov 02, 2022 at 09:53:49AM -0700, Stephen Boyd wrote:
-> > > Quoting Johan Hovold (2022-11-02 03:52:39)
-> >
-> > > > > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > Cc: Johan Hovold <johan+linaro@kernel.org>
-> > > > > Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> > > > > Cc: Taniya Das <quic_tdas@quicinc.com>
-> > > > > Cc: Satya Priya <quic_c_skakit@quicinc.com>
-> > > > > Cc: Douglas Anderson <dianders@chromium.org>
-> > > > > Cc: Matthias Kaehlcke <mka@chromium.org>
-> > > > > Reported-by: Stephen Boyd <swboyd@chromium.org>
-> > > >
-> > > > We typically don't add Reported-by tags for bugs we find and fix
-> > > > ourselves.
-> > >
-> > > Heh, I didn't see anything like that in Documentation/ so it seems fine.
-> > > I debugged my problem and reported it.
-> >
-> > I'd say the documentation is pretty clear on this matter:
-> >
-> >   Reported-by: names a user who reported a problem which is fixed by this
-> >   patch; this tag is used to give credit to the (often underappreciated)
-> >   people who test our code and let us know when things do not work
-> >   correctly.
-> >
-> >   - Documentation/process/5.Posting.rst
-> >
-> >   The Reported-by tag gives credit to people who find bugs and report
-> >   them and it hopefully inspires them to help us again in the future.
-> >   Please note that if the bug was reported in private, then ask for
-> >   permission first before using the Reported-by tag.
-> >
-> >   - Documentation/process/submitting-patches.rst
+On Thu, Nov 03, 2022 at 11:30:30AM -0700, Stephen Boyd wrote:
+> We shouldn't be calling runtime PM APIs from within the genpd
+> enable/disable path for a couple reasons.
 > 
-> I don't see anything above that says I can't add this tag if I reported
-> (by sending an email about the problem to the list), debugged, and
-> solved the problem by sending a patch.
+> First, this causes an AA lockdep splat[1] because genpd can call into
+> genpd code again while holding the genpd lock.
 
-We don't try to prevent every strange interpretation of our docs by
-spelling everything out. Just look at why we added a tag in the first
-place and how it *is* being using.
- 
-> > Just like you don't add a Tested-by tag for every patch you submit, it
-> > is implied that you found the issue you fix unless you explicitly
-> > attribute that to a third party using Reported-by.
+> Second, this confuses runtime PM on CoachZ for the camera devices by
+> causing the camera clock controller's runtime PM usage_count to go
+> negative after resuming from suspend. This is because runtime PM is
+> being used on the clock controller while runtime PM is disabled for the
+> device.
 > 
-> I don't see how this is the same. It certainly is not explicit, as you
-> say.
-
-We added the Reported-by tag so that users reporting bugs would get some
-credit and not just the person fixing the bug. Just as we did for
-Tested-by.
-
-If some author added a Tested-by tag for themselves to their own patches
-I'm sure you'd call that out too as that's not the way the tag is meant
-to be used.
-
-The reasoning is exactly the same for Reported-by.
-
-> I wouldn't have added the tag if I didn't send an email to the list with
-> the lockdep splat and follow that up with a bisection report for
-> suspend/resume being broken. Shouldn't we value those sorts of bug
-> report emails? I will add a link to the report in the commit text to
-> clarify.
-
-Ok, perhaps that would make this a bit more reasonable (Reported-by +
-Link to report), but I still do not think the tag is warranted.
-
-> > This is the first time I see anyone trying to use Reported-by this way,
-> > and even if you think the documentation isn't clear enough on this, our
-> > praxis is.
-> >
+> The reason for the negative count is because a GDSC is represented as a
+> genpd and each genpd that is attached to a device is resumed during the
+> noirq phase of system wide suspend/resume (see the noirq suspend ops
+> assignment in pm_genpd_init() for more details). The camera GDSCs are
+> attached to camera devices with the 'power-domains' property in DT.
+> Every device has runtime PM disabled in the late system suspend phase
+> via __device_suspend_late(). Runtime PM is not usable until runtime PM
+> is enabled in device_resume_early(). The noirq phases run after the
+> 'late' and before the 'early' phase of suspend/resume. When the genpds
+> are resumed in genpd_resume_noirq(), we call down into gdsc_enable()
+> that calls pm_runtime_resume_and_get() and that returns -EACCES to
+> indicate failure to resume because runtime PM is disabled for all
+> devices.
 > 
-> Ok, so is it just a shock to see this for the first time? What is the
-> problem with the tag? Can you elaborate on your concerns? I would like
-> to understand.
+> Upon closer inspection, calling runtime PM APIs like this in the GDSC
+> driver doesn't make sense. It was intended to make sure the GDSC for the
+> clock controller providing other GDSCs was enabled, specifically the
+> MMCX GDSC for the display clk controller on SM8250 (sm8250-dispcc), so
+> that GDSC register accesses succeeded. That will already happen because
+> we make the 'dev->pm_domain' a parent domain of each GDSC we register in
+> gdsc_register() via pm_genpd_add_subdomain(). When any of these GDSCs
+> are accessed, we'll enable the parent domain (in this specific case
+> MMCX).
+> 
+> We also remove any getting of runtime PM during registration, because
+> when a genpd is registered it increments the count on the parent if the
+> genpd itself is already enabled.
+> 
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: Johan Hovold <johan+linaro@kernel.org>
+> Cc: Ulf Hansson <ulf.hansson@linaro.org>
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+> Cc: Satya Priya <quic_c_skakit@quicinc.com>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> Tested-by: Douglas Anderson <dianders@chromium.org>
+> Cc: Matthias Kaehlcke <mka@chromium.org>
+> Reported-by: Stephen Boyd <swboyd@chromium.org>
+> Link: https://lore.kernel.org/r/CAE-0n52xbZeJ66RaKwggeRB57fUAwjvxGxfFMKOKJMKVyFTe+w@mail.gmail.com [1]
+> Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+> 
+> Changes from v2 (https://lore.kernel.org/r/20221102170717.1262547-1-swboyd@chromium.org):
+>  * Drop dev assignment and remove struct member
+>  * Update commit text, add link to report
+> 
+> Changes from v1 (https://lore.kernel.org/r/20221101233421.997149-1-swboyd@chromium.org):
+>  * Fix ret thinko
+>  * Update kerneldoc on 'dev' member
 
-It's apparently the first time you try to give credit to yourself for
-finding a bug this way too, so let's turn that question around. Why do
-you suddenly insist on crediting yourself this way when no one else does
-so?
-
-In the end it's about maintaining a common interpretation of these tags
-and avoiding unnecessary noise. I'm sure no one wants to see a redundant
-Tested-by tag on every commit nor a redundant Reported-by tag on every
-bug fix for bugs that kernel developers find themselves. And if only
-some people start using the tags this way it would also skew our
-statistics (e.g. the LWN reports).
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
 
 Johan
