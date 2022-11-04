@@ -2,68 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C777D619F4B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 18:54:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36281619F6C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 19:03:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231887AbiKDRyV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 13:54:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58372 "EHLO
+        id S231824AbiKDSDl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 14:03:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231657AbiKDRyU (ORCPT
+        with ESMTP id S231737AbiKDSDj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 13:54:20 -0400
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A8C02BB0A;
-        Fri,  4 Nov 2022 10:54:15 -0700 (PDT)
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-13ae8117023so6311047fac.9;
-        Fri, 04 Nov 2022 10:54:15 -0700 (PDT)
+        Fri, 4 Nov 2022 14:03:39 -0400
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE47C2AE26;
+        Fri,  4 Nov 2022 11:03:38 -0700 (PDT)
+Received: by mail-oo1-f44.google.com with SMTP id e11-20020a4ab14b000000b0049be568062bso774009ooo.4;
+        Fri, 04 Nov 2022 11:03:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=u7AHuf0DqeM+V9xiT6efORX/S9z2qweBOkj1kn1GRs4=;
-        b=wBYHHTtMH/bDhJAI4bAOg4Yf5UdgJbxv/nS2eMJ0TNbM3DOp3+Rx3BNzBo5V5D9XZ3
-         rZsBULAR0Qu+ztPhfNK8MsK3kY+TgXJPbCnEMGBB4JTUIRM29Dk3M5ycT41uaH2pZGzx
-         VdXqOsLuIfzqU4GQZSJyEPX/s4vu5X70bOcaxbc1i526zjL8h8PJLAw8uFA6GMQ1GLJK
-         b4DK0nGGX7OJNDibke9bAZLKN8o0auWCsJ+W6KtTWPFEiqh1aLMlp6PDi3mfFNZ5kTMH
-         dOqjzfTZVmLj/uiPZj1fqsQTJkqR36KmK1Xh/gLeQrxFO8v4uCcyJIW+yKPT38neitEQ
-         vVhg==
-X-Gm-Message-State: ACrzQf2opMIM9FIz+xU+YEN4H3+TvN6OUdXP3FX4cf55657nKrzuDH2Q
-        bYOHIttiEAfdea5smVrRkbuLYn1QkA==
-X-Google-Smtp-Source: AMsMyM6kU+jqpdhuEc+A1TS9uvGNWlwogKOJv8gvkoL4lBPWHzE6K6dqi+QCXOj0qPtBg4le4Fab8Q==
-X-Received: by 2002:a05:6870:4284:b0:101:202e:a78d with SMTP id y4-20020a056870428400b00101202ea78dmr31712560oah.37.1667584454747;
-        Fri, 04 Nov 2022 10:54:14 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=d/H6tH1T19zPir63G4IjFf14dpF+2I+FJK0jn9RaHLc=;
+        b=5FwfHo32kXpQpmAbmziIdo/DY5FvZOk6AGLGZKVmuPe63vsHSB8Zn/vlHJPXkM63Gd
+         f9QYPey9MtCo8L/s/mj4a7LzCki/1ZBHLSwM3O9n5t6OaRif2gquNz24g87VujYXti5+
+         nnIKAdBhxnSxScdsn0R91SzwwI7aI8i96fQ7ssRK3H9S9YzfXrd4uz5oBqHcJ5r0mSm8
+         PLSb+PKSBX9cfcDNfjTb/JDjI3YTRuYhl+0wi4tQ6pKDSKiOo/UN4nvENcZWT97e2fka
+         ArwHO0zZ39JD2yUlECoqcqaORj2S3h6cJ7YZ62UAFfos52mOXqQulOyoa1tLP7hjZV/B
+         f9HA==
+X-Gm-Message-State: ACrzQf2V5PZjhbmwlIByv04gs3zIIc9n7oVguBd7ngwiGyS4G3qQKRGR
+        qyO4L9IQFTrfFKTYdRk79g==
+X-Google-Smtp-Source: AMsMyM66fHRV+R/ARMYtiXVHLPRSZBNpfBH8YPLsVf1YT19J77mGQsHZqha8apV2mlQjAuCEsedmYQ==
+X-Received: by 2002:a4a:4e41:0:b0:480:8a3c:a797 with SMTP id r62-20020a4a4e41000000b004808a3ca797mr15670730ooa.71.1667585017929;
+        Fri, 04 Nov 2022 11:03:37 -0700 (PDT)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id o3-20020a544783000000b00342ded07a75sm1669705oic.18.2022.11.04.10.54.13
+        by smtp.gmail.com with ESMTPSA id em6-20020a0568705b8600b00127d2005ea1sm2079274oab.18.2022.11.04.11.03.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Nov 2022 10:54:14 -0700 (PDT)
-Received: (nullmailer pid 2078500 invoked by uid 1000);
-        Fri, 04 Nov 2022 17:54:15 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-MIME-Version: 1.0
+        Fri, 04 Nov 2022 11:03:37 -0700 (PDT)
+Received: (nullmailer pid 2087245 invoked by uid 1000);
+        Fri, 04 Nov 2022 18:03:39 -0000
+Date:   Fri, 4 Nov 2022 13:03:39 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>, devicetree@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>
-In-Reply-To: <20221104130324.1024242-4-dmitry.baryshkov@linaro.org>
-References: <20221104130324.1024242-1-dmitry.baryshkov@linaro.org>
- <20221104130324.1024242-4-dmitry.baryshkov@linaro.org>
-Message-Id: <166758411702.2065980.14252732148824060814.robh@kernel.org>
-Subject: Re: [PATCH v3 3/8] dt-bindings: display/msm: add support for the
- display on SM8450
-Date:   Fri, 04 Nov 2022 12:54:15 -0500
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        sudeep.holla@arm.com, cristian.marussi@arm.com, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        quic_avajid@quicinc.com
+Subject: Re: [RFC 1/2] dt-bindings: firmware: arm,scmi: Add support for
+ memlat vendor protocol
+Message-ID: <20221104180339.GA2079655-robh@kernel.org>
+References: <1667451512-9655-1-git-send-email-quic_sibis@quicinc.com>
+ <1667451512-9655-2-git-send-email-quic_sibis@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1667451512-9655-2-git-send-email-quic_sibis@quicinc.com>
 X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
@@ -75,59 +68,212 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Nov 03, 2022 at 10:28:31AM +0530, Sibi Sankar wrote:
+> Add bindings support for the SCMI QTI memlat (memory latency) vendor
+> protocol. The memlat vendor protocol enables the frequency scaling of
+> various buses (L3/LLCC/DDR) based on the memory latency governor
+> running on the CPUSS Control Processor.
 
-On Fri, 04 Nov 2022 16:03:19 +0300, Dmitry Baryshkov wrote:
-> Add DPU and MDSS schemas to describe MDSS and DPU blocks on the Qualcomm
-> SM8450 platform.
+I thought the interconnect binding was what provided details for bus 
+scaling.
+
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 > ---
->  .../bindings/display/msm/qcom,sm8450-dpu.yaml | 132 +++++++
->  .../display/msm/qcom,sm8450-mdss.yaml         | 347 ++++++++++++++++++
->  2 files changed, 479 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml
+>  .../devicetree/bindings/firmware/arm,scmi.yaml     | 164 +++++++++++++++++++++
+>  1 file changed, 164 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+> index 1c0388da6721..efc8a5a8bffe 100644
+> --- a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+> +++ b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+> @@ -189,6 +189,47 @@ properties:
+>        reg:
+>          const: 0x18
+>  
+> +  protocol@80:
+> +    type: object
+> +    properties:
+> +      reg:
+> +        const: 0x80
+> +
+> +      qcom,bus-type:
+> +        $ref: /schemas/types.yaml#/definitions/uint32-array
+> +        items:
+> +          minItems: 1
+> +        description:
+> +          Identifier of the bus type to be scaled by the memlat protocol.
+> +
+> +      cpu-map:
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+cpu-map only goes under /cpus node.
 
-yamllint warnings/errors:
+> +        type: object
+> +        description:
+> +          The list of all cpu cluster configurations to be tracked by the memlat protocol
+> +
+> +        patternProperties:
+> +          '^cluster[0-9]':
+> +            type: object
+> +            description:
+> +              Each cluster node describes the frequency domain associated with the
+> +              CPUFREQ HW engine and bandwidth requirements of the buses to be scaled.
+> +
+> +            properties:
 
-dtschema/dtc warnings/errors:
-./Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/display/msm/mdss-common.yaml
-./Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/display/msm/dpu-common.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.example.dtb: display-controller@ae01000: False schema does not allow {'compatible': ['qcom,sm8450-dpu'], 'reg': [[182456320, 585728], [183173120, 8200]], 'reg-names': ['mdp', 'vbif'], 'clocks': [[4294967295, 28], [4294967295, 29], [4294967295, 1], [4294967295, 63], [4294967295, 60], [4294967295, 75]], 'clock-names': ['bus', 'nrt_bus', 'iface', 'lut', 'core', 'vsync'], 'assigned-clocks': [[4294967295, 75]], 'assigned-clock-rates': [[19200000]], 'operating-points-v2': [[1]], 'power-domains': [[4294967295, 6]], 'interrupts': [[0]], 'ports': {'#address-cells': [[1]], '#size-cells': [[0]], 'port@0': {'reg': [[0]], 'endpoint': {'remote-endpoint': [[4294967295]]}}, 'port@1': {'reg': [[1]], 'endpoint': {'remote-endpoint': [[4294967295]]}}}, 'opp-table': {'compatible': ['operating-points-v2'], 'phandle': [[1]], 'opp-172000000': {'opp-hz': [[0], [172000000]], 'required-opps': [[4294967295]]}, 'o
- pp-200000000': {'opp-hz': [[0], [200000000]], 'required-opps': [[4294967295]]}, 'opp-325000000': {'opp-hz': [[0], [325000000]], 'required-opps': [[4294967295]]}, 'opp-375000000': {'opp-hz': [[0], [375000000]], 'required-opps': [[4294967295]]}, 'opp-500000000': {'opp-hz': [[0], [500000000]], 'required-opps': [[4294967295]]}}, '$nodename': ['display-controller@ae01000']}
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.example.dtb: display-controller@ae01000: Unevaluated properties are not allowed ('interrupts', 'operating-points-v2', 'opp-table', 'ports', 'power-domains' were unexpected)
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.example.dtb: display-subsystem@ae00000: False schema does not allow {'compatible': ['qcom,sm8450-mdss'], 'reg': [[182452224, 4096]], 'reg-names': ['mdss'], 'interconnects': [[4294967295, 14, 0, 4294967295, 3, 0], [4294967295, 14, 0, 4294967295, 3, 0]], 'interconnect-names': ['mdp0-mem', 'mdp1-mem'], 'resets': [[4294967295, 0]], 'power-domains': [[4294967295, 0]], 'clocks': [[4294967295, 1], [4294967295, 28], [4294967295, 29], [4294967295, 60]], 'clock-names': ['iface', 'bus', 'nrt_bus', 'core'], 'interrupts': [[0, 83, 4]], 'interrupt-controller': True, '#interrupt-cells': [[1]], 'iommus': [[4294967295, 10240, 1026]], '#address-cells': [[1]], '#size-cells': [[1]], 'ranges': True, 'display-controller@ae01000': {'compatible': ['qcom,sm8450-dpu'], 'reg': [[182456320, 585728], [183173120, 8200]], 'reg-names': ['mdp', 'vbif'], 'clocks': [[4294967295, 28], [4294967295, 29], [4294967295, 1], 
- [4294967295, 63], [4294967295, 60], [4294967295, 75]], 'clock-names': ['bus', 'nrt_bus', 'iface', 'lut', 'core', 'vsync'], 'assigned-clocks': [[4294967295, 75]], 'assigned-clock-rates': [[19200000]], 'operating-points-v2': [[1]], 'power-domains': [[4294967295, 6]], 'interrupts': [[0]], 'ports': {'#address-cells': [[1]], '#size-cells': [[0]], 'port@0': {'reg': [[0]], 'endpoint': {'remote-endpoint': [[2]], 'phandle': [[6]]}}, 'port@1': {'reg': [[1]], 'endpoint': {'remote-endpoint': [[3]], 'phandle': [[8]]}}}, 'opp-table': {'compatible': ['operating-points-v2'], 'phandle': [[1]], 'opp-172000000': {'opp-hz': [[0], [172000000]], 'required-opps': [[4294967295]]}, 'opp-200000000': {'opp-hz': [[0], [200000000]], 'required-opps': [[4294967295]]}, 'opp-325000000': {'opp-hz': [[0], [325000000]], 'required-opps': [[4294967295]]}, 'opp-375000000': {'opp-hz': [[0], [375000000]], 'required-opps': [[4294967295]]}, 'opp-500000000': {'opp-hz': [[0], [500000000]], 'required-opps': [[4294967295]]}}}, '
- dsi@ae94000': {'compatible': ['qcom,mdss-dsi-ctrl'], 'reg': [[183058432, 1024]], 'reg-names': ['dsi_ctrl'], 'interrupts': [[4]], 'clocks': [[4294967295, 3], [4294967295, 6], [4294967295, 65], [4294967295, 55], [4294967295, 1], [4294967295, 28]], 'clock-names': ['byte', 'byte_intf', 'pixel', 'core', 'iface', 'bus'], 'assigned-clocks': [[4294967295, 4], [4294967295, 66]], 'assigned-clock-parents': [[4, 0], [4, 1]], 'operating-points-v2': [[5]], 'power-domains': [[4294967295, 6]], 'phys': [[4]], 'phy-names': ['dsi'], '#address-cells': [[1]], '#size-cells': [[0]], 'ports': {'#address-cells': [[1]], '#size-cells': [[0]], 'port@0': {'reg': [[0]], 'endpoint': {'remote-endpoint': [[6]], 'phandle': [[2]]}}, 'port@1': {'reg': [[1]], 'endpoint': {}}}, 'opp-table': {'compatible': ['operating-points-v2'], 'phandle': [[5]], 'opp-160310000': {'opp-hz': [[0], [160310000]], 'required-opps': [[4294967295]]}, 'opp-187500000': {'opp-hz': [[0], [187500000]], 'required-opps': [[4294967295]]}, 'opp-300000
- 000': {'opp-hz': [[0], [300000000]], 'required-opps': [[4294967295]]}, 'opp-358000000': {'opp-hz': [[0], [358000000]], 'required-opps': [[4294967295]]}}}, 'phy@ae94400': {'compatible': ['qcom,dsi-phy-5nm-8450'], 'reg': [[183059456, 512], [183059968, 640], [183060736, 608]], 'reg-names': ['dsi_phy', 'dsi_phy_lane', 'dsi_pll'], '#clock-cells': [[1]], '#phy-cells': [[0]], 'clocks': [[4294967295, 1], [4294967295, 0]], 'clock-names': ['iface', 'ref'], 'vdds-supply': [[4294967295]], 'phandle': [[4]]}, 'dsi@ae96000': {'compatible': ['qcom,mdss-dsi-ctrl'], 'reg': [[183066624, 1024]], 'reg-names': ['dsi_ctrl'], 'interrupts': [[5]], 'clocks': [[4294967295, 7], [4294967295, 10], [4294967295, 67], [4294967295, 57], [4294967295, 1], [4294967295, 28]], 'clock-names': ['byte', 'byte_intf', 'pixel', 'core', 'iface', 'bus'], 'assigned-clocks': [[4294967295, 8], [4294967295, 68]], 'assigned-clock-parents': [[7, 0], [7, 1]], 'operating-points-v2': [[5]], 'power-domains': [[4294967295, 6]], 'phys': [[7
- ]], 'phy-names': ['dsi'], '#address-cells': [[1]], '#size-cells': [[0]], 'ports': {'#address-cells': [[1]], '#size-cells': [[0]], 'port@0': {'reg': [[0]], 'endpoint': {'remote-endpoint': [[8]], 'phandle': [[3]]}}, 'port@1': {'reg': [[1]], 'endpoint': {}}}}, 'phy@ae96400': {'compatible': ['qcom,dsi-phy-5nm-8450'], 'reg': [[183067648, 512], [183068160, 640], [183068928, 608]], 'reg-names': ['dsi_phy', 'dsi_phy_lane', 'dsi_pll'], '#clock-cells': [[1]], '#phy-cells': [[0]], 'clocks': [[4294967295, 1], [4294967295, 0]], 'clock-names': ['iface', 'ref'], 'vdds-supply': [[4294967295]], 'phandle': [[7]]}, '$nodename': ['display-subsystem@ae00000']}
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.example.dtb: display-subsystem@ae00000: Unevaluated properties are not allowed ('#address-cells', '#interrupt-cells', '#size-cells', 'interrupt-controller', 'interrupts', 'power-domains', 'ranges', 'reg', 'reg-names', 'resets' were unexpected)
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.example.dtb: display-controller@ae01000: False schema does not allow {'compatible': ['qcom,sm8450-dpu'], 'reg': [[182456320, 585728], [183173120, 8200]], 'reg-names': ['mdp', 'vbif'], 'clocks': [[4294967295, 28], [4294967295, 29], [4294967295, 1], [4294967295, 63], [4294967295, 60], [4294967295, 75]], 'clock-names': ['bus', 'nrt_bus', 'iface', 'lut', 'core', 'vsync'], 'assigned-clocks': [[4294967295, 75]], 'assigned-clock-rates': [[19200000]], 'operating-points-v2': [[1]], 'power-domains': [[4294967295, 6]], 'interrupts': [[0]], 'ports': {'#address-cells': [[1]], '#size-cells': [[0]], 'port@0': {'reg': [[0]], 'endpoint': {'remote-endpoint': [[2]], 'phandle': [[6]]}}, 'port@1': {'reg': [[1]], 'endpoint': {'remote-endpoint': [[3]], 'phandle': [[8]]}}}, 'opp-table': {'compatible': ['operating-points-v2'], 'phandle': [[1]], 'opp-172000000': {'opp-hz': [[0], [172000000]], 'required-opps': 
- [[4294967295]]}, 'opp-200000000': {'opp-hz': [[0], [200000000]], 'required-opps': [[4294967295]]}, 'opp-325000000': {'opp-hz': [[0], [325000000]], 'required-opps': [[4294967295]]}, 'opp-375000000': {'opp-hz': [[0], [375000000]], 'required-opps': [[4294967295]]}, 'opp-500000000': {'opp-hz': [[0], [500000000]], 'required-opps': [[4294967295]]}}, '$nodename': ['display-controller@ae01000']}
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.example.dtb: display-controller@ae01000: Unevaluated properties are not allowed ('interrupts', 'operating-points-v2', 'opp-table', 'ports', 'power-domains' were unexpected)
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml
+cpu-map nodes don't have properties.
 
-doc reference errors (make refcheckdocs):
+> +              operating-points-v2: true
+> +
+> +              qcom,freq-domain:
 
-See https://patchwork.ozlabs.org/patch/
+Please don't add new users of this. Use the performance-domains binding 
+instead.
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+> +                $ref: /schemas/types.yaml#/definitions/phandle-array
+> +                description:
+> +                  Reference to the frequency domain of the CPUFREQ HW engine
+> +                items:
+> +                  - items:
+> +                      - description: phandle to CPUFREQ HW engine
+> +                      - description: frequency domain associated with the cluster
+> +
+> +            required:
+> +              - qcom,freq-domain
+> +              - operating-points-v2
+> +
+>  additionalProperties: false
+>  
+>  patternProperties:
+> @@ -429,4 +470,127 @@ examples:
+>          };
+>      };
+>  
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    firmware {
+> +        scmi {
+> +            compatible = "arm,scmi";
+> +
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +
+> +            mboxes = <&cpucp_mbox>;
+> +            mbox-names = "tx";
+> +            shmem = <&cpu_scp_lpri>;
+> +
+> +            scmi_memlat: protocol@80 {
+> +                reg = <0x80>;
+> +                qcom,bus-type = <0x2>;
+> +
+> +                cpu-map {
+> +                    cluster0 {
+> +                        qcom,freq-domain = <&cpufreq_hw 0>;
+> +                        operating-points-v2 = <&cpu0_opp_table>;
+> +                    };
+> +
+> +                    cluster1 {
+> +                        qcom,freq-domain = <&cpufreq_hw 1>;
+> +                        operating-points-v2 = <&cpu4_opp_table>;
+> +                    };
+> +
+> +                    cluster2 {
+> +                        qcom,freq-domain = <&cpufreq_hw 2>;
+> +                        operating-points-v2 = <&cpu7_opp_table>;
+> +                    };
+> +                };
+> +            };
+> +        };
+> +
+> +        cpu0_opp_table: opp-table-cpu0 {
+> +            compatible = "operating-points-v2";
+> +
+> +            cpu0_opp_300mhz: opp-300000000 {
+> +                opp-hz = /bits/ 64 <300000000>;
+> +                opp-peak-kBps = <9600000>;
+> +            };
+> +
+> +            cpu0_opp_1325mhz: opp-1324800000 {
+> +                opp-hz = /bits/ 64 <1324800000>;
+> +                opp-peak-kBps = <33792000>;
+> +            };
+> +
+> +            cpu0_opp_2016mhz: opp-2016000000 {
+> +                opp-hz = /bits/ 64 <2016000000>;
+> +                opp-peak-kBps = <48537600>;
+> +            };
+> +        };
+> +
+> +        cpu4_opp_table: opp-table-cpu4 {
+> +            compatible = "operating-points-v2";
+> +
+> +            cpu4_opp_691mhz: opp-691200000 {
+> +                opp-hz = /bits/ 64 <691200000>;
+> +                opp-peak-kBps = <9600000>;
+> +            };
+> +
+> +            cpu4_opp_941mhz: opp-940800000 {
+> +                opp-hz = /bits/ 64 <940800000>;
+> +                opp-peak-kBps = <17817600>;
+> +            };
+> +
+> +            cpu4_opp_2611mhz: opp-2611200000 {
+> +                opp-hz = /bits/ 64 <2611200000>;
+> +                opp-peak-kBps = <48537600>;
+> +            };
+> +        };
+> +
+> +        cpu7_opp_table: opp-table-cpu7 {
+> +            compatible = "operating-points-v2";
+> +
+> +            cpu7_opp_806mhz: opp-806400000 {
+> +                opp-hz = /bits/ 64 <806400000>;
+> +                opp-peak-kBps = <9600000>;
+> +            };
+> +
+> +            cpu7_opp_2381mhz: opp-2380800000 {
+> +                opp-hz = /bits/ 64 <2380800000>;
+> +                opp-peak-kBps = <44851200>;
+> +            };
+> +
+> +            cpu7_opp_2515mhz: opp-2515200000 {
+> +                opp-hz = /bits/ 64 <2515200000>;
+> +                opp-peak-kBps = <48537600>;
+> +            };
+> +        };
+> +    };
+> +
+> +
+> +    soc {
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +
+> +        cpucp_mbox: mailbox@17400000 {
+> +            compatible = "qcom,cpucp-mbox";
+> +            reg =   <0x0 0x17c00000 0x0 0x10>, <0x0 0x18590300 0x0 0x700>;
+> +            interrupts = <GIC_SPI 62 IRQ_TYPE_LEVEL_HIGH>;
+> +            #mbox-cells = <0>;
+> +        };
+> +
+> +        sram@18509400 {
+> +            compatible = "mmio-sram";
+> +            reg = <0x0 0x18509400 0x0 0x400>;
+> +            no-memory-wc;
+> +
+> +            #address-cells = <1>;
+> +            #size-cells = <1>;
+> +            ranges = <0x0 0x0 0x18509400 0x400>;
+> +
+> +            cpu_scp_lpri: scp-sram-section@0 {
+> +                compatible = "arm,scmi-shmem";
+> +                reg = <0x0 0x80>;
+> +            };
+> +        };
+> +    };
+> +
+>  ...
+> -- 
+> 2.7.4
+> 
+> 
