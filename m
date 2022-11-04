@@ -2,62 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 227E7619B2C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 16:15:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BEF3619BA7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 16:31:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231591AbiKDPPW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 11:15:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57764 "EHLO
+        id S232529AbiKDPbA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 11:31:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231913AbiKDPPV (ORCPT
+        with ESMTP id S232528AbiKDPa7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 11:15:21 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6282410D9;
-        Fri,  4 Nov 2022 08:15:19 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id F12076224E;
-        Fri,  4 Nov 2022 15:15:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884BEC433C1;
-        Fri,  4 Nov 2022 15:15:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667574918;
-        bh=qxe9QLnJVFO3g780VADLn9uwp3GHTLedQwLcrp06fI4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=boAdFwdrgL0yEL9x07dMDkx+KrTxVQ+VR4NJuHsjCQ2bkL9aE+Qx8XTJiVprqQc1f
-         FjUfgBPHrEPahhxIo2yNOvbRMsPJSEPBvHY1gE7JCQtkgZRvqADNzFmx2RmfZoXh6B
-         VOo86va/4vFb6AZYtXgDLeAQgValHH0bD6HvCeQcG641fe6lnWVB1hoMkfZgDxWuta
-         N00uf5hp3FhbKhweBZPT9Z9rKFiUAvZBU33SPD8Te4qTJgM1DDLyQd7dAJz7otu/Yz
-         8x8cEsq6z9BzS159ocTUETG1YgQR8CVBe5s2Jge+fwnzZgBSSs8u90KxTYy483J4Ip
-         gVzglRNh+6tKw==
-Date:   Fri, 4 Nov 2022 20:45:14 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Fri, 4 Nov 2022 11:30:59 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 651842D771
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 08:30:57 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id y14so14173328ejd.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 08:30:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=l0/8QLq6i9UBaQrWixxpT1QN5F499hppxzKmDfSPo+o=;
+        b=QEPWfvV5o0/xQrLseMnsrB2cPgofxv3zH/nstHYd2ezRCYfPwC8IKVAHC/RDJpIAOm
+         QNi1POh6NYqgDxggTNQt77PFFTL3YbTyP6Q1+uTZQYDDSHa7wuWbJbqtJf/cX2bUUohM
+         245D5iJmIRgkb5mgPEhTPsiM1JBVQ4XU6qH/1Hu8qDhG392OsVwob5TS5yGG2C2MQD3i
+         QjZ/J4LHUFzaPDjoH3ujwaWhvYPpkcrmc4C5xpcZNXUu9CGVpCKgs4ttn7nYfhO4yLjh
+         vVPHK2vAULnKhoCyKzvVXLgTw3eZmKoyclloKeHJOs+yGWqXDJ5hbgPdr5bQNNMFe+m1
+         J89g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=l0/8QLq6i9UBaQrWixxpT1QN5F499hppxzKmDfSPo+o=;
+        b=LIglvzzcSghy4OKObty/of6uFxTdwJk990UXsjUPuR5M4O2/KmlaAkyefAlSQtfDjE
+         fgdsamJu+FoMs9MdPcNqi1bQDBjz4PZguw/qnwSUlMIcowCB+RmsK3ZXf7Rzjpp20IO4
+         +bFRbxmlUxIqHOhs1jpF0GpGFZ+Mzl7TdOlSWlvJm61ti7hTAksaRtrzDjZRoYug1PQF
+         DQUvx/sDe83eSkAsZ2QQuG5Cp/wBCnFMNfvvNosRigQJOU2A8Y8gie+syYWrt5KqwNzY
+         bsTRj9iAq/MsqoGfno+axTIhIdNstrRN96ZRBdVgnuujXmO8HKib6mlf4icvv1p8nnaq
+         U3Tw==
+X-Gm-Message-State: ACrzQf0mOQWJPZKN1tas+EYg6Ii+9RNT3mGv6v2x3xfEy1spoeXERMh0
+        xL6+jA7fM8yT5qZxx2++zWIvOXNMio+s9Q==
+X-Google-Smtp-Source: AMsMyM6Qm9G+ineNjR0kpLmP9LlNavjWQ8XENp+/k3yVxBWw3w6JPL3+riB7tItz0v4wzrMvO80ICA==
+X-Received: by 2002:a17:906:3852:b0:78d:b3d2:97a9 with SMTP id w18-20020a170906385200b0078db3d297a9mr34237279ejc.565.1667575855783;
+        Fri, 04 Nov 2022 08:30:55 -0700 (PDT)
+Received: from otso.arnhem.chello.nl (k10064.upc-k.chello.nl. [62.108.10.64])
+        by smtp.gmail.com with ESMTPSA id es11-20020a056402380b00b00458898fe90asm2059971edb.5.2022.11.04.08.30.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Nov 2022 08:30:55 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v1 3/5] arm64: dts: qcom: sm8450-hdk: enable display
- hardware
-Message-ID: <Y2Usgs8XHgS/KkxN@matsya>
-References: <20221104131358.1025987-1-dmitry.baryshkov@linaro.org>
- <20221104131358.1025987-4-dmitry.baryshkov@linaro.org>
+        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>,
+        Evan Green <evgreen@chromium.org>, linux-kernel@vger.kernel.org
+Subject: [PATCH] soc: qcom: llcc: make irq truly optional
+Date:   Fri,  4 Nov 2022 16:30:41 +0100
+Message-Id: <20221104153041.412020-1-luca.weiss@fairphone.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221104131358.1025987-4-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -65,48 +73,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04-11-22, 16:13, Dmitry Baryshkov wrote:
-> Enable MDSS/DPU/DSI0 on SM8450-HDK device. Note, there is no panel
-> configuration (yet).
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> index 38ccd44620d0..e1a4cf1ee51d 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> @@ -442,3 +442,21 @@ &usb_1_qmpphy {
->  	vdda-phy-supply = <&vreg_l6b_1p2>;
->  	vdda-pll-supply = <&vreg_l1b_0p91>;
->  };
-> +
-> +&mdss {
-> +	status = "okay";
-> +};
-> +
-> +&mdss_mdp {
-> +	status = "okay";
-> +};
-> +
-> +&dsi0 {
-> +	status = "okay";
-> +	vdda-supply = <&vreg_l6b_1p2>;
-> +};
-> +
-> +&dsi0_phy {
-> +	status = "okay";
-> +	vdds-supply = <&vreg_l5b_0p88>;
-> +};
+The function platform_get_irq prints an error message into the kernel
+log when the irq isn't found.
 
-This is missing dispcc, please enable that node too.
+Since the interrupt is actually optional and not provided by some SoCs,
+use platform_get_irq_optional which does not print an error message.
 
-Also, sort this please
+Fixes: c081f3060fab ("soc: qcom: Add support to register LLCC EDAC driver")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+ drivers/soc/qcom/llcc-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> -- 
-> 2.35.1
-
+diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+index 8b7e8118f3ce..82c3cfdcc560 100644
+--- a/drivers/soc/qcom/llcc-qcom.c
++++ b/drivers/soc/qcom/llcc-qcom.c
+@@ -849,7 +849,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err;
+ 
+-	drv_data->ecc_irq = platform_get_irq(pdev, 0);
++	drv_data->ecc_irq = platform_get_irq_optional(pdev, 0);
+ 	if (drv_data->ecc_irq >= 0) {
+ 		llcc_edac = platform_device_register_data(&pdev->dev,
+ 						"qcom_llcc_edac", -1, drv_data,
 -- 
-~Vinod
+2.38.1
+
