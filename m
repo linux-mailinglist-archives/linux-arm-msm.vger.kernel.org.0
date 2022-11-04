@@ -2,75 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3256D619C5A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 16:59:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3783A619CA9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 17:11:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231361AbiKDP7X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 11:59:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34634 "EHLO
+        id S232292AbiKDQLj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 12:11:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232130AbiKDP7W (ORCPT
+        with ESMTP id S232314AbiKDQLh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 11:59:22 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BC8C3135A
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 08:59:18 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id 4so5325474pli.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 08:59:18 -0700 (PDT)
+        Fri, 4 Nov 2022 12:11:37 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33E7F47311
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 09:11:35 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id v8so3321273qkg.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 09:11:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=unQcVjy+Rx2tEvMdVdz8Z5NcSoVggd7rvnDgjCA2EkY=;
-        b=ZNXqS7MOHY6qfrquNrzzp6t2gxtMEY2V8l3hEduaPIz0bJYIOhUH2k3lNi/Roysyls
-         Xd63/MUhDOUglwwozaTaZd53cQ1+jOrYNopbRATprgtKXymvyDWasJ1LzFl5gXJVopeU
-         ZH6oFd1K7zHpmhhMCFHAOuHJmmPTcQjZS8zLK9ZC+RpdYO8yZ358ISdCuNcPkJ5cMaOs
-         47Li3ftsdQk4/InmG2H8twil5gHYNr+7ry5ZuT6x0HgoACsuZNHr7wHXw1OOV1zSHJ36
-         wa2uzPjNkecvUPRbYJOWqrDkJBfS8SYtLBUjHE1oWIWNqEvieDQMUo7BJL4g+ItYoAVS
-         tWIw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7zZ4hgOBkSS7lKqMVHhHdz8obglhyQ+aTwbL4NpTFkY=;
+        b=Yq6e3O/pGs0MyOMWNUA3vzTx3Od/4zemKt3ajIfy7bcKicU6rKTt+8SIfixfMHxYJG
+         w3lkubqOHSdShkN8ENt7WCjjVvv9tm492yyyg6N6h8Q0bhPz7urmD2n6uvcihudnfrtD
+         w5UqLLeSSwlvEdhrQ/6T0CGR628QwEKOuiTjBynJldhpCCIjNLmnUz62A21iSOSUoBz2
+         PTm/SNg41p669YN1ZpS75LmdeyTFSdWeYGC9CLP8h32bqyQkootg73Cnl8BMYv1fcapI
+         9/Q0u8hE1BASSR7bydW+osW15FGfsoMxrnc8IjlNiBNooe9wpIkU0P+PUIriongxdZqa
+         dUjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=unQcVjy+Rx2tEvMdVdz8Z5NcSoVggd7rvnDgjCA2EkY=;
-        b=3vrLUM7f0Q/QIFOgxPrDplDZcYIWun/qgWGYS2EBL8UINR4kYaFny8T1gULI6d8vhb
-         /YhAk3lv07AeDDTMQR/ZvGN1rpyvMOICTbBYiMFTWpMt0H/O2An5r/cr+xkwU7El/9Pj
-         jjCe2/6wdUA3wjUWvoAv1uCJgfxhIFBteAsHCoDZ0TKweiTcBYn8eL318SAl4hsd9KXq
-         p12BqhPmtqwB9qZCTuGCSDnLcOaQvATH890I93MH1LhJWiEKfTInbdvDGZ/rmNlkm6og
-         Bu0V56D+5oYSWSQZ7k+5bmzZQGiIWek2a9tpCCgxxSa6Ait36NL9CASNENehf3UJ4c7t
-         0pww==
-X-Gm-Message-State: ACrzQf3bY58pVl/CIFsF8J9edt9/+NP3huLwlVdw9NpHgdDzJ9yaPm1e
-        rO/bp7xhq3EPrH6zmlDcb4cBdg==
-X-Google-Smtp-Source: AMsMyM5r24y1+lrcS1/Q/3uZqstkpaHqWWB3+g5pk7LSbIiaEDiO9nHRx/L4b1lrx6FgAmbgRLb8SQ==
-X-Received: by 2002:a17:90a:1657:b0:213:7c4d:768a with SMTP id x23-20020a17090a165700b002137c4d768amr46361362pje.199.1667577557978;
-        Fri, 04 Nov 2022 08:59:17 -0700 (PDT)
-Received: from p14s (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id u9-20020a17090a3fc900b00200461cfa99sm1832503pjm.11.2022.11.04.08.59.16
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7zZ4hgOBkSS7lKqMVHhHdz8obglhyQ+aTwbL4NpTFkY=;
+        b=X01xay3DhcyfobfPZ1XcXElMjgcAO+w2dn1/HzpCIpPedRS7A6Ai+X027ftUBKexwg
+         xIxFYTbdeYNikyl+y4gzyGPH6zJZyHuBf7/fdummpOPahAYHIXcT+h/0EIL8wxusIogz
+         x6gpX2b/Cp5eal7NO9pfyPcbrQt0Yss0PcxlTacE5V+QLCbIzbh83kRK7KzeIqhDAlKg
+         xFp5FSyCsIOlSNkc7u/drY1b4fHXYAnxZ4jjoeLnuYsAQLzM5HTvIK0WDlGXP3GSghME
+         6ph3l35Wmc63Mm1pTYrHf/LuPmNOGMQ2A8VrMVqmbR849JcUeVIX8p2Wkc3sBzMldxZa
+         dDXw==
+X-Gm-Message-State: ACrzQf2/dG4VMu9oQUFpB1vAuU70av75jzQ5O26Z2nJ8rKxKMsswIB/w
+        cYzZlIDhR1b8FnHlBB40A+rckg==
+X-Google-Smtp-Source: AMsMyM6tpIfGesI5sSD92+o7Ph27abF80lG778Fl8YEEGnGgkigFyNhJSH2KgbhupSJ1G3bKjEPdZA==
+X-Received: by 2002:a37:69c5:0:b0:6fa:d6f:e848 with SMTP id e188-20020a3769c5000000b006fa0d6fe848mr26175271qkc.17.1667578294302;
+        Fri, 04 Nov 2022 09:11:34 -0700 (PDT)
+Received: from krzk-bin.. ([2601:586:5000:570:aad6:acd8:4ed9:299b])
+        by smtp.gmail.com with ESMTPSA id b6-20020a05620a0cc600b006e6a7c2a269sm3125370qkj.22.2022.11.04.09.11.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Nov 2022 08:59:17 -0700 (PDT)
-Date:   Fri, 4 Nov 2022 09:59:15 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
-Cc:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>,
-        linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_clew@quicinc.com
-Subject: Re: [PATCH v4] remoteproc: core: do pm relax when in RPROC_OFFLINE
-Message-ID: <20221104155915.GC1873068@p14s>
-References: <20221013173442.GA1279972@p14s>
- <20221013180334.GB1279972@p14s>
- <8807a9a6-d93d-aef5-15f4-88648a6ecbe2@quicinc.com>
- <CANLsYkx8Vcha9FpfRvJEkq2pd+mSYFeZQBXj65YoiSBv+WEY4A@mail.gmail.com>
- <70828854-8427-8ce1-1535-e14261fd122d@quicinc.com>
- <420faf00-d59e-57c6-55a5-fae08a411517@foss.st.com>
- <CANLsYkw1Ex0TfmG-tRhHJgn3LsdvNhS_6HjJXn=ogwcCOWbH_A@mail.gmail.com>
- <414aacb1-e68b-a9a7-3b99-12bc56494f6f@quicinc.com>
- <20221102180350.GA1733006@p14s>
- <4c3d38c9-a43e-97bd-c7f9-3d21240e9d0e@quicinc.com>
+        Fri, 04 Nov 2022 09:11:33 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] arm64: dts: qcom: qcs404: align TLMM pin configuration with DT schema
+Date:   Fri,  4 Nov 2022 12:11:30 -0400
+Message-Id: <20221104161131.57719-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4c3d38c9-a43e-97bd-c7f9-3d21240e9d0e@quicinc.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -81,465 +75,382 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 03, 2022 at 10:03:49AM +0800, Aiqun(Maria) Yu wrote:
-> On 11/3/2022 2:03 AM, Mathieu Poirier wrote:
-> > On Wed, Nov 02, 2022 at 06:53:49PM +0800, Aiqun(Maria) Yu wrote:
-> > > Hi,
-> > > 
-> > > Let me think about this carefully.
-> > > 
-> > > When in RPROC_RECOVERY_FAIL case we want to re-do the recovery process again
-> > > or just leave the pm_relax?
-> > 
-> > Neither.
-> > 
-> > When a recovery fail we don't want to call pm_relax().  The code in
-> > rproc_crash_handler_work() becomes:
-> > 
-> > 	if (rproc->state == RPROC_OFFLINE) {
-> >                  /* We have raced with rproc_shutdown() */
-> >                  pm_relax()
-> > 		mutex_unlock(&rproc->lock);
-> > 		return;
-> >          }
-> > 
-> > 	if (rproc->state == RPROC_CRASHED ||
-> >              rproc->state == RPROC_RECOVERY_FAILED) {
-> > 		/* handle only the first crash detected */
-> > 		mutex_unlock(&rproc->lock);
-> > 		return;
-> > 	}
-> > 
-> > 
-> > RPROC_RECOVERY_FAILED gets set in rproc_boot_recovery() if request_firmware() or
-> > rproc_start() fail.  Function rproc_trigger_recovery() needs to allow for the
-> > recovery the the remote processor is in RPROC_RECOVERY_FAILED state.  As such
-> > the condition becomes:
-> > 
-> >          /* State could have changed before we got the mutex */
-> > 	if (rproc->state != RPROC_CRASHED &&
-> >              rproc->state != RPROC_RECOVERY_FAILED)
-> > 		goto unlock_mutex;
-> > 
-> > Start with that and we can look at corner cases (if some exists) with a fresh
-> > patchset.  Note that I have not addressed the attach/detach() scenario in the
-> > above.
-> 
-> If we didn't deal with the recovery failed case with correct pm_relax call,
-> it may left the device in a state that cannot enter to suspend state.
+DT schema expects TLMM pin configuration nodes to be named with
+'-state' suffix and their optional children with '-pins' suffix.
 
-That is what I am looking for.  We don't want to give the impression that
-everything is fine by allowing the device to suspend.  If the remote processor
-can't be recovered than it needs to be dealth with.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/qcs404-evb-4000.dts | 20 +++---
+ arch/arm64/boot/dts/qcom/qcs404-evb.dtsi     | 52 +++++++--------
+ arch/arm64/boot/dts/qcom/qcs404.dtsi         | 66 ++++++++++++--------
+ 3 files changed, 71 insertions(+), 67 deletions(-)
 
-> Because first PROC_RECOVERY_FAIL case cannot ensure it have pm_relax called
-> before the second crash handler call pm_stay_awake or not.
-> 
+diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb-4000.dts b/arch/arm64/boot/dts/qcom/qcs404-evb-4000.dts
+index 08d5d51221cf..9c7d4e780357 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404-evb-4000.dts
++++ b/arch/arm64/boot/dts/qcom/qcs404-evb-4000.dts
+@@ -37,54 +37,54 @@ phy1: phy@4 {
+ };
+ 
+ &tlmm {
+-	ethernet_defaults: ethernet-defaults {
+-		int {
++	ethernet_defaults: ethernet-defaults-state {
++		int-pins {
+ 			pins = "gpio61";
+ 			function = "rgmii_int";
+ 			bias-disable;
+ 			drive-strength = <2>;
+ 		};
+-		mdc {
++		mdc-pins {
+ 			pins = "gpio76";
+ 			function = "rgmii_mdc";
+ 			bias-pull-up;
+ 		};
+-		mdio {
++		mdio-pins {
+ 			pins = "gpio75";
+ 			function = "rgmii_mdio";
+ 			bias-pull-up;
+ 		};
+-		tx {
++		tx-pins {
+ 			pins = "gpio67", "gpio66", "gpio65", "gpio64";
+ 			function = "rgmii_tx";
+ 			bias-pull-up;
+ 			drive-strength = <16>;
+ 		};
+-		rx {
++		rx-pins {
+ 			pins = "gpio73", "gpio72", "gpio71", "gpio70";
+ 			function = "rgmii_rx";
+ 			bias-disable;
+ 			drive-strength = <2>;
+ 		};
+-		tx-ctl {
++		tx-ctl-pins {
+ 			pins = "gpio68";
+ 			function = "rgmii_ctl";
+ 			bias-pull-up;
+ 			drive-strength = <16>;
+ 		};
+-		rx-ctl {
++		rx-ctl-pins {
+ 			pins = "gpio74";
+ 			function = "rgmii_ctl";
+ 			bias-disable;
+ 			drive-strength = <2>;
+ 		};
+-		tx-ck {
++		tx-ck-pins {
+ 			pins = "gpio63";
+ 			function = "rgmii_ck";
+ 			bias-pull-up;
+ 			drive-strength = <16>;
+ 		};
+-		rx-ck {
++		rx-ck-pins {
+ 			pins = "gpio69";
+ 			function = "rgmii_ck";
+ 			bias-disable;
+diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+index dbbe1653718b..4d53cd544e41 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+@@ -229,7 +229,7 @@ &sdcc1 {
+ };
+ 
+ &tlmm {
+-	perst_state: perst {
++	perst_state: perst-state {
+ 		pins = "gpio43";
+ 		function = "gpio";
+ 
+@@ -238,68 +238,63 @@ perst_state: perst {
+ 		output-low;
+ 	};
+ 
+-	sdc1_on: sdc1-on {
+-		clk {
++	sdc1_on: sdc1-on-state {
++		clk-pins {
+ 			pins = "sdc1_clk";
+ 			bias-disable;
+ 			drive-strength = <16>;
+ 		};
+ 
+-		cmd {
++		cmd-pins {
+ 			pins = "sdc1_cmd";
+ 			bias-pull-up;
+ 			drive-strength = <10>;
+ 		};
+ 
+-		data {
++		data-pins {
+ 			pins = "sdc1_data";
+ 			bias-pull-up;
+ 			drive-strength = <10>;
+ 		};
+ 
+-		rclk {
++		rclk-pins {
+ 			pins = "sdc1_rclk";
+ 			bias-pull-down;
+ 		};
+ 	};
+ 
+-	sdc1_off: sdc1-off {
+-		clk {
++	sdc1_off: sdc1-off-state {
++		clk-pins {
+ 			pins = "sdc1_clk";
+ 			bias-disable;
+ 			drive-strength = <2>;
+ 		};
+ 
+-		cmd {
++		cmd-pins {
+ 			pins = "sdc1_cmd";
+ 			bias-pull-up;
+ 			drive-strength = <2>;
+ 		};
+ 
+-		data {
++		data-pins {
+ 			pins = "sdc1_data";
+ 			bias-pull-up;
+ 			drive-strength = <2>;
+ 		};
+ 
+-		rclk {
++		rclk-pins {
+ 			pins = "sdc1_rclk";
+ 			bias-pull-down;
+ 		};
+ 	};
+ 
+-	usb3_id_pin: usb3-id-pin {
+-		pinmux {
+-			pins = "gpio116";
+-			function = "gpio";
+-		};
++	usb3_id_pin: usb3-id-state {
++		pins = "gpio116";
++		function = "gpio";
+ 
+-		pinconf {
+-			pins = "gpio116";
+-			drive-strength = <2>;
+-			bias-pull-up;
+-			input-enable;
+-		};
++		drive-strength = <2>;
++		bias-pull-up;
++		input-enable;
+ 	};
+ };
+ 
+@@ -366,31 +361,28 @@ &wifi {
+ /* PINCTRL - additions to nodes defined in qcs404.dtsi */
+ 
+ &blsp1_uart2_default {
+-	rx {
++	rx-pins {
+ 		drive-strength = <2>;
+ 		bias-disable;
+ 	};
+ 
+-	tx {
++	tx-pins {
+ 		drive-strength = <2>;
+ 		bias-disable;
+ 	};
+ };
+ 
+ &blsp1_uart3_default {
+-	cts {
+-		pins = "gpio84";
++	cts-pins {
+ 		bias-disable;
+ 	};
+ 
+-	rts-tx {
+-		pins = "gpio85", "gpio82";
++	rts-tx-pins {
+ 		drive-strength = <2>;
+ 		bias-disable;
+ 	};
+ 
+-	rx {
+-		pins = "gpio83";
++	rx-pins {
+ 		bias-pull-up;
+ 	};
+ };
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index 80f2d05595fa..577d76662468 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -593,118 +593,130 @@ tlmm: pinctrl@1000000 {
+ 			interrupt-controller;
+ 			#interrupt-cells = <2>;
+ 
+-			blsp1_i2c0_default: blsp1-i2c0-default {
++			blsp1_i2c0_default: blsp1-i2c0-default-state {
+ 				pins = "gpio32", "gpio33";
+ 				function = "blsp_i2c0";
+ 			};
+ 
+-			blsp1_i2c1_default: blsp1-i2c1-default {
++			blsp1_i2c1_default: blsp1-i2c1-default-state {
+ 				pins = "gpio24", "gpio25";
+ 				function = "blsp_i2c1";
+ 			};
+ 
+-			blsp1_i2c2_default: blsp1-i2c2-default {
+-				sda {
++			blsp1_i2c2_default: blsp1-i2c2-default-state {
++				sda-pins {
+ 					pins = "gpio19";
+ 					function = "blsp_i2c_sda_a2";
+ 				};
+ 
+-				scl {
++				scl-pins {
+ 					pins = "gpio20";
+ 					function = "blsp_i2c_scl_a2";
+ 				};
+ 			};
+ 
+-			blsp1_i2c3_default: blsp1-i2c3-default {
++			blsp1_i2c3_default: blsp1-i2c3-default-state {
+ 				pins = "gpio84", "gpio85";
+ 				function = "blsp_i2c3";
+ 			};
+ 
+-			blsp1_i2c4_default: blsp1-i2c4-default {
++			blsp1_i2c4_default: blsp1-i2c4-default-state {
+ 				pins = "gpio117", "gpio118";
+ 				function = "blsp_i2c4";
+ 			};
+ 
+-			blsp1_uart0_default: blsp1-uart0-default {
++			blsp1_uart0_default: blsp1-uart0-default-state {
+ 				pins = "gpio30", "gpio31", "gpio32", "gpio33";
+ 				function = "blsp_uart0";
+ 			};
+ 
+-			blsp1_uart1_default: blsp1-uart1-default {
++			blsp1_uart1_default: blsp1-uart1-default-state {
+ 				pins = "gpio22", "gpio23";
+ 				function = "blsp_uart1";
+ 			};
+ 
+-			blsp1_uart2_default: blsp1-uart2-default {
+-				rx {
++			blsp1_uart2_default: blsp1-uart2-default-state {
++				rx-pins {
+ 					pins = "gpio18";
+ 					function = "blsp_uart_rx_a2";
+ 				};
+ 
+-				tx {
++				tx-pins {
+ 					pins = "gpio17";
+ 					function = "blsp_uart_tx_a2";
+ 				};
+ 			};
+ 
+-			blsp1_uart3_default: blsp1-uart3-default {
+-				pins = "gpio82", "gpio83", "gpio84", "gpio85";
+-				function = "blsp_uart3";
++			blsp1_uart3_default: blsp1-uart3-default-state {
++				cts-pins {
++					pins = "gpio84";
++					function = "blsp_uart3";
++				};
++
++				rts-tx-pins {
++					pins = "gpio85", "gpio82";
++					function = "blsp_uart3";
++				};
++
++				rx-pins {
++					pins = "gpio83";
++					function = "blsp_uart3";
++				};
+ 			};
+ 
+-			blsp2_i2c0_default: blsp2-i2c0-default {
++			blsp2_i2c0_default: blsp2-i2c0-default-state {
+ 				pins = "gpio28", "gpio29";
+ 				function = "blsp_i2c5";
+ 			};
+ 
+-			blsp1_spi0_default: blsp1-spi0-default {
++			blsp1_spi0_default: blsp1-spi0-default-state {
+ 				pins = "gpio30", "gpio31", "gpio32", "gpio33";
+ 				function = "blsp_spi0";
+ 			};
+ 
+-			blsp1_spi1_default: blsp1-spi1-default {
+-				mosi {
++			blsp1_spi1_default: blsp1-spi1-default-state {
++				mosi-pins {
+ 					pins = "gpio22";
+ 					function = "blsp_spi_mosi_a1";
+ 				};
+ 
+-				miso {
++				miso-pins {
+ 					pins = "gpio23";
+ 					function = "blsp_spi_miso_a1";
+ 				};
+ 
+-				cs_n {
++				cs-n-pins {
+ 					pins = "gpio24";
+ 					function = "blsp_spi_cs_n_a1";
+ 				};
+ 
+-				clk {
++				clk-pins {
+ 					pins = "gpio25";
+ 					function = "blsp_spi_clk_a1";
+ 				};
+ 			};
+ 
+-			blsp1_spi2_default: blsp1-spi2-default {
++			blsp1_spi2_default: blsp1-spi2-default-state {
+ 				pins = "gpio17", "gpio18", "gpio19", "gpio20";
+ 				function = "blsp_spi2";
+ 			};
+ 
+-			blsp1_spi3_default: blsp1-spi3-default {
++			blsp1_spi3_default: blsp1-spi3-default-state {
+ 				pins = "gpio82", "gpio83", "gpio84", "gpio85";
+ 				function = "blsp_spi3";
+ 			};
+ 
+-			blsp1_spi4_default: blsp1-spi4-default {
++			blsp1_spi4_default: blsp1-spi4-default-state {
+ 				pins = "gpio37", "gpio38", "gpio117", "gpio118";
+ 				function = "blsp_spi4";
+ 			};
+ 
+-			blsp2_spi0_default: blsp2-spi0-default {
++			blsp2_spi0_default: blsp2-spi0-default-state {
+ 				pins = "gpio26", "gpio27", "gpio28", "gpio29";
+ 				function = "blsp_spi5";
+ 			};
+ 
+-			blsp2_uart0_default: blsp2-uart0-default {
++			blsp2_uart0_default: blsp2-uart0-default-state {
+ 				pins = "gpio26", "gpio27", "gpio28", "gpio29";
+ 				function = "blsp_uart5";
+ 			};
+-- 
+2.34.1
 
-I've been thinking about that part.  I don't think adding a wake_count to
-control calls to pm_stay_awake()/pm_relax() is the best way to go.  There is a
-similar count happening in the PM runtime subsystem and that is what we should
-be using.  I have asked a power management expert at Linaro for guidance with
-this matter.  I should be able to get back to you with a way forward by the end
-of next week.
-
-> So, What about the atomic count along with pm_relax and pm_stay_awake ?
-> 
-> struct rproc{
-> ...
-> atomic_t wake_count;
-> ...
-> }
-> 
-> rproc_pm_stay_awake()
-> {
-> 	atomic_inc(&wake_count);
-> 	pm_stay_awake();
-> }
-> 
-> rproc_pm_relax()
-> {
-> 	if (atomic_dec_return(&wake_count) == 0)
-> 		pm_stay_awake();
-> }
-> 
-> can refer code like:
-> 
-> rproc_report_crash()
-> {
-> 	...
-> 	rproc_pm_stay_awake();
-> 	queue_work();
-> 	...
-> }
-> 
-> rproc_crash_handler_work()
-> {
-> 	...
-> 	if (rproc->state == RPROC_OFFLINE || rproc->state == RPROC_CRASHED) {
->                   /* We have raced with rproc_shutdown() */
->                   rproc_pm_relax();
->  		mutex_unlock(&rproc->lock);
->  		return;
->           }
-> 	...
-> }
-> 
-> > 
-> > Thanks,
-> > Mathieu
-> > 
-> > > 
-> > > recovery fail case 1:
-> > > |                                      |firstcrash interrupt issued
-> > > | second crashed interrupt issued      | rproc_report_crash()
-> > > | rproc_report_crash()                 |          pm_stay_awake()
-> > > |          pm_stay_awake()             |          queue_work()
-> > > |          queue_work()                |rproc_crash_handler_work()
-> > > |                                      |mutex_lock(&rproc->lock);
-> > > |                                      |rproc_stop()
-> > > |rproc_crash_handler_work()            |rproc->state = RPROC_OFFLINE;
-> > > |                                      |RPROC_RECOVERY_FAIL //new
-> > > |                                      |mutex_unlock(&rproc->lock);
-> > > |mutex_lock(&rproc->lock);             |pm_relax()
-> > > |if (rproc->state == RPROC_OFFLINE)    |
-> > > |return // shouldn't do pm_relax if RPROC_RECOVERY_FAIL?  |
-> > > |mutex_unlock(&rproc->lock);           |
-> > > |                                      |
-> > > |                                      |
-> > > |                                      |
-> > > 
-> > > recovery fail case 2:
-> > > |                                      |firstcrash interrupt issued
-> > > |                                      | rproc_report_crash()
-> > > |                                      |          pm_stay_awake()
-> > > |                                      |          queue_work()
-> > > |                                      |rproc_crash_handler_work()
-> > > |                                      |mutex_lock(&rproc->lock);
-> > > |                                      |rproc_stop()
-> > > |                                      |rproc->state = RPROC_OFFLINE;
-> > > |                                      |RPROC_RECOVERY_FAIL //new
-> > > |                                      |mutex_unlock(&rproc->lock);
-> > > |                                      |pm_relax()
-> > > |
-> > > | second crashed interrupt issued      |
-> > > | rproc_report_crash()                 |
-> > > |          pm_stay_awake()             |
-> > > |          queue_work()                |
-> > > |pm_stay_awake()
-> > > |mutex_lock(&rproc->lock);
-> > > |if (rproc->state == RPROC_OFFLINE)    |
-> > > |return // still need do pm_relax if RPROC_RECOVERY_FAIL?  |
-> > > |mutex_unlock(&rproc->lock);           |
-> > > |                                      |
-> > > |                                      |
-> > > |                                      |
-> > > 
-> > > Maybe I can have:
-> > > 1. the pm_stay_awake and pm_relax with count based and call with paired for
-> > > fix current concurency issue.
-> > > 2. RPROC_RECOVERY_FAIL can be another patch for continue try to do recovery
-> > > work.
-> > > 3. handle RPROC_DETACHED case.
-> > > 
-> > > On 11/2/2022 4:11 AM, Mathieu Poirier wrote:
-> > > > On Fri, 28 Oct 2022 at 09:31, Arnaud POULIQUEN
-> > > > <arnaud.pouliquen@foss.st.com> wrote:
-> > > > > 
-> > > > > Hi,
-> > > > > 
-> > > > > On 10/24/22 05:17, Aiqun(Maria) Yu wrote:
-> > > > > > On 10/22/2022 3:34 AM, Mathieu Poirier wrote:
-> > > > > > > On Wed, 19 Oct 2022 at 23:52, Aiqun(Maria) Yu <quic_aiquny@quicinc.com> wrote:
-> > > > > > > > 
-> > > > > > > > On 10/14/2022 2:03 AM, Mathieu Poirier wrote:
-> > > > > > > > > On Thu, Oct 13, 2022 at 11:34:42AM -0600, Mathieu Poirier wrote:
-> > > > > > > > > > On Thu, Oct 13, 2022 at 09:40:09AM +0800, Aiqun(Maria) Yu wrote:
-> > > > > > > > > > > Hi Mathieu,
-> > > > > > > > > > > 
-> > > > > > > > > > > On 10/13/2022 4:43 AM, Mathieu Poirier wrote:
-> > > > > > > > > > > > Please add what has changed from one version to another, either in a cover
-> > > > > > > > > > > > letter or after the "Signed-off-by".  There are many examples on how to
-> > > > > > > > > > > > do that
-> > > > > > > > > > > > on the mailing list.
-> > > > > > > > > > > > 
-> > > > > > > > > > > Thx for the information, will take a note and benefit for next time.
-> > > > > > > > > > > 
-> > > > > > > > > > > > On Fri, Sep 16, 2022 at 03:12:31PM +0800, Maria Yu wrote:
-> > > > > > > > > > > > > RPROC_OFFLINE state indicate there is no recovery process
-> > > > > > > > > > > > > is in progress and no chance to do the pm_relax.
-> > > > > > > > > > > > > Because when recovering from crash, rproc->lock is held and
-> > > > > > > > > > > > > state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
-> > > > > > > > > > > > > and then unlock rproc->lock.
-> > > > > > > > > > > > 
-> > > > > > > > > > > > You are correct - because the lock is held rproc->state should be set to
-> > > > > > > > > > > > RPROC_RUNNING
-> > > > > > > > > > > > when rproc_trigger_recovery() returns.  If that is not the case then
-> > > > > > > > > > > > something
-> > > > > > > > > > > > went wrong.
-> > > > > > > > > > > > 
-> > > > > > > > > > > > Function rproc_stop() sets rproc->state to RPROC_OFFLINE just before
-> > > > > > > > > > > > returning,
-> > > > > > > > > > > > so we know the remote processor was stopped.  Therefore if rproc->state
-> > > > > > > > > > > > is set
-> > > > > > > > > > > > to RPROC_OFFLINE something went wrong in either request_firmware() or
-> > > > > > > > > > > > rproc_start().  Either way the remote processor is offline and the system
-> > > > > > > > > > > > probably
-> > > > > > > > > > > > in an unknown/unstable.  As such I don't see how calling pm_relax() can help
-> > > > > > > > > > > > things along.
-> > > > > > > > > > > > 
-> > > > > > > > > > > PROC_OFFLINE is possible that rproc_shutdown is triggered and successfully
-> > > > > > > > > > > finished.
-> > > > > > > > > > > Even if it is multi crash rproc_crash_handler_work contention issue, and
-> > > > > > > > > > > last rproc_trigger_recovery bailed out with only
-> > > > > > > > > > > rproc->state==RPROC_OFFLINE, it is still worth to do pm_relax in pair.
-> > > > > > > > > > > Since the subsystem may still can be recovered with customer's next trigger
-> > > > > > > > > > > of rproc_start, and we can make each error out path clean with pm resources.
-> > > > > > > > > > > 
-> > > > > > > > > > > > I suggest spending time understanding what leads to the failure when
-> > > > > > > > > > > > recovering
-> > > > > > > > > > > > from a crash and address that problem(s).
-> > > > > > > > > > > > 
-> > > > > > > > > > > In current case, the customer's information is that the issue happened when
-> > > > > > > > > > > rproc_shutdown is triggered at similar time. So not an issue from error out
-> > > > > > > > > > > of rproc_trigger_recovery.
-> > > > > > > > > > 
-> > > > > > > > > > That is a very important element to consider and should have been mentioned
-> > > > > > > > > > from
-> > > > > > > > > > the beginning.  What I see happening is the following:
-> > > > > > > > > > 
-> > > > > > > > > > rproc_report_crash()
-> > > > > > > > > >             pm_stay_awake()
-> > > > > > > > > >             queue_work() // current thread is suspended
-> > > > > > > > > > 
-> > > > > > > > > > rproc_shutdown()
-> > > > > > > > > >             rproc_stop()
-> > > > > > > > > >                     rproc->state = RPROC_OFFLINE;
-> > > > > > > > > > 
-> > > > > > > > > > rproc_crash_handler_work()
-> > > > > > > > > >             if (rproc->state == RPROC_OFFLINE)
-> > > > > > > > > >                     return // pm_relax() is not called
-> > > > > > > > > > 
-> > > > > > > > > > The right way to fix this is to add a pm_relax() in rproc_shutdown() and
-> > > > > > > > > > rproc_detach(), along with a very descriptive comment as to why it is needed.
-> > > > > > > > > 
-> > > > > > > > > Thinking about this further there are more ramifications to consider.  Please
-> > > > > > > > > confirm the above scenario is what you are facing.  I will advise on how to
-> > > > > > > > > move
-> > > > > > > > > forward if that is the case.
-> > > > > > > > > 
-> > > > > > > > Not sure if the situation is clear or not. So resend the email again.
-> > > > > > > > 
-> > > > > > > > The above senario is what customer is facing. crash hanppened while at
-> > > > > > > > the same time shutdown is triggered.
-> > > > > > > 
-> > > > > > > Unfortunately this is not enough details to address a problem as
-> > > > > > > complex as this one.
-> > > > > > > 
-> > > > > > > > And the device cannto goes to suspend state after that.
-> > > > > > > > the subsystem can still be start normally after this.
-> > > > > > > 
-> > > > > > > If the code flow I pasted above reflects the problem at hand, the
-> > > > > > > current patch will not be sufficient to address the issue.  If Arnaud
-> > > > > > > confirms my suspicions we will have to think about a better solution.
-> > > > > > > 
-> > > > > > 
-> > > > > > Hi Mathiew,
-> > > > > > 
-> > > > > > Could you pls have more details of any side effects other then power issue of
-> > > > > > the current senario?
-> > > > > > Why the current patch is not sufficient pls?
-> > > > > > 
-> > > > > > 
-> > > > > > Have the current senario in details with rproc->lock information in details:
-> > > > > > 
-> > > > > > | subsystem crashed interrupt issued      | user trigger shutdown
-> > > > > > | rproc_report_crash()                    |
-> > > > > > |          pm_stay_awake()                |
-> > > > > > |          queue_work()                   |
-> > > > > > |                                         |rproc_shutdown
-> > > > > > |                                         |mutex_lock(&rproc->lock);
-> > > > > > |                                         |rproc_stop()
-> > > > > > |rproc_crash_handler_work()               |rproc->state = RPROC_OFFLINE;
-> > > > > > |                                         |mutex_unlock(&rproc->lock);
-> > > > > > |mutex_lock(&rproc->lock);                |
-> > > > > > |if (rproc->state == RPROC_OFFLINE)       |
-> > > > > > |return // pm_relax() is not called       |rproc_boot
-> > > > > > |mutex_unlock(&rproc->lock);              |
-> > > > > > |                                         |mutex_lock(&rproc->lock);
-> > > > > > |                                         |rproc_start()
-> > > > > > |                                         |mutex_unlock(&rproc->lock);
-> > > > > > 
-> > > > > > 
-> > > > > 
-> > > > > Agree with Mathieu, this is not so simple.
-> > > > > 
-> > > > 
-> > > > Thanks for looking into this.
-> > > > 
-> > > > > Here is my view  hoping I haven't missed a point in your discussion or
-> > > > > an other corner cases.
-> > > > > 
-> > > > > I tried to analyze the issues (in what follows, the term "condition" means
-> > > > > the "if" condition in which Aiqun proposes to add the fix) :
-> > > > > 
-> > > > > I can see 4 use cases with race condition
-> > > > > 
-> > > > > 1) crash report while already one is treated (rproc_boot_recovery called)
-> > > > >        => not a real use case as if the remote processor is crashed we
-> > > > >                 should not have a second crash report
-> > > > > 
-> > > > 
-> > > > That part is of great concern to me.  *Theoretically* we should not
-> > > > get a new crash report while one has already been dispatched but the
-> > > > current code accounts for this scenario and as such the possibility
-> > > > can't be dismissed.  Therefore we need to expect rproc_report_crash()
-> > > > to be called multiple times before a single instance of
-> > > > rproc_boot_recovery() is scheduled.
-> > > 
-> > > 
-> > > > 
-> > > > > 2) rproc_stop executed between the queuing of the crash work and the call of
-> > > > >     rproc_crash_handler_work
-> > > > >      => rproc->state = RPROC_OFFLINE
-> > > > >      => we enter in the "condition" and the pm_relax has to be called
-> > > > >      => This commit fix should solve this use case
-> > > > > 
-> > > > > 3) rproc_detach executed between the queue of the crash work and the call of
-> > > > >     rproc_crash_handler_work
-> > > > >      => rproc->state = RPROC_DETACHED;
-> > > > >      => we don't go in "the condition" and issue because the recovery reattach
-> > > > >         to the remote processor
-> > > > >      => but pm_relax is called
-> > > > >      => probably need an extra fix to avoid to re-attach
-> > > > > 
-> > > > > 4) crash report while already one is treated (rproc_attach_recovery called)
-> > > > >      this one corresponds to an auto reboot of the remote processor, with a
-> > > > >      new crash
-> > > > >      => rproc->state = RPROC_CRASHED or rproc->state = RPROC_DETACHED;
-> > > > >      4)a) rproc->state = RPROC_CRASHED if rproc->recovery_disabled = true
-> > > > >           => should call pm_relax if rproc->recovery_disabled = true
-> > > > >           => commit does not work for this use case
-> > > > > 
-> > > > >      4)b) rproc->state = RPROC_DETACHED if recovery fails
-> > > > >          => error case with an unstable state
-> > > > >          => how to differentiate it from the use case 3) ?
-> > > > >          => introduce a RPROC_RECOVERY_FAIL state?
-> > > > > 
-> > > > 
-> > > > The case where a recovery fails needs to be considered and is the
-> > > > reason the original patch doesn't work.  Right now in
-> > > > rproc_crash_handler_work(), it is not possible to differentiate
-> > > > between a legitimate shutdown request (scenario #2 above) and a
-> > > > recovery that went wrong.  I think introducing RPROC_RECOVERY_FAIL
-> > > > would greatly simplify things.
-> > > > 
-> > > > My initial evaluation had not considered the attach/detach scenarios -
-> > > > thanks for adding that in the mix.
-> > > > 
-> > > > Aiqun, please send a new patchset that adds a new remote processor
-> > > > state, i.e RPROC_RECOVERY_FAIL.  There should also be another patch in
-> > > > that set that takes attach/detach scenarios into account.  The code
-> > > > between the v6.0 and v6.1 cycle has changed a lot in that area so make
-> > > > sure to properly rebase.
-> > > > 
-> > > I will try.
-> > > 
-> > > > > 
-> > > > > Then pm_stay_awake is called when the crash work is queued.
-> > > > > It seems to me coherent to call the pm_relax in the work handler.
-> > > > > 
-> > > > > 
-> > > > > 
-> > > > > Here is a quick and dirty patch (not tested) that should take into account the
-> > > > > main use cases ( except 1) and 4)b) )
-> > > > > 
-> > > > > @@ -2009,8 +2009,18 @@ static void rproc_crash_handler_work(struct work_struct *work)
-> > > > > 
-> > > > >           mutex_lock(&rproc->lock);
-> > > > > 
-> > > > > -       if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
-> > > > > +       if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE ||
-> > > > > +           rproc->state == RPROC_DETACHED) {
-> > > > >                   /* handle only the first crash detected */
-> > > > > +
-> > > > > +               /*
-> > > > > +                * call pm-relax in following use cases:
-> > > > > +                * - the remote processor has been stopped by the user
-> > > > > +                * - the remote processor is detached
-> > > > > +                + - the remote proc has an autonomous reset but recovery_disabled is true.
-> > > > > +                */
-> > > > > +               if(rproc->state != RPROC_CRASHED || rproc->recovery_disabled)
-> > > > > +                       pm_relax(rproc->dev.parent);
-> > > > >                   mutex_unlock(&rproc->lock);
-> > > > >                   return;
-> > > > >           }
-> > > > > 
-> > > > > Regards,
-> > > > > Arnaud
-> > > > > 
-> > > > > > > > 
-> > > > > > > > > > 
-> > > > > > > > > > 
-> > > > > > > > > > > > Thanks,
-> > > > > > > > > > > > Mathieu
-> > > > > > > > > > > > 
-> > > > > > > > > > > > 
-> > > > > > > > > > > > > When the state is in RPROC_OFFLINE it means separate request
-> > > > > > > > > > > > > of rproc_stop was done and no need to hold the wakeup source
-> > > > > > > > > > > > > in crash handler to recover any more.
-> > > > > > > > > > > > > 
-> > > > > > > > > > > > > Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
-> > > > > > > > > > > > > ---
-> > > > > > > > > > > > >       drivers/remoteproc/remoteproc_core.c | 11 +++++++++++
-> > > > > > > > > > > > >       1 file changed, 11 insertions(+)
-> > > > > > > > > > > > > 
-> > > > > > > > > > > > > diff --git a/drivers/remoteproc/remoteproc_core.c
-> > > > > > > > > > > > > b/drivers/remoteproc/remoteproc_core.c
-> > > > > > > > > > > > > index e5279ed9a8d7..6bc7b8b7d01e 100644
-> > > > > > > > > > > > > --- a/drivers/remoteproc/remoteproc_core.c
-> > > > > > > > > > > > > +++ b/drivers/remoteproc/remoteproc_core.c
-> > > > > > > > > > > > > @@ -1956,6 +1956,17 @@ static void rproc_crash_handler_work(struct
-> > > > > > > > > > > > > work_struct *work)
-> > > > > > > > > > > > >              if (rproc->state == RPROC_CRASHED || rproc->state ==
-> > > > > > > > > > > > > RPROC_OFFLINE) {
-> > > > > > > > > > > > >                      /* handle only the first crash detected */
-> > > > > > > > > > > > >                      mutex_unlock(&rproc->lock);
-> > > > > > > > > > > > > +         /*
-> > > > > > > > > > > > > +          * RPROC_OFFLINE state indicate there is no recovery process
-> > > > > > > > > > > > > +          * is in progress and no chance to have pm_relax in place.
-> > > > > > > > > > > > > +          * Because when recovering from crash, rproc->lock is held and
-> > > > > > > > > > > > > +          * state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
-> > > > > > > > > > > > > +          * and then unlock rproc->lock.
-> > > > > > > > > > > > > +          * RPROC_OFFLINE is only an intermediate state in recovery
-> > > > > > > > > > > > > +          * process.
-> > > > > > > > > > > > > +          */
-> > > > > > > > > > > > > +         if (rproc->state == RPROC_OFFLINE)
-> > > > > > > > > > > > > +                 pm_relax(rproc->dev.parent);
-> > > > > > > > > > > > >                      return;
-> > > > > > > > > > > > >              }
-> > > > > > > > > > > > > --
-> > > > > > > > > > > > > 2.7.4
-> > > > > > > > > > > > > 
-> > > > > > > > > > > 
-> > > > > > > > > > > 
-> > > > > > > > > > > --
-> > > > > > > > > > > Thx and BRs,
-> > > > > > > > > > > Aiqun(Maria) Yu
-> > > > > > > > 
-> > > > > > > > 
-> > > > > > > > --
-> > > > > > > > Thx and BRs,
-> > > > > > > > Aiqun(Maria) Yu
-> > > > > > 
-> > > > > > 
-> > > 
-> > > 
-> > > -- 
-> > > Thx and BRs,
-> > > Aiqun(Maria) Yu
-> 
-> 
-> -- 
-> Thx and BRs,
-> Aiqun(Maria) Yu
