@@ -2,103 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C649619DC4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 17:52:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE944619E13
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 18:06:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231336AbiKDQwA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 12:52:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40982 "EHLO
+        id S230070AbiKDRF7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 13:05:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232005AbiKDQvk (ORCPT
+        with ESMTP id S229699AbiKDRF6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 12:51:40 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECB0240471
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 09:49:47 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id k26so3425347qkg.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 09:49:47 -0700 (PDT)
+        Fri, 4 Nov 2022 13:05:58 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 848E131FA0
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 10:05:57 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id k2so3439709qkk.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 10:05:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=szOAhCODiz2psvbLaxB05H0+fft3Kwz0ZU1zhJdCDdQ=;
-        b=ttyl45T4rcwvy19XAH/tMzLVbnxQ07TsEg2etISoj+uvocLgeye+GCly2rxOdjFzPZ
-         NHfeIxWgFrcvmeGvFTznOkg8BYvCrL8m3eKROcxfmlJyKd61tyCL6uKFier8UR+21fpW
-         jIeU7QkwN3lFMm6zxcKwHZ3EQOO0/vFs/QJuLlf5L0950ssC+XJpfGmR8hCRTG//Psfs
-         xPg2swVaVcknk28KhPsE+6UAh5M7QFWJRkQaNkjvsFYeQ2EehLw7kcPEXbfWRz1igf5A
-         efsG/HBNI+Nzc2icw/RqwtmmF0JIneaiVbVUEGSWxrYXKl4oJCPDPsOprSKoL+UQ2jut
-         9Zrg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=QmgwhFKSfmRVfZGc4RFN5XxR8b40r2de6Oo0rq1T4LM=;
+        b=JbUTll5MUjsFEpb6RFMbBc3v4wZC7nXCGMHb5OK0Dj1brJXpSu1B6bkm7Y7U9ncuKG
+         iqnkdFnjDpJ/4iU0uVw5784Yk5pIFbYFFk7YLX74gaga3r1+BZWyM8k/tte7jaoZfLp+
+         SlEYGRI1opxkZ1YRf0Y4i8oWvqEnxRFm1RUa5eAOVfW4YOseCzkAaRrueQgSzuEEILvk
+         i9eEPWx2w/roHu+WfzQFQEo2ebRYbXiUsIeEZxCb/+ZMK51rTc/95nl1+OfG4qFyIvkk
+         nOUuPaSW/ZFDusLt/V5JBCTDb231pwqVnE35hOL+wY7KG8B6OE9IbAc/plX1LmlgWrEp
+         VTzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=szOAhCODiz2psvbLaxB05H0+fft3Kwz0ZU1zhJdCDdQ=;
-        b=zl/sS0vtmYtJLXq5c4FUT6HmxjjtDFVfd+EgS6Sn9iF85xe9wm7Ktug55prDpZn8mL
-         n56mI4AAYGLKS0CH4IDGdMeUOfc2/WJ3pQBVNaIGbA0lHJBqgVCtMy7pRKT+vMqDNQtx
-         ESq2YG6prk+mkcRIC0wkj3RIAz6HYpHc8N4AySniFPCjxJlncwo5zzJFJzQeCdYX+JuJ
-         lAhlpmlBL9UTsEhNRgM03Sc9jI91SiKJ2KrhrCcq5BXeL6c6BwhCyv8iUbjOH+MPIgHL
-         /EOf7hidaR1v76fHtyk/V476ClDnSjeBJ8xhajJJho0zjKxaY70TVE6fVxl55JO1UC5A
-         n7Fw==
-X-Gm-Message-State: ACrzQf3j4NZv1YOjrVb2khw8Pk72EszPvsjMxvOJXJ08csN//gp0gaTa
-        F38iiLs2tiT7LFATyMzGfLc+mg==
-X-Google-Smtp-Source: AMsMyM5qHrayLZ4x1Xy8q+I1McvLmvl9QsUflOS8FBeq1znjLnFdKgBaqb3J/5HMhiVDBhLQezmtrQ==
-X-Received: by 2002:a05:620a:2909:b0:6ee:6c83:9769 with SMTP id m9-20020a05620a290900b006ee6c839769mr27246269qkp.732.1667580587144;
-        Fri, 04 Nov 2022 09:49:47 -0700 (PDT)
-Received: from ?IPV6:2601:586:5000:570:aad6:acd8:4ed9:299b? ([2601:586:5000:570:aad6:acd8:4ed9:299b])
-        by smtp.gmail.com with ESMTPSA id bp33-20020a05620a45a100b006ee7923c187sm3220489qkb.42.2022.11.04.09.49.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Nov 2022 09:49:46 -0700 (PDT)
-Message-ID: <f1273127-0349-9978-b8de-94760684dc1d@linaro.org>
-Date:   Fri, 4 Nov 2022 12:49:45 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: qcs404: align TLMM pin
- configuration with DT schema
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QmgwhFKSfmRVfZGc4RFN5XxR8b40r2de6Oo0rq1T4LM=;
+        b=E8lNaoxq1ucu5NfmvwfII6u4b3WEeeaOFnYi45Rrau/5kQvJ44eOnC9aPH6CrhCVSS
+         l9xVsRII4R4xKK0aCCNdyMqR3Fu1H+1kd0ZPobvzvX9aftpRnfU4Kw/oldx716UIIsJL
+         abP4/SX8Clbc2p3abv3YChibwJ4eWkBOPCzCm+CmM7EXQAEpbnhXg809PVqKvaquL2Tv
+         +xT0EvFvLhdNrHRtWutjoOOHgFIGvQmuWgCVjcnap1JU1QHz7nDcJs3Nu4Or/tIBT5Bh
+         txtMSopbFwJBqrCJocSPEpTsNkV6U2OGWL4e/GNm8Kbb6LXhEfYQ4dajy6ZUZsOIpZbh
+         sU6Q==
+X-Gm-Message-State: ACrzQf2iy+czIM0Yyc/BFKG3PDFIBSWiDGKZDkRy8SMk/4BYwLIsZ4a7
+        st74jOtirTqyWaSIPpIFRSfAGA==
+X-Google-Smtp-Source: AMsMyM6iuA5yKil9gA8TtmEMRoCASMZ22sLHJHjAsR2lUWcHqXr3ZMn45PnxakMpdKdj3KTXVDfCSQ==
+X-Received: by 2002:a37:2d84:0:b0:6fa:1747:5369 with SMTP id t126-20020a372d84000000b006fa17475369mr25414271qkh.693.1667581556663;
+        Fri, 04 Nov 2022 10:05:56 -0700 (PDT)
+Received: from krzk-bin.. ([2601:586:5000:570:aad6:acd8:4ed9:299b])
+        by smtp.gmail.com with ESMTPSA id c11-20020ac8054b000000b003a527d29a41sm2667370qth.75.2022.11.04.10.05.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Nov 2022 10:05:55 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221104161131.57719-1-krzysztof.kozlowski@linaro.org>
- <b9f217bf-f0cc-675e-bf76-399a63b10309@somainline.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <b9f217bf-f0cc-675e-bf76-399a63b10309@somainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] dt-bindings: clock: qcom,sdm845-lpasscc: convert to dtschema
+Date:   Fri,  4 Nov 2022 13:05:52 -0400
+Message-Id: <20221104170552.72242-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/11/2022 12:34, Konrad Dybcio wrote:
-> 
-> 
-> On 04/11/2022 17:11, Krzysztof Kozlowski wrote:
->> DT schema expects TLMM pin configuration nodes to be named with
->> '-state' suffix and their optional children with '-pins' suffix.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> 
-> Konrad
+Convert Qualcomm SDM845 LPASS clock controller bindings to DT schema.
 
-Thanks Konrad. Could you also take a look at:
-https://lore.kernel.org/linux-arm-msm/20221024002356.28261-2-krzysztof.kozlowski@linaro.org/
-?
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../bindings/clock/qcom,lpasscc.txt           | 26 ----------
+ .../bindings/clock/qcom,sdm845-lpasscc.yaml   | 47 +++++++++++++++++++
+ 2 files changed, 47 insertions(+), 26 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/clock/qcom,lpasscc.txt
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sdm845-lpasscc.yaml
 
-Best regards,
-Krzysztof
+diff --git a/Documentation/devicetree/bindings/clock/qcom,lpasscc.txt b/Documentation/devicetree/bindings/clock/qcom,lpasscc.txt
+deleted file mode 100644
+index b9e9787045b9..000000000000
+--- a/Documentation/devicetree/bindings/clock/qcom,lpasscc.txt
++++ /dev/null
+@@ -1,26 +0,0 @@
+-Qualcomm LPASS Clock Controller Binding
+------------------------------------------------
+-
+-Required properties :
+-- compatible		: shall contain "qcom,sdm845-lpasscc"
+-- #clock-cells		: from common clock binding, shall contain 1.
+-- reg			: shall contain base register address and size,
+-			  in the order
+-			Index-0 maps to LPASS_CC register region
+-			Index-1 maps to LPASS_QDSP6SS register region
+-
+-Optional properties :
+-- reg-names	: register names of LPASS domain
+-		 "cc", "qdsp6ss".
+-
+-Example:
+-
+-The below node has to be defined in the cases where the LPASS peripheral loader
+-would bring the subsystem out of reset.
+-
+-	lpasscc: clock-controller@17014000 {
+-		compatible = "qcom,sdm845-lpasscc";
+-		reg = <0x17014000 0x1f004>, <0x17300000 0x200>;
+-		reg-names = "cc", "qdsp6ss";
+-		#clock-cells = <1>;
+-	};
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sdm845-lpasscc.yaml b/Documentation/devicetree/bindings/clock/qcom,sdm845-lpasscc.yaml
+new file mode 100644
+index 000000000000..10aa9b6e8d89
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,sdm845-lpasscc.yaml
+@@ -0,0 +1,47 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,sdm845-lpasscc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm SDM845 LPASS Clock Controller
++
++maintainers:
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++
++description: |
++  Qualcomm SDM845 LPASS (Low Power Audio SubSystem) Clock Controller.
++
++  See also:: include/dt-bindings/clock/qcom,lpass-sdm845.h
++
++properties:
++  compatible:
++    const: qcom,sdm845-lpasscc
++
++  '#clock-cells':
++    const: 1
++
++  reg:
++    maxItems: 2
++
++  reg-names:
++    items:
++      - const: cc
++      - const: qdsp6ss
++
++required:
++  - compatible
++  - '#clock-cells'
++  - reg
++  - reg-names
++
++additionalProperties: false
++
++examples:
++  - |
++    clock-controller@17014000 {
++        compatible = "qcom,sdm845-lpasscc";
++        reg = <0x17014000 0x1f004>, <0x17300000 0x200>;
++        reg-names = "cc", "qdsp6ss";
++        #clock-cells = <1>;
++    };
+-- 
+2.34.1
 
