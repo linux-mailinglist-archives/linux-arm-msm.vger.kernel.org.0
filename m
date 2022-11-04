@@ -2,65 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7216F619621
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 13:21:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D21C61963C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 13:29:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231849AbiKDMVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 08:21:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47628 "EHLO
+        id S231907AbiKDM35 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 08:29:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231864AbiKDMVe (ORCPT
+        with ESMTP id S231909AbiKDM3z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 08:21:34 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AB672D1F6;
-        Fri,  4 Nov 2022 05:21:33 -0700 (PDT)
+        Fri, 4 Nov 2022 08:29:55 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78E3F29362;
+        Fri,  4 Nov 2022 05:29:51 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 30C7F620BC;
-        Fri,  4 Nov 2022 12:21:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95BE2C433D7;
-        Fri,  4 Nov 2022 12:21:32 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1ED286216F;
+        Fri,  4 Nov 2022 12:29:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E674C433C1;
+        Fri,  4 Nov 2022 12:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667564492;
-        bh=ZXLJVpZXT+rWJ0ivseoUk9nwVTF3CBUlHi/ObsPKqIE=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=OBM77ubcRT9a5w/v78iozP0L2hG7m4X1G75HVaBibLtU25YftqEBE5Ndooewxzy3c
-         ZeXDb/WzrIW3iDDeLe4Em83u0w93DhzPQmMtj9RmUOPO3XwS5XJdmqw0PsmMQsVLCx
-         9ol/afe0iVZEJMgO1GrPZGrYleovk/ZymFAuCfLC8DSoEr7FUooH063SvS4K+7chmp
-         /3aBEwPTJ8JhMfRQcdmiwIdKPUIxu+WlNG4qvKCO9Dk5KZOq+fEq/zoRvG4nq3T8Ca
-         GsbV7XySi5YaUfX3FD4wdayFLaLd9CeQpzjgb1XkzZhgmaBjNT3riekPEAydEpBMDw
-         xKBYHv0MpVYIQ==
-Received: by mail-lf1-f50.google.com with SMTP id f37so7172613lfv.8;
-        Fri, 04 Nov 2022 05:21:32 -0700 (PDT)
-X-Gm-Message-State: ACrzQf1lhExyGHn0PmcMnhRMiNOl8i1cUUvnzzkT09ocvkoksvIYXWy6
-        KjlhKxZ+f2edQ8H3VNW9tJwvhyog5dIKJDxjTA==
-X-Google-Smtp-Source: AMsMyM5kTNZDfNz1NMagVWEucdPQHrDVvMm1GNlzFfBYpRDW2nbr0fXNbF2H0V1PLZq0+l5VjjjYUpUH27KcZlOR9e0=
-X-Received: by 2002:a19:5048:0:b0:4b1:3856:e422 with SMTP id
- z8-20020a195048000000b004b13856e422mr5516827lfj.368.1667564490584; Fri, 04
- Nov 2022 05:21:30 -0700 (PDT)
-MIME-Version: 1.0
-References: <20221024164225.3236654-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221024164225.3236654-1-dmitry.baryshkov@linaro.org>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Fri, 4 Nov 2022 07:21:21 -0500
-X-Gmail-Original-Message-ID: <CAL_Jsq+_p36jCUTE+9V+eAyxF9ETcgk4gBDN7-+mgJVd7-ZYzg@mail.gmail.com>
-Message-ID: <CAL_Jsq+_p36jCUTE+9V+eAyxF9ETcgk4gBDN7-+mgJVd7-ZYzg@mail.gmail.com>
-Subject: Re: [PATCH v9 00/12] dt-bindings: display/msm: rework MDSS and DPU bindings
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        s=k20201202; t=1667564990;
+        bh=dRXXq1WtmtcofcC4LTzQfmWTAewk8R7MhRb3YRAQETg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=JAhkp7ssChjDv9VUrE/ZQH8dUrKIDApMAcZT/aWq2t+eim5M8GnbEWnm46NqmYv76
+         r2oXS7iOympLpU2fvUAR0kE0DwPsuDjQhmT2aDvSoyiDHqHQBy+kt3mlpB457bZOE+
+         glSbMF6AXqU4h1B+yqOuR7dn+llKG3ag5kMyFLGIqKDW31u5gTyKisBFoUOGCofhQY
+         BEIOHeelIe/w0cPmDgZ+Y+SHt3cLx8aIpeJChPN/NOp7k3IspH1cLh6HBY2Zm/XJOT
+         NVDc9H3PWmoQuXY67a+73K0TdV92emufEINYsI9Q7Vuj7pxpHZyiArpNuLoNLZWslu
+         NYaXfoEn3B9EA==
+Date:   Fri, 4 Nov 2022 17:59:46 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Sireesh Kodali <sireeshkodali1@gmail.com>
+Cc:     andersson@kernel.org, agross@kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v2 1/1] dmaengine: qcom: bam_dma: Add support for metadata
+Message-ID: <Y2UFuvg5sq9tLf83@matsya>
+References: <20221027052007.47403-1-sireeshkodali1@gmail.com>
+ <20221027052007.47403-2-sireeshkodali1@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221027052007.47403-2-sireeshkodali1@gmail.com>
 X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -70,126 +58,150 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 24, 2022 at 11:42 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> Create separate YAML schema for MDSS devicesd$ (both for MDP5 and DPU
-> devices). Cleanup DPU schema files, so that they do not contain schema
-> for both MDSS and DPU nodes. Apply misc small fixes to the DPU schema
-> afterwards. Add schema for the MDSS and DPU on sm8250 platform.
->
-> Soft dependency on [1] to define qcom,dsi-phy-14nm-2290 binding used in
-> examples
->
-> [1] https://lore.kernel.org/linux-arm-msm/20220924121900.222711-1-dmitry.baryshkov@linaro.org/
->
-> Changes since v8:
->  - Dropped DSI/DSI-PHY examples from the first patch. Proper example
->    generate a pile of warnings because of DSI schema deficiencies. I'll
->    add these examples back, once DSI schema is fixed.
->
-> Changes since v7:
->  - Expanded examples to include MDSS child nodes (Krzysztof)
->
-> Changes since v6:
->  - Removed extra newlines (Krzysztof)
->  - Added $ref to dpu-common.yaml#/ports/port@foo to enforce schema
->    for the port nodes (Rob)
->  - Removed unused allOf's (Rob)
->  - Fixed repeated interconnects descriptions (Rob)
->  - Fixed dpu-common.yaml and mdss-common.yaml descriptions (Rob)
->  - Fixed intentation of examples (Krzysztof)
->  - Renamed MDSS and DPU schema to follow compat names (Rob)
->
-> Changes since v5:
->  - Dropped the core clock from mdss.yaml. It will be handled in a
->    separate patchset together with adding the clock itself.
->  - Fixed a typo in two commit subjects (mdm -> msm).
->
-> Changes since v4:
->  - Created separate mdss-common.yaml
->  - Rather than squashing everything into mdss.yaml, create individual
->    schema files for MDSS devices.
->
-> Changes since v3:
->  - Changed mdss->(dpu, dsi, etc.) relationship into the tight binding
->    depending on the mdss compatible string.
->  - Added sm8250 dpu schema and added qcom,sm8250-mdss to mdss.yaml
->
-> Changes since v2:
->  - Added a patch to allow opp-table under the dpu* nodes.
->  - Removed the c&p issue which allowed the @0 nodes under the MDSS
->    device node.
->
-> Changes since v1:
->  - Renamed DPU device nodes from mdp@ to display-controller@
->  - Described removal of mistakenly mentioned "lut" clock
->  - Switched mdss.yaml to use $ref instead of fixing compatible strings
->  - Dropped mdp-opp-table description (renamed by Krzysztof in his
->    patchset)
->  - Reworked DPU's ports definitions. Dropped description of individual
->    ports, left only /ports $ref and description in dpu-common.yaml.
->
-> Dmitry Baryshkov (12):
->   dt-bindings: display/msm: split qcom,mdss bindings
->   dt-bindings: display/msm: add gcc-bus clock to dpu-smd845
->   dt-bindings: display/msm: add interconnects property to
->     qcom,mdss-smd845
->   dt-bindings: display/msm: move common DPU properties to
->     dpu-common.yaml
->   dt-bindings: display/msm: move common MDSS properties to
->     mdss-common.yaml
->   dt-bindings: display/msm: split dpu-sc7180 into DPU and MDSS parts
->   dt-bindings: display/msm: split dpu-sc7280 into DPU and MDSS parts
->   dt-bindings: display/msm: split dpu-sdm845 into DPU and MDSS parts
->   dt-bindings: display/msm: split dpu-msm8998 into DPU and MDSS parts
->   dt-bindings: display/msm: split dpu-qcm2290 into DPU and MDSS parts
->   dt-bindings: display/msm: add missing device nodes to mdss-* schemas
->   dt-bindings: display/msm: add support for the display on SM8250
+On 27-10-22, 10:50, Sireesh Kodali wrote:
+> From: Vladimir Lypak <vladimir.lypak@gmail.com>
+> 
+> Add client metadata support for receiving information about transfers.
+> Only type of metadata implemented is amount of transferred bytes. This
+> can be used to know how much data is actually received if information
+> transferred doesn't contain header with size or is aggregated.
+> 
+> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+> ---
+>  drivers/dma/qcom/bam_dma.c       | 57 ++++++++++++++++++++++++++++++++
+>  include/linux/dma/qcom_bam_dma.h |  8 +++++
+>  2 files changed, 65 insertions(+)
+> 
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index 3135a3e4a167..264a9a2e199f 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -30,6 +30,7 @@
+>  #include <linux/module.h>
+>  #include <linux/interrupt.h>
+>  #include <linux/dma-mapping.h>
+> +#include <linux/dma/qcom_bam_dma.h>
+>  #include <linux/scatterlist.h>
+>  #include <linux/device.h>
+>  #include <linux/platform_device.h>
+> @@ -70,6 +71,7 @@ struct bam_async_desc {
+>  	u16 flags;
+>  
+>  	struct bam_desc_hw *curr_desc;
+> +	struct bam_dma_metadata *metadata;
+>  
+>  	/* list node for the desc in the bam_chan list of descriptors */
+>  	struct list_head desc_node;
+> @@ -418,6 +420,52 @@ static inline void __iomem *bam_addr(struct bam_device *bdev, u32 pipe,
+>  		r.ee_mult * bdev->ee;
+>  }
+>  
+> +/**
+> + * bam_update_metadata - update metadata buffer
+> + * @bchan: BAM channel to read metadata from
+> + * @async_desc: BAM async descriptior
+> + *
+> + * Updates metadata buffer (transfer size) based on values
+> + * read from FIFO descriptors at bchan->head
+> + */
+> +
+> +static inline void bam_update_metadata(struct bam_chan *bchan,
+> +				       struct bam_async_desc *async_desc)
+> +{
+> +	unsigned int i, e, len = 0;
+> +	struct bam_desc_hw *fifo;
+> +
+> +	if (!async_desc->metadata)
+> +		return;
+> +
+> +	fifo = PTR_ALIGN(bchan->fifo_virt, sizeof(struct bam_desc_hw));
+> +	for (i = bchan->head, e = i + async_desc->xfer_len; i < e; i++)
+> +		len += fifo[i % MAX_DESCRIPTORS].size;
+> +
+> +	async_desc->metadata->xfer_len_bytes += len;
+> +}
+> +
+> +/**
+> + * bam_attach_metadata - attach metadata buffer to the async descriptor
+> + * @desc: async descriptor
+> + * @data: buffer pointer
+> + * @len: length of passed buffer
+> + */
+> +static int bam_attach_metadata(struct dma_async_tx_descriptor *desc, void *data,
+> +			       size_t len)
+> +{
+> +	struct bam_async_desc *async_desc;
+> +
+> +	if (!data || len != sizeof(struct bam_dma_metadata))
+> +		return -EINVAL;
+> +
+> +	async_desc = container_of(desc, struct bam_async_desc, vd.tx);
+> +	async_desc->metadata = data;
+> +	async_desc->metadata->xfer_len_bytes = 0;
+> +
+> +	return 0;
+> +}
+> +
+>  /**
+>   * bam_reset() - reset and initialize BAM registers
+>   * @bdev: bam device
+> @@ -456,6 +504,10 @@ static void bam_reset(struct bam_device *bdev)
+>  	writel_relaxed(BAM_IRQ_MSK, bam_addr(bdev, 0, BAM_IRQ_SRCS_MSK_EE));
+>  }
+>  
+> +static struct dma_descriptor_metadata_ops metadata_ops = {
+> +	.attach = bam_attach_metadata,
+> +};
+> +
+>  /**
+>   * bam_reset_channel - Reset individual BAM DMA channel
+>   * @bchan: bam channel
+> @@ -714,6 +766,8 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
+>  		} while (remainder > 0);
+>  	}
+>  
+> +	async_desc->vd.tx.metadata_ops = &metadata_ops;
+> +
+>  	return vchan_tx_prep(&bchan->vc, &async_desc->vd, flags);
+>  }
+>  
+> @@ -867,6 +921,8 @@ static u32 process_channel_irqs(struct bam_device *bdev)
+>  			if (avail < async_desc->xfer_len)
+>  				break;
+>  
+> +			bam_update_metadata(bchan, async_desc);
+> +
+>  			/* manage FIFO */
+>  			bchan->head += async_desc->xfer_len;
+>  			bchan->head %= MAX_DESCRIPTORS;
+> @@ -1347,6 +1403,7 @@ static int bam_dma_probe(struct platform_device *pdev)
+>  	bdev->common.residue_granularity = DMA_RESIDUE_GRANULARITY_SEGMENT;
+>  	bdev->common.src_addr_widths = DMA_SLAVE_BUSWIDTH_4_BYTES;
+>  	bdev->common.dst_addr_widths = DMA_SLAVE_BUSWIDTH_4_BYTES;
+> +	bdev->common.desc_metadata_modes = DESC_METADATA_CLIENT;
+>  	bdev->common.device_alloc_chan_resources = bam_alloc_chan;
+>  	bdev->common.device_free_chan_resources = bam_free_chan;
+>  	bdev->common.device_prep_slave_sg = bam_prep_slave_sg;
+> diff --git a/include/linux/dma/qcom_bam_dma.h b/include/linux/dma/qcom_bam_dma.h
+> index 68fc0e643b1b..8168b0573f45 100644
+> --- a/include/linux/dma/qcom_bam_dma.h
+> +++ b/include/linux/dma/qcom_bam_dma.h
+> @@ -8,6 +8,14 @@
+>  
+>  #include <asm/byteorder.h>
+>  
+> +/*
+> + * This data type is used as client metadata buffer in bam driver.
+> + */
+> +struct bam_dma_metadata {
+> +	/* Actual number of bytes transferred by hardware */
+> +	size_t xfer_len_bytes;
 
-This is now warning in linux-next:
+Pls implement dmaengine_result() and report that with proper residue
+set...
 
-/builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/qcom,sc7180-mdss.example.dtb:
-dsi@ae94000: 'opp-table' does not match any of the regexes:
-'pinctrl-[0-9]+'
-        From schema:
-/builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-/builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/qcom,sm8250-mdss.example.dtb:
-dsi@ae94000: 'opp-table' does not match any of the regexes:
-'pinctrl-[0-9]+'
-        From schema:
-/builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-/builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.example.dtb:
-dsi@5e94000: compatible: 'oneOf' conditional failed, one must be
-fixed:
-        'qcom,dsi-ctrl-6g-qcm2290' does not match
-'^qcom,(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+-.*$'
-        'qcom,dsi-ctrl-6g-qcm2290' does not match
-'^qcom,(sa|sc)8[0-9]+[a-z][a-z]?-.*$'
-        'qcom,dsi-ctrl-6g-qcm2290' does not match
-'^qcom,[ak]pss-wdt-(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-        'qcom,dsi-ctrl-6g-qcm2290' does not match
-'^qcom,gcc-(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-        'qcom,dsi-ctrl-6g-qcm2290' does not match
-'^qcom,mmcc-(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-        'qcom,dsi-ctrl-6g-qcm2290' does not match
-'^qcom,pcie-(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-        'qcom,dsi-ctrl-6g-qcm2290' does not match
-'^qcom,rpm-(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-        'qcom,dsi-ctrl-6g-qcm2290' does not match
-'^qcom,scm-(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$'
-        'qcom,dsi-ctrl-6g-qcm2290' is not one of ['qcom,gpucc-sdm630',
-'qcom,gpucc-sdm660', 'qcom,lcc-apq8064', 'qcom,lcc-ipq8064',
-'qcom,lcc-mdm9615', 'qcom,lcc-msm8960', 'qcom,lpass-cpu-apq8016',
-'qcom,usb-ss-ipq4019-phy', 'qcom,usb-hs-ipq4019-phy',
-'qcom,vqmmc-ipq4019-regulator']
-        'qcom,dsi-ctrl-6g-qcm2290' is not one of ['qcom,ipq806x-gmac',
-'qcom,ipq806x-nand', 'qcom,ipq806x-sata-phy',
-'qcom,ipq806x-usb-phy-ss', 'qcom,ipq806x-usb-phy-hs']
-        From schema:
-/builds/robherring/linux-dt/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-/builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/qcom,sc7280-mdss.example.dtb:
-dsi@ae94000: 'opp-table' does not match any of the regexes:
-'pinctrl-[0-9]+'
-        From schema:
-/builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+Thanks
+
+-- 
+~Vinod
