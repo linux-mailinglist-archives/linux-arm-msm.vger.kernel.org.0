@@ -2,446 +2,385 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8126619831
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 14:35:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E220E61987E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 14:54:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231549AbiKDNfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 09:35:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34174 "EHLO
+        id S230496AbiKDNyU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 09:54:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231803AbiKDNfP (ORCPT
+        with ESMTP id S230145AbiKDNyS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 09:35:15 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 401A52E6B3;
-        Fri,  4 Nov 2022 06:35:14 -0700 (PDT)
-Received: from IcarusMOD.eternityproject.eu (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        Fri, 4 Nov 2022 09:54:18 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52B4E29B;
+        Fri,  4 Nov 2022 06:54:15 -0700 (PDT)
+Received: from [192.168.31.208] (unknown [194.29.137.22])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 6E5756602986;
-        Fri,  4 Nov 2022 13:35:12 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1667568913;
-        bh=Eb+xbMsO7KrHg8IVfxmIEWgXYchKqw4DxXi5WchT9w8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=C3nw1uupQ2nxivYub3mn8EjoiZfUHGLW77JMRJN4fN1aOs/dTrNMj4XM/CosLPT8r
-         qBvZ0mejBqmrlU8vwDJnX20ZN1uJnGTEQQ3sPASMuihLf9Y4XAz+37bf6fUJF4S4J2
-         4+DS7naub9VdqtkkkEnLOz5DIjyV6E28yElYyirnp5/1dkBc+RdmCFvSPo40t+pk4n
-         /GWWFSBv3fPwLbL3xRF8UukrFuyCUH/FyLMEnS5eR4NNYskp/RtWX7NCJ3fC0f+rbA
-         i9ZRAtJ8JVBQXOk23vlk/aNzu1GzPlUO09jIZq7xYP7xEauXmcZj1Ck1LBIxGaVztK
-         VpigjzeZpYbGA==
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-To:     agross@kernel.org
-Cc:     andersson@kernel.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        angelogioacchino.delregno@collabora.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, marijn.suijten@somainline.org,
-        kernel@collabora.com,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH 2/2] soc: qcom: Add Qualcomm Ramp Controller driver
-Date:   Fri,  4 Nov 2022 14:35:06 +0100
-Message-Id: <20221104133506.131316-3-angelogioacchino.delregno@collabora.com>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <20221104133506.131316-1-angelogioacchino.delregno@collabora.com>
-References: <20221104133506.131316-1-angelogioacchino.delregno@collabora.com>
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 91EAE3EE24;
+        Fri,  4 Nov 2022 14:54:12 +0100 (CET)
+Message-ID: <fdea9d9b-a91a-06b9-a467-315af0c0fed4@somainline.org>
+Date:   Fri, 4 Nov 2022 14:54:10 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.1
+Subject: Re: [PATCH v3 4/8] drm/msm/dsi: add support for DSI-PHY on SM8350 and
+ SM8450
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Robert Foss <robert.foss@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
+References: <20221104130324.1024242-1-dmitry.baryshkov@linaro.org>
+ <20221104130324.1024242-5-dmitry.baryshkov@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20221104130324.1024242-5-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 
-The Ramp Controller is used to program the sequence ID for pulse
-swallowing, enable sequence and linking sequence IDs for the CPU
-cores on some Qualcomm SoCs.
+On 04/11/2022 14:03, Dmitry Baryshkov wrote:
+> SM8350 and SM8450 use 5nm DSI PHYs, which share register definitions
+> with 7nm DSI PHYs. Rather than duplicating the driver, handle 5nm
+> variants inside the common 5+7nm driver.
+>
+> Co-developed-by: Robert Foss <robert.foss@linaro.org>
+> Tested-by: Vinod Koul <vkoul@kernel.org>
+> Reviewed-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/Kconfig               |   6 +-
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c     |   4 +
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.h     |   2 +
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 128 ++++++++++++++++++++--
+>   4 files changed, 127 insertions(+), 13 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+> index 3c9dfdb0b328..e7b100d97f88 100644
+> --- a/drivers/gpu/drm/msm/Kconfig
+> +++ b/drivers/gpu/drm/msm/Kconfig
+> @@ -140,12 +140,12 @@ config DRM_MSM_DSI_10NM_PHY
+>   	  Choose this option if DSI PHY on SDM845 is used on the platform.
+>   
+>   config DRM_MSM_DSI_7NM_PHY
+> -	bool "Enable DSI 7nm PHY driver in MSM DRM"
+> +	bool "Enable DSI 7nm/5nm PHY driver in MSM DRM"
+>   	depends on DRM_MSM_DSI
+>   	default y
+>   	help
+> -	  Choose this option if DSI PHY on SM8150/SM8250/SC7280 is used on
+> -	  the platform.
+> +	  Choose this option if DSI PHY on SM8150/SM8250/SM8350/SM8450/SC7280
+> +	  is used on the platform.
+>   
+>   config DRM_MSM_HDMI
+>   	bool "Enable HDMI support in MSM DRM driver"
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> index ee6051367679..0c956fdab23e 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> @@ -569,6 +569,10 @@ static const struct of_device_id dsi_phy_dt_match[] = {
+>   	  .data = &dsi_phy_7nm_8150_cfgs },
+>   	{ .compatible = "qcom,sc7280-dsi-phy-7nm",
+>   	  .data = &dsi_phy_7nm_7280_cfgs },
+> +	{ .compatible = "qcom,dsi-phy-5nm-8350",
+> +	  .data = &dsi_phy_5nm_8350_cfgs },
+> +	{ .compatible = "qcom,dsi-phy-5nm-8450",
+> +	  .data = &dsi_phy_5nm_8450_cfgs },
+>   #endif
+>   	{}
+>   };
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> index 1096afedd616..f7a907ed2b4b 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> @@ -57,6 +57,8 @@ extern const struct msm_dsi_phy_cfg dsi_phy_10nm_8998_cfgs;
+>   extern const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs;
+>   extern const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs;
+>   extern const struct msm_dsi_phy_cfg dsi_phy_7nm_7280_cfgs;
+> +extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8350_cfgs;
+> +extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8450_cfgs;
+>   
+>   struct msm_dsi_dphy_timing {
+>   	u32 clk_zero;
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> index 9e7fa7d88ead..00d92fe97bc3 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> @@ -39,8 +39,14 @@
+>   #define VCO_REF_CLK_RATE		19200000
+>   #define FRAC_BITS 18
+>   
+> +/* Hardware is pre V4.1 */
+> +#define DSI_PHY_7NM_QUIRK_PRE_V4_1	BIT(0)
+>   /* Hardware is V4.1 */
+> -#define DSI_PHY_7NM_QUIRK_V4_1		BIT(0)
+> +#define DSI_PHY_7NM_QUIRK_V4_1		BIT(1)
+> +/* Hardware is V4.2 */
+> +#define DSI_PHY_7NM_QUIRK_V4_2		BIT(2)
+> +/* Hardware is V4.3 */
+> +#define DSI_PHY_7NM_QUIRK_V4_3		BIT(3)
 
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
----
- drivers/soc/qcom/Kconfig           |   9 +
- drivers/soc/qcom/Makefile          |   1 +
- drivers/soc/qcom/ramp_controller.c | 330 +++++++++++++++++++++++++++++
- 3 files changed, 340 insertions(+)
- create mode 100644 drivers/soc/qcom/ramp_controller.c
+Quirk is quite an unfortunate name considering what we use it for.. but I
 
-diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-index 024e420f1bb7..1e681f98bad4 100644
---- a/drivers/soc/qcom/Kconfig
-+++ b/drivers/soc/qcom/Kconfig
-@@ -95,6 +95,15 @@ config QCOM_QMI_HELPERS
- 	tristate
- 	depends on NET
- 
-+config QCOM_RAMP_CTRL
-+	tristate "Qualcomm Ramp Controller driver"
-+	depends on ARCH_QCOM
-+	help
-+	  The Ramp Controller is used to program the sequence ID for pulse
-+	  swallowing, enable sequence and linking sequence IDs for the
-+	  CPU cores on some Qualcomm SoCs.
-+	  Say y here to enable support for the ramp controller.
-+
- config QCOM_RMTFS_MEM
- 	tristate "Qualcomm Remote Filesystem memory driver"
- 	depends on ARCH_QCOM
-diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-index d66604aff2b0..6e02333c4080 100644
---- a/drivers/soc/qcom/Makefile
-+++ b/drivers/soc/qcom/Makefile
-@@ -10,6 +10,7 @@ obj-$(CONFIG_QCOM_OCMEM)	+= ocmem.o
- obj-$(CONFIG_QCOM_PDR_HELPERS)	+= pdr_interface.o
- obj-$(CONFIG_QCOM_QMI_HELPERS)	+= qmi_helpers.o
- qmi_helpers-y	+= qmi_encdec.o qmi_interface.o
-+obj-$(CONFIG_QCOM_RAMP_CTRL)	+= ramp_controller.o
- obj-$(CONFIG_QCOM_RMTFS_MEM)	+= rmtfs_mem.o
- obj-$(CONFIG_QCOM_RPMH)		+= qcom_rpmh.o
- qcom_rpmh-y			+= rpmh-rsc.o
-diff --git a/drivers/soc/qcom/ramp_controller.c b/drivers/soc/qcom/ramp_controller.c
-new file mode 100644
-index 000000000000..e28679b545d1
---- /dev/null
-+++ b/drivers/soc/qcom/ramp_controller.c
-@@ -0,0 +1,330 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Qualcomm Ramp Controller driver
-+ * Copyright (c) 2022, AngeloGioacchino Del Regno
-+ *                     <angelogioacchino.delregno@collabora.com>
-+ */
-+
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/of_platform.h>
-+#include <linux/platform_device.h>
-+#include <linux/regmap.h>
-+#include <linux/types.h>
-+
-+#define RC_UPDATE_EN		BIT(0)
-+#define RC_ROOT_EN		BIT(1)
-+
-+#define RC_REG_CFG_UPDATE	0x60
-+ #define RC_CFG_UPDATE_EN	BIT(8)
-+ #define RC_CFG_ACK		GENMASK(31, 16)
-+
-+#define RC_DCVS_CFG_SID		2
-+#define RC_LINK_SID		3
-+#define RC_LMH_SID		6
-+#define RC_DFS_SID		14
-+
-+#define RC_UPDATE_TIMEOUT_US	500
-+
-+/**
-+ * struct qcom_ramp_controller_desc - SoC specific parameters
-+ * @cfg_dfs_sid:      Dynamic Frequency Scaling SID configuration
-+ * @cfg_link_sid:     Link SID configuration
-+ * @cfg_lmh_sid:      Limits Management hardware SID configuration
-+ * @cfg_ramp_pre_en:  Ramp Controller pre-enable sequence
-+ * @cfg_ramp_en:      Ramp Controller enable sequence
-+ * @cfg_ramp_post_en: Ramp Controller post-enable sequence
-+ * @cfg_ramp_dis:     Ramp Controller disable sequence
-+ * @cmd_reg:          Command register offset
-+ * @num_dfs_sids:     Number of DFS SIDs (max 8)
-+ * @num_link_sids:    Number of Link SIDs (max 3)
-+ * @num_lmh_sids:     Number of LMh SIDs (max 8)
-+ */
-+struct qcom_ramp_controller_desc {
-+	struct reg_sequence *cfg_dfs_sid;
-+	struct reg_sequence *cfg_link_sid;
-+	struct reg_sequence *cfg_lmh_sid;
-+	struct reg_sequence *cfg_ramp_pre_en;
-+	struct reg_sequence *cfg_ramp_en;
-+	struct reg_sequence *cfg_ramp_post_en;
-+	struct reg_sequence *cfg_ramp_dis;
-+	u8 cmd_reg;
-+	u8 num_dfs_sids;
-+	u8 num_link_sids;
-+	u8 num_lmh_sids;
-+};
-+
-+/**
-+ * struct qcom_ramp_controller - Main driver structure
-+ * @regmap: Regmap handle
-+ * @desc:   SoC specific parameters
-+ */
-+struct qcom_ramp_controller {
-+	struct regmap *regmap;
-+	const struct qcom_ramp_controller_desc *desc;
-+};
-+
-+/**
-+ * rc_wait_for_update() - Wait for Ramp Controller root update
-+ * @qrc: Main driver structure
-+ *
-+ * Return: Zero for success or negative number for failure
-+ */
-+static int rc_wait_for_update(struct qcom_ramp_controller *qrc)
-+{
-+	const struct qcom_ramp_controller_desc *d = qrc->desc;
-+	struct regmap *r = qrc->regmap;
-+	u32 val;
-+	int ret;
-+
-+	ret = regmap_set_bits(r, d->cmd_reg, RC_ROOT_EN);
-+	if (ret)
-+		return ret;
-+
-+	return regmap_read_poll_timeout(r, d->cmd_reg, val, !(val & RC_UPDATE_EN),
-+					1, RC_UPDATE_TIMEOUT_US);
-+}
-+
-+/**
-+ * rc_set_cfg_update() - Ramp Controller configuration update
-+ * @qrc: Main driver structure
-+ * @ce: Configuration entry to update
-+ *
-+ * Return: Zero for success or negative number for failure
-+ */
-+static int rc_set_cfg_update(struct qcom_ramp_controller *qrc, u8 ce)
-+{
-+	const struct qcom_ramp_controller_desc *d = qrc->desc;
-+	struct regmap *r = qrc->regmap;
-+	u32 ack, val;
-+	int ret;
-+
-+	/* The ack bit is between bits 16-31 of RC_REG_CFG_UPDATE */
-+	ack = FIELD_PREP(RC_CFG_ACK, BIT(ce));
-+
-+	/* Write the configuration type first... */
-+	ret = regmap_set_bits(r, d->cmd_reg + RC_REG_CFG_UPDATE, ce);
-+	if (ret)
-+		return ret;
-+
-+	/* ...and after that, enable the update bit to sync the changes */
-+	ret = regmap_set_bits(r, d->cmd_reg + RC_REG_CFG_UPDATE, RC_CFG_UPDATE_EN);
-+	if (ret)
-+		return ret;
-+
-+	/* Wait for the changes to go through */
-+	ret = regmap_read_poll_timeout(r, d->cmd_reg + RC_REG_CFG_UPDATE, val,
-+				       val & ack, 1, RC_UPDATE_TIMEOUT_US);
-+	if (ret)
-+		return ret;
-+
-+	/*
-+	 * Configuration update success! The CFG_UPDATE register will not be
-+	 * cleared automatically upon applying the configuration, so we have
-+	 * to do that manually in order to leave the ramp controller in a
-+	 * predictable and clean state.
-+	 */
-+	ret = regmap_write(r, d->cmd_reg + RC_REG_CFG_UPDATE, 0);
-+	if (ret)
-+		return ret;
-+
-+	/* Wait for the update bit cleared ack */
-+	return regmap_read_poll_timeout(r, d->cmd_reg + RC_REG_CFG_UPDATE,
-+					val, !(val & RC_CFG_ACK), 1,
-+					RC_UPDATE_TIMEOUT_US);
-+}
-+
-+/**
-+ * rc_write_cfg - Send configuration sequence
-+ * @qrc: Main driver structure
-+ * @seq: Register sequence to send before asking for update
-+ * @ce: Configuration SID
-+ * @nsids: Total number of SIDs
-+ *
-+ * Returns: Zero for success or negative number for error
-+ */
-+static int rc_write_cfg(struct qcom_ramp_controller *qrc, struct reg_sequence *seq,
-+			u16 ce, u8 nsids)
-+{
-+	int ret;
-+	u8 i;
-+
-+	/* Check if, and wait until the ramp controller is ready */
-+	ret = rc_wait_for_update(qrc);
-+	if (ret)
-+		return ret;
-+
-+	/* Write the sequence */
-+	ret = regmap_multi_reg_write(qrc->regmap, seq, nsids);
-+	if (ret)
-+		return ret;
-+
-+	/* Pull the trigger: do config update starting from the last sid */
-+	for (i = 0; i < nsids; i++) {
-+		ret = rc_set_cfg_update(qrc, (u8)ce - i);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+/**
-+ * rc_ramp_ctrl_enable() - Enable Ramp up/down Control
-+ * @qrc: Main driver structure
-+ *
-+ * Return: Zero for success or negative number for error
-+ */
-+static int rc_ramp_ctrl_enable(struct qcom_ramp_controller *qrc)
-+{
-+	const struct qcom_ramp_controller_desc *d = qrc->desc;
-+	int ret;
-+
-+	ret = rc_write_cfg(qrc, d->cfg_ramp_pre_en, RC_DCVS_CFG_SID, 1);
-+	if (ret)
-+		return ret;
-+
-+	ret = rc_write_cfg(qrc, d->cfg_ramp_en, RC_DCVS_CFG_SID, 1);
-+	if (ret)
-+		return ret;
-+
-+	return rc_write_cfg(qrc, d->cfg_ramp_post_en, RC_DCVS_CFG_SID, 1);
-+}
-+
-+/**
-+ * qcom_ramp_controller_start() - Initialize and start the ramp controller
-+ * @qrc: Main driver structure
-+ *
-+ * The Ramp Controller needs to be initialized by programming the relevant
-+ * registers with SoC-specific configuration: once programming is done,
-+ * the hardware will take care of the rest (no further handling required).
-+ *
-+ * Return: Zero for success or negative number for error
-+ */
-+static int qcom_ramp_controller_start(struct qcom_ramp_controller *qrc)
-+{
-+	const struct qcom_ramp_controller_desc *d = qrc->desc;
-+	int ret;
-+
-+	/* Program LMH, DFS, Link SIDs */
-+	ret = rc_write_cfg(qrc, d->cfg_lmh_sid, RC_LMH_SID, d->num_lmh_sids);
-+	if (ret)
-+		return ret;
-+
-+	ret = rc_write_cfg(qrc, d->cfg_dfs_sid, RC_DFS_SID, d->num_dfs_sids);
-+	if (ret)
-+		return ret;
-+
-+	ret = rc_write_cfg(qrc, d->cfg_link_sid, RC_LINK_SID, d->num_link_sids);
-+	if (ret)
-+		return ret;
-+
-+	/* Everything is ready! Enable the ramp up/down control */
-+	return rc_ramp_ctrl_enable(qrc);
-+}
-+
-+static const struct regmap_config qrc_regmap_config = {
-+	.reg_bits = 32,
-+	.reg_stride = 4,
-+	.val_bits = 32,
-+	.max_register =	0x68,
-+	.fast_io = true,
-+};
-+
-+static const struct qcom_ramp_controller_desc msm8976_rc_cfg = {
-+	.cfg_dfs_sid = (struct reg_sequence[]) {
-+		{ 0x10, 0xfefebff7 },
-+		{ 0x14, 0xfdff7fef },
-+		{ 0x18, 0xfbffdefb },
-+		{ 0x1c, 0xb69b5555 },
-+		{ 0x20, 0x24929249 },
-+		{ 0x24, 0x49241112 },
-+		{ 0x28, 0x11112111 },
-+		{ 0x2c, 0x8102 },
-+	},
-+	.cfg_link_sid = (struct reg_sequence[]) {
-+		{ 0x40, 0xfc987 },
-+	},
-+	.cfg_lmh_sid = (struct reg_sequence[]) {
-+		{ 0x30, 0x77706db },
-+		{ 0x34, 0x5550249 },
-+		{ 0x38, 0x111 },
-+	},
-+	.cfg_ramp_pre_en = (struct reg_sequence[]) {
-+		{ 0x50, 0x800 },
-+	},
-+	.cfg_ramp_en = (struct reg_sequence[]) {
-+		{ 0x50, 0xc00 },
-+	},
-+	.cfg_ramp_post_en = (struct reg_sequence[]) {
-+		{ 0x50, 0x400 },
-+	},
-+	.cfg_ramp_dis = (struct reg_sequence[]) {
-+		{ 0x50, 0x0 },
-+	},
-+	.cmd_reg = 0x0,
-+
-+	.num_dfs_sids = 8,
-+	.num_lmh_sids = 3,
-+	.num_link_sids = 1,
-+};
-+
-+static int qcom_ramp_controller_probe(struct platform_device *pdev)
-+{
-+	struct qcom_ramp_controller *qrc;
-+	void __iomem *base;
-+
-+	base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(base))
-+		return PTR_ERR(base);
-+
-+	qrc = devm_kmalloc(&pdev->dev, sizeof(*qrc), GFP_KERNEL);
-+	if (!qrc)
-+		return -ENOMEM;
-+
-+	qrc->desc = device_get_match_data(&pdev->dev);
-+	if (!qrc)
-+		return -EINVAL;
-+
-+	qrc->regmap = devm_regmap_init_mmio(&pdev->dev, base, &qrc_regmap_config);
-+	if (IS_ERR(qrc->regmap))
-+		return PTR_ERR(qrc->regmap);
-+
-+	platform_set_drvdata(pdev, qrc);
-+
-+	return qcom_ramp_controller_start(qrc);
-+}
-+
-+static int qcom_ramp_controller_remove(struct platform_device *pdev)
-+{
-+	struct qcom_ramp_controller *qrc = platform_get_drvdata(pdev);
-+
-+	return rc_write_cfg(qrc, qrc->desc->cfg_ramp_dis, RC_DCVS_CFG_SID, 1);
-+}
-+
-+static const struct of_device_id qcom_ramp_controller_match_table[] = {
-+	{ .compatible = "qcom,msm8976-ramp-controller", .data = &msm8976_rc_cfg },
-+	{ /* sentinel */ }
-+};
-+MODULE_DEVICE_TABLE(of, qcom_ramp_controller_match_table);
-+
-+static struct platform_driver qcom_ramp_controller_driver = {
-+	.driver = {
-+		.name = "qcom-ramp-controller",
-+		.of_match_table = qcom_ramp_controller_match_table,
-+		.suppress_bind_attrs = true,
-+	},
-+	.probe  = qcom_ramp_controller_probe,
-+	.remove = qcom_ramp_controller_remove,
-+};
-+
-+static int __init qcom_ramp_controller_init(void)
-+{
-+	return platform_driver_register(&qcom_ramp_controller_driver);
-+}
-+arch_initcall(qcom_ramp_controller_init);
-+
-+MODULE_AUTHOR("AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>");
-+MODULE_DESCRIPTION("Qualcomm Ramp Controller driver");
-+MODULE_LICENSE("GPL");
--- 
-2.37.2
+suppose it can stay, as otherwise even more renaming would have to be done.
 
+
+>   
+>   struct dsi_pll_config {
+>   	bool enable_ssc;
+> @@ -116,7 +122,7 @@ static void dsi_pll_calc_dec_frac(struct dsi_pll_7nm *pll, struct dsi_pll_config
+>   	dec_multiple = div_u64(pll_freq * multiplier, divider);
+>   	dec = div_u64_rem(dec_multiple, multiplier, &frac);
+>   
+> -	if (!(pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1))
+> +	if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1)
+>   		config->pll_clock_inverters = 0x28;
+>   	else if (pll_freq <= 1000000000ULL)
+>   		config->pll_clock_inverters = 0xa0;
+> @@ -197,16 +203,25 @@ static void dsi_pll_config_hzindep_reg(struct dsi_pll_7nm *pll)
+>   	void __iomem *base = pll->phy->pll_base;
+>   	u8 analog_controls_five_1 = 0x01, vco_config_1 = 0x00;
+>   
+> -	if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
+> +	if (!(pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1))
+>   		if (pll->vco_current_rate >= 3100000000ULL)
+>   			analog_controls_five_1 = 0x03;
+>   
+> +	if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
+>   		if (pll->vco_current_rate < 1520000000ULL)
+>   			vco_config_1 = 0x08;
+>   		else if (pll->vco_current_rate < 2990000000ULL)
+>   			vco_config_1 = 0x01;
+>   	}
+>   
+> +	if ((pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_2) ||
+> +	    (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3)) {
+> +		if (pll->vco_current_rate < 1520000000ULL)
+> +			vco_config_1 = 0x08;
+> +		else if (pll->vco_current_rate >= 2990000000ULL)
+> +			vco_config_1 = 0x01;
+> +	}
+> +
+>   	dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_FIVE_1,
+>   		      analog_controls_five_1);
+>   	dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_VCO_CONFIG_1, vco_config_1);
+> @@ -231,9 +246,9 @@ static void dsi_pll_config_hzindep_reg(struct dsi_pll_7nm *pll)
+>   	dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_PFILT, 0x2f);
+>   	dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_IFILT, 0x2a);
+>   	dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_IFILT,
+> -		  pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1 ? 0x3f : 0x22);
+> +		  !(pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1) ? 0x3f : 0x22);
+>   
+> -	if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
+> +	if (!(pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1)) {
+>   		dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_PERF_OPTIMIZE, 0x22);
+>   		if (pll->slave)
+>   			dsi_phy_write(pll->slave->phy->pll_base + REG_DSI_7nm_PHY_PLL_PERF_OPTIMIZE, 0x22);
+> @@ -788,7 +803,7 @@ static void dsi_phy_hw_v4_0_lane_settings(struct msm_dsi_phy *phy)
+>   	const u8 *tx_dctrl = tx_dctrl_0;
+>   	void __iomem *lane_base = phy->lane_base;
+>   
+> -	if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1)
+> +	if (!(phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1))
+>   		tx_dctrl = tx_dctrl_1;
+>   
+>   	/* Strength ctrl settings */
+> @@ -844,6 +859,12 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+>   	if (dsi_phy_hw_v4_0_is_pll_on(phy))
+>   		pr_warn("PLL turned on before configuring PHY\n");
+>   
+> +	/* Request for REFGEN READY */
+> +	if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) {
+> +		dsi_phy_write(phy->base + REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE10, 0x1);
+> +		udelay(500);
+> +	}
+> +
+>   	/* wait for REFGEN READY */
+>   	ret = readl_poll_timeout_atomic(base + REG_DSI_7nm_PHY_CMN_PHY_STATUS,
+>   					status, (status & BIT(0)),
+> @@ -858,23 +879,53 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+>   	/* Alter PHY configurations if data rate less than 1.5GHZ*/
+>   	less_than_1500_mhz = (clk_req->bitclk_rate <= 1500000000);
+>   
+> -	if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
+> -		vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
+> +	if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) {
+> +		if (phy->cphy_mode) {
+> +			vreg_ctrl_0 = 0x51;
+> +			glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x01;
+> +			glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x3b;
+> +			glbl_str_swi_cal_sel_ctrl = 0x00;
+> +			glbl_hstx_str_ctrl_0 = 0x00;
+> +		} else {
+> +			vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
+> +			glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x01;
+
+msm-5.10 has it as 0x3d : 0x00 for both v4.2 and v4.3 in DPHY mode
+
+
+> +			glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x39;
+> +			glbl_str_swi_cal_sel_ctrl = 0x00;
+> +			glbl_hstx_str_ctrl_0 = 0x88;
+> +		}
+> +	} else if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_2) {
+> +		if (phy->cphy_mode) {
+> +			vreg_ctrl_0 = 0x51;
+> +			glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x01;
+> +			glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x3b;
+> +			glbl_str_swi_cal_sel_ctrl = 0x00;
+> +			glbl_hstx_str_ctrl_0 = 0x00;
+> +		} else {
+> +			vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
+> +			glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3c :  0x00;
+> +			glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x39;
+> +			glbl_str_swi_cal_sel_ctrl = 0x00;
+> +			glbl_hstx_str_ctrl_0 = 0x88;
+> +		}
+> +	} else if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
+>   		if (phy->cphy_mode) {
+> +			vreg_ctrl_0 = 0x51;
+>   			glbl_rescode_top_ctrl = 0x00;
+>   			glbl_rescode_bot_ctrl = 0x3c;
+>   		} else {
+> +			vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
+>   			glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x00;
+>   			glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x39 :  0x3c;
+>   		}
+>   		glbl_str_swi_cal_sel_ctrl = 0x00;
+>   		glbl_hstx_str_ctrl_0 = 0x88;
+>   	} else {
+> -		vreg_ctrl_0 = less_than_1500_mhz ? 0x5B : 0x59;
+>   		if (phy->cphy_mode) {
+> +			vreg_ctrl_0 = 0x51;
+>   			glbl_str_swi_cal_sel_ctrl = 0x03;
+>   			glbl_hstx_str_ctrl_0 = 0x66;
+>   		} else {
+> +			vreg_ctrl_0 = less_than_1500_mhz ? 0x5B : 0x59;
+>   			glbl_str_swi_cal_sel_ctrl = less_than_1500_mhz ? 0x03 : 0x00;
+>   			glbl_hstx_str_ctrl_0 = less_than_1500_mhz ? 0x66 : 0x88;
+>   		}
+> @@ -883,7 +934,6 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+>   	}
+>   
+>   	if (phy->cphy_mode) {
+> -		vreg_ctrl_0 = 0x51;
+>   		vreg_ctrl_1 = 0x55;
+>   		glbl_pemph_ctrl_0 = 0x11;
+>   		lane_ctrl0 = 0x17;
+> @@ -1017,6 +1067,13 @@ static void dsi_7nm_phy_disable(struct msm_dsi_phy *phy)
+>   		pr_warn("Turning OFF PHY while PLL is on\n");
+>   
+>   	dsi_phy_hw_v4_0_config_lpcdrx(phy, false);
+> +
+> +	/* Turn off REFGEN Vote */
+> +        dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE10, 0x0);
+> +        wmb();
+> +        /* Delay to ensure HW removes vote before PHY shut down */
+> +        udelay(2);
+
+Either thunderbird is acting up (again) or the code after the first 
+comment is
+
+indented with spaces instead of tabs.
+
+
+Other than that,
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+
+
+Konrad
+
+> +
+>   	data = dsi_phy_read(base + REG_DSI_7nm_PHY_CMN_CTRL_0);
+>   
+>   	/* disable all lanes */
+> @@ -1040,6 +1097,10 @@ static const struct regulator_bulk_data dsi_phy_7nm_37750uA_regulators[] = {
+>   	{ .supply = "vdds", .init_load_uA = 37550 },
+>   };
+>   
+> +static const struct regulator_bulk_data dsi_phy_7nm_97800uA_regulators[] = {
+> +	{ .supply = "vdds", .init_load_uA = 97800},
+> +};
+> +
+>   const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
+>   	.has_phy_lane = true,
+>   	.regulator_data = dsi_phy_7nm_36mA_regulators,
+> @@ -1079,6 +1140,7 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs = {
+>   	.max_pll_rate = 3500000000UL,
+>   	.io_start = { 0xae94400, 0xae96400 },
+>   	.num_dsi_phy = 2,
+> +	.quirks = DSI_PHY_7NM_QUIRK_PRE_V4_1,
+>   };
+>   
+>   const struct msm_dsi_phy_cfg dsi_phy_7nm_7280_cfgs = {
+> @@ -1102,3 +1164,49 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_7280_cfgs = {
+>   	.num_dsi_phy = 1,
+>   	.quirks = DSI_PHY_7NM_QUIRK_V4_1,
+>   };
+> +
+> +const struct msm_dsi_phy_cfg dsi_phy_5nm_8350_cfgs = {
+> +	.has_phy_lane = true,
+> +	.regulator_data = dsi_phy_7nm_37750uA_regulators,
+> +	.num_regulators = ARRAY_SIZE(dsi_phy_7nm_37750uA_regulators),
+> +	.ops = {
+> +		.enable = dsi_7nm_phy_enable,
+> +		.disable = dsi_7nm_phy_disable,
+> +		.pll_init = dsi_pll_7nm_init,
+> +		.save_pll_state = dsi_7nm_pll_save_state,
+> +		.restore_pll_state = dsi_7nm_pll_restore_state,
+> +		.set_continuous_clock = dsi_7nm_set_continuous_clock,
+> +	},
+> +	.min_pll_rate = 600000000UL,
+> +#ifdef CONFIG_64BIT
+> +	.max_pll_rate = 5000000000UL,
+> +#else
+> +	.max_pll_rate = ULONG_MAX,
+> +#endif
+> +	.io_start = { 0xae94400, 0xae96400 },
+> +	.num_dsi_phy = 2,
+> +	.quirks = DSI_PHY_7NM_QUIRK_V4_2,
+> +};
+> +
+> +const struct msm_dsi_phy_cfg dsi_phy_5nm_8450_cfgs = {
+> +	.has_phy_lane = true,
+> +	.regulator_data = dsi_phy_7nm_97800uA_regulators,
+> +	.num_regulators = ARRAY_SIZE(dsi_phy_7nm_97800uA_regulators),
+> +	.ops = {
+> +		.enable = dsi_7nm_phy_enable,
+> +		.disable = dsi_7nm_phy_disable,
+> +		.pll_init = dsi_pll_7nm_init,
+> +		.save_pll_state = dsi_7nm_pll_save_state,
+> +		.restore_pll_state = dsi_7nm_pll_restore_state,
+> +		.set_continuous_clock = dsi_7nm_set_continuous_clock,
+> +	},
+> +	.min_pll_rate = 600000000UL,
+> +#ifdef CONFIG_64BIT
+> +	.max_pll_rate = 5000000000UL,
+> +#else
+> +	.max_pll_rate = ULONG_MAX,
+> +#endif
+> +	.io_start = { 0xae94400, 0xae96400 },
+> +	.num_dsi_phy = 2,
+> +	.quirks = DSI_PHY_7NM_QUIRK_V4_3,
+> +};
