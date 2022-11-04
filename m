@@ -2,58 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B999761935D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 10:21:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 01A40619380
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 10:30:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231334AbiKDJVT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 05:21:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44004 "EHLO
+        id S229823AbiKDJaD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 05:30:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231217AbiKDJVR (ORCPT
+        with ESMTP id S230194AbiKDJ3u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 05:21:17 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BC8025296;
-        Fri,  4 Nov 2022 02:21:16 -0700 (PDT)
+        Fri, 4 Nov 2022 05:29:50 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 582C529CA4;
+        Fri,  4 Nov 2022 02:29:49 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id ECEA262110;
-        Fri,  4 Nov 2022 09:21:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5978DC433B5;
-        Fri,  4 Nov 2022 09:21:14 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E65ED62114;
+        Fri,  4 Nov 2022 09:29:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50DCFC433C1;
+        Fri,  4 Nov 2022 09:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667553675;
-        bh=l9ouLc59eP5YzEVZSBgkam6/h5cQtwOSfXADrCbIK80=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=jntuttOuk6uYrgx4J2ZDUOqMSm27PLU+uyMsAAnihqCSZ3o8eKn7rGcd/qGLcmRDZ
-         +VMRTEG/YZGqQFnFH5/PR3vHI9AHK9jRkomXiJaUxmoDE/0AQL/v+yEwmrSDUx1WmH
-         RWOaFDX7MbWfE1q4HMnm4o4uuZbLXCikPWJ/sw2g8oJo/61r+7j7H1HGGK7jc3XzCz
-         xF+ffMzFvVpryhMV5ykfPNqSfY6NEXx4+/BcaqbENeawoTj6Kd+6UVb321NxxYk2O7
-         y8oDNiZ0JHgAKYLUoL3Emttto5FX8dp97qWxyzwPIl/+CZImtVqF9GegUL0DXzV1ab
-         PybQl/6G5vd5Q==
+        s=k20201202; t=1667554188;
+        bh=GvpMC/s97cy1zODznYS5BOEVcIvr4qyq43qRasSeRqs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=WYbQsiIwNF1cF6QBI0aTi+8vG8quWpm81ADIzZIhiYBWKG1Ece4kXL5OLIshNohBf
+         wO5oSxVeOYvYS76vsIkHoO+BudVt4N7putwzbWkN6ULnSuaRjQE2ZrIsxhJXfjhYAh
+         bYPc1mZLfok3O/YriEm91hnClG5gwU1DePng7rLNKElK3GuEvMpIf6jQt0L0DOnUGU
+         o5x1VMLz8t4XAKAAdGKzI6LDbIxlRolpcY+PDN8c8/VuiIuH/oR4VMo5ZaFtZ0Vfe4
+         bHKXYbnemDuNvMs0HG+K1F/0SvWEhCUblmL2iAl40CmpSB/rgkAXziTOaDUsX0Q7tT
+         YJe5ZQ5YvyLmA==
 Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1oqssi-0004Xb-Lo; Fri, 04 Nov 2022 10:20:56 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
+        (envelope-from <johan@kernel.org>)
+        id 1oqt10-0004ha-Gb; Fri, 04 Nov 2022 10:29:30 +0100
+Date:   Fri, 4 Nov 2022 10:29:30 +0100
+From:   Johan Hovold <johan@kernel.org>
 To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Cc:     Shazad Hussain <quic_shazhuss@quicinc.com>,
+        Stephen Boyd <sboyd@kernel.org>, bmasney@redhat.com,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Brian Masney <bmasney@redhat.com>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 2/2] arm64: dts: qcom: sc8280xp: update UFS PHY nodes
-Date:   Fri,  4 Nov 2022 10:20:45 +0100
-Message-Id: <20221104092045.17410-3-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20221104092045.17410-1-johan+linaro@kernel.org>
-References: <20221104092045.17410-1-johan+linaro@kernel.org>
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1] clk: qcom: gcc-sc8280xp: add cxo as parent for
+ gcc_ufs_ref_clkref_clk
+Message-ID: <Y2Tber39cHuOSR/W@hovoldconsulting.com>
+References: <20221030142333.31019-1-quic_shazhuss@quicinc.com>
+ <20221101182402.32CE5C433C1@smtp.kernel.org>
+ <Y2IZaxukERXNcPGR@hovoldconsulting.com>
+ <c96304da-f57e-4926-2f3f-665c2054fb00@quicinc.com>
+ <Y2Imnf1+v5j5CH9r@hovoldconsulting.com>
+ <bb590bfb-07a4-97c1-e5c0-d00d840e2e11@quicinc.com>
+ <Y2I3tekSAO42r0xR@hovoldconsulting.com>
+ <20221103024949.lw4g2tavk7uw5xt4@builder.lan>
+ <Y2OEjNAPXg5BfOxH@hovoldconsulting.com>
+ <20221103152355.5sfbkpsfvjzgeixi@builder.lan>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221103152355.5sfbkpsfvjzgeixi@builder.lan>
 X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -63,107 +71,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update the UFS PHY nodes to match the new binding.
+On Thu, Nov 03, 2022 at 10:23:55AM -0500, Bjorn Andersson wrote:
+> On Thu, Nov 03, 2022 at 10:06:20AM +0100, Johan Hovold wrote:
+> > On Wed, Nov 02, 2022 at 09:49:49PM -0500, Bjorn Andersson wrote:
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 49 +++++++++-----------------
- 1 file changed, 17 insertions(+), 32 deletions(-)
+> > > In line with the downstream dts, we have GCC_UFS{,_1}_CARD_CLKREF_CLK
+> > > providing a reference clock to the two phys. Then GCC_UFS_REF_CLKREF_CLK
+> > > feeds the UFS refclock pads (both of them), which connect to the memory
+> > > device(s).
+> > > 
+> > > In other words, GCC_UFS{,_1}_CARD_CLKREF_CLK should be "ref" in
+> > > respective phy.
+> > > 
+> > > GCC_UFS_REF_CLKREF_CLK is the clock to the devices, but as we don't
+> > > represent the memory device explicitly it seems suitable to use as
+> > > "ref_clk" in the ufshc nodes - which would then match the special
+> > > handling of the "link clock" in the UFS driver.
+> > 
+> > Thanks for clearing that up. Using GCC_UFS_REF_CLKREF_CLK as ref_clk for
+> > the controller sounds reasonable.
+> > 
+> > I guess the only missing piece is which "card" ref clock is used by
+> > which PHY.
+> > 
+> > The ADP dts uses:
+> > 
+> > 	phy			ref clock
+> > 
+> > 	phy@1d87000 (UFS_PHY)	GCC_UFS_CARD_CLKREF_CLK
+> > 	phy@1da7000 (UFS_CARD)	GCC_UFS_1_CARD_CLKREF_CLK
+> > 
+> 
+> This matches the documentation.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index e0d0fb6994b5..1b309fa93484 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -896,7 +896,7 @@ ufs_mem_hc: ufs@1d84000 {
- 				     "jedec,ufs-2.0";
- 			reg = <0 0x01d84000 0 0x3000>;
- 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
--			phys = <&ufs_mem_phy_lanes>;
-+			phys = <&ufs_mem_phy>;
- 			phy-names = "ufsphy";
- 			lanes-per-direction = <2>;
- 			#reset-cells = <1>;
-@@ -937,27 +937,20 @@ ufs_mem_hc: ufs@1d84000 {
- 
- 		ufs_mem_phy: phy@1d87000 {
- 			compatible = "qcom,sc8280xp-qmp-ufs-phy";
--			reg = <0 0x01d87000 0 0x1c8>;
--			#address-cells = <2>;
--			#size-cells = <2>;
--			ranges;
--			clock-names = "ref",
--				      "ref_aux";
-+			reg = <0 0x01d87000 0 0x1000>;
-+
- 			clocks = <&gcc GCC_UFS_CARD_CLKREF_CLK>,
- 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
-+			clock-names = "ref", "ref_aux";
-+
-+			power-domains = <&gcc UFS_PHY_GDSC>;
- 
- 			resets = <&ufs_mem_hc 0>;
- 			reset-names = "ufsphy";
--			status = "disabled";
- 
--			ufs_mem_phy_lanes: phy@1d87400 {
--				reg = <0 0x01d87400 0 0x108>,
--				      <0 0x01d87600 0 0x1e0>,
--				      <0 0x01d87c00 0 0x1dc>,
--				      <0 0x01d87800 0 0x108>,
--				      <0 0x01d87a00 0 0x1e0>;
--				#phy-cells = <0>;
--			};
-+			#phy-cells = <0>;
-+
-+			status = "disabled";
- 		};
- 
- 		ufs_card_hc: ufs@1da4000 {
-@@ -965,7 +958,7 @@ ufs_card_hc: ufs@1da4000 {
- 				     "jedec,ufs-2.0";
- 			reg = <0 0x01da4000 0 0x3000>;
- 			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>;
--			phys = <&ufs_card_phy_lanes>;
-+			phys = <&ufs_card_phy>;
- 			phy-names = "ufsphy";
- 			lanes-per-direction = <2>;
- 			#reset-cells = <1>;
-@@ -1005,28 +998,20 @@ ufs_card_hc: ufs@1da4000 {
- 
- 		ufs_card_phy: phy@1da7000 {
- 			compatible = "qcom,sc8280xp-qmp-ufs-phy";
--			reg = <0 0x01da7000 0 0x1c8>;
--			#address-cells = <2>;
--			#size-cells = <2>;
--			ranges;
--			clock-names = "ref",
--				      "ref_aux";
-+			reg = <0 0x01da7000 0 0x1000>;
-+
- 			clocks = <&gcc GCC_UFS_1_CARD_CLKREF_CLK>,
- 				 <&gcc GCC_UFS_CARD_PHY_AUX_CLK>;
-+			clock-names = "ref", "ref_aux";
-+
-+			power-domains = <&gcc UFS_CARD_GDSC>;
- 
- 			resets = <&ufs_card_hc 0>;
- 			reset-names = "ufsphy";
- 
--			status = "disabled";
-+			#phy-cells = <0>;
- 
--			ufs_card_phy_lanes: phy@1da7400 {
--				reg = <0 0x01da7400 0 0x108>,
--				      <0 0x01da7600 0 0x1e0>,
--				      <0 0x01da7c00 0 0x1dc>,
--				      <0 0x01da7800 0 0x108>,
--				      <0 0x01da7a00 0 0x1e0>;
--				#phy-cells = <0>;
--			};
-+			status = "disabled";
- 		};
- 
- 		tcsr_mutex: hwlock@1f40000 {
--- 
-2.37.3
+Thanks for checking.
 
+> > > All three clocks are sourced off the CXO pad, so I would like this patch
+> > > to cover at least all of these. And
+> > > 
+> > > Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
+> > > 
+> > > seems to be in order for such patch.
+> > > 
+> > > 
+> > > @Johan, would you mind writing a dts patch flipping the clocks around
+> > > and Shazad can update this patch?
+> > 
+> > I'll do so, but I'll wait with posting until you can confirm which
+> > clkref is which.
+
+I've know posted a patch fixing the devicetree here:
+
+	https://lore.kernel.org/lkml/20221104092045.17410-1-johan+linaro@kernel.org/
+
+Note that we need to get Shazad's clock driver fix in first as the UFS
+controller driver expects a valid frequency for the device ref clock.
+
+Johan
