@@ -2,174 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE944619E13
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 18:06:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C9FA6619E63
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 18:22:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230070AbiKDRF7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 13:05:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52776 "EHLO
+        id S230005AbiKDRWA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 13:22:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229699AbiKDRF6 (ORCPT
+        with ESMTP id S230035AbiKDRV7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 13:05:58 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 848E131FA0
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 10:05:57 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id k2so3439709qkk.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 10:05:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=QmgwhFKSfmRVfZGc4RFN5XxR8b40r2de6Oo0rq1T4LM=;
-        b=JbUTll5MUjsFEpb6RFMbBc3v4wZC7nXCGMHb5OK0Dj1brJXpSu1B6bkm7Y7U9ncuKG
-         iqnkdFnjDpJ/4iU0uVw5784Yk5pIFbYFFk7YLX74gaga3r1+BZWyM8k/tte7jaoZfLp+
-         SlEYGRI1opxkZ1YRf0Y4i8oWvqEnxRFm1RUa5eAOVfW4YOseCzkAaRrueQgSzuEEILvk
-         i9eEPWx2w/roHu+WfzQFQEo2ebRYbXiUsIeEZxCb/+ZMK51rTc/95nl1+OfG4qFyIvkk
-         nOUuPaSW/ZFDusLt/V5JBCTDb231pwqVnE35hOL+wY7KG8B6OE9IbAc/plX1LmlgWrEp
-         VTzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QmgwhFKSfmRVfZGc4RFN5XxR8b40r2de6Oo0rq1T4LM=;
-        b=E8lNaoxq1ucu5NfmvwfII6u4b3WEeeaOFnYi45Rrau/5kQvJ44eOnC9aPH6CrhCVSS
-         l9xVsRII4R4xKK0aCCNdyMqR3Fu1H+1kd0ZPobvzvX9aftpRnfU4Kw/oldx716UIIsJL
-         abP4/SX8Clbc2p3abv3YChibwJ4eWkBOPCzCm+CmM7EXQAEpbnhXg809PVqKvaquL2Tv
-         +xT0EvFvLhdNrHRtWutjoOOHgFIGvQmuWgCVjcnap1JU1QHz7nDcJs3Nu4Or/tIBT5Bh
-         txtMSopbFwJBqrCJocSPEpTsNkV6U2OGWL4e/GNm8Kbb6LXhEfYQ4dajy6ZUZsOIpZbh
-         sU6Q==
-X-Gm-Message-State: ACrzQf2iy+czIM0Yyc/BFKG3PDFIBSWiDGKZDkRy8SMk/4BYwLIsZ4a7
-        st74jOtirTqyWaSIPpIFRSfAGA==
-X-Google-Smtp-Source: AMsMyM6iuA5yKil9gA8TtmEMRoCASMZ22sLHJHjAsR2lUWcHqXr3ZMn45PnxakMpdKdj3KTXVDfCSQ==
-X-Received: by 2002:a37:2d84:0:b0:6fa:1747:5369 with SMTP id t126-20020a372d84000000b006fa17475369mr25414271qkh.693.1667581556663;
-        Fri, 04 Nov 2022 10:05:56 -0700 (PDT)
-Received: from krzk-bin.. ([2601:586:5000:570:aad6:acd8:4ed9:299b])
-        by smtp.gmail.com with ESMTPSA id c11-20020ac8054b000000b003a527d29a41sm2667370qth.75.2022.11.04.10.05.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Nov 2022 10:05:55 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindings: clock: qcom,sdm845-lpasscc: convert to dtschema
-Date:   Fri,  4 Nov 2022 13:05:52 -0400
-Message-Id: <20221104170552.72242-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Fri, 4 Nov 2022 13:21:59 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA1CFAE5A;
+        Fri,  4 Nov 2022 10:21:58 -0700 (PDT)
+Received: from IcarusMOD.eternityproject.eu (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 0C36B6602989;
+        Fri,  4 Nov 2022 17:21:55 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1667582516;
+        bh=R/MBlJBNY8EYBt6oZqjxP8TEcbb7lnlRlY2DZ7434zU=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Ku0bwUVtf5oKlMLP0ahGkM/AFF1NVvTK4xSv08D6bDpoArwk7fNUVX4up8i7p+YS6
+         WYrOAkqaccZpd+oaLAiY6Ar/q++RvqReKQX4DoxIjAmVuVNG4GjKc1P9nsptV/qTry
+         fO/9xoBfP6Fe2KUuOnbg0KciaFngjlPyxceVz0aygW5fdg0kTOe207ImIimWwaj+8I
+         c/JLmjU7DXdI1qr+B8jWvJ7lVkPiq+U3fNvcRPvcf3wQ03oottMi2qAEsC+bClQ0EW
+         inX+4W/B9XPKzo6kWvJgQBTRMCKkOHDjQ557fzpi6e/7KlREFMyxoq6MVsZM7R5LBv
+         wiLqQNjOVMKAg==
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+To:     agross@kernel.org
+Cc:     andersson@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        lee@kernel.org, ulf.hansson@linaro.org,
+        srinivas.kandagatla@linaro.org, jic23@kernel.org, lars@metafoo.de,
+        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        bhupesh.sharma@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-hardening@vger.kernel.org, marijn.suijten@somainline.org,
+        kernel@collabora.com, luca@z3ntu.xyz, a39.skl@gmail.com,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Subject: [PATCH 0/9] MSM8956/76 and Sony Xperia X / X Compact support
+Date:   Fri,  4 Nov 2022 18:21:13 +0100
+Message-Id: <20221104172122.252761-1-angelogioacchino.delregno@collabora.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert Qualcomm SDM845 LPASS clock controller bindings to DT schema.
+This series adds basic support for MSM8976 and its lower spec variant
+MSM8956, along with two devices: the Sony Xperia X and X Compact.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../bindings/clock/qcom,lpasscc.txt           | 26 ----------
- .../bindings/clock/qcom,sdm845-lpasscc.yaml   | 47 +++++++++++++++++++
- 2 files changed, 47 insertions(+), 26 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/clock/qcom,lpasscc.txt
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,sdm845-lpasscc.yaml
+For now, even though I do have a tree in which these two devices are
+fully booting, only a basic console boot is provided as the rest is
+awaiting cleanup and some more dependencies.
+Especially every device requiring IOMMU support, like MDSS, MDP and
+Adreno GPU cannot work with the current qcom_iommu driver, as it
+needs some code to get the ASIDs right for MSM8956/76.
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,lpasscc.txt b/Documentation/devicetree/bindings/clock/qcom,lpasscc.txt
-deleted file mode 100644
-index b9e9787045b9..000000000000
---- a/Documentation/devicetree/bindings/clock/qcom,lpasscc.txt
-+++ /dev/null
-@@ -1,26 +0,0 @@
--Qualcomm LPASS Clock Controller Binding
-------------------------------------------------
--
--Required properties :
--- compatible		: shall contain "qcom,sdm845-lpasscc"
--- #clock-cells		: from common clock binding, shall contain 1.
--- reg			: shall contain base register address and size,
--			  in the order
--			Index-0 maps to LPASS_CC register region
--			Index-1 maps to LPASS_QDSP6SS register region
--
--Optional properties :
--- reg-names	: register names of LPASS domain
--		 "cc", "qdsp6ss".
--
--Example:
--
--The below node has to be defined in the cases where the LPASS peripheral loader
--would bring the subsystem out of reset.
--
--	lpasscc: clock-controller@17014000 {
--		compatible = "qcom,sdm845-lpasscc";
--		reg = <0x17014000 0x1f004>, <0x17300000 0x200>;
--		reg-names = "cc", "qdsp6ss";
--		#clock-cells = <1>;
--	};
-diff --git a/Documentation/devicetree/bindings/clock/qcom,sdm845-lpasscc.yaml b/Documentation/devicetree/bindings/clock/qcom,sdm845-lpasscc.yaml
-new file mode 100644
-index 000000000000..10aa9b6e8d89
---- /dev/null
-+++ b/Documentation/devicetree/bindings/clock/qcom,sdm845-lpasscc.yaml
-@@ -0,0 +1,47 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/clock/qcom,sdm845-lpasscc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SDM845 LPASS Clock Controller
-+
-+maintainers:
-+  - Bjorn Andersson <bjorn.andersson@linaro.org>
-+
-+description: |
-+  Qualcomm SDM845 LPASS (Low Power Audio SubSystem) Clock Controller.
-+
-+  See also:: include/dt-bindings/clock/qcom,lpass-sdm845.h
-+
-+properties:
-+  compatible:
-+    const: qcom,sdm845-lpasscc
-+
-+  '#clock-cells':
-+    const: 1
-+
-+  reg:
-+    maxItems: 2
-+
-+  reg-names:
-+    items:
-+      - const: cc
-+      - const: qdsp6ss
-+
-+required:
-+  - compatible
-+  - '#clock-cells'
-+  - reg
-+  - reg-names
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    clock-controller@17014000 {
-+        compatible = "qcom,sdm845-lpasscc";
-+        reg = <0x17014000 0x1f004>, <0x17300000 0x200>;
-+        reg-names = "cc", "qdsp6ss";
-+        #clock-cells = <1>;
-+    };
+This series depends on [1].
+
+Tested on both Xperia X and X Compact.
+
+[1]: https://patchwork.kernel.org/project/linux-arm-msm/list/?series=690889
+
+AngeloGioacchino Del Regno (7):
+  dt-bindings: iio: qcom-spmi-vadc: Add definitions for USB DP/DM VADCs
+  dt-bindings: soc: qcom: qcom,smd-rpm: Use qcom,smd-channels on MSM8976
+  dt-bindings: mmc: sdhci-msm: Document compatible for MSM8976
+  dt-bindings: mfd: qcom,tcsr: Add compatible for MSM8976
+  arm64: dts: qcom: Add configuration for PM8950 peripheral
+  arm64: dts: qcom: Add DTS for MSM8976 and MSM8956 SoCs
+  arm64: dts: qcom: Add support for SONY Xperia X/X Compact
+
+Marijn Suijten (2):
+  dt-bindings: nvmem: Add compatible for MSM8976
+  dt-bindings: arm: qcom: Document msm8956 and msm8976 SoC and devices
+
+ .../devicetree/bindings/arm/qcom.yaml         |   10 +
+ .../devicetree/bindings/mfd/qcom,tcsr.yaml    |    1 +
+ .../devicetree/bindings/mmc/sdhci-msm.yaml    |    1 +
+ .../bindings/nvmem/qcom,qfprom.yaml           |    1 +
+ .../bindings/soc/qcom/qcom,smd-rpm.yaml       |    1 +
+ arch/arm64/boot/dts/qcom/Makefile             |    2 +
+ .../qcom/msm8956-sony-xperia-loire-kugo.dts   |   36 +
+ .../qcom/msm8956-sony-xperia-loire-suzu.dts   |   17 +
+ .../dts/qcom/msm8956-sony-xperia-loire.dtsi   |  269 ++++
+ arch/arm64/boot/dts/qcom/msm8956.dtsi         |   18 +
+ arch/arm64/boot/dts/qcom/msm8976.dtsi         | 1208 +++++++++++++++++
+ arch/arm64/boot/dts/qcom/pm8950.dtsi          |  165 +++
+ include/dt-bindings/iio/qcom,spmi-vadc.h      |    3 +
+ 13 files changed, 1732 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire-kugo.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire-suzu.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8956.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8976.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/pm8950.dtsi
+
 -- 
-2.34.1
+2.37.2
 
