@@ -2,122 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 74ED461998C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 15:22:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6863619990
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 15:22:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232156AbiKDOWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 10:22:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34642 "EHLO
+        id S232075AbiKDOWt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 10:22:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232176AbiKDOU6 (ORCPT
+        with ESMTP id S232076AbiKDOWa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 10:20:58 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2B3D2F662
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 07:20:56 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id w4so3128302qts.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 07:20:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bfe4QYAii/msXqogDnhvJDFD5ejC6/JC1TdZ0YZAnVI=;
-        b=FyxE3aSUOkrzTK/QGnh5iwhxJxO5xXxYiHBPnlQynz1BLSctcEwCGCNrK6jxH+LRPN
-         wi1al9drpsMVRxUoR0smZMxu2j0mE5aDRe63spjQNFBvpSYaL4yGKIkul4xq2Rugb7fZ
-         V7qB0ImNu5yFaKKtsEJuh/eNL9JRTut59ys/uYhHfRd4dvXiMmVoa1rOn7plCP9oaH5d
-         jkbWivYhY3PKK28TERpxgGsz5NoijL80qEi5BHDFkAD7CvnA69T6mVIPrh/qdzeSLXr4
-         yAT+AOvd5JcuxdulYEJoJxCmT8saxJNVW8KLNMH1xnGGBzgKBtMyt5RaiOkaZuw/hqls
-         IrcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bfe4QYAii/msXqogDnhvJDFD5ejC6/JC1TdZ0YZAnVI=;
-        b=As4b2/RI6pfgc4WhTqB5rxdS3+LW4kdqlaplJnYjh1bIAtOavGPJL4nKA133yJoDI1
-         XEBKp5wcM7/pJMQuBPHM+ESteNU29BOLOhn3YpORmjGIEPKcuSDH2jaHXODBUrrbXLd9
-         d+2Zmhj3K5xbEo2bmeT33tZYtI0rdBhmokfHcfgTrLJp1uZs7QHh2nkK2AWHM4MH5cRe
-         ZWUmqJqTl3foxGFt3glaYsH4ACY0x5am/IukR18EFfzQmrK3dNJ6eLJS5VGNSmFmDaDb
-         I/yaYzu90XMkMqid6WBMrw6Kq05i4ZBTMnITcQxiXVPoBF+0JOhv3Lq/6wfkCkottxg6
-         Oawg==
-X-Gm-Message-State: ACrzQf2hNrRBiYPNbCVYfO20IdK2ETSpk1iYM39NO2ugiiKvZKc2Y9RG
-        OZEEtvPqNI+Aw7oh8XJuPnsP6Q==
-X-Google-Smtp-Source: AMsMyM7CV19Vj9XYnilruJJvftU1TZeOxpARoRc6S+ODrtdXMN3RA8hrkRGI8BdB7SK5VPuSclcvsg==
-X-Received: by 2002:a05:622a:1ba2:b0:39c:ed3c:6310 with SMTP id bp34-20020a05622a1ba200b0039ced3c6310mr28888623qtb.516.1667571655926;
-        Fri, 04 Nov 2022 07:20:55 -0700 (PDT)
-Received: from ?IPV6:2601:586:5000:570:aad6:acd8:4ed9:299b? ([2601:586:5000:570:aad6:acd8:4ed9:299b])
-        by smtp.gmail.com with ESMTPSA id ey21-20020a05622a4c1500b003988b3d5280sm2518844qtb.70.2022.11.04.07.20.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Nov 2022 07:20:55 -0700 (PDT)
-Message-ID: <aa1c6223-e56c-b0b3-ed74-25cdeee36fb7@linaro.org>
-Date:   Fri, 4 Nov 2022 10:20:54 -0400
+        Fri, 4 Nov 2022 10:22:30 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8FAE2B248
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 07:21:21 -0700 (PDT)
+Received: from [192.168.31.208] (unknown [194.29.137.22])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 841903F70C;
+        Fri,  4 Nov 2022 15:21:19 +0100 (CET)
+Message-ID: <89994dc6-52f8-752e-04ae-42c8df3e9615@somainline.org>
+Date:   Fri, 4 Nov 2022 15:21:18 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v1 5/5] arm64: dts: qcom: sm8450-hdk: Enable HDMI Display
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.1
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: msm8916-alcatel-idol347: add LED
+ indicator
+To:     Vincent Knecht <vincent.knecht@mailoo.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Vinod Koul <vkoul@kernel.org>
-References: <20221104131358.1025987-1-dmitry.baryshkov@linaro.org>
- <20221104131358.1025987-6-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221104131358.1025987-6-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221104132400.1763218-1-vincent.knecht@mailoo.org>
+ <20221104132400.1763218-4-vincent.knecht@mailoo.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20221104132400.1763218-4-vincent.knecht@mailoo.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/11/2022 09:13, Dmitry Baryshkov wrote:
-> From: Vinod Koul <vkoul@kernel.org>
-> 
-> Add the HDMI display nodes and link it to DSI. Also enable missing dispcc
-> nodes
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Thank you for your patch. There is something to discuss/improve.
-
-> +&dispcc {
+On 04/11/2022 14:24, Vincent Knecht wrote:
+> Add si-en,sn3190 LED controller to enable white LED indicator.
+>
+> This requires adding the additional "enable" gpio that the OEM
+> choose to use, despite it not being mentioned in si-en,sn3190
+> datasheet nor supported by the driver.
+>
+> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
+> ---
+>   .../boot/dts/qcom/msm8916-alcatel-idol347.dts | 44 +++++++++++++++++++
+>   1 file changed, 44 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts b/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
+> index eadeb1a445fd..701a5585d77e 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
+> +++ b/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
+> @@ -130,6 +130,27 @@ gyroscope@68 {
+>   	};
+>   };
+>   
+> +&blsp_i2c6 {
 > +	status = "okay";
-> +};
 > +
->  &dsi0 {
->  	status = "okay";
->  	vdda-supply = <&vreg_l6b_1p2>;
+> +	led-controller@68 {
+> +		compatible = "si-en,sn3190";
+> +		reg = <0x68>;
+> +		shutdown-gpios = <&msmgpio 89 GPIO_ACTIVE_HIGH>;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&led_enable_default &led_shutdown_default>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
 > +
-> +	ports {
-> +		port@1 {
-> +			endpoint {
-> +				remote-endpoint = <&lt9611_a>;
-> +				data-lanes = <0 1 2 3>;
-> +			};
+> +		led@1 {
+> +			reg = <1>;
+> +			led-max-microamp = <5000>;
+> +			function = LED_FUNCTION_INDICATOR;
+> +			color = <LED_COLOR_ID_WHITE>;
 > +		};
 > +	};
+> +};
 > +
+>   &pm8916_resin {
+>   	status = "okay";
+>   	linux,code = <KEY_VOLUMEDOWN>;
+> @@ -306,6 +327,29 @@ gyro_int_default: gyro-int-default-state {
+>   		bias-disable;
+>   	};
+>   
+> +	/*
+> +	 * The OEM wired an additional GPIO to be asserted so that
+> +	 * the si-en,sn3190 LED IC works. Since this GPIO is not
+> +	 * part of the IC datasheet nor supported by the driver,
+> +	 * force it asserted here.
+> +	 */
 
-Drop blank line.
+Looks like the least problematic way to handle this.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Best regards,
-Krzysztof
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
+
+Konrad
+
+> +	led_enable_default: led-enable-default-state {
+> +		pins = "gpio102";
+> +		function = "gpio";
+> +
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +		output-high;
+> +	};
+> +
+> +	led_shutdown_default: led-shutdown-default-state {
+> +		pins = "gpio89";
+> +		function = "gpio";
+> +
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+>   	mag_reset_default: mag-reset-default-state {
+>   		pins = "gpio8";
+>   		function = "gpio";
