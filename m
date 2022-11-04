@@ -2,99 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF095619FF6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 19:32:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 585C261A05D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 19:57:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232103AbiKDScB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 14:32:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51440 "EHLO
+        id S229637AbiKDS5k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 14:57:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232130AbiKDSbz (ORCPT
+        with ESMTP id S229540AbiKDS5j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 14:31:55 -0400
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02A0F40916
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 11:31:52 -0700 (PDT)
-Received: by mail-qv1-xf2c.google.com with SMTP id j6so3739719qvn.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 11:31:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jv/VBBSPGfDMm3BuvCUb6KeKn+DQzFUitFYwYAfTSbw=;
-        b=Gf4Igk3vYjYVzOdyjeQvBR+wn0fv9jCoK2u94IZ9RY/2cw8nU9sVSyVIb458qMAPtB
-         HzbKuLwRjp58mdYEnl4x7a15rlRVbqpxVdbzzaPcJ+jzYgrrIoaEoCTV4xoGgJBxflSZ
-         7rZwl1NRDJVbJ4lTHJfPFdiu2AQCzPsSzJ4uqwQBxHbcLR35xgeCU2WO/yzxOSo59JoK
-         QYUSGpYd2BvBoRleK2z/rA5pI+DS5s3rrKXLwV3Ii1zd5AXWDJjHuO8gsHqRg0xTgmYt
-         X5yDUgA7ctHYiZimR/DjS+frJl9XuI40oCizh+kuxhOmvVA4qWBXLeOmsFLWSUd3P+wo
-         EJlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jv/VBBSPGfDMm3BuvCUb6KeKn+DQzFUitFYwYAfTSbw=;
-        b=jCy0LLRweVKEK2b/sE7c0m3/bFOrRBrnGZF9krQNVeCPEXtipSCYMaaQASnwUKKF7R
-         AZEO0ix/X/0lkiIzxDA3yn4uC3kNRc2IhCZbjbTUrmtamjhyuIHQhqigarconGt5nV9Y
-         GR1riRPGvt8kBMhsmOQ62PxGV1GwXPmS2MgcGAVQmIyysCSoBJT6TCi5UX+aYQnqYye7
-         V/kFHHzwJoPLaK7bRWmiJF5M/U5YH9kgf0UcAKyA3XdLvDLEgiWDaMHcnWpaMUDdTfUX
-         lfWY6XMoGmo0ae07Ab3tATakSZbHVUJ2qRB69LT1c2SvsdY54Y/B4wf4o6gEeHeWbVwZ
-         TY1g==
-X-Gm-Message-State: ACrzQf37ufMtSfqeVjA+Ed7kcRx0y4SsFCn3uTGPmEtzHL64aoRbImrl
-        q78h55OyHuQl8Qc4f6ZCTSIFRA==
-X-Google-Smtp-Source: AMsMyM6gLeFy71nSxk2gT25tUnCpxV9lEYdESGw3HGK02z1+OuPJ6eKzIpdPlsMCVsuRvg7YFgwQiQ==
-X-Received: by 2002:a05:6214:625:b0:4bb:ff88:a937 with SMTP id a5-20020a056214062500b004bbff88a937mr25108338qvx.111.1667586711697;
-        Fri, 04 Nov 2022 11:31:51 -0700 (PDT)
-Received: from ?IPV6:2601:586:5000:570:aad6:acd8:4ed9:299b? ([2601:586:5000:570:aad6:acd8:4ed9:299b])
-        by smtp.gmail.com with ESMTPSA id i19-20020ac860d3000000b003a5612c3f28sm2333417qtm.56.2022.11.04.11.31.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Nov 2022 11:31:50 -0700 (PDT)
-Message-ID: <5eeb52b6-2ac6-0cf0-917b-149ba442285f@linaro.org>
-Date:   Fri, 4 Nov 2022 14:31:49 -0400
+        Fri, 4 Nov 2022 14:57:39 -0400
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02E5C51C34
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 11:57:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1667588257; x=1699124257;
+  h=date:from:to:cc:subject:message-id:mime-version:
+   content-transfer-encoding;
+  bh=HfJ4nv8wN6briqCaEwDbiyyy2GoyauuVwacO9HR6vKQ=;
+  b=ilGH6svSXLCF5Y+2CdV/c9mdg4u+qDB68I65Ws2mtKYKU1JhFn5WdnBo
+   CojwRt7IKa4wqoQsA15sYDkOSe8ICms7mZH0+R0NRAFV1+eCOLgDA5dZL
+   HN9UEAEP/NqsK8i7UUgWPvHtILUBEuLib9Y8o+FdJrWFaXsAymnzpoF81
+   +vGnxRQIFOCb5RjvxQmiTuVDs/xhW8g21h3h3E/gTumPkckpOLcEQDboI
+   P0ZBvUOyxx57U0vtWsUCJClbqo0CIEL+vwkiQgN0OqbcHDnw/8Mef8xy6
+   yWi/yRX5h5BAgji4Kjkwy42fa8LdLZlCw/HWL8apjdFtyXbg/kI2fxI/W
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10521"; a="396344407"
+X-IronPort-AV: E=Sophos;i="5.96,138,1665471600"; 
+   d="scan'208";a="396344407"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2022 11:57:37 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10521"; a="777818230"
+X-IronPort-AV: E=Sophos;i="5.96,138,1665471600"; 
+   d="scan'208";a="777818230"
+Received: from lkp-server02.sh.intel.com (HELO b6d29c1a0365) ([10.239.97.151])
+  by fmsmga001.fm.intel.com with ESMTP; 04 Nov 2022 11:57:36 -0700
+Received: from kbuild by b6d29c1a0365 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1or1sl-000HFA-0j;
+        Fri, 04 Nov 2022 18:57:35 +0000
+Date:   Sat, 05 Nov 2022 02:56:37 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Andrew Morton <akpm@linux-foundation.org>
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        Linux Memory Management List <linux-mm@kvack.org>
+Subject: [linux-next:master] BUILD SUCCESS WITH WARNING
+ 0cdb3579f1ee4c1e55acf8dfb0697b660067b1f8
+Message-ID: <63656065.kcx4EopdcPjzWJhq%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 6/9] dt-bindings: mfd: qcom,tcsr: Add compatible for
- MSM8976
-Content-Language: en-US
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>, agross@kernel.org
-Cc:     andersson@kernel.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        lee@kernel.org, ulf.hansson@linaro.org,
-        srinivas.kandagatla@linaro.org, jic23@kernel.org, lars@metafoo.de,
-        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
-        bhupesh.sharma@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-hardening@vger.kernel.org, marijn.suijten@somainline.org,
-        kernel@collabora.com, luca@z3ntu.xyz, a39.skl@gmail.com
-References: <20221104172122.252761-1-angelogioacchino.delregno@collabora.com>
- <20221104172122.252761-7-angelogioacchino.delregno@collabora.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221104172122.252761-7-angelogioacchino.delregno@collabora.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/11/2022 13:21, AngeloGioacchino Del Regno wrote:
-> Document the qcom,msm8976-tcsr compatible.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> ---
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+branch HEAD: 0cdb3579f1ee4c1e55acf8dfb0697b660067b1f8  Add linux-next specific files for 20221104
 
+Warning reports:
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+https://lore.kernel.org/oe-kbuild-all/202211041320.coq8EELJ-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202211041654.zCUPre9o-lkp@intel.com
 
-Best regards,
-Krzysztof
+Warning: (recently discovered and may have been fixed)
 
+drivers/gpu/drm/amd/amdgpu/../display/dc/core/dc.c:4878: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
+drivers/gpu/drm/amd/amdgpu/../display/dc/core/dc_link_dp.c:5044:24: warning: implicit conversion from 'enum <anonymous>' to 'enum dc_status' [-Wenum-conversion]
+drivers/gpu/drm/msm/hdmi/hdmi.c:244:1: warning: 'static' is not at beginning of declaration [-Wold-style-declaration]
+drivers/gpu/drm/msm/hdmi/hdmi.c:251:1: warning: 'static' is not at beginning of declaration [-Wold-style-declaration]
+
+Warning ids grouped by kconfigs:
+
+gcc_recent_errors
+|-- alpha-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:This-comment-starts-with-but-isn-t-a-kernel-doc-comment.-Refer-Documentation-doc-guide-kernel-doc.rst
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc_link_dp.c:warning:implicit-conversion-from-enum-anonymous-to-enum-dc_status
+|   `-- drivers-gpu-drm-msm-hdmi-hdmi.c:warning:static-is-not-at-beginning-of-declaration
+|-- arc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:This-comment-starts-with-but-isn-t-a-kernel-doc-comment.-Refer-Documentation-doc-guide-kernel-doc.rst
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc_link_dp.c:warning:implicit-conversion-from-enum-anonymous-to-enum-dc_status
+|   `-- drivers-gpu-drm-msm-hdmi-hdmi.c:warning:static-is-not-at-beginning-of-declaration
+|-- arc-randconfig-r036-20221104
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc_link_dp.c:warning:implicit-conversion-from-enum-anonymous-to-enum-dc_status
+|-- arc-randconfig-r043-20221104
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:This-comment-starts-with-but-isn-t-a-kernel-doc-comment.-Refer-Documentation-doc-guide-kernel-doc.rst
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc_link_dp.c:warning:implicit-conversion-from-enum-anonymous-to-enum-dc_status
+|-- arm-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:This-comment-starts-with-but-isn-t-a-kernel-doc-comment.-Refer-Documentation-doc-guide-kernel-doc.rst
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc_link_dp.c:warning:implicit-conversion-from-enum-anonymous-to-enum-dc_status
+|   `-- drivers-gpu-drm-msm-hdmi-hdmi.c:warning:static-is-not-at-beginning-of-declaration
+|-- arm-defconfig
+|   `-- drivers-gpu-drm-msm-hdmi-hdmi.c:warning:static-is-not-at-beginning-of-declaration
+|-- arm64-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:This-comment-starts-with-but-isn-t-a-kernel-doc-comment.-Refer-Documentation-doc-guide-kernel-doc.rst
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc_link_dp.c:warning:implicit-conversion-from-enum-anonymous-to-enum-dc_status
+|   `-- drivers-gpu-drm-msm-hdmi-hdmi.c:warning:static-is-not-at-beginning-of-declaration
+|-- i386-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:This-comment-starts-with-but-isn-t-a-kernel-doc-comment.-Refer-Documentation-doc-guide-kernel-doc.rst
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc_link_dp.c:warning:implicit-conversion-from-enum-anonymous-to-enum-dc_status
+|-- ia64-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:This-comment-starts-with-but-isn-t-a-kernel-doc-comment.-Refer-Documentation-doc-guide-kernel-doc.rst
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc_link_dp.c:warning:implicit-conversion-from-enum-anonymous-to-enum-dc_status
+|-- ia64-buildonly-randconfig-r006-20221104
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:This-comment-starts-with-but-isn-t-a-kernel-doc-comment.-Refer-Documentation-doc-guide-kernel-doc.rst
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc_link_dp.c:warning:implicit-conversion-from-enum-anonymous-to-enum-dc_status
+|-- m68k-allmodconfig
+|   `-- drivers-gpu-drm-msm-hdmi-hdmi.c:warning:static-is-not-at-beginning-of-declaration
+|-- m68k-allyesconfig
+|   `-- drivers-gpu-drm-msm-hdmi-hdmi.c:warning:static-is-not-at-beginning-of-declaration
+|-- mips-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:This-comment-starts-with-but-isn-t-a-kernel-doc-comment.-Refer-Documentation-doc-guide-kernel-doc.rst
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc_link_dp.c:warning:implicit-conversion-from-enum-anonymous-to-enum-dc_status
+|   `-- drivers-gpu-drm-msm-hdmi-hdmi.c:warning:static-is-not-at-beginning-of-declaration
+|-- powerpc-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:This-comment-starts-with-but-isn-t-a-kernel-doc-comment.-Refer-Documentation-doc-guide-kernel-doc.rst
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc_link_dp.c:warning:implicit-conversion-from-enum-anonymous-to-enum-dc_status
+|   `-- drivers-gpu-drm-msm-hdmi-hdmi.c:warning:static-is-not-at-beginning-of-declaration
+|-- riscv-randconfig-r042-20221104
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:This-comment-starts-with-but-isn-t-a-kernel-doc-comment.-Refer-Documentation-doc-guide-kernel-doc.rst
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc_link_dp.c:warning:implicit-conversion-from-enum-anonymous-to-enum-dc_status
+|-- s390-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc.c:warning:This-comment-starts-with-but-isn-t-a-kernel-doc-comment.-Refer-Documentation-doc-guide-kernel-doc.rst
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-core-dc_link_dp.c:warning:implicit-conversion-from-enum-anonymous-to-enum-dc_status
+clang_recent_errors
+`-- x86_64-randconfig-a016
+    `-- vmlinux.o:warning:objtool:handle_bug:call-to-kmsan_unpoison_entry_regs()-leaves-.noinstr.text-section
+
+elapsed time: 773m
+
+configs tested: 58
+configs skipped: 2
+
+gcc tested configs:
+um                             i386_defconfig
+um                           x86_64_defconfig
+i386                                defconfig
+riscv                randconfig-r042-20221104
+x86_64                              defconfig
+x86_64                        randconfig-a013
+arc                  randconfig-r043-20221104
+x86_64                        randconfig-a011
+arc                                 defconfig
+s390                 randconfig-r044-20221104
+s390                             allmodconfig
+x86_64                        randconfig-a015
+powerpc                           allnoconfig
+ia64                             allmodconfig
+x86_64                          rhel-8.3-func
+alpha                               defconfig
+x86_64                    rhel-8.3-kselftests
+x86_64                        randconfig-a004
+x86_64                           rhel-8.3-kvm
+s390                             allyesconfig
+s390                                defconfig
+x86_64                         rhel-8.3-kunit
+x86_64                        randconfig-a002
+x86_64                               rhel-8.3
+x86_64                           rhel-8.3-syz
+i386                             allyesconfig
+sh                               allmodconfig
+arc                              allyesconfig
+mips                             allyesconfig
+x86_64                        randconfig-a006
+powerpc                          allmodconfig
+alpha                            allyesconfig
+arm                                 defconfig
+m68k                             allyesconfig
+i386                          randconfig-a001
+i386                          randconfig-a003
+i386                          randconfig-a014
+x86_64                           allyesconfig
+i386                          randconfig-a012
+i386                          randconfig-a005
+i386                          randconfig-a016
+arm                              allyesconfig
+arm64                            allyesconfig
+m68k                             allmodconfig
+
+clang tested configs:
+hexagon              randconfig-r041-20221104
+hexagon              randconfig-r045-20221104
+x86_64                        randconfig-a012
+x86_64                        randconfig-a014
+x86_64                        randconfig-a016
+x86_64                        randconfig-a001
+x86_64                        randconfig-a003
+x86_64                        randconfig-a005
+i386                          randconfig-a002
+i386                          randconfig-a004
+i386                          randconfig-a013
+i386                          randconfig-a006
+i386                          randconfig-a011
+i386                          randconfig-a015
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
