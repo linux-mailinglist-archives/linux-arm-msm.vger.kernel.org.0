@@ -2,73 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B48426192B5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 09:29:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B44F4619364
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 10:23:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230474AbiKDI3j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 04:29:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49760 "EHLO
+        id S230381AbiKDJXL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 05:23:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230460AbiKDI3i (ORCPT
+        with ESMTP id S229489AbiKDJXK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 04:29:38 -0400
+        Fri, 4 Nov 2022 05:23:10 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13F802610E;
-        Fri,  4 Nov 2022 01:29:34 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A46sh0l024757;
-        Fri, 4 Nov 2022 08:28:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=F523UAf1/s3baROaXRYF1jL25q1n1tGzBM/u38xKkvk=;
- b=TBEhM615QX7w14CYbKOAnSSZbJ8Nwe5pNgzgsEXzywf4ZLCLdmtywAw+T4V088hTitTk
- 8A0glYME6NoXsemC4khtMfVMfPzipMbvsVw5VAfyfhNLcUvAwC3CErwSEhbopg0npbPz
- 8RMpBvhDGtWQht/t07CwgLcg8r+m/G+28hAgBd7WlSGnwEz7VKmF2f2OVwvEPrV1tSlU
- Nbf5kLBG9ntg8BNxP2aJQdDDuRaSlfIfi6qPIvAMLbbtlpT8g1Dz49IYURczn1BBTWel
- ARG80xOD41muE/hqXU9E8vcC2mVSTohQzoG6ESgSfJ+b/kcLEERjh5tMDdStBrlP9iOU bQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kmvdy8djp-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84E7C275D9;
+        Fri,  4 Nov 2022 02:23:09 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A49JntM021774;
+        Fri, 4 Nov 2022 09:22:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=XU+pTkO/J5QRdDNXmPAzfbbSQ90JP/22zRHbYnu0jRc=;
+ b=SkL/z8m8FGmpZ1FWSc9SMcalmOiZdkz4MdjQBE4MKtxqJGiqUKiIhkTxVhoCE1LrmuBC
+ IVDGGrM2w15GzFw562pHkblhnKMBYX9AAXRhWcdC8rQBQc3b3vpW5NN7NvLbd4/qemSa
+ GtbMoIOe9jPQzTN9zhOWNgaN7mReInd71dagrzw6OkokPiCSxGEfaQ5Y51ridNTquKgl
+ 06lP/mJynvRk9sz5IcILqbZkzePWUPA1sLYg87BeB/umOnC90Zv4TAcH7Ki9tnxqWLg7
+ nX3okJRriEYhZOOj8dXQDfycjJrMPHew6oLzidnUbm1PT3DmX1elDK6E1B5OapL0ybZW Hw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kmyseg13j-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 04 Nov 2022 08:28:50 +0000
+        Fri, 04 Nov 2022 09:22:48 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A48SncK006786
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A49Mmlj029511
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 4 Nov 2022 08:28:49 GMT
-Received: from youghand-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Fri, 4 Nov 2022 01:28:46 -0700
-From:   Youghandhar Chintala <quic_youghand@quicinc.com>
-To:     <ath11k@lists.infradead.org>
-CC:     <linux-wireless@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_mpubbise@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        "Youghandhar Chintala" <quic_youghand@quicinc.com>,
-        kernel test robot <lkp@intel.com>
-Subject: [PATCH v2] wifi: ath10k: Add WLAN firmware image version info into smem
-Date:   Fri, 4 Nov 2022 13:58:28 +0530
-Message-ID: <20221104082828.14386-1-quic_youghand@quicinc.com>
-X-Mailer: git-send-email 2.38.0
+        Fri, 4 Nov 2022 09:22:48 GMT
+Received: from [10.216.59.146] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Fri, 4 Nov 2022
+ 02:22:43 -0700
+Message-ID: <8c0a715a-d626-aa70-15f1-79f1e23fbc67@quicinc.com>
+Date:   Fri, 4 Nov 2022 14:49:59 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Subject: Re: PM-runtime: supplier looses track of consumer during probe
+From:   Tushar Nimkar <quic_tnimkar@quicinc.com>
+To:     <linux-pm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        <bjorn.andersson@kernel.org>,
+        Nitin Rawat <quic_nitirawa@quicinc.com>,
+        <quic_mkshah@quicinc.com>, <quic_lsrao@quicinc.com>,
+        <bvanassche@acm.org>, <adrian.hunter@intel.com>,
+        Peter Wang <peter.wang@mediatek.com>
+References: <36aed941-a73e-d937-2721-4f0decd61ce0@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <36aed941-a73e-d937-2721-4f0decd61ce0@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ViL93cA0mf8EPKql2a8wzNtxT70RzuSY
-X-Proofpoint-ORIG-GUID: ViL93cA0mf8EPKql2a8wzNtxT70RzuSY
+X-Proofpoint-GUID: EQr5dPOqBfi4y62mddPdvqbe_voJy31h
+X-Proofpoint-ORIG-GUID: EQr5dPOqBfi4y62mddPdvqbe_voJy31h
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
  definitions=2022-11-04_02,2022-11-03_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 spamscore=0 clxscore=1011
- mlxscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211040055
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
+ lowpriorityscore=0 clxscore=1011 priorityscore=1501 malwarescore=0
+ suspectscore=0 bulkscore=0 impostorscore=0 mlxlogscore=999 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211040060
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,98 +84,136 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In a SoC based solution, it would be useful to know the versions of the
-various binary firmware blobs the system is running on. On a QCOM based
-SoC, this info can be obtained from socinfo debugfs infrastructure. For
-this to work, respective subsystem drivers have to export the firmware
-version information to an SMEM based version information table.
+Hi linux-pm/linux-scsi,
 
-Having firmware version information at one place will help quickly
-figure out the firmware versions of various subsystems on the device
-instead of going through builds/logs in an event of a system crash.
+Gentle reminder!
 
-Fill WLAN firmware version information in SMEM version table to be
-printed as part of socinfo debugfs infrastructure on a Qualcomm based
-SoC.
+Can you please provide your suggestions on below race?
 
-This change is applicable only for WCN399X targets.
+Thanks, Tushar Nimkar
 
-Reported-by: kernel test robot <lkp@intel.com>
-
-Tested-on: WCN3990 hw1.0 SNOC WLAN.HL.3.2.2.c10-00754-QCAHLSWMTPL-1
-
-Signed-off-by: Youghandhar Chintala <quic_youghand@quicinc.com>
-
----
-Changes from v1:
- - Changed print format specifier to %zu from %i
- - Changed ath10k_qmi_add_wlan_ver_smem() API argument
-	  to const char *fw_build_id from char *fw_build_id
- - Changed version_string_size with MACRO
----
- drivers/net/wireless/ath/ath10k/qmi.c | 28 +++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
-
-diff --git a/drivers/net/wireless/ath/ath10k/qmi.c b/drivers/net/wireless/ath/ath10k/qmi.c
-index 66cb7a1e628a..928d78f6d494 100644
---- a/drivers/net/wireless/ath/ath10k/qmi.c
-+++ b/drivers/net/wireless/ath/ath10k/qmi.c
-@@ -14,6 +14,7 @@
- #include <linux/net.h>
- #include <linux/platform_device.h>
- #include <linux/qcom_scm.h>
-+#include <linux/soc/qcom/smem.h>
- #include <linux/string.h>
- #include <net/sock.h>
- 
-@@ -22,6 +23,8 @@
- 
- #define ATH10K_QMI_CLIENT_ID		0x4b4e454c
- #define ATH10K_QMI_TIMEOUT		30
-+#define ATH10K_SMEM_IMAGE_VERSION_TABLE       469
-+#define ATH10K_SMEM_IMAGE_TABLE_CNSS_INDEX     13
- 
- static int ath10k_qmi_map_msa_permission(struct ath10k_qmi *qmi,
- 					 struct ath10k_msa_mem_info *mem_info)
-@@ -536,6 +539,29 @@ int ath10k_qmi_wlan_disable(struct ath10k *ar)
- 	return ath10k_qmi_mode_send_sync_msg(ar, QMI_WLFW_OFF_V01);
- }
- 
-+static void ath10k_qmi_add_wlan_ver_smem(struct ath10k *ar, const char *fw_build_id)
-+{
-+	u8 *smem_table_ptr;
-+	size_t smem_block_size;
-+	const u32 version_string_size = MAX_BUILD_ID_LEN;
-+	const u32 smem_img_idx_wlan = ATH10K_SMEM_IMAGE_TABLE_CNSS_INDEX * 128;
-+
-+	smem_table_ptr = qcom_smem_get(QCOM_SMEM_HOST_ANY,
-+				       ATH10K_SMEM_IMAGE_VERSION_TABLE,
-+				       &smem_block_size);
-+	if (IS_ERR(smem_table_ptr)) {
-+		ath10k_dbg(ar, ATH10K_DBG_QMI, "smem image version table not found");
-+		return;
-+	}
-+	if (smem_img_idx_wlan + version_string_size > smem_block_size) {
-+		ath10k_dbg(ar, ATH10K_DBG_QMI, "smem block size too small: %zu",
-+			   smem_block_size);
-+		return;
-+	}
-+	memcpy(smem_table_ptr + smem_img_idx_wlan, fw_build_id,
-+	       version_string_size);
-+}
-+
- static int ath10k_qmi_cap_send_sync_msg(struct ath10k_qmi *qmi)
- {
- 	struct wlfw_cap_resp_msg_v01 *resp;
-@@ -606,6 +632,8 @@ static int ath10k_qmi_cap_send_sync_msg(struct ath10k_qmi *qmi)
- 			    qmi->fw_version, qmi->fw_build_timestamp, qmi->fw_build_id);
- 	}
- 
-+	ath10k_qmi_add_wlan_ver_smem(ar, qmi->fw_build_id);
-+
- 	kfree(resp);
- 	return 0;
- 
--- 
-2.38.0
-
+On 10/14/2022 4:20 PM, Tushar Nimkar wrote:
+> Hi linux-pm/linux-scsi,
+> 
+> We have included fix [1] but continuing to observe supplier loosing 
+> track of consumer.
+> 
+> Below is trace snippet with additional logging added.
+> Here consumer is 0:0:0:0 and supplier is 0:0:0:49488. In Last three 
+> lines consumer resume is completed but supplier is put down.
+> 
+>     kworker/u16:0-7     0.880014: rpm_idle:             0:0:0:0 flags-4 
+> cnt-0  dep-0  auto-1 p-0 irq-0 child-0
+>     kworker/u16:0-7     0.880017: bprint: 
+> pm_runtime_mark_last_busy.46700: :#205 dev_name:0:0:0:0 
+> ktime_get_mono_fast_ns():852365364
+>     kworker/u16:0-7     0.880019: rpm_suspend:          0:0:0:0 flags-8 
+> cnt-0  dep-0  auto-1 p-0 irq-0 child-0
+>     kworker/u16:0-7     0.880022: bprint: pm_runtime_put_noidle.44083: 
+> pm_runtime_put_noidle: #112 dev_name:0:0:0:49488 dev usage_count:5 
+> decremented usage count
+>     kworker/u16:0-7     0.880023: bprint: pm_runtime_put_noidle.44083: 
+> pm_runtime_put_noidle: #112 dev_name:0:0:0:49488 dev usage_count:4 
+> decremented usage count
+>     kworker/u16:2-142   0.880024: rpm_resume:           0:0:0:0 flags-4 
+> cnt-1  dep-0  auto-1 p-0 irq-0 child-0
+>     kworker/u16:0-7     0.880025: bprint: __rpm_put_suppliers: 
+> __rpm_put_suppliers: #348 consumer:0:0:0:0 supplier:0:0:0:49488 
+> usage_count:4
+>     kworker/u16:0-7     0.880061: rpm_idle:             0:0:0:49488 
+> flags-1 cnt-4  dep-0  auto-1 p-0 irq-0 child-0
+>     kworker/u16:0-7     0.880062: rpm_return_int: 
+> rpm_idle+0x16c:0:0:0:49488 ret=-11
+>     kworker/u16:2-142   0.880062: bprint: __pm_runtime_resume: 
+> __pm_runtime_resume: #1147 dev_name:0:0:0:49488 dev usage_count:5 
+> incremented usage count
+>     kworker/u16:2-142   0.880063: rpm_resume:           0:0:0:49488 
+> flags-4 cnt-5  dep-0  auto-1 p-0 irq-0 child-0
+>     kworker/u16:2-142   0.880063: rpm_return_int: 
+> rpm_resume+0x690:0:0:0:49488 ret=1
+>     kworker/u16:0-7     0.880063: rpm_return_int: 
+> rpm_suspend+0x68:0:0:0:0 ret=0
+>     kworker/u16:2-142   0.880063: bprint: rpm_get_suppliers: 
+> rpm_get_suppliers: #300 consumer:0:0:0:0 supplier:0:0:0:49488 usage_count:5
+>     kworker/u16:0-7     0.880065: bprint: pm_runtime_put_noidle.44083: 
+> pm_runtime_put_noidle: #112 dev_name:0:0:0:49488 dev usage_count:4 
+> decremented usage count
+>     kworker/u16:2-142   0.880065: bprint: 
+> pm_runtime_mark_last_busy.44088: :#205 dev_name:0:0:0:0 
+> ktime_get_mono_fast_ns():852413749
+>     kworker/u16:2-142   0.880065: rpm_idle:             0:0:0:0 flags-1 
+> cnt-1  dep-0  auto-1 p-0 irq-0 child-0
+>     kworker/u16:2-142   0.880065: rpm_return_int: rpm_idle+0x16c:0:0:0:0 
+> ret=-11
+>     kworker/u16:0-7     0.880066: bprint: __rpm_put_suppliers: 
+> __rpm_put_suppliers: #348 consumer:0:0:0:0 supplier:0:0:0:49488 
+> usage_count:4
+>     kworker/u16:0-7     0.880067: rpm_return_int: rpm_idle+0x16c:0:0:0:0 
+> ret=-16
+>     kworker/u16:2-142   0.880067: rpm_return_int: 
+> rpm_resume+0x690:0:0:0:0 ret=0
+> 
+> Upon looking into this further the race looks to be in below two 
+> processes running in parallel and process-1 is putting down supplier at 
+> [C] because process-2 is setting runtime_status as resuming at [D].
+> 
+> Also as per runtime PM documentation
+> In order to use autosuspend, subsystems or drivers must call
+> pm_runtime_use_autosuspend(), and thereafter they should use the various 
+> `*_autosuspend()` helper functions...
+> 
+> It was also observed that *_autosuspend() API at point [A] was invoked 
+> without first invoking pm_runtime_use_autosuspend() which return 
+> expiration as zero at point [B] and proceeds ahead for immediate runtime 
+> suspend of device which seems lead to this race condition.
+> 
+> Process -1
+> ufshcd_async_scan context (process 1)
+> scsi_autopm_put_device() //0:0:0:0
+> pm_runtime_put_sync()
+> __pm_runtime_idle()
+> rpm_idle() -- RPM_GET_PUT(4)
+>      __rpm_callback
+>          scsi_runtime_idle()
+>              pm_runtime_mark_last_busy()
+>              pm_runtime_autosuspend()  --[A]
+>                  rpm_suspend() -- RPM_AUTO(8)
+>                      pm_runtime_autosuspend_expiration() 
+> use_autosuspend    is false return 0   --- [B]
+>                          __update_runtime_status to RPM_SUSPENDING
+>                      __rpm_callback()
+>                          __rpm_put_suppliers(dev, false)
+>                      __update_runtime_status to RPM_SUSPENDED
+>                  rpm_suspend_suppliers()
+>                      rpm_idle() for supplier -- RPM_ASYNC(1) return 
+> (-EAGAIN) [ Other consumer active for supplier]
+>                  rpm_suspend() – END with return=0
+>          scsi_runtime_idle() END return (-EBUSY) always.
+>       /* Do that if resume fails too.*/
+>      (dev->power.runtime_status == RPM_RESUMING && retval)))  return -EBUSY
+>          __rpm_put_suppliers(dev, false)  -- [C]
+> rpm_idle() END return -EBUSY
+> 
+> Process -2
+> sd_probe context (Process 2)
+> scsi_autopm_get_device() //0:0:0:0
+> __pm_runtime_resume(RPM_GET_PUT)
+> rpm_resume() -- RPM_GET_PUT(4)
+>      __update_runtime_status to RPM_RESUMING --[D]
+>      __rpm_callback()
+>          rpm_get_suppliers()
+>              __pm_runtime_resume() - RPM_GET_PUT(4) – supplier
+>                  rpm_resume() for supplier.
+>      __update_runtime_status to RPM_ACTIVE
+>      pm_runtime_mark_last_busy ()
+> rpm_resume() END return 0
+> 
+> Can you please provide your suggestions on addressing above race condition?
+> 
+> This is also reported at [2].
+> 
+> [1]: https://lore.kernel.org/lkml/4748074.GXAFRqVoOG@kreacher/T/
+> [2]: https://lkml.org/lkml/2022/10/12/259
+> 
+> Thanks,
+> Tushar Nimkar
