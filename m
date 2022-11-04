@@ -2,309 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 152E5619115
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 07:29:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 90B92619274
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 09:10:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229567AbiKDG3e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 02:29:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57132 "EHLO
+        id S229882AbiKDIKd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 04:10:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229882AbiKDG3d (ORCPT
+        with ESMTP id S229600AbiKDIKd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 02:29:33 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EDB1286DA
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Nov 2022 23:29:32 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id q9so3694125pfg.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Nov 2022 23:29:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=quanta-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SxFg7HXpZ+LzNmI03TKgAta5PVasE7I6+Po/GSpLci0=;
-        b=Ku7F2bl3irc/VRVUlNhaaN8IT1wmr9OCKQsAZv9ztMfUd49lTX1pYwy7jqWuE0TVMo
-         X6nEk+VQ6RZQqvhjJmW9hH9yXbSXcARoLOyblr39K9seyoX6gjbpGp4grAIEqCvCPVya
-         TLAWyo4oiZ2Zm+UouNqITHeOE+j+N1XpG/LIkkm9WXhEetSBhFDLFSNu9d9DxYHVnS8u
-         05gnQjkNN0rhaN8tuu3xOYC+hxr57oHxUQwGt8PBQJWC9AFkrgjzPhifFQgBC0yAXy4O
-         MHh2ydSVEa/K0A+b37o0X9rm7P2h+qon1WsNbBSLhK4/xHiXE1MiTQd5qwvO6eGbcOmv
-         UXMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SxFg7HXpZ+LzNmI03TKgAta5PVasE7I6+Po/GSpLci0=;
-        b=UA19LLHI7DgoG2jVToh8QyJQ/QQIJInzPE9bJUCUhklPtpD+trNGXXaVYhGKPhGZ7f
-         78AkneFWGvWlTizlgupc/WdqMm5wKcIgMXOc5V9SXvPLMnl6HAnxjZU1uvrxNrkFnIaJ
-         3S3O9QiYCRPhPij2T/MFkXMIKrHcUHAgzyCaZciYRkiguCxLWx1w7JyQpIJBqGdmvvHr
-         dCpPiZuEkhDadVToTRaxYs61KyZkDHFFM/JYq0cRM/CyOEDEr98pGmKh5PbwOyiJPrk8
-         r+6lNuh5tn1wOT7Ggt2nkEi87TiXs7VBfTgRSY8ESv5yQTuyWyy/NaRbmtggMuMLFN6r
-         VZIA==
-X-Gm-Message-State: ACrzQf2RR2dYurLNLL1+F3DWaNsri+I9TYdIUaW651Zi2XDXE4lu7XqW
-        2/jLCI+dQKh5lUIAnHskHoIi56WsH2LHVw==
-X-Google-Smtp-Source: AMsMyM5K4ff6vcUwtrZl0lxUOHrxCUXhlw//8AWk8Y9AhXCUkFhFFtS0Zv+P3v/T20SmSpSiCJzJjA==
-X-Received: by 2002:a63:455e:0:b0:439:9496:ddd8 with SMTP id u30-20020a63455e000000b004399496ddd8mr28969212pgk.261.1667543371792;
-        Thu, 03 Nov 2022 23:29:31 -0700 (PDT)
-Received: from liang-Predator-PH517-52.. (2001-b400-e306-842b-9ec5-b6d1-6a82-aa11.emome-ip6.hinet.net. [2001:b400:e306:842b:9ec5:b6d1:6a82:aa11])
-        by smtp.gmail.com with ESMTPSA id r18-20020aa79892000000b0056bf24f0837sm1764687pfl.166.2022.11.03.23.29.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Nov 2022 23:29:31 -0700 (PDT)
-From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     dianders@chromium.org,
-        Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v10 4/4] arm64: dts: qcom: sc7280: add sc7280-herobrine-audio-rt5682-3mic3.dtsi for evoker
-Date:   Fri,  4 Nov 2022 14:19:41 +0800
-Message-Id: <20221104141515.v10.4.I9718ac3622fa550e432209ae5c95c87b873a0f87@changeid>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221104061941.2739938-1-sheng-liang.pan@quanta.corp-partner.google.com>
-References: <20221104061941.2739938-1-sheng-liang.pan@quanta.corp-partner.google.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Fri, 4 Nov 2022 04:10:33 -0400
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82F4C21266;
+        Fri,  4 Nov 2022 01:10:31 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id E780E5C00BE;
+        Fri,  4 Nov 2022 04:10:30 -0400 (EDT)
+Received: from imap51 ([10.202.2.101])
+  by compute3.internal (MEProxy); Fri, 04 Nov 2022 04:10:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm3; t=1667549430; x=1667635830; bh=4yw24n+H9s
+        ew5wjPIN5rwS9Ptmj6epn7kfJOfbtVSMk=; b=Og9ijk2hObYCaVvY79CGJF8wxq
+        2lgE7uxsPAZYpI7WuRRSliXmPYja/ts8fKNpSbuarP9zeSTumYtC+NsMD/HhZzou
+        xir+G9OdCZH8ETuQlm1LvJRBikMRh9hg7POeIvDhU1+z1GQoHjb43WdY3Qm5eTwD
+        M4OKKBe7EBlQ89T3NfKSRkXsLGI+bUAtz4h78b5orou5p2WXTkap3rEssRQBTOtv
+        IMfuRYBzhhN32qjJWUMsqLFkTUgdIKzcldnH1WcAcs1/7hyRYXZPY2q8VJ7LMo2F
+        sbyq92b+2dv4V7EkbheDFCO8JXoWNG05G20KhX0VYzCm+coX5IvNUDeFX99A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; t=1667549430; x=1667635830; bh=4yw24n+H9sew5wjPIN5rwS9Ptmj6
+        epn7kfJOfbtVSMk=; b=CS7UG3tY5ElDuWEDog5xPDIJyNxdYWNLQR4N3lowjwLu
+        XMol5Ym0sE084PHNE5tp+I/QXMQlS0qxHm/5O4f8lwcFz2yW1F9OmlaxXBJw/X3D
+        YCoQj/k9XJEJt05NfLSHL1QTue3zR3ne0O/46eP2m2uenYEHNEQZXXyE5apF67Xg
+        Qa0J7L0Jif4wg+DADocKPA9e6jz4h0RiMGNdt8B1E7wWw+vmRgwkLqjgfW6EOVeo
+        WmFjfLum5zoCAi4/UDO8mAIE6QBTfrVGYnHP/6haDLk13SheuG9Nk6rbubIvX685
+        mDflAvom14aFSse8+K48vwL9ZQE7Ih3J5tbxNze5WQ==
+X-ME-Sender: <xms:9shkY6r5nTEm0ai-OvcxDXsjTtzR-y3fA0phAHdWPior-ae0M02V0w>
+    <xme:9shkY4olQOufzpK54hZ2E3w0_yIixkAKQVUXeTHsU6G691k9UglAutaJPeaunYFB1
+    dtRB9uFRfsPilbNOzA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrvddtgdduudejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
+    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
+    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
+    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
+    hrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:9shkY_NPogpgaWVhOBpxaCq98Am3O7kMgUZjGNnCh8_MMPSwFL3CYw>
+    <xmx:9shkY57I1w0ZfBpWbSjChg7zmukbrqIKGuJm9DxJAUalIwUZ8nqLpw>
+    <xmx:9shkY54jCvXUJE0T8rb23dIbMdseKqwpuI_569IbwzrmMeAfuU8fDw>
+    <xmx:9shkY4z1DWqNwc_l0qkEfbxt3YZ-DHzQw5d1FbF3Ym5IGQqbFn74ww>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 914A5B603ED; Fri,  4 Nov 2022 04:10:30 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-1087-g968661d8e1-fm-20221021.001-g968661d8
+Mime-Version: 1.0
+Message-Id: <9dd597d9-a3f3-48f2-8416-b5b097a230d5@app.fastmail.com>
+In-Reply-To: <96238455-73b6-bead-0fdb-55ca68e5bf0b@quicinc.com>
+References: <20221026185846.3983888-1-quic_eberman@quicinc.com>
+ <20221026185846.3983888-14-quic_eberman@quicinc.com>
+ <Y2H8oh7AvYDiMqKs@kroah.com>
+ <722b05a1-4bf5-0837-baea-b1d0a9cc1e43@quicinc.com>
+ <Y2MKWOihjAPxfl6v@kroah.com>
+ <96238455-73b6-bead-0fdb-55ca68e5bf0b@quicinc.com>
+Date:   Fri, 04 Nov 2022 09:10:12 +0100
+From:   "Arnd Bergmann" <arnd@arndb.de>
+To:     "Elliot Berman" <quic_eberman@quicinc.com>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
+Cc:     "Bjorn Andersson" <quic_bjorande@quicinc.com>,
+        "Murali Nalajala" <quic_mnalajal@quicinc.com>,
+        "Trilok Soni" <quic_tsoni@quicinc.com>,
+        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
+        "Carl van Schaik" <quic_cvanscha@quicinc.com>,
+        "Prakruthi Deepak Heragu" <quic_pheragu@quicinc.com>,
+        "Andy Gross" <agross@kernel.org>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        "Jassi Brar" <jassisinghbrar@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        "Mark Rutland" <mark.rutland@arm.com>,
+        "Lorenzo Pieralisi" <lorenzo.pieralisi@arm.com>,
+        "Sudeep Holla" <sudeep.holla@arm.com>,
+        "Marc Zyngier" <maz@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Jonathan Corbet" <corbet@lwn.net>,
+        "Will Deacon" <will@kernel.org>,
+        "Catalin Marinas" <catalin.marinas@arm.com>,
+        "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
+        "Amol Maheshwari" <amahesh@qti.qualcomm.com>,
+        "Kalle Valo" <kvalo@kernel.org>, devicetree@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 13/21] gunyah: vm_mgr: Introduce basic VM Manager
+Content-Type: text/plain
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-add specific 3mic setting as sc7280-herobrine-audio-rt5682-3mic.dtsi,
-so we can include sc7280-herobrine-audio-rt5682-3mic.dtsi for evoker
-as it uses rt5682 with 3 mics.
+On Fri, Nov 4, 2022, at 01:11, Elliot Berman wrote:
+> On 11/2/2022 5:24 PM, Greg Kroah-Hartman wrote:
+>> On Wed, Nov 02, 2022 at 11:45:12AM -0700, Elliot Berman wrote:
+>>
+>> Even if you don't support it 1:1, at least for the ones that are the
+>> same thing, pick the same numbers as that's a nicer thing to do, right?
+>> 
+>
+> Does same thing == interpretation of arguments is the same? For
+> instance, GH_CREATE_VM and KVM_CREATE_VM interpret the arguments
+> differently. Same for KVM_SET_USERSPACE_MEMORY. The high level 
+> functionality should be similar for most all hypervisors since they will 
+> all support creating a VM and probably sharing memory with that VM. The 
+> arguments for that will necessarily look similar, but they will probably 
+> be subtly different because the hypervisors support different features.
 
-Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
----
+I think in the ideal case, you should make the arguments and the
+command codes the same for any command where that is possible. If
+you come across a command that is shared with KVM but just needs
+another flag, that would involve coordinating with the KVM maintainers
+about sharing the definition so the same flag does not get reused
+in an incompatible way.
 
-Changes in v10:
-- add evoker include specific sc7280-herobrine-audio-rt5682-3mic.dtsi setting
+For commands that cannot fit into the existing definition, there
+should be a different command code, using your own namespace and
+not the 0xAE block that KVM has. It still makes sense to follow
+the argument structure roughly here, unless there is a technical
+reason for making it different.
 
- .../sc7280-herobrine-audio-rt5682-3mic.dtsi   | 194 ++++++++++++++++++
- .../boot/dts/qcom/sc7280-herobrine-evoker.dts |   2 +
- 2 files changed, 196 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682-3mic.dtsi
+> I don't think userspace that supports both KVM and Gunyah will benefit 
+> much from re-using the same numbers since those re-used ioctl calls 
+> still need to sit within the context of a Gunyah VM.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682-3mic.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682-3mic.dtsi
-new file mode 100644
-index 0000000000000..01bc8ee93b19a
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682-3mic.dtsi
-@@ -0,0 +1,194 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ *
-+ * This file defines the common audio settings for the child boards
-+ * using rt5682 codec and having 3 dmics connected to sc7280.
-+ *
-+ * Copyright 2022 Google LLC.
-+ */
-+
-+/ {
-+	/* BOARD-SPECIFIC TOP LEVEL NODES */
-+	sound: sound {
-+		compatible = "google,sc7280-herobrine";
-+		model = "sc7280-rt5682-max98360a-3mic";
-+
-+		status = "okay";
-+		audio-routing =
-+			"VA DMIC0", "vdd-micb",
-+			"VA DMIC1", "vdd-micb",
-+			"VA DMIC2", "vdd-micb",
-+			"VA DMIC3", "vdd-micb",
-+
-+			"Headphone Jack", "HPOL",
-+			"Headphone Jack", "HPOR";
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		dai-link@0 {
-+			link-name = "MAX98360";
-+			reg = <0>;
-+
-+			cpu {
-+				sound-dai = <&lpass_cpu MI2S_SECONDARY>;
-+			};
-+
-+			codec {
-+				sound-dai = <&max98360a>;
-+			};
-+		};
-+
-+		dai-link@1 {
-+			link-name = "DisplayPort";
-+			reg = <1>;
-+
-+			cpu {
-+				sound-dai = <&lpass_cpu LPASS_DP_RX>;
-+			};
-+
-+			codec {
-+				sound-dai = <&mdss_dp>;
-+			};
-+		};
-+
-+		dai-link@2 {
-+			link-name = "ALC5682";
-+			reg = <2>;
-+
-+			cpu {
-+				sound-dai = <&lpass_cpu MI2S_PRIMARY>;
-+			};
-+
-+			codec {
-+				sound-dai = <&alc5682 0 /* aif1 */>;
-+			};
-+		};
-+
-+		dai-link@4 {
-+			link-name = "DMIC";
-+			reg = <4>;
-+
-+			cpu {
-+				sound-dai = <&lpass_cpu LPASS_CDC_DMA_VA_TX0>;
-+			};
-+
-+			codec {
-+				sound-dai = <&lpass_va_macro 0>;
-+			};
-+		};
-+	};
-+};
-+
-+hp_i2c: &i2c2 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	alc5682: codec@1a {
-+		compatible = "realtek,rt5682s";
-+		reg = <0x1a>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&hp_irq>;
-+
-+		#sound-dai-cells = <1>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <101 IRQ_TYPE_EDGE_BOTH>;
-+
-+		AVDD-supply = <&pp1800_alc5682>;
-+		MICVDD-supply = <&pp3300_codec>;
-+
-+		realtek,dmic1-data-pin = <1>;
-+		realtek,dmic1-clk-pin = <2>;
-+		realtek,jd-src = <1>;
-+		realtek,dmic-clk-rate-hz = <2048000>;
-+	};
-+};
-+
-+&lpass_cpu {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&mi2s0_data0>, <&mi2s0_data1>, <&mi2s0_mclk>, <&mi2s0_sclk>, <&mi2s0_ws>,
-+			<&mi2s1_data0>, <&mi2s1_sclk>, <&mi2s1_ws>;
-+
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	dai-link@0 {
-+		reg = <MI2S_PRIMARY>;
-+		qcom,playback-sd-lines = <1>;
-+		qcom,capture-sd-lines = <0>;
-+	};
-+
-+	dai-link@1 {
-+		reg = <MI2S_SECONDARY>;
-+		qcom,playback-sd-lines = <0>;
-+	};
-+
-+	dai-link@5 {
-+		reg = <LPASS_DP_RX>;
-+	};
-+
-+	dai-link@25 {
-+		reg = <LPASS_CDC_DMA_VA_TX0>;
-+	};
-+};
-+
-+&lpass_va_macro {
-+	status = "okay";
-+	vdd-micb-supply = <&pp1800_l2c>;
-+	pinctrl-0 = <&lpass_dmic01_clk>, <&lpass_dmic01_data>, <&lpass_dmic23_clk>,
-+			<&lpass_dmic23_data>;
-+};
-+
-+&mi2s0_data0 {
-+	drive-strength = <6>;
-+	bias-disable;
-+};
-+
-+&mi2s0_data1 {
-+	drive-strength = <6>;
-+	bias-disable;
-+};
-+
-+&mi2s0_mclk {
-+	drive-strength = <6>;
-+	bias-disable;
-+};
-+
-+&mi2s0_sclk {
-+	drive-strength = <6>;
-+	bias-disable;
-+};
-+
-+&mi2s0_ws {
-+	drive-strength = <6>;
-+	bias-disable;
-+};
-+
-+&lpass_dmic01_clk {
-+	drive-strength = <8>;
-+	bias-disable;
-+};
-+
-+&lpass_dmic01_clk_sleep {
-+	drive-strength = <2>;
-+};
-+
-+&lpass_dmic01_data {
-+	bias-pull-down;
-+};
-+
-+&lpass_dmic23_clk {
-+	drive-strength = <8>;
-+	bias-disable;
-+};
-+
-+&lpass_dmic23_clk_sleep {
-+	drive-strength = <2>;
-+};
-+
-+&lpass_dmic23_data {
-+	bias-pull-down;
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
-index dcdd4eecfe670..d608682f9742b 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
-@@ -8,6 +8,8 @@
- /dts-v1/;
- 
- #include "sc7280-herobrine-evoker.dtsi"
-+#include "sc7280-herobrine-audio-rt5682-3mic.dtsi"
-+
- 
- / {
- 	model = "Google Evoker";
--- 
-2.34.1
+One immediate benefit is for tools that work on running processes,
+such as strace, gdb or qemu-user. If they encounter a known command,
+they can correctly display the arguments etc.
 
+Another benefit is for sharing portions of the VMM that live in
+outside processes like vhost-user based device emulation that
+interacts with irqfd, memfd etc. The more similar the command
+interface is, the easier it gets to keep these tools portable.
+
+      Arnd
