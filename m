@@ -2,169 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EAC2F61A424
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 23:38:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 76F4F61A611
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Nov 2022 00:44:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229608AbiKDWiU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 18:38:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45570 "EHLO
+        id S229593AbiKDXom (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 19:44:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbiKDWiT (ORCPT
+        with ESMTP id S229547AbiKDXok (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 18:38:19 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86CEB2FC24;
-        Fri,  4 Nov 2022 15:38:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1667601498; x=1699137498;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=wsU+aHAPL6wI9VTXb6yNVacRzmtrJE6X1htelu1J7e8=;
-  b=l0/x7R6Q4Np+x2J4SeiDI319iA9+eM+7JdQ/Sud81DoSheR4qzwAj0Wv
-   r6n/JlbBHYzZ5WRjDHBvKMZ6nRG6wbttqAT/mbAtkjjVq3dJrw4azjTCu
-   HvmbjMMP3bmKjK9rlRm9CvdEu8w8nQfMLjNx5ajfs36JX/TxqvnPAAOj+
-   o=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 04 Nov 2022 15:38:18 -0700
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2022 15:38:17 -0700
-Received: from [10.110.122.8] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Fri, 4 Nov 2022
- 15:38:16 -0700
-Message-ID: <980db147-794e-ecd9-9626-64ff81109bab@quicinc.com>
-Date:   Fri, 4 Nov 2022 15:38:16 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH v6 13/21] gunyah: vm_mgr: Introduce basic VM Manager
-Content-Language: en-US
-To:     Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Fri, 4 Nov 2022 19:44:40 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B79F2F022
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 16:44:39 -0700 (PDT)
+Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id C34073F73D;
+        Sat,  5 Nov 2022 00:44:36 +0100 (CET)
+Date:   Sat, 5 Nov 2022 00:44:35 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        "Will Deacon" <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Kalle Valo <kvalo@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20221026185846.3983888-1-quic_eberman@quicinc.com>
- <20221026185846.3983888-14-quic_eberman@quicinc.com>
- <Y2H8oh7AvYDiMqKs@kroah.com>
- <722b05a1-4bf5-0837-baea-b1d0a9cc1e43@quicinc.com>
- <Y2MKWOihjAPxfl6v@kroah.com>
- <96238455-73b6-bead-0fdb-55ca68e5bf0b@quicinc.com>
- <9dd597d9-a3f3-48f2-8416-b5b097a230d5@app.fastmail.com>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <9dd597d9-a3f3-48f2-8416-b5b097a230d5@app.fastmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: Add configuration for PMI8950
+ peripheral
+Message-ID: <20221104234435.xwjpwfxs73puvfca@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221101161801.1058969-1-luca@z3ntu.xyz>
+ <20221101161801.1058969-2-luca@z3ntu.xyz>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221101161801.1058969-2-luca@z3ntu.xyz>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 11/4/2022 1:10 AM, Arnd Bergmann wrote:
-> On Fri, Nov 4, 2022, at 01:11, Elliot Berman wrote:
->> On 11/2/2022 5:24 PM, Greg Kroah-Hartman wrote:
->>> On Wed, Nov 02, 2022 at 11:45:12AM -0700, Elliot Berman wrote:
->>>
->>> Even if you don't support it 1:1, at least for the ones that are the
->>> same thing, pick the same numbers as that's a nicer thing to do, right?
->>>
->>
->> Does same thing == interpretation of arguments is the same? For
->> instance, GH_CREATE_VM and KVM_CREATE_VM interpret the arguments
->> differently. Same for KVM_SET_USERSPACE_MEMORY. The high level
->> functionality should be similar for most all hypervisors since they will
->> all support creating a VM and probably sharing memory with that VM. The
->> arguments for that will necessarily look similar, but they will probably
->> be subtly different because the hypervisors support different features.
+On 2022-11-01 17:18:00, Luca Weiss wrote:
+> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 > 
-> I think in the ideal case, you should make the arguments and the
-> command codes the same for any command where that is possible. If
-> you come across a command that is shared with KVM but just needs
-> another flag, that would involve coordinating with the KVM maintainers
-> about sharing the definition so the same flag does not get reused
-> in an incompatible way.
+> The PMI8950 features integrated peripherals like ADC, GPIO controller,
+> MPPs and others.
 > 
-
-I think the converse also needs to be true; KVM would need to check that
-new flags don't get used in some incompatible way with Gunyah, even if
-one of us is just -EINVAL'ing. I don't think Gunyah and KVM should be
-reliant on the other reviewing shared ioctls.
-
-The problem is a bit worse because "machine type" is architecture-
-dependent whereas the planned Gunyah flags are architecture-independent.
-KVM within itself re-uses flags between architectures so Gunyah would
-need to reserve some flags from all architectures that KVM supports.
-
-> For commands that cannot fit into the existing definition, there
-> should be a different command code, using your own namespace and
-> not the 0xAE block that KVM has. It still makes sense to follow
-> the argument structure roughly here, unless there is a technical
-> reason for making it different.
+> [luca@z3ntu.xyz: remove pm8950, style changes for 2022 standards, add wled]
+> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+> Changes since v2:
+> * Pick up patch, and adjust as mentioned above sign-offs
 > 
->> I don't think userspace that supports both KVM and Gunyah will benefit
->> much from re-using the same numbers since those re-used ioctl calls
->> still need to sit within the context of a Gunyah VM.
+>  arch/arm64/boot/dts/qcom/pmi8950.dtsi | 97 +++++++++++++++++++++++++++
+>  1 file changed, 97 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/pmi8950.dtsi
 > 
-> One immediate benefit is for tools that work on running processes,
-> such as strace, gdb or qemu-user. If they encounter a known command,
-> they can correctly display the arguments etc.
+> diff --git a/arch/arm64/boot/dts/qcom/pmi8950.dtsi b/arch/arm64/boot/dts/qcom/pmi8950.dtsi
+> new file mode 100644
+> index 000000000000..32d27e2187e3
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/pmi8950.dtsi
+> @@ -0,0 +1,97 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +// Copyright (c) 2019, AngeloGioacchino Del Regno <kholk11@gmail.com>
+> +
+> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
+> +#include <dt-bindings/interrupt-controller/irq.h>
+> +#include <dt-bindings/spmi/spmi.h>
+> +
+> +&spmi_bus {
+> +	pmic@2 {
+> +		compatible = "qcom,pmi8950", "qcom,spmi-pmic";
+> +		reg = <0x2 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		pmi8950_vadc: adc@3100 {
+> +			compatible = "qcom,spmi-vadc";
+> +			reg = <0x3100>;
+> +			interrupts = <0x2 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			#io-channel-cells = <1>;
+> +
+> +			adc-chan@0 {
+> +				reg = <VADC_USBIN>;
+> +				qcom,pre-scaling = <1 4>;
+> +				label = "usbin";
+
+I've previously sent a patch with labels in the node name instead [1],
+what's the preferred way nowadays?
+
+[1]: https://lore.kernel.org/linux-arm-msm/20220926190148.283805-4-marijn.suijten@somainline.org/
+
+> +			};
+> +
+> +			adc-chan@1 {
+> +				reg = <VADC_DCIN>;
+> +				qcom,pre-scaling = <1 4>;
+> +				label = "dcin";
+> +			};
+> +
+> +			adc-chan@2 {
+> +				reg = <VADC_VCHG_SNS>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "vchg_sns";
+
+Shall we use hyphens in labels (especially if using them as node names).
+
+> +			};
+> +
+> +			adc-chan@9 {
+> +				reg = <VADC_REF_625MV>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "ref_625mv";
+> +			};
+> +
+> +			adc-chan@a {
+> +				reg = <VADC_REF_1250MV>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "ref_1250v";
+
+mv* :)
+
+> +			};
+> +
+> +			adc-chan@d {
+> +				reg = <VADC_SPARE2>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "chg_temp";
+> +			};
+> +		};
+> +
+> +		pmi8950_mpps: mpps@a000 {
+> +			compatible = "qcom,pmi8950-mpp", "qcom,spmi-mpp";
+> +			reg = <0xa000>;
+> +			gpio-controller;
+> +			gpio-ranges = <&pmi8950_mpps 0 0 4>;
+> +			#gpio-cells = <2>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +
+> +		pmi8950_gpio: gpio@c000 {
+
+It seems more common to name this label plural pmi8950_gpioS?
+
+> +			compatible = "qcom,pmi8950-gpio", "qcom,spmi-gpio";
+> +			reg = <0xc000>;
+> +			gpio-controller;
+> +			gpio-ranges = <&pmi8950_gpio 0 0 2>;
+> +			#gpio-cells = <2>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +	};
+> +
+> +	pmic@3 {
+> +		compatible = "qcom,pmi8950", "qcom,spmi-pmic";
+> +		reg = <0x3 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		pmi8950_wled: leds@d800 {
+> +			compatible = "qcom,pmi8950-wled";
+> +			reg = <0xd800>, <0xd900>;
+> +			interrupts = <0x3 0xd8 0x02 IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "short";
+> +			label = "backlight";
+
+Same question here about using the node name instead, and dropping the
+label altogether.
+
+- Marijn
+
+> +
+> +			status = "disabled";
+> +		};
+> +	};
+> +};
+> -- 
+> 2.38.1
 > 
-
-We can update these tools and anyway there will be different ioctls to
-get started. There are important ioctls that wouldn't be correctly
-displayed off the bat anyway; work would need to be done to support the
-Gunyah ioctls either way. Whereas tooling update is temporary, the
-coupling of KVM and Gunyah ioctls would be permanent.
-
-> Another benefit is for sharing portions of the VMM that live in
-> outside processes like vhost-user based device emulation that
-> interacts with irqfd, memfd etc. The more similar the command
-> interface is, the easier it gets to keep these tools portable.
-> 
-
-Hypervisor interfaces already have different ioctls for equivalent
-functionality [1], so VMMs that want to scale to multiple hypervisors
-already abstract out ioctl-level interfaces so there wouldn't be any
-code-reuse even if Gunyah and KVM shared the same ioctl number. Between
-hypervisors, the best case is there is design similarity for userspace,
-which makes it easier to add new hypervisor support for VMMs and that's
-what we are aiming for.
-
-[1]: e.g. compare KVM, acrn, xen for implementing virtual interrupts.
-KVM and acrn use independently implemented irqfd interfaces, xen has
-totally different implementation called event channels.
-
-Thanks,
-Elliot
