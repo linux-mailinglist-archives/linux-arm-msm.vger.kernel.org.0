@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B251061A2B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 21:51:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B567561A2EF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 22:10:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229968AbiKDUv3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 16:51:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47238 "EHLO
+        id S229694AbiKDVKT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 17:10:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229471AbiKDUv2 (ORCPT
+        with ESMTP id S229528AbiKDVKS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 16:51:28 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23D6249B40
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 13:51:26 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id be13so8938269lfb.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 13:51:26 -0700 (PDT)
+        Fri, 4 Nov 2022 17:10:18 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D829B4385B
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 14:10:15 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-3321c2a8d4cso54640407b3.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 14:10:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zMfksGVovJyKssatLq3qPApzW4xAJ9RmshsVA1B1FUM=;
-        b=AOyUYLhQB+OF+RwYwdDwwmQ38cHBcpL55GVlYYpbmo/IhTvhxI2JCo4BQLlSpPfIt2
-         A7kQpV15ys91B7Xw/oO6H4/94pyD7p5R/9pipaspVrj1YHbAAqWxDnhqCXtufv9IbnSe
-         ojKjV/3UgyYxiFjqcvbEBI8RtCfQXB/dzzgWQ=
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=cwXqFzxAtkrKTKzZGzLe9Mfbky8J4s9QItvkhLD83kU=;
+        b=EWQoU8YoAt/OYgfH63ml03fy9cAdpDGtKVVbEOGaBuxHDcTLtKtI2Od7HxiH9Z8aCI
+         PTRdz7+5X8wjKiSlJ9N0t9EMZdLNvSsQ1T73CpdIaMnitMEZJkB0xe4YWbBP7wn1xQL5
+         Md4rbCATJQNHQI1DbkJPVxl0+ORssqj1JkHFDtK7wCi4HjsI2GZeIixiNLujzjDWBqEr
+         ZLHtGD/Ym7N3EzMNdarE9A/oStXORsO043pkBzGruzsIvxz4OOZceH5P0pkV/B5ZE4p5
+         Xdv16t1NzN3RD8SxPcbBJ09Hh2iumMeMwWTfOgW4zWnZ4Eqyb6fmgArDSRMR/NtFRJA5
+         FbcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zMfksGVovJyKssatLq3qPApzW4xAJ9RmshsVA1B1FUM=;
-        b=u9SkjPDRPIZTJkFysF9dGHhujfot1VR7hGApZEWXPnpIuAu39cHGpoCmluVD664buu
-         rObegabphg9OXnslru9fxp9gTjjE6TdmW7ipbHw2uJZB2oHCB9Lk+jFatQ1fRBH1+2wf
-         xmBhA4bFsI3pYMrhed45/QmJyI5e5g9hAIFnnZ+gEsfMk/kEqYBZVCjWjgED8wSPe6Xd
-         S0biT/bVM+ysa31MO5zkbZis8yrkIc8bMyKrdGq4YDpV6uoxFSq3rmzJBl12jO6175R8
-         FbSF7N9LjzaN5EumyLbyD+7/wcaMgP/DD0P0HhJIBgW0rytWmPF3uPHnQ5fTTIl/f7AT
-         rqrQ==
-X-Gm-Message-State: ACrzQf2+ETMqBSmBjbIp/r/RjdDeur58c8ZCWXtCYVCit63pLLSIM/oK
-        iOIZPgKHQM8S0iBlltODL55eBImCKnnCxe9aSaOdaA==
-X-Google-Smtp-Source: AMsMyM7Nm8maiYEBKfD/QCN1CZqY5y3LSAqpeCk56cKCFU+2F+w80T1ekhdFysJ1NCnRuWqDWDLO5fNqaZBtILfclho=
-X-Received: by 2002:a05:6512:3dac:b0:4a4:8044:9c3 with SMTP id
- k44-20020a0565123dac00b004a4804409c3mr13585880lfv.145.1667595084419; Fri, 04
- Nov 2022 13:51:24 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 4 Nov 2022 13:51:23 -0700
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cwXqFzxAtkrKTKzZGzLe9Mfbky8J4s9QItvkhLD83kU=;
+        b=3yF0GuPTNzYmYNzpk1TyoOGNX7lyEjvLO0SCTEarrmJ5cPQvOFCUsmShfA2WuHpz8Q
+         MYDhEV4mm/nR15z+ZlKaCNcK2PH8o0/EnHqbpXwcwMUftCiZnySDMPvKWn4gFL0v4q2B
+         p7tkrTsh600Auz3G+cHEg/cMwHjRC5v0zuoqxvfh69r4GvJIbbsp8OKnde7AoFowSZK7
+         P9RzfHjMTFd/H05zIf6cJpYGl2XlZ6hAal596drWZwJ/MkeseYT9rR5WZKNqgwVBaO28
+         ZqD7AzZnH4WXMf+U1K9eX8YMdTaHUAZEWAxIvB6m99CD/qulk6IkmCIzEnrCNCzlKAFB
+         VPIA==
+X-Gm-Message-State: ACrzQf1+rfjKZzfqHQqXWkLfWmMwMnpi4cWi06CDRpFE2Zfp3f8ldjMd
+        kvmfHcQpCM5896YFYy267coLeTW0PvWntouM6pJheQ==
+X-Google-Smtp-Source: AMsMyM6p8Mijb2ZJqrpdINSR2OUp+/sgY+NK1HyQavD90xTWt/vMGVt3m08ouSoQg8PL+7ErmgpGiE0png2t2TIo7g8=
+X-Received: by 2002:a81:5905:0:b0:370:853a:80e4 with SMTP id
+ n5-20020a815905000000b00370853a80e4mr24444604ywb.418.1667596215061; Fri, 04
+ Nov 2022 14:10:15 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20221104064055.1.I00a0e4564a25489e85328ec41636497775627564@changeid>
 References: <20221104064055.1.I00a0e4564a25489e85328ec41636497775627564@changeid>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Fri, 4 Nov 2022 13:51:23 -0700
-Message-ID: <CAE-0n507hS0huoCVoarV65F5cGsxMuYCv-3C4s2e1m61cPMZcg@mail.gmail.com>
+In-Reply-To: <20221104064055.1.I00a0e4564a25489e85328ec41636497775627564@changeid>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 5 Nov 2022 00:10:04 +0300
+Message-ID: <CAA8EJppmNeNFHA4r8ycsjqeYDiL7HnJ=q5N7vmuuHfdzJ3euww@mail.gmail.com>
 Subject: Re: [PATCH 1/3] clk: qcom: lpass-sc7280: Fix pm_runtime usage
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>
-Cc:     Taniya Das <quic_tdas@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
         Judy Hsiao <judyhsiao@chromium.org>,
         Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         Matthias Kaehlcke <mka@chromium.org>,
@@ -69,8 +68,8 @@ Cc:     Taniya Das <quic_tdas@quicinc.com>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,7 +78,8 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2022-11-04 06:56:28)
+On Fri, 4 Nov 2022 at 16:57, Douglas Anderson <dianders@chromium.org> wrote:
+>
 > The pm_runtime usage in lpass-sc7280 was broken in quite a few
 > ways. Specifically:
 >
@@ -153,6 +153,9 @@ Quoting Douglas Anderson (2022-11-04 06:56:28)
 > that Dmitry did in commit 72cfc73f4663 ("clk: qcom: use
 > devm_pm_runtime_enable and devm_pm_clk_create"), but I guess
 > lpassaudiocc-sc7280.c didn't exist then.
+
+I don't remember. Most probably so.
+
 >
 > [1] https://lore.kernel.org/r/20220922154354.2486595-1-dianders@chromium.org
 >
@@ -160,4 +163,8 @@ Quoting Douglas Anderson (2022-11-04 06:56:28)
 > Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+-- 
+With best wishes
+Dmitry
