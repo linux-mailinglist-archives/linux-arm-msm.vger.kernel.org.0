@@ -2,88 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 985086193B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 10:39:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EFE6F6193BA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 10:41:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230491AbiKDJjp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 05:39:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54952 "EHLO
+        id S231401AbiKDJl4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 05:41:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230306AbiKDJjm (ORCPT
+        with ESMTP id S230182AbiKDJlw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 05:39:42 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BB2A2250B;
-        Fri,  4 Nov 2022 02:39:41 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Fri, 4 Nov 2022 05:41:52 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F2E2264AD
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 02:41:51 -0700 (PDT)
+Received: from [192.168.31.208] (unknown [194.29.137.22])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CF15C62113;
-        Fri,  4 Nov 2022 09:39:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36916C433D6;
-        Fri,  4 Nov 2022 09:39:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667554780;
-        bh=vBRE2zaNk9N2+qpe0TEUqPTS+nFtRWARCQHJUnRfQFQ=;
-        h=From:To:Cc:Subject:Date:From;
-        b=TQMFVP0DnwjC5bCpvwoumZ69nBPt7Pwp8dEuwdxMjH31qncebTLneyvwX/QPwfpBK
-         Z4EIpr949jgEpHSYhOgZmN3DwhMwJYikFIQAc+jeHyi+3K7omux6QAeI4bpq62gQry
-         ZzKAOWazoY0Sn0OZHR1GRyPBFDFZzE7YqQxTcIwv4NadBE1D4o2FsqCmLGIkRhUHOm
-         vM27Yx8QI2fhcghxjQgNPWbvU9PJeZLBBFfgV8VDNn2u8oqfeNPkOgWr+KVNo8Qj1E
-         1ZIksIdBveqqnZ0eQjQT0qM5BqWTCwcI9GIk5n7ipSE4UMnDb9U0hZADsBSg4U6heZ
-         LoD8/2TSRTr4w==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1oqtAX-00064k-QT; Fri, 04 Nov 2022 10:39:22 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Hemant Kumar <quic_hemantk@quicinc.com>, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v2] mhi: pci_generic: add support for sc8280xp-crd SDX55 variant
-Date:   Fri,  4 Nov 2022 10:39:13 +0100
-Message-Id: <20221104093913.23347-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.37.3
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id CC786401FC;
+        Fri,  4 Nov 2022 10:41:48 +0100 (CET)
+Message-ID: <a7489c04-4aa6-5ec5-315b-fcdf93f1ea7b@somainline.org>
+Date:   Fri, 4 Nov 2022 10:41:48 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.1
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc8280xp: update UFS PHY nodes
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Brian Masney <bmasney@redhat.com>,
+        Shazad Hussain <quic_shazhuss@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221104092045.17410-1-johan+linaro@kernel.org>
+ <20221104092045.17410-3-johan+linaro@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20221104092045.17410-3-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SC8280XP Compute Reference Design (CRD) has an on-PCB SDX55 modem
-which uses MBIM.
 
-The exact channel configuration is not known but the Foxconn SDX55
-configuration allows the modem to be used so reuse that one for now.
+On 04/11/2022 10:20, Johan Hovold wrote:
+> Update the UFS PHY nodes to match the new binding.
+>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
-
-Changes in v2
- - drop comment describing this variant (Mani)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
 
- drivers/bus/mhi/host/pci_generic.c | 2 ++
- 1 file changed, 2 insertions(+)
+Konrad
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index caa4ce28cf9e..7dcd0ef3184a 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -542,6 +542,8 @@ static const struct mhi_pci_dev_info mhi_telit_fn990_info = {
- static const struct pci_device_id mhi_pci_id_table[] = {
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx24_info },
-+	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, PCI_VENDOR_ID_QCOM, 0x010c),
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
- 	/* EM919x (sdx55), use the same vid:pid as qcom-sdx55m */
- 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, 0x18d7, 0x0200),
- 		.driver_data = (kernel_ulong_t) &mhi_sierra_em919x_info },
--- 
-2.37.3
-
+>   arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 49 +++++++++-----------------
+>   1 file changed, 17 insertions(+), 32 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index e0d0fb6994b5..1b309fa93484 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -896,7 +896,7 @@ ufs_mem_hc: ufs@1d84000 {
+>   				     "jedec,ufs-2.0";
+>   			reg = <0 0x01d84000 0 0x3000>;
+>   			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+> -			phys = <&ufs_mem_phy_lanes>;
+> +			phys = <&ufs_mem_phy>;
+>   			phy-names = "ufsphy";
+>   			lanes-per-direction = <2>;
+>   			#reset-cells = <1>;
+> @@ -937,27 +937,20 @@ ufs_mem_hc: ufs@1d84000 {
+>   
+>   		ufs_mem_phy: phy@1d87000 {
+>   			compatible = "qcom,sc8280xp-qmp-ufs-phy";
+> -			reg = <0 0x01d87000 0 0x1c8>;
+> -			#address-cells = <2>;
+> -			#size-cells = <2>;
+> -			ranges;
+> -			clock-names = "ref",
+> -				      "ref_aux";
+> +			reg = <0 0x01d87000 0 0x1000>;
+> +
+>   			clocks = <&gcc GCC_UFS_CARD_CLKREF_CLK>,
+>   				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
+> +			clock-names = "ref", "ref_aux";
+> +
+> +			power-domains = <&gcc UFS_PHY_GDSC>;
+>   
+>   			resets = <&ufs_mem_hc 0>;
+>   			reset-names = "ufsphy";
+> -			status = "disabled";
+>   
+> -			ufs_mem_phy_lanes: phy@1d87400 {
+> -				reg = <0 0x01d87400 0 0x108>,
+> -				      <0 0x01d87600 0 0x1e0>,
+> -				      <0 0x01d87c00 0 0x1dc>,
+> -				      <0 0x01d87800 0 0x108>,
+> -				      <0 0x01d87a00 0 0x1e0>;
+> -				#phy-cells = <0>;
+> -			};
+> +			#phy-cells = <0>;
+> +
+> +			status = "disabled";
+>   		};
+>   
+>   		ufs_card_hc: ufs@1da4000 {
+> @@ -965,7 +958,7 @@ ufs_card_hc: ufs@1da4000 {
+>   				     "jedec,ufs-2.0";
+>   			reg = <0 0x01da4000 0 0x3000>;
+>   			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>;
+> -			phys = <&ufs_card_phy_lanes>;
+> +			phys = <&ufs_card_phy>;
+>   			phy-names = "ufsphy";
+>   			lanes-per-direction = <2>;
+>   			#reset-cells = <1>;
+> @@ -1005,28 +998,20 @@ ufs_card_hc: ufs@1da4000 {
+>   
+>   		ufs_card_phy: phy@1da7000 {
+>   			compatible = "qcom,sc8280xp-qmp-ufs-phy";
+> -			reg = <0 0x01da7000 0 0x1c8>;
+> -			#address-cells = <2>;
+> -			#size-cells = <2>;
+> -			ranges;
+> -			clock-names = "ref",
+> -				      "ref_aux";
+> +			reg = <0 0x01da7000 0 0x1000>;
+> +
+>   			clocks = <&gcc GCC_UFS_1_CARD_CLKREF_CLK>,
+>   				 <&gcc GCC_UFS_CARD_PHY_AUX_CLK>;
+> +			clock-names = "ref", "ref_aux";
+> +
+> +			power-domains = <&gcc UFS_CARD_GDSC>;
+>   
+>   			resets = <&ufs_card_hc 0>;
+>   			reset-names = "ufsphy";
+>   
+> -			status = "disabled";
+> +			#phy-cells = <0>;
+>   
+> -			ufs_card_phy_lanes: phy@1da7400 {
+> -				reg = <0 0x01da7400 0 0x108>,
+> -				      <0 0x01da7600 0 0x1e0>,
+> -				      <0 0x01da7c00 0 0x1dc>,
+> -				      <0 0x01da7800 0 0x108>,
+> -				      <0 0x01da7a00 0 0x1e0>;
+> -				#phy-cells = <0>;
+> -			};
+> +			status = "disabled";
+>   		};
+>   
+>   		tcsr_mutex: hwlock@1f40000 {
