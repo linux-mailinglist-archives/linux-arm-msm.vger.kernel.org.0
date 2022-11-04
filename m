@@ -2,162 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8E96619BC5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 16:34:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B35EF619C25
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 16:52:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232597AbiKDPer (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 11:34:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44784 "EHLO
+        id S229823AbiKDPwM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 11:52:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232642AbiKDPeg (ORCPT
+        with ESMTP id S229995AbiKDPwL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 11:34:36 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0662D115;
-        Fri,  4 Nov 2022 08:34:34 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3C29E62238;
-        Fri,  4 Nov 2022 15:34:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7F6C4347C;
-        Fri,  4 Nov 2022 15:34:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667576073;
-        bh=N1ULCwSa1AVjFUvna+kSfDT3wnar4/4rCcFLHf54/cQ=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=qdjInU3mZIRWLYdl4ULYMh4n6qqgpfeVOsFK0e5OKfforiZOBJCBktTJARkiGFvUW
-         pJrjTbEzxItf9onGDCV8UDkYzXXKY27+vk0UljwkbZKwdQyZsB8+4lCCqbzgd5UpmC
-         uh+SpdQvuiEO82VZaATGzNS9fYSBlC7v5VG6GHT0CswTrdOUPgoPFbCzH4vYkRdDoh
-         g1Z7IGTLFhZqqYv6/FQ9rjbxaK7Mux/z780k6RZPxSWr82fRw/FLgn+CTG2q1P0P9J
-         oKj59Xy3TS9IJweULZDtQ18dv3r6WcvEQWj+HfL8b8+W67eAFdETmj7oX1eGf3L1Mc
-         5ME3eWWzG5Dhw==
-Received: by mail-lf1-f54.google.com with SMTP id r12so7919070lfp.1;
-        Fri, 04 Nov 2022 08:34:33 -0700 (PDT)
-X-Gm-Message-State: ACrzQf3+0fJ5p+KlhHLRU/+l6FxLWBZ5cJMo31z3XQz6H/vx9vm5sAWV
-        eFNcVLId9UiGxKAMVjagpk3MCyjNSTJ6099azg==
-X-Google-Smtp-Source: AMsMyM5bCuAPEcNkY77ckUagY268kfBLpC6XBnq51kNQiIj22Oxgyz5HDRlL7+iItfKaGJcMVhk4vtQbx4v7fRNB/2k=
-X-Received: by 2002:a19:f24b:0:b0:4ab:cd12:d282 with SMTP id
- d11-20020a19f24b000000b004abcd12d282mr14031723lfk.74.1667576071604; Fri, 04
- Nov 2022 08:34:31 -0700 (PDT)
+        Fri, 4 Nov 2022 11:52:11 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A1602D763;
+        Fri,  4 Nov 2022 08:52:08 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id m14-20020a17090a3f8e00b00212dab39bcdso8634165pjc.0;
+        Fri, 04 Nov 2022 08:52:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=h91PY4kE003Fzt7Dp6s2LtF8+Ku5gtgrJGFgjbiXW0Y=;
+        b=fZfNmpLbARw2htsWecPLMgqjYPXVCha4yMS8ZDbD2ibFKN0J+n0z1donudEwT68czq
+         a0Napturob7ia7xuzL1aB8P2BRUnsbBoS56zzlP4bsMwS3v0iD1ekMG6/YiSja5OdMBh
+         ZCp/Zuw4eFXMl/9YJFXMK7h0CS5Ws0Jx7n+Kbc3sXjDM8Lu7Vg6FRDU0RqK/bDLQCZOi
+         obao476g+hOwqCoByP4oL/i2QR58pWgfSbrhdrn5d0YF+Ifeqb2RFpTqn99sjrMwzQva
+         xg2F99kYPErdBIQAkV2v+HdMxcyQ923U6Dvjb8E1W3FPlEvL4id57fFAJYKXEcJuUpNa
+         SVZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=h91PY4kE003Fzt7Dp6s2LtF8+Ku5gtgrJGFgjbiXW0Y=;
+        b=APKqNQhpKUOKfUM8/zdN47R2aw14vYM5q8mB3whvG+pSU4WRuvUIIxuRUMOPROMEKy
+         x++KxBksvIgom0S1oEaAyHj9DiPxvAFfXVLV3Yu3v/l6zU01jSaDgrudwFuTZ5IoDzpa
+         dyG10K6sP6qZkANyju8JKNro6sLJzf+x2GXxcLUc++pt+ufDeKTiddLXZIE7pO8n0eTa
+         S3Tr76Osb0D0B8iCOdY0Pl2cswceI6CunW+3bkSa6VzDSnl6S+QYweV5DwelaP36BuTI
+         zhO6dsW+kcnIlX98IPm5zbaKZt63QXaIjcEv53rRgLoMbTnsRg+5w5n/eR+qBALvHKSM
+         zeEg==
+X-Gm-Message-State: ACrzQf00ahYgFFyhSBcvXlRY5IEead6rMo0kGvOrQyRz1L1zHnItLBsE
+        U6NI8r9E1G2kaFtK5ddA2s0=
+X-Google-Smtp-Source: AMsMyM6zNFvjaDiCUgUsJtKWxaFpLMuqPLYgtr1mX1+M2ATzrBZKD/U5nCh1sXRpFzk8ueJiv0U/Yg==
+X-Received: by 2002:a17:90b:152:b0:213:dfd6:3e5e with SMTP id em18-20020a17090b015200b00213dfd63e5emr27484666pjb.229.1667577127429;
+        Fri, 04 Nov 2022 08:52:07 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
+        by smtp.gmail.com with ESMTPSA id j4-20020a17090ac48400b002130c269b6fsm1868454pjt.1.2022.11.04.08.52.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Nov 2022 08:52:07 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [RFC] drm/msm: Boost on waits
+Date:   Fri,  4 Nov 2022 08:52:29 -0700
+Message-Id: <20221104155229.528193-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-References: <20221026200429.162212-1-quic_molvera@quicinc.com>
- <20221026200429.162212-4-quic_molvera@quicinc.com> <ae4b2333-d243-17ee-1ebd-6b1c89eef9f3@linaro.org>
- <d109cbdf-1b0e-ff67-879c-d0955da4898e@quicinc.com> <9eaaf256-8de2-ddc9-ac95-aed9b0670f5e@linaro.org>
- <4832b716-6caf-cf72-1c7e-f21a0670cbaa@quicinc.com> <5109d728-ebea-21ca-3ee1-15710dfd6f1b@quicinc.com>
- <23a0dc6b-b704-c094-96dc-cf2c083ef55e@somainline.org>
-In-Reply-To: <23a0dc6b-b704-c094-96dc-cf2c083ef55e@somainline.org>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Fri, 4 Nov 2022 10:34:22 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqLubWBr2W3xZPsuPLOGav7CFgBdH=aCfT22F_m0_cx3cQ@mail.gmail.com>
-Message-ID: <CAL_JsqLubWBr2W3xZPsuPLOGav7CFgBdH=aCfT22F_m0_cx3cQ@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 4, 2022 at 4:32 AM Konrad Dybcio
-<konrad.dybcio@somainline.org> wrote:
-> On 04/11/2022 05:05, Trilok Soni wrote:
-> > + Adding Konrad, Bjorn is already there in this email
-> >
-> > On 11/3/2022 2:13 PM, Melody Olvera wrote:
-> >>
-> >>
-> >> On 11/2/2022 9:24 AM, Krzysztof Kozlowski wrote:
-> >>> On 31/10/2022 17:49, Melody Olvera wrote:
-> >>>>
-> >>>> On 10/27/2022 8:21 AM, Krzysztof Kozlowski wrote:
-> >>>>> On 26/10/2022 16:04, Melody Olvera wrote:
-> >>>>>> Add the base DTSI files for QDU1000 and QRU1000 SoCs, including base
-> >>>>>> descriptions of CPUs, GCC, RPMHCC, QUP, TLMM, and
-> >>>>>> interrupt-controller
-> >>>>>> to boot to shell with console on these SoCs.
+From: Rob Clark <robdclark@chromium.org>
 
-[...]
+Minimize interactive latency by boosting frequency when userspace is
+waiting on the GPU to finish.
 
-> >>>> Not sure how much two-sense I have for the conversation at large,
-> >>>> but generally I agree with Doug's
-> >>>> point in the first paragraph. Pulls for this soc are consistent
-> >>>> across boards so I don't think it makes
-> >>>> sense to move them to the board files here. I vote that these stay
-> >>>> here.
-> >>> I would be great if Konrad and Bjorn shared their opinion on this...
-> >>> but
-> >>> wait, you did not Cc all maintainers... Eh.
-> >> I'm not sure why this is being brought up again; we've already
-> >> discussed this here
-> >> https://lore.kernel.org/all/9707bf67-1b22-8a77-7193-fc909b4f49de@quicinc.com/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+I did contemplate also boosting on dma_fence_wait(), but (a) that would
+require some extra plumbing thru gpu-sched, (b) that only captures a
+sub-set of wait-on-dma-fence patterns, and (c) waiting on a dma-fence
+doesn't always imply urgency (for ex, virglrenderer poll()ing on a dma-
+fence to know when to send a fence irq to VM guest).  But the driver
+WAIT_FENCE and CPU_PREP ioctls map to things like glFinish() where it
+is pretty clear that there is something wishing the GPU would finish
+sooner.
 
-A bit excessive, yes. If it's just a discussion and the issue has
-already been raised, add the people and move on. OTOH, imagine having
-to mention the same things multiple times a day in reviews. It is
-tiring.
+ drivers/gpu/drm/msm/msm_drv.c         | 7 +++++--
+ drivers/gpu/drm/msm/msm_gem.c         | 6 ++++++
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c | 2 +-
+ 3 files changed, 12 insertions(+), 3 deletions(-)
 
-> >> Would you like to discuss this issue here, on the next version, or
-> >> not at all?
-> >>
-> >> On a side note, I'm uncomfortable with how our continued interactions
-> >> are going
-> >> and do not believe this to be conductive to continued collaboration.
-> >> I would ask that
-> >> we keep our correspondence polite and professional moving forward.
-> >
-> > I have added Konrad and Bjorn is already there on the thread. Our
-> > understanding is that CCing maintainers comment is for next patch
-> > series after this one.
->
-> BTW: you can feed git send-email with
-> --cc-cmd='./scripts/get_maintainer.pl --norolestats' and
->
-> it'll pick the right people for you (most of the time, anyway).
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index c3b77b44b2aa..017a512982a2 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -894,7 +894,7 @@ static int msm_ioctl_gem_info(struct drm_device *dev, void *data,
+ }
+ 
+ static int wait_fence(struct msm_gpu_submitqueue *queue, uint32_t fence_id,
+-		      ktime_t timeout)
++		      ktime_t timeout, struct msm_gpu *gpu)
+ {
+ 	struct dma_fence *fence;
+ 	int ret;
+@@ -924,6 +924,9 @@ static int wait_fence(struct msm_gpu_submitqueue *queue, uint32_t fence_id,
+ 	if (!fence)
+ 		return 0;
+ 
++	if (!dma_fence_is_signaled(fence))
++		msm_devfreq_boost(gpu, 2);
++
+ 	ret = dma_fence_wait_timeout(fence, true, timeout_to_jiffies(&timeout));
+ 	if (ret == 0) {
+ 		ret = -ETIMEDOUT;
+@@ -956,7 +959,7 @@ static int msm_ioctl_wait_fence(struct drm_device *dev, void *data,
+ 	if (!queue)
+ 		return -ENOENT;
+ 
+-	ret = wait_fence(queue, args->fence, to_ktime(args->timeout));
++	ret = wait_fence(queue, args->fence, to_ktime(args->timeout), priv->gpu);
+ 
+ 	msm_submitqueue_put(queue);
+ 
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 1dee0d18abbb..fbda0e3a94f8 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -846,6 +846,12 @@ int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout)
+ 		op & MSM_PREP_NOSYNC ? 0 : timeout_to_jiffies(timeout);
+ 	long ret;
+ 
++	if (!dma_resv_test_signaled(obj->resv, dma_resv_usage_rw(write))) {
++		struct msm_drm_private *priv = obj->dev->dev_private;
++
++		msm_devfreq_boost(priv->gpu, 2);
++	}
++
+ 	ret = dma_resv_wait_timeout(obj->resv, dma_resv_usage_rw(write),
+ 				    true,  remain);
+ 	if (ret == 0)
+diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+index 85c443a37e4e..025940eb08d1 100644
+--- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
++++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+@@ -305,7 +305,7 @@ void msm_devfreq_boost(struct msm_gpu *gpu, unsigned factor)
+ 	struct msm_gpu_devfreq *df = &gpu->devfreq;
+ 	uint64_t freq;
+ 
+-	if (!has_devfreq(gpu))
++	if (!gpu || !has_devfreq(gpu))
+ 		return;
+ 
+ 	freq = get_freq(gpu);
+-- 
+2.38.1
 
-That uses git history which doesn't really work well IMO being on the
-receiving end of those. I would suggest something like this in your
-.gitconfig:
-
-[sendemail.linux]
-        tocmd =" scripts/get_maintainer.pl --nogit --nogit-fallback --nol"
-        cccmd ="scripts/get_maintainer.pl --nogit --nogit-fallback --nom"
-        confirm = always
-
-Then you do just 'git send-email --identity=linux ...'
-
-Or use b4 as it does the above and works better for series.
-
-> > Bjorn, please check and comment on above? If requires we should start
-> > writing the guidelines for MSM boards since lot of comments are based
-> > on the experience or knowledge in the community Vs caught by tools -
-> > so it is easy to be missed by developers submitting new boards. Thoughts?
-
-Some internal review or training for new contributors is needed IMO.
-Some companies are required to have an known/experienced kernel
-developer signoff on patches before they are submitted. I don't think
-you want to get to that point.
-
-> Big yes! Some of the points should probably even be raised wrt the DT
-> spec itself, such as property order.
-
-Ideally, we should only be providing comments that can be referenced
-to documentation (if the tooling can't address it). In this case, I
-don't think the DT spec would be the right place property order. It's
-just a convention for the schema format. However, often the
-documentation we do have already isn't followed, so I'm not too
-motivated to add more.
-
-Rob
