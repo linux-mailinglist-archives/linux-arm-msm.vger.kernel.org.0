@@ -2,45 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43B306194C1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 11:47:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C42CD6194DD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 11:54:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229608AbiKDKrF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 06:47:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59156 "EHLO
+        id S231810AbiKDKyP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 06:54:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbiKDKrE (ORCPT
+        with ESMTP id S231821AbiKDKyJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 06:47:04 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1D1B2B24C
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 03:46:59 -0700 (PDT)
-Received: from [192.168.31.208] (unknown [194.29.137.22])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Fri, 4 Nov 2022 06:54:09 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41AC52BB21;
+        Fri,  4 Nov 2022 03:54:07 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 766FE401A9;
-        Fri,  4 Nov 2022 11:46:57 +0100 (CET)
-Message-ID: <71ac8750-8a15-4d0c-7b0e-8992b68992cd@somainline.org>
-Date:   Fri, 4 Nov 2022 11:46:56 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH] serial: Fix a typo ("ignorning")
-To:     =?UTF-8?Q?Jonathan_Neusch=c3=a4fer?= <j.neuschaefer@gmx.net>,
-        linux-serial@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D10F462152;
+        Fri,  4 Nov 2022 10:54:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30BA6C433C1;
+        Fri,  4 Nov 2022 10:54:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667559246;
+        bh=pvwG3Gm3N2eUyHgbPambsEuPVQ8R8/OOOxapou4YcUQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=cbBnPnYUkVl8HlirmjDewnnffVKehLHqlm1obIGLgPClQn+N8qpt6kVVeRv7jmkO8
+         pE7BDnwwVWraetTc50i8EYFTEP+BRLKvWFpiyw2Gs+LrYi2/9fCOWz7XWJBfFy+t+N
+         VUPPPDL7PDYnompJUihMxfpqHpM5QT45oSZ5IzRkkx4uYzpbz7+Gv+BVjPcpGO6D0h
+         EHGkwdAYVKkDvz+n0VT5S1PBTfxDR9q6nxMI2WHO3D8zYILp8VLd98rqj+kPqOMjW/
+         q1XTDuI5pJ+IMVj8PdQoZ6+dd96tvrhGWkjqbmv2oVa552CjRmOl1p1ptyfl2jnXxh
+         uWarmbCkIf6hg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oquKZ-0001I6-77; Fri, 04 Nov 2022 11:53:47 +0100
+Date:   Fri, 4 Nov 2022 11:53:47 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, patches@lists.linux.dev,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20221104103719.2234098-1-j.neuschaefer@gmx.net>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20221104103719.2234098-1-j.neuschaefer@gmx.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
+Message-ID: <Y2TvO875fYZTTNy9@hovoldconsulting.com>
+References: <20221101233421.997149-1-swboyd@chromium.org>
+ <Y2JL9/HFrb3E+CYY@hovoldconsulting.com>
+ <CAE-0n51Wuc6gVmsTOu4Nf4yx+6Wp-Oi3XZy06syhCMVmePWPEw@mail.gmail.com>
+ <Y2PAXX2oYL6iFTlB@hovoldconsulting.com>
+ <CAE-0n5319JSX16Z3H5vKQSL9UDetOdfb38zo_vp0C=uX1jddWQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n5319JSX16Z3H5vKQSL9UDetOdfb38zo_vp0C=uX1jddWQ@mail.gmail.com>
+X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -48,49 +72,95 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Nov 03, 2022 at 11:19:08AM -0700, Stephen Boyd wrote:
+> Quoting Johan Hovold (2022-11-03 06:21:33)
+> > On Wed, Nov 02, 2022 at 09:53:49AM -0700, Stephen Boyd wrote:
+> > > Quoting Johan Hovold (2022-11-02 03:52:39)
+> >
+> > > > > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > > Cc: Johan Hovold <johan+linaro@kernel.org>
+> > > > > Cc: Ulf Hansson <ulf.hansson@linaro.org>
+> > > > > Cc: Taniya Das <quic_tdas@quicinc.com>
+> > > > > Cc: Satya Priya <quic_c_skakit@quicinc.com>
+> > > > > Cc: Douglas Anderson <dianders@chromium.org>
+> > > > > Cc: Matthias Kaehlcke <mka@chromium.org>
+> > > > > Reported-by: Stephen Boyd <swboyd@chromium.org>
+> > > >
+> > > > We typically don't add Reported-by tags for bugs we find and fix
+> > > > ourselves.
+> > >
+> > > Heh, I didn't see anything like that in Documentation/ so it seems fine.
+> > > I debugged my problem and reported it.
+> >
+> > I'd say the documentation is pretty clear on this matter:
+> >
+> >   Reported-by: names a user who reported a problem which is fixed by this
+> >   patch; this tag is used to give credit to the (often underappreciated)
+> >   people who test our code and let us know when things do not work
+> >   correctly.
+> >
+> >   - Documentation/process/5.Posting.rst
+> >
+> >   The Reported-by tag gives credit to people who find bugs and report
+> >   them and it hopefully inspires them to help us again in the future.
+> >   Please note that if the bug was reported in private, then ask for
+> >   permission first before using the Reported-by tag.
+> >
+> >   - Documentation/process/submitting-patches.rst
+> 
+> I don't see anything above that says I can't add this tag if I reported
+> (by sending an email about the problem to the list), debugged, and
+> solved the problem by sending a patch.
 
-On 04/11/2022 11:37, Jonathan Neuschäfer wrote:
-> Fix the two instances of this typo present in the MSM and VT8500 serial
-> drivers.
->
-> Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-> ---
+We don't try to prevent every strange interpretation of our docs by
+spelling everything out. Just look at why we added a tag in the first
+place and how it *is* being using.
+ 
+> > Just like you don't add a Tested-by tag for every patch you submit, it
+> > is implied that you found the issue you fix unless you explicitly
+> > attribute that to a third party using Reported-by.
+> 
+> I don't see how this is the same. It certainly is not explicit, as you
+> say.
 
-Acked-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+We added the Reported-by tag so that users reporting bugs would get some
+credit and not just the person fixing the bug. Just as we did for
+Tested-by.
 
+If some author added a Tested-by tag for themselves to their own patches
+I'm sure you'd call that out too as that's not the way the tag is meant
+to be used.
 
-Konrad
+The reasoning is exactly the same for Reported-by.
 
->   drivers/tty/serial/msm_serial.c    | 2 +-
->   drivers/tty/serial/vt8500_serial.c | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
-> index 7dd19a2815794..d9a3aa941427c 100644
-> --- a/drivers/tty/serial/msm_serial.c
-> +++ b/drivers/tty/serial/msm_serial.c
-> @@ -819,7 +819,7 @@ static void msm_handle_rx(struct uart_port *port)
->   			port->icount.rx++;
->   		}
->
-> -		/* Mask conditions we're ignorning. */
-> +		/* Mask conditions we're ignoring. */
->   		sr &= port->read_status_mask;
->
->   		if (sr & MSM_UART_SR_RX_BREAK)
-> diff --git a/drivers/tty/serial/vt8500_serial.c b/drivers/tty/serial/vt8500_serial.c
-> index 10fbdb09965f3..37c8a55b48eda 100644
-> --- a/drivers/tty/serial/vt8500_serial.c
-> +++ b/drivers/tty/serial/vt8500_serial.c
-> @@ -168,7 +168,7 @@ static void handle_rx(struct uart_port *port)
->
->   		c = readw(port->membase + VT8500_RXFIFO) & 0x3ff;
->
-> -		/* Mask conditions we're ignorning. */
-> +		/* Mask conditions we're ignoring. */
->   		c &= ~port->read_status_mask;
->
->   		if (c & FER) {
-> --
-> 2.35.1
->
+> I wouldn't have added the tag if I didn't send an email to the list with
+> the lockdep splat and follow that up with a bisection report for
+> suspend/resume being broken. Shouldn't we value those sorts of bug
+> report emails? I will add a link to the report in the commit text to
+> clarify.
+
+Ok, perhaps that would make this a bit more reasonable (Reported-by +
+Link to report), but I still do not think the tag is warranted.
+
+> > This is the first time I see anyone trying to use Reported-by this way,
+> > and even if you think the documentation isn't clear enough on this, our
+> > praxis is.
+> >
+> 
+> Ok, so is it just a shock to see this for the first time? What is the
+> problem with the tag? Can you elaborate on your concerns? I would like
+> to understand.
+
+It's apparently the first time you try to give credit to yourself for
+finding a bug this way too, so let's turn that question around. Why do
+you suddenly insist on crediting yourself this way when no one else does
+so?
+
+In the end it's about maintaining a common interpretation of these tags
+and avoiding unnecessary noise. I'm sure no one wants to see a redundant
+Tested-by tag on every commit nor a redundant Reported-by tag on every
+bug fix for bugs that kernel developers find themselves. And if only
+some people start using the tags this way it would also skew our
+statistics (e.g. the LWN reports).
+
+Johan
