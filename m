@@ -2,116 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F0CD61A380
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 22:41:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 89A9461A3E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 23:08:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229598AbiKDVkl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 17:40:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46820 "EHLO
+        id S229445AbiKDWIh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 18:08:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229485AbiKDVkk (ORCPT
+        with ESMTP id S229542AbiKDWIg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 17:40:40 -0400
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E50FBA6;
-        Fri,  4 Nov 2022 14:40:39 -0700 (PDT)
-Received: by mail-oi1-f177.google.com with SMTP id b124so6510565oia.4;
-        Fri, 04 Nov 2022 14:40:39 -0700 (PDT)
+        Fri, 4 Nov 2022 18:08:36 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E667AFCE1
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 15:08:34 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id t25so16679683ejb.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 15:08:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=OUWMpfCp8yMYMN27hOBTPmmaRDIODrfLy/QYyrxVC9U=;
+        b=N/5MobyCqMqaDHUf0VYAeGDlaShVI6gW3R/fr1tLkTjRzSd0mrwTwe6AgO1bc6rMAQ
+         vGqaYuhfvQ82vWTraoh76WIR9XOumQyzsOIhiQlm7A5wwEuKKd3o4BWpzigWjyVJAaHB
+         lXa1OaNbz5gonB88NC84ox0/3fAaw8jeOZ6TU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Jh4TZpx/fUejHGdSgYJPb2bOIrkhGmJ4yxw/EXpmSSk=;
-        b=iPRBMAce09l0t8FPGESxNDo0BR59BiqGIsHpT/KMpqnsrQ3RZa8G1fqDcTcgVmzfGT
-         GKyOMw/oZXvdie/JussKcE28KwbK1URxxWOQZWnb8d5/v/WT/GFl7qDLGD26D7f/MKgW
-         W5Mzwtxa1Tpl9dHKYpiTzZNeexiAjYNrqspYcCM0OZSIXkxOGUsnkgYV3hi50JHNWpks
-         CSgJw0w9YadOmJvXyvnr+zLtYOL+CZ675uYaiXw6IjGUInUsNBmIHWGupLL5Qv0GMvaW
-         0jPyKU+TjVJ8An7ssQOsM2XjLA2gpH+G8hRtbVtiip9DVAvXaZywgszlLUvg1eRcHwt6
-         6wqw==
-X-Gm-Message-State: ACrzQf1/MLB0Rk0MQNWu0n+cblRVmtPxL0VQeYYKx8bqvppedq7r1OGG
-        j7vouubrmqvRIqfDYwLb5Q==
-X-Google-Smtp-Source: AMsMyM4AIauGU9ELLG9wadYHkA3jCPpaknwCvdEYTBT+HNyDIyo9igsDWHLRAB0W7CXeL0RgIYFYcg==
-X-Received: by 2002:a05:6808:1288:b0:35a:5a4b:812a with SMTP id a8-20020a056808128800b0035a5a4b812amr2989133oiw.117.1667598038238;
-        Fri, 04 Nov 2022 14:40:38 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id r7-20020a4acb07000000b0047ed75e4d61sm135059ooq.7.2022.11.04.14.40.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Nov 2022 14:40:37 -0700 (PDT)
-Received: (nullmailer pid 2878196 invoked by uid 1000);
-        Fri, 04 Nov 2022 21:40:39 -0000
-Date:   Fri, 4 Nov 2022 16:40:39 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-phy@lists.infradead.org, Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RESEND v2 11/13] dt-bindings: phy: qcom,qmp-usb: fix
- sc8280xp binding
-Message-ID: <166759803901.2878139.5371601797957864706.robh@kernel.org>
-References: <20221028160435.26948-1-johan+linaro@kernel.org>
- <20221028160435.26948-12-johan+linaro@kernel.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OUWMpfCp8yMYMN27hOBTPmmaRDIODrfLy/QYyrxVC9U=;
+        b=e0QWHNpFdBEtVSmotWq2+LhTMGUjKI06xCdAQX1bPrpw+Vnri3J77i+eGH761+HU0r
+         CHj/SDWX4YZBvDdk8UE2aHCEgtt/iztGdeJtZC6DNiWv36+0r64yaTNXfsF006m3T7zV
+         aDJ9WpSd5mZIlBXkwB/qrgnkk3WTzoQ/spyLKx07Pg5kbY2J4VgS20Pi1ABtf1FfOW1A
+         Y/hOIUSQuBmfOpVN7GNkkFUqQiko2FkbNXpyMtAQp0bMee/KdDAtq/V6MK6D/GnA13Nh
+         fkZRgEGU/2tMF372MkfU6OAlNrUtfNEaskZbiawDap/9vk2umLDKztEwS8E+Bxtpu9no
+         RqYw==
+X-Gm-Message-State: ACrzQf2WdI/UK+hlIPPyNncFmtbcguSeziIUhaJEqGN4JfJuF6MluHP1
+        UPis1LspM9jTynQs7d466xChjpjuXHIOCnTa
+X-Google-Smtp-Source: AMsMyM4NDUTHsgvt5/kOvmXSy0GcXTvqLhMGoUN93zzAJ2da+SbaR8HUg7pDC6utQtLcTgfbi+gxow==
+X-Received: by 2002:a17:906:6a17:b0:794:f0e8:1918 with SMTP id qw23-20020a1709066a1700b00794f0e81918mr36933601ejc.474.1667599713216;
+        Fri, 04 Nov 2022 15:08:33 -0700 (PDT)
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com. [209.85.128.48])
+        by smtp.gmail.com with ESMTPSA id h19-20020a170906829300b007abaff3a97asm53447ejx.221.2022.11.04.15.08.29
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Nov 2022 15:08:30 -0700 (PDT)
+Received: by mail-wm1-f48.google.com with SMTP id c3-20020a1c3503000000b003bd21e3dd7aso6229989wma.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 15:08:29 -0700 (PDT)
+X-Received: by 2002:a05:600c:2212:b0:3cf:6068:3c40 with SMTP id
+ z18-20020a05600c221200b003cf60683c40mr25419745wml.57.1667599706005; Fri, 04
+ Nov 2022 15:08:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221028160435.26948-12-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+References: <20221104064055.1.I00a0e4564a25489e85328ec41636497775627564@changeid>
+ <20221104064055.2.I49b25b9bda9430fc7ea21e5a708ca5a0aced2798@changeid> <CAE-0n53FLz+4XROL7t5Vk1pEgvAX4tJYO4UK8rdCQUW0Pq78jg@mail.gmail.com>
+In-Reply-To: <CAE-0n53FLz+4XROL7t5Vk1pEgvAX4tJYO4UK8rdCQUW0Pq78jg@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 4 Nov 2022 15:08:12 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VSh90tdSDaxThoGaE_uYWPTMrGYBMM0UqcH=HUZaScNg@mail.gmail.com>
+Message-ID: <CAD=FV=VSh90tdSDaxThoGaE_uYWPTMrGYBMM0UqcH=HUZaScNg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] clk: qcom: lpass-sc7180: Fix pm_runtime usage
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
-On Fri, 28 Oct 2022 18:04:33 +0200, Johan Hovold wrote:
-> The current QMP USB PHY bindings are based on the original MSM8996 PCIe
-> PHY binding which provided multiple PHYs per IP block and these in turn
-> were described by child nodes.
-> 
-> The QMP USB PHY block only provide a single PHY and the remnant child
-> node does not really reflect the hardware.
-> 
-> The original MSM8996 binding also ended up describing the individual
-> register blocks as belonging to either the wrapper node or the PHY child
-> nodes.
-> 
-> This is an unnecessary level of detail which has lead to problems when
-> later IP blocks using different register layouts have been forced to fit
-> the original mould rather than updating the binding. The bindings are
-> arguable also incomplete as they only the describe register blocks used
-> by the current Linux drivers (e.g. does not include the per lane PCS
-> registers).
-> 
-> Note that PCS_USB region is also not described by the current bindings
-> despite being used by the driver and this has led to people increasing
-> the size of the PCS region in the devicetree so that it includes PCS_USB
-> registers even though other regions like TX and RX may lie in between.
-> 
-> Add a new binding for the QMP USB PHYs found on SC8280XP which further
-> bindings can be based on.
-> 
-> Note that this also fixes the SC8280XP "phy_phy" reset name.
-> 
-> Also note that the current binding is simply removed instead of being
-> deprecated as it was only recently merged and support for SC8280XP is
-> still under development. And, specifically, there is no support in
-> mainline for the multiport controller that uses these PHYs.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->  .../phy/qcom,msm8996-qmp-usb3-phy.yaml        |  13 ---
->  .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   | 105 ++++++++++++++++++
->  2 files changed, 105 insertions(+), 13 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> 
+On Fri, Nov 4, 2022 at 2:19 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Douglas Anderson (2022-11-04 06:56:29)
+> > The sc7180 lpass clock controller's pm_runtime usage wasn't broken
+> > quite as spectacularly as the sc7280's pm_runtime usage, but it was
+> > still broken. Putting some printouts in at boot showed me this (with
+> > serial console enabled, which makes the prints slow and thus changes
+> > timing):
+> >   [    3.109951] DOUG: my_pm_clk_resume, usage=1
+> >   [    3.114767] DOUG: my_pm_clk_resume, usage=1
+> >   [    3.664443] DOUG: my_pm_clk_suspend, usage=0
+> >   [    3.897566] DOUG: my_pm_clk_suspend, usage=0
+> >   [    3.910137] DOUG: my_pm_clk_resume, usage=1
+> >   [    3.923217] DOUG: my_pm_clk_resume, usage=0
+> >   [    4.440116] DOUG: my_pm_clk_suspend, usage=-1
+> >   [    4.444982] DOUG: my_pm_clk_suspend, usage=0
+> >   [   14.170501] DOUG: my_pm_clk_resume, usage=1
+> >   [   14.176245] DOUG: my_pm_clk_resume, usage=0
+> >
+> > ...or this w/out serial console:
+> >   [    0.556139] DOUG: my_pm_clk_resume, usage=1
+> >   [    0.556279] DOUG: my_pm_clk_resume, usage=1
+> >   [    1.058422] DOUG: my_pm_clk_suspend, usage=-1
+> >   [    1.058464] DOUG: my_pm_clk_suspend, usage=0
+> >   [    1.186250] DOUG: my_pm_clk_resume, usage=1
+> >   [    1.186292] DOUG: my_pm_clk_resume, usage=0
+> >   [    1.731536] DOUG: my_pm_clk_suspend, usage=-1
+> >   [    1.731557] DOUG: my_pm_clk_suspend, usage=0
+> >   [   10.288910] DOUG: my_pm_clk_resume, usage=1
+> >   [   10.289496] DOUG: my_pm_clk_resume, usage=0
+> >
+> > It seems to be doing roughly the right sequence of calls, but just
+> > like with sc7280 this is more by luck than anything. Having a usage of
+> > -1 is just not OK.
+> >
+> > Let's fix this like we did with sc7280.
+>
+> Any Fixes tag?
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Ah, right. I guess the most obvious one is actually:
+
+Fixes: ce8c195e652f ("clk: qcom: lpasscc: Introduce pm autosuspend for SC7180")
+
+That's what got us going negative. One could _sorta_ make the argument
+for a "Fixes" tag all the way to the start of the driver, though. The
+driver never did a pm_runtime_get() during probe and so there was (I
+guess) a chance that some of the bare register writes in probe could
+have been unclocked. I'm not aware of that ever being a problem, so I
+guess just the above "Fixes" is fine.
+
+
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > ---
+>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+
+Thanks! Yell if you want me to spin a v2 with the Fixes in place.
+
+-Doug
