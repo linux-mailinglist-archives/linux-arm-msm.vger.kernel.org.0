@@ -2,46 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE56A6193C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 10:44:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EEBCC61945B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 11:20:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230165AbiKDJoC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 05:44:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57458 "EHLO
+        id S231707AbiKDKUg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 06:20:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231597AbiKDJny (ORCPT
+        with ESMTP id S231687AbiKDKUY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 05:43:54 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FACD62F7;
-        Fri,  4 Nov 2022 02:43:52 -0700 (PDT)
-Received: from [192.168.31.208] (unknown [194.29.137.22])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        Fri, 4 Nov 2022 06:20:24 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96AD225E9B;
+        Fri,  4 Nov 2022 03:20:22 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 8708F3F792;
-        Fri,  4 Nov 2022 10:43:50 +0100 (CET)
-Message-ID: <0da38ea1-23ce-23d4-ade5-cddfff5d957f@somainline.org>
-Date:   Fri, 4 Nov 2022 10:43:49 +0100
+        by ams.source.kernel.org (Postfix) with ESMTPS id 197AEB82CD5;
+        Fri,  4 Nov 2022 10:20:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 8FCAFC433D7;
+        Fri,  4 Nov 2022 10:20:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667557219;
+        bh=1QAp6R4OhEVBViSbCctOc2XRBVTc/Th1TNMoCMIQDg4=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=lFh690D0Huc12CBXhTIqb8GSLetAfqww1qr7tQjm+t1ZATQns7dGuGBhZOdqL9OdB
+         1d/ne3UF77QJfPJ/KlHkKMt/tPyv2INfyLK8fbXzBL5ZI67UcF23EFhxNyRVD7rfcc
+         Y4RRIaVTUknvoUA2/wpaEQClDXo9tKjABF4LdQw85SM5pAqon3BpP90jacafe8WbXc
+         8VZV/W/HqHeLDt95g8h+FLjZg2/vDVDdCHt7B1cbILPJmQirE3b1mOAlPnphk8rrx5
+         /5JpBEaAx/JvCeeIhYdx7QycnVJGvcno0NaVCYakMDQtd/OirKCy3UplR92P/rQEOF
+         vys4FTveNTtgQ==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 79550E270F6;
+        Fri,  4 Nov 2022 10:20:19 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc8280xp: fix UFS reference clocks
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Brian Masney <bmasney@redhat.com>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20221104092045.17410-1-johan+linaro@kernel.org>
- <20221104092045.17410-2-johan+linaro@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20221104092045.17410-2-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next v2 0/9] net: ipa: support more endpoints
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <166755721948.22576.16201941889810013711.git-patchwork-notify@kernel.org>
+Date:   Fri, 04 Nov 2022 10:20:19 +0000
+References: <20221102221139.1091510-1-elder@linaro.org>
+In-Reply-To: <20221102221139.1091510-1-elder@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, mka@chromium.org, evgreen@chromium.org,
+        andersson@kernel.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -49,77 +61,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hello:
 
-On 04/11/2022 10:20, Johan Hovold wrote:
-> There are three UFS reference clocks on SC8280XP which are used as
-> follows:
->
->   - The GCC_UFS_REF_CLKREF_CLK clock is fed to any UFS device connected
->     to either controller.
->
->   - The GCC_UFS_1_CARD_CLKREF_CLK and GCC_UFS_CARD_CLKREF_CLK clocks
->     provide reference clocks to the two PHYs.
->
-> Note that this depends on first updating the clock driver to reflect
-> that all three clocks are sourced from CXO. Specifically, the UFS
-> controller driver expects the device reference clock to have a valid
-> frequency:
->
-> 	ufshcd-qcom 1d84000.ufs: invalid ref_clk setting = 0
->
-> Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-> Fixes: 8d6b458ce6e9 ("arm64: dts: qcom: sc8280xp: fix ufs_card_phy ref clock")
-> Fixes: f3aa975e230e ("arm64: dts: qcom: sc8280xp: correct ref clock for ufs_mem_phy")
-> Link: https://lore.kernel.org/lkml/Y2OEjNAPXg5BfOxH@hovoldconsulting.com/
-> Cc: stable@vger.kernel.org	# 5.20
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
+This series was applied to netdev/net-next.git (master)
+by David S. Miller <davem@davemloft.net>:
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+On Wed,  2 Nov 2022 17:11:30 -0500 you wrote:
+> This series adds support for more than 32 IPA endpoints.  To do
+> this, five registers whose bits represent endpoint state are
+> replicated as needed to represent endpoints beyond 32.  For existing
+> platforms, the number of endpoints is never greater than 32, so
+> there is just one of each register.  IPA v5.0+ supports more than
+> that though; these changes prepare the code for that.
+> 
+> [...]
+
+Here is the summary with links:
+  - [net-next,v2,1/9] net: ipa: reduce arguments to ipa_table_init_add()
+    https://git.kernel.org/netdev/net-next/c/5cb76899fb47
+  - [net-next,v2,2/9] net: ipa: use ipa_table_mem() in ipa_table_reset_add()
+    https://git.kernel.org/netdev/net-next/c/6337b147828b
+  - [net-next,v2,3/9] net: ipa: add a parameter to aggregation registers
+    https://git.kernel.org/netdev/net-next/c/1d8f16dbdf36
+  - [net-next,v2,4/9] net: ipa: add a parameter to suspend registers
+    (no matching commit)
+  - [net-next,v2,5/9] net: ipa: use a bitmap for defined endpoints
+    (no matching commit)
+  - [net-next,v2,6/9] net: ipa: use a bitmap for available endpoints
+    https://git.kernel.org/netdev/net-next/c/88de7672404d
+  - [net-next,v2,7/9] net: ipa: support more filtering endpoints
+    https://git.kernel.org/netdev/net-next/c/0f97fbd47858
+  - [net-next,v2,8/9] net: ipa: use a bitmap for set-up endpoints
+    https://git.kernel.org/netdev/net-next/c/ae5108e9b7fa
+  - [net-next,v2,9/9] net: ipa: use a bitmap for enabled endpoints
+    https://git.kernel.org/netdev/net-next/c/9b7a00653651
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
-Konrad
-
->   arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index 21ac119e0382..e0d0fb6994b5 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -912,7 +912,7 @@ ufs_mem_hc: ufs@1d84000 {
->   				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
->   				 <&gcc GCC_UFS_PHY_AHB_CLK>,
->   				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
-> -				 <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&gcc GCC_UFS_REF_CLKREF_CLK>,
->   				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
->   				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
->   				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
-> @@ -943,7 +943,7 @@ ufs_mem_phy: phy@1d87000 {
->   			ranges;
->   			clock-names = "ref",
->   				      "ref_aux";
-> -			clocks = <&gcc GCC_UFS_REF_CLKREF_CLK>,
-> +			clocks = <&gcc GCC_UFS_CARD_CLKREF_CLK>,
->   				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
->   
->   			resets = <&ufs_mem_hc 0>;
-> @@ -980,7 +980,7 @@ ufs_card_hc: ufs@1da4000 {
->   				 <&gcc GCC_AGGRE_UFS_CARD_AXI_CLK>,
->   				 <&gcc GCC_UFS_CARD_AHB_CLK>,
->   				 <&gcc GCC_UFS_CARD_UNIPRO_CORE_CLK>,
-> -				 <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&gcc GCC_UFS_REF_CLKREF_CLK>,
->   				 <&gcc GCC_UFS_CARD_TX_SYMBOL_0_CLK>,
->   				 <&gcc GCC_UFS_CARD_RX_SYMBOL_0_CLK>,
->   				 <&gcc GCC_UFS_CARD_RX_SYMBOL_1_CLK>;
-> @@ -1011,7 +1011,7 @@ ufs_card_phy: phy@1da7000 {
->   			ranges;
->   			clock-names = "ref",
->   				      "ref_aux";
-> -			clocks = <&gcc GCC_UFS_REF_CLKREF_CLK>,
-> +			clocks = <&gcc GCC_UFS_1_CARD_CLKREF_CLK>,
->   				 <&gcc GCC_UFS_CARD_PHY_AUX_CLK>;
->   
->   			resets = <&ufs_card_hc 0>;
