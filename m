@@ -2,71 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AE2261A31A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 22:17:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C5F0161A324
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 22:19:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229662AbiKDVRN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 17:17:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57754 "EHLO
+        id S230108AbiKDVTP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 17:19:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229646AbiKDVRH (ORCPT
+        with ESMTP id S229749AbiKDVTO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 17:17:07 -0400
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9DD16157
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 14:17:06 -0700 (PDT)
-Received: by mail-yb1-xb2e.google.com with SMTP id e123so2937963ybh.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 14:17:06 -0700 (PDT)
+        Fri, 4 Nov 2022 17:19:14 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 991B3F61
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 14:19:12 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id g12so9015558lfh.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 14:19:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pyGds6Hg1ZCJpXSt9b953qf8BGwVMn84FDUpPupYsPA=;
-        b=DssSrfVlC3iSSNTKeeDHt8VNgTSi5VuuN0su+R3SWycgfn/MKXXDOSE3gj83VHj9cl
-         HrcoYCHYVAfb1wbgNsGa68z+V456TnMfPIT+EWX1A3hvJA/y97t/hSXShCZHpAd8xdqx
-         qTIh8O0CZ6+qBXguTqj2gcIVxJzVVFi8qg2OlMU5BHM3ZGOyhfU60YFUTTnbgQiDVrIp
-         Wz6zJ1INTZtvm0/sZ/ImQPWgnnMzAS1PkvA5/N8CuSHTNsKF0Ut11gL4z0iziR9dStwo
-         jvo60f0Su6wLkC44wUyx1gW8XdHwqtDcMrVuoVfluOlT7V7Ddh7BsQtyAPevahbOC6o6
-         uDKQ==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=L+pen+bclyorb8ogf6bpxsI2tvXi5ZuGCYXqmAjFI/g=;
+        b=XJNITXPyNkcNnI4VfJNFhxvsGcNZ0rAQl0ZqqMYKQh4nUReBgcc4uXnwTAwLDZQRs4
+         LYZANwCEbW5F9+854u1PG1+tjER3XnwothDcaJKX4mCwz3DTRsjRB2M7lnZBEOp9HL1J
+         upmnQMir3Q6QiUDlmnP85/moEVRKqPt3t+hqc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pyGds6Hg1ZCJpXSt9b953qf8BGwVMn84FDUpPupYsPA=;
-        b=kDjESUuEVz685zIowt8FVWOc9bgY6OgG7LHSuYAqyAqHMImYHfUg+0moCY1y5vq4jp
-         Tx1yf9FnDE3eNeq9izSN7fkMRZ/x3Ti69AZNxJokHRWmGuQqpjpJV6QRYxpeBSaM7kEv
-         vk326Ryp4AlK1EHNzcacQk3NV3L+Flwbttp+BegCwdtG0m1WnZt64pnLsreQw0ER0JsQ
-         eOJOAd+BQ6ezHPO45WUEtAi9nyLWVQutZNU3mBUZN0iyTrIi8NOiTOxrR7R4bp54Xxup
-         zjZdmDbJTVNh+lXkd3uVedB09kBQxAYvkY1Sx7+oXjIZZaVhLV37K17kr9GEqikv+hsO
-         3t9Q==
-X-Gm-Message-State: ANoB5pmCTcXhXXLZFJqTvIbDQyTdheuXUzH+eZ+nyyPrFFpCb7DsbXco
-        wjjFRPkz2S7xqm0OUAw2CHFXdF8U/tTj+wEC+HGMAzobhT3SDQ==
-X-Google-Smtp-Source: AA0mqf5GaczFdCkzkNzAZDKj1QHfSwJuiNQKKfgZLEkbhvf/8ad5OCKF9RnkskhAcJNNr1lKt2Duwh8y0sswHirdtBY=
-X-Received: by 2002:a25:3b90:0:b0:6d3:5464:8338 with SMTP id
- i138-20020a253b90000000b006d354648338mr4703120yba.288.1667596626192; Fri, 04
- Nov 2022 14:17:06 -0700 (PDT)
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=L+pen+bclyorb8ogf6bpxsI2tvXi5ZuGCYXqmAjFI/g=;
+        b=OKfC6RjYqKzZI+864k8nINrlc616Dq6tvt1j3Ws/HnqRrmUfB0jXbijVnc5Ro4ZBK+
+         mUyBOMorawHHesomtNT3AyMStnlLIFvht1+3FOoLmkfOP4GMr8lcqv+uhdx+L+6RkWE7
+         Tv9lR+bMf4Dgi+5ExzVdOBkX9uusKK2XzosMedqTg9aNl/BDqLkC9iJuMK6Tv4uKhq8/
+         fsLQ0d5JZ7BUFVGqch28b45IxB63tmtprrB6+PemiSazriXyAkWXkjn91/jGVV6rCLmY
+         W4bKIXfXY67mpO6793VaYLslWAtWuFRCOTSC17k4HhD32RKXOBggpfPd3fEU8tA1TBp/
+         1wlA==
+X-Gm-Message-State: ACrzQf3kJmAS+JGEyiRUxEPVuFyDf9OecVokJhY8HIQ+Vd7ZGKpyps6F
+        kqeCotxgsg6QudSKZORWzVIfv2OKRLlhc0mztfRWiA==
+X-Google-Smtp-Source: AMsMyM7hO7tIh7DUGKYkxLwL5wT6J+jrjdD8MBfAHIk43j8UcT87F7EAGjbtaoEX4G1b90StxBn3SpTuz37UP7/InaQ=
+X-Received: by 2002:ac2:4d81:0:b0:4b2:11d:fa0e with SMTP id
+ g1-20020ac24d81000000b004b2011dfa0emr1166848lfe.309.1667596750945; Fri, 04
+ Nov 2022 14:19:10 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 4 Nov 2022 14:19:10 -0700
 MIME-Version: 1.0
-References: <20221104133452.131227-1-angelogioacchino.delregno@collabora.com>
- <20221104133452.131227-3-angelogioacchino.delregno@collabora.com> <20221104143202.nps2iwqjcwug6mij@SoMainline.org>
-In-Reply-To: <20221104143202.nps2iwqjcwug6mij@SoMainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 5 Nov 2022 00:16:55 +0300
-Message-ID: <CAA8EJprOUmFKHr91qAmmKjXn0Q6EX7pgpaMp4J53jsF+5E_M8Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] soc: qcom: spm: Implement support for SAWv2.3,
- MSM8976 L2 PM
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel@collabora.com,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
+In-Reply-To: <20221104064055.3.I90ba14a47683a484f26531a08f7b46ace7f0a8a9@changeid>
+References: <20221104064055.1.I00a0e4564a25489e85328ec41636497775627564@changeid>
+ <20221104064055.3.I90ba14a47683a484f26531a08f7b46ace7f0a8a9@changeid>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Fri, 4 Nov 2022 14:19:10 -0700
+Message-ID: <CAE-0n53=YeA+sFkS0EVESwq60rQTyXisOY1gcPTXDG9Zm1zoYA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] clk: qcom: lpass-sc7180: Avoid an extra "struct dev_pm_ops"
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>
+Cc:     Taniya Das <quic_tdas@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,88 +78,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 4 Nov 2022 at 17:34, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
+Quoting Douglas Anderson (2022-11-04 06:56:30)
+> The two devices managed by lpasscorecc-sc7180.c each had their own
+> "struct dev_pm_ops". This is not needed. They are exactly the same and
+> the structure is "static const" so it can't possible change. combine
+> the two. This matches what's done for sc7280.
 >
-> On 2022-11-04 14:34:52, AngeloGioacchino Del Regno wrote:
-> > From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> >
-> > Implement the support for SAW v2.3, used in at least MSM8976, MSM8956
-> > and APQ variants and while at it also add the configuration for the
-> > MSM8976's little (a53) and big (a72) clusters cache power management.
-> >
-> > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> > [Marijn: reorder struct definitions to follow high-to-low order]
+> This should be a noop other than saving a few bytes.
 >
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-With this sign-off in place,
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
->
-> > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> > ---
-> >  drivers/soc/qcom/spm.c | 33 +++++++++++++++++++++++++++++++++
-> >  1 file changed, 33 insertions(+)
-> >
-> > diff --git a/drivers/soc/qcom/spm.c b/drivers/soc/qcom/spm.c
-> > index 484b42b7454e..bfcd321d7837 100644
-> > --- a/drivers/soc/qcom/spm.c
-> > +++ b/drivers/soc/qcom/spm.c
-> > @@ -98,6 +98,35 @@ static const struct spm_reg_data spm_reg_8916_cpu = {
-> >       .start_index[PM_SLEEP_MODE_SPC] = 5,
-> >  };
-> >
-> > +static const u16 spm_reg_offset_v2_3[SPM_REG_NR] = {
-> > +     [SPM_REG_CFG]           = 0x08,
-> > +     [SPM_REG_SPM_CTL]       = 0x30,
-> > +     [SPM_REG_DLY]           = 0x34,
-> > +     [SPM_REG_PMIC_DATA_0]   = 0x40,
-> > +     [SPM_REG_PMIC_DATA_1]   = 0x44,
-> > +};
-> > +
-> > +/* SPM register data for 8976 */
-> > +static const struct spm_reg_data spm_reg_8976_gold_l2 = {
-> > +     .reg_offset = spm_reg_offset_v2_3,
-> > +     .spm_cfg = 0x14,
-> > +     .spm_dly = 0x3c11840a,
-> > +     .pmic_data[0] = 0x03030080,
-> > +     .pmic_data[1] = 0x00030000,
-> > +     .start_index[PM_SLEEP_MODE_STBY] = 0,
-> > +     .start_index[PM_SLEEP_MODE_SPC] = 3,
-> > +};
-> > +
-> > +static const struct spm_reg_data spm_reg_8976_silver_l2 = {
-> > +     .reg_offset = spm_reg_offset_v2_3,
-> > +     .spm_cfg = 0x14,
-> > +     .spm_dly = 0x3c102800,
-> > +     .pmic_data[0] = 0x03030080,
-> > +     .pmic_data[1] = 0x00030000,
-> > +     .start_index[PM_SLEEP_MODE_STBY] = 0,
-> > +     .start_index[PM_SLEEP_MODE_SPC] = 2,
-> > +};
-> > +
-> >  static const u16 spm_reg_offset_v2_1[SPM_REG_NR] = {
-> >       [SPM_REG_CFG]           = 0x08,
-> >       [SPM_REG_SPM_CTL]       = 0x30,
-> > @@ -213,6 +242,10 @@ static const struct of_device_id spm_match_table[] = {
-> >         .data = &spm_reg_8916_cpu },
-> >       { .compatible = "qcom,msm8974-saw2-v2.1-cpu",
-> >         .data = &spm_reg_8974_8084_cpu },
-> > +     { .compatible = "qcom,msm8976-gold-saw2-v2.3-l2",
-> > +       .data = &spm_reg_8976_gold_l2 },
-> > +     { .compatible = "qcom,msm8976-silver-saw2-v2.3-l2",
-> > +       .data = &spm_reg_8976_silver_l2 },
-> >       { .compatible = "qcom,msm8998-gold-saw2-v4.1-l2",
-> >         .data = &spm_reg_8998_gold_l2 },
-> >       { .compatible = "qcom,msm8998-silver-saw2-v4.1-l2",
-> > --
-> > 2.37.2
-> >
-
-
-
--- 
-With best wishes
-Dmitry
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
