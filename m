@@ -2,169 +2,221 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B567561A2EF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 22:10:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D60561A2FC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 22:13:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229694AbiKDVKT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 17:10:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55872 "EHLO
+        id S229920AbiKDVNc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 17:13:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229528AbiKDVKS (ORCPT
+        with ESMTP id S229917AbiKDVN2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 17:10:18 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D829B4385B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 14:10:15 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-3321c2a8d4cso54640407b3.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 14:10:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=cwXqFzxAtkrKTKzZGzLe9Mfbky8J4s9QItvkhLD83kU=;
-        b=EWQoU8YoAt/OYgfH63ml03fy9cAdpDGtKVVbEOGaBuxHDcTLtKtI2Od7HxiH9Z8aCI
-         PTRdz7+5X8wjKiSlJ9N0t9EMZdLNvSsQ1T73CpdIaMnitMEZJkB0xe4YWbBP7wn1xQL5
-         Md4rbCATJQNHQI1DbkJPVxl0+ORssqj1JkHFDtK7wCi4HjsI2GZeIixiNLujzjDWBqEr
-         ZLHtGD/Ym7N3EzMNdarE9A/oStXORsO043pkBzGruzsIvxz4OOZceH5P0pkV/B5ZE4p5
-         Xdv16t1NzN3RD8SxPcbBJ09Hh2iumMeMwWTfOgW4zWnZ4Eqyb6fmgArDSRMR/NtFRJA5
-         FbcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cwXqFzxAtkrKTKzZGzLe9Mfbky8J4s9QItvkhLD83kU=;
-        b=3yF0GuPTNzYmYNzpk1TyoOGNX7lyEjvLO0SCTEarrmJ5cPQvOFCUsmShfA2WuHpz8Q
-         MYDhEV4mm/nR15z+ZlKaCNcK2PH8o0/EnHqbpXwcwMUftCiZnySDMPvKWn4gFL0v4q2B
-         p7tkrTsh600Auz3G+cHEg/cMwHjRC5v0zuoqxvfh69r4GvJIbbsp8OKnde7AoFowSZK7
-         P9RzfHjMTFd/H05zIf6cJpYGl2XlZ6hAal596drWZwJ/MkeseYT9rR5WZKNqgwVBaO28
-         ZqD7AzZnH4WXMf+U1K9eX8YMdTaHUAZEWAxIvB6m99CD/qulk6IkmCIzEnrCNCzlKAFB
-         VPIA==
-X-Gm-Message-State: ACrzQf1+rfjKZzfqHQqXWkLfWmMwMnpi4cWi06CDRpFE2Zfp3f8ldjMd
-        kvmfHcQpCM5896YFYy267coLeTW0PvWntouM6pJheQ==
-X-Google-Smtp-Source: AMsMyM6p8Mijb2ZJqrpdINSR2OUp+/sgY+NK1HyQavD90xTWt/vMGVt3m08ouSoQg8PL+7ErmgpGiE0png2t2TIo7g8=
-X-Received: by 2002:a81:5905:0:b0:370:853a:80e4 with SMTP id
- n5-20020a815905000000b00370853a80e4mr24444604ywb.418.1667596215061; Fri, 04
- Nov 2022 14:10:15 -0700 (PDT)
-MIME-Version: 1.0
-References: <20221104064055.1.I00a0e4564a25489e85328ec41636497775627564@changeid>
-In-Reply-To: <20221104064055.1.I00a0e4564a25489e85328ec41636497775627564@changeid>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 5 Nov 2022 00:10:04 +0300
-Message-ID: <CAA8EJppmNeNFHA4r8ycsjqeYDiL7HnJ=q5N7vmuuHfdzJ3euww@mail.gmail.com>
-Subject: Re: [PATCH 1/3] clk: qcom: lpass-sc7280: Fix pm_runtime usage
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Judy Hsiao <judyhsiao@chromium.org>,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
+        Fri, 4 Nov 2022 17:13:28 -0400
+Received: from wnew3-smtp.messagingengine.com (wnew3-smtp.messagingengine.com [64.147.123.17])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3B381121;
+        Fri,  4 Nov 2022 14:13:22 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailnew.west.internal (Postfix) with ESMTP id 3655C2B066BD;
+        Fri,  4 Nov 2022 17:13:20 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Fri, 04 Nov 2022 17:13:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=svenpeter.dev;
+         h=cc:cc:content-transfer-encoding:date:date:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to; s=fm3; t=1667596399; x=
+        1667603599; bh=tHzuOmU+HU6cakH/7CcnyTDF5rh8M6mBGsxwOP1JyDc=; b=Z
+        KS6Jun3AkvRK7r0BM8pvmB93E3qYR5c8PDclKK0hxwhjwobeHgXFFp/qopbzN5fO
+        ePt6zuXlMx2JkCF0UjyW0VtlxV9sHU3rfX7CoEQomkCp+MC0e43Ynl1VaNMIS3aO
+        pwp+KfPKo8UKdf7r2S1lXep5leofZLczwftjeJTD1YbZG88GeejBa8t84A+jkXeJ
+        LCyOjF9q4fNgKoOHJxkUkogEGC9ZqmAYCl86qmfdU3qPYSDybm8gLn+vB+C/iOYL
+        pcHKEnJpV8QYTWivMW4mMYEDBpeZ8B152stPGX4lIdy14ti3K5fQUgugsC7Broz9
+        cFeFBoune/CuHVRZYjuhg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm3; t=1667596399; x=1667603599; bh=tHzuOmU+HU6ca
+        kH/7CcnyTDF5rh8M6mBGsxwOP1JyDc=; b=EGVpLtTaGOxJXwfNf6S0FRSdW4PLK
+        Fize4dZFwpmG6UoYPYjna7WwysWWAjAkYnjibcbfQlfsTQ5mDKVkfW3A04Fe92iR
+        ohfcIAtM9wikxnbsERt+hg53GLKswjlaA6i6jc2QZq0/xeUu1/upuBufunLxcuCJ
+        Ut0nNKOpp1oX5bmUPQ4OdKfQffaGHUUIufCS8tS7RnBA3vjWftOL0m7kSlFPRnxU
+        r8LHsHGwlQz0jkDN1W2yIYx1SrUzYiTOVgXBYo31vfG+rLaIzBYer7LWjk1I3nID
+        teTCJcCizZnoZ24CzBAxn/AzYY/KV0gLuVprITHruzkU1NDMmxWsfOTWw==
+X-ME-Sender: <xms:b4BlY_uwA2Nty0PqnViWp-ynPW8EWzD3QM8p17TunxK1oMo59d-96g>
+    <xme:b4BlYwf57ZJg-fevv_MjDowowozeLXjlJBogjMblbpsvZ-aiGqQK0ZPlrhb5nl-ce
+    D8S3i4pYRScr4cR-G8>
+X-ME-Received: <xmr:b4BlYyyq4_isWhKa1j5HgxaG0VWV1_vTdvXQwdaXt9XKEERlY9KkIJxDldkSE5cGBZBjgOiFbei0ZITg5UWVQqjwMUCwvN8xcapBUXzzKT1cgRhUFh9xdKe1SC85Yg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrvddugddugeefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepufhvvghn
+    ucfrvghtvghruceoshhvvghnsehsvhgvnhhpvghtvghrrdguvghvqeenucggtffrrghtth
+    gvrhhnpefhueffgfffgedtfefhfeeujeefgffhleekteduvdffieegffeuvdejgeduleei
+    leenucffohhmrghinhepuggvvhhitggvthhrvggvrdhorhhgnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepshhvvghnsehsvhgvnhhpvghtvghr
+    rdguvghv
+X-ME-Proxy: <xmx:b4BlY-NoRtGbyvtUcq42Q9U03eEHx3pKm1gOtNwJk7M-Cz_dnXmcWg>
+    <xmx:b4BlY_9eviRkz7V3NtjRSUvkYQmqkKguNc779zJm54w2id423_iKLw>
+    <xmx:b4BlY-UoYuRzdOVRJgKkYNCZz0GCoVw6K0by3p4m4FlBA3xVUQjb-w>
+    <xmx:b4BlY6e72_WEEpg8JMfCSuyGKtFpq5h8n1AnIEswYAjntyoi6whmH1h4JBs>
+Feedback-ID: i51094778:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 4 Nov 2022 17:13:15 -0400 (EDT)
+From:   Sven Peter <sven@svenpeter.dev>
+To:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Sven Peter <sven@svenpeter.dev>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Hector Martin <marcan@marcan.st>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        asahi@lists.linux.dev, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh@kernel.org>
+Subject: [PATCH v5 1/7] dt-bindings: net: Add generic Bluetooth controller
+Date:   Fri,  4 Nov 2022 22:12:57 +0100
+Message-Id: <20221104211303.70222-2-sven@svenpeter.dev>
+X-Mailer: git-send-email 2.30.1 (Apple Git-130)
+In-Reply-To: <20221104211303.70222-1-sven@svenpeter.dev>
+References: <20221104211303.70222-1-sven@svenpeter.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 4 Nov 2022 at 16:57, Douglas Anderson <dianders@chromium.org> wrote:
->
-> The pm_runtime usage in lpass-sc7280 was broken in quite a few
-> ways. Specifically:
->
-> 1. At the end of probe it called "put" twice. This is a no-no and will
->    end us up with a negative usage count. Even worse than calling
->    "put" twice, it never called "get" once. Thus after bootup it could
->    be seen that the runtime usage of the devices managed by this
->    driver was -2.
-> 2. In some error cases it manually called pm_runtime_disable() even
->    though it had previously used devm_add_action_or_reset() to set
->    this up to be called automatically. This meant that in these error
->    cases we'd double-call pm_runtime_disable().
-> 3. It forgot to call undo pm_runtime_use_autosuspend(), which can
->    sometimes have subtle problems (and the docs specifically mention
->    that you need to undo this function).
->
-> Overall the above seriously calls into question how this driver is
-> working. It seems like a combination of "it doesn't", "by luck", and
-> "because of the weirdness of runtime_pm". Specifically I put a
-> printout to the serial console every time the runtime suspend/resume
-> was called for the two devices created by this driver (I wrapped the
-> pm_clk calls). When I had serial console enabled, I found that the
-> calls got resumed at bootup (when the clk core probed and before our
-> double-put) and then never touched again. That's no good.
->   [    0.829997] DOUG: my_pm_clk_resume, usage=1
->   [    0.835487] DOUG: my_pm_clk_resume, usage=1
->
-> When I disabled serial console (speeding up boot), I got a different
-> pattern, which I guess (?) is better:
->   [    0.089767] DOUG: my_pm_clk_resume, usage=1
->   [    0.090507] DOUG: my_pm_clk_resume, usage=1
->   [    0.151885] DOUG: my_pm_clk_suspend, usage=-2
->   [    0.151914] DOUG: my_pm_clk_suspend, usage=-2
->   [    1.825747] DOUG: my_pm_clk_resume, usage=-1
->   [    1.825774] DOUG: my_pm_clk_resume, usage=-1
->   [    1.888269] DOUG: my_pm_clk_suspend, usage=-2
->   [    1.888282] DOUG: my_pm_clk_suspend, usage=-2
->
-> These different patterns have to do with the fact that the core PM
-> Runtime code really isn't designed to be robust to negative usage
-> counts and sometimes may happen to stumble upon a behavior that
-> happens to "work". For instance, you can see that
-> __pm_runtime_suspend() will treat any non-zero value (including
-> negative numbers) as if the device is in use.
->
-> In any case, let's fix the driver to be correct. We'll hold a
-> pm_runtime reference for the whole probe and then drop it (once!) at
-> the end. We'll get rid of manual pm_runtime_disable() calls in the
-> error handling. We'll also switch to devm_pm_runtime_enable(), which
-> magically handles undoing pm_runtime_use_autosuspend() as of commit
-> b4060db9251f ("PM: runtime: Have devm_pm_runtime_enable() handle
-> pm_runtime_dont_use_autosuspend()").
->
-> While we're at this, let's also use devm_pm_clk_create() instead of
-> rolling it ourselves.
->
-> Note that the above changes make it obvious that
-> lpassaudio_create_pm_clks() was doing more than just creating
-> clocks. It was also setting up pm_runtime parameters. Let's rename it.
->
-> All of these problems were found by code inspection. I started looking
-> at this driver because it was involved in a deadlock that I reported a
-> while ago [1]. Though I bisected the deadlock to commit 1b771839de05
-> ("clk: qcom: gdsc: enable optional power domain support"), it was
-> never really clear why that patch affected it other than a luck of
-> timing changes. I'll also note that by fixing the timing (as done in
-> this change) we also seem to aboid the deadlock, which is a nice
-> benefit.
->
-> Also note that some of the fixes here are much the same type of stuff
-> that Dmitry did in commit 72cfc73f4663 ("clk: qcom: use
-> devm_pm_runtime_enable and devm_pm_clk_create"), but I guess
-> lpassaudiocc-sc7280.c didn't exist then.
+Bluetooth controllers share the common local-bd-address property.
+Add a generic YAML schema to replace bluetooth.txt for those.
 
-I don't remember. Most probably so.
+Signed-off-by: Sven Peter <sven@svenpeter.dev>
+Reviewed-by: Rob Herring <robh@kernel.org>
+---
+ .../devicetree/bindings/net/bluetooth.txt     |  5 ----
+ .../net/bluetooth/bluetooth-controller.yaml   | 29 +++++++++++++++++++
+ .../{ => bluetooth}/qualcomm-bluetooth.yaml   |  6 ++--
+ .../bindings/soc/qcom/qcom,wcnss.yaml         |  8 ++---
+ 4 files changed, 35 insertions(+), 13 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/net/bluetooth.txt
+ create mode 100644 Documentation/devicetree/bindings/net/bluetooth/bluetooth-controller.yaml
+ rename Documentation/devicetree/bindings/net/{ => bluetooth}/qualcomm-bluetooth.yaml (96%)
 
->
-> [1] https://lore.kernel.org/r/20220922154354.2486595-1-dianders@chromium.org
->
-> Fixes: a9dd26639d05 ("clk: qcom: lpass: Add support for LPASS clock controller for SC7280")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+diff --git a/Documentation/devicetree/bindings/net/bluetooth.txt b/Documentation/devicetree/bindings/net/bluetooth.txt
+deleted file mode 100644
+index 94797df751b8..000000000000
+--- a/Documentation/devicetree/bindings/net/bluetooth.txt
++++ /dev/null
+@@ -1,5 +0,0 @@
+-The following properties are common to the Bluetooth controllers:
+-
+-- local-bd-address: array of 6 bytes, specifies the BD address that was
+-  uniquely assigned to the Bluetooth device, formatted with least significant
+-  byte first (little-endian).
+diff --git a/Documentation/devicetree/bindings/net/bluetooth/bluetooth-controller.yaml b/Documentation/devicetree/bindings/net/bluetooth/bluetooth-controller.yaml
+new file mode 100644
+index 000000000000..9309dc40f54f
+--- /dev/null
++++ b/Documentation/devicetree/bindings/net/bluetooth/bluetooth-controller.yaml
+@@ -0,0 +1,29 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/net/bluetooth/bluetooth-controller.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Bluetooth Controller Generic Binding
++
++maintainers:
++  - Marcel Holtmann <marcel@holtmann.org>
++  - Johan Hedberg <johan.hedberg@gmail.com>
++  - Luiz Augusto von Dentz <luiz.dentz@gmail.com>
++
++properties:
++  $nodename:
++    pattern: "^bluetooth(@.*)?$"
++
++  local-bd-address:
++    $ref: /schemas/types.yaml#/definitions/uint8-array
++    maxItems: 6
++    description:
++      Specifies the BD address that was uniquely assigned to the Bluetooth
++      device. Formatted with least significant byte first (little-endian), e.g.
++      in order to assign the address 00:11:22:33:44:55 this property must have
++      the value [55 44 33 22 11 00].
++
++additionalProperties: true
++
++...
+diff --git a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+similarity index 96%
+rename from Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
+rename to Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+index f93c6e7a1b59..a6a6b0e4df7a 100644
+--- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
++++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+@@ -1,7 +1,7 @@
+ # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: http://devicetree.org/schemas/net/qualcomm-bluetooth.yaml#
++$id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Qualcomm Bluetooth Chips
+@@ -79,8 +79,7 @@ properties:
+   firmware-name:
+     description: specify the name of nvm firmware to load
+ 
+-  local-bd-address:
+-    description: see Documentation/devicetree/bindings/net/bluetooth.txt
++  local-bd-address: true
+ 
+ 
+ required:
+@@ -89,6 +88,7 @@ required:
+ additionalProperties: false
+ 
+ allOf:
++  - $ref: bluetooth-controller.yaml#
+   - if:
+       properties:
+         compatible:
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
+index 5320504bb5e0..0e6fd57d658d 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
+@@ -42,15 +42,13 @@ properties:
+   bluetooth:
+     type: object
+     additionalProperties: false
++    allOf:
++      - $ref: /schemas/net/bluetooth/bluetooth-controller.yaml#
+     properties:
+       compatible:
+         const: qcom,wcnss-bt
+ 
+-      local-bd-address:
+-        $ref: /schemas/types.yaml#/definitions/uint8-array
+-        maxItems: 6
+-        description:
+-          See Documentation/devicetree/bindings/net/bluetooth.txt
++      local-bd-address: true
+ 
+     required:
+       - compatible
 -- 
-With best wishes
-Dmitry
+2.25.1
+
