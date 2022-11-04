@@ -2,115 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EE3F61949E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 11:38:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 648FB619488
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 11:37:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231324AbiKDKit (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 06:38:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53696 "EHLO
+        id S230074AbiKDKhj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 06:37:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231821AbiKDKi1 (ORCPT
+        with ESMTP id S230029AbiKDKhi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 06:38:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80A562982D
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 03:37:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1667558249;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=FvcSXdbTIY6j0RtoeMW2Oyvbsf0knEKyh2vmjeJsi+Y=;
-        b=Rf7Y0x2rmHCJixzVfneytF9Am7S6DScMizsbjl0XclcHjmrS6FPguGpDS21bWKcaSNoWS8
-        IU34rB7tm8+HIrkqjlXmm8ygtqUVipefGTYZrcAvIZthEbmZUTNabiOFhO6uRJcm6XHgzx
-        1svERowWXKKM5DwNVwy2HP6lQY2ewpE=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-235-6Aj_DMHMPM2BBju_tbuukg-1; Fri, 04 Nov 2022 06:37:20 -0400
-X-MC-Unique: 6Aj_DMHMPM2BBju_tbuukg-1
-Received: by mail-wm1-f70.google.com with SMTP id 1-20020a05600c028100b003cf7833293cso4054111wmk.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 03:37:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FvcSXdbTIY6j0RtoeMW2Oyvbsf0knEKyh2vmjeJsi+Y=;
-        b=zhS3r4CO8sbx/ea9WKFXE1FPHLUqm2pxuVJ28hLUzd/qA7GJrXBT4qlWOUrqsEGKQA
-         fNrys3AcFG1TrzwgDaY0mS/j8Us4LYHh5deKwZT3Gn6VsGLDhX+86XMbnifk3l+qU1U1
-         T6XvcWfhspiumjxww/dyUc16Es3diW09PmsBW7zn75GKxCatpQ5Jzgc2bPHh6B0FB1X2
-         Htv+v5bEIWHosaGfLW1lIJHrRSnypriY8L8Mi8YKlbvBZEb4UEVQH+xokVv+YqR1ZeZe
-         Jzd/Db6Aq27WA3XN5EPYCZi241SMOYD1ZtMcSiFdNmPszhBMS2ffBSLhDWHjF5ahN73+
-         PXkw==
-X-Gm-Message-State: ACrzQf1bIDUv6NGQ5bPYutOk1sEBqj2DiQHjjEjXQ6pnthMaqZzgxrrG
-        ffjxfViIK4nvYbApTjzYJxXDy7LeLKbpPs4waPUA0ysUi2KFZrBseNtXSWzvqz+ccnHPkHBoyac
-        Wkm6U9fNkBk9mXvBxE/bPVMeNlA==
-X-Received: by 2002:a05:600c:1e2a:b0:3c3:d770:1756 with SMTP id ay42-20020a05600c1e2a00b003c3d7701756mr23539591wmb.134.1667558239644;
-        Fri, 04 Nov 2022 03:37:19 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM4LKXhwK5qh8ieFEkCSZgi7mblk9sJOfnr0awtpFbS+pIQGNE9IUSRaCOrs9CG3VpGFJY/xjQ==
-X-Received: by 2002:a05:600c:1e2a:b0:3c3:d770:1756 with SMTP id ay42-20020a05600c1e2a00b003c3d7701756mr23539569wmb.134.1667558239379;
-        Fri, 04 Nov 2022 03:37:19 -0700 (PDT)
-Received: from [192.168.1.130] (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
-        by smtp.gmail.com with ESMTPSA id f15-20020a5d50cf000000b0022e36c1113fsm3031008wrt.13.2022.11.04.03.37.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Nov 2022 03:37:18 -0700 (PDT)
-Message-ID: <ab8358a9-8450-0d49-627f-26afe7ba4f9d@redhat.com>
-Date:   Fri, 4 Nov 2022 11:37:17 +0100
+        Fri, 4 Nov 2022 06:37:38 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 398632A276;
+        Fri,  4 Nov 2022 03:37:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net; s=s31663417;
+        t=1667558242; bh=HHObUMqxyzm1pOX3j1YUDl912OP6TjeEK87qob5XEvI=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=iH8kwCkg/nplgQGH2SaUH4Ole0QBH2YU9fUpOe+jxs/u2fr1jsbcWm3Z+fLwx+rox
+         3CtWl9gDGd7Ip+30FVTNWRlsWH/t2ntQ+o4uo7AAHABMwS46WkUNPS1qTW2x1YDPhs
+         Fia9HFhSIMVG2RTt9se1YIund6qRPY8/9DX0XCdgrAPiD3qCRIiyguKLFTe6P6b8mx
+         mO9P6VS8s0QukSWhoRZpijWcWF1jx+N7I/OTGX4/aZHihg5QecfqApP/BDMSdDIDSb
+         YkpzX4jnHooqevhIbGKULq29r1F0GKOtl+26hziUqKQtu6PdTWgZ4xTmZ4TvkIjdm4
+         0ZZjacCvJrShQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from probook ([95.223.44.31]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MSKu0-1oSaoz3RTE-00SizJ; Fri, 04
+ Nov 2022 11:37:21 +0100
+From:   =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To:     linux-serial@vger.kernel.org
+Cc:     =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: [PATCH] serial: Fix a typo ("ignorning")
+Date:   Fri,  4 Nov 2022 11:37:19 +0100
+Message-Id: <20221104103719.2234098-1-j.neuschaefer@gmx.net>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH v3 20/23] drm/fb-helper: Set flag in struct drm_fb_helper
- for leaking physical addresses
-Content-Language: en-US
-To:     Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
-        airlied@gmail.com, sam@ravnborg.org, mripard@kernel.org,
-        maarten.lankhorst@linux.intel.com
-Cc:     linux-aspeed@lists.ozlabs.org, nouveau@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-samsung-soc@vger.kernel.org, amd-gfx@lists.freedesktop.org,
-        linux-rockchip@lists.infradead.org, xen-devel@lists.xenproject.org,
-        linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, etnaviv@lists.freedesktop.org,
-        linux-mediatek@lists.infradead.org,
-        spice-devel@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-        linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20221103151446.2638-1-tzimmermann@suse.de>
- <20221103151446.2638-21-tzimmermann@suse.de>
-From:   Javier Martinez Canillas <javierm@redhat.com>
-In-Reply-To: <20221103151446.2638-21-tzimmermann@suse.de>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:otl6u0ZQ35bKG7n+pC1q1iP1p25Az/OuifD0UevnC6sKvY2prte
+ wQSHkOQEjp5e9PBxsOMsxzdov/8EJT3vSDYHNrVPcRD7j9F/fCGjQB80N9FmGguirmqSNm9
+ SBAdgBegNTXIcDK42bryMEXGEWlMjcoJtq63qq9rOZamBK8r1P2jRErkf1iHICMxZiwZXkp
+ gQHf4id5kgdVko5bigSsw==
+UI-OutboundReport: notjunk:1;M01:P0:FSci/EGaBjQ=;xwJPKEQHdoIWHKtOK//YN59N/X2
+ U7X+M9HORDae4rSIK+I90VU7bVlz2u/ncv2vyC95k5regeYuAvyIY2uLINtqBO163eYBlofFa
+ 4OY+Lw6GogZCnZjH/Lc+wJCU4zG/AHnoQpfrVUIvMOitnl2KwXQZC/78hrMq1yLpGhzYKTPpN
+ zt9M+AV6yx1Awo3juvjvS5K4danSqpINixJhplKGN216LGQGjyE+DkkstRWRGg0Lgi4lU0Bg9
+ fZF4Os+NcGLguE1+54uFx8E7+QLHpMFAVyIxW7y/OeFfP/c4tTUrYTRDVq7emrPDVBzW9Rc/N
+ rqACvIi0tWReJ+G036av23ZJIeaMEq6yorBKTHBfASKQLsMJyOoitkc650MZVU+mYSJ8XWhbo
+ D4Yuq5sg9fnwv+jh47LNerEqch7du9Il4u89W02tjpmhAf/Kx5vELWhlkCT6fvthBcScZTjrk
+ FIIIsbVQtA5bFfA+PnjQ4RSSK29opmF8Crld30hYI60TQHNmWW4F4jYQ8N7MjE0icYGHXCqZo
+ NZg9UnSC88eL/6KWD741sFtmq/GMVPJ/S4s2yHGEJFdADvyNJ1nrSGXj+NDfweTh5YY4Hgk0f
+ /n2YjKMb+Faak+DVgOFcTmsI0Yhq0Odpv8a006pjd/HSmLFcFsuqvZH5QL5xbW3WkyX0BNjlV
+ xEbUNqRyjlCqmFpAEqS4BlVLaiAGK7Oc3WutWhEDpMtK4qHKxaXmnWGvmcF7gMgJ+nO/52/TH
+ bNKT22X306MSjdAaMW0vEr99nuPlxtxK8aL2k0S9Ysc6DyCx/WDCn1lT0hJFrxWWknHp9ubu4
+ njWbBFmeOj688NEgcS6UN+0JrKDVgiR0tYSlTu9/+rVJxT+PvtWcvQy9rI17RhwQiRIayphzk
+ JPhby2PDkgXkFBg9aDIO4T9BfuhzMCmfGfV4+3uMbQG10NM3s9zgxWStXZLsXn7cwJobNPrnj
+ rdaRXNUrj2SieagadD6KxZSmrEw=
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/3/22 16:14, Thomas Zimmermann wrote:
-> Uncouple the parameter drm_leak_fbdev_smem from the implementation by
-> setting a flag in struct drm_fb_helper. This will help to move the
-> generic fbdev emulation into its own source file, while keeping the
-> parameter in drm_fb_helper.c. No functional changes.
-> 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> ---
+Fix the two instances of this typo present in the MSM and VT8500 serial
+drivers.
 
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+=2D--
+ drivers/tty/serial/msm_serial.c    | 2 +-
+ drivers/tty/serial/vt8500_serial.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
--- 
-Best regards,
+diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_seri=
+al.c
+index 7dd19a2815794..d9a3aa941427c 100644
+=2D-- a/drivers/tty/serial/msm_serial.c
++++ b/drivers/tty/serial/msm_serial.c
+@@ -819,7 +819,7 @@ static void msm_handle_rx(struct uart_port *port)
+ 			port->icount.rx++;
+ 		}
 
-Javier Martinez Canillas
-Core Platforms
-Red Hat
+-		/* Mask conditions we're ignorning. */
++		/* Mask conditions we're ignoring. */
+ 		sr &=3D port->read_status_mask;
+
+ 		if (sr & MSM_UART_SR_RX_BREAK)
+diff --git a/drivers/tty/serial/vt8500_serial.c b/drivers/tty/serial/vt850=
+0_serial.c
+index 10fbdb09965f3..37c8a55b48eda 100644
+=2D-- a/drivers/tty/serial/vt8500_serial.c
++++ b/drivers/tty/serial/vt8500_serial.c
+@@ -168,7 +168,7 @@ static void handle_rx(struct uart_port *port)
+
+ 		c =3D readw(port->membase + VT8500_RXFIFO) & 0x3ff;
+
+-		/* Mask conditions we're ignorning. */
++		/* Mask conditions we're ignoring. */
+ 		c &=3D ~port->read_status_mask;
+
+ 		if (c & FER) {
+=2D-
+2.35.1
 
