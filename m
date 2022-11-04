@@ -2,123 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89618619A24
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 15:36:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E463619A26
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 15:36:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232204AbiKDOgL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 10:36:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50184 "EHLO
+        id S232067AbiKDOgQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 10:36:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231600AbiKDOex (ORCPT
+        with ESMTP id S231474AbiKDOfr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 10:34:53 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCBFD3134E
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 07:32:35 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id b2so13749852eja.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 07:32:35 -0700 (PDT)
+        Fri, 4 Nov 2022 10:35:47 -0400
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 844E73137D
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 07:32:59 -0700 (PDT)
+Received: by mail-qv1-xf2a.google.com with SMTP id u7so3275220qvn.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 07:32:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=zPb3Ch5cQKo79npejowVrWhaxOj2flVSGSghaJJIM+U=;
-        b=dxtrk433iz23cbIBt75tV4gk15B1zGxQLL7jAwlCmvFRrRA8zIaKb1GO5l5owsD0oW
-         2km7HkCuXNWJFwFUBLl1swFXyGN5fQwIt/sK4B3tG18jBkFheLjAvGXAKH0BYcPpO+gr
-         Q0hCfupY+PK7atfKqUKcXj18iOcd0/8IYVX/g=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OeOrHPnEU5cox0eqwYtdlY9TT4wnzhynjogUJRsWZ7o=;
+        b=w/ARTFunLSDiyxRHSOzo6qwqLgD9x6KwLjikPcCosCa1wU2ELA2NXqsHWDw6OAZX0+
+         1ZKqC91ImfY/cR+gQfcLhCT4yk1E6H5yMfDLHXp0KBUN00cqK8Vm59sAB8zGcpGH4968
+         pglQtaGcq0d9DfTmU/YvyVTTbfEN0fWnSu3/q+utycA/AQI+Wc6pS7ocGeNQoU0jNcXJ
+         kwJ2KB2Z6oz2+Oat5Q2+iQJ8mOU9XnJihaRX5cXfR+quWHBN9W9H+eCPt242Bld2ODGw
+         YtkNJJWbjzormwNWmg/NtR250tXkhy+1cQgjWltaSPuHrt6fliBziGlezFBe8VOS17TC
+         5TCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zPb3Ch5cQKo79npejowVrWhaxOj2flVSGSghaJJIM+U=;
-        b=WaXrw65kvO8ZBYHlTJKam5mPV74dvGCDiv7Vt2ntP91ymU1CdIF2Tx67kpj90gupnP
-         MflqWU+v6OHCLnBJVpJDTTnQsTkwgMCcODz0eSkkSr6+BLSJllo3AWGgYxHKPBu4LnPd
-         brQWd9rU7LFz8U8VAEgglUY8+NDNS0JpVy2r8ONWXNumBi1MBWboe1p1BVBriQHhhtz0
-         z/rRUpG9pUAocyDsGtfDlRSRDu0ThUhRdOiO86KdZCuyegSZXh9ofKPDy2WKY55qqC4o
-         ShR6LIKp0PX/DDiWwvE1nAEO9aR/vrehbRRyTbi5bgZKDXhC8mj8zLmb+9p8KmWioLpX
-         X0Yw==
-X-Gm-Message-State: ACrzQf0+/RXayiVNpkRGgzrRCVzUBFst6jy7RV+iKwAfLhfoZtIpPtvN
-        FSUlBUyqJljekQ0XvhYaJMqMH6pb3WPyoePe
-X-Google-Smtp-Source: AMsMyM6EUoF1QdGpd0/wbdwgIL6lNG5vAsIm3BKBnl+ci+NPHSGeO2nRPAPOxrS9THK72O9NKQ8fNg==
-X-Received: by 2002:a17:906:5656:b0:78d:d2e5:7a11 with SMTP id v22-20020a170906565600b0078dd2e57a11mr328638ejr.144.1667572353980;
-        Fri, 04 Nov 2022 07:32:33 -0700 (PDT)
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com. [209.85.221.44])
-        by smtp.gmail.com with ESMTPSA id tg12-20020a1709078dcc00b0079de6b05c99sm1879392ejc.138.2022.11.04.07.32.28
-        for <linux-arm-msm@vger.kernel.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OeOrHPnEU5cox0eqwYtdlY9TT4wnzhynjogUJRsWZ7o=;
+        b=7OykXoxu4V8YYU+CHH7VxSJkwAQq7vET4WEyPkFe6ZfNxjwBIlGC2j7RYSjJGa5SOT
+         TmhlpvGTI/GxoTOvsi/QT/9C6LYAsV3xVlHe5dtB5y/fQAMmV771YVaxUNpuaXp1G9p7
+         82yosMmD17XaVz6rWVjtAzAhLuH68O/B2ck9HbBVS/O1BVJAQ2TKIWkCq1NN5Y+M9A4b
+         YMpqj1SD48K2zOqkma3tcMsmxUoB3Y26TwW1jO3ScO5cQ9oessd0169TPBNv/DkyiEI5
+         d/mmhjIXt4m+YPldQR+gZ+0FS64sqwOgSAE5U/0bYkgEr0Xcaw1uta+XPTnG44Oeh8pR
+         oEYg==
+X-Gm-Message-State: ACrzQf0XnpND1h9I4dOK9WZoNNS4VyDKcAGVg3nDfiAF6pFapRLHvOQG
+        zDYlLbwOsJNdROyow0M90AwtqPvog7AF0g==
+X-Google-Smtp-Source: AMsMyM5Mv0wIYbec9tqLkuKXmCDe7J07JAYbB3fGL2UWnMWOFRvwdpyTKWWwHbksWKnADQkPdEmnQA==
+X-Received: by 2002:a0c:f391:0:b0:4bb:7482:526a with SMTP id i17-20020a0cf391000000b004bb7482526amr32859051qvk.20.1667572378718;
+        Fri, 04 Nov 2022 07:32:58 -0700 (PDT)
+Received: from ?IPV6:2601:586:5000:570:aad6:acd8:4ed9:299b? ([2601:586:5000:570:aad6:acd8:4ed9:299b])
+        by smtp.gmail.com with ESMTPSA id y7-20020ac87087000000b0039bfe8acff6sm2499020qto.58.2022.11.04.07.32.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Nov 2022 07:32:29 -0700 (PDT)
-Received: by mail-wr1-f44.google.com with SMTP id l14so7340520wrw.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 07:32:28 -0700 (PDT)
-X-Received: by 2002:adf:d1ec:0:b0:236:880f:2adf with SMTP id
- g12-20020adfd1ec000000b00236880f2adfmr22994810wrd.617.1667572348631; Fri, 04
- Nov 2022 07:32:28 -0700 (PDT)
+        Fri, 04 Nov 2022 07:32:58 -0700 (PDT)
+Message-ID: <6cdd193e-8a7a-c781-320a-8bf18f9c5c68@linaro.org>
+Date:   Fri, 4 Nov 2022 10:32:57 -0400
 MIME-Version: 1.0
-References: <20221104061941.2739938-1-sheng-liang.pan@quanta.corp-partner.google.com>
- <20221104141515.v10.3.I3ac715e729f6f9b5a3e3001b155df4f9d14e6186@changeid>
- <139c06eb-14b8-10b5-80b7-ba8ec8579846@somainline.org> <CAD=FV=VwP_s5y0MVNLs+WGD_=nJtJe7h=n+Xu4Ky5RvgdkAw9Q@mail.gmail.com>
- <b6e8da04-f5bf-8e27-e4b7-3854d4168a08@somainline.org>
-In-Reply-To: <b6e8da04-f5bf-8e27-e4b7-3854d4168a08@somainline.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 4 Nov 2022 07:32:15 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Xsd6Do_RGN-F_Ef0uxBOqERNGUjme9nCE6Xu49kTOzcw@mail.gmail.com>
-Message-ID: <CAD=FV=Xsd6Do_RGN-F_Ef0uxBOqERNGUjme9nCE6Xu49kTOzcw@mail.gmail.com>
-Subject: Re: [PATCH v10 3/4] arm64: dts: qcom: sc7280: Add touchscreen and
- touchpad support for evoker
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v2 1/2] dt-bindings: soc: qcom: Add bindings for Qualcomm
+ Ramp Controller
+Content-Language: en-US
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>, agross@kernel.org
+Cc:     andersson@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, marijn.suijten@somainline.org,
+        kernel@collabora.com
+References: <20221104142204.156333-1-angelogioacchino.delregno@collabora.com>
+ <20221104142204.156333-2-angelogioacchino.delregno@collabora.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221104142204.156333-2-angelogioacchino.delregno@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 04/11/2022 10:22, AngeloGioacchino Del Regno wrote:
+> Document bindings for the Qualcomm Ramp Controller, found on various
+> legacy Qualcomm SoCs.
 
-On Fri, Nov 4, 2022 at 7:28 AM Konrad Dybcio
-<konrad.dybcio@somainline.org> wrote:
->
->
-> On 04/11/2022 15:25, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Fri, Nov 4, 2022 at 2:35 AM Konrad Dybcio
-> > <konrad.dybcio@somainline.org> wrote:
-> >>
-> >> On 04/11/2022 07:19, Sheng-Liang Pan wrote:
-> >>> Change touchpad and touchscreen node for evoker
-> >>> Touchpad: SA461D-1011
-> >>> Touchscreen: GT7986U
-> >> What's the reasoning? Were they changed post r0? Is r0 support
-> >> effectively dropped?
-> >>
-> >> The changes look ok, but I feel like this needs more of a comment in the
-> >> commit msg.
-> > As I understand it r0's toucscreen/touchpad were not right to start
-> > with. We are moving towards getting things upstream sooner and that
-> > means that hardware hasn't always been fully tested out.
-> >
-> > I certainly wouldn't object to a better commit message here, but in
-> > this case there are no real world users (yet) and thus nobody is
-> > really affected by this churn. ...so IMO if the series needs to be
-> > spun for some other reason then the commit message could be updated,
-> > but I wouldn't object to it landing as-is either.
->
-> If there are no real (read: not-an-internal-devboard) devices using it,
-> then I
->
-> agree, it's fine to merge as-is.
+Subject: drop second "bindings" word. One in prefix (dt-bindings) is enough.
 
-I can confirm that. There are no evoker devices in the wild.
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> ---
 
--Doug
+With above:
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+
+Best regards,
+Krzysztof
+
