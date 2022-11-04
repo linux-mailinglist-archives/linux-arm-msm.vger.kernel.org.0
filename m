@@ -2,46 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 910D06193AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 10:38:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 985086193B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 10:39:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231171AbiKDJiK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 05:38:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54046 "EHLO
+        id S230491AbiKDJjp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 05:39:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229615AbiKDJiJ (ORCPT
+        with ESMTP id S230306AbiKDJjm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 05:38:09 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E56622BDC
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 02:38:08 -0700 (PDT)
-Received: from [192.168.31.208] (unknown [194.29.137.22])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        Fri, 4 Nov 2022 05:39:42 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BB2A2250B;
+        Fri,  4 Nov 2022 02:39:41 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D30873EEDF;
-        Fri,  4 Nov 2022 10:38:06 +0100 (CET)
-Message-ID: <0060c22a-0dfe-40bf-c877-7fb86c97872b@somainline.org>
-Date:   Fri, 4 Nov 2022 10:38:06 +0100
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CF15C62113;
+        Fri,  4 Nov 2022 09:39:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36916C433D6;
+        Fri,  4 Nov 2022 09:39:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667554780;
+        bh=vBRE2zaNk9N2+qpe0TEUqPTS+nFtRWARCQHJUnRfQFQ=;
+        h=From:To:Cc:Subject:Date:From;
+        b=TQMFVP0DnwjC5bCpvwoumZ69nBPt7Pwp8dEuwdxMjH31qncebTLneyvwX/QPwfpBK
+         Z4EIpr949jgEpHSYhOgZmN3DwhMwJYikFIQAc+jeHyi+3K7omux6QAeI4bpq62gQry
+         ZzKAOWazoY0Sn0OZHR1GRyPBFDFZzE7YqQxTcIwv4NadBE1D4o2FsqCmLGIkRhUHOm
+         vM27Yx8QI2fhcghxjQgNPWbvU9PJeZLBBFfgV8VDNn2u8oqfeNPkOgWr+KVNo8Qj1E
+         1ZIksIdBveqqnZ0eQjQT0qM5BqWTCwcI9GIk5n7ipSE4UMnDb9U0hZADsBSg4U6heZ
+         LoD8/2TSRTr4w==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1oqtAX-00064k-QT; Fri, 04 Nov 2022 10:39:22 +0100
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Hemant Kumar <quic_hemantk@quicinc.com>, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v2] mhi: pci_generic: add support for sc8280xp-crd SDX55 variant
+Date:   Fri,  4 Nov 2022 10:39:13 +0100
+Message-Id: <20221104093913.23347-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH v10 4/4] arm64: dts: qcom: sc7280: add
- sc7280-herobrine-audio-rt5682-3mic3.dtsi for evoker
-To:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
-        LKML <linux-kernel@vger.kernel.org>
-Cc:     dianders@chromium.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20221104061941.2739938-1-sheng-liang.pan@quanta.corp-partner.google.com>
- <20221104141515.v10.4.I9718ac3622fa550e432209ae5c95c87b873a0f87@changeid>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20221104141515.v10.4.I9718ac3622fa550e432209ae5c95c87b873a0f87@changeid>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -49,247 +55,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The SC8280XP Compute Reference Design (CRD) has an on-PCB SDX55 modem
+which uses MBIM.
 
-On 04/11/2022 07:19, Sheng-Liang Pan wrote:
-> add specific 3mic setting as sc7280-herobrine-audio-rt5682-3mic.dtsi,
-> so we can include sc7280-herobrine-audio-rt5682-3mic.dtsi for evoker
-> as it uses rt5682 with 3 mics.
->
-> Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
-> ---
->
-> Changes in v10:
-> - add evoker include specific sc7280-herobrine-audio-rt5682-3mic.dtsi setting
->
->   .../sc7280-herobrine-audio-rt5682-3mic.dtsi   | 194 ++++++++++++++++++
->   .../boot/dts/qcom/sc7280-herobrine-evoker.dts |   2 +
->   2 files changed, 196 insertions(+)
->   create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682-3mic.dtsi
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682-3mic.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682-3mic.dtsi
-> new file mode 100644
-> index 0000000000000..01bc8ee93b19a
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682-3mic.dtsi
-> @@ -0,0 +1,194 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> +/*
-> + *
-> + * This file defines the common audio settings for the child boards
-> + * using rt5682 codec and having 3 dmics connected to sc7280.
-> + *
-> + * Copyright 2022 Google LLC.
-> + */
-> +
-> +/ {
-> +	/* BOARD-SPECIFIC TOP LEVEL NODES */
-> +	sound: sound {
-> +		compatible = "google,sc7280-herobrine";
-> +		model = "sc7280-rt5682-max98360a-3mic";
-> +
-> +		status = "okay";
+The exact channel configuration is not known but the Foxconn SDX55
+configuration allows the modem to be used so reuse that one for now.
 
-I don't see it being disabled anywhere, probably can drop this line.
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
+
+Changes in v2
+ - drop comment describing this variant (Mani)
 
 
-> +		audio-routing =
-> +			"VA DMIC0", "vdd-micb",
-> +			"VA DMIC1", "vdd-micb",
-> +			"VA DMIC2", "vdd-micb",
-> +			"VA DMIC3", "vdd-micb",
-> +
-> +			"Headphone Jack", "HPOL",
-> +			"Headphone Jack", "HPOR";
-> +
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		dai-link@0 {
-> +			link-name = "MAX98360";
-> +			reg = <0>;
-> +
-> +			cpu {
-> +				sound-dai = <&lpass_cpu MI2S_SECONDARY>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&max98360a>;
-> +			};
-> +		};
-> +
-> +		dai-link@1 {
-> +			link-name = "DisplayPort";
-> +			reg = <1>;
-> +
-> +			cpu {
-> +				sound-dai = <&lpass_cpu LPASS_DP_RX>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&mdss_dp>;
-> +			};
-> +		};
-> +
-> +		dai-link@2 {
-> +			link-name = "ALC5682";
-> +			reg = <2>;
-> +
-> +			cpu {
-> +				sound-dai = <&lpass_cpu MI2S_PRIMARY>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&alc5682 0 /* aif1 */>;
-> +			};
-> +		};
-> +
-> +		dai-link@4 {
-> +			link-name = "DMIC";
-> +			reg = <4>;
-> +
-> +			cpu {
-> +				sound-dai = <&lpass_cpu LPASS_CDC_DMA_VA_TX0>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&lpass_va_macro 0>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +hp_i2c: &i2c2 {
-> +	status = "okay";
-> +	clock-frequency = <400000>;
+ drivers/bus/mhi/host/pci_generic.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Status last in all nodes, please.
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index caa4ce28cf9e..7dcd0ef3184a 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -542,6 +542,8 @@ static const struct mhi_pci_dev_info mhi_telit_fn990_info = {
+ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx24_info },
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, PCI_VENDOR_ID_QCOM, 0x010c),
++		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+ 	/* EM919x (sdx55), use the same vid:pid as qcom-sdx55m */
+ 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, 0x18d7, 0x0200),
+ 		.driver_data = (kernel_ulong_t) &mhi_sierra_em919x_info },
+-- 
+2.37.3
 
-
-> +
-> +	alc5682: codec@1a {
-> +		compatible = "realtek,rt5682s";
-> +		reg = <0x1a>;
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&hp_irq>;
-> +
-> +		#sound-dai-cells = <1>;
-> +
-> +		interrupt-parent = <&tlmm>;
-> +		interrupts = <101 IRQ_TYPE_EDGE_BOTH>;
-> +
-> +		AVDD-supply = <&pp1800_alc5682>;
-> +		MICVDD-supply = <&pp3300_codec>;
-> +
-> +		realtek,dmic1-data-pin = <1>;
-> +		realtek,dmic1-clk-pin = <2>;
-> +		realtek,jd-src = <1>;
-> +		realtek,dmic-clk-rate-hz = <2048000>;
-> +	};
-> +};
-> +
-> +&lpass_cpu {
-> +	status = "okay";
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&mi2s0_data0>, <&mi2s0_data1>, <&mi2s0_mclk>, <&mi2s0_sclk>, <&mi2s0_ws>,
-> +			<&mi2s1_data0>, <&mi2s1_sclk>, <&mi2s1_ws>;
-> +
-> +	#address-cells = <1>;
-> +	#size-cells = <0>;
-> +
-> +	dai-link@0 {
-> +		reg = <MI2S_PRIMARY>;
-> +		qcom,playback-sd-lines = <1>;
-> +		qcom,capture-sd-lines = <0>;
-> +	};
-> +
-> +	dai-link@1 {
-> +		reg = <MI2S_SECONDARY>;
-> +		qcom,playback-sd-lines = <0>;
-> +	};
-> +
-> +	dai-link@5 {
-> +		reg = <LPASS_DP_RX>;
-> +	};
-> +
-> +	dai-link@25 {
-> +		reg = <LPASS_CDC_DMA_VA_TX0>;
-> +	};
-> +};
-> +
-> +&lpass_va_macro {
-> +	status = "okay";
-> +	vdd-micb-supply = <&pp1800_l2c>;
-> +	pinctrl-0 = <&lpass_dmic01_clk>, <&lpass_dmic01_data>, <&lpass_dmic23_clk>,
-> +			<&lpass_dmic23_data>;
-> +};
-> +
-> +&mi2s0_data0 {
-
-Keep the node references sorted alphabetically, please.
-
-
-Konrad
-
-> +	drive-strength = <6>;
-> +	bias-disable;
-> +};
-> +
-> +&mi2s0_data1 {
-> +	drive-strength = <6>;
-> +	bias-disable;
-> +};
-> +
-> +&mi2s0_mclk {
-> +	drive-strength = <6>;
-> +	bias-disable;
-> +};
-> +
-> +&mi2s0_sclk {
-> +	drive-strength = <6>;
-> +	bias-disable;
-> +};
-> +
-> +&mi2s0_ws {
-> +	drive-strength = <6>;
-> +	bias-disable;
-> +};
-> +
-> +&lpass_dmic01_clk {
-> +	drive-strength = <8>;
-> +	bias-disable;
-> +};
-> +
-> +&lpass_dmic01_clk_sleep {
-> +	drive-strength = <2>;
-> +};
-> +
-> +&lpass_dmic01_data {
-> +	bias-pull-down;
-> +};
-> +
-> +&lpass_dmic23_clk {
-> +	drive-strength = <8>;
-> +	bias-disable;
-> +};
-> +
-> +&lpass_dmic23_clk_sleep {
-> +	drive-strength = <2>;
-> +};
-> +
-> +&lpass_dmic23_data {
-> +	bias-pull-down;
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
-> index dcdd4eecfe670..d608682f9742b 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
-> @@ -8,6 +8,8 @@
->   /dts-v1/;
->   
->   #include "sc7280-herobrine-evoker.dtsi"
-> +#include "sc7280-herobrine-audio-rt5682-3mic.dtsi"
-> +
->   
->   / {
->   	model = "Google Evoker";
