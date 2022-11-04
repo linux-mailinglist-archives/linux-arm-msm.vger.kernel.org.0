@@ -2,145 +2,480 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89A9461A3E2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 23:08:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB39861A3F5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Nov 2022 23:16:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229445AbiKDWIh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Nov 2022 18:08:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35908 "EHLO
+        id S229626AbiKDWQQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Nov 2022 18:16:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229542AbiKDWIg (ORCPT
+        with ESMTP id S229492AbiKDWQQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Nov 2022 18:08:36 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E667AFCE1
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 15:08:34 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id t25so16679683ejb.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 15:08:34 -0700 (PDT)
+        Fri, 4 Nov 2022 18:16:16 -0400
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D313B42F45
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Nov 2022 15:16:14 -0700 (PDT)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-368edbc2c18so55492607b3.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 15:16:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=OUWMpfCp8yMYMN27hOBTPmmaRDIODrfLy/QYyrxVC9U=;
-        b=N/5MobyCqMqaDHUf0VYAeGDlaShVI6gW3R/fr1tLkTjRzSd0mrwTwe6AgO1bc6rMAQ
-         vGqaYuhfvQ82vWTraoh76WIR9XOumQyzsOIhiQlm7A5wwEuKKd3o4BWpzigWjyVJAaHB
-         lXa1OaNbz5gonB88NC84ox0/3fAaw8jeOZ6TU=
+        bh=1HfnlDnnSIKrpwcWHnYXP8r8LvoFkj8rfyMhrfMoGp0=;
+        b=ApHnpmU5I5emdK/HMsrmrUEIrjuO4yn9fHabgnsthQAKfU915KlcEGIu7QZ+YwO5wa
+         NT56cTpRGR5EIAFdGP2Fsc69m8i3aJ1/WI4jZ6UdXp5NxNkmVtTGy4R1uKxaC+S0OOXA
+         p+WDFascQK6/5siW17cX0Piq/COUWPkV/bY0sgtXU6GBe8iPxQO8oRFTBeAQsYvW86J5
+         QBSAqnEVAzMdvbiXC9OWM+gCQbucbA2fzNN3bZFBCAiNS9le6VD+hsTWUBecFKkz1ip4
+         hiqVadCffIi3qU+afRWIbsfxx4aNS6pYGAx9ycDyRfYsuDLWoL9sNpQXdbY/MYgy/GAJ
+         FWiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OUWMpfCp8yMYMN27hOBTPmmaRDIODrfLy/QYyrxVC9U=;
-        b=e0QWHNpFdBEtVSmotWq2+LhTMGUjKI06xCdAQX1bPrpw+Vnri3J77i+eGH761+HU0r
-         CHj/SDWX4YZBvDdk8UE2aHCEgtt/iztGdeJtZC6DNiWv36+0r64yaTNXfsF006m3T7zV
-         aDJ9WpSd5mZIlBXkwB/qrgnkk3WTzoQ/spyLKx07Pg5kbY2J4VgS20Pi1ABtf1FfOW1A
-         Y/hOIUSQuBmfOpVN7GNkkFUqQiko2FkbNXpyMtAQp0bMee/KdDAtq/V6MK6D/GnA13Nh
-         fkZRgEGU/2tMF372MkfU6OAlNrUtfNEaskZbiawDap/9vk2umLDKztEwS8E+Bxtpu9no
-         RqYw==
-X-Gm-Message-State: ACrzQf2WdI/UK+hlIPPyNncFmtbcguSeziIUhaJEqGN4JfJuF6MluHP1
-        UPis1LspM9jTynQs7d466xChjpjuXHIOCnTa
-X-Google-Smtp-Source: AMsMyM4NDUTHsgvt5/kOvmXSy0GcXTvqLhMGoUN93zzAJ2da+SbaR8HUg7pDC6utQtLcTgfbi+gxow==
-X-Received: by 2002:a17:906:6a17:b0:794:f0e8:1918 with SMTP id qw23-20020a1709066a1700b00794f0e81918mr36933601ejc.474.1667599713216;
-        Fri, 04 Nov 2022 15:08:33 -0700 (PDT)
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com. [209.85.128.48])
-        by smtp.gmail.com with ESMTPSA id h19-20020a170906829300b007abaff3a97asm53447ejx.221.2022.11.04.15.08.29
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Nov 2022 15:08:30 -0700 (PDT)
-Received: by mail-wm1-f48.google.com with SMTP id c3-20020a1c3503000000b003bd21e3dd7aso6229989wma.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Nov 2022 15:08:29 -0700 (PDT)
-X-Received: by 2002:a05:600c:2212:b0:3cf:6068:3c40 with SMTP id
- z18-20020a05600c221200b003cf60683c40mr25419745wml.57.1667599706005; Fri, 04
- Nov 2022 15:08:26 -0700 (PDT)
+        bh=1HfnlDnnSIKrpwcWHnYXP8r8LvoFkj8rfyMhrfMoGp0=;
+        b=RvIbnPv6ITs2Bu2CDkdCyt+rsksrTQzAWddADcnYj9mGW12VIsP3oSpDNJ+N6GhKkl
+         S9tLuADmGQ9I/G5vRgZN990BrbVBpP6JyWCeeQyt7Z4OgU/PcWJaTdDD08nIwIlkn67f
+         CK/Ee9nLq4jL2HAFORsZ6EkknJDF/fOCy7LGBueXIw23xKiAwoiobo+h4NpXrHc/Xku5
+         OPJme3L7lxPgbAI4j8/KZJU/BU8TvQ8Jr1oehlSFkkQsL9mG7pDFu5mykpMVm2CdcL+H
+         LeFxpuGT0b8JPUeKQIrcjUP7DK5Qft5ol6kBmEzxBePWxiEIer2cn3WXQelSxOcos+T1
+         c0jA==
+X-Gm-Message-State: ACrzQf0f4tgKrK2oGb0iwXvgE2sZbtgETOZKl88Bqns5sBO3vBnM6etb
+        kj4cMbrVGXMA0dLkP0nGlTO+aYReWIenV3P/G/WKZQ==
+X-Google-Smtp-Source: AMsMyM49rEgiVcUTJy+cdyuEg6hd6EM//eOAr+kMZq9alNX8TO/7Vyq/uiNRSnHkfSOGpJSjQA+EaWUdSeHruVISaLA=
+X-Received: by 2002:a81:9186:0:b0:36f:d191:3b43 with SMTP id
+ i128-20020a819186000000b0036fd1913b43mr36804837ywg.132.1667600173967; Fri, 04
+ Nov 2022 15:16:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20221104064055.1.I00a0e4564a25489e85328ec41636497775627564@changeid>
- <20221104064055.2.I49b25b9bda9430fc7ea21e5a708ca5a0aced2798@changeid> <CAE-0n53FLz+4XROL7t5Vk1pEgvAX4tJYO4UK8rdCQUW0Pq78jg@mail.gmail.com>
-In-Reply-To: <CAE-0n53FLz+4XROL7t5Vk1pEgvAX4tJYO4UK8rdCQUW0Pq78jg@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 4 Nov 2022 15:08:12 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VSh90tdSDaxThoGaE_uYWPTMrGYBMM0UqcH=HUZaScNg@mail.gmail.com>
-Message-ID: <CAD=FV=VSh90tdSDaxThoGaE_uYWPTMrGYBMM0UqcH=HUZaScNg@mail.gmail.com>
-Subject: Re: [PATCH 2/3] clk: qcom: lpass-sc7180: Fix pm_runtime usage
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Judy Hsiao <judyhsiao@chromium.org>,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221104133506.131316-1-angelogioacchino.delregno@collabora.com> <20221104133506.131316-3-angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20221104133506.131316-3-angelogioacchino.delregno@collabora.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 5 Nov 2022 01:16:02 +0300
+Message-ID: <CAA8EJprQ0v75O1txO0aVuvFpdiRAAzCphLE-sAiUGi_=Kn-ueA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] soc: qcom: Add Qualcomm Ramp Controller driver
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Cc:     agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        marijn.suijten@somainline.org, kernel@collabora.com,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Fri, Nov 4, 2022 at 2:19 PM Stephen Boyd <swboyd@chromium.org> wrote:
+On Fri, 4 Nov 2022 at 16:35, AngeloGioacchino Del Regno
+<angelogioacchino.delregno@collabora.com> wrote:
 >
-> Quoting Douglas Anderson (2022-11-04 06:56:29)
-> > The sc7180 lpass clock controller's pm_runtime usage wasn't broken
-> > quite as spectacularly as the sc7280's pm_runtime usage, but it was
-> > still broken. Putting some printouts in at boot showed me this (with
-> > serial console enabled, which makes the prints slow and thus changes
-> > timing):
-> >   [    3.109951] DOUG: my_pm_clk_resume, usage=1
-> >   [    3.114767] DOUG: my_pm_clk_resume, usage=1
-> >   [    3.664443] DOUG: my_pm_clk_suspend, usage=0
-> >   [    3.897566] DOUG: my_pm_clk_suspend, usage=0
-> >   [    3.910137] DOUG: my_pm_clk_resume, usage=1
-> >   [    3.923217] DOUG: my_pm_clk_resume, usage=0
-> >   [    4.440116] DOUG: my_pm_clk_suspend, usage=-1
-> >   [    4.444982] DOUG: my_pm_clk_suspend, usage=0
-> >   [   14.170501] DOUG: my_pm_clk_resume, usage=1
-> >   [   14.176245] DOUG: my_pm_clk_resume, usage=0
-> >
-> > ...or this w/out serial console:
-> >   [    0.556139] DOUG: my_pm_clk_resume, usage=1
-> >   [    0.556279] DOUG: my_pm_clk_resume, usage=1
-> >   [    1.058422] DOUG: my_pm_clk_suspend, usage=-1
-> >   [    1.058464] DOUG: my_pm_clk_suspend, usage=0
-> >   [    1.186250] DOUG: my_pm_clk_resume, usage=1
-> >   [    1.186292] DOUG: my_pm_clk_resume, usage=0
-> >   [    1.731536] DOUG: my_pm_clk_suspend, usage=-1
-> >   [    1.731557] DOUG: my_pm_clk_suspend, usage=0
-> >   [   10.288910] DOUG: my_pm_clk_resume, usage=1
-> >   [   10.289496] DOUG: my_pm_clk_resume, usage=0
-> >
-> > It seems to be doing roughly the right sequence of calls, but just
-> > like with sc7280 this is more by luck than anything. Having a usage of
-> > -1 is just not OK.
-> >
-> > Let's fix this like we did with sc7280.
+> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 >
-> Any Fixes tag?
-
-Ah, right. I guess the most obvious one is actually:
-
-Fixes: ce8c195e652f ("clk: qcom: lpasscc: Introduce pm autosuspend for SC7180")
-
-That's what got us going negative. One could _sorta_ make the argument
-for a "Fixes" tag all the way to the start of the driver, though. The
-driver never did a pm_runtime_get() during probe and so there was (I
-guess) a chance that some of the bare register writes in probe could
-have been unclocked. I'm not aware of that ever being a problem, so I
-guess just the above "Fixes" is fine.
-
-
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
+> The Ramp Controller is used to program the sequence ID for pulse
+> swallowing, enable sequence and linking sequence IDs for the CPU
+> cores on some Qualcomm SoCs.
 >
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> ---
+>  drivers/soc/qcom/Kconfig           |   9 +
+>  drivers/soc/qcom/Makefile          |   1 +
+>  drivers/soc/qcom/ramp_controller.c | 330 +++++++++++++++++++++++++++++
+>  3 files changed, 340 insertions(+)
+>  create mode 100644 drivers/soc/qcom/ramp_controller.c
+>
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index 024e420f1bb7..1e681f98bad4 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -95,6 +95,15 @@ config QCOM_QMI_HELPERS
+>         tristate
+>         depends on NET
+>
+> +config QCOM_RAMP_CTRL
+> +       tristate "Qualcomm Ramp Controller driver"
+> +       depends on ARCH_QCOM
+> +       help
+> +         The Ramp Controller is used to program the sequence ID for pulse
+> +         swallowing, enable sequence and linking sequence IDs for the
+> +         CPU cores on some Qualcomm SoCs.
+> +         Say y here to enable support for the ramp controller.
 
-Thanks! Yell if you want me to spin a v2 with the Fixes in place.
+Generic question. regarding this controller. If it is supposed to work
+close to DVCS, etc. Does ramp controller need any programming when
+changing speed and/or APC voltage?
+Is it necessary to turn ramp on and off during the runtime?
 
--Doug
+> +
+>  config QCOM_RMTFS_MEM
+>         tristate "Qualcomm Remote Filesystem memory driver"
+>         depends on ARCH_QCOM
+> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+> index d66604aff2b0..6e02333c4080 100644
+> --- a/drivers/soc/qcom/Makefile
+> +++ b/drivers/soc/qcom/Makefile
+> @@ -10,6 +10,7 @@ obj-$(CONFIG_QCOM_OCMEM)      += ocmem.o
+>  obj-$(CONFIG_QCOM_PDR_HELPERS) += pdr_interface.o
+>  obj-$(CONFIG_QCOM_QMI_HELPERS) += qmi_helpers.o
+>  qmi_helpers-y  += qmi_encdec.o qmi_interface.o
+> +obj-$(CONFIG_QCOM_RAMP_CTRL)   += ramp_controller.o
+>  obj-$(CONFIG_QCOM_RMTFS_MEM)   += rmtfs_mem.o
+>  obj-$(CONFIG_QCOM_RPMH)                += qcom_rpmh.o
+>  qcom_rpmh-y                    += rpmh-rsc.o
+> diff --git a/drivers/soc/qcom/ramp_controller.c b/drivers/soc/qcom/ramp_controller.c
+> new file mode 100644
+> index 000000000000..e28679b545d1
+> --- /dev/null
+> +++ b/drivers/soc/qcom/ramp_controller.c
+> @@ -0,0 +1,330 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Qualcomm Ramp Controller driver
+> + * Copyright (c) 2022, AngeloGioacchino Del Regno
+> + *                     <angelogioacchino.delregno@collabora.com>
+> + */
+> +
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/of_platform.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/regmap.h>
+> +#include <linux/types.h>
+> +
+> +#define RC_UPDATE_EN           BIT(0)
+> +#define RC_ROOT_EN             BIT(1)
+> +
+> +#define RC_REG_CFG_UPDATE      0x60
+> + #define RC_CFG_UPDATE_EN      BIT(8)
+> + #define RC_CFG_ACK            GENMASK(31, 16)
+> +
+> +#define RC_DCVS_CFG_SID                2
+> +#define RC_LINK_SID            3
+> +#define RC_LMH_SID             6
+> +#define RC_DFS_SID             14
+> +
+> +#define RC_UPDATE_TIMEOUT_US   500
+> +
+> +/**
+> + * struct qcom_ramp_controller_desc - SoC specific parameters
+> + * @cfg_dfs_sid:      Dynamic Frequency Scaling SID configuration
+> + * @cfg_link_sid:     Link SID configuration
+> + * @cfg_lmh_sid:      Limits Management hardware SID configuration
+> + * @cfg_ramp_pre_en:  Ramp Controller pre-enable sequence
+> + * @cfg_ramp_en:      Ramp Controller enable sequence
+> + * @cfg_ramp_post_en: Ramp Controller post-enable sequence
+> + * @cfg_ramp_dis:     Ramp Controller disable sequence
+> + * @cmd_reg:          Command register offset
+> + * @num_dfs_sids:     Number of DFS SIDs (max 8)
+> + * @num_link_sids:    Number of Link SIDs (max 3)
+> + * @num_lmh_sids:     Number of LMh SIDs (max 8)
+> + */
+> +struct qcom_ramp_controller_desc {
+> +       struct reg_sequence *cfg_dfs_sid;
+> +       struct reg_sequence *cfg_link_sid;
+> +       struct reg_sequence *cfg_lmh_sid;
+> +       struct reg_sequence *cfg_ramp_pre_en;
+> +       struct reg_sequence *cfg_ramp_en;
+> +       struct reg_sequence *cfg_ramp_post_en;
+> +       struct reg_sequence *cfg_ramp_dis;
+> +       u8 cmd_reg;
+> +       u8 num_dfs_sids;
+> +       u8 num_link_sids;
+> +       u8 num_lmh_sids;
+> +};
+> +
+> +/**
+> + * struct qcom_ramp_controller - Main driver structure
+> + * @regmap: Regmap handle
+> + * @desc:   SoC specific parameters
+> + */
+> +struct qcom_ramp_controller {
+> +       struct regmap *regmap;
+> +       const struct qcom_ramp_controller_desc *desc;
+> +};
+> +
+> +/**
+> + * rc_wait_for_update() - Wait for Ramp Controller root update
+> + * @qrc: Main driver structure
+> + *
+> + * Return: Zero for success or negative number for failure
+> + */
+> +static int rc_wait_for_update(struct qcom_ramp_controller *qrc)
+> +{
+> +       const struct qcom_ramp_controller_desc *d = qrc->desc;
+> +       struct regmap *r = qrc->regmap;
+> +       u32 val;
+> +       int ret;
+> +
+> +       ret = regmap_set_bits(r, d->cmd_reg, RC_ROOT_EN);
+> +       if (ret)
+> +               return ret;
+> +
+> +       return regmap_read_poll_timeout(r, d->cmd_reg, val, !(val & RC_UPDATE_EN),
+> +                                       1, RC_UPDATE_TIMEOUT_US);
+> +}
+> +
+> +/**
+> + * rc_set_cfg_update() - Ramp Controller configuration update
+> + * @qrc: Main driver structure
+> + * @ce: Configuration entry to update
+> + *
+> + * Return: Zero for success or negative number for failure
+> + */
+> +static int rc_set_cfg_update(struct qcom_ramp_controller *qrc, u8 ce)
+> +{
+> +       const struct qcom_ramp_controller_desc *d = qrc->desc;
+> +       struct regmap *r = qrc->regmap;
+> +       u32 ack, val;
+> +       int ret;
+> +
+> +       /* The ack bit is between bits 16-31 of RC_REG_CFG_UPDATE */
+> +       ack = FIELD_PREP(RC_CFG_ACK, BIT(ce));
+> +
+> +       /* Write the configuration type first... */
+> +       ret = regmap_set_bits(r, d->cmd_reg + RC_REG_CFG_UPDATE, ce);
+> +       if (ret)
+> +               return ret;
+> +
+> +       /* ...and after that, enable the update bit to sync the changes */
+> +       ret = regmap_set_bits(r, d->cmd_reg + RC_REG_CFG_UPDATE, RC_CFG_UPDATE_EN);
+> +       if (ret)
+> +               return ret;
+> +
+> +       /* Wait for the changes to go through */
+> +       ret = regmap_read_poll_timeout(r, d->cmd_reg + RC_REG_CFG_UPDATE, val,
+> +                                      val & ack, 1, RC_UPDATE_TIMEOUT_US);
+> +       if (ret)
+> +               return ret;
+> +
+> +       /*
+> +        * Configuration update success! The CFG_UPDATE register will not be
+> +        * cleared automatically upon applying the configuration, so we have
+> +        * to do that manually in order to leave the ramp controller in a
+> +        * predictable and clean state.
+> +        */
+> +       ret = regmap_write(r, d->cmd_reg + RC_REG_CFG_UPDATE, 0);
+> +       if (ret)
+> +               return ret;
+> +
+> +       /* Wait for the update bit cleared ack */
+> +       return regmap_read_poll_timeout(r, d->cmd_reg + RC_REG_CFG_UPDATE,
+> +                                       val, !(val & RC_CFG_ACK), 1,
+> +                                       RC_UPDATE_TIMEOUT_US);
+> +}
+> +
+> +/**
+> + * rc_write_cfg - Send configuration sequence
+> + * @qrc: Main driver structure
+> + * @seq: Register sequence to send before asking for update
+> + * @ce: Configuration SID
+> + * @nsids: Total number of SIDs
+> + *
+> + * Returns: Zero for success or negative number for error
+> + */
+> +static int rc_write_cfg(struct qcom_ramp_controller *qrc, struct reg_sequence *seq,
+> +                       u16 ce, u8 nsids)
+> +{
+> +       int ret;
+> +       u8 i;
+> +
+> +       /* Check if, and wait until the ramp controller is ready */
+> +       ret = rc_wait_for_update(qrc);
+> +       if (ret)
+> +               return ret;
+> +
+> +       /* Write the sequence */
+> +       ret = regmap_multi_reg_write(qrc->regmap, seq, nsids);
+> +       if (ret)
+> +               return ret;
+> +
+> +       /* Pull the trigger: do config update starting from the last sid */
+> +       for (i = 0; i < nsids; i++) {
+> +               ret = rc_set_cfg_update(qrc, (u8)ce - i);
+> +               if (ret)
+> +                       return ret;
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+> +/**
+> + * rc_ramp_ctrl_enable() - Enable Ramp up/down Control
+> + * @qrc: Main driver structure
+> + *
+> + * Return: Zero for success or negative number for error
+> + */
+> +static int rc_ramp_ctrl_enable(struct qcom_ramp_controller *qrc)
+> +{
+> +       const struct qcom_ramp_controller_desc *d = qrc->desc;
+> +       int ret;
+> +
+> +       ret = rc_write_cfg(qrc, d->cfg_ramp_pre_en, RC_DCVS_CFG_SID, 1);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret = rc_write_cfg(qrc, d->cfg_ramp_en, RC_DCVS_CFG_SID, 1);
+> +       if (ret)
+> +               return ret;
+> +
+> +       return rc_write_cfg(qrc, d->cfg_ramp_post_en, RC_DCVS_CFG_SID, 1);
+> +}
+> +
+> +/**
+> + * qcom_ramp_controller_start() - Initialize and start the ramp controller
+> + * @qrc: Main driver structure
+> + *
+> + * The Ramp Controller needs to be initialized by programming the relevant
+> + * registers with SoC-specific configuration: once programming is done,
+> + * the hardware will take care of the rest (no further handling required).
+> + *
+> + * Return: Zero for success or negative number for error
+> + */
+> +static int qcom_ramp_controller_start(struct qcom_ramp_controller *qrc)
+> +{
+> +       const struct qcom_ramp_controller_desc *d = qrc->desc;
+> +       int ret;
+> +
+> +       /* Program LMH, DFS, Link SIDs */
+> +       ret = rc_write_cfg(qrc, d->cfg_lmh_sid, RC_LMH_SID, d->num_lmh_sids);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret = rc_write_cfg(qrc, d->cfg_dfs_sid, RC_DFS_SID, d->num_dfs_sids);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret = rc_write_cfg(qrc, d->cfg_link_sid, RC_LINK_SID, d->num_link_sids);
+> +       if (ret)
+> +               return ret;
+> +
+> +       /* Everything is ready! Enable the ramp up/down control */
+> +       return rc_ramp_ctrl_enable(qrc);
+> +}
+> +
+> +static const struct regmap_config qrc_regmap_config = {
+> +       .reg_bits = 32,
+> +       .reg_stride = 4,
+> +       .val_bits = 32,
+> +       .max_register = 0x68,
+> +       .fast_io = true,
+> +};
+> +
+> +static const struct qcom_ramp_controller_desc msm8976_rc_cfg = {
+> +       .cfg_dfs_sid = (struct reg_sequence[]) {
+> +               { 0x10, 0xfefebff7 },
+> +               { 0x14, 0xfdff7fef },
+> +               { 0x18, 0xfbffdefb },
+> +               { 0x1c, 0xb69b5555 },
+> +               { 0x20, 0x24929249 },
+> +               { 0x24, 0x49241112 },
+> +               { 0x28, 0x11112111 },
+> +               { 0x2c, 0x8102 },
+
+Does the vendor kernel contain register names for these items? If so,
+it might be good to include them here.
+
+> +       },
+> +       .cfg_link_sid = (struct reg_sequence[]) {
+> +               { 0x40, 0xfc987 },
+> +       },
+> +       .cfg_lmh_sid = (struct reg_sequence[]) {
+> +               { 0x30, 0x77706db },
+> +               { 0x34, 0x5550249 },
+> +               { 0x38, 0x111 },
+> +       },
+> +       .cfg_ramp_pre_en = (struct reg_sequence[]) {
+> +               { 0x50, 0x800 },
+> +       },
+> +       .cfg_ramp_en = (struct reg_sequence[]) {
+> +               { 0x50, 0xc00 },
+> +       },
+> +       .cfg_ramp_post_en = (struct reg_sequence[]) {
+> +               { 0x50, 0x400 },
+> +       },
+> +       .cfg_ramp_dis = (struct reg_sequence[]) {
+> +               { 0x50, 0x0 },
+> +       },
+> +       .cmd_reg = 0x0,
+> +
+> +       .num_dfs_sids = 8,
+> +       .num_lmh_sids = 3,
+> +       .num_link_sids = 1,
+
+I see. It might be better to have this as ARRAY_SIZE of the corresponding item.
+
+> +};
+> +
+> +static int qcom_ramp_controller_probe(struct platform_device *pdev)
+> +{
+> +       struct qcom_ramp_controller *qrc;
+> +       void __iomem *base;
+> +
+> +       base = devm_platform_ioremap_resource(pdev, 0);
+> +       if (IS_ERR(base))
+> +               return PTR_ERR(base);
+> +
+> +       qrc = devm_kmalloc(&pdev->dev, sizeof(*qrc), GFP_KERNEL);
+> +       if (!qrc)
+> +               return -ENOMEM;
+> +
+> +       qrc->desc = device_get_match_data(&pdev->dev);
+> +       if (!qrc)
+> +               return -EINVAL;
+> +
+> +       qrc->regmap = devm_regmap_init_mmio(&pdev->dev, base, &qrc_regmap_config);
+> +       if (IS_ERR(qrc->regmap))
+> +               return PTR_ERR(qrc->regmap);
+> +
+> +       platform_set_drvdata(pdev, qrc);
+> +
+> +       return qcom_ramp_controller_start(qrc);
+> +}
+> +
+> +static int qcom_ramp_controller_remove(struct platform_device *pdev)
+> +{
+> +       struct qcom_ramp_controller *qrc = platform_get_drvdata(pdev);
+> +
+> +       return rc_write_cfg(qrc, qrc->desc->cfg_ramp_dis, RC_DCVS_CFG_SID, 1);
+> +}
+> +
+> +static const struct of_device_id qcom_ramp_controller_match_table[] = {
+> +       { .compatible = "qcom,msm8976-ramp-controller", .data = &msm8976_rc_cfg },
+> +       { /* sentinel */ }
+> +};
+> +MODULE_DEVICE_TABLE(of, qcom_ramp_controller_match_table);
+> +
+> +static struct platform_driver qcom_ramp_controller_driver = {
+> +       .driver = {
+> +               .name = "qcom-ramp-controller",
+> +               .of_match_table = qcom_ramp_controller_match_table,
+> +               .suppress_bind_attrs = true,
+> +       },
+> +       .probe  = qcom_ramp_controller_probe,
+> +       .remove = qcom_ramp_controller_remove,
+> +};
+> +
+> +static int __init qcom_ramp_controller_init(void)
+> +{
+> +       return platform_driver_register(&qcom_ramp_controller_driver);
+> +}
+> +arch_initcall(qcom_ramp_controller_init);
+> +
+> +MODULE_AUTHOR("AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>");
+> +MODULE_DESCRIPTION("Qualcomm Ramp Controller driver");
+> +MODULE_LICENSE("GPL");
+> --
+> 2.37.2
+>
+
+
+-- 
+With best wishes
+Dmitry
