@@ -2,82 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11E8D61DAEB
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Nov 2022 15:22:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36A0661DAFD
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Nov 2022 15:33:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229576AbiKEOWJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Nov 2022 10:22:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39328 "EHLO
+        id S229877AbiKEOdf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Nov 2022 10:33:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbiKEOWI (ORCPT
+        with ESMTP id S229486AbiKEOde (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Nov 2022 10:22:08 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2255BBF69;
-        Sat,  5 Nov 2022 07:22:08 -0700 (PDT)
-Received: from g550jk.. (unknown [46.183.103.8])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id A961CCE809;
-        Sat,  5 Nov 2022 14:21:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1667658118; bh=F7ulIQSAklv8bkqHi8uNDnqlnBOKAGuuRsdUaEDvNcQ=;
-        h=From:To:Cc:Subject:Date;
-        b=fBfkCH8wlinKsUZlhD688lPYWopPmng88j89oXMNUUyJI6gZXV9cGXnh4EdRZlP7p
-         b4DuPvDOFxQoRLG7DXJ+4M21oC46e0whXaR5uN9pGtPCk9TWp+ObJ6SijI6M/BrjvR
-         47YEYzzpY17Rw6qblZEQL6XGti3MsACS7ghTzkQw=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     iommu@lists.linux.dev
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>, Rob Herring <robh@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v5] dt-bindings: iommu: qcom: Add Qualcomm MSM8953 compatible
-Date:   Sat,  5 Nov 2022 15:20:17 +0100
-Message-Id: <20221105142016.93406-1-luca@z3ntu.xyz>
-X-Mailer: git-send-email 2.38.1
+        Sat, 5 Nov 2022 10:33:34 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCE5DFF3;
+        Sat,  5 Nov 2022 07:33:33 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5F916B80159;
+        Sat,  5 Nov 2022 14:33:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E192C433D6;
+        Sat,  5 Nov 2022 14:33:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667658810;
+        bh=1TDRmbhSSHThH7G6bhltqeMsDuHL0/99z97pCjW6ghw=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=UlCOzLrU/xIunyk4HIiSbuVamAW4vq2m+18yFlFzh2C9fUUtKsyD2fxm+JOL82jPd
+         mwINIT9GZgDqHku8VRq+RnrFsvRzl5QRM8h3yXbVK5MgsV8O6HFtPEHKbkxCkA7DYz
+         QAF12bZUKjqbNVlkT8KR4+DSrOgjA6IsAYhkNdDiCEF1Do2X5nQf/emblGWXP/M8K/
+         Q3Qmw4ub1IHxfkR6SZPLkpbNn1C6iu3HKKFZEVwiali6t8586szPalrm9D8K4KNXtk
+         pZXaDMhZUVdf+9zw5Ibn+Gt4c4XkiR9uHJYM83hDLoVbpNnN5iihgokquHufzZT3Jx
+         QkhfELS3WSFXg==
+Date:   Sat, 5 Nov 2022 14:33:17 +0000
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        lee@kernel.org, ulf.hansson@linaro.org,
+        srinivas.kandagatla@linaro.org, lars@metafoo.de,
+        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        bhupesh.sharma@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-hardening@vger.kernel.org, marijn.suijten@somainline.org,
+        kernel@collabora.com, luca@z3ntu.xyz, a39.skl@gmail.com,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Subject: Re: [PATCH 1/9] dt-bindings: iio: qcom-spmi-vadc: Add definitions
+ for USB DP/DM VADCs
+Message-ID: <20221105143317.13cf93a9@jic23-huawei>
+In-Reply-To: <5bafce51-5f03-499c-65d4-3040cfc03ed9@linaro.org>
+References: <20221104172122.252761-1-angelogioacchino.delregno@collabora.com>
+        <20221104172122.252761-2-angelogioacchino.delregno@collabora.com>
+        <5bafce51-5f03-499c-65d4-3040cfc03ed9@linaro.org>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.34; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        FROM_SUSPICIOUS_NTLD_FP,PDS_OTHER_BAD_TLD,RCVD_IN_SBL_CSS,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the compatible used for IOMMU on the msm8953 SoC.
+On Fri, 4 Nov 2022 14:25:15 -0400
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote:
 
-Acked-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
-Changes in v5:
-* Change subject so it hopefully gets noticed by iommu maintainers
-  (thanks Krzysztof, maybe this helps..)
+> On 04/11/2022 13:21, AngeloGioacchino Del Regno wrote:
+> > From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> > 
+> > Some SoCs do have a USB DP/DM ADC at 0x43, 0x44.
+> >   
+> 
+> 
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
- Documentation/devicetree/bindings/iommu/qcom,iommu.txt | 1 +
- 1 file changed, 1 insertion(+)
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-index 059139abce35..e6cecfd360eb 100644
---- a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-+++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-@@ -10,6 +10,7 @@ to non-secure vs secure interrupt line.
- - compatible       : Should be one of:
- 
-                         "qcom,msm8916-iommu"
-+                        "qcom,msm8953-iommu"
- 
-                      Followed by "qcom,msm-iommu-v1".
- 
--- 
-2.38.1
+> 
+> Best regards,
+> Krzysztof
+> 
 
