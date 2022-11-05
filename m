@@ -2,121 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED1EA61DA9B
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Nov 2022 14:31:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 11E8D61DAEB
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Nov 2022 15:22:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229453AbiKENbB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Nov 2022 09:31:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54158 "EHLO
+        id S229576AbiKEOWJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Nov 2022 10:22:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229516AbiKENbA (ORCPT
+        with ESMTP id S229501AbiKEOWI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Nov 2022 09:31:00 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6F56DFFF;
-        Sat,  5 Nov 2022 06:30:59 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 92561B80025;
-        Sat,  5 Nov 2022 13:30:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B146AC433D7;
-        Sat,  5 Nov 2022 13:30:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667655057;
-        bh=Exmb2YbVuJv8xgD75Jwx6M3P7AfHe0lCKRLcDlEsnKw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=pPyd7d6NY3uFHHKCarHevBVmkEnP1IGtnPPCPiV186twVOs262fob0X4/QyuS0LEV
-         5v9DGoZDnSHBAE2P1j15ptsg7OrKX+3eu2Ri/xXnp4LZpt2mvsLGlrtkKUXtSsHyUL
-         xSg5L5xrFE0G3AyEdPGaIkrKdsG3kt250uDEGNqmVMwPv1snB4D5/SWGXIHdFxX076
-         UAkbh6eMnw4DY8ID9cPitTEoJXQLnlZum+UNSUCA7AsHTyE+2oJGLKTICTNZf5CB7c
-         2AXvTdXCuuvrIeJETIDtM+0KlK5TM7QKZN5ZjIehR8iYFDqwcbcaYOpG3BiJs5rASu
-         nyBMQZiEo6KFQ==
-Date:   Sat, 5 Nov 2022 19:00:52 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Sat, 5 Nov 2022 10:22:08 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2255BBF69;
+        Sat,  5 Nov 2022 07:22:08 -0700 (PDT)
+Received: from g550jk.. (unknown [46.183.103.8])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id A961CCE809;
+        Sat,  5 Nov 2022 14:21:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1667658118; bh=F7ulIQSAklv8bkqHi8uNDnqlnBOKAGuuRsdUaEDvNcQ=;
+        h=From:To:Cc:Subject:Date;
+        b=fBfkCH8wlinKsUZlhD688lPYWopPmng88j89oXMNUUyJI6gZXV9cGXnh4EdRZlP7p
+         b4DuPvDOFxQoRLG7DXJ+4M21oC46e0whXaR5uN9pGtPCk9TWp+ObJ6SijI6M/BrjvR
+         47YEYzzpY17Rw6qblZEQL6XGti3MsACS7ghTzkQw=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     iommu@lists.linux.dev
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca@z3ntu.xyz>, Rob Herring <robh@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 09/16] phy: qcom-qmp-pcie: add register init helper
-Message-ID: <Y2ZljEGAdg9zehE7@matsya>
-References: <20221028133603.18470-1-johan+linaro@kernel.org>
- <20221028133603.18470-10-johan+linaro@kernel.org>
- <Y2ZSVooZDBDnsKD3@matsya>
- <Y2ZiTWk+dJj/XNu/@hovoldconsulting.com>
+Subject: [PATCH v5] dt-bindings: iommu: qcom: Add Qualcomm MSM8953 compatible
+Date:   Sat,  5 Nov 2022 15:20:17 +0100
+Message-Id: <20221105142016.93406-1-luca@z3ntu.xyz>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y2ZiTWk+dJj/XNu/@hovoldconsulting.com>
-X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        FROM_SUSPICIOUS_NTLD_FP,PDS_OTHER_BAD_TLD,RCVD_IN_SBL_CSS,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05-11-22, 14:17, Johan Hovold wrote:
-> On Sat, Nov 05, 2022 at 05:38:54PM +0530, Vinod Koul wrote:
-> > On 28-10-22, 15:35, Johan Hovold wrote:
+Document the compatible used for IOMMU on the msm8953 SoC.
 
-> > > +	qmp_pcie_configure(serdes, tbls->serdes, tbls->serdes_num);
-> > 
-> > We are tbls
-> 
-> Yeah, it's a separate function.
-> 
-> Note that qmp_pcie_configure_lane() above use 'tbl' too.
-> 
-> > > +
-> > >  	qmp_pcie_configure_lane(tx, tbls->tx, tbls->tx_num, 1);
-> > >  	qmp_pcie_configure_lane(rx, tbls->rx, tbls->rx_num, 1);
-> > >  
-> > > @@ -1848,15 +1843,6 @@ static void qmp_pcie_lanes_init(struct qmp_pcie *qmp, const struct qmp_phy_cfg_t
-> > >  		qmp_pcie_configure_lane(tx2, tbls->tx, tbls->tx_num, 2);
-> > >  		qmp_pcie_configure_lane(rx2, tbls->rx, tbls->rx_num, 2);
-> > >  	}
-> > > -}
-> > > -
-> > > -static void qmp_pcie_pcs_init(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tbls)
-> > > -{
-> > > -	void __iomem *pcs = qmp->pcs;
-> > > -	void __iomem *pcs_misc = qmp->pcs_misc;
-> > > -
-> > > -	if (!tbls)
-> > > -		return;
-> > >  
-> > >  	qmp_pcie_configure(pcs, tbls->pcs, tbls->pcs_num);
-> > >  	qmp_pcie_configure(pcs_misc, tbls->pcs_misc, tbls->pcs_misc_num);
-> > > @@ -1932,8 +1918,8 @@ static int qmp_pcie_power_on(struct phy *phy)
-> > >  	else
-> > >  		mode_tables = cfg->tables_ep;
-> > >  
-> > > -	qmp_pcie_serdes_init(qmp, &cfg->tables);
-> > > -	qmp_pcie_serdes_init(qmp, mode_tables);
-> > > +	qmp_pcie_init_registers(qmp, &cfg->tables);
-> > > +	qmp_pcie_init_registers(qmp, mode_tables);
-> > 
-> > but here tables :(
-> > 
-> > Lets stick with either please, or if we have differentiation lets make
-> > it real obvious
-> 
-> It's not uncommon to use shorter local identifiers and a more descriptive
-> name in structures, but since the driver already used 'tbl' consistently
-> before the recent addition of the aggregate tables structure, I can
-> rename also those pointers so that we use 'tbl' and 'tbls' consistently
-> throughout the driver.
+Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Changes in v5:
+* Change subject so it hopefully gets noticed by iommu maintainers
+  (thanks Krzysztof, maybe this helps..)
 
-Thanks that would be great. Lets stick to one convention throughout the
-driver
+ Documentation/devicetree/bindings/iommu/qcom,iommu.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
+diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
+index 059139abce35..e6cecfd360eb 100644
+--- a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
++++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
+@@ -10,6 +10,7 @@ to non-secure vs secure interrupt line.
+ - compatible       : Should be one of:
+ 
+                         "qcom,msm8916-iommu"
++                        "qcom,msm8953-iommu"
+ 
+                      Followed by "qcom,msm-iommu-v1".
+ 
 -- 
-~Vinod
+2.38.1
+
