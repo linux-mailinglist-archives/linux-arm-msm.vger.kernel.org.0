@@ -2,44 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F11A061DA8E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Nov 2022 14:19:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ED1EA61DA9B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Nov 2022 14:31:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229517AbiKENTa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Nov 2022 09:19:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50862 "EHLO
+        id S229453AbiKENbB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Nov 2022 09:31:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbiKENT3 (ORCPT
+        with ESMTP id S229516AbiKENbA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Nov 2022 09:19:29 -0400
+        Sat, 5 Nov 2022 09:31:00 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73D1FDF45;
-        Sat,  5 Nov 2022 06:19:28 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6F56DFFF;
+        Sat,  5 Nov 2022 06:30:59 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 22181B81CD0;
-        Sat,  5 Nov 2022 13:19:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7D8C433D6;
-        Sat,  5 Nov 2022 13:19:25 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 92561B80025;
+        Sat,  5 Nov 2022 13:30:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B146AC433D7;
+        Sat,  5 Nov 2022 13:30:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667654365;
-        bh=n978bdZclo1OUqgWipKVcYfrpp2oIPsYbXjMUSCLzwI=;
+        s=k20201202; t=1667655057;
+        bh=Exmb2YbVuJv8xgD75Jwx6M3P7AfHe0lCKRLcDlEsnKw=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=krMh5ThZKLX5Tes9Y3K/uXBT2Ll9Gw2n9lCBLhGo5GK28z+kbMBpMwH37LFRYJXWL
-         Fa3mpSbdi1LlKhbtkMXwhE8YqVSi0yeGkRUzTnoZU+M8KGJHDFE+np/9sjYfbtkyLf
-         p3D0rr0Pm7hG+h+afcUcmw8RuzYVIgyULiGM2KL4JXQm+vJn65nPBUR7NR8mib2sRL
-         iG/TCm+K8l7vUhCmvbhuB+t/XGSVIxtoXJ8JFqyP69evAH6cWccPRfjMrDUjK7F7Wo
-         RZzvnKHGQWzHLrizdSdO4UzfYlyVYb6vHPOYFmPXQoEjg3sovEdLyd37u+DaxNbNIE
-         qsoipVHk3/Seg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1orJ4j-0007Bh-Us; Sat, 05 Nov 2022 14:19:06 +0100
-Date:   Sat, 5 Nov 2022 14:19:05 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
+        b=pPyd7d6NY3uFHHKCarHevBVmkEnP1IGtnPPCPiV186twVOs262fob0X4/QyuS0LEV
+         5v9DGoZDnSHBAE2P1j15ptsg7OrKX+3eu2Ri/xXnp4LZpt2mvsLGlrtkKUXtSsHyUL
+         xSg5L5xrFE0G3AyEdPGaIkrKdsG3kt250uDEGNqmVMwPv1snB4D5/SWGXIHdFxX076
+         UAkbh6eMnw4DY8ID9cPitTEoJXQLnlZum+UNSUCA7AsHTyE+2oJGLKTICTNZf5CB7c
+         2AXvTdXCuuvrIeJETIDtM+0KlK5TM7QKZN5ZjIehR8iYFDqwcbcaYOpG3BiJs5rASu
+         nyBMQZiEo6KFQ==
+Date:   Sat, 5 Nov 2022 19:00:52 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
@@ -48,18 +44,16 @@ Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 10/16] dt-bindings: phy: qcom,qmp-pcie: rename current
- bindings
-Message-ID: <Y2ZiySD7vaJAbUO1@hovoldconsulting.com>
+Subject: Re: [PATCH v4 09/16] phy: qcom-qmp-pcie: add register init helper
+Message-ID: <Y2ZljEGAdg9zehE7@matsya>
 References: <20221028133603.18470-1-johan+linaro@kernel.org>
- <20221028133603.18470-11-johan+linaro@kernel.org>
- <33b13789-33d6-a22f-82c9-4c5691d0737d@linaro.org>
- <Y1zot8aJ1WXnbrwF@hovoldconsulting.com>
- <Y2ZShqNfwB65lX+0@matsya>
+ <20221028133603.18470-10-johan+linaro@kernel.org>
+ <Y2ZSVooZDBDnsKD3@matsya>
+ <Y2ZiTWk+dJj/XNu/@hovoldconsulting.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Y2ZShqNfwB65lX+0@matsya>
+In-Reply-To: <Y2ZiTWk+dJj/XNu/@hovoldconsulting.com>
 X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -69,19 +63,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Nov 05, 2022 at 05:39:42PM +0530, Vinod Koul wrote:
-> On 29-10-22, 10:47, Johan Hovold wrote:
-> > On Fri, Oct 28, 2022 at 05:57:01PM -0400, Krzysztof Kozlowski wrote:
+On 05-11-22, 14:17, Johan Hovold wrote:
+> On Sat, Nov 05, 2022 at 05:38:54PM +0530, Vinod Koul wrote:
+> > On 28-10-22, 15:35, Johan Hovold wrote:
 
-> > > Also missing cc devicetree list.
+> > > +	qmp_pcie_configure(serdes, tbls->serdes, tbls->serdes_num);
 > > 
-> > Yes, I know, but as I mentioned in my reply to Rob on the QMP USB
-> > series, I do not intend to repost this series unless someone insists as
-> > there were no binding-related changes in v4 (or v3).
+> > We are tbls
 > 
-> It is always better to repost and get that out :-)
+> Yeah, it's a separate function.
+> 
+> Note that qmp_pcie_configure_lane() above use 'tbl' too.
+> 
+> > > +
+> > >  	qmp_pcie_configure_lane(tx, tbls->tx, tbls->tx_num, 1);
+> > >  	qmp_pcie_configure_lane(rx, tbls->rx, tbls->rx_num, 1);
+> > >  
+> > > @@ -1848,15 +1843,6 @@ static void qmp_pcie_lanes_init(struct qmp_pcie *qmp, const struct qmp_phy_cfg_t
+> > >  		qmp_pcie_configure_lane(tx2, tbls->tx, tbls->tx_num, 2);
+> > >  		qmp_pcie_configure_lane(rx2, tbls->rx, tbls->rx_num, 2);
+> > >  	}
+> > > -}
+> > > -
+> > > -static void qmp_pcie_pcs_init(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tables *tbls)
+> > > -{
+> > > -	void __iomem *pcs = qmp->pcs;
+> > > -	void __iomem *pcs_misc = qmp->pcs_misc;
+> > > -
+> > > -	if (!tbls)
+> > > -		return;
+> > >  
+> > >  	qmp_pcie_configure(pcs, tbls->pcs, tbls->pcs_num);
+> > >  	qmp_pcie_configure(pcs_misc, tbls->pcs_misc, tbls->pcs_misc_num);
+> > > @@ -1932,8 +1918,8 @@ static int qmp_pcie_power_on(struct phy *phy)
+> > >  	else
+> > >  		mode_tables = cfg->tables_ep;
+> > >  
+> > > -	qmp_pcie_serdes_init(qmp, &cfg->tables);
+> > > -	qmp_pcie_serdes_init(qmp, mode_tables);
+> > > +	qmp_pcie_init_registers(qmp, &cfg->tables);
+> > > +	qmp_pcie_init_registers(qmp, mode_tables);
+> > 
+> > but here tables :(
+> > 
+> > Lets stick with either please, or if we have differentiation lets make
+> > it real obvious
+> 
+> It's not uncommon to use shorter local identifiers and a more descriptive
+> name in structures, but since the driver already used 'tbl' consistently
+> before the recent addition of the aggregate tables structure, I can
+> rename also those pointers so that we use 'tbl' and 'tbls' consistently
+> throughout the driver.
 
-Yeah, it's just that I was expecting this series to merged the same day,
-and I didn't want to spam the list in vain.
+Thanks that would be great. Lets stick to one convention throughout the
+driver
 
-Johan
+-- 
+~Vinod
