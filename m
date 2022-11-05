@@ -2,106 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9703661D9D3
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Nov 2022 13:09:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3BD461DA19
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Nov 2022 13:39:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229587AbiKEMJw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Nov 2022 08:09:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36106 "EHLO
+        id S229555AbiKEMjT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Nov 2022 08:39:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229581AbiKEMJv (ORCPT
+        with ESMTP id S229479AbiKEMjJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Nov 2022 08:09:51 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC7D364FB;
-        Sat,  5 Nov 2022 05:09:50 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A6B9EB82D64;
-        Sat,  5 Nov 2022 12:09:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B127DC433C1;
-        Sat,  5 Nov 2022 12:09:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667650188;
-        bh=+rs6Q+VjOlHj+euSJ4o9S8ikRCeAGUE9DzDvLfyibdQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=W+FRiPsAMrVf7EpIXJlJh7YkPvn8BTHV1EBTaIlm6gPA5Tm+jylGj4zsiMqTeQfmf
-         7OuurQkPK6yQGhF1IwsNT1iZcI4ZAqe+Q6M65xI67x/vPS7/4iI4MgipLHAm58wDxv
-         zBV2JgGcVWi16bPr2peWGZnuNQAWEMrgsWp7zeUCMojY2U6zXGIN1gPfqseLQA3QuY
-         Tsz4sfZOxqtY7s8hYse5+hF4aBUk7fOr8qkdQuDjaEPhdWKxZDpTQlOEmxButgOL4G
-         sKTlY+gyq6TnY9Z+ZYyOZjCB6eTQFMoatok2csYBvhWaPjmUvHatnFZ97KX5K5S+AW
-         xN+effbYPJ0pg==
-Date:   Sat, 5 Nov 2022 17:39:42 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 10/16] dt-bindings: phy: qcom,qmp-pcie: rename current
- bindings
-Message-ID: <Y2ZShqNfwB65lX+0@matsya>
-References: <20221028133603.18470-1-johan+linaro@kernel.org>
- <20221028133603.18470-11-johan+linaro@kernel.org>
- <33b13789-33d6-a22f-82c9-4c5691d0737d@linaro.org>
- <Y1zot8aJ1WXnbrwF@hovoldconsulting.com>
+        Sat, 5 Nov 2022 08:39:09 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C80A15A26
+        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Nov 2022 05:39:08 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id b5so6573291pgb.6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Nov 2022 05:39:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=c8XA1N0uaxkLO/wKHErNWHaSuu64k5Pjb5u9dmcZrOc=;
+        b=RIHC9n/dKVExSLG73bd8Y0TEFLCe8HTSL+2d7yE6D2NKhaBTGC77yJTmz2n+UQEoLn
+         jxE36/CP2zWRsxdrbl6Qipo/1wujKwbWTegmQtKA5KaKY5c5k0uls/46uPweryK1Q/70
+         p7KuiiXfJ0vih3FChZlrnOZ0SimajpgL+AXRNjZnSx1jbzFH5llJcPftmYgxT0KBp7aY
+         Nvw2mfIN1dkT84jofHnK9dh7XMfTMquPbJMMLMjB0Dp08MAIB2DxhF8xAtCfYFVwsPDo
+         kuNK/heTlVtwv9hHFhKrR/b4yxRwRja7vVsRsbB9inWGKh1FmpKXNdm91a1Uu/cF0CiR
+         QmBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=c8XA1N0uaxkLO/wKHErNWHaSuu64k5Pjb5u9dmcZrOc=;
+        b=TYg8vkG5KGjue/rFQfvgCgdDZmvTua2s+sts+XAzbEgz+2jh48GsWyaufAme49bnFy
+         UkQDWC89u+M9sSISF7jLzpRDte6lDZJjGIEAfno6c+P0daoG55fl8Rqm7kUE0t9KF3Th
+         p5e8FWYWgy5IVsZ0tnRbNVlPs3bcekQ87+nf0bB0lOXF4KGNxdVyilD9ArJlmAfd1PuC
+         PwkMHvDzcrbh/teCJET+oITI+6HQflB88RbFnQ7WBhfPRDlsBPfjz9GhsIPnH9LXscDj
+         TgNiekXpMlkjIvcjtLxgacxrVeHcm0rNpM4LAE4TVW6Zc1rE99LE/ISH1tLDRRVnp5oa
+         vGmw==
+X-Gm-Message-State: ACrzQf3BxovJM7wBW+ygH5NZrCUihdUekSqAIMeRpMdrtFfQGLlx7xgM
+        KJLPTP6y7mlPUz0dg+tNzePuc6AhBxCH8iYf0PU=
+X-Google-Smtp-Source: AMsMyM7B0KgO1ePqgiznBJPxBFqW0p1QJVzP9XdnRybtCWEEA1+7r7SGcBMaZXE781qwVCHZ0F/UGDKN4buuMG8EUng=
+X-Received: by 2002:a63:8aca:0:b0:461:25fe:e7c5 with SMTP id
+ y193-20020a638aca000000b0046125fee7c5mr34958534pgd.395.1667651947704; Sat, 05
+ Nov 2022 05:39:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y1zot8aJ1WXnbrwF@hovoldconsulting.com>
-X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a05:7301:2e91:b0:83:922d:c616 with HTTP; Sat, 5 Nov 2022
+ 05:39:06 -0700 (PDT)
+Reply-To: stefanopessia755@hotmail.com
+From:   Stefano Pessina <wamathaibenard@gmail.com>
+Date:   Sat, 5 Nov 2022 15:39:06 +0300
+Message-ID: <CAN7bvZKFRi6jCy913fp9Nu5T=uorMfPGun5ibm5bYqhSVn2ZFA@mail.gmail.com>
+Subject: Geldspende
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=4.7 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29-10-22, 10:47, Johan Hovold wrote:
-> On Fri, Oct 28, 2022 at 05:57:01PM -0400, Krzysztof Kozlowski wrote:
-> > On 28/10/2022 09:35, Johan Hovold wrote:
-> > > The current QMP PCIe PHY bindings are based on the original MSM8996
-> > > binding which provided multiple PHYs per IP block and these in turn were
-> > > described by child nodes.
-> > > 
-> > > Later QMP PCIe PHY blocks only provide a single PHY and the remnant
-> > > child node does not really reflect the hardware.
-> > > 
-> > > The original MSM8996 binding also ended up describing the individual
-> > > register blocks as belonging to either the wrapper node or the PHY child
-> > > nodes.
-> > > 
-> > > This is an unnecessary level of detail which has lead to problems when
-> > > later IP blocks using different register layouts have been forced to fit
-> > > the original mould rather than updating the binding. The bindings are
-> > > arguable also incomplete as they only the describe register blocks used
-> > > by the current Linux drivers (e.g. does not include the per lane PCS
-> > > registers).
-> > > 
-> > > In preparation for adding new bindings for SC8280XP which further
-> > > bindings can be based on, rename the current schema file after IPQ8074,
-> > > which was the first SoC added to the bindings after MSM8996 (which has
-> > > already been split out), and add a reference to the SC8280XP bindings.
-> > > 
-> > > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > > ---
-> > 
-> > Also missing cc devicetree list.
-> 
-> Yes, I know, but as I mentioned in my reply to Rob on the QMP USB
-> series, I do not intend to repost this series unless someone insists as
-> there were no binding-related changes in v4 (or v3).
-
-It is always better to repost and get that out :-)
-
--- 
-~Vinod
+--=20
+Die Summe von 500.000,00 =E2=82=AC wurde Ihnen von STEFANO PESSINA gespende=
+t.
+Bitte kontaktieren Sie uns f=C3=BCr weitere Informationen =C3=BCber
+stefanopessia755@hotmail.com
