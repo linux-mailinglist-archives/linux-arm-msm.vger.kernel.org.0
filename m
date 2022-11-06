@@ -2,79 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE10961DEB3
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Nov 2022 22:39:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4388361E00E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Nov 2022 03:57:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230074AbiKEVjy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Nov 2022 17:39:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38054 "EHLO
+        id S229575AbiKFC5C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Nov 2022 22:57:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229551AbiKEVjx (ORCPT
+        with ESMTP id S229492AbiKFC5B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Nov 2022 17:39:53 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5452F12AE6
-        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Nov 2022 14:39:52 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id b9so11032696ljr.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Nov 2022 14:39:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wDcIJcBi6g/qTugxSJoaAlKPWTs30yKTjAwn5zyj53s=;
-        b=ASDj/J9+wRrN00QLmymSnOx9IIJdjK5+0StudWW/LmTirKiy2F45mqhrLIVz1l9x/a
-         dnDOfINvFkq0Y9bJlNGy0BIBcTgK6682rHySG69N8oVxuiEn6cYq6kHthqJOTsnlZt8+
-         5P113RmeGEgZITcq1Goi6uvdmX61U8to5y3g0TjATI14ljcaq/HWmRBeqWTJph0cEUtU
-         VRg9wtwh7P9ia1TjzPoHH0RAaMqlsg9s8ecU02y9WNVxeF94DuixW4IN8Ay6gURVF1vx
-         WV6aKMj3PIgfNQwg+/NU03a+tMvQ4czhWIbRTJ63hUunZKrZDgqCUbUoWw9++Q6S9U/s
-         QfUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wDcIJcBi6g/qTugxSJoaAlKPWTs30yKTjAwn5zyj53s=;
-        b=GCnO/NIr9yZ39oi8TMw88JV4vjJu4zfdZV9EV+xsgt46dkrxUVyj7nL1SFdOw35tBk
-         7Ws2C8AKOakvCrVgiqXF/LTigWBj4JPQ24ib+dKt+x50YHtM/WaoyXbnncRUNzzB8ngl
-         VX2g/CNErdsCYHK2NoYMg8fM+2YaGzKgsUg4k/W7ozZV413NQkCDhWpCghVufYW6vjXv
-         An4TYUcUcRUB7tQjFqZBqJq3NgNGY9lt4Wah1lu/a9S/S5jAirMScpvOv2fieuQBUgq6
-         eBWffZQBnLKdPS8mAblTUDUIOyVH0Bl97aHRUiTvZO6FmkYek48YGKRztC/auFE5OQ7/
-         hmXA==
-X-Gm-Message-State: ANoB5pl0oWB6HKt2lB+xXzs6rev21y14AP5JJhN2U5whk1s/kXFD7598
-        MP9J0HBalLGItlg+NeC8Rb3cunz4px/Y4d6v1R8=
-X-Google-Smtp-Source: AA0mqf4IKa3pR/UQQq2LsUdHHa3ZRD5v/r/aPDwmpGOTRKJqEPMiSadFo8MeoPeXSdY1rfyR10yAFw==
-X-Received: by 2002:a2e:5c42:0:b0:277:9847:286a with SMTP id q63-20020a2e5c42000000b002779847286amr1123359ljb.309.1667684390373;
-        Sat, 05 Nov 2022 14:39:50 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id b22-20020a056512305600b004a8f824466bsm423619lfb.188.2022.11.05.14.39.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 05 Nov 2022 14:39:49 -0700 (PDT)
-Message-ID: <2bee4c98-d8f3-69fd-4a1e-7a9abc4f7e3e@linaro.org>
-Date:   Sun, 6 Nov 2022 00:39:49 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH v5 08/16] phy: qcom-qmp-pcie: use shorter tables
- identifiers
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Sat, 5 Nov 2022 22:57:01 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F5B2FCCC;
+        Sat,  5 Nov 2022 19:57:00 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 196EC60BDE;
+        Sun,  6 Nov 2022 02:57:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B793C433D6;
+        Sun,  6 Nov 2022 02:56:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667703419;
+        bh=OxCmvoAiWJ7eX5jbg8wqKgFMCNgFHPCFJ3WmR4oO6wo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=UUkadnWNL31eAF7V1a20xeGAsI056SUVEz4XUD5ibGYMgQqLO0tADYxSzwgvYknNn
+         9VHuKT18ZW8dYBqOUR/OAG7Z5U6RMGP2N5V5wRFW3O3B4KwS9W3RUT4fuV1n+4lISr
+         fIQ6OMf4hsetrSTVm23ezMLjbziO6V/cO/vyG9JTH7U8/Ik7h2U6ankBZE5DXSEBOx
+         7Kg3iQoS2pdOJy2C5bVsgA1vOUYDjFz6EHlT5tW432XFJU9C+mBjeEsIQEkS1BWYhM
+         Ui1hp2ri2NgAgferRuC417AvCIJbmH10712oMJw2wbCVUy3yoN7/CL93+6g8Y+7DKd
+         eB2CMECZwQYBw==
+Date:   Sat, 5 Nov 2022 21:56:56 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+Cc:     devicetree@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>,
+        Josef W Menad <JosefWMenad@protonmail.ch>,
+        Markuss Broks <markuss.broks@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        "Lin, Andy Gross" <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221105145939.20318-1-johan+linaro@kernel.org>
- <20221105145939.20318-9-johan+linaro@kernel.org>
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221105145939.20318-9-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: msm8916-samsung-j5-common: Add
+ initial common device tree
+Message-ID: <20221106025656.5s6bwcuk2blv5tvm@builder.lan>
+References: <20220928110049.96047-1-linmengbo0689@protonmail.com>
+ <20220928121717.102402-1-linmengbo0689@protonmail.com>
+ <20220928123816.104641-1-linmengbo0689@protonmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220928123816.104641-1-linmengbo0689@protonmail.com>
+X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,22 +64,103 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/11/2022 17:59, Johan Hovold wrote:
-> The QMP drivers all use 'tbl' to refer to their register initialisation
-> tables.
+On Wed, Sep 28, 2022 at 12:39:46PM +0000, Lin, Meng-Bo wrote:
+> The smartphones below are using the MSM8916 SoC,
+> which are released in 2015-2016:
 > 
-> For consistency use 'tbls' rather than 'tables' to refer to the new
-> aggregate table structures.
+> Samsung Galaxy J5 2015 (SM-J500*)
+> Samsung Galaxy J5 2016 (SM-J510*)
+> Samsung Galaxy J3 2016
+> - SM-J3109/SM-J320Y/SM-J320YZ
+> - SM-J320N0/SM-J320ZN
+> - SM-J320P/SM-J320R4/SM-J320V/SM-S320VL
 > 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Add a common device tree for with initial support for:
+> 
+
+I'm afraid I don't think this, or the $subject, reflects what you're
+actually doing in this change.
+
+This should say something about moving the J5 device definition to a
+common file, so that it could be reused in other related devices.
+
+> - GPIO keys
+> - SDHCI (internal and external storage)
+> - USB Device Mode
+> - UART (on USB connector via the SM5703 MUIC)
+> - WCNSS (WiFi/BT)
+> - Regulators
+> 
+> The three devices (some varints of J3, all other variants of J5 released
+> in 2015 and J5X released in 2016) are very similar, with some differences
+> in display and GPIO pins. The common parts are shared in
+> msm8916-samsung-j5-common.dtsi to reduce duplication.
+> 
+> Signed-off-by: Lin, Meng-Bo <linmengbo0689@protonmail.com>
 > ---
->   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 90 ++++++++++++------------
->   1 file changed, 45 insertions(+), 45 deletions(-)
+>  ...6-samsung-j5.dts => msm8916-samsung-j5-common.dtsi} | 10 ++--------
+>  1 file changed, 2 insertions(+), 8 deletions(-)
+>  rename arch/arm64/boot/dts/qcom/{msm8916-samsung-j5.dts => msm8916-samsung-j5-common.dtsi} (94%)
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
+> similarity index 94%
+> rename from arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts
+> rename to arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
+> index eabeed18cfaa..4f71609bf6f8 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts
+> +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+With this movewe have the Makefile referencing a file that doesn't
+exist. Please introduce msm8916-samsung-j5.dts in the same commit.
 
--- 
-With best wishes
-Dmitry
+> @@ -1,15 +1,10 @@
+>  // SPDX-License-Identifier: GPL-2.0-only
+>  
+> 
+> -/dts-v1/;
+> -
+>  #include "msm8916-pm8916.dtsi"
+> +
+>  #include <dt-bindings/gpio/gpio.h>
+>  
+> 
+>  / {
+> -	model = "Samsung Galaxy J5 (2015)";
+> -	compatible = "samsung,j5", "qcom,msm8916";
+> -	chassis-type = "handset";
+> -
+>  	aliases {
+>  		serial0 = &blsp1_uart2;
+>  	};
+> @@ -92,7 +87,6 @@ &usb {
+>  
+> 
+>  &usb_hs_phy {
+>  	extcon = <&pm8916_usbin>;
+> -	qcom,init-seq = /bits/ 8 <0x1 0x19 0x2 0x0b>;
+>  };
+>  
+> 
+>  &smd_rpm_regulators {
+> @@ -199,7 +193,7 @@ l18 {
+>  };
+>  
+> 
+>  &msmgpio {
+> -	gpio_keys_default: gpio-keys-default {
+> +	gpio_keys_default: gpio-keys-default-state {
+
+This is a good, but unrelated change.
+
+Thanks,
+Bjorn
+
+>  		pins = "gpio107", "gpio109";
+>  		function = "gpio";
+>  
+> 
+> -- 
+> 
+> 2.30.2
+> 
 
