@@ -2,59 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3412161E040
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Nov 2022 05:30:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B66561E046
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Nov 2022 05:35:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229470AbiKFEaS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Nov 2022 00:30:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50728 "EHLO
+        id S229492AbiKFEf5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Nov 2022 00:35:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbiKFEaR (ORCPT
+        with ESMTP id S229463AbiKFEf4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Nov 2022 00:30:17 -0400
+        Sun, 6 Nov 2022 00:35:56 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12070641C;
-        Sat,  5 Nov 2022 21:30:15 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1171641D;
+        Sat,  5 Nov 2022 21:35:55 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C302560B68;
-        Sun,  6 Nov 2022 04:30:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A597C433C1;
-        Sun,  6 Nov 2022 04:30:12 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 74F9E60BED;
+        Sun,  6 Nov 2022 04:35:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E2AC433C1;
+        Sun,  6 Nov 2022 04:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667709014;
-        bh=zrkn1G+w9Wm/7JS5FLoHzU9ltDXv9SgNtssolctSshw=;
+        s=k20201202; t=1667709354;
+        bh=kOngOvfZxwx9QxOuj1TrIm7cT3qvXl/KFNkdQIS7quI=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JTlEEyeCq+jdsxB6DGbRvgG6hh9j0gwEOJDZRkFOSyWdc/wmIU3e/PlvQlMeGQcZW
-         +1/mv85O3GiEh0ixlGFdOzNUH0cK0Ah9hrFOkp7wDxKlWmBFDU3SVR+5+vtmAZ4iku
-         LDgIIhDmiWvCffgOT8hjBCNJXfbEGIhoKIVNSUOpdwRJLlp18fvZn5s35Xxxu2Wn3Z
-         m4mXS15QD4jU+zWZIxgswsNH/CMexPDpNjFGOTe0w1i0iC1A5xdCbgBYomeigJvjC/
-         FsAJYFdtP5iqdlEsqMl0YDqE0EP1GACqfiR6kBCoogo9+J+ZW3yPAjKy8NLJaygEfv
-         uKo3apx6NNCsA==
-Date:   Sat, 5 Nov 2022 23:30:11 -0500
+        b=tRQEknKdx47ZVpK/iFTkqLOh0c9+4+dtd0GcrZwVYX4WP2QSyunnkONg9JH/JoJzO
+         1cCVwZ2E4wE1bQxmX1JBVkAGGS2ZQUHl3xMuvtUypH0os03N2RdTwus2838GLWTww5
+         e+mhYggFpiGAYVKxUQ3slDooeAzB24qGTMq95NELb8NBZhgzZBaH2+6H4Hz+m6F20k
+         psrpV4nSwpq8KOqQWpkArcsNhUNP1ikCb4Rfs8ALmj5WjrhySQ1pUnMiS9yIFCO84m
+         jwKfayvED/lXhiMHy0jr9AR0TcNuoqBI6w6v62VnaEUs1t+/ir+F0NJ2irYbaOzUel
+         qjjKvGqZSCL0A==
+Date:   Sat, 5 Nov 2022 23:35:52 -0500
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH v1 3/5] arm64: dts: qcom: sm8450-hdk: enable display
- hardware
-Message-ID: <20221106043011.pw5fqeame7otzdcn@builder.lan>
-References: <20221104131358.1025987-1-dmitry.baryshkov@linaro.org>
- <20221104131358.1025987-4-dmitry.baryshkov@linaro.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, johan+linaro@kernel.org,
+        quic_jprakash@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        steev@kali.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v4 11/12] arm64: dts: qcom: sc8280xp-x13s: Add
+ PM8280_{1/2} ADC_TM5 channels
+Message-ID: <20221106043552.f5vrtpzd3en2lauc@builder.lan>
+References: <20221103095810.64606-1-manivannan.sadhasivam@linaro.org>
+ <20221103095810.64606-12-manivannan.sadhasivam@linaro.org>
+ <Y2Om1N8X/Qkr9rYI@hovoldconsulting.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221104131358.1025987-4-dmitry.baryshkov@linaro.org>
+In-Reply-To: <Y2Om1N8X/Qkr9rYI@hovoldconsulting.com>
 X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -64,48 +61,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 04, 2022 at 04:13:56PM +0300, Dmitry Baryshkov wrote:
-> Enable MDSS/DPU/DSI0 on SM8450-HDK device. Note, there is no panel
-> configuration (yet).
+On Thu, Nov 03, 2022 at 12:32:36PM +0100, Johan Hovold wrote:
+> On Thu, Nov 03, 2022 at 03:28:09PM +0530, Manivannan Sadhasivam wrote:
+> > Add ADC_TM5 channels of PM8280_{1/2} for monitoring the temperature from
+> > external thermistors connected to AMUX pins. The temperature measurements
+> > are collected from the PMK8280's VADC channels that expose the
+> > measurements from secondary PMICs PM8280_{1/2}.
+> > 
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 68 +++++++++++++++++++
+> >  1 file changed, 68 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > index 7677fe5cf28e..bdaacf1abf9f 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > @@ -254,6 +254,74 @@ pmic-die-temp@403 {
+> >  	};
+> >  };
+> >  
+> > +&pmk8280_adc_tm {
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
+> Please try to keep the nodes sorted alphabetically (e.g. this one should
+> go before &pmk8280_pon_pwrkey).
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> index 38ccd44620d0..e1a4cf1ee51d 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> @@ -442,3 +442,21 @@ &usb_1_qmpphy {
->  	vdda-phy-supply = <&vreg_l6b_1p2>;
->  	vdda-pll-supply = <&vreg_l1b_0p91>;
->  };
-> +
-> +&mdss {
-> +	status = "okay";
-> +};
-> +
-> +&mdss_mdp {
-> +	status = "okay";
-> +};
-> +
-> +&dsi0 {
 
-Please prefix the labels with "mdss_" so that you can keep them sorted
-alphabetically.
+Thanks for spotting that, I fixed up the order.
 
-THanks,
+Regards,
 Bjorn
-
-> +	status = "okay";
-> +	vdda-supply = <&vreg_l6b_1p2>;
-> +};
-> +
-> +&dsi0_phy {
-> +	status = "okay";
-> +	vdds-supply = <&vreg_l5b_0p88>;
-> +};
-> -- 
-> 2.35.1
-> 
