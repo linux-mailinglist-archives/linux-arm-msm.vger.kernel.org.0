@@ -2,94 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B66561E046
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Nov 2022 05:35:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D0DAD61E0C1
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Nov 2022 09:02:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229492AbiKFEf5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Nov 2022 00:35:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51226 "EHLO
+        id S229816AbiKFICb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Nov 2022 03:02:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbiKFEf4 (ORCPT
+        with ESMTP id S230003AbiKFICU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Nov 2022 00:35:56 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1171641D;
-        Sat,  5 Nov 2022 21:35:55 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 74F9E60BED;
-        Sun,  6 Nov 2022 04:35:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E2AC433C1;
-        Sun,  6 Nov 2022 04:35:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667709354;
-        bh=kOngOvfZxwx9QxOuj1TrIm7cT3qvXl/KFNkdQIS7quI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tRQEknKdx47ZVpK/iFTkqLOh0c9+4+dtd0GcrZwVYX4WP2QSyunnkONg9JH/JoJzO
-         1cCVwZ2E4wE1bQxmX1JBVkAGGS2ZQUHl3xMuvtUypH0os03N2RdTwus2838GLWTww5
-         e+mhYggFpiGAYVKxUQ3slDooeAzB24qGTMq95NELb8NBZhgzZBaH2+6H4Hz+m6F20k
-         psrpV4nSwpq8KOqQWpkArcsNhUNP1ikCb4Rfs8ALmj5WjrhySQ1pUnMiS9yIFCO84m
-         jwKfayvED/lXhiMHy0jr9AR0TcNuoqBI6w6v62VnaEUs1t+/ir+F0NJ2irYbaOzUel
-         qjjKvGqZSCL0A==
-Date:   Sat, 5 Nov 2022 23:35:52 -0500
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, johan+linaro@kernel.org,
-        quic_jprakash@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        steev@kali.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v4 11/12] arm64: dts: qcom: sc8280xp-x13s: Add
- PM8280_{1/2} ADC_TM5 channels
-Message-ID: <20221106043552.f5vrtpzd3en2lauc@builder.lan>
-References: <20221103095810.64606-1-manivannan.sadhasivam@linaro.org>
- <20221103095810.64606-12-manivannan.sadhasivam@linaro.org>
- <Y2Om1N8X/Qkr9rYI@hovoldconsulting.com>
+        Sun, 6 Nov 2022 03:02:20 -0500
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F10316356;
+        Sun,  6 Nov 2022 01:02:05 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id b62so7939981pgc.0;
+        Sun, 06 Nov 2022 01:02:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5HVAEd9MRqq4+UEkyosACOKfYclXv6j5Rr/scR7ngsI=;
+        b=J8FhOotX+JH9qRe0ClIg8UlfWcSSHM4bB5OpcJN9ldMUQEXOY38+SBkjn22YmmIQEk
+         d+0bSAYG3+XaQQ8QstzC/9f2oR6gHIOwiLgylKn0Jl+R9RO0qWxWikwozGPb0Gtdwftb
+         z6Am7/a1uWQbXL6RwZf2zbTBK/xJnEmW1LYDqkv8cRcPoJWy4Kygy3sV4PLOMeJ1Nsc6
+         ihiOid9PJ+0/85gUV7jo67RjM5ulI/votfGsyiz87eFWMmu0yoSOsxiElOZ0isD3RO3u
+         BfZPyIyPgzDltKjNDwz169RWXoghVwU+Z7mDQqppX/RkaKblO8ZYNFmEWGWS9RF7/Oe3
+         UYHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5HVAEd9MRqq4+UEkyosACOKfYclXv6j5Rr/scR7ngsI=;
+        b=BJWBX1CM024e4Sr4AYKO3QjPxHPbrvzzTWjqOW0YCqVEe0NRu+E37NFoUExiXatYxr
+         tFDcvnT9YW6Jbkw2cgwA4XooO/NKwLg5vBZJ7T6Aj7lpOyjw4VkAF5DW8gJWWtpoFELk
+         tBhZTmJNwrOFkXu675E+/1L1iJcck4psPCJaRaaUJsGAx/apj+pZbSm6NV4n15dAuRQw
+         tM1oBxlXa+6+8WDuIVAiZH/IHcRDP73AwwhLt3EPU05aAKwaEafrZ5G8XwM1eA1PyRSC
+         OxTVDTb2U7KzvKmec7MGjMpUh8vlYJvlvpqKohqH7eWUMYl8Cfod2dGOBTB6wtFE5oJh
+         4ltw==
+X-Gm-Message-State: ANoB5pnOeRxhYI9ESG2oTyKgmLPQi7PrKYu7onG0N8LZxQ4ZjoiDjj/b
+        mrDpZoiwQkNkwjEoM8RpKbE=
+X-Google-Smtp-Source: AA0mqf5npKAYgb+1Fna6B5J8t9t0/6WOt/svLNq0egbTm/M0bEBCNFe7ugsuf+37FLFfBxMKYaODGw==
+X-Received: by 2002:a63:f651:0:b0:470:4f30:f724 with SMTP id u17-20020a63f651000000b004704f30f724mr5016774pgj.445.1667721719706;
+        Sun, 06 Nov 2022 01:01:59 -0700 (PDT)
+Received: from localhost ([2600:1700:38c1:1d7f:f66d:4ff:fe3c:3ceb])
+        by smtp.gmail.com with ESMTPSA id i17-20020aa796f1000000b0056da073b2b7sm2237769pfq.210.2022.11.06.01.01.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 06 Nov 2022 01:01:59 -0700 (PDT)
+Date:   Sun, 6 Nov 2022 01:01:55 -0700
+From:   Brian Norris <computersforpeace@gmail.com>
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Hendrik Koerner <koerhen@web.de>
+Subject: Re: [PATCH] ARM: dts: qcom: ipq8064: disable mmc-ddr-1_8v for sdcc1
+Message-ID: <Y2dp8+2tfi2+nXNL@localhost>
+References: <20221024233817.27410-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Y2Om1N8X/Qkr9rYI@hovoldconsulting.com>
-X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20221024233817.27410-1-ansuelsmth@gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 03, 2022 at 12:32:36PM +0100, Johan Hovold wrote:
-> On Thu, Nov 03, 2022 at 03:28:09PM +0530, Manivannan Sadhasivam wrote:
-> > Add ADC_TM5 channels of PM8280_{1/2} for monitoring the temperature from
-> > external thermistors connected to AMUX pins. The temperature measurements
-> > are collected from the PMK8280's VADC channels that expose the
-> > measurements from secondary PMICs PM8280_{1/2}.
-> > 
-> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 68 +++++++++++++++++++
-> >  1 file changed, 68 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > index 7677fe5cf28e..bdaacf1abf9f 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > @@ -254,6 +254,74 @@ pmic-die-temp@403 {
-> >  	};
-> >  };
-> >  
-> > +&pmk8280_adc_tm {
+On Tue, Oct 25, 2022 at 01:38:17AM +0200, Christian Marangi wrote:
+> It was reported non working mmc with this option enabled.
+> Both mmc for ipq8064 are supplied by a fixed 3.3v regulator so mmc can't
+> be run at 1.8v.
+> Disable it to restore correct functionality of this SoC feature.
 > 
-> Please try to keep the nodes sorted alphabetically (e.g. this one should
-> go before &pmk8280_pon_pwrkey).
-> 
+> Tested-by: Hendrik Koerner <koerhen@web.de>
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 
-Thanks for spotting that, I fixed up the order.
+Perhaps there's some board where this property makes sense, but it seems
+like something that should be added when needed in the leaf DTS, and not
+supplied in the base DTSI. So:
 
-Regards,
-Bjorn
+Reviewed-by: Brian Norris <computersforpeace@gmail.com>
+
+This also fixes problems I've seen on my systems, so:
+
+Tested-by: Brian Norris <computersforpeace@gmail.com>
+
+Thanks!
