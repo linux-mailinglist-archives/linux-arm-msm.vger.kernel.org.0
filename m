@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 114FF61E205
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Nov 2022 13:13:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 38CD561E39E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Nov 2022 18:03:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229853AbiKFMNY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Nov 2022 07:13:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55606 "EHLO
+        id S230051AbiKFRDx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Nov 2022 12:03:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229817AbiKFMNX (ORCPT
+        with ESMTP id S229932AbiKFRDw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Nov 2022 07:13:23 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D60A726E;
-        Sun,  6 Nov 2022 04:13:21 -0800 (PST)
+        Sun, 6 Nov 2022 12:03:52 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84180DFC4;
+        Sun,  6 Nov 2022 09:03:51 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2E57760C54;
-        Sun,  6 Nov 2022 12:13:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC207C433C1;
-        Sun,  6 Nov 2022 12:13:17 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3CBCFB80B38;
+        Sun,  6 Nov 2022 17:03:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A151C433C1;
+        Sun,  6 Nov 2022 17:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667736800;
-        bh=n7I0dfh4J22AKYzyGTJXvVtld9av1k13Mzj9MWHRvtw=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=HxeB+8akcnzj8crEMbCHkEU2HpNJkll3UynQkNIXLbk/dRWogZZOSjGrLDB9rYBwz
-         E1tsW1FkeuTrRYVUj18u4C1NZ7tvRjHXWZ9X8Cvyvzr/lOgh6xqSZShydv9jKRI8/F
-         K3fpUpCNpiY6QfzfwLFl+HS/wMpN09nmfW1t3EJsWieqy9dnKT46M7yShWJsXMogi5
-         uwfmt/fjdA4DVZFjuWmZmRd+5i/HXrl9RzQHYf/qr9vAsvoCVPpyRnKpgifP8JV2ES
-         TAfrZJdxkxVPYLU2uHeYWnwk3axWKpAEBUkSzwRHqz3gHUnIfs4CFqgY4YS/f6Ub35
-         aa3tr9aEEoXoQ==
-Date:   Sun, 6 Nov 2022 12:13:10 +0000
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        afd@ti.com, Lars-Peter Clausen <lars@metafoo.de>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: iio/adc: qcom,spmi-iadc: use double
- compatibles
-Message-ID: <20221106121310.3ad643be@jic23-huawei>
-In-Reply-To: <20221102163136.GA4004075-robh@kernel.org>
-References: <20221031182456.952648-1-luca@z3ntu.xyz>
-        <20221102163136.GA4004075-robh@kernel.org>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.34; x86_64-pc-linux-gnu)
+        s=k20201202; t=1667754228;
+        bh=aBETzMf0OclZ0SaVEPr4il3hPRXeVDkWT00EYqZWNXQ=;
+        h=From:To:Cc:Subject:Date:From;
+        b=TPzKC7Mz5MCCkwQKeWtIvTNO2t34monjJW7W4WQ+kO2/kchlTWSjnmtLQeLVKoCJS
+         CA32IoDqYmv7LUGnj2hBVnVxa+HvRke2sBuo+u3AXU50yDLvJwMFI7/0p6f/dljrbG
+         E9m244vW//2NQm0+JWRkQKOxbmzlsN72qm36pyDTbblCrLyL6+Cvn36BTB4U200Hds
+         ZPSEBTlYdp7c2qgEt078ZLFB8kJKBv1zIWefdpNo2Q/uwH3aXsVKAAHr1flkYnA7mY
+         OwuN1wdYTQ6kDTWIgIC8gcy050ZA3IqaDVJVlD50nlqFo03BWlqfpooxZxQRCbSqZD
+         AOb5UXDJegE+w==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Sasha Levin <sashal@kernel.org>, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
+        airlied@gmail.com, daniel@ffwll.ch,
+        angelogioacchino.delregno@collabora.com, andersson@kernel.org,
+        olvaffe@gmail.com, konrad.dybcio@somainline.org, nathan@kernel.org,
+        vladimir.lypak@gmail.com, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.0 01/30] drm/msm/gpu: Fix crash during system suspend after unbind
+Date:   Sun,  6 Nov 2022 12:03:13 -0500
+Message-Id: <20221106170345.1579893-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -60,35 +60,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2 Nov 2022 11:31:36 -0500
-Rob Herring <robh@kernel.org> wrote:
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
 
-> On Mon, Oct 31, 2022 at 07:24:54PM +0100, Luca Weiss wrote:
-> > As in other bindings, let's use specific compatibles together with the
-> > fallback compatible. Adjust the bindings for it.  
-> 
-> You should state users are already doing this.
-> 
-I can fix that up whilst applying.  However it raises the question:
-Should I treat this as a fix, or a tidy up (that can wait for next merge window)?
+[ Upstream commit 76efc2453d0e8e5d6692ef69981b183ad674edea ]
 
-I'm also fine with this going with the other patch in the series (that lore
-found for me as it didn't go to linux-iio) if that makes more sense.
+In adreno_unbind, we should clean up gpu device's drvdata to avoid
+accessing a stale pointer during system suspend. Also, check for NULL
+ptr in both system suspend/resume callbacks.
 
-If that happens
+Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/505075/
+Link: https://lore.kernel.org/r/20220928124830.2.I5ee0ac073ccdeb81961e5ec0cce5f741a7207a71@changeid
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 10 +++++++++-
+ drivers/gpu/drm/msm/msm_gpu.c              |  2 ++
+ drivers/gpu/drm/msm/msm_gpu.h              |  4 ++++
+ 3 files changed, 15 insertions(+), 1 deletion(-)
 
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
-Jonathan
-
-> > 
-> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > ---
-> > Changes in v2:
-> > * New patch
-> > 
-> >  .../devicetree/bindings/iio/adc/qcom,spmi-iadc.yaml        | 7 +++++--
-> >  1 file changed, 5 insertions(+), 2 deletions(-)  
-> 
-> Acked-by: Rob Herring <robh@kernel.org>
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index 24b489b6129a..628806423f7d 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -679,6 +679,9 @@ static int adreno_system_suspend(struct device *dev)
+ 	struct msm_gpu *gpu = dev_to_gpu(dev);
+ 	int remaining, ret;
+ 
++	if (!gpu)
++		return 0;
++
+ 	suspend_scheduler(gpu);
+ 
+ 	remaining = wait_event_timeout(gpu->retire_event,
+@@ -700,7 +703,12 @@ static int adreno_system_suspend(struct device *dev)
+ 
+ static int adreno_system_resume(struct device *dev)
+ {
+-	resume_scheduler(dev_to_gpu(dev));
++	struct msm_gpu *gpu = dev_to_gpu(dev);
++
++	if (!gpu)
++		return 0;
++
++	resume_scheduler(gpu);
+ 	return pm_runtime_force_resume(dev);
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index c2bfcf3f1f40..01aae792ffa9 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -993,4 +993,6 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
+ 	}
+ 
+ 	msm_devfreq_cleanup(gpu);
++
++	platform_set_drvdata(gpu->pdev, NULL);
+ }
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index 4d935fedd2ac..fd22cf4041af 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -282,6 +282,10 @@ struct msm_gpu {
+ static inline struct msm_gpu *dev_to_gpu(struct device *dev)
+ {
+ 	struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(dev);
++
++	if (!adreno_smmu)
++		return NULL;
++
+ 	return container_of(adreno_smmu, struct msm_gpu, adreno_smmu);
+ }
+ 
+-- 
+2.35.1
 
