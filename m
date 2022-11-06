@@ -2,55 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5009C61E03A
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Nov 2022 05:00:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3412161E040
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Nov 2022 05:30:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229470AbiKFEAR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Nov 2022 00:00:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47542 "EHLO
+        id S229470AbiKFEaS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Nov 2022 00:30:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbiKFEAQ (ORCPT
+        with ESMTP id S229463AbiKFEaR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Nov 2022 00:00:16 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94FE1E0DB;
-        Sat,  5 Nov 2022 21:00:15 -0700 (PDT)
+        Sun, 6 Nov 2022 00:30:17 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12070641C;
+        Sat,  5 Nov 2022 21:30:15 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2A80F60BCA;
-        Sun,  6 Nov 2022 04:00:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A7DC433C1;
-        Sun,  6 Nov 2022 04:00:13 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C302560B68;
+        Sun,  6 Nov 2022 04:30:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A597C433C1;
+        Sun,  6 Nov 2022 04:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667707214;
-        bh=E1AzEct0O10uZX3FImOAaMkHS+fAyEb2/HkDnc+nDfo=;
+        s=k20201202; t=1667709014;
+        bh=zrkn1G+w9Wm/7JS5FLoHzU9ltDXv9SgNtssolctSshw=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=IWXKgA5gSv2SVbSf5ZqCSYaiUUavKroPRw5IB+4REqTY2Z9mVE3HGzaSOHhRfAPIY
-         /nzCaKFRUL3I9FA4NwHFsVUcsQ9mCsDuMUbzy8G63/NbaPtEgJ6TNpCcyPcAcHz1ho
-         NBuEOAdMauWdwLlZ8jJSeqvqwCgciHK3nyJrWTvH7uDvnQXncauu7dmgDf5WlFy+zc
-         l6wjfVygZBoWlBYeHTkJz+31PtOKS/JM4NB5Rqn/CxuE0vnguRzlzWZL5/TSDYO8pX
-         i54StkLlddbTKqAc6jqB4ZbEE8b8Frq7he7OxXbaDGA4//ZPqUwh42qn0Uv7QpkAcr
-         FkzMkRZ40kbWA==
-Date:   Sat, 5 Nov 2022 23:00:11 -0500
+        b=JTlEEyeCq+jdsxB6DGbRvgG6hh9j0gwEOJDZRkFOSyWdc/wmIU3e/PlvQlMeGQcZW
+         +1/mv85O3GiEh0ixlGFdOzNUH0cK0Ah9hrFOkp7wDxKlWmBFDU3SVR+5+vtmAZ4iku
+         LDgIIhDmiWvCffgOT8hjBCNJXfbEGIhoKIVNSUOpdwRJLlp18fvZn5s35Xxxu2Wn3Z
+         m4mXS15QD4jU+zWZIxgswsNH/CMexPDpNjFGOTe0w1i0iC1A5xdCbgBYomeigJvjC/
+         FsAJYFdtP5iqdlEsqMl0YDqE0EP1GACqfiR6kBCoogo9+J+ZW3yPAjKy8NLJaygEfv
+         uKo3apx6NNCsA==
+Date:   Sat, 5 Nov 2022 23:30:11 -0500
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: Add initial device tree for SM6375
-Message-ID: <20221106040011.rbqginfdwvkmasy3@builder.lan>
-References: <20221022194218.210941-1-konrad.dybcio@somainline.org>
- <20221022194218.210941-3-konrad.dybcio@somainline.org>
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH v1 3/5] arm64: dts: qcom: sm8450-hdk: enable display
+ hardware
+Message-ID: <20221106043011.pw5fqeame7otzdcn@builder.lan>
+References: <20221104131358.1025987-1-dmitry.baryshkov@linaro.org>
+ <20221104131358.1025987-4-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221022194218.210941-3-konrad.dybcio@somainline.org>
+In-Reply-To: <20221104131358.1025987-4-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-8.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -60,52 +64,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Oct 22, 2022 at 09:42:16PM +0200, Konrad Dybcio wrote:
-[..]
-> +	clocks {
-> +		xo_board: xo-board {
-> +			compatible = "fixed-clock";
-> +			#clock-cells = <0>;
-> +			clock-frequency = <19200000>;
-> +			clock-output-names = "xo_board";
-
-The only reason that you would need this is if you have code somewhere
-relying on clock lookup based on global naming. Can you please fix that
-up and drop clock-output-names?
-
-A -clk suffix would be nice on the node as well (xo-board-clk).
-
-> +		};
+On Fri, Nov 04, 2022 at 04:13:56PM +0300, Dmitry Baryshkov wrote:
+> Enable MDSS/DPU/DSI0 on SM8450-HDK device. Note, there is no panel
+> configuration (yet).
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+> index 38ccd44620d0..e1a4cf1ee51d 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+> @@ -442,3 +442,21 @@ &usb_1_qmpphy {
+>  	vdda-phy-supply = <&vreg_l6b_1p2>;
+>  	vdda-pll-supply = <&vreg_l1b_0p91>;
+>  };
 > +
-> +		sleep_clk: sleep-clk {
-> +			compatible = "fixed-clock";
-> +			clock-frequency = <32000>;
-> +			#clock-cells = <0>;
-> +		};
-> +	};
-[..]
-> +	reserved_memory: reserved-memory {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
+> +&mdss {
+> +	status = "okay";
+> +};
 > +
-> +		hyp_mem: memory@80000000 {
-
-I believe "memory" is still reserved, so please rename these nodes.
-
-> +			reg = <0 0x80000000 0 0x600000>;
-> +			no-map;
-> +		};
+> +&mdss_mdp {
+> +	status = "okay";
+> +};
 > +
-[..]
-> +	smem: smem {
-> +		compatible = "qcom,smem";
+> +&dsi0 {
 
-Please move the compatible and hwlocks to the &smem_mem node directly.
+Please prefix the labels with "mdss_" so that you can keep them sorted
+alphabetically.
 
-> +		memory-region = <&smem_mem>;
-> +		hwlocks = <&tcsr_mutex 3>;
-> +	};
-
-Regards,
+THanks,
 Bjorn
+
+> +	status = "okay";
+> +	vdda-supply = <&vreg_l6b_1p2>;
+> +};
+> +
+> +&dsi0_phy {
+> +	status = "okay";
+> +	vdds-supply = <&vreg_l5b_0p88>;
+> +};
+> -- 
+> 2.35.1
+> 
