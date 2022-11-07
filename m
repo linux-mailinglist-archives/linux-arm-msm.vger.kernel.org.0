@@ -2,156 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 80EAD61F472
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 14:36:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB86961F49B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 14:47:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231874AbiKGNgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 08:36:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36676 "EHLO
+        id S231264AbiKGNrI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 08:47:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231897AbiKGNgJ (ORCPT
+        with ESMTP id S230430AbiKGNrI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 08:36:09 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A99A65F5;
-        Mon,  7 Nov 2022 05:36:07 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id l14so16272400wrw.2;
-        Mon, 07 Nov 2022 05:36:07 -0800 (PST)
+        Mon, 7 Nov 2022 08:47:08 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44CF81CFCE
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 05:47:07 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id a14so16295824wru.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 05:47:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:subject:cc:to:from:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=2KT5748vrQwNv05axgctLrrojQ2dZkiY8TujtK+A0ew=;
-        b=CaoRQ7UHdn1ni+0XAt5gnQl4npWFFl4sJVVqHr2c7z1kmqqaJJE3/B1/BtIzannMG6
-         WFKDkmGqPdMvRHjgF6S+3Mv242mDKbrADpIPu+BraDgUWfQs7vdTe1uM+V4tg5t6LhS6
-         H9kw1aZpydumLvfDQe50q9+uc/isiC7OXPnls2DKGvyjjwCAXB+xZYU2uAhO/+fTNMsh
-         kbG9oeAA6bl0sJhEFPFf6+noZb8/FebAbTT4GY6IC8atpjtMs86AyVPm9Zr72uzZFQyY
-         qpLQQyHF6XsVrVihns04E2eKhso0x//KP+BtI9LaLxb9nKPSbx0ucml6SSIftZK8fUAU
-         2Oow==
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=1AC3YGIaP9V1NcYduZ2gjnjW3VyF2paTalXWaqNImmI=;
+        b=KLK3MEHraVuw0BOWHmqR+3FnxAOspxOavkgD/w0ogGrKoqK4J7grUD3vCU9UiMvvkk
+         anTuvcA3puB2XEMmJccwxTgT0KnO3dgE0uqJSlw7oM7gYjxHgaRLPtvZClknXpDBz7N0
+         Igz22I5YxH7BOclDKEKmpw3QZl2IThI/e9XBuNEbcwmszPnk/fQXie5HQP1tnTp51d2K
+         139rhA+cd8yjFyCN8JYf0sEnJsQSAKriyxORFpdJZTzFyXtgv3NmoaCZ5yGD0JPa/OG8
+         MscUMDNjE+skdsVGX00144TF9odadea0kL6mqWhSW7pZbzxrt4OtPjEmkOBQKX9W5Zpg
+         pRbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:subject:cc:to:from:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2KT5748vrQwNv05axgctLrrojQ2dZkiY8TujtK+A0ew=;
-        b=Wslcv6ToQ3l7Bb6nYlun5COyM3nczEMO9QbAV7iVzGuhZAhzgjhCxYCTpSklfcOPf6
-         k2xo5VuF80piNHMSoyeZ73m5d4NLOuTzR4Lw5aYHOSWhJwVqPl1CEih3W/2ZC5VfFoF2
-         oz+Qcv3HMHkD8AoB6QrlGwq1hg7vqR90PXCFmcwyUDqcrPMQTXMGRNH7vOg7uVY0wgpJ
-         VzE+4oiwQ93SFoLLZxdJp6u0y5T1E34PUrw/gcifkLbciCg6J9Z1jfC7OCiGaDiRXTg5
-         dZTrt9MliDF3Odbf2t+WWlBCWWMZDn2dYZ5lCz9oaUmefbpi7X7qsAQv9nuclPV5FaGn
-         Y86Q==
-X-Gm-Message-State: ACrzQf2sU6PNW/TJ+ioSRe0tULLRy39apKT4TiXaP0yg/1YdoKKXcgok
-        aiwgO/YfaqQMjsV2FD5g/NM=
-X-Google-Smtp-Source: AMsMyM6Fax2tTJ9I6ZRMxoVmQZkE1ZXKsw6rCkveL4gfy81TDEtwqxJyQLxmjgo6ge2WSRQocSprCA==
-X-Received: by 2002:a05:6000:408a:b0:236:cdf8:1e3f with SMTP id da10-20020a056000408a00b00236cdf81e3fmr566389wrb.80.1667828165661;
-        Mon, 07 Nov 2022 05:36:05 -0800 (PST)
-Received: from Ansuel-xps. (93-42-71-18.ip85.fastwebnet.it. [93.42.71.18])
-        by smtp.gmail.com with ESMTPSA id l32-20020a05600c1d2000b003c6b7f5567csm28304890wms.0.2022.11.07.05.36.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 05:36:05 -0800 (PST)
-Message-ID: <636909c5.050a0220.b7180.f787@mx.google.com>
-X-Google-Original-Message-ID: <Y2kJw3VMucF6LasC@Ansuel-xps.>
-Date:   Mon, 7 Nov 2022 14:36:03 +0100
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 3/3] thermal: qcom: tsens: rework debugfs file
- structure
-References: <20221022125657.22530-1-ansuelsmth@gmail.com>
- <20221022125657.22530-4-ansuelsmth@gmail.com>
- <591f7038-81ed-1850-b525-d02a4e082903@linaro.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1AC3YGIaP9V1NcYduZ2gjnjW3VyF2paTalXWaqNImmI=;
+        b=3gNg80r3Xx3zUDnFfAw9fvssLrm5eVMwnTiMU72dfiaqMm8N/+xxFgPHmtlvqAq+Aw
+         ukQbIB1t9/ams1axka7Hess0ZmOTLo9DDHhcvlfmsx+f2+75Ag2bXod7SmoUDAj03qjC
+         bofcqxsfWRF1qJ/HXc+EbofYa7aOipIkO70s8s0h6j0acnfUq2IPPQAy46Wr1yQfY0cB
+         288tmP0DYfWMv9rVOYoYlwUNKwMNucJHTQX21pxj7pd5ude6OWqjVttAAyRljfNXfnDh
+         Wovu2wVaM8yd0HItxxdPseHRUX7cJMGaykvPaGQ+VH0w7h1KQcaCO4VsT44mg61FhETb
+         AEog==
+X-Gm-Message-State: ACrzQf3Ms8laVMB/rA8rjLaFy+x4hCIrcePMNj+mmcbCc621eMqdaO8P
+        qgDAPmqfCS98vm4e6uASf2fPSRi/vAfV/FnaG1C44g==
+X-Google-Smtp-Source: AMsMyM6VsyV3GUEU7A+sgU0cqpAT4MmNpY2dA52ocj/n4oPUEh0wtdHEKdSgxjNFgVTLvmgUnIE9aPQF/edsvVebtCA=
+X-Received: by 2002:adf:e84a:0:b0:236:5f2d:9027 with SMTP id
+ d10-20020adfe84a000000b002365f2d9027mr31265063wrn.89.1667828825558; Mon, 07
+ Nov 2022 05:47:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <591f7038-81ed-1850-b525-d02a4e082903@linaro.org>
+References: <CAGRyCJGWQagceLhnECBcpPfG5jMPZrjbsHrio1BvgpZJhk0pbA@mail.gmail.com>
+ <20221107115856.GE2220@thinkpad>
+In-Reply-To: <20221107115856.GE2220@thinkpad>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Mon, 7 Nov 2022 14:46:29 +0100
+Message-ID: <CAMZdPi-=AkfKnyPRBgV-7RxczePnB4shLq2bdj+q3kh+7Web3w@mail.gmail.com>
+Subject: Re: MHI DTR client implementation
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Daniele Palmas <dnlplm@gmail.com>, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org,
+        Network Development <netdev@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Oct 22, 2022 at 03:08:46PM +0200, Daniel Lezcano wrote:
-> On 22/10/2022 14:56, Christian Marangi wrote:
-> > The current tsens debugfs structure is composed by:
-> > - a tsens dir in debugfs with a version file
-> > - a directory for each tsens istance with sensors file to dump all the
-> >    sensors value.
-> 
-> s/istance/instance/
-> 
-> The patch looks good to me, no need to resend, I'll fix the typos
+On Mon, 7 Nov 2022 at 12:59, Manivannan Sadhasivam <mani@kernel.org> wrote:
 >
+> + Loic
+>
+> On Tue, Sep 20, 2022 at 04:23:25PM +0200, Daniele Palmas wrote:
+> > Hello all,
+> >
+> > I'm looking for some guidance related to  a possible MHI client for
+> > serial ports signals management implementation.
+> >
+> > Testing the AT channels with Telit modems I noted that unsolicited
+> > indications do not show: the root cause for this is DTR not set for
+> > those ports through MHI channels 18/19, something that with current
+> > upstream code can't be done due to the missing DTR client driver.
+> >
+> > I currently have an hack, based on the very first mhi stack submission
+> > (see https://lore.kernel.org/lkml/1524795811-21399-2-git-send-email-sdias@codeaurora.org/#Z31drivers:bus:mhi:core:mhi_dtr.c),
+> > solving my issue, but I would like to understand which would be the
+> > correct way, so maybe I can contribute some code.
+> >
+> > Should the MHI DTR client be part of the WWAN subsystem?
+>
+> Yes, since WWAN is going to be the consumer of this channel, it makes sense to
+> host the client driver there.
 
-By checking linux-next it looks like the wrong revision was applied [0].
-I think this was done by mistake while fixing the typo. Can this be
-fixed? The applied revision conflicts with what we agreed was a good
-solution.
+Agree.
 
-[0] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/log/drivers/thermal/qcom/tsens.c
+>
+> > If yes, does it make sense to have an associated port exposed as a char
+> > device?
+>
+> If the goal is to control the DTR settings from userspace, then you can use
+> the "AT" chardev node and handle the DTR settings in this client driver.
+> Because at the end of the day, user is going to read/write from AT port only.
+> Adding one more ctrl port and have it configured before using AT port is going
+> to be a pain.
+>
+> Thanks,
+> Mani
+>
+> > I guess the answer is no, since it should be used just by the AT ports
+> > created by mhi_wwan_ctrl, but I'm not sure if that's possible.
+> >
+> > Or should the DTR management be somehow part of the MHI stack and
+> > mhi_wwan_ctrl interacts with that through exported functions?
 
-> > This works on the assumption that we have the same version for each
-> > istance but this assumption seems fragile and with more than one tsens
-> > istance results in the version file not tracking each of them.
-> > 
-> > A better approach is to just create a subdirectory for each tsens
-> > istance and put there version and sensors debugfs file.
-> > 
-> > Using this new implementation results in less code since debugfs entry
-> > are created only on successful tsens probe.
-> > 
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > ---
-> >   drivers/thermal/qcom/tsens.c | 13 +++----------
-> >   1 file changed, 3 insertions(+), 10 deletions(-)
-> > 
-> > diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> > index 467585c45d34..fc12d7c07de4 100644
-> > --- a/drivers/thermal/qcom/tsens.c
-> > +++ b/drivers/thermal/qcom/tsens.c
-> > @@ -704,21 +704,14 @@ DEFINE_SHOW_ATTRIBUTE(dbg_sensors);
-> >   static void tsens_debug_init(struct platform_device *pdev)
-> >   {
-> >   	struct tsens_priv *priv = platform_get_drvdata(pdev);
-> > -	struct dentry *root, *file;
-> > -	root = debugfs_lookup("tsens", NULL);
-> > -	if (!root)
-> > +	priv->debug_root = debugfs_lookup("tsens", NULL);
-> > +	if (!priv->debug_root)
-> >   		priv->debug_root = debugfs_create_dir("tsens", NULL);
-> > -	else
-> > -		priv->debug_root = root;
-> > -
-> > -	file = debugfs_lookup("version", priv->debug_root);
-> > -	if (!file)
-> > -		debugfs_create_file("version", 0444, priv->debug_root,
-> > -				    pdev, &dbg_version_fops);
-> >   	/* A directory for each instance of the TSENS IP */
-> >   	priv->debug = debugfs_create_dir(dev_name(&pdev->dev), priv->debug_root);
-> > +	debugfs_create_file("version", 0444, priv->debug, pdev, &dbg_version_fops);
-> >   	debugfs_create_file("sensors", 0444, priv->debug, pdev, &dbg_sensors_fops);
-> >   }
-> >   #else
-> 
-> 
-> -- 
-> <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-> 
-> Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-> <http://twitter.com/#!/linaroorg> Twitter |
-> <http://www.linaro.org/linaro-blog/> Blog
+Is this DTR thing Telit specific?
 
--- 
-	Ansuel
+Noticed you're using the IP_CTRL channel for this, do you have more
+information about the protocol to use?
+
+At first glance, I would say you can create a simple driver for
+IP_CTRL channel (that could be part of mhi_wwan_ctrl), but instead of
+exposing it rawly to the user, simply enable DTR unconditionally at
+probe time?
+
+Regards,
+Loic
