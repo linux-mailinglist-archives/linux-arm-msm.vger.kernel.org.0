@@ -2,62 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 522DE61F62D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 15:36:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 278FB61F6B7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 15:55:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231742AbiKGOgg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 09:36:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50668 "EHLO
+        id S232589AbiKGOzz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 09:55:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232000AbiKGOge (ORCPT
+        with ESMTP id S232514AbiKGOzn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 09:36:34 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0443192;
-        Mon,  7 Nov 2022 06:36:33 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3BEACB811E9;
-        Mon,  7 Nov 2022 14:36:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858FBC433B5;
-        Mon,  7 Nov 2022 14:36:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667831790;
-        bh=m9xqrpdjytPm9RXLg7Gj85tY2WF2XYvRdNUJgi2UJi0=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=e+kCiuyYrd5fkBBNHVr4CtpTwmImmiM1Pf9Vf35Asqk4sT8SrfCowuYnYbF6VWMEa
-         X3NwkrvbmVMboJXCq7SYAEJvWBXqZL7uoG1RbbqMLa77lXmHWLQoiutFIACiCHPqjP
-         KM4JtmDfUJx6/h5Eq6SS2mbjiO+pk8wiGyrAO+TS2x6wvOUUxHL3mtFEfQbsbVrIup
-         /Fonw2/Q1iQSuOLJqBwHfkcbIG0HF6CoOuXyIsbyBO+vctICzsVo+0G1b5IC0HYTa1
-         pnyEzQZxhCp8uQKv7jCjDpgFsseRM9w+SQq3jQFFDJZu6MIHpB3kbmBn/zthu348EA
-         a2BBrvUnyMD1w==
-Message-ID: <7d2c43b7-1507-7c30-27f7-3081c6ec77ba@kernel.org>
-Date:   Mon, 7 Nov 2022 16:36:24 +0200
+        Mon, 7 Nov 2022 09:55:43 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51EFE1E3E0
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 06:55:28 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id q9so30929486ejd.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 06:55:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EOVxQQ/KJuIdX83Yq489JvOvm/XE0A18nnsZpKusNfc=;
+        b=OsoPVjOYLsMri2sXv4Hd7GJ2zyBns0DNMhyn6yiUZUzrtw2ijRaBSz9E0vlUpYdsgE
+         YsVJ+A1E7AnGs3vAuCzF5cUNjNCu/OyOwM0YsDHo3FNA+SvFgxFn/SHvdKIKyFM8n8Ks
+         xxoiPcirZWrN3EBwZYe0mOg29a0/gHdOzQmx2qB8j9BtYnzNnLTlVQvONVJxeR5QzD1J
+         B3a1YjUVDLJaHQPg9ci3fOYShbyWFCXGvqV7IsK88pvKqh3YupBvznWXX1twcMOGGjEo
+         kM+jGuywW+XX8YzlM7QZQ6z2VzTvUmFD7BTveobUTqTUSJkEs3xWyYbwdwTkzDKjeGsm
+         +dQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EOVxQQ/KJuIdX83Yq489JvOvm/XE0A18nnsZpKusNfc=;
+        b=04M1PCdhCsUEcBG5Yjasy46doUTPVUGkTFGITC/EIRvb/cYBVNyZ/bho/ATNB0U4zx
+         +1uw9owUqanxunvTuAM1msNiYoSirCQZgpZygJwWgWrUGkkSGM+Tqq5jNcBi09h/7whd
+         7U0TOO3S8BWrNZngW6V2ArWg07eN7JcWlLcJO7MJ/PvU0cAp0gSgqa5mIP8rFH5bVnWf
+         pNLxKBWdasLMNF88kKcBDBoB1K3lYY/+TYzeTOy3qegdzflFFrjV6s3we4665XQrMj57
+         eGaOH11EuA+xiNLHiKgtGJgEF/V4HnX/hV1SJfXHMtWH6SDOUcxQblqUOYKszrKsZVv7
+         Gpuw==
+X-Gm-Message-State: ACrzQf3OXXWac+ZkGLuuuCsc4FuPO4mmb0Ys0BdM6oxWBRkKj+8sKtsj
+        dNYkVUHKZ7+AbI9VRJcxgJ/FARln0Ux+QQ8H
+X-Google-Smtp-Source: AMsMyM7OamA26aBlLI14vRHanUHRJLYUBNYc76HEiBrjREZUI94d60oPj4LXq6UcrLS6Nha1FiYb1w==
+X-Received: by 2002:a17:906:328c:b0:780:7574:ced2 with SMTP id 12-20020a170906328c00b007807574ced2mr48488850ejw.634.1667832926397;
+        Mon, 07 Nov 2022 06:55:26 -0800 (PST)
+Received: from localhost.localdomain ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id d1-20020a1709067f0100b0078907275a44sm3503049ejr.42.2022.11.07.06.55.24
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 07 Nov 2022 06:55:25 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 00/11] Minor DT comment cleanups
+Date:   Mon,  7 Nov 2022 15:55:10 +0100
+Message-Id: <20221107145522.6706-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.32.0 (Apple Git-132)
 MIME-Version: 1.0
-Subject: Re: [PATCH v3 1/3] dt-bindings: interconnect: Remove required reg
- field
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Odelu Kukatla <quic_okukatla@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221026190520.4004264-1-quic_molvera@quicinc.com>
- <20221026190520.4004264-2-quic_molvera@quicinc.com>
- <a214f513-fe28-2096-c2b0-2107e97f3ce2@linaro.org>
- <64d0e5ef-fd36-6f25-2c39-00e8e1346af7@quicinc.com>
- <1a7fd1fd-4f0d-bec3-ddd5-7c6a99a2ab01@linaro.org>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <1a7fd1fd-4f0d-bec3-ddd5-7c6a99a2ab01@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -65,48 +68,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Ensure the usage of C-style (/* */) comments instead of '//'.
+Make sure all multiline C-style commends begin with just '/*' with
+the comment text starting on a new line.
 
-On 2.11.22 23:11, Krzysztof Kozlowski wrote:
-> On 31/10/2022 19:29, Melody Olvera wrote:
->>
->>
->> On 10/27/2022 8:29 AM, Krzysztof Kozlowski wrote:
->>> On 26/10/2022 15:05, Melody Olvera wrote:
->>>> Many of the *-virt compatible devices do not have a reg field
->>>> so remove it as required from the bindings.
->>> and some virt have it... This should be probably separate binding or if
->>> the list is small - allOf:if:then.
->> I attempted this; however I'm still seeing failures in dtb_check. I've added this
->> to the binding; does this look correct?
->>   allOf:
->>     - $ref: qcom,rpmh-common.yaml#
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,qdu1000-clk-virt
->> +              - qcom,qdu1000-mc-virt
->> +
->> +    then:
->> +      required:
->> +        - compatible
-> 
-> No, because we talk about reg, not compatible. You should not require
-> reg instead for some compatibles... but then the schema is getting
-> complicated.
-> 
-> It's difficult to give you recommendation because I do not know what are
-> all these "virt" interconnects. Why some have unit address, why some do not?
+I also capitalized some comments differently and trimmed some fluff.
 
-My understanding is that the "reg" property is required for the NoCs that have
-registers for controlling the QoS settings for the ports from Linux side.
-Other NoCs might be controlled by some remote processor and direct access from
-Linux may not be possible, so they do not have unit address and are outside of
-the soc DT node.
-Do we need to strictly define when exactly the "reg" property is required,
-can't we just mark it as optional?
+This patchset brings no functional change, purely for cosmetic and
+code style purposes.
 
-Thanks,
-Georgi
+I also caught a single sneaky raw value with a proper #define constant
+sitting next to it in the comment..
+
+
+Konrad Dybcio (11):
+  arm64: dts: qcom: msm/apq8x16-*: Fix up comments
+  arm64: dts: qcom: msm/apq8x96-*: Fix up comments
+  arm64: dts: qcom: msm8953: Fix up comments
+  arm64: dts: qcom: msm8998-*: Fix up comments
+  arm64: dts: qcom: sc8280xp-x13s: Fix up comments
+  arm64: dts: qcom: sdm845-*: Fix up comments
+  arm64: dts: qcom: ipq8074-*: Fix up comments
+  arm64: dts: qcom: msm8992-*: Fix up comments
+  arm64: dts: qcom: msm8994-*: Fix up comments
+  arm64: dts: qcom: qcs404-*: Fix up comments
+  arm64: dts: qcom: pm6150/l/pm7325/pms405: Fix up comments
+
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts      |  2 +-
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dts   | 14 +++----
+ arch/arm64/boot/dts/qcom/ipq8074-hk01.dts     |  3 +-
+ arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dts  |  3 +-
+ arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dts  |  3 +-
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi         | 12 +++---
+ .../arm64/boot/dts/qcom/msm8916-huawei-g7.dts |  4 +-
+ .../boot/dts/qcom/msm8916-longcheer-l8150.dts |  6 +--
+ arch/arm64/boot/dts/qcom/msm8916-pins.dtsi    |  2 +-
+ .../dts/qcom/msm8916-samsung-serranove.dts    |  4 +-
+ .../dts/qcom/msm8916-wingtech-wt88047.dts     |  4 +-
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         | 10 ++---
+ arch/arm64/boot/dts/qcom/msm8953.dtsi         |  6 +--
+ .../dts/qcom/msm8992-lg-bullhead-rev-10.dts   |  3 +-
+ .../dts/qcom/msm8992-lg-bullhead-rev-101.dts  |  3 +-
+ .../boot/dts/qcom/msm8992-lg-bullhead.dtsi    | 41 ++++++++++---------
+ arch/arm64/boot/dts/qcom/msm8992.dtsi         |  3 +-
+ .../qcom/msm8994-huawei-angler-rev-101.dts    |  3 +-
+ arch/arm64/boot/dts/qcom/msm8994.dtsi         |  3 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |  3 +-
+ .../boot/dts/qcom/msm8998-fxtec-pro1.dts      |  8 +---
+ arch/arm64/boot/dts/qcom/msm8998-mtp.dts      |  8 +---
+ arch/arm64/boot/dts/qcom/pm6150.dtsi          |  4 +-
+ arch/arm64/boot/dts/qcom/pm6150l.dtsi         |  4 +-
+ arch/arm64/boot/dts/qcom/pm7325.dtsi          |  4 +-
+ arch/arm64/boot/dts/qcom/pms405.dtsi          |  4 +-
+ arch/arm64/boot/dts/qcom/qcs404-evb-1000.dts  |  4 +-
+ arch/arm64/boot/dts/qcom/qcs404-evb-4000.dts  |  4 +-
+ arch/arm64/boot/dts/qcom/qcs404-evb.dtsi      |  4 +-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          |  4 +-
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  2 +-
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts    | 38 ++++++++++-------
+ .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |  5 ++-
+ .../boot/dts/qcom/sdm850-samsung-w737.dts     |  2 +-
+ 34 files changed, 131 insertions(+), 96 deletions(-)
+
+-- 
+2.38.1
+
