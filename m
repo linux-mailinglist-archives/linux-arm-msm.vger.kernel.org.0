@@ -2,134 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 657B061F795
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 16:27:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 028C561F7F1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 16:48:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232220AbiKGP1A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 10:27:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33936 "EHLO
+        id S232941AbiKGPs2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 10:48:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232879AbiKGP04 (ORCPT
+        with ESMTP id S232922AbiKGPsW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 10:26:56 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFB2EBC93;
-        Mon,  7 Nov 2022 07:26:55 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 57D2D6113D;
-        Mon,  7 Nov 2022 15:26:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45829C433C1;
-        Mon,  7 Nov 2022 15:26:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667834814;
-        bh=W675gqNAfxBDemkU93uk7keZsNkIbPSTt12Mk3qnGOg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=CtQqMj5pvofsT6RL6c73nOHyJPNzYHtWR26lgwhR5lL+mFr3DLmnfXNOyM2ctk2EB
-         DXSnyVmwBDVWCuh6t/jOYy4sGDpVuaah8fWod0gReT/fuEvZjRhpL+WKjRyfD3KxA5
-         StyJ8iTVWr2AYevyJncv9jcjUdKTGN08CG+c4sb5sthZwvKGwtnyE5ke3jg/Iw5YSO
-         IG58eDQv1Bu1n7fbiBR5ddQtysHqTwy/hn4mRBxbfYaLnb08KeHt4dh1qmmSMB2QnU
-         Rbls6y5O+krcPIpTHylZ9sv6MHtZf+7JOJAm12EOSyHvBewer8sDqrAkrqaWflTupW
-         qNvv+jC8xzkbQ==
-Date:   Mon, 7 Nov 2022 15:26:45 +0000
-From:   Will Deacon <will@kernel.org>
-To:     Nicolin Chen <nicolinc@nvidia.com>
-Cc:     joro@8bytes.org, robin.murphy@arm.com, jgg@nvidia.com,
-        kevin.tian@intel.com, quic_jjohnson@quicinc.com,
-        suravee.suthikulpanit@amd.com, robdclark@gmail.com,
-        dwmw2@infradead.org, baolu.lu@linux.intel.com,
-        yong.wu@mediatek.com, matthias.bgg@gmail.com, orsonzhai@gmail.com,
-        baolin.wang@linux.alibaba.com, zhang.lyra@gmail.com,
-        thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
-        jean-philippe@linaro.org, tglx@linutronix.de,
-        shameerali.kolothum.thodi@huawei.com,
-        christophe.jaillet@wanadoo.fr, yangyicong@hisilicon.com,
-        yangyingliang@huawei.com, quic_saipraka@quicinc.com,
-        jon@solid-run.com, iommu@lists.linux.dev,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org
-Subject: Re: [PATCH v7 4/5] iommu: Use EINVAL for incompatible device/domain
- in ->attach_dev
-Message-ID: <20221107152645.GD21002@willie-the-truck>
-References: <cover.1666042872.git.nicolinc@nvidia.com>
- <f52a07f7320da94afe575c9631340d0019a203a7.1666042873.git.nicolinc@nvidia.com>
+        Mon, 7 Nov 2022 10:48:22 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E82711FFAC
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 07:48:19 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id s12so8626171edd.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 07:48:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PFZbCwEAf5xvmFibQbTSCqyngiA1gCMbpOH+dBVu8iE=;
+        b=CZ8TGNRlE5jmJffm9Yx0cmQI4SfkpxDCjF0CUs2Eo78TqWT6+m/jyXCqqzr0l482Nf
+         bZ5N559p66DFquV0L7YT6toyJmIMaAzdHaSVJhA3fsSLwj2u6dSuId1C7haefteeYblH
+         g28tShiu7o6XNcbT9DIRO0DOF9TsaAMDwQgfDek1ekvzeXEQ1SPswpUVBHKwaCt11pNz
+         Lylxs6d2TprhGOql/pyKa0d6d3jO5AK2uqREQdAykb0/oUef2BIpJJUQ0PO3ST/QQNZW
+         mGLU4TzPtjlpsFOS5ZHtyW73YEYhFtFEjxNPj6eRhlZ7Q5VPgi5irG7Y9qWs69ffQ+7t
+         5sQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=PFZbCwEAf5xvmFibQbTSCqyngiA1gCMbpOH+dBVu8iE=;
+        b=fmRKmnn0uIMOT03htAn/+yRUG/KIJ0dRES2l5VSOXuMeAhB/Zc2ON3ML3sxdnuarC1
+         OqF+WUtMAM14tJVGcJHIeI8zz9uRsK04Z1mPs7zSo4vF39GAJmwdOOreWwc9pAq8j8sh
+         qb/+Y5bzdAYoSP8thXdz7VYWTiw1ju/uVh++EoLwUaion56dZKIvN5I8psnShTjb8sAA
+         ceedzvOG7a5QxJ6sdIEiT5EK3t10CvFQGiT9cBrrXhr+A2wp8Vs55kepb57yfjrLQVj9
+         6iMPOBLAxrWvMgtVBFkCLWxqfFpEffdJvOkBZcRy4IB0HUwGfx4B6IrXbd8uD4AMswZc
+         mdXA==
+X-Gm-Message-State: ACrzQf1HfN8EEqMPjI1yWyIjYB7QNHyRQ9q+FKbu3wDb9TjWv/Eaifxa
+        bcKVcCZoNTTL3katawecGrDAJg==
+X-Google-Smtp-Source: AMsMyM4C4BS78FBPn0mzYLjEHkzToQ5EH3PogrfSySzn/OQCGvYBG56Zr7WlIdFu1ic0QJe9/FVAzg==
+X-Received: by 2002:a50:cd07:0:b0:464:63b:1017 with SMTP id z7-20020a50cd07000000b00464063b1017mr28653410edi.364.1667836098543;
+        Mon, 07 Nov 2022 07:48:18 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id k18-20020a05640212d200b0044ef2ac2650sm4337439edx.90.2022.11.07.07.48.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Nov 2022 07:48:17 -0800 (PST)
+Message-ID: <49407328-de28-9018-321b-c649c5bc7435@linaro.org>
+Date:   Mon, 7 Nov 2022 16:48:14 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f52a07f7320da94afe575c9631340d0019a203a7.1666042873.git.nicolinc@nvidia.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.1
+Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: Remove redundant soundwire
+ property
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        vkoul@kernel.org, agross@kernel.org, andersson@kernel.org,
+        robh+dt@kernel.org, broonie@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_rohkumar@quicinc.com, srinivas.kandagatla@linaro.org,
+        dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
+        alsa-devel@alsa-project.org, quic_rjendra@quicinc.com,
+        mka@chromium.org
+Cc:     Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+References: <1667830844-31566-1-git-send-email-quic_srivasam@quicinc.com>
+ <1667830844-31566-3-git-send-email-quic_srivasam@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1667830844-31566-3-git-send-email-quic_srivasam@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 17, 2022 at 04:02:21PM -0700, Nicolin Chen wrote:
-> Following the new rules in include/linux/iommu.h kdocs, update all drivers
-> ->attach_dev callback functions to return EINVAL in the failure paths that
-> are related to domain incompatibility.
+
+
+On 07/11/2022 15:20, Srinivasa Rao Mandadapu wrote:
+> Remove redundant property qcom,port-offset in soundwire
+> controller nodes.
+> This patch is required to avoid dtbs_check errors with
+> qcom,soundwie.yaml
 > 
-> Also, drop adjacent error prints to prevent a kernel log spam.
+> Fixes: 12ef689f09ab ("arm64: dts: qcom: sc7280: Add nodes for soundwire and va tx rx digital macro codecs")
+> Fixes: 24f52ef0c4bf ("arm64: dts: qcom: sm8250: Add nodes for tx and rx macros with soundwire masters")
 > 
-> Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-> Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+> Signed-off-by: Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
 > ---
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 11 +----------
->  drivers/iommu/arm/arm-smmu/arm-smmu.c       |  3 ---
->  drivers/iommu/arm/arm-smmu/qcom_iommu.c     |  7 +------
->  drivers/iommu/intel/iommu.c                 | 10 +++-------
->  drivers/iommu/ipmmu-vmsa.c                  |  2 --
->  drivers/iommu/omap-iommu.c                  |  2 +-
->  drivers/iommu/sprd-iommu.c                  |  4 +---
->  drivers/iommu/tegra-gart.c                  |  2 +-
->  drivers/iommu/virtio-iommu.c                |  3 +--
->  9 files changed, 9 insertions(+), 35 deletions(-)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 1 -
+>   arch/arm64/boot/dts/qcom/sm8250.dtsi | 1 -
+>   2 files changed, 2 deletions(-)
 > 
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> index ba47c73f5b8c..01fd7df16cb9 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> @@ -2430,23 +2430,14 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
->  			goto out_unlock;
->  		}
->  	} else if (smmu_domain->smmu != smmu) {
-> -		dev_err(dev,
-> -			"cannot attach to SMMU %s (upstream of %s)\n",
-> -			dev_name(smmu_domain->smmu->dev),
-> -			dev_name(smmu->dev));
-> -		ret = -ENXIO;
-> +		ret = -EINVAL;
->  		goto out_unlock;
->  	} else if (smmu_domain->stage == ARM_SMMU_DOMAIN_S1 &&
->  		   master->ssid_bits != smmu_domain->s1_cfg.s1cdmax) {
-> -		dev_err(dev,
-> -			"cannot attach to incompatible domain (%u SSID bits != %u)\n",
-> -			smmu_domain->s1_cfg.s1cdmax, master->ssid_bits);
->  		ret = -EINVAL;
->  		goto out_unlock;
->  	} else if (smmu_domain->stage == ARM_SMMU_DOMAIN_S1 &&
->  		   smmu_domain->stall_enabled != master->stall_enabled) {
-> -		dev_err(dev, "cannot attach to stall-%s domain\n",
-> -			smmu_domain->stall_enabled ? "enabled" : "disabled");
->  		ret = -EINVAL;
->  		goto out_unlock;
->  	}
-
-I think it would be helpful to preserve these messages using
-dev_err_ratelimited() so that attach failure can be diagnosed without
-having to hack the messages back into the driver.
-
-With that:
-
-Acked-by: Will Deacon <will@kernel.org>
-
-Will
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 748eef6..71be873 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -2317,7 +2317,6 @@
+>   			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0xff 0xff>;
+>   			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff>;
+>   			qcom,ports-lane-control =	/bits/ 8 <0x00 0x01 0x00>;
+> -			qcom,port-offset = <1>;
+>   
+>   			#sound-dai-cells = <1>;
+>   			#address-cells = <2>;
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index eb5a10c..0f430ca 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -2360,7 +2360,6 @@
+>   			qcom,ports-word-length =	/bits/ 8 <0xFF 0xFF 0xFF 0xFF 0xFF>;
+>   			qcom,ports-block-group-count =	/bits/ 8 <0xFF 0xFF 0xFF 0xFF 0xFF>;
+>   			qcom,ports-lane-control =	/bits/ 8 <0xFF 0x00 0x01 0x00 0x01>;
+> -			qcom,port-offset = <1>;
+>   			#sound-dai-cells = <1>;
+>   			#address-cells = <2>;
+>   			#size-cells = <0>;
