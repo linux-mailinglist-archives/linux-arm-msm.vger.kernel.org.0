@@ -2,134 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 278FB61F6B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 15:55:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 51AFE61F6B9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 15:55:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232589AbiKGOzz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S232598AbiKGOzz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 7 Nov 2022 09:55:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36992 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232514AbiKGOzn (ORCPT
+        with ESMTP id S232519AbiKGOzn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 7 Nov 2022 09:55:43 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51EFE1E3E0
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 06:55:28 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id q9so30929486ejd.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 06:55:28 -0800 (PST)
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 563DE1E3EC
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 06:55:30 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id d26so30750570eje.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 06:55:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EOVxQQ/KJuIdX83Yq489JvOvm/XE0A18nnsZpKusNfc=;
-        b=OsoPVjOYLsMri2sXv4Hd7GJ2zyBns0DNMhyn6yiUZUzrtw2ijRaBSz9E0vlUpYdsgE
-         YsVJ+A1E7AnGs3vAuCzF5cUNjNCu/OyOwM0YsDHo3FNA+SvFgxFn/SHvdKIKyFM8n8Ks
-         xxoiPcirZWrN3EBwZYe0mOg29a0/gHdOzQmx2qB8j9BtYnzNnLTlVQvONVJxeR5QzD1J
-         B3a1YjUVDLJaHQPg9ci3fOYShbyWFCXGvqV7IsK88pvKqh3YupBvznWXX1twcMOGGjEo
-         kM+jGuywW+XX8YzlM7QZQ6z2VzTvUmFD7BTveobUTqTUSJkEs3xWyYbwdwTkzDKjeGsm
-         +dQQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8q5/sPJ8PzwqMDWQnWVQ3yndf3DiMrXzDKeslcAimJs=;
+        b=ISQidbMpqbz3BK7Rlc6O0fxMSCHzgM7gnVXyvqBk9Mu15MujguVyxgs2itrVqI7nYe
+         HZuFyoeww4VBkSnf9vBc9N85eWXNjSq7UfBynImwcqVLUfIg8NBqZc5uuCJBWJpLr7w5
+         DzJ76XTiATPQUPIPBAYMVLDsQnZh7+CNzY4JaIlFMg62S6Kg/5/cWa7pmTLBXpA58l+u
+         MbpHsGBI0I20xtYQW7t6r1IWGEDtPgBq4wtVAIGdr/qNLG7B7E9e5c4HXyl0+qR6Tqh4
+         +fzrCEQATBAVBI61Ln+HAX1YmD1CEjFv6oJZ6ov8uUMmqSvbLsFjeMIlVnbxE3h/+Jf+
+         20IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EOVxQQ/KJuIdX83Yq489JvOvm/XE0A18nnsZpKusNfc=;
-        b=04M1PCdhCsUEcBG5Yjasy46doUTPVUGkTFGITC/EIRvb/cYBVNyZ/bho/ATNB0U4zx
-         +1uw9owUqanxunvTuAM1msNiYoSirCQZgpZygJwWgWrUGkkSGM+Tqq5jNcBi09h/7whd
-         7U0TOO3S8BWrNZngW6V2ArWg07eN7JcWlLcJO7MJ/PvU0cAp0gSgqa5mIP8rFH5bVnWf
-         pNLxKBWdasLMNF88kKcBDBoB1K3lYY/+TYzeTOy3qegdzflFFrjV6s3we4665XQrMj57
-         eGaOH11EuA+xiNLHiKgtGJgEF/V4HnX/hV1SJfXHMtWH6SDOUcxQblqUOYKszrKsZVv7
-         Gpuw==
-X-Gm-Message-State: ACrzQf3OXXWac+ZkGLuuuCsc4FuPO4mmb0Ys0BdM6oxWBRkKj+8sKtsj
-        dNYkVUHKZ7+AbI9VRJcxgJ/FARln0Ux+QQ8H
-X-Google-Smtp-Source: AMsMyM7OamA26aBlLI14vRHanUHRJLYUBNYc76HEiBrjREZUI94d60oPj4LXq6UcrLS6Nha1FiYb1w==
-X-Received: by 2002:a17:906:328c:b0:780:7574:ced2 with SMTP id 12-20020a170906328c00b007807574ced2mr48488850ejw.634.1667832926397;
-        Mon, 07 Nov 2022 06:55:26 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8q5/sPJ8PzwqMDWQnWVQ3yndf3DiMrXzDKeslcAimJs=;
+        b=aPWa2HfKWe++izEswu0SRY50aNbtXH+nPoeZHO8FafmtquNL2uqpYOJAInouO9sG05
+         mRYFzCSIn4qu3T7NFUgBtL5QcmXUH0aCWFvFojjO2nPosjQRPsv5Fi9us8JdbsAeUams
+         WNBhsKcPBfk9tkmbit0YQ7BpB+cMKILVptmxeJ+wsZP6i6EfrclBvxIr356CoUmhJMdQ
+         m2KQNMEwKYF83BCVLrgSUeDwe+IB9XM7YaHPtSwWKyfJ6sS37akQIKQ9oFdkDtIlg4eO
+         8/c6L/wNjACxkMLKoAYsaT0uEfcEU7wA1eAFbSG8PheQWM4KnzgAbbPqzVEHQX6iq0pP
+         /z/Q==
+X-Gm-Message-State: ACrzQf2HLKwhpzcHcSqmWEpvrg+xaHKUzslcm/7ZCiybG6nNJP4fbKbc
+        Rp44GuKEnO1rX2S+w/BiNFnUyZ02z5QSjxVE
+X-Google-Smtp-Source: AMsMyM5LMGVcC2wSuMoQAfKDTU4V4JzRtSwZlFPg0NXTsJbwLwSk83XT9ULRZii1ijHeO6kXEANWlA==
+X-Received: by 2002:a17:907:7da8:b0:7ae:2278:ba02 with SMTP id oz40-20020a1709077da800b007ae2278ba02mr21050301ejc.326.1667832928544;
+        Mon, 07 Nov 2022 06:55:28 -0800 (PST)
 Received: from localhost.localdomain ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id d1-20020a1709067f0100b0078907275a44sm3503049ejr.42.2022.11.07.06.55.24
+        by smtp.gmail.com with ESMTPSA id d1-20020a1709067f0100b0078907275a44sm3503049ejr.42.2022.11.07.06.55.26
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 07 Nov 2022 06:55:25 -0800 (PST)
+        Mon, 07 Nov 2022 06:55:27 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH 00/11] Minor DT comment cleanups
-Date:   Mon,  7 Nov 2022 15:55:10 +0100
-Message-Id: <20221107145522.6706-1-konrad.dybcio@linaro.org>
+Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 01/11] arm64: dts: qcom: msm/apq8x16-*: Fix up comments
+Date:   Mon,  7 Nov 2022 15:55:11 +0100
+Message-Id: <20221107145522.6706-2-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.32.0 (Apple Git-132)
+In-Reply-To: <20221107145522.6706-1-konrad.dybcio@linaro.org>
+References: <20221107145522.6706-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Ensure the usage of C-style (/* */) comments instead of '//'.
+Switch '//' comments to C-style /* */ and fix up the contents of some.
 Make sure all multiline C-style commends begin with just '/*' with
 the comment text starting on a new line.
 
-I also capitalized some comments differently and trimmed some fluff.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts               |  2 +-
+ arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts         |  4 +++-
+ arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts   |  6 +++---
+ arch/arm64/boot/dts/qcom/msm8916-pins.dtsi             |  2 +-
+ arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts |  4 +++-
+ arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts  |  4 +++-
+ arch/arm64/boot/dts/qcom/msm8916.dtsi                  | 10 +++++-----
+ 7 files changed, 19 insertions(+), 13 deletions(-)
 
-This patchset brings no functional change, purely for cosmetic and
-code style purposes.
-
-I also caught a single sneaky raw value with a proper #define constant
-sitting next to it in the comment..
-
-
-Konrad Dybcio (11):
-  arm64: dts: qcom: msm/apq8x16-*: Fix up comments
-  arm64: dts: qcom: msm/apq8x96-*: Fix up comments
-  arm64: dts: qcom: msm8953: Fix up comments
-  arm64: dts: qcom: msm8998-*: Fix up comments
-  arm64: dts: qcom: sc8280xp-x13s: Fix up comments
-  arm64: dts: qcom: sdm845-*: Fix up comments
-  arm64: dts: qcom: ipq8074-*: Fix up comments
-  arm64: dts: qcom: msm8992-*: Fix up comments
-  arm64: dts: qcom: msm8994-*: Fix up comments
-  arm64: dts: qcom: qcs404-*: Fix up comments
-  arm64: dts: qcom: pm6150/l/pm7325/pms405: Fix up comments
-
- arch/arm64/boot/dts/qcom/apq8016-sbc.dts      |  2 +-
- arch/arm64/boot/dts/qcom/apq8096-db820c.dts   | 14 +++----
- arch/arm64/boot/dts/qcom/ipq8074-hk01.dts     |  3 +-
- arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dts  |  3 +-
- arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dts  |  3 +-
- arch/arm64/boot/dts/qcom/ipq8074.dtsi         | 12 +++---
- .../arm64/boot/dts/qcom/msm8916-huawei-g7.dts |  4 +-
- .../boot/dts/qcom/msm8916-longcheer-l8150.dts |  6 +--
- arch/arm64/boot/dts/qcom/msm8916-pins.dtsi    |  2 +-
- .../dts/qcom/msm8916-samsung-serranove.dts    |  4 +-
- .../dts/qcom/msm8916-wingtech-wt88047.dts     |  4 +-
- arch/arm64/boot/dts/qcom/msm8916.dtsi         | 10 ++---
- arch/arm64/boot/dts/qcom/msm8953.dtsi         |  6 +--
- .../dts/qcom/msm8992-lg-bullhead-rev-10.dts   |  3 +-
- .../dts/qcom/msm8992-lg-bullhead-rev-101.dts  |  3 +-
- .../boot/dts/qcom/msm8992-lg-bullhead.dtsi    | 41 ++++++++++---------
- arch/arm64/boot/dts/qcom/msm8992.dtsi         |  3 +-
- .../qcom/msm8994-huawei-angler-rev-101.dts    |  3 +-
- arch/arm64/boot/dts/qcom/msm8994.dtsi         |  3 +-
- arch/arm64/boot/dts/qcom/msm8996.dtsi         |  3 +-
- .../boot/dts/qcom/msm8998-fxtec-pro1.dts      |  8 +---
- arch/arm64/boot/dts/qcom/msm8998-mtp.dts      |  8 +---
- arch/arm64/boot/dts/qcom/pm6150.dtsi          |  4 +-
- arch/arm64/boot/dts/qcom/pm6150l.dtsi         |  4 +-
- arch/arm64/boot/dts/qcom/pm7325.dtsi          |  4 +-
- arch/arm64/boot/dts/qcom/pms405.dtsi          |  4 +-
- arch/arm64/boot/dts/qcom/qcs404-evb-1000.dts  |  4 +-
- arch/arm64/boot/dts/qcom/qcs404-evb-4000.dts  |  4 +-
- arch/arm64/boot/dts/qcom/qcs404-evb.dtsi      |  4 +-
- arch/arm64/boot/dts/qcom/qcs404.dtsi          |  4 +-
- .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  2 +-
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts    | 38 ++++++++++-------
- .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |  5 ++-
- .../boot/dts/qcom/sdm850-samsung-w737.dts     |  2 +-
- 34 files changed, 131 insertions(+), 96 deletions(-)
-
+diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+index 1b613098fb4a..334f28385716 100644
+--- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
++++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+@@ -839,7 +839,7 @@ ls_exp_gpio_f: pm8916-mpp4-state {
+ 		function = "digital";
+ 
+ 		output-low;
+-		power-source = <PM8916_MPP_L5>;	// 1.8V
++		power-source = <PM8916_MPP_L5>;	/* 1.8V */
+ 	};
+ 
+ 	pm8916_mpps_leds: pm8916-mpps-state {
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts b/arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts
+index 9e470c67274e..93e95ff41d08 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts
+@@ -1,5 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+-// Copyright (C) 2021 Stephan Gerhold
++/*
++ * Copyright (C) 2021 Stephan Gerhold
++ */
+ 
+ /dts-v1/;
+ 
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
+index d85e7f7c0835..c158f884d29e 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
+@@ -22,7 +22,7 @@ chosen {
+ 	};
+ 
+ 	reserved-memory {
+-		// wcnss.mdt is not relocatable, so it must be loaded at 0x8b600000
++		/* wcnss.mdt is not relocatable, so it must be loaded at 0x8b600000 */
+ 		/delete-node/ wcnss@89300000;
+ 
+ 		wcnss_mem: wcnss@8b600000 {
+@@ -204,12 +204,12 @@ rmi4@20 {
+ 
+ 		rmi4-f01@1 {
+ 			reg = <0x1>;
+-			syna,nosleep-mode = <1>; // Allow sleeping
++			syna,nosleep-mode = <1>; /* Allow sleeping */
+ 		};
+ 
+ 		rmi4-f12@12 {
+ 			reg = <0x12>;
+-			syna,sensor-type = <1>; // Touchscreen
++			syna,sensor-type = <1>; /* Touchscreen */
+ 		};
+ 	};
+ };
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi b/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
+index 7dedb91b9930..1bb7df185ac4 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
+@@ -6,7 +6,7 @@
+ &msmgpio {
+ 
+ 	blsp1_uart1_default: blsp1-uart1-default {
+-		//	TX, RX, CTS_N, RTS_N
++		/* TX, RX, CTS_N, RTS_N */
+ 		pins = "gpio0", "gpio1", "gpio2", "gpio3";
+ 		function = "blsp_uart1";
+ 
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
+index bbd6bb3f4fd7..73f980a4b213 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
+@@ -1,5 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+-// Copyright (C) 2019 Stephan Gerhold
++/*
++ * Copyright (C) 2019 Stephan Gerhold
++ */
+ 
+ /dts-v1/;
+ 
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
+index 84a352dcf9a2..147e187fc403 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
+@@ -1,5 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+-// Copyright (C) 2020 Stephan Gerhold
++/*
++ * Copyright (C) 2020 Stephan Gerhold
++ */
+ 
+ /dts-v1/;
+ 
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index a60eb8a59dca..d7af9318b1cc 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -1263,21 +1263,21 @@ apps_iommu: iommu@1ef0000 {
+ 			clock-names = "iface", "bus";
+ 			qcom,iommu-secure-id = <17>;
+ 
+-			// vfe:
++			/* VFE */
+ 			iommu-ctx@3000 {
+ 				compatible = "qcom,msm-iommu-v1-sec";
+ 				reg = <0x3000 0x1000>;
+ 				interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
+ 			};
+ 
+-			// mdp_0:
++			/* MDP_0 */
+ 			iommu-ctx@4000 {
+ 				compatible = "qcom,msm-iommu-v1-ns";
+ 				reg = <0x4000 0x1000>;
+ 				interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
+ 			};
+ 
+-			// venus_ns:
++			/* VENUS_NS */
+ 			iommu-ctx@5000 {
+ 				compatible = "qcom,msm-iommu-v1-sec";
+ 				reg = <0x5000 0x1000>;
+@@ -1296,14 +1296,14 @@ gpu_iommu: iommu@1f08000 {
+ 			clock-names = "iface", "bus";
+ 			qcom,iommu-secure-id = <18>;
+ 
+-			// gfx3d_user:
++			/* GFX3D_USER */
+ 			iommu-ctx@1000 {
+ 				compatible = "qcom,msm-iommu-v1-ns";
+ 				reg = <0x1000 0x1000>;
+ 				interrupts = <GIC_SPI 241 IRQ_TYPE_LEVEL_HIGH>;
+ 			};
+ 
+-			// gfx3d_priv:
++			/* GFX3D_PRIV */
+ 			iommu-ctx@2000 {
+ 				compatible = "qcom,msm-iommu-v1-ns";
+ 				reg = <0x2000 0x1000>;
 -- 
 2.38.1
 
