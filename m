@@ -2,61 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB4A061E9CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 04:43:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B50E061EA33
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 05:27:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230366AbiKGDnt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Nov 2022 22:43:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57052 "EHLO
+        id S230322AbiKGE1b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Nov 2022 23:27:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230228AbiKGDns (ORCPT
+        with ESMTP id S230214AbiKGE1a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Nov 2022 22:43:48 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA0C62670;
-        Sun,  6 Nov 2022 19:43:47 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 37BD660EAE;
-        Mon,  7 Nov 2022 03:43:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858C2C433C1;
-        Mon,  7 Nov 2022 03:43:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667792626;
-        bh=vJMXMhjRRH2tAhkB+zZFrEC95x2s5+eyVMSNAanNWaA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=emduUXpgAlRw70W/ylbLGfsPUZACpE/fZpJCQKVSGFOxHeX3em1cArMbRvdeAtgth
-         pzV4fRYyox7qyAgMPxSpL0/EVjCxyzPDaQh6Tc96wstY3G35dqEDbuZvGpFdL5jfiZ
-         RsVqXu9KI8bN1msv/7HuGhvj12Ex+pbWOE9yleYmSyGqrX0WNTd4royflPPeGXxtQi
-         e0NNyB7eNUAoovOP3SDKGvRToRZlMRe2GoUzWw9xHfZ5btmpbQ/sFs/Z4BA18ZWkQG
-         Pka8yThO0dcQLUYK4A76Kz+SjT0u97r9gs97LEBjzqhHsfl7DEDLAnDMTjXp+zOY8t
-         Uuj6kijSL9oxw==
-Date:   Sun, 6 Nov 2022 21:43:43 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-crypto@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, herbert@gondor.apana.org.au,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, thara.gopinath@gmail.com,
-        robh@kernel.org, bhupesh.linux@gmail.com, davem@davemloft.net,
-        Jordan Crouse <jorcrous@amazon.com>
-Subject: Re: [PATCH v7 6/9] crypto: qce: core: Add new compatibles for qce
- crypto driver
-Message-ID: <20221107034343.iyknmiztjuxcuqqs@builder.lan>
-References: <20220920114051.1116441-1-bhupesh.sharma@linaro.org>
- <20220920114051.1116441-7-bhupesh.sharma@linaro.org>
- <b4016460-f43a-13f8-432e-47c27237e005@linaro.org>
- <9b111583-519b-95a6-15b5-243e88dc8d39@linaro.org>
- <37b509ff-4fc2-73f1-b135-c0930075ec29@linaro.org>
- <94ff2006-0051-19be-5eee-a5f71a07e26b@linaro.org>
+        Sun, 6 Nov 2022 23:27:30 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E8A665AD
+        for <linux-arm-msm@vger.kernel.org>; Sun,  6 Nov 2022 20:27:28 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A73ikK3011638;
+        Mon, 7 Nov 2022 04:27:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=JSizoXzr70KqY0WUH64+rkHsaXR10syEdTHNili8OCE=;
+ b=CBuG9pFT45Hr+yCgo08ZqKS5eJUHHivx99HYjs8yXw9NdsNfF5vDAATaFaZ3tNxPm5hI
+ FwXr60C7NEt17Zq6UZ7hkzPdWqEeo7QDqK/jRR0uEYcA1JCGT+/VCGqs9ClHD3h2GBd6
+ WDPPE3RYnZ29Kx4RO/gzgJlDPOQ9cANvQXRoQNx7GxSojLNs/0w92qL3QRV1LF/udpyR
+ 7eDQYUW3At//bbOFphYkVqop//PegwZflnetLd3p71RP3UJnrIskVRq52zdrD5kcZzwa
+ o5dYWnzhRJdJajjxbP3n0y5o4egGQ90+M8Aa4ztNgxTMEW1DZ5Ek/zdiAI6bkYCcYiJv Zg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kppndrc7p-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 07 Nov 2022 04:27:14 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A74RDWI002014
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 7 Nov 2022 04:27:13 GMT
+Received: from [10.111.172.54] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Sun, 6 Nov 2022
+ 20:27:09 -0800
+Message-ID: <5b7492e2-e635-d3ea-6085-dacbc91db9cb@quicinc.com>
+Date:   Sun, 6 Nov 2022 20:27:03 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <94ff2006-0051-19be-5eee-a5f71a07e26b@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 1/5] drm/msm/dsi: add support for DSI-PHY on SM8350 and
+ SM8450
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        Robert Foss <robert.foss@linaro.org>
+References: <20220922113016.355188-1-dmitry.baryshkov@linaro.org>
+ <20220922113016.355188-2-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220922113016.355188-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: pWMrz64ix2q4u62ZVNkp9yoqB_vsMh42
+X-Proofpoint-GUID: pWMrz64ix2q4u62ZVNkp9yoqB_vsMh42
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-06_16,2022-11-03_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 suspectscore=0
+ bulkscore=0 spamscore=0 mlxlogscore=999 phishscore=0 adultscore=0
+ clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211070035
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,149 +86,327 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 21, 2022 at 12:22:03PM +0530, Bhupesh Sharma wrote:
-> On 9/21/22 11:57 AM, Krzysztof Kozlowski wrote:
-> > On 21/09/2022 08:16, Bhupesh Sharma wrote:
-> > > 
-> > > 
-> > > On 9/20/22 8:42 PM, Krzysztof Kozlowski wrote:
-> > > > On 20/09/2022 13:40, Bhupesh Sharma wrote:
-> > > > > Since we decided to use soc specific compatibles for describing
-> > > > > the qce crypto IP nodes in the device-trees, adapt the driver
-> > > > > now to handle the same.
-> > > > > 
-> > > > > Keep the old deprecated compatible strings still in the driver,
-> > > > > to ensure backward compatibility.
-> > > > > 
-> > > > > Cc: Bjorn Andersson <andersson@kernel.org>
-> > > > > Cc: Rob Herring <robh@kernel.org>
-> > > > > Cc: herbert@gondor.apana.org.au
-> > > > > Tested-by: Jordan Crouse <jorcrous@amazon.com>
-> > > > > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > > > > ---
-> > > > >    drivers/crypto/qce/core.c | 9 +++++++++
-> > > > >    1 file changed, 9 insertions(+)
-> > > > > 
-> > > > > diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-> > > > > index 63be06df5519..99ed540611ab 100644
-> > > > > --- a/drivers/crypto/qce/core.c
-> > > > > +++ b/drivers/crypto/qce/core.c
-> > > > > @@ -291,8 +291,17 @@ static int qce_crypto_remove(struct platform_device *pdev)
-> > > > >    }
-> > > > >    static const struct of_device_id qce_crypto_of_match[] = {
-> > > > > +	/* Following two entries are deprecated (kept only for backward compatibility) */
-> > > > >    	{ .compatible = "qcom,crypto-v5.1", },
-> > > > >    	{ .compatible = "qcom,crypto-v5.4", },
-> > > > 
-> > > > This is okay, so there is no ABI break.
-> > > 
-> > > Great. Thanks for the confirmation.
-> > > 
-> > > > > +	/* Add compatible strings as per updated dt-bindings, here: */
-> > > > > +	{ .compatible = "qcom,ipq4019-qce", },
-> > > > > +	{ .compatible = "qcom,ipq6018-qce", },
-> > > > > +	{ .compatible = "qcom,ipq8074-qce", },
-> > > > > +	{ .compatible = "qcom,msm8996-qce", },
-> > > > > +	{ .compatible = "qcom,sdm845-qce", },
-> > > > > +	{ .compatible = "qcom,sm8150-qce", },
-> > > > > +	{ .compatible = "qcom,sm8250-qce", },
-> > > > 
-> > > > This is a bit odd... you have 7 devices which are simply compatible or
-> > > > even the same. This should be instead one compatible.
-> > > > 
-> > > > I don't really get why do you want to deprecate "qcom,crypto-v5.1".
-> > > > Commit msg only says "we decided" but I do not know who is "we" and "why
-> > > > we decided like this". If you want to deprecate it, perfectly fine by
-> > > > me, but please say in commit msg why you are doing it.
-> > > 
-> > > I understand. This patchset has been in flight for some time and hence I
-> > > might have missed sharing some detailed information about the review
-> > > comments and rework done along the way (in the cover letter for this
-> > > series).
-> > > 
-> > > Coming back to your concern, here is the relevant background:
-> > > - Please see:
-> > > https://lore.kernel.org/linux-arm-msm/20210316222825.GA3792517@robh.at.kernel.org/
-> > > 
-> > > - Rob shared some comments on the v1 series regarding the soc-specific
-> > > compatibles. He mentioned in the above thread that 'you should stick
-> > > with SoC specific compatibles as *everyone* else does (including most
-> > > QCom bindings).'
-> > > 
-> > > - So, while I had proposed "qcom,crypto-v5.1" (for ipq6018) and
-> > > "qcom,crypto-v5.4" (for sdm845, sm8150) etc. as the compatible(s) in the
-> > > v1 series, I shifted to using the soc-specific compatibles from the v2
-> > > series, onwards.
-> > 
-> > Then the reason could be - Reviewers preferred SoC-based compatible
-> > instead of IP-block-version-based.
-> > 
-> > What is confusing is the difference between that link and here. That
-> > link wanted to introduce 4 different compatibles... and here you have
-> > even 7 compatibles being the same.
-> 
-> The link points to v1 version and we are on v7 currently. So there have been
-> other comments and reworks along the way :)
-> 
-> All of these have been referred to in the cover letter logs.
-> 
-> Again please refer to Vladimir's comments on v5 version here, where he
-> suggested adding soc compatibles for 'ipq8074' and 'msm8996' as well.
-> 
-> -
-> https://lore.kernel.org/lkml/7328ae17-1dc7-eaa1-5993-411b986e5e02@linaro.org/
-> -
-> https://lore.kernel.org/lkml/f5b7c89c-3bdd-1e1e-772e-721aa5e95bbf@linaro.org/
-> -
-> https://lore.kernel.org/lkml/7328ae17-1dc7-eaa1-5993-411b986e5e02@linaro.org/
-> 
-> Also the 7 SoC compatibles do not point to the same crypto IP version. We
-> have two IP versions currently supported upstream, "qcom,crypto-v5.1" and
-> "qcom,crypto-v5.4" (with patches for support for newer versions under work
-> and can be expected to land upstream in near future).
-> 
-> However, if you suggest, we can add some comments in the dt-binding doc
-> to reflect which SoC supports which version.
-> 
-> > > - Basically, since we are going to have newer qce IP versions available
-> > > in near future, e.g. "qcom,crypto-v5.5" etc, and we will have 2 or more
-> > > SoCs also sharing 1 version, these compatibles would grow and become
-> > > more confusing. IMO, having a soc-specific compatible in such cases is
-> > > probably a much cleaner approach.
-> > > 
-> > > Hope this helps answer some of your concerns and provides some relevant
-> > > background information.
-> > 
-> > Sure, but I still think you should have only one compatible in the
-> > driver in such case. You don't have differences between them from the
-> > driver point of view, so the devices seem to be compatible.
-> > 
-> > If not, what are the differences?
-> 
-> There can always be requirements for compatible specific handling done in
-> the driver. See Bjorn's comment here for example:
-> https://lore.kernel.org/lkml/YZKhqJuFlRVeQkCc@builder.lan/ , as an example
-> of 'clk_get' calls conditional based on the compatible instead.
-> 
 
-How about providing a generic compatible without the version number
-(i.e. qcom,crypto) and then in the DT binding require this and
-qcom,<platform>-crypto, and if we have such quirky integration behavior
-for a particular platform we can add the special handling in the driver
-for the platform compatible.
 
-(And we obviously keep the two existing version-based compatibles in the
-driver, for backwards compatibility)
+On 9/22/2022 4:30 AM, Dmitry Baryshkov wrote:
+> SM8350 and SM8450 use 5nm DSI PHYs, which share register definitions
+> with 7nm DSI PHYs. Rather than duplicating the driver, handle 5nm
+> variants inside the common 5+7nm driver.
 
-Regards,
-Bjorn
+I do realize that there is common code across PHYs but i am concerned 
+about this type of unification of phy drivers.
 
-> This series is to get some early comments and might need some further rework
-> / rearrangement.
+If we have features which are PHY sequence dependent such as ULPS, this 
+will just complicate things for us.
+
+Also some PHY registers might get added some might get removed across 
+chipsets as this is the most frequently changed component.
+
+Even in this patch, I see this added to dsi_7nm_phy_disable()
+
+ > +	/* Turn off REFGEN Vote */
+ > +        dsi_phy_write(base + 
+REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE10, 0x0);
+ > +        wmb();
+ > +        /* Delay to ensure HW removes vote before PHY shut down */
+ > +        udelay(2);
+ > +
+
+What would be the impact of writing this for the existing 7nm PHY?
+
+I am having some access issues to check the software interface so wanted 
+to check.
+
 > 
-> However, I would request Rob to share his views as well on the soc specific
-> compatibles, since it was originally his suggestion. I can rework the
-> patchset accordingly.
+> Co-developed-by: Robert Foss <robert.foss@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/Kconfig               |   6 +-
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c     |   4 +
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.h     |   2 +
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 132 ++++++++++++++++++++--
+>   4 files changed, 131 insertions(+), 13 deletions(-)
 > 
-> Thanks,
-> Bhupesh
+> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+> index 4e0cbd682725..e6c5dfbad009 100644
+> --- a/drivers/gpu/drm/msm/Kconfig
+> +++ b/drivers/gpu/drm/msm/Kconfig
+> @@ -140,12 +140,12 @@ config DRM_MSM_DSI_10NM_PHY
+>   	  Choose this option if DSI PHY on SDM845 is used on the platform.
+>   
+>   config DRM_MSM_DSI_7NM_PHY
+> -	bool "Enable DSI 7nm PHY driver in MSM DRM"
+> +	bool "Enable DSI 7nm/5nm PHY driver in MSM DRM"
+>   	depends on DRM_MSM_DSI
+>   	default y
+>   	help
+> -	  Choose this option if DSI PHY on SM8150/SM8250/SC7280 is used on
+> -	  the platform.
+> +	  Choose this option if DSI PHY on SM8150/SM8250/SM8350/SM8450/SC7280
+> +	  is used on the platform.
+>   
+>   config DRM_MSM_HDMI
+>   	bool "Enable HDMI support in MSM DRM driver"
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> index 7fc0975cb869..97cf6b8b34cc 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> @@ -567,6 +567,10 @@ static const struct of_device_id dsi_phy_dt_match[] = {
+>   	  .data = &dsi_phy_7nm_8150_cfgs },
+>   	{ .compatible = "qcom,sc7280-dsi-phy-7nm",
+>   	  .data = &dsi_phy_7nm_7280_cfgs },
+> +	{ .compatible = "qcom,dsi-phy-5nm-8350",
+> +	  .data = &dsi_phy_5nm_8350_cfgs },
+> +	{ .compatible = "qcom,dsi-phy-5nm-8450",
+> +	  .data = &dsi_phy_5nm_8450_cfgs },
+>   #endif
+>   	{}
+>   };
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> index 60a99c6525b2..654cbfa14d6e 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> @@ -56,6 +56,8 @@ extern const struct msm_dsi_phy_cfg dsi_phy_10nm_8998_cfgs;
+>   extern const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs;
+>   extern const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs;
+>   extern const struct msm_dsi_phy_cfg dsi_phy_7nm_7280_cfgs;
+> +extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8350_cfgs;
+> +extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8450_cfgs;
+>   
+>   struct msm_dsi_dphy_timing {
+>   	u32 clk_zero;
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> index 9e7fa7d88ead..1696ff150b9e 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> @@ -39,8 +39,14 @@
+>   #define VCO_REF_CLK_RATE		19200000
+>   #define FRAC_BITS 18
+>   
+> +/* Hardware is pre V4.1 */
+> +#define DSI_PHY_7NM_QUIRK_PRE_V4_1	BIT(0)
+>   /* Hardware is V4.1 */
+> -#define DSI_PHY_7NM_QUIRK_V4_1		BIT(0)
+> +#define DSI_PHY_7NM_QUIRK_V4_1		BIT(1)
+> +/* Hardware is V4.2 */
+> +#define DSI_PHY_7NM_QUIRK_V4_2		BIT(2)
+> +/* Hardware is V4.3 */
+> +#define DSI_PHY_7NM_QUIRK_V4_3		BIT(3)
+>   
+>   struct dsi_pll_config {
+>   	bool enable_ssc;
+> @@ -116,7 +122,7 @@ static void dsi_pll_calc_dec_frac(struct dsi_pll_7nm *pll, struct dsi_pll_config
+>   	dec_multiple = div_u64(pll_freq * multiplier, divider);
+>   	dec = div_u64_rem(dec_multiple, multiplier, &frac);
+>   
+> -	if (!(pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1))
+> +	if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1)
+>   		config->pll_clock_inverters = 0x28;
+>   	else if (pll_freq <= 1000000000ULL)
+>   		config->pll_clock_inverters = 0xa0;
+> @@ -197,16 +203,25 @@ static void dsi_pll_config_hzindep_reg(struct dsi_pll_7nm *pll)
+>   	void __iomem *base = pll->phy->pll_base;
+>   	u8 analog_controls_five_1 = 0x01, vco_config_1 = 0x00;
+>   
+> -	if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
+> +	if (!(pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1))
+>   		if (pll->vco_current_rate >= 3100000000ULL)
+>   			analog_controls_five_1 = 0x03;
+>   
+> +	if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
+>   		if (pll->vco_current_rate < 1520000000ULL)
+>   			vco_config_1 = 0x08;
+>   		else if (pll->vco_current_rate < 2990000000ULL)
+>   			vco_config_1 = 0x01;
+>   	}
+>   
+> +	if ((pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_2) ||
+> +	    (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3)) {
+> +		if (pll->vco_current_rate < 1520000000ULL)
+> +			vco_config_1 = 0x08;
+> +		else if (pll->vco_current_rate >= 2990000000ULL)
+> +			vco_config_1 = 0x01;
+> +	}
+> +
+>   	dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_FIVE_1,
+>   		      analog_controls_five_1);
+>   	dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_VCO_CONFIG_1, vco_config_1);
+> @@ -231,9 +246,9 @@ static void dsi_pll_config_hzindep_reg(struct dsi_pll_7nm *pll)
+>   	dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_PFILT, 0x2f);
+>   	dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_IFILT, 0x2a);
+>   	dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_IFILT,
+> -		  pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1 ? 0x3f : 0x22);
+> +		  !(pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1) ? 0x3f : 0x22);
+>   
+> -	if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
+> +	if (!(pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1)) {
+>   		dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_PERF_OPTIMIZE, 0x22);
+>   		if (pll->slave)
+>   			dsi_phy_write(pll->slave->phy->pll_base + REG_DSI_7nm_PHY_PLL_PERF_OPTIMIZE, 0x22);
+> @@ -788,7 +803,7 @@ static void dsi_phy_hw_v4_0_lane_settings(struct msm_dsi_phy *phy)
+>   	const u8 *tx_dctrl = tx_dctrl_0;
+>   	void __iomem *lane_base = phy->lane_base;
+>   
+> -	if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1)
+> +	if (!(phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1))
+>   		tx_dctrl = tx_dctrl_1;
+>   
+>   	/* Strength ctrl settings */
+> @@ -844,6 +859,12 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+>   	if (dsi_phy_hw_v4_0_is_pll_on(phy))
+>   		pr_warn("PLL turned on before configuring PHY\n");
+>   
+> +	/* Request for REFGEN READY */
+> +	if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) {
+> +		dsi_phy_write(phy->base + REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE10, 0x1);
+> +		udelay(500);
+> +	}
+> +
+>   	/* wait for REFGEN READY */
+>   	ret = readl_poll_timeout_atomic(base + REG_DSI_7nm_PHY_CMN_PHY_STATUS,
+>   					status, (status & BIT(0)),
+> @@ -858,23 +879,53 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+>   	/* Alter PHY configurations if data rate less than 1.5GHZ*/
+>   	less_than_1500_mhz = (clk_req->bitclk_rate <= 1500000000);
+>   
+> -	if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
+> -		vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
+> +	if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) {
+> +		if (phy->cphy_mode) {
+> +			vreg_ctrl_0 = 0x51;
+> +			glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x01;
+> +			glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x3b;
+> +			glbl_str_swi_cal_sel_ctrl = 0x00;
+> +			glbl_hstx_str_ctrl_0 = 0x00;
+> +		} else {
+> +			vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
+> +			glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x01;
+> +			glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x39;
+> +			glbl_str_swi_cal_sel_ctrl = 0x00;
+> +			glbl_hstx_str_ctrl_0 = 0x88;
+> +		}
+> +	} else if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_2) {
+> +		if (phy->cphy_mode) {
+> +			vreg_ctrl_0 = 0x51;
+> +			glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x01;
+> +			glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x3b;
+> +			glbl_str_swi_cal_sel_ctrl = 0x00;
+> +			glbl_hstx_str_ctrl_0 = 0x00;
+> +		} else {
+> +			vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
+> +			glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3c :  0x00;
+> +			glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x39;
+> +			glbl_str_swi_cal_sel_ctrl = 0x00;
+> +			glbl_hstx_str_ctrl_0 = 0x88;
+> +		}
+> +	} else if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
+>   		if (phy->cphy_mode) {
+> +			vreg_ctrl_0 = 0x51;
+>   			glbl_rescode_top_ctrl = 0x00;
+>   			glbl_rescode_bot_ctrl = 0x3c;
+>   		} else {
+> +			vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
+>   			glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x00;
+>   			glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x39 :  0x3c;
+>   		}
+>   		glbl_str_swi_cal_sel_ctrl = 0x00;
+>   		glbl_hstx_str_ctrl_0 = 0x88;
+>   	} else {
+> -		vreg_ctrl_0 = less_than_1500_mhz ? 0x5B : 0x59;
+>   		if (phy->cphy_mode) {
+> +			vreg_ctrl_0 = 0x51;
+>   			glbl_str_swi_cal_sel_ctrl = 0x03;
+>   			glbl_hstx_str_ctrl_0 = 0x66;
+>   		} else {
+> +			vreg_ctrl_0 = less_than_1500_mhz ? 0x5B : 0x59;
+>   			glbl_str_swi_cal_sel_ctrl = less_than_1500_mhz ? 0x03 : 0x00;
+>   			glbl_hstx_str_ctrl_0 = less_than_1500_mhz ? 0x66 : 0x88;
+>   		}
+> @@ -883,7 +934,6 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+>   	}
+>   
+>   	if (phy->cphy_mode) {
+> -		vreg_ctrl_0 = 0x51;
+>   		vreg_ctrl_1 = 0x55;
+>   		glbl_pemph_ctrl_0 = 0x11;
+>   		lane_ctrl0 = 0x17;
+> @@ -1017,6 +1067,13 @@ static void dsi_7nm_phy_disable(struct msm_dsi_phy *phy)
+>   		pr_warn("Turning OFF PHY while PLL is on\n");
+>   
+>   	dsi_phy_hw_v4_0_config_lpcdrx(phy, false);
+> +
+> +	/* Turn off REFGEN Vote */
+> +        dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE10, 0x0);
+> +        wmb();
+> +        /* Delay to ensure HW removes vote before PHY shut down */
+> +        udelay(2);
+> +
+>   	data = dsi_phy_read(base + REG_DSI_7nm_PHY_CMN_CTRL_0);
+>   
+>   	/* disable all lanes */
+> @@ -1079,6 +1136,7 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs = {
+>   	.max_pll_rate = 3500000000UL,
+>   	.io_start = { 0xae94400, 0xae96400 },
+>   	.num_dsi_phy = 2,
+> +	.quirks = DSI_PHY_7NM_QUIRK_PRE_V4_1,
+>   };
+>   
+>   const struct msm_dsi_phy_cfg dsi_phy_7nm_7280_cfgs = {
+> @@ -1102,3 +1160,57 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_7280_cfgs = {
+>   	.num_dsi_phy = 1,
+>   	.quirks = DSI_PHY_7NM_QUIRK_V4_1,
+>   };
+> +
+> +const struct msm_dsi_phy_cfg dsi_phy_5nm_8350_cfgs = {
+> +	.has_phy_lane = true,
+> +	.reg_cfg = {
+> +		.num = 1,
+> +		.regs = {
+> +			{"vdds", 37550, 0},
+> +		},
+> +	},
+> +	.ops = {
+> +		.enable = dsi_7nm_phy_enable,
+> +		.disable = dsi_7nm_phy_disable,
+> +		.pll_init = dsi_pll_7nm_init,
+> +		.save_pll_state = dsi_7nm_pll_save_state,
+> +		.restore_pll_state = dsi_7nm_pll_restore_state,
+> +		.set_continuous_clock = dsi_7nm_set_continuous_clock,
+> +	},
+> +	.min_pll_rate = 600000000UL,
+> +#ifdef CONFIG_64BIT
+> +	.max_pll_rate = 5000000000UL,
+> +#else
+> +	.max_pll_rate = ULONG_MAX,
+> +#endif
+> +	.io_start = { 0xae94400, 0xae96400 },
+> +	.num_dsi_phy = 2,
+> +	.quirks = DSI_PHY_7NM_QUIRK_V4_2,
+> +};
+> +
+> +const struct msm_dsi_phy_cfg dsi_phy_5nm_8450_cfgs = {
+> +	.has_phy_lane = true,
+> +	.reg_cfg = {
+> +		.num = 1,
+> +		.regs = {
+> +			{"vdds", 97800, 0},
+> +		},
+> +	},
+> +	.ops = {
+> +		.enable = dsi_7nm_phy_enable,
+> +		.disable = dsi_7nm_phy_disable,
+> +		.pll_init = dsi_pll_7nm_init,
+> +		.save_pll_state = dsi_7nm_pll_save_state,
+> +		.restore_pll_state = dsi_7nm_pll_restore_state,
+> +		.set_continuous_clock = dsi_7nm_set_continuous_clock,
+> +	},
+> +	.min_pll_rate = 600000000UL,
+> +#ifdef CONFIG_64BIT
+> +	.max_pll_rate = 5000000000UL,
+> +#else
+> +	.max_pll_rate = ULONG_MAX,
+> +#endif
+> +	.io_start = { 0xae94400, 0xae96400 },
+> +	.num_dsi_phy = 2,
+> +	.quirks = DSI_PHY_7NM_QUIRK_V4_3,
+> +};
