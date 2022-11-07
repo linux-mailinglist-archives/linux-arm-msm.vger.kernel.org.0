@@ -2,96 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F031761FB85
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 18:36:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 65B0261FB98
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 18:38:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232781AbiKGRgX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 12:36:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47800 "EHLO
+        id S232932AbiKGRh7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 12:37:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229695AbiKGRgX (ORCPT
+        with ESMTP id S232901AbiKGRh6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 12:36:23 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 982EF639C;
-        Mon,  7 Nov 2022 09:36:22 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Mon, 7 Nov 2022 12:37:58 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DED682126C;
+        Mon,  7 Nov 2022 09:37:57 -0800 (PST)
+Received: from [192.168.2.123] (109-252-117-140.nat.spd-mgts.ru [109.252.117.140])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 363CD611C0;
-        Mon,  7 Nov 2022 17:36:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBFCC433C1;
-        Mon,  7 Nov 2022 17:36:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667842581;
-        bh=AwBvVZIF9qlgA475hSkeq7qNy18IbEKQETL/LT5Aeqc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=gIH2JjakcJY2CmwdiPDKG8y+DI2GCGN/BUntJ6gnHTb9fCs3ZgiXxQF2mgS0g8d60
-         LKnoSnHdsrnXYZvkkQedSobAV7/FMDbQlsnp8QW2n6KP8VEE6NEsMfF2OlP2QpupQ9
-         ROMCdiFjpZQvXcJJdD5/PtrV6D0SGEoMyrTAt6PhcYPJ6bnpexzC6dXs8/UF42BER1
-         BiW3BdLi6k38YZcPbiq7t1wzTP/vpe2Uh8bWQY0tl4xdC24qljQeK2CJDQq5+sdWpQ
-         o46w6j54+j8YBFx8Y4WR09Hzup0DCcCx0kUw3Oh+FdNwpbhfGecJzhRoOLisvhKc6A
-         qnSAKuPfZ2ANA==
-Date:   Mon, 7 Nov 2022 11:36:18 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Melody Olvera <quic_molvera@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/5] dt-bindings: clock: Add RPMHCC bindings for
- QDU1000 and QRU1000
-Message-ID: <20221107173618.ws5rrqbrmtu22iut@builder.lan>
-References: <20221026190441.4002212-1-quic_molvera@quicinc.com>
- <20221026190441.4002212-3-quic_molvera@quicinc.com>
+        (Authenticated sender: dmitry.osipenko)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id AB1B366023A6;
+        Mon,  7 Nov 2022 17:37:51 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1667842676;
+        bh=UMRS4vM/GE6IwT0ij75XZK2yxYOoTzS0D0RuPVqVLQ0=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=miwcwDXpS7Bbvd1kg8ufWW8EYMDu/fgcPle5PVDEc/B45ktlgqIx4KYYA7QJIH0/S
+         by6GLLPhco/tY89MPdmT/s8ECZUVpumdsyezUNadhVFrBlk2dKSnpRR4YYHs5ifRqx
+         kuVjLNaEObN6eE/lFu1N0kKKLb+Hg6OZXx6pYEFM8ctFWBT+AgibmceYq8kqFMCEG5
+         kowqpdeAKxf0CNu91SEfqgK2XcDJWq/xRLM5BkdsTv9wWssGJ9nsGOSCQkZma8qL+/
+         vHXhwraRJ7N/LdEZD26enrecVwg8djUWKheSt++aa2448mbVzh/odGXyBvPK2wEDIp
+         kG1p1Gc0TCNDw==
+Message-ID: <daebe990-6032-15a1-175a-84e9e1ce2ca0@collabora.com>
+Date:   Mon, 7 Nov 2022 20:37:49 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221026190441.4002212-3-quic_molvera@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH v7 18/21] dma-buf: Move dma_buf_mmap() to dynamic locking
+ specification
+Content-Language: en-US
+To:     Daniel Vetter <daniel@ffwll.ch>
+Cc:     David Airlie <airlied@linux.ie>, Gerd Hoffmann <kraxel@redhat.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Chia-I Wu <olvaffe@gmail.com>,
+        Daniel Almeida <daniel.almeida@collabora.com>,
+        Gert Wollny <gert.wollny@collabora.com>,
+        Gustavo Padovan <gustavo.padovan@collabora.com>,
+        Daniel Stone <daniel@fooishbar.org>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Clark <robdclark@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        =?UTF-8?Q?Thomas_Hellstr=c3=b6m?= <thomas_os@shipmail.org>,
+        Qiang Yu <yuq825@gmail.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>,
+        Leon Romanovsky <leon@kernel.org>,
+        Juergen Gross <jgross@suse.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        Ruhl Michael J <michael.j.ruhl@intel.com>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Dmitry Osipenko <digetx@gmail.com>,
+        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
+        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        kernel@collabora.com, virtualization@lists.linux-foundation.org,
+        linux-rdma@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20221017172229.42269-1-dmitry.osipenko@collabora.com>
+ <20221017172229.42269-19-dmitry.osipenko@collabora.com>
+ <CAKMK7uFFwTfNYT2BrubYvUMrH4fEmtF=yJshUck3-gKYLGqxCg@mail.gmail.com>
+From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <CAKMK7uFFwTfNYT2BrubYvUMrH4fEmtF=yJshUck3-gKYLGqxCg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 26, 2022 at 12:04:38PM -0700, Melody Olvera wrote:
-> Add compatible strings for RPMHCC for QDU1000 and QRU1000.
+On 11/7/22 20:25, Daniel Vetter wrote:
+>> Move dma_buf_mmap() function to the dynamic locking specification by
+>> taking the reservation lock. Neither of the today's drivers take the
+>> reservation lock within the mmap() callback, hence it's safe to enforce
+>> the locking.
+>>
+>> Acked-by: Sumit Semwal <sumit.semwal@linaro.org>
+>> Acked-by: Christian König <christian.koenig@amd.com>
+>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Just noticed this while reading code ... this patch seems to have
+> missed dma_buf_mmap_internal()?
 > 
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> Might be good if at least some drivers gain a dma_resv_assert_held in
+> that path to make sure we're not quite this bad, together with fixing
+> this issue.
 
-This is independent of the GCC binding/driver, so I fixed up the
-$subject per Krzysztof's feedback and picked the two patches.
+Good catch! I'll prepare the patches.
 
-But like the PDC, it's better to post independent things separately.
+-- 
+Best regards,
+Dmitry
 
-Thanks,
-Bjorn
-
-> ---
->  Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
-> index 437a34b930e3..fccb91e78e49 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
-> @@ -17,6 +17,7 @@ description: |
->  properties:
->    compatible:
->      enum:
-> +      - qcom,qdu1000-rpmh-clk
->        - qcom,sc7180-rpmh-clk
->        - qcom,sc7280-rpmh-clk
->        - qcom,sc8180x-rpmh-clk
-> -- 
-> 2.25.1
-> 
