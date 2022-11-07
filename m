@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC12A61F266
+	by mail.lfdr.de (Postfix) with ESMTP id 5FB0B61F265
 	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 13:06:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231563AbiKGMGF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S231526AbiKGMGF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 7 Nov 2022 07:06:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35732 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229638AbiKGMGD (ORCPT
+        with ESMTP id S231563AbiKGMGE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 07:06:03 -0500
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E7471163
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 04:05:58 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id b9so15902323ljr.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 04:05:58 -0800 (PST)
+        Mon, 7 Nov 2022 07:06:04 -0500
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CFD813F04
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 04:05:59 -0800 (PST)
+Received: by mail-lj1-x242.google.com with SMTP id s24so15870706ljs.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 04:05:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=sIQpUknokjs3QFKaGMUkV8vshn2qA+chP0pID9rWGu0=;
-        b=hUjzv4uq6McMIRbtnD927Xh4H4zD7dS3mU/clZiqOlMDQy73URdVadD2ucACl++UVp
-         +6JIDQGoN84wGy7oLBtjkHsNuAZvQ1Onbor2DLeF8DKHn62xtyfAIlbMJ/ryRA6+VmT/
-         Z/HAbqb3iloLuCHTr+16utOMjBvnUPhyrLsOf8iaeqweR2LV8GDN8V6IRykNKK3aAmAI
-         MRwmamZc6s9o6knDEzNuwSj7C+muM7DJcsnPxBmJZ1tIoA0jSXbttDbmw8qehE35Hmpl
-         gkgkLSQPUAA9GUluwp7bdeP7tWenzAFKnT6PCCWre0NoASrCYL0zdGYI5aCL0nvVBSKD
-         sMpw==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xIrNmqiJLZwwxFebaV7gZLbwg7xBYzA/fdAgPd6xUNs=;
+        b=qP4oDpLm1JVhZvJqh08mZPyIgbVa35QUUUVzh+K2jXBNSF+Amkgh+6aeDv6Sv7+KzX
+         tFaB6mgkna2SlsEOU4qat/Bc+A/M7O90P1p4YG+y7CB2It8w52/1MH70RundEuHeave3
+         9aC2CYRczPJT1rFQvM15coMMLz19O3dELC7MYnEZW10B5BJqztDCmz+8H1xqHkL1dPTb
+         j3K2R5kTK3JYtUHke92IyrNbMTRcDFNKJIVguUl6avmVahsI0VDlhpnzJfc/V/xOxp3U
+         XmqYSIS/Al7ZQlm5XavJzoUnT13vgsiqX+iYj/MhfT8g7mC+yePHH3x2dO1Sx+qjoX0g
+         Ezcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sIQpUknokjs3QFKaGMUkV8vshn2qA+chP0pID9rWGu0=;
-        b=yjy5x88wP3OuUMES4TK2Uq/28PL64GTp5rCZ3zo/IqSQtA4cJSfe334uHDpbLo7m4X
-         GIBlex4t+nKrLJl2mx6SkXmeQFOotVfAs8QEXKLjySz36CF6pNRMUJ8WD93gj731bNZF
-         NBtGv6mztsYkUh1jmngQ1p5B5zwnjygXwVyr6MCZIIGdn0Zft80xEpSmvLMwAhzW2EqN
-         dayuQMkhP1lo9YcxXKHMM8YI8MtF5LLcegY2smxjUFfsNbsPfDA+NxOH6r5C9pomSU8o
-         sOJTtS9dz0ERZrIVQcReKXSkti74mwfjh/DdM2HltinP5yeL9yrL8xQuKt4p/JWKcUdv
-         QaPA==
-X-Gm-Message-State: ACrzQf1Z3ZNUoqHglGzM9NMJQsMPFEFn60NuXmdOJW9zPctNuVM8SQiQ
-        YI5nxelAg87WaRK9C2UfDniF15wKgqdZXQH1
-X-Google-Smtp-Source: AMsMyM7uVZOfkrfUV29LP23hpD30iklFEu0Lr9zkTjjTqUbzCG3iCT0qPYlZ0RAEcSDbQkDUDY+++A==
-X-Received: by 2002:a2e:bc26:0:b0:277:f49:b234 with SMTP id b38-20020a2ebc26000000b002770f49b234mr18054013ljf.1.1667822756088;
-        Mon, 07 Nov 2022 04:05:56 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xIrNmqiJLZwwxFebaV7gZLbwg7xBYzA/fdAgPd6xUNs=;
+        b=svHo0HgiSCHhd26bTPQLw9ikkSTlwcewwYYSZ84Y46oaZufGiVZc2TJJJFvzTLBEKS
+         PZ3DD+GUaaUrVmhQ7xo2wgwOatJ35e/4GtBMkGNBgjjWyjXTmCD1CmZHQ/q1JMvjG331
+         gnLXKm4ok+fem/DOurlJrceKLedYdt8Mv1wvDGVVhza0A4s8ZiWry7NAIck/lO66i489
+         Zh4+e4G2CygaQjIx8D2neci3NmK3d9WO2s+O5Ap+4ssZ/gUVA3KcbohPvqnBZwRvIvHS
+         z1Ok1XmIQa4C/jN6eySL7Gn9XNjFTzFJEUdbxBd9ZM/RjC02y+iU+mvpBEzNCTUglM1Q
+         6BTA==
+X-Gm-Message-State: ACrzQf2Y8W5NSZXTdbDMwRT0w8/QGYOI9WyUBzqYOSV2duYaNo1JEToe
+        cDD8HL4VUHPI6OUYP8zWHTYe9UEL+DqOoGtA
+X-Google-Smtp-Source: AMsMyM6vQWqwwrJjoZCwGs8Z2l/oq/e1EhUtEKNymR6bcIzagKBlycSSl3k/Hk8koyhrLUVYQpYGYw==
+X-Received: by 2002:a2e:2a86:0:b0:277:203:e3e9 with SMTP id q128-20020a2e2a86000000b002770203e3e9mr18045689ljq.163.1667822757570;
+        Mon, 07 Nov 2022 04:05:57 -0800 (PST)
 Received: from localhost.localdomain ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id p13-20020ac24ecd000000b0049936272173sm1200065lfr.204.2022.11.07.04.05.54
+        by smtp.gmail.com with ESMTPSA id p13-20020ac24ecd000000b0049936272173sm1200065lfr.204.2022.11.07.04.05.56
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 07 Nov 2022 04:05:55 -0800 (PST)
+        Mon, 07 Nov 2022 04:05:57 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org
@@ -63,10 +64,12 @@ Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@somainline.org>,
         Thierry Reding <treding@nvidia.com>,
         Lorenzo Pieralisi <lpieralisi@kernel.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 1/4] dt-bindings: arm: cpus: Add Kryo 660 CPUs
-Date:   Mon,  7 Nov 2022 13:05:34 +0100
-Message-Id: <20221107120539.12305-1-konrad.dybcio@linaro.org>
+Subject: [PATCH v2 2/4] dt-bindings: arm: qcom: Document SM6375 & Xperia 10 IV
+Date:   Mon,  7 Nov 2022 13:05:35 +0100
+Message-Id: <20221107120539.12305-2-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.32.0 (Apple Git-132)
+In-Reply-To: <20221107120539.12305-1-konrad.dybcio@linaro.org>
+References: <20221107120539.12305-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,30 +84,43 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Konrad Dybcio <konrad.dybcio@somainline.org>
 
-Add a compatible for Kryo 660 CPUs found in at least Qualcomm SM6375.
+Add compatibles for Sony Xperia 10 IV (PDX225) and the SM6375 SoC
+it's based on.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
 Changes since v1:
 - Pick up tags
 
- Documentation/devicetree/bindings/arm/cpus.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
-index 5c13b73e4d57..b2058345bb8e 100644
---- a/Documentation/devicetree/bindings/arm/cpus.yaml
-+++ b/Documentation/devicetree/bindings/arm/cpus.yaml
-@@ -183,6 +183,7 @@ properties:
-       - qcom,kryo485
-       - qcom,kryo560
-       - qcom,kryo570
-+      - qcom,kryo660
-       - qcom,kryo685
-       - qcom,kryo780
-       - qcom,scorpion
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 207e28260206..35e22cf15f9f 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -56,6 +56,7 @@ description: |
+         sdx65
+         sm6125
+         sm6350
++        sm6375
+         sm7225
+         sm8150
+         sm8250
+@@ -718,6 +719,11 @@ properties:
+               - sony,pdx213
+           - const: qcom,sm6350
+ 
++      - items:
++          - enum:
++              - sony,pdx225
++          - const: qcom,sm6375
++
+       - items:
+           - enum:
+               - fairphone,fp4
 -- 
 2.38.1
 
