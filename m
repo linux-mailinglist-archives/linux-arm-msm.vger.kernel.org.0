@@ -2,130 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECC2E61E863
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 02:44:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB08061E892
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 03:22:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230291AbiKGBoO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Nov 2022 20:44:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43270 "EHLO
+        id S230146AbiKGCWH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Nov 2022 21:22:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229955AbiKGBoN (ORCPT
+        with ESMTP id S230136AbiKGCWH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Nov 2022 20:44:13 -0500
-Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id B323CD118;
-        Sun,  6 Nov 2022 17:44:11 -0800 (PST)
-Received: from localhost.localdomain (unknown [124.16.138.125])
-        by APP-01 (Coremail) with SMTP id qwCowACHjHTlYmhjCXO0CA--.36359S2;
-        Mon, 07 Nov 2022 09:44:06 +0800 (CST)
-From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
-To:     andersson@kernel.org
-Cc:     quic_jjohnson@quicinc.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Subject: [PATCH v6] soc: qcom: apr: Add check for idr_alloc and of_property_read_string_index
-Date:   Mon,  7 Nov 2022 09:44:03 +0800
-Message-Id: <20221107014403.3606-1-jiasheng@iscas.ac.cn>
-X-Mailer: git-send-email 2.25.1
+        Sun, 6 Nov 2022 21:22:07 -0500
+Received: from m1311.mail.163.com (m1311.mail.163.com [220.181.13.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C839CBC0A;
+        Sun,  6 Nov 2022 18:22:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=ScMxi
+        eHTPar3YkNXAD90hEM0gkbOXRibaEF0UYr+a40=; b=jNQS6yQ2krnrEp2+Jnyxg
+        orqjhV34FsZ3kiuG/zMsO+7mVxwCmpQJl5RiDlO7Ex1QFgULcUPJbGWA3OK2K+Zn
+        z+eYU88kY+yKzo3Er5L38qjx6zOwzNxJ2B7zbX6IYvwAf42reNqRwJ/QzmX5X4/S
+        8P6amf3E0XgMRXHvphBUUw=
+Received: from slark_xiao$163.com ( [223.104.77.212] ) by
+ ajax-webmail-wmsvr11 (Coremail) ; Mon, 7 Nov 2022 10:21:36 +0800 (CST)
+X-Originating-IP: [223.104.77.212]
+Date:   Mon, 7 Nov 2022 10:21:36 +0800 (CST)
+From:   "Slark Xiao" <slark_xiao@163.com>
+To:     "Manivannan Sadhasivam" <mani@kernel.org>
+Cc:     gregkh@linuxfoundation.org, loic.poulain@linaro.org,
+        dnlplm@gmail.com, yonglin.tan@outlook.com,
+        fabio.porcedda@gmail.com, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re:Re: [PATCH] bus: mhi: host: pci_generic: Add macro for some vids
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20220113(9671e152)
+ Copyright (c) 2002-2022 www.mailtech.cn 163com
+In-Reply-To: <20221103125009.GH8434@thinkpad>
+References: <20221102024437.15248-1-slark_xiao@163.com>
+ <20221103125009.GH8434@thinkpad>
+X-NTES-SC: AL_QuydBfuTuE4i4CGYZOkWkkcRjuo+UMC0vfgh249fPJs0vinO+wQ5bV9mJX3b/Pi2Oh2BkDioQSlTx+1FY4BWRKKqNzdpQRrMEfI6HYBHuawl
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qwCowACHjHTlYmhjCXO0CA--.36359S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Ar43Xw48GFy5Xw4DGw18Grg_yoW8CFy3pa
-        12vas8Cry8KFsa9ry3Zr1kWa45Ka1xtaykG3s7J3sI9rn8XrnF9rnrtFy09rW5CFZ3Aa1U
-        XF1aqF95CF4UurJanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDU0xBIdaVrnRJUUUkq14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-        rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-        1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-        6F4UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr
-        1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv
-        7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r
-        1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY02Avz4vE14v_
-        KwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r
-        1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij
-        64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr
-        0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF
-        0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7VUbLiSPUUUUU==
-X-Originating-IP: [124.16.138.125]
-X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
-X-Spam-Status: No, score=-0.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        RCVD_IN_SBL_CSS,SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+Message-ID: <cbb018a.ab1.1844fe4a7e8.Coremail.slark_xiao@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: C8GowAAHVZWwa2hjQFdcAA--.10820W
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/xtbCdQCyZGBbGFE3vwAAsZ
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As idr_alloc() and of_property_read_string_index() can return negative
-numbers, it should be better to check the return value and deal with
-the exception.
-Therefore, it should be better to use goto statement to stop and return
-error.
-
-Fixes: 6adba21eb434 ("soc: qcom: Add APR bus driver")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
----
-Changelog:
-
-v5 -> v6:
-
-1. Remove the put_device.
-
-v4 -> v5:
-
-1. Change dev_err and goto statements.
-
-v3 -> v4:
-
-1. Change the title and remove the kfree.
-
-v2 -> v3:
-
-1. Change the title and use goto statement to deal with the exception.
-
-v1 -> v2:
-
-1. Add dev_err and put_device in order to maintain the code consistency.
----
- drivers/soc/qcom/apr.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
-index b4046f393575..cd44f17dad3d 100644
---- a/drivers/soc/qcom/apr.c
-+++ b/drivers/soc/qcom/apr.c
-@@ -454,11 +454,19 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 	adev->dev.driver = NULL;
- 
- 	spin_lock(&apr->svcs_lock);
--	idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
-+	ret = idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
- 	spin_unlock(&apr->svcs_lock);
-+	if (ret < 0) {
-+		dev_err(dev, "idr_alloc failed: %d\n", ret);
-+		goto out;
-+	}
- 
--	of_property_read_string_index(np, "qcom,protection-domain",
--				      1, &adev->service_path);
-+	ret = of_property_read_string_index(np, "qcom,protection-domain",
-+					    1, &adev->service_path);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to read second value of qcom,protection-domain\n");
-+		goto out;
-+	}
- 
- 	dev_info(dev, "Adding APR/GPR dev: %s\n", dev_name(&adev->dev));
- 
-@@ -468,6 +476,7 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 		put_device(&adev->dev);
- 	}
- 
-+out:
- 	return ret;
- }
- 
--- 
-2.25.1
-
+CgoKCgoKCgoKCgoKCgoKCkF0IDIwMjItMTEtMDMgMjA6NTA6MDksICJNYW5pdmFubmFuIFNhZGhh
+c2l2YW0iIDxtYW5pQGtlcm5lbC5vcmc+IHdyb3RlOgo+T24gV2VkLCBOb3YgMDIsIDIwMjIgYXQg
+MTA6NDQ6MzdBTSArMDgwMCwgU2xhcmsgWGlhbyB3cm90ZToKPj4gVG8gbWFrZSBjb2RlIG5lYXQg
+YW5kIGZvciBjb252ZW5pZW5jZSBwdXJwb3NlLCB1c2luZyBtYWNybyBmb3IKPj4gc29tZSB2aWRz
+Lgo+Cj5zL3VzaW5nL3VzZQo+cy92aWRzL1ZJRHMKPgo+PiBSZWZlciB0byBwcmV2aW91cyBwYXRj
+aCBpbiBwY2lfaWRzLmggc2lkZSwgdGhleSBhcmUKPj4gbm90IGFsbG93ZWQgdG8gYWRkIG5ldyBl
+bnRyaWVzIG9mIHNpbmdsZSBkcml2ZXIgbmVlZGVkLiBTbyB3ZQo+PiBhZGQgaXQgaW4gb3VyIGxv
+Y2FsIGZpbGUuCj4+Cj4KPlJlZmVyZW5jZSB0byB0aGUgcHJldmlvdXMgcGF0Y2ggaGFzIG5vIHJl
+bGF0aW9uc2hpcCB3aXRoIHRoaXMgY29tbWl0IG9uY2UKPm1lcmdlZC4gSG93IGFib3V0LAo+Cj4i
+VGhlc2UgbWFjcm9zIGFyZSBzdXBwb3NlZCB0byBiZSBhZGRlZCB0byBwY2lfaWRzLmguIEJ1dCB1
+bnRpbCB0aGUgbWFjcm9zIGFyZQo+dXNlZCBpbiBtdWx0aXBsZSBwbGFjZXMsIGl0IGlzIG5vdCBy
+ZWNvbW1lbmRlZC4gU28gYWRkaW5nIGl0IGxvY2FsbHkgZm9yIG5vdy4iCj4gCj4+IFNpZ25lZC1v
+ZmYtYnk6IFNsYXJrIFhpYW8gPHNsYXJrX3hpYW9AMTYzLmNvbT4KPj4gLS0tCj4+ICBkcml2ZXJz
+L2J1cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5jIHwgMTggKysrKysrKysrKystLS0tLS0tCj4+ICAx
+IGZpbGUgY2hhbmdlZCwgMTEgaW5zZXJ0aW9ucygrKSwgNyBkZWxldGlvbnMoLSkKPj4gCj4+IGRp
+ZmYgLS1naXQgYS9kcml2ZXJzL2J1cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5jIGIvZHJpdmVycy9i
+dXMvbWhpL2hvc3QvcGNpX2dlbmVyaWMuYwo+PiBpbmRleCBjNDI1OWNiMmQyODkuLjVhYmM3Nzhh
+NTI5MCAxMDA2NDQKPj4gLS0tIGEvZHJpdmVycy9idXMvbWhpL2hvc3QvcGNpX2dlbmVyaWMuYwo+
+PiArKysgYi9kcml2ZXJzL2J1cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5jCj4+IEBAIC0yNCw2ICsy
+NCwxMCBAQAo+PiAgCj4+ICAjZGVmaW5lIEhFQUxUSF9DSEVDS19QRVJJT0QgKEhaICogMikKPj4g
+IAo+Cj5BZGQgYSBjb21tZW50LAo+Cj4vKiBQQ0kgVklEIGRlZmluaXRpb25zICovCj4KPj4gKyNk
+ZWZpbmUgUENJX1ZFTkRPUl9JRF9USEFMRVMJMHgxMjY5Cj4+ICsKPgo+Tm8gbmVlZCBvZiBuZXds
+aW5lCj4KPj4gKyNkZWZpbmUgUENJX1ZFTkRPUl9JRF9RVUVDVEVMCTB4MWVhYwo+PiArCj4KPkp1
+c3QgdXNlIGEgc3BhY2UgYWZ0ZXIgUENJX1ZFTkRPUl9JRF9RVUVDVEVMIGxpa2UgYWJvdmUuCj4K
+PlRoYW5rcywKPk1hbmkKSGkgTWFuaSwKSSBkaWRuJ3QgZ2V0IHRoZSBwb2ludCBvZiB0aGlzIGZv
+cm1hdCBpc3N1ZS4KRG8geW91IG1lYW4gcmVtb3ZlIHRoYXQgbmV3bGluZSBiZXR3ZWVuIHRoZXNl
+IDIgZGVmaW5pdGlvbnM/Cj4KPj4gIC8qKgo+PiAgICogc3RydWN0IG1oaV9wY2lfZGV2X2luZm8g
+LSBNSEkgUENJIGRldmljZSBzcGVjaWZpYyBpbmZvcm1hdGlvbgo+PiAgICogQGNvbmZpZzogTUhJ
+IGNvbnRyb2xsZXIgY29uZmlndXJhdGlvbgo+PiBAQCAtNTU3LDExICs1NjEsMTEgQEAgc3RhdGlj
+IGNvbnN0IHN0cnVjdCBwY2lfZGV2aWNlX2lkIG1oaV9wY2lfaWRfdGFibGVbXSA9IHsKPj4gIAkJ
+LmRyaXZlcl9kYXRhID0gKGtlcm5lbF91bG9uZ190KSAmbWhpX3RlbGl0X2ZuOTkwX2luZm8gfSwK
+Pj4gIAl7IFBDSV9ERVZJQ0UoUENJX1ZFTkRPUl9JRF9RQ09NLCAweDAzMDgpLAo+PiAgCQkuZHJp
+dmVyX2RhdGEgPSAoa2VybmVsX3Vsb25nX3QpICZtaGlfcWNvbV9zZHg2NV9pbmZvIH0sCj4+IC0J
+eyBQQ0lfREVWSUNFKDB4MWVhYywgMHgxMDAxKSwgLyogRU0xMjBSLUdMIChzZHgyNCkgKi8KPj4g
+Kwl7IFBDSV9ERVZJQ0UoUENJX1ZFTkRPUl9JRF9RVUVDVEVMLCAweDEwMDEpLCAvKiBFTTEyMFIt
+R0wgKHNkeDI0KSAqLwo+PiAgCQkuZHJpdmVyX2RhdGEgPSAoa2VybmVsX3Vsb25nX3QpICZtaGlf
+cXVlY3RlbF9lbTF4eF9pbmZvIH0sCj4+IC0JeyBQQ0lfREVWSUNFKDB4MWVhYywgMHgxMDAyKSwg
+LyogRU0xNjBSLUdMIChzZHgyNCkgKi8KPj4gKwl7IFBDSV9ERVZJQ0UoUENJX1ZFTkRPUl9JRF9R
+VUVDVEVMLCAweDEwMDIpLCAvKiBFTTE2MFItR0wgKHNkeDI0KSAqLwo+PiAgCQkuZHJpdmVyX2Rh
+dGEgPSAoa2VybmVsX3Vsb25nX3QpICZtaGlfcXVlY3RlbF9lbTF4eF9pbmZvIH0sCj4+IC0JeyBQ
+Q0lfREVWSUNFKDB4MWVhYywgMHgyMDAxKSwgLyogRU0xMjBSLUdMIGZvciBGQ0NMIChzZHgyNCkg
+Ki8KPj4gKwl7IFBDSV9ERVZJQ0UoUENJX1ZFTkRPUl9JRF9RVUVDVEVMLCAweDIwMDEpLCAvKiBF
+TTEyMFItR0wgZm9yIEZDQ0wgKHNkeDI0KSAqLwo+PiAgCQkuZHJpdmVyX2RhdGEgPSAoa2VybmVs
+X3Vsb25nX3QpICZtaGlfcXVlY3RlbF9lbTF4eF9pbmZvIH0sCj4+ICAJLyogVDk5VzE3NSAoc2R4
+NTUpLCBCb3RoIGZvciBlU0lNIGFuZCBOb24tZVNJTSAqLwo+PiAgCXsgUENJX0RFVklDRShQQ0lf
+VkVORE9SX0lEX0ZPWENPTk4sIDB4ZTBhYiksCj4+IEBAIC01ODUsMTYgKzU4OSwxNiBAQCBzdGF0
+aWMgY29uc3Qgc3RydWN0IHBjaV9kZXZpY2VfaWQgbWhpX3BjaV9pZF90YWJsZVtdID0gewo+PiAg
+CXsgUENJX0RFVklDRShQQ0lfVkVORE9SX0lEX0ZPWENPTk4sIDB4ZTBkOSksCj4+ICAJCS5kcml2
+ZXJfZGF0YSA9IChrZXJuZWxfdWxvbmdfdCkgJm1oaV9mb3hjb25uX3NkeDY1X2luZm8gfSwKPj4g
+IAkvKiBNVjMxLVcgKENpbnRlcmlvbikgKi8KPj4gLQl7IFBDSV9ERVZJQ0UoMHgxMjY5LCAweDAw
+YjMpLAo+PiArCXsgUENJX0RFVklDRShQQ0lfVkVORE9SX0lEX1RIQUxFUywgMHgwMGIzKSwKPj4g
+IAkJLmRyaXZlcl9kYXRhID0gKGtlcm5lbF91bG9uZ190KSAmbWhpX212MzFfaW5mbyB9LAo+PiAg
+CS8qIE1WMzEtVyAoQ2ludGVyaW9uKSwgYmFzZWQgb24gbmV3IGJhc2VsaW5lICovCj4+IC0JeyBQ
+Q0lfREVWSUNFKDB4MTI2OSwgMHgwMGI0KSwKPj4gKwl7IFBDSV9ERVZJQ0UoUENJX1ZFTkRPUl9J
+RF9USEFMRVMsIDB4MDBiNCksCj4+ICAJCS5kcml2ZXJfZGF0YSA9IChrZXJuZWxfdWxvbmdfdCkg
+Jm1oaV9tdjMxX2luZm8gfSwKPj4gIAkvKiBNVjMyLVdBIChDaW50ZXJpb24pICovCj4+IC0JeyBQ
+Q0lfREVWSUNFKDB4MTI2OSwgMHgwMGJhKSwKPj4gKwl7IFBDSV9ERVZJQ0UoUENJX1ZFTkRPUl9J
+RF9USEFMRVMsIDB4MDBiYSksCj4+ICAJCS5kcml2ZXJfZGF0YSA9IChrZXJuZWxfdWxvbmdfdCkg
+Jm1oaV9tdjMyX2luZm8gfSwKPj4gIAkvKiBNVjMyLVdCIChDaW50ZXJpb24pICovCj4+IC0JeyBQ
+Q0lfREVWSUNFKDB4MTI2OSwgMHgwMGJiKSwKPj4gKwl7IFBDSV9ERVZJQ0UoUENJX1ZFTkRPUl9J
+RF9USEFMRVMsIDB4MDBiYiksCj4+ICAJCS5kcml2ZXJfZGF0YSA9IChrZXJuZWxfdWxvbmdfdCkg
+Jm1oaV9tdjMyX2luZm8gfSwKPj4gIAl7ICB9Cj4+ICB9Owo+PiAtLSAKPj4gMi4xNy4xCj4+IAo+
+Cj4tLSAKPuCuruCuo+Cuv+CuteCuo+CvjeCuo+CuqeCvjSDgrprgrqTgrr7grprgrr/grrXgrq7g
+r40K
