@@ -2,64 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EED76203D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 00:36:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B5276203DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 00:38:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232411AbiKGXgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 18:36:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57286 "EHLO
+        id S232283AbiKGXih (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 18:38:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232391AbiKGXgJ (ORCPT
+        with ESMTP id S232110AbiKGXig (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 18:36:09 -0500
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBE8B5FF6;
-        Mon,  7 Nov 2022 15:36:04 -0800 (PST)
-Received: by mail-pg1-x529.google.com with SMTP id s196so11913840pgs.3;
-        Mon, 07 Nov 2022 15:36:04 -0800 (PST)
+        Mon, 7 Nov 2022 18:38:36 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FEF3140C9
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 15:38:35 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id m14-20020a17090a3f8e00b00212dab39bcdso16350906pjc.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 15:38:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=H6+t9BRAAElMuyAd9jyg2LbJwD0gdcLK+WHij3+TgOQ=;
-        b=Y9dKowagG/XvHm+0TMIIOSnLsxlrWwlZsxSRqyNr9WaHIqQ15ZRys4gg3i3ZxbLAv/
-         P9qg5BVFP0liD+HoB/3rKLAN0ioiCaeqInm8/R4dfoEMErqroQ4KJsl/myXFepxOfDOh
-         h4tsaCDdoY6mzCVfTzQ9mv8uveer2lBcHLaYcIDE1DnykUjbn/ZJgH7H4gD9WZ/vWacI
-         Kr0K9q4v7a3ZfvihQfKbPrjYkyBpORSXXPcx4JFSbitBwaVaOdFMiTFwoxK55focdox/
-         Wp3pj3YyI5vtLjfFszntwNjp+pBe7jIGdCEprESurQGt+ti2zdAlKXdHXHV+4aj4QYTc
-         b3eA==
+        bh=pJoui0QTjH7+JY5QxKtsNZXHrYepTm8gLqppY/5uVl0=;
+        b=cOQPoEYo5sBoGz+A5Ih1+I6ERPnCL25YURQrwXXiQclLDQ9QXO0Ht8OZLO/5crg2rA
+         1h3pRCQkE0syK1ko0t2JEloZh7pTs+Wj/XVO6N+YaEVl3vteQHC7/kBBLOASjsQ+w29m
+         WpsZN3QzbGw/Uyvwmyh7kpGj6JZcE9mUsGk8HrP8ok1/tBovb9WJFAMIo5lv6BcPIlAk
+         wCEB+WFO9zmdAoZRjblCJ0xICdHxsZhYpZyNs+HUUzbnQs02jqtQuH8iIob+VbHLz/3O
+         +oECZboUg9we/CWUebF25notuwyY/Uurh76FHDomlTJxkpDr0r9F+VEtZOa/iV7G+r1o
+         /a/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=H6+t9BRAAElMuyAd9jyg2LbJwD0gdcLK+WHij3+TgOQ=;
-        b=yZJlOS593F1Xcb2m81sLvmjBGNn7PXyaT/XtAVY+Ivcxth/d3AUNGot2HjBESlqWet
-         LkuxlqhZEsgbSdXVBEkI869WhmBd0EShIIV6jqDTYUHv+8qrX4Qltq9LrxOaSV6LNv06
-         DSlWJJ2xucECKL1DXSD67W53GwbPzT04GKOYPx61f0sQBQlVEA3OTBl3/wjovwQ77Q7v
-         tK8lDXrDFZBKyjPgl7YWx0WaqjxeOvFBJU6Xy3YcrgzGpU3B44QoziloAxElH9SxK1Er
-         a3LbQ8Ix3zne4zQYdAwWcl6MFs4nN08SfPjU6OPGYGfI0b1y9IV8H2HmpSUqUJnVWBek
-         xVMA==
-X-Gm-Message-State: ACrzQf2M32KnHK3K0J/tVaxT7qDh4cLaM9Ay7Ppmg5wNx26pQsbcXNTH
-        OGXT/JT+Tw3q4+oW4Crg+uAZnt/5I+sFiDEXgxA=
-X-Google-Smtp-Source: AMsMyM4I7+RU/c1gxy+M/sT3xI/aGM5k9qiVJeKfAcM251JephW6u7ff0aPsPIxtFOTMF88/Qw8JhqGe8eSqGKUQsME=
-X-Received: by 2002:a62:1b11:0:b0:56d:568d:c293 with SMTP id
- b17-20020a621b11000000b0056d568dc293mr45767339pfb.41.1667864164431; Mon, 07
- Nov 2022 15:36:04 -0800 (PST)
+        bh=pJoui0QTjH7+JY5QxKtsNZXHrYepTm8gLqppY/5uVl0=;
+        b=ZClt3G418hO6fYlLJ69JsVugoK1H0GJO69yn1brjYcFT/bWyaF4yDSTKBY1w7WB4Gh
+         spoDLP8DhhnOX2uvFTQNFjGNTyKR6GYNHD6MmopkrdCkrQyHUjTK6esLjUcgF3SUGTCe
+         8ENNbTj5qk1Ed9S0IDupnLV1wBbhmzQwohaqCkWu592o9y1WOQ4YSb4UJrG2LZ04xwmh
+         vihUusz3bLSEDStX5PZvfLCzjIxmng0X7On2KH2YktTFkmf+wiSTLuBRKiKyaCf2SYtC
+         ql+8nt0gy9CKlcI0b6ooEOQi3OyxFhbfXdz6okETi+PfZsCelvxJsCZwSE+4fIp3OS9u
+         yADQ==
+X-Gm-Message-State: ACrzQf3sIoUjB6wyoMrQ5Wex7QOCDQMhqQKNL2upm1zJbaZBviKYHYsK
+        My+/HDrwbc2HobfmsY44lQl0G/lEPs+39TmO3DM=
+X-Google-Smtp-Source: AMsMyM4y43dY/NFouUjTBykfyDw6rEsWjWjUzB+SR3YWoHqcel0gNj6ED9q8GniIeg4UOzt2BpcYQaInbhS3sqwBGTU=
+X-Received: by 2002:a17:902:7d8b:b0:187:3030:ab02 with SMTP id
+ a11-20020a1709027d8b00b001873030ab02mr39797597plm.80.1667864314602; Mon, 07
+ Nov 2022 15:38:34 -0800 (PST)
 MIME-Version: 1.0
-References: <20221107145522.6706-1-konrad.dybcio@linaro.org> <20221107145522.6706-9-konrad.dybcio@linaro.org>
-In-Reply-To: <20221107145522.6706-9-konrad.dybcio@linaro.org>
+References: <20221107145522.6706-1-konrad.dybcio@linaro.org>
+In-Reply-To: <20221107145522.6706-1-konrad.dybcio@linaro.org>
 From:   Petr Vorel <petr.vorel@gmail.com>
-Date:   Tue, 8 Nov 2022 00:35:53 +0100
-Message-ID: <CAB1t1CyNJqEeEkmd0vOgexkrjP=bB-KSMxuDgzswG7MMkDksgA@mail.gmail.com>
-Subject: Re: [PATCH 08/11] arm64: dts: qcom: msm8992-*: Fix up comments
+Date:   Tue, 8 Nov 2022 00:38:22 +0100
+Message-ID: <CAB1t1CwFwuL+dPqNH-9Zivye7onddXGrj=hcsx+7eFFT1bS-JA@mail.gmail.com>
+Subject: Re: [PATCH 00/11] Minor DT comment cleanups
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org,
-        patches@linaro.org, Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+        patches@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
@@ -74,6 +71,7 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 Hi Konrad,
 
 Reviewed-by: Petr Vorel <petr.vorel@gmail.com>
+for whole patchset.
 
 Kind regards,
 Petr
