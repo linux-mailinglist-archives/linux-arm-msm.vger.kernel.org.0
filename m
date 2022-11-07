@@ -2,100 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6693861F217
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 12:43:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2415261F21E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 12:46:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229638AbiKGLnA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 06:43:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53360 "EHLO
+        id S231431AbiKGLqb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 06:46:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231901AbiKGLm4 (ORCPT
+        with ESMTP id S231406AbiKGLqa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 06:42:56 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D12121A055;
-        Mon,  7 Nov 2022 03:42:55 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 83C9AB8104F;
-        Mon,  7 Nov 2022 11:42:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F494C4347C;
-        Mon,  7 Nov 2022 11:42:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667821373;
-        bh=9eowJ01JpeSKROTBqHNO82UhWBEwBAPJBY2Eh1IN4WM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Llv1irvrrLGrhfTI02f2lfZjLN3cvPl/cefR2v5PXyszVGC7nvrZCGHY1TPJxtxdu
-         BvSZ3axZ8OGIYKQVaKHrg2SiAjVgcgVOYfkkIW50cuSDvPwECIczCUV1iuinKpLDdO
-         g4SVGsVdXT6e2wPiFhq5LYLWEXxOI8Xj1YiH+eCTCNXRJo7lfZR/2+TUDVf6V2YUkj
-         UNVWDJ2kldy4UigRFHZN8uvMZ5keGCC7fKQ4t+pjFFN/4o1VZN0egADZ6f+TeGC2SP
-         y9Gky7UlT8O/JvUbE5qQ8PdMppMR9wkvJpYhtZO+i5LLC0zvaybCn4Au2xjfmg4dng
-         aH49f/Fi0uQ3g==
-Date:   Mon, 7 Nov 2022 17:12:43 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Hemant Kumar <quic_hemantk@quicinc.com>, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] mhi: pci_generic: add support for sc8280xp-crd SDX55
- variant
-Message-ID: <20221107114243.GD2220@thinkpad>
-References: <20221104093913.23347-1-johan+linaro@kernel.org>
+        Mon, 7 Nov 2022 06:46:30 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7A0C19000
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 03:46:26 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id a15so15800915ljb.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 03:46:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+JKZi6enSst2kWBJr01vLjOt2FvneWEg8LFzz5LHGB0=;
+        b=jRVQIfmhXkPyQnD1t0mtaV1FdLeZIGj3gSbWh1rV/Z4ZOVlfY1/hK0O5VkF0xmCWOp
+         Oi/hUjXVsGyFoWijFXycIFRbt8rXdq6HltPG7+Q3sfTeKCnglMKmU/1dv0XliC+qLYp8
+         KnbVu3PoifP80c87ciD4PHRNArjB9XIUQ4GcFBcQgyf8q23ONyTdnrK0AjdFf9R47Z2X
+         hu+i+p1M+qlgmEluomPb91cwXF/CwqUx2bkHAkgs4/nKLFRT07XnQSsDc9DnlpKA7bF2
+         aQnHXZPKtkCh0nf51yYKDew4qY8SNHunHgCiK5BA6dPQSCPkZCn66qqo073FJNZxpcEo
+         UqPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+JKZi6enSst2kWBJr01vLjOt2FvneWEg8LFzz5LHGB0=;
+        b=n+ELzCFFwdqIucuWMOemjP7g5s8K/oIBs8pQoebjr4VhvYYAh17ZcnYQ8yD5HEme8j
+         tdwVGf9RkE+tDEyCr5XmuoyejmhxcbEWmXPijWB0tkZMwTo0kyJUJe0jWXJPOERnCO0L
+         H8yvX/Q7eeSbtDGRq/A3xRRdpLaMxZ+2QrLm8rQyE7KuhwNve+JJsYSZLmgumnwCo2r/
+         rcrDSHbc5cgw8TzC1RU05qMlm9xVtTFf/2pdJk+ErMEJ82o50URTmvk0I6foD8U84zsU
+         EtHNLT3E+dBknSrzJiJPqjAcNvRcQmqx44EtkM7vYKzg2vVywPSf0IPnQNo1uUsZdMob
+         uDxQ==
+X-Gm-Message-State: ACrzQf22hfk1sKVrk1B9zh6Rdkl78Lkxt8H9PcpHW16LKAMu+cCXVoGe
+        +psTBTw9WRLlkzEd2Em1CCbPnA==
+X-Google-Smtp-Source: AMsMyM5mKL7r8syre1BT4ctSIJFcHz6VTdD+N62rT1HzWdp50D84I5g9TtrE6H6vZRgIfavxv+ReSw==
+X-Received: by 2002:a2e:a367:0:b0:277:7daa:cec6 with SMTP id i7-20020a2ea367000000b002777daacec6mr7265039ljn.265.1667821585056;
+        Mon, 07 Nov 2022 03:46:25 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id c10-20020a056512324a00b004afc1607130sm1204444lfr.8.2022.11.07.03.46.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Nov 2022 03:46:24 -0800 (PST)
+Message-ID: <819dc2f9-c1f2-201d-d611-f8b2a323473d@linaro.org>
+Date:   Mon, 7 Nov 2022 12:46:19 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221104093913.23347-1-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.1
+Subject: Re: [PATCH v1 3/5] arm64: dts: qcom: sm8450-hdk: enable display
+ hardware
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Vinod Koul <vkoul@kernel.org>
+References: <20221104131358.1025987-1-dmitry.baryshkov@linaro.org>
+ <20221104131358.1025987-4-dmitry.baryshkov@linaro.org>
+ <20221106043011.pw5fqeame7otzdcn@builder.lan>
+ <dc19c341-c653-c60e-dd45-5c87ed4c6811@linaro.org>
+ <163d117e-e519-e86d-b052-e4a2a53388d7@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <163d117e-e519-e86d-b052-e4a2a53388d7@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 04, 2022 at 10:39:13AM +0100, Johan Hovold wrote:
-> The SC8280XP Compute Reference Design (CRD) has an on-PCB SDX55 modem
-> which uses MBIM.
-> 
-> The exact channel configuration is not known but the Foxconn SDX55
-> configuration allows the modem to be used so reuse that one for now.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-Modified the subject to the format "bus: mhi: host: pci_generic" and applied
-to mhi-next!
+On 07/11/2022 12:36, Krzysztof Kozlowski wrote:
+> On 07/11/2022 11:46, Konrad Dybcio wrote:
+>>
+>> On 06/11/2022 05:30, Bjorn Andersson wrote:
+>>> On Fri, Nov 04, 2022 at 04:13:56PM +0300, Dmitry Baryshkov wrote:
+>>>> Enable MDSS/DPU/DSI0 on SM8450-HDK device. Note, there is no panel
+>>>> configuration (yet).
+>>>>
+>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>> ---
+>>>>    arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 18 ++++++++++++++++++
+>>>>    1 file changed, 18 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+>>>> index 38ccd44620d0..e1a4cf1ee51d 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+>>>> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+>>>> @@ -442,3 +442,21 @@ &usb_1_qmpphy {
+>>>>    	vdda-phy-supply = <&vreg_l6b_1p2>;
+>>>>    	vdda-pll-supply = <&vreg_l1b_0p91>;
+>>>>    };
+>>>> +
+>>>> +&mdss {
+>>>> +	status = "okay";
+>>>> +};
+>>>> +
+>>>> +&mdss_mdp {
+>>>> +	status = "okay";
+>>>> +};
+>>>> +
+>>>> +&dsi0 {
+>>> Please prefix the labels with "mdss_" so that you can keep them sorted
+>>> alphabetically.
+>> Why such a change all of a sudden? Only downstream (and sc7280 upstream)
+>> has mdss_ prefixes for dsi.
+> For keeping the nodes together - this makes review of code and patches
+> easier.
 
-Thanks,
-Mani
+Ok, I can see the reasoning.
 
-> ---
-> 
-> Changes in v2
->  - drop comment describing this variant (Mani)
-> 
-> 
->  drivers/bus/mhi/host/pci_generic.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index caa4ce28cf9e..7dcd0ef3184a 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -542,6 +542,8 @@ static const struct mhi_pci_dev_info mhi_telit_fn990_info = {
->  static const struct pci_device_id mhi_pci_id_table[] = {
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
->  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx24_info },
-> +	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, PCI_VENDOR_ID_QCOM, 0x010c),
-> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
->  	/* EM919x (sdx55), use the same vid:pid as qcom-sdx55m */
->  	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, 0x18d7, 0x0200),
->  		.driver_data = (kernel_ulong_t) &mhi_sierra_em919x_info },
-> -- 
-> 2.37.3
-> 
-> 
 
--- 
-மணிவண்ணன் சதாசிவம்
+>> Plain 'dsiN' is more generic.
+> And why the label should be generic? Label should be useful and
+> descriptive, although not too much, so mdss_dsi still fits in reasonable
+> choice.
+
+I was under the impression that it should be. But you're right.
+
+
+Konrad
+
+>
+> Best regards,
+> Krzysztof
+>
