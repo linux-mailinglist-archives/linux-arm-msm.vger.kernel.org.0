@@ -2,78 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 810FF62032B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 00:03:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 37D5A620331
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 00:04:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232417AbiKGXC6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 18:02:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42098 "EHLO
+        id S232736AbiKGXEA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 18:04:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232799AbiKGXC5 (ORCPT
+        with ESMTP id S230362AbiKGXD7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 18:02:57 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEABE2CCA4
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 15:02:55 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id c1so17162095lfi.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 15:02:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AmluNRdwGvgd4YoWhYSoMPCkZtHJPs/rh5Fx+5v/Mao=;
-        b=uZAhCeG8auvdD0+w0IudpX10s7gRlXQItDL1u84bkH6Y8T0/9dRjg3VOBs26a/o3TS
-         n4MErlTterkLCtPJma7BKjezhfOAgoxpKFtGMqbUoMzIUuqaEwdlKz5ytdSxymme2b/E
-         l4SK4ezlgbH0rAONenjKa6QVSjr8zwZWhnRsEk2npLPJs+HdTK5kKDfmq5xgdX3uzjKg
-         bWuE/ToiQsyv02qKjMImPRPdhltofZ8sRx73Wt2WnHPE08ho9R/+98o43Rbb0PeEg40u
-         BCAflv1no2On7k3rlJNIOlKLRMGe8pCXjHRQB9gbSLo9YfIMWdEesSQZSIguljTiFdKS
-         etlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AmluNRdwGvgd4YoWhYSoMPCkZtHJPs/rh5Fx+5v/Mao=;
-        b=55qCcbvVBYzd+2Vf496SDTmH4uRTnqTfBLjNv7LzUqwDbJEqkE+lYjk+Jz9//iGS3B
-         cqNFjRg75j/q4CJ73y4cJpjkjpamJxKmkEKJ9Ancx/MyOtuxBKKyH36qTl78GbiQFnFH
-         K7uhW2yS7J/7jvAkOoARhxLtV5nrzdwoD+xJ6QnkkA89SLE0gQEFhy5brl54qjDx0AnQ
-         VJxvCWU/U2Wk8WT4wg8Db/rISgq1TAAj95NIZkxROb+pAfX65D3K1daFjXtwE4XYivBE
-         DN4kKdIG11QMDMwqlKl9Cfk5P6vVBX7mIrenncelwY7Gfg3GnSMN73kmOS8ooSqZqke9
-         JxZg==
-X-Gm-Message-State: ACrzQf3qfxYtF1pTYlEsREF+VU9nZAbW+Vax8iYTmhovaeDTijdm57Ds
-        +nwF1o5mHFZ7UxrJ6JedFqWTXA==
-X-Google-Smtp-Source: AMsMyM5UwEHPKOw39miqFZblKIM67i6gTzJn6YmyC/bODDhToG94Jz+sASwLql4t+Gtco/gtcFVvaA==
-X-Received: by 2002:ac2:4827:0:b0:4af:d7cd:5d59 with SMTP id 7-20020ac24827000000b004afd7cd5d59mr19795536lft.321.1667862174259;
-        Mon, 07 Nov 2022 15:02:54 -0800 (PST)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id y4-20020a199144000000b0049f53d53235sm1468389lfj.50.2022.11.07.15.02.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Nov 2022 15:02:53 -0800 (PST)
-Message-ID: <46fb5758-bdd9-8b08-7d8a-d35a459b1cb0@linaro.org>
-Date:   Tue, 8 Nov 2022 02:02:52 +0300
+        Mon, 7 Nov 2022 18:03:59 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6613225C5A;
+        Mon,  7 Nov 2022 15:03:58 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A7Meeo3002700;
+        Mon, 7 Nov 2022 23:03:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=St4gj79wQCn//ZWeMyZlYW395G9v9PWn0KTVyf4hUtw=;
+ b=JrrkM81EPiPRo6zGU+PFwghSWQXQp7Jp+GSvpNdWh+U42cDzWDaEUL2K+3ErbkCwXZWM
+ 9eXwOgE5vG63LHT2/mlq+dcsyJULLZ77Izee9sshSMQ8V+OER+MAx4GseAdHoZu7vIHp
+ ocBZ8WflTN7M8UytCJBfVRd0wXh1W6RIV0N53Gb1vcsQK+qQQELizwFkUR8gXtxPPbZO
+ 4vnSiWC9JIOFdAcb66Bk/FaIFUy9UvXfG5gOaCRK1rLshgC41uS9DVPFPfkigfFZAIZO
+ ncliK4ya42OXKokzSNoTuR1jkT4Zx7gN5ljgC9B8XY1OYaw+/B8fHmEfuY3mRMou/d5R Vg== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kq7g4gm3g-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 07 Nov 2022 23:03:43 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A7N3gOR005001
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 7 Nov 2022 23:03:42 GMT
+Received: from [10.110.0.244] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 7 Nov 2022
+ 15:03:41 -0800
+Message-ID: <e9146fac-cb22-31bb-6018-1fd8708d3757@quicinc.com>
+Date:   Mon, 7 Nov 2022 15:03:41 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH 1/5] drm/msm/dsi: add support for DSI-PHY on SM8350 and
- SM8450
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Robert Foss <robert.foss@linaro.org>
-References: <20220922113016.355188-1-dmitry.baryshkov@linaro.org>
- <20220922113016.355188-2-dmitry.baryshkov@linaro.org>
- <5b7492e2-e635-d3ea-6085-dacbc91db9cb@quicinc.com>
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <5b7492e2-e635-d3ea-6085-dacbc91db9cb@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH v3 1/5] dt-bindings: clock: Add QDU1000 and QRU1000 GCC
+ clock bindings
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20221026190441.4002212-1-quic_molvera@quicinc.com>
+ <20221026190441.4002212-2-quic_molvera@quicinc.com>
+ <20221107172552.jlspmxb7zoa2aqxl@builder.lan>
+From:   Melody Olvera <quic_molvera@quicinc.com>
+In-Reply-To: <20221107172552.jlspmxb7zoa2aqxl@builder.lan>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: zGFALEM4SzZ2iIsNZIkMPbcMSyEbN0xK
+X-Proofpoint-GUID: zGFALEM4SzZ2iIsNZIkMPbcMSyEbN0xK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-07_11,2022-11-07_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ suspectscore=0 priorityscore=1501 mlxscore=0 mlxlogscore=999 bulkscore=0
+ spamscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211070173
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -83,362 +89,304 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/11/2022 07:27, Abhinav Kumar wrote:
-> 
-> 
-> On 9/22/2022 4:30 AM, Dmitry Baryshkov wrote:
->> SM8350 and SM8450 use 5nm DSI PHYs, which share register definitions
->> with 7nm DSI PHYs. Rather than duplicating the driver, handle 5nm
->> variants inside the common 5+7nm driver.
-> 
-> I do realize that there is common code across PHYs but i am concerned 
-> about this type of unification of phy drivers.
 
-This more or less follows downstream, which has unifier v4.0 driver.
 
-> If we have features which are PHY sequence dependent such as ULPS, this 
-> will just complicate things for us.
-
-During development we initially tried to create a separate 5nm driver. 
-However this resulted in huuuge code duplication. This would be prone to 
-significant amount of errors if we change one of the drivers at some 
-point and not another one.
-
-> Also some PHY registers might get added some might get removed across 
-> chipsets as this is the most frequently changed component.
-
-Yes, I completely agree here. However beforehand we have successfully 
-managed to have per-generation drivers, handling minor differences with 
-quirks.
-
-> 
-> Even in this patch, I see this added to dsi_7nm_phy_disable()
-> 
->  > +    /* Turn off REFGEN Vote */
->  > +        dsi_phy_write(base + 
-> REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE10, 0x0);
->  > +        wmb();
->  > +        /* Delay to ensure HW removes vote before PHY shut down */
->  > +        udelay(2);
->  > +
-> 
-> What would be the impact of writing this for the existing 7nm PHY?
-
-Let's probably guard this with the v4.3 check.
-
-> 
-> I am having some access issues to check the software interface so wanted 
-> to check.
-
-I don't remember having any issues on RB5, but I did not run any special 
-checks.
-
-> 
+On 11/7/2022 9:25 AM, Bjorn Andersson wrote:
+> On Wed, Oct 26, 2022 at 12:04:37PM -0700, Melody Olvera wrote:
+>> Add device tree bindings for global clock controller on QDU1000 and
+>> QRU1000 SoCs.
 >>
->> Co-developed-by: Robert Foss <robert.foss@linaro.org>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 >> ---
->>   drivers/gpu/drm/msm/Kconfig               |   6 +-
->>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c     |   4 +
->>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.h     |   2 +
->>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 132 ++++++++++++++++++++--
->>   4 files changed, 131 insertions(+), 13 deletions(-)
+>>  .../bindings/clock/qcom,gcc-qdu1000.yaml      |  77 ++++++++
+>>  include/dt-bindings/clock/qcom,gcc-qdu1000.h  | 170 ++++++++++++++++++
+>>  2 files changed, 247 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-qdu1000.yaml
+>>  create mode 100644 include/dt-bindings/clock/qcom,gcc-qdu1000.h
 >>
->> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
->> index 4e0cbd682725..e6c5dfbad009 100644
->> --- a/drivers/gpu/drm/msm/Kconfig
->> +++ b/drivers/gpu/drm/msm/Kconfig
->> @@ -140,12 +140,12 @@ config DRM_MSM_DSI_10NM_PHY
->>         Choose this option if DSI PHY on SDM845 is used on the platform.
->>   config DRM_MSM_DSI_7NM_PHY
->> -    bool "Enable DSI 7nm PHY driver in MSM DRM"
->> +    bool "Enable DSI 7nm/5nm PHY driver in MSM DRM"
->>       depends on DRM_MSM_DSI
->>       default y
->>       help
->> -      Choose this option if DSI PHY on SM8150/SM8250/SC7280 is used on
->> -      the platform.
->> +      Choose this option if DSI PHY on 
->> SM8150/SM8250/SM8350/SM8450/SC7280
->> +      is used on the platform.
->>   config DRM_MSM_HDMI
->>       bool "Enable HDMI support in MSM DRM driver"
->> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c 
->> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
->> index 7fc0975cb869..97cf6b8b34cc 100644
->> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
->> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
->> @@ -567,6 +567,10 @@ static const struct of_device_id 
->> dsi_phy_dt_match[] = {
->>         .data = &dsi_phy_7nm_8150_cfgs },
->>       { .compatible = "qcom,sc7280-dsi-phy-7nm",
->>         .data = &dsi_phy_7nm_7280_cfgs },
->> +    { .compatible = "qcom,dsi-phy-5nm-8350",
->> +      .data = &dsi_phy_5nm_8350_cfgs },
->> +    { .compatible = "qcom,dsi-phy-5nm-8450",
->> +      .data = &dsi_phy_5nm_8450_cfgs },
->>   #endif
->>       {}
->>   };
->> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h 
->> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
->> index 60a99c6525b2..654cbfa14d6e 100644
->> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
->> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
->> @@ -56,6 +56,8 @@ extern const struct msm_dsi_phy_cfg 
->> dsi_phy_10nm_8998_cfgs;
->>   extern const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs;
->>   extern const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs;
->>   extern const struct msm_dsi_phy_cfg dsi_phy_7nm_7280_cfgs;
->> +extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8350_cfgs;
->> +extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8450_cfgs;
->>   struct msm_dsi_dphy_timing {
->>       u32 clk_zero;
->> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c 
->> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
->> index 9e7fa7d88ead..1696ff150b9e 100644
->> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
->> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
->> @@ -39,8 +39,14 @@
->>   #define VCO_REF_CLK_RATE        19200000
->>   #define FRAC_BITS 18
->> +/* Hardware is pre V4.1 */
->> +#define DSI_PHY_7NM_QUIRK_PRE_V4_1    BIT(0)
->>   /* Hardware is V4.1 */
->> -#define DSI_PHY_7NM_QUIRK_V4_1        BIT(0)
->> +#define DSI_PHY_7NM_QUIRK_V4_1        BIT(1)
->> +/* Hardware is V4.2 */
->> +#define DSI_PHY_7NM_QUIRK_V4_2        BIT(2)
->> +/* Hardware is V4.3 */
->> +#define DSI_PHY_7NM_QUIRK_V4_3        BIT(3)
->>   struct dsi_pll_config {
->>       bool enable_ssc;
->> @@ -116,7 +122,7 @@ static void dsi_pll_calc_dec_frac(struct 
->> dsi_pll_7nm *pll, struct dsi_pll_config
->>       dec_multiple = div_u64(pll_freq * multiplier, divider);
->>       dec = div_u64_rem(dec_multiple, multiplier, &frac);
->> -    if (!(pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1))
->> +    if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1)
->>           config->pll_clock_inverters = 0x28;
->>       else if (pll_freq <= 1000000000ULL)
->>           config->pll_clock_inverters = 0xa0;
->> @@ -197,16 +203,25 @@ static void dsi_pll_config_hzindep_reg(struct 
->> dsi_pll_7nm *pll)
->>       void __iomem *base = pll->phy->pll_base;
->>       u8 analog_controls_five_1 = 0x01, vco_config_1 = 0x00;
->> -    if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
->> +    if (!(pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1))
->>           if (pll->vco_current_rate >= 3100000000ULL)
->>               analog_controls_five_1 = 0x03;
->> +    if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
->>           if (pll->vco_current_rate < 1520000000ULL)
->>               vco_config_1 = 0x08;
->>           else if (pll->vco_current_rate < 2990000000ULL)
->>               vco_config_1 = 0x01;
->>       }
->> +    if ((pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_2) ||
->> +        (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3)) {
->> +        if (pll->vco_current_rate < 1520000000ULL)
->> +            vco_config_1 = 0x08;
->> +        else if (pll->vco_current_rate >= 2990000000ULL)
->> +            vco_config_1 = 0x01;
->> +    }
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-qdu1000.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-qdu1000.yaml
+>> new file mode 100644
+>> index 000000000000..ad460d628ffc
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-qdu1000.yaml
+>> @@ -0,0 +1,77 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/clock/qcom,gcc-qdu1000.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 >> +
->>       dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_FIVE_1,
->>                 analog_controls_five_1);
->>       dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_VCO_CONFIG_1, 
->> vco_config_1);
->> @@ -231,9 +246,9 @@ static void dsi_pll_config_hzindep_reg(struct 
->> dsi_pll_7nm *pll)
->>       dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_PFILT, 0x2f);
->>       dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_IFILT, 0x2a);
->>       dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_IFILT,
->> -          pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1 ? 0x3f : 0x22);
->> +          !(pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1) ? 
->> 0x3f : 0x22);
->> -    if (pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
->> +    if (!(pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1)) {
->>           dsi_phy_write(base + REG_DSI_7nm_PHY_PLL_PERF_OPTIMIZE, 0x22);
->>           if (pll->slave)
->>               dsi_phy_write(pll->slave->phy->pll_base + 
->> REG_DSI_7nm_PHY_PLL_PERF_OPTIMIZE, 0x22);
->> @@ -788,7 +803,7 @@ static void dsi_phy_hw_v4_0_lane_settings(struct 
->> msm_dsi_phy *phy)
->>       const u8 *tx_dctrl = tx_dctrl_0;
->>       void __iomem *lane_base = phy->lane_base;
->> -    if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1)
->> +    if (!(phy->cfg->quirks & DSI_PHY_7NM_QUIRK_PRE_V4_1))
->>           tx_dctrl = tx_dctrl_1;
->>       /* Strength ctrl settings */
->> @@ -844,6 +859,12 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy 
->> *phy,
->>       if (dsi_phy_hw_v4_0_is_pll_on(phy))
->>           pr_warn("PLL turned on before configuring PHY\n");
->> +    /* Request for REFGEN READY */
->> +    if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) {
->> +        dsi_phy_write(phy->base + 
->> REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE10, 0x1);
->> +        udelay(500);
->> +    }
+>> +title: Qualcomm Global Clock & Reset Controller for QDU1000 and QRU1000
 >> +
->>       /* wait for REFGEN READY */
->>       ret = readl_poll_timeout_atomic(base + 
->> REG_DSI_7nm_PHY_CMN_PHY_STATUS,
->>                       status, (status & BIT(0)),
->> @@ -858,23 +879,53 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy 
->> *phy,
->>       /* Alter PHY configurations if data rate less than 1.5GHZ*/
->>       less_than_1500_mhz = (clk_req->bitclk_rate <= 1500000000);
->> -    if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
->> -        vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
->> +    if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_3) {
->> +        if (phy->cphy_mode) {
->> +            vreg_ctrl_0 = 0x51;
->> +            glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x01;
->> +            glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x3b;
->> +            glbl_str_swi_cal_sel_ctrl = 0x00;
->> +            glbl_hstx_str_ctrl_0 = 0x00;
->> +        } else {
->> +            vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
->> +            glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x01;
->> +            glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x39;
->> +            glbl_str_swi_cal_sel_ctrl = 0x00;
->> +            glbl_hstx_str_ctrl_0 = 0x88;
->> +        }
->> +    } else if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_2) {
->> +        if (phy->cphy_mode) {
->> +            vreg_ctrl_0 = 0x51;
->> +            glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x01;
->> +            glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x3b;
->> +            glbl_str_swi_cal_sel_ctrl = 0x00;
->> +            glbl_hstx_str_ctrl_0 = 0x00;
->> +        } else {
->> +            vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
->> +            glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3c :  0x00;
->> +            glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x38 :  0x39;
->> +            glbl_str_swi_cal_sel_ctrl = 0x00;
->> +            glbl_hstx_str_ctrl_0 = 0x88;
->> +        }
->> +    } else if (phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1) {
->>           if (phy->cphy_mode) {
->> +            vreg_ctrl_0 = 0x51;
->>               glbl_rescode_top_ctrl = 0x00;
->>               glbl_rescode_bot_ctrl = 0x3c;
->>           } else {
->> +            vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
->>               glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x00;
->>               glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x39 :  0x3c;
->>           }
->>           glbl_str_swi_cal_sel_ctrl = 0x00;
->>           glbl_hstx_str_ctrl_0 = 0x88;
->>       } else {
->> -        vreg_ctrl_0 = less_than_1500_mhz ? 0x5B : 0x59;
->>           if (phy->cphy_mode) {
->> +            vreg_ctrl_0 = 0x51;
->>               glbl_str_swi_cal_sel_ctrl = 0x03;
->>               glbl_hstx_str_ctrl_0 = 0x66;
->>           } else {
->> +            vreg_ctrl_0 = less_than_1500_mhz ? 0x5B : 0x59;
->>               glbl_str_swi_cal_sel_ctrl = less_than_1500_mhz ? 0x03 : 
->> 0x00;
->>               glbl_hstx_str_ctrl_0 = less_than_1500_mhz ? 0x66 : 0x88;
->>           }
->> @@ -883,7 +934,6 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy 
->> *phy,
->>       }
->>       if (phy->cphy_mode) {
->> -        vreg_ctrl_0 = 0x51;
->>           vreg_ctrl_1 = 0x55;
->>           glbl_pemph_ctrl_0 = 0x11;
->>           lane_ctrl0 = 0x17;
+>> +allOf:
+>> +  - $ref: qcom,gcc.yaml#
+>> +
+>> +maintainers:
+>> +  - Melody Olvera <quic_molvera@quicinc.com>
+>> +
+>> +description: |
+>> +  Qualcomm global clock control module which supports the clocks, resets and
+>> +  power domains on QDU1000 and QRU1000
+>> +
+>> +  See also:
+>> +  - include/dt-bindings/clock/qcom,gcc-qdu1000.h
+>> +
+>> +properties:
+>> +  compatible:
+>> +    items:
+>> +      - const: qcom,gcc-qdu1000
+>> +      - const: syscon
+>> +
+>> +  clocks:
+>> +    items:
+>> +      - description: Board XO source
+>> +      - description: Sleep clock source
+>> +      - description: PCIE 0 Pipe clock source
+>> +      - description: PCIE 0 Phy Auxiliary clock source
+>> +      - description: USB3 Phy wrapper pipe clock source
+>> +    minItems: 2
+> They should all be required by the binding, but I will accept .dts
+> files with not yet available sources specified as <0>.
 
-So far this is the largest chunk to handle the difference between 
-platforms. And I think it was a mess even before we tried adding the 
-4.2/4.3 versions.
+Yeah I'll add these clocks.
 
->> @@ -1017,6 +1067,13 @@ static void dsi_7nm_phy_disable(struct 
->> msm_dsi_phy *phy)
->>           pr_warn("Turning OFF PHY while PLL is on\n");
->>       dsi_phy_hw_v4_0_config_lpcdrx(phy, false);
+>
 >> +
->> +    /* Turn off REFGEN Vote */
->> +        dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE10, 
->> 0x0);
->> +        wmb();
->> +        /* Delay to ensure HW removes vote before PHY shut down */
->> +        udelay(2);
+>> +  clock-names:
+> Including clock-names in the binding indicates that clocks are indexed
+> based on these names (which is what we've done for many years now).
+>
+> As we're transitioning the clock providers to rely solely on the
+> ordering of clocks, I prefer that we omit the clock-names property, just
+> to make it clear that clock-names is effectively ignored by Linux.
+
+Sounds good.
+
+>
+>> +    items:
+>> +      - const: bi_tcxo
+>> +      - const: sleep_clk
+>> +      - const: pcie_0_pipe_clk
+>> +    minItems: 2
 >> +
->>       data = dsi_phy_read(base + REG_DSI_7nm_PHY_CMN_CTRL_0);
->>       /* disable all lanes */
->> @@ -1079,6 +1136,7 @@ const struct msm_dsi_phy_cfg 
->> dsi_phy_7nm_8150_cfgs = {
->>       .max_pll_rate = 3500000000UL,
->>       .io_start = { 0xae94400, 0xae96400 },
->>       .num_dsi_phy = 2,
->> +    .quirks = DSI_PHY_7NM_QUIRK_PRE_V4_1,
->>   };
->>   const struct msm_dsi_phy_cfg dsi_phy_7nm_7280_cfgs = {
->> @@ -1102,3 +1160,57 @@ const struct msm_dsi_phy_cfg 
->> dsi_phy_7nm_7280_cfgs = {
->>       .num_dsi_phy = 1,
->>       .quirks = DSI_PHY_7NM_QUIRK_V4_1,
->>   };
+>> +  '#clock-cells':
+>> +    const: 1
 >> +
->> +const struct msm_dsi_phy_cfg dsi_phy_5nm_8350_cfgs = {
->> +    .has_phy_lane = true,
->> +    .reg_cfg = {
->> +        .num = 1,
->> +        .regs = {
->> +            {"vdds", 37550, 0},
->> +        },
->> +    },
->> +    .ops = {
->> +        .enable = dsi_7nm_phy_enable,
->> +        .disable = dsi_7nm_phy_disable,
->> +        .pll_init = dsi_pll_7nm_init,
->> +        .save_pll_state = dsi_7nm_pll_save_state,
->> +        .restore_pll_state = dsi_7nm_pll_restore_state,
->> +        .set_continuous_clock = dsi_7nm_set_continuous_clock,
->> +    },
->> +    .min_pll_rate = 600000000UL,
->> +#ifdef CONFIG_64BIT
->> +    .max_pll_rate = 5000000000UL,
->> +#else
->> +    .max_pll_rate = ULONG_MAX,
+>> +  '#reset-cells':
+>> +    const: 1
+>> +
+>> +  '#power-domain-cells':
+>> +    const: 1
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - clocks
+>> +  - clock-names
+>> +  - '#clock-cells'
+>> +  - '#reset-cells'
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/clock/qcom,rpmh.h>
+>> +    clock-controller@100000 {
+>> +      compatible = "qcom,gcc-qdu1000", "syscon";
+>> +      reg = <0x00100000 0x001f4200>;
+>> +      clocks = <&rpmhcc RPMH_CXO_CLK>, <&sleep_clk>;
+> This is just an example, so please make up some plausible sources for
+> the remaining clocks.
+
+Yeah the remaining clocks can go under this source as well.
+
+Thanks,
+Melody
+>> +      clock-names = "bi_tcxo", "sleep_clk";
+>> +      #clock-cells = <1>;
+>> +      #reset-cells = <1>;
+>> +      #power-domain-cells = <1>;
+>> +    };
+>> diff --git a/include/dt-bindings/clock/qcom,gcc-qdu1000.h b/include/dt-bindings/clock/qcom,gcc-qdu1000.h
+>> new file mode 100644
+>> index 000000000000..99edb688fef2
+>> --- /dev/null
+>> +++ b/include/dt-bindings/clock/qcom,gcc-qdu1000.h
+>> @@ -0,0 +1,170 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause */
+>> +/*
+>> + * Copyright (c) 2021-2022, Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#ifndef _DT_BINDINGS_CLK_QCOM_GCC_QDU1000_H
+>> +#define _DT_BINDINGS_CLK_QCOM_GCC_QDU1000_H
+>> +
+>> +/* GCC clocks */
+>> +#define GCC_GPLL0					0
+>> +#define GCC_GPLL0_OUT_EVEN				1
+>> +#define GCC_GPLL1					2
+>> +#define GCC_GPLL2					3
+>> +#define GCC_GPLL2_OUT_EVEN				4
+>> +#define GCC_GPLL3					5
+>> +#define GCC_GPLL4					6
+>> +#define GCC_GPLL5					7
+>> +#define GCC_GPLL5_OUT_EVEN				8
+>> +#define GCC_GPLL6					9
+>> +#define GCC_GPLL7					10
+>> +#define GCC_GPLL8					11
+>> +#define GCC_AGGRE_NOC_ECPRI_DMA_CLK			12
+>> +#define GCC_AGGRE_NOC_ECPRI_DMA_CLK_SRC			13
+>> +#define GCC_AGGRE_NOC_ECPRI_GSI_CLK_SRC			14
+>> +#define GCC_BOOT_ROM_AHB_CLK				15
+>> +#define GCC_CFG_NOC_ECPRI_CC_AHB_CLK			16
+>> +#define GCC_CFG_NOC_USB3_PRIM_AXI_CLK			17
+>> +#define GCC_DDRSS_ECPRI_DMA_CLK				18
+>> +#define GCC_ECPRI_AHB_CLK				19
+>> +#define GCC_ECPRI_CC_GPLL0_CLK_SRC			20
+>> +#define GCC_ECPRI_CC_GPLL1_EVEN_CLK_SRC			21
+>> +#define GCC_ECPRI_CC_GPLL2_EVEN_CLK_SRC			22
+>> +#define GCC_ECPRI_CC_GPLL3_CLK_SRC			23
+>> +#define GCC_ECPRI_CC_GPLL4_CLK_SRC			24
+>> +#define GCC_ECPRI_CC_GPLL5_EVEN_CLK_SRC			25
+>> +#define GCC_ECPRI_XO_CLK				26
+>> +#define GCC_ETH_DBG_SNOC_AXI_CLK			27
+>> +#define GCC_GEMNOC_PCIE_QX_CLK				28
+>> +#define GCC_GP1_CLK					29
+>> +#define GCC_GP1_CLK_SRC					30
+>> +#define GCC_GP2_CLK					31
+>> +#define GCC_GP2_CLK_SRC					32
+>> +#define GCC_GP3_CLK					33
+>> +#define GCC_GP3_CLK_SRC					34
+>> +#define GCC_PCIE_0_AUX_CLK				35
+>> +#define GCC_PCIE_0_AUX_CLK_SRC				36
+>> +#define GCC_PCIE_0_CFG_AHB_CLK				37
+>> +#define GCC_PCIE_0_CLKREF_EN				38
+>> +#define GCC_PCIE_0_MSTR_AXI_CLK				39
+>> +#define GCC_PCIE_0_PHY_AUX_CLK				40
+>> +#define GCC_PCIE_0_PHY_RCHNG_CLK			41
+>> +#define GCC_PCIE_0_PHY_RCHNG_CLK_SRC			42
+>> +#define GCC_PCIE_0_PIPE_CLK				43
+>> +#define GCC_PCIE_0_SLV_AXI_CLK				44
+>> +#define GCC_PCIE_0_SLV_Q2A_AXI_CLK			45
+>> +#define GCC_PDM2_CLK					46
+>> +#define GCC_PDM2_CLK_SRC				47
+>> +#define GCC_PDM_AHB_CLK					48
+>> +#define GCC_PDM_XO4_CLK					49
+>> +#define GCC_QMIP_ANOC_PCIE_CLK				50
+>> +#define GCC_QMIP_ECPRI_DMA0_CLK				51
+>> +#define GCC_QMIP_ECPRI_DMA1_CLK				52
+>> +#define GCC_QMIP_ECPRI_GSI_CLK				53
+>> +#define GCC_QUPV3_WRAP0_CORE_2X_CLK			54
+>> +#define GCC_QUPV3_WRAP0_CORE_CLK			55
+>> +#define GCC_QUPV3_WRAP0_S0_CLK				56
+>> +#define GCC_QUPV3_WRAP0_S0_CLK_SRC			57
+>> +#define GCC_QUPV3_WRAP0_S1_CLK				58
+>> +#define GCC_QUPV3_WRAP0_S1_CLK_SRC			59
+>> +#define GCC_QUPV3_WRAP0_S2_CLK				60
+>> +#define GCC_QUPV3_WRAP0_S2_CLK_SRC			61
+>> +#define GCC_QUPV3_WRAP0_S3_CLK				62
+>> +#define GCC_QUPV3_WRAP0_S3_CLK_SRC			63
+>> +#define GCC_QUPV3_WRAP0_S4_CLK				64
+>> +#define GCC_QUPV3_WRAP0_S4_CLK_SRC			65
+>> +#define GCC_QUPV3_WRAP0_S5_CLK				66
+>> +#define GCC_QUPV3_WRAP0_S5_CLK_SRC			67
+>> +#define GCC_QUPV3_WRAP0_S6_CLK				68
+>> +#define GCC_QUPV3_WRAP0_S6_CLK_SRC			69
+>> +#define GCC_QUPV3_WRAP0_S7_CLK				70
+>> +#define GCC_QUPV3_WRAP0_S7_CLK_SRC			71
+>> +#define GCC_QUPV3_WRAP1_CORE_2X_CLK			72
+>> +#define GCC_QUPV3_WRAP1_CORE_CLK			73
+>> +#define GCC_QUPV3_WRAP1_S0_CLK				74
+>> +#define GCC_QUPV3_WRAP1_S0_CLK_SRC			75
+>> +#define GCC_QUPV3_WRAP1_S1_CLK				76
+>> +#define GCC_QUPV3_WRAP1_S1_CLK_SRC			77
+>> +#define GCC_QUPV3_WRAP1_S2_CLK				78
+>> +#define GCC_QUPV3_WRAP1_S2_CLK_SRC			79
+>> +#define GCC_QUPV3_WRAP1_S3_CLK				80
+>> +#define GCC_QUPV3_WRAP1_S3_CLK_SRC			81
+>> +#define GCC_QUPV3_WRAP1_S4_CLK				82
+>> +#define GCC_QUPV3_WRAP1_S4_CLK_SRC			83
+>> +#define GCC_QUPV3_WRAP1_S5_CLK				84
+>> +#define GCC_QUPV3_WRAP1_S5_CLK_SRC			85
+>> +#define GCC_QUPV3_WRAP1_S6_CLK				86
+>> +#define GCC_QUPV3_WRAP1_S6_CLK_SRC			87
+>> +#define GCC_QUPV3_WRAP1_S7_CLK				88
+>> +#define GCC_QUPV3_WRAP1_S7_CLK_SRC			89
+>> +#define GCC_QUPV3_WRAP_0_M_AHB_CLK			90
+>> +#define GCC_QUPV3_WRAP_0_S_AHB_CLK			91
+>> +#define GCC_QUPV3_WRAP_1_M_AHB_CLK			92
+>> +#define GCC_QUPV3_WRAP_1_S_AHB_CLK			93
+>> +#define GCC_SDCC5_AHB_CLK				94
+>> +#define GCC_SDCC5_APPS_CLK				95
+>> +#define GCC_SDCC5_APPS_CLK_SRC				96
+>> +#define GCC_SDCC5_ICE_CORE_CLK				97
+>> +#define GCC_SDCC5_ICE_CORE_CLK_SRC			98
+>> +#define GCC_SNOC_CNOC_GEMNOC_PCIE_QX_CLK		99
+>> +#define GCC_SNOC_CNOC_GEMNOC_PCIE_SOUTH_QX_CLK		100
+>> +#define GCC_SNOC_CNOC_PCIE_QX_CLK			101
+>> +#define GCC_SNOC_PCIE_SF_CENTER_QX_CLK			102
+>> +#define GCC_SNOC_PCIE_SF_SOUTH_QX_CLK			103
+>> +#define GCC_TSC_CFG_AHB_CLK				104
+>> +#define GCC_TSC_CLK_SRC					105
+>> +#define GCC_TSC_CNTR_CLK				106
+>> +#define GCC_TSC_ETU_CLK					107
+>> +#define GCC_USB2_CLKREF_EN				108
+>> +#define GCC_USB30_PRIM_MASTER_CLK			109
+>> +#define GCC_USB30_PRIM_MASTER_CLK_SRC			110
+>> +#define GCC_USB30_PRIM_MOCK_UTMI_CLK			111
+>> +#define GCC_USB30_PRIM_MOCK_UTMI_CLK_SRC		112
+>> +#define GCC_USB30_PRIM_MOCK_UTMI_POSTDIV_CLK_SRC	113
+>> +#define GCC_USB30_PRIM_SLEEP_CLK			114
+>> +#define GCC_USB3_PRIM_PHY_AUX_CLK			115
+>> +#define GCC_USB3_PRIM_PHY_AUX_CLK_SRC			116
+>> +#define GCC_USB3_PRIM_PHY_COM_AUX_CLK			117
+>> +#define GCC_USB3_PRIM_PHY_PIPE_CLK			118
+>> +#define GCC_SM_BUS_AHB_CLK				119
+>> +#define GCC_SM_BUS_XO_CLK				120
+>> +#define GCC_SM_BUS_XO_CLK_SRC				121
+>> +#define GCC_USB3_PRIM_PHY_PIPE_CLK_SRC			122
+>> +#define GCC_ETH_100G_C2C_HM_APB_CLK			123
+>> +#define GCC_ETH_100G_FH_HM_APB_0_CLK			124
+>> +#define GCC_ETH_100G_FH_HM_APB_1_CLK			125
+>> +#define GCC_ETH_100G_FH_HM_APB_2_CLK			126
+>> +#define GCC_ETH_DBG_C2C_HM_APB_CLK			127
+>> +#define GCC_AGGRE_NOC_ECPRI_GSI_CLK			128
+>> +#define GCC_PCIE_0_PIPE_CLK_SRC				129
+>> +#define GCC_PCIE_0_PHY_AUX_CLK_SRC			130
+>> +
+>> +/* GCC resets */
+>> +#define GCC_ECPRI_CC_BCR				0
+>> +#define GCC_ECPRI_SS_BCR				1
+>> +#define GCC_ETH_WRAPPER_BCR				2
+>> +#define GCC_PCIE_0_BCR					3
+>> +#define GCC_PCIE_0_LINK_DOWN_BCR			4
+>> +#define GCC_PCIE_0_NOCSR_COM_PHY_BCR			5
+>> +#define GCC_PCIE_0_PHY_BCR				6
+>> +#define GCC_PCIE_0_PHY_NOCSR_COM_PHY_BCR		7
+>> +#define GCC_PCIE_PHY_CFG_AHB_BCR			8
+>> +#define GCC_PCIE_PHY_COM_BCR				9
+>> +#define GCC_PDM_BCR					10
+>> +#define GCC_QUPV3_WRAPPER_0_BCR				11
+>> +#define GCC_QUPV3_WRAPPER_1_BCR				12
+>> +#define GCC_QUSB2PHY_PRIM_BCR				13
+>> +#define GCC_QUSB2PHY_SEC_BCR				14
+>> +#define GCC_SDCC5_BCR					15
+>> +#define GCC_TCSR_PCIE_BCR				16
+>> +#define GCC_TSC_BCR					17
+>> +#define GCC_USB30_PRIM_BCR				18
+>> +#define GCC_USB3_DP_PHY_PRIM_BCR			19
+>> +#define GCC_USB3_DP_PHY_SEC_BCR				20
+>> +#define GCC_USB3_PHY_PRIM_BCR				21
+>> +#define GCC_USB3_PHY_SEC_BCR				22
+>> +#define GCC_USB3PHY_PHY_PRIM_BCR			23
+>> +#define GCC_USB3PHY_PHY_SEC_BCR				24
+>> +#define GCC_USB_PHY_CFG_AHB2PHY_BCR			25
+>> +
 >> +#endif
->> +    .io_start = { 0xae94400, 0xae96400 },
->> +    .num_dsi_phy = 2,
->> +    .quirks = DSI_PHY_7NM_QUIRK_V4_2,
->> +};
->> +
->> +const struct msm_dsi_phy_cfg dsi_phy_5nm_8450_cfgs = {
->> +    .has_phy_lane = true,
->> +    .reg_cfg = {
->> +        .num = 1,
->> +        .regs = {
->> +            {"vdds", 97800, 0},
->> +        },
->> +    },
->> +    .ops = {
->> +        .enable = dsi_7nm_phy_enable,
->> +        .disable = dsi_7nm_phy_disable,
->> +        .pll_init = dsi_pll_7nm_init,
->> +        .save_pll_state = dsi_7nm_pll_save_state,
->> +        .restore_pll_state = dsi_7nm_pll_restore_state,
->> +        .set_continuous_clock = dsi_7nm_set_continuous_clock,
->> +    },
->> +    .min_pll_rate = 600000000UL,
->> +#ifdef CONFIG_64BIT
->> +    .max_pll_rate = 5000000000UL,
->> +#else
->> +    .max_pll_rate = ULONG_MAX,
->> +#endif
->> +    .io_start = { 0xae94400, 0xae96400 },
->> +    .num_dsi_phy = 2,
->> +    .quirks = DSI_PHY_7NM_QUIRK_V4_3,
->> +};
-
--- 
-With best wishes
-Dmitry
+>> -- 
+>> 2.25.1
+>>
 
