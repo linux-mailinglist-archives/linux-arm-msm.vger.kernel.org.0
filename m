@@ -2,121 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 26536620347
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 00:07:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EF2A620380
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 00:12:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232308AbiKGXHF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 18:07:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44932 "EHLO
+        id S232936AbiKGXMa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 18:12:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbiKGXHD (ORCPT
+        with ESMTP id S232927AbiKGXMX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 18:07:03 -0500
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64DBE2C67F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 15:07:02 -0800 (PST)
-Received: from pendragon.ideasonboard.com (117.145-247-81.adsl-dyn.isp.belgacom.be [81.247.145.117])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 133C0492;
-        Tue,  8 Nov 2022 00:06:59 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1667862419;
-        bh=N0sUr1gASY7tZbY60ADDHkTFGTrQM54JT8hf8XPS7DA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MmJTxFiCxVhUcC7KkJl56G9rUGL2Qai4zH66EbEGE/pY61UqOZQ0bdTVErENaMBZI
-         612iucMMpAOtQ+e20W/Vyj7VxrenUeEE51phbTPSxrpY6TTttfWPurl4aya9rdq0+k
-         VUeiEchPrXCvG+HDSAMpg1E7+p3C7WRwTL0XS0KQ=
-Date:   Tue, 8 Nov 2022 01:06:40 +0200
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        quic_abhinavk@quicinc.com, dri-devel@lists.freedesktop.org,
-        swboyd@chromium.org, daniel.vetter@ffwll.ch, seanpaul@chromium.org,
-        dmitry.baryshkov@linaro.org
-Subject: Re: [RFC PATCH 0/3] Support for Solid Fill Planes
-Message-ID: <Y2mPgB4LoOqhhOUe@pendragon.ideasonboard.com>
-References: <20221028225952.160-1-quic_jesszhan@quicinc.com>
- <Y2leZDfLj/5963wl@intel.com>
+        Mon, 7 Nov 2022 18:12:23 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D58A252A2;
+        Mon,  7 Nov 2022 15:12:20 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A7NB6U8012309;
+        Mon, 7 Nov 2022 23:12:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=rx9W3BIhzS5QtgEfhCcmVgNCP1dr8FiEALyBkoDsobA=;
+ b=GJin8FMx9KMZYAiwXknNo8YnmW9GV07P8XHRsDdd6VEnVY0H5ku+sY8F6SI1YB5+0U7J
+ 8d+B9MW5ypZz9YdMpllHIbaZ77xBWqUz7wBPeWNWTJ5ErTufGIzHpa9qG3jumV6KV5Ma
+ N91i4YxGhFRoMpYpKSVi9FXSHaYm7qJg6a/TTF7ezN5RrJOS9D1j1fpd7r3qo74qWk94
+ Gu9IM8yjV9c8x8WSzKymeQd0W2y00t8YYoe4u477KfPHezWMueq0pHFZHvCFgwuCYqBu
+ 3brx+eSCLJyG1z47vXgaevl54K0lFTfd7UjX3lR03x1L05k8YaOek8zNECp0pdT5HqM2 Dg== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kq5ftruay-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 07 Nov 2022 23:12:16 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A7NCFIu023855
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 7 Nov 2022 23:12:15 GMT
+Received: from [10.110.0.244] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 7 Nov 2022
+ 15:12:14 -0800
+Message-ID: <bf9b6c4a-189e-b528-10e4-7660a098c648@quicinc.com>
+Date:   Mon, 7 Nov 2022 15:12:14 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y2leZDfLj/5963wl@intel.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH v3 1/5] dt-bindings: firmware: scm: Add QDU1000/QRU1000
+ compatibles
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+CC:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20221026190549.4005703-1-quic_molvera@quicinc.com>
+ <20221026190549.4005703-2-quic_molvera@quicinc.com>
+ <20221107173842.6ct43x7wyuulqv33@builder.lan>
+From:   Melody Olvera <quic_molvera@quicinc.com>
+In-Reply-To: <20221107173842.6ct43x7wyuulqv33@builder.lan>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YgknJlRt5q6lQXqs-efM9bJZdmtbyHNw
+X-Proofpoint-ORIG-GUID: YgknJlRt5q6lQXqs-efM9bJZdmtbyHNw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-07_11,2022-11-07_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ malwarescore=0 adultscore=0 bulkscore=0 suspectscore=0 mlxlogscore=999
+ priorityscore=1501 mlxscore=0 phishscore=0 lowpriorityscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
+ definitions=main-2211070174
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 07, 2022 at 09:37:08PM +0200, Ville Syrjälä wrote:
-> On Fri, Oct 28, 2022 at 03:59:49PM -0700, Jessica Zhang wrote:
-> > Introduce and add support for COLOR_FILL and COLOR_FILL_FORMAT
-> > properties. When the color fill value is set, and the framebuffer is set
-> > to NULL, memory fetch will be disabled.
-> 
-> Thinking a bit more universally I wonder if there should be
-> some kind of enum property:
-> 
-> enum plane_pixel_source {
-> 	FB,
-> 	COLOR,
-> 	LIVE_FOO,
-> 	LIVE_BAR,
-> 	...
-> }
 
-That's something I could use on (older) Renesas hardware, where planes
-can be fed with a live source. The issue there is that the live source
-is a compositor with multiple inputs, handled through the V4L2 API. How
-to synchronize the configuration of the compositor and the display
-engine is an unsolved problem at the moment, but it could be solved
-another day.
 
-> > In addition, loosen the NULL FB checks within the atomic commit callstack
-> > to allow a NULL FB when color_fill is nonzero and add FB checks in
-> > methods where the FB was previously assumed to be non-NULL.
-> > 
-> > Finally, have the DPU driver use drm_plane_state.color_fill and
-> > drm_plane_state.color_fill_format instead of dpu_plane_state.color_fill,
-> > and add extra checks in the DPU atomic commit callstack to account for a
-> > NULL FB in cases where color_fill is set.
-> > 
-> > Some drivers support hardware that have optimizations for solid fill
-> > planes. This series aims to expose these capabilities to userspace as
-> > some compositors have a solid fill flag (ex. SOLID_COLOR in the Android
-> > hardware composer HAL) that can be set by apps like the Android Gears
-> > app.
-> > 
-> > Userspace can set the color_fill value by setting COLOR_FILL_FORMAT to a
-> > DRM format, setting COLOR_FILL to a color fill value, and setting the
-> > framebuffer to NULL.
-> 
-> Is there some real reason for the format property? Ie. why not 
-> just do what was the plan for the crttc background color and
-> specify the color in full 16bpc format and just pick as many
-> msbs from that as the hw can use?
-> 
-> > Jessica Zhang (3):
-> >   drm: Introduce color fill properties for drm plane
-> >   drm: Adjust atomic checks for solid fill color
-> >   drm/msm/dpu: Use color_fill property for DPU planes
-> > 
-> >  drivers/gpu/drm/drm_atomic.c              | 68 ++++++++++++-----------
-> >  drivers/gpu/drm/drm_atomic_helper.c       | 34 +++++++-----
-> >  drivers/gpu/drm/drm_atomic_uapi.c         |  8 +++
-> >  drivers/gpu/drm/drm_blend.c               | 38 +++++++++++++
-> >  drivers/gpu/drm/drm_plane.c               |  8 +--
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  7 ++-
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 66 ++++++++++++++--------
-> >  include/drm/drm_atomic_helper.h           |  5 +-
-> >  include/drm/drm_blend.h                   |  2 +
-> >  include/drm/drm_plane.h                   | 28 ++++++++++
-> >  10 files changed, 188 insertions(+), 76 deletions(-)
+On 11/7/2022 9:38 AM, Bjorn Andersson wrote:
+> On Wed, Oct 26, 2022 at 12:05:45PM -0700, Melody Olvera wrote:
+>> Add compatibles for scm driver for QDU1000 and QRU1000 platforms.
+>>
+>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>> ---
+>>  .../devicetree/bindings/firmware/qcom,scm.yaml    | 15 +++++++++++++++
+>>  1 file changed, 15 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+>> index be1b5746eddb..5352181aa393 100644
+>> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+>> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+>> @@ -38,6 +38,7 @@ properties:
+>>            - qcom,scm-msm8994
+>>            - qcom,scm-msm8996
+>>            - qcom,scm-msm8998
+>> +          - qcom,scm-qdu1000
+>>            - qcom,scm-sc7180
+>>            - qcom,scm-sc7280
+>>            - qcom,scm-sc8280xp
+>> @@ -81,6 +82,20 @@ properties:
+>>      description: TCSR hardware block
+>>  
+>>  allOf:
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            const: qcom,scm-qdu1000
+>> +    then:
+>> +      properties:
+>> +        '#reset-cells':
+>> +          maxItems: 1
+>> +        clocks: false
+>> +        clock-names: false
+>> +
+>> +      required:
+>> +        - '#reset-cells'
+> Please document what this reset is expected to be wired to, and write a
+> sentence or two in the commit message how the QDU differs from existing
+> platforms supported by the binding.
+>
 
--- 
-Regards,
+Honestly, I can't remember what this is here for. Will remove from here and DT.
+Will also add a quick blurb about not needing clocks.
 
-Laurent Pinchart
+Thanks,
+Melody
+>
+>>    - if:
+>>        properties:
+>>          compatible:
+>> -- 
+>> 2.25.1
+>>
+
