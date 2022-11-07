@@ -2,100 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AC1F61F2F3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 13:24:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 615A361F3AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 13:49:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232187AbiKGMYV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 07:24:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50266 "EHLO
+        id S231563AbiKGMtW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 07:49:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232174AbiKGMYQ (ORCPT
+        with ESMTP id S230363AbiKGMtW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 07:24:16 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5CF2262D;
-        Mon,  7 Nov 2022 04:24:14 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 646D26101C;
-        Mon,  7 Nov 2022 12:24:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3B1C433D7;
-        Mon,  7 Nov 2022 12:24:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667823853;
-        bh=iQ5ViS/Km14zaC7mgBP0y2BtAXFP1Zx2+Nc0cPz+2qA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Cjo/qXHYDinqnN1BP/cR4oeVGmag98le5Rk5ncBzR62I69Fw268at7QCX1YlMexDs
-         cYsR6k3RHR3tfPbvEeOzkiaWT6N9rawd5MC1JTSWjOpi02oykFYTdnYSEEZrKRshkS
-         lZRGonQGVwvMXfHpmxqhifkluwQLYdW2ric5Ig0eODnqS3Vp/5oU7aFwKcyW7IFeNb
-         hjpmQDzp7CktfXP5ghOjSepmNfg2eTsoOo02ssHsmhDeojtrjRS900yNpfXGzJipJK
-         XNKzSCLix4khBHtq05cl/AVx0RXjO9Zy27GtkoYKeaG7vTHok6UmjqZcANYTz1Ytj1
-         OFPJ+xVgD9Hcw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1os1AL-0004DQ-56; Mon, 07 Nov 2022 13:23:49 +0100
-Date:   Mon, 7 Nov 2022 13:23:49 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Brian Masney <bmasney@redhat.com>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Mon, 7 Nov 2022 07:49:22 -0500
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2E35193EC;
+        Mon,  7 Nov 2022 04:49:20 -0800 (PST)
+Received: from g550jk.localnet (unknown [10.0.11.2])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id EF07AD00BC;
+        Mon,  7 Nov 2022 12:49:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1667825358; bh=Cj+KlzDdd4JzWqsSFQcDBwUA1JbTMTttCWs4Q5GW65U=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=xPrXFFoOzd65kDce5ZLTVpim0AT8yAANXqQP9fi9qxxnxOT54HVanXnEvdGDrAH68
+         FxEM6kM3V8pdJ2R6xz2HvESqEJypfjE34t8j5Xi+kRPmGPyBJi/ekbpyES/oCaKGCO
+         Q1oBSTNm9u/NpGpiA/O9mEMbbb4wqi3FEqEkQStM=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     Lee Jones <lee@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        afd@ti.com, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc8280xp: fix UFS reference clocks
-Message-ID: <Y2j41epn0FTT2Asb@hovoldconsulting.com>
-References: <20221104092045.17410-1-johan+linaro@kernel.org>
- <20221104092045.17410-2-johan+linaro@kernel.org>
- <Y2jnWJ0FI6Fmy8/O@x1>
+        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: mfd: qcom,spmi-pmic: rename extcon node name
+Date:   Mon, 07 Nov 2022 13:49:17 +0100
+Message-ID: <5873923.lOV4Wx5bFT@g550jk>
+In-Reply-To: <Y2jLAIQcthVLWU9e@google.com>
+References: <20221031175717.942237-1-luca@z3ntu.xyz> <Y2jLAIQcthVLWU9e@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y2jnWJ0FI6Fmy8/O@x1>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 07, 2022 at 06:09:12AM -0500, Brian Masney wrote:
-> On Fri, Nov 04, 2022 at 10:20:44AM +0100, Johan Hovold wrote:
-> > There are three UFS reference clocks on SC8280XP which are used as
-> > follows:
+On Montag, 7. November 2022 10:08:16 CET Lee Jones wrote:
+> On Mon, 31 Oct 2022, Luca Weiss wrote:
+> > extcon is a Linux-specific name and shouldn't be a part of the dts. Make
+> > it be called usb-detect@ instead.
 > > 
-> >  - The GCC_UFS_REF_CLKREF_CLK clock is fed to any UFS device connected
-> >    to either controller.
+> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> > ---
+> > This patch builds on top of
+> > https://lore.kernel.org/linux-arm-msm/20221031173933.936147-1-luca@z3ntu.x
+> > yz/ But could also be applied without, if conflicts are resolved.
 > > 
-> >  - The GCC_UFS_1_CARD_CLKREF_CLK and GCC_UFS_CARD_CLKREF_CLK clocks
-> >    provide reference clocks to the two PHYs.
-> > 
-> > Note that this depends on first updating the clock driver to reflect
-> > that all three clocks are sourced from CXO. Specifically, the UFS
-> > controller driver expects the device reference clock to have a valid
-> > frequency:
-> > 
-> > 	ufshcd-qcom 1d84000.ufs: invalid ref_clk setting = 0
-> > 
-> > Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-> > Fixes: 8d6b458ce6e9 ("arm64: dts: qcom: sc8280xp: fix ufs_card_phy ref clock")
-> > Fixes: f3aa975e230e ("arm64: dts: qcom: sc8280xp: correct ref clock for ufs_mem_phy")
-> > Link: https://lore.kernel.org/lkml/Y2OEjNAPXg5BfOxH@hovoldconsulting.com/
-> > Cc: stable@vger.kernel.org	# 5.20
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> >  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 8 ++++----
+> >  1 file changed, 4 insertions(+), 4 deletions(-)
 > 
-> Reviewed-by: Brian Masney <bmasney@redhat.com>
+> Same here.  Only 1/3 received.
 > 
-> Note that there was no 5.20 kernel; that should be 6.0. Bjorn should be
-> able to fix this up during merge.
+> Can I take this on its own?
 
-Good catch. I based this on a tag created before 6.0 was released and
-failed to notice.
+Hi,
 
-Johan
+yes, this can be taken on its own. Perhaps it'll introduce some temporary 
+dtbs_check warnings until the other patches have also made it into the tree.
+
+Patch 2 is pm8941-misc yaml change, and patch 3 is adjusting dtsi file for the 
+new name.
+
+Lore: https://lore.kernel.org/lkml/20221031175717.942237-1-luca@z3ntu.xyz/
+
+Regards
+Luca
+
+> 
+> > diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> > b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml index
+> > cf10d62ace54..14aa42057d6f 100644
+> > --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> > +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> > 
+> > @@ -123,10 +123,6 @@ patternProperties:
+> >        - $ref: /schemas/power/supply/qcom,pm8941-charger.yaml#
+> >        - $ref: /schemas/power/supply/qcom,pm8941-coincell.yaml#
+> > 
+> > -  "extcon@[0-9a-f]+$":
+> > -    type: object
+> > -    $ref: /schemas/extcon/qcom,pm8941-misc.yaml#
+> > -
+> > 
+> >    "gpio(s)?@[0-9a-f]+$":
+> >      type: object
+> >      $ref: /schemas/pinctrl/qcom,pmic-gpio.yaml#
+> > 
+> > @@ -143,6 +139,10 @@ patternProperties:
+> >      type: object
+> >      $ref: /schemas/thermal/qcom,spmi-temp-alarm.yaml#
+> > 
+> > +  "^usb-detect@[0-9a-f]+$":
+> > +    type: object
+> > +    $ref: /schemas/extcon/qcom,pm8941-misc.yaml#
+> > +
+> > 
+> >    "^usb-vbus-regulator@[0-9a-f]+$":
+> >      type: object
+> >      $ref: /schemas/regulator/qcom,usb-vbus-regulator.yaml#
+
+
+
+
