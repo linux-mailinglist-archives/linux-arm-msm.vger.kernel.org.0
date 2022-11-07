@@ -2,90 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B48E661FF28
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 21:08:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BCE761FF40
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 21:13:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232748AbiKGUIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 15:08:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46954 "EHLO
+        id S232489AbiKGUNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 15:13:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232538AbiKGUID (ORCPT
+        with ESMTP id S232141AbiKGUNf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 15:08:03 -0500
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5157C2AC6E;
-        Mon,  7 Nov 2022 12:08:01 -0800 (PST)
-Received: by mail-ot1-f52.google.com with SMTP id cn2-20020a056830658200b0066c74617e3dso7208329otb.2;
-        Mon, 07 Nov 2022 12:08:01 -0800 (PST)
+        Mon, 7 Nov 2022 15:13:35 -0500
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2443519024
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 12:13:34 -0800 (PST)
+Received: by mail-pf1-x431.google.com with SMTP id m6so11715417pfb.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 12:13:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=s87rc+3CLCRrQxp5sxRKisBXBThEk3zvk8uOAZk34uQ=;
+        b=JcatK1a3bnx5+S0pZodYk+4x8ISxTRgSUsbH7K83f5H1MTWJrtZ00CC01l5+JNw5wE
+         HGZlX7Cl8JWuzC7SFQfEtoWyAXVgsPF7APeV5BhbUe+RJ8oiLKd1uCQbN6btOgc1fMDG
+         AyDCiX7VS5ckLdgp8wCICW3p2fzLRE0C0APaol3oH3OQ3GnRSUSJvyxjVc1PWpzu5U7d
+         3v+W2EobOxnhxD/Z836nIjKtP6Ua6902lPUXpqDWr1wzrGzhXv+QDfxWRbLc9CuOtY7D
+         096KePrvsoQ9QrHSkCtH+awJs7IDlhxTVHUAjrH+NjQDLDjyecM5WAhXIisMDUEu1FTC
+         DCBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2e+1CQkY31rHRU0NgYRi9WpKBJmDl6YDaaKalJuxGYI=;
-        b=DSuWORcZm2esk4UkhYLC7luaIFUQmegaEHE92/O76wlaZ4B6JB0nxwXsuvCgLZh9Na
-         QZ90hbXj/+zWN05OkPOe9a5HDulWJnaS+FbTsmkD6Mb4qrsPm14PoXXc1NzhcwzxxxPf
-         dVfBExGjkHkDRGP2A5CIETRxeWuyPp7mFS4hcboVsFhXeJZOf+Wns9UWt0wgGzymdDAg
-         86xd4gdf0+WSC1S4aZO/Tw6FL2mySOmm8c4WQ7qha2BKdKuhildrtELFs4vOO3dGVmpJ
-         cu9fhCcYTQbk3mfLsh7bxnn6i31X6Bf2Lx0B+Vql5nmy1mdQdh3hH5V7CZsBsqYZM9JH
-         T2OA==
-X-Gm-Message-State: ACrzQf29ptMys5AqApX6sYj88UN2uF1bltF2spXYJXYsx0SmfRZPAIXo
-        fQD51LUcKKg4f0DWz3bmsQ==
-X-Google-Smtp-Source: AMsMyM42ecXI4jCMeu1Vcv60kCpnrjWz5XTXNFhmZZ/yXrVn/q9+wmUt8QoVVIhjw/+1BIFiuvTv+w==
-X-Received: by 2002:a05:6830:2aa3:b0:66c:9a3a:539 with SMTP id s35-20020a0568302aa300b0066c9a3a0539mr8688491otu.317.1667851680547;
-        Mon, 07 Nov 2022 12:08:00 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id u8-20020a9d4d88000000b0066871c3adb3sm3330746otk.28.2022.11.07.12.07.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 12:07:59 -0800 (PST)
-Received: (nullmailer pid 1525000 invoked by uid 1000);
-        Mon, 07 Nov 2022 20:08:01 -0000
-Date:   Mon, 7 Nov 2022 14:08:01 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Takashi Iwai <tiwai@suse.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        devicetree@vger.kernel.org, Banajit Goswami <bgoswami@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH 1/2] ASoC: dt-bindings: qcom,lpass: do not hard-code
- clock-output-names
-Message-ID: <166785167860.1524281.4239012568327496150.robh@kernel.org>
-References: <20221103195341.174972-1-krzysztof.kozlowski@linaro.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=s87rc+3CLCRrQxp5sxRKisBXBThEk3zvk8uOAZk34uQ=;
+        b=UJnl04d31JL3+qrUjV1u/jevJ2G4U29dvXhUl1psusWVMEHITgblF+O+4o9sv5XGhG
+         WzhCsMagP7yYi68tId+WB0PXe3qBUL2rNfeU4g+yffP9fpIhHuKrBo46EDPIEmoVmyKO
+         oBA7EGSd/UHrrfNIJmjFnS0Qsrx0IWQdWVBmd/I+xi3W1C2EyKLYKs9ma84CpFjXA9l8
+         B07/5+oEv9Ao5UnkXx2n9rpapBezIw1KCDmoihr9KKHToOuzpaLEH4duIJiMKUbhe3t5
+         trWvdX5qYRIFrVoV0aFyCLECQ0wQxGPI42HEm/2ecMaidSjxQ2/wP9g0vjfB49QQmZOR
+         Wbqg==
+X-Gm-Message-State: ACrzQf1WAmSztfcouOqSFTVUgYHMYLy3SpKqgc9g+5xcorGqLJx1FWnm
+        ZMpEVSCrlhdRn4X0YiAOm0G7irf8+izd4RU8JclqTA==
+X-Google-Smtp-Source: AMsMyM4R5Cm2QwKto+eIFDpMQNrn42E1pWAAl2yG+IdRhm6k+vQhrKETu+Dj7T4+ziC4G5VJFL56Pp+oRcye4IJBE9k=
+X-Received: by 2002:a05:6a00:1823:b0:56b:f348:998f with SMTP id
+ y35-20020a056a00182300b0056bf348998fmr52092639pfa.28.1667852013605; Mon, 07
+ Nov 2022 12:13:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221103195341.174972-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+References: <20221026194209.3758834-1-briannorris@chromium.org>
+In-Reply-To: <20221026194209.3758834-1-briannorris@chromium.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Mon, 7 Nov 2022 21:12:56 +0100
+Message-ID: <CAPDyKFqQDXPPDVHvSXG57n83wdWs1B7+NzahM0ZAd3CPh6+DXQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/7] mmc: sdhci controllers: Fix SDHCI_RESET_ALL for CQHCI
+To:     Brian Norris <briannorris@chromium.org>
+Cc:     Shawn Guo <shawnguo@kernel.org>, linux-mmc@vger.kernel.org,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Shawn Lin <shawn.lin@rock-chips.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Andy Gross <agross@kernel.org>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Al Cooper <alcooperx@gmail.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Haibo Chen <haibo.chen@nxp.com>,
+        Sowjanya Komatineni <skomatineni@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, 26 Oct 2022 at 21:42, Brian Norris <briannorris@chromium.org> wrote:
+>
+> This is a series of identical fixes for several SDHCI host
+> drivers. Patch #2 (for sdhci-of-arasan; plus its dependency in patch #1)
+> is the only one I've tested, and I wrote it due to a bug described
+> there.
+>
+> I then noticed that several other drivers do the same thing, and that
+> commit df57d73276b8 ("mmc: sdhci-pci: Fix SDHCI_RESET_ALL for CQHCI for
+> Intel GLK-based controllers") points out the likely-repeated bug. So the
+> fix is now factored into a separate sdhci_and_cqhci_reset() helper,
+> and it's likely that most/all drivers that support a combo SDHCI/CQHCI
+> controller will want to use it.
+>
+> Thus, I include additional patches (compile-tested only) that apply this
+> helper/fix to the other drivers which call cqhci_init() but not
+> cqhci_deactivate(). They contain appropriate disclaimers and the
+> relevant parties are CC'd. I would suggest only merging them if you get
+> some kind of ACK from people familiar with the relevant hardware.
+>
+> Notably, I do *not* patch drivers/mmc/host/mtk-sd.c although it uses
+> CQHCI, because it doesn't seem to be an SDHCI-based controller, and so
+> even if it has a similar bug, it's not clear to me how to patch it.
+>
+> - Brian
+>
+> Changes in v4:
+>  - Improve for-stable cherry-picking notes
+>  - Add Adrian's Ack
+>  - Also fix sdhci_am654_ops, sdhci_j721e_8bit_ops
+>
+> Changes in v3:
+>  - Refactor to a "SDHCI and CQHCI" helper -- sdhci_and_cqhci_reset()
+>
+> Changes in v2:
+>  - Rely on cqhci_deactivate() to safely handle (ignore)
+>    not-yet-initialized CQE support
+>
+> Brian Norris (7):
+>   mmc: cqhci: Provide helper for resetting both SDHCI and CQHCI
+>   mmc: sdhci-of-arasan: Fix SDHCI_RESET_ALL for CQHCI
+>   mmc: sdhci-brcmstb: Fix SDHCI_RESET_ALL for CQHCI
+>   mms: sdhci-esdhc-imx: Fix SDHCI_RESET_ALL for CQHCI
+>   mmc: sdhci-tegra: Fix SDHCI_RESET_ALL for CQHCI
+>   mmc: sdhci_am654: Fix SDHCI_RESET_ALL for CQHCI
+>   mmc: sdhci-*: Convert drivers to new sdhci_and_cqhci_reset()
+>
+>  drivers/mmc/host/sdhci-brcmstb.c   |  3 ++-
+>  drivers/mmc/host/sdhci-cqhci.h     | 24 ++++++++++++++++++++++++
+>  drivers/mmc/host/sdhci-esdhc-imx.c |  3 ++-
+>  drivers/mmc/host/sdhci-msm.c       | 10 ++--------
+>  drivers/mmc/host/sdhci-of-arasan.c |  3 ++-
+>  drivers/mmc/host/sdhci-pci-core.c  | 11 ++---------
+>  drivers/mmc/host/sdhci-pci-gli.c   | 11 ++---------
+>  drivers/mmc/host/sdhci-tegra.c     |  3 ++-
+>  drivers/mmc/host/sdhci_am654.c     |  7 ++++---
+>  9 files changed, 42 insertions(+), 33 deletions(-)
+>  create mode 100644 drivers/mmc/host/sdhci-cqhci.h
+>
 
-On Thu, 03 Nov 2022 15:53:39 -0400, Krzysztof Kozlowski wrote:
-> The purpose of clock-output-names is to customize desired clock name,
-> not use one, same name.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../devicetree/bindings/sound/qcom,lpass-rx-macro.yaml         | 3 +--
->  .../devicetree/bindings/sound/qcom,lpass-tx-macro.yaml         | 3 +--
->  .../devicetree/bindings/sound/qcom,lpass-va-macro.yaml         | 3 +--
->  .../devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml        | 3 +--
->  4 files changed, 4 insertions(+), 8 deletions(-)
-> 
+Patch1 -> patch6, applied for fixes and by adding stable tags. Patch7
+applied for next.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Thanks and kind regards
+Uffe
