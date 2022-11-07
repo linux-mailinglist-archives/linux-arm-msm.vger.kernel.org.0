@@ -2,56 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3245D61F94D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 17:21:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2AC461F9C3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 17:30:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231153AbiKGQVR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 11:21:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42538 "EHLO
+        id S232456AbiKGQae (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 11:30:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231590AbiKGQUj (ORCPT
+        with ESMTP id S232519AbiKGQaJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 11:20:39 -0500
-Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7262E205FF;
-        Mon,  7 Nov 2022 08:20:11 -0800 (PST)
-Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id 4CDDFC0005;
-        Mon,  7 Nov 2022 16:20:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1667838010;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=g1aiRW5byLVv6/Zl3rvmU1fUJuuBJRNLyImrDUKUB2A=;
-        b=PqSYI2J5umJ9aOCxRT6hOtjzj77aTFCPbsuCgXWw7dhtGxA0jUBexLd7WFE8KMf0xzcIVB
-        ODoTtwHPqIm/g7UyDV9IOVRvz6GRe4P4sosgRC5JSmEezC/iSZY2Xatv/srbBmor8NJj0B
-        P+LbG8hfGB78+pu0VkfSnEw8irxJJQkPQMYrghUdpFJmk5uS3VNJWOg9YhJlhSqOLusXbT
-        MsJhlZu4bIcQGgRuvCcYKUqxyfKLunlSet12gYaXvqL3sFTNzViV5emQJyFONlPjN8snod
-        GD0LNj4paP8RqDYgc87qIdRWT72MZju2GagMpceqsf7mfEJOCRptms2Ek9YDPQ==
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Christian Marangi <ansuelsmth@gmail.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     stable@vger.kernel.org
-Subject: Re: [PATCH] mtd: nand: raw: qcom_nandc: handle ret from parse with codeword_fixup
-Date:   Mon,  7 Nov 2022 17:20:08 +0100
-Message-Id: <20221107162008.44113-1-miquel.raynal@bootlin.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221021165304.19991-1-ansuelsmth@gmail.com>
-References: 
+        Mon, 7 Nov 2022 11:30:09 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C342201A2;
+        Mon,  7 Nov 2022 08:28:21 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id x2so18453108edd.2;
+        Mon, 07 Nov 2022 08:28:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=HwXaliEEVKH0MdJ6ecTgcVLSTfjMI6wnbCqix/s3ces=;
+        b=Fv9Rem11FO40mKELGJq8C/bhdHfwqBaqFq9GHyGanXaZiorTmSbPN+spoKLugaxZl/
+         psVpRv9W3is41LlL/CZxAXEmJRR9efNtxfvEXYrFBmpCJ0yj1VzSMTs25pmIq0GQT/tw
+         ubkPNOztuMZjamNf2dR0jaRXa4T2pRaWiV/dPBrQSXb713fBI87InQ/Xq3ljc5riZWit
+         ykTAe0mLKrSACOqjWoeS90/hrCW2M3IIx0eGziJxZK7pCRPEhFOf3/XU0qLw0H/NH2tx
+         2jsutpwG9iaVye+jbfZ81o6dx/NU6mZS6zHJoTypSKN7vhwpAuCmnxCy0CYbSz1+yYfp
+         BilQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HwXaliEEVKH0MdJ6ecTgcVLSTfjMI6wnbCqix/s3ces=;
+        b=G11WGGENmvLayWbmocvK6m0zHxlycEtRrqMY/gTNnMT4vozmgsbjQaQb+Ca/3aziSP
+         HA7lCicuZL+l2hB+plq7KCZxvKZ0g7mEQZFazVFPCsCe6NFXfzirKXafrSBIRz0V3QL2
+         FN1pZHRB+rjCztNewFlnlv4A8f2tHK6YWyqcZxURqDpsoRhqZel/7pUVH5UCz5xwN1Tq
+         Tdnttx/SxarM43BLRzJkl1KW19LEbF4JuzLFBCbSq5NE6ACg6g8O+fgdT68gbiQPGNS5
+         Ox8Q/RLIuQ2n7T8tOqEIFxN4UYkkjOOaXwpUfBlM+mDpFFUuSqhItEc6A9NL3YFqHAfb
+         nciw==
+X-Gm-Message-State: ACrzQf1ZXfvxuebENccOivz1eLjYuZ55yZAIkRPoOeyk2Q8e7/QfF5mq
+        7ZBvseIZ7e2+Q+bSFBv9UiMcP4hhoXJreK6joTjXOtuHouI=
+X-Google-Smtp-Source: AMsMyM5iq5fp05dyvDndCDK7KtNxhJCliMAt9xCZc0WtGyYnc62dBroocmMeL3tG4zyceauU/UJJlomNfdu+R4X3CAI=
+X-Received: by 2002:a05:6402:1cca:b0:460:7d72:8f2 with SMTP id
+ ds10-20020a0564021cca00b004607d7208f2mr51781141edb.205.1667838499569; Mon, 07
+ Nov 2022 08:28:19 -0800 (PST)
 MIME-Version: 1.0
-X-linux-mtd-patch-notification: thanks
-X-linux-mtd-patch-commit: b'7df140e84a75c89962feef659d686303d3ce75e5'
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=ham
+References: <CAGRyCJGWQagceLhnECBcpPfG5jMPZrjbsHrio1BvgpZJhk0pbA@mail.gmail.com>
+ <20221107115856.GE2220@thinkpad> <CAMZdPi-=AkfKnyPRBgV-7RxczePnB4shLq2bdj+q3kh+7Web3w@mail.gmail.com>
+In-Reply-To: <CAMZdPi-=AkfKnyPRBgV-7RxczePnB4shLq2bdj+q3kh+7Web3w@mail.gmail.com>
+From:   Daniele Palmas <dnlplm@gmail.com>
+Date:   Mon, 7 Nov 2022 17:28:08 +0100
+Message-ID: <CAGRyCJG_FzzjEWtpc=FQX=gO1s=DM2cV3XFB4Y0vq4UM_MP1KQ@mail.gmail.com>
+Subject: Re: MHI DTR client implementation
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org,
+        Network Development <netdev@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HK_RANDOM_ENVFROM,
+        HK_RANDOM_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -59,26 +69,87 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 2022-10-21 at 16:53:04 UTC, Christian Marangi wrote:
-> With use_codeword_fixup enabled, any return from
-> mtd_device_parse_register gets overwritten. Aside from the clear bug, this
-> is also problematic as a parser can EPROBE_DEFER and because this is not
-> correctly handled, the nand is never rescanned later in the bootup
-> process.
-> 
-> An example of this problem is when smem requires additional time to be
-> probed and nandc use qcomsmempart as parser. Parser will return
-> EPROBE_DEFER but in the current code this ret gets overwritten by
-> qcom_nand_host_parse_boot_partitions and qcom_nand_host_init_and_register
-> return 0.
-> 
-> Correctly handle the return code from mtd_device_parse_register so that
-> any error from this function is not ignored.
-> 
-> Fixes: 862bdedd7f4b ("mtd: nand: raw: qcom_nandc: add support for unprotected spare data pages")
-> Cc: stable@vger.kernel.org # v6.0+
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Hi Loic,
 
-Applied to https://git.kernel.org/pub/scm/linux/kernel/git/mtd/linux.git mtd/fixes, thanks.
+Il giorno lun 7 nov 2022 alle ore 14:47 Loic Poulain
+<loic.poulain@linaro.org> ha scritto:
+>
+> On Mon, 7 Nov 2022 at 12:59, Manivannan Sadhasivam <mani@kernel.org> wrote:
+> >
+> > + Loic
+> >
+> > On Tue, Sep 20, 2022 at 04:23:25PM +0200, Daniele Palmas wrote:
+> > > Hello all,
+> > >
+> > > I'm looking for some guidance related to  a possible MHI client for
+> > > serial ports signals management implementation.
+> > >
+> > > Testing the AT channels with Telit modems I noted that unsolicited
+> > > indications do not show: the root cause for this is DTR not set for
+> > > those ports through MHI channels 18/19, something that with current
+> > > upstream code can't be done due to the missing DTR client driver.
+> > >
+> > > I currently have an hack, based on the very first mhi stack submission
+> > > (see https://lore.kernel.org/lkml/1524795811-21399-2-git-send-email-sdias@codeaurora.org/#Z31drivers:bus:mhi:core:mhi_dtr.c),
+> > > solving my issue, but I would like to understand which would be the
+> > > correct way, so maybe I can contribute some code.
+> > >
+> > > Should the MHI DTR client be part of the WWAN subsystem?
+> >
+> > Yes, since WWAN is going to be the consumer of this channel, it makes sense to
+> > host the client driver there.
+>
+> Agree.
+>
+> >
+> > > If yes, does it make sense to have an associated port exposed as a char
+> > > device?
+> >
+> > If the goal is to control the DTR settings from userspace, then you can use
+> > the "AT" chardev node and handle the DTR settings in this client driver.
+> > Because at the end of the day, user is going to read/write from AT port only.
+> > Adding one more ctrl port and have it configured before using AT port is going
+> > to be a pain.
+> >
+> > Thanks,
+> > Mani
+> >
+> > > I guess the answer is no, since it should be used just by the AT ports
+> > > created by mhi_wwan_ctrl, but I'm not sure if that's possible.
+> > >
+> > > Or should the DTR management be somehow part of the MHI stack and
+> > > mhi_wwan_ctrl interacts with that through exported functions?
+>
+> Is this DTR thing Telit specific?
+>
 
-Miquel
+I'm still not 100% sure, but I believe it is Telit specific.
+
+> Noticed you're using the IP_CTRL channel for this, do you have more
+> information about the protocol to use?
+>
+
+No, Qualcomm documents I have about mhi does not telly anything about
+this protocol: all I know is coming from previously sent patches and
+code available at
+https://git.codelinaro.org/clo/le/platform/mhi-host/-/commit/17a10f4c879c9f504a0d279f03e924553bcf2420
+
+> At first glance, I would say you can create a simple driver for
+> IP_CTRL channel (that could be part of mhi_wwan_ctrl), but instead of
+> exposing it rawly to the user, simply enable DTR unconditionally at
+> probe time?
+>
+
+Yes, this is what I'm currently doing in custom patches and it's
+working fine since I just need to "turn on" indications. Not sure,
+however, if this works fine for other use cases (e.g. dial-up, as
+mentioned in commit description at
+https://git.codelinaro.org/clo/le/platform/mhi-host/-/commit/17a10f4c879c9f504a0d279f03e924553bcf2420
+though I'm not sure how much having a dial-up connection with this
+kind of modems makes sense...)
+
+Thanks,
+Daniele
+
+> Regards,
+> Loic
