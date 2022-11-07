@@ -2,79 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2F0E61FD43
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 19:19:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B77161FD87
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 19:28:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231693AbiKGSTs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 13:19:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34024 "EHLO
+        id S232568AbiKGS2m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 13:28:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232127AbiKGSTZ (ORCPT
+        with ESMTP id S232579AbiKGS2k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 13:19:25 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5776B1147D
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 10:18:47 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id r12so17931933lfp.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 10:18:47 -0800 (PST)
+        Mon, 7 Nov 2022 13:28:40 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52F3B10A5
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 10:28:39 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id l12so6813331lfp.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 10:28:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=tWsXLh2L851r8RYCKJq+fTeiBfSiiVKT4hw/fDZo7zY=;
-        b=pnj0uLR9fJ4eXPPSx5vdtLny3B0AGgtcshzTfn3nv25iVQZT59hBKwyjlRsIC9sntp
-         jEuUijaHMRcGw3yti8oH31EW5tMd1hlxPQKFTHFsypbLaGIymVzeU1nXISqhRvdNzC9L
-         PSCbYJsCrzdyzrnrxrmVR6zDmuZ1nVNQaBd6UJ8jWrAsEaOZd9DBvwz+bb4pFuvF+EeR
-         oh9zSgdToRaeLlZiBTwgGWGwU/fyaCoLgF91yPovyLR0G6O3/4L2Du42WrLyqmHdtOwi
-         KxOHR6xJ7HV3MizjMJBJpEeFftaccz93wkl2HmazKT5fA50FNlbD4+LardUi4tu3lJ88
-         5z0A==
+        bh=vdp7PDi0T7BQyAwkQUhSfvaQ6xRVmE/EG/6MvECjXbE=;
+        b=uuadWkdCxNQeLEDr/RNoiZGpYCm7HXdRuNfjc6nZ8jTbjDCDb1W8PnYCE6V7sOJywA
+         8+1uBCvsqT+UMdS/Bb8zisl8pmTNqD3lW7aQ8tqEtkVUki9Gukbzb/QxGvDQrjzSXb6a
+         R2p5eH4RwbDQ2xVDqRjdPTM5m5NXrFiUX3WmQ0Wz7aHzBnDad54KAMjQPRWocC89E4i/
+         oB7f64FItvZILL5UFCMBEVkfCJG7gUTtttfqUIfC/pGiViGu1/TWtgEA6CtLKBgpphtq
+         unwJdYs8F8CmEuayXFNst5C7PjQBL5myT0KASV705GuY7KsHMAjlZL/Wif5EowNEWXLu
+         iNlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tWsXLh2L851r8RYCKJq+fTeiBfSiiVKT4hw/fDZo7zY=;
-        b=bGn0XNxJcwebxVl5CETk5m60xdceeB+8NFr6Ttaqc2vpMkOe4Ei39a2JMTteHEYsOr
-         n1Zqip2egqVxILQ4ShAqA8I2vFJN7LTkCvorps8dXDSRy0WEFWxV7NdR7CZEPuG9VjZs
-         F+32+creg2KK6ZW0r6AaYvfZF+rO65trcWE7xrmi4z0BmgyYtkzA0ulXTkd6Q2MtH+pu
-         DE2khn6v3mRztqh9JBbdgi5ifySo3jCkblp/B7pACWBL4KQkShNG/GUb1KwFq+HcLyft
-         iLat/tdM7VQ0OnkC+a/rEtwszSTahA/8snzkk8SCaF/dMgvpbBWQWzGiCYp1f7kOqLXR
-         n9Xg==
-X-Gm-Message-State: ANoB5pk8xiM2wUbb6Qqeplxw9q6nbdQiRlJ1DduTgRsj81ZJkB5pbEVl
-        Nh+wG1h97TPyrbzjuclRpa3FPA==
-X-Google-Smtp-Source: AA0mqf6uQrloA1xdpVDP17NsvKbFFDiNw5PsPA/9ZXq1MuCsgg9JsvymfHX6GczKvE6+iQskp7J4ig==
-X-Received: by 2002:a05:6512:38c9:b0:4b2:1a29:cc44 with SMTP id p9-20020a05651238c900b004b21a29cc44mr4679507lft.176.1667845125716;
-        Mon, 07 Nov 2022 10:18:45 -0800 (PST)
+        bh=vdp7PDi0T7BQyAwkQUhSfvaQ6xRVmE/EG/6MvECjXbE=;
+        b=LwHkuXSlCv4kKGivUVYOWEeMUAb53gjkWrWAQXL2QlU2tqBZBoEnWmg8NeI8i5cyh+
+         TzPcclJ8yjjKk8hfuWJvPunFInApToBzEqctjnOU85qtgVARn6fiXAooDUBmoSJ8cDKE
+         K0m7tvOE3jcVD85q/7b3j1PGbyBT2W4vYv0vrIbSX40lIY58NSfGZlQGU+r3kYLfbQbd
+         yBUsuijBtIRSwL5YNphZVlCYgCR/vYPgyJqSEOjeQ+CDHY91bkikcdq3ya28GILaRMF1
+         6Fa7TkZ114dYBYLT2cWz3Rn+/wTolVkEoLOsVBV1xCeG3GMIQwTd+z1+MqZMI3bxs67I
+         RN1Q==
+X-Gm-Message-State: ACrzQf33SXYd/7NFIcB7ZzxWLksY/lCfFjMHNZMs4NIZBwDNS2XuQxQM
+        ofCNzudxitQtdkGMBnFmi1nSNg==
+X-Google-Smtp-Source: AMsMyM4Fch0PTguwDhppGmnjE9bqmftS6Hp4ihDF4ZawlEs716t6BvwccW5CVSk4fPZ8D4+0ydYL3g==
+X-Received: by 2002:a05:6512:2fb:b0:4b0:620:b106 with SMTP id m27-20020a05651202fb00b004b00620b106mr19073030lfq.470.1667845717694;
+        Mon, 07 Nov 2022 10:28:37 -0800 (PST)
 Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
-        by smtp.gmail.com with ESMTPSA id m18-20020a197112000000b004a2550db9ddsm1350619lfc.245.2022.11.07.10.18.44
+        by smtp.gmail.com with ESMTPSA id 18-20020ac24d52000000b004ab2cb8deb5sm1363225lfp.18.2022.11.07.10.28.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Nov 2022 10:18:45 -0800 (PST)
-Message-ID: <7b848257-e3a4-3b6b-9986-57174e40319d@linaro.org>
-Date:   Mon, 7 Nov 2022 19:18:44 +0100
+        Mon, 07 Nov 2022 10:28:36 -0800 (PST)
+Message-ID: <225f3ff2-62cb-7f11-3eb1-f677360b4359@linaro.org>
+Date:   Mon, 7 Nov 2022 19:28:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH v3 2/5] dt-bindings: power: rpmpd: Add QDU1000/QRU1000 to
- rpmpd binding
+Subject: Re: [PATCH v3 1/3] dt-bindings: interconnect: Remove required reg
+ field
 Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Melody Olvera <quic_molvera@quicinc.com>,
+To:     Georgi Djakov <djakov@kernel.org>,
+        Melody Olvera <quic_molvera@quicinc.com>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221026190549.4005703-1-quic_molvera@quicinc.com>
- <20221026190549.4005703-3-quic_molvera@quicinc.com>
- <23e8a609-345f-a8ce-b0cb-2926fd86a315@linaro.org>
- <20221107174848.lwq4ma62bj5b2fkt@builder.lan>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Odelu Kukatla <quic_okukatla@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221026190520.4004264-1-quic_molvera@quicinc.com>
+ <20221026190520.4004264-2-quic_molvera@quicinc.com>
+ <a214f513-fe28-2096-c2b0-2107e97f3ce2@linaro.org>
+ <64d0e5ef-fd36-6f25-2c39-00e8e1346af7@quicinc.com>
+ <1a7fd1fd-4f0d-bec3-ddd5-7c6a99a2ab01@linaro.org>
+ <7d2c43b7-1507-7c30-27f7-3081c6ec77ba@kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221107174848.lwq4ma62bj5b2fkt@builder.lan>
+In-Reply-To: <7d2c43b7-1507-7c30-27f7-3081c6ec77ba@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -84,37 +86,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/11/2022 18:48, Bjorn Andersson wrote:
-> On Thu, Oct 27, 2022 at 11:25:42AM -0400, Krzysztof Kozlowski wrote:
->> On 26/10/2022 15:05, Melody Olvera wrote:
->>> Add compatible and constants for the power domains exposed by the RPMH
->>> in the Qualcomm QDU1000 and QRU1000 platforms.
+On 07/11/2022 15:36, Georgi Djakov wrote:
+> Hi,
+> 
+> On 2.11.22 23:11, Krzysztof Kozlowski wrote:
+>> On 31/10/2022 19:29, Melody Olvera wrote:
 >>>
->>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>>>
+>>> On 10/27/2022 8:29 AM, Krzysztof Kozlowski wrote:
+>>>> On 26/10/2022 15:05, Melody Olvera wrote:
+>>>>> Many of the *-virt compatible devices do not have a reg field
+>>>>> so remove it as required from the bindings.
+>>>> and some virt have it... This should be probably separate binding or if
+>>>> the list is small - allOf:if:then.
+>>> I attempted this; however I'm still seeing failures in dtb_check. I've added this
+>>> to the binding; does this look correct?
+>>>   allOf:
+>>>     - $ref: qcom,rpmh-common.yaml#
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          contains:
+>>> +            enum:
+>>> +              - qcom,qdu1000-clk-virt
+>>> +              - qcom,qdu1000-mc-virt
+>>> +
+>>> +    then:
+>>> +      required:
+>>> +        - compatible
 >>
->> Looks good, but you did not Cc maintainers and  they must see this patch.
+>> No, because we talk about reg, not compatible. You should not require
+>> reg instead for some compatibles... but then the schema is getting
+>> complicated.
 >>
+>> It's difficult to give you recommendation because I do not know what are
+>> all these "virt" interconnects. Why some have unit address, why some do not?
 > 
-> $ ./scripts/get_maintainer.pl -f Documentation/devicetree/bindings/power/qcom,rpmpd.yaml include/dt-bindings/power/qcom-rpmpd.h
-> Andy Gross <agross@kernel.org> (maintainer:ARM/QUALCOMM SUPPORT)
-> Bjorn Andersson <andersson@kernel.org> (maintainer:ARM/QUALCOMM SUPPORT,in file)
-> Konrad Dybcio <konrad.dybcio@somainline.org> (reviewer:ARM/QUALCOMM SUPPORT)
-> Rob Herring <robh+dt@kernel.org> (maintainer:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS)
-> Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org> (maintainer:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS)
-> linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT)
-> devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS)
-> linux-kernel@vger.kernel.org (open list)
-> 
-> So you're right; Melody did miss Konrad in the recipients list. But he's
-> typically doing a very good job of keeping an eye on the list - and both
-> you and I got the patch.
-> 
-> 
-> Why didn't you add your R-b if you think it looks good?
+> My understanding is that the "reg" property is required for the NoCs that have
+> registers for controlling the QoS settings for the ports from Linux side.
+> Other NoCs might be controlled by some remote processor and direct access from
+> Linux may not be possible, so they do not have unit address and are outside of
+> the soc DT node.
+> Do we need to strictly define when exactly the "reg" property is required,
+> can't we just mark it as optional?
 
-Because then you would pick it up and that I did not want. It shall be
-resent so all maintainers get it. I did not check though how many of
-people were missing.
+It's preferred to make it strictly required or not allowed, so the
+bindings are specific. This also allows to validate for mistakes. It
+would be a bit different case if such test for req would make the
+bindings complicated. I think it's not the case because we could just
+split the bindings into two files:
+1. One for controlled by AP, with reg.
+2. One for controller by remote processors, without reg.
 
 Best regards,
 Krzysztof
