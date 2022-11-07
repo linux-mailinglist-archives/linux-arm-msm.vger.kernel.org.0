@@ -2,138 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FC8E61F0FF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 11:46:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E174461F13C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 11:56:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231590AbiKGKqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 05:46:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49842 "EHLO
+        id S231678AbiKGK4U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 05:56:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231249AbiKGKqb (ORCPT
+        with ESMTP id S231237AbiKGK4T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 05:46:31 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BB8B17E34
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 02:46:30 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id c25so15558474ljr.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 02:46:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=s5MDDAXa8IRw5p9rl+GiC7riEtVmh8Gwkk4sc9znBsQ=;
-        b=yjhKeDwzkK7xlEhAN3vJRmSnRn5UsFC0h2qMfFeq7gjYgomws/qFZMamo/TOaD0coK
-         jwh7A77oKSRWD0e5edIfuA1zJiWxUqD3JNoy/9erdccKWhLBTNLHTQqiA0JmNnn46WGF
-         1QVba+arjBlTCBr3pD2WxfSuyrI2FQPBDxnoJVtuNMC/CUAeJjFXWxnm4Lq5IQ9zDyaa
-         ZqqU75SbLONPVqjevkwjeIchO2UEJ57K4wk3Az/zs1iDWdZdt8VS5XUMrD+3y35iASHF
-         IrYpMJVoNmwTqyc/lVdYekKSJc7v0eEQXly1oGydiLZzJrWWCeJKRHiEUB6zxF8flWkR
-         SBRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=s5MDDAXa8IRw5p9rl+GiC7riEtVmh8Gwkk4sc9znBsQ=;
-        b=mLM9OvlTkwbCmjQj/dUjESoXv4+FEIPAP51/AKuBkm1AYVfD9qnpvadstt62r1msFU
-         x9Ic9KQNRAdrvgfaaHivnaAE3YyCsOBp3LDK1AmHYHjgtnwISLmLKM4BTrht2nX8IhnM
-         Xo5pVLvKen1ukkMfx1zb686Gw0EQ72t0s6CGBvAmusje3vgstmftpSCoWajVDaKpu/HM
-         IDmeTNH7sRPHKYd/RsUg2RffQSYjJe2EUwRQzHA4GAj55/EnBan/Ctc5ZVWFY0f61YlD
-         LtQ+wXy9Eqn6fBnqwqtJITxoaTTKsoGaXG97DQHsBHrSZ39sGps646wdvYDZrSCglbGO
-         gWQQ==
-X-Gm-Message-State: ACrzQf08+sCtphzK2dSIlDEJ9ANpsAofpjc5FkPk6nsNSap4oEcd84d1
-        eVPOIymxgqtsFTioXNv8s9K22g==
-X-Google-Smtp-Source: AMsMyM4Kvpme3xgciEbA2G0h5fSNqcNALszrO4u+9XgylLUtLBOKkQxUaWnDHLFPPOa3sHtHQqCAYA==
-X-Received: by 2002:a2e:a30d:0:b0:277:1c75:b73f with SMTP id l13-20020a2ea30d000000b002771c75b73fmr18044987lje.458.1667817988463;
-        Mon, 07 Nov 2022 02:46:28 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id f18-20020a2ea0d2000000b0027776efa48csm1145125ljm.91.2022.11.07.02.46.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Nov 2022 02:46:27 -0800 (PST)
-Message-ID: <dc19c341-c653-c60e-dd45-5c87ed4c6811@linaro.org>
-Date:   Mon, 7 Nov 2022 11:46:23 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH v1 3/5] arm64: dts: qcom: sm8450-hdk: enable display
- hardware
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Mon, 7 Nov 2022 05:56:19 -0500
+Received: from mout-y-111.mailbox.org (mout-y-111.mailbox.org [91.198.250.236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E62C0F9;
+        Mon,  7 Nov 2022 02:56:17 -0800 (PST)
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mout-y-111.mailbox.org (Postfix) with ESMTPS id 4N5Sp60VxGz9spb;
+        Mon,  7 Nov 2022 11:56:14 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=noorman.info;
+        s=MBO0001; t=1667818574;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=zR6Mhv/vRVdGbEmRy19xWFBS8xMO4Kg6VmBSaKKrkYA=;
+        b=D4i5c2f/FPiucTd8gLwUgzy7BdbilM406LibcE3v+l0kIaPoYMCxkwh+c0izQ0w9Mve3Kd
+        dB2PZN3DTdaRbhGva09h9nAelS95ode61ws4EzenCodoVD+Mk069cGqTFSISyrcL35xUq3
+        1dkXq+d0C3R5ZPQmXW6NQ+UtEXydx2ujVM5AEHcET59ZJG/RRvgNyyKQZpIpdX5Lqr2Fm6
+        skyDUfWLRcfK0rttIJTRbegZ454O9xTXyd2VLvnFSfSf4dK4o/cA5MOWV8PWxBkrdEZ3ZJ
+        2XV7KYSGdHZ/7dnkPPK5j8sWaX1jtgigCioAxLjTFYOxdREj1OhzPzaZYM8dFw==
+From:   Job Noorman <job@noorman.info>
+To:     Job Noorman <job@noorman.info>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Vinod Koul <vkoul@kernel.org>
-References: <20221104131358.1025987-1-dmitry.baryshkov@linaro.org>
- <20221104131358.1025987-4-dmitry.baryshkov@linaro.org>
- <20221106043011.pw5fqeame7otzdcn@builder.lan>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221106043011.pw5fqeame7otzdcn@builder.lan>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Henrik Rydberg <rydberg@bitmath.org>
+Cc:     linux-input@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Luca Weiss <luca@z3ntu.xyz>
+Subject: [PATCH RESEND v6 0/3] Add Himax hx83112b touchscreen driver
+Date:   Mon,  7 Nov 2022 11:56:01 +0100
+Message-Id: <20221107105604.26541-1-job@noorman.info>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 4N5Sp60VxGz9spb
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi all,
+
+This series adds support for the Himax hx83112b. The hx83112b supports 10
+point multitouch with hardware tracking of touch points. It is the
+touchschreen used by the Fairphone 3.
+
+Note that a datasheet was unavailable for this device, so it was built
+based on the Android driver that was tagged as GPLv2. This series is a
+complete rewrite, though, and the code bears no resemblence to the original
+implementation.
+
+It is expected that this driver can be made to work on other hx83xxx
+devices, especially the hx83112a used in the Fairphone 4. However, since we
+have been unable to verify this, this driver only declares compatibility
+with the hx83112b and uses very specific file names.
+
+Changes since v5 (based on Jeff LaBundy's 3rd round of comments):
+- Consistently reuse local variable dev in himax_probe()
+
+Changes since v4 (based on Jeff LaBundy's 2nd round of comments):
+- Kconfig: depend on I2C and select REGMAP_I2C
+- Don't suppress dev_err() on EPROBE_DEFER
+- Some minor coding style updates
+
+Changes since v3 (based on Dmitry Torokhov's comments):
+- Use gpiod_set_value_cansleep (instead of gpiod_set_value) during probe
+- Inline some small helper functions
+- Use DEFINE_SIMPLE_DEV_PM_OPS() and pm_sleep_ptr()
+- Use PTR_ERR_OR_ZERO instead of IS_ERR+PTR_ERR
+- Some minor coding style updates (e.g., use C-style comments)
+
+Changes since v2 (based on Jeff LaBundy's comments):
+- Kconfig: depend on REGMAP_I2C instead of I2C
+- Don't use dev_err_probe()
+- Return IRQ_NONE on failed register reads to prevent possible interrupt
+  storm
+- Add small delay after de-asserting reset pin
+- Some minor coding style updates
+- dt-bindings: make touchscreen-size-{x,y} required
+
+Changes since v1:
+- Fix sparse warnings. Reported-by: kernel test robot <lkp@intel.com>.
+- Fix dt_binding_check.
+
+Best regards,
+Job
+
+Previous versions:
+- v5: https://lore.kernel.org/lkml/20221023163032.144150-1-job@noorman.info/
+- v4: https://lore.kernel.org/lkml/20221017100409.189293-1-job@noorman.info/
+- v3: https://lore.kernel.org/lkml/20221016102756.40345-1-job@noorman.info/
+- v2: https://lore.kernel.org/lkml/20221012202341.295351-1-job@noorman.info/
+- v1: https://lore.kernel.org/lkml/20221011190729.14747-1-job@noorman.info/
+
+Job Noorman (3):
+  dt-bindings: touchscreen: add Himax hx83112b bindings
+  Input: add driver for Himax hx83112b touchscreen devices
+  arm64: dts: qcom: sdm632: fairphone-fp3: add touchscreen
+
+ .../input/touchscreen/himax,hx83112b.yaml     |  63 +++
+ MAINTAINERS                                   |   7 +
+ .../boot/dts/qcom/sdm632-fairphone-fp3.dts    |  14 +
+ drivers/input/touchscreen/Kconfig             |  12 +
+ drivers/input/touchscreen/Makefile            |   1 +
+ drivers/input/touchscreen/himax_hx83112b.c    | 361 ++++++++++++++++++
+ 6 files changed, 458 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/input/touchscreen/himax,hx83112b.yaml
+ create mode 100644 drivers/input/touchscreen/himax_hx83112b.c
 
 
-On 06/11/2022 05:30, Bjorn Andersson wrote:
-> On Fri, Nov 04, 2022 at 04:13:56PM +0300, Dmitry Baryshkov wrote:
->> Enable MDSS/DPU/DSI0 on SM8450-HDK device. Note, there is no panel
->> configuration (yet).
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 18 ++++++++++++++++++
->>   1 file changed, 18 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
->> index 38ccd44620d0..e1a4cf1ee51d 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
->> @@ -442,3 +442,21 @@ &usb_1_qmpphy {
->>   	vdda-phy-supply = <&vreg_l6b_1p2>;
->>   	vdda-pll-supply = <&vreg_l1b_0p91>;
->>   };
->> +
->> +&mdss {
->> +	status = "okay";
->> +};
->> +
->> +&mdss_mdp {
->> +	status = "okay";
->> +};
->> +
->> +&dsi0 {
-> 
-> Please prefix the labels with "mdss_" so that you can keep them sorted
-> alphabetically.
-Why such a change all of a sudden? Only downstream (and sc7280 upstream) 
-has mdss_ prefixes for dsi. Plain 'dsiN' is more generic.
+base-commit: 153a197077d33861744be5a2d4bd17cec2c2dca3
+-- 
+2.38.1
 
-Konrad
-> 
-> THanks,
-> Bjorn
-> 
->> +	status = "okay";
->> +	vdda-supply = <&vreg_l6b_1p2>;
->> +};
->> +
->> +&dsi0_phy {
->> +	status = "okay";
->> +	vdds-supply = <&vreg_l5b_0p88>;
->> +};
->> -- 
->> 2.35.1
->>
