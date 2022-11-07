@@ -2,96 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6C2D61F099
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 11:27:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD82961F0A7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 11:31:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231243AbiKGK1c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 05:27:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37528 "EHLO
+        id S231710AbiKGKbU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 05:31:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230141AbiKGK1b (ORCPT
+        with ESMTP id S231298AbiKGKbU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 05:27:31 -0500
-Received: from m13110.mail.163.com (m13110.mail.163.com [220.181.13.110])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 28939167CE;
-        Mon,  7 Nov 2022 02:27:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=Iezgj
-        ihe3dMNgACGfpPanM3zvh99fKU3TJbsD0OFZa4=; b=UewkY+SWzGeiHNOG7iz7h
-        qGT+4oOPSaUAXU++sKP8JJvTCY8whaSIGCg2yTXZRCIz6988+SFjCm2v5Nf3zdTJ
-        fZGRpYoaBxtD4LdS/88ySdEMis8dA0I/7JHIPlkztRyddcnXO9yveLRlnJKbwo0k
-        l+2eVlYYI5uEB9Y9nvNh88=
-Received: from slark_xiao$163.com ( [112.97.52.114] ) by
- ajax-webmail-wmsvr110 (Coremail) ; Mon, 7 Nov 2022 18:26:16 +0800 (CST)
-X-Originating-IP: [112.97.52.114]
-Date:   Mon, 7 Nov 2022 18:26:16 +0800 (CST)
-From:   "Slark Xiao" <slark_xiao@163.com>
-To:     "Greg KH" <gregkh@linuxfoundation.org>
-Cc:     mani@kernel.org, loic.poulain@linaro.org, dnlplm@gmail.com,
-        yonglin.tan@outlook.com, fabio.porcedda@gmail.com,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re:Re: Re: [PATCH v2] bus: mhi: host: pci_generic: Add macro for
- some VIDs
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20220113(9671e152)
- Copyright (c) 2002-2022 www.mailtech.cn 163com
-In-Reply-To: <Y2jVtWPdTybNCYqX@kroah.com>
-References: <20221107084826.8888-1-slark_xiao@163.com>
- <Y2jJpT5//xBUOQMq@kroah.com>
- <28f1e702.28d7.184516dbbbb.Coremail.slark_xiao@163.com>
- <Y2jVtWPdTybNCYqX@kroah.com>
-X-NTES-SC: AL_QuydBfSauU8s4CCRYekWkkcRjuo+UMC0vfgh249fPJs0pCvtxAMnWFBjJnDK+smkJQyVnzeNTiZyythzUqdYWY0xnU/Bg6eXjfRlTVHEt+Hq
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+        Mon, 7 Nov 2022 05:31:20 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECB0D14D2C
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 02:31:18 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id s24so15490960ljs.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 02:31:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=phTgWro8ITa1pQy8f5x6b7yFdhBlhdxnWW0xZ/54IDc=;
+        b=mrJgIqkAtBUsHsv6nECf+GO2hcSlXo2Hf4IDo9JTAqThKKzgAS/v+qOj6nT4AbJFWy
+         EainCmCQCNiJ6aFJO+Q62hKYncSPEIynB5LggHOggma5ZvYSGC1MYWRcLjqCZU7dC/tB
+         LER1CHM8dHn8x/ErXrirz8679ljXdqth5cbjDpdW+sRXaLHoym+LNr0pZ4VfSap6Mlu5
+         Dbfb4GXQE1RvNmmzCboD9LFatoNXQ7ymo8GtvVx/VjdwaMXQ8sDH5r/rNaDN2ACs5Tuv
+         ArijT/4hlGreLZhn6Hf/Cyhp9cmPzmMZRmHDDudgoG+6H1piwr6Drh26bNlkyMThw4q8
+         BjVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=phTgWro8ITa1pQy8f5x6b7yFdhBlhdxnWW0xZ/54IDc=;
+        b=hk/yNk6E/JfzpoCz/ViybYLauSzzvuQTba5toF9eqtTBCvCfzQOHekdiI2njMd1Z/9
+         qdXzeAbD5QDbfDGozMCg1BFpsKH7DHLDU2QmakbOpEmRIh4kv6g++4ulGWYBU+ae3hpR
+         48LLNo+Nd/kq6VLIiTAUgLyiI/ozkDivd4LaykG3k6SvQDAq1wMCo7WtyXu/e0w7WHxX
+         X8E8nkRN1ebaXl3Ez5lnETmKDz61+NnRcHdKeA85RG6FuwQAGG2m7LcaJMA1oCgMSmK3
+         piolfhafzUt+gQ2beItRsYWZq1GZdyGyvZJlyWBOastrvNP3o7H990pH9cDVKO1NN3wK
+         cmaA==
+X-Gm-Message-State: ACrzQf0PkYvpYsI/AZ6ADOp8sLuuQpeJJrn+EQldacN7P5At1PHa5fTw
+        sCiQUkqMVla/nbUs0pjzzd1MwA==
+X-Google-Smtp-Source: AMsMyM6VXgpY256mT1s4LKd9dVye8Gc7XdH/fOoWTc1d0zgP4LtokebEjtxzL+i91dICVSFInE5dqQ==
+X-Received: by 2002:a05:651c:118a:b0:277:5ae6:4b67 with SMTP id w10-20020a05651c118a00b002775ae64b67mr13140015ljo.414.1667817077358;
+        Mon, 07 Nov 2022 02:31:17 -0800 (PST)
+Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
+        by smtp.gmail.com with ESMTPSA id w3-20020a05651204c300b004ab4ebb5d92sm1169012lfq.5.2022.11.07.02.31.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Nov 2022 02:31:16 -0800 (PST)
+Message-ID: <85bdc42b-eb1e-916e-2869-62e145bc00e8@linaro.org>
+Date:   Mon, 7 Nov 2022 11:31:15 +0100
 MIME-Version: 1.0
-Message-ID: <5b96b2e2.3a97.18451a061a3.Coremail.slark_xiao@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: bsGowADnUwdI3Whj5KBFAA--.2306W
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbivwmyZFWB2NyaHgAAs0
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: hk10: use "okay" instead of "ok"
+Content-Language: en-US
+To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221107092930.33325-1-robimarko@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221107092930.33325-1-robimarko@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-CgoKCgoKCgoKCgoKCgoKCkF0IDIwMjItMTEtMDcgMTc6NTM6NTcsICJHcmVnIEtIIiA8Z3JlZ2to
-QGxpbnV4Zm91bmRhdGlvbi5vcmc+IHdyb3RlOgo+T24gTW9uLCBOb3YgMDcsIDIwMjIgYXQgMDU6
-MzA6NTZQTSArMDgwMCwgU2xhcmsgWGlhbyB3cm90ZToKPj4gCj4+IAo+PiAKPj4gCj4+IAo+PiAK
-Pj4gCj4+IAo+PiAKPj4gCj4+IAo+PiAKPj4gCj4+IAo+PiAKPj4gCj4+IEF0IDIwMjItMTEtMDcg
-MTc6MDI6MjksICJHcmVnIEtIIiA8Z3JlZ2toQGxpbnV4Zm91bmRhdGlvbi5vcmc+IHdyb3RlOgo+
-PiA+T24gTW9uLCBOb3YgMDcsIDIwMjIgYXQgMDQ6NDg6MjZQTSArMDgwMCwgU2xhcmsgWGlhbyB3
-cm90ZToKPj4gPj4gVG8gbWFrZSBjb2RlIG5lYXQgYW5kIGZvciBjb252ZW5pZW5jZSBwdXJwb3Nl
-LCB1c2UgbWFjcm8gZm9yCj4+ID4+IHNvbWUgVklEcy4gVGhlc2UgbWFjcm9zIGFyZSBzdXBwb3Nl
-ZCB0byBiZSBhZGRlZCB0byBwY2lfaWRzLmguCj4+ID4KPj4gPk5vLCB0aGV5IGFyZSBub3Qgc3Vw
-cG9zZWQgdG8gYmUgYWRkZWQgdGhlcmUgYXQgYWxsLgo+PiA+Cj4+ID5BbmQgdGhleSBhcmUgbm90
-IGEgIm1hY3JvIiwgaXQgaXMgYSAiI2RlZmluZSIuCj4+ID4KPj4gPj4gQnV0IHVudGlsIHRoZSBt
-YWNyb3MgYXJlIHVzZWQgaW4gbXVsdGlwbGUgcGxhY2VzLCBpdCBpcyBub3QKPj4gPj4gcmVjb21t
-ZW5kZWQuIFNvIGFkZGluZyBpdCBsb2NhbGx5IGZvciBub3cuCj4+ID4KPj4gPkFnYWluLCB0aGVz
-ZSBhcmUgbm90IG1hY3Jvcwo+PiA+Cj4+ID50aGFua3MsCj4+ID4KPj4gPmdyZWcgay1oCj4+IAo+
-PiBIaSBHcmVnLAo+PiBUaGFua3MgZm9yIHlvdXIgY29tbWVudC4KPj4gSW4gbXkgb3Bpbmlvbiwg
-TUFDUk8gYWxtb3N0IHNhbWUgYXMgYSAnI2RlZmluZScuICBNYXkgSSBrbm93IGhvdyBkbyAKPj4g
-eW91IGNhbGwgc3VjaCBkZWZpbml0aW9uPwo+Cj5BcyBJIHNhaWQsIHRoaXMgaXMganVzdCBhIGRl
-ZmluZSwgbm90IGEgbWFjcm8gYXQgYWxsLgo+Cj4+IEFuZCBjb3VsZCB5b3UgZ2l2ZSB5b3VyIGNv
-bW1lbnRzIGluIHByZXZpb3VzIHBhdGNoLCBub3QgdGhlICdmaW5hbCcgb25lPwo+Cj5JIGRvIG5v
-dCB1bmRlcnN0YW5kLCB3aGF0IHByZXZpb3VzIHBhdHJjaD8gIFdoYXQgImZpbmFsIiBvbmU/ICBX
-aGF0IGlzCj50aGUgImxhdGVzdCIgcGF0Y2g/CnByZXZpb3VzIHBhdGNoOgpodHRwczovL2xvcmUu
-a2VybmVsLm9yZy9sa21sLzIwMjIxMDI3MTE1MTIzLjUzMjYtMS1zbGFya194aWFvQDE2My5jb20v
-Cmh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2xrbWwvMjAyMjEwMjgwMjM3MTEuNDE5Ni0xLXNsYXJr
-X3hpYW9AMTYzLmNvbS8KaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvbGttbC8yMDIyMTEwMjAyNDQz
-Ny4xNTI0OC0xLXNsYXJrX3hpYW9AMTYzLmNvbS8KCidmaW5hbCcgcGF0Y2g6Cmh0dHBzOi8vbG9y
-ZS5rZXJuZWwub3JnL2xrbWwvMjAyMjExMDcwODQ4MjYuODg4OC0xLXNsYXJrX3hpYW9AMTYzLmNv
-bS8KaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvbGttbC8yMDIyMTEwMTAxNTg1OC42Nzc3LTEtc2xh
-cmtfeGlhb0AxNjMuY29tLwoKVGhlICdmaW5hbCcgcGF0Y2ggd2FzIGNvbW1pdHRlZCBhY2NvcmRp
-bmcgdG8gdGhlIGFkdmljZSBvZiB0aGUgZmVhdHVyZQptYWludGFpbmVyLiAKPgo+PiBJbiBhbm90
-aGVyIHBjaV9pZHMgcGF0Y2gsIHlvdSBicmVhayBpdCBpbiB2MyBhbmQgYnJlYWsgaXQgaGVyZSBh
-Z2FpbiBpbiB2Mi4KPgo+SSBicm9rZSB3aGF0PwpZb3UgY291bGQgaGF2ZSAgdm9pY2VkIG91dCBz
-dWNoIGNvbW1lbnQgaW4gVjEsIFYyIGJlZm9yZSB0aGUgJ2ZpbmFsJy4gCj4KPj4gSG9uZXN0bHks
-ICBpdCdzIHBvc2l0aXZlIGZvciB3aG9sZSBwcm9qZWN0LiBCdXQgaXQncyBuZWdhdGl2ZSAgZm9y
-IGNvbnRyaWJ1dG9yIAo+PiBhbmQgbWFpbnRhaW5lci4gCj4KPkkgYW0gdG90YWxseSBjb25mdXNl
-ZCBoZXJlIGFuZCBkbyBub3QgdW5kZXJzdGFuZCB3aGF0IHlvdSBhcmUgcmVmZXJyaW5nCj50bywg
-c29ycnkuCj4KPmdyZWcgay1oCg==
+On 07/11/2022 10:29, Robert Marko wrote:
+> Use "okay" instead of "ok" in USB nodes as "ok" is deprecated.
+> 
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+>  arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
+
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
