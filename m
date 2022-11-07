@@ -2,50 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 615A361F3AA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 13:49:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B24CF61F44E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 14:29:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231563AbiKGMtW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 07:49:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39896 "EHLO
+        id S232011AbiKGN3T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 08:29:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230363AbiKGMtW (ORCPT
+        with ESMTP id S231667AbiKGN3S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 07:49:22 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2E35193EC;
-        Mon,  7 Nov 2022 04:49:20 -0800 (PST)
-Received: from g550jk.localnet (unknown [10.0.11.2])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id EF07AD00BC;
-        Mon,  7 Nov 2022 12:49:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1667825358; bh=Cj+KlzDdd4JzWqsSFQcDBwUA1JbTMTttCWs4Q5GW65U=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=xPrXFFoOzd65kDce5ZLTVpim0AT8yAANXqQP9fi9qxxnxOT54HVanXnEvdGDrAH68
-         FxEM6kM3V8pdJ2R6xz2HvESqEJypfjE34t8j5Xi+kRPmGPyBJi/ekbpyES/oCaKGCO
-         Q1oBSTNm9u/NpGpiA/O9mEMbbb4wqi3FEqEkQStM=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Lee Jones <lee@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        afd@ti.com, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: mfd: qcom,spmi-pmic: rename extcon node name
-Date:   Mon, 07 Nov 2022 13:49:17 +0100
-Message-ID: <5873923.lOV4Wx5bFT@g550jk>
-In-Reply-To: <Y2jLAIQcthVLWU9e@google.com>
-References: <20221031175717.942237-1-luca@z3ntu.xyz> <Y2jLAIQcthVLWU9e@google.com>
+        Mon, 7 Nov 2022 08:29:18 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EF211CB0D;
+        Mon,  7 Nov 2022 05:29:05 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id d26so30036373eje.10;
+        Mon, 07 Nov 2022 05:29:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4s/Ptq8qmBpFC+qJpngwSoeByDBagm3Zx2Ag2l+arII=;
+        b=L2PeUV/vUgUVmloujR/vHOf91PEBnyAq+3zmOkc/1hunmGtWrlLICfsUgd0JwBoOUT
+         bBfomTM43fmiMli/d4SrMTUHLjvFhvkyF1DF+Bw66b+QdZoHOJwJ4pIeLR/jVT7tlnii
+         jU1gZJL2rRk6pTzfGaEw1Dmx4kN+yaw88/ofOkt57hseoZ7yMjh4TNuAWbhwmQ8GCCAD
+         HMlgfNfW790FXoM50zTC/NTBLGefApdwayg6+JAmL6phIFVMnuwk5AQlTbZ1k3kDanhm
+         5bHu9GL2FfO9hRr+XK9phvhMELcg9otEYnT0mTBj4kkBtsqN9rXK+wzYUYJpC5BP3LGs
+         rBqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4s/Ptq8qmBpFC+qJpngwSoeByDBagm3Zx2Ag2l+arII=;
+        b=LlCfFSGoE4BWaqBZ+DKn2oaQ4PNye78Gh4e3niJ7SKSd8UHuQqMB6D8erSVD/D0UbD
+         HxCvlAfgDaX0nX8JxJN00BdO9YUuyf6RZhkhLda/CD2KjluK+skiDU/bucL8Cng7KOFK
+         hmO9Ouy4QAMlpfDeY+Y5TG/ODOSHLlll1nOmqtrq8gh6ndS5A3eq0EIFyBf6S8JL4lcx
+         86CX5bOrtIh2Hos66Ob7fnPsgWofRuTcDIQ9+QdBxOh18nb33KrxsAKD59LHXCpSFlJi
+         A8007s43AHYCQb8W8JhQmY4VRRzeVHDanyu7JuxvWpCJa1ikiGv3MllaT1ebVYXcQNjI
+         nMYg==
+X-Gm-Message-State: ACrzQf2bCe75t8Fpl7jXXxqiwfmkg4APsAKqMaAVwzubFBHqz7IRXKVP
+        /g77w1NXwwlf1LPg+fB4Bek=
+X-Google-Smtp-Source: AMsMyM4TLYEv7krxKJO9xwNS3FvCmLCYf5ofH5o7VJkH2pssMqj/zXD3EyEdd1qPST+FPuEXv2IuXg==
+X-Received: by 2002:a17:906:794a:b0:7a0:72b8:2368 with SMTP id l10-20020a170906794a00b007a072b82368mr47657792ejo.601.1667827744013;
+        Mon, 07 Nov 2022 05:29:04 -0800 (PST)
+Received: from fedora.. (dh207-98-26.xnet.hr. [88.207.98.26])
+        by smtp.googlemail.com with ESMTPSA id ky14-20020a170907778e00b0073c8d4c9f38sm3446037ejc.177.2022.11.07.05.29.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Nov 2022 05:29:03 -0800 (PST)
+From:   Robert Marko <robimarko@gmail.com>
+To:     agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, mturquette@baylibre.com,
+        sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     Robert Marko <robimarko@gmail.com>
+Subject: [PATCH 1/3] clk: qcom: reset: support resetting multiple bits
+Date:   Mon,  7 Nov 2022 14:28:59 +0100
+Message-Id: <20221107132901.489240-1-robimarko@gmail.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS autolearn=no
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -53,70 +73,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Montag, 7. November 2022 10:08:16 CET Lee Jones wrote:
-> On Mon, 31 Oct 2022, Luca Weiss wrote:
-> > extcon is a Linux-specific name and shouldn't be a part of the dts. Make
-> > it be called usb-detect@ instead.
-> > 
-> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > ---
-> > This patch builds on top of
-> > https://lore.kernel.org/linux-arm-msm/20221031173933.936147-1-luca@z3ntu.x
-> > yz/ But could also be applied without, if conflicts are resolved.
-> > 
-> >  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 8 ++++----
-> >  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> Same here.  Only 1/3 received.
-> 
-> Can I take this on its own?
+This patch adds the support for giving the complete bitmask
+in reset structure and reset operation will use this bitmask
+for all reset operations.
 
-Hi,
+Currently, reset structure only takes a single bit for each reset
+and then calculates the bitmask by using the BIT() macro.
 
-yes, this can be taken on its own. Perhaps it'll introduce some temporary 
-dtbs_check warnings until the other patches have also made it into the tree.
+However, this is not sufficient anymore for newer SoC-s like IPQ8074,
+IPQ6018 and more, since their networking resets require multiple bits
+to be asserted in order to properly reset the HW block completely.
 
-Patch 2 is pm8941-misc yaml change, and patch 3 is adjusting dtsi file for the 
-new name.
+So, in order to allow asserting multiple bits add "bitmask" field to
+qcom_reset_map, and then use that bitmask value if its populated in the
+driver, if its not populated, then we just default to existing behaviour
+and calculate the bitmask on the fly.
 
-Lore: https://lore.kernel.org/lkml/20221031175717.942237-1-luca@z3ntu.xyz/
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+---
+ drivers/clk/qcom/reset.c | 4 ++--
+ drivers/clk/qcom/reset.h | 1 +
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-Regards
-Luca
-
-> 
-> > diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> > b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml index
-> > cf10d62ace54..14aa42057d6f 100644
-> > --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> > +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> > 
-> > @@ -123,10 +123,6 @@ patternProperties:
-> >        - $ref: /schemas/power/supply/qcom,pm8941-charger.yaml#
-> >        - $ref: /schemas/power/supply/qcom,pm8941-coincell.yaml#
-> > 
-> > -  "extcon@[0-9a-f]+$":
-> > -    type: object
-> > -    $ref: /schemas/extcon/qcom,pm8941-misc.yaml#
-> > -
-> > 
-> >    "gpio(s)?@[0-9a-f]+$":
-> >      type: object
-> >      $ref: /schemas/pinctrl/qcom,pmic-gpio.yaml#
-> > 
-> > @@ -143,6 +139,10 @@ patternProperties:
-> >      type: object
-> >      $ref: /schemas/thermal/qcom,spmi-temp-alarm.yaml#
-> > 
-> > +  "^usb-detect@[0-9a-f]+$":
-> > +    type: object
-> > +    $ref: /schemas/extcon/qcom,pm8941-misc.yaml#
-> > +
-> > 
-> >    "^usb-vbus-regulator@[0-9a-f]+$":
-> >      type: object
-> >      $ref: /schemas/regulator/qcom,usb-vbus-regulator.yaml#
-
-
-
+diff --git a/drivers/clk/qcom/reset.c b/drivers/clk/qcom/reset.c
+index 2a16adb572d2..0e914ec7aeae 100644
+--- a/drivers/clk/qcom/reset.c
++++ b/drivers/clk/qcom/reset.c
+@@ -30,7 +30,7 @@ qcom_reset_assert(struct reset_controller_dev *rcdev, unsigned long id)
+ 
+ 	rst = to_qcom_reset_controller(rcdev);
+ 	map = &rst->reset_map[id];
+-	mask = BIT(map->bit);
++	mask = map->bitmask ? map->bitmask : BIT(map->bit);
+ 
+ 	return regmap_update_bits(rst->regmap, map->reg, mask, mask);
+ }
+@@ -44,7 +44,7 @@ qcom_reset_deassert(struct reset_controller_dev *rcdev, unsigned long id)
+ 
+ 	rst = to_qcom_reset_controller(rcdev);
+ 	map = &rst->reset_map[id];
+-	mask = BIT(map->bit);
++	mask = map->bitmask ? map->bitmask : BIT(map->bit);
+ 
+ 	return regmap_update_bits(rst->regmap, map->reg, mask, 0);
+ }
+diff --git a/drivers/clk/qcom/reset.h b/drivers/clk/qcom/reset.h
+index b8c113582072..9a47c838d9b1 100644
+--- a/drivers/clk/qcom/reset.h
++++ b/drivers/clk/qcom/reset.h
+@@ -12,6 +12,7 @@ struct qcom_reset_map {
+ 	unsigned int reg;
+ 	u8 bit;
+ 	u8 udelay;
++	u32 bitmask;
+ };
+ 
+ struct regmap;
+-- 
+2.38.1
 
