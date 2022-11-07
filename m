@@ -2,75 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0459761E98E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 04:23:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB4A061E9CE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 04:43:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230453AbiKGDXd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Nov 2022 22:23:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49094 "EHLO
+        id S230366AbiKGDnt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Nov 2022 22:43:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230245AbiKGDXa (ORCPT
+        with ESMTP id S230228AbiKGDns (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Nov 2022 22:23:30 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4A89112A
-        for <linux-arm-msm@vger.kernel.org>; Sun,  6 Nov 2022 19:23:28 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id z14so14329438wrn.7
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Nov 2022 19:23:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BoCqJFFEwga8HLbIPvad2ONk7YeJiUs7YZ46dNA2Vj4=;
-        b=M+NsIlRxwZJQco2DVxK1IC+XpxvBfEGXljI3xoieudB8Dp7htzA/oYgJL89345JbZ+
-         7BoyTX1W1WcfOMa+KHyY+gKXeBIuks8pizpXsllvVUowdYYcGBbMv7Bln5uyqx2DGIKp
-         ZCfCr4sz6dLi3G+gA0hvqJKk/MKNeV2ECIwtNIq+4QfoAGXxSa2YKrg3gTP4NvhM4s/i
-         Sa1/9J1bmFdujrYV67hmPlRq6GtF6sPNSr0mwRUCCOmIN6nMoDi80n6eF9z4KzuQkcfM
-         MPZiy8m2hvR7FIyRcWqGUhDdkcn9+NOywPjnUtFb1Eo/Das+NUpl69PUfbWyyXz/02aJ
-         zYaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BoCqJFFEwga8HLbIPvad2ONk7YeJiUs7YZ46dNA2Vj4=;
-        b=F3y7FXkhkcaMGbWpQsNf585fd9RWR7lTngDpC/OWZ/dTczQH0VCdc6i3r03rVBc7+V
-         MBYRbMbjfvNlv9i2yyG9VCMkPwjV/IaZCvkaGaS1AcMnEZYRXzv7gygWrl+FP+kNOEVr
-         qoBvfy6uH6/rhgS84j2zNQPBaeRmQYpt7ELhLSi9dvR+3n0SV4k1y3/KtcbEXHok7OIE
-         DGNyPXSI9r0K6fPC/4y6Kqod54/g0KaEa2WatpaRG7VrQqcYdOW8iyU04pGQ5H3I/B1Q
-         YESTbi6dry1CPn6fpNKLZrRHNXpSzuzg9K5kmgltqKJQnxgVSxHQTOOUgFvtTcydRdGE
-         Yi+Q==
-X-Gm-Message-State: ACrzQf37KMx/Bz4BqoW5Ob9yziEf5mb0YDc+4UDdRAjMAzm47qghtCHp
-        a61YGYVZckMtCxhF+s48glX5WQ==
-X-Google-Smtp-Source: AMsMyM7Xpy/hX5YLOqDGvmPFqG6e7WURl4Q/vq45MrPiOVdJ2okbjVVyQLWJwIkvgw+axxmR69Wsig==
-X-Received: by 2002:adf:fd4a:0:b0:236:87bc:a900 with SMTP id h10-20020adffd4a000000b0023687bca900mr29075747wrs.706.1667791407388;
-        Sun, 06 Nov 2022 19:23:27 -0800 (PST)
-Received: from [192.168.36.1] (92.40.199.16.threembb.co.uk. [92.40.199.16])
-        by smtp.gmail.com with ESMTPSA id e5-20020adfef05000000b00225307f43fbsm6004290wro.44.2022.11.06.19.23.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 06 Nov 2022 19:23:26 -0800 (PST)
-Message-ID: <83faab03-30df-cc2e-c447-110f345cc1d5@linaro.org>
-Date:   Mon, 7 Nov 2022 03:23:25 +0000
+        Sun, 6 Nov 2022 22:43:48 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA0C62670;
+        Sun,  6 Nov 2022 19:43:47 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 37BD660EAE;
+        Mon,  7 Nov 2022 03:43:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858C2C433C1;
+        Mon,  7 Nov 2022 03:43:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667792626;
+        bh=vJMXMhjRRH2tAhkB+zZFrEC95x2s5+eyVMSNAanNWaA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=emduUXpgAlRw70W/ylbLGfsPUZACpE/fZpJCQKVSGFOxHeX3em1cArMbRvdeAtgth
+         pzV4fRYyox7qyAgMPxSpL0/EVjCxyzPDaQh6Tc96wstY3G35dqEDbuZvGpFdL5jfiZ
+         RsVqXu9KI8bN1msv/7HuGhvj12Ex+pbWOE9yleYmSyGqrX0WNTd4royflPPeGXxtQi
+         e0NNyB7eNUAoovOP3SDKGvRToRZlMRe2GoUzWw9xHfZ5btmpbQ/sFs/Z4BA18ZWkQG
+         Pka8yThO0dcQLUYK4A76Kz+SjT0u97r9gs97LEBjzqhHsfl7DEDLAnDMTjXp+zOY8t
+         Uuj6kijSL9oxw==
+Date:   Sun, 6 Nov 2022 21:43:43 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-crypto@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, herbert@gondor.apana.org.au,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, thara.gopinath@gmail.com,
+        robh@kernel.org, bhupesh.linux@gmail.com, davem@davemloft.net,
+        Jordan Crouse <jorcrous@amazon.com>
+Subject: Re: [PATCH v7 6/9] crypto: qce: core: Add new compatibles for qce
+ crypto driver
+Message-ID: <20221107034343.iyknmiztjuxcuqqs@builder.lan>
+References: <20220920114051.1116441-1-bhupesh.sharma@linaro.org>
+ <20220920114051.1116441-7-bhupesh.sharma@linaro.org>
+ <b4016460-f43a-13f8-432e-47c27237e005@linaro.org>
+ <9b111583-519b-95a6-15b5-243e88dc8d39@linaro.org>
+ <37b509ff-4fc2-73f1-b135-c0930075ec29@linaro.org>
+ <94ff2006-0051-19be-5eee-a5f71a07e26b@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH 0/5] arm64: dts: qcom: add and enable the pmi8998 RRADC
-Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, konrad.dybcio@somainline.org,
-        luca@z3ntu.xyz, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>
-References: <20221016180330.1912214-1-caleb.connolly@linaro.org>
- <166779074258.500303.6143441430945522925.b4-ty@kernel.org>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <166779074258.500303.6143441430945522925.b4-ty@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <94ff2006-0051-19be-5eee-a5f71a07e26b@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,54 +64,149 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 07/11/2022 03:11, Bjorn Andersson wrote:
-> On Sun, 16 Oct 2022 19:03:24 +0100, Caleb Connolly wrote:
->> This contains patches 6 through 10 of the series adding a driver
->> for the RRADC
->> https://lore.kernel.org/linux-arm-msm/20220429220904.137297-1-caleb.connolly@linaro.org/
->>
->> The driver and DT bindings have been in mainline for a while.
->>
->> This introduces a new dtbs_check warning which is fixed in
->> https://lore.kernel.org/linux-arm-msm/20221016175757.1911016-1-caleb.connolly@linaro.org/
->> and depends on Luca's series:
->> https://lore.kernel.org/linux-arm-msm/20220925211744.133947-2-luca@z3ntu.xyz/
->>
->> [...]
+On Wed, Sep 21, 2022 at 12:22:03PM +0530, Bhupesh Sharma wrote:
+> On 9/21/22 11:57 AM, Krzysztof Kozlowski wrote:
+> > On 21/09/2022 08:16, Bhupesh Sharma wrote:
+> > > 
+> > > 
+> > > On 9/20/22 8:42 PM, Krzysztof Kozlowski wrote:
+> > > > On 20/09/2022 13:40, Bhupesh Sharma wrote:
+> > > > > Since we decided to use soc specific compatibles for describing
+> > > > > the qce crypto IP nodes in the device-trees, adapt the driver
+> > > > > now to handle the same.
+> > > > > 
+> > > > > Keep the old deprecated compatible strings still in the driver,
+> > > > > to ensure backward compatibility.
+> > > > > 
+> > > > > Cc: Bjorn Andersson <andersson@kernel.org>
+> > > > > Cc: Rob Herring <robh@kernel.org>
+> > > > > Cc: herbert@gondor.apana.org.au
+> > > > > Tested-by: Jordan Crouse <jorcrous@amazon.com>
+> > > > > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > > > > ---
+> > > > >    drivers/crypto/qce/core.c | 9 +++++++++
+> > > > >    1 file changed, 9 insertions(+)
+> > > > > 
+> > > > > diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
+> > > > > index 63be06df5519..99ed540611ab 100644
+> > > > > --- a/drivers/crypto/qce/core.c
+> > > > > +++ b/drivers/crypto/qce/core.c
+> > > > > @@ -291,8 +291,17 @@ static int qce_crypto_remove(struct platform_device *pdev)
+> > > > >    }
+> > > > >    static const struct of_device_id qce_crypto_of_match[] = {
+> > > > > +	/* Following two entries are deprecated (kept only for backward compatibility) */
+> > > > >    	{ .compatible = "qcom,crypto-v5.1", },
+> > > > >    	{ .compatible = "qcom,crypto-v5.4", },
+> > > > 
+> > > > This is okay, so there is no ABI break.
+> > > 
+> > > Great. Thanks for the confirmation.
+> > > 
+> > > > > +	/* Add compatible strings as per updated dt-bindings, here: */
+> > > > > +	{ .compatible = "qcom,ipq4019-qce", },
+> > > > > +	{ .compatible = "qcom,ipq6018-qce", },
+> > > > > +	{ .compatible = "qcom,ipq8074-qce", },
+> > > > > +	{ .compatible = "qcom,msm8996-qce", },
+> > > > > +	{ .compatible = "qcom,sdm845-qce", },
+> > > > > +	{ .compatible = "qcom,sm8150-qce", },
+> > > > > +	{ .compatible = "qcom,sm8250-qce", },
+> > > > 
+> > > > This is a bit odd... you have 7 devices which are simply compatible or
+> > > > even the same. This should be instead one compatible.
+> > > > 
+> > > > I don't really get why do you want to deprecate "qcom,crypto-v5.1".
+> > > > Commit msg only says "we decided" but I do not know who is "we" and "why
+> > > > we decided like this". If you want to deprecate it, perfectly fine by
+> > > > me, but please say in commit msg why you are doing it.
+> > > 
+> > > I understand. This patchset has been in flight for some time and hence I
+> > > might have missed sharing some detailed information about the review
+> > > comments and rework done along the way (in the cover letter for this
+> > > series).
+> > > 
+> > > Coming back to your concern, here is the relevant background:
+> > > - Please see:
+> > > https://lore.kernel.org/linux-arm-msm/20210316222825.GA3792517@robh.at.kernel.org/
+> > > 
+> > > - Rob shared some comments on the v1 series regarding the soc-specific
+> > > compatibles. He mentioned in the above thread that 'you should stick
+> > > with SoC specific compatibles as *everyone* else does (including most
+> > > QCom bindings).'
+> > > 
+> > > - So, while I had proposed "qcom,crypto-v5.1" (for ipq6018) and
+> > > "qcom,crypto-v5.4" (for sdm845, sm8150) etc. as the compatible(s) in the
+> > > v1 series, I shifted to using the soc-specific compatibles from the v2
+> > > series, onwards.
+> > 
+> > Then the reason could be - Reviewers preferred SoC-based compatible
+> > instead of IP-block-version-based.
+> > 
+> > What is confusing is the difference between that link and here. That
+> > link wanted to introduce 4 different compatibles... and here you have
+> > even 7 compatibles being the same.
 > 
-> Applied, thanks!
-
-Hi Bjorn,
-
-Apologies, I should have left a reply about re-spinning this; it's 
-been dropped to a single patch as Krzysztof suggested in [1] and is 
-currently pending a v4 (v3 can be found at [2]).
-
-The changes aren't major, actually just enabling it by default rather 
-than per-device. If it would need to be reverted I could instead send 
-a followup to do this as well as add the missing dt bindings.
-
-[1]: 
-https://lore.kernel.org/linux-arm-msm/5929051d-d2be-5b51-0cf9-294affa51df2@linaro.org/
-[2]: 
-https://lore.kernel.org/linux-arm-msm/20221017190902.2282899-1-caleb.connolly@linaro.org/
-
+> The link points to v1 version and we are on v7 currently. So there have been
+> other comments and reworks along the way :)
 > 
-> [1/5] arm64: dts: qcom: pmi8998: add rradc node
->        commit: 1cb78978d34e1b65bbb912d8265eb95713ae7a45
-> [2/5] arm64: dts: qcom: sdm845-oneplus: enable rradc
->        commit: 868985181a69df53321035d96aa668d90f6cd5cb
-> [3/5] arm64: dts: qcom: sdm845-db845c: enable rradc
->        commit: e779eb99859cc26d051f6fc723d2bd2d5990a812
-> [4/5] arm64: dts: qcom: sdm845-xiaomi-beryllium: enable rradc
->        commit: 53c54069d9ffd556b52893077324e628655cd591
-> [5/5] arm64: dts: qcom: msm8998-oneplus-common: enable RRADC
->        commit: aac16a9d247e5496361bfe20d651f2c1333eb5dc
+> All of these have been referred to in the cover letter logs.
 > 
-> Best regards,
+> Again please refer to Vladimir's comments on v5 version here, where he
+> suggested adding soc compatibles for 'ipq8074' and 'msm8996' as well.
+> 
+> -
+> https://lore.kernel.org/lkml/7328ae17-1dc7-eaa1-5993-411b986e5e02@linaro.org/
+> -
+> https://lore.kernel.org/lkml/f5b7c89c-3bdd-1e1e-772e-721aa5e95bbf@linaro.org/
+> -
+> https://lore.kernel.org/lkml/7328ae17-1dc7-eaa1-5993-411b986e5e02@linaro.org/
+> 
+> Also the 7 SoC compatibles do not point to the same crypto IP version. We
+> have two IP versions currently supported upstream, "qcom,crypto-v5.1" and
+> "qcom,crypto-v5.4" (with patches for support for newer versions under work
+> and can be expected to land upstream in near future).
+> 
+> However, if you suggest, we can add some comments in the dt-binding doc
+> to reflect which SoC supports which version.
+> 
+> > > - Basically, since we are going to have newer qce IP versions available
+> > > in near future, e.g. "qcom,crypto-v5.5" etc, and we will have 2 or more
+> > > SoCs also sharing 1 version, these compatibles would grow and become
+> > > more confusing. IMO, having a soc-specific compatible in such cases is
+> > > probably a much cleaner approach.
+> > > 
+> > > Hope this helps answer some of your concerns and provides some relevant
+> > > background information.
+> > 
+> > Sure, but I still think you should have only one compatible in the
+> > driver in such case. You don't have differences between them from the
+> > driver point of view, so the devices seem to be compatible.
+> > 
+> > If not, what are the differences?
+> 
+> There can always be requirements for compatible specific handling done in
+> the driver. See Bjorn's comment here for example:
+> https://lore.kernel.org/lkml/YZKhqJuFlRVeQkCc@builder.lan/ , as an example
+> of 'clk_get' calls conditional based on the compatible instead.
+> 
 
--- 
-Kind Regards,
-Caleb (they/them)
+How about providing a generic compatible without the version number
+(i.e. qcom,crypto) and then in the DT binding require this and
+qcom,<platform>-crypto, and if we have such quirky integration behavior
+for a particular platform we can add the special handling in the driver
+for the platform compatible.
+
+(And we obviously keep the two existing version-based compatibles in the
+driver, for backwards compatibility)
+
+Regards,
+Bjorn
+
+> This series is to get some early comments and might need some further rework
+> / rearrangement.
+> 
+> However, I would request Rob to share his views as well on the soc specific
+> compatibles, since it was originally his suggestion. I can rework the
+> patchset accordingly.
+> 
+> Thanks,
+> Bhupesh
