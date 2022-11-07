@@ -2,117 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 047826203A7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 00:20:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EED76203D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 00:36:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232577AbiKGXU1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 18:20:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52328 "EHLO
+        id S232411AbiKGXgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 18:36:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232196AbiKGXU0 (ORCPT
+        with ESMTP id S232391AbiKGXgJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 18:20:26 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2504B2716C;
-        Mon,  7 Nov 2022 15:20:26 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A7MfR8e007676;
-        Mon, 7 Nov 2022 23:20:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=F+JBdY5GCv5NYpZ5AGOqeyM6zH5lr5JUXnXKw9APh6o=;
- b=fOaeSEiW8QbGtTYTXl9X61E4sn9m2SyG+u/Vv+CTncIQrN3wKa1/5Q1a7aULvFR7Sbs3
- TOhVNB3Bvzftdq6oZWRqz93AanzE+laebYYgaRh6aWIEqPZF9ZG+nr4rws/0lFg9cjvZ
- eh4PoAybMxNjLba705PtoZ6bjJWGpQBAGE+pooTFo0i0NJn2VVDdIWYMdk2iosfbgxbt
- 5QlhmVZ/sHiTlDwSXitjQTT/w2yRLcj0ExKlleTzceP68t9m9DMCFN2YuQmFL1525e8m
- Z+xOCCWDIxr2W9M42/4m3+duAVkOI/sI/B8jAofp/FJ5X0G24/n54mzwIeW3p2RUpwmw kw== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kq62y923j-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 07 Nov 2022 23:20:18 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A7NKIck001363
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 7 Nov 2022 23:20:18 GMT
-Received: from [10.110.0.244] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 7 Nov 2022
- 15:20:17 -0800
-Message-ID: <c5af2329-7cc5-9909-b630-70fb102229fd@quicinc.com>
-Date:   Mon, 7 Nov 2022 15:20:17 -0800
+        Mon, 7 Nov 2022 18:36:09 -0500
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBE8B5FF6;
+        Mon,  7 Nov 2022 15:36:04 -0800 (PST)
+Received: by mail-pg1-x529.google.com with SMTP id s196so11913840pgs.3;
+        Mon, 07 Nov 2022 15:36:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=H6+t9BRAAElMuyAd9jyg2LbJwD0gdcLK+WHij3+TgOQ=;
+        b=Y9dKowagG/XvHm+0TMIIOSnLsxlrWwlZsxSRqyNr9WaHIqQ15ZRys4gg3i3ZxbLAv/
+         P9qg5BVFP0liD+HoB/3rKLAN0ioiCaeqInm8/R4dfoEMErqroQ4KJsl/myXFepxOfDOh
+         h4tsaCDdoY6mzCVfTzQ9mv8uveer2lBcHLaYcIDE1DnykUjbn/ZJgH7H4gD9WZ/vWacI
+         Kr0K9q4v7a3ZfvihQfKbPrjYkyBpORSXXPcx4JFSbitBwaVaOdFMiTFwoxK55focdox/
+         Wp3pj3YyI5vtLjfFszntwNjp+pBe7jIGdCEprESurQGt+ti2zdAlKXdHXHV+4aj4QYTc
+         b3eA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=H6+t9BRAAElMuyAd9jyg2LbJwD0gdcLK+WHij3+TgOQ=;
+        b=yZJlOS593F1Xcb2m81sLvmjBGNn7PXyaT/XtAVY+Ivcxth/d3AUNGot2HjBESlqWet
+         LkuxlqhZEsgbSdXVBEkI869WhmBd0EShIIV6jqDTYUHv+8qrX4Qltq9LrxOaSV6LNv06
+         DSlWJJ2xucECKL1DXSD67W53GwbPzT04GKOYPx61f0sQBQlVEA3OTBl3/wjovwQ77Q7v
+         tK8lDXrDFZBKyjPgl7YWx0WaqjxeOvFBJU6Xy3YcrgzGpU3B44QoziloAxElH9SxK1Er
+         a3LbQ8Ix3zne4zQYdAwWcl6MFs4nN08SfPjU6OPGYGfI0b1y9IV8H2HmpSUqUJnVWBek
+         xVMA==
+X-Gm-Message-State: ACrzQf2M32KnHK3K0J/tVaxT7qDh4cLaM9Ay7Ppmg5wNx26pQsbcXNTH
+        OGXT/JT+Tw3q4+oW4Crg+uAZnt/5I+sFiDEXgxA=
+X-Google-Smtp-Source: AMsMyM4I7+RU/c1gxy+M/sT3xI/aGM5k9qiVJeKfAcM251JephW6u7ff0aPsPIxtFOTMF88/Qw8JhqGe8eSqGKUQsME=
+X-Received: by 2002:a62:1b11:0:b0:56d:568d:c293 with SMTP id
+ b17-20020a621b11000000b0056d568dc293mr45767339pfb.41.1667864164431; Mon, 07
+ Nov 2022 15:36:04 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v3 5/5] dt-bindings: qcom,pdc: Introduce pdc bindings for
- QDU1000 and QRU1000
-Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-CC:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+References: <20221107145522.6706-1-konrad.dybcio@linaro.org> <20221107145522.6706-9-konrad.dybcio@linaro.org>
+In-Reply-To: <20221107145522.6706-9-konrad.dybcio@linaro.org>
+From:   Petr Vorel <petr.vorel@gmail.com>
+Date:   Tue, 8 Nov 2022 00:35:53 +0100
+Message-ID: <CAB1t1CyNJqEeEkmd0vOgexkrjP=bB-KSMxuDgzswG7MMkDksgA@mail.gmail.com>
+Subject: Re: [PATCH 08/11] arm64: dts: qcom: msm8992-*: Fix up comments
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        patches@linaro.org, Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20221026190441.4002212-1-quic_molvera@quicinc.com>
- <20221026190441.4002212-6-quic_molvera@quicinc.com>
- <20221027182240.E9FA0C433D6@smtp.kernel.org>
- <eeb3e06d-316a-1ff8-b4b8-c257fa03a206@quicinc.com>
- <20221107171622.nh62m4bf635rl2ae@builder.lan>
-From:   Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <20221107171622.nh62m4bf635rl2ae@builder.lan>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: LThGWXAiHqvhHPpaSiBiLjy9k2WoaIH1
-X-Proofpoint-GUID: LThGWXAiHqvhHPpaSiBiLjy9k2WoaIH1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-07_11,2022-11-07_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 bulkscore=0 adultscore=0 suspectscore=0
- lowpriorityscore=0 spamscore=0 malwarescore=0 mlxlogscore=931 phishscore=0
- mlxscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211070174
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Konrad,
 
+Reviewed-by: Petr Vorel <petr.vorel@gmail.com>
 
-On 11/7/2022 9:16 AM, Bjorn Andersson wrote:
-> On Thu, Oct 27, 2022 at 02:31:08PM -0700, Melody Olvera wrote:
->>
->> On 10/27/2022 11:22 AM, Stephen Boyd wrote:
->>> Quoting Melody Olvera (2022-10-26 12:04:41)
->>>> Add compatible fields for QDU1000 and QRU1000 pdcs.
->>>>
->>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
->>>> ---
->>> Is there a reason why this patch continues to be included in what is
->>> otherwise a clk driver patch series? Can this patch be sent separately
->>> from the clk patches (and not Cced to clk maintainers/list) in the
->>> future?
->> Sure thing. On reflection, this belongs with the misc support patches.
->>
-> Even better, the "misc" series goes through my tree but this patch is
-> unrelated. So if you send it on it's own it could just be picked up by
-> the PDC maintainer (or Rob).
->
->
-Sure thing. I'll just send each on their own.
-
-Thanks,
-Melody
+Kind regards,
+Petr
