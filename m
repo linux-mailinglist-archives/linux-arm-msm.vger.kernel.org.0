@@ -2,100 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA56161F143
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 11:56:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B1DB61F192
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 12:11:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231933AbiKGK4c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 05:56:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54718 "EHLO
+        id S231602AbiKGLLX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 06:11:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231898AbiKGK4Y (ORCPT
+        with ESMTP id S231747AbiKGLLA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 05:56:24 -0500
-Received: from mout-y-209.mailbox.org (mout-y-209.mailbox.org [91.198.250.237])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B00DD193D7;
-        Mon,  7 Nov 2022 02:56:22 -0800 (PST)
-Received: from smtp202.mailbox.org (unknown [91.198.250.118])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mout-y-209.mailbox.org (Postfix) with ESMTPS id 4N5SpC2YDYz9t0s;
-        Mon,  7 Nov 2022 11:56:19 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=noorman.info;
-        s=MBO0001; t=1667818579;
+        Mon, 7 Nov 2022 06:11:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8A7F19C1A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 03:09:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1667819356;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=jwBbiiF+pKf0bcTgRsblZnn0hi/Wak5zHyTIoUTbsXg=;
-        b=ECBpJHIDrHCy5IPgt0z2M9lc3msvjKZOFXvQZniblR/G+hL77pgc4swcYdA5v0kqcFbOKz
-        oNb4NOvPk796Ll16ZHvZPXDqoUSd/Zl30QtONoev04jhZCfz6W1fVcZF5G4XISkubYpa0R
-        f4/AA1uusLnGrHFU3T5V2Fhl6YcbqI7RcGxdoIXar9lCR9q8wq70DChDgTYNy9rJN2BqPK
-        sDFvi6OMvBHWAA9LNPaQkqoRNGYscV3JYyK1xNPZ+YuUilwjSV36DTIVzQSgs8zOWLRkf/
-        4XfsmAmo2JT6ocbWFFpbb1bxXTqTAWDrFq9mqd1Cdyx8G2GYLx5YqQYAdpBxdw==
-From:   Job Noorman <job@noorman.info>
-To:     Job Noorman <job@noorman.info>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        bh=n8Cl/06MPGSPm5RCcGRmqHy2+qFfaHoF23PzrGUHbl0=;
+        b=gQAFVSogdmVtbnkqTjnaxFmeniAc/QMWZGR9xNJgztcS+f7/a47sEe/gZ5O4Wc9t+sd8A1
+        ATpFIKv2x91TKhjXvsA+ViEGFjtgK76Okyk74q3oxliXYrrEJCfE/wmlJ7iqb5rt0F7OGW
+        hDFY2oAKVeJD646tEZuu/aRq0rTG2dE=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-331-TSQtG-ZJNnOV9bXtgnBQ0Q-1; Mon, 07 Nov 2022 06:09:15 -0500
+X-MC-Unique: TSQtG-ZJNnOV9bXtgnBQ0Q-1
+Received: by mail-qk1-f199.google.com with SMTP id x22-20020a05620a259600b006b552a69231so9778022qko.18
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 03:09:14 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=n8Cl/06MPGSPm5RCcGRmqHy2+qFfaHoF23PzrGUHbl0=;
+        b=uLGSoPynRQj51iVSljytHCVyzRCSt///4hGxLZFY3lo1RJFxK9Y3GcdqP5/2UmIs4s
+         c+RoCTAoctZ9jRBhIUUPfxi9l9xo7WIxMPsR6CH5vgwviGhjlkoqFRSX3cg8TgLcdNo2
+         sAbM3yTh7S9wAsxNEWjZ/NTVl4pXq0zpSGgBqKSS6TP4O3o7TJ5D4OqKCyhnktSsWfbq
+         AVOxCV0jCr3p0s6VKl5EBZcXCrOvAFWW2oqX1Ixja1YM9u8Z44lLkfA66mZ7DTBNlCjz
+         Ml43xniOtjciXp5O9sI6laH2v6OOtL008F5s/zIkpoC+mu9kpc2eIIUIi+nU9oETzGGj
+         fWuQ==
+X-Gm-Message-State: ACrzQf3aOd3w9i9Y0Ea+vgVi3C/FL9LNPxpYn2I0gWfj4cg3kYRwEBe0
+        K4I8x2wiJWDwhrbM5/cNZnRxl8OVvMjFut5R7Pw77jyKRoYbBKhJymZFOykWCT69/2vNriUJSXn
+        qZ28BvYSYzv4hzNzkzFHde2Af+Q==
+X-Received: by 2002:a05:6214:b6b:b0:4bb:9fea:f53a with SMTP id ey11-20020a0562140b6b00b004bb9feaf53amr44142074qvb.7.1667819354529;
+        Mon, 07 Nov 2022 03:09:14 -0800 (PST)
+X-Google-Smtp-Source: AMsMyM4P+NUQULfed2HggHKoSQY6kh/nJD0vPq50SemRAN1ssl+3+ZctfwFB6qqd/+YR3SsRBOdEJw==
+X-Received: by 2002:a05:6214:b6b:b0:4bb:9fea:f53a with SMTP id ey11-20020a0562140b6b00b004bb9feaf53amr44142058qvb.7.1667819354338;
+        Mon, 07 Nov 2022 03:09:14 -0800 (PST)
+Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id c8-20020a05620a134800b006ecb9dfdd15sm6481524qkl.92.2022.11.07.03.09.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Nov 2022 03:09:13 -0800 (PST)
+Date:   Mon, 7 Nov 2022 06:09:12 -0500
+From:   Brian Masney <bmasney@redhat.com>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Henrik Rydberg <rydberg@bitmath.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-input@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Luca Weiss <luca@z3ntu.xyz>
-Subject: [PATCH RESEND v6 3/3] arm64: dts: qcom: sdm632: fairphone-fp3: add touchscreen
-Date:   Mon,  7 Nov 2022 11:56:04 +0100
-Message-Id: <20221107105604.26541-4-job@noorman.info>
-In-Reply-To: <20221107105604.26541-1-job@noorman.info>
-References: <20221107105604.26541-1-job@noorman.info>
+        Shazad Hussain <quic_shazhuss@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc8280xp: fix UFS reference clocks
+Message-ID: <Y2jnWJ0FI6Fmy8/O@x1>
+References: <20221104092045.17410-1-johan+linaro@kernel.org>
+ <20221104092045.17410-2-johan+linaro@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 4N5SpC2YDYz9t0s
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221104092045.17410-2-johan+linaro@kernel.org>
+User-Agent: Mutt/2.2.7 (2022-08-07)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add Himax hx83112b touchscreen to the FP3 DT.
+On Fri, Nov 04, 2022 at 10:20:44AM +0100, Johan Hovold wrote:
+> There are three UFS reference clocks on SC8280XP which are used as
+> follows:
+> 
+>  - The GCC_UFS_REF_CLKREF_CLK clock is fed to any UFS device connected
+>    to either controller.
+> 
+>  - The GCC_UFS_1_CARD_CLKREF_CLK and GCC_UFS_CARD_CLKREF_CLK clocks
+>    provide reference clocks to the two PHYs.
+> 
+> Note that this depends on first updating the clock driver to reflect
+> that all three clocks are sourced from CXO. Specifically, the UFS
+> controller driver expects the device reference clock to have a valid
+> frequency:
+> 
+> 	ufshcd-qcom 1d84000.ufs: invalid ref_clk setting = 0
+> 
+> Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+> Fixes: 8d6b458ce6e9 ("arm64: dts: qcom: sc8280xp: fix ufs_card_phy ref clock")
+> Fixes: f3aa975e230e ("arm64: dts: qcom: sc8280xp: correct ref clock for ufs_mem_phy")
+> Link: https://lore.kernel.org/lkml/Y2OEjNAPXg5BfOxH@hovoldconsulting.com/
+> Cc: stable@vger.kernel.org	# 5.20
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-Signed-off-by: Job Noorman <job@noorman.info>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+Reviewed-by: Brian Masney <bmasney@redhat.com>
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-index 891e314bc782..2920504461d3 100644
---- a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-@@ -49,6 +49,20 @@ &hsusb_phy {
- 	vdda-phy-dpdm-supply = <&pm8953_l13>;
- };
- 
-+&i2c_3 {
-+	status = "okay";
-+
-+	touchscreen@48 {
-+		compatible = "himax,hx83112b";
-+		reg = <0x48>;
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <65 IRQ_TYPE_LEVEL_LOW>;
-+		touchscreen-size-x = <1080>;
-+		touchscreen-size-y = <2160>;
-+		reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
-+	};
-+};
-+
- &pm8953_resin {
- 	status = "okay";
- 	linux,code = <KEY_VOLUMEDOWN>;
--- 
-2.38.1
+Note that there was no 5.20 kernel; that should be 6.0. Bjorn should be
+able to fix this up during merge.
+
+https://en.wikipedia.org/wiki/Linux_kernel_version_history
 
