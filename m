@@ -2,70 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A735B61F456
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 14:29:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80EAD61F472
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 14:36:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232128AbiKGN3V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 08:29:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60476 "EHLO
+        id S231874AbiKGNgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 08:36:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231883AbiKGN3S (ORCPT
+        with ESMTP id S231897AbiKGNgJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 08:29:18 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5D6E1CB17;
-        Mon,  7 Nov 2022 05:29:07 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id q9so30216325ejd.0;
-        Mon, 07 Nov 2022 05:29:07 -0800 (PST)
+        Mon, 7 Nov 2022 08:36:09 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A99A65F5;
+        Mon,  7 Nov 2022 05:36:07 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id l14so16272400wrw.2;
+        Mon, 07 Nov 2022 05:36:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XDOdLV96aBPIAMlkNzE1ZyzcwED/u+zRiKOTdjgBJUU=;
-        b=YgLNaVxs1RztJCcCieI8ERHtdHkFdvRBWXaoGj+AFLeV0EnQ6J9GsBnutFSoPtBsGf
-         wqGEIUoUKqYNOPeCTfn1rUDGU9lSJJHHLAMyEkvxmsyoJ9eWysOIIAcot7QrHsOycz5S
-         +q4LOxO5qs1upjjEHf4jIk1N12UBXbFxAZwTxHCwRSJIduSE0b0ZzJNltKmKYx1KkoUt
-         XJ67MNa49mxB1PeKRLXDPhmykww37tN+1pOnpwTxZmVGCP7PD+HZlxp/DKqcBopnEb1V
-         ylZmHLI/HZ8aYw8pU8iCpTAdKu75zLJV/mhhhXEMhmp5q2GkuQ0NwczZFxyfCRvo4mQz
-         AOgw==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:subject:cc:to:from:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=2KT5748vrQwNv05axgctLrrojQ2dZkiY8TujtK+A0ew=;
+        b=CaoRQ7UHdn1ni+0XAt5gnQl4npWFFl4sJVVqHr2c7z1kmqqaJJE3/B1/BtIzannMG6
+         WFKDkmGqPdMvRHjgF6S+3Mv242mDKbrADpIPu+BraDgUWfQs7vdTe1uM+V4tg5t6LhS6
+         H9kw1aZpydumLvfDQe50q9+uc/isiC7OXPnls2DKGvyjjwCAXB+xZYU2uAhO/+fTNMsh
+         kbG9oeAA6bl0sJhEFPFf6+noZb8/FebAbTT4GY6IC8atpjtMs86AyVPm9Zr72uzZFQyY
+         qpLQQyHF6XsVrVihns04E2eKhso0x//KP+BtI9LaLxb9nKPSbx0ucml6SSIftZK8fUAU
+         2Oow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XDOdLV96aBPIAMlkNzE1ZyzcwED/u+zRiKOTdjgBJUU=;
-        b=HPDnA8geCSuNImobfdCHM3QjfHemVxFNMA51rvatLbGeqXs7CECMrHkTGjef3qo1Uj
-         /RVYurq6X9xcTIgoDB0zgWFANkW1kO4/aPwabmB509O0H2AjujbrlGC8BpM5CEm2fX9V
-         TOiVzQAA8JilnNpRkRCFwwk9qt54x9qzaMBmB12QZpgz9vX7XDUWI6O4ggw83iWYj5Yb
-         ad3pHHD+9CaeSNjYNhNFZNElK4NqIhuc4EiZobBIa2Fb63jzAGCZyyBOrYKbGgHT2KTG
-         ZRzc2CWJSfnhvQ3tFaznCu+wCnPstk0WTSyn9F16FGb2WGXx7Wk/HyjK4HDvF1J8SGwk
-         nZ0g==
-X-Gm-Message-State: ACrzQf1XyZ3V1GmH0n6DITaINeHWXd5isafndPNkzxXfznc5nGtCcG3x
-        INVQdlwU81DQE7ihHX/+wNk=
-X-Google-Smtp-Source: AMsMyM6fliBlCshCjtfYk2Qg/pWwCrenj7y+n7lKdApNLB8h60d8aRsQrVG5i6G87s0IUlZDUF0Mgg==
-X-Received: by 2002:a17:907:c711:b0:7ae:35c9:f07b with SMTP id ty17-20020a170907c71100b007ae35c9f07bmr16421779ejc.423.1667827746465;
-        Mon, 07 Nov 2022 05:29:06 -0800 (PST)
-Received: from fedora.. (dh207-98-26.xnet.hr. [88.207.98.26])
-        by smtp.googlemail.com with ESMTPSA id ky14-20020a170907778e00b0073c8d4c9f38sm3446037ejc.177.2022.11.07.05.29.05
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:subject:cc:to:from:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2KT5748vrQwNv05axgctLrrojQ2dZkiY8TujtK+A0ew=;
+        b=Wslcv6ToQ3l7Bb6nYlun5COyM3nczEMO9QbAV7iVzGuhZAhzgjhCxYCTpSklfcOPf6
+         k2xo5VuF80piNHMSoyeZ73m5d4NLOuTzR4Lw5aYHOSWhJwVqPl1CEih3W/2ZC5VfFoF2
+         oz+Qcv3HMHkD8AoB6QrlGwq1hg7vqR90PXCFmcwyUDqcrPMQTXMGRNH7vOg7uVY0wgpJ
+         VzE+4oiwQ93SFoLLZxdJp6u0y5T1E34PUrw/gcifkLbciCg6J9Z1jfC7OCiGaDiRXTg5
+         dZTrt9MliDF3Odbf2t+WWlBCWWMZDn2dYZ5lCz9oaUmefbpi7X7qsAQv9nuclPV5FaGn
+         Y86Q==
+X-Gm-Message-State: ACrzQf2sU6PNW/TJ+ioSRe0tULLRy39apKT4TiXaP0yg/1YdoKKXcgok
+        aiwgO/YfaqQMjsV2FD5g/NM=
+X-Google-Smtp-Source: AMsMyM6Fax2tTJ9I6ZRMxoVmQZkE1ZXKsw6rCkveL4gfy81TDEtwqxJyQLxmjgo6ge2WSRQocSprCA==
+X-Received: by 2002:a05:6000:408a:b0:236:cdf8:1e3f with SMTP id da10-20020a056000408a00b00236cdf81e3fmr566389wrb.80.1667828165661;
+        Mon, 07 Nov 2022 05:36:05 -0800 (PST)
+Received: from Ansuel-xps. (93-42-71-18.ip85.fastwebnet.it. [93.42.71.18])
+        by smtp.gmail.com with ESMTPSA id l32-20020a05600c1d2000b003c6b7f5567csm28304890wms.0.2022.11.07.05.36.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 05:29:06 -0800 (PST)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, mturquette@baylibre.com,
-        sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH 3/3] clk: qcom: ipq8074: add missing networking resets
-Date:   Mon,  7 Nov 2022 14:29:01 +0100
-Message-Id: <20221107132901.489240-3-robimarko@gmail.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221107132901.489240-1-robimarko@gmail.com>
-References: <20221107132901.489240-1-robimarko@gmail.com>
+        Mon, 07 Nov 2022 05:36:05 -0800 (PST)
+Message-ID: <636909c5.050a0220.b7180.f787@mx.google.com>
+X-Google-Original-Message-ID: <Y2kJw3VMucF6LasC@Ansuel-xps.>
+Date:   Mon, 7 Nov 2022 14:36:03 +0100
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] thermal: qcom: tsens: rework debugfs file
+ structure
+References: <20221022125657.22530-1-ansuelsmth@gmail.com>
+ <20221022125657.22530-4-ansuelsmth@gmail.com>
+ <591f7038-81ed-1850-b525-d02a4e082903@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <591f7038-81ed-1850-b525-d02a4e082903@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -76,42 +83,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Downstream QCA 5.4 kernel defines networking resets which are not present
-in the mainline kernel but are required for the networking drivers.
+On Sat, Oct 22, 2022 at 03:08:46PM +0200, Daniel Lezcano wrote:
+> On 22/10/2022 14:56, Christian Marangi wrote:
+> > The current tsens debugfs structure is composed by:
+> > - a tsens dir in debugfs with a version file
+> > - a directory for each tsens istance with sensors file to dump all the
+> >    sensors value.
+> 
+> s/istance/instance/
+> 
+> The patch looks good to me, no need to resend, I'll fix the typos
+>
 
-So, port the downstream resets and avoid using magic values for mask,
-construct mask for resets which require multiple bits to be set/cleared.
+By checking linux-next it looks like the wrong revision was applied [0].
+I think this was done by mistake while fixing the typo. Can this be
+fixed? The applied revision conflicts with what we agreed was a good
+solution.
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
- drivers/clk/qcom/gcc-ipq8074.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+[0] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/log/drivers/thermal/qcom/tsens.c
 
-diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
-index 42d185fe19c8..37d8a9f4105e 100644
---- a/drivers/clk/qcom/gcc-ipq8074.c
-+++ b/drivers/clk/qcom/gcc-ipq8074.c
-@@ -4826,6 +4826,20 @@ static const struct qcom_reset_map gcc_ipq8074_resets[] = {
- 	[GCC_PCIE1_AXI_SLAVE_ARES] = { 0x76040, 4 },
- 	[GCC_PCIE1_AHB_ARES] = { 0x76040, 5 },
- 	[GCC_PCIE1_AXI_MASTER_STICKY_ARES] = { 0x76040, 6 },
-+	[GCC_PPE_FULL_RESET] = { .reg = 0x68014, .bitmask = GENMASK(19, 16) },
-+	[GCC_UNIPHY0_SOFT_RESET] = { .reg = 0x56004, .bitmask = GENMASK(13, 4) | BIT(1) },
-+	[GCC_UNIPHY0_XPCS_RESET] = { 0x56004, 2 },
-+	[GCC_UNIPHY1_SOFT_RESET] = { .reg = 0x56104, .bitmask = GENMASK(5, 4) | BIT(1) },
-+	[GCC_UNIPHY1_XPCS_RESET] = { 0x56104, 2 },
-+	[GCC_UNIPHY2_SOFT_RESET] = { .reg = 0x56204, .bitmask = GENMASK(5, 4) | BIT(1) },
-+	[GCC_UNIPHY2_XPCS_RESET] = { 0x56204, 2 },
-+	[GCC_EDMA_HW_RESET] = { .reg = 0x68014, .bitmask = GENMASK(21, 20) },
-+	[GCC_NSSPORT1_RESET] = { .reg = 0x68014, .bitmask = BIT(24) | GENMASK(1, 0) },
-+	[GCC_NSSPORT2_RESET] = { .reg = 0x68014, .bitmask = BIT(25) | GENMASK(3, 2) },
-+	[GCC_NSSPORT3_RESET] = { .reg = 0x68014, .bitmask = BIT(26) | GENMASK(5, 4) },
-+	[GCC_NSSPORT4_RESET] = { .reg = 0x68014, .bitmask = BIT(27) | GENMASK(9, 8) },
-+	[GCC_NSSPORT5_RESET] = { .reg = 0x68014, .bitmask = BIT(28) | GENMASK(11, 10) },
-+	[GCC_NSSPORT6_RESET] = { .reg = 0x68014, .bitmask = BIT(29) | GENMASK(13, 12) },
- };
- 
- static struct gdsc *gcc_ipq8074_gdscs[] = {
+> > This works on the assumption that we have the same version for each
+> > istance but this assumption seems fragile and with more than one tsens
+> > istance results in the version file not tracking each of them.
+> > 
+> > A better approach is to just create a subdirectory for each tsens
+> > istance and put there version and sensors debugfs file.
+> > 
+> > Using this new implementation results in less code since debugfs entry
+> > are created only on successful tsens probe.
+> > 
+> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> > ---
+> >   drivers/thermal/qcom/tsens.c | 13 +++----------
+> >   1 file changed, 3 insertions(+), 10 deletions(-)
+> > 
+> > diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> > index 467585c45d34..fc12d7c07de4 100644
+> > --- a/drivers/thermal/qcom/tsens.c
+> > +++ b/drivers/thermal/qcom/tsens.c
+> > @@ -704,21 +704,14 @@ DEFINE_SHOW_ATTRIBUTE(dbg_sensors);
+> >   static void tsens_debug_init(struct platform_device *pdev)
+> >   {
+> >   	struct tsens_priv *priv = platform_get_drvdata(pdev);
+> > -	struct dentry *root, *file;
+> > -	root = debugfs_lookup("tsens", NULL);
+> > -	if (!root)
+> > +	priv->debug_root = debugfs_lookup("tsens", NULL);
+> > +	if (!priv->debug_root)
+> >   		priv->debug_root = debugfs_create_dir("tsens", NULL);
+> > -	else
+> > -		priv->debug_root = root;
+> > -
+> > -	file = debugfs_lookup("version", priv->debug_root);
+> > -	if (!file)
+> > -		debugfs_create_file("version", 0444, priv->debug_root,
+> > -				    pdev, &dbg_version_fops);
+> >   	/* A directory for each instance of the TSENS IP */
+> >   	priv->debug = debugfs_create_dir(dev_name(&pdev->dev), priv->debug_root);
+> > +	debugfs_create_file("version", 0444, priv->debug, pdev, &dbg_version_fops);
+> >   	debugfs_create_file("sensors", 0444, priv->debug, pdev, &dbg_sensors_fops);
+> >   }
+> >   #else
+> 
+> 
+> -- 
+> <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+> 
+> Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+> <http://twitter.com/#!/linaroorg> Twitter |
+> <http://www.linaro.org/linaro-blog/> Blog
+
 -- 
-2.38.1
-
+	Ansuel
