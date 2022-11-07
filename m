@@ -2,139 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 738B761FE6C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 20:15:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 373BF61FE93
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 20:26:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232328AbiKGTPn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 14:15:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51424 "EHLO
+        id S231733AbiKGT0T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 14:26:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232468AbiKGTPm (ORCPT
+        with ESMTP id S232066AbiKGT0E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 14:15:42 -0500
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3DE02A268
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 11:15:41 -0800 (PST)
-Received: by mail-pf1-x42c.google.com with SMTP id b185so11534620pfb.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 11:15:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MAGGpX4Ay77YkRb+5QXDL/dau2EPpYwvMkCbBNog/BI=;
-        b=TjqUSgqnII0G0WZTI6p6Gd/CyWQFWrHl1hMxQohEpc1bkF0MU6XGVc3OOjReGoaOms
-         PRI20021zPm29apZ1ts3/q7kxLscRoXetQPBWCKZKHNHcoMxTSw1MSgBcMv0Cc69/6/z
-         KLL99x85K3owtxshucfwd+CAs/vbJVeg3ndzk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MAGGpX4Ay77YkRb+5QXDL/dau2EPpYwvMkCbBNog/BI=;
-        b=4yHWtfWzbOZss7AsG1CPLBQo++aT20HDhyQPuLPyWqn6HN2iAeUxoQI0KkPBsISjTs
-         xebNs3BTgoCbCN44bvSaxedx6kjnaclTY39p06d9wSgxiuGVPE/4545xSZMyW2EoCQtw
-         Aslxs9krBZ4+wNCSNtEQByeHnpwKKSPN8h4cZwBbu/IcjZI7SttAKrzq2sdyyR5jRunp
-         AD9VbVglUlini9xgd4d7zxf214zPQ59/azo4FQWAdA9q6X5Q3vu+ZhGc3a+5R4zNWbbn
-         jVA/0sFI9g+VOP/2uhzIUOQFtAelp16gk/bMoNlPOZzXgCGo4LXk4J7TJ6Jgs+64jWbJ
-         mdOw==
-X-Gm-Message-State: ANoB5pm6VHOO3JLHOsdS4C+T8J7HL9zIpXIF6QTm9IwnkjNdTy9LOIK0
-        DWf2LEeNSbxCK5sh8zcD+h6jjQ==
-X-Google-Smtp-Source: AA0mqf6DAWhYHCQXdGe8W8GD7+Ltdyot8QuSvT65ONDzi3yi0qOK21KX1BPtL78HniLAO08zYVjNAw==
-X-Received: by 2002:a63:f353:0:b0:470:814c:f4ee with SMTP id t19-20020a63f353000000b00470814cf4eemr3188280pgj.8.1667848541273;
-        Mon, 07 Nov 2022 11:15:41 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:11a:201:4652:3752:b9b7:29f9])
-        by smtp.gmail.com with ESMTPSA id r11-20020a170902c60b00b001830ed575c3sm5306627plr.117.2022.11.07.11.15.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 11:15:40 -0800 (PST)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>
-Subject: [PATCH v2 2/2] arm64: dts: qcom: Fully describe fingerprint node on Trogdor
-Date:   Mon,  7 Nov 2022 11:15:35 -0800
-Message-Id: <20221107191535.624371-3-swboyd@chromium.org>
-X-Mailer: git-send-email 2.38.1.431.g37b22c650d-goog
-In-Reply-To: <20221107191535.624371-1-swboyd@chromium.org>
-References: <20221107191535.624371-1-swboyd@chromium.org>
+        Mon, 7 Nov 2022 14:26:04 -0500
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08FE42AE3A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 11:26:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1667849160; x=1699385160;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=CaREa9/pD5lD48Lzd2B7bjrPLIU9+e08QxMO2B4kapk=;
+  b=bRyfTCltc0Wnzjmft7i8dyy7+kPrMUSrLlHXGyS4iUABfM123/59gFme
+   ao2Lx9au/7D1WcJNYJykYQd+oUW5x6Q/Q/cRT67X776tNGR+9dXbhjHPy
+   J7FHE7JJpk/GABtcK1Z/8ugV5zEtvdCSfjFuQmSLfEnWoZmJU3XY/0fqP
+   E696nupC7l+vC8OXVRKPsHc2oz/hjrugBvS+Xdf69ifhwI8V4a35uSHFi
+   hxUUrgicOWs8VfT2SHv8JcGLxl9DKwYZWvvkT4a4TOgt+Ep4cpY+9eAip
+   HRZSuL8Tbb4YoQmhoyRP/ZX8LBAnlfxk/jen1SGAFAfYwch89amU01u84
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10524"; a="372642935"
+X-IronPort-AV: E=Sophos;i="5.96,145,1665471600"; 
+   d="scan'208";a="372642935"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Nov 2022 11:26:00 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10524"; a="705009773"
+X-IronPort-AV: E=Sophos;i="5.96,145,1665471600"; 
+   d="scan'208";a="705009773"
+Received: from stinkpipe.fi.intel.com (HELO stinkbox) ([10.237.72.191])
+  by fmsmga004.fm.intel.com with SMTP; 07 Nov 2022 11:25:57 -0800
+Received: by stinkbox (sSMTP sendmail emulation); Mon, 07 Nov 2022 21:25:56 +0200
+From:   Ville Syrjala <ville.syrjala@linux.intel.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 3/7] drm/msm: Use drm_mode_init() for on-stack modes
+Date:   Mon,  7 Nov 2022 21:25:41 +0200
+Message-Id: <20221107192545.9896-4-ville.syrjala@linux.intel.com>
+X-Mailer: git-send-email 2.37.4
+In-Reply-To: <20221107192545.9896-1-ville.syrjala@linux.intel.com>
+References: <20221107192545.9896-1-ville.syrjala@linux.intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update the fingerprint node on Trogdor to match the fingerprint DT
-binding. This will allow us to drive the reset and boot gpios from the
-driver when it is re-attached after flashing. We'll also be able to boot
-the fingerprint processor if the BIOS isn't doing it for us.
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Cc: Alexandru M Stan <amstan@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Initialize on-stack modes with drm_mode_init() to guarantee
+no stack garbage in the list head, or that we aren't copying
+over another mode's list head.
+
+Based on the following cocci script, with manual fixups:
+@decl@
+identifier M;
+expression E;
+@@
+- struct drm_display_mode M = E;
++ struct drm_display_mode M;
+
+@@
+identifier decl.M;
+expression decl.E;
+statement S, S1;
+@@
+struct drm_display_mode M;
+... when != S
++ drm_mode_init(&M, &E);
++
+S1
+
+@@
+expression decl.E;
+@@
+- &*E
++ E
+
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
 ---
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 4a5ea17a15ba..65601bea0797 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -894,13 +894,16 @@ ap_spi_fp: &spi10 {
- 	cs-gpios = <&tlmm 89 GPIO_ACTIVE_LOW>;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index 2c14646661b7..0f71e8fe7be7 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -237,12 +237,13 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
+ 	unsigned long lock_flags;
+ 	struct dpu_hw_intf_cfg intf_cfg = { 0 };
  
- 	cros_ec_fp: ec@0 {
--		compatible = "google,cros-ec-spi";
-+		compatible = "google,cros-ec-fp", "google,cros-ec-spi";
- 		reg = <0>;
- 		interrupt-parent = <&tlmm>;
- 		interrupts = <4 IRQ_TYPE_LEVEL_LOW>;
- 		pinctrl-names = "default";
--		pinctrl-0 = <&fp_to_ap_irq_l>;
-+		pinctrl-0 = <&fp_to_ap_irq_l>, <&fp_rst_l>, <&fpmcu_boot0>;
-+		boot0-gpios = <&tlmm 10 GPIO_ACTIVE_HIGH>;
-+		reset-gpios = <&tlmm 22 GPIO_ACTIVE_LOW>;
- 		spi-max-frequency = <3000000>;
-+		vdd-supply = <&pp3300_fp_tp>;
- 	};
- };
- 
-@@ -1226,6 +1229,13 @@ en_pp3300_hub: en-pp3300-hub-state {
- 		bias-disable;
- 	};
- 
-+	fp_rst_l: fp-rst-l-state {
-+		pins = "gpio22";
-+		function = "gpio";
-+		bias-disable;
-+		drive-strength = <2>;
-+	};
++	drm_mode_init(&mode, &phys_enc->cached_mode);
 +
- 	fp_to_ap_irq_l: fp-to-ap-irq-l-state {
- 		pins = "gpio4";
- 		function = "gpio";
-@@ -1235,6 +1245,12 @@ fp_to_ap_irq_l: fp-to-ap-irq-l-state {
- 		bias-disable;
- 	};
+ 	if (!phys_enc->hw_ctl->ops.setup_intf_cfg) {
+ 		DPU_ERROR("invalid encoder %d\n", phys_enc != NULL);
+ 		return;
+ 	}
  
-+	fpmcu_boot0: fpmcu-boot0-state {
-+		pins = "gpio10";
-+		function = "gpio";
-+		bias-disable;
-+	};
+-	mode = phys_enc->cached_mode;
+ 	if (!phys_enc->hw_intf->ops.setup_timing_gen) {
+ 		DPU_ERROR("timing engine setup is not supported\n");
+ 		return;
+@@ -634,7 +635,9 @@ static int dpu_encoder_phys_vid_get_frame_count(
+ {
+ 	struct intf_status s = {0};
+ 	u32 fetch_start = 0;
+-	struct drm_display_mode mode = phys_enc->cached_mode;
++	struct drm_display_mode mode;
 +
- 	h1_ap_int_odl: h1-ap-int-odl-state {
- 		pins = "gpio42";
- 		function = "gpio";
++	drm_mode_init(&mode, &phys_enc->cached_mode);
+ 
+ 	if (!dpu_encoder_phys_vid_is_master(phys_enc))
+ 		return -EINVAL;
 -- 
-https://chromeos.dev
+2.37.4
 
