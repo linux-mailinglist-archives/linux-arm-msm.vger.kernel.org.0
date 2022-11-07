@@ -2,113 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79D5161EEF8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 10:29:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A04861EF0F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 10:31:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231516AbiKGJ3l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 04:29:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55546 "EHLO
+        id S231754AbiKGJbi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 04:31:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231359AbiKGJ3i (ORCPT
+        with ESMTP id S231752AbiKGJbh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 04:29:38 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD7E115732;
-        Mon,  7 Nov 2022 01:29:37 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id f5so28427062ejc.5;
-        Mon, 07 Nov 2022 01:29:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9C4ZpIu9MoFe/21Uj/Vi0AVSvYvZIvhlEsa/ecQ+D1U=;
-        b=jOs+RksedWn2abnSKpQ1jJsuiitFNo12IAfdDaIE3X0PObmWfJuN8RX77sN4cYiYx6
-         2v+xMqbkZz5+rYNAIR0x7vl1Xwd5WnWT9OjpaQC/arJ7a3moVxFoDhKiw0XwKbwPiBc8
-         sbaT36vI5RKbxmm+zd6sXAN4w87VeMxdyXanncMxRHCVc0Hx56RF2NdsKFGvysdpDeBJ
-         CjRG9QBNZzaNU6xc6jeeA1gss5FCUDEUti6Wb2wRdkNsBlvUlbFrd1Zfw7NfyhCK1mCq
-         oD1IxEOtcydCAdFljN15WO4q+ymPSLH5SA4IzwVqt90VINQHhP3dKXosgxf64DxeHWKE
-         yNeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9C4ZpIu9MoFe/21Uj/Vi0AVSvYvZIvhlEsa/ecQ+D1U=;
-        b=1D49ioXc605wMPBAvoUpsJdmTRZrD3i7wFWqn/NqUxvnbxFWiZ6p2HDznF9FnbzCKO
-         4jMo03IgiWbZ9NlZQkY1JuUR8vKb2LxgvmA2afjpdfU6KPBEK6TkB7gpZkzSApWBH6Pe
-         ceby8T7Dt2CRaVe2LEyPbu1cfrMfXmDL0vPzr43bfug94Kkl8OGlsvUe5EJfnMOxvpwV
-         0pnQ3Vt7+j9eKUxX+Y5x8A1rWPQlkgXmXn8c5rip6lyZSmUrTaptOxr3PdChXKYFD6Gp
-         AGFbbcw+KdBLJs46E29AufDpbz9/LchtHx/YRrjLVXjeNs/cX57kqDQAADJnkVzajfoJ
-         8GSA==
-X-Gm-Message-State: ACrzQf3VDhSBuNhCPG+zF7nHextrC//qKbyu2K/7k3nGXe0s46MAXgmK
-        0zAFNKrYPbqQK9upAuxPhjI=
-X-Google-Smtp-Source: AMsMyM6y/wC+MJslmKIVv6GrQApqPb1rv72L0C9GHzobMnQcDkSbAck3Cm8dKTcnGoCFXwSc4PCizw==
-X-Received: by 2002:a17:907:a4e:b0:77d:94d:8148 with SMTP id be14-20020a1709070a4e00b0077d094d8148mr45090255ejc.607.1667813376243;
-        Mon, 07 Nov 2022 01:29:36 -0800 (PST)
-Received: from fedora.. (dh207-98-26.xnet.hr. [88.207.98.26])
-        by smtp.googlemail.com with ESMTPSA id u10-20020a056402110a00b0045b3853c4b7sm3912837edv.51.2022.11.07.01.29.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 01:29:35 -0800 (PST)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH 3/3] arm64: dts: qcom: hk01: use GPIO flags for tlmm
-Date:   Mon,  7 Nov 2022 10:29:30 +0100
-Message-Id: <20221107092930.33325-3-robimarko@gmail.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221107092930.33325-1-robimarko@gmail.com>
-References: <20221107092930.33325-1-robimarko@gmail.com>
+        Mon, 7 Nov 2022 04:31:37 -0500
+Received: from m1323.mail.163.com (m1323.mail.163.com [220.181.13.23])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id B24AD13F99;
+        Mon,  7 Nov 2022 01:31:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=9cght
+        XGQQk9Yt267vvrz9hrm+iRwuABo78gGmpmvyeU=; b=UHYAmAYuFxxofx6l6v5Jo
+        pnBbdgegLSOlUtL5weLO21IHIt8sJH8VNBQE8hnWPpoHs/zGHtRSpbnVUwbAmb7g
+        cwCXUpf8U04f1FqE1g81+Qft9T7jfy4iFEBaH/Z5YFtGnH2x8TgSRLPb98YoCmML
+        iCXzp4MJPs/ZOcOo3Znfxs=
+Received: from slark_xiao$163.com ( [112.97.52.114] ) by
+ ajax-webmail-wmsvr23 (Coremail) ; Mon, 7 Nov 2022 17:30:56 +0800 (CST)
+X-Originating-IP: [112.97.52.114]
+Date:   Mon, 7 Nov 2022 17:30:56 +0800 (CST)
+From:   "Slark Xiao" <slark_xiao@163.com>
+To:     "Greg KH" <gregkh@linuxfoundation.org>
+Cc:     mani@kernel.org, loic.poulain@linaro.org, dnlplm@gmail.com,
+        yonglin.tan@outlook.com, fabio.porcedda@gmail.com,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re:Re: [PATCH v2] bus: mhi: host: pci_generic: Add macro for some
+ VIDs
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20220113(9671e152)
+ Copyright (c) 2002-2022 www.mailtech.cn 163com
+In-Reply-To: <Y2jJpT5//xBUOQMq@kroah.com>
+References: <20221107084826.8888-1-slark_xiao@163.com>
+ <Y2jJpT5//xBUOQMq@kroah.com>
+X-NTES-SC: AL_QuydBfSavEwu4CiaZ+lS8T5326h2JYDkxZVQuvkNWussghrW5goaREZpIkPY/uFibj+4/omKqfsZqcElJYXG
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Message-ID: <28f1e702.28d7.184516dbbbb.Coremail.slark_xiao@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: F8GowACX4GlQ0GhjdHJBAA--.9183W
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiGR2yZFyPfQkjmQABsO
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use respective GPIO_ACTIVE_LOW/HIGH flags for tlmm GPIOs instead of
-harcoding the cell value.
-
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
- arch/arm64/boot/dts/qcom/ipq8074-hk01.dts | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-index b60b2d4c2ea5..c3f3f78271e9 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-@@ -4,6 +4,7 @@
-  */
- #include "ipq8074.dtsi"
- #include "pmp8074.dtsi"
-+#include <dt-bindings/gpio/gpio.h>
- 
- / {
- 	model = "Qualcomm Technologies, Inc. IPQ8074-HK01";
-@@ -52,12 +53,12 @@ &blsp1_uart5 {
- 
- &pcie0 {
- 	status = "okay";
--	perst-gpios = <&tlmm 61 0x1>;
-+	perst-gpios = <&tlmm 61 GPIO_ACTIVE_LOW>;
- };
- 
- &pcie1 {
- 	status = "okay";
--	perst-gpios = <&tlmm 58 0x1>;
-+	perst-gpios = <&tlmm 58 GPIO_ACTIVE_LOW>;
- };
- 
- &pcie_phy0 {
--- 
-2.38.1
-
+CgoKCgoKCgoKCgoKCgoKCkF0IDIwMjItMTEtMDcgMTc6MDI6MjksICJHcmVnIEtIIiA8Z3JlZ2to
+QGxpbnV4Zm91bmRhdGlvbi5vcmc+IHdyb3RlOgo+T24gTW9uLCBOb3YgMDcsIDIwMjIgYXQgMDQ6
+NDg6MjZQTSArMDgwMCwgU2xhcmsgWGlhbyB3cm90ZToKPj4gVG8gbWFrZSBjb2RlIG5lYXQgYW5k
+IGZvciBjb252ZW5pZW5jZSBwdXJwb3NlLCB1c2UgbWFjcm8gZm9yCj4+IHNvbWUgVklEcy4gVGhl
+c2UgbWFjcm9zIGFyZSBzdXBwb3NlZCB0byBiZSBhZGRlZCB0byBwY2lfaWRzLmguCj4KPk5vLCB0
+aGV5IGFyZSBub3Qgc3VwcG9zZWQgdG8gYmUgYWRkZWQgdGhlcmUgYXQgYWxsLgo+Cj5BbmQgdGhl
+eSBhcmUgbm90IGEgIm1hY3JvIiwgaXQgaXMgYSAiI2RlZmluZSIuCj4KPj4gQnV0IHVudGlsIHRo
+ZSBtYWNyb3MgYXJlIHVzZWQgaW4gbXVsdGlwbGUgcGxhY2VzLCBpdCBpcyBub3QKPj4gcmVjb21t
+ZW5kZWQuIFNvIGFkZGluZyBpdCBsb2NhbGx5IGZvciBub3cuCj4KPkFnYWluLCB0aGVzZSBhcmUg
+bm90IG1hY3Jvcwo+Cj50aGFua3MsCj4KPmdyZWcgay1oCgpIaSBHcmVnLApUaGFua3MgZm9yIHlv
+dXIgY29tbWVudC4KSW4gbXkgb3BpbmlvbiwgTUFDUk8gYWxtb3N0IHNhbWUgYXMgYSAnI2RlZmlu
+ZScuICBNYXkgSSBrbm93IGhvdyBkbyAKeW91IGNhbGwgc3VjaCBkZWZpbml0aW9uPwoKQW5kIGNv
+dWxkIHlvdSBnaXZlIHlvdXIgY29tbWVudHMgaW4gcHJldmlvdXMgcGF0Y2gsIG5vdCB0aGUgJ2Zp
+bmFsJyBvbmU/CkluIGFub3RoZXIgcGNpX2lkcyBwYXRjaCwgeW91IGJyZWFrIGl0IGluIHYzIGFu
+ZCBicmVhayBpdCBoZXJlIGFnYWluIGluIHYyLgpIb25lc3RseSwgIGl0J3MgcG9zaXRpdmUgZm9y
+IHdob2xlIHByb2plY3QuIEJ1dCBpdCdzIG5lZ2F0aXZlICBmb3IgY29udHJpYnV0b3IgCmFuZCBt
+YWludGFpbmVyLiAKCkZpbmFsbHksIGl0J3Mgd2VsY29tZSB0byBwb2ludCBvdXQgdGhlIGVycm9y
+LiA=
