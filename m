@@ -2,74 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2DD561FE13
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 19:59:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C6A5A61FE6A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 20:15:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231754AbiKGS7k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 13:59:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40354 "EHLO
+        id S232439AbiKGTPm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 14:15:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232273AbiKGS7j (ORCPT
+        with ESMTP id S232051AbiKGTPk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 13:59:39 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECE241D642
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 10:59:36 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id l8so17727556ljh.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 10:59:36 -0800 (PST)
+        Mon, 7 Nov 2022 14:15:40 -0500
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E73E32A268
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 11:15:38 -0800 (PST)
+Received: by mail-pf1-x42c.google.com with SMTP id 130so11536203pfu.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 11:15:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=q6+tifRwm98rAaw+GHP74ruEoAmooOK+xQD6j6mXEfs=;
-        b=mBleVDhIojdtiptSbA/vSs3qVkg4VMpPsrlPMfPe2VtoRCCLCELsPQ4dqELBh2sfpN
-         DNhwKEoswbG5mI1fFV3MFttf8Cr/3dlD7LJj3pOAtd25oQcXXpEls/1M5GV2clWa09ve
-         DVGd+rHSS8MGAUFhGA4hw9kikrpDPQBhplG4QosIOBO3oB1AGYjzh11NJbN6uVWkLW4Z
-         Zm+HgTQ+deFRoVLAZCo8kRu2b/3R9VDIfmLJhBVKNXAf1yA2VHjrwAQ9ogdfMUM6zz+w
-         WuRbXKkOqcOoSEQjJl4cuZ66Flyp9X3iRMfHEYkmmMhBYI+dvMM0ybSndZm/rBl0Q8KP
-         lT0g==
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dCHSGnCFJ0y/u8SQ+Xtk+pvjFKxhWsoTtgBkVZ7qxaM=;
+        b=TwTXuGCgoe+Z65wLfGNAl2YpRz2wltTlH9WaarTkzyxcNuqjq7OP/xRtRRBMbAKp/r
+         yBLXUgFsTL3cz7EnQAj/lTBse27z/05qQbXwve0LY0Qhyox4COYPH5+V5SLO/lBcFYK8
+         BqbpdoK40GlI5FVGftaGRXyN3+w6eU8I99ZA8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=q6+tifRwm98rAaw+GHP74ruEoAmooOK+xQD6j6mXEfs=;
-        b=ONIqIOeZ9vwqlIn0bDWVuDFEfpI/X8+BIy5vQsZHFj9UjBfTVqgSSYoNoqkbWrZLcb
-         fHdkj8UNTwZeGPQ3ddJCQWptY8sod4lR0AZdSrQ21ae5HKvwStYJlKxWAOt8Fdq/AWjd
-         1BFewNxLb/jrpca3LSVs7jWEl045PEBF9U6uFqHBICGUl91hA6el63S5Zl5hl7EYQ+2u
-         P+lX8Zp1qoLpssO8Rbg1d28mjOmt4884HxaVtIEQcIkSB6wle+bX2M4YdiH+qwNgJ4K9
-         FfLAM6X3D3+SCU/zv9M7P0RF2X0vGOpb+4wNV+wzmZMn6EkPL7mTVXiRhkC42ran9IDF
-         dxzA==
-X-Gm-Message-State: ACrzQf3wZfJEy+qtEFRUb4gRjVpL9Iv3kiWOewfZiaBA5/y3QItomDaV
-        JyPBY1IrwD8AjdHbfOH/xp0/Qw==
-X-Google-Smtp-Source: AMsMyM4bvRAD5pFcUnjckx8kRc0DjR32qWX+6xs08zUhVp9Yl6EplB/pie2qvUv/MMlfAvmm+qyEhg==
-X-Received: by 2002:a2e:b2d1:0:b0:277:c68:874b with SMTP id 17-20020a2eb2d1000000b002770c68874bmr5414236ljz.261.1667847575315;
-        Mon, 07 Nov 2022 10:59:35 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
-        by smtp.gmail.com with ESMTPSA id y5-20020a05651c106500b002770a9ed61bsm1327875ljm.66.2022.11.07.10.59.34
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dCHSGnCFJ0y/u8SQ+Xtk+pvjFKxhWsoTtgBkVZ7qxaM=;
+        b=d4ZKQz2lPDZgsFU6HZ//bK3OC0h+gYwGP5QDjQOAnq++UjUm0WHAdu4zkTo46WkO3Q
+         F6eWj2LHNRom07ShWKSMIm33jXfLb+Q2f7hFu0XGC72vBAws5esSXzklpDKiMjliGRXD
+         7fKf98vsS+CgMvtkv5aaPQanrZvMaBCJXOndOtcMFRfkBL0qp9XUB2hfX7+zaU6buMD4
+         NiFBrifI4gG2h7j+WqNoKu8DOb/zNPbDQqQ95NlgXehWHzStM+qjeAGDmLq6adG4NU1P
+         CJ8R8tagHyjpG0rE2llKqJWrpzMBM3n9Abs7/cY4ewsGNY4Y66mqqqU/gci13jzaxUAd
+         bblw==
+X-Gm-Message-State: ACrzQf05C6gBiQBwUOqFF53mysfHX40UTcWaSN2DiCkCe4KZRWfjStYZ
+        e3RG9JogcLF0hxHxHA+VODqFEw==
+X-Google-Smtp-Source: AMsMyM57yEmLDsxYkqy5WClNr4Ff1qFsZt/FJwLmrYrNwVcO744HMtZOn/erJGiCcLU+9G/pqnohcg==
+X-Received: by 2002:a05:6a00:2285:b0:56d:5d42:3aa8 with SMTP id f5-20020a056a00228500b0056d5d423aa8mr44174929pfe.79.1667848538360;
+        Mon, 07 Nov 2022 11:15:38 -0800 (PST)
+Received: from smtp.gmail.com ([2620:15c:11a:201:4652:3752:b9b7:29f9])
+        by smtp.gmail.com with ESMTPSA id r11-20020a170902c60b00b001830ed575c3sm5306627plr.117.2022.11.07.11.15.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 10:59:34 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Mon, 07 Nov 2022 11:15:37 -0800 (PST)
+From:   Stephen Boyd <swboyd@chromium.org>
 To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] ARM: dts: qcom-apq8060: align TLMM pin configuration with DT schema
-Date:   Mon,  7 Nov 2022 19:59:31 +0100
-Message-Id: <20221107185931.22075-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221107185931.22075-1-krzysztof.kozlowski@linaro.org>
-References: <20221107185931.22075-1-krzysztof.kozlowski@linaro.org>
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Alexandru M Stan <amstan@chromium.org>
+Subject: [PATCH v2 0/2] Update fingerprint node on herobrine/trogdor
+Date:   Mon,  7 Nov 2022 11:15:33 -0800
+Message-Id: <20221107191535.624371-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.38.1.431.g37b22c650d-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,242 +69,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DT schema expects TLMM pin configuration nodes to be named with
-'-state' suffix and their optional children with '-pins' suffix.
+This patch series updates the binding for the Trogdor and Herobrine
+boards' fingerprint node. Now that the binding has been accepted[1]
+we're ready to merge this in the qcom tree.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../arm/boot/dts/qcom-apq8060-dragonboard.dts | 126 +++++++-----------
- 1 file changed, 51 insertions(+), 75 deletions(-)
+Changes from v1 (https://lore.kernel.org/r/20220317010640.2498502-1-swboyd@chromium.org):
+ * New patch for trogdor
 
-diff --git a/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-index 0baf202a82ba..7a4c59e04af6 100644
---- a/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-+++ b/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-@@ -789,28 +789,24 @@ &sdcc5 {
- 
- &tlmm {
- 	/* eMMC pins, all 8 data lines connected */
--	dragon_sdcc1_pins: sdcc1 {
--		mux {
--			pins = "gpio159", "gpio160", "gpio161",
--			     "gpio162", "gpio163", "gpio164",
--			     "gpio165", "gpio166", "gpio167",
--			     "gpio168";
--			     function = "sdc1";
--		};
--		clk {
-+	dragon_sdcc1_pins: sdcc1-state {
-+		clk-pins {
- 			pins = "gpio167"; /* SDC1 CLK */
-+			function = "sdc1";
- 			drive-strength = <16>;
- 			bias-disable;
- 		};
--		cmd {
-+		cmd-pins {
- 			pins = "gpio168"; /* SDC1 CMD */
-+			function = "sdc1";
- 			drive-strength = <10>;
- 			bias-pull-up;
- 		};
--		data {
-+		data-pins {
- 			/* SDC1 D0 to D7 */
- 			pins = "gpio159", "gpio160", "gpio161", "gpio162",
- 			     "gpio163", "gpio164", "gpio165", "gpio166";
-+			function = "sdc1";
- 			drive-strength = <10>;
- 			bias-pull-up;
- 		};
-@@ -820,18 +816,18 @@ data {
- 	 * The SDCC3 pins are hardcoded (non-muxable) but need some pin
- 	 * configuration.
- 	 */
--	dragon_sdcc3_pins: sdcc3 {
--		clk {
-+	dragon_sdcc3_pins: sdcc3-state {
-+		clk-pins {
- 			pins = "sdc3_clk";
- 			drive-strength = <8>;
- 			bias-disable;
- 		};
--		cmd {
-+		cmd-pins {
- 			pins = "sdc3_cmd";
- 			drive-strength = <8>;
- 			bias-pull-up;
- 		};
--		data {
-+		data-pins {
- 			pins = "sdc3_data";
- 			drive-strength = <8>;
- 			bias-pull-up;
-@@ -839,101 +835,82 @@ data {
- 	};
- 
- 	/* Second SD card slot pins */
--	dragon_sdcc5_pins: sdcc5 {
--		mux {
--			pins = "gpio95", "gpio96", "gpio97",
--			    "gpio98", "gpio99", "gpio100";
--			function = "sdc5";
--		};
--		clk {
-+	dragon_sdcc5_pins: sdcc5-state {
-+		clk-pins {
- 			pins = "gpio97"; /* SDC5 CLK */
-+			function = "sdc5";
- 			drive-strength = <16>;
- 			bias-disable;
- 		};
--		cmd {
-+		cmd-pins {
- 			pins = "gpio95"; /* SDC5 CMD */
-+			function = "sdc5";
- 			drive-strength = <10>;
- 			bias-pull-up;
- 		};
--		data {
-+		data-pins {
- 			/* SDC5 D0 to D3 */
- 			pins = "gpio96", "gpio98", "gpio99", "gpio100";
-+			function = "sdc5";
- 			drive-strength = <10>;
- 			bias-pull-up;
- 		};
- 	};
- 
--	dragon_gsbi3_i2c_pins: gsbi3_i2c {
--		mux {
--			pins = "gpio43", "gpio44";
--			function = "gsbi3";
--		};
--		pinconf {
--			pins = "gpio43", "gpio44";
--			drive-strength = <8>;
--			/* These have external pull-up 2.2kOhm to 1.8V */
--			bias-disable;
--		};
-+	dragon_gsbi3_i2c_pins: gsbi3-i2c-state {
-+		pins = "gpio43", "gpio44";
-+		function = "gsbi3";
-+		drive-strength = <8>;
-+		/* These have external pull-up 2.2kOhm to 1.8V */
-+		bias-disable;
- 	};
- 
--	dragon_gsbi8_i2c_pins: gsbi8_i2c {
--		mux {
--			pins = "gpio64", "gpio65";
--			function = "gsbi8";
--		};
--		pinconf {
--			pins = "gpio64", "gpio65";
--			drive-strength = <16>;
--			/* These have external pull-up 2.2kOhm to 1.8V */
--			bias-disable;
--		};
-+	dragon_gsbi8_i2c_pins: gsbi8-i2c-state {
-+		pins = "gpio64", "gpio65";
-+		function = "gsbi8";
-+		drive-strength = <16>;
-+		/* These have external pull-up 2.2kOhm to 1.8V */
-+		bias-disable;
- 	};
- 
--	dragon_gsbi12_i2c_pins: gsbi12_i2c {
--		mux {
--			pins = "gpio115", "gpio116";
--			function = "gsbi12";
--		};
--		pinconf {
--			pins = "gpio115", "gpio116";
--			drive-strength = <16>;
--			/* These have external pull-up 4.7kOhm to 1.8V */
--			bias-disable;
--		};
-+	dragon_gsbi12_i2c_pins: gsbi12-i2c-state {
-+		pins = "gpio115", "gpio116";
-+		function = "gsbi12";
-+		drive-strength = <16>;
-+		/* These have external pull-up 4.7kOhm to 1.8V */
-+		bias-disable;
- 	};
- 
- 	/* Primary serial port uart 0 pins */
--	dragon_gsbi12_serial_pins: gsbi12_serial {
--		mux {
--			pins = "gpio117", "gpio118";
--			function = "gsbi12";
--		};
--		tx {
-+	dragon_gsbi12_serial_pins: gsbi12-serial-state {
-+		tx-pins {
- 			pins = "gpio117";
-+			function = "gsbi12";
- 			drive-strength = <8>;
- 			bias-disable;
- 		};
--		rx {
-+		rx-pins {
- 			pins = "gpio118";
-+			function = "gsbi12";
- 			drive-strength = <2>;
- 			bias-pull-up;
- 		};
- 	};
- 
--	dragon_ebi2_pins: ebi2 {
-+	dragon_ebi2_pins: ebi2-state {
- 		/*
- 		 * Pins used by EBI2 on the Dragonboard, actually only
- 		 * CS2 is used by a real peripheral. CS0 is just
- 		 * routed to a test point.
- 		 */
--		mux0 {
-+		mux0-pins {
- 			pins =
- 			    /* "gpio39", CS1A_N this is not good to mux */
- 			    "gpio40", /* CS2A_N */
- 			    "gpio134"; /* CS0_N testpoint TP29 */
- 			function = "ebi2cs";
- 		};
--		mux1 {
-+		mux1-pins {
- 			pins =
- 			    /* EBI2_ADDR_7 downto EBI2_ADDR_0 address bus */
- 			    "gpio123", "gpio124", "gpio125", "gpio126",
-@@ -951,22 +928,21 @@ mux1 {
- 	};
- 
- 	/* Interrupt line for the KXSD9 accelerometer */
--	dragon_kxsd9_gpios: kxsd9 {
--		irq {
--			pins = "gpio57"; /* IRQ line */
--			bias-pull-up;
--		};
-+	dragon_kxsd9_gpios: kxsd9-state {
-+		pins = "gpio57"; /* IRQ line */
-+		function = "gpio";
-+		bias-pull-up;
- 	};
- 
--	dragon_tma340_gpios: tma340 {
--		reset {
-+	dragon_tma340_gpios: tma340-state {
-+		reset-pins {
- 			/* RESET line, TS_ATTN, WAKE_CTP */
- 			pins = "gpio58";
- 			function = "gpio";
- 			drive-strength = <6>;
- 			bias-disable;
- 		};
--		irq {
-+		irq-pins {
- 			pins = "gpio61"; /* IRQ line */
- 			function = "gpio";
- 			drive-strength = <2>;
+Stephen Boyd (2):
+  arm64: dts: qcom: Fully describe fingerprint node on Herobrine
+  arm64: dts: qcom: Fully describe fingerprint node on Trogdor
+
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 20 +++++++++++++++++--
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  5 ++++-
+ 2 files changed, 22 insertions(+), 3 deletions(-)
+
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Cc: Alexandru M Stan <amstan@chromium.org>
+
+[1] https://lore.kernel.org/r/166718941539.790.4332712127794687523.git-patchwork-notify@kernel.org
+
+base-commit: 95fade4016cbd57ee050ab226c8f0483af1753c4
 -- 
-2.34.1
+https://chromeos.dev
 
