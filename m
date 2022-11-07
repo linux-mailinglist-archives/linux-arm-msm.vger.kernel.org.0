@@ -2,49 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C85B461E8F0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 04:12:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2758561E8F1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 04:12:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230377AbiKGDMq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S230382AbiKGDMq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sun, 6 Nov 2022 22:12:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34434 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230366AbiKGDMo (ORCPT
+        with ESMTP id S230369AbiKGDMo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 6 Nov 2022 22:12:44 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12BC0DF99;
-        Sun,  6 Nov 2022 19:12:42 -0800 (PST)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63B42DF9E;
+        Sun,  6 Nov 2022 19:12:43 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A0A1360E9B;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id F100E60E98;
+        Mon,  7 Nov 2022 03:12:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BF4C433C1;
         Mon,  7 Nov 2022 03:12:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5ACC433D7;
-        Mon,  7 Nov 2022 03:12:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667790761;
-        bh=/ITrgkN/B9hw0kL4nYSR1Lr2KvFvAGSqf17UtxY6OHs=;
+        s=k20201202; t=1667790762;
+        bh=wSGw+1ab0M0hKgWXdmnc430Sc24IHBbcUGFcWPL0QwM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ItwvoZoBlM+MAppiXVJQ3Iax5zK7SOXxA6Rh5pFJMci+VZHh9bN+kPfXGlTKXe8o2
-         JJgv8y8mbd9wSUrcdyy8WWAifftk0wXjqPwd7/r6Kdu3JbW9vDydl905+uYspyNdAv
-         +vo0Cmo1IC2NKDXaytS1fXFlVn9oVYF/Myyl4ZsLoJfgBIoPbAAbyAaBxro2o36zmG
-         S7QEovROHK7CZ5eu5seeFWbBwMrDVSsAQdA0Z9EUuYqQKBb/2G9xVuXO2cF/9Dnm67
-         xkDSJpQX6fBFcgb1+WQVKp2Ek8bNvWBPTOdkXf8k7aunHLMIqm/FoL7MukcdpSFl6g
-         r0Hhi6Wa/Y0LQ==
+        b=XLX1Ki5lGjwO/KGG/AdqOInGVZX3fKiY2rjf8ytrME1jfDNeCnFBT1iS1Ghr5tciH
+         CuOS5N07fJDCQQoQm6uw2blbs22bBjJXrLQMrE4pS8qsa6tgtHVw2ojirKKipczsd2
+         F76nlTVsvvO7aduRjwkQvnstm8nWcG9svDOchNCqoCN5aVO96MekqDoUZEgAE51T/z
+         S4DgBrCzzq36mo1vw0w2ufSO0y1ki7ILpsgGFhxzNnPqz20jhvP9kyF1wn+HDwjxAD
+         6rpI3m8hXFXj97u55KSCW1u3iGme6GxPAfrdrOQt4v1sL0jDn9nmk7VuriboYvG9Uz
+         bMQ1LyDnC0c/w==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     caleb.connolly@linaro.org
-Cc:     krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, konrad.dybcio@somainline.org,
-        luca@z3ntu.xyz, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH 0/5] arm64: dts: qcom: add and enable the pmi8998 RRADC
-Date:   Sun,  6 Nov 2022 21:11:59 -0600
-Message-Id: <166779074258.500303.6143441430945522925.b4-ty@kernel.org>
+To:     krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org,
+        sean@poorly.run, Rob Herring <robh+dt@kernel.org>,
+        quic_abhinavk@quicinc.com, konrad.dybcio@somainline.org,
+        robdclark@gmail.com, Andy Gross <agross@kernel.org>
+Cc:     devicetree@vger.kernel.org, swboyd@chromium.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        daniel@ffwll.ch, airlied@linux.ie, freedreno@lists.freedesktop.org
+Subject: Re: (subset) [PATCH 0/2] arm: dts: qcom: rename HDMI PHY nodes
+Date:   Sun,  6 Nov 2022 21:12:00 -0600
+Message-Id: <166779074251.500303.3874190524418032312.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221016180330.1912214-1-caleb.connolly@linaro.org>
-References: <20221016180330.1912214-1-caleb.connolly@linaro.org>
+In-Reply-To: <20220924094347.178666-1-dmitry.baryshkov@linaro.org>
+References: <20220924094347.178666-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -57,32 +58,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 16 Oct 2022 19:03:24 +0100, Caleb Connolly wrote:
-> This contains patches 6 through 10 of the series adding a driver
-> for the RRADC
-> https://lore.kernel.org/linux-arm-msm/20220429220904.137297-1-caleb.connolly@linaro.org/
+On Sat, 24 Sep 2022 12:43:45 +0300, Dmitry Baryshkov wrote:
+> Historically HDMI PHY device tree nodes used the hdmi-phy@ names.
+> Replace them with generic phy@ names.
 > 
-> The driver and DT bindings have been in mainline for a while.
+> While there is no such requirement in the DT schema, it's worth doing
+> that because:
 > 
-> This introduces a new dtbs_check warning which is fixed in
-> https://lore.kernel.org/linux-arm-msm/20221016175757.1911016-1-caleb.connolly@linaro.org/
-> and depends on Luca's series:
-> https://lore.kernel.org/linux-arm-msm/20220925211744.133947-2-luca@z3ntu.xyz/
+> 1) The recent qcom DT files already use just phy@ for most of PHY nodes
 > 
 > [...]
 
 Applied, thanks!
 
-[1/5] arm64: dts: qcom: pmi8998: add rradc node
-      commit: 1cb78978d34e1b65bbb912d8265eb95713ae7a45
-[2/5] arm64: dts: qcom: sdm845-oneplus: enable rradc
-      commit: 868985181a69df53321035d96aa668d90f6cd5cb
-[3/5] arm64: dts: qcom: sdm845-db845c: enable rradc
-      commit: e779eb99859cc26d051f6fc723d2bd2d5990a812
-[4/5] arm64: dts: qcom: sdm845-xiaomi-beryllium: enable rradc
-      commit: 53c54069d9ffd556b52893077324e628655cd591
-[5/5] arm64: dts: qcom: msm8998-oneplus-common: enable RRADC
-      commit: aac16a9d247e5496361bfe20d651f2c1333eb5dc
+[1/2] ARM: dts: qcom-apq8064: change HDMI PHY node name to generic one
+      commit: 5743efe0e73e4e1c8d042e982e31bb8145e35baf
 
 Best regards,
 -- 
