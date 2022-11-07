@@ -2,217 +2,310 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE77A61F7F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 16:52:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B4A7861F839
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 17:04:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232289AbiKGPwl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 10:52:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48974 "EHLO
+        id S232348AbiKGQEf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 11:04:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232084AbiKGPwl (ORCPT
+        with ESMTP id S230434AbiKGQEc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 10:52:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 353EAB39
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 07:51:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1667836310;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=jKqEegX7OgcJy3yUQyqatoiqD10vcofZSbYNQadN7Ek=;
-        b=J+Nd2gtzjVr+rkEnrOwmtDjTGqD2XQMKat8DZizrQ0Lg/y4oZxLE9Io1A52wylWp0c94A+
-        7gVlOZ9p0Y1MWVy3xPhEejBvfgLZFcWZPMlS6F5MNhA5fnjd4AhU3rHtCfucwN1pSJ/sxs
-        kYZrdXcgjp9NJpcpBqEIMCfufGRwxxI=
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-625--_VonGepMoi6d35UauV3Vg-1; Mon, 07 Nov 2022 10:51:49 -0500
-X-MC-Unique: -_VonGepMoi6d35UauV3Vg-1
-Received: by mail-oi1-f199.google.com with SMTP id a5-20020aca1a05000000b00359de30f06dso4607896oia.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 07:51:49 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jKqEegX7OgcJy3yUQyqatoiqD10vcofZSbYNQadN7Ek=;
-        b=jL9QFb5t8jPkWhIV8CkIMFKh6TkGSFWJjAHiQzQ6WedH8Fejj6f36qW9TOJP1G8edC
-         +sKqSscn2rSJtPY4xSZiTbdUEqo4BlDGl+tFSGkGGbYMdb5+xo3/uhwjfoL5qhCsyiSM
-         lD2moMMZYXHcl3QP9LTWbB0hXxYxdNj3SQ2JNaDXtGyOzCAWiwyxwuTw7X70/DjODjLV
-         bATXTHxrvn5yAOaR7oO3gerQWtFsvqKrgVnYKKIGxHLwYv9YhIrONYp0+d9Ym2QRJKSI
-         Q+KvNtiWeE/RTJgKZ1RYU/n5dj7SGOpT95qE6qMwF3JliwtbrzB9nwo+YJASi3/QZ47I
-         e8FA==
-X-Gm-Message-State: ACrzQf0NBTgp5kOSHZXAn1rkkdIgPTJxNJxeqWh8XOyuCbb1Nj7fl9xh
-        8dnIvhvIgosOFDDxw3k/lrZNTZqT4/4IKsCGpfcXkFtIzRZWoGBOCU+gEO1+CpS80xICJbjt8BF
-        wd4Zzcao3XkmRhm2rnXEU9irmLw==
-X-Received: by 2002:a05:6808:1796:b0:359:e5f6:6662 with SMTP id bg22-20020a056808179600b00359e5f66662mr26691821oib.256.1667836308569;
-        Mon, 07 Nov 2022 07:51:48 -0800 (PST)
-X-Google-Smtp-Source: AMsMyM4ZjtbShF1jQWywiTvyIgE7lltPnxOVzJZFu9R+Imftqkh3XahaunnziORphW9W136kJURU/A==
-X-Received: by 2002:a05:6808:1796:b0:359:e5f6:6662 with SMTP id bg22-20020a056808179600b00359e5f66662mr26691802oib.256.1667836308297;
-        Mon, 07 Nov 2022 07:51:48 -0800 (PST)
-Received: from halaney-x13s ([2600:1700:1ff0:d0e0::21])
-        by smtp.gmail.com with ESMTPSA id a22-20020a9d4716000000b0066c41be56e7sm3013797otf.55.2022.11.07.07.51.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 07:51:47 -0800 (PST)
-Date:   Mon, 7 Nov 2022 09:51:45 -0600
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mon, 7 Nov 2022 11:04:32 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 594331115F;
+        Mon,  7 Nov 2022 08:04:31 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3EC39ED1;
+        Mon,  7 Nov 2022 08:04:37 -0800 (PST)
+Received: from pierre123.arm.com (pierre123.nice.arm.com [10.34.100.128])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 0AE9A3F534;
+        Mon,  7 Nov 2022 08:04:15 -0800 (PST)
+From:   Pierre Gondois <pierre.gondois@arm.com>
+To:     linux-kernel@vger.kernel.org
+Cc:     Pierre Gondois <pierre.gondois@arm.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: fix USB MP QMP PHY nodes
-Message-ID: <20221107155145.tvxxi7oed7a6nms7@halaney-x13s>
-References: <20221107081705.18446-1-johan+linaro@kernel.org>
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Tsahee Zidenberg <tsahee@annapurnalabs.com>,
+        Antoine Tenart <atenart@kernel.org>,
+        Brijesh Singh <brijeshkumar.singh@amd.com>,
+        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+        Tom Lendacky <thomas.lendacky@amd.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Khuong Dinh <khuong@os.amperecomputing.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        William Zhang <william.zhang@broadcom.com>,
+        Anand Gore <anand.gore@broadcom.com>,
+        Kursad Oney <kursad.oney@broadcom.com>,
+        =?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Chester Lin <clin@suse.com>,
+        =?UTF-8?q?Andreas=20F=C3=A4rber?= <afaerber@suse.de>,
+        Matthias Brugger <mbrugger@suse.com>,
+        NXP S32 Linux Team <s32@nxp.com>,
+        Wei Xu <xuwei5@hisilicon.com>, Chanho Min <chanho.min@lge.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Lars Povlsen <lars.povlsen@microchip.com>,
+        Steen Hegelund <Steen.Hegelund@microchip.com>,
+        Daniel Machon <daniel.machon@microchip.com>,
+        UNGLinuxDriver@microchip.com, Avi Fishman <avifishman70@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Patrick Venture <venture@google.com>,
+        Nancy Yuen <yuenn@google.com>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Jisheng Zhang <jszhang@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Tero Kristo <kristo@kernel.org>,
+        Viorel Suman <viorel.suman@nxp.com>,
+        Abel Vesa <abelvesa@kernel.org>, Peng Fan <peng.fan@nxp.com>,
+        Shenwei Wang <shenwei.wang@nxp.com>,
+        Ming Qian <ming.qian@nxp.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Adam Ford <aford173@gmail.com>,
+        Tim Harvey <tharvey@gateworks.com>,
+        Richard Zhu <hongxing.zhu@nxp.com>, Li Jun <jun.li@nxp.com>,
+        Joakim Zhang <qiangqing.zhang@nxp.com>,
+        Markus Niebel <Markus.Niebel@ew.tq-group.com>,
+        Marco Felsch <m.felsch@pengutronix.de>,
+        Marek Vasut <marex@denx.de>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Alexander Stein <alexander.stein@ew.tq-group.com>,
+        Paul Elder <paul.elder@ideasonboard.com>,
+        Martin Kepplinger <martink@posteo.de>,
+        David Heidelberg <david@ixit.cz>,
+        Oliver Graute <oliver.graute@kococonnector.com>,
+        Liu Ying <victor.liu@nxp.com>, Shijie Qin <shijie.qin@nxp.com>,
+        Jacky Bai <ping.bai@nxp.com>,
+        Clark Wang <xiaoning.wang@nxp.com>,
+        Chris Packham <chris.packham@alliedtelesis.co.nz>,
+        Vadym Kochan <vadym.kochan@plvision.eu>,
+        Sameer Pujar <spujar@nvidia.com>,
+        Akhil R <akhilrajeev@nvidia.com>,
+        Prathamesh Shete <pshete@nvidia.com>,
+        Sumit Gupta <sumitg@nvidia.com>,
+        Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
+        Mikko Perttunen <mperttunen@nvidia.com>,
+        Vidya Sagar <vidyas@nvidia.com>,
+        Ashish Mhetre <amhetre@nvidia.com>,
+        Johan Jonker <jbx6244@gmail.com>,
+        Christopher Obbard <chris.obbard@collabora.com>,
+        Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+        Aswani Reddy <aswani.reddy@samsung.com>,
+        Shashank Prashar <s.prashar@samsung.com>,
+        Arjun K V <arjun.kv@samsung.com>, devicetree@vger.kernel.org,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org,
+        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-realtek-soc@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org
+Subject: [PATCH v2 00/23] Update cache properties for arm64 DTS
+Date:   Mon,  7 Nov 2022 16:56:53 +0100
+Message-Id: <20221107155825.1644604-1-pierre.gondois@arm.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221107081705.18446-1-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 07, 2022 at 09:17:05AM +0100, Johan Hovold wrote:
-> Update the USB MP QMP PHY nodes to match the new binding which
-> specifically includes the missing register regions (e.g. PCS_USB).
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+v2:
+- Update/Add patches for missed cache properties requiring to be
+  updated for the following platforns: bcm, amazon, arm, exynos,
+  freescale, marvell, mediatek, nvidia, socinext, tesla, ti.
+  Missed cache properties were detected using Rob Herring's branch:
+  https://github.com/robherring/dt-schema/tree/cache-rework
+- v1 of exynos, tesla were merged.
+- Updated wrong reference in commit message.
+- Added received Rb/Acked-by.
 
-Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+Align arm64 DTS to the DeviceTree specification v0.3 regarding
+cache properties. The patch-set mainly adds 'cache-level' or
+'cache' compatibility properties.
+For one qcom DTS, level 1 cache nodes are removed as they should
+be in the cpu nodes.
 
-Address region matches downstream, and with this change in place
-make CHECK_DTBS=y qcom/sa8295p-adp.dtb no longer complains about
-the node failing to follow the dt-bindings.
+On another node, it seems that the 'cache-unified' is under-used.
+cache-unified:
+  If present, specifies the cache has a unified or-
+  ganization. If not present, specifies that the
+  cache has a Harvard architecture with separate
+  caches for instructions and data.
+Only a few l2 cache nodes have this property, and in the absence
+of [|d|i]-cache-size properties (or other), the cache is assumed to be
+split.
 
-Thanks,
-Andrew
+The l2 cache of the Rockchip RK3308 platform is thus assumed to be
+split:
+l2: l2-cache {
+	compatible = "cache";
+	cache-level = <2>;
+};
+when the platform datasheet advertises a unified cache.
 
-> ---
-> 
-> The corresponding binding and driver fixes are now in linux-next so that
-> the devicetree can be updated. [1]
-> 
-> Note that there's yet no support for the multiport controller in
-> mainline.
-> 
-> Johan
-> 
-> [1] https://lore.kernel.org/lkml/20221028160435.26948-1-johan+linaro@kernel.org/
-> 
-> 
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 62 ++++++++++----------------
->  1 file changed, 24 insertions(+), 38 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index 1b309fa93484..506172206b8a 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -1090,70 +1090,56 @@ usb_2_hsphy3: phy@88ea000 {
->  			status = "disabled";
->  		};
->  
-> -		usb_2_qmpphy0: phy-wrapper@88ef000 {
-> +		usb_2_qmpphy0: phy@88ef000 {
->  			compatible = "qcom,sc8280xp-qmp-usb3-uni-phy";
-> -			reg = <0 0x088ef000 0 0x1c8>;
-> -			#address-cells = <2>;
-> -			#size-cells = <2>;
-> -			ranges;
-> +			reg = <0 0x088ef000 0 0x2000>;
->  
->  			clocks = <&gcc GCC_USB3_MP_PHY_AUX_CLK>,
->  				 <&rpmhcc RPMH_CXO_CLK>,
->  				 <&gcc GCC_USB3_MP0_CLKREF_CLK>,
-> -				 <&gcc GCC_USB3_MP_PHY_COM_AUX_CLK>;
-> -			clock-names = "aux", "ref_clk_src", "ref", "com_aux";
-> +				 <&gcc GCC_USB3_MP_PHY_COM_AUX_CLK>,
-> +				 <&gcc GCC_USB3_MP_PHY_PIPE_0_CLK>;
-> +			clock-names = "aux", "ref_clk_src", "ref", "com_aux",
-> +				      "pipe";
->  
->  			resets = <&gcc GCC_USB3_UNIPHY_MP0_BCR>,
->  				 <&gcc GCC_USB3UNIPHY_PHY_MP0_BCR>;
-> -			reset-names = "phy", "common";
-> +			reset-names = "phy", "phy_phy";
->  
->  			power-domains = <&gcc USB30_MP_GDSC>;
->  
-> -			status = "disabled";
-> +			#clock-cells = <0>;
-> +			clock-output-names = "usb2_phy0_pipe_clk";
->  
-> -			usb_2_ssphy0: phy@88efe00 {
-> -				reg = <0 0x088efe00 0 0x160>,
-> -				      <0 0x088f0000 0 0x1ec>,
-> -				      <0 0x088ef200 0 0x1f0>;
-> -				#phy-cells = <0>;
-> -				#clock-cells = <0>;
-> -				clocks = <&gcc GCC_USB3_MP_PHY_PIPE_0_CLK>;
-> -				clock-names = "pipe0";
-> -				clock-output-names = "usb2_phy0_pipe_clk";
-> -			};
-> +			#phy-cells = <0>;
-> +
-> +			status = "disabled";
->  		};
->  
-> -		usb_2_qmpphy1: phy-wrapper@88f1000 {
-> +		usb_2_qmpphy1: phy@88f1000 {
->  			compatible = "qcom,sc8280xp-qmp-usb3-uni-phy";
-> -			reg = <0 0x088f1000 0 0x1c8>;
-> -			#address-cells = <2>;
-> -			#size-cells = <2>;
-> -			ranges;
-> +			reg = <0 0x088f1000 0 0x2000>;
->  
->  			clocks = <&gcc GCC_USB3_MP_PHY_AUX_CLK>,
->  				 <&rpmhcc RPMH_CXO_CLK>,
->  				 <&gcc GCC_USB3_MP1_CLKREF_CLK>,
-> -				 <&gcc GCC_USB3_MP_PHY_COM_AUX_CLK>;
-> -			clock-names = "aux", "ref_clk_src", "ref", "com_aux";
-> +				 <&gcc GCC_USB3_MP_PHY_COM_AUX_CLK>,
-> +				 <&gcc GCC_USB3_MP_PHY_PIPE_1_CLK>;
-> +			clock-names = "aux", "ref_clk_src", "ref", "com_aux",
-> +				      "pipe";
->  
->  			resets = <&gcc GCC_USB3_UNIPHY_MP1_BCR>,
->  				 <&gcc GCC_USB3UNIPHY_PHY_MP1_BCR>;
-> -			reset-names = "phy", "common";
-> +			reset-names = "phy", "phy_phy";
->  
->  			power-domains = <&gcc USB30_MP_GDSC>;
->  
-> -			status = "disabled";
-> +			#clock-cells = <0>;
-> +			clock-output-names = "usb2_phy1_pipe_clk";
->  
-> -			usb_2_ssphy1: phy@88f1e00 {
-> -				reg = <0 0x088f1e00 0 0x160>,
-> -				      <0 0x088f2000 0 0x1ec>,
-> -				      <0 0x088f1200 0 0x1f0>;
-> -				#phy-cells = <0>;
-> -				#clock-cells = <0>;
-> -				clocks = <&gcc GCC_USB3_MP_PHY_PIPE_1_CLK>;
-> -				clock-names = "pipe0";
-> -				clock-output-names = "usb2_phy1_pipe_clk";
-> -			};
-> +			#phy-cells = <0>;
-> +
-> +			status = "disabled";
->  		};
->  
->  		remoteproc_adsp: remoteproc@3000000 {
-> -- 
-> 2.37.4
-> 
+No modification/check was made to correct that due to the lack of
+cache information for most platforms.
+
+Pierre Gondois (23):
+  arm64: dts: Update cache properties for amazon
+  arm64: dts: Update cache properties for amd
+  arm64: dts: Update cache properties for amlogic
+  arm64: dts: Update cache properties for apm
+  arm64: dts: Update cache properties for arm
+  arm64: dts: Update cache properties for broadcom
+  arm64: dts: Update cache properties for exynos
+  arm64: dts: Update cache properties for freescale
+  arm64: dts: Update cache properties for hisilicon
+  arm64: dts: Update cache properties for lg
+  arm64: dts: Update cache properties for marvell
+  arm64: dts: Update cache properties for mediatek
+  arm64: dts: Update cache properties for microchip
+  arm64: dts: Update cache properties for nuvoton
+  arm64: dts: Update cache properties for nvidia
+  arm64: dts: Update cache properties for qcom
+  arm64: dts: Update cache properties for realtek
+  arm64: dts: Update cache properties for renesas
+  arm64: dts: Update cache properties for rockchip
+  arm64: dts: Update cache properties for socionext
+  arm64: dts: Update cache properties for synaptics
+  arm64: dts: Update cache properties for tesla
+  arm64: dts: Update cache properties for ti
+
+ arch/arm/boot/dts/bcm2711.dtsi                |  1 +
+ arch/arm/boot/dts/bcm2837.dtsi                |  1 +
+ arch/arm64/boot/dts/amazon/alpine-v3.dtsi     |  4 ++
+ arch/arm64/boot/dts/amd/amd-seattle-cpus.dtsi |  9 +++
+ arch/arm64/boot/dts/amlogic/meson-a1.dtsi     |  1 +
+ arch/arm64/boot/dts/amlogic/meson-axg.dtsi    |  1 +
+ arch/arm64/boot/dts/amlogic/meson-g12a.dtsi   |  1 +
+ arch/arm64/boot/dts/amlogic/meson-g12b.dtsi   |  1 +
+ arch/arm64/boot/dts/amlogic/meson-gx.dtsi     |  1 +
+ arch/arm64/boot/dts/amlogic/meson-sm1.dtsi    |  1 +
+ arch/arm64/boot/dts/apm/apm-shadowcat.dtsi    |  4 ++
+ arch/arm64/boot/dts/apm/apm-storm.dtsi        |  4 ++
+ arch/arm64/boot/dts/arm/corstone1000.dtsi     |  1 +
+ arch/arm64/boot/dts/arm/foundation-v8.dtsi    |  1 +
+ arch/arm64/boot/dts/arm/juno-r1.dts           |  2 +
+ arch/arm64/boot/dts/arm/juno-r2.dts           |  2 +
+ arch/arm64/boot/dts/arm/juno.dts              |  2 +
+ arch/arm64/boot/dts/arm/rtsm_ve-aemv8a.dts    |  1 +
+ .../boot/dts/arm/vexpress-v2f-1xv7-ca53x2.dts |  1 +
+ .../boot/dts/broadcom/bcmbca/bcm4908.dtsi     |  1 +
+ .../boot/dts/broadcom/bcmbca/bcm4912.dtsi     |  1 +
+ .../boot/dts/broadcom/bcmbca/bcm63146.dtsi    |  1 +
+ .../boot/dts/broadcom/bcmbca/bcm63158.dtsi    |  1 +
+ .../boot/dts/broadcom/bcmbca/bcm6813.dtsi     |  1 +
+ .../boot/dts/broadcom/bcmbca/bcm6856.dtsi     |  1 +
+ .../boot/dts/broadcom/bcmbca/bcm6858.dtsi     |  1 +
+ .../boot/dts/broadcom/northstar2/ns2.dtsi     |  1 +
+ .../boot/dts/broadcom/stingray/stingray.dtsi  |  4 ++
+ arch/arm64/boot/dts/exynos/exynos5433.dtsi    |  4 ++
+ arch/arm64/boot/dts/exynos/exynos7.dtsi       |  2 +
+ .../arm64/boot/dts/freescale/fsl-ls1028a.dtsi |  1 +
+ .../arm64/boot/dts/freescale/fsl-ls1043a.dtsi |  1 +
+ .../arm64/boot/dts/freescale/fsl-ls1046a.dtsi |  1 +
+ .../arm64/boot/dts/freescale/fsl-ls2080a.dtsi |  4 ++
+ .../arm64/boot/dts/freescale/fsl-ls2088a.dtsi |  4 ++
+ .../arm64/boot/dts/freescale/fsl-lx2160a.dtsi |  8 +++
+ arch/arm64/boot/dts/freescale/imx8dxl.dtsi    |  1 +
+ arch/arm64/boot/dts/freescale/imx8mm.dtsi     |  1 +
+ arch/arm64/boot/dts/freescale/imx8mn.dtsi     |  1 +
+ arch/arm64/boot/dts/freescale/imx8mp.dtsi     |  1 +
+ arch/arm64/boot/dts/freescale/imx8mq.dtsi     |  1 +
+ arch/arm64/boot/dts/freescale/imx8qm.dtsi     |  2 +
+ arch/arm64/boot/dts/freescale/imx8qxp.dtsi    |  1 +
+ arch/arm64/boot/dts/freescale/imx8ulp.dtsi    |  1 +
+ arch/arm64/boot/dts/freescale/s32g2.dtsi      |  2 +
+ arch/arm64/boot/dts/freescale/s32v234.dtsi    |  2 +
+ arch/arm64/boot/dts/hisilicon/hi3660.dtsi     |  2 +
+ arch/arm64/boot/dts/hisilicon/hi6220.dtsi     |  2 +
+ arch/arm64/boot/dts/hisilicon/hip05.dtsi      |  4 ++
+ arch/arm64/boot/dts/hisilicon/hip06.dtsi      |  4 ++
+ arch/arm64/boot/dts/hisilicon/hip07.dtsi      | 16 ++++++
+ arch/arm64/boot/dts/lg/lg1312.dtsi            |  1 +
+ arch/arm64/boot/dts/lg/lg1313.dtsi            |  1 +
+ arch/arm64/boot/dts/marvell/ac5-98dx25xx.dtsi |  1 +
+ .../boot/dts/marvell/armada-ap806-dual.dtsi   |  2 +
+ .../boot/dts/marvell/armada-ap806-quad.dtsi   |  4 ++
+ .../boot/dts/marvell/armada-ap807-quad.dtsi   |  4 ++
+ arch/arm64/boot/dts/mediatek/mt8186.dtsi      |  3 +
+ arch/arm64/boot/dts/mediatek/mt8192.dtsi      |  3 +
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi      |  3 +
+ arch/arm64/boot/dts/microchip/sparx5.dtsi     |  1 +
+ .../boot/dts/nuvoton/nuvoton-npcm845.dtsi     |  1 +
+ arch/arm64/boot/dts/nvidia/tegra194.dtsi      | 15 +++++
+ arch/arm64/boot/dts/nvidia/tegra210.dtsi      |  1 +
+ arch/arm64/boot/dts/nvidia/tegra234.dtsi      | 33 +++++++++++
+ arch/arm64/boot/dts/qcom/msm8953.dtsi         | 56 -------------------
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |  9 +++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |  9 +++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  9 +++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  9 +++
+ arch/arm64/boot/dts/qcom/sm6125.dtsi          |  2 +
+ arch/arm64/boot/dts/qcom/sm6350.dtsi          |  9 +++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |  9 +++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  9 +++
+ arch/arm64/boot/dts/qcom/sm8350.dtsi          |  9 +++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |  9 +++
+ arch/arm64/boot/dts/realtek/rtd1293.dtsi      |  1 +
+ arch/arm64/boot/dts/realtek/rtd1295.dtsi      |  1 +
+ arch/arm64/boot/dts/realtek/rtd1296.dtsi      |  1 +
+ arch/arm64/boot/dts/realtek/rtd1395.dtsi      |  1 +
+ arch/arm64/boot/dts/realtek/rtd16xx.dtsi      |  2 +
+ arch/arm64/boot/dts/renesas/r9a07g043.dtsi    |  1 +
+ arch/arm64/boot/dts/renesas/r9a07g044.dtsi    |  1 +
+ arch/arm64/boot/dts/renesas/r9a07g054.dtsi    |  1 +
+ arch/arm64/boot/dts/rockchip/rk3308.dtsi      |  1 +
+ arch/arm64/boot/dts/rockchip/rk3328.dtsi      |  1 +
+ .../boot/dts/socionext/uniphier-ld11.dtsi     |  1 +
+ .../boot/dts/socionext/uniphier-ld20.dtsi     |  2 +
+ .../boot/dts/socionext/uniphier-pxs3.dtsi     |  1 +
+ arch/arm64/boot/dts/synaptics/berlin4ct.dtsi  |  1 +
+ arch/arm64/boot/dts/tesla/fsd.dtsi            |  2 +
+ arch/arm64/boot/dts/ti/k3-am625.dtsi          |  1 +
+ arch/arm64/boot/dts/ti/k3-am62a7.dtsi         |  1 +
+ arch/arm64/boot/dts/ti/k3-am642.dtsi          |  1 +
+ arch/arm64/boot/dts/ti/k3-am654.dtsi          |  2 +
+ arch/arm64/boot/dts/ti/k3-j7200.dtsi          |  1 +
+ arch/arm64/boot/dts/ti/k3-j721e.dtsi          |  1 +
+ arch/arm64/boot/dts/ti/k3-j721s2.dtsi         |  1 +
+ 98 files changed, 299 insertions(+), 56 deletions(-)
+
+-- 
+2.25.1
 
