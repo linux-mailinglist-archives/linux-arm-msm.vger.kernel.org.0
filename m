@@ -2,76 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 40FC661F705
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 16:02:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CDE6661F70C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 16:03:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232524AbiKGPCw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 10:02:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44810 "EHLO
+        id S232719AbiKGPC5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 10:02:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232708AbiKGPBo (ORCPT
+        with ESMTP id S232685AbiKGPCb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 10:01:44 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FADF1F601;
-        Mon,  7 Nov 2022 07:00:16 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A7DZEF0019451;
-        Mon, 7 Nov 2022 15:00:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=SaOkCxj53AKWkom4tmtWwm8oa4P8xO0egGlUV/WvPqs=;
- b=FQ8Jo4NgbJs7gdF1fV256+FPUHXxF11wznWWC2+G42hrrPRbQU7h38h92Y6yMbYK8Vy8
- Zx/qo1zGNVT9KAxBc5oBnw1pxIsN0EjDaX8LWa/NxFdXwvLI93NP41NfQi6ydhS8cyCl
- sI4n6h3ped7uwczSs86913bFDz9u+greESLSvdLfnHtnxbt3QnGPHzqWmGsmJ5q5zhfS
- D4u9EqDTcEOb4DtND4l/KbZRPhz34TWos+5rEJBi8A11XRrr+6/+Y0nvc3ytN5UObllN
- HIQcLs6mD0EYI4x4SkzwLl43xLJs29p60ueVoMy3rNzS5CQ96fD9IBi0XM0YkN4a9FkQ hg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kpp9ghm9a-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 07 Nov 2022 15:00:04 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A7F03Gh013364
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 7 Nov 2022 15:00:03 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 7 Nov 2022
- 07:00:03 -0800
-Message-ID: <25b67462-d6a6-c564-6830-694b726bd1d9@quicinc.com>
-Date:   Mon, 7 Nov 2022 08:00:02 -0700
+        Mon, 7 Nov 2022 10:02:31 -0500
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0126F39
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 07:02:29 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id k19so16699961lji.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 07:02:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fODzgR6f5QIFQoQpSBqUjOLDxlY3mnOv7TGRHuzFTmQ=;
+        b=Sa3GlGhKz9uFh2xqVF8cJoU3Rjyu+lW99l4UTK5vaJQyJGY6nBEgvS0sw04i2CTloO
+         bsEm3VpZONpb7/0esp7CVMuVMI0WhPcfnK4wfKSJBdQZWTliIllDagRJbTVMLjWVfMB/
+         y7nOTLmb+q8rBgXSIyLUO8Dy8CFYQ9ra93pHcCjU3iJFxmCcidG9C7lwTRq5WNBrT5zy
+         2BI50NMYSP2Jlv+QCsIIVgCnREo91KPRqexIfjimqLibHRiZ8yv3+lw6O6DeppQkqrzx
+         j5Jcqd+rbgT+8Izh6bAq+KIbx/7p7XBzgWKhQy8DCK64B7Hr5oesOQiXBYHUndvSskGE
+         fBcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fODzgR6f5QIFQoQpSBqUjOLDxlY3mnOv7TGRHuzFTmQ=;
+        b=NjDAm/ibmeQ2M4yaGCzTvLrA9k8+nN57Grc0bGVzTDVd6MXDQ3QU0TQkZ747KnnFPO
+         OjEO6y+M+lyzpI6KlpLNBMFCppKXjWoaMVOKoMsuGrdckWx5T3ReuGPvctXOabLI3H1k
+         L4DpyxShQ3WxJ/jz8JmHJ/lQ4Nuru7dU7LIQBwL+vGOGAQaim4Ag2bpHzVwre2dZBOAq
+         oAJCRFdHkxYvlPDJR8tA0KBrokY3ZIssjubJddZMAHfULmNrNGDoB0XKRpFxHSiMZOpP
+         0frN0aWfOpjikQrrZIlcei1sRw+nzsJjJ9yPc9LYX4MRtTTkJmtHaPwuabBRy4bdAfkC
+         0wZg==
+X-Gm-Message-State: ACrzQf3FEyf8yGdlbPkHTI3OdgD2EJWU1eWIlwYQnr0Nq3mHXGKPFfUc
+        26XXs4dkyXvF3nU0U4ZTYyMl7A==
+X-Google-Smtp-Source: AMsMyM6B0W0l3KqZ9xRH+gtlHucDMeOI7PEKTYEscM5ZWSFSyC5tIOLxpnuRvNgZsHoxQ2HzMi+yNQ==
+X-Received: by 2002:a2e:bc11:0:b0:277:6018:6f07 with SMTP id b17-20020a2ebc11000000b0027760186f07mr12809516ljf.16.1667833347512;
+        Mon, 07 Nov 2022 07:02:27 -0800 (PST)
+Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
+        by smtp.gmail.com with ESMTPSA id x23-20020ac24897000000b0048aee825e2esm1272499lfc.282.2022.11.07.07.02.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Nov 2022 07:02:26 -0800 (PST)
+Message-ID: <88c55827-067c-e6b1-a841-be70c05b7fc4@linaro.org>
+Date:   Mon, 7 Nov 2022 16:02:24 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH] bus: mhi: host: Disable preemption while processing data
- events
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v4 1/3] arm64: dts: qcom: Update soundwire slave node
+ names
 Content-Language: en-US
-To:     Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>,
-        <loic.poulain@linaro.org>
-CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <mrana@quicinc.com>
-References: <1667462111-55496-1-git-send-email-quic_qianyu@quicinc.com>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <1667462111-55496-1-git-send-email-quic_qianyu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        vkoul@kernel.org, agross@kernel.org, andersson@kernel.org,
+        robh+dt@kernel.org, broonie@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_rohkumar@quicinc.com, srinivas.kandagatla@linaro.org,
+        dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
+        alsa-devel@alsa-project.org, quic_rjendra@quicinc.com,
+        konrad.dybcio@somainline.org, mka@chromium.org
+Cc:     Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+References: <1667830844-31566-1-git-send-email-quic_srivasam@quicinc.com>
+ <1667830844-31566-2-git-send-email-quic_srivasam@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1667830844-31566-2-git-send-email-quic_srivasam@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dfUMr8jOCjAcGgQ3IL24sqvacQD4RGoZ
-X-Proofpoint-GUID: dfUMr8jOCjAcGgQ3IL24sqvacQD4RGoZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-07_08,2022-11-07_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 impostorscore=0
- phishscore=0 bulkscore=0 malwarescore=0 spamscore=0 mlxlogscore=929
- mlxscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211070120
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -81,12 +83,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/3/2022 1:55 AM, Qiang Yu wrote:
-> If data processing of an event is scheduled out because core
-> is busy handling multiple irqs, this can starves the processing
-> of MHI M0 state change event on another core. Fix this issue by
-> disabling irq on the core processing data events.
+On 07/11/2022 15:20, Srinivasa Rao Mandadapu wrote:
+> Update soundwire slave nodes of WSA speaker to match with
+> dt-bindings pattern properties regular expression.
+> 
+> This modifiction is required to avoid dtbs-check errors
+> occurred with qcom,soundwire.yaml.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+> Signed-off-by: Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts             | 4 ++--
+>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts           | 4 ++--
+>  arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 4 ++--
+>  arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts     | 4 ++--
+>  arch/arm64/boot/dts/qcom/sm8250-mtp.dts              | 4 ++--
+>  5 files changed, 10 insertions(+), 10 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> index 2c08500..983e8a9 100644
+> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> @@ -1007,7 +1007,7 @@
+>  };
+>  
+>  &swr0 {
+> -	left_spkr: wsa8810-left {
+> +	left_spkr: wsa8810@0,3 {
 
-Can you elaborate on the scenario more?
+While changing it, make the node names generic, so:
 
-If a device hasn't entered M0, then what event could be processed?
+speaker@0,3
+
+https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+
+>  		compatible = "sdw10217211000";
+>  		reg = <0 3>;
+>  		powerdown-gpios = <&tlmm 130 GPIO_ACTIVE_HIGH>;
+> @@ -1016,7 +1016,7 @@
+>  		#sound-dai-cells = <0>;
+>  	};
+>  
+> -	right_spkr: wsa8810-right {
+> +	right_spkr: wsa8810@0,4 {
+
+speaker@0,4
+
+and so on...
+
+Best regards,
+Krzysztof
+
