@@ -2,209 +2,324 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F55A61FDB6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 19:40:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4A3161FE11
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Nov 2022 19:59:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232414AbiKGSkC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 13:40:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50906 "EHLO
+        id S232217AbiKGS7j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 13:59:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231693AbiKGSju (ORCPT
+        with ESMTP id S231754AbiKGS7h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 13:39:50 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 62E3E1ADA4;
-        Mon,  7 Nov 2022 10:39:02 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 32AD71FB;
-        Mon,  7 Nov 2022 10:39:08 -0800 (PST)
-Received: from [10.57.67.115] (unknown [10.57.67.115])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8BC543F534;
-        Mon,  7 Nov 2022 10:38:59 -0800 (PST)
-Message-ID: <69a3cd4b-c4b0-b998-b4c1-70a928690972@arm.com>
-Date:   Mon, 7 Nov 2022 18:38:57 +0000
+        Mon, 7 Nov 2022 13:59:37 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4E7B1D33A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 10:59:35 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id k19so17757892lji.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 10:59:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mzBdSHu6u/NiAzmAan71AbHEXCztDx1eWL0MFLAjVBw=;
+        b=eXWffAkvcIDnpIT9k3tN/pH23NmpS9g1ezQUyC4o6pP3m9rAiOWXxdMoQN3mrCwSzh
+         mxEcG8m5Sl8UHiMsm05BINaRZfGAnr5l9fJ+21eVmQ6uT0a6e1Pn1iTIwNyFqk0heP9y
+         YihmAswiiTjDleWGouA4s4PkEFWrhDaY1yq57UoOTVvB4nTtRDq0ZiKP1N+mwKaD1Vz/
+         RD6j3ffiy1bs7aFywSYySzNcknoDU0s/XKhDKPGC0Glr6Y7iRFVMiQcPIQ3748X2QS8/
+         ZiRwEwuGQfy66+1Xqu0vE39GeabAlcxGaHkFrjFPNAKOk5jAukmJ+N2lkH40uowMiu16
+         p5EQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mzBdSHu6u/NiAzmAan71AbHEXCztDx1eWL0MFLAjVBw=;
+        b=hgFQfdfvq2rPm3M2/+jQLRpQLhBeTahJWcnwfNGfPzlrQUZ4fnqw3MVkCQ+clLxXd8
+         cFrehaxQbnpQUg3QbIuSz91RtkNWh3GCbfK7XlmznttjFYg6a7PvalFLbDQ4iAXvcWav
+         fqPuDYuuvlgvJYegYi1S5YvGLCf1JZAjcciPkIHGIJcxPIVwXGgS4S2u/mVOeZqoDv03
+         D0bXnqEJK61dApVvx5OQvkoAC/2ChU8+4Gb1cyDYQCKqCiOWlF28jEw4BWr4Uy24cnbj
+         gG3bBUve2RZFE7lOcsVotY3urHoXRYBpFBO3abI/2sMKHxgxSPWj82b0txSMNlRd9BL9
+         VAdg==
+X-Gm-Message-State: ACrzQf3X0X0+g+gpK4nHDIZCDZycFfx/+nccL3p8lffAr/XLasC5OfY3
+        lQOH6GMMdLygN9qDF8sZ8Cq8nE2iaMMqog==
+X-Google-Smtp-Source: AMsMyM5hqxGfwz8P6yjzN7RdozQ/Ufrx1pPbdjNFT9maL8BpEkZziOYwFfCO3upfHVZBBSMO4WgpOQ==
+X-Received: by 2002:a2e:6e03:0:b0:277:d99:9971 with SMTP id j3-20020a2e6e03000000b002770d999971mr18911047ljc.34.1667847574140;
+        Mon, 07 Nov 2022 10:59:34 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
+        by smtp.gmail.com with ESMTPSA id y5-20020a05651c106500b002770a9ed61bsm1327875ljm.66.2022.11.07.10.59.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Nov 2022 10:59:33 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] dt-bindings: pinctrl: qcom,msm8660: convert to dtschema
+Date:   Mon,  7 Nov 2022 19:59:30 +0100
+Message-Id: <20221107185931.22075-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH v14 0/9] Coresight: Add support for TPDM and TPDA
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>
-Cc:     Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20221102091915.15281-1-quic_jinlmao@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20221102091915.15281-1-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/11/2022 09:19, Mao Jinlong wrote:
-> This series adds support for the trace performance monitoring and
-> diagnostics hardware (TPDM and TPDA). It is composed of two major
-> elements.
-> a) Changes for original coresight framework to support for TPDM and TPDA.
-> b) Add driver code for TPDM and TPDA.
-> 
-> Introduction of changes for original coresight framework
-> Support TPDM as new coresight source.
-> Since only STM and ETM are supported as coresight source originally.
-> TPDM is a newly added coresight source. We need to change
-> the original way of saving coresight path to support more types source
-> for coresight driver.
-> The following patch is to add support more coresight sources.
->      coresight: core: Use IDR for non-cpu bound sources' paths.
-> 
----8>---
+Convert Qualcomm MSM8660 pin controller bindings to DT schema.  Keep the
+parsing of pin configuration subnodes consistent with other Qualcomm
+schemas (children named with '-state' suffix, their children with
+'-pins').
 
-> Introduction of TPDM and TPDA
-> TPDM - The trace performance monitoring and diagnostics monitor or TPDM in
-> short serves as data collection component for various dataset types
-> specified in the QPMDA(Qualcomm performance monitoring and diagnostics
-> architecture) spec. The primary use case of the TPDM is to collect data
-> from different data sources and send it to a TPDA for packetization,
-> timestamping and funneling.
->       Coresight: Add coresight TPDM source driver
->       dt-bindings: arm: Adds CoreSight TPDM hardware definitions
->       coresight-tpdm: Add DSB dataset support
->       coresight-tpdm: Add integration test support
->       docs: sysfs: coresight: Add sysfs ABI documentation for TPDM
-> 
-> TPDA - The trace performance monitoring and diagnostics aggregator or
-> TPDA in short serves as an arbitration and packetization engine for the
-> performance monitoring and diagnostics network as specified in the QPMDA
-> (Qualcomm performance monitoring and diagnostics architecture)
-> specification. The primary use case of the TPDA is to provide
-> packetization, funneling and timestamping of Monitor data as specified
-> in the QPMDA specification.
-> The following patch is to add driver for TPDA.
->       Coresight: Add TPDA link driver
->       dt-bindings: arm: Adds CoreSight TPDA hardware definitions
-> 
-> The last patch of this series is a device tree modification, which add
-> the TPDM and TPDA configuration to device tree for validating.
->      ARM: dts: msm: Add coresight components for SM8250
->      ARM: dts: msm: Add tpdm mm/prng for sm8250
-> 
-> Once this series patches are applied properly, the tpdm and tpda nodes
-> should be observed at the coresight path /sys/bus/coresight/devices
-> e.g.
-> /sys/bus/coresight/devices # ls -l | grep tpd
-> tpda0 -> ../../../devices/platform/soc@0/6004000.tpda/tpda0
-> tpdm0 -> ../../../devices/platform/soc@0/6c08000.mm.tpdm/tpdm0
-> 
-> We can use the commands are similar to the below to validate TPDMs.
-> Enable coresight sink first.
-> 
-> echo 1 > /sys/bus/coresight/devices/tmc_etf0/enable_sink
-> echo 1 > /sys/bus/coresight/devices/tpdm0/enable_source
-> echo 1 > /sys/bus/coresight/devices/tpdm0/integration_test
-> echo 2 > /sys/bus/coresight/devices/tpdm0/integration_test
-> The test data will be collected in the coresight sink which is enabled.
-> If rwp register of the sink is keeping updating when do
-> integration_test (by cat tmc_etf0/mgmt/rwp), it means there is data
-> generated from TPDM to sink.
-> 
-> There must be a tpda between tpdm and the sink. When there are some
-> other trace event hw components in the same HW block with tpdm, tpdm
-> and these hw components will connect to the coresight funnel. When
-> there is only tpdm trace hw in the HW block, tpdm will connect to
-> tpda directly.
->    
->      +---------------+                +-------------+
->      |  tpdm@6c08000 |                |tpdm@684C000 |
->      +-------|-------+                +------|------+
->              |                               |
->      +-------|-------+                       |
->      | funnel@6c0b000|                       |
->      +-------|-------+                       |
->              |                               |
->      +-------|-------+                       |
->      |funnel@6c2d000 |                       |
->      +-------|-------+                       |
->              |                               |
->              |    +---------------+          |
->              +----- tpda@6004000  -----------+
->                   +-------|-------+
->                           |
->                   +-------|-------+
->                   |funnel@6005000 |
->                   +---------------+
-> 
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../bindings/pinctrl/qcom,msm8660-pinctrl.txt |  96 --------------
+ .../pinctrl/qcom,msm8660-pinctrl.yaml         | 125 ++++++++++++++++++
+ 2 files changed, 125 insertions(+), 96 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8660-pinctrl.txt
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8660-pinctrl.yaml
 
---8<--
-
-Please could you add the above to a Documentation file (Of course
-skip the description of patches).
-
-
-> This patch series depends on patch series:
-> "[v5,00/14] coresight: Add new API to allocate trace source ID values"
-> https://patchwork.kernel.org/project/linux-arm-kernel/cover/20221101163103.17921-1-mike.leach@linaro.org/
-
-So, is there a strict binding between a TPDM and a TPDA ?
-i.e., Multiple TPDMs could never end up reaching the sam
-TPDA ? I see that the TPDMs could be connected to funnels
-and thus other TPDMs could be connected to the same funnels
-and thus reach the same TPDA.
-
-Also, the trace-id is bound to TPDA and not TPDM. So, if
-we have multiple TPDMs, trace decoding is going to be
-impossible.
-
-Thanks
-Suzuki
-
-> 
-> Mao Jinlong (9):
->    coresight: core: Use IDR for non-cpu bound sources' paths.
->    Coresight: Add coresight TPDM source driver
->    dt-bindings: arm: Adds CoreSight TPDM hardware
->    coresight-tpdm: Add DSB dataset support
->    coresight-tpdm: Add integration test support
->    Coresight: Add TPDA link driver
->    dt-bindings: arm: Adds CoreSight TPDA hardware definitions
->    arm64: dts: qcom: sm8250: Add coresight components
->    arm64: dts: qcom: sm8250: Add tpdm mm/prng
-> 
->   .../testing/sysfs-bus-coresight-devices-tpdm  |  13 +
->   .../bindings/arm/qcom,coresight-tpda.yaml     | 111 +++
->   .../bindings/arm/qcom,coresight-tpdm.yaml     |  93 +++
->   MAINTAINERS                                   |   1 +
->   arch/arm64/boot/dts/qcom/sm8250.dtsi          | 671 ++++++++++++++++++
->   drivers/hwtracing/coresight/Kconfig           |  23 +
->   drivers/hwtracing/coresight/Makefile          |   2 +
->   drivers/hwtracing/coresight/coresight-core.c  |  42 +-
->   drivers/hwtracing/coresight/coresight-tpda.c  | 208 ++++++
->   drivers/hwtracing/coresight/coresight-tpda.h  |  35 +
->   drivers/hwtracing/coresight/coresight-tpdm.c  | 259 +++++++
->   drivers/hwtracing/coresight/coresight-tpdm.h  |  62 ++
->   include/linux/coresight.h                     |   1 +
->   13 files changed, 1509 insertions(+), 12 deletions(-)
->   create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->   create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
->   create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
->   create mode 100644 drivers/hwtracing/coresight/coresight-tpda.c
->   create mode 100644 drivers/hwtracing/coresight/coresight-tpda.h
->   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.c
->   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.h
-> 
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8660-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,msm8660-pinctrl.txt
+deleted file mode 100644
+index f095209848c8..000000000000
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,msm8660-pinctrl.txt
++++ /dev/null
+@@ -1,96 +0,0 @@
+-Qualcomm MSM8660 TLMM block
+-
+-Required properties:
+-- compatible: "qcom,msm8660-pinctrl"
+-- reg: Should be the base address and length of the TLMM block.
+-- interrupts: Should be the parent IRQ of the TLMM block.
+-- interrupt-controller: Marks the device node as an interrupt controller.
+-- #interrupt-cells: Should be two.
+-- gpio-controller: Marks the device node as a GPIO controller.
+-- #gpio-cells : Should be two.
+-                The first cell is the gpio pin number and the
+-                second cell is used for optional parameters.
+-- gpio-ranges: see ../gpio/gpio.txt
+-
+-Optional properties:
+-
+-- gpio-reserved-ranges: see ../gpio/gpio.txt
+-
+-Please refer to ../gpio/gpio.txt and ../interrupt-controller/interrupts.txt for
+-a general description of GPIO and interrupt bindings.
+-
+-Please refer to pinctrl-bindings.txt in this directory for details of the
+-common pinctrl bindings used by client devices, including the meaning of the
+-phrase "pin configuration node".
+-
+-Qualcomm's pin configuration nodes act as a container for an arbitrary number of
+-subnodes. Each of these subnodes represents some desired configuration for a
+-pin, a group, or a list of pins or groups. This configuration can include the
+-mux function to select on those pin(s)/group(s), and various pin configuration
+-parameters, such as pull-up, drive strength, etc.
+-
+-The name of each subnode is not important; all subnodes should be enumerated
+-and processed purely based on their content.
+-
+-Each subnode only affects those parameters that are explicitly listed. In
+-other words, a subnode that lists a mux function but no pin configuration
+-parameters implies no information about any pin configuration parameters.
+-Similarly, a pin subnode that describes a pullup parameter implies no
+-information about e.g. the mux function.
+-
+-
+-The following generic properties as defined in pinctrl-bindings.txt are valid
+-to specify in a pin configuration subnode:
+-
+- pins, function, bias-disable, bias-pull-down, bias-pull-up, drive-strength,
+- output-low, output-high.
+-
+-Non-empty subnodes must specify the 'pins' property.
+-
+-Valid values for pins are:
+-  gpio0-gpio172, sdc3_clk, sdc3_cmd, sdc3_data sdc4_clk, sdc4_cmd, sdc4_data
+-
+-Valid values for function are:
+-  gpio, cam_mclk, dsub, ext_gps, gp_clk_0a, gp_clk_0b, gp_clk_1a, gp_clk_1b,
+-  gp_clk_2a, gp_clk_2b, gp_mn, gsbi1, gsbi1_spi_cs1_n, gsbi1_spi_cs2a_n,
+-  gsbi1_spi_cs2b_n, gsbi1_spi_cs3_n, gsbi2, gsbi2_spi_cs1_n, gsbi2_spi_cs2_n,
+-  gsbi2_spi_cs3_n, gsbi3, gsbi3_spi_cs1_n, gsbi3_spi_cs2_n, gsbi3_spi_cs3_n,
+-  gsbi4, gsbi5, gsbi6, gsbi7, gsbi8, gsbi9, gsbi10, gsbi11, gsbi12, hdmi, i2s,
+-  lcdc, mdp_vsync, mi2s, pcm, ps_hold, sdc1, sdc2, sdc5, tsif1, tsif2, usb_fs1,
+-  usb_fs1_oe_n, usb_fs2, usb_fs2_oe_n, vfe, vsens_alarm, ebi2, ebi2cs
+-
+-Example:
+-
+-	msmgpio: pinctrl@800000 {
+-		compatible = "qcom,msm8660-pinctrl";
+-		reg = <0x800000 0x4000>;
+-
+-		gpio-controller;
+-		#gpio-cells = <2>;
+-		gpio-ranges = <&msmgpio 0 0 173>;
+-		interrupt-controller;
+-		#interrupt-cells = <2>;
+-		interrupts = <0 16 0x4>;
+-
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&gsbi12_uart>;
+-
+-		gsbi12_uart: gsbi12-uart {
+-			mux {
+-				pins = "gpio117", "gpio118";
+-				function = "gsbi12";
+-			};
+-
+-			tx {
+-				pins = "gpio118";
+-				drive-strength = <8>;
+-				bias-disable;
+-			};
+-
+-			rx {
+-				pins = "gpio117";
+-				drive-strength = <2>;
+-				bias-pull-up;
+-			};
+-		};
+-	};
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8660-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,msm8660-pinctrl.yaml
+new file mode 100644
+index 000000000000..ad0cad4694c0
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,msm8660-pinctrl.yaml
+@@ -0,0 +1,125 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pinctrl/qcom,msm8660-pinctrl.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm MSM8660 TLMM pin controller
++
++maintainers:
++  - Bjorn Andersson <andersson@kernel.org>
++  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
++
++description:
++  Top Level Mode Multiplexer pin controller in Qualcomm MSM8660 SoC.
++
++properties:
++  compatible:
++    const: qcom,msm8660-pinctrl
++
++  reg:
++    maxItems: 1
++
++  interrupts: true
++  interrupt-controller: true
++  "#interrupt-cells": true
++  gpio-controller: true
++  "#gpio-cells": true
++  gpio-ranges: true
++  wakeup-parent: true
++
++  gpio-reserved-ranges:
++    minItems: 1
++    maxItems: 86
++
++  gpio-line-names:
++    maxItems: 173
++
++patternProperties:
++  "-state$":
++    oneOf:
++      - $ref: "#/$defs/qcom-msm8660-tlmm-state"
++      - patternProperties:
++          "-pins$":
++            $ref: "#/$defs/qcom-msm8660-tlmm-state"
++        additionalProperties: false
++
++$defs:
++  qcom-msm8660-tlmm-state:
++    type: object
++    description:
++      Pinctrl node's client devices use subnodes for desired pin configuration.
++      Client device subnodes use below standard properties.
++    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
++
++    properties:
++      pins:
++        description:
++          List of gpio pins affected by the properties specified in this
++          subnode.
++        items:
++          oneOf:
++            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-6][0-9]|17[0-2])$"
++            - enum: [ sdc3_clk, sdc3_cmd, sdc3_data, sdc4_clk, sdc4_cmd, sdc4_data ]
++        minItems: 1
++        maxItems: 36
++
++      function:
++        description:
++          Specify the alternative function to be configured for the specified
++          pins.
++
++        enum: [ gpio, cam_mclk, dsub, ext_gps, gp_clk_0a, gp_clk_0b, gp_clk_1a,
++                gp_clk_1b, gp_clk_2a, gp_clk_2b, gp_mn, gsbi1, gsbi1_spi_cs1_n,
++                gsbi1_spi_cs2a_n, gsbi1_spi_cs2b_n, gsbi1_spi_cs3_n, gsbi2,
++                gsbi2_spi_cs1_n, gsbi2_spi_cs2_n, gsbi2_spi_cs3_n, gsbi3,
++                gsbi3_spi_cs1_n, gsbi3_spi_cs2_n, gsbi3_spi_cs3_n, gsbi4,
++                gsbi5, gsbi6, gsbi7, gsbi8, gsbi9, gsbi10, gsbi11, gsbi12,
++                hdmi, i2s, lcdc, mdp_vsync, mi2s, pcm, ps_hold, sdc1, sdc2,
++                sdc5, tsif1, tsif2, usb_fs1, usb_fs1_oe_n, usb_fs2,
++                usb_fs2_oe_n, vfe, vsens_alarm, ebi2, ebi2cs ]
++
++
++      bias-pull-down: true
++      bias-pull-up: true
++      bias-disable: true
++      drive-strength: true
++      input-enable: true
++      output-high: true
++      output-low: true
++
++    required:
++      - pins
++
++    additionalProperties: false
++
++allOf:
++  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
++
++required:
++  - compatible
++  - reg
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    tlmm: pinctrl@800000 {
++        compatible = "qcom,msm8660-pinctrl";
++        reg = <0x800000 0x4000>;
++
++        gpio-controller;
++        gpio-ranges = <&tlmm 0 0 173>;
++        #gpio-cells = <2>;
++        interrupts = <0 16 0x4>;
++        interrupt-controller;
++        #interrupt-cells = <2>;
++
++        gsbi3-i2c-state {
++            pins = "gpio43", "gpio44";
++            function = "gsbi3";
++            drive-strength = <8>;
++            bias-disable;
++        };
++    };
+-- 
+2.34.1
 
