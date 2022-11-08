@@ -2,69 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DA4162071F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 04:02:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BA6F62072F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 04:04:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233221AbiKHDCs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 22:02:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39792 "EHLO
+        id S233327AbiKHDEr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 22:04:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233128AbiKHDCs (ORCPT
+        with ESMTP id S233284AbiKHDEk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 22:02:48 -0500
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F21552F67E;
-        Mon,  7 Nov 2022 19:02:46 -0800 (PST)
-Received: by mail-qt1-x82d.google.com with SMTP id l2so8017978qtq.11;
-        Mon, 07 Nov 2022 19:02:46 -0800 (PST)
+        Mon, 7 Nov 2022 22:04:40 -0500
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71BAA30548;
+        Mon,  7 Nov 2022 19:04:25 -0800 (PST)
+Received: by mail-qt1-x834.google.com with SMTP id z6so8049889qtv.5;
+        Mon, 07 Nov 2022 19:04:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wTgvsmQCgbUJy/uyEBLIwEwJeivJlDp4X00FjEbm73U=;
-        b=KpGOTlZpFF56PAJz4Zyiyj1+AE/0+obLPnwKtXkayi9BgHyMd1LEnld1njeN3AVfgp
-         9UT1CWH3HOhFEJzbQVxOzORHS5x6yip2l+gMDq/lFqFvzbdTS152Ur80e0112btw6Bt1
-         XB1mDSrtSD2Gz1yQEEmuhqap1RdI8vGjsaVVoe0MRVarxfgS/cSUw6cb1rN4+YZL7tWr
-         aLK8X9eTQg/KDyhYNBD1uyNc74TH6V5SsdcM7Wfw6O2f6fp71is/cQY0P/fnaZGgDQzV
-         7Ov6CJDUXtgzHjoOPsEYHR5WQt6vgYzBRZk2+OYc6boRZB3obYz8k5TB6LAU1hh40RrY
-         6+LA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rkIMOBSS3ypVsdn15tuhOs5mmYH7IO0HzwnEY+I3eho=;
+        b=AfQKzSnjYn7tjFvQXb9Bizqt0k4Bua80a/j1tdphzrOQO9Vpa9IovM26k0335K9yHQ
+         CSg0Y70qlXHOzAtoHUnjlqqKZbN8mCEfex5Dx0h75GhxJ9dukp0aUU7a3u50md2bQQBh
+         yjfzRjBiCMmhLq0O9HXXYjIyBjh/4eljROwwP83oIs8EYRByNGtKMrSqBhdIk8bybGOq
+         D5LUP0VDyRnGTpBRWvdlBiS5cE+imcDYyeYKHwdcTjijCgvn1y6zTJG7/rZyKsrbaUbb
+         COlGo8fYlLh8FOVmNKXLwr2+3x4j+Kq7RG8YY/Ahd9jYxAloYKSDnnFKyjrt9JLPRgeq
+         wPxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wTgvsmQCgbUJy/uyEBLIwEwJeivJlDp4X00FjEbm73U=;
-        b=UWErregtJcdpoGd6kBPyXu5zE3xnAponH+0jlvd7pKFgqrnrr4UPCUWZaKOYSGp6n4
-         ZS3HK0UyT20O+qKcChcUcCQ2aGeBjg4FFITTKQ250mHjJVvStuIiJWuJ3hLejJQ870yp
-         n/QHMzA+Q9VEUqTPHvkW6Hcbs/87Ul0mq0QtqAduJlwGa84c45nzZGp8onwoUJDXvbbc
-         KCB5/eMhZg+vy8Pg/afexNC3McD4tGzJ3UwOqAgSg3ZDTO6tAirEWtFqy+fLiLQV01lI
-         R3z1bqe4dl4w/zZDrNmKRf+E16mtB2ZHdCYs65Z0wh9K8JFQYSEmiXRjxZPHyd3vzN0H
-         xxSQ==
-X-Gm-Message-State: ANoB5pm4WX41NGz+xnK/ZYAUkjZ4YWVA9hZxt9fLI31MSsza+mfMwZdj
-        gHnkZ5MpcZ5VuCRLsxEmtHc=
-X-Google-Smtp-Source: AA0mqf5kH5sVly/98XYjDeDQdqiaVJGNbUetyTPauSbsmbjnkjfzzoiUBE6uGJvjanAM9rKdnAswHg==
-X-Received: by 2002:ac8:5c07:0:b0:3a5:946e:8b7e with SMTP id i7-20020ac85c07000000b003a5946e8b7emr4462095qti.385.1667876566133;
-        Mon, 07 Nov 2022 19:02:46 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rkIMOBSS3ypVsdn15tuhOs5mmYH7IO0HzwnEY+I3eho=;
+        b=C77HYUA2y/X5MmDy2Hx61IkSJmVAuAJie98YvBjcV5N7CstG/1AD+6M4dAVK1dboUs
+         GsWbtpwEuFDwM2d8jJxwna2WM1GyTAgv/pmcjw5gzKfH3cE58urdMQ9ol48Z1XyQERhI
+         mJnKk7GqbT7RppFlD4D6DTGmyDRbsvxnmESLEDbQBIXyvfLmusZoVXWmPAMFrW6pucQn
+         uvn+cbBoLRBi/h5N7GidrCODasNCOVS7ASYFsT89M/TTJR0O+76yip9nnb7DUIK7iuPX
+         IU0ue8PXGVLIMpk3CNpwmhXD63pX+mKiVeLY4LMcAHacxWnx1JNu4WLL+RDKAZuYk2Os
+         nwow==
+X-Gm-Message-State: ACrzQf1uPwFZLJlJRGi1trORjKo3OSsYJ44fn+g2UWg45ezo0JQAqlv2
+        QtdEXXgcRT4p9lQQs+FWru4=
+X-Google-Smtp-Source: AMsMyM6PJRwhTna0XKwPWKldchpUG/4X98+LNNTGwZ5hXHWgtdW6Le4yC6D7uKrS2//Bmgc23CXqIg==
+X-Received: by 2002:a05:622a:4d44:b0:3a5:2c05:9e12 with SMTP id fe4-20020a05622a4d4400b003a52c059e12mr33661012qtb.481.1667876664576;
+        Mon, 07 Nov 2022 19:04:24 -0800 (PST)
 Received: from localhost ([2607:fea8:a2e2:2d00::61cc])
-        by smtp.gmail.com with ESMTPSA id ay14-20020a05620a178e00b006bb366779a4sm8347893qkb.6.2022.11.07.19.02.45
+        by smtp.gmail.com with ESMTPSA id fw9-20020a05622a4a8900b003a56d82fd8csm7248694qtb.91.2022.11.07.19.04.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 19:02:45 -0800 (PST)
-Date:   Mon, 7 Nov 2022 22:02:44 -0500
+        Mon, 07 Nov 2022 19:04:24 -0800 (PST)
 From:   Richard Acayan <mailingradian@gmail.com>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 0/1] iommu: SMMU for SDM670
-Message-ID: <Y2nG1ExgpYVm2sY+@mailingradian>
-References: <20221108025847.58352-1-mailingradian@gmail.com>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH v3 0/4] Initial SDM670 and Pixel 3a support
+Date:   Mon,  7 Nov 2022 22:04:07 -0500
+Message-Id: <20221108030411.59409-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221108025847.58352-1-mailingradian@gmail.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -75,35 +78,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 07, 2022 at 09:58:48PM -0500, Richard Acayan wrote:
-> Changes since v3:
->  - drop driver patch
+Changes since v2:
+ - remove intc address and size cells (4/4)
+ - move apps_rsc label property down (4/4)
+ - move properties in intc (4/4)
+ - remove leading zeroes in iommus (4/4)
+ - change 0x0 to 0 in regs except cpu (4/4)
+ - change 0 to 0x0 in memory regs (4/4)
+ - convert hex to decimal in rmi4 #cells properties (4/4)
 
-This is v4. I forgot to increment the version in the subject header. My
-apologies.
+Changes since v1:
+ - remove i2c interconnects (4/4)
+ - change regulator phandle names (4/4)
+ - change regulators node names (4/4)
+ - remove clock-output-names from xo-board (4/4)
+ - remove vdd-supply from touchscreen (4/4)
+ - move clocks to device dts (4/4)
+ - reorder pmic nodes, root nodes, and phandle references in dts (4/4)
+ - move status properties to bottom of nodes (4/4)
+ - accumulate commit message tags (1-3/4)
 
-> 
-> Changes since v2:
->  - rewrite driver patch (2/2)
->  - rebase on (1/2):
->    https://lore.kernel.org/linux-iommu/20221102184420.534094-1-dmitry.baryshkov@linaro.org/
->  - reset review process (1-2/2)
-> 
-> Changes since v1 (no emails related to this series since last week):
->  - accumulate tags (both were added because it seems like the discussion
->    ended in agreement to keep adding compatible strings to the driver)
-> 
-> This adds the compatible string for the Qualcomm Snapdragon 670's SMMU. The
-> SMMU is necessary for GENI I2C, included in initial bringup because it
-> doesn't need non-trivial patches except for patches conventionally added
-> before the initial device tree (global clock controller and pinctrl).
-> 
-> Richard Acayan (1):
->   dt-bindings: iommu: arm-smmu: add sdm670 compatible
-> 
->  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> -- 
-> 2.38.1
-> 
+Do not apply this series yet. It is only for review comments. It can be
+applied once the "qcom,sdm670-smmu-500" compatible string gets added (or
+now if you don't care about handling an unnecessary quirk).
+
+This adds the device trees and bindings to support the Qualcomm
+Snapdragon 670 and Google Pixel 3a. This patch series, specifically the
+last patch, depends on:
+
+[PATCH v4 0/3] SDM670 Global Clocks
+  https://lore.kernel.org/all/20220914013922.198778-1-mailingradian@gmail.com/T/
+[PATCH v2 0/2] RPMh Support for PM660 and PM660L
+  https://lore.kernel.org/all/20220920223331.150635-1-mailingradian@gmail.com/T/
+[PATCH v2 0/2] SDM670 RPMh Clocks
+  https://lore.kernel.org/all/20220920223734.151135-1-mailingradian@gmail.com/T/
+[PATCH v2 0/2] SDM670 USB 2.0 support
+  https://lore.kernel.org/all/20220922024656.178529-1-mailingradian@gmail.com/T/
+[PATCH 0/2] SDM670 SDHCI support
+  https://lore.kernel.org/all/20220923014322.33620-1-mailingradian@gmail.com/T/
+[PATCH v2 0/2] SDM670 Power Domains
+  https://lore.kernel.org/all/20221004221130.14076-1-mailingradian@gmail.com/T/
+[PATCH v10 0/3] SDM670 Pin Control Driver
+  https://lore.kernel.org/all/20221014001934.4995-1-mailingradian@gmail.com/T/
+[PATCH v6 0/4] SDM670 GPI DMA support
+  https://lore.kernel.org/all/20221018005740.23952-1-mailingradian@gmail.com/T/
+[RFC PATCH v2 0/11] iommu/arm-smmu-qcom: Rework Qualcomm SMMU bindings and implementation
+  https://lore.kernel.org/linux-arm-msm/20221102184420.534094-1-dmitry.baryshkov@linaro.org/T/
+[PATCH v4 0/1] iommu: SMMU for SDM670
+  https://lore.kernel.org/linux-arm-msm/20221108025847.58352-1-mailingradian@gmail.com/T/
+
+P.S.: Thank you to all the maintainers and reviewers who went through
+everything and made helpful comments!
+
+Richard Acayan (4):
+  dt-bindings: arm: cpus: add qcom kryo 360 compatible
+  dt-bindings: arm: qcom: add sdm670 and pixel 3a compatible
+  dt-bindings: firmware: scm: add sdm670 compatible
+  arm64: dts: qcom: add sdm670 and pixel 3a device trees
+
+ .../devicetree/bindings/arm/cpus.yaml         |    1 +
+ .../devicetree/bindings/arm/qcom.yaml         |    6 +
+ .../bindings/firmware/qcom,scm.yaml           |    1 +
+ arch/arm64/boot/dts/qcom/Makefile             |    1 +
+ .../boot/dts/qcom/sdm670-google-sargo.dts     |  533 ++++++++
+ arch/arm64/boot/dts/qcom/sdm670.dtsi          | 1160 +++++++++++++++++
+ 6 files changed, 1702 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm670.dtsi
+
+-- 
+2.38.1
+
