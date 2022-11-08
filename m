@@ -2,106 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37F82620EA3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 12:21:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3955A620FB5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 13:03:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233792AbiKHLV2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 06:21:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60686 "EHLO
+        id S234041AbiKHMDE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 07:03:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233821AbiKHLVW (ORCPT
+        with ESMTP id S233971AbiKHMDA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 06:21:22 -0500
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CA542CCA6
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 03:21:21 -0800 (PST)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-370547b8ca0so131016817b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 03:21:21 -0800 (PST)
+        Tue, 8 Nov 2022 07:03:00 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1A641EC68
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 04:02:59 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id t1so8663387wmi.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 04:02:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jD/YBCtOhOa1ipEyheDVa6geA3XolzkSqDbroMLmTEw=;
-        b=WGKRB/pLaIjpmGXOx2LuwSkikxvZJWCPzj3t5FrAdj35xH9byZDFkulm2wmKuPrHcW
-         BXlWOJ64Tk2V1TFItuyRjbEG64JpFDnOfR4G1ElhijqzCv+/iTDTwHlpfvMlxmbM4BMh
-         mdxB9KfnY1DCz1XbT06CMT/qkkgOuWuXPxw9oWOGZ8iw0/62EIvhKoa4IDxoVL9Db1jM
-         ahOgc2W+cmdzEXjJYKj8kAyHCGsyj4J8oqLzjWS2Txo69AztjfoBgv/fT6ncVpuswC5r
-         kjpUAvsSlgO08sSAjPDLsWyg4bdZkb88WQvlipWLscUclIAVTPIQ3ZzAs926L27Ix25J
-         A4aQ==
+        d=linaro.org; s=google;
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:from:to:cc:subject:date:message-id:reply-to;
+        bh=hIvdpOhjCyNiqJSBAwvQQBj8Uqill7WA0zit53y3ii8=;
+        b=KLTeW1vZJd8TnbnX06b9xU8JdQSiRABXLn7DRR6r2chkTI8Qspl6yxcGULvjrycbDj
+         KoMvgeXfTNdukowYA3AaEh9jW0oO6+6zJjlKlTngjvYFYv93shZ9F/iHLpSnHH7bSnPO
+         UCHAha/D2MeRWssidl0tuII2MaEdeXTAY7gdkV6/1ABZdhoKIDLRJQh/DLVCNAoponJP
+         VlWi/aWNX+/SG3ajPFiYzzgNGqG9owQBFRubPQ6bc7cemTRLLuKb7kAyVKgTs2xV84qR
+         2RYCUVZzSkpU/RppH6otY24vHPt3ioI9FeyCOFQ5taXOrPVzZvI+1SyLCvLdQJADO0gD
+         x2Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jD/YBCtOhOa1ipEyheDVa6geA3XolzkSqDbroMLmTEw=;
-        b=K3oPl+hUAbW6ciVg3maV3mer9Rw0mNOdqs9UikEAoujAoXUU+ewG9pJa10gLb9AC6T
-         UFjBOa3Slr55kJwOLr2LoXoh0waxwTg4NyW9RkANNajlre4zsq/ZOoQvfyoPjYdRzUkZ
-         9gBKPagLMRkbwqHgDQZsV1l4Y8d/K6wqPB0OT2G9ssqDgShqEkp+ENQ4HSe0sB4sXXWk
-         cl1rnX2h4BuvxZcjRrlOODmVKVNwzrl0u8sdGABTsFBBK/9k3NyL03QCj7b+1gBx0r88
-         xVzNo3o8Xz12drlZzEayHueMZsucbzp8rECZpMPLVj6DT6aRBUP+nWxiLvieviCLFyAo
-         Fg4g==
-X-Gm-Message-State: ACrzQf0rl0hA/3AjxNc9K2ItdM2+JBHhsK9tPR3GzLajfVyZAf9DcEtk
-        EEEBvYUrsMvfYYo+QbRTIgkyVdGu7Xxrd4C+9Rg=
-X-Google-Smtp-Source: AMsMyM4FUZeyScKefVyfEIrOJHG3QP81BEZo0LPg3KK8qCTVuoCycevGJkKBG7F2M9IXRYrx7GH6JAFcOsYbyBtHgzo=
-X-Received: by 2002:a0d:de83:0:b0:337:c0bf:12ee with SMTP id
- h125-20020a0dde83000000b00337c0bf12eemr50480942ywe.289.1667906480773; Tue, 08
- Nov 2022 03:21:20 -0800 (PST)
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hIvdpOhjCyNiqJSBAwvQQBj8Uqill7WA0zit53y3ii8=;
+        b=1Mp4Q1GghR0EP4OvYIyUzgcA9lQbvHwY86LwLND79J5mz4+I8Tf0K//fLqljO/qVXC
+         fUWGVx0TewaHmSfh8h2e0bXbaIue1/s/OlEzsc2HImUOmLcVYfQuBQ9Tds/NN8u1YJHB
+         iJ6YjQSEzHN+Lr3YznXdStaux/9b8/QWXfn+T5nN8WtD3Dj8zIWjrZYGPry8v6eqLs2Z
+         7z1v1W1eGwRDTDs/8cIvgdJgU8HkCkOEzQPTtWSaukZFBEscy8hTQ1o56yqFYRpafr4A
+         u+uo2QLAaqpRTrMV0PDhHQj+Huun1+ny8kufEO1+cDz+rfjd1SfZ+wVJT3/nQasbiU8p
+         2jGg==
+X-Gm-Message-State: ACrzQf2ct6gR4goXHNQzp0R0VK/jlm6w83f7rstU0kWUiukhcY9jvOXC
+        nkBixX/Xav/LbHhbDA8F/foCLA==
+X-Google-Smtp-Source: AMsMyM7UPWEFVXALIjatygYKPCSG4hpLFypCBxStqFtN1IpXPmGg97KLO6VUpK072PDk4houkgRRsw==
+X-Received: by 2002:a05:600c:554b:b0:3cf:84ea:3097 with SMTP id iz11-20020a05600c554b00b003cf84ea3097mr23114193wmb.100.1667908978159;
+        Tue, 08 Nov 2022 04:02:58 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id w2-20020a5d6802000000b0023662245d3csm10056034wru.95.2022.11.08.04.02.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Nov 2022 04:02:57 -0800 (PST)
+Subject: [PATCH v5 0/2] arm: qcom: mdm9615: first round of bindings and DT fixes
 MIME-Version: 1.0
-Received: by 2002:a05:7010:a38a:b0:313:c983:1d7e with HTTP; Tue, 8 Nov 2022
- 03:21:20 -0800 (PST)
-Reply-To: mrinvest1010@gmail.com
-From:   "K. A. Mr. Kairi" <ctocik2@gmail.com>
-Date:   Tue, 8 Nov 2022 03:21:20 -0800
-Message-ID: <CAC9COZeS659=-gSvoR3SCbj2pRfVsjsKRciV6Wdz6fvX9r=dBg@mail.gmail.com>
-Subject: Re: My Response..
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UNDISC_FREEM autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:1130 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5008]
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [mrinvest1010[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [ctocik2[at]gmail.com]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [ctocik2[at]gmail.com]
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  2.9 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-b4-tracking: H4sIAGxFamMC/43Oz2rDMAwG8FcpPk/D/532tPcoO8i20hgSB+wudJS8+8Ruo4flJD7B95OeolMr1M
+ Xl9BSNttLLWjm4t5NIE9YbQcmchZZay7MeYMnL2SsH+Q49TbQgjOVBHbzPNsuUYkhBcDtiJ4gNa5q4
+ X7/mmZdT6fe1ff9e2xSP6//wpkBC9OQNhjwqGj7mUrGt72u7iU9GN30Q0gwNYYwULZJ05gUyByHDkD
+ Mqo3M6GWdfIHsQsgxlTDqPiCnIvx/t+/4D6D5GpZ8BAAA=
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Tue, 08 Nov 2022 13:02:52 +0100
+Message-Id: <20220928-mdm9615-dt-schema-fixes-v5-0-bbb120c6766a@linaro.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Neil Armstrong <neil.armstrong@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-rtc@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+X-Mailer: b4 0.10.1
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This is a first round of trivial bindings & DT fixes for the MDM9615 platform.
+
+This first round focuses on trivial changes, the remaining work will
+mainly be .txt to .yaml transition of old qcom pmic & co device bindings.
+
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@somainline.org>
+To: Alessandro Zummo <a.zummo@towertech.it>
+To: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Satya Priya <quic_c_skakit@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-rtc@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Dependencies: None
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v5:
+- Removed applied patches
+- Link to v4: https://lore.kernel.org/r/20220928-mdm9615-dt-schema-fixes-v4-0-dac2dfaac703@linaro.org
+
+Changes in v4:
+- patch 1: None
+- patch 2: None
+- patch 3: None
+- patch 4: None
+- patch 5: Added reviewed-by tag
+- patch 6: Fix descriptions, Added reviewed-by tags
+- patch 7: None
+- patch 8: None
+- patch 9: Added acked-by tag
+- patch 10: None
+- patch 11: None
+- Link to v3: https://lore.kernel.org/r/20220928-mdm9615-dt-schema-fixes-v3-0-531da552c354@linaro.org
+
+Changes in v3:
+- Rebased on v6.1-rc1
+- patch 1: Added reviewed-by tag
+- patch 2: Fixes typo in commit msg and added precision about why MIT was selected
+- patch 3: Added reviewed-by tag
+- patch 4: None
+- patch 5: Drop second example node
+- patch 6: Drop Andy, fix interrupts desc and fix example indentation
+- patch 7: Fix commit msg wrap & add reviewed-by tag
+- patch 8: Reword commit msg & add reviewed-by tag
+- patch 9: Reword commit msg & add reviewed-by tag
+- patch 10: None
+- patch 11: Added reviewed-by tag
+- Link to v2: https://lore.kernel.org/r/20220928-mdm9615-dt-schema-fixes-v2-0-87fbeb4ae053@linaro.org
+
+Changes in v2:
+- patch 1: switch to move from swir.txt to qcom.yaml
+- patch 2: use MIT licence instead of X11 licence
+- patch 3: move reg after compatible
+- patch 4: added Krzysztof's review
+- patch 5: split into 5 changes:
+  - document qcom,pm8921 as fallback of qcom,pm8018
+  - convert qcom,pm8921-pwrkey to dt-schema
+  - document qcom,pm8921-rtc as fallback of qcom,pm8018-rtc
+  - drop unused PM8018 compatible
+  - drop unused pm8018 RTC compatible
+- patch 6: None
+- patch 7: Reworded commit log based on Dmitry's wording on similar patches
+- Link to v1: https://lore.kernel.org/r/20220928-mdm9615-dt-schema-fixes-v1-0-b6e63a7df1e8@linaro.org
+
+---
+Neil Armstrong (2):
+      dt-bindings: rtc: qcom-pm8xxx: document qcom,pm8921-rtc as fallback of qcom,pm8018-rtc
+      rtc: pm8xxx: drop unused pm8018 compatible
+
+ .../devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml         | 16 ++++++++++------
+ drivers/rtc/rtc-pm8xxx.c                                 |  1 -
+ 2 files changed, 10 insertions(+), 7 deletions(-)
+---
+base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
+change-id: 20220928-mdm9615-dt-schema-fixes-66d4d0ccb7c7
+
+Best regards,
 -- 
-Hi
-
-How are you with your family, I have a serious client, whom will be
-interested to invest in your country, I got your Details through the
-Investment Network and world Global Business directory.
-
-If you are interested for more details.....
-
-Sincerely,
-Kairi Andrew
+Neil Armstrong <neil.armstrong@linaro.org>
