@@ -2,172 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BC6E62078E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 04:34:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A789F6207BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 04:49:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231659AbiKHDes (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 22:34:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52698 "EHLO
+        id S232464AbiKHDs6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 22:48:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233087AbiKHDe3 (ORCPT
+        with ESMTP id S232328AbiKHDs5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 22:34:29 -0500
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FC496463
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 19:34:25 -0800 (PST)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-13d9a3bb27aso14197514fac.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 19:34:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BDw3Gg68r1mAo82wyeCHUt98gJiZsSI0ml7JTaDn03s=;
-        b=QOkIOZbqsVhd+vTtWIJAAoUhey3ujk0tDMJGx62ppq7jEsavzriI0c7g/bAzp9oG5A
-         yIePbu4jLTiq0zBKlATb6sPP0ZzuNa2fiP+805uK899nh287O5rShjXSobnbT8vg/xQm
-         5VI3mbbI55PhVqLAS+A2QifGt07WVcvdo3IHimJ1k+xU4oeM8hRy8gCHrovt/X+Mp0JL
-         yvsUx69uPQhlaJqjWn8WG7xi4LSTb8WrxO2RIAdi/2i/3WpECx8Xtwggwa/0adgikGEX
-         nvOHhX2sU00rFkftHW0skUxGNEtIMfaCtX9/Da71ClBW5IAWJ7iT0Rt79wSWqOhNe+La
-         U90w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BDw3Gg68r1mAo82wyeCHUt98gJiZsSI0ml7JTaDn03s=;
-        b=otr2tb9w0Z+jexFKDS7z94bgH+KpMgCvIxeivSHoTzbwJwjMw7iI2mnBXbbnIQ21er
-         xdHRb7J6bCd0jWnRn63dn8ptoU7rReh9OlqEbjEwcS+Ssw2LCrE6pI66xwq0uNlsXZTW
-         jdkR5a7xSs7G67Twl/kFOgg0GMJCu8lW6AMtrN0/y7nG4jG3+ZJ2DtT7IbOEd2Pk2EJy
-         z5dxtVfFatn4ClW/bBCbOET/jybtMez1OMUA3IWzO92orZ49JucyjCnBcvEFnH/Ldnd+
-         UHACNywAiFU3qaNgqUme5Dp9zYunsTa9k8oEPJ5EseWf/NFOm6aTzDnMK/X1sD279Yhx
-         aGyA==
-X-Gm-Message-State: ACrzQf3wWxd1ReDCdffuwFCPqK0t+m28BanArO05sYnsqq3YbakX058A
-        AB8/z0i7EHWL+/OzhFJNa2i5XkKrAuAJ7Azvtso=
-X-Google-Smtp-Source: AMsMyM6ic9iVzhaVGRyEno7zttlTNzS/Qd1k0Nk9bzSpHReLupGdrIOatJuMj7zFolXXNFdzxWKjblGETD0oeLTFtI4=
-X-Received: by 2002:a05:6871:6a4:b0:13b:a056:f97f with SMTP id
- l36-20020a05687106a400b0013ba056f97fmr31413824oao.38.1667878464722; Mon, 07
- Nov 2022 19:34:24 -0800 (PST)
+        Mon, 7 Nov 2022 22:48:57 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16F112D76F;
+        Mon,  7 Nov 2022 19:48:56 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A39F86140B;
+        Tue,  8 Nov 2022 03:48:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE5DEC433D6;
+        Tue,  8 Nov 2022 03:48:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667879335;
+        bh=+7fDjDjSwuIces8TlINydr9JTAVpjqCtHsiPm6OS7rM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=KSsS7ToymbL46gAbd5H/O3HeZFAOXLCpNSaBvKq9bXWg4vKy1jF/1ReM6vX7955lV
+         nVPMW9RfLPpTs/t0f7/Y30VQElbLTUpASoSTTpGWRHJDnoIv4/Cyr5CgXGvqBmSjio
+         8Djmbwfh5+fetk5eLjZuoNS/LDSWTPFwTeJ8TRDmeKvwmRvn63CroeGd6KVrCcB9H2
+         yeAKpS+pBNYqoDeAVLIcstuRJp9T+RTYQo+BxqBoTmAwZF/Zd2E6s6mNO/XH9AXRl6
+         lPLlY6zskxM6yM1JaexNS6rrt+xQym9Yb/GTLW9lTqyICiBImr17w6aHvgQ4OMtdU5
+         /WmaGrsFxMxyg==
+Date:   Mon, 7 Nov 2022 21:48:52 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
+        konrad.dybcio@somainline.org, mchehab@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        dmitry.baryshkov@linaro.org, vladimir.zapolskiy@linaro.org,
+        sakari.ailus@iki.fi, hverkuil@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, quic_mmitkov@quicinc.com,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: qrb5165-rb5-vision-mezzanine:
+ Add vision mezzanine
+Message-ID: <20221108034852.3tiqs46mpat4pwt7@builder.lan>
+References: <20221108021816.213084-1-bryan.odonoghue@linaro.org>
+ <20221108021816.213084-3-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-References: <20221028225952.160-1-quic_jesszhan@quicinc.com>
- <Y2leZDfLj/5963wl@intel.com> <5a9167d5-f88d-ed6b-abff-8ae39117feb1@quicinc.com>
- <CAF6AEGtbwsvr5A+mX7BxP95u3RyRiUFzE6dfiZacS96WVBhuvw@mail.gmail.com> <c196f010-34e7-4c1c-4ca6-852a4c32b154@quicinc.com>
-In-Reply-To: <c196f010-34e7-4c1c-4ca6-852a4c32b154@quicinc.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 7 Nov 2022 19:34:43 -0800
-Message-ID: <CAF6AEGtJcz6dK-vgnYuJsBqm2tDRUYB7Tg2jtQm1-KuTi+z8ZA@mail.gmail.com>
-Subject: Re: [Freedreno] [RFC PATCH 0/3] Support for Solid Fill Planes
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        daniel.vetter@ffwll.ch, quic_abhinavk@quicinc.com,
-        dri-devel@lists.freedesktop.org, swboyd@chromium.org,
-        seanpaul@chromium.org, laurent.pinchart@ideasonboard.com,
-        linux-arm-msm@vger.kernel.org, dmitry.baryshkov@linaro.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221108021816.213084-3-bryan.odonoghue@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 7, 2022 at 4:22 PM Jessica Zhang <quic_jesszhan@quicinc.com> wr=
-ote:
->
->
->
-> On 11/7/2022 2:09 PM, Rob Clark wrote:
-> > On Mon, Nov 7, 2022 at 1:32 PM Jessica Zhang <quic_jesszhan@quicinc.com=
-> wrote:
-> >>
-> >>
-> >>
-> >> On 11/7/2022 11:37 AM, Ville Syrj=C3=A4l=C3=A4 wrote:
-> >>> On Fri, Oct 28, 2022 at 03:59:49PM -0700, Jessica Zhang wrote:
-> >>>> Introduce and add support for COLOR_FILL and COLOR_FILL_FORMAT
-> >>>> properties. When the color fill value is set, and the framebuffer is=
- set
-> >>>> to NULL, memory fetch will be disabled.
-> >>>
-> >>> Thinking a bit more universally I wonder if there should be
-> >>> some kind of enum property:
-> >>>
-> >>> enum plane_pixel_source {
-> >>>        FB,
-> >>>        COLOR,
-> >>>        LIVE_FOO,
-> >>>        LIVE_BAR,
-> >>>        ...
-> >>> }
-> >>
-> >> Hi Ville,
-> >>
-> >> Makes sense -- this way, we'd also lay some groundwork for cases where
-> >> drivers want to use other non-FB sources.
-> >>
-> >>>
-> >>>> In addition, loosen the NULL FB checks within the atomic commit call=
-stack
-> >>>> to allow a NULL FB when color_fill is nonzero and add FB checks in
-> >>>> methods where the FB was previously assumed to be non-NULL.
-> >>>>
-> >>>> Finally, have the DPU driver use drm_plane_state.color_fill and
-> >>>> drm_plane_state.color_fill_format instead of dpu_plane_state.color_f=
-ill,
-> >>>> and add extra checks in the DPU atomic commit callstack to account f=
-or a
-> >>>> NULL FB in cases where color_fill is set.
-> >>>>
-> >>>> Some drivers support hardware that have optimizations for solid fill
-> >>>> planes. This series aims to expose these capabilities to userspace a=
-s
-> >>>> some compositors have a solid fill flag (ex. SOLID_COLOR in the Andr=
-oid
-> >>>> hardware composer HAL) that can be set by apps like the Android Gear=
-s
-> >>>> app.
-> >>>>
-> >>>> Userspace can set the color_fill value by setting COLOR_FILL_FORMAT =
-to a
-> >>>> DRM format, setting COLOR_FILL to a color fill value, and setting th=
-e
-> >>>> framebuffer to NULL.
-> >>>
-> >>> Is there some real reason for the format property? Ie. why not
-> >>> just do what was the plan for the crttc background color and
-> >>> specify the color in full 16bpc format and just pick as many
-> >>> msbs from that as the hw can use?
-> >>
-> >> The format property was added because we can't assume that all hardwar=
-e
-> >> will support/use the same color format for solid fill planes. Even for
-> >> just MSM devices, the hardware supports different variations of RGB
-> >> formats [1].
-> >
-> > Sure, but the driver can convert the format into whatever the hw
-> > wants.  A 1x1 color conversion is not going to be problematic ;-)
->
-> Hi Rob,
->
-> Hm... that's also a fair point. Just wondering, is there any advantage
-> of having the driver convert the format, other than not having to
-> implement an extra format property?
->
-> (In case we end up wrapping everything into a prop blob or something)
->
+On Tue, Nov 08, 2022 at 02:18:15AM +0000, Bryan O'Donoghue wrote:
+[..]
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index 8ef0a9fe67dd..7199a86d2cbe 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -3801,6 +3801,39 @@ tlmm: pinctrl@f100000 {
+>  			gpio-ranges = <&tlmm 0 0 181>;
+>  			wakeup-parent = <&pdc>;
+>  
+> +			cam2_default: cam2-default {
 
-It keeps the uabi simpler.. for obvious reasons you don't want the
-driver to do cpu color conversion for an arbitrary size plane, which
-is why we go to all the complexity to expose formats and modifiers for
-"real" planes, but we are dealing with a single pixel value here,
-let's not make the uabi more complex than we need to.  I'd propose
-making it float32[4] if float weren't a pita for kernel/uabi, but
-u16[4] or u32[4] should be fine, and drivers can translate that easily
-into whatever weird formats their hw wants for solid-fill.
+Please add -state suffix to the pinctrl state nodes.
 
-BR,
--R
+> +				rst {
+
+And please add -pins suffix to the subnodes thereof.
+
+Regards,
+Bjorn
