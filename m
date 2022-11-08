@@ -2,65 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28848620D4A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 11:30:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC5FF620D6D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 11:36:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233643AbiKHKar (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 05:30:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55034 "EHLO
+        id S233952AbiKHKf7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 05:35:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233556AbiKHKaq (ORCPT
+        with ESMTP id S233587AbiKHKfz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 05:30:46 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9772E1DA67
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 02:30:39 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id f5so37395723ejc.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 02:30:39 -0800 (PST)
+        Tue, 8 Nov 2022 05:35:55 -0500
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43FD942F7A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 02:35:51 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id bj12so37315612ejb.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 02:35:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=atid+edrTzuA80uie5QzASVMiLlCSb3CRaHv4tRjrTo=;
-        b=MVT4fW33uw7BUUBENA2h0LV1Q06r+UqbCZNEDgKULbWhbaBkr5apVHL2rx1O+g8PgH
-         c2EMukiFZDuQYe2l4M/hz8G7UxJ9znVy4hQHTuDLytfE5WvFbJp2kG7Fl++xEzwOmRzU
-         kSoimhpnWfoF3JP52N5zc5isTOagoCadDirj5DKlDroCCHlmItdjjPBVRqK/Klxfnzmn
-         ylxfCz7F1v4ZqjzMj6JNF5uDAyNXT3b+HN6q41mG93J6LhKZlBSDxOT7dEKX0qgsx8r6
-         0ncJJbT7GxafxPLN5gHwihgOcT113BQ3yKaFRoCmxF5aQc+ANwm4qEmjeaCAn7ozdxm7
-         OdlQ==
+        bh=QzGzsYzfZld5BaPsWA5Lt7NjqLM8KvUDhOQ6bLN6+Og=;
+        b=p2tdeDcHOvdvUTcDLFXYRVq4ekKoCNHqucsPWZvzZE97BFX7xpmVJ/CI5ytB8q2vTp
+         jWX3m1b0qgSIjDxOBWKwIuUhzj/SfDebRy0dDwWP7yyMGJHkmDVOPoZzD0CJ0hKn0UD2
+         3K0GFhZubMWCvjTAlMPSyuzZJgv2g/DOkK+D2umwGJ8dvv0LLVRovwZXC5PHc1vxs4v+
+         LZ1BsutMnBr9X9Ou9tGabFs3vrv46Zn76bMv6p5eoNUW0Yf8qNY7I3gOQiK/krUgrESk
+         I1jLhtmT9ZWkvBQVtvULojmEzs+ios3PbhEPgfy485phQntChVfnk+PudKmufTMIB1iA
+         e3Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=atid+edrTzuA80uie5QzASVMiLlCSb3CRaHv4tRjrTo=;
-        b=6dK8nqMCE9MDS/cFuvJomsANXzxAldel+TAdTn2zdA+5Wkcb4a6umERQmPRli8vEbO
-         7g/z1ZiF59wwYo3Ahs82bp8vDXIsI44492YkQqtyMWABauksnQOPBH7Svc7CkXKax3Yr
-         t/L9N0mwq0jk5o34U73TUFa4WOthzrvwVpjWbl6wQHWqhoufsst5aPT3ZxEgM4wVMbgY
-         kDuHks3wIdesB0rHrOEiUM7T6o9DHapHFcm1z/MaqvUNX1r2ne8w1PjVg7i7H62LJEjs
-         Msbqe+1jP0e5/6IaMvFLnu6Sp6Bgs5AFmUaz7/Vx7wA0ersc0fH2THHJ9m8bl43zQMfv
-         PJZg==
-X-Gm-Message-State: ACrzQf09+/HY0OKXDEjF9tT33eCf5sc6FEmeFXJUb7t49adpBXH0gEN2
-        6bBG1ONzuEPMrWAmNUmdas9lu9f7S/LELqOr9Yf8jg==
-X-Google-Smtp-Source: AMsMyM6C4pYdpFc+2xWSYisNGabYiqSF7IYYb9LDhANci3pbCXop9mslrGeLo/xG0Uw0avfdB4yFFoIj54JUCGNp/Uo=
-X-Received: by 2002:a17:907:c1e:b0:7ae:31a0:571e with SMTP id
- ga30-20020a1709070c1e00b007ae31a0571emr20498403ejc.690.1667903438431; Tue, 08
- Nov 2022 02:30:38 -0800 (PST)
+        bh=QzGzsYzfZld5BaPsWA5Lt7NjqLM8KvUDhOQ6bLN6+Og=;
+        b=S87Y9R51HHEjsvPz0N3Edxn5RhComeAL2/tcXE0OlVzdbTHh+3+fM6H5W+Mgs3hjew
+         4znWyKvgATklwqVVfxboLgzwkinHW0oVbOXfAE36yMv9S7mAd2R2duvfo0OUvSPm0Oc4
+         p373ouMl6+ocOafTytxCdgR9EeQvTTQLe0wCAIOy8UO8qRO0jZiu8o5VUhPda3rqPFV9
+         kd5Z2M3HWmvC36M1GLqFCuTYPObCjm1OOMwkVQ3lYjKqdnZpc3QUb4fxzVz2teiGLKVF
+         Imk8ziAWv+pazsVwq/rXo25qIXg3hec9oefwL3S8GzcOSKT0RrV50q5BiHCaGV219x7V
+         3zZw==
+X-Gm-Message-State: ACrzQf2NDupKjOZkksEvJ01YJUIgcAnGDirgm+UPYzoO2kQcl8fOe+Ds
+        MdgJKN0ZJLecob5W7HFpA4Bi++JrFAJDWbIp2r+y8Q==
+X-Google-Smtp-Source: AMsMyM4XmkDJX+qrSEP4SpZrn8cWb1HWzNQvAAk1OfJ9imq8qxTAL9wtzeIx9tJqISQizQs+QRf+dML5kSmR4FEmz9A=
+X-Received: by 2002:a17:906:6956:b0:7ae:3a0b:c6f6 with SMTP id
+ c22-20020a170906695600b007ae3a0bc6f6mr20431161ejs.383.1667903749742; Tue, 08
+ Nov 2022 02:35:49 -0800 (PST)
 MIME-Version: 1.0
-References: <20221024002356.28261-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221024002356.28261-1-krzysztof.kozlowski@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 8 Nov 2022 11:30:27 +0100
-Message-ID: <CACRpkdb8JN1R2tG0o=zKNkMohDSAHHz-K2QC=mjJfPjNC6TaaA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom,msm8916: convert to dtschema
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221013121255.1977-1-quic_mmitkov@quicinc.com> <46d82762-8b6b-8a3e-0bdd-5598163244de@linaro.org>
+In-Reply-To: <46d82762-8b6b-8a3e-0bdd-5598163244de@linaro.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Tue, 8 Nov 2022 11:35:38 +0100
+Message-ID: <CAG3jFysAfymcFS54CyxBYhJbQ4Qh7bvhpE8UPc3S1o_8uQq7Xg@mail.gmail.com>
+Subject: Re: [PATCH v4 0/4] media: camss: sm8250: Virtual channels support for SM8250
+To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc:     quic_mmitkov@quicinc.com, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, akapatra@quicinc.com,
+        jzala@quicinc.com, todor.too@gmail.com, agross@kernel.org,
+        konrad.dybcio@somainline.org, mchehab@kernel.org,
+        cgera@qti.qualcomm.com, gchinnab@quicinc.com,
+        ayasan@qti.qualcomm.com, laurent.pinchart@ideasonboard.com
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -71,19 +70,105 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 24, 2022 at 2:24 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
-
-> Convert Qualcomm MSM8916 pin controller bindings to DT schema.  Keep the
-> parsing of pin configuration subnodes consistent with other Qualcomm
-> schemas (children named with '-state' suffix, their children with
-> '-pins').
+On Tue, 8 Nov 2022 at 01:12, Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
 >
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> On 13/10/2022 13:12, quic_mmitkov@quicinc.com wrote:
+> > From: Milen Mitkov <quic_mmitkov@quicinc.com>
+> >
+> > For v4:
+> > - fixes the warning reported by the kernel test robot
+> > - tiny code change to enable the vc functionality with the partially-applied
+> >    multistream patches on linux-next (tested on tag:next-20221010)
+> >
+> > For v3:
+> > - setting the sink pad format on the CSID entity will now propagate the
+> >    format to the source pads to keep the subdev in a valid internal state.
+> > - code syntax improvements
+> >
+> > For v2:
+> > - code syntax improvements
+> > - The info print for the enabled VCs was demoted to a dbg print. Can be
+> >    enabled with dynamic debug, e.g.:
+> > echo "file drivers/media/platform/qcom/camss/* +p" > /sys/kernel/debug/dynamic_debug/control
+> >
+> > NOTE: These changes depend on the multistream series, that as of yet
+> > is still not merged upstream. However, part of the
+> > multistream patches are merged in linux-next (tested on
+> > tag:next-20221010), including the patch that introduces the
+> > video_device_pipeline_alloc_start() functionality. This allows
+> > applying and using this series on linux-next without applying the
+> > complete multistream set.
+> >
+> > The CSID hardware on SM8250 can demux the input data stream into
+> > maximum of 4 multiple streams depending on virtual channel (vc)
+> > or data type (dt) configuration.
+> >
+> > Situations in which demuxing is useful:
+> > - HDR sensors that produce a 2-frame HDR output, e.g. a light and a dark frame
+> >    (the setup we used for testing, with the imx412 sensor),
+> >    or a 3-frame HDR output - light, medium-lit, dark frame.
+> > - sensors with additional metadata that is streamed over a different
+> >    virtual channel/datatype.
+> > - sensors that produce frames with multiple resolutions in the same pixel
+> >    data stream
+> >
+> > With these changes, the CSID entity has, as it did previously, a single
+> > sink port (0), and always exposes 4 source ports (1, 2,3, 4). The
+> > virtual channel configuration is determined by which of the source ports
+> > are linked to an output VFE line. For example, the link below will
+> > configure the CSID driver to enable vc 0 and vc 1:
+> >
+> > media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> > media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
+> >
+> > which will be demuxed and propagated into /dev/video0
+> > and /dev/video1 respectively. With this, the userspace can use
+> > any normal V4L2 client app to start/stop/queue/dequeue from these
+> > video nodes. Tested with the yavta app.
+> >
+> > The format of each RDI channel of the used VFE(s) (msm_vfe0_rdi0,
+> > msm_vfe0_rdi1,...) must also be configured explicitly.
+> >
+> > Note that in order to keep a valid internal subdevice state,
+> > setting the sink pad format of the CSID subdevice will propagate
+> > this format to the source pads. However, since the CSID hardware
+> > can demux the input stream into several streams each of which can
+> > be a different format, in that case each source pad's
+> > format must be set individually, e.g.:
+> >
+> > media-ctl -V '"msm_csid0":1[fmt:SRGGB10/3840x2160]'
+> > media-ctl -V '"msm_csid0":2[fmt:SRGGB10/960x540]'
+> >
+> > Milen Mitkov (4):
+> >    media: camss: sm8250: Virtual channels for CSID
+> >    media: camss: vfe: Reserve VFE lines on stream start and link to CSID
+> >    media: camss: vfe-480: Multiple outputs support for SM8250
+> >    media: camss: sm8250: Pipeline starting and stopping for multiple
+> >      virtual channels
+> >
+> >   .../platform/qcom/camss/camss-csid-gen2.c     | 54 ++++++++++------
+> >   .../media/platform/qcom/camss/camss-csid.c    | 44 +++++++++----
+> >   .../media/platform/qcom/camss/camss-csid.h    | 11 +++-
+> >   .../media/platform/qcom/camss/camss-vfe-480.c | 61 ++++++++++++-------
+> >   drivers/media/platform/qcom/camss/camss-vfe.c |  7 +++
+> >   .../media/platform/qcom/camss/camss-video.c   | 21 ++++++-
+> >   drivers/media/platform/qcom/camss/camss.c     |  2 +-
+> >   7 files changed, 140 insertions(+), 60 deletions(-)
+> >
+>
+> I've done some offline work with Milen on this.
+>
+> I'm happy enough to add my
+>
+> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>
+> to the series. I don't have - currently a VC enabled setup but for the
+> simple case this set doesn't break anything on RB5 for me.
+>
+> ---
+> bod
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+This series has my ack.
 
-I expect that I get this in a pull request with some other qcom stuff or so :)
-
-Yours,
-Linus Walleij
+Acked-by: Robert Foss <robert.foss@linaro.org>
