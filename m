@@ -2,65 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9ADA96205BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 02:23:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 839986205BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 02:23:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233062AbiKHBXO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 20:23:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47944 "EHLO
+        id S232890AbiKHBXR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 20:23:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233121AbiKHBXI (ORCPT
+        with ESMTP id S233008AbiKHBXJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 20:23:08 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A0851C906
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 17:23:02 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id a5so20262692edb.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 17:23:02 -0800 (PST)
+        Mon, 7 Nov 2022 20:23:09 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24A971B1CF
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 17:23:06 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id q9so34890712ejd.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 17:23:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=huQuPYkl7U+LTfPaignW2xikp2tMlS/JRi7V+K6MHt8=;
-        b=irTny37RkM+fGVHhNgcCBJ0iTlIIPXy+dgkSvu7tYO5TGRTQCbks4PWN65k63oXT+5
-         jGRQHWb+zGLrTTmThs65Dup5b/mmNc7pV8yHJsJ/mw1/TVYWLGLi5wMvo294yHZ3Fct3
-         wc3/hzieeFRLBlrXiJbqEFDE6P27lTrXB1lYs=
+        bh=o0A0yw55ZieBl6SrkekIUPpMrnlgooteEELcL9ZP3Ec=;
+        b=DK54vb1qCybXBrtEEyTCQW0ellpWxVvHx4N75ZCqL1P4rDLkJG0CiGEVVH3XeWq8xh
+         8+1IjIRIPFAGUQTO7Sg3OvRkap8WxD6/LXF1uT2MaR2yNYLzsHlI24+cioPAtbMyHm9s
+         a0wRssFzUFGXrvEcesGMmXNcOXvAfnaUFFqHI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=huQuPYkl7U+LTfPaignW2xikp2tMlS/JRi7V+K6MHt8=;
-        b=BT4X9vLPp9pZZWSRICeK0RbthFe6PgCqlyr0xSYQhryooDvK1AOq04hwQQWJJDqn6t
-         LautyrR1aTqzvyuqe6bYPmkv4nv/2lqCSFFdVzEWOkqM2/Zc9DLOXOFtRmnjgRcRJ0Z4
-         C+p+vLyqxhkPDILUuyEXKRHUE6TcntcifKcT7j15oCFhe5p8JI+WfB2g/c1ZWXQ4Z4BQ
-         lr/mQ12c47FhqGS7FeBgV2d/v5QX/t2kNQwWzxYgipcgbrqTheabJZIRRR8A/kDmPZVZ
-         pLViS4I5wGFv3B1g+aT3OeGhLpsaMfG1Lg5N6ccE2NAnN4UhBmBpAM0oRQPbvYmk3T7I
-         cxFw==
-X-Gm-Message-State: ACrzQf1XIhKWZDrxw2JWK5Mfw6Fqlj5s0uDxoWbkjFnJpdeHF3X1AUL3
-        rCts8jCTCfnRS18jjBaiX2qwG/sWVfhKxayN
-X-Google-Smtp-Source: AMsMyM7Vr0pHfvwpKIA6rhtOoqRNcaqVI0YciOrual/sr3j+TXZoSuEkcSS3eMgx/jf963vg55GgjQ==
-X-Received: by 2002:aa7:d40e:0:b0:463:3844:f160 with SMTP id z14-20020aa7d40e000000b004633844f160mr48223893edq.296.1667870580539;
-        Mon, 07 Nov 2022 17:23:00 -0800 (PST)
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com. [209.85.221.41])
-        by smtp.gmail.com with ESMTPSA id rh16-20020a17090720f000b0077016f4c6d4sm4044616ejb.55.2022.11.07.17.22.59
+        bh=o0A0yw55ZieBl6SrkekIUPpMrnlgooteEELcL9ZP3Ec=;
+        b=7uMhwxtj4rDpM/mlyZ9SRP7uAuF1+L86DbjSfkdnfJgo+8Lx/3RoJ0aGTi/Bj2iBWX
+         /IYN00ZIQgbQatg83GbgF0d9pgdc5ibSFQAPhonk0QlKdn9YhSRsAekK46ffyspm01Y7
+         VsW3zICHjumJIoCeFs1nN4nzvvwPkGYQbHKnFRgAcRv8Yvn0Idh2d6IJxDX++zdNURUD
+         wNiYQbDemFleqAt0O4HgG8UC3n6lRErHXlyntLCmzzv4zbn9h0JAhMvtKWjPtfrjxC/0
+         1Llw3oOQJuXGX+XAtWNjkNMw1X+B7wQwcE+a5PHrBd6Si10+5w+GVABYwURZsljZDnG9
+         WtyA==
+X-Gm-Message-State: ACrzQf0WAkx03hJ12mhsIMudDwOrykkZHlodu/tfDalUHhY05oINHDfv
+        9l4HVnimbB5l6hLIE+al77y6hkaLJlHcyAaN
+X-Google-Smtp-Source: AMsMyM5SsmT4fRiJ2eWw4TiUmNFnj9FRsDtzEXkkfLRH0shpFzOciipguA88HT5yu8w4yRm5x5WEgg==
+X-Received: by 2002:a17:907:75c1:b0:79b:f804:c081 with SMTP id jl1-20020a17090775c100b0079bf804c081mr50826084ejc.381.1667870584442;
+        Mon, 07 Nov 2022 17:23:04 -0800 (PST)
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com. [209.85.221.43])
+        by smtp.gmail.com with ESMTPSA id m17-20020a170906581100b007933047f923sm4022251ejq.118.2022.11.07.17.23.03
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Nov 2022 17:22:59 -0800 (PST)
-Received: by mail-wr1-f41.google.com with SMTP id l14so18740501wrw.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 17:22:59 -0800 (PST)
-X-Received: by 2002:a5d:4410:0:b0:236:a8f9:268f with SMTP id
- z16-20020a5d4410000000b00236a8f9268fmr33789345wrq.405.1667870578850; Mon, 07
- Nov 2022 17:22:58 -0800 (PST)
+        Mon, 07 Nov 2022 17:23:03 -0800 (PST)
+Received: by mail-wr1-f43.google.com with SMTP id z14so18706254wrn.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 17:23:03 -0800 (PST)
+X-Received: by 2002:adf:d1ec:0:b0:236:880f:2adf with SMTP id
+ g12-20020adfd1ec000000b00236880f2adfmr33984142wrd.617.1667870583522; Mon, 07
+ Nov 2022 17:23:03 -0800 (PST)
 MIME-Version: 1.0
-References: <20221107191535.624371-1-swboyd@chromium.org> <20221107191535.624371-2-swboyd@chromium.org>
-In-Reply-To: <20221107191535.624371-2-swboyd@chromium.org>
+References: <20221107191535.624371-1-swboyd@chromium.org> <20221107191535.624371-3-swboyd@chromium.org>
+In-Reply-To: <20221107191535.624371-3-swboyd@chromium.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 7 Nov 2022 17:22:47 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=UJEkNcWWFExQsCD5SXvH_YvoK_K6mtFB0_ojDSNLP8Zg@mail.gmail.com>
-Message-ID: <CAD=FV=UJEkNcWWFExQsCD5SXvH_YvoK_K6mtFB0_ojDSNLP8Zg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: Fully describe fingerprint node
- on Herobrine
+Date:   Mon, 7 Nov 2022 17:22:51 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=XKHftMn4Ja40fdDggwi78F2pB0A+prs94+fFBhbSvNYw@mail.gmail.com>
+Message-ID: <CAD=FV=XKHftMn4Ja40fdDggwi78F2pB0A+prs94+fFBhbSvNYw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: Fully describe fingerprint node
+ on Trogdor
 To:     Stephen Boyd <swboyd@chromium.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -71,8 +71,7 @@ Cc:     Andy Gross <agross@kernel.org>,
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -83,7 +82,7 @@ Hi,
 
 On Mon, Nov 7, 2022 at 11:15 AM Stephen Boyd <swboyd@chromium.org> wrote:
 >
-> Update the fingerprint node on Herobrine to match the fingerprint DT
+> Update the fingerprint node on Trogdor to match the fingerprint DT
 > binding. This will allow us to drive the reset and boot gpios from the
 > driver when it is re-attached after flashing. We'll also be able to boot
 > the fingerprint processor if the BIOS isn't doing it for us.
@@ -93,18 +92,32 @@ On Mon, Nov 7, 2022 at 11:15 AM Stephen Boyd <swboyd@chromium.org> wrote:
 > Cc: Alexandru M Stan <amstan@chromium.org>
 > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 20 ++++++++++++++++++--
+>  1 file changed, 18 insertions(+), 2 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> index 4a5ea17a15ba..65601bea0797 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> @@ -894,13 +894,16 @@ ap_spi_fp: &spi10 {
+>         cs-gpios = <&tlmm 89 GPIO_ACTIVE_LOW>;
+>
+>         cros_ec_fp: ec@0 {
+> -               compatible = "google,cros-ec-spi";
+> +               compatible = "google,cros-ec-fp", "google,cros-ec-spi";
+>                 reg = <0>;
+>                 interrupt-parent = <&tlmm>;
+>                 interrupts = <4 IRQ_TYPE_LEVEL_LOW>;
+>                 pinctrl-names = "default";
+> -               pinctrl-0 = <&fp_to_ap_irq_l>;
+> +               pinctrl-0 = <&fp_to_ap_irq_l>, <&fp_rst_l>, <&fpmcu_boot0>;
+> +               boot0-gpios = <&tlmm 10 GPIO_ACTIVE_HIGH>;
+> +               reset-gpios = <&tlmm 22 GPIO_ACTIVE_LOW>;
 
-From Bjorn's recent comment [1], I think your subject needs modification to:
+This isn't totally a no-op change since the pinctrl entries for
+fp_rst_l and fpmcu_boot0 will now be applied. I assume you've
+confirmed that it works as expected?
 
-   arm64: dts: qcom: sc7280: Fully describe fingerprint node on Herobrine
-
-Other than that this seems fine and is a better description of hardware, so:
+...other than the subject (same as patch #1), this LGTM.
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
-
-I guess we're still leaving gpio77 alone (AKA not describing it in the
-fingerprint regulator)?
-
-[1] https://lore.kernel.org/r/20221017224853.stuy5qeqxjxntob4@builder.lan/
