@@ -2,135 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 04E14620E20
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 12:05:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A406620E32
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 12:07:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233986AbiKHLFa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 06:05:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49962 "EHLO
+        id S234023AbiKHLHd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 06:07:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233994AbiKHLFY (ORCPT
+        with ESMTP id S234083AbiKHLHU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 06:05:24 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C46D84876B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 03:05:22 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id j16so20674649lfe.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 03:05:22 -0800 (PST)
+        Tue, 8 Nov 2022 06:07:20 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FC474C255
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 03:07:10 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id gw22so13466607pjb.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 03:07:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WmA4SwRAK4FKhvbkswEw6v9u4o5Xo6uAQ5jvXjJ9JHs=;
-        b=x+lUOScQI2UK3mV8gMgM4ALhWKQ5J8qhEO23u/nHu/FkhLd3emRQJj/XilDluE9hYF
-         cNz+e1I8EFkpjzlfTeJi7LFZwWpxK+X4144Czxh9WB4jILvjdJHgXT1zNxil4Xglpoj8
-         9OEkdh0B/f6bWlbhoq8zeTsDa/Fqz20UKwr02P93OCX3r7nQoux931fBNPein6IUt+pC
-         qdTq+K+ExjQfP7DlrEDmYGTC3Y3GCHt2/e7i3RjWqbVAxJhgCNh8tDgmmwoTiR1hlBHo
-         NMjqRZwBpqW9YdhXai7zBWusStWYzVYx3ocGxCOhJ5Mf/FO5ooETg4PzcTCZR4VlOVh9
-         aI4A==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5/yRs+y53DAJ225f9gq7YtS+yadU9QI0BNYlnqPDhZM=;
+        b=Fdy7U+Zeib9GDPNku63uXCnIrBz4DkypUsCcCh30aOQtdGK2jUOIoGolYp9bymh/0b
+         tUEiG1j1BnM95r3GvtiaoUJvPhdxfqwIWzpCzasbD6njjb5BqrRv0iWcnIW0eu9BeXI9
+         JcclZKwQo49yXuGNIuYkwzg8fHmUIy8h00d2oUUECfwZPKIgJ5MY6v5Ms2RSEP5u2gJD
+         Pasi/KwpUYKQf2ldez+ue7TYnYIqe2AOsN6iak9BIPTOXZVcuzKgk5Hr6hoBUGNguQZ3
+         J/nBisQGtDI+Dok3nG5xhwU3qb8bX6gjAfZ/a1E94uXpwXHdLVHL+G+vGVdh2mkNBGGg
+         dcZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WmA4SwRAK4FKhvbkswEw6v9u4o5Xo6uAQ5jvXjJ9JHs=;
-        b=L5cr1N82XIZ3f2LzHOD5WvrKXdW+rcwXP+T28OP0idEtDPumBDKlNmHPOCa7d2AKMt
-         X4PS0G262gURiCvxtwlZvPdKoUdlKpjYIZ7J/+Q1h1BkB9sFj/BxIPV/f8KK6sF/7xGy
-         tkRgtkTPOF0ZjqephvFFE3aZS1RgRXcY8Wm/PKh2Pnbrytb0B+lAIQq2nYyM41znXNxM
-         BvlPqZ6pdnnuMs0yH1/LD0KsY7EU+Ccr+JgcRIMqD5ZQz36LbIzOpSUIvwpxO+V885JP
-         CWw5wRpNR9xTqQBa73faRATQmuEYJJ0/7H3EZJGGi0AlDDo8WJf0hQBgBmVxPjkZN2F6
-         7ZoA==
-X-Gm-Message-State: ACrzQf3JX8J3rP8XrUayqU96jIK8HVjXgUxvUag2HDK2DINQ/fh11U9S
-        UcfnDY0fBM3ES3ak6UHJ6jka9w==
-X-Google-Smtp-Source: AMsMyM4QCZNhzqj/hg5k7Q/ywTj5eooBtNeEJafutY0EP3/GsLy+44CVVIEhKeAoePc6bKJbhlxDYw==
-X-Received: by 2002:ac2:5dce:0:b0:4a2:2dad:7ad4 with SMTP id x14-20020ac25dce000000b004a22dad7ad4mr18570086lfq.654.1667905521139;
-        Tue, 08 Nov 2022 03:05:21 -0800 (PST)
-Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
-        by smtp.gmail.com with ESMTPSA id i9-20020a2ea229000000b0027765fd616asm1705206ljm.20.2022.11.08.03.05.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Nov 2022 03:05:20 -0800 (PST)
-Message-ID: <f72aeaa0-0c0a-86d9-0b9b-db3810c35fad@linaro.org>
-Date:   Tue, 8 Nov 2022 12:05:19 +0100
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5/yRs+y53DAJ225f9gq7YtS+yadU9QI0BNYlnqPDhZM=;
+        b=O8INvtxDGQp3+sQWSDEnAaJ1sMBDANMfrqMli0upMjkUQm0bXBtMCX3aaLgcSqpyp4
+         DGPNMpX35FvJo4hJ4pwXi4dhbiy1kQTbokK2ul5tJiE24NoacrjcjbE3lre+J7PCLWXE
+         0tIXic+5DS+vg6NdJwV0RwX8w/McB6VS10w/OVUCV/PlYYH/AoWX5BxnAGWAGrx77Ujr
+         x6HaACAiYAuiZCQc9qWoy42d/39OHI8U9Ie/iCRh6RpeaRsTyCaXDQLehotABcp3zU0a
+         hROpZuIb77wrtUMQgaTQ3vT12PBT1OxMohKYo2f1ehC442qssr3Ho9Gi/iabgnyTkzTn
+         Bvfw==
+X-Gm-Message-State: ACrzQf0S0OaZevkel9KEfAnDCl71hGWes40hF7Z664/5qp/SanAk5Nod
+        4lE0JdSSV4IGAcZwAqnbF2E8OFpwqt8zGyp+NtFSXw==
+X-Google-Smtp-Source: AMsMyM7ruYnA4wSj+YXFuThf157la9P6XriUdgbY/9J3/RZR0+A7idD6kCIl96wiczH1I9YhBbcjEvL7sV34vKRsEsI=
+X-Received: by 2002:a17:90b:4d07:b0:1ef:521c:f051 with SMTP id
+ mw7-20020a17090b4d0700b001ef521cf051mr75338135pjb.164.1667905629698; Tue, 08
+ Nov 2022 03:07:09 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v9 05/12] dt-bindings: display/msm: move common MDSS
- properties to mdss-common.yaml
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Rob Herring <robh@kernel.org>
-References: <20221024164225.3236654-1-dmitry.baryshkov@linaro.org>
- <20221024164225.3236654-6-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221024164225.3236654-6-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20221027115745.240516-1-ulf.hansson@linaro.org>
+ <166779074268.500303.10369639779721394913.b4-ty@kernel.org> <CAMi1Hd3rE+r4vMdBy_LxQEbAKaXRYntje==eiO8cxkgSU9jXdw@mail.gmail.com>
+In-Reply-To: <CAMi1Hd3rE+r4vMdBy_LxQEbAKaXRYntje==eiO8cxkgSU9jXdw@mail.gmail.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 8 Nov 2022 12:06:33 +0100
+Message-ID: <CAPDyKFpa57K4yHq9MSBF7U7mXZyyMUe1eA1fMawO450-eSB3_Q@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sm8250: Disable the not yet supported
+ cluster idle state
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Amit Pundir <amit.pundir@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, konrad.dybcio@somainline.org,
+        dmitry.baryshkov@linaro.org, sudeep.holla@arm.com,
+        quic_mkshah@quicinc.com, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_rjendra@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/10/2022 18:42, Dmitry Baryshkov wrote:
-> Move properties common to all MDSS DT nodes to the mdss-common.yaml.
-> 
-> This extends qcom,msm8998-mdss schema to allow interconnect nodes, which
-> will be added later, once msm8998 gains interconnect support.
+On Mon, 7 Nov 2022 at 06:55, Amit Pundir <amit.pundir@linaro.org> wrote:
+>
+> On Mon, 7 Nov 2022 at 08:43, Bjorn Andersson <andersson@kernel.org> wrote:
+> >
+> > On Thu, 27 Oct 2022 13:57:45 +0200, Ulf Hansson wrote:
+> > > To support the deeper cluster idle state for sm8250 platforms, some
+> > > additional synchronization is needed between the rpmh-rsc device and the
+> > > CPU cluster PM domain. Until that is supported, let's disable the cluster
+> > > idle state.
+> > >
+> > > This fixes a problem that has been reported for the Qcom RB5 platform (see
+> > > below), but most likely other sm8250 platforms suffers from similar issues,
+> > > so let's make the fix generic for sm8250.
+> > >
+> > > [...]
+> >
+> > Applied, thanks!
+> >
+> > [1/1] arm64: dts: qcom: sm8250: Disable the not yet supported cluster idle state
+> >       commit: 5c7fa5de12a31c1425cc87ba2ef27e6ae0a1788c
+>
+> Hi Bjorn,
+>
+> There seem to be some error while applying the patch "arm64: dts:
+> qcom: sm8250: Disable the not yet supported cluster idle state".
+> This patch is already applied in your arm64-fixes-for-6.1 tree
+> (commit: cadaa773bcf161184fa428180516bae33a7bc667)
+>
+> The new commit: 5c7fa5de12a31c1425cc87ba2ef27e6ae0a1788c,
+> however, disables the Big cpu idle state instead. I'm not sure if that
+> is intentional though.
 
+It's a mistake. There have been a lot of various patches/discussions
+around this issue at LKML, not entirely easy to follow.
 
-(...)
+Anyway to make it clear, we shouldn't need to disable the
+BIG_CPU_SLEEP_0 state, but only the CLUSTER_SLEEP_0.
 
-> +    minItems: 1
-> +    items:
-> +      - description: Interconnect path from mdp0 (or a single mdp) port to the data bus
-> +      - description: Interconnect path from mdp1 port to the data bus
-> +
-> +  interconnect-names:
-> +    minItems: 1
-> +    items:
-> +      - const: mdp0-mem
-> +      - const: mdp1-mem
-> +
-> +  resets:
-> +    items:
-> +      - description: MDSS_CORE reset
-> +
-> +required:
-> +  - compatible
+Bjorn, can you please have a look and drop/revert commit
+5c7fa5de12a31c1425cc87ba2ef27e6ae0a1788c ?
 
-For consistency this should not be required here, but in schema actually
-defining it.
-
-> +  - reg
-> +  - reg-names
-> +  - power-domains
-> +  - clocks
-> +  - interrupts
-> +  - interrupt-controller
-> +  - iommus
-> +  - ranges
-
-Keep the same order as in list of top-level properties.
-
-> +
-> +additionalProperties: true
-
-Best regards,
-Krzysztof
-
+Kind regards
+Uffe
