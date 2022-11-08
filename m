@@ -2,194 +2,572 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A605462123A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 14:23:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A4A8C621272
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 14:30:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234289AbiKHNXP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 08:23:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57914 "EHLO
+        id S233736AbiKHNaS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 08:30:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234010AbiKHNXO (ORCPT
+        with ESMTP id S233817AbiKHNaQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 08:23:14 -0500
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on20605.outbound.protection.outlook.com [IPv6:2a01:111:f400:7eab::605])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F4A24FF98;
-        Tue,  8 Nov 2022 05:23:13 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BpG2xSfa1HLMlUoeIi+g/7tBt0wozc7x/8D49Ji4O70BNwwr1YIswezsjosHvt9EAVDbDgm/sQlqodsxXs2gZoWN4RJkYsgXkEm3vz3ChSNvn4a/DD4oaP0WglYKGGEVqO1KGXuSbDeiZW3sRTwz1DuvHfCRReGIzJAGziTed0V8SVyid5V/AKqFua8TCoSQ66hjzm1LJXXzJ8C+JKRNk0fBlEuc5X6GaaLdaF0ewPBRdluyujOCWq5X6jPg3/1e3mP0HiYbwj5LnOgviNHweA8/8BquE1Ptl6vmVzlik/SRVRZOQpPg4got/gTD6dASGsp74vn35QEa0v/iQIt9/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Y4lg1aVjB5ZHRwdIvv/hl2uo2jH4KOQIwL5Zvpbr0TI=;
- b=gIzS+gbXe6qSmZ+pzRjOE0mAB12perKxa9i6VlpOruutuFnuI25BhD2L3Um9XV4Y8/nEhvQD1rZbJ5ZUM4SjjWLiPipgtp+6mOIp3miHfs9RRzxd1uORmdZfoq9GgR5dxIk+dL3GlMJ6TLEb0aq8hEb6fvgj/9DKEY56GZilXrHjaMnxLEAwUmbX/McXduCxLS6Fp0hOkU0ZRa4TuAp4YysCmDK99KTPWt+3ndxaibCArPgNBIjnNaS8r1V3lI+az8AmWgxvHBC+0o1BCv9lwABUott9k4OvgEdFqbhEHpebDj1lDk+k4puuB2/QhPOCBNOikSKuZintnmvgs1f29Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Y4lg1aVjB5ZHRwdIvv/hl2uo2jH4KOQIwL5Zvpbr0TI=;
- b=pitefX8Qc3ow3eTLM8p37Ho3H7ls2ehktxYNXaEVz4319uNjK2QpSF3rN4tVv7hlaINcm7Q0kpDGj/Qj2VnKOnZJVHCS3XuTO4Ky821t6DhJ+4xvF3dMuGI8kX7G+ZQhGq1ZDROIo1qtzclyG1dJeMe9lt3lIY1eMgSjZFju6n2iob4E+ZG5BBAu8Um5wqwjccJfyi9NzPMiXnplvYvW9qjs+kSbeAWG9nsrtPWb3c+rucM1IJZIDUxhkwhKra5zCn8GUG4DMhg2q+c20oBy5iaAzH8XJHZ4eSk2KrknBSxUKqy/qKEeXI5TITrzzigld8JgOD8wqPiyATOIXrAZlg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by MW4PR12MB5644.namprd12.prod.outlook.com (2603:10b6:303:189::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5791.24; Tue, 8 Nov
- 2022 13:23:11 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::7a81:a4e4:bb9c:d1de]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::7a81:a4e4:bb9c:d1de%6]) with mapi id 15.20.5791.026; Tue, 8 Nov 2022
- 13:23:11 +0000
-Date:   Tue, 8 Nov 2022 09:23:10 -0400
-From:   Jason Gunthorpe <jgg@nvidia.com>
-To:     Will Deacon <will@kernel.org>
-Cc:     Nicolin Chen <nicolinc@nvidia.com>, joro@8bytes.org,
-        robin.murphy@arm.com, kevin.tian@intel.com,
-        quic_jjohnson@quicinc.com, suravee.suthikulpanit@amd.com,
-        robdclark@gmail.com, dwmw2@infradead.org, baolu.lu@linux.intel.com,
-        yong.wu@mediatek.com, matthias.bgg@gmail.com, orsonzhai@gmail.com,
-        baolin.wang@linux.alibaba.com, zhang.lyra@gmail.com,
-        thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
-        jean-philippe@linaro.org, tglx@linutronix.de,
-        shameerali.kolothum.thodi@huawei.com,
-        christophe.jaillet@wanadoo.fr, yangyicong@hisilicon.com,
-        yangyingliang@huawei.com, quic_saipraka@quicinc.com,
-        jon@solid-run.com, iommu@lists.linux.dev,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org
-Subject: Re: [PATCH v7 4/5] iommu: Use EINVAL for incompatible device/domain
- in ->attach_dev
-Message-ID: <Y2pYPnjMqrwDDwB/@nvidia.com>
-References: <cover.1666042872.git.nicolinc@nvidia.com>
- <f52a07f7320da94afe575c9631340d0019a203a7.1666042873.git.nicolinc@nvidia.com>
- <20221107152645.GD21002@willie-the-truck>
- <Y2mfaG1/6hd1qykW@Asurada-Nvidia>
- <20221108132041.GB22816@willie-the-truck>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221108132041.GB22816@willie-the-truck>
-X-ClientProxiedBy: BL0PR05CA0027.namprd05.prod.outlook.com
- (2603:10b6:208:91::37) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
+        Tue, 8 Nov 2022 08:30:16 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B16F45084;
+        Tue,  8 Nov 2022 05:30:14 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A8AMRcx004493;
+        Tue, 8 Nov 2022 13:30:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=s6EcZ087QKCj6f8gIXxhz8JUyyvty6PpFUj0q2w1MRM=;
+ b=o6vk3PRnjMKs4DSjSI9XXP+w/GaQjsYk+ixyEHu79iIUDHX+v/lu/7h12c2+gO+Uf0Zz
+ e6Lbr7bKHAITqGP3BPKP2XN0tZ9oaS4FqjJb9FDU0aJfJMw1Nc9TLA893W2wHeqTVelk
+ 2xmUhz8914JUl6RwmnNS61Cz4RKH3d3h9+d318d7oiWsyuPpgNo6EVf51rOk/3quqp15
+ Xo3OmYLOKlUzhwkIk/faOJHVWnbnUQdKef6KJkGTd+6VS9QRrvMKNTtpBAOBeMis7gJ4
+ 9w3cx0Go/QoJ+cZ1ekPDa38tMX0KrKE6zPUJKlkLBMsBeRdYXBCVyEu+IPqDHJQUNUmJ Ew== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kqhmes0y4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 08 Nov 2022 13:30:01 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A8DU0ib019250
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 8 Nov 2022 13:30:00 GMT
+Received: from [10.216.34.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 8 Nov 2022
+ 05:29:53 -0800
+Message-ID: <b8175f2a-0096-80d4-5733-26ce9f7fd437@quicinc.com>
+Date:   Tue, 8 Nov 2022 18:59:50 +0530
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|MW4PR12MB5644:EE_
-X-MS-Office365-Filtering-Correlation-Id: 68453bd6-fc3e-4d54-4584-08dac18c61f7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 1GVZAk95Dokbdn6h4APRIbB5zfquYIHt3gvq3rjyO5rxpLEiPYc2f6Q16kgPAeAs55+e1qvAJtkpYZkcW3B+yo0If1+UPDAwWjeudH3CDIocBkEYVxrWNGr+BfT6EPiao1OyjTVMOY19hvdqG48E1OUshNvDy624A9KM2jiLMpT0npmH1EqQGkjaJjyXeGKgif90BdE0f//3528YMo3TUshutDdlAniL2tFuWWtQQo618BRZHtZHJXM3xzKoZmaZiUMQVay8dItx/uvtIGuvIh3IBuY7jNsvm7a5MFR+OkEqBPu+pfwGC0bA8K3+rN0TXnB6N4ldFT1x8ZtCOifuMISfcVj9xNNC2MYzuXMFHZPytivgG5lNIMDFUIMV34bl7imNtrmzlUpkyIzAVb2JgcRJJSu1mjThNgZ/c0w9t3GGd+TxmQIee3/TLO8JUHjkRWiIG2NDal4phm4tpRhMCJVoxJxaPJFHSxFUyC15EQ98+yQJEGbaLEsGlerFSncqiuh+HA3lA52D7dqDvS6+ktz9rLsBjTe5gyQ1kWarewqd7LY1WxnDwc3T9ygPhD+4qUBUSLfEzS01ynGhiD3YY1V17oKQckXXuXt+8a6Dyg7uI0/IGYOFEDYJPJQhlrsXDNb7G0pnn08sz/qjAjYWdJrroUzgMpdslSY4uSu3J9oWMMWNYdh/IMW1itn86i1SiUALOJzyrMz6CGNOrsQKYV4p4XZPnsNJurQenp9raGI9HZyousiM+5F47CMSswpO
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(376002)(136003)(39860400002)(396003)(346002)(366004)(451199015)(66946007)(186003)(8936002)(86362001)(66556008)(6506007)(26005)(2906002)(8676002)(66476007)(6512007)(7416002)(36756003)(7406005)(5660300002)(41300700001)(2616005)(38100700002)(83380400001)(4326008)(316002)(478600001)(6486002)(6916009)(473944003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?zkQCf9vuhBEdzbhXikAa2y4l3nWaDHRbjPGkY7ZSHF3zIYJN5LL4PgELSkd9?=
- =?us-ascii?Q?xZkYHpuCRDR9aGKfRYW9fWopmuslW2EIafc4gQQN3IoamcFSZeTnM8DyQ3we?=
- =?us-ascii?Q?i475crH5A/bdTh6UkZAZac48vKWpcRiTozLvR4iu/XcbkzzQtHhR3y+sZ9Np?=
- =?us-ascii?Q?U+RiK5bhmWKjiCJGXfJN+pdyLibjzSiD6l050wgunz8oipiOhgzdEpIhwK2x?=
- =?us-ascii?Q?aFVA4rtIxvoIH0DoJdC7jSkjfsUgHjWnkr9ocWqkp/gBplMJfmOrMEVZAvv2?=
- =?us-ascii?Q?/pXchugcqtReV9lRinwG7Bo+k/I/nwMNp+HbYbLpkodogSd4BRTI3heGnosv?=
- =?us-ascii?Q?mFpLMbHrR5Ls5SlPQ5sYWR/EBos9C1r3sF0OWj4UC5VpV8Rsc9+kGjGBc30m?=
- =?us-ascii?Q?m5YqLkrle23xA4vsY1OWpF6+pLp4KB0CwWXzd5gHoqWkj/6RlYoImIx7pKXT?=
- =?us-ascii?Q?qR2GtNRM9x9wzt9qlbeF+LPTZnFfPhccUlaiq2i4f2LtN7CGes7LzaX4Ax86?=
- =?us-ascii?Q?M3/50uespqgRXg5uTOqA92j/kJqaBKyXoaLMt4DzpT24L1YYvnEkB6fNHjfx?=
- =?us-ascii?Q?ARotWDtj3q+3PFfYHZJ7ZcV9Umc/keRu4IPgkEcku3amKulScU7jVRlbT68d?=
- =?us-ascii?Q?4K+3c9a5IoMo5Qx6AjsobDutG/xIomFYxBJkLbQyJp5EQmZYD/rHJDXbjkF+?=
- =?us-ascii?Q?nOD1pz2BIvYPgCSLsX30jGlNPQGfEV/RFOLTgi7JRZhwdsZgE2yR4fhAJ9iR?=
- =?us-ascii?Q?WJcv1fwuR7LP16rUmBe6093TdBEE0v2ubeHQuxRkxIfD7d2vqFPw8VkBkrkn?=
- =?us-ascii?Q?owAaJk6e0b9wmIXqahfmQ0NwwR1xUVUAc04UgIIx60//aT8M/gIq8Co8wVK1?=
- =?us-ascii?Q?aqoNOnYL4LVRESuOLoQ5JVFxkvTjumJj+8G7am5zVeQH3fyPVwLCLUncIjGH?=
- =?us-ascii?Q?arDNxqydBv24Mnda2NStobHE/ZrPg+Fd4dbR2x/e9vJ66+UQvGFd5cjeREJ9?=
- =?us-ascii?Q?nZI+E/GxEZmQaQdTEieWH74ZXype3BYSjt1Xi81ViYJMuVD9Sjh8XonAfHup?=
- =?us-ascii?Q?0CY2EftL1CcAYA/0evxYNRodbryhKBgyqga//2tYH3SpL4I6W1Mymo4pOEMx?=
- =?us-ascii?Q?XXCsjwQf1ZQ5irlQB6onvPHUsYBG8tNeQ7LOWFHRRoIM7OPp3HOFpS4jzkuy?=
- =?us-ascii?Q?McsyzDsTzk+8CbD+6FG/hXf39rR7RitYlrPwfl6VRIQNj/RkkCOMN2WzJmbz?=
- =?us-ascii?Q?k4SHd+AYPc30J7f1Jn+YT2XTNVEuP6vIcm9VhLtCtRL2skmKZgjOy2Gg9RgA?=
- =?us-ascii?Q?3DdkPlL1JEgMxUAtmMNF9+btyzx5BPs0b7lEv3Tm9g1IaY4zT/R+tyJWpLDd?=
- =?us-ascii?Q?3YUW8eRPEz1NT7167SvG8h75grgv9BC8/ZJVXKBDVyB/ZIiUmbjh3JadhvSn?=
- =?us-ascii?Q?AHpKqDxuOZGxxsJJFu0iSAchO8IiESHQ8fq2L+1HLFFLEFFcAZe2bI03Nr3r?=
- =?us-ascii?Q?3FpCTcNSEbSLEIiZW/mXwI56yIhUC2Q+gKwfBzIl2Elc004tSKgS7Y/oZxPh?=
- =?us-ascii?Q?/Av82d8ON8zgK+tnYJ0=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 68453bd6-fc3e-4d54-4584-08dac18c61f7
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Nov 2022 13:23:11.2170
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: d9j3Ieq90+XWaodEymm1VndKGYkQI6xFGPWhYitdQpHyiYDBEfyouYYv54g4Ivnw
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB5644
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        SPF_HELO_PASS,SPF_NONE autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v5 4/4] dt-bindings: soundwire: Convert text bindings to
+ DT Schema
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <vkoul@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
+        <robh+dt@kernel.org>, <broonie@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <dianders@chromium.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        <alsa-devel@alsa-project.org>, <quic_rjendra@quicinc.com>,
+        <konrad.dybcio@somainline.org>, <mka@chromium.org>
+CC:     Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+References: <1667911156-19238-1-git-send-email-quic_srivasam@quicinc.com>
+ <1667911156-19238-5-git-send-email-quic_srivasam@quicinc.com>
+ <ec87eaa6-2e76-db16-f300-686a92e4f324@linaro.org>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <ec87eaa6-2e76-db16-f300-686a92e4f324@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: R6bHq7CfaI9Bl2KhuWXiAzdyo3FFj0tj
+X-Proofpoint-ORIG-GUID: R6bHq7CfaI9Bl2KhuWXiAzdyo3FFj0tj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-07_11,2022-11-08_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ adultscore=0 mlxlogscore=999 phishscore=0 spamscore=0 suspectscore=0
+ malwarescore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211080079
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 08, 2022 at 01:20:42PM +0000, Will Deacon wrote:
-> On Mon, Nov 07, 2022 at 04:14:32PM -0800, Nicolin Chen wrote:
-> > On Mon, Nov 07, 2022 at 03:26:45PM +0000, Will Deacon wrote:
-> > 
-> > > > diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> > > > index ba47c73f5b8c..01fd7df16cb9 100644
-> > > > --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> > > > +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> > > > @@ -2430,23 +2430,14 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
-> > > >                       goto out_unlock;
-> > > >               }
-> > > >       } else if (smmu_domain->smmu != smmu) {
-> > > > -             dev_err(dev,
-> > > > -                     "cannot attach to SMMU %s (upstream of %s)\n",
-> > > > -                     dev_name(smmu_domain->smmu->dev),
-> > > > -                     dev_name(smmu->dev));
-> > > > -             ret = -ENXIO;
-> > > > +             ret = -EINVAL;
-> > > >               goto out_unlock;
-> > > >       } else if (smmu_domain->stage == ARM_SMMU_DOMAIN_S1 &&
-> > > >                  master->ssid_bits != smmu_domain->s1_cfg.s1cdmax) {
-> > > > -             dev_err(dev,
-> > > > -                     "cannot attach to incompatible domain (%u SSID bits != %u)\n",
-> > > > -                     smmu_domain->s1_cfg.s1cdmax, master->ssid_bits);
-> > > >               ret = -EINVAL;
-> > > >               goto out_unlock;
-> > > >       } else if (smmu_domain->stage == ARM_SMMU_DOMAIN_S1 &&
-> > > >                  smmu_domain->stall_enabled != master->stall_enabled) {
-> > > > -             dev_err(dev, "cannot attach to stall-%s domain\n",
-> > > > -                     smmu_domain->stall_enabled ? "enabled" : "disabled");
-> > > >               ret = -EINVAL;
-> > > >               goto out_unlock;
-> > > >       }
-> > 
-> > > I think it would be helpful to preserve these messages using
-> > > dev_err_ratelimited() so that attach failure can be diagnosed without
-> > > having to hack the messages back into the driver.
-> > 
-> > Thank you for the review.
-> > 
-> > The change is already picked up last week. Yet, I can add prints
-> > back with a followup patch, if no one has a problem with that.
-> 
-> Sorry, I fell behind with upstream so I got to this late. A patch on top
-> would be fantastic!
-> 
-> > Also, I am not quite sure what the use case would be to have an
-> > error print. Perhaps dev_dbg() would be more fitting if it is
-> > just for diagnosis?
-> 
-> Sure, that works for me. I think the messages are useful for folks
-> triggering this path e.g. via sysfs but if they're limited to debug I think
-> that's better than removing them altogether.
 
-I suspsect it has to be dbg - vfio/iommufd will probably trigger these
-messages as it probes for domains that are compatible - eg certainly
-the first one. Even if it is a "once" it would still emit a confusing
-message for a normal occurance.
+On 11/8/2022 6:15 PM, Krzysztof Kozlowski wrote:
+Thanks for your time Krzyszto!!!
+> On 08/11/2022 13:39, Srinivasa Rao Mandadapu wrote:
+>> Convert soundwire text bindings to DT Schema format.
+>>
+>> Update interrupt property items as per device tree,
+>> as it is not appropriately described in text file.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> Co-developed-by: Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+>> Signed-off-by: Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+>> ---
+>> Changes since V4:
+>>    -- Update interrupt names in example.
+>>    -- Fix blank lines.
+>>    -- Remove dependecy patch info.
+>> Changes since V3:
+>>    -- Remove subnode description and add appropriate pattern properties.
+>>    -- Add interrput names in example.
+>>    -- update some properties description.
+>>    -- Revert minIteams change in previous version.
+>>    -- Rebase to latest code base.
+>> Changes since V2:
+>>    -- Update commit message.
+>>    -- Add child node property.
+>>    -- Change file name.
+>>    -- Remove minIteams for few properties.
+>>    -- Remove redundant required properties.
+>>    -- Remove redundant description for wakeup-source property.
+>>    -- Update interrupt property items.
+>> Changes since V1:
+>>    -- Remove the status field in example.
+>>    -- Remove interrupt-names property in the required list.
+>>    -- Add the wakeup-source property.	
+>>   
+>>   .../devicetree/bindings/soundwire/qcom,sdw.txt     | 215 ------------------
+>>   .../bindings/soundwire/qcom,soundwire.yaml         | 244 +++++++++++++++++++++
+>>   2 files changed, 244 insertions(+), 215 deletions(-)
+>>   delete mode 100644 Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
+>>   create mode 100644 Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt b/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
+>> deleted file mode 100644
+>> index e0faed8..0000000
+>> --- a/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
+>> +++ /dev/null
+>> @@ -1,215 +0,0 @@
+>> -Qualcomm SoundWire Controller Bindings
+>> -
+>> -
+>> -This binding describes the Qualcomm SoundWire Controller along with its
+>> -board specific bus parameters.
+>> -
+>> -- compatible:
+>> -	Usage: required
+>> -	Value type: <stringlist>
+>> -	Definition: must be "qcom,soundwire-v<MAJOR>.<MINOR>.<STEP>",
+>> -		    Example:
+>> -			"qcom,soundwire-v1.3.0"
+>> -			"qcom,soundwire-v1.5.0"
+>> -			"qcom,soundwire-v1.5.1"
+>> -			"qcom,soundwire-v1.6.0"
+>> -			"qcom,soundwire-v1.7.0"
+>> -- reg:
+>> -	Usage: required
+>> -	Value type: <prop-encoded-array>
+>> -	Definition: the base address and size of SoundWire controller
+>> -		    address space.
+>> -
+>> -- interrupts:
+>> -	Usage: required
+>> -	Value type: <prop-encoded-array>
+>> -	Definition: should specify the SoundWire Controller core and optional
+>> -		    wake IRQ
+>> -
+>> -- interrupt-names:
+>> -	Usage: Optional
+>> -	Value type: boolean
+>> -	Value type: <stringlist>
+>> -	Definition: should be "core" for core and "wakeup" for wake interrupt.
+>> -
+>> -- wakeup-source:
+>> -	Usage: Optional
+>> -	Value type: boolean
+>> -	Definition: should specify if SoundWire Controller is wake up capable.
+>> -
+>> -- clock-names:
+>> -	Usage: required
+>> -	Value type: <stringlist>
+>> -	Definition: should be "iface" for SoundWire Controller interface clock
+>> -
+>> -- clocks:
+>> -	Usage: required
+>> -	Value type: <prop-encoded-array>
+>> -	Definition: should specify the SoundWire Controller interface clock
+>> -
+>> -- #sound-dai-cells:
+>> -	Usage: required
+>> -	Value type: <u32>
+>> -	Definition: must be 1 for digital audio interfaces on the controller.
+>> -
+>> -- qcom,dout-ports:
+>> -	Usage: required
+>> -	Value type: <u32>
+>> -	Definition: must be count of data out ports
+>> -
+>> -- qcom,din-ports:
+>> -	Usage: required
+>> -	Value type: <u32>
+>> -	Definition: must be count of data in ports
+>> -
+>> -- qcom,ports-offset1:
+>> -	Usage: required
+>> -	Value type: <prop-encoded-array>
+>> -	Definition: should specify payload transport window offset1 of each
+>> -		    data port. Out ports followed by In ports.
+>> -		    Value of 0xFF indicates that this option is not implemented
+>> -		    or applicable for the respective data port.
+>> -		    More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> -
+>> -- qcom,ports-offset2:
+>> -	Usage: required
+>> -	Value type: <prop-encoded-array>
+>> -	Definition: should specify payload transport window offset2 of each
+>> -		    data port. Out ports followed by In ports.
+>> -		    Value of 0xFF indicates that this option is not implemented
+>> -		    or applicable for the respective data port.
+>> -		    More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> -
+>> -- qcom,ports-sinterval-low:
+>> -	Usage: required
+>> -	Value type: <prop-encoded-array>
+>> -	Definition: should be sample interval low of each data port.
+>> -		    Out ports followed by In ports. Used for Sample Interval
+>> -		    calculation.
+>> -		    Value of 0xFF indicates that this option is not implemented
+>> -		    or applicable for the respective data port.
+>> -		    More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> -
+>> -- qcom,ports-word-length:
+>> -	Usage: optional
+>> -	Value type: <prop-encoded-array>
+>> -	Definition: should be size of payload channel sample.
+>> -		    Value of 0xFF indicates that this option is not implemented
+>> -		    or applicable for the respective data port.
+>> -		    More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> -
+>> -- qcom,ports-block-pack-mode:
+>> -	Usage: optional
+>> -	Value type: <prop-encoded-array>
+>> -	Definition: should be 0 or 1 to indicate the block packing mode.
+>> -		    0 to indicate Blocks are per Channel
+>> -		    1 to indicate Blocks are per Port.
+>> -		    Out ports followed by In ports.
+>> -		    Value of 0xFF indicates that this option is not implemented
+>> -		    or applicable for the respective data port.
+>> -		    More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> -
+>> -- qcom,ports-block-group-count:
+>> -	Usage: optional
+>> -	Value type: <prop-encoded-array>
+>> -	Definition: should be in range 1 to 4 to indicate how many sample
+>> -		    intervals are combined into a payload.
+>> -		    Out ports followed by In ports.
+>> -		    Value of 0xFF indicates that this option is not implemented
+>> -		    or applicable for the respective data port.
+>> -		    More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> -
+>> -- qcom,ports-lane-control:
+>> -	Usage: optional
+>> -	Value type: <prop-encoded-array>
+>> -	Definition: should be in range 0 to 7 to identify which	data lane
+>> -		    the data port uses.
+>> -		    Out ports followed by In ports.
+>> -		    Value of 0xFF indicates that this option is not implemented
+>> -		    or applicable for the respective data port.
+>> -		    More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> -
+>> -- qcom,ports-hstart:
+>> -	Usage: optional
+>> -	Value type: <prop-encoded-array>
+>> -	Definition: should be number identifying lowerst numbered coloum in
+>> -		    SoundWire Frame, i.e. left edge of the Transport sub-frame
+>> -		    for each port. Values between 0 and 15 are valid.
+>> -		    Out ports followed by In ports.
+>> -		    Value of 0xFF indicates that this option is not implemented
+>> -		    or applicable for the respective data port.
+>> -		    More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> -
+>> -- qcom,ports-hstop:
+>> -	Usage: optional
+>> -	Value type: <prop-encoded-array>
+>> -	Definition: should be number identifying highest numbered coloum in
+>> -		    SoundWire Frame, i.e. the right edge of the Transport
+>> -		    sub-frame for each port. Values between 0 and 15 are valid.
+>> -		    Out ports followed by In ports.
+>> -		    Value of 0xFF indicates that this option is not implemented
+>> -		    or applicable for the respective data port.
+>> -		    More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> -
+>> -- qcom,dports-type:
+>> -	Usage: optional
+>> -	Value type: <prop-encoded-array>
+>> -	Definition: should be one of the following types
+>> -		    0 for reduced port
+>> -		    1 for simple ports
+>> -		    2 for full port
+>> -		    Out ports followed by In ports.
+>> -		    Value of 0xFF indicates that this option is not implemented
+>> -		    or applicable for the respective data port.
+>> -		    More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> -
+>> -- reset:
+>> -	Usage: optional
+>> -	Value type: <prop-encoded-array>
+>> -	Definition: Should specify the SoundWire audio CSR reset controller interface,
+>> -		    which is required for SoundWire version 1.6.0 and above.
+>> -
+>> -- reset-names:
+>> -	Usage: optional
+>> -	Value type: <stringlist>
+>> -	Definition: should be "swr_audio_cgcr" for SoundWire audio CSR reset
+>> -		    controller interface.
+>> -
+>> -Note:
+>> -	More Information on detail of encoding of these fields can be
+>> -found in MIPI Alliance SoundWire 1.0 Specifications.
+>> -
+>> -= SoundWire devices
+>> -Each subnode of the bus represents SoundWire device attached to it.
+>> -The properties of these nodes are defined by the individual bindings.
+>> -
+>> -= EXAMPLE
+>> -The following example represents a SoundWire controller on DB845c board
+>> -which has controller integrated inside WCD934x codec on SDM845 SoC.
+>> -
+>> -soundwire: soundwire@c85 {
+>> -	compatible = "qcom,soundwire-v1.3.0";
+>> -	reg = <0xc85 0x20>;
+>> -	interrupts = <20 IRQ_TYPE_EDGE_RISING>;
+>> -	clocks = <&wcc>;
+>> -	clock-names = "iface";
+>> -	resets = <&lpass_audiocc LPASS_AUDIO_SWR_TX_CGCR>;
+>> -	reset-names = "swr_audio_cgcr";
+>> -	#sound-dai-cells = <1>;
+>> -	qcom,dports-type = <0>;
+>> -	qcom,dout-ports	= <6>;
+>> -	qcom,din-ports	= <2>;
+>> -	qcom,ports-sinterval-low = /bits/ 8  <0x07 0x1F 0x3F 0x7 0x1F 0x3F 0x0F 0x0F>;
+>> -	qcom,ports-offset1 = /bits/ 8 <0x01 0x02 0x0C 0x6 0x12 0x0D 0x07 0x0A >;
+>> -	qcom,ports-offset2 = /bits/ 8 <0x00 0x00 0x1F 0x00 0x00 0x1F 0x00 0x00>;
+>> -
+>> -	/* Left Speaker */
+>> -	left{
+>> -		....
+>> -	};
+>> -
+>> -	/* Right Speaker */
+>> -	right{
+>> -		....
+>> -	};
+>> -};
+>> diff --git a/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml b/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
+>> new file mode 100644
+>> index 0000000..4114c5c
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
+>> @@ -0,0 +1,244 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/soundwire/qcom,soundwire.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm SoundWire Controller
+>> +
+>> +maintainers:
+>> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> +  - Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> +
+>> +description:
+>> +  The Qualcomm SoundWire controller along with its board specific bus parameters.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,soundwire-v1.3.0
+>> +      - qcom,soundwire-v1.5.0
+>> +      - qcom,soundwire-v1.5.1
+>> +      - qcom,soundwire-v1.6.0
+>> +      - qcom,soundwire-v1.7.0
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  interrupts:
+>> +    minItems: 1
+>> +    items:
+>> +      - description: specify the SoundWire controller core.
+>> +      - description: specify the Soundwire controller wake IRQ.
+>> +
+>> +  interrupt-names:
+>> +    minItems: 1
+>> +    items:
+>> +      - const: core
+>> +      - const: wakeup
+>> +
+>> +  clocks:
+>> +    items:
+>> +      - description: iface clock
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: iface
+>> +
+>> +  resets:
+>> +    items:
+>> +      - description: SWR_AUDIO_CGCR RESET
+>> +
+>> +  reset-names:
+>> +    items:
+>> +      - const: swr_audio_cgcr
+>> +
+>> +  '#sound-dai-cells':
+>> +    const: 1
+>> +
+>> +  '#address-cells':
+>> +    const: 2
+>> +
+>> +  '#size-cells':
+>> +    const: 0
+>> +
+>> +  wakeup-source: true
+>> +
+>> +  qcom,din-ports:
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>> +    description: count of data in ports
+>> +
+>> +  qcom,dout-ports:
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>> +    description: count of data out ports
+>> +
+>> +  qcom,ports-word-length:
+>> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+>> +    description: Size of payload channel sample.
+>> +                 Value of 0xFF indicates that this option is not implemented
+>> +                 or applicable for the respective data port.
+>> +                 More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> +    minItems: 3
+>> +    maxItems: 5
+>> +
+>> +  qcom,ports-sinterval-low:
+>> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+>> +    description: Sample interval low of each data port.
+>> +                 Out ports followed by In ports. Used for Sample Interval
+>> +                 calculation.
+>> +                 Value of 0xFF indicates that this option is not implemented
+>> +                 or applicable for the respective data port.
+>> +                 More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> +    minItems: 3
+>> +    maxItems: 8
+>> +
+>> +  qcom,ports-offset1:
+>> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+>> +    description: Payload transport window offset1 of each
+>> +                 data port. Out ports followed by In ports.
+>> +                 Value of 0xFF indicates that this option is not implemented
+>> +                 or applicable for the respective data port.
+>> +                 More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> +    minItems: 3
+>> +    maxItems: 8
+>> +
+>> +  qcom,ports-offset2:
+>> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+>> +    description: Payload transport window offset2 of each
+>> +                 data port. Out ports followed by In ports.
+>> +                 Value of 0xFF indicates that this option is not implemented
+>> +                 or applicable for the respective data port.
+>> +                 More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> +    minItems: 3
+>> +    maxItems: 8
+>> +
+>> +  qcom,ports-lane-control:
+>> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+>> +    description: Identify which data lane the data port uses.
+>> +                 Out ports followed by In ports.
+>> +                 Value of 0xFF indicates that this option is not implemented
+>> +                 or applicable for the respective data port.
+>> +                 More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> +    minItems: 3
+>> +    maxItems: 5
+>> +
+>> +  qcom,ports-block-pack-mode:
+>> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+>> +    description: Indicate the block packing mode.
+>> +                 0 to indicate Blocks are per Channel
+>> +                 1 to indicate Blocks are per Port.
+>> +                 Out ports followed by In ports.
+>> +                 Value of 0xFF indicates that this option is not implemented
+>> +                 or applicable for the respective data port.
+>> +                 More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> +    minItems: 3
+>> +    maxItems: 8
+>> +
+>> +  qcom,ports-hstart:
+>> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+>> +    description: Identifying lowerst numbered coloum in
+>> +                 SoundWire Frame, i.e. left edge of the Transport sub-frame
+>> +                 for each port. Values between 0 and 15 are valid.
+> minimum: 0
+> maximum: 15
+> and drop that one sentence.
+>
+> The same in other places.
 
-This is why they were removed in the first place..
+As below mentioned it will also have 0xFF value. I think we can't 
+restrict with minimum and maximum values.
 
-Jason
+Please suggest if my understanding is wrong.
+
+>
+>> +                 Out ports followed by In ports.
+>> +                 Value of 0xFF indicates that this option is not implemented
+>> +                 or applicable for the respective data port.
+>> +                 More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> +    minItems: 3
+>> +    maxItems: 5
+>> +
+>> +  qcom,ports-hstop:
+>> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+>> +    description: Identifying highest numbered coloum in
+>> +                 SoundWire Frame, i.e. the right edge of the Transport
+>> +                 sub-frame for each port. Values between 0 and 15 are valid.
+>> +                 Out ports followed by In ports.
+>> +                 Value of 0xFF indicates that this option is not implemented
+>> +                 or applicable for the respective data port.
+>> +                 More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> +    minItems: 3
+>> +    maxItems: 5
+>> +
+>> +  qcom,ports-block-group-count:
+>> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+>> +    description: In range 1 to 4 to indicate how many sample
+>> +                 intervals are combined into a payload.
+>> +                 Out ports followed by In ports.
+>> +                 Value of 0xFF indicates that this option is not implemented
+>> +                 or applicable for the respective data port.
+>> +                 More info in MIPI Alliance SoundWire 1.0 Specifications.
+>> +    minItems: 3
+>> +    maxItems: 5
+>> +
+>> +  label:
+>> +    maxItems: 1
+>> +
+>> +patternProperties:
+>> +  "^.*@[0-9a-f],[0-9a-f]$":
+>> +    type: object
+>> +    description: Child nodes for a standalone audio codec or speaker amplifier IC.
+>> +                 It has RX and TX Soundwire slave devices.
+> s/slave/secondary/
+>
+> This is some odd indentation. Please use standard, like example-schema
+> is showing, so:
+>
+>      description:
+>        Child nodes for a standalone audio codec or speaker amplifier IC.
+>        RX and TX Soundwire slave devices.
+>
+> It looks you used such pattern in other places here - they should also
+> be corrected.
+Okay. Will change accordingly.
+>
+>> +    properties:
+>> +      compatible:
+>> +        pattern: "^sdw[0-9a-f]{1}[0-9a-f]{4}[0-9a-f]{4}[0-9a-f]{2}$"
+>> +
+>
+> Best regards,
+> Krzysztof
+>
