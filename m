@@ -2,363 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1620621701
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 15:42:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D554D621735
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 15:48:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234269AbiKHOmK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 09:42:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47114 "EHLO
+        id S233784AbiKHOra (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 09:47:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234255AbiKHOmH (ORCPT
+        with ESMTP id S234406AbiKHOrC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 09:42:07 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2CD027900
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 06:42:04 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id l14so21355945wrw.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 06:42:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=W8UcJ0GaU+CjJ1uQZKnrPv8ndJ2BS66qRNxxSEafyKE=;
-        b=muz8Ab86BqaMTfG0PBWYuWzWU7rZMNLpVa+2bN/hRSDGr+1Pa/ucWfB8p0ROCZb/Ev
-         m35meCmJUyv14YfFOecebgNcU8vntDoSr6C1I01iAsyP4u+C5qFVpxWAB696bdRsgU/+
-         LOUoKnW6OW0qY/JG+WcNskD5992R0VJApE+RsCkRCx08Tx+Gsn6sC4y0wJZEArxLzZBy
-         nbMnKOWeJYtKzyME6LF97/TLGqqWDX39KFx6KqAYHprdac7XHWyONvgCXxjs1Rbr6qBu
-         GKsiKth9abImAXeUsFYs7uHCNlspBTbOfRz1vu8SwBbWGAy5aW9Cv1Oa5yBMn6h/9Hsp
-         R10A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W8UcJ0GaU+CjJ1uQZKnrPv8ndJ2BS66qRNxxSEafyKE=;
-        b=68E1R0/2EtCQp/hZ4Iv+wZ1knejlM/GrCvg19ORJpUNK39Pq5LuuWD1OMnCxjelE35
-         1YDx/h656xJ/oFdueVPaAUz6Y6SLRtJMgQ0PayPjZ3P6cTDa87BCmhvJ3CWsJybEQv2S
-         YrZf9hE8cpYOCRa582mJh0tLx4wjiazzam9fwyYX0DXgymA6qk5Yc5yxRAN4GV5HM++n
-         9n+bofygA2fqAaYJpZ2X2jaOh/YzJmBkZiHejhEZ1Y0Pw4r3xjjQY8nGNPODeL3vutyA
-         Lv2P3lRYSx98px3D5qMegsCfrYPvtsiaNxXJ2Tx2P4GmEWSZGWVMhHIBUDP/tDVfefkL
-         hwhA==
-X-Gm-Message-State: ACrzQf0m/gkGkJPgzq5p/xOCXRAwi/PrHsFhgAuuSvDYqB0PMCoGEnqw
-        FR/lgR6NtlIJqQlcbr4MaAx/eQ==
-X-Google-Smtp-Source: AMsMyM5oMvEjL2vTJwXTlTKP2P+NZu+skMaqMeBR7astV6rsRFfYVY7xi0BdMj1Uwee6UHnFtlR5Qg==
-X-Received: by 2002:a5d:4889:0:b0:22b:214:38dd with SMTP id g9-20020a5d4889000000b0022b021438ddmr37505143wrq.32.1667918523474;
-        Tue, 08 Nov 2022 06:42:03 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id l12-20020a05600c2ccc00b003b47ff307e1sm12228666wmc.31.2022.11.08.06.42.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Nov 2022 06:42:03 -0800 (PST)
-Message-ID: <a8c36604-5f52-0be9-29d7-f64811541c97@linaro.org>
-Date:   Tue, 8 Nov 2022 14:42:02 +0000
+        Tue, 8 Nov 2022 09:47:02 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4177A9FE8;
+        Tue,  8 Nov 2022 06:46:59 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A8E8Cwi021563;
+        Tue, 8 Nov 2022 14:46:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=xY2h5+UrR73hVYHlPLptrNsNGUN3y4EyCh+wOIi6Oy8=;
+ b=DQThg95gIPWRmtEtuwy2yBifaEah0HTt4sORa7P5qMZMQ/oJcBXSLPiUhJyQ9TTqSG8I
+ vCHCAWbQ1Q3nHwvVqwqRZCXYKp0mN/y0eMeGGWzCtho+VYnlRW80OMZhgR5AI6mfrwZV
+ On/ma0u90ctyKPeYj1s9sO3S59/aEL3c6qwiFrC9vrUAOJdQ+/XByp5rCb+rTySMvXHK
+ IxAGkYaxEjH4U9fjSFSEuyDuyREFYi/yTxjoreSpAvJrCq1z9XDruBIg2lG3taINCOYd
+ axmRwnnEy1LxLrhpkgaSRveZg/zJBOcs1/nEAeLILnFPW07DmY7GQM8e/Rvm+QeZQpPz mA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kqht896fs-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 08 Nov 2022 14:46:46 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A8EkjKR008059
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 8 Nov 2022 14:46:45 GMT
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Tue, 8 Nov 2022 06:46:39 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <vkoul@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
+        <robh+dt@kernel.org>, <broonie@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <dianders@chromium.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        <alsa-devel@alsa-project.org>, <quic_rjendra@quicinc.com>,
+        <konrad.dybcio@somainline.org>, <mka@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v6 0/4]  Convert soundwire bindings to DT schema
+Date:   Tue, 8 Nov 2022 20:15:59 +0530
+Message-ID: <1667918763-32445-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v2 03/18] dt-bindings: msm: dsi-controller-main: Add vdd*
- descriptions back in
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        quic_mkrishn@quicinc.com, linux-arm-msm@vger.kernel.org
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221107235654.1769462-1-bryan.odonoghue@linaro.org>
- <20221107235654.1769462-4-bryan.odonoghue@linaro.org>
- <ceffec42-f9af-6bde-8db1-076f0cc2a34f@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <ceffec42-f9af-6bde-8db1-076f0cc2a34f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: PMRg16jl0ynzdb_SRsKG26fR5zqlTGyq
+X-Proofpoint-GUID: PMRg16jl0ynzdb_SRsKG26fR5zqlTGyq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-07_11,2022-11-08_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=863
+ impostorscore=0 suspectscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ adultscore=0 mlxscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211080089
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/11/2022 12:59, Dmitry Baryshkov wrote:
->>
->> Warnings about missing regulators can be resolved by updating the 
->> relevant
->> dtsi files to point to fixed always-on regulators where appropriate.
-> 
-> Ugh. Are they missing or are they optional/not used on these platforms?
+Convert soundwire bindings text file to DT schema and update
+device tree entries to follow strict dt-bindings.
+Changes since V5:
+  -- Update indentation of few properties description.
+  -- Update minimum and maximum limit for few properties.
+  -- Fix Typo errors in commit message.
+  -- Update commit message with differences from text file.
+Changes Since V4:
+  -- Update interrupt names in example.
+  -- Fix blank lines.
+  -- Remove dependecy patch info.
+  -- Split dtsi patches as per SoC.
+Changes Since V3:
+  -- Remove subnode description and add appropriate pattern properties.
+  -- Add interrput names in example.
+  -- update some properties description.
+  -- Revert minIteams change in previous version.
+  -- Rebase to latest code base.
+  -- Update dtsi node names,
+  -- Remove redundant property in soundwire node.
 
-Some platforms either don't implement them or worse possibly do 
-implement but don't model them when they should.
+Srinivasa Rao Mandadapu (4):
+  arm64: dts: qcom: Update soundwire secondary node names
+  arm64: dts: qcom: sm8250: Remove redundant soundwire property
+  arm64: dts: qcom: sc7280: Remove redundant soundwire property
+  dt-bindings: soundwire: Convert text bindings to DT Schema
 
-> Can you possibly list all regulator warnings?
+ .../devicetree/bindings/soundwire/qcom,sdw.txt     | 215 ----------------
+ .../bindings/soundwire/qcom,soundwire.yaml         | 270 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts           |   4 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |   1 -
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts         |   4 +-
+ .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts      |   4 +-
+ arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts   |   4 +-
+ arch/arm64/boot/dts/qcom/sm8250-mtp.dts            |   4 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi               |   1 -
+ 9 files changed, 280 insertions(+), 227 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
+ create mode 100644 Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
 
-
-Downstream we have
-
-arch/arm/boot/dts/qcom/msm8916-mdss.dtsi
-
-mdss_dsi0: qcom,mdss_dsi@1a98000 {
-	vdda-supply = <&pm8916_l2>;
-	vdd-supply = <&pm8916_l17>;
-	vddio-supply = <&pm8916_l6>;
-};
-
-Looking at something like
-
-arch/arm/boot/dts/qcom/msm8916-mtp.dtsi which references 
-arch/arm/boot/dts/qcom/dsi-panel-jdi-1080p-video.dtsi it doesn't appear 
-to delete andy of the vdd*-supply references
-
-apq8016-sbc.dtb: dsi@1a98000: 'vdd-supply' is a required property
-msm8916-samsung-a3u-eur.dtb: dsi@1a98000: 'vdd-supply' is a required 
-property
-msm8916-samsung-a5u-eur.dtb: dsi@1a98000: 'vdd-supply' is a required 
-property
-msm8916-samsung-e5.dtb: dsi@1a98000: 'vdd-supply' is a required property
-msm8916-samsung-e7.dtb: dsi@1a98000: 'vdd-supply' is a required property
-msm8916-samsung-grandmax.dtb: dsi@1a98000: 'vdd-supply' is a required 
-property
-msm8996-xiaomi-natrium.dtb: dsi@994000: 'panel@0', 'vcca-supply' do not 
-match any of the regexes: 'pinctrl-[0-9]+'
-msm8996-xiaomi-scorpio.dtb: dsi@994000: 'vdda-supply' is a required property
-qrb5165-rb5.dtb: dsi@ae94000: 'vdd-supply' is a required property
-qrb5165-rb5.dtb: dsi@ae94000: 'vddio-supply' is a required property
-sc7180-idp.dtb: dsi@ae94000: 'vdd-supply' is a required property
-sc7180-idp.dtb: dsi@ae94000: 'vddio-supply' is a required property
-sc7180-trogdor-coachz-r1.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-coachz-r1.dtb: dsi@ae94000: 'vddio-supply' is a required 
-property
-sc7180-trogdor-coachz-r1-lte.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-coachz-r1-lte.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-coachz-r3.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-coachz-r3.dtb: dsi@ae94000: 'vddio-supply' is a required 
-property
-sc7180-trogdor-coachz-r3-lte.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-coachz-r3-lte.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-homestar-r2.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-homestar-r2.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-homestar-r3.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-homestar-r3.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-homestar-r4.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-homestar-r4.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-kingoftown-r0.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-kingoftown-r0.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-kingoftown-r1.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-kingoftown-r1.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-lazor-r0.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-lazor-r0.dtb: dsi@ae94000: 'vddio-supply' is a required 
-property
-sc7180-trogdor-lazor-r1.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-lazor-r1.dtb: dsi@ae94000: 'vddio-supply' is a required 
-property
-sc7180-trogdor-lazor-r1-kb.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-lazor-r1-kb.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-lazor-r1-lte.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-lazor-r1-lte.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-lazor-r3.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-lazor-r3.dtb: dsi@ae94000: 'vddio-supply' is a required 
-property
-sc7180-trogdor-lazor-r3-kb.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-lazor-r3-kb.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-lazor-r3-lte.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-lazor-r3-lte.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-lazor-r9.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-lazor-r9.dtb: dsi@ae94000: 'vddio-supply' is a required 
-property
-sc7180-trogdor-lazor-r9-kb.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-lazor-r9-kb.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-lazor-r9-lte.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-lazor-r9-lte.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-lazor-limozeen-r4.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-lazor-limozeen-r4.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-lazor-limozeen-r9.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-lazor-limozeen-r9.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-lazor-limozeen-nots-r4.dtb: dsi@ae94000: 'vdd-supply' is 
-a required property
-sc7180-trogdor-lazor-limozeen-nots-r4.dtb: dsi@ae94000: 'vddio-supply' 
-is a required property
-sc7180-trogdor-lazor-limozeen-nots-r5.dtb: dsi@ae94000: 'vdd-supply' is 
-a required property
-sc7180-trogdor-lazor-limozeen-nots-r5.dtb: dsi@ae94000: 'vddio-supply' 
-is a required property
-sc7180-trogdor-lazor-limozeen-nots-r9.dtb: dsi@ae94000: 'vdd-supply' is 
-a required property
-sc7180-trogdor-lazor-limozeen-nots-r9.dtb: dsi@ae94000: 'vddio-supply' 
-is a required property
-sc7180-trogdor-mrbland-rev0-auo.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-mrbland-rev0-auo.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-mrbland-rev0-boe.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-mrbland-rev0-boe.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-mrbland-rev1-auo.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-mrbland-rev1-auo.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-mrbland-rev1-boe.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-mrbland-rev1-boe.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-pazquel-lte-parade.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-pazquel-lte-parade.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-pazquel-lte-ti.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-pazquel-lte-ti.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-pazquel-parade.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-pazquel-parade.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-pazquel-ti.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-pazquel-ti.dtb: dsi@ae94000: 'vddio-supply' is a required 
-property
-sc7180-trogdor-pompom-r1.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-pompom-r1.dtb: dsi@ae94000: 'vddio-supply' is a required 
-property
-sc7180-trogdor-pompom-r1-lte.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-pompom-r1-lte.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-pompom-r2.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-pompom-r2.dtb: dsi@ae94000: 'vddio-supply' is a required 
-property
-sc7180-trogdor-pompom-r2-lte.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-pompom-r2-lte.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-pompom-r3.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-pompom-r3.dtb: dsi@ae94000: 'vddio-supply' is a required 
-property
-sc7180-trogdor-pompom-r3-lte.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-pompom-r3-lte.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-quackingstick-r0.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-quackingstick-r0.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
-sc7180-trogdor-quackingstick-r0-lte.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-quackingstick-r0-lte.dtb: dsi@ae94000: 'vddio-supply' is 
-a required property
-sc7180-trogdor-wormdingler-rev0-boe.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-wormdingler-rev0-boe.dtb: dsi@ae94000: 'vddio-supply' is 
-a required property
-sc7180-trogdor-wormdingler-rev0-inx.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-wormdingler-rev0-inx.dtb: dsi@ae94000: 'vddio-supply' is 
-a required property
-sc7180-trogdor-wormdingler-rev1-boe.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-wormdingler-rev1-boe.dtb: dsi@ae94000: 'vddio-supply' is 
-a required property
-sc7180-trogdor-wormdingler-rev1-inx.dtb: dsi@ae94000: 'vdd-supply' is a 
-required property
-sc7180-trogdor-wormdingler-rev1-inx.dtb: dsi@ae94000: 'vddio-supply' is 
-a required property
-sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dtb: dsi@ae94000: 
-'vdd-supply' is a required property
-sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dtb: dsi@ae94000: 
-'vddio-supply' is a required property
-sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dtb: dsi@ae94000: 
-'vdd-supply' is a required property
-sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dtb: dsi@ae94000: 
-'vddio-supply' is a required property
-sc7180-trogdor-r1.dtb: dsi@ae94000: 'vdd-supply' is a required property
-sc7180-trogdor-r1.dtb: dsi@ae94000: 'vddio-supply' is a required property
-sc7180-trogdor-r1-lte.dtb: dsi@ae94000: 'vdd-supply' is a required property
-sc7180-trogdor-r1-lte.dtb: dsi@ae94000: 'vddio-supply' is a required 
-property
-sda660-inforce-ifc6560.dtb: dsi@c994000: 'vdd-supply' is a required property
-sda660-inforce-ifc6560.dtb: dsi@c994000: 'vddio-supply' is a required 
-property
-sdm845-cheza-r1.dtb: dsi@ae94000: 'vdd-supply' is a required property
-sdm845-cheza-r1.dtb: dsi@ae94000: 'vddio-supply' is a required property
-sdm845-cheza-r2.dtb: dsi@ae94000: 'vdd-supply' is a required property
-sdm845-cheza-r2.dtb: dsi@ae94000: 'vddio-supply' is a required property
-sdm845-cheza-r3.dtb: dsi@ae94000: 'vdd-supply' is a required property
-sdm845-cheza-r3.dtb: dsi@ae94000: 'vddio-supply' is a required property
-sdm845-db845c.dtb: dsi@ae94000: 'vdd-supply' is a required property
-sdm845-db845c.dtb: dsi@ae94000: 'vddio-supply' is a required property
-sdm845-mtp.dtb: dsi@ae94000: 'vdd-supply' is a required property
-sdm845-mtp.dtb: dsi@ae94000: 'vddio-supply' is a required property
-sdm845-mtp.dtb: dsi@ae96000: 'vdd-supply' is a required property
-sdm845-mtp.dtb: dsi@ae96000: 'vddio-supply' is a required property
-sdm845-oneplus-enchilada.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sdm845-oneplus-enchilada.dtb: dsi@ae94000: 'vddio-supply' is a required 
-property
-sdm845-oneplus-fajita.dtb: dsi@ae94000: 'vdd-supply' is a required property
-sdm845-oneplus-fajita.dtb: dsi@ae94000: 'vddio-supply' is a required 
-property
-sdm845-xiaomi-beryllium.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sdm845-xiaomi-beryllium.dtb: dsi@ae94000: 'vddio-supply' is a required 
-property
-sdm845-xiaomi-polaris.dtb: dsi@ae94000: 'vdd-supply' is a required property
-sdm845-xiaomi-polaris.dtb: dsi@ae94000: 'vddio-supply' is a required 
-property
-sdm845-shift-axolotl.dtb: dsi@ae94000: 'vdd-supply' is a required property
-sdm845-shift-axolotl.dtb: dsi@ae94000: 'vddio-supply' is a required property
-sdm850-lenovo-yoga-c630.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sdm850-lenovo-yoga-c630.dtb: dsi@ae94000: 'vddio-supply' is a required 
-property
-
-apq8016-sbc.dtb: dsi@1a98000: 'vdd-supply' is a required property
-msm8916-samsung-a5u-eur.dtb: dsi@1a98000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-homestar-r4.dtb: dsi@ae94000: 'vdd-supply' is a required 
-property
-sc7180-trogdor-homestar-r4.dtb: dsi@ae94000: 'vddio-supply' is a 
-required property
+-- 
+2.7.4
 
