@@ -2,81 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11EC7620CEB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 11:11:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 245EB620D02
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 11:19:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233606AbiKHKLN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 05:11:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42652 "EHLO
+        id S233853AbiKHKTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 05:19:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233382AbiKHKLM (ORCPT
+        with ESMTP id S233856AbiKHKTI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 05:11:12 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EF25CE2B;
-        Tue,  8 Nov 2022 02:11:11 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A88bapU015600;
-        Tue, 8 Nov 2022 10:11:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=h8+ioOxt/M50vRMcvRz9EeFpvFX/e57/3WpIPPmWfBk=;
- b=oX4xm7HS0JiNM8HMqg1/YgWVDld8WNMHjUCkM2tEa4zhV7RstP2Lw/DXI81xuT6UJ5mk
- /7XCtucyxClNFDKcsC3xRAimnt5kWRJnfQae2BPwqs9MEca0LRBT+pCvsfpenN895pAS
- 1hvI7gCpTZdQjxc0hqhYKP9YfO19pF8RAk/+dJeLcUsgCc1UnUy1oolnf9upeHRAF7Uo
- cxLSymHDVjvCR19sb66L8H917jQvRYCpEBRd3Kr0CZJjxZ207sCkeYW1Hb3ZJd+f1Qla
- QD4fisgT+Pugt2RzxsSVKhG9mxmUMrJZlnZpMgiB5qmCG86yzObNCh9F9buXODSmC0v3 LQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kqhmk8em1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 08 Nov 2022 10:11:00 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A8AAxxa028342
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 8 Nov 2022 10:10:59 GMT
-Received: from [10.79.43.101] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 8 Nov 2022
- 02:10:55 -0800
-Message-ID: <e5b529c7-865c-b5d1-c3bf-dc6b162431d7@quicinc.com>
-Date:   Tue, 8 Nov 2022 15:40:52 +0530
+        Tue, 8 Nov 2022 05:19:08 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E24E8E0D3
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 02:19:04 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id i3so13376952pfc.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 02:19:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=mzN5KFd2Y8I/q67uNmUdKzDvTfRtrUq0Ss4XZ+RPexg=;
+        b=Y762+Z7+yJXkYybXyvsdCWsLlLawNmZSVHud6lRjtqz/U1O/w89HGZ17E085oW1TX+
+         MugDWPz5mhnEuoCvYo6FU4REmALXzFFFb88J0A6iKutYsHiXdoByrsWdiRzR9dUbYa9L
+         nb9oXGH9Epohl+7s1/7gvl3mW2mh7vKCJ4acMh05S50XWyF/1OEmtEhJbKQUA5HFUZq1
+         FoNn/iaZPISGLVEFWaXaTkh/pgJoppSiaOXQFWBft6KzZkCERrXjTHDR2hHnWAtBtJt7
+         cToPq3/W2gm4tLBjQ0df7HXVS2AfQhaFJbe+YCZmXM5GWCw6247kEQDNVktHfitQMq3G
+         cy/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mzN5KFd2Y8I/q67uNmUdKzDvTfRtrUq0Ss4XZ+RPexg=;
+        b=gVlUcL8lPC6MERw37DBPsxiF4vdillZvd7QLR6SCgLJ+bNdXInDbHBNzb5ZkxqsJrx
+         4RIGb2nHbHzAHEaFm/Fd6tgTnct8myT3YCwX572sLj+WyjK84PuVpNwpJJd3wDwmknv6
+         STBwf7S5c2W0TXkRzv9/JGb/uKYl2YS+Xmg03YGDZy+WljlUHAlH6XL772xPEZmIGWvW
+         JAHK59ptcdqxApmWjGibUkOoJBnRho8oLwIaKkH8vy2Bi4nifTyeCLY1lg/52A9Rl/+h
+         rDtuTvowU8m9XQJoOtym7KAfcc4B5l2sP0JSzrt02oDmdGbkxysQWWUxTem7Cyg9XdoZ
+         sN1w==
+X-Gm-Message-State: ACrzQf2CevywuYcR60D0j94NFOHDQRVXQb25mA/RuWZv85MVLP1PwDSS
+        EDikIxtTjppb9ZFsGTBKBRpt+dTOJtHWpw89lV08IA==
+X-Google-Smtp-Source: AMsMyM7vNqP5xj1WaQF2hJQ70H9fGNDZKo70toyjGFxR5FLwldoGzpWM/PBOrVNOYQG3pn0UbkBMDCGyPh1OOl1Hh1w=
+X-Received: by 2002:a63:464d:0:b0:441:5968:cd0e with SMTP id
+ v13-20020a63464d000000b004415968cd0emr48838238pgk.595.1667902744501; Tue, 08
+ Nov 2022 02:19:04 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH V2 1/2] arm64: dts: qcom: sc7280: Mark all Qualcomm
- reference boards as LTE
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <bjorn.andersson@linaro.org>, <dianders@chromium.org>,
-        <jinghung.chen3@hotmail.com>
-CC:     <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
-        <konrad.dybcio@somainline.org>
-References: <20221108092207.8186-1-quic_sibis@quicinc.com>
- <ca515021-326d-6034-2af9-54e73e1cc8fa@linaro.org>
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <ca515021-326d-6034-2af9-54e73e1cc8fa@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: HLvoFt3Ucq8T2Tbrx1BERlM7Q1fw_O3h
-X-Proofpoint-ORIG-GUID: HLvoFt3Ucq8T2Tbrx1BERlM7Q1fw_O3h
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-07_11,2022-11-07_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- priorityscore=1501 clxscore=1015 lowpriorityscore=0 mlxlogscore=798
- phishscore=0 suspectscore=0 mlxscore=0 spamscore=0 adultscore=0
- impostorscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2210170000 definitions=main-2211080055
+References: <20221018152837.619426-7-ulf.hansson@linaro.org>
+ <202210190144.WIiituiJ-lkp@intel.com> <20221107170127.i5bfkx45egaf2oh4@builder.lan>
+In-Reply-To: <20221107170127.i5bfkx45egaf2oh4@builder.lan>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 8 Nov 2022 11:18:27 +0100
+Message-ID: <CAPDyKFpsPk5uhva2F+=b0r7FeO-8n9+tMAA9iaxGmZZgrtoZUw@mail.gmail.com>
+Subject: Re: [PATCH v3 6/6] soc: qcom: rpmh-rsc: Write CONTROL_TCS with next
+ timer wakeup
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     kernel test robot <lkp@intel.com>, Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        kbuild-all@lists.01.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,32 +76,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Krzysztof,
-Thanks for taking time to review the series.
+On Mon, 7 Nov 2022 at 18:01, Bjorn Andersson <andersson@kernel.org> wrote:
+>
+> On Wed, Oct 19, 2022 at 01:47:17AM +0800, kernel test robot wrote:
+> [..]
+> >    155        #define USECS_TO_CYCLES(time_usecs)                     \
+> >    156                xloops_to_cycles((time_usecs) * 0x10C7UL)
+> >    157
+> >    158        static inline unsigned long xloops_to_cycles(unsigned long xloops)
+>
+> Any objections to me changing the type to u64 while applying the
+> patches?
 
+No objections. Thanks for making the improvement!
 
-On 11/8/22 15:04, Krzysztof Kozlowski wrote:
-> On 08/11/2022 10:22, Sibi Sankar wrote:
->> When the modem node was re-located to a separate LTE source file
->> "sc7280-herobrine-lte-sku.dtsi", some of the previous LTE users
->> weren't marked appropriately. Fix this by marking all Qualcomm
->> reference devices as LTE.
->>
->> Fix-suggested-by: Douglas Anderson <dianders@chromium.org>
-> 
-> There is no such tag. If it is a fix, use Reported-by. If it is not, use
-> Suggested-by.
+>
+> Regards,
+> Bjorn
+>
+> >    159        {
+> >  > 160                return (xloops * loops_per_jiffy * HZ) >> 32;
+> >    161        }
+> >    162
 
-lol I should have just stuck with S-b but found the tag being used a
-number of times. I'll fix this up if the series warrants a re-spin.
-
--Sibi
-
-> 
->> Fixes: d42fae738f3a ("arm64: dts: qcom: Add LTE SKUs for sc7280-villager family")
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->> ---
-> 
-> Best regards,
-> Krzysztof
-> 
+Kind regards
+Uffe
