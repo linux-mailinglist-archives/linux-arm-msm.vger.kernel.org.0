@@ -2,77 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9EC6620E05
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 12:01:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C973620E08
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 12:02:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233870AbiKHLBc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 06:01:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47404 "EHLO
+        id S233910AbiKHLCW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 06:02:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233844AbiKHLBa (ORCPT
+        with ESMTP id S233747AbiKHLCU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 06:01:30 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68C2345EDF;
-        Tue,  8 Nov 2022 03:01:29 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A8AMfHC030637;
-        Tue, 8 Nov 2022 11:01:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=b8ful+Ico9cTg5FCbvxSJcqiOop2CXximVnBcSFM/x4=;
- b=BFZLhCd25oN1JQXFyvawgxBXRCyYova+GKqwvJrLJTdhgL3BcdNS4YwapF8pQS3hZ2eI
- ioGxJ12has4fB8EFz/0KLYCro68hGOBUdPuvBQp/gDvJGNJjN5cO6fuK7COhUAY66VbI
- XyQSjkb4Sm6P0kOad7nhkbnlKmUikcE2Vht3RInenLeXrpJzcDRxMUVkTp/Hcm7/9pwR
- Zkd6kjHdkGFKzm5rteb1RcSHhjtrbm4+6AdZ6tD485Z2GHIa1Zg29J1e2mjiWOBBVs5W
- O2bTESNztHR4KSlkATBV+CVMY0dM4noOzNH+XpErytMizi2jMx7pTPcZmgrHkSVmbiFa /A== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kqhmggj7t-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 08 Nov 2022 11:01:19 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A8B1IkG021849
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 8 Nov 2022 11:01:18 GMT
-Received: from [10.79.43.101] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 8 Nov 2022
- 03:01:15 -0800
-Message-ID: <dad47960-6c91-3b77-4371-db649de0c147@quicinc.com>
-Date:   Tue, 8 Nov 2022 16:31:12 +0530
+        Tue, 8 Nov 2022 06:02:20 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BEEA4731D
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 03:02:19 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id d20so20511012ljc.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 03:02:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cn8xDfZvXsB41XkQwJ5O0ptc1Al1vldhnYatc7I/dps=;
+        b=HjVF5flkezC2CUkVw2fV7PUN3JxWfls0uUR864b8ktY560GsUH/fp8ti2i1GLLXkUu
+         YhNtFqzDqm2WGFB8iHUPUUkujF4RkVq8xWfOzoinJEipEprHeZM92gV2b57uGpI1uLTE
+         HyG/FVI8cbTym6wbNsWWmMbj8L3CeQgdAEjQFx7Ez2NhPXCtB+mKWpZsecGD+h6sLteM
+         b5YOTLYRoPO7pbDnT0dBRg0Fbav+FH8l7+ESgsJOtv1HafKmvNsLZlvMc7aqwRA/ek+o
+         DMtEH99PkRW2rc9X6v1XWUl5mTZ5AfounvVcXKcbYe270j3Kk489+7WMPqtAJ9yqOs+q
+         yVag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cn8xDfZvXsB41XkQwJ5O0ptc1Al1vldhnYatc7I/dps=;
+        b=jouDrG3KGGAU9Gip8LYT/tJlR1yTNQI1fXuRZbwXRU0d8Hc0OSFuKjxBAxM8uVqVKO
+         KfOEytmaOrrqWCziw0Rv//RAKqozB0b0nN4192kjyveO3wBqCPoDDlCyI9tPNH8bnl2k
+         o0gF1ha00mLlKLGKnVsGa2pRrfYOgNwz7wpbL+Z0A8LQLdTRWbZm2OB/zOY5IGxl7uLU
+         BupQNi4ICVrw2mLAHgA4rJIzSBqE64wVdFHN4iYPu6I+IBSy/Q/fF1BMzR37WY5U32yA
+         56UABzaNzgSiVyFdXmqLUrSqNMh4YSlwBHSxUYGSBlvDAy9ev+CKMe1eybJm+NQu7BXQ
+         5nHw==
+X-Gm-Message-State: ACrzQf0YC+iKEWv2OPc45HqKFYvqD0XkSn3iEFC3ayhX1Eh4WQZtego7
+        4xSDYFjZASHmW8utGx7+wAmFpQ==
+X-Google-Smtp-Source: AMsMyM6HCaaxxudPzb046JtNcBohEMFbaPXk3HJh9n9Nw2CpwimyduwKlvf0NuOGh3LYP+a4btI0jA==
+X-Received: by 2002:a2e:8919:0:b0:277:22ee:ca2b with SMTP id d25-20020a2e8919000000b0027722eeca2bmr18049090lji.465.1667905337655;
+        Tue, 08 Nov 2022 03:02:17 -0800 (PST)
+Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
+        by smtp.gmail.com with ESMTPSA id bi27-20020a0565120e9b00b0049f9799d349sm1726558lfb.187.2022.11.08.03.02.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Nov 2022 03:02:17 -0800 (PST)
+Message-ID: <e14a3e14-d0d7-f8f9-051c-3168a6457b8e@linaro.org>
+Date:   Tue, 8 Nov 2022 12:02:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [RFC 0/2] Add support for SCMI QTI Memlat Vendor Protocol
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v3 3/8] dt-bindings: display/msm: add support for the
+ display on SM8450
 Content-Language: en-US
-To:     Cristian Marussi <cristian.marussi@arm.com>
-CC:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <robh+dt@kernel.org>, <sudeep.holla@arm.com>, <agross@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <konrad.dybcio@somainline.org>,
-        <quic_avajid@quicinc.com>, <souvik.chakravarty@arm.com>
-References: <1667451512-9655-1-git-send-email-quic_sibis@quicinc.com>
- <Y2OMpiMXcaEiiA/2@e120937-lin>
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <Y2OMpiMXcaEiiA/2@e120937-lin>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20221104130324.1024242-1-dmitry.baryshkov@linaro.org>
+ <20221104130324.1024242-4-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221104130324.1024242-4-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: OVAiJ6J_y-sOXeBB5zq_9fDSTte_3FAD
-X-Proofpoint-ORIG-GUID: OVAiJ6J_y-sOXeBB5zq_9fDSTte_3FAD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-07_11,2022-11-08_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- clxscore=1011 impostorscore=0 adultscore=0 suspectscore=0 mlxlogscore=975
- priorityscore=1501 phishscore=0 malwarescore=0 mlxscore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211080061
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -82,46 +86,236 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Cristian,
-Thanks for taking time to review the series.
+On 04/11/2022 14:03, Dmitry Baryshkov wrote:
+> Add DPU and MDSS schemas to describe MDSS and DPU blocks on the Qualcomm
+> SM8450 platform.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../bindings/display/msm/qcom,sm8450-dpu.yaml | 132 +++++++
+>  .../display/msm/qcom,sm8450-mdss.yaml         | 347 ++++++++++++++++++
+>  2 files changed, 479 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml
+> new file mode 100644
+> index 000000000000..090a6506c8e9
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml
+> @@ -0,0 +1,132 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/msm/qcom,sm8450-dpu.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SM8450 Display DPU
+> +
+> +maintainers:
+> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> +
+> +$ref: /schemas/display/msm/dpu-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sm8450-dpu
+> +
+> +  reg:
+> +    items:
+> +      - description: Address offset and size for mdp register set
+> +      - description: Address offset and size for vbif register set
+> +
+> +  reg-names:
+> +    items:
+> +      - const: mdp
+> +      - const: vbif
+> +
+> +  clocks:
+> +    items:
+> +      - description: Display hf axi
+> +      - description: Display sf axi
+> +      - description: Display ahb
+> +      - description: Display lut
+> +      - description: Display core
+> +      - description: Display vsync
+> +
+> +  clock-names:
+> +    items:
+> +      - const: bus
+> +      - const: nrt_bus
+> +      - const: iface
+> +      - const: lut
+> +      - const: core
+> +      - const: vsync
+> +
+> +unevaluatedProperties: false
 
-On 11/3/22 15:11, Cristian Marussi wrote:
-> On Thu, Nov 03, 2022 at 10:28:30AM +0530, Sibi Sankar wrote:
->> The patch series documents the bindings and adds support for the
->> SCMI QTI memlat (memory latency) vendor protocol. The protocol takes
->> in several tuneables including the IPM ratio (Instructions Per Miss),
->> bus bandwidth requirements and PMU maps to enable frequency scaling
->> of various buses (L3/LLCC/DDR). The scaling is performed by the HW
->> memory latency governor running on the CPUSS Control Processor.
->>
->> Depends on CPUCP mailbox driver:
->> https://patchwork.kernel.org/project/linux-arm-msm/cover/1663135386-26270-1-git-send-email-quic_sibis@quicinc.com/
->>
-> 
-> [+ CC: souvik.chakravarty@arm.com ]
-> 
-> Hi Sibi,
-> 
-> Nice to see vendor protocols starting to make their way into upstream !
-> 
-> I only glanced through the series as of now, and I'd have a few
-> questions before going on with the review:
-> 
->   - why this protocol is dependent on a specific transport ?
->     Is it to compile it only on platform supoprting it without adding
->     a per-protocol Kconfig ?
+You should require here properties provided by this schema. Otherwise it
+is a bit trickier to get what is actually required. I'll comment on your
+dependency patchset as well.
 
-It was done just to compile it on platforms supporting it but it doesn't
-have to done that way. I remove the dependency during the next re-spin.
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,sm8450-dispcc.h>
+> +    #include <dt-bindings/clock/qcom,gcc-sm8450.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/interconnect/qcom,sm8450.h>
+> +    #include <dt-bindings/power/qcom-rpmpd.h>
+> +
+> +    display-controller@ae01000 {
+> +        compatible = "qcom,sm8450-dpu";
+> +        reg = <0x0ae01000 0x8f000>,
+> +              <0x0aeb0000 0x2008>;
+> +        reg-names = "mdp", "vbif";
+> +
+> +        clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
+> +                <&gcc GCC_DISP_SF_AXI_CLK>,
+> +                <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +                <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
+> +                <&dispcc DISP_CC_MDSS_MDP_CLK>,
+> +                <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+> +        clock-names = "bus",
+> +                      "nrt_bus",
+> +                      "iface",
+> +                      "lut",
+> +                      "core",
+> +                      "vsync";
+> +
+> +        assigned-clocks = <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+> +        assigned-clock-rates = <19200000>;
+> +
+> +        operating-points-v2 = <&mdp_opp_table>;
+> +        power-domains = <&rpmhpd SM8450_MMCX>;
+> +
+> +        interrupt-parent = <&mdss>;
+> +        interrupts = <0>;
+> +
+> +        ports {
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +
+> +            port@0 {
+> +                reg = <0>;
+> +                dpu_intf1_out: endpoint {
+> +                    remote-endpoint = <&dsi0_in>;
+> +                };
+> +            };
+> +
+> +            port@1 {
+> +                reg = <1>;
+> +                dpu_intf2_out: endpoint {
+> +                    remote-endpoint = <&dsi1_in>;
+> +                };
+> +            };
+> +        };
+> +
+> +        mdp_opp_table: opp-table {
+> +            compatible = "operating-points-v2";
+> +
+> +            opp-172000000{
+> +                opp-hz = /bits/ 64 <172000000>;
+> +                required-opps = <&rpmhpd_opp_low_svs_d1>;
+> +            };
+> +
+> +            opp-200000000 {
+> +                opp-hz = /bits/ 64 <200000000>;
+> +                required-opps = <&rpmhpd_opp_low_svs>;
+> +            };
+> +
+> +            opp-325000000 {
+> +                opp-hz = /bits/ 64 <325000000>;
+> +                required-opps = <&rpmhpd_opp_svs>;
+> +            };
+> +
+> +            opp-375000000 {
+> +                opp-hz = /bits/ 64 <375000000>;
+> +                required-opps = <&rpmhpd_opp_svs_l1>;
+> +            };
+> +
+> +            opp-500000000 {
+> +                opp-hz = /bits/ 64 <500000000>;
+> +                required-opps = <&rpmhpd_opp_nom>;
+> +            };
+> +        };
+> +    };
+> +...
+> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml
+> new file mode 100644
+> index 000000000000..9b6e1e03dc78
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml
+> @@ -0,0 +1,347 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/msm/qcom,sm8450-mdss.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SM8450 Display MDSS
+> +
+> +maintainers:
+> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> +
+> +description:
+> +  SM8450 MSM Mobile Display Subsystem(MDSS), which encapsulates sub-blocks like
+> +  DPU display controller, DSI and DP interfaces etc.
+> +
+> +$ref: /schemas/display/msm/mdss-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sm8450-mdss
+> +
+> +  clocks:
+> +    items:
+> +      - description: Display AHB
+> +      - description: Display hf AXI
+> +      - description: Display sf AXI
+> +      - description: Display core
+> +
+> +  clock-names:
+> +    items:
+> +      - const: iface
+> +      - const: bus
+> +      - const: nrt_bus
+> +      - const: core
+> +
+> +  iommus:
+> +    maxItems: 1
+> +
+> +  interconnects:
+> +    maxItems: 2
+> +
+> +  interconnect-names:
+> +    maxItems: 2
+> +
+> +patternProperties:
+> +  "^display-controller@[0-9a-f]+$":
+> +    type: object
+> +    properties:
+> +      compatible:
+> +        const: qcom,sm8450-dpu
+> +
+> +  "^dsi@[0-9a-f]+$":
+> +    type: object
+> +    properties:
+> +      compatible:
+> +        const: qcom,mdss-dsi-ctrl
+> +
+> +  "^phy@[0-9a-f]+$":
+> +    type: object
+> +    properties:
+> +      compatible:
+> +        const: qcom,dsi-phy-5nm-8450
+> +
+> +unevaluatedProperties: false
 
-- Sibi
+Ditto
 
-> 
-> Protocols are anyway enumerated at SCMI stack probe time so even if it
-> is not there it just won't be activated...I maybe missing something.
-> 
-> Thanks,
-> Cristian
-> 
-> 
-> 
+
+
+Best regards,
+Krzysztof
+
