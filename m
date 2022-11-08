@@ -2,54 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEE1F62127B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 14:33:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C23B621367
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 14:50:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233468AbiKHNdq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 08:33:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36450 "EHLO
+        id S234620AbiKHNuF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 08:50:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233372AbiKHNdp (ORCPT
+        with ESMTP id S234616AbiKHNuE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 08:33:45 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 365E5282
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 05:33:43 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D9916B81AE4
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 13:33:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9A6C433D6;
-        Tue,  8 Nov 2022 13:33:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667914420;
-        bh=7XY63BVNkDFf8XNi82/PutUfKJA6hYvAAgkd8WIXW3o=;
-        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-        b=YcKIrks8T6BZ3a2ieJjFEyPCR56ZLq/aKIYJdZxdCIcWRLdX4BsI5rv4d1EkNjo20
-         HqC+9lRqeRJ380eIVwEHXQezcPy4Gt9Y1IhtGexYSN1yTwmRxwJUIxkpOxwjonti3M
-         ixtx+bi2XxxEp+oxHisVX2IJnRcGH3sPlPuUhMXIrxyei0l8G7e7dzepmvTt2fUlCC
-         6FaoFTVKm1DPaa30pN2TvPKHwDUsRdbHVqvast1h+cnYDhfeznCuAsP9Y7RK+gizlP
-         NXWydNDHDz/bG9fnLzlbYLFWYVwwCD8CrEsSyN/+WL98LMMTjN6qLOyT8F9nFwSd9i
-         CqOCpbRKfC9og==
-From:   Kalle Valo <kvalo@kernel.org>
-To:     Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Jeff Johnson <quic_jjohnson@quicinc.com>,
-        Hemant Kumar <quic_hemantk@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev
-Subject: Re: [PATCH v5] bus: mhi: host: make mhi_controller_config::event_cfg const
-References: <20220829205112.12036-1-quic_jjohnson@quicinc.com>
-        <20220830171147.24338-1-quic_jjohnson@quicinc.com>
-        <20220907080016.GA22505@workstation>
-Date:   Tue, 08 Nov 2022 15:33:35 +0200
-In-Reply-To: <20220907080016.GA22505@workstation> (Manivannan Sadhasivam's
-        message of "Wed, 7 Sep 2022 13:30:16 +0530")
-Message-ID: <87fsettvtc.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Tue, 8 Nov 2022 08:50:04 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6D14B843
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 05:50:02 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id p8so21269200lfu.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 05:50:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2UOTLJIJjlKyMFsd4bjanGUmZl8YyXauAhu1BAnXo0k=;
+        b=VlACUCZj5v6rL3K9IrtTakH0zJT4XXALH/f5eC4uaMyl4GCs28MQKq/ys/EZ8E16QU
+         DExi4+RdcDQ6W+97Ur/sL7Do7Rx/qjo198KUCzxH0jcAsIU+JrAB6SmeMaNes/I/T3w3
+         MBNY/4KNZKAlOhzyFLTIcUhO4p1VwqngwiAZAltPGg44OWXXS2+Grg3MnniQXc6RppeY
+         s5FUuoAwWz0jwmEEenLLNw9jbdZm9S0C+8JK8jJS4SFzPVx1x1IaZkYt719levAbr2mj
+         uvXXgW+tsTCogDm/fzlqRhJ9l/dYahIdUAaL9jcHYg2+EPZZo0g1LCuGd7L9SA9wayId
+         Ys0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2UOTLJIJjlKyMFsd4bjanGUmZl8YyXauAhu1BAnXo0k=;
+        b=gduQEIg9zhKFCI260WdrnP9CSCI1R9ZBQzKSEQnGRarEzVnOgMEyE7MWjLojrKvulu
+         OXVOatUNtl2Y3ZzQ5L4eK0w9CbSKeFd04iW2UnXA6b0Tk5uZtTTVN9/xnvCTITwve/bT
+         raFE8rROow+WctZMLAUQK8/eoy6DLCvTV/8yxICQLhtGshWgeb1eSj2unTserPM1cyqC
+         gLRU5qdLjt9FSCmOav8TbyciKo09q7bRA+hmXcfLZD7KQso7m2owNvaYUIBEKgSuasZi
+         liDpGCERlVUA7/cv9B2HE1OhPLHexTeDcgoIFugxmmDCk3on8WXElTRO91f7/BMdWWbm
+         IwxA==
+X-Gm-Message-State: ANoB5pnr8I/2fvLs7D6Rvj5ZvVtoi3mEs7J7CAKueFlmjJF9Yww4zvMJ
+        WhNnszJeazDT9N2RtGDoaCHIDw==
+X-Google-Smtp-Source: AA0mqf7uG7BBXftt8g/nQ97DInOy3cCUyJC9Dq/me1lOdWMWoc2EK7UGJ1E8I7haQZUQqmrsgVKiCw==
+X-Received: by 2002:a19:6758:0:b0:4b4:c0c:8c64 with SMTP id e24-20020a196758000000b004b40c0c8c64mr801216lfj.122.1667915401027;
+        Tue, 08 Nov 2022 05:50:01 -0800 (PST)
+Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
+        by smtp.gmail.com with ESMTPSA id j29-20020a056512029d00b004ac980a1ba1sm1794354lfp.24.2022.11.08.05.49.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Nov 2022 05:50:00 -0800 (PST)
+Message-ID: <2a2385a0-0055-aeff-cd7c-71270dd4e561@linaro.org>
+Date:   Tue, 8 Nov 2022 14:49:58 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v5 4/4] dt-bindings: soundwire: Convert text bindings to
+ DT Schema
+Content-Language: en-US
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        vkoul@kernel.org, agross@kernel.org, andersson@kernel.org,
+        robh+dt@kernel.org, broonie@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_rohkumar@quicinc.com, srinivas.kandagatla@linaro.org,
+        dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
+        alsa-devel@alsa-project.org, quic_rjendra@quicinc.com,
+        konrad.dybcio@somainline.org, mka@chromium.org
+Cc:     Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+References: <1667911156-19238-1-git-send-email-quic_srivasam@quicinc.com>
+ <1667911156-19238-5-git-send-email-quic_srivasam@quicinc.com>
+ <ec87eaa6-2e76-db16-f300-686a92e4f324@linaro.org>
+ <b8175f2a-0096-80d4-5733-26ce9f7fd437@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <b8175f2a-0096-80d4-5733-26ce9f7fd437@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,22 +85,106 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Manivannan Sadhasivam <mani@kernel.org> writes:
+On 08/11/2022 14:29, Srinivasa Rao Mandadapu wrote:
+>>> +  qcom,ports-block-pack-mode:
+>>> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+>>> +    description: Indicate the block packing mode.
+>>> +                 0 to indicate Blocks are per Channel
+>>> +                 1 to indicate Blocks are per Port.
+>>> +                 Out ports followed by In ports.
+>>> +                 Value of 0xFF indicates that this option is not implemented
+>>> +                 or applicable for the respective data port.
+>>> +                 More info in MIPI Alliance SoundWire 1.0 Specifications.
+>>> +    minItems: 3
+>>> +    maxItems: 8
+>>> +
+>>> +  qcom,ports-hstart:
+>>> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+>>> +    description: Identifying lowerst numbered coloum in
+>>> +                 SoundWire Frame, i.e. left edge of the Transport sub-frame
+>>> +                 for each port. Values between 0 and 15 are valid.
+>> minimum: 0
+>> maximum: 15
+>> and drop that one sentence.
+>>
+>> The same in other places.
+> 
+> As below mentioned it will also have 0xFF value. I think we can't 
+> restrict with minimum and maximum values.
+> 
+> Please suggest if my understanding is wrong.
 
-> On Tue, Aug 30, 2022 at 10:11:47AM -0700, Jeff Johnson wrote:
->> Currently the event_cfg pointer in struct mhi_controller_config is not
->> defined as a const pointer. This prevents clients from registering a
->> read-only configuration unless they use a typecast. Since the
->> event_cfg should not be modified once registered, add the const
->> qualifier to event_cfg. This is aligned with the definition of ch_cfg.
->> 
->> Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
->
-> Applied to mhi-next!
+Then (and it is actually an array):
+minItems: 3
+maxItems: 5
+items:
+  oneOf:
+    - minimum: 0
+      maximum: 15
+    - const: 0xff
 
-BTW what happened to this patch? I cannot find it anywhere.
+> 
+>>
+>>> +                 Out ports followed by In ports.
+>>> +                 Value of 0xFF indicates that this option is not implemented
+>>> +                 or applicable for the respective data port.
+>>> +                 More info in MIPI Alliance SoundWire 1.0 Specifications.
+>>> +    minItems: 3
+>>> +    maxItems: 5
+>>> +
+>>> +  qcom,ports-hstop:
+>>> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+>>> +    description: Identifying highest numbered coloum in
+>>> +                 SoundWire Frame, i.e. the right edge of the Transport
+>>> +                 sub-frame for each port. Values between 0 and 15 are valid.
+>>> +                 Out ports followed by In ports.
+>>> +                 Value of 0xFF indicates that this option is not implemented
+>>> +                 or applicable for the respective data port.
+>>> +                 More info in MIPI Alliance SoundWire 1.0 Specifications.
+>>> +    minItems: 3
+>>> +    maxItems: 5
+>>> +
+>>> +  qcom,ports-block-group-count:
+>>> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+>>> +    description: In range 1 to 4 to indicate how many sample
+>>> +                 intervals are combined into a payload.
+>>> +                 Out ports followed by In ports.
+>>> +                 Value of 0xFF indicates that this option is not implemented
+>>> +                 or applicable for the respective data port.
+>>> +                 More info in MIPI Alliance SoundWire 1.0 Specifications.
+>>> +    minItems: 3
+>>> +    maxItems: 5
+>>> +
+>>> +  label:
+>>> +    maxItems: 1
+>>> +
+>>> +patternProperties:
+>>> +  "^.*@[0-9a-f],[0-9a-f]$":
+>>> +    type: object
+>>> +    description: Child nodes for a standalone audio codec or speaker amplifier IC.
+>>> +                 It has RX and TX Soundwire slave devices.
+>> s/slave/secondary/
+>>
+>> This is some odd indentation. Please use standard, like example-schema
+>> is showing, so:
+>>
+>>      description:
+>>        Child nodes for a standalone audio codec or speaker amplifier IC.
+>>        RX and TX Soundwire slave devices.
+>>
+>> It looks you used such pattern in other places here - they should also
+>> be corrected.
+> Okay. Will change accordingly.
+>>
+>>> +    properties:
+>>> +      compatible:
+>>> +        pattern: "^sdw[0-9a-f]{1}[0-9a-f]{4}[0-9a-f]{4}[0-9a-f]{2}$"
+>>> +
+>>
+>> Best regards,
+>> Krzysztof
+>>
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+Best regards,
+Krzysztof
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
