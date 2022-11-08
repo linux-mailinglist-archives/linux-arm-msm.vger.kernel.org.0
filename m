@@ -2,67 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC5FF620D6D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 11:36:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7945F620DB0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 11:49:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233952AbiKHKf7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 05:35:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57580 "EHLO
+        id S233916AbiKHKtO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 05:49:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233587AbiKHKfz (ORCPT
+        with ESMTP id S233998AbiKHKsu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 05:35:55 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43FD942F7A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 02:35:51 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id bj12so37315612ejb.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 02:35:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QzGzsYzfZld5BaPsWA5Lt7NjqLM8KvUDhOQ6bLN6+Og=;
-        b=p2tdeDcHOvdvUTcDLFXYRVq4ekKoCNHqucsPWZvzZE97BFX7xpmVJ/CI5ytB8q2vTp
-         jWX3m1b0qgSIjDxOBWKwIuUhzj/SfDebRy0dDwWP7yyMGJHkmDVOPoZzD0CJ0hKn0UD2
-         3K0GFhZubMWCvjTAlMPSyuzZJgv2g/DOkK+D2umwGJ8dvv0LLVRovwZXC5PHc1vxs4v+
-         LZ1BsutMnBr9X9Ou9tGabFs3vrv46Zn76bMv6p5eoNUW0Yf8qNY7I3gOQiK/krUgrESk
-         I1jLhtmT9ZWkvBQVtvULojmEzs+ios3PbhEPgfy485phQntChVfnk+PudKmufTMIB1iA
-         e3Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QzGzsYzfZld5BaPsWA5Lt7NjqLM8KvUDhOQ6bLN6+Og=;
-        b=S87Y9R51HHEjsvPz0N3Edxn5RhComeAL2/tcXE0OlVzdbTHh+3+fM6H5W+Mgs3hjew
-         4znWyKvgATklwqVVfxboLgzwkinHW0oVbOXfAE36yMv9S7mAd2R2duvfo0OUvSPm0Oc4
-         p373ouMl6+ocOafTytxCdgR9EeQvTTQLe0wCAIOy8UO8qRO0jZiu8o5VUhPda3rqPFV9
-         kd5Z2M3HWmvC36M1GLqFCuTYPObCjm1OOMwkVQ3lYjKqdnZpc3QUb4fxzVz2teiGLKVF
-         Imk8ziAWv+pazsVwq/rXo25qIXg3hec9oefwL3S8GzcOSKT0RrV50q5BiHCaGV219x7V
-         3zZw==
-X-Gm-Message-State: ACrzQf2NDupKjOZkksEvJ01YJUIgcAnGDirgm+UPYzoO2kQcl8fOe+Ds
-        MdgJKN0ZJLecob5W7HFpA4Bi++JrFAJDWbIp2r+y8Q==
-X-Google-Smtp-Source: AMsMyM4XmkDJX+qrSEP4SpZrn8cWb1HWzNQvAAk1OfJ9imq8qxTAL9wtzeIx9tJqISQizQs+QRf+dML5kSmR4FEmz9A=
-X-Received: by 2002:a17:906:6956:b0:7ae:3a0b:c6f6 with SMTP id
- c22-20020a170906695600b007ae3a0bc6f6mr20431161ejs.383.1667903749742; Tue, 08
- Nov 2022 02:35:49 -0800 (PST)
+        Tue, 8 Nov 2022 05:48:50 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D2CA43871;
+        Tue,  8 Nov 2022 02:48:41 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A897LnJ024277;
+        Tue, 8 Nov 2022 10:48:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=oqCPnuhcclVuBKkKCdVweXH9kYN9fMbcdEPaLydmOz8=;
+ b=SKBFWKilnYWXak7J5N9kGRD9TMc7gE8Bu596/p5t5weTLAPVimhxe/n3SwviPUvhEsL0
+ 7DHJR/Fy4IdQCcBSFtQYTZjWWTRm1dDvoW4kiHKTVRBB/bvHZv6qIMP/5isIEhQLb3pm
+ pJdOL+VG2OrKoIFtCItKXw48KDmJcfmcwqr5tCeNA3rAX9VlW0soZ/Ej3OBcfVbyTf4g
+ p7yU5sFogwAR8sZbJ9yYjg17WMEeRJftojG+6kN+23jJMVmK4bfUclbymqedAcGvNNBk
+ bnpLcq06mtylCAHc+jDdHx14nScVKOaLPGs0jFIPITAd0Dd/rbXl/hukUi6aYFKeA6Rg kQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kqhkp0k8y-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 08 Nov 2022 10:48:22 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A8AmLuZ007667
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 8 Nov 2022 10:48:21 GMT
+Received: from [10.79.43.101] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 8 Nov 2022
+ 02:48:18 -0800
+Message-ID: <dd4821da-331f-4529-8162-90bfe95aa8f8@quicinc.com>
+Date:   Tue, 8 Nov 2022 16:18:15 +0530
 MIME-Version: 1.0
-References: <20221013121255.1977-1-quic_mmitkov@quicinc.com> <46d82762-8b6b-8a3e-0bdd-5598163244de@linaro.org>
-In-Reply-To: <46d82762-8b6b-8a3e-0bdd-5598163244de@linaro.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Tue, 8 Nov 2022 11:35:38 +0100
-Message-ID: <CAG3jFysAfymcFS54CyxBYhJbQ4Qh7bvhpE8UPc3S1o_8uQq7Xg@mail.gmail.com>
-Subject: Re: [PATCH v4 0/4] media: camss: sm8250: Virtual channels support for SM8250
-To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc:     quic_mmitkov@quicinc.com, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, akapatra@quicinc.com,
-        jzala@quicinc.com, todor.too@gmail.com, agross@kernel.org,
-        konrad.dybcio@somainline.org, mchehab@kernel.org,
-        cgera@qti.qualcomm.com, gchinnab@quicinc.com,
-        ayasan@qti.qualcomm.com, laurent.pinchart@ideasonboard.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [RFC 1/2] dt-bindings: firmware: arm,scmi: Add support for memlat
+ vendor protocol
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+CC:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <sudeep.holla@arm.com>, <cristian.marussi@arm.com>,
+        <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <konrad.dybcio@somainline.org>, <quic_avajid@quicinc.com>
+References: <1667451512-9655-1-git-send-email-quic_sibis@quicinc.com>
+ <1667451512-9655-2-git-send-email-quic_sibis@quicinc.com>
+ <20221104180339.GA2079655-robh@kernel.org>
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <20221104180339.GA2079655-robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: c85QPdilenasOBfnSH_12kIYBDxRx3Ng
+X-Proofpoint-ORIG-GUID: c85QPdilenasOBfnSH_12kIYBDxRx3Ng
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-07_11,2022-11-08_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 phishscore=0 priorityscore=1501 mlxlogscore=999 mlxscore=0
+ impostorscore=0 clxscore=1015 bulkscore=0 malwarescore=0 adultscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211080059
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,105 +84,234 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 8 Nov 2022 at 01:12, Bryan O'Donoghue
-<bryan.odonoghue@linaro.org> wrote:
->
-> On 13/10/2022 13:12, quic_mmitkov@quicinc.com wrote:
-> > From: Milen Mitkov <quic_mmitkov@quicinc.com>
-> >
-> > For v4:
-> > - fixes the warning reported by the kernel test robot
-> > - tiny code change to enable the vc functionality with the partially-applied
-> >    multistream patches on linux-next (tested on tag:next-20221010)
-> >
-> > For v3:
-> > - setting the sink pad format on the CSID entity will now propagate the
-> >    format to the source pads to keep the subdev in a valid internal state.
-> > - code syntax improvements
-> >
-> > For v2:
-> > - code syntax improvements
-> > - The info print for the enabled VCs was demoted to a dbg print. Can be
-> >    enabled with dynamic debug, e.g.:
-> > echo "file drivers/media/platform/qcom/camss/* +p" > /sys/kernel/debug/dynamic_debug/control
-> >
-> > NOTE: These changes depend on the multistream series, that as of yet
-> > is still not merged upstream. However, part of the
-> > multistream patches are merged in linux-next (tested on
-> > tag:next-20221010), including the patch that introduces the
-> > video_device_pipeline_alloc_start() functionality. This allows
-> > applying and using this series on linux-next without applying the
-> > complete multistream set.
-> >
-> > The CSID hardware on SM8250 can demux the input data stream into
-> > maximum of 4 multiple streams depending on virtual channel (vc)
-> > or data type (dt) configuration.
-> >
-> > Situations in which demuxing is useful:
-> > - HDR sensors that produce a 2-frame HDR output, e.g. a light and a dark frame
-> >    (the setup we used for testing, with the imx412 sensor),
-> >    or a 3-frame HDR output - light, medium-lit, dark frame.
-> > - sensors with additional metadata that is streamed over a different
-> >    virtual channel/datatype.
-> > - sensors that produce frames with multiple resolutions in the same pixel
-> >    data stream
-> >
-> > With these changes, the CSID entity has, as it did previously, a single
-> > sink port (0), and always exposes 4 source ports (1, 2,3, 4). The
-> > virtual channel configuration is determined by which of the source ports
-> > are linked to an output VFE line. For example, the link below will
-> > configure the CSID driver to enable vc 0 and vc 1:
-> >
-> > media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-> > media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
-> >
-> > which will be demuxed and propagated into /dev/video0
-> > and /dev/video1 respectively. With this, the userspace can use
-> > any normal V4L2 client app to start/stop/queue/dequeue from these
-> > video nodes. Tested with the yavta app.
-> >
-> > The format of each RDI channel of the used VFE(s) (msm_vfe0_rdi0,
-> > msm_vfe0_rdi1,...) must also be configured explicitly.
-> >
-> > Note that in order to keep a valid internal subdevice state,
-> > setting the sink pad format of the CSID subdevice will propagate
-> > this format to the source pads. However, since the CSID hardware
-> > can demux the input stream into several streams each of which can
-> > be a different format, in that case each source pad's
-> > format must be set individually, e.g.:
-> >
-> > media-ctl -V '"msm_csid0":1[fmt:SRGGB10/3840x2160]'
-> > media-ctl -V '"msm_csid0":2[fmt:SRGGB10/960x540]'
-> >
-> > Milen Mitkov (4):
-> >    media: camss: sm8250: Virtual channels for CSID
-> >    media: camss: vfe: Reserve VFE lines on stream start and link to CSID
-> >    media: camss: vfe-480: Multiple outputs support for SM8250
-> >    media: camss: sm8250: Pipeline starting and stopping for multiple
-> >      virtual channels
-> >
-> >   .../platform/qcom/camss/camss-csid-gen2.c     | 54 ++++++++++------
-> >   .../media/platform/qcom/camss/camss-csid.c    | 44 +++++++++----
-> >   .../media/platform/qcom/camss/camss-csid.h    | 11 +++-
-> >   .../media/platform/qcom/camss/camss-vfe-480.c | 61 ++++++++++++-------
-> >   drivers/media/platform/qcom/camss/camss-vfe.c |  7 +++
-> >   .../media/platform/qcom/camss/camss-video.c   | 21 ++++++-
-> >   drivers/media/platform/qcom/camss/camss.c     |  2 +-
-> >   7 files changed, 140 insertions(+), 60 deletions(-)
-> >
->
-> I've done some offline work with Milen on this.
->
-> I'm happy enough to add my
->
-> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->
-> to the series. I don't have - currently a VC enabled setup but for the
-> simple case this set doesn't break anything on RB5 for me.
->
-> ---
-> bod
+Hey Rob,
+Thanks for taking time to review the series.
 
-This series has my ack.
+On 11/4/22 23:33, Rob Herring wrote:
+> On Thu, Nov 03, 2022 at 10:28:31AM +0530, Sibi Sankar wrote:
+>> Add bindings support for the SCMI QTI memlat (memory latency) vendor
+>> protocol. The memlat vendor protocol enables the frequency scaling of
+>> various buses (L3/LLCC/DDR) based on the memory latency governor
+>> running on the CPUSS Control Processor.
+> 
+> I thought the interconnect binding was what provided details for bus
+> scaling.
 
-Acked-by: Robert Foss <robert.foss@linaro.org>
+The bus scaling in this particular case is done by SCP FW and not
+from any kernel client. The SCMI vendor protocol would be used to
+pass on the bandwidth requirements during initialization and SCP FW
+would vote on it independently after it is
+
+> 
+>>
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>> ---
+>>   .../devicetree/bindings/firmware/arm,scmi.yaml     | 164 +++++++++++++++++++++
+>>   1 file changed, 164 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+>> index 1c0388da6721..efc8a5a8bffe 100644
+>> --- a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+>> +++ b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+>> @@ -189,6 +189,47 @@ properties:
+>>         reg:
+>>           const: 0x18
+>>   
+>> +  protocol@80:
+>> +    type: object
+>> +    properties:
+>> +      reg:
+>> +        const: 0x80
+>> +
+>> +      qcom,bus-type:
+>> +        $ref: /schemas/types.yaml#/definitions/uint32-array
+>> +        items:
+>> +          minItems: 1
+>> +        description:
+>> +          Identifier of the bus type to be scaled by the memlat protocol.
+>> +
+>> +      cpu-map:
+> 
+> cpu-map only goes under /cpus node.
+
+sure will use a qcom specific node instead
+
+> 
+>> +        type: object
+>> +        description:
+>> +          The list of all cpu cluster configurations to be tracked by the memlat protocol
+>> +
+>> +        patternProperties:
+>> +          '^cluster[0-9]':
+>> +            type: object
+>> +            description:
+>> +              Each cluster node describes the frequency domain associated with the
+>> +              CPUFREQ HW engine and bandwidth requirements of the buses to be scaled.
+>> +
+>> +            properties:
+> 
+> cpu-map nodes don't have properties.
+
+ack
+
+> 
+>> +              operating-points-v2: true
+>> +
+>> +              qcom,freq-domain:
+> 
+> Please don't add new users of this. Use the performance-domains binding
+> instead.
+
+The plan was to re-use the ^^ to determine frequency domain of
+the cpus since they are already present in the dts. I guess using
+performance-domains bindings would require a corresponding change in
+qcom-cpufreq-hw driver as well. Ack.
+
+> 
+>> +                $ref: /schemas/types.yaml#/definitions/phandle-array
+>> +                description:
+>> +                  Reference to the frequency domain of the CPUFREQ HW engine
+>> +                items:
+>> +                  - items:
+>> +                      - description: phandle to CPUFREQ HW engine
+>> +                      - description: frequency domain associated with the cluster
+>> +
+>> +            required:
+>> +              - qcom,freq-domain
+>> +              - operating-points-v2
+>> +
+>>   additionalProperties: false
+>>   
+>>   patternProperties:
+>> @@ -429,4 +470,127 @@ examples:
+>>           };
+>>       };
+>>   
+>> +  - |
+>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +
+>> +    firmware {
+>> +        scmi {
+>> +            compatible = "arm,scmi";
+>> +
+>> +            #address-cells = <1>;
+>> +            #size-cells = <0>;
+>> +
+>> +            mboxes = <&cpucp_mbox>;
+>> +            mbox-names = "tx";
+>> +            shmem = <&cpu_scp_lpri>;
+>> +
+>> +            scmi_memlat: protocol@80 {
+>> +                reg = <0x80>;
+>> +                qcom,bus-type = <0x2>;
+>> +
+>> +                cpu-map {
+>> +                    cluster0 {
+>> +                        qcom,freq-domain = <&cpufreq_hw 0>;
+>> +                        operating-points-v2 = <&cpu0_opp_table>;
+>> +                    };
+>> +
+>> +                    cluster1 {
+>> +                        qcom,freq-domain = <&cpufreq_hw 1>;
+>> +                        operating-points-v2 = <&cpu4_opp_table>;
+>> +                    };
+>> +
+>> +                    cluster2 {
+>> +                        qcom,freq-domain = <&cpufreq_hw 2>;
+>> +                        operating-points-v2 = <&cpu7_opp_table>;
+>> +                    };
+>> +                };
+>> +            };
+>> +        };
+>> +
+>> +        cpu0_opp_table: opp-table-cpu0 {
+>> +            compatible = "operating-points-v2";
+>> +
+>> +            cpu0_opp_300mhz: opp-300000000 {
+>> +                opp-hz = /bits/ 64 <300000000>;
+>> +                opp-peak-kBps = <9600000>;
+>> +            };
+>> +
+>> +            cpu0_opp_1325mhz: opp-1324800000 {
+>> +                opp-hz = /bits/ 64 <1324800000>;
+>> +                opp-peak-kBps = <33792000>;
+>> +            };
+>> +
+>> +            cpu0_opp_2016mhz: opp-2016000000 {
+>> +                opp-hz = /bits/ 64 <2016000000>;
+>> +                opp-peak-kBps = <48537600>;
+>> +            };
+>> +        };
+>> +
+>> +        cpu4_opp_table: opp-table-cpu4 {
+>> +            compatible = "operating-points-v2";
+>> +
+>> +            cpu4_opp_691mhz: opp-691200000 {
+>> +                opp-hz = /bits/ 64 <691200000>;
+>> +                opp-peak-kBps = <9600000>;
+>> +            };
+>> +
+>> +            cpu4_opp_941mhz: opp-940800000 {
+>> +                opp-hz = /bits/ 64 <940800000>;
+>> +                opp-peak-kBps = <17817600>;
+>> +            };
+>> +
+>> +            cpu4_opp_2611mhz: opp-2611200000 {
+>> +                opp-hz = /bits/ 64 <2611200000>;
+>> +                opp-peak-kBps = <48537600>;
+>> +            };
+>> +        };
+>> +
+>> +        cpu7_opp_table: opp-table-cpu7 {
+>> +            compatible = "operating-points-v2";
+>> +
+>> +            cpu7_opp_806mhz: opp-806400000 {
+>> +                opp-hz = /bits/ 64 <806400000>;
+>> +                opp-peak-kBps = <9600000>;
+>> +            };
+>> +
+>> +            cpu7_opp_2381mhz: opp-2380800000 {
+>> +                opp-hz = /bits/ 64 <2380800000>;
+>> +                opp-peak-kBps = <44851200>;
+>> +            };
+>> +
+>> +            cpu7_opp_2515mhz: opp-2515200000 {
+>> +                opp-hz = /bits/ 64 <2515200000>;
+>> +                opp-peak-kBps = <48537600>;
+>> +            };
+>> +        };
+>> +    };
+>> +
+>> +
+>> +    soc {
+>> +        #address-cells = <2>;
+>> +        #size-cells = <2>;
+>> +
+>> +        cpucp_mbox: mailbox@17400000 {
+>> +            compatible = "qcom,cpucp-mbox";
+>> +            reg =   <0x0 0x17c00000 0x0 0x10>, <0x0 0x18590300 0x0 0x700>;
+>> +            interrupts = <GIC_SPI 62 IRQ_TYPE_LEVEL_HIGH>;
+>> +            #mbox-cells = <0>;
+>> +        };
+>> +
+>> +        sram@18509400 {
+>> +            compatible = "mmio-sram";
+>> +            reg = <0x0 0x18509400 0x0 0x400>;
+>> +            no-memory-wc;
+>> +
+>> +            #address-cells = <1>;
+>> +            #size-cells = <1>;
+>> +            ranges = <0x0 0x0 0x18509400 0x400>;
+>> +
+>> +            cpu_scp_lpri: scp-sram-section@0 {
+>> +                compatible = "arm,scmi-shmem";
+>> +                reg = <0x0 0x80>;
+>> +            };
+>> +        };
+>> +    };
+>> +
+>>   ...
+>> -- 
+>> 2.7.4
+>>
+>>
