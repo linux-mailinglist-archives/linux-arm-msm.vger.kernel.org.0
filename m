@@ -2,76 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB41E620FCA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 13:05:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B0439621004
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 13:13:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233098AbiKHMFU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 07:05:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57490 "EHLO
+        id S233651AbiKHMNe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 07:13:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233576AbiKHMFT (ORCPT
+        with ESMTP id S233615AbiKHMNc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 07:05:19 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC62E42985;
-        Tue,  8 Nov 2022 04:05:17 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A8BGpie021311;
-        Tue, 8 Nov 2022 12:04:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=0N8xF34uZZ3oQaq7z3zSL7RQw2wjq3nrrQc7VpDG5JI=;
- b=UT7bBe/IW79P3EM7Sjgpdx1K5RoBw1tHZwo+gy2gxnd+cYi2VQ5HCVqHvI0LFx1BOgWb
- lmOGFflaUaTsD7EMj1zDu/dvcSMbe955Z4Ebfx8v0lOR3ia7KTISUxmZeDwg/88n0DBb
- WbpLMWJmDUXhUjRXQMWipF12Y6wCot+2PxH6p/pk/zr11kv3Dlt0IarHMqSWORzUP8u4
- e0D9fT77PdnYKdZfi2/J8Wet1f5UmCyHLfdlKVo0M0cua6HPAZVYyoaz6vbLFIjfNenT
- irvuH2JwJ3QfjE5g9am70E+4ffbdVw8d4IW5jcUgwFLa2jigLPtWNoFXNiFOsagjZfg4 ow== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kq7g4j8by-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 08 Nov 2022 12:04:51 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A8C4oRd031418
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 8 Nov 2022 12:04:50 GMT
-Received: from [10.216.12.65] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 8 Nov 2022
- 04:04:47 -0800
-Message-ID: <a07cb525-b814-241b-db72-840f5c17e785@quicinc.com>
-Date:   Tue, 8 Nov 2022 17:34:43 +0530
+        Tue, 8 Nov 2022 07:13:32 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E53A2BF0
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 04:13:31 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id z14so20668451wrn.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 04:13:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:reply-to:organization:from
+         :references:cc:to:content-language:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=DGiJKi8pt0ZkT5jSHZTDlrGpOtMcV9yLgx2y0k/nDck=;
+        b=eZbAFAG7tV9SrubtV1Sb5rt20OKHNSQ5FBKNjxQ3NQ82LPeB+LMia2ntK9WgGzO1At
+         XanCQwoY22GlggaP6pBbf2duU5kbSiz8gvJ620vNPcMICuITTlKBSPq7Vg6dqmiK4Ml4
+         x4JoH+bRYVIviCngHdTAYQtvCmGDs3eMchF70KX4ldXECkTAcOz7pvtLgx2fLzKoNRlO
+         eb/kNwuyRwqwVGH502+0mB+66XW1BcEXnlxCved8cHtds8cULsdcHE8D4b2Fr66XhBLD
+         hu3cTZJ6RA2a/ecvLvBYC+bwUar3dXq/4+1iPLUMoL2YtxiXOWbwJrUgopph/kmhV2m9
+         IZcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:reply-to:organization:from
+         :references:cc:to:content-language:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DGiJKi8pt0ZkT5jSHZTDlrGpOtMcV9yLgx2y0k/nDck=;
+        b=4ToeUb/pbY2u1c7mKA98sRMoXeIyv31/O9grDGndfDLAJ+zQ4qD3YCvBjkoRwkAR10
+         N5Tz5kDbJKvhvSMiBxjw3NeGMWXybkCI8L7vuzQzy/p6qc+djOMcLlFNFQuJFrqNVtUR
+         kU4lMZ+I6SIjpV5w7yGd6baf5ELjyXh2JW8RUuCGAztlSzHe6ZcIGCPy7D1P3t13ckuT
+         qxmCQetxVAmuzj9b+rOAyhtTlwE7zsy/03C6VAuhIsuuufxeaW1ubj9ckF9IHcItmmup
+         8beZ/TbVeEya7lq8EoWyL1lsC0oLV8r2X3rDB/FOwWPSqkeneDEiWgCaZuqN1qfqoeFB
+         mMKg==
+X-Gm-Message-State: ACrzQf121c4YHOcCaQkDfMByoY/nCRdlBIx+PDH9XDMam+PLnTW4M/K/
+        BrvzFhzKPEfPN1WxSQmSFIpLDg==
+X-Google-Smtp-Source: AMsMyM6BCuHdTFPBnmlr1H1nFvlmu7PDIJEeHt8iJqYIVd7G/mMR6kXS+TkC7wobyF1ZWJNOnrWlRA==
+X-Received: by 2002:a5d:680a:0:b0:236:b797:5d80 with SMTP id w10-20020a5d680a000000b00236b7975d80mr33748170wru.403.1667909609888;
+        Tue, 08 Nov 2022 04:13:29 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:7474:d539:20c5:d55e? ([2a01:e0a:982:cbb0:7474:d539:20c5:d55e])
+        by smtp.gmail.com with ESMTPSA id q2-20020a7bce82000000b003cf7292c553sm10991140wmj.13.2022.11.08.04.13.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Nov 2022 04:13:29 -0800 (PST)
+Message-ID: <4c31425b-34b5-01ec-a2cf-d8269448766f@linaro.org>
+Date:   Tue, 8 Nov 2022 13:13:28 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v2] wifi: ath10k: Add WLAN firmware image version info
- into smem
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Subject: Re: [PATCH v3 4/5] dt-bindings: soc: qcom: convert non-smd RPM
+ bindings to dt-schema
 Content-Language: en-US
-To:     Kalle Valo <kvalo@kernel.org>
-CC:     <ath11k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_mpubbise@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, kernel test robot <lkp@intel.com>
-References: <20221104082828.14386-1-quic_youghand@quicinc.com>
- <166790340662.9633.4549756749859911615.kvalo@kernel.org>
-From:   "Youghandhar Chintala (Temp)" <quic_youghand@quicinc.com>
-In-Reply-To: <166790340662.9633.4549756749859911615.kvalo@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Bjorn Andersson <andersson@kernel.org>, Lee Jones <lee@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-gpio@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+References: <20221005-mdm9615-pinctrl-yaml-v3-0-e5e045644971@linaro.org>
+ <20221005-mdm9615-pinctrl-yaml-v3-4-e5e045644971@linaro.org>
+ <20221106034823.quftsxs7zpvb73tv@builder.lan>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+Reply-To: neil.armstrong@linaro.org
+In-Reply-To: <20221106034823.quftsxs7zpvb73tv@builder.lan>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Vujk1Lx8zud34sldkyPGbqSZ09gIs06z
-X-Proofpoint-GUID: Vujk1Lx8zud34sldkyPGbqSZ09gIs06z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-07_11,2022-11-08_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- suspectscore=0 priorityscore=1501 mlxscore=0 mlxlogscore=999 bulkscore=0
- spamscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211080069
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -81,38 +89,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
-On 11/8/2022 4:00 PM, Kalle Valo wrote:
-> Youghandhar Chintala <quic_youghand@quicinc.com> wrote:
->
->> In a SoC based solution, it would be useful to know the versions of the
->> various binary firmware blobs the system is running on. On a QCOM based
->> SoC, this info can be obtained from socinfo debugfs infrastructure. For
->> this to work, respective subsystem drivers have to export the firmware
->> version information to an SMEM based version information table.
->>
->> Having firmware version information at one place will help quickly
->> figure out the firmware versions of various subsystems on the device
->> instead of going through builds/logs in an event of a system crash.
->>
->> Fill WLAN firmware version information in SMEM version table to be
->> printed as part of socinfo debugfs infrastructure on a Qualcomm based
->> SoC.
->>
->> This change is applicable only for WCN399X targets.
->>
->> Reported-by: kernel test robot <lkp@intel.com>
->>
->> Tested-on: WCN3990 hw1.0 SNOC WLAN.HL.3.2.2.c10-00754-QCAHLSWMTPL-1
->>
->> Signed-off-by: Youghandhar Chintala <quic_youghand@quicinc.com>
->> Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-> This doesn't compile unless QCOM_SMEM is enabled in Kconfig. So should we add
-> "select QCOM_SMEM" in Kconfig for ATH10K_SNOC?
+On 06/11/2022 04:48, Bjorn Andersson wrote:
+> On Fri, Oct 21, 2022 at 05:27:56PM +0200, Neil Armstrong wrote:
+> [..]
+>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,ipc-rpm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,ipc-rpm.yaml
+>> new file mode 100644
+>> index 000000000000..6531c8805894
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,ipc-rpm.yaml
+>> @@ -0,0 +1,101 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,ipc-rpm.yaml#"
+>> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+>> +
+>> +title: Qualcomm Resource Power Manager (RPM) over IPC
+> 
+> It's true that there's something executing elsewhere in the SoC
+> acting upon the request written to the RPM memory region.
+> 
+> But for me the phrasing "over IPC" applies much more to the SMD/GLINK
+> variant than to this. So I would prefer to just name this
+> "qcom,rpm.yaml" and omit the "over IPC" phrasing.
+> 
+> 
+> Binding looks good to me.
 
-Yes Kalle. Thank you.
+Thanks I'll post a v4 with these changes,
+Rob, Lee, can I keep your current review tags with only the renaming and removal of " over IPC" in title ?
 
-Regards,
+> 
+> Thanks,
+> Bjorn
 
-Youghandhar
-
+Thanks,
+Neil
