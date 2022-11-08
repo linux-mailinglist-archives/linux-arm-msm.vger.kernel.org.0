@@ -2,78 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A1B6620CB9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 10:57:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 11EC7620CEB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 11:11:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233643AbiKHJ54 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 04:57:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35536 "EHLO
+        id S233606AbiKHKLN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 05:11:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229843AbiKHJ5z (ORCPT
+        with ESMTP id S233382AbiKHKLM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 04:57:55 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CC4D13EBE
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 01:57:54 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id g7so20506944lfv.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 01:57:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UzIkB97wrKBKr6cVr3DUHYTmRg+yvmZDZzpdOYE3TT4=;
-        b=XmaVBDqIo1HN7hPCvJCS7axGiEkEnEPZr1IAsm1vX9OvkDQPBLh29+1HIn3UFPFz3U
-         ACXWzsr8mwzuiuhRaUCgU5uy6CT5YA7QdHVzjI5517s+XIPlLui+imL9Nc7VgbLdTsaM
-         Ys7vyzMJmVJyw+L4vSXmeheyYuvpW1gQq5GmHt6ebb+lNYJTVTz3OfBWuTPWLDWOh+FK
-         BgCbPnOy0q73O8uR7jQWBMC4xnZbvCZs5jdDemt0z0WEJ47toH6CEYstbws2hFgaWjod
-         FXoDDbsRCA0gUXIkIULFzii+4GEpNbshi2+AymYUQlSXk4NX+VZox+EfOQ8uhW4fYBV5
-         OVRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UzIkB97wrKBKr6cVr3DUHYTmRg+yvmZDZzpdOYE3TT4=;
-        b=MtZnYAOHdodKAs6gkVw8Uh34mLsMpyLpZgRVTO9Sm7wCFMwq836b9ObiX/dY/RRtDt
-         xfAoAGvMpmke4RGvrn19FvZI9mePqnSfxyzGEgNJvHIj3rCkHmlJwAOWaQbnxLSVYeYJ
-         a5Wp1tgtnxyIpvVdO8+YMcmtMArlc7pqiVvpeYceBqjHQZ1XfsOo3fIbH/2PA23Pm5n6
-         3qcWeo0cnzhIu4bd0f4CqEWPbbkdj0Is7pky1KlBszGvriPBGdCSR1V9xqo6JvKmZFXY
-         NZJdVEbqWojCHqkvmKtEzvUs6ghQz1LjC3GQWeht7Hys/2Plrz2YsbZ1z3bjB3gPXZyZ
-         1RtQ==
-X-Gm-Message-State: ANoB5pm6it2Jiiuz2UacJHjQGcMgt6zkZ3m2E+Vs8oQafTFdn0sCdP+F
-        yIa/HMSq1g9I+4rG3CKJQKkMbNB71kY+KA==
-X-Google-Smtp-Source: AA0mqf5GCGgBSLf5eKDQn1/Q9ks37EyZXU10uI6iWpK0j41+foEUJv9XDZkd/RNeFBWOmDW0zLhMuw==
-X-Received: by 2002:a19:e30f:0:b0:4b3:b574:8be1 with SMTP id a15-20020a19e30f000000b004b3b5748be1mr3061383lfh.262.1667901472723;
-        Tue, 08 Nov 2022 01:57:52 -0800 (PST)
-Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
-        by smtp.gmail.com with ESMTPSA id v6-20020a05651203a600b004b40c1f1c70sm193334lfp.212.2022.11.08.01.57.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Nov 2022 01:57:51 -0800 (PST)
-Message-ID: <fd05b618-8ab9-054a-7874-3b98aae69218@linaro.org>
-Date:   Tue, 8 Nov 2022 10:57:49 +0100
+        Tue, 8 Nov 2022 05:11:12 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EF25CE2B;
+        Tue,  8 Nov 2022 02:11:11 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A88bapU015600;
+        Tue, 8 Nov 2022 10:11:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=h8+ioOxt/M50vRMcvRz9EeFpvFX/e57/3WpIPPmWfBk=;
+ b=oX4xm7HS0JiNM8HMqg1/YgWVDld8WNMHjUCkM2tEa4zhV7RstP2Lw/DXI81xuT6UJ5mk
+ /7XCtucyxClNFDKcsC3xRAimnt5kWRJnfQae2BPwqs9MEca0LRBT+pCvsfpenN895pAS
+ 1hvI7gCpTZdQjxc0hqhYKP9YfO19pF8RAk/+dJeLcUsgCc1UnUy1oolnf9upeHRAF7Uo
+ cxLSymHDVjvCR19sb66L8H917jQvRYCpEBRd3Kr0CZJjxZ207sCkeYW1Hb3ZJd+f1Qla
+ QD4fisgT+Pugt2RzxsSVKhG9mxmUMrJZlnZpMgiB5qmCG86yzObNCh9F9buXODSmC0v3 LQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kqhmk8em1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 08 Nov 2022 10:11:00 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A8AAxxa028342
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 8 Nov 2022 10:10:59 GMT
+Received: from [10.79.43.101] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 8 Nov 2022
+ 02:10:55 -0800
+Message-ID: <e5b529c7-865c-b5d1-c3bf-dc6b162431d7@quicinc.com>
+Date:   Tue, 8 Nov 2022 15:40:52 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: qrb5165-rb5-vision-mezzanine:
- Add vision mezzanine
+ Thunderbird/102.2.2
+Subject: Re: [PATCH V2 1/2] arm64: dts: qcom: sc7280: Mark all Qualcomm
+ reference boards as LTE
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@somainline.org,
-        mchehab@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org,
-        vladimir.zapolskiy@linaro.org
-Cc:     sakari.ailus@iki.fi, hverkuil@xs4all.nl,
-        laurent.pinchart@ideasonboard.com, quic_mmitkov@quicinc.com,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20221108021816.213084-1-bryan.odonoghue@linaro.org>
- <20221108021816.213084-3-bryan.odonoghue@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221108021816.213084-3-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <bjorn.andersson@linaro.org>, <dianders@chromium.org>,
+        <jinghung.chen3@hotmail.com>
+CC:     <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
+        <konrad.dybcio@somainline.org>
+References: <20221108092207.8186-1-quic_sibis@quicinc.com>
+ <ca515021-326d-6034-2af9-54e73e1cc8fa@linaro.org>
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <ca515021-326d-6034-2af9-54e73e1cc8fa@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: HLvoFt3Ucq8T2Tbrx1BERlM7Q1fw_O3h
+X-Proofpoint-ORIG-GUID: HLvoFt3Ucq8T2Tbrx1BERlM7Q1fw_O3h
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-07_11,2022-11-07_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ priorityscore=1501 clxscore=1015 lowpriorityscore=0 mlxlogscore=798
+ phishscore=0 suspectscore=0 mlxscore=0 spamscore=0 adultscore=0
+ impostorscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2210170000 definitions=main-2211080055
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -83,80 +84,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/11/2022 03:18, Bryan O'Donoghue wrote:
-> The Vision Mezzanine for the RB5 ships with an imx517 and ov9282 populated.
-> Other sensors and components may be added or stacked with additional
-> mezzanines.
-> 
-> Enable both the IMX577
-> 
-> An example media-ctl pipeline for the imx577 is:
-> 
-> media-ctl --reset
-> media-ctl -v -d /dev/media0 -V '"imx577 '22-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
-> media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
-> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-> 
-> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |  1 +
->  .../dts/qcom/qrb5165-rb5-vision-mezzanine.dts | 64 +++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sm8250.dtsi          | 33 ++++++++++
->  3 files changed, 98 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index b0558d3389e5..78f6e78d8ed4 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -52,6 +52,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-poplar.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5-vision-mezzanine.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts
-> new file mode 100644
-> index 000000000000..307b09094e7f
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts
-> @@ -0,0 +1,64 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2022, Linaro Ltd.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "qrb5165-rb5.dts"
-> +
-> +&camss {
-> +	status = "okay";
-> +	vdda-phy-supply = <&vreg_l5a_0p88>;
-> +	vdda-pll-supply = <&vreg_l9a_1p2>;
-> +
-> +	ports {
-> +		/* The port index denotes CSIPHY id i.e. csiphy2 */
-> +		port@2 {
-> +			reg = <2>;
-> +			csiphy2_ep: endpoint {
-> +				clock-lanes = <7>;
-> +				data-lanes = <0 1 2 3>;
-> +				remote-endpoint = <&imx577_ep>;
-> +			};
-> +
+Krzysztof,
+Thanks for taking time to review the series.
 
-No need for blank line.
 
-Plus missing dtbs_check, as pointed out by Bjorn.
+On 11/8/22 15:04, Krzysztof Kozlowski wrote:
+> On 08/11/2022 10:22, Sibi Sankar wrote:
+>> When the modem node was re-located to a separate LTE source file
+>> "sc7280-herobrine-lte-sku.dtsi", some of the previous LTE users
+>> weren't marked appropriately. Fix this by marking all Qualcomm
+>> reference devices as LTE.
+>>
+>> Fix-suggested-by: Douglas Anderson <dianders@chromium.org>
+> 
+> There is no such tag. If it is a fix, use Reported-by. If it is not, use
+> Suggested-by.
 
-Best regards,
-Krzysztof
+lol I should have just stuck with S-b but found the tag being used a
+number of times. I'll fix this up if the series warrants a re-spin.
 
+-Sibi
+
+> 
+>> Fixes: d42fae738f3a ("arm64: dts: qcom: Add LTE SKUs for sc7280-villager family")
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>> ---
+> 
+> Best regards,
+> Krzysztof
+> 
