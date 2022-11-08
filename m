@@ -2,56 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD643620D47
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 11:30:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 28848620D4A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 11:30:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233681AbiKHKaP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 05:30:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54730 "EHLO
+        id S233643AbiKHKar (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 05:30:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233659AbiKHKaO (ORCPT
+        with ESMTP id S233556AbiKHKaq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 05:30:14 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD3F9614A;
-        Tue,  8 Nov 2022 02:30:12 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7420E614F1;
-        Tue,  8 Nov 2022 10:30:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1302AC433D7;
-        Tue,  8 Nov 2022 10:30:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667903411;
-        bh=QScj0SPWiAoUuCjvCzfGcgNluCdjviFFK4yyG9xTUTA=;
-        h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
-        b=YWeCvuNtkh38gLaCWRbJiHi7ors2Xznh8Ga26ofr+FraGaVxfBYsDBaFTWDbuOo8k
-         2eNP5PJ7pwpEfqgrbLNUolY3p57MfQ3f1T3h4UFrcA4lsgYqVSVV9NlhceHCYwgD4r
-         i2fOC7cHZI1+JyDnF67KKQ/L4tgOdcWgtoABweRdmENvYqzw8BaI+guMHTkKipBUcI
-         +Y/dZ1KUDzYJgymyRBPkWNMALOF2RQd7+z6ixvxZ6xCMbHfFTdPnGG2C3fhntxQiol
-         nixHjzeEXJg4GpJUmvH4MVQ9FPXipQ5zLMvVaseRspuf60ltx6tattvs76SPbEsvo9
-         IZknsBhAuvLUg==
-Content-Type: text/plain; charset="utf-8"
+        Tue, 8 Nov 2022 05:30:46 -0500
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9772E1DA67
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 02:30:39 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id f5so37395723ejc.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 02:30:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=atid+edrTzuA80uie5QzASVMiLlCSb3CRaHv4tRjrTo=;
+        b=MVT4fW33uw7BUUBENA2h0LV1Q06r+UqbCZNEDgKULbWhbaBkr5apVHL2rx1O+g8PgH
+         c2EMukiFZDuQYe2l4M/hz8G7UxJ9znVy4hQHTuDLytfE5WvFbJp2kG7Fl++xEzwOmRzU
+         kSoimhpnWfoF3JP52N5zc5isTOagoCadDirj5DKlDroCCHlmItdjjPBVRqK/Klxfnzmn
+         ylxfCz7F1v4ZqjzMj6JNF5uDAyNXT3b+HN6q41mG93J6LhKZlBSDxOT7dEKX0qgsx8r6
+         0ncJJbT7GxafxPLN5gHwihgOcT113BQ3yKaFRoCmxF5aQc+ANwm4qEmjeaCAn7ozdxm7
+         OdlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=atid+edrTzuA80uie5QzASVMiLlCSb3CRaHv4tRjrTo=;
+        b=6dK8nqMCE9MDS/cFuvJomsANXzxAldel+TAdTn2zdA+5Wkcb4a6umERQmPRli8vEbO
+         7g/z1ZiF59wwYo3Ahs82bp8vDXIsI44492YkQqtyMWABauksnQOPBH7Svc7CkXKax3Yr
+         t/L9N0mwq0jk5o34U73TUFa4WOthzrvwVpjWbl6wQHWqhoufsst5aPT3ZxEgM4wVMbgY
+         kDuHks3wIdesB0rHrOEiUM7T6o9DHapHFcm1z/MaqvUNX1r2ne8w1PjVg7i7H62LJEjs
+         Msbqe+1jP0e5/6IaMvFLnu6Sp6Bgs5AFmUaz7/Vx7wA0ersc0fH2THHJ9m8bl43zQMfv
+         PJZg==
+X-Gm-Message-State: ACrzQf09+/HY0OKXDEjF9tT33eCf5sc6FEmeFXJUb7t49adpBXH0gEN2
+        6bBG1ONzuEPMrWAmNUmdas9lu9f7S/LELqOr9Yf8jg==
+X-Google-Smtp-Source: AMsMyM6C4pYdpFc+2xWSYisNGabYiqSF7IYYb9LDhANci3pbCXop9mslrGeLo/xG0Uw0avfdB4yFFoIj54JUCGNp/Uo=
+X-Received: by 2002:a17:907:c1e:b0:7ae:31a0:571e with SMTP id
+ ga30-20020a1709070c1e00b007ae31a0571emr20498403ejc.690.1667903438431; Tue, 08
+ Nov 2022 02:30:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v2] wifi: ath10k: Add WLAN firmware image version info
- into
- smem
-From:   Kalle Valo <kvalo@kernel.org>
-In-Reply-To: <20221104082828.14386-1-quic_youghand@quicinc.com>
-References: <20221104082828.14386-1-quic_youghand@quicinc.com>
-To:     Youghandhar Chintala <quic_youghand@quicinc.com>
-Cc:     <ath11k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_mpubbise@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        "Youghandhar Chintala" <quic_youghand@quicinc.com>,
-        kernel test robot <lkp@intel.com>
-User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.7.3
-Message-ID: <166790340662.9633.4549756749859911615.kvalo@kernel.org>
-Date:   Tue,  8 Nov 2022 10:30:09 +0000 (UTC)
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+References: <20221024002356.28261-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221024002356.28261-1-krzysztof.kozlowski@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 8 Nov 2022 11:30:27 +0100
+Message-ID: <CACRpkdb8JN1R2tG0o=zKNkMohDSAHHz-K2QC=mjJfPjNC6TaaA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom,msm8916: convert to dtschema
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -59,36 +71,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Youghandhar Chintala <quic_youghand@quicinc.com> wrote:
+On Mon, Oct 24, 2022 at 2:24 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 
-> In a SoC based solution, it would be useful to know the versions of the
-> various binary firmware blobs the system is running on. On a QCOM based
-> SoC, this info can be obtained from socinfo debugfs infrastructure. For
-> this to work, respective subsystem drivers have to export the firmware
-> version information to an SMEM based version information table.
-> 
-> Having firmware version information at one place will help quickly
-> figure out the firmware versions of various subsystems on the device
-> instead of going through builds/logs in an event of a system crash.
-> 
-> Fill WLAN firmware version information in SMEM version table to be
-> printed as part of socinfo debugfs infrastructure on a Qualcomm based
-> SoC.
-> 
-> This change is applicable only for WCN399X targets.
-> 
-> Reported-by: kernel test robot <lkp@intel.com>
-> 
-> Tested-on: WCN3990 hw1.0 SNOC WLAN.HL.3.2.2.c10-00754-QCAHLSWMTPL-1
-> 
-> Signed-off-by: Youghandhar Chintala <quic_youghand@quicinc.com>
-> Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+> Convert Qualcomm MSM8916 pin controller bindings to DT schema.  Keep the
+> parsing of pin configuration subnodes consistent with other Qualcomm
+> schemas (children named with '-state' suffix, their children with
+> '-pins').
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-This doesn't compile unless QCOM_SMEM is enabled in Kconfig. So should we add
-"select QCOM_SMEM" in Kconfig for ATH10K_SNOC?
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/patch/20221104082828.14386-1-quic_youghand@quicinc.com/
+I expect that I get this in a pull request with some other qcom stuff or so :)
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
-
+Yours,
+Linus Walleij
