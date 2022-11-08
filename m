@@ -2,98 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A5313621835
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 16:27:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0125A62188B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 16:41:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233882AbiKHP1o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 10:27:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50984 "EHLO
+        id S233967AbiKHPlF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 10:41:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231576AbiKHP1n (ORCPT
+        with ESMTP id S233907AbiKHPlD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 10:27:43 -0500
-Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4D7551C32
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 07:27:42 -0800 (PST)
-Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-13b103a3e5dso16613185fac.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 07:27:42 -0800 (PST)
+        Tue, 8 Nov 2022 10:41:03 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F19C25C74D
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 07:41:00 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id a11-20020a05600c2d4b00b003cf6f5fd9f1so9329931wmg.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 07:41:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SzBlYeGeT15Xra75w9IZDBjQ7Da3XKSmRdlnDJDYrko=;
-        b=dIyZf3dThsxIsg+semC7/AGuKbizxfPGl1TQJ+Nxq30NcH+8UxV4a39IPScCYPstej
-         yn8+1Hrpez1eMPGPfu0oaNGoRWe7s7bdZqHfjqwaDvXVdz4W2qaHAOoSo2MiZfSI3Y2m
-         R65Qsjtq4kVXUVVdmhCDwEvnhECjVcP4rW38BC1V87ug855FadAwh7q+Kt0GdMKYEn51
-         kPax10gi+/P424e3cPciOYc5kB6feeUFkaNtwdNbiBn7Ku9eT1fBYRvtqK2kcp7kTMLS
-         C8ZZRd1tO1kvUOb4jZEFErjmjXJN97o8II38DDsgM1EXpXdIs+yl2rYBvZBl6BZPyB7k
-         Vb0A==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dtMFSLGIMNeVTZxLCqkj7tWGtF0CJEz5WaekwP9dego=;
+        b=NjnfutBKN3dagOdJZ04/4o6UvHmx7gCBH4fD5QajTuq9HLnGT8gsyYgeufHeOQhRfQ
+         c3UDrrJanI7iDjSyOtOIN2OX+0pTdLqzyyyUwVnQodK1EvF3WmuXbGrOQgGTDmxUxujP
+         ZS6ksVzKgmFsGUzrds/lR9X00QQjyUvQWP+ysiY8E6wMQeOIe79pAbGVrQRn6mMiOQAj
+         sVsZAbuBhM+gWczD3LQHhGJ+aNXaE2JJADY5jCRC67HB6D9efRyJGfy7Uw/4QKELpJzW
+         nBQ7hc+I4DytKZqFLAf2+on9jkiDg3EAnNu3Y6FYyy/P2sIgbtqTUD8iq3jrnpNi3BSs
+         FlTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SzBlYeGeT15Xra75w9IZDBjQ7Da3XKSmRdlnDJDYrko=;
-        b=DlhHoXOcdDSnWwYJKjRVqwARpu9DtIq2Mi7dfFTsxqs3tI4YVAj6v5LxeCcw+2IAaQ
-         L/5bYTFSJzgfuHBBGFFs2RXA8X05JRf546DcHfj+Jg1+m9HoF4bCsN694rdeelSbxzt3
-         DQYFBkz0Ja/QVauGTO7nyEBYIHiORdqxJgW/KQqznPbupnSHONVTYG8IZq/4SKgegOhl
-         tlr44rjTZZQsbH6JZ2cQWHKbmcDgmdiD/YBHHaHr8cAdRMmt0znWwDlgH1H48kuOW4Wp
-         8iK4MWieys1lRQluMtBD4xAl/SIpUN+3VmpBP4VXB61t3EYPt6Wb3jO77zENJIs0golR
-         qkUg==
-X-Gm-Message-State: ACrzQf3wTSzuUF6HitCC6m3SOtxTw+vPb/1FJb56Zrrl0IPteMFKlsb7
-        Axw7c5dibVBl/d/SWVeZ97BfKczgC/AOkQkllgk=
-X-Google-Smtp-Source: AMsMyM5PlHPjzghdmVcu1xLAdsc3KX0qSgnZT92T7h+x0QOTT4AsU4xI0HURjFHudav1+MqIaDugMH+IXGamDDEK0fc=
-X-Received: by 2002:a05:6871:152:b0:13c:c1a9:e96e with SMTP id
- z18-20020a056871015200b0013cc1a9e96emr30811115oab.258.1667921261690; Tue, 08
- Nov 2022 07:27:41 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dtMFSLGIMNeVTZxLCqkj7tWGtF0CJEz5WaekwP9dego=;
+        b=kveBTiy/k2cbUdU4jJyachGwu5YOjnVImhEOIIHhVcFGRusWZ2BrP4XUSkxRnQsgoo
+         2Ttn59MGj+PQZlEFsPzKFjBlIFfMDSk0YO+tEnMtD3Sz+iTXXfhDKNX/sFQyXHoRBuhx
+         tzSjV+F8E5p09mE5iPfEUTOr+IIco3PMnO2cE8XLFyAekB6cXUZj8YFf2+PBS68S+LDR
+         KPM9zfbROj0iYMf2lDKgU2iXaQzv+nUuyzByFccnixHGD/48GbIGDcUALfLT/RtijHQX
+         v2MCu9lKKP40bg/9dmL4bLP1fk14DoDc00iCGs3tF8vyMvQTJoe/mC9RcrpoUSCR74eQ
+         K0Pw==
+X-Gm-Message-State: ACrzQf00c4z22eNu5g9m1FRsHsYC8ecgyf/6hloFpiTIHcl+vkcjnt5b
+        J05b8nlkfw3crohyT/nyVgn0
+X-Google-Smtp-Source: AMsMyM6SWVW4hweJvSHlGAIvASyg36sxqkTSS6y/q5ALexhcDDH5J0V0eJOICvasXwcjz8F1weG6GA==
+X-Received: by 2002:a05:600c:2150:b0:3cf:6c05:b4ab with SMTP id v16-20020a05600c215000b003cf6c05b4abmr35259174wml.161.1667922059445;
+        Tue, 08 Nov 2022 07:40:59 -0800 (PST)
+Received: from localhost.localdomain ([117.207.25.46])
+        by smtp.gmail.com with ESMTPSA id e4-20020adff344000000b002364c77bc96sm10906899wrp.33.2022.11.08.07.40.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Nov 2022 07:40:58 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     andersson@kernel.org, viresh.kumar@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, rafael@kernel.org,
+        robh+dt@kernel.org
+Cc:     johan@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v5 0/3] qcom-cpufreq-hw: Add CPU clock provider support
+Date:   Tue,  8 Nov 2022 21:10:34 +0530
+Message-Id: <20221108154037.111794-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Received: by 2002:a05:6808:2029:0:0:0:0 with HTTP; Tue, 8 Nov 2022 07:27:40
- -0800 (PST)
-Reply-To: mr.abraham022@gmail.com
-From:   "Mr.Abraham" <joykekeli4@gmail.com>
-Date:   Tue, 8 Nov 2022 15:27:40 +0000
-Message-ID: <CAO4V9UEtmsW+f2aSrznRJrKe4Lo78znxd-V_JB5S6UGwwsCFOg@mail.gmail.com>
-Subject: Greeting
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2001:4860:4864:20:0:0:0:36 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.4982]
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [mr.abraham022[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [joykekeli4[at]gmail.com]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [joykekeli4[at]gmail.com]
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
-        *  2.9 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-My Greeting, Did you receive the letter i sent to you. Please answer me.
-Regard, Mr.Abraham
+Hello,
+
+This series adds clock provider support to the Qcom CPUFreq driver for
+supplying the clocks to the CPU cores in Qcom SoCs.
+
+The Qualcomm platforms making use of CPUFreq HW Engine (EPSS/OSM) supply
+clocks to the CPU cores. But this is not represented clearly in devicetree.
+There is no clock coming out of the CPUFreq HW node to the CPU. This created
+an issue [1] with the OPP core when a recent enhancement series was submitted.
+Eventhough the issue got fixed in the OPP framework in the meantime, that's
+not a proper solution and this series aims to fix it properly.
+
+There was also an attempt made by Viresh [2] to fix the issue by moving the
+clocks supplied to the CPUFreq HW node to the CPU. But that was not accepted
+since those clocks belong to the CPUFreq HW node only.
+
+The proposal here is to add clock provider support to the Qcom CPUFreq HW
+driver to supply clocks to the CPUs that comes out of the EPSS/OSM block.
+This correctly reflects the hardware implementation.
+
+The clock provider is a simple one that just provides the frequency of the
+clocks supplied to each frequency domain in the SoC using .recalc_rate()
+callback. The frequency supplied by the driver will be the actual frequency
+that comes out of the EPSS/OSM block after the DCVS operation. This frequency
+is not same as what the CPUFreq framework has set but it is the one that gets
+supplied to the CPUs after throttling by LMh.
+
+This series has been tested on SM8450 based dev board with the OPP hack removed
+and hence there is a DTS change only for that platform. Once this series gets
+accepted, rest of the platform DTS can also be modified and finally the hack on
+the OPP core can be dropped.
+
+Thanks,
+Mani
+
+[1] https://lore.kernel.org/lkml/YsxSkswzsqgMOc0l@hovoldconsulting.com/
+[2] https://lore.kernel.org/lkml/20220801054255.GA12039@thinkpad/t/
+
+Changes in v5:
+
+* Switched to Hz unit for the CPU clocks
+
+Changes in v4:
+
+* Rebased on top of cpufreq/arm/linux-next branch
+
+Changes in v3:
+
+* Submitted the cpufreq driver cleanup patches as a separate series as
+  suggested by Viresh
+* Removed static keyword from clk_init_data declaration
+
+Changes in v2:
+
+* Moved the qcom_cpufreq_data allocation to probe
+* Added single clock provider with multiple clks for each freq domain
+* Moved soc_data to qcom_cpufreq struct
+* Added Rob's review for binding
+
+Manivannan Sadhasivam (3):
+  dt-bindings: cpufreq: cpufreq-qcom-hw: Add cpufreq clock provider
+  arm64: dts: qcom: sm8450: Supply clock from cpufreq node to CPUs
+  cpufreq: qcom-hw: Add CPU clock provider support
+
+ .../bindings/cpufreq/cpufreq-qcom-hw.yaml     | 12 ++++++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |  9 ++++
+ drivers/cpufreq/qcom-cpufreq-hw.c             | 43 +++++++++++++++++++
+ 3 files changed, 64 insertions(+)
+
+-- 
+2.25.1
+
