@@ -2,49 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A31316205E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 02:28:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D74A26205F2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 02:28:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233368AbiKHB2L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 20:28:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50396 "EHLO
+        id S233293AbiKHB2p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 20:28:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233293AbiKHB2H (ORCPT
+        with ESMTP id S233354AbiKHB2K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 20:28:07 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE5112B63A;
-        Mon,  7 Nov 2022 17:28:01 -0800 (PST)
+        Mon, 7 Nov 2022 20:28:10 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CED252C114;
+        Mon,  7 Nov 2022 17:28:04 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4AFBA61380;
-        Tue,  8 Nov 2022 01:28:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87311C4347C;
-        Tue,  8 Nov 2022 01:27:59 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 8375DB81711;
+        Tue,  8 Nov 2022 01:28:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7079C433D6;
+        Tue,  8 Nov 2022 01:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667870880;
-        bh=Yn9vD7aPdJpm7zviw8cUVowJExvvVCQS6pH0coJ+GSc=;
+        s=k20201202; t=1667870882;
+        bh=1tioVGTqeYyNu4ZTUF3M9dc/z4ZQURezc3VWaBrCJto=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=efsA6hVOlreEekr5yuz0fGPpeSN+FDE7COGoRC9+IzO4vkyvnYFuDLj9oUoNmVKEV
-         fTKD/YmrzKYDxRfTZusrwnh0s2yiaLs7OeOfdGpMM1i11FWsrrDI3xAx0nQjhSj79V
-         EqSj0LI/x/jhVsNBN9mQGKQsAEdRlxco6HL9e1y7I6348zZteWIjqDmVrAOWaybSBH
-         aFacVk1c2dPkjzymnUBdImbTJVkyaFezHVXiao1dNvbgayKvu4XWsNXpL5ITyxlMBQ
-         qe4K6r7VUC1pW2kcaoVDQ3wleolYiM6ks2Hx+J0TnTzbyTpKJHGy0TJ3H1/xHuL8ow
-         sLKQ4jZbX0oPg==
+        b=HLP8jD4QSSThJkjIQqil670uZQL9WbPDEr21hUQAUPO6Ev2oEun0a7lim21s8npHR
+         igtf95QL+xKdej8gH48zv7UFEe4Omr53qX+r5QzySHttXqmxr5oR44BrSke/9UcGmY
+         C1DK50OKAyLqkSpH8wgwcYGimsbunpvTJdHZTHjCwgya/YuqQk9srl5QQ62LBnPuxL
+         Ek3aReGKzUyqhBj167FFI67amFiXD7W842l0A5YVdTOuR5775ZRz3KfMcoO+om8YKP
+         1KvJgTSVk7idZ/POhz5Nf/M8i2L7hHO1z+xFvhOPRqaT4zmfe51sZCsbgBjrJgTvYh
+         mvabAFPzjp9HA==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     luca@z3ntu.xyz, linux-arm-msm@vger.kernel.org
-Cc:     devicetree@vger.kernel.org, sboyd@kernel.org, robh+dt@kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
-        agross@kernel.org, afd@ti.com, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org, lee@kernel.org
-Subject: Re: (subset) [PATCH v2 1/3] dt-bindings: mfd: qcom,spmi-pmic: support more types
-Date:   Mon,  7 Nov 2022 19:27:31 -0600
-Message-Id: <166787084683.599230.9192518212041906530.b4-ty@kernel.org>
+To:     marex@denx.de, linux-arm-kernel@lists.infradead.org
+Cc:     devicetree@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, robh+dt@kernel.org,
+        linus.walleij@linaro.org, konrad.dybcio@somainline.org,
+        linux-stm32@st-md-mailman.stormreply.com, yann.gautier@foss.st.com,
+        agross@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        alexandre.torgue@foss.st.com, ulf.hansson@linaro.org
+Subject: Re: (subset) [PATCH v2 1/3] dt-bindings: mmc: arm,pl18x: Document interrupt-names is ignored
+Date:   Mon,  7 Nov 2022 19:27:32 -0600
+Message-Id: <166787084676.599230.2324624555833358061.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221031173933.936147-1-luca@z3ntu.xyz>
-References: <20221031173933.936147-1-luca@z3ntu.xyz>
+In-Reply-To: <20221013221242.218808-1-marex@denx.de>
+References: <20221013221242.218808-1-marex@denx.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -57,18 +58,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 31 Oct 2022 18:39:31 +0100, Luca Weiss wrote:
-> * 'adc@' is either spmi-iadc or spmi-vadc
-> * 'charger@' is either pm8941-charger or pm8941-coincell
-> * 'usb-vbus-regulator@' is usb-vbus-regulator
-> * 'vibrator@' is now in yaml format, so add it
+On Fri, 14 Oct 2022 00:12:40 +0200, Marek Vasut wrote:
+> Due to inconsistency of existing DTs regarding the content of this IP
+> interrupt-names DT property, document this such that interrupt-names
+> is not used by this IP bindings.
 > 
 > 
 
 Applied, thanks!
 
-[3/3] arm64: dts: qcom: pm8150b: change vbus-regulator node name
-      commit: 0c9a86fb9ebc576e66a2ce6a667684431a14d2f1
+[2/3] ARM: dts: qcom: Drop MMCI interrupt-names
+      commit: 2f7fa366bac9aa2addb83ffa5f208291f4dbe4d8
 
 Best regards,
 -- 
