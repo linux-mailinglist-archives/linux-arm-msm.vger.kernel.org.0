@@ -2,56 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD63E620854
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 05:41:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DE7562089C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 05:59:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232494AbiKHElO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 23:41:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53178 "EHLO
+        id S233372AbiKHE7T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 23:59:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232125AbiKHElN (ORCPT
+        with ESMTP id S233382AbiKHE6y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 23:41:13 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A035E0C5;
-        Mon,  7 Nov 2022 20:41:12 -0800 (PST)
+        Mon, 7 Nov 2022 23:58:54 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8569E40448;
+        Mon,  7 Nov 2022 20:55:15 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2400B61466;
-        Tue,  8 Nov 2022 04:41:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A17A9C433C1;
-        Tue,  8 Nov 2022 04:41:10 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 23556B818F8;
+        Tue,  8 Nov 2022 04:55:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3F2C433D6;
+        Tue,  8 Nov 2022 04:55:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667882471;
-        bh=u+aMSC7NtK/eF/XnaxPejrZT3LQ1++Bwr4IovOzzV24=;
+        s=k20201202; t=1667883312;
+        bh=xkR30a+entgy1vXyIX0srbFHhSZZjvV2+o31MTjdbMM=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=IWRfF3klqBvKduJp26siphyeNq3/RNm+nQkelqIna629PgV8dlx2m5+L7iJ/t2Isl
-         CEBTukWsBpBnf8uLp9k3v3BvT8dovqFTIaIlF0vSt2euKYlIZFQe4PgFSYulFmmAEr
-         Zk3KiHQMNF8skaoacDySPbl2cYzMTSuoVikmI66kLBdfqMXz/6XmabefgHk22meK1A
-         vxhHNPSX0nLU0airdnO+Jm4QT2lPKkvK/t2lB1yTAnXy2kyVCn9FOAaA6BsWm6gK55
-         4h3E+//4Ae+v3izNeGulcQpVBmWZGbcS7yZmWPjAlzrUH8r8693DBVsYaS7OkSwnLR
-         QpYkHuETB4zRg==
-Date:   Mon, 7 Nov 2022 22:41:08 -0600
+        b=QNAC1UX1ZD1iQhthMdjWT5RYSzCnzWVQ4pyMyHLWaLhx4mesgWRR600qBYaX7BAvY
+         +v8KKzPPSsej6S8h9Wwnwx5l6gGlFUIg/YgJlpxZ1lSsvQLIneoOHsV3p6XmrGMo9H
+         kUYOSYvpnK1pYnZHTZw0sWRopWb5qUCQrNL++1Qe34gTpmd8t4alBis8QzyWZOhMS/
+         fR7I2U2bmNjvhRyLmikUi5tk2MfqEIlZAdcN97h8Ilb6gW/2rMe/U7OtkrrMaX9zVk
+         dMf25nqpJifkAyUFi2TxHvZPl+DK+YxYK+tdGRJCBMq0tnJG2my7lkOI9wG9zsK5AQ
+         yoSASNzJJcC2w==
+Date:   Mon, 7 Nov 2022 22:55:08 -0600
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Yassine Oudjana <yassine.oudjana@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: msm8996pro-xiaomi-scorpio: Remove DSI
- PHY clocks from MMCC
-Message-ID: <20221108044108.se3et4do5q2dspsb@builder.lan>
-References: <20221107114016.356112-1-y.oudjana@protonmail.com>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Cc:     agross@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        lee@kernel.org, ulf.hansson@linaro.org,
+        srinivas.kandagatla@linaro.org, jic23@kernel.org, lars@metafoo.de,
+        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        bhupesh.sharma@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-hardening@vger.kernel.org, marijn.suijten@somainline.org,
+        kernel@collabora.com, luca@z3ntu.xyz, a39.skl@gmail.com,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Subject: Re: [PATCH 8/9] arm64: dts: qcom: Add DTS for MSM8976 and MSM8956
+ SoCs
+Message-ID: <20221108045508.hnnwt22m6ceg5u4y@builder.lan>
+References: <20221104172122.252761-1-angelogioacchino.delregno@collabora.com>
+ <20221104172122.252761-9-angelogioacchino.delregno@collabora.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221107114016.356112-1-y.oudjana@protonmail.com>
+In-Reply-To: <20221104172122.252761-9-angelogioacchino.delregno@collabora.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -61,55 +66,327 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 07, 2022 at 02:40:17PM +0300, Yassine Oudjana wrote:
-> From: Yassine Oudjana <y.oudjana@protonmail.com>
+On Fri, Nov 04, 2022 at 06:21:21PM +0100, AngeloGioacchino Del Regno wrote:
+> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 > 
-> Having DSI PHY clocks listed in the MMCC node while MDSS is disabled makes
-> it defer probe indefinitely, resulting in simplefb and other blocks that
-> depend on its clocks to defer probe as well. Remove DSI PHY clocks from
-> MMCC to let it probe with MDSS disabled.
+> This commit adds device trees for MSM8956 and MSM8976 SoCs.
+> They are *almost* identical, with minor differences, such as
+> MSM8956 having two A72 cores less.
 > 
+> However, there is a bug in Sony Loire bootloader that requires presence
+> of all 8 cores in the cpu{} node, so these will not be deleted.
+> 
+> Co-developed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Co-developed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> ---
+>  arch/arm64/boot/dts/qcom/msm8956.dtsi |   18 +
+>  arch/arm64/boot/dts/qcom/msm8976.dtsi | 1208 +++++++++++++++++++++++++
+>  2 files changed, 1226 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8956.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8976.dtsi
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8956.dtsi b/arch/arm64/boot/dts/qcom/msm8956.dtsi
+> new file mode 100644
+> index 000000000000..eb2c1345172c
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8956.dtsi
+> @@ -0,0 +1,18 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2016-2022, AngeloGioacchino Del Regno
+> + *                          <angelogioacchino.delregno@somainline.org>
+> + * Copyright (c) 2022, Konrad Dybcio <konrad.dybcio@somainline.org>
+> + * Copyright (c) 2022, Marijn Suijten <marijn.suijten@somainline.org>
+> + */
+> +
+> +#include "msm8976.dtsi"
+> +
+> +&pmu {
+> +	interrupts = <GIC_PPI 7 (GIC_CPU_MASK_SIMPLE(6) | IRQ_TYPE_LEVEL_HIGH)>;
+> +};
+> +
+> +/*
+> + * You might be wondering.. why is it so empty out there?
+> + * Well, the SoCs are almost identical.
+> + */
+> diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+> new file mode 100644
+> index 000000000000..e084a3a78f18
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+> @@ -0,0 +1,1208 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2016-2022, AngeloGioacchino Del Regno
+> + *                          <angelogioacchino.delregno@somainline.org>
+> + * Copyright (c) 2022, Konrad Dybcio <konrad.dybcio@somainline.org>
+> + * Copyright (c) 2022, Marijn Suijten <marijn.suijten@somainline.org>
+> + */
+> +
+> +#include <dt-bindings/clock/qcom,gcc-msm8976.h>
+> +#include <dt-bindings/clock/qcom,rpmcc.h>
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/interrupt-controller/irq.h>
+> +#include <dt-bindings/power/qcom-rpmpd.h>
+> +
+> +/ {
+> +	interrupt-parent = <&intc>;
+> +	#address-cells = <2>;
+> +	#size-cells = <2>;
+> +
+> +	chosen { };
+> +
+> +	cpus {
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		CPU0: cpu@0 {
+> +			device_type = "cpu";
+> +			compatible = "arm,cortex-a53";
+> +			reg = <0x0>;
+> +			enable-method = "psci";
+> +			cpu-idle-states = <&little_cpu_sleep_0>;
+> +			capacity-dmips-mhz = <573>;
+> +			next-level-cache = <&l2_0>;
+> +			#cooling-cells = <2>;
+> +		};
+> +
+> +		CPU1: cpu@1 {
+> +			device_type = "cpu";
+> +			compatible = "arm,cortex-a53";
+> +			reg = <0x1>;
+> +			enable-method = "psci";
+> +			cpu-idle-states = <&little_cpu_sleep_0>;
+> +			capacity-dmips-mhz = <573>;
+> +			next-level-cache = <&l2_0>;
+> +			#cooling-cells = <2>;
+> +		};
+> +
+> +		CPU2: cpu@2 {
+> +			device_type = "cpu";
+> +			compatible = "arm,cortex-a53";
+> +			reg = <0x2>;
+> +			enable-method = "psci";
+> +			cpu-idle-states = <&little_cpu_sleep_0>;
+> +			capacity-dmips-mhz = <573>;
+> +			next-level-cache = <&l2_0>;
+> +			#cooling-cells = <2>;
+> +		};
+> +
+> +		CPU3: cpu@3 {
+> +			device_type = "cpu";
+> +			compatible = "arm,cortex-a53";
+> +			reg = <0x3>;
+> +			enable-method = "psci";
+> +			cpu-idle-states = <&little_cpu_sleep_0>;
+> +			capacity-dmips-mhz = <573>;
+> +			next-level-cache = <&l2_0>;
+> +			#cooling-cells = <2>;
+> +		};
+> +
+> +		CPU4: cpu@100 {
+> +			device_type = "cpu";
+> +			compatible = "arm,cortex-a72";
+> +			reg = <0x100>;
+> +			enable-method = "psci";
+> +			cpu-idle-states = <&big_cpu_sleep_0 &big_cpu_sleep_1>;
+> +			capacity-dmips-mhz = <1024>;
+> +			next-level-cache = <&l2_1>;
+> +			#cooling-cells = <2>;
+> +		};
+> +
+> +		CPU5: cpu@101 {
+> +			device_type = "cpu";
+> +			compatible = "arm,cortex-a72";
+> +			reg = <0x101>;
+> +			enable-method = "psci";
+> +			cpu-idle-states = <&big_cpu_sleep_0 &big_cpu_sleep_1>;
+> +			capacity-dmips-mhz = <1024>;
+> +			next-level-cache = <&l2_1>;
+> +			#cooling-cells = <2>;
+> +		};
+> +
+> +		CPU6: cpu@102 {
+> +			device_type = "cpu";
+> +			compatible = "arm,cortex-a72";
+> +			reg = <0x102>;
+> +			enable-method = "psci";
+> +			cpu-idle-states = <&big_cpu_sleep_0 &big_cpu_sleep_1>;
+> +			capacity-dmips-mhz = <1024>;
+> +			next-level-cache = <&l2_1>;
+> +			#cooling-cells = <2>;
+> +		};
+> +
+> +		CPU7: cpu@103 {
+> +			device_type = "cpu";
+> +			compatible = "arm,cortex-a72";
+> +			reg = <0x103>;
+> +			enable-method = "psci";
+> +			cpu-idle-states = <&big_cpu_sleep_0 &big_cpu_sleep_1>;
+> +			capacity-dmips-mhz = <1024>;
+> +			next-level-cache = <&l2_1>;
+> +			#cooling-cells = <2>;
+> +		};
+> +
+> +		cpu-map {
+> +			cluster0 {
+> +				core0 {
+> +					cpu = <&CPU0>;
+> +				};
+> +
+> +				core1 {
+> +					cpu = <&CPU1>;
+> +				};
+> +
+> +				core2 {
+> +					cpu = <&CPU2>;
+> +				};
+> +
+> +				core3 {
+> +					cpu = <&CPU3>;
+> +				};
+> +			};
+> +
+> +			cluster1 {
 
-Isn't this a generic problem that we will have all over the place, where
-we describe incoming clocks from all PHYs and then only enable the ones
-actually available on each platform?
+Are you sure that the two clusters should be expressed separately in the
+cpu-map?
 
-Am I missing something special with this case? I think the kernel need
-to handle this.
+> +				core0 {
+> +					cpu = <&CPU4>;
+> +				};
+> +
+> +				core1 {
+> +					cpu = <&CPU5>;
+> +				};
+> +
+> +				core2 {
+> +					cpu = <&CPU6>;
+> +				};
+> +
+> +				core3 {
+> +					cpu = <&CPU7>;
+> +				};
+> +			};
+> +		};
+> +
+> +		idle-states {
+> +			entry-method = "psci";
+> +
+> +			little_cpu_sleep_0: cpu-sleep-0-0 {
+> +				compatible = "arm,idle-state";
+> +				idle-state-name = "little-power-collapse";
+> +				arm,psci-suspend-param = <0x40000003>;
+> +				entry-latency-us = <181>;
+> +				exit-latency-us = <149>;
+> +				min-residency-us = <703>;
+> +				local-timer-stop;
+> +			};
+> +
+> +			big_cpu_sleep_0: cpu-sleep-1-0 {
+> +				compatible = "arm,idle-state";
+> +				idle-state-name = "big-retention";
+> +				arm,psci-suspend-param = <0x00000002>;
+> +				entry-latency-us = <142>;
+> +				exit-latency-us = <99>;
+> +				min-residency-us = <242>;
+> +			};
+> +
+> +			big_cpu_sleep_1: cpu-sleep-1-1 {
+> +				compatible = "arm,idle-state";
+> +				idle-state-name = "big-power-collapse";
+> +				arm,psci-suspend-param = <0x40000003>;
+> +				entry-latency-us = <158>;
+> +				exit-latency-us = <144>;
+> +				min-residency-us = <863>;
+> +				local-timer-stop;
+> +			};
+> +		};
+> +
+> +		l2_0: l2-cache0 {
+> +			compatible = "cache";
+> +			cache-level = <2>;
+> +		};
+> +
+> +		l2_1: l2-cache1 {
+> +			compatible = "cache";
+> +			cache-level = <2>;
+> +		};
+> +	};
+> +
+> +	firmware {
+> +		scm: scm {
+> +			compatible = "qcom,scm-msm8976", "qcom,scm";
+> +			clocks = <&gcc GCC_CRYPTO_CLK>,
+> +				 <&gcc GCC_CRYPTO_AXI_CLK>,
+> +				 <&gcc GCC_CRYPTO_AHB_CLK>;
+> +			clock-names = "core", "bus", "iface";
+> +			#reset-cells = <1>;
+> +
+> +			qcom,dload-mode = <&tcsr 0x6100>;
+> +		};
+> +	};
+> +
+> +	memory@80000000 {
+> +		device_type = "memory";
+> +		/* We expect the bootloader to fill in the size */
+> +		reg = <0x0 0x80000000 0x0 0x0>;
+> +	};
+> +
+> +	pmu: pmu {
+> +		compatible = "arm,armv8-pmuv3";
+> +		interrupts = <GIC_PPI 7 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_HIGH)>;
+> +	};
+> +
+> +	psci {
+> +		compatible = "arm,psci-1.0";
+> +		method = "smc";
+> +	};
+> +
+> +	reserved-memory {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		cont_splash_mem: memory@83000000 {
+
+memory is "reserved", please use specific node names for these regions.
+
+> +			reg = <0x0 0x83000000 0x0 0x2800000>;
+> +		};
+[..]
+> +		apcs: syscon@b011000 {
+> +			compatible = "syscon";
+
+Why not use qcom,msm8976-apcs-kpss-global here?
+
+> +			reg = <0x0b011000 0x1000>;
+> +		};
+[..]
+> +
+> +		imem: imem@8600000 {
+> +			compatible = "simple-mfd";
+
+sram/qcom,imem.yaml please.
+
+> +			reg = <0x08600000 0x1000>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +
+> +			ranges = <0 0x08600000 0x1000>;
+> +
+> +			pil-reloc@94c {
+> +				compatible = "qcom,pil-reloc-info";
+> +				reg = <0x94c 0xc8>;
+> +			};
+> +		};
+> +	};
+> +
 
 Regards,
 Bjorn
-
-> Fixes: 48aa636285ad ("arm64: dts: qcom: msm8996: add clocks to the MMCC device node")
-> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-> ---
->  .../boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts     | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts b/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts
-> index 7bf6ad1a214b..c68c2dadd7b4 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts
-> @@ -113,6 +113,19 @@ &mdss {
->  	status = "disabled";
->  };
->  
-> +&mmcc {
-> +	/*
-> +	 * Remove non-essential DSI PHY clocks to allow MMCC to probe
-> +	 * with MDSS disabled.
-> +	 */
-> +	clocks = <&xo_board>,
-> +		 <&gcc GCC_MMSS_NOC_CFG_AHB_CLK>,
-> +		 <&gcc GPLL0>;
-> +	clock-names = "xo",
-> +		      "gcc_mmss_noc_cfg_ahb_clk",
-> +		      "gpll0";
-> +};
-> +
->  &mss_pil {
->  	firmware-name = "qcom/msm8996/scorpio/mba.mbn",
->  			"qcom/msm8996/scorpio/modem.mbn";
-> -- 
-> 2.38.1
-> 
