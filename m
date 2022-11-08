@@ -2,106 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EFA0621E5E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 22:15:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 858F7621E69
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 22:17:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229628AbiKHVPQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 16:15:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43410 "EHLO
+        id S229675AbiKHVRu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 16:17:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229586AbiKHVPP (ORCPT
+        with ESMTP id S229801AbiKHVRr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 16:15:15 -0500
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F67C50F14
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 13:15:14 -0800 (PST)
-Received: by mail-lj1-x22d.google.com with SMTP id t10so23056092ljj.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 13:15:14 -0800 (PST)
+        Tue, 8 Nov 2022 16:17:47 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5069160356;
+        Tue,  8 Nov 2022 13:17:43 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id y16so22893544wrt.12;
+        Tue, 08 Nov 2022 13:17:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TbPSXqBkkfsvy6sh0R6QLPf4hCgHc3rDcYUsSV8QWAw=;
-        b=gq3BauSNoIQY8OsQReR2/NvF09kGSEZx51qdGVmKUYIUteqzHQQ5J2TnLGb2gefFa/
-         66mzynqqNlKLZY2kx74CtQADZIfTPWdGr+5ssjYmxfxCpJgL/xyfq5TI0ZUqDrcatlMF
-         xiVLW5M++2vI6ENo5p5rDUHK2ZZXwo81A+Hp26+sU00A3RfwzSgl1wv9jVTvLHXH/6HO
-         WJywjXUdU44T1Yx4GweCVL5Cy4y+rNrKlSwVIvYv791IKImsObPWrQ6mLXKARM6BQQio
-         jkxVCEs/kOCqhlMPkclREiGtlgPn85HnFq3NQiJS8izHFlulLo0wgwJB8be2jIDStm7r
-         zC2Q==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JaQ3qz4RAxB0OZvGVNsixJMinEHr+Sa/4oPbj4kqOBA=;
+        b=Mxkb/CgpSin7mV3Vzf7xtXQ0c62wTqd7CKX7ftEpwmSr7vrwIteF4BqUjxqqimJfTO
+         IdU74fecVdLsD4gBDDKI8JiEM8XHjIkdVyBz6pt+u6SmqZZzNW5yomEbh71H0n55/NtE
+         kgoElk2VPcuCzbRSLaodyhNoLS6mT2oHHy76rNhb7rW7LVF3a2+1GVNf1SMrmNxr+UaR
+         7P/FDnrDlOS2zM1Bdf1RTnMh0O9o5TF0Dpsbtl6KmRUYSkLSL8eZ6h1/h8MiDqhGAILs
+         J5UO8W5IsvH5WUQ9L8vHJUf8IQVxvwuv4xTxRPHk3dkMpaPw9st5uPmQQJVNhPjqAmzQ
+         te3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TbPSXqBkkfsvy6sh0R6QLPf4hCgHc3rDcYUsSV8QWAw=;
-        b=aG/oXLhqY9n3VMs5MMCGNwWJ9F3Y+ZZBmBO69UTOWIbj709zrnJIBcGfO56phy5LeT
-         J7v5C/OfHAYZJQBWu6Nsdpo+q53q/KUXVmpDsIk+ZBOutjCQe+tIc5LLGTdenDnq/S5O
-         t7gfmKLuAnfLalif2SkU1Nn9vgcjwOOUKBIwccN16ssRtUSuHcDq3yVu0A8U/d3Rg5j2
-         E5K1YzmNWWvVQKfWnhi0xnrdOLN7WRJg4I4xBD4pfMDw45wxzVEjl6Ly+xcySjJnEipI
-         fajjGWBEUrSoV75fmd3wXYS/gpbtPgXLCd3gkWYsDxTUyZw2WSWWJUShNSzjyRUd7jt5
-         pw1w==
-X-Gm-Message-State: ACrzQf0H0dTuh36Xv9/8wRMS4dHiWtI196bzxCSUIT+cut3Z0VGImAsJ
-        54T6/BZn4Qt1LH4rMuCCRYwXfQ==
-X-Google-Smtp-Source: AMsMyM7WIn32uNwx5DstbReB/5SJTwpZj+9Ij378/4SmbHtfHmPVJdupIAz9ZY92s7CNJTzU3Lfmaw==
-X-Received: by 2002:a2e:9cd9:0:b0:277:489a:40b1 with SMTP id g25-20020a2e9cd9000000b00277489a40b1mr19393074ljj.367.1667942112646;
-        Tue, 08 Nov 2022 13:15:12 -0800 (PST)
-Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
-        by smtp.gmail.com with ESMTPSA id s17-20020a056512315100b0048a934168c0sm1931190lfi.35.2022.11.08.13.15.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Nov 2022 13:15:12 -0800 (PST)
-Message-ID: <d721d484-84d3-f380-3bbc-43dad139bdee@linaro.org>
-Date:   Tue, 8 Nov 2022 22:15:11 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JaQ3qz4RAxB0OZvGVNsixJMinEHr+Sa/4oPbj4kqOBA=;
+        b=O5jIoRuwOl76Y+RFl01irGjqcMjobSB7vlZhCRia+/s2NzyliHhB6KvEat9fihCjE2
+         pv3IvyZoVKwFMuLV1BnWnzl9iJYfcRtjMqWm6duyWdEHUemhsy7aUqImr/BEhlXjfVNQ
+         /jACiGb7jNPiyDT+pjnqo0Sq+LY1V1jEAT3odG9dtugusNs4K0Bl0sseRVO3TrcnK4yM
+         p4A1wrc132N6PgJyYu3RJJ/7dZ2sUP0F0sFzhpzrsPWbtzRZRaHJSRfB4LxtEg+5dQz+
+         grWC4sGoibky1R7mp+DPAOIRltnZRAfo4SLYLYbhcPvyBW5NcrIYOI/GGMTphogi62JJ
+         be3A==
+X-Gm-Message-State: ANoB5pmewRM5+PqfvcX/QBFPzuo1Xrf6YriT7hjUmeBtqJcVBjO1KYdb
+        JCk7kzednJZ/HJ5Gca46Fz8=
+X-Google-Smtp-Source: AA0mqf7mkBlhcgeIAGPGEoDIwmMAx1+Q45J2QmFuenk0lQtrrRcgqL9tIt1S+mF1faiCdr4d3DuoSg==
+X-Received: by 2002:a5d:6392:0:b0:23b:4b0d:4591 with SMTP id p18-20020a5d6392000000b0023b4b0d4591mr15899667wru.635.1667942261715;
+        Tue, 08 Nov 2022 13:17:41 -0800 (PST)
+Received: from localhost.localdomain (93-42-71-18.ip85.fastwebnet.it. [93.42.71.18])
+        by smtp.googlemail.com with ESMTPSA id t20-20020a05600c199400b003cf9bf5208esm14337980wmq.19.2022.11.08.13.17.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Nov 2022 13:17:41 -0800 (PST)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Christian Marangi <ansuelsmth@gmail.com>
+Subject: [PATCH] clk: qcom: kpss-xcc: register it as clk provider
+Date:   Tue,  8 Nov 2022 22:17:34 +0100
+Message-Id: <20221108211734.3707-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v2 07/18] dt-bindings: msm: dsi-controller-main: Add
- compatible strings for every current SoC
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        quic_mkrishn@quicinc.com, linux-arm-msm@vger.kernel.org
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221107235654.1769462-1-bryan.odonoghue@linaro.org>
- <20221107235654.1769462-8-bryan.odonoghue@linaro.org>
- <aeb59d3c-34d0-f00a-bfc3-524cd03acb71@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <aeb59d3c-34d0-f00a-bfc3-524cd03acb71@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/11/2022 13:46, Dmitry Baryshkov wrote:
-> On 08/11/2022 02:56, Bryan O'Donoghue wrote:
->> Currently we do not differentiate between the various users of the
->> qcom,mdss-dsi-ctrl. The driver is flexible enough to operate from one
->> compatible string but, the hardware does have some significant differences
->> in the number of clocks.
->>
->> To facilitate documenting the clocks add the following compatible strings
->>
->> - qcom,mdss-dsi-ctrl-apq8064
-> 
-> Generic comment: I think we'd better follow the arm/qcom-soc.yaml and 
-> use qcom,soc-something as compat string. This would leave us with 
-> qcom,apq8064-dsi-ctrl
+krait-cc use this driver for the secondary mux. Register it as a clk
+provider to correctly use this clk in other drivers.
 
-That's a requirement. Only existing patterns are allowed to continue,
-but here all there is no such pattern.
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+---
+ drivers/clk/qcom/kpss-xcc.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/clk/qcom/kpss-xcc.c b/drivers/clk/qcom/kpss-xcc.c
+index b1b370274ec4..97358c98c6c9 100644
+--- a/drivers/clk/qcom/kpss-xcc.c
++++ b/drivers/clk/qcom/kpss-xcc.c
+@@ -31,12 +31,13 @@ MODULE_DEVICE_TABLE(of, kpss_xcc_match_table);
+ 
+ static int kpss_xcc_driver_probe(struct platform_device *pdev)
+ {
++	struct device *dev = &pdev->dev;
+ 	const struct of_device_id *id;
+ 	void __iomem *base;
+ 	struct clk_hw *hw;
+ 	const char *name;
+ 
+-	id = of_match_device(kpss_xcc_match_table, &pdev->dev);
++	id = of_match_device(kpss_xcc_match_table, dev);
+ 	if (!id)
+ 		return -ENODEV;
+ 
+@@ -45,7 +46,7 @@ static int kpss_xcc_driver_probe(struct platform_device *pdev)
+ 		return PTR_ERR(base);
+ 
+ 	if (id->data) {
+-		if (of_property_read_string_index(pdev->dev.of_node,
++		if (of_property_read_string_index(dev->of_node,
+ 						  "clock-output-names",
+ 						  0, &name))
+ 			return -ENODEV;
+@@ -55,12 +56,16 @@ static int kpss_xcc_driver_probe(struct platform_device *pdev)
+ 		base += 0x28;
+ 	}
+ 
+-	hw = devm_clk_hw_register_mux_parent_data_table(&pdev->dev, name, aux_parents,
++	hw = devm_clk_hw_register_mux_parent_data_table(dev, name, aux_parents,
+ 							ARRAY_SIZE(aux_parents), 0,
+ 							base, 0, 0x3,
+ 							0, aux_parent_map, NULL);
++	if (IS_ERR(hw))
++		return PTR_ERR(hw);
+ 
+-	return PTR_ERR_OR_ZERO(hw);
++	of_clk_add_hw_provider(dev->of_node, of_clk_hw_simple_get, hw);
++
++	return 0;
+ }
+ 
+ static struct platform_driver kpss_xcc_driver = {
+-- 
+2.37.2
 
