@@ -2,77 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F500621140
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 13:46:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F06B8621146
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 13:47:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234269AbiKHMqs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 07:46:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32904 "EHLO
+        id S233873AbiKHMrF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 07:47:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233979AbiKHMql (ORCPT
+        with ESMTP id S234260AbiKHMqw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 07:46:41 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00AF952886
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 04:46:40 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id j16so21027452lfe.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 04:46:40 -0800 (PST)
+        Tue, 8 Nov 2022 07:46:52 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE771528A5
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 04:46:51 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id r12so21092565lfp.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 04:46:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=3ec4qBSZkRiXSLaWs7CwYWDreZtQ9OjryTN/TEu/9Uc=;
-        b=EFACJzEA+ZYzeeFJrlOfvGYFj9+XMKM1DMV/pjLx4Fz1ohge68gODDobxmUbGHs+AF
-         beD3cNOlxprwZF1/TKgrXzQAkZuEoWLqdKMiviTavQ78Tz6VK87GJuFFaSgeiiKyVAL9
-         ZkeQeQa0QFi9jFdZVfa3yxLMFrpxL0HCldfObgsuMiTrd0iE7fl+5oAITyCZlKilaN7K
-         K06eAo0SaIvotVAQ+kk82RKj5ltaNYVFIGilVrmuU2QZYZH7oImqDQaMFl1Q+wMEtGxh
-         z6IdVZ4b9U3meddyjjgfDdJt7c+Jusv6BXwXDfWTMTKxFWrzkOYSdOUJT7jFD1f/xdGy
-         4O2Q==
+        bh=ICaRGw9xCO3DSvdx7VVEsxQH9tTfnXE7G9tYCgGWr34=;
+        b=CgRwNsUWCdaRfL0Zxw2rP8qnHgxwQqa92EwavvN0gY58lu/xEfqCf3aeLCvbOM/5EX
+         iKzJivIDq1LGRPIQGB/os0BPO01HugtPFSoY/YN9kGAMRoUbs8N+MJl9JT392szKjLE6
+         F9oVDo/kSdsb5IVos5xA4L5vNKE9p2MkvfjgeJEZh0/YvHQUGyysRjKVVj/IuRc0dFxy
+         omYcT4CEKNgLZu0H/35FZqMNOYOs1LAFw5z/y0TLlgvj+HolM/IpPw9kxwoEEEMbz8hf
+         pRpzYqAsHmi8pidSpaCxVRq7DNOmGt/8mcgYJn2i+dDJKYO65vbWGQx0Jzt99sVDBl0a
+         jcDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3ec4qBSZkRiXSLaWs7CwYWDreZtQ9OjryTN/TEu/9Uc=;
-        b=m0j97kFAiOF1yFynBkNtPod9vU7OrtalqHBYn+TNNK7wULksibJf19/WVw53yudjat
-         XjAw/hI8kHGrmn+IsnYLOBkLYh20JK+axHOv9AoCKl+uspVKluick0naM46CX0UfHeDC
-         lE5dUwloJNY8veE4g+yTo4PA9Y8GMwFZYqUWyQKQWdyiyW/uK/r4qkEnxQkXfe+GxZjq
-         3C1BWFbKOx0B6yVN/HIItTbbeeVeBH+A+LRhSLL3hxwflepsdicPjNw5dsvi5TiM2rRY
-         l5KRiSDV4KosZjj+tarWzlZT3naWjY00tc0c6gwULTNy1VZDKbiSq/ffCdCN6ZON+kl6
-         7y/w==
-X-Gm-Message-State: ACrzQf2TCFDP0n+Q8zTe5+32YzN0HdlYjGVjuMHg7Nd4gEWMcF6v6ncw
-        s2If49jpKbDZagQ5xXOks75XOw==
-X-Google-Smtp-Source: AMsMyM4mBDv4HO3daS3jFbUT6KUf6TGTzBSDBCFvSnnC2MJTh7duW7vsuNT9IGMI0K111dDpylA/cA==
-X-Received: by 2002:a05:6512:3d26:b0:4a2:a591:a45e with SMTP id d38-20020a0565123d2600b004a2a591a45emr21504975lfv.115.1667911599389;
-        Tue, 08 Nov 2022 04:46:39 -0800 (PST)
-Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
-        by smtp.gmail.com with ESMTPSA id i14-20020a2ea22e000000b0026e8dd02eacsm1705056ljm.16.2022.11.08.04.46.38
+        bh=ICaRGw9xCO3DSvdx7VVEsxQH9tTfnXE7G9tYCgGWr34=;
+        b=kWeXOHSVHd7NF1XMDoODK3bcJsvWq+rveRTy0SlmU3j9N3wfqnRzxpSnYBDJ3kxW9Q
+         In4FZjdrp2XcMoXxFEatPQD7qPbMoNrQ8GmY4Arig4OLmeDHSSYNYaiP7yIFa81fDjiw
+         WB7jAPwpai5GU5VMKBg0hxwcX/E140kRYQjfM6i9ToNytB87H9uMKhldBTTlimm7LOYZ
+         ckGEkOPWmty1CEMO6+sBFlkVsSDbpJkPsC0nWZE7E9mcJ9REeXk6y+Nhth93uEgnNN60
+         SaQWrvXH4HKbrBpXURFvlnfsGfkOwqUNLmt/C9ETE35tJrPsnr3D5uMbbFObSGGx9qv7
+         eKKA==
+X-Gm-Message-State: ACrzQf3u5p7ePftSzxyja6lfg/d7WlymkongC2hx9O3PNxSCeeL7qDb/
+        JM2Nvv893zqUpCs5XMGrJsp/5A==
+X-Google-Smtp-Source: AMsMyM7Rss3ZJXpWQzraDFVxnOgPelIhIHbOdwlUE0xr9Mb3GOdpjuUhBYjZGqSRdBoMHu/gRWClKw==
+X-Received: by 2002:a05:6512:78c:b0:4a2:4b01:8466 with SMTP id x12-20020a056512078c00b004a24b018466mr511398lfr.34.1667911611454;
+        Tue, 08 Nov 2022 04:46:51 -0800 (PST)
+Received: from [10.27.10.248] ([195.165.23.90])
+        by smtp.gmail.com with ESMTPSA id s16-20020a056512215000b004a2c447598fsm1776440lfr.159.2022.11.08.04.46.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Nov 2022 04:46:38 -0800 (PST)
-Message-ID: <eb2b7f21-5103-b30d-4a7b-bb4988f6024f@linaro.org>
-Date:   Tue, 8 Nov 2022 13:46:37 +0100
+        Tue, 08 Nov 2022 04:46:51 -0800 (PST)
+Message-ID: <aeb59d3c-34d0-f00a-bfc3-524cd03acb71@linaro.org>
+Date:   Tue, 8 Nov 2022 15:46:50 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v5 1/4] arm64: dts: qcom: Update soundwire slave node
- names
-Content-Language: en-US
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        vkoul@kernel.org, agross@kernel.org, andersson@kernel.org,
-        robh+dt@kernel.org, broonie@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_rohkumar@quicinc.com, srinivas.kandagatla@linaro.org,
-        dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
-        alsa-devel@alsa-project.org, quic_rjendra@quicinc.com,
-        konrad.dybcio@somainline.org, mka@chromium.org
-Cc:     Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
-References: <1667911156-19238-1-git-send-email-quic_srivasam@quicinc.com>
- <1667911156-19238-2-git-send-email-quic_srivasam@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1667911156-19238-2-git-send-email-quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+ Thunderbird/102.4.1
+Subject: Re: [PATCH v2 07/18] dt-bindings: msm: dsi-controller-main: Add
+ compatible strings for every current SoC
+Content-Language: en-GB
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, krzysztof.kozlowski+dt@linaro.org,
+        robh+dt@kernel.org, quic_mkrishn@quicinc.com,
+        linux-arm-msm@vger.kernel.org
+Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221107235654.1769462-1-bryan.odonoghue@linaro.org>
+ <20221107235654.1769462-8-bryan.odonoghue@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221107235654.1769462-8-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -83,25 +81,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/11/2022 13:39, Srinivasa Rao Mandadapu wrote:
-> Update soundwire slave nodes of WSA speaker to match with
-
-s/slave/secondary/
-
-> dt-bindings pattern properties regular expression.
+On 08/11/2022 02:56, Bryan O'Donoghue wrote:
+> Currently we do not differentiate between the various users of the
+> qcom,mdss-dsi-ctrl. The driver is flexible enough to operate from one
+> compatible string but, the hardware does have some significant differences
+> in the number of clocks.
 > 
-> This modifiction is required to avoid dtbs-check errors
-
-s/modifiction/modification/
-
-> occurred with qcom,soundwire.yaml.
+> To facilitate documenting the clocks add the following compatible strings
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
-> Signed-off-by: Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+> - qcom,mdss-dsi-ctrl-apq8064
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Generic comment: I think we'd better follow the arm/qcom-soc.yaml and 
+use qcom,soc-something as compat string. This would leave us with 
+qcom,apq8064-dsi-ctrl
 
-Best regards,
-Krzysztof
+I'm not sure if we want to follow the qcm2290 approach and encode the 
+DSI ctrl revision here (6g vs v2).
+
+
+> - qcom,mdss-dsi-ctrl-msm8916
+> - qcom,mdss-dsi-ctrl-msm8974
+> - qcom,mdss-dsi-ctrl-msm8996
+> - qcom,mdss-dsi-ctrl-sc7180
+> - qcom,mdss-dsi-ctrl-sc7280
+> - qcom,mdss-dsi-ctrl-sdm630
+> - qcom,mdss-dsi-ctrl-sdm660
+> - qcom,mdss-dsi-ctrl-sdm845
+> - qcom,mdss-dsi-ctrl-sm8250
+> 
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: David Airlie <airlied@gmail.com>
+> Cc: Daniel Vetter <daniel@ffwll.ch>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: dri-devel@lists.freedesktop.org
+> Cc: freedreno@lists.freedesktop.org
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>   .../bindings/display/msm/dsi-controller-main.yaml      | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> index b35130a77b43e..9db3e63acda3d 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> @@ -17,6 +17,16 @@ properties:
+>       enum:
+>         - qcom,dsi-ctrl-6g-qcm2290
+>         - qcom,mdss-dsi-ctrl
+> +      - qcom,mdss-dsi-ctrl-apq8064
+> +      - qcom,mdss-dsi-ctrl-msm8916
+> +      - qcom,mdss-dsi-ctrl-msm8974
+> +      - qcom,mdss-dsi-ctrl-msm8996
+> +      - qcom,mdss-dsi-ctrl-sc7180
+> +      - qcom,mdss-dsi-ctrl-sc7280
+> +      - qcom,mdss-dsi-ctrl-sdm630
+> +      - qcom,mdss-dsi-ctrl-sdm660
+> +      - qcom,mdss-dsi-ctrl-sdm845
+> +      - qcom,mdss-dsi-ctrl-sm8250
+>   
+>     reg:
+>       maxItems: 1
+
+-- 
+With best wishes
+Dmitry
 
