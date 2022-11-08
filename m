@@ -2,94 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 775AA621133
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 13:46:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F500621140
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 13:46:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233700AbiKHMqC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 07:46:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60508 "EHLO
+        id S234269AbiKHMqs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 07:46:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233657AbiKHMqC (ORCPT
+        with ESMTP id S233979AbiKHMql (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 07:46:02 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7298B51C2C
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 04:46:00 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id ay14-20020a05600c1e0e00b003cf6ab34b61so11616857wmb.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 04:46:00 -0800 (PST)
+        Tue, 8 Nov 2022 07:46:41 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00AF952886
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 04:46:40 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id j16so21027452lfe.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 04:46:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hIQ3u/huOf4z9jf0jf8kWSgTP1/QU5AOGn1ARoDQeg0=;
-        b=fWDgETyypYOc1gL0Y4RbTqbIiUZjuIhpIKjNKu4S+sZcyvPAKsmZV6mh+gKWcbWauE
-         2+U+9kYLsqPF97ahGm2w2l8rqq+RxVjS+aIOpe1i/rfXGdaHCPpv25jJxBogaQQgJmFv
-         TW2MGPQo4ArbQvCCu7c/X7UiWcdHHTwx5oXHE+kibb/5WHpGYOqBv164DWKWUPxEF2cG
-         bdSCcC4aYsD/2yOfkgKqsdRehjDYK8/jvylQp9T87ZXnNRBplvuu7KKaE8IKrmRv8nsT
-         2WMLkggWxVgV9wGE3495gzdDeDf5Q8H98e1hU3ebvAIu/9VuScQ6cDyVzMBCfMNHlJM6
-         bI5g==
+        bh=3ec4qBSZkRiXSLaWs7CwYWDreZtQ9OjryTN/TEu/9Uc=;
+        b=EFACJzEA+ZYzeeFJrlOfvGYFj9+XMKM1DMV/pjLx4Fz1ohge68gODDobxmUbGHs+AF
+         beD3cNOlxprwZF1/TKgrXzQAkZuEoWLqdKMiviTavQ78Tz6VK87GJuFFaSgeiiKyVAL9
+         ZkeQeQa0QFi9jFdZVfa3yxLMFrpxL0HCldfObgsuMiTrd0iE7fl+5oAITyCZlKilaN7K
+         K06eAo0SaIvotVAQ+kk82RKj5ltaNYVFIGilVrmuU2QZYZH7oImqDQaMFl1Q+wMEtGxh
+         z6IdVZ4b9U3meddyjjgfDdJt7c+Jusv6BXwXDfWTMTKxFWrzkOYSdOUJT7jFD1f/xdGy
+         4O2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hIQ3u/huOf4z9jf0jf8kWSgTP1/QU5AOGn1ARoDQeg0=;
-        b=oBXDpjupKGJf/jMMrXuUazuFltVPZDp19jijAeZY4kx2kPRJnqfX6w596UdcOWVaS2
-         c+m40W8xW3Hp9UwG+itlSNuOh/VMaef1zcdOKh/yX0c/oaMVZ4qGnuuVSVJqJRXArrKn
-         G0yzgsJMIZb0fr3PCTlzwf7aKq9w4N4w7/2wh0oPpseq/rdWxmWx5W8V2N9XW9/NA5BN
-         P6B8eS6E3PIbHZhhhlEZhSzZaB0RWoJpcYelRsEtprwfxhVUtPhLGxeXbrhWEpPo3Tp/
-         JZgZdS3At8NcR0yNrLtFzrwv78mj6843vMjY5zukWJVCxz6v7gRLjW+97Dr/vlFeNGyg
-         N/YA==
-X-Gm-Message-State: ACrzQf0Esp5KVQeavYAmgjuInKXncD5fmbxPUX31E0qRgyhJL9RU5N4T
-        tXTOVH8nx53ZP4nKKyFq+bQwHQ==
-X-Google-Smtp-Source: AMsMyM44z2U/h+ehijFYZ/5qViV4YPBFnGfwbHys7xmuID6S4pCbrFGbASlzwGGFG0zW9x1S5a7Bsg==
-X-Received: by 2002:a05:600c:21a:b0:3cf:6e78:8e89 with SMTP id 26-20020a05600c021a00b003cf6e788e89mr33447753wmi.46.1667911558976;
-        Tue, 08 Nov 2022 04:45:58 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id q24-20020a1cf318000000b003cfb7c02542sm1937720wmq.11.2022.11.08.04.45.57
+        bh=3ec4qBSZkRiXSLaWs7CwYWDreZtQ9OjryTN/TEu/9Uc=;
+        b=m0j97kFAiOF1yFynBkNtPod9vU7OrtalqHBYn+TNNK7wULksibJf19/WVw53yudjat
+         XjAw/hI8kHGrmn+IsnYLOBkLYh20JK+axHOv9AoCKl+uspVKluick0naM46CX0UfHeDC
+         lE5dUwloJNY8veE4g+yTo4PA9Y8GMwFZYqUWyQKQWdyiyW/uK/r4qkEnxQkXfe+GxZjq
+         3C1BWFbKOx0B6yVN/HIItTbbeeVeBH+A+LRhSLL3hxwflepsdicPjNw5dsvi5TiM2rRY
+         l5KRiSDV4KosZjj+tarWzlZT3naWjY00tc0c6gwULTNy1VZDKbiSq/ffCdCN6ZON+kl6
+         7y/w==
+X-Gm-Message-State: ACrzQf2TCFDP0n+Q8zTe5+32YzN0HdlYjGVjuMHg7Nd4gEWMcF6v6ncw
+        s2If49jpKbDZagQ5xXOks75XOw==
+X-Google-Smtp-Source: AMsMyM4mBDv4HO3daS3jFbUT6KUf6TGTzBSDBCFvSnnC2MJTh7duW7vsuNT9IGMI0K111dDpylA/cA==
+X-Received: by 2002:a05:6512:3d26:b0:4a2:a591:a45e with SMTP id d38-20020a0565123d2600b004a2a591a45emr21504975lfv.115.1667911599389;
+        Tue, 08 Nov 2022 04:46:39 -0800 (PST)
+Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
+        by smtp.gmail.com with ESMTPSA id i14-20020a2ea22e000000b0026e8dd02eacsm1705056ljm.16.2022.11.08.04.46.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Nov 2022 04:45:58 -0800 (PST)
-Message-ID: <162823f6-9fa9-1d69-5421-d77d37b6a0d7@linaro.org>
-Date:   Tue, 8 Nov 2022 12:45:57 +0000
+        Tue, 08 Nov 2022 04:46:38 -0800 (PST)
+Message-ID: <eb2b7f21-5103-b30d-4a7b-bb4988f6024f@linaro.org>
+Date:   Tue, 8 Nov 2022 13:46:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH v2 08/18] dt-bindings: msm: dsi-controller-main: Document
- clocks on a per compatible basis
+Subject: Re: [PATCH v5 1/4] arm64: dts: qcom: Update soundwire slave node
+ names
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        quic_mkrishn@quicinc.com, linux-arm-msm@vger.kernel.org
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221107235654.1769462-1-bryan.odonoghue@linaro.org>
- <20221107235654.1769462-9-bryan.odonoghue@linaro.org>
- <d10bf67c-c21c-5096-d774-ff924bf1dd41@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <d10bf67c-c21c-5096-d774-ff924bf1dd41@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        vkoul@kernel.org, agross@kernel.org, andersson@kernel.org,
+        robh+dt@kernel.org, broonie@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_rohkumar@quicinc.com, srinivas.kandagatla@linaro.org,
+        dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
+        alsa-devel@alsa-project.org, quic_rjendra@quicinc.com,
+        konrad.dybcio@somainline.org, mka@chromium.org
+Cc:     Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+References: <1667911156-19238-1-git-send-email-quic_srivasam@quicinc.com>
+ <1667911156-19238-2-git-send-email-quic_srivasam@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1667911156-19238-2-git-send-email-quic_srivasam@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/11/2022 12:43, Dmitry Baryshkov wrote:
-> I'd prefer to have this part squashed into the previous patch.
+On 08/11/2022 13:39, Srinivasa Rao Mandadapu wrote:
+> Update soundwire slave nodes of WSA speaker to match with
 
-NP.
+s/slave/secondary/
 
-Actually I'll add you as a suggested by here since you sent me a patch ~ 
-similar to this.
+> dt-bindings pattern properties regular expression.
+> 
+> This modifiction is required to avoid dtbs-check errors
 
----
-bod
+s/modifiction/modification/
+
+> occurred with qcom,soundwire.yaml.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+> Signed-off-by: Ratna Deepthi Kudaravalli <quic_rkudarav@quicinc.com>
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
