@@ -2,171 +2,215 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50D80620A25
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 08:26:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CA0A7620B3F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 09:34:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232940AbiKHH0N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 02:26:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34784 "EHLO
+        id S233413AbiKHIei (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 03:34:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229657AbiKHH0M (ORCPT
+        with ESMTP id S233087AbiKHIeh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 02:26:12 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D11063AF;
-        Mon,  7 Nov 2022 23:26:11 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A876mvc002834;
-        Tue, 8 Nov 2022 07:26:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=OBgBkaL8Vj57NvULPs68OhWsCOi7W7XtYnTPU95lJOg=;
- b=cesU4SlWAHfWlh6aikDUMh/wViSpRWEh8eylNaaXpFHpldBZ7/qltXgyKBCC8D3mrLYj
- UvHFfWxctVwPtsDI2hzhSSz2fz6hxHA2JnxfFkxk0iJkcAO9dcSePTKg77Qs+KGJ4QFR
- okfMm8/+06hcMF6AcxWCwERMv2z0EEp9o8rdoB3wSMq0EOgfdNla4Hl3apWeBwsIf5WK
- 8uHbjWcaejxnp+C6wM9GT/bSIrJ9vU4ePp+qcafwlCCQeAiEleq0s3hfoNO/hxKRxgj4
- s4nwLLEk3FF1TA9g/p5gswmM6zQ5sOXWDqQ/fcjSJKXxvmg1T/0i0v67vEpgAi3FWbb5 qw== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kqht88450-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 08 Nov 2022 07:26:04 +0000
-Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A87Q3Mg025480
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 8 Nov 2022 07:26:03 GMT
-Received: from [10.253.38.162] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 7 Nov 2022
- 23:26:01 -0800
-Message-ID: <e85961ce-c807-7a42-2748-9628f469c793@quicinc.com>
-Date:   Tue, 8 Nov 2022 15:25:58 +0800
+        Tue, 8 Nov 2022 03:34:37 -0500
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57037E0A3;
+        Tue,  8 Nov 2022 00:34:36 -0800 (PST)
+Received: by mail-qk1-f176.google.com with SMTP id s20so8693810qkg.5;
+        Tue, 08 Nov 2022 00:34:36 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9rjK+cFGvl0bYlnbNWlNdjkQ+vEPF5KQW+G9V7jNEfE=;
+        b=qLHu9TDpIr9TIgM9ckBuIT5QkQ+gAPZNdSQFo3KlE/uVUaji3Ilx1pHnIBS+93YWKY
+         S4Zqt91gzM3tYWFWL7uxeK0bsZBFge8lYNJmFUDSK2oKz7hOXVTGuSHc8gKP9q0RrnM/
+         8TsJnjBm0Nyc6n4rd4SW1zB8C85rUYfJGoS6UEO3M3S1ch7M3sS1dhnb+YymwqPvgfn6
+         6rxjBHvhz5z9nwiWL1YgFXWGguP8RLVO3UVACfk/O31yk1MpTmRK4MPvlRCmGSufLfdV
+         UGysRs3IT9dXSuGFqpSczUsq9zk9+rKjjjcRYxlzIdo9JB4EYTTQw6fpMAkZTGvusUig
+         EnaA==
+X-Gm-Message-State: ACrzQf3GHtPiX//Aj69OI8k7Tmha+c3PUb41fyWmNojt5jsjs3dCdteB
+        OQz94oVNkoBIiuqwAt4Sb/8tPuNKX8aP07XL
+X-Google-Smtp-Source: AMsMyM5n9RFBhHumsOb4egODJZvbGArk5mUKAGa3NMc6j96Px/+Fkq5AmEvHgTbZKacp4j3Ibdj07Q==
+X-Received: by 2002:a05:620a:888:b0:6f5:ec2:6398 with SMTP id b8-20020a05620a088800b006f50ec26398mr840149qka.617.1667896475305;
+        Tue, 08 Nov 2022 00:34:35 -0800 (PST)
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com. [209.85.128.181])
+        by smtp.gmail.com with ESMTPSA id cn3-20020a05622a248300b003a5430ee366sm7668958qtb.60.2022.11.08.00.34.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Nov 2022 00:34:34 -0800 (PST)
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-36cbcda2157so127132167b3.11;
+        Tue, 08 Nov 2022 00:34:32 -0800 (PST)
+X-Received: by 2002:a0d:e301:0:b0:374:a8ba:99b0 with SMTP id
+ m1-20020a0de301000000b00374a8ba99b0mr6035680ywe.358.1667896472556; Tue, 08
+ Nov 2022 00:34:32 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH] bus: mhi: host: Add session ID to MHI controller
-Content-Language: en-US
-To:     Manivannan Sadhasivam <mani@kernel.org>
-CC:     <quic_hemantk@quicinc.com>, <loic.poulain@linaro.org>,
-        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <mrana@quicinc.com>
-References: <1665376870-60668-1-git-send-email-quic_qianyu@quicinc.com>
- <20221028172022.GC13880@thinkpad>
- <7dc5b87a-1413-f7cb-4fdc-93828252c4f1@quicinc.com>
- <20221101114554.GD54667@thinkpad> <20221103125531.GI8434@thinkpad>
-From:   Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <20221103125531.GI8434@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 1G6tUTKKv_mjPHw8QPE0B89QskQHA_Fd
-X-Proofpoint-GUID: 1G6tUTKKv_mjPHw8QPE0B89QskQHA_Fd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-07_11,2022-11-07_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- impostorscore=0 suspectscore=0 clxscore=1015 bulkscore=0 phishscore=0
- adultscore=0 mlxscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211080039
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20221107155825.1644604-1-pierre.gondois@arm.com> <20221107155825.1644604-19-pierre.gondois@arm.com>
+In-Reply-To: <20221107155825.1644604-19-pierre.gondois@arm.com>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Tue, 8 Nov 2022 09:34:20 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdWOZemsvMfM8+NTvQ4=cDd9hu3=0tVFRmNzFmjaxVhgig@mail.gmail.com>
+Message-ID: <CAMuHMdWOZemsvMfM8+NTvQ4=cDd9hu3=0tVFRmNzFmjaxVhgig@mail.gmail.com>
+Subject: Re: [PATCH v2 18/23] arm64: dts: Update cache properties for renesas
+To:     Pierre Gondois <pierre.gondois@arm.com>
+Cc:     linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Tsahee Zidenberg <tsahee@annapurnalabs.com>,
+        Antoine Tenart <atenart@kernel.org>,
+        Brijesh Singh <brijeshkumar.singh@amd.com>,
+        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+        Tom Lendacky <thomas.lendacky@amd.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Khuong Dinh <khuong@os.amperecomputing.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        William Zhang <william.zhang@broadcom.com>,
+        Anand Gore <anand.gore@broadcom.com>,
+        Kursad Oney <kursad.oney@broadcom.com>,
+        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Chester Lin <clin@suse.com>,
+        =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
+        Matthias Brugger <mbrugger@suse.com>,
+        NXP S32 Linux Team <s32@nxp.com>,
+        Wei Xu <xuwei5@hisilicon.com>, Chanho Min <chanho.min@lge.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Lars Povlsen <lars.povlsen@microchip.com>,
+        Steen Hegelund <Steen.Hegelund@microchip.com>,
+        Daniel Machon <daniel.machon@microchip.com>,
+        UNGLinuxDriver@microchip.com, Avi Fishman <avifishman70@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Patrick Venture <venture@google.com>,
+        Nancy Yuen <yuenn@google.com>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Jisheng Zhang <jszhang@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Tero Kristo <kristo@kernel.org>,
+        Viorel Suman <viorel.suman@nxp.com>,
+        Abel Vesa <abelvesa@kernel.org>,
+        Shenwei Wang <shenwei.wang@nxp.com>,
+        Peng Fan <peng.fan@nxp.com>, Ming Qian <ming.qian@nxp.com>,
+        Adam Ford <aford173@gmail.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Tim Harvey <tharvey@gateworks.com>,
+        Richard Zhu <hongxing.zhu@nxp.com>, Li Jun <jun.li@nxp.com>,
+        Marek Vasut <marex@denx.de>,
+        Markus Niebel <Markus.Niebel@ew.tq-group.com>,
+        Joakim Zhang <qiangqing.zhang@nxp.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Alexander Stein <alexander.stein@ew.tq-group.com>,
+        Paul Elder <paul.elder@ideasonboard.com>,
+        Martin Kepplinger <martink@posteo.de>,
+        Joy Zou <joy.zou@nxp.com>, David Heidelberg <david@ixit.cz>,
+        Liu Ying <victor.liu@nxp.com>,
+        Oliver Graute <oliver.graute@kococonnector.com>,
+        Shijie Qin <shijie.qin@nxp.com>, Jacky Bai <ping.bai@nxp.com>,
+        Wei Fang <wei.fang@nxp.com>,
+        Clark Wang <xiaoning.wang@nxp.com>,
+        Chris Packham <chris.packham@alliedtelesis.co.nz>,
+        Vadym Kochan <vadym.kochan@plvision.eu>,
+        Sameer Pujar <spujar@nvidia.com>,
+        Prathamesh Shete <pshete@nvidia.com>,
+        Akhil R <akhilrajeev@nvidia.com>,
+        Mikko Perttunen <mperttunen@nvidia.com>,
+        Sumit Gupta <sumitg@nvidia.com>,
+        Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
+        Vidya Sagar <vidyas@nvidia.com>,
+        Ashish Mhetre <amhetre@nvidia.com>,
+        Johan Jonker <jbx6244@gmail.com>,
+        Christopher Obbard <chris.obbard@collabora.com>,
+        Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+        Aswani Reddy <aswani.reddy@samsung.com>,
+        Shashank Prashar <s.prashar@samsung.com>,
+        devicetree@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org,
+        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-realtek-soc@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Pierre,
 
-On 11/3/2022 8:55 PM, Manivannan Sadhasivam wrote:
-> On Tue, Nov 01, 2022 at 05:15:54PM +0530, Manivannan Sadhasivam wrote:
->> On Mon, Oct 31, 2022 at 04:54:55PM +0800, Qiang Yu wrote:
->>> On 10/29/2022 1:20 AM, Manivannan Sadhasivam wrote:
->>>> On Mon, Oct 10, 2022 at 12:41:10PM +0800, Qiang Yu wrote:
->>>>> Session ID to be used during BHI transfers to recognize a
->>>>> particular session are currently not being stored in the MHI
->>>>> controller structure. Store them to allow for tracking and other
->>>>> future usage.
->>>>>
->>>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->>>> Who/what is going to use this session id?
->>> Sometimes, we may find some error logs and want to see what happens on
->>> device when host is printing these error logs.
->>> Session id can help us find the logs we want.
->> Okay. Please add this info to the commit message.
->>
-> Wait. I asked who is going to use session_id cached in the MHI controller
-> structure? session_id is already printed in debug log.
-When we repro issue, we often write a ramdom session id before host set 
-M0, so that the session id can help us find key logs.
-To avoid loss of logs containing seesion id, we need to print session id 
-in different place. In some cases, we even print session
-id every time when host prints logs as prefix.
+Thanks for your patch!
+
+On Mon, Nov 7, 2022 at 5:33 PM Pierre Gondois <pierre.gondois@arm.com> wrote:
+> The DeviceTree Specification v0.3 specifies that the cache node
+> 'compatible' and 'cache-level' properties are 'required'. Cf.
+> s3.8 Multi-level and Shared Cache Nodes
+
+"compatible" is present?
+
+> The 'cache-unified' property should be present if one of the
+> properties for unified cache is present ('cache-size', ...).
+
+Present, too?
+
+> Update the Device Trees accordingly.
 >
->> Thanks,
->> Mani
->>
->>>> Thanks,
->>>> Mani
->>>>
->>>>> ---
->>>>>    drivers/bus/mhi/host/boot.c | 8 ++++----
->>>>>    include/linux/mhi.h         | 1 +
->>>>>    2 files changed, 5 insertions(+), 4 deletions(-)
->>>>>
->>>>> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
->>>>> index 26d0edd..5bed8b51 100644
->>>>> --- a/drivers/bus/mhi/host/boot.c
->>>>> +++ b/drivers/bus/mhi/host/boot.c
->>>>> @@ -231,7 +231,7 @@ static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
->>>>>    			   dma_addr_t dma_addr,
->>>>>    			   size_t size)
->>>>>    {
->>>>> -	u32 tx_status, val, session_id;
->>>>> +	u32 tx_status, val;
->>>>>    	int i, ret;
->>>>>    	void __iomem *base = mhi_cntrl->bhi;
->>>>>    	rwlock_t *pm_lock = &mhi_cntrl->pm_lock;
->>>>> @@ -253,16 +253,16 @@ static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
->>>>>    		goto invalid_pm_state;
->>>>>    	}
->>>>> -	session_id = MHI_RANDOM_U32_NONZERO(BHI_TXDB_SEQNUM_BMSK);
->>>>> +	mhi_cntrl->session_id = MHI_RANDOM_U32_NONZERO(BHI_TXDB_SEQNUM_BMSK);
->>>>>    	dev_dbg(dev, "Starting image download via BHI. Session ID: %u\n",
->>>>> -		session_id);
->>>>> +		mhi_cntrl->session_id);
->>>>>    	mhi_write_reg(mhi_cntrl, base, BHI_STATUS, 0);
->>>>>    	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_HIGH,
->>>>>    		      upper_32_bits(dma_addr));
->>>>>    	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_LOW,
->>>>>    		      lower_32_bits(dma_addr));
->>>>>    	mhi_write_reg(mhi_cntrl, base, BHI_IMGSIZE, size);
->>>>> -	mhi_write_reg(mhi_cntrl, base, BHI_IMGTXDB, session_id);
->>>>> +	mhi_write_reg(mhi_cntrl, base, BHI_IMGTXDB, mhi_cntrl->session_id);
->>>>>    	read_unlock_bh(pm_lock);
->>>>>    	/* Wait for the image download to complete */
->>>>> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
->>>>> index a5441ad..8b3c934 100644
->>>>> --- a/include/linux/mhi.h
->>>>> +++ b/include/linux/mhi.h
->>>>> @@ -405,6 +405,7 @@ struct mhi_controller {
->>>>>    	u32 minor_version;
->>>>>    	u32 serial_number;
->>>>>    	u32 oem_pk_hash[MHI_MAX_OEM_PK_HASH_SEGMENTS];
->>>>> +	u32 session_id;
->>>>>    	struct mhi_event *mhi_event;
->>>>>    	struct mhi_cmd *mhi_cmd;
->>>>> -- 
->>>>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->>>>> a Linux Foundation Collaborative Project
->>>>>
->>>>>
->> -- 
->> மணிவண்ணன் சதாசிவம்
->>
+> Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
+
+> --- a/arch/arm64/boot/dts/renesas/r9a07g043.dtsi
+> +++ b/arch/arm64/boot/dts/renesas/r9a07g043.dtsi
+> @@ -88,6 +88,7 @@ L3_CA55: cache-controller-0 {
+>                         compatible = "cache";
+>                         cache-unified;
+>                         cache-size = <0x40000>;
+> +                       cache-level = <3>;
+>                 };
+>         };
+'
+This hunk now applies to arch/arm64/boot/dts/renesas/r9a07g043u.dtsi.
+
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+i.e. will queue in renesas-devel for v6.2, with the patch description
+and the file names updated to match the real world.
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
