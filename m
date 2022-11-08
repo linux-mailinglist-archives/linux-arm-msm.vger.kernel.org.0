@@ -2,198 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 05910620C7E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 10:41:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A1B6620CB9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 10:57:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233822AbiKHJlL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 04:41:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54312 "EHLO
+        id S233643AbiKHJ54 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 04:57:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233761AbiKHJlA (ORCPT
+        with ESMTP id S229843AbiKHJ5z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 04:41:00 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3AED53134B;
-        Tue,  8 Nov 2022 01:40:59 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 217251FB;
-        Tue,  8 Nov 2022 01:41:05 -0800 (PST)
-Received: from [10.57.67.115] (unknown [10.57.67.115])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7A8493F534;
-        Tue,  8 Nov 2022 01:40:56 -0800 (PST)
-Message-ID: <64c239e6-2df9-fd98-ee1e-151218d0d070@arm.com>
-Date:   Tue, 8 Nov 2022 09:40:54 +0000
+        Tue, 8 Nov 2022 04:57:55 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CC4D13EBE
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 01:57:54 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id g7so20506944lfv.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 01:57:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UzIkB97wrKBKr6cVr3DUHYTmRg+yvmZDZzpdOYE3TT4=;
+        b=XmaVBDqIo1HN7hPCvJCS7axGiEkEnEPZr1IAsm1vX9OvkDQPBLh29+1HIn3UFPFz3U
+         ACXWzsr8mwzuiuhRaUCgU5uy6CT5YA7QdHVzjI5517s+XIPlLui+imL9Nc7VgbLdTsaM
+         Ys7vyzMJmVJyw+L4vSXmeheyYuvpW1gQq5GmHt6ebb+lNYJTVTz3OfBWuTPWLDWOh+FK
+         BgCbPnOy0q73O8uR7jQWBMC4xnZbvCZs5jdDemt0z0WEJ47toH6CEYstbws2hFgaWjod
+         FXoDDbsRCA0gUXIkIULFzii+4GEpNbshi2+AymYUQlSXk4NX+VZox+EfOQ8uhW4fYBV5
+         OVRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UzIkB97wrKBKr6cVr3DUHYTmRg+yvmZDZzpdOYE3TT4=;
+        b=MtZnYAOHdodKAs6gkVw8Uh34mLsMpyLpZgRVTO9Sm7wCFMwq836b9ObiX/dY/RRtDt
+         xfAoAGvMpmke4RGvrn19FvZI9mePqnSfxyzGEgNJvHIj3rCkHmlJwAOWaQbnxLSVYeYJ
+         a5Wp1tgtnxyIpvVdO8+YMcmtMArlc7pqiVvpeYceBqjHQZ1XfsOo3fIbH/2PA23Pm5n6
+         3qcWeo0cnzhIu4bd0f4CqEWPbbkdj0Is7pky1KlBszGvriPBGdCSR1V9xqo6JvKmZFXY
+         NZJdVEbqWojCHqkvmKtEzvUs6ghQz1LjC3GQWeht7Hys/2Plrz2YsbZ1z3bjB3gPXZyZ
+         1RtQ==
+X-Gm-Message-State: ANoB5pm6it2Jiiuz2UacJHjQGcMgt6zkZ3m2E+Vs8oQafTFdn0sCdP+F
+        yIa/HMSq1g9I+4rG3CKJQKkMbNB71kY+KA==
+X-Google-Smtp-Source: AA0mqf5GCGgBSLf5eKDQn1/Q9ks37EyZXU10uI6iWpK0j41+foEUJv9XDZkd/RNeFBWOmDW0zLhMuw==
+X-Received: by 2002:a19:e30f:0:b0:4b3:b574:8be1 with SMTP id a15-20020a19e30f000000b004b3b5748be1mr3061383lfh.262.1667901472723;
+        Tue, 08 Nov 2022 01:57:52 -0800 (PST)
+Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
+        by smtp.gmail.com with ESMTPSA id v6-20020a05651203a600b004b40c1f1c70sm193334lfp.212.2022.11.08.01.57.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Nov 2022 01:57:51 -0800 (PST)
+Message-ID: <fd05b618-8ab9-054a-7874-3b98aae69218@linaro.org>
+Date:   Tue, 8 Nov 2022 10:57:49 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH v14 0/9] Coresight: Add support for TPDM and TPDA
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-To:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>
-Cc:     Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20221102091915.15281-1-quic_jinlmao@quicinc.com>
- <69a3cd4b-c4b0-b998-b4c1-70a928690972@arm.com>
- <102a8c21-2b78-56ca-874a-194e878dff8f@quicinc.com>
- <9072665a-f019-975b-7b3b-d3f37ea71425@arm.com>
-In-Reply-To: <9072665a-f019-975b-7b3b-d3f37ea71425@arm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: qrb5165-rb5-vision-mezzanine:
+ Add vision mezzanine
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        mchehab@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org,
+        vladimir.zapolskiy@linaro.org
+Cc:     sakari.ailus@iki.fi, hverkuil@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, quic_mmitkov@quicinc.com,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20221108021816.213084-1-bryan.odonoghue@linaro.org>
+ <20221108021816.213084-3-bryan.odonoghue@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221108021816.213084-3-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/11/2022 09:37, Suzuki K Poulose wrote:
-> On 08/11/2022 05:54, Jinlong Mao wrote:
->>
->> On 11/8/2022 2:38 AM, Suzuki K Poulose wrote:
->>> On 02/11/2022 09:19, Mao Jinlong wrote:
->>>> This series adds support for the trace performance monitoring and
->>>> diagnostics hardware (TPDM and TPDA). It is composed of two major
->>>> elements.
->>>> a) Changes for original coresight framework to support for TPDM and 
->>>> TPDA.
->>>> b) Add driver code for TPDM and TPDA.
->>>>
->>>> Introduction of changes for original coresight framework
->>>> Support TPDM as new coresight source.
->>>> Since only STM and ETM are supported as coresight source originally.
->>>> TPDM is a newly added coresight source. We need to change
->>>> the original way of saving coresight path to support more types source
->>>> for coresight driver.
->>>> The following patch is to add support more coresight sources.
->>>>      coresight: core: Use IDR for non-cpu bound sources' paths.
->>>>
->>> ---8>---
->>>
->>>> Introduction of TPDM and TPDA
->>>> TPDM - The trace performance monitoring and diagnostics monitor or 
->>>> TPDM in
->>>> short serves as data collection component for various dataset types
->>>> specified in the QPMDA(Qualcomm performance monitoring and diagnostics
->>>> architecture) spec. The primary use case of the TPDM is to collect data
->>>> from different data sources and send it to a TPDA for packetization,
->>>> timestamping and funneling.
->>>>       Coresight: Add coresight TPDM source driver
->>>>       dt-bindings: arm: Adds CoreSight TPDM hardware definitions
->>>>       coresight-tpdm: Add DSB dataset support
->>>>       coresight-tpdm: Add integration test support
->>>>       docs: sysfs: coresight: Add sysfs ABI documentation for TPDM
->>>>
->>>> TPDA - The trace performance monitoring and diagnostics aggregator or
->>>> TPDA in short serves as an arbitration and packetization engine for the
->>>> performance monitoring and diagnostics network as specified in the 
->>>> QPMDA
->>>> (Qualcomm performance monitoring and diagnostics architecture)
->>>> specification. The primary use case of the TPDA is to provide
->>>> packetization, funneling and timestamping of Monitor data as specified
->>>> in the QPMDA specification.
->>>> The following patch is to add driver for TPDA.
->>>>       Coresight: Add TPDA link driver
->>>>       dt-bindings: arm: Adds CoreSight TPDA hardware definitions
->>>>
->>>> The last patch of this series is a device tree modification, which add
->>>> the TPDM and TPDA configuration to device tree for validating.
->>>>      ARM: dts: msm: Add coresight components for SM8250
->>>>      ARM: dts: msm: Add tpdm mm/prng for sm8250
->>>>
->>>> Once this series patches are applied properly, the tpdm and tpda nodes
->>>> should be observed at the coresight path /sys/bus/coresight/devices
->>>> e.g.
->>>> /sys/bus/coresight/devices # ls -l | grep tpd
->>>> tpda0 -> ../../../devices/platform/soc@0/6004000.tpda/tpda0
->>>> tpdm0 -> ../../../devices/platform/soc@0/6c08000.mm.tpdm/tpdm0
->>>>
->>>> We can use the commands are similar to the below to validate TPDMs.
->>>> Enable coresight sink first.
->>>>
->>>> echo 1 > /sys/bus/coresight/devices/tmc_etf0/enable_sink
->>>> echo 1 > /sys/bus/coresight/devices/tpdm0/enable_source
->>>> echo 1 > /sys/bus/coresight/devices/tpdm0/integration_test
->>>> echo 2 > /sys/bus/coresight/devices/tpdm0/integration_test
->>>> The test data will be collected in the coresight sink which is enabled.
->>>> If rwp register of the sink is keeping updating when do
->>>> integration_test (by cat tmc_etf0/mgmt/rwp), it means there is data
->>>> generated from TPDM to sink.
->>>>
->>>> There must be a tpda between tpdm and the sink. When there are some
->>>> other trace event hw components in the same HW block with tpdm, tpdm
->>>> and these hw components will connect to the coresight funnel. When
->>>> there is only tpdm trace hw in the HW block, tpdm will connect to
->>>> tpda directly.
->>>>         +---------------+                +-------------+
->>>>      |  tpdm@6c08000 |                |tpdm@684C000 |
->>>>      +-------|-------+                +------|------+
->>>>              |                               |
->>>>      +-------|-------+                       |
->>>>      | funnel@6c0b000|                       |
->>>>      +-------|-------+                       |
->>>>              |                               |
->>>>      +-------|-------+                       |
->>>>      |funnel@6c2d000 |                       |
->>>>      +-------|-------+                       |
->>>>              |                               |
->>>>              |    +---------------+          |
->>>>              +----- tpda@6004000  -----------+
->>>>                   +-------|-------+
->>>>                           |
->>>>                   +-------|-------+
->>>>                   |funnel@6005000 |
->>>>                   +---------------+
->>>>
->>>
->>> --8<--
->>>
->>> Please could you add the above to a Documentation file (Of course
->>> skip the description of patches).
->> Sure. I will add them to the Documentation file.
->>>
->>>
->>>> This patch series depends on patch series:
->>>> "[v5,00/14] coresight: Add new API to allocate trace source ID values"
->>>> https://patchwork.kernel.org/project/linux-arm-kernel/cover/20221101163103.17921-1-mike.leach@linaro.org/
->>>
->>> So, is there a strict binding between a TPDM and a TPDA ?
->>> i.e., Multiple TPDMs could never end up reaching the sam
->>> TPDA ? I see that the TPDMs could be connected to funnels
->>> and thus other TPDMs could be connected to the same funnels
->>> and thus reach the same TPDA.
->> There is no strict binding between TPDM and TPDA.
->> TPDA can have multiple TPDMs connect to it.
->> But There must be only one TPDA in the path from the TPDM source to 
->> TMC sink.
->> TPDM can directly connect to TPDA's inport
->> or connect to funnel which will connect to TPDA's inport.
->>>
->>> Also, the trace-id is bound to TPDA and not TPDM. So, if
->>> we have multiple TPDMs, trace decoding is going to be
->>> impossible.
->> The TPDMs which are connected to same TPDA shares the same
->> trace-id. When TPDA does packetization, different port will have
->> unique channel number for decoding.
+On 08/11/2022 03:18, Bryan O'Donoghue wrote:
+> The Vision Mezzanine for the RB5 ships with an imx517 and ov9282 populated.
+> Other sensors and components may be added or stacked with additional
+> mezzanines.
+> 
+> Enable both the IMX577
+> 
+> An example media-ctl pipeline for the imx577 is:
+> 
+> media-ctl --reset
+> media-ctl -v -d /dev/media0 -V '"imx577 '22-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
+> media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
+> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> 
+> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |  1 +
+>  .../dts/qcom/qrb5165-rb5-vision-mezzanine.dts | 64 +++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi          | 33 ++++++++++
+>  3 files changed, 98 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index b0558d3389e5..78f6e78d8ed4 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -52,6 +52,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-poplar.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5-vision-mezzanine.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts
+> new file mode 100644
+> index 000000000000..307b09094e7f
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts
+> @@ -0,0 +1,64 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2022, Linaro Ltd.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "qrb5165-rb5.dts"
+> +
+> +&camss {
+> +	status = "okay";
+> +	vdda-phy-supply = <&vreg_l5a_0p88>;
+> +	vdda-pll-supply = <&vreg_l9a_1p2>;
+> +
+> +	ports {
+> +		/* The port index denotes CSIPHY id i.e. csiphy2 */
+> +		port@2 {
+> +			reg = <2>;
+> +			csiphy2_ep: endpoint {
+> +				clock-lanes = <7>;
+> +				data-lanes = <0 1 2 3>;
+> +				remote-endpoint = <&imx577_ep>;
+> +			};
+> +
 
-So this assumes that nobody connects two TPDMs to a funnel, which
-then connects to a TPDA ? (i.e. tpdm@684C000 above must not be
-connected to funnel@6c0b000 or funnel@6c2d000).
-In which case, two of them end up in the same port of the TPDA.
+No need for blank line.
 
-Suzuki
+Plus missing dtbs_check, as pointed out by Bjorn.
 
+Best regards,
+Krzysztof
 
