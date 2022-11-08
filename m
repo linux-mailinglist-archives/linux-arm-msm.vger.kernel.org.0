@@ -2,69 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1363A621E0C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 21:52:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A1611621E3B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 22:10:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229705AbiKHUwS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 15:52:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58202 "EHLO
+        id S229750AbiKHVKf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 16:10:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229547AbiKHUwR (ORCPT
+        with ESMTP id S229447AbiKHVKe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 15:52:17 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F38D14AF3F
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 12:52:15 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id u11so22899984ljk.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 12:52:15 -0800 (PST)
+        Tue, 8 Nov 2022 16:10:34 -0500
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 138C93C6EB
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 13:10:33 -0800 (PST)
+Received: by mail-lj1-x235.google.com with SMTP id x21so22944338ljg.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 13:10:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=OGSFwgK3Xru6xCg2uioQoFI439LPe03CP0uz0+rdENc=;
-        b=GLC1ZcJ0YHbvGQPLlsyDO8T3sYfnOrfBlA9PpjqJDYjIAbtM3t2oxb8MKlrgWQMfCI
-         yR2PU0Fp9spXSjEj8rC/KUIzQAFEPuzt3AhtXb75i54X8Op0X9z4fnSbhdwl9A272HHb
-         XWr9Z8dhsmQMpPKhY2rA/E3qTvihCAk/PDTPVT8RlX3c1C2ZQFE5v+LDNuUjtmH6ys+Z
-         YPgczrYlKmO74iUBMpfgKTjqH55S/t4boxzEDqU6m8P1mMWimgW/gJt9MzDJfsfGPOfu
-         sT7BaDdhnuKYheEVJnFeUiORnG+aXyIy9u9P7SFDco0yDJJC4jfCCrjya0DrebL+Fe58
-         IWZg==
+        bh=6ZAafqOZBdpxx83ZFYFN1Hi8JWgUTuB0MF2wqgfb+j0=;
+        b=BmbRlhuIxfQgv60+/uxmJD2mUTMS1D0a5vXHhZdSI+B0M5n7f+PY+aY+i3bYejK+47
+         QAdInA8SRHniQJjhhghXtj43Y63XNmSMkmmTfTfgYedB6o8JaZTnyatSRXboWFXzzkD8
+         g2QTiyGD9OFXonYu/wW1c7sVz7Lz7oaxfiWFJNRGfSlCfaPJrTkpgUNBuc9HeD98Ah24
+         YpHZNx0F0/+cfv0RdCs+sd/hp7I/iGeLbyq/AyZr/jaiGdiBxohdkNnS+fx/fy2Hpfyr
+         3WxJzj5MdugdN3Sot7qFgjiKrVQpDMLOmwPQXKT4N6+Tmja50fD0vqu1PTZ0NNp4I0Lt
+         djPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OGSFwgK3Xru6xCg2uioQoFI439LPe03CP0uz0+rdENc=;
-        b=L/RbKfjv3gWdLcq5fMnzM9AlZNYBwDNq8J7QjWXqeZ0pZDGngQ+41+6t2rUmnzjh9H
-         CpNPHgW7fUBOnSkEfBGJ7XF56/DWTrUbpLWqIxZWkGxefvRLMH+QhJvA2gDqgAeg5ZFJ
-         eSLi4U6dErtuLJsNlLJOWABDF8rToe5Hws/9FZz/Kq5iFkjQhDQ+DX4Aj23swIwwJK5h
-         3WQ7K2Xe9uWUeSFv+DZQEvXXAQ8ANWTRsv35HYulyUsAmVCk3aCpgIrrtimuQeTs/2D4
-         c/to22Q0UXeroAyICwVst5Y9VT6Yl4kA+Xw7fuSRfu9SBuRohWudIR5DH+fOA+A+L6PL
-         go9w==
-X-Gm-Message-State: ACrzQf0cfIhZePybjO87ZGn0oZ2FfJqOOzj4v8uy2GfNUarBCBtU+bWA
-        nUzS3LT1Wyt2ptK1Zbz95111Ew==
-X-Google-Smtp-Source: AMsMyM4+Srzcu1J/9xM3Zj4N39hyIqva+7koOAAaEOrOfaiCYynGG2BoCs53NkJ4GzIE+I986Ykwlg==
-X-Received: by 2002:a2e:834b:0:b0:26d:ffb1:dae7 with SMTP id l11-20020a2e834b000000b0026dffb1dae7mr19975488ljh.128.1667940734376;
-        Tue, 08 Nov 2022 12:52:14 -0800 (PST)
+        bh=6ZAafqOZBdpxx83ZFYFN1Hi8JWgUTuB0MF2wqgfb+j0=;
+        b=rYP2wpuo8tr5VZ2dPRyaAm+FYZv3nAZEHEPDXUPL19GCf28FqNGl/zB3NoqT51E9/B
+         Vj2YMzR2x7vgGb0LHp2d4/4nroz5Y38hCv47gAa76qPZ+CRBZyFYnupSy4mWPF5d903a
+         TpRoAGRI7VReMd61mtRF5SCI+7BhjXWgyj57f/ZfT2ItX2wxSvI0DNXrYxWNy67EYVkg
+         bospRlRY87QL9iBhF3O2kEdRvmAVIfvCkzAWAh5TI0COzLJo+KDe8Vdq9N/N2ir4GvG5
+         0buPSJnwt+fAkSV/MMDsIdbxkueXyt1ANQwy/Abw2Py5azJGq4W3nwdULf1LfLplRSE1
+         ivdg==
+X-Gm-Message-State: ACrzQf0byKn7KUhFAw8qESLy6fID7Hp1USK/hM7PZTnlUMpd9S8Sfsk3
+        QeyUFSM2IYSsIOAq+TMJ/k1p/Q==
+X-Google-Smtp-Source: AMsMyM4fusBtXtXt1yqqm9JfpkjsgoZrmDOHZ38/STvFvd3nHz0ohLlYZyuEMRbdkEJIFvFcju188w==
+X-Received: by 2002:a05:651c:1207:b0:277:276a:9d7b with SMTP id i7-20020a05651c120700b00277276a9d7bmr19141181lja.129.1667941831467;
+        Tue, 08 Nov 2022 13:10:31 -0800 (PST)
 Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
-        by smtp.gmail.com with ESMTPSA id e4-20020a05651236c400b0049ad2619becsm1921310lfs.131.2022.11.08.12.52.13
+        by smtp.gmail.com with ESMTPSA id q13-20020a056512210d00b0049c29292250sm1932529lfr.149.2022.11.08.13.10.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Nov 2022 12:52:13 -0800 (PST)
-Message-ID: <cba8a036-2e70-17df-809a-36924899a5b9@linaro.org>
-Date:   Tue, 8 Nov 2022 21:52:12 +0100
+        Tue, 08 Nov 2022 13:10:30 -0800 (PST)
+Message-ID: <b482360f-16d2-6a7d-2cbe-72f2a1c6f50f@linaro.org>
+Date:   Tue, 8 Nov 2022 22:10:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280-idp: don't modify &ipa twice
-To:     Alex Elder <elder@linaro.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, agross@kernel.org
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221108201625.1220919-1-elder@linaro.org>
+Subject: Re: [PATCH v2 02/18] dt-bindings: msm: dsi-controller-main: Fix
+ power-domain constraint
 Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        quic_mkrishn@quicinc.com, linux-arm-msm@vger.kernel.org
+Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221107235654.1769462-1-bryan.odonoghue@linaro.org>
+ <20221107235654.1769462-3-bryan.odonoghue@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221108201625.1220919-1-elder@linaro.org>
+In-Reply-To: <20221107235654.1769462-3-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -76,15 +81,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/11/2022 21:16, Alex Elder wrote:
-> In "sc7280-idp.dts", the IPA node is modified after being defined.
-> However that file includes "sc7280-idp.dtsi", which also modifies
-> the IPA node (in the same way).  This only needs to be done in
-> "sc7280-idp.dtsi".
+On 08/11/2022 00:56, Bryan O'Donoghue wrote:
+> power-domain is required for the sc7180 dispcc GDSC but not every qcom SoC
+> has a similar dependency for example the aqp8064.
 > 
+> Most Qcom SoC's using mdss-dsi-ctrl seem to have the ability to
+> power-collapse the MDP without collapsing DSI.
+> 
+> For example the qcom vendor kernel commit for apq8084, msm8226, msm8916, msm8974
+> 
+> https://review.carbonrom.org/plugins/gitiles/CarbonROM/android_kernel_oneplus_msm8994/+/7b5c011a770daa2811778937ed646237a28a8694
+> 
+> "ARM: dts: msm: add mdss gdsc supply to dsi controller device
+> 
+>  It is possible for the DSI controller to be active when MDP is
+>  power collapsed. DSI controller needs to have it's own vote for
+>  mdss gdsc to ensure that gdsc remains on in such cases."
+> 
+> This however doesn't appear to be the case for the apq8064 so we shouldn't
+> be marking power-domain as required in yaml checks.
+> 
+> Fixes: 4dbe55c97741 ("dt-bindings: msm: dsi: add yaml schemas for DSI bindings")
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: David Airlie <airlied@gmail.com>
+> Cc: Daniel Vetter <daniel@ffwll.ch>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: dri-devel@lists.freedesktop.org
+> Cc: freedreno@lists.freedesktop.org
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
 
+Your Cc list is huge and not necessary to store in git log. For example
+I am appearing there twice. Please keep it under '---'.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
