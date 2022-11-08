@@ -2,174 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF24E62047D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 01:12:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 85DE7620487
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 01:15:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232110AbiKHAMn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 19:12:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45668 "EHLO
+        id S232929AbiKHAPH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 19:15:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232060AbiKHAMn (ORCPT
+        with ESMTP id S232283AbiKHAPF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 19:12:43 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA2321F616
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Nov 2022 16:12:41 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id l14so18588842wrw.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Nov 2022 16:12:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uQLGGh2c0FrDc8xrYdmfJRxfXXaVnRzp9E86zXF3WsU=;
-        b=Gtjm8jWkjBa5D4KOFvfnaR18jG0/DGKd7PfqdzCjtwriU16+btp7YUoRj64+I56LjE
-         oa6KwuCFR548dvtJR3ry1PwYa5S+Su2VlICmp22DeTsOtNn/PZej+bZ9olQVQKyEfSMD
-         qHn6JC+gZBDqayib7FWvREBLDdH8F8RZlLX6YV1QkOIga8gs35Fw/yYRYtgM05ShPH6r
-         45HmQ/puRy0+/0EL/S3oZ6diBUUmPYUGwD4a18zOHHUeB8aC8HnnoNFdCr9FrEDKZkqJ
-         plejLwloChx8Y5YxCiUMqF5EMW49+Dhem9LbYeF7soPXM99QaPCIUM29QKynkOeUhfk3
-         4EAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uQLGGh2c0FrDc8xrYdmfJRxfXXaVnRzp9E86zXF3WsU=;
-        b=AdPxQfQ+swAALu+K0FxeR7AEIJ/q5nLKAxy8GnQGbXP/3WZjOdeLaxxZw2O9deqWpc
-         ZBwP/93urLXp4dY1xJbn+O4vQflrumypSN6eI6NUJ+vOgY+ho6DldMcquS5yMPr/6C+m
-         Myo1/jNkgKtYoP7wEOORzdzAHFoMBdK34F68haSTZV3CSpmsiFkInw6MRNmszhLOq0+1
-         KG9kckTokm17UDUmfRPzGcUCEfNwUP7OjEKrSJ9lbOKSDslm0j6+NDrj+3/e935MCFEi
-         RnxBQk83ICQbnbbw/WSOVzpD4+dEDDLBKvR4fYhCTOxCg4vl54oaM6fVV6uWqJX7i3yG
-         LmxQ==
-X-Gm-Message-State: ACrzQf22x1nOsNWNNA9LUQcppBbzbVdWTasQ4EBNH0mina/CTG4FxJzo
-        uTbj67LCCoxw81G7TfVljYt4cg==
-X-Google-Smtp-Source: AMsMyM5abVFTk1f+IEL0A0z5ffu6JIzbSpoKJ+WoIxrzCqzjOWXinvKRn5Fe2ck7XjMWONcJOF4R9w==
-X-Received: by 2002:a05:6000:1109:b0:236:5d1f:5198 with SMTP id z9-20020a056000110900b002365d1f5198mr32424264wrw.22.1667866360502;
-        Mon, 07 Nov 2022 16:12:40 -0800 (PST)
-Received: from [192.168.0.159] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id s1-20020a7bc381000000b003c6b874a0dfsm11136968wmj.14.2022.11.07.16.12.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Nov 2022 16:12:40 -0800 (PST)
-Message-ID: <46d82762-8b6b-8a3e-0bdd-5598163244de@linaro.org>
-Date:   Tue, 8 Nov 2022 00:12:35 +0000
+        Mon, 7 Nov 2022 19:15:05 -0500
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2070.outbound.protection.outlook.com [40.107.101.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F27CE273C;
+        Mon,  7 Nov 2022 16:15:02 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=K7T9m5eCCkMF1JiU8YIs+mgovLnWwzz88lLlR5R/SrCprXK/ZDh7sU2NFh4k9EWNfSMhRKnrnPaUkjUCnrmBCAz75rh4+6VE06R/KKBBnaEzDalLw+EXA7uX32MP3NTn7mPEHIiIINmD6x8ZxqUoTIu7Wdqtc+fdBX1h/jezzbxdZJs5QizU3IYVZ70qPJBzv3dj0H54hVi2/bcqAlS2hH9o+HRZRQnxORtt+jOFQEKvGzyfXVKL2jBWr76W1isgWgR8dDsd/KDW07RnfJC2+qs5vlMDJIHPzMCeYwNuUaSCYguzMMXsGO5W+2LgXJfpevnHd4OeKE4lmdwlWmnqqQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=weGhFE/NPYqsu3+oQ3+Gc2/85Dt0v2jOoXlR66OrBHw=;
+ b=kx7IfdEOtqt2KHzYWuGL3ZqCYAVthb7LZTE5D99w3Vp+06kf0rhjqFAJ0bX6ysKXuVJABprwelzRTRme8RuZwU2+bhNmMKnsXZ10EziheSNFzzwVLnv7hg1PPmnzx08Rx2clKBkNRUh0N21G84quHsnUqoY+OWHRBkbOOZXi8fT3HQ6j5mIxy9YfhblWPY0mZarwLeXbmS80YBCxCokxiNrtVi12ScyGk5EnmHZz92sjl/Ekeuh0Apy/nJGuoaIaKZTHQZSahc4ltOFzRyiocj3xK8myMkMyDojbIgmFSpwxWspWMAItLgTD0E+gause4qUbTnXphFJMAwIeHMFnzA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=kernel.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=weGhFE/NPYqsu3+oQ3+Gc2/85Dt0v2jOoXlR66OrBHw=;
+ b=Hm/1W6/aw4Wz3PVVK2TxDawAuSSC47ovyTL3RQ+Jvq7LvI8Wrc9bhEjkLVWdsqVb6g0LNQIjwYOgJo+S8btjUICCUnG/mjvX5B0eWz6TyGelAUJQzrr+zPGYM7eJA0VlVT8HaMKsz0o8Htkfg2fg1gQIQXcIa1yfxK5FUYITJFvLx6f6kt6Chi91JLmVmkP8SXrA4QbD5v+ULjcKOuvNUMJo+nFWUcmI0KbSszkcgciF1iUSD6u7npCYS+19Syl0GRYU6kSxa7chi4Qq2DYMfbIe0hDnIrbNlckMmMvkr1l7oHqtexEIjExBLdRQERKKDNHStvuNE3vxiXZgibuhVQ==
+Received: from MN2PR20CA0014.namprd20.prod.outlook.com (2603:10b6:208:e8::27)
+ by SJ0PR12MB5424.namprd12.prod.outlook.com (2603:10b6:a03:300::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5791.26; Tue, 8 Nov
+ 2022 00:15:00 +0000
+Received: from BL02EPF0000EE3C.namprd05.prod.outlook.com
+ (2603:10b6:208:e8:cafe::f) by MN2PR20CA0014.outlook.office365.com
+ (2603:10b6:208:e8::27) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5791.20 via Frontend
+ Transport; Tue, 8 Nov 2022 00:14:59 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ BL02EPF0000EE3C.mail.protection.outlook.com (10.167.241.132) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5813.11 via Frontend Transport; Tue, 8 Nov 2022 00:14:59 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Mon, 7 Nov 2022
+ 16:14:37 -0800
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 7 Nov 2022
+ 16:14:36 -0800
+Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com (10.129.68.9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29 via Frontend
+ Transport; Mon, 7 Nov 2022 16:14:34 -0800
+Date:   Mon, 7 Nov 2022 16:14:32 -0800
+From:   Nicolin Chen <nicolinc@nvidia.com>
+To:     Will Deacon <will@kernel.org>
+CC:     <joro@8bytes.org>, <robin.murphy@arm.com>, <jgg@nvidia.com>,
+        <kevin.tian@intel.com>, <quic_jjohnson@quicinc.com>,
+        <suravee.suthikulpanit@amd.com>, <robdclark@gmail.com>,
+        <dwmw2@infradead.org>, <baolu.lu@linux.intel.com>,
+        <yong.wu@mediatek.com>, <matthias.bgg@gmail.com>,
+        <orsonzhai@gmail.com>, <baolin.wang@linux.alibaba.com>,
+        <zhang.lyra@gmail.com>, <thierry.reding@gmail.com>,
+        <vdumpa@nvidia.com>, <jonathanh@nvidia.com>,
+        <jean-philippe@linaro.org>, <tglx@linutronix.de>,
+        <shameerali.kolothum.thodi@huawei.com>,
+        <christophe.jaillet@wanadoo.fr>, <yangyicong@hisilicon.com>,
+        <yangyingliang@huawei.com>, <quic_saipraka@quicinc.com>,
+        <jon@solid-run.com>, <iommu@lists.linux.dev>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-tegra@vger.kernel.org>,
+        <virtualization@lists.linux-foundation.org>
+Subject: Re: [PATCH v7 4/5] iommu: Use EINVAL for incompatible device/domain
+ in ->attach_dev
+Message-ID: <Y2mfaG1/6hd1qykW@Asurada-Nvidia>
+References: <cover.1666042872.git.nicolinc@nvidia.com>
+ <f52a07f7320da94afe575c9631340d0019a203a7.1666042873.git.nicolinc@nvidia.com>
+ <20221107152645.GD21002@willie-the-truck>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v4 0/4] media: camss: sm8250: Virtual channels support for
- SM8250
-To:     quic_mmitkov@quicinc.com, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, robert.foss@linaro.org,
-        akapatra@quicinc.com, jzala@quicinc.com, todor.too@gmail.com
-Cc:     agross@kernel.org, konrad.dybcio@somainline.org,
-        mchehab@kernel.org, cgera@qti.qualcomm.com, gchinnab@quicinc.com,
-        ayasan@qti.qualcomm.com, laurent.pinchart@ideasonboard.com
-References: <20221013121255.1977-1-quic_mmitkov@quicinc.com>
-Content-Language: en-US
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20221013121255.1977-1-quic_mmitkov@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20221107152645.GD21002@willie-the-truck>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0000EE3C:EE_|SJ0PR12MB5424:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5808e1ce-f844-4895-f7a2-08dac11e4645
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 0RU24JXB3AVpAykJgZNiyB3QHnmFS+aLLRoamB/d0r3zRn8a/2egcnaBTglj+4BNErN9mte5MVKMKM4Yxyxgwgz5sehyBUjHTrMEQeFFmxn7Btkl8XS1rklD3NNWVLTcMi5ayNeV1hWnIoqchFg65GgZqaubfP6eFAREAIzAOdGi5ryeiBukr5zfyzFpue5gZUxQqiKCuwt6/RNBzE8eH/u+xfAjXGF+gs/SHAgMwRncZF/iGKBwqeXVpC91hJWnhC830ozySpnTDs318VEVGkUZPSyK3sVs+39mNMiFiYtYAl3dLjyiKukH1j1+gnsXMB/b9DCq/scM56Uo2nPkyVowrQT9qKDHEIH4+OST988u/RuxNk4yUETdsd5nhds2NuO/A5DJEcDCU2zDrWUF7f//rzXfkniEOa02yik+5IP2WguwggJexPf3GjwYnYKwHrKZsEVbYEhW2eXxFz0Z6xzr0akkdSN/IxGuRuipblRntFU5KMzr981xONqiTjuecTCm1NpOb3hMmH9K+Vm3B5GQsjlCHOznfH6rj+TP5tI99FSbrXOH6+ftyVklI9Ja+P6896QvJ7unisz0fyzvtCHUVF5zoMZm1YATBq+4gIIDtT/1tYF+MPA0r7SBsE/anmABGSKRWch0wN960R0b/Paqb8j90kGfif4uAmSEl2598y8OvmqvMSST9n9cJckjYFxJwF3bqKTQdg9npOGBNrlaJpioZ6dSRPtCMmXrg3rnFC8MUBXBymSJrwTVWGDP9PDHJuI/vherWrVYPsufQpmP/Po6R3OjUS7y6uy3jPM=
+X-Forefront-Antispam-Report: CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(376002)(396003)(136003)(39860400002)(346002)(451199015)(40470700004)(46966006)(36840700001)(86362001)(356005)(7636003)(82740400003)(83380400001)(55016003)(40460700003)(40480700001)(2906002)(9686003)(26005)(186003)(336012)(47076005)(426003)(36860700001)(70206006)(8676002)(4326008)(7406005)(6916009)(316002)(478600001)(82310400005)(33716001)(7416002)(54906003)(70586007)(8936002)(5660300002)(41300700001)(473944003);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Nov 2022 00:14:59.6329
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5808e1ce-f844-4895-f7a2-08dac11e4645
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0000EE3C.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB5424
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/10/2022 13:12, quic_mmitkov@quicinc.com wrote:
-> From: Milen Mitkov <quic_mmitkov@quicinc.com>
-> 
-> For v4:
-> - fixes the warning reported by the kernel test robot
-> - tiny code change to enable the vc functionality with the partially-applied
->    multistream patches on linux-next (tested on tag:next-20221010)
-> 
-> For v3:
-> - setting the sink pad format on the CSID entity will now propagate the
->    format to the source pads to keep the subdev in a valid internal state.
-> - code syntax improvements
-> 
-> For v2:
-> - code syntax improvements
-> - The info print for the enabled VCs was demoted to a dbg print. Can be
->    enabled with dynamic debug, e.g.:
-> echo "file drivers/media/platform/qcom/camss/* +p" > /sys/kernel/debug/dynamic_debug/control
-> 
-> NOTE: These changes depend on the multistream series, that as of yet
-> is still not merged upstream. However, part of the
-> multistream patches are merged in linux-next (tested on
-> tag:next-20221010), including the patch that introduces the
-> video_device_pipeline_alloc_start() functionality. This allows
-> applying and using this series on linux-next without applying the
-> complete multistream set.
-> 
-> The CSID hardware on SM8250 can demux the input data stream into
-> maximum of 4 multiple streams depending on virtual channel (vc)
-> or data type (dt) configuration.
-> 
-> Situations in which demuxing is useful:
-> - HDR sensors that produce a 2-frame HDR output, e.g. a light and a dark frame
->    (the setup we used for testing, with the imx412 sensor),
->    or a 3-frame HDR output - light, medium-lit, dark frame.
-> - sensors with additional metadata that is streamed over a different
->    virtual channel/datatype.
-> - sensors that produce frames with multiple resolutions in the same pixel
->    data stream
-> 
-> With these changes, the CSID entity has, as it did previously, a single
-> sink port (0), and always exposes 4 source ports (1, 2,3, 4). The
-> virtual channel configuration is determined by which of the source ports
-> are linked to an output VFE line. For example, the link below will
-> configure the CSID driver to enable vc 0 and vc 1:
-> 
-> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-> media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
-> 
-> which will be demuxed and propagated into /dev/video0
-> and /dev/video1 respectively. With this, the userspace can use
-> any normal V4L2 client app to start/stop/queue/dequeue from these
-> video nodes. Tested with the yavta app.
-> 
-> The format of each RDI channel of the used VFE(s) (msm_vfe0_rdi0,
-> msm_vfe0_rdi1,...) must also be configured explicitly.
-> 
-> Note that in order to keep a valid internal subdevice state,
-> setting the sink pad format of the CSID subdevice will propagate
-> this format to the source pads. However, since the CSID hardware
-> can demux the input stream into several streams each of which can
-> be a different format, in that case each source pad's
-> format must be set individually, e.g.:
-> 
-> media-ctl -V '"msm_csid0":1[fmt:SRGGB10/3840x2160]'
-> media-ctl -V '"msm_csid0":2[fmt:SRGGB10/960x540]'
-> 
-> Milen Mitkov (4):
->    media: camss: sm8250: Virtual channels for CSID
->    media: camss: vfe: Reserve VFE lines on stream start and link to CSID
->    media: camss: vfe-480: Multiple outputs support for SM8250
->    media: camss: sm8250: Pipeline starting and stopping for multiple
->      virtual channels
-> 
->   .../platform/qcom/camss/camss-csid-gen2.c     | 54 ++++++++++------
->   .../media/platform/qcom/camss/camss-csid.c    | 44 +++++++++----
->   .../media/platform/qcom/camss/camss-csid.h    | 11 +++-
->   .../media/platform/qcom/camss/camss-vfe-480.c | 61 ++++++++++++-------
->   drivers/media/platform/qcom/camss/camss-vfe.c |  7 +++
->   .../media/platform/qcom/camss/camss-video.c   | 21 ++++++-
->   drivers/media/platform/qcom/camss/camss.c     |  2 +-
->   7 files changed, 140 insertions(+), 60 deletions(-)
-> 
+On Mon, Nov 07, 2022 at 03:26:45PM +0000, Will Deacon wrote:
 
-I've done some offline work with Milen on this.
+> > diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> > index ba47c73f5b8c..01fd7df16cb9 100644
+> > --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> > +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> > @@ -2430,23 +2430,14 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+> >                       goto out_unlock;
+> >               }
+> >       } else if (smmu_domain->smmu != smmu) {
+> > -             dev_err(dev,
+> > -                     "cannot attach to SMMU %s (upstream of %s)\n",
+> > -                     dev_name(smmu_domain->smmu->dev),
+> > -                     dev_name(smmu->dev));
+> > -             ret = -ENXIO;
+> > +             ret = -EINVAL;
+> >               goto out_unlock;
+> >       } else if (smmu_domain->stage == ARM_SMMU_DOMAIN_S1 &&
+> >                  master->ssid_bits != smmu_domain->s1_cfg.s1cdmax) {
+> > -             dev_err(dev,
+> > -                     "cannot attach to incompatible domain (%u SSID bits != %u)\n",
+> > -                     smmu_domain->s1_cfg.s1cdmax, master->ssid_bits);
+> >               ret = -EINVAL;
+> >               goto out_unlock;
+> >       } else if (smmu_domain->stage == ARM_SMMU_DOMAIN_S1 &&
+> >                  smmu_domain->stall_enabled != master->stall_enabled) {
+> > -             dev_err(dev, "cannot attach to stall-%s domain\n",
+> > -                     smmu_domain->stall_enabled ? "enabled" : "disabled");
+> >               ret = -EINVAL;
+> >               goto out_unlock;
+> >       }
 
-I'm happy enough to add my
+> I think it would be helpful to preserve these messages using
+> dev_err_ratelimited() so that attach failure can be diagnosed without
+> having to hack the messages back into the driver.
 
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Thank you for the review.
 
-to the series. I don't have - currently a VC enabled setup but for the 
-simple case this set doesn't break anything on RB5 for me.
+The change is already picked up last week. Yet, I can add prints
+back with a followup patch, if no one has a problem with that.
 
----
-bod
+Also, I am not quite sure what the use case would be to have an
+error print. Perhaps dev_dbg() would be more fitting if it is
+just for diagnosis?
+
+Thanks
+Nic
