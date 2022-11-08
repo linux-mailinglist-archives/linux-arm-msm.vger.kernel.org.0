@@ -2,189 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 05702620BBB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 10:07:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FDBC620C11
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 10:23:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233216AbiKHJG7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 04:06:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59634 "EHLO
+        id S233539AbiKHJXE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 04:23:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233654AbiKHJGv (ORCPT
+        with ESMTP id S233837AbiKHJWs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 04:06:51 -0500
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 423281D665;
-        Tue,  8 Nov 2022 01:06:50 -0800 (PST)
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 5A4366602339;
-        Tue,  8 Nov 2022 09:06:47 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1667898408;
-        bh=ueI+2JlJ8usQR2qw2C5uUQ8cXmpDFvzCuDuDhHJLK6k=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=Cdl0yXa75sc5uC9OZZNK8dJnq9kBEwkNsoj/Xag2CA0BWHRCUKt4WkSQMHUQ845GQ
-         saCu/BmwHKUDjX7dn4NleewUVVhHWtTsR8WSm5WXIfxx2xOUoxwp70wTprD5nYUmo5
-         5BJ0TWZqFPHIn4b3mG5h7SGb4ECS+0OMpVq+TJ1cLXqEdgshDQgaYE2P5ALSeD4xP5
-         zTaVLgDl2apypZen3F4dFpFNCUUGqR8WlZeAO95Iv3UDSAUsP0xnf/SuKzkYV6SACG
-         sHlvSzh5tLzdSkKXc6tSR6WEabp5Rkoh+6NZf6Qa82pTabMR+oE+Zz59tLNSjjBH4N
-         8aZJaOk6t1UcA==
-Message-ID: <b99a3071-0982-a1bd-f3b9-14e2a8fdd904@collabora.com>
-Date:   Tue, 8 Nov 2022 10:06:45 +0100
+        Tue, 8 Nov 2022 04:22:48 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E8C7317C6;
+        Tue,  8 Nov 2022 01:22:47 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A88bao1015600;
+        Tue, 8 Nov 2022 09:22:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=mT6jkfEi6uSfzDsuwB51MHPIsLO1JTLfTxHtQpZ7SuQ=;
+ b=OROvfzdCAIepYO/PH6xDlQFUGGeMiCmgxvuw5asl5bY7R2p6uXCn0Anv0v//3yua0PbW
+ mh7RzKzaxvrQDvgKSzLfkolLguWUY2UHnbunpxxA1m1C2NAgEJmo+sxid0PPgwno1Koh
+ L2eU0F7oUbhgjwtFmXPp2h14YjZpd93XX5dBnN8yENeCsUKlO+hk9tmoiQYprx/UU6J5
+ tLQRbVYr0ADx9cEpNyaIJrtkZG3SDDwjUyfGIt51hMQCOcUj2EqmViweMq7KFG1c+b0G
+ supe6UYuulfIkaGWyXh9TAuL3GsjWs5aukmLjRD+xlRx9O3JFDoLNzKfvzp3q8jRXFH2 rw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kqhmk8bn7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 08 Nov 2022 09:22:36 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A89MZZf001918
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 8 Nov 2022 09:22:35 GMT
+Received: from blr-ubuntu-311.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Tue, 8 Nov 2022 01:22:32 -0800
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+To:     <bjorn.andersson@linaro.org>, <dianders@chromium.org>,
+        <jinghung.chen3@hotmail.com>
+CC:     <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
+        <konrad.dybcio@somainline.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH V2 1/2] arm64: dts: qcom: sc7280: Mark all Qualcomm reference boards as LTE
+Date:   Tue, 8 Nov 2022 14:52:06 +0530
+Message-ID: <20221108092207.8186-1-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH 8/9] arm64: dts: qcom: Add DTS for MSM8976 and MSM8956
- SoCs
-Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     agross@kernel.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        lee@kernel.org, ulf.hansson@linaro.org,
-        srinivas.kandagatla@linaro.org, jic23@kernel.org, lars@metafoo.de,
-        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
-        bhupesh.sharma@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-hardening@vger.kernel.org, marijn.suijten@somainline.org,
-        kernel@collabora.com, luca@z3ntu.xyz, a39.skl@gmail.com,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-References: <20221104172122.252761-1-angelogioacchino.delregno@collabora.com>
- <20221104172122.252761-9-angelogioacchino.delregno@collabora.com>
- <20221108045508.hnnwt22m6ceg5u4y@builder.lan>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20221108045508.hnnwt22m6ceg5u4y@builder.lan>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: gTiFuxLrBocSMqVYXsJy1FDw-Y01zUuz
+X-Proofpoint-ORIG-GUID: gTiFuxLrBocSMqVYXsJy1FDw-Y01zUuz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-07_11,2022-11-07_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ priorityscore=1501 clxscore=1011 lowpriorityscore=0 mlxlogscore=629
+ phishscore=0 suspectscore=0 mlxscore=0 spamscore=0 adultscore=0
+ impostorscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2210170000 definitions=main-2211080050
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 08/11/22 05:55, Bjorn Andersson ha scritto:
-> On Fri, Nov 04, 2022 at 06:21:21PM +0100, AngeloGioacchino Del Regno wrote:
->> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->>
->> This commit adds device trees for MSM8956 and MSM8976 SoCs.
->> They are *almost* identical, with minor differences, such as
->> MSM8956 having two A72 cores less.
->>
->> However, there is a bug in Sony Loire bootloader that requires presence
->> of all 8 cores in the cpu{} node, so these will not be deleted.
->>
->> Co-developed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->> Co-developed-by: Marijn Suijten <marijn.suijten@somainline.org>
->> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+When the modem node was re-located to a separate LTE source file
+"sc7280-herobrine-lte-sku.dtsi", some of the previous LTE users
+weren't marked appropriately. Fix this by marking all Qualcomm
+reference devices as LTE.
 
-Hello,
+Fix-suggested-by: Douglas Anderson <dianders@chromium.org>
+Fixes: d42fae738f3a ("arm64: dts: qcom: Add LTE SKUs for sc7280-villager family")
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks to everyone for the feedback!
-I'll send a new version this Friday, according to the received reviews.
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+index 4884647a8a95..ca09367abb6c 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+@@ -13,6 +13,7 @@
+ #include "pmk8350.dtsi"
+ 
+ #include "sc7280-chrome-common.dtsi"
++#include "sc7280-herobrine-lte-sku.dtsi"
+ 
+ / {
+ 	aliases {
+-- 
+2.17.1
 
-In the meanwhile, a few answers will follow, check below.
-
->> ---
->>   arch/arm64/boot/dts/qcom/msm8956.dtsi |   18 +
->>   arch/arm64/boot/dts/qcom/msm8976.dtsi | 1208 +++++++++++++++++++++++++
->>   2 files changed, 1226 insertions(+)
->>   create mode 100644 arch/arm64/boot/dts/qcom/msm8956.dtsi
->>   create mode 100644 arch/arm64/boot/dts/qcom/msm8976.dtsi
->>
-
-..snip..
-
->> +		cpu-map {
->> +			cluster0 {
->> +				core0 {
->> +					cpu = <&CPU0>;
->> +				};
->> +
->> +				core1 {
->> +					cpu = <&CPU1>;
->> +				};
->> +
->> +				core2 {
->> +					cpu = <&CPU2>;
->> +				};
->> +
->> +				core3 {
->> +					cpu = <&CPU3>;
->> +				};
->> +			};
->> +
->> +			cluster1 {
-> 
-> Are you sure that the two clusters should be expressed separately in the
-> cpu-map?
-> 
-
-This SoC has two clusters with split L2 cache, can shutdown one cluster CPU, or
-the L2 cache for one cluster, or one entire cluster, hence can also manage idle
-states on a per-cluster basis.
-
-Also, as per bindings/cpu/cpu-topology.txt - I am here describing the hierarchy
-of CPUs in MSM8976, containing one "little" cluster, composed of four slower CPU
-cores and its own L2 cache slice, and one "big" cluster, composed of four (8976)
-or two (8956) faster CPU cores and its own L2 cache slice.
-
-That said, I am sure that the two clusters shall be expressed separately.
-
-Am I underestimating and/or ignoring anything?
-
->> +				core0 {
->> +					cpu = <&CPU4>;
->> +				};
->> +
-
-..snip..
-
->> +
->> +	reserved-memory {
->> +		#address-cells = <2>;
->> +		#size-cells = <2>;
->> +		ranges;
->> +
->> +		cont_splash_mem: memory@83000000 {
-> 
-> memory is "reserved", please use specific node names for these regions.
-> 
-
-Agreed.
-
->> +			reg = <0x0 0x83000000 0x0 0x2800000>;
->> +		};
-> [..]
->> +		apcs: syscon@b011000 {
->> +			compatible = "syscon";
-> 
-> Why not use qcom,msm8976-apcs-kpss-global here?
-> 
-
-There's no reason not to use the suggested compatible. I'm sorry for the miss.
-
->> +			reg = <0x0b011000 0x1000>;
->> +		};
-> [..]
->> +
->> +		imem: imem@8600000 {
->> +			compatible = "simple-mfd";
-> 
-> sram/qcom,imem.yaml please.
-> 
-
-Will do on v2.
-
-Regards,
-Angelo
