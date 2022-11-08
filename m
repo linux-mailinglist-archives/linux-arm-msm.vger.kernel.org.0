@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B0A2621534
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 15:09:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 05A1F62163E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 15:25:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235157AbiKHOJR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 09:09:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45632 "EHLO
+        id S234229AbiKHOZu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 09:25:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235149AbiKHOJQ (ORCPT
+        with ESMTP id S234358AbiKHOZY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 09:09:16 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B930DAA
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 06:09:14 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id f37so21378933lfv.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 06:09:14 -0800 (PST)
+        Tue, 8 Nov 2022 09:25:24 -0500
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CA1854B1F
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 06:24:03 -0800 (PST)
+Received: by mail-lj1-x235.google.com with SMTP id h12so21320676ljg.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 06:24:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0FgsPe/szodLK49SrQwNRX+hLhmwVotdsMjQ6Dk684k=;
-        b=ZJGFhvLAWxExMH2sPyGUriHe/nFMCRz1O2/TEtviPmJ37PGxllvQP3kEF8aDO2lKH9
-         NlpeiQaCzlIqlpspuAICgEifaFUjgHV8XmKqO97HPW/FF5LXIg5/vyUyQgG0VL4yVMh8
-         yePBQuQ7y/jpB6hBV5SEVPjxQ4wzF9TeLvj+tW5Tb575q4kyEPbQ9nVvK2F64Ocamzzq
-         /BrwcY+DjXIuIFW617WBkda81a3qI0zsfi7QxsORrU9jPykRmp/neYoDC7Wq/vbMiJ7A
-         Vr0f4XjgTdCNBNoYrUHnDemOONgerlSIgsbAb+QBTqfrYlndpQiGakyFZrJ41bj00tOR
-         sXEQ==
+        bh=kzxTV0X+yQxXJgZlrlaClTgQHtvgc1ORzzoobFuqWL0=;
+        b=NNWN8VT07DCC3zDfTVTAG14DrKNcDUhkMCeJG4wKqNPfOCeu3/+5fKWcgPUSBYBcao
+         qSlVXfb7G/v2Qm0KlRhXYCe/GN218qFxST+DFzCGFpf8RId9qM2p2M/8/iW0KzuLozuH
+         n9h/aw+vOM1VXBjZ4+qvUNG00ognxosf4wenhMjFdv2RUWay068kdc4SOEc3OiWdbyZq
+         3RlYxLBw4xiOPE+QzLkW4LAoJ0l1VAb7ZOgXFSFCzLbjYTZ7CuT7VEwlsf2LOgTr57I5
+         KqSBJpETWyw0QHz7UC/bT0WopfYD4gNZIfpOFvaLBv97Yhjw2o851rjLMDsf3ycUPTfU
+         bCZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0FgsPe/szodLK49SrQwNRX+hLhmwVotdsMjQ6Dk684k=;
-        b=zGb818XDc2VM5Ppa9c7lP0C3q6UUVK67jbUojUldhAaGruwhnLC0X8wRcljgQroC0K
-         tTNaqFmn1wHUAji3JWt+Q5ITfJw9g4xrgtbWSzsn5JyGYttD56oNmvqQXzzK1hOH0Rrn
-         6NDjuNtY9h92YC6mXvnRwPeSNBdssmrsu4ayULn4mIEikn9LqZASDSX4RwE68RJ5p9Hy
-         dxcU95uquKcUINX9UFV8X87oxfsX5vuI9i6LMjN8hAb7xJgxa+pFBkCvL2VSYP+f2A3Y
-         M7k3G3S82KF8A+i6bALhLT9KnbQCR/MyxH5gpRZSKGQ2kbrRkBQ7mNDYQQHcRztSZlHo
-         eZrA==
-X-Gm-Message-State: ACrzQf3AMyF8GIzQX0NL5qtzy0EuD6s3Rye60AVH8z8oCcpvihgsntqL
-        XFF3OU8ZTL4dnMtatHi340OXJQ==
-X-Google-Smtp-Source: AMsMyM628TNUiqY7CeXh8ulWmBa1i/FBfpt9UV5mqz+dNB6YpQEnA4Lv38oXpDvZEQRO+Oyv9Afzug==
-X-Received: by 2002:a05:6512:10d0:b0:4a2:ad92:2990 with SMTP id k16-20020a05651210d000b004a2ad922990mr21116941lfg.276.1667916552498;
-        Tue, 08 Nov 2022 06:09:12 -0800 (PST)
+        bh=kzxTV0X+yQxXJgZlrlaClTgQHtvgc1ORzzoobFuqWL0=;
+        b=J2vjifHiNNmLYGZGENyWUmT0bRfizesouUKs9L32o7oWyW/k8Fl1uLMDYJRZi/EEnU
+         vmHqgZ/Agju0hwMAVNmnqKVX4tJe/c9aAkipCDbthS3AibauUoid6Pyi6f0em8jLRRp/
+         7aEifZeMnlMbd2VzDRNezc1IM9IpQNGReR8STDIu2qGP9tc84s6hoO30t/vsc4noNxy6
+         4mXVvBZ1xGtKj0rWzFD3f/y6FjsUdhE9IgICgxo5kl+FdGxpjI4EoD/Nu8VNahSKPjR8
+         /vUvD9pOnOpXOTBDzePsUfXyRouf9q8bPd6Vq46FmGFqGPdNUo2xPRNoLQBYIVrq67Sl
+         8/8Q==
+X-Gm-Message-State: ACrzQf0VjrsNMZl8LxlP80q8RyP7XEcd3AS/KsXuUDG14G1zEGK+4etC
+        WfzHt0go/7C/Yxns7rBPkZ/TzQ==
+X-Google-Smtp-Source: AMsMyM4Vy5pe2OBv3GnQlV4lMfJzqQNAIRrzEe4vfUOJlBhniW+3FPYt2Mm2bUK4Y48lVGOJjhEfgw==
+X-Received: by 2002:a2e:8781:0:b0:26d:e758:ce84 with SMTP id n1-20020a2e8781000000b0026de758ce84mr18941581lji.178.1667917441301;
+        Tue, 08 Nov 2022 06:24:01 -0800 (PST)
 Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
-        by smtp.gmail.com with ESMTPSA id o25-20020ac25e39000000b0048af3c090f8sm1800517lfg.13.2022.11.08.06.09.10
+        by smtp.gmail.com with ESMTPSA id k7-20020ac24f07000000b004a65780e4cfsm1815117lfr.106.2022.11.08.06.23.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Nov 2022 06:09:11 -0800 (PST)
+        Tue, 08 Nov 2022 06:23:59 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -59,53 +59,49 @@ To:     Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindings: pinctrl: qcom,msm8976: convert to dtschema
-Date:   Tue,  8 Nov 2022 15:09:09 +0100
-Message-Id: <20221108140909.51422-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] dt-bindings: pinctrl: qcom,ipq8074: convert to dtschema
+Date:   Tue,  8 Nov 2022 15:23:56 +0100
+Message-Id: <20221108142357.67202-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert Qualcomm MSM8976 pin controller bindings to DT schema.  Keep the
+Convert Qualcomm IPQ8074 pin controller bindings to DT schema.  Keep the
 parsing of pin configuration subnodes consistent with other Qualcomm
 schemas (children named with '-state' suffix, their children with
 '-pins').
 
-Changes during conversion: update the list of non-mux pins (like sdc1)
-to match Linux driver.
-
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- .../bindings/pinctrl/qcom,msm8976-pinctrl.txt | 183 ------------------
- .../pinctrl/qcom,msm8976-pinctrl.yaml         | 137 +++++++++++++
- 2 files changed, 137 insertions(+), 183 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt
- create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.yaml
+ .../bindings/pinctrl/qcom,ipq8074-pinctrl.txt | 181 ------------------
+ .../pinctrl/qcom,ipq8074-pinctrl.yaml         | 135 +++++++++++++
+ 2 files changed, 135 insertions(+), 181 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq8074-pinctrl.txt
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq8074-pinctrl.yaml
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,ipq8074-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,ipq8074-pinctrl.txt
 deleted file mode 100644
-index 70d04d12f136..000000000000
---- a/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt
+index 7b151894f5a0..000000000000
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,ipq8074-pinctrl.txt
 +++ /dev/null
-@@ -1,183 +0,0 @@
--Qualcomm MSM8976 TLMM block
+@@ -1,181 +0,0 @@
+-Qualcomm Technologies, Inc. IPQ8074 TLMM block
 -
 -This binding describes the Top Level Mode Multiplexer block found in the
--MSM8956 and MSM8976 platforms.
+-IPQ8074 platform.
 -
 -- compatible:
 -	Usage: required
 -	Value type: <string>
--	Definition: must be "qcom,msm8976-pinctrl"
+-	Definition: must be "qcom,ipq8074-pinctrl"
 -
 -- reg:
 -	Usage: required
@@ -180,16 +176,8 @@ index 70d04d12f136..000000000000
 -	Usage: required
 -	Value type: <string-array>
 -	Definition: List of gpio pins affected by the properties specified in
--		    this subnode.
--
--		    Valid pins are:
--		      gpio0-gpio145
--		        Supports mux, bias and drive-strength
--
--		      sdc1_clk, sdc1_cmd, sdc1_data,
--		      sdc2_clk, sdc2_cmd, sdc2_data,
--		      sdc3_clk, sdc3_cmd, sdc3_data
--		        Supports bias and drive-strength
+-		    this subnode.  Valid pins are:
+-		    gpio0-gpio69
 -
 -- function:
 -	Usage: required
@@ -197,28 +185,30 @@ index 70d04d12f136..000000000000
 -	Definition: Specify the alternative function to be configured for the
 -		    specified pins. Functions are only valid for gpio pins.
 -		    Valid values are:
--
--		    gpio, blsp_uart1, blsp_spi1, smb_int, blsp_i2c1, blsp_spi2,
--		    blsp_uart2, blsp_i2c2, gcc_gp1_clk_b, blsp_spi3,
--		    qdss_tracedata_b, blsp_i2c3, gcc_gp2_clk_b, gcc_gp3_clk_b,
--		    blsp_spi4, cap_int, blsp_i2c4, blsp_spi5, blsp_uart5,
--		    qdss_traceclk_a, m_voc, blsp_i2c5, qdss_tracectl_a,
--		    qdss_tracedata_a, blsp_spi6, blsp_uart6, qdss_tracectl_b,
--		    blsp_i2c6, qdss_traceclk_b, mdp_vsync, pri_mi2s_mclk_a,
--		    sec_mi2s_mclk_a, cam_mclk, cci0_i2c, cci1_i2c, blsp1_spi,
--		    blsp3_spi, gcc_gp1_clk_a, gcc_gp2_clk_a, gcc_gp3_clk_a,
--		    uim_batt, sd_write, uim1_data, uim1_clk, uim1_reset,
--		    uim1_present, uim2_data, uim2_clk, uim2_reset,
--		    uim2_present, ts_xvdd, mipi_dsi0, us_euro, ts_resout,
--		    ts_sample, sec_mi2s_mclk_b, pri_mi2s, codec_reset,
--		    cdc_pdm0, us_emitter, pri_mi2s_mclk_b, pri_mi2s_mclk_c,
--		    lpass_slimbus, lpass_slimbus0, lpass_slimbus1, codec_int1,
--		    codec_int2, wcss_bt, sdc3, wcss_wlan2, wcss_wlan1,
--		    wcss_wlan0, wcss_wlan, wcss_fm, key_volp, key_snapshot,
--		    key_focus, key_home, pwr_down, dmic0_clk, hdmi_int,
--		    dmic0_data, wsa_vi, wsa_en, blsp_spi8, wsa_irq, blsp_i2c8,
--		    pa_indicator, modem_tsync, ssbi_wtr1, gsm1_tx, gsm0_tx,
--		    sdcard_det, sec_mi2s, ss_switch,
+-		    atest_char, atest_char0, atest_char1, atest_char2,
+-		    atest_char3, audio_rxbclk, audio_rxd, audio_rxfsync,
+-		    audio_rxmclk, audio_txbclk, audio_txd, audio_txfsync,
+-		    audio_txmclk, blsp0_i2c, blsp0_spi, blsp0_uart, blsp1_i2c,
+-		    blsp1_spi, blsp1_uart, blsp2_i2c, blsp2_spi, blsp2_uart,
+-		    blsp3_i2c, blsp3_spi, blsp3_spi0, blsp3_spi1, blsp3_spi2,
+-		    blsp3_spi3, blsp3_uart, blsp4_i2c0, blsp4_i2c1, blsp4_spi0,
+-		    blsp4_spi1, blsp4_uart0, blsp4_uart1, blsp5_i2c, blsp5_spi,
+-		    blsp5_uart, burn0, burn1, cri_trng, cri_trng0, cri_trng1,
+-		    cxc0, cxc1, dbg_out, gcc_plltest, gcc_tlmm, gpio, ldo_en,
+-		    ldo_update, led0, led1, led2, mac0_sa0, mac0_sa1, mac1_sa0,
+-		    mac1_sa1, mac1_sa2, mac1_sa3, mac2_sa0, mac2_sa1, mdc,
+-		    mdio, pcie0_clk, pcie0_rst, pcie0_wake, pcie1_clk,
+-		    pcie1_rst, pcie1_wake, pcm_drx, pcm_dtx, pcm_fsync,
+-		    pcm_pclk, pcm_zsi0, pcm_zsi1, prng_rosc, pta1_0, pta1_1,
+-		    pta1_2, pta2_0, pta2_1, pta2_2, pwm0, pwm1, pwm2, pwm3,
+-		    qdss_cti_trig_in_a0, qdss_cti_trig_in_a1,
+-		    qdss_cti_trig_in_b0, qdss_cti_trig_in_b1,
+-		    qdss_cti_trig_out_a0, qdss_cti_trig_out_a1,
+-		    qdss_cti_trig_out_b0, qdss_cti_trig_out_b1,
+-		    qdss_traceclk_a, qdss_traceclk_b, qdss_tracectl_a,
+-		    qdss_tracectl_b, qdss_tracedata_a, qdss_tracedata_b,
+-		    qpic, rx0, rx1, rx2, sd_card, sd_write, tsens_max, wci2a,
+-		    wci2b, wci2c, wci2d
 -
 -- bias-disable:
 -	Usage: optional
@@ -240,14 +230,12 @@ index 70d04d12f136..000000000000
 -	Value type: <none>
 -	Definition: The specified pins are configured in output mode, driven
 -		    high.
--		    Not valid for sdc pins.
 -
 -- output-low:
 -	Usage: optional
 -	Value type: <none>
 -	Definition: The specified pins are configured in output mode, driven
 -		    low.
--		    Not valid for sdc pins.
 -
 -- drive-strength:
 -	Usage: optional
@@ -258,52 +246,58 @@ index 70d04d12f136..000000000000
 -Example:
 -
 -	tlmm: pinctrl@1000000 {
--		compatible = "qcom,msm8976-pinctrl";
+-		compatible = "qcom,ipq8074-pinctrl";
 -		reg = <0x1000000 0x300000>;
 -		interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
 -		gpio-controller;
 -		#gpio-cells = <2>;
--		gpio-ranges = <&tlmm 0 0 145>;
+-		gpio-ranges = <&tlmm 0 0 70>;
 -		interrupt-controller;
 -		#interrupt-cells = <2>;
 -
--		blsp1_uart2_active: blsp1_uart2_active {
+-		uart2: uart2-default {
 -			mux {
--				pins = "gpio4", "gpio5", "gpio6", "gpio7";
--				function = "blsp_uart2";
+-				pins = "gpio23", "gpio24";
+-				function = "blsp4_uart1";
 -			};
 -
--			config {
--				pins = "gpio4", "gpio5", "gpio6", "gpio7";
--				drive-strength = <2>;
+-			rx {
+-				pins = "gpio23";
+-				drive-strength = <4>;
 -				bias-disable;
+-			};
+-
+-			tx {
+-				pins = "gpio24";
+-				drive-strength = <2>;
+-				bias-pull-up;
 -			};
 -		};
 -	};
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.yaml
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,ipq8074-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,ipq8074-pinctrl.yaml
 new file mode 100644
-index 000000000000..1002a57248f6
+index 000000000000..c02dd2ad9b31
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.yaml
-@@ -0,0 +1,137 @@
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,ipq8074-pinctrl.yaml
+@@ -0,0 +1,135 @@
 +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 +%YAML 1.2
 +---
-+$id: http://devicetree.org/schemas/pinctrl/qcom,msm8976-pinctrl.yaml#
++$id: http://devicetree.org/schemas/pinctrl/qcom,ipq8074-pinctrl.yaml#
 +$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+title: Qualcomm MSM8976 TLMM pin controller
++title: Qualcomm IPQ8074 TLMM pin controller
 +
 +maintainers:
 +  - Bjorn Andersson <andersson@kernel.org>
 +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 +
 +description:
-+  Top Level Mode Multiplexer pin controller in Qualcomm MSM8976 SoC.
++  Top Level Mode Multiplexer pin controller in Qualcomm IPQ8074 SoC.
 +
 +properties:
 +  compatible:
-+    const: qcom,msm8976-pinctrl
++    const: qcom,ipq8074-pinctrl
 +
 +  reg:
 +    maxItems: 1
@@ -318,22 +312,22 @@ index 000000000000..1002a57248f6
 +
 +  gpio-reserved-ranges:
 +    minItems: 1
-+    maxItems: 73
++    maxItems: 35
 +
 +  gpio-line-names:
-+    maxItems: 145
++    maxItems: 70
 +
 +patternProperties:
 +  "-state$":
 +    oneOf:
-+      - $ref: "#/$defs/qcom-msm8976-tlmm-state"
++      - $ref: "#/$defs/qcom-ipq8074-tlmm-state"
 +      - patternProperties:
 +          "-pins$":
-+            $ref: "#/$defs/qcom-msm8976-tlmm-state"
++            $ref: "#/$defs/qcom-ipq8074-tlmm-state"
 +        additionalProperties: false
 +
 +$defs:
-+  qcom-msm8976-tlmm-state:
++  qcom-ipq8074-tlmm-state:
 +    type: object
 +    description:
 +      Pinctrl node's client devices use subnodes for desired pin configuration.
@@ -346,11 +340,7 @@ index 000000000000..1002a57248f6
 +          List of gpio pins affected by the properties specified in this
 +          subnode.
 +        items:
-+          oneOf:
-+            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-3][0-9]|14[0-4])$"
-+            - enum: [ qdsd_clk, qdsd_cmd, qdsd_data0, qdsd_data1, qdsd_data2,
-+                      qdsd_data3 sdc1_clk, sdc1_cmd, sdc1_data, sdc1_rclk,
-+                      sdc2_clk, sdc2_cmd, sdc2_data ]
++          pattern: "^gpio([0-9]|[1-6][0-9]|70)$"
 +        minItems: 1
 +        maxItems: 36
 +
@@ -359,26 +349,28 @@ index 000000000000..1002a57248f6
 +          Specify the alternative function to be configured for the specified
 +          pins.
 +
-+        enum: [ gpio, blsp_uart1, blsp_spi1, smb_int, blsp_i2c1, blsp_spi2,
-+                blsp_uart2, blsp_i2c2, gcc_gp1_clk_b, blsp_spi3,
-+                qdss_tracedata_b, blsp_i2c3, gcc_gp2_clk_b, gcc_gp3_clk_b,
-+                blsp_spi4, cap_int, blsp_i2c4, blsp_spi5, blsp_uart5,
-+                qdss_traceclk_a, m_voc, blsp_i2c5, qdss_tracectl_a,
-+                qdss_tracedata_a, blsp_spi6, blsp_uart6, qdss_tracectl_b,
-+                blsp_i2c6, qdss_traceclk_b, mdp_vsync, pri_mi2s_mclk_a,
-+                sec_mi2s_mclk_a, cam_mclk, cci0_i2c, cci1_i2c, blsp1_spi,
-+                blsp3_spi, gcc_gp1_clk_a, gcc_gp2_clk_a, gcc_gp3_clk_a,
-+                uim_batt, sd_write, uim1_data, uim1_clk, uim1_reset,
-+                uim1_present, uim2_data, uim2_clk, uim2_reset, uim2_present,
-+                ts_xvdd, mipi_dsi0, us_euro, ts_resout, ts_sample,
-+                sec_mi2s_mclk_b, pri_mi2s, codec_reset, cdc_pdm0, us_emitter,
-+                pri_mi2s_mclk_b, pri_mi2s_mclk_c, lpass_slimbus,
-+                lpass_slimbus0, lpass_slimbus1, codec_int1, codec_int2,
-+                wcss_bt, sdc3, wcss_wlan2, wcss_wlan1, wcss_wlan0, wcss_wlan,
-+                wcss_fm, key_volp, key_snapshot, key_focus, key_home, pwr_down,
-+                dmic0_clk, hdmi_int, dmic0_data, wsa_vi, wsa_en, blsp_spi8,
-+                wsa_irq, blsp_i2c8, pa_indicator, modem_tsync, ssbi_wtr1,
-+                gsm1_tx, gsm0_tx, sdcard_det, sec_mi2s, ss_switch ]
++        enum: [ gpio, atest_char, atest_char0, atest_char1, atest_char2,
++                atest_char3, audio_rxbclk, audio_rxd, audio_rxfsync,
++                audio_rxmclk, audio_txbclk, audio_txd, audio_txfsync,
++                audio_txmclk, blsp0_i2c, blsp0_spi, blsp0_uart, blsp1_i2c,
++                blsp1_spi, blsp1_uart, blsp2_i2c, blsp2_spi, blsp2_uart,
++                blsp3_i2c, blsp3_spi, blsp3_spi0, blsp3_spi1, blsp3_spi2,
++                blsp3_spi3, blsp3_uart, blsp4_i2c0, blsp4_i2c1, blsp4_spi0,
++                blsp4_spi1, blsp4_uart0, blsp4_uart1, blsp5_i2c, blsp5_spi,
++                blsp5_uart, burn0, burn1, cri_trng, cri_trng0, cri_trng1, cxc0,
++                cxc1, dbg_out, gcc_plltest, gcc_tlmm, ldo_en, ldo_update, led0,
++                led1, led2, mac0_sa0, mac0_sa1, mac1_sa0, mac1_sa1, mac1_sa2,
++                mac1_sa3, mac2_sa0, mac2_sa1, mdc, mdio, pcie0_clk, pcie0_rst,
++                pcie0_wake, pcie1_clk, pcie1_rst, pcie1_wake, pcm_drx, pcm_dtx,
++                pcm_fsync, pcm_pclk, pcm_zsi0, pcm_zsi1, prng_rosc, pta1_0,
++                pta1_1, pta1_2, pta2_0, pta2_1, pta2_2, pwm0, pwm1, pwm2, pwm3,
++                qdss_cti_trig_in_a0, qdss_cti_trig_in_a1, qdss_cti_trig_in_b0,
++                qdss_cti_trig_in_b1, qdss_cti_trig_out_a0,
++                qdss_cti_trig_out_a1, qdss_cti_trig_out_b0,
++                qdss_cti_trig_out_b1, qdss_traceclk_a, qdss_traceclk_b,
++                qdss_tracectl_a, qdss_tracectl_b, qdss_tracedata_a,
++                qdss_tracedata_b, qpic, rx0, rx1, rx2, sd_card, sd_write,
++                tsens_max, wci2a, wci2b, wci2c, wci2d ]
 +
 +      bias-pull-down: true
 +      bias-pull-up: true
@@ -407,19 +399,19 @@ index 000000000000..1002a57248f6
 +    #include <dt-bindings/interrupt-controller/arm-gic.h>
 +
 +    tlmm: pinctrl@1000000 {
-+        compatible = "qcom,msm8976-pinctrl";
-+        reg = <0x1000000 0x300000>;
++        compatible = "qcom,ipq8074-pinctrl";
++        reg = <0x01000000 0x300000>;
 +        interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
 +        gpio-controller;
-+        #gpio-cells = <2>;
-+        gpio-ranges = <&tlmm 0 0 145>;
++        gpio-ranges = <&tlmm 0 0 70>;
++        #gpio-cells = <0x2>;
 +        interrupt-controller;
-+        #interrupt-cells = <2>;
++        #interrupt-cells = <0x2>;
 +
-+        blsp1-uart2-active-state {
-+            pins = "gpio4", "gpio5", "gpio6", "gpio7";
-+            function = "blsp_uart2";
-+            drive-strength = <2>;
++        serial4-state {
++            pins = "gpio23", "gpio24";
++            function = "blsp4_uart1";
++            drive-strength = <8>;
 +            bias-disable;
 +        };
 +    };
