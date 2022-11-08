@@ -2,127 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CC776211B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 14:01:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A979262122F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 14:20:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233705AbiKHNBP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 08:01:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43776 "EHLO
+        id S234369AbiKHNUx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 08:20:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234118AbiKHNBO (ORCPT
+        with ESMTP id S233751AbiKHNUx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 08:01:14 -0500
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E05251C26
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Nov 2022 05:01:13 -0800 (PST)
-Received: by mail-lj1-x234.google.com with SMTP id d20so20959761ljc.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Nov 2022 05:01:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=o2KBnjP+nSiovlrgCNq3pgnMfvwR/TgjyTkfX/lxAXY=;
-        b=B1NLcQxYD/tx2pF3yzopjY1j/+5ZIQBGNS2nBPNbnSEbAaWVMjzgybAcu8U73wnSpS
-         2p6Wl/qwuoxfmZpHd4pLS6PNPs01SywKDuEOkq/q9Ll06Uhqm9dlrj5PlresGVgbve64
-         81jMN8Is3/iJqmZxDo7rnXCEDUqiUT60X5AEQtVsfFO+9JPBb1eHrIMgmHyC84lpfQty
-         9u8nsXg0URwU1h2oRYR5vAB2D5t6Snyqq+Yxr9V/yyuKVp2JYkbfKX1XfxXOF1yYSOwy
-         F5+k72GuWuWwlibeltt6Y62hytjwcAWnJqWAeXfoAy6vj5S9H50BOjRbtsk+tq78j1X8
-         3IQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=o2KBnjP+nSiovlrgCNq3pgnMfvwR/TgjyTkfX/lxAXY=;
-        b=u8patVOOjhS7cYi5Kxl3qMAtspEpDDBl8lkc5JXf1pVmGAQzuR0jtiC/Z1A0reD9bA
-         JTapz+/pVZe5HB1xcuBf4v//3jxFQjCBfgYBkvmbCbYaMkJHQ3HKHLahH5z98JZDRuwP
-         ropQsWoZIDOz0d2AWve2eV41kT1nyBR7IoqfTnFG7xeBa+1MmkHX1ZS/THxorpa22boa
-         XiEBILqptoxtxYHTjGADIE63B55oB03LIgpPqRRNNKFrg3DtRDOwBpdGq7B/zClxHVgc
-         lNdt2oKDQdLuKz687Q2IdmN4/6g12AGd6+q+nBdIq4jpMBiD7klOjMQGi4rZYbZGxGv7
-         8i/g==
-X-Gm-Message-State: ACrzQf0Hc9eL2xjUjHEAd5gWCrVgeUnvkS8VJCZck1qZrdiVWX3BLcow
-        nEWyszvsBkbujKyDCPyUoTu2cA==
-X-Google-Smtp-Source: AMsMyM66xrug6V/sv7oOh3M+8rA31Sg6TAYX3OsMnAX7+YblTowGVcUPAZ+KslM0y4845evMIBVXVA==
-X-Received: by 2002:a05:651c:178a:b0:277:8a07:a558 with SMTP id bn10-20020a05651c178a00b002778a07a558mr5264594ljb.333.1667912471539;
-        Tue, 08 Nov 2022 05:01:11 -0800 (PST)
-Received: from [10.27.10.248] ([195.165.23.90])
-        by smtp.gmail.com with ESMTPSA id h7-20020ac250c7000000b004a2386b8cf5sm1767451lfm.215.2022.11.08.05.01.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Nov 2022 05:01:11 -0800 (PST)
-Message-ID: <228c9136-0c52-af0b-459e-23c9f7ee08f3@linaro.org>
-Date:   Tue, 8 Nov 2022 16:01:10 +0300
+        Tue, 8 Nov 2022 08:20:53 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ECF831F8D;
+        Tue,  8 Nov 2022 05:20:52 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 121EE61557;
+        Tue,  8 Nov 2022 13:20:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7360C433D6;
+        Tue,  8 Nov 2022 13:20:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667913651;
+        bh=F1MrMjvh/L1F4zxWBX7r8xXYoMUO4ZXMTGWde/+UFd8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LZaBgX2VaqGZgOh/2C0l++qPRlM8ueDrM9SLeSVBvUQEQ0+CNdo356p2qirP1dEgJ
+         p/H4iy/1oAwn0ait0PvZKuBfPMAnQDFDkXJtKbJiot6gOdqiqVGf0/w7jk8vpPsbFI
+         n39iYmDpzjVLSA1MXWr/cDCfrGf3A/+OHru3RiE4kPX3W97ALdEM6/h3yPQ0zjGCJZ
+         q1ivEC4oeiOD9WI4AegBBhj03IgPbMrHzOGR+4pXQwzPuGiX7waZ0und1RxcXF1J+j
+         MXeA9iQvAXVNy8WS4w2xu8rFWvjxhzh0obhV1OFgD6jSVycIiG4hb8lh5dBxyqba2D
+         JHeBEQ2z21fvg==
+Date:   Tue, 8 Nov 2022 13:20:42 +0000
+From:   Will Deacon <will@kernel.org>
+To:     Nicolin Chen <nicolinc@nvidia.com>
+Cc:     joro@8bytes.org, robin.murphy@arm.com, jgg@nvidia.com,
+        kevin.tian@intel.com, quic_jjohnson@quicinc.com,
+        suravee.suthikulpanit@amd.com, robdclark@gmail.com,
+        dwmw2@infradead.org, baolu.lu@linux.intel.com,
+        yong.wu@mediatek.com, matthias.bgg@gmail.com, orsonzhai@gmail.com,
+        baolin.wang@linux.alibaba.com, zhang.lyra@gmail.com,
+        thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+        jean-philippe@linaro.org, tglx@linutronix.de,
+        shameerali.kolothum.thodi@huawei.com,
+        christophe.jaillet@wanadoo.fr, yangyicong@hisilicon.com,
+        yangyingliang@huawei.com, quic_saipraka@quicinc.com,
+        jon@solid-run.com, iommu@lists.linux.dev,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-tegra@vger.kernel.org,
+        virtualization@lists.linux-foundation.org
+Subject: Re: [PATCH v7 4/5] iommu: Use EINVAL for incompatible device/domain
+ in ->attach_dev
+Message-ID: <20221108132041.GB22816@willie-the-truck>
+References: <cover.1666042872.git.nicolinc@nvidia.com>
+ <f52a07f7320da94afe575c9631340d0019a203a7.1666042873.git.nicolinc@nvidia.com>
+ <20221107152645.GD21002@willie-the-truck>
+ <Y2mfaG1/6hd1qykW@Asurada-Nvidia>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v2 05/18] dt-bindings: msm: dsi-controller-main: Fix
- description of core clock
-Content-Language: en-GB
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, krzysztof.kozlowski+dt@linaro.org,
-        robh+dt@kernel.org, quic_mkrishn@quicinc.com,
-        linux-arm-msm@vger.kernel.org
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221107235654.1769462-1-bryan.odonoghue@linaro.org>
- <20221107235654.1769462-6-bryan.odonoghue@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221107235654.1769462-6-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y2mfaG1/6hd1qykW@Asurada-Nvidia>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/11/2022 02:56, Bryan O'Donoghue wrote:
-> There's a typo in describing the core clock as an 'escape' clock. The
-> accurate description is 'core'.
+On Mon, Nov 07, 2022 at 04:14:32PM -0800, Nicolin Chen wrote:
+> On Mon, Nov 07, 2022 at 03:26:45PM +0000, Will Deacon wrote:
 > 
-> Fixes: 4dbe55c97741 ("dt-bindings: msm: dsi: add yaml schemas for DSI bindings")
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Sean Paul <sean@poorly.run>
-> Cc: David Airlie <airlied@gmail.com>
-> Cc: Daniel Vetter <daniel@ffwll.ch>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: freedreno@lists.freedesktop.org
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->   .../devicetree/bindings/display/msm/dsi-controller-main.yaml    | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+> > > diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> > > index ba47c73f5b8c..01fd7df16cb9 100644
+> > > --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> > > +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> > > @@ -2430,23 +2430,14 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+> > >                       goto out_unlock;
+> > >               }
+> > >       } else if (smmu_domain->smmu != smmu) {
+> > > -             dev_err(dev,
+> > > -                     "cannot attach to SMMU %s (upstream of %s)\n",
+> > > -                     dev_name(smmu_domain->smmu->dev),
+> > > -                     dev_name(smmu->dev));
+> > > -             ret = -ENXIO;
+> > > +             ret = -EINVAL;
+> > >               goto out_unlock;
+> > >       } else if (smmu_domain->stage == ARM_SMMU_DOMAIN_S1 &&
+> > >                  master->ssid_bits != smmu_domain->s1_cfg.s1cdmax) {
+> > > -             dev_err(dev,
+> > > -                     "cannot attach to incompatible domain (%u SSID bits != %u)\n",
+> > > -                     smmu_domain->s1_cfg.s1cdmax, master->ssid_bits);
+> > >               ret = -EINVAL;
+> > >               goto out_unlock;
+> > >       } else if (smmu_domain->stage == ARM_SMMU_DOMAIN_S1 &&
+> > >                  smmu_domain->stall_enabled != master->stall_enabled) {
+> > > -             dev_err(dev, "cannot attach to stall-%s domain\n",
+> > > -                     smmu_domain->stall_enabled ? "enabled" : "disabled");
+> > >               ret = -EINVAL;
+> > >               goto out_unlock;
+> > >       }
 > 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> index cab38a20a54b0..a607ccd4a905a 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> @@ -32,7 +32,7 @@ properties:
->         - description: Display byte clock
->         - description: Display byte interface clock
->         - description: Display pixel clock
-> -      - description: Display escape clock
-> +      - description: Display core clock
->         - description: Display AHB clock
->         - description: Display AXI clock
->         - description: Core MultiMedia SubSystem clock
+> > I think it would be helpful to preserve these messages using
+> > dev_err_ratelimited() so that attach failure can be diagnosed without
+> > having to hack the messages back into the driver.
+> 
+> Thank you for the review.
+> 
+> The change is already picked up last week. Yet, I can add prints
+> back with a followup patch, if no one has a problem with that.
 
--- 
-With best wishes
-Dmitry
+Sorry, I fell behind with upstream so I got to this late. A patch on top
+would be fantastic!
 
+> Also, I am not quite sure what the use case would be to have an
+> error print. Perhaps dev_dbg() would be more fitting if it is
+> just for diagnosis?
+
+Sure, that works for me. I think the messages are useful for folks
+triggering this path e.g. via sysfs but if they're limited to debug I think
+that's better than removing them altogether.
+
+Cheers,
+
+Will
