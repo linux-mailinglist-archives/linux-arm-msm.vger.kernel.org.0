@@ -2,50 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BF0A62084F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 05:36:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD63E620854
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 05:41:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232919AbiKHEgk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Nov 2022 23:36:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50942 "EHLO
+        id S232494AbiKHElO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Nov 2022 23:41:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232307AbiKHEgj (ORCPT
+        with ESMTP id S232125AbiKHElN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Nov 2022 23:36:39 -0500
+        Mon, 7 Nov 2022 23:41:13 -0500
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 155DC27908;
-        Mon,  7 Nov 2022 20:36:36 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A035E0C5;
+        Mon,  7 Nov 2022 20:41:12 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 71CF26146A;
-        Tue,  8 Nov 2022 04:36:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 363FBC433C1;
-        Tue,  8 Nov 2022 04:36:35 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2400B61466;
+        Tue,  8 Nov 2022 04:41:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A17A9C433C1;
+        Tue,  8 Nov 2022 04:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667882195;
-        bh=OG44KWmZaIEMvgjyKsQDKtAHHYFHCw8JOB7XLYtFQz0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=d4CW+C6G+WsNwVA7W/x/7fuvoirJpjyOHlxfvLJfTQhf/DnKaoflzf2G0ahPdC1Ya
-         6HpXg3sr1w5969R9mNAdgoptDYAhyqbOlFbOlfrB384V8v1Wa9qcWYj0xRS1FKNkCr
-         E9NZZGnuARFGVT5Sd170I15w3eJxPtbD/SOgo4fD2uiYgPtrOF7RjgI2MSHUYPHq3A
-         rmcbvKv5dCr3O1kc9JHzIS6SBRebp4/ZHYmb++MNxaF+VD63QAnFwfp0AgLGD7HwFn
-         XkxMUvgZ+WQ2D83Qmc6DfPfTwxs0o1AT1xSuar4Y/XBFCm0+//IfMWMHzRZ1ll4Tse
-         UjJOIYlWDU0bw==
+        s=k20201202; t=1667882471;
+        bh=u+aMSC7NtK/eF/XnaxPejrZT3LQ1++Bwr4IovOzzV24=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=IWRfF3klqBvKduJp26siphyeNq3/RNm+nQkelqIna629PgV8dlx2m5+L7iJ/t2Isl
+         CEBTukWsBpBnf8uLp9k3v3BvT8dovqFTIaIlF0vSt2euKYlIZFQe4PgFSYulFmmAEr
+         Zk3KiHQMNF8skaoacDySPbl2cYzMTSuoVikmI66kLBdfqMXz/6XmabefgHk22meK1A
+         vxhHNPSX0nLU0airdnO+Jm4QT2lPKkvK/t2lB1yTAnXy2kyVCn9FOAaA6BsWm6gK55
+         4h3E+//4Ae+v3izNeGulcQpVBmWZGbcS7yZmWPjAlzrUH8r8693DBVsYaS7OkSwnLR
+         QpYkHuETB4zRg==
+Date:   Mon, 7 Nov 2022 22:41:08 -0600
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     swboyd@chromium.org, agross@kernel.org
-Cc:     patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-        dianders@chromium.org, amstan@chromium.org,
-        linux-arm-msm@vger.kernel.org, mka@chromium.org
-Subject: Re: (subset) [PATCH v2 0/2] Update fingerprint node on herobrine/trogdor
-Date:   Mon,  7 Nov 2022 22:36:29 -0600
-Message-Id: <166788218318.625965.10548024842918828007.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221107191535.624371-1-swboyd@chromium.org>
-References: <20221107191535.624371-1-swboyd@chromium.org>
+To:     Yassine Oudjana <yassine.oudjana@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Yassine Oudjana <y.oudjana@protonmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: msm8996pro-xiaomi-scorpio: Remove DSI
+ PHY clocks from MMCC
+Message-ID: <20221108044108.se3et4do5q2dspsb@builder.lan>
+References: <20221107114016.356112-1-y.oudjana@protonmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221107114016.356112-1-y.oudjana@protonmail.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -55,23 +61,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 7 Nov 2022 11:15:33 -0800, Stephen Boyd wrote:
-> This patch series updates the binding for the Trogdor and Herobrine
-> boards' fingerprint node. Now that the binding has been accepted[1]
-> we're ready to merge this in the qcom tree.
+On Mon, Nov 07, 2022 at 02:40:17PM +0300, Yassine Oudjana wrote:
+> From: Yassine Oudjana <y.oudjana@protonmail.com>
 > 
-> Changes from v1 (https://lore.kernel.org/r/20220317010640.2498502-1-swboyd@chromium.org):
->  * New patch for trogdor
+> Having DSI PHY clocks listed in the MMCC node while MDSS is disabled makes
+> it defer probe indefinitely, resulting in simplefb and other blocks that
+> depend on its clocks to defer probe as well. Remove DSI PHY clocks from
+> MMCC to let it probe with MDSS disabled.
 > 
-> [...]
 
-Applied, thanks!
+Isn't this a generic problem that we will have all over the place, where
+we describe incoming clocks from all PHYs and then only enable the ones
+actually available on each platform?
 
-[1/2] arm64: dts: qcom: Fully describe fingerprint node on Herobrine
-      commit: aefd5370ab5e55a18c94573b9602083132e24601
-[2/2] arm64: dts: qcom: Fully describe fingerprint node on Trogdor
-      commit: 9ec68fea9e53d25177618d2ce1bc4a1b1b724938
+Am I missing something special with this case? I think the kernel need
+to handle this.
 
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+Regards,
+Bjorn
+
+> Fixes: 48aa636285ad ("arm64: dts: qcom: msm8996: add clocks to the MMCC device node")
+> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+> ---
+>  .../boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts     | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts b/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts
+> index 7bf6ad1a214b..c68c2dadd7b4 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts
+> +++ b/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts
+> @@ -113,6 +113,19 @@ &mdss {
+>  	status = "disabled";
+>  };
+>  
+> +&mmcc {
+> +	/*
+> +	 * Remove non-essential DSI PHY clocks to allow MMCC to probe
+> +	 * with MDSS disabled.
+> +	 */
+> +	clocks = <&xo_board>,
+> +		 <&gcc GCC_MMSS_NOC_CFG_AHB_CLK>,
+> +		 <&gcc GPLL0>;
+> +	clock-names = "xo",
+> +		      "gcc_mmss_noc_cfg_ahb_clk",
+> +		      "gpll0";
+> +};
+> +
+>  &mss_pil {
+>  	firmware-name = "qcom/msm8996/scorpio/mba.mbn",
+>  			"qcom/msm8996/scorpio/modem.mbn";
+> -- 
+> 2.38.1
+> 
