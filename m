@@ -2,66 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42255621EBC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 22:56:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E708F621EC2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Nov 2022 22:58:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229896AbiKHV4f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Nov 2022 16:56:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34926 "EHLO
+        id S230011AbiKHV6g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Nov 2022 16:58:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229880AbiKHV4d (ORCPT
+        with ESMTP id S229880AbiKHV6g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Nov 2022 16:56:33 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B08F16317B;
-        Tue,  8 Nov 2022 13:56:32 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id j15so23070276wrq.3;
-        Tue, 08 Nov 2022 13:56:32 -0800 (PST)
+        Tue, 8 Nov 2022 16:58:36 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C472C1209E;
+        Tue,  8 Nov 2022 13:58:34 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id p13-20020a05600c468d00b003cf8859ed1bso67879wmo.1;
+        Tue, 08 Nov 2022 13:58:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fWi8AsnAXr1L5oWziawccETw/TpocZBIIBOJfBTzhJE=;
-        b=pjyFWfPlWsQy1nigSqke8Z0vXoHkUnsJH/2DB4nkoRCuL+5G3QbHge3HcayNZzFM57
-         fp1M3nPpxluF6CSUTGvF+qk+TVJ3UjY17/hoQJcGOWZvr5U0Qa7fvgKH/98XqfDcO6xp
-         zJjl+zRGWCCYwX4QWwvvDCSZ5QNT9J3bYb+p6qnbszVghd8dC9JhZn9LXjRJj9mXVgxS
-         KP4getsFS2tUGMkXJVR/EE44/nMw6XOhJYYl9R5L///w9YU7yIl9PNywnaPsyGI3JXJ3
-         h8RpWwTPGffZoQYt1voeCE8arRE4qjkrHX31rYSQKBumqkz9q87EeTFy9eW2oWRs1P4J
-         6pkw==
+        bh=lbmtzZutOKwlENbTWZlqhwmsnDeYsEDLq4PdapbJAAw=;
+        b=nvTIwewH7mb2ir7sT1fwaZuAeSueQGU8ZeI9gcWcFu+D0SqtrGtESQzxqMCPtmsNKH
+         yD1V8nIAlf8X1os1cdL4WGp7j4v4UvxzQCnME3BZHWOs+IRAj4aGau2Fa4k1GvUe1zEl
+         9tAW0c/39/FTZzuEz4WKdRPEFIzJNrGB4PJCjZmiJ6/jIJABsWejtiKdLV1NyNvBOQW1
+         0ZqH1erSaiAy7Lz1ruV97yCk57+giGbCDV76DTKZdMDNIQdLW59iMVA4Yg2arzSLK/Db
+         5LG59wcNRhWWqOWVUOHGmUats6+CzVMkxzWtWiL3Qw0dC4HIPlIOHgFQDtuMlpm62ZTy
+         r4zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=fWi8AsnAXr1L5oWziawccETw/TpocZBIIBOJfBTzhJE=;
-        b=cQ1FMls8X9GSbIgPvYmlcBDBPSdTW4pvf44RIFILA+4GXxpMqZDaOig0nuKKJbLRRe
-         n05AwhbH/l+3MTc0k5D6kxMAKMNA7jzOLp3bijsFr9OAXgZRMiBiJfsrj8wTTjI4sORj
-         DLyfEVJz6Fr4e9uI3JShZAOmRoafhnf7cVtOFK35U9SCIs0fHNxV7Z7Y9m7dxrwST02d
-         L03IObU5vPM0CECC3sSCZB8HzjFKbyAtVbQatB4gavWi8PfjpQiblWwDlIS6BGoMMSG7
-         SVEz7sm05gw/sQkJAHXG+z8Y15zJv6S18uHSr803Ii9fbR0OHxR79aXKD0hmQ3WvhcaA
-         m+SA==
-X-Gm-Message-State: ACrzQf01qfKhJaJhjNKnSFjS4c9RIdfwXuGLSL/4jrh69IYfX8VZ7+tT
-        LCjhLl/GdTqPYenBZGtzVMg=
-X-Google-Smtp-Source: AMsMyM5ORItwMz8VDKtN780mz5LkE8pwEh5xtrCs0HjkrgOdXkxarj2n4V3w0AnPPRI1+oKRW/V7wQ==
-X-Received: by 2002:adf:f701:0:b0:236:e2b2:3b69 with SMTP id r1-20020adff701000000b00236e2b23b69mr27489598wrp.532.1667944591163;
-        Tue, 08 Nov 2022 13:56:31 -0800 (PST)
+        bh=lbmtzZutOKwlENbTWZlqhwmsnDeYsEDLq4PdapbJAAw=;
+        b=6AjYDc3qAKIQBCQZtjvWyDBM5sMd6SyoEuoEDjszU/Z1ZMX3/d6YNplXmXSNadHR+F
+         sL7R/PeHabOBGVaG5vHi3ZqVTymt9D6L8adUJGsS4KMEsw27NGTQPLkLLlZoLeeo6aGR
+         40tRy6ZB9MXOVPXF8XBpcOXrNjNQ0wA6AM6PzIpDxZQcx/3h9Pkf9JR0aDZ1WQP2fbCw
+         PQVshptFz2o71vRTZK6P3YsdXXXeVRVn6l2XM0UeUmHp7L293iMgFEENUMxlS0ofIRB1
+         8sC6LBjesV27tV37Dao+uuetSQolg76Zn7k820EXyyN4DA+MeNZ6sd7HSSIR8yf7a7OA
+         85QA==
+X-Gm-Message-State: ACrzQf1FqAa2VmD/p0f74+ASRTtjhNYB+Cnt9xK7Y31sx6je/pOgiunS
+        mwQLqDaCaqJRXR5B6wgmo/iHAOxnmBc=
+X-Google-Smtp-Source: AMsMyM6c7KyrcM8fqO36Uo/SlhmIW004F1Awzeni7Y2GtGV/CRoDFY0/hPXX8V7F0gJKBfIZK5ASqw==
+X-Received: by 2002:a05:600c:21d8:b0:3cf:69ec:9628 with SMTP id x24-20020a05600c21d800b003cf69ec9628mr816509wmj.79.1667944713140;
+        Tue, 08 Nov 2022 13:58:33 -0800 (PST)
 Received: from localhost.localdomain (93-42-71-18.ip85.fastwebnet.it. [93.42.71.18])
-        by smtp.googlemail.com with ESMTPSA id m3-20020a05600c4f4300b003b47b80cec3sm17050256wmq.42.2022.11.08.13.56.29
+        by smtp.googlemail.com with ESMTPSA id bg20-20020a05600c3c9400b003b4ff30e566sm98761wmb.3.2022.11.08.13.58.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Nov 2022 13:56:30 -0800 (PST)
+        Tue, 08 Nov 2022 13:58:32 -0800 (PST)
 From:   Christian Marangi <ansuelsmth@gmail.com>
 To:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sricharan R <sricharan@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Christian Marangi <ansuelsmth@gmail.com>
-Subject: [PATCH] clk: qcom: clk-krait: fix wrong div2 functions
-Date:   Tue,  8 Nov 2022 22:56:25 +0100
-Message-Id: <20221108215625.30186-1-ansuelsmth@gmail.com>
+Subject: [PATCH] clk: qcom: krait-cc: use devm variant for clk notifier register
+Date:   Tue,  8 Nov 2022 22:58:27 +0100
+Message-Id: <20221108215827.30475-1-ansuelsmth@gmail.com>
 X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -75,31 +73,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently div2 value is applied to the wrong bits. This is caused by a
-bug in the code where the shift is done only for lpl, for anything
-else the mask is not shifted to the correct bits.
+Use devm variant for clk notifier register and correctly handle free
+resource on driver remove.
 
-Fix this by correctly shift if lpl is not supported.
-
-Fixes: 4d7dc77babfe ("clk: qcom: Add support for Krait clocks")
 Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 ---
- drivers/clk/qcom/clk-krait.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/qcom/krait-cc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/clk-krait.c b/drivers/clk/qcom/clk-krait.c
-index 45da736bd5f4..293a9dfa7151 100644
---- a/drivers/clk/qcom/clk-krait.c
-+++ b/drivers/clk/qcom/clk-krait.c
-@@ -114,6 +114,8 @@ static int krait_div2_set_rate(struct clk_hw *hw, unsigned long rate,
+diff --git a/drivers/clk/qcom/krait-cc.c b/drivers/clk/qcom/krait-cc.c
+index e91275663973..33a78b7de0bd 100644
+--- a/drivers/clk/qcom/krait-cc.c
++++ b/drivers/clk/qcom/krait-cc.c
+@@ -64,7 +64,7 @@ static int krait_notifier_register(struct device *dev, struct clk *clk,
+ 	int ret = 0;
  
- 	if (d->lpl)
- 		mask = mask << (d->shift + LPL_SHIFT) | mask << d->shift;
-+	else
-+		mask <<= d->shift;
+ 	mux->clk_nb.notifier_call = krait_notifier_cb;
+-	ret = clk_notifier_register(clk, &mux->clk_nb);
++	ret = devm_clk_notifier_register(dev, clk, &mux->clk_nb);
+ 	if (ret)
+ 		dev_err(dev, "failed to register clock notifier: %d\n", ret);
  
- 	spin_lock_irqsave(&krait_clock_reg_lock, flags);
- 	val = krait_get_l2_indirect_reg(d->offset);
 -- 
 2.37.2
 
