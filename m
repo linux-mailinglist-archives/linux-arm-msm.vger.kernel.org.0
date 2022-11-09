@@ -2,76 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 516AC622E14
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 15:36:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B761622E22
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 15:42:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231623AbiKIOgl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Nov 2022 09:36:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49686 "EHLO
+        id S229541AbiKIOmD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Nov 2022 09:42:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231612AbiKIOgk (ORCPT
+        with ESMTP id S231649AbiKIOmC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Nov 2022 09:36:40 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40BFD10FEB
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Nov 2022 06:36:38 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id d20so26038794ljc.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Nov 2022 06:36:38 -0800 (PST)
+        Wed, 9 Nov 2022 09:42:02 -0500
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB4DE65B8
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Nov 2022 06:42:01 -0800 (PST)
+Received: by mail-lj1-x22d.google.com with SMTP id a15so26080646ljb.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Nov 2022 06:42:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gKEIa4d4PXxZHsy+REJGIS5k0lMx2knvhKiineEouMs=;
-        b=AewmfnuRfPL2XnkdjjtcalH3nWK7+1doHGbLFf1fdFnSPD1BEQHA85mD5uotVItko/
-         8U0WiuVkQl+53+a5EwgdAhUbCLNRpVUGiBCoUAttQ6uOLUUxyibB33RJwvAUnbsNIBOM
-         4F1l+g2rZnWhxsOWqFMGd012X9kXrlI713qlQt35QR1z+wFDzHyacL0Lgm4xZ3L9F/Cp
-         hsGWAx1oB0I4h4Tr+2B4DmUX4wASO83wdyGVd3NgN/PjCM6RsumTgygkOjG0qCwDULzK
-         cmBr8A3UTXm3sQ4/qZ2zdk2ZAWs5EHoVXTM2LMj92RJcPnnKH9ABjhJGnGYmUplJYtIB
-         h9vw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=y3fCCO8OrFqfmlRiJOlN3mcmOILX6073otuJdGgRoSU=;
+        b=G+EbcyZhttx2pXBAAVJNBRJtzsNoy3nm8TjOHndnUkffpsMzrYvO0D6yS6LR3w7nRx
+         /aJeRFsze++7h3UnGgwtlBBCxvqSHgS+8VFXpP99KOIkOsFuFSI/6rE4zdU7UU/AkZd2
+         +fTVyrgIN6LyJvi0OQ77b1q1y99e61njr617i64ozYSiwKAJqzVb89jCUmru4VBgJqen
+         Tu6NYzvcvZc0OcJKv2dSdOlOMJUOqajUYOFA2204ABSW9f/WMdoEFllIMO6ASMpvzPAe
+         DRkdVuv3Wp3PhMNPZh2f2P6agP5AkwHWoQyfHLyA2aJfuTjtekVn2G9R2q+vFdopt673
+         qLTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gKEIa4d4PXxZHsy+REJGIS5k0lMx2knvhKiineEouMs=;
-        b=MhkxlRtC6qvYxrZcLlBaR7Uo7OwiSKUFo1wJm0DgfrUsbbXuF4lmHyUw2yhJFacrsg
-         Qo0cUEo8yNmN++7zBCOATTZvT4b9i88bpQOZaCpf7eF5JRPIB6YpuNjwtgbhDpFnD3Ra
-         xWhcoWsViQdgLAhn32x2HHeYbx1RgLsFr9qY5avTaLTP57qfjNH9IK3VqVXu2YH1ptFQ
-         Y3pKkF/C2Io7GUZklHipPDLyOtYnEI4D6CwfP1/7eBlJFGFHFEauW3AOuR+99cfcL3Su
-         XKtjn8DuTKKAavfbQll4BNOsXOmntWybAZpKmmpnCwc1oJA84QhSCsz5BAPFqvj+b18r
-         nmVQ==
-X-Gm-Message-State: ACrzQf3tnNQXNx4mRqD0bXb3tUTmiIoOcKcPvZJIbTZgEOxK2vZgEs2Y
-        PNcImevTkiBmJJrfH6Uy7djv7Q==
-X-Google-Smtp-Source: AMsMyM5XqSNP93AqO9f4HmbeDKe1y8cIlnGgwPXoT68FvBWlJ1DOqhyHn0MmNwSjmxPcZlNvu/NYnw==
-X-Received: by 2002:a2e:9819:0:b0:277:23f9:866d with SMTP id a25-20020a2e9819000000b0027723f9866dmr19664531ljj.60.1668004596628;
-        Wed, 09 Nov 2022 06:36:36 -0800 (PST)
-Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
-        by smtp.gmail.com with ESMTPSA id s16-20020ac24650000000b0049aa20af00fsm2240053lfo.21.2022.11.09.06.36.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Nov 2022 06:36:35 -0800 (PST)
-Message-ID: <87ff8801-0d0a-9ac3-6a9f-6b21302e3e72@linaro.org>
-Date:   Wed, 9 Nov 2022 15:36:35 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=y3fCCO8OrFqfmlRiJOlN3mcmOILX6073otuJdGgRoSU=;
+        b=gBC0WoDWW8jBoH617HVA7Rx8xI6/zRSAp7YAsJD6bxMijyYEhJPTyeWdk68xnhVyNU
+         V4lHwa4GyUxbZ9Tvxm86Q+PLCDVINsVWTCxRvpFdNjfk/Dc2mrn2HaNiFFZHat0GfBJn
+         O+VSqkgwJZmt5Izss44d4tCzQ5izJeoytufColaRo/g5v2W7SH4iU04fJeN13UwdwEzQ
+         o9amjwZf28P/GCrHxMY2v4oN1V1+sAZxPUmb9tlzjHvd0PU8TMz0VH2FIgXiQX62PBEL
+         42H3oJ8/v9NlPBnzF/2/yNhp13wvxnz1q0gUO4xrMd3WUQDwqFERWNHLVE9rl/F7yZpx
+         6kEA==
+X-Gm-Message-State: ACrzQf3gN/vojIjgvAagCPDl5zi8mc/DWPcWpHZUpXYJ7GhsTmV6kYPd
+        +O4jzWrrEo5jWLs31muiHXwHVBn+UD2xCnpB
+X-Google-Smtp-Source: AMsMyM5NWMtNShqzTekBu6kStpTBUMQwoOaT1oR4csNEVUuLjqg3YYqbyka+VgbkzPEEPQtwmmzIQA==
+X-Received: by 2002:a2e:9e03:0:b0:26d:eb2b:3eb with SMTP id e3-20020a2e9e03000000b0026deb2b03ebmr19189595ljk.300.1668004919959;
+        Wed, 09 Nov 2022 06:41:59 -0800 (PST)
+Received: from localhost.localdomain ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id q10-20020a056512210a00b004a478c2f4desm2235229lfr.163.2022.11.09.06.41.58
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 09 Nov 2022 06:41:59 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v2 0/3] SM6375 / PDX225 SD Card support
+Date:   Wed,  9 Nov 2022 15:41:50 +0100
+Message-Id: <20221109144153.53630-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.32.0 (Apple Git-132)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm6375-pdx225: Enable SD card slot
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221109142623.53052-1-konrad.dybcio@linaro.org>
- <20221109142623.53052-4-konrad.dybcio@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221109142623.53052-4-konrad.dybcio@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,80 +68,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/11/2022 15:26, Konrad Dybcio wrote:
-> Set SDHCI VMMC/VQMMC to <=2v96 and allow load setting by the SDHCI
-> driver, as required by this use case.
-> 
-> Configure the SD Card Detect pin, enable the SDHCI2 controller and
-> assign it the aforementioned regulators.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  .../qcom/sm6375-sony-xperia-murray-pdx225.dts | 34 +++++++++++++++++--
->  1 file changed, 32 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-> index 33083f18755b..c4181476f3b8 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-> @@ -153,7 +153,8 @@ pm6125_l4: l4 {
->  
->  		pm6125_l5: l5 {
->  			regulator-min-microvolt = <1650000>;
-> -			regulator-max-microvolt = <3050000>;
-> +			regulator-max-microvolt = <2960000>;
-> +			regulator-allow-set-load;
->  		};
->  
->  		pm6125_l6: l6 {
-> @@ -235,7 +236,8 @@ pm6125_l21: l21 {
->  
->  		pm6125_l22: l22 {
->  			regulator-min-microvolt = <2704000>;
-> -			regulator-max-microvolt = <3544000>;
-> +			regulator-max-microvolt = <2960000>;
-> +			regulator-allow-set-load;
->  		};
->  
->  		pm6125_l23: l23 {
-> @@ -302,6 +304,34 @@ &qupv3_id_1 {
->  	status = "okay";
->  };
->  
-> +&sdc2_off_state {
-> +	sd-cd-pins {
-> +		pins = "gpio94";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +	};
-> +};
-> +
-> +&sdc2_on_state {
-> +	sd-cd-pins {
-> +		pins = "gpio94";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-pull-up;
-> +	};
-> +};
-> +
-> +&sdhc_2 {
-> +	status = "okay";
-> +
-> +	vmmc-supply = <&pm6125_l22>;
-> +	vqmmc-supply = <&pm6125_l5>;
-> +
-> +	cd-gpios = <&tlmm 94 GPIO_ACTIVE_HIGH>;
-> +};
-> +
-> +
+Add SDHC2 for SM6375 which effectively means SD Card support for
+PDX225. Nothing unusual here, some regulator dancing was required,
+but that's expected.
 
-Just one blank line.
+Depends on [1] and [2].
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+[1] https://lore.kernel.org/linux-arm-msm/20221109111236.46003-1-konrad.dybcio@linaro.org/T/#t
+[2] https://lore.kernel.org/linux-arm-msm/20221109110846.45789-2-konrad.dybcio@linaro.org/T/#u
 
+Changes since v1:
+- remove stray newline
+- use mmc@ node name instead of sdhci@
+- pick up tags
 
-Best regards,
-Krzysztof
+Konrad Dybcio (3):
+  dt-bindings: mmc: sdhci-msm: Document the SM6375 compatible
+  arm64: dts: qcom: sm6375: Add SDHCI2
+  arm64: dts: qcom: sm6375-pdx225: Enable SD card slot
+
+ .../devicetree/bindings/mmc/sdhci-msm.yaml    |  1 +
+ .../qcom/sm6375-sony-xperia-murray-pdx225.dts | 33 +++++++-
+ arch/arm64/boot/dts/qcom/sm6375.dtsi          | 82 +++++++++++++++++++
+ 3 files changed, 114 insertions(+), 2 deletions(-)
+
+-- 
+2.38.1
 
