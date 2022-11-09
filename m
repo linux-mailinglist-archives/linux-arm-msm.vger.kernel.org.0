@@ -2,94 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC963622CD0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 14:51:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F2D4622CD7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 14:52:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229627AbiKINu6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Nov 2022 08:50:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38124 "EHLO
+        id S229452AbiKINwY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Nov 2022 08:52:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229797AbiKINun (ORCPT
+        with ESMTP id S229537AbiKINwX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Nov 2022 08:50:43 -0500
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD7272228F
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Nov 2022 05:50:41 -0800 (PST)
-Received: by mail-lj1-x22a.google.com with SMTP id z24so25855054ljn.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Nov 2022 05:50:41 -0800 (PST)
+        Wed, 9 Nov 2022 08:52:23 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 886311FCC8
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Nov 2022 05:52:22 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id f5so46820322ejc.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Nov 2022 05:52:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kFZg5Lk0YUDHQefo64cd18AIqjQKEsxBGKbtInmBwT4=;
-        b=CQp544BNM4KqeIyk4UcQJ/HVanH5nN3a/Udqm1aMCWKw5E1PfhQxJdrHExLSGWH+AE
-         XwZraC8hYZ0c/xoPCXATEL/0esYUHjdfvHGfSQiPWZfBZti+ClBzCfj/h0XHSuHBdC5Y
-         eV1TSIWeAURYFdtjrCIzqN8VfcZjb/DyfJSbb0Vx1DDfi3KVKEzDXXuWvv+V7YhMHhu5
-         UVrP13S4HgOvicqkO8ZRXDhGw+90Ixa1C8qwZbCr8pqg3RenDfgejqg1O178CvxeXrBR
-         CdgsydtQW9jKbA4n7GTRYX8qGCsCFImX8ZJBMFlM1Lql+t9fN4i60nTMqfl25LU8URQQ
-         XNDw==
+        d=ffwll.ch; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2S+J1iMBr46oe55nECdK26SAa6W64ZtOEh/PbByniAU=;
+        b=AZMhWxuad20lIxfAUULABl3yIgEcHVNdTApiGdmGv/ZRoE4CsXXL4K3vxKFM9e+0Uf
+         ITQwbHIx4eLw8MSlJ5Zh/OwdaUiheDOSJQ50J5aNPCuK8JJKz0X4vMtEcUMIKn1LW3uH
+         s+VyaVx9nlc47fG3YPUl7sJxh5+1n2b312Ivw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kFZg5Lk0YUDHQefo64cd18AIqjQKEsxBGKbtInmBwT4=;
-        b=S8QXyA7p38pmO+sAEEyW5pDEz6up1/FDc2KVXZD+vVEWAyeFIMuD8Re3icMBhhSjEg
-         6Mu0GsGcl6AG8CFPUAaXZFRajrjammwu35vlYPt67wo3wDJGT5biJwdAJzJEUrP9LCRe
-         cgEEr7yUms0HMjeZ1GQBtVtcwY9e/tyAluLsAkKthfuf4KxGs0Ob0dwn6ITLnaJGp+2A
-         3vIrbinj3OJRe2Q6tPJK3ZGe6wGP9YZZNYgzK9lxHb7MUpfH+PVVQRPCmJXyqYFX569e
-         QOx88opWdMmhFGyhevVRsM3zeabSBj15Xw2enf9Ndsa1MMZR9No4x+rk6dMDtGbo/B7g
-         dOkA==
-X-Gm-Message-State: ACrzQf3DO2EP1m2jLfIe88AT3fUw0B0uHzCkpYv577yIgFTLK5p+y/S2
-        0880ESKYVQwutlwxBKsz40MmxQ==
-X-Google-Smtp-Source: AMsMyM6pqepF0MaRpJkl0gk5rhLC0+DZ4vWqAKGf71C706I0FaUBy55Tsir8RAQCIDCtqQm1P5ZHWg==
-X-Received: by 2002:a2e:b529:0:b0:26c:6dce:ce59 with SMTP id z9-20020a2eb529000000b0026c6dcece59mr8208846ljm.130.1668001840272;
-        Wed, 09 Nov 2022 05:50:40 -0800 (PST)
-Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
-        by smtp.gmail.com with ESMTPSA id v26-20020ac258fa000000b00498f871f33fsm2233540lfo.86.2022.11.09.05.50.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Nov 2022 05:50:39 -0800 (PST)
-Message-ID: <dfbb5a16-04f8-ab50-d54b-f92117d0eb0e@linaro.org>
-Date:   Wed, 9 Nov 2022 14:50:38 +0100
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2S+J1iMBr46oe55nECdK26SAa6W64ZtOEh/PbByniAU=;
+        b=yG0uGaMHe676qr9/Df2QtIEywcBkUJJ3dWACxBrFF6+xQt8RIh1sdMlaUZ0pQs4TCZ
+         B7ZaknDqfuAX0/6r96VUkV0ETWNV5MpPen3G5N8zSFp9mwGZ2HD05cbd5aW4DiYhBjay
+         K8Lciw6yWI0o2Lu8wadd10wWaTjMQ2eOBATR4doVG0I8qZv1yncXJ/solNFxbuAcBtYB
+         0NKENWm0mdZZH0WlIsWWkpSMeiPLTK331i5GSjLeddK1uw7tdyP19cSC9UXJ83Vbg6EK
+         k9adySU59v8wtDayQRLiXgGkPujfvLynpFaEHUli5lniiXa6RpKcRo98GP0KFUQ3VuS5
+         Reqg==
+X-Gm-Message-State: ACrzQf1Km2SByTrGGHkDiyiYOJ002roV1sN1/D3+VOep/0tq06U67qfg
+        LXK/NbmnLH0+RHPFPo8ZToPrRw==
+X-Google-Smtp-Source: AMsMyM5cM+yUjAcRBZ6MzVFWPzKG388UhMKyFKh3eL7E58JSyMRacGE4fimWfsAwbnzEawMVN42zNw==
+X-Received: by 2002:a17:907:7639:b0:79f:d1dd:2f86 with SMTP id jy25-20020a170907763900b0079fd1dd2f86mr57825602ejc.586.1668001941057;
+        Wed, 09 Nov 2022 05:52:21 -0800 (PST)
+Received: from phenom.ffwll.local (212-51-149-33.fiber7.init7.net. [212.51.149.33])
+        by smtp.gmail.com with ESMTPSA id q9-20020a170906360900b00795bb7d64d8sm5937137ejb.217.2022.11.09.05.52.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Nov 2022 05:52:19 -0800 (PST)
+Date:   Wed, 9 Nov 2022 14:52:12 +0100
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Simon Ser <contact@emersion.fr>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        seanpaul@chromium.org, swboyd@chromium.org,
+        quic_abhinavk@quicinc.com, daniel.vetter@ffwll.ch,
+        laurent.pinchart@ideasonboard.com
+Subject: Re: [RFC PATCH 1/3] drm: Introduce color fill properties for drm
+ plane
+Message-ID: <Y2uwjKCN4KGzm3aN@phenom.ffwll.local>
+References: <20221028225952.160-1-quic_jesszhan@quicinc.com>
+ <20221028225952.160-2-quic_jesszhan@quicinc.com>
+ <eddf4726-3d7e-601a-51ac-03adb2dd822b@linaro.org>
+ <fqY-wVvRxd553E0flH80_NaZMpmiVTIdhvu6F31qM9T4yQ0L5fbT9JiixWIhDcDAt3Hxy1roQxwntvgVEnqm5WK6dzEIKqXnlLRcywGhYH4=@emersion.fr>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 1/2] dt-bindings: regulator: qcom,smd: Document PMR735a
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20221109110846.45789-1-konrad.dybcio@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221109110846.45789-1-konrad.dybcio@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fqY-wVvRxd553E0flH80_NaZMpmiVTIdhvu6F31qM9T4yQ0L5fbT9JiixWIhDcDAt3Hxy1roQxwntvgVEnqm5WK6dzEIKqXnlLRcywGhYH4=@emersion.fr>
+X-Operating-System: Linux phenom 5.19.0-2-amd64 
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/11/2022 12:08, Konrad Dybcio wrote:
-> PMR735a also appears to be bundled with some SMD RPM SoCs.
-> Document it.
+On Tue, Nov 08, 2022 at 06:25:29PM +0000, Simon Ser wrote:
+> On Saturday, October 29th, 2022 at 13:23, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
+> > On 29/10/2022 01:59, Jessica Zhang wrote:
+> > 
+> > > Add support for COLOR_FILL and COLOR_FILL_FORMAT properties for
+> > > drm_plane. In addition, add support for setting and getting the values
+> > > of these properties.
+> > > 
+> > > COLOR_FILL represents the color fill of a plane while COLOR_FILL_FORMAT
+> > > represents the format of the color fill. Userspace can set enable solid
+> > > fill on a plane by assigning COLOR_FILL to a uint64_t value, assigning
+> > > the COLOR_FILL_FORMAT property to a uint32_t value, and setting the
+> > > framebuffer to NULL.
+> > 
+> > I suppose that COLOR_FILL should override framebuffer rather than
+> > requiring that FB is set to NULL. In other words, if color_filL_format
+> > is non-zero, it would make sense to ignore the FB. Then one can use the
+> > color_fill_format property to quickly switch between filled plane and
+> > FB-backed one.
+> 
+> That would be inconsistent with the rest of the KMS uAPI. For instance,
+> the kernel will error out if CRTC has active=0 but a connector is still
+> linked to the CRTC. IOW, the current uAPI errors out if the KMS state
+> is inconsistent.
 
+So if the use-case here really is to solid-fill a plane (and not just
+provide a background color for the crtc overall), then I guess we could
+also extend addfb to make that happen. We've talked in the past about
+propertery-fying framebuffer objects, and that would sort out this uapi
+wart. And I agree the color fill vs PLANE_ID issue is a bit ugly at least.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+But if the use-cases are all background color then just doing the crtc
+background color would be tons simpler (and likely also easier to support
+for more hardware).
+-Daniel
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
