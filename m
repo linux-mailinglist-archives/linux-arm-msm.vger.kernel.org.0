@@ -2,418 +2,357 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E3F6622A9F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 12:33:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C5922622B28
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 13:14:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229560AbiKILdp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Nov 2022 06:33:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51890 "EHLO
+        id S229629AbiKIMOx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Nov 2022 07:14:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229509AbiKILdp (ORCPT
+        with ESMTP id S229509AbiKIMOw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Nov 2022 06:33:45 -0500
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED84F12D0F
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Nov 2022 03:33:40 -0800 (PST)
-Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id BC0D540180;
-        Wed,  9 Nov 2022 12:33:36 +0100 (CET)
-Date:   Wed, 9 Nov 2022 12:33:34 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,msm8976: convert to dtschema
-Message-ID: <20221109113334.u2jhlwqgpfubfg5w@SoMainline.org>
-References: <20221108140909.51422-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221108140909.51422-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Wed, 9 Nov 2022 07:14:52 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4603213F02;
+        Wed,  9 Nov 2022 04:14:51 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A9Aw7rR030982;
+        Wed, 9 Nov 2022 12:14:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=C5OOgI1LjpktKDvlDPjeZWN/9tRwltUt4Apw39MxR68=;
+ b=YFiZ+ogLFBO8v2aWXcm7EACJCzUJ2778NxE44Ht6ye6yc0lLvVWS3Uh74UzjLTv9BZTC
+ zdSkLgisSdWb/5d6PUnGP/L4EZ8N7vP58gudfTrw04adbIwu4Y+UI5CHQqxaTLP0rdEz
+ brYi1U/mD3EbUvj8F3dI+9cay5FuFBpMthv6eivt9IIUdnNZSOnQQreuOXLzsyfrnFh8
+ 80z60g8MgyP6iNdMwsu0Az/4BmrsF57ElQVTFjg9/mSBnVZau/2iMuNj6EM9aKVw0FSy
+ KjJvRi1iCvUivrDmrDBONCtDjEIB5SpT8mZtCMdNJqGeZvYamNU4taWdiUwCqmnRfHFI Nw== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kr68m10e0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 09 Nov 2022 12:14:48 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2A9CEiA7004804;
+        Wed, 9 Nov 2022 12:14:44 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3kngwkn0n1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 09 Nov 2022 12:14:44 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2A9CEiQL004798;
+        Wed, 9 Nov 2022 12:14:44 GMT
+Received: from kalyant-linux.qualcomm.com (kalyant-linux.qualcomm.com [10.204.66.210])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 2A9CEhN0004797;
+        Wed, 09 Nov 2022 12:14:44 +0000
+Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
+        id D33614887; Wed,  9 Nov 2022 04:14:42 -0800 (PST)
+From:   Kalyan Thota <quic_kalyant@quicinc.com>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Kalyan Thota <quic_kalyant@quicinc.com>,
+        linux-kernel@vger.kernel.org, robdclark@chromium.org,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_vpolimer@quicinc.com, dmitry.baryshkov@linaro.org,
+        quic_abhinavk@quicinc.com
+Subject: [v8] drm/msm/disp/dpu1: add support for dspp sub block flush in sc7280
+Date:   Wed,  9 Nov 2022 04:14:40 -0800
+Message-Id: <1667996080-23870-1-git-send-email-quic_kalyant@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: V696zhe61KZx-kvWgX4Q_hen59hLNhzV
+X-Proofpoint-ORIG-GUID: V696zhe61KZx-kvWgX4Q_hen59hLNhzV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-09_05,2022-11-09_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 bulkscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0
+ mlxscore=0 impostorscore=0 clxscore=1011 mlxlogscore=999 adultscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211090094
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-11-08 15:09:09, Krzysztof Kozlowski wrote:
-> Convert Qualcomm MSM8976 pin controller bindings to DT schema.  Keep the
-> parsing of pin configuration subnodes consistent with other Qualcomm
-> schemas (children named with '-state' suffix, their children with
-> '-pins').
-> 
-> Changes during conversion: update the list of non-mux pins (like sdc1)
-> to match Linux driver.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Flush mechanism for DSPP blocks has changed in sc7280 family, it
+allows individual sub blocks to be flushed in coordination with
+master flush control.
 
-Thanks for sending this right as we are upstreaming MSM8976!  With one
-question and one nit below:
+Representation: master_flush && (PCC_flush | IGC_flush .. etc )
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+This change adds necessary support for the above design.
 
-> ---
->  .../bindings/pinctrl/qcom,msm8976-pinctrl.txt | 183 ------------------
->  .../pinctrl/qcom,msm8976-pinctrl.yaml         | 137 +++++++++++++
->  2 files changed, 137 insertions(+), 183 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt
-> deleted file mode 100644
-> index 70d04d12f136..000000000000
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.txt
-> +++ /dev/null
-> @@ -1,183 +0,0 @@
-> -Qualcomm MSM8976 TLMM block
-> -
-> -This binding describes the Top Level Mode Multiplexer block found in the
-> -MSM8956 and MSM8976 platforms.
-> -
-> -- compatible:
-> -	Usage: required
-> -	Value type: <string>
-> -	Definition: must be "qcom,msm8976-pinctrl"
-> -
-> -- reg:
-> -	Usage: required
-> -	Value type: <prop-encoded-array>
-> -	Definition: the base address and size of the TLMM register space.
-> -
-> -- interrupts:
-> -	Usage: required
-> -	Value type: <prop-encoded-array>
-> -	Definition: should specify the TLMM summary IRQ.
-> -
-> -- interrupt-controller:
-> -	Usage: required
-> -	Value type: <none>
-> -	Definition: identifies this node as an interrupt controller
-> -
-> -- #interrupt-cells:
-> -	Usage: required
-> -	Value type: <u32>
-> -	Definition: must be 2. Specifying the pin number and flags, as defined
-> -		    in <dt-bindings/interrupt-controller/irq.h>
-> -
-> -- gpio-controller:
-> -	Usage: required
-> -	Value type: <none>
-> -	Definition: identifies this node as a gpio controller
-> -
-> -- #gpio-cells:
-> -	Usage: required
-> -	Value type: <u32>
-> -	Definition: must be 2. Specifying the pin number and flags, as defined
-> -		    in <dt-bindings/gpio/gpio.h>
-> -
-> -- gpio-ranges:
-> -	Usage: required
-> -	Definition:  see ../gpio/gpio.txt
-> -
-> -- gpio-reserved-ranges:
-> -	Usage: optional
-> -	Definition: see ../gpio/gpio.txt
-> -
-> -Please refer to ../gpio/gpio.txt and ../interrupt-controller/interrupts.txt for
-> -a general description of GPIO and interrupt bindings.
-> -
-> -Please refer to pinctrl-bindings.txt in this directory for details of the
-> -common pinctrl bindings used by client devices, including the meaning of the
-> -phrase "pin configuration node".
-> -
-> -The pin configuration nodes act as a container for an arbitrary number of
-> -subnodes. Each of these subnodes represents some desired configuration for a
-> -pin, a group, or a list of pins or groups. This configuration can include the
-> -mux function to select on those pin(s)/group(s), and various pin configuration
-> -parameters, such as pull-up, drive strength, etc.
-> -
-> -
-> -PIN CONFIGURATION NODES:
-> -
-> -The name of each subnode is not important; all subnodes should be enumerated
-> -and processed purely based on their content.
-> -
-> -Each subnode only affects those parameters that are explicitly listed. In
-> -other words, a subnode that lists a mux function but no pin configuration
-> -parameters implies no information about any pin configuration parameters.
-> -Similarly, a pin subnode that describes a pullup parameter implies no
-> -information about e.g. the mux function.
-> -
-> -
-> -The following generic properties as defined in pinctrl-bindings.txt are valid
-> -to specify in a pin configuration subnode:
-> -
-> -- pins:
-> -	Usage: required
-> -	Value type: <string-array>
-> -	Definition: List of gpio pins affected by the properties specified in
-> -		    this subnode.
-> -
-> -		    Valid pins are:
-> -		      gpio0-gpio145
-> -		        Supports mux, bias and drive-strength
-> -
-> -		      sdc1_clk, sdc1_cmd, sdc1_data,
-> -		      sdc2_clk, sdc2_cmd, sdc2_data,
-> -		      sdc3_clk, sdc3_cmd, sdc3_data
-> -		        Supports bias and drive-strength
-> -
-> -- function:
-> -	Usage: required
-> -	Value type: <string>
-> -	Definition: Specify the alternative function to be configured for the
-> -		    specified pins. Functions are only valid for gpio pins.
-> -		    Valid values are:
-> -
-> -		    gpio, blsp_uart1, blsp_spi1, smb_int, blsp_i2c1, blsp_spi2,
-> -		    blsp_uart2, blsp_i2c2, gcc_gp1_clk_b, blsp_spi3,
-> -		    qdss_tracedata_b, blsp_i2c3, gcc_gp2_clk_b, gcc_gp3_clk_b,
-> -		    blsp_spi4, cap_int, blsp_i2c4, blsp_spi5, blsp_uart5,
-> -		    qdss_traceclk_a, m_voc, blsp_i2c5, qdss_tracectl_a,
-> -		    qdss_tracedata_a, blsp_spi6, blsp_uart6, qdss_tracectl_b,
-> -		    blsp_i2c6, qdss_traceclk_b, mdp_vsync, pri_mi2s_mclk_a,
-> -		    sec_mi2s_mclk_a, cam_mclk, cci0_i2c, cci1_i2c, blsp1_spi,
-> -		    blsp3_spi, gcc_gp1_clk_a, gcc_gp2_clk_a, gcc_gp3_clk_a,
-> -		    uim_batt, sd_write, uim1_data, uim1_clk, uim1_reset,
-> -		    uim1_present, uim2_data, uim2_clk, uim2_reset,
-> -		    uim2_present, ts_xvdd, mipi_dsi0, us_euro, ts_resout,
-> -		    ts_sample, sec_mi2s_mclk_b, pri_mi2s, codec_reset,
-> -		    cdc_pdm0, us_emitter, pri_mi2s_mclk_b, pri_mi2s_mclk_c,
-> -		    lpass_slimbus, lpass_slimbus0, lpass_slimbus1, codec_int1,
-> -		    codec_int2, wcss_bt, sdc3, wcss_wlan2, wcss_wlan1,
-> -		    wcss_wlan0, wcss_wlan, wcss_fm, key_volp, key_snapshot,
-> -		    key_focus, key_home, pwr_down, dmic0_clk, hdmi_int,
-> -		    dmic0_data, wsa_vi, wsa_en, blsp_spi8, wsa_irq, blsp_i2c8,
-> -		    pa_indicator, modem_tsync, ssbi_wtr1, gsm1_tx, gsm0_tx,
-> -		    sdcard_det, sec_mi2s, ss_switch,
-> -
-> -- bias-disable:
-> -	Usage: optional
-> -	Value type: <none>
-> -	Definition: The specified pins should be configured as no pull.
-> -
-> -- bias-pull-down:
-> -	Usage: optional
-> -	Value type: <none>
-> -	Definition: The specified pins should be configured as pull down.
-> -
-> -- bias-pull-up:
-> -	Usage: optional
-> -	Value type: <none>
-> -	Definition: The specified pins should be configured as pull up.
-> -
-> -- output-high:
-> -	Usage: optional
-> -	Value type: <none>
-> -	Definition: The specified pins are configured in output mode, driven
-> -		    high.
-> -		    Not valid for sdc pins.
-> -
-> -- output-low:
-> -	Usage: optional
-> -	Value type: <none>
-> -	Definition: The specified pins are configured in output mode, driven
-> -		    low.
-> -		    Not valid for sdc pins.
-> -
-> -- drive-strength:
-> -	Usage: optional
-> -	Value type: <u32>
-> -	Definition: Selects the drive strength for the specified pins, in mA.
-> -		    Valid values are: 2, 4, 6, 8, 10, 12, 14 and 16
-> -
-> -Example:
-> -
-> -	tlmm: pinctrl@1000000 {
-> -		compatible = "qcom,msm8976-pinctrl";
-> -		reg = <0x1000000 0x300000>;
-> -		interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> -		gpio-controller;
-> -		#gpio-cells = <2>;
-> -		gpio-ranges = <&tlmm 0 0 145>;
-> -		interrupt-controller;
-> -		#interrupt-cells = <2>;
-> -
-> -		blsp1_uart2_active: blsp1_uart2_active {
-> -			mux {
-> -				pins = "gpio4", "gpio5", "gpio6", "gpio7";
-> -				function = "blsp_uart2";
-> -			};
-> -
-> -			config {
-> -				pins = "gpio4", "gpio5", "gpio6", "gpio7";
-> -				drive-strength = <2>;
-> -				bias-disable;
-> -			};
-> -		};
-> -	};
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.yaml
-> new file mode 100644
-> index 000000000000..1002a57248f6
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,msm8976-pinctrl.yaml
-> @@ -0,0 +1,137 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pinctrl/qcom,msm8976-pinctrl.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm MSM8976 TLMM pin controller
-> +
-> +maintainers:
-> +  - Bjorn Andersson <andersson@kernel.org>
-> +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> +
-> +description:
-> +  Top Level Mode Multiplexer pin controller in Qualcomm MSM8976 SoC.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,msm8976-pinctrl
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts: true
-> +  interrupt-controller: true
-> +  "#interrupt-cells": true
-> +  gpio-controller: true
-> +  "#gpio-cells": true
-> +  gpio-ranges: true
-> +  wakeup-parent: true
-> +
-> +  gpio-reserved-ranges:
-> +    minItems: 1
-> +    maxItems: 73
-> +
-> +  gpio-line-names:
-> +    maxItems: 145
-> +
-> +patternProperties:
-> +  "-state$":
-> +    oneOf:
-> +      - $ref: "#/$defs/qcom-msm8976-tlmm-state"
-> +      - patternProperties:
-> +          "-pins$":
-> +            $ref: "#/$defs/qcom-msm8976-tlmm-state"
-> +        additionalProperties: false
-> +
-> +$defs:
-> +  qcom-msm8976-tlmm-state:
-> +    type: object
-> +    description:
-> +      Pinctrl node's client devices use subnodes for desired pin configuration.
-> +      Client device subnodes use below standard properties.
-> +    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
-> +
-> +    properties:
-> +      pins:
-> +        description:
-> +          List of gpio pins affected by the properties specified in this
-> +          subnode.
+Changes in v1:
+- Few nits (Doug, Dmitry)
+- Restrict sub-block flush programming to dpu_hw_ctl file (Dmitry)
 
-I thought I read earlier that the description shouldn't describe the DT
-format: should this be `state` instead of `subnode` (same in the
-description above)?
+Changes in v2:
+- Move the address offset to flush macro (Dmitry)
+- Seperate ops for the sub block flush (Dmitry)
 
-> +        items:
-> +          oneOf:
-> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-3][0-9]|14[0-4])$"
-> +            - enum: [ qdsd_clk, qdsd_cmd, qdsd_data0, qdsd_data1, qdsd_data2,
-> +                      qdsd_data3 sdc1_clk, sdc1_cmd, sdc1_data, sdc1_rclk,
-> +                      sdc2_clk, sdc2_cmd, sdc2_data ]
-> +        minItems: 1
-> +        maxItems: 36
-> +
-> +      function:
-> +        description:
-> +          Specify the alternative function to be configured for the specified
-> +          pins.
-> +
-> +        enum: [ gpio, blsp_uart1, blsp_spi1, smb_int, blsp_i2c1, blsp_spi2,
-> +                blsp_uart2, blsp_i2c2, gcc_gp1_clk_b, blsp_spi3,
-> +                qdss_tracedata_b, blsp_i2c3, gcc_gp2_clk_b, gcc_gp3_clk_b,
-> +                blsp_spi4, cap_int, blsp_i2c4, blsp_spi5, blsp_uart5,
-> +                qdss_traceclk_a, m_voc, blsp_i2c5, qdss_tracectl_a,
-> +                qdss_tracedata_a, blsp_spi6, blsp_uart6, qdss_tracectl_b,
-> +                blsp_i2c6, qdss_traceclk_b, mdp_vsync, pri_mi2s_mclk_a,
-> +                sec_mi2s_mclk_a, cam_mclk, cci0_i2c, cci1_i2c, blsp1_spi,
-> +                blsp3_spi, gcc_gp1_clk_a, gcc_gp2_clk_a, gcc_gp3_clk_a,
-> +                uim_batt, sd_write, uim1_data, uim1_clk, uim1_reset,
-> +                uim1_present, uim2_data, uim2_clk, uim2_reset, uim2_present,
-> +                ts_xvdd, mipi_dsi0, us_euro, ts_resout, ts_sample,
-> +                sec_mi2s_mclk_b, pri_mi2s, codec_reset, cdc_pdm0, us_emitter,
-> +                pri_mi2s_mclk_b, pri_mi2s_mclk_c, lpass_slimbus,
-> +                lpass_slimbus0, lpass_slimbus1, codec_int1, codec_int2,
-> +                wcss_bt, sdc3, wcss_wlan2, wcss_wlan1, wcss_wlan0, wcss_wlan,
-> +                wcss_fm, key_volp, key_snapshot, key_focus, key_home, pwr_down,
-> +                dmic0_clk, hdmi_int, dmic0_data, wsa_vi, wsa_en, blsp_spi8,
-> +                wsa_irq, blsp_i2c8, pa_indicator, modem_tsync, ssbi_wtr1,
-> +                gsm1_tx, gsm0_tx, sdcard_det, sec_mi2s, ss_switch ]
-> +
-> +      bias-pull-down: true
-> +      bias-pull-up: true
-> +      bias-disable: true
-> +      drive-strength: true
-> +      input-enable: true
-> +      output-high: true
-> +      output-low: true
-> +
-> +    required:
-> +      - pins
-> +
-> +    additionalProperties: false
-> +
-> +allOf:
-> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +
-> +    tlmm: pinctrl@1000000 {
-> +        compatible = "qcom,msm8976-pinctrl";
-> +        reg = <0x1000000 0x300000>;
-> +        interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> +        gpio-controller;
-> +        #gpio-cells = <2>;
-> +        gpio-ranges = <&tlmm 0 0 145>;
+Changes in v3:
+- Reuse the DPU_DSPP_xx enum instead of a new one (Dmitry)
 
-Shouldn't this be alphabetical (disregarding `#`), where cells <
-controller? (same for interrupt-controller below)
+Changes in v4:
+- Use shorter version for unsigned int (Stephen)
 
-- Marijn
+Changes in v5:
+- Spurious patch please ignore.
 
-> +        interrupt-controller;
-> +        #interrupt-cells = <2>;
-> +
-> +        blsp1-uart2-active-state {
-> +            pins = "gpio4", "gpio5", "gpio6", "gpio7";
-> +            function = "blsp_uart2";
-> +            drive-strength = <2>;
-> +            bias-disable;
-> +        };
-> +    };
-> -- 
-> 2.34.1
-> 
+Changes in v6:
+- Add SOB tag (Doug, Dmitry)
+
+Changes in v7:
+- Cache flush mask per dspp (Dmitry)
+- Few nits (Marijn)
+
+Changes in v8:
+- Few nits (Marijn)
+
+Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c       |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  5 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 12 +++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c     | 66 +++++++++++++++++++++-----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h     |  7 ++-
+ 5 files changed, 72 insertions(+), 20 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index 601d687..4170fbe 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -766,7 +766,7 @@ static void _dpu_crtc_setup_cp_blocks(struct drm_crtc *crtc)
+ 
+ 		/* stage config flush mask */
+ 		ctl->ops.update_pending_flush_dspp(ctl,
+-			mixer[i].hw_dspp->idx);
++			mixer[i].hw_dspp->idx, DPU_DSPP_PCC);
+ 	}
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 27f029f..0eecb2f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -65,7 +65,10 @@
+ 	(PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE2))
+ 
+ #define CTL_SC7280_MASK \
+-	(BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE) | BIT(DPU_CTL_VM_CFG))
++	(BIT(DPU_CTL_ACTIVE_CFG) | \
++	 BIT(DPU_CTL_FETCH_ACTIVE) | \
++	 BIT(DPU_CTL_VM_CFG) | \
++	 BIT(DPU_CTL_DSPP_SUB_BLOCK_FLUSH))
+ 
+ #define MERGE_3D_SM8150_MASK (0)
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+index 38aa38a..35f4810 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -161,10 +161,12 @@ enum {
+  * DSPP sub-blocks
+  * @DPU_DSPP_PCC             Panel color correction block
+  * @DPU_DSPP_GC              Gamma correction block
++ * @DPU_DSPP_IGC             Inverse gamma correction block
+  */
+ enum {
+ 	DPU_DSPP_PCC = 0x1,
+ 	DPU_DSPP_GC,
++	DPU_DSPP_IGC,
+ 	DPU_DSPP_MAX
+ };
+ 
+@@ -188,16 +190,18 @@ enum {
+ 
+ /**
+  * CTL sub-blocks
+- * @DPU_CTL_SPLIT_DISPLAY:	CTL supports video mode split display
+- * @DPU_CTL_FETCH_ACTIVE:	Active CTL for fetch HW (SSPPs)
+- * @DPU_CTL_VM_CFG:		CTL config to support multiple VMs
+- * @DPU_CTL_MAX
++ * @DPU_CTL_SPLIT_DISPLAY     CTL supports video mode split display
++ * @DPU_CTL_FETCH_ACTIVE      Active CTL for fetch HW (SSPPs)
++ * @DPU_CTL_VM_CFG            CTL config to support multiple VMs
++ * @DPU_CTL_DSPP_BLOCK_FLUSH  CTL config to support dspp sub-block flush
++ * @DPU_CTL_MAX               Maximum value
+  */
+ enum {
+ 	DPU_CTL_SPLIT_DISPLAY = 0x1,
+ 	DPU_CTL_ACTIVE_CFG,
+ 	DPU_CTL_FETCH_ACTIVE,
+ 	DPU_CTL_VM_CFG,
++	DPU_CTL_DSPP_SUB_BLOCK_FLUSH,
+ 	DPU_CTL_MAX
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+index a35ecb6..29821ea 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+@@ -28,22 +28,23 @@
+ #define   CTL_INTF_ACTIVE               0x0F4
+ #define   CTL_MERGE_3D_FLUSH            0x100
+ #define   CTL_DSC_ACTIVE                0x0E8
+-#define   CTL_DSC_FLUSH                0x104
++#define   CTL_DSC_FLUSH                 0x104
+ #define   CTL_WB_FLUSH                  0x108
+ #define   CTL_INTF_FLUSH                0x110
+ #define   CTL_INTF_MASTER               0x134
+ #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
++#define   CTL_DSPP_n_FLUSH(n)           ((0x13C) + ((n) * 4))
+ 
+-#define CTL_MIXER_BORDER_OUT            BIT(24)
+-#define CTL_FLUSH_MASK_CTL              BIT(17)
++#define   CTL_MIXER_BORDER_OUT          BIT(24)
++#define   CTL_FLUSH_MASK_CTL            BIT(17)
+ 
+-#define DPU_REG_RESET_TIMEOUT_US        2000
+-#define  MERGE_3D_IDX   23
+-#define  DSC_IDX        22
+-#define  INTF_IDX       31
+-#define WB_IDX          16
+-#define CTL_INVALID_BIT                 0xffff
+-#define CTL_DEFAULT_GROUP_ID		0xf
++#define   DPU_REG_RESET_TIMEOUT_US      2000
++#define   MERGE_3D_IDX                  23
++#define   DSC_IDX                       22
++#define   INTF_IDX                      31
++#define   WB_IDX                        16
++#define   CTL_INVALID_BIT               0xffff
++#define   CTL_DEFAULT_GROUP_ID          0xf
+ 
+ static const u32 fetch_tbl[SSPP_MAX] = {CTL_INVALID_BIT, 16, 17, 18, 19,
+ 	CTL_INVALID_BIT, CTL_INVALID_BIT, CTL_INVALID_BIT, CTL_INVALID_BIT, 0,
+@@ -110,9 +111,14 @@ static inline void dpu_hw_ctl_trigger_pending(struct dpu_hw_ctl *ctx)
+ 
+ static inline void dpu_hw_ctl_clear_pending_flush(struct dpu_hw_ctl *ctx)
+ {
++	int i;
++
+ 	trace_dpu_hw_ctl_clear_pending_flush(ctx->pending_flush_mask,
+ 				     dpu_hw_ctl_get_flush_register(ctx));
+ 	ctx->pending_flush_mask = 0x0;
++
++	for(i = 0; i < ARRAY_SIZE(ctx->pending_dspp_flush_mask); i++)
++		ctx->pending_dspp_flush_mask[i] = 0x0;
+ }
+ 
+ static inline void dpu_hw_ctl_update_pending_flush(struct dpu_hw_ctl *ctx,
+@@ -130,6 +136,8 @@ static u32 dpu_hw_ctl_get_pending_flush(struct dpu_hw_ctl *ctx)
+ 
+ static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
+ {
++	int i;
++
+ 	if (ctx->pending_flush_mask & BIT(MERGE_3D_IDX))
+ 		DPU_REG_WRITE(&ctx->hw, CTL_MERGE_3D_FLUSH,
+ 				ctx->pending_merge_3d_flush_mask);
+@@ -140,6 +148,11 @@ static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
+ 		DPU_REG_WRITE(&ctx->hw, CTL_WB_FLUSH,
+ 				ctx->pending_wb_flush_mask);
+ 
++	for(i = 0; i < ARRAY_SIZE(ctx->pending_dspp_flush_mask); i++)
++		if (ctx->pending_dspp_flush_mask[i])
++			DPU_REG_WRITE(&ctx->hw, CTL_DSPP_n_FLUSH(i),
++				ctx->pending_dspp_flush_mask[i]);
++
+ 	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
+ }
+ 
+@@ -287,8 +300,9 @@ static void dpu_hw_ctl_update_pending_flush_merge_3d_v1(struct dpu_hw_ctl *ctx,
+ }
+ 
+ static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl *ctx,
+-	enum dpu_dspp dspp)
++	enum dpu_dspp dspp, u32 dspp_sub_blk)
+ {
++
+ 	switch (dspp) {
+ 	case DSPP_0:
+ 		ctx->pending_flush_mask |= BIT(13);
+@@ -307,6 +321,30 @@ static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl *ctx,
+ 	}
+ }
+ 
++static void dpu_hw_ctl_update_pending_flush_dspp_subblocks(
++	struct dpu_hw_ctl *ctx,	enum dpu_dspp dspp, u32 dspp_sub_blk)
++{
++
++	if (dspp >= DSPP_MAX)
++		return;
++
++	switch (dspp_sub_blk) {
++	case DPU_DSPP_IGC:
++		ctx->pending_dspp_flush_mask[dspp - DSPP_0] |= BIT(2);
++		break;
++	case DPU_DSPP_PCC:
++		ctx->pending_dspp_flush_mask[dspp - DSPP_0] |= BIT(4);
++		break;
++	case DPU_DSPP_GC:
++		ctx->pending_dspp_flush_mask[dspp - DSPP_0] |= BIT(5);
++		break;
++	default:
++		return;
++	}
++
++	ctx->pending_flush_mask |= BIT(29);
++}
++
+ static u32 dpu_hw_ctl_poll_reset_status(struct dpu_hw_ctl *ctx, u32 timeout_us)
+ {
+ 	struct dpu_hw_blk_reg_map *c = &ctx->hw;
+@@ -675,7 +713,11 @@ static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
+ 	ops->setup_blendstage = dpu_hw_ctl_setup_blendstage;
+ 	ops->update_pending_flush_sspp = dpu_hw_ctl_update_pending_flush_sspp;
+ 	ops->update_pending_flush_mixer = dpu_hw_ctl_update_pending_flush_mixer;
+-	ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp;
++	if (cap & BIT(DPU_CTL_DSPP_SUB_BLOCK_FLUSH))
++		ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp_subblocks;
++	else
++		ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp;
++
+ 	if (cap & BIT(DPU_CTL_FETCH_ACTIVE))
+ 		ops->set_active_pipes = dpu_hw_ctl_set_fetch_pipe_active;
+ };
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+index 96c012e..ff4e92c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+@@ -148,13 +148,15 @@ struct dpu_hw_ctl_ops {
+ 		enum dpu_lm blk);
+ 
+ 	/**
+-	 * OR in the given flushbits to the cached pending_flush_mask
++	 * OR in the given flushbits to the cached pending_dspp_flush_mask
+ 	 * No effect on hardware
+ 	 * @ctx       : ctl path ctx pointer
+ 	 * @blk       : DSPP block index
++	 * @dspp_sub_blk : DSPP sub-block index
+ 	 */
+ 	void (*update_pending_flush_dspp)(struct dpu_hw_ctl *ctx,
+-		enum dpu_dspp blk);
++		enum dpu_dspp blk, u32 dspp_sub_blk);
++
+ 	/**
+ 	 * Write the value of the pending_flush_mask to hardware
+ 	 * @ctx       : ctl path ctx pointer
+@@ -242,6 +244,7 @@ struct dpu_hw_ctl {
+ 	u32 pending_intf_flush_mask;
+ 	u32 pending_wb_flush_mask;
+ 	u32 pending_merge_3d_flush_mask;
++	u32 pending_dspp_flush_mask[DSPP_MAX - DSPP_0];
+ 
+ 	/* ops */
+ 	struct dpu_hw_ctl_ops ops;
+-- 
+2.7.4
+
