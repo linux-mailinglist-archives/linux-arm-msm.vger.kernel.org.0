@@ -2,48 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 76C7A62353F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 22:00:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D89A62354B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 22:01:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232058AbiKIVAW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Nov 2022 16:00:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56162 "EHLO
+        id S231824AbiKIVBK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Nov 2022 16:01:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232077AbiKIVAA (ORCPT
+        with ESMTP id S230512AbiKIVA5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Nov 2022 16:00:00 -0500
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 143774C24A;
-        Wed,  9 Nov 2022 12:57:20 -0800 (PST)
-Received: by mail-pl1-f174.google.com with SMTP id c2so18209166plz.11;
-        Wed, 09 Nov 2022 12:57:20 -0800 (PST)
+        Wed, 9 Nov 2022 16:00:57 -0500
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD5CD317DA;
+        Wed,  9 Nov 2022 12:59:53 -0800 (PST)
+Received: by mail-pg1-f179.google.com with SMTP id 78so17219813pgb.13;
+        Wed, 09 Nov 2022 12:59:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uD0GBYBsoiz/gWYARSVIf2ZmCuLIn6//Vw6TLDyyaDk=;
-        b=Vhftjzmfu0SwLsWMSWiAsWr7oVd9GDkoEvhUSY+LdAbvxs7rWAL+3Y29c3egfF9cti
-         qmmleqrPaV8fyvfGhbZpR1I3IaoYMH/j8HRQcJz71LtkQOTZgVtYDs+BmbAeF4uqDMXz
-         g7yG0skx2FTge0wbhYaS5MMFezv+E11qS/K6faJsQ3j+K5T9mBfOy8Ak2NyHIvXScSlM
-         TO6wOvQIgWrfwfir8zw7IXYDeJHVFyEOSn4SjD8lx0d5jRmCitoAtbKuW3eBpQeVHkha
-         KcSTDpyuigKJep2oLawcVOG4kHM5azQVrkPb9G3wUahUxrnItBIWzONjdik8yKBPlf7l
-         y0DQ==
-X-Gm-Message-State: ACrzQf2ovskXeqTz6rBtmvHIPxkuebuccBbSnSCZr/j0KcJj74Cnc4rL
-        ++3Ls5726I7fkJvVK102E/c=
-X-Google-Smtp-Source: AMsMyM6p5H47cPIfuFBoHxSrzEpBlvA/rTkDEywkBb3sGm2Kl+Ps8iLYUi4EJ4PlEY27+/wEAy0czg==
-X-Received: by 2002:a17:90a:db09:b0:212:ec36:4d04 with SMTP id g9-20020a17090adb0900b00212ec364d04mr1243701pjv.158.1668027417839;
-        Wed, 09 Nov 2022 12:56:57 -0800 (PST)
+        bh=VHNdxjB2vbkPuh8ywKXBoD9bI2A/2MU0vQL/ydHZo+4=;
+        b=PlNGhFg8DG8XBuJikCLyzpRTrTkLGNaeU3NJ4up2LhTqNrs1kWjSa+MBsyu3XK1zoj
+         nbA7DA5vSxCm/0QwMNW/EWGOVkxzMIrBMSsx6rxJYjV5gZh429URQBDbUw5q8Tm1rWUV
+         EcKK51Yk/Vr4fXvvaSQnu4HdT7YvKW1FaHM5yTiv9y2XFfVMdWqNu32psgwMldKB3DRj
+         fb2BwAXOz38YtsOi9Pvfp8EIeOckWhWLh8g/f5j52ZNptR+GhyLY9OMyHWBpxrryVc5j
+         f6qF547BspSFddTUMNraXi9MG9aVID3sxFJHj/zYxYOhjBjEMiGd/k2lz/X4MRpfbHhs
+         +36g==
+X-Gm-Message-State: ACrzQf1Twyapji/mVhBwxoj0vgw68o7uIQYSLRTwm5pksWjX3BDvR2Ba
+        xiuPv4mYBlu5ItUkk1wgdls=
+X-Google-Smtp-Source: AMsMyM62kMPNoyJDZgwdKKsxEk4j1aMpr65AK0xZCww1ROwtLXDwkgW6kIMV+m6QN1ONTXR2WuG7bA==
+X-Received: by 2002:aa7:988b:0:b0:56e:6d41:b167 with SMTP id r11-20020aa7988b000000b0056e6d41b167mr33632016pfl.70.1668027593139;
+        Wed, 09 Nov 2022 12:59:53 -0800 (PST)
 Received: from ?IPV6:2620:15c:211:201:68b6:5dae:a00c:c3b? ([2620:15c:211:201:68b6:5dae:a00c:c3b])
-        by smtp.gmail.com with ESMTPSA id q32-20020a17090a4fa300b0020ad86f4c54sm1682505pjh.16.2022.11.09.12.56.55
+        by smtp.gmail.com with ESMTPSA id q8-20020a635048000000b00460a5c6304dsm7769722pgl.67.2022.11.09.12.59.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Nov 2022 12:56:57 -0800 (PST)
-Message-ID: <310d25c7-1a7b-2770-8f47-9ad21ef12ffd@acm.org>
-Date:   Wed, 9 Nov 2022 12:56:54 -0800
+        Wed, 09 Nov 2022 12:59:52 -0800 (PST)
+Message-ID: <c1acceb1-8824-1d2a-8096-76ad5f17312d@acm.org>
+Date:   Wed, 9 Nov 2022 12:59:49 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Subject: Re: [PATCH v4 02/16] ufs: core: Probe for ext_iid support
+Subject: Re: [PATCH v4 03/16] ufs: core: Introduce Multi-circular queue
+ capability
 Content-Language: en-US
 To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_cang@quicinc.com,
         martin.petersen@oracle.com, linux-scsi@vger.kernel.org
@@ -54,12 +55,11 @@ Cc:     quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
         Alim Akhtar <alim.akhtar@samsung.com>,
         "James E.J. Bottomley" <jejb@linux.ibm.com>,
         Jinyoung Choi <j-young.choi@samsung.com>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
         open list <linux-kernel@vger.kernel.org>
 References: <cover.1668022680.git.quic_asutoshd@quicinc.com>
- <94a483673c3c7e03d8897fffd6e6145027979517.1668022680.git.quic_asutoshd@quicinc.com>
+ <aa223196f80538f061cac6245fd690d34f12f4b2.1668022680.git.quic_asutoshd@quicinc.com>
 From:   Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <94a483673c3c7e03d8897fffd6e6145027979517.1668022680.git.quic_asutoshd@quicinc.com>
+In-Reply-To: <aa223196f80538f061cac6245fd690d34f12f4b2.1668022680.git.quic_asutoshd@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
@@ -73,12 +73,18 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 11/9/22 11:41, Asutosh Das wrote:
-> Task Tag is limited to 8 bits and this restricts the number
-> of active IOs to 255.
-> In Multi-circular queue mode, this may not be enough.
-> The specification provides EXT_IID which can be used to increase
-> the number of IOs if the UFS device and UFSHC support it.
-> This patch adds support to probe for ext_iid support in
-> ufs device and UFSHC.
+> +/* UFSHC 4.0 compliant HC support this mode, refer param_set_mcq_mode() */
+> +static bool mcq_mode = true;
 
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Please rename both the variable and the kernel module parameter 
+"mcq_mode" into "use_mcq_mode".
+
+> +module_param_cb(mcq_mode, &mcq_mode_ops, &mcq_mode, 0644);
+> +MODULE_PARM_DESC(mcq_mode, "Disable MCQ mode for UFSHCI 4.0 controllers");
+
+The description of this parameter is confusing since it suggests that 
+setting this parameter to 1 disables MCQ mode.
+
+Thanks,
+
+Bart.
