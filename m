@@ -2,118 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 29C9F6229C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 12:10:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 12DC06229D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 12:12:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229975AbiKILKr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Nov 2022 06:10:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55734 "EHLO
+        id S229501AbiKILMn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Nov 2022 06:12:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229595AbiKILKq (ORCPT
+        with ESMTP id S229540AbiKILMm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Nov 2022 06:10:46 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A515822B0C
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Nov 2022 03:10:45 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id s12so17073958edd.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Nov 2022 03:10:45 -0800 (PST)
+        Wed, 9 Nov 2022 06:12:42 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DBDF22B3C
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Nov 2022 03:12:41 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id u24so26627738edd.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Nov 2022 03:12:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lwHwOq8FsLNoD2aO9ykMtFctZv91WdYSzGZv2yreSuA=;
-        b=D2migdEODR8Q/QlwooR0P45jANQ3w1cPDCzYnfjrn/MvRoGIv9et4/DHrAzuO08uzu
-         NHDdb4QTtHVW/VVU/1adZe7IopgsLtms+1K1aTJiG3QmIkoz/g04fS4WJud7fpo65M9+
-         zY+kk5fouVvJC7AHJrd1TVnYKp9A9/YFRmVGu/kYtpEjcVw87QDx6VRCjygfN+847awZ
-         E6PPRTqvQ/jmTjxJcT9y5um7zDbnr47l/1ARSFMhK9IAcxs0lOHFhdL71PsVLp+g8Wxb
-         BS8xOvAQCWfBc1RyX0hsDdzmQzlqAYByh2qcg/XmCi78t5vJ6OaPnIBURSb3PcKSmRy+
-         2ZQw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=l6oOl8d8AonHh+s2dAI8VnJgTk/i9weLsO8qn9kf1Oo=;
+        b=bWWVhwAdt3fTWRn7iXz9q+vxjV7aSPMV5ya2kke6QF/sAG7tooxdlhurRK9Vnwb1nv
+         MEjvDjZJgG54w+IdJ7Ar/Q9stEd0BRKAY7AkPolx1XYWaAiyXkIv8DeGcltcc42ck5Hi
+         Hxu1aVM5RZdmhxcq9a3ItJvsU5IzfCnyI37KwnlTv2r1MkxfxDWhmtkGTDudBSTDR6lv
+         rZfUu8dfSSySM2zGOB3Tr+pWYb4wXsKZ5QHphwIgVmTca+F2ABRzvELEdu/dT7hU0xTv
+         JLJtQeWMSV8Loi28CZPphDhFPRnDI44JMghZEag4fA4SCiZBrwE8PPYHD7h9vQ8tALe9
+         LKGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=lwHwOq8FsLNoD2aO9ykMtFctZv91WdYSzGZv2yreSuA=;
-        b=bM58jfJaIjf+QLMv5ddn9R3sY+SFtN4hXLpHiv8tBoSlhw+0wW/Agbg70Hmsdq14Yd
-         gdFOL93fDBIK16VXNE9wWNHTFufipHQgrQHZwBXMHw9TPEQ13zjCi3VNhInxz0K516qE
-         V2kIsYpj48eBfIzo43CIDaJ3CBItO8lPon2ntu0Bmnh0m61icq6M6oxe9v6p5nffQrLl
-         i6Ff0MvCOT4MAqQnxCVJNO9JYJ8Kfg9CXZkCJ1FH/wRGQAez7plenCvrQcEofyfQNi5z
-         Pgmi6h9fRly2YxuqRyOGfCZQ+mRb5Rv5SRHsfkx3kKZ6Cw+TcNWWyqTqEJhvzBSdb+Ay
-         vdjg==
-X-Gm-Message-State: ACrzQf3722Nkmt4lCHYCtghKB4o0EvVynZyT3Ks3Te70pEK3rfPqd0+4
-        kbZyOCLdZ9MpJV78YAEa1E7AQP/Vy0DnZtkP
-X-Google-Smtp-Source: AMsMyM4fWcdacnBHb0ersV1OYLbBfhg8lo1BIBwYnIYYdB7EjZXnMher95VyVJqMztr2KgJ8rQLpzw==
-X-Received: by 2002:a05:6402:360d:b0:459:5f40:5b0a with SMTP id el13-20020a056402360d00b004595f405b0amr57750711edb.168.1667992244215;
-        Wed, 09 Nov 2022 03:10:44 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id eq16-20020a056402299000b004610899742asm6720392edb.13.2022.11.09.03.10.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Nov 2022 03:10:43 -0800 (PST)
-Message-ID: <7927fa8f-372d-5c34-2d68-a9533b87c1b0@linaro.org>
-Date:   Wed, 9 Nov 2022 12:10:42 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [RESEND PATCH] dt-bindings: PCI: qcom,pcie-ep: correct
- qcom,perst-regs
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Rob Herring <robh@kernel.org>
-References: <20221109105555.49557-1-krzysztof.kozlowski@linaro.org>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=l6oOl8d8AonHh+s2dAI8VnJgTk/i9weLsO8qn9kf1Oo=;
+        b=myIVMy9YPvjmyGj6eE7Hn5OT4blBGYVwE2hQ/gDZDtpd3BjveDFvphnmPJznz7fYfg
+         9d2hwKP77Jh4fLzhafzQPPACfVc9HPNzqUHbhwg3dJYVBlZpLec/VbpOGjW8j4s1CTok
+         jBYSNegZ0UpTK+9Q9djiZcCFYfJjvGSFi1NWa/KvO8Oq65hlsZ/ssvdzJXh96sjxLyUG
+         igfogzk6WEsPWqwLWiQsKw7XSRbDdnuSYa21Wq5ZiR1+8RnI6f/WBtl9Zk2S1+YjzZW2
+         oliA79wkoSvfsIZUVsSSHnZrD9/aTX5k/eoxmeh3AGqcY8dm0OnTKy8lUV8ZDyV31seL
+         ku7w==
+X-Gm-Message-State: ANoB5plJY4UzlpmhfMV/t6pljuHQW7Ee981uKpJcLLxSJZIgzYsFkDkk
+        00BuwAd74yHGHb/X1a0DAiiHDAoeNPbjiyEG
+X-Google-Smtp-Source: AA0mqf5B/yZdkyk4OezVq8fTNRIKi/2DNaSjRPAiHM+mdHGnnfvMy0Nks6e2LmzIXPwRQuRF6QpChQ==
+X-Received: by 2002:a05:6402:5510:b0:459:5ea:9bc0 with SMTP id fi16-20020a056402551000b0045905ea9bc0mr3572537edb.152.1667992359762;
+        Wed, 09 Nov 2022 03:12:39 -0800 (PST)
+Received: from localhost.localdomain ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id k8-20020a1709062a4800b007ad9c826d75sm5825899eje.61.2022.11.09.03.12.38
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 09 Nov 2022 03:12:39 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221109105555.49557-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 00/10] SM6375/PDX225 GPI DMA, QUPs & PMIC peripherals
+Date:   Wed,  9 Nov 2022 12:12:25 +0100
+Message-Id: <20221109111236.46003-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.32.0 (Apple Git-132)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series adds support for:
 
-On 09/11/2022 11:55, Krzysztof Kozlowski wrote:
-> qcom,perst-regs is an phandle array of one item with a phandle and its
-> arguments.
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Acked-by: Manivannan Sadhasivam <mani@kernel.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> ---
->   Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> index 977c976ea799..5aa590957ee4 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> @@ -47,8 +47,10 @@ properties:
->                    enable registers
->       $ref: "/schemas/types.yaml#/definitions/phandle-array"
->       items:
-> -      minItems: 3
-> -      maxItems: 3
-> +      - items:
-> +          - description: Syscon to TCSR system registers
-> +          - description: Perst enable offset
-> +          - description: Perst separateion enable offset
+- GPI DMA for 6375
+- QUP hosts & I2C / SPI controllers for 6375
+- pinctrl for SOME (check commit message of 05/10) of ^
+- pmk8350 on sid6 (rather sad implementation, check 03/10 commit msg)
+- touchscreen & SMD regulators on PDX225 (depends on [1])
+- pmic peripherals on PDX225
 
-separation?
+As well as some necessary binding changes with it.
 
+Patches 1-8 can be applied right away, 9 and 10 depend on:
 
-Konrad
+[1] https://lore.kernel.org/linux-arm-msm/20221109110846.45789-1-konrad.dybcio@linaro.org/T/#t
 
->   
->     interrupts:
->       items:
+Konrad Dybcio (10):
+  dt-bindings: arm-smmu: Allow up to 3 power-domains
+  dt-bindings: dmaengine: qcom: gpi: add compatible for SM6375
+  arm64: dts: qcom: Add a device tree for PMK8350 on SID6
+  arm64: dts: qcom: sm6375: Add GPI DMA nodes
+  arm64: dts: qcom: sm6375: Add pin configs for some QUP configurations
+  arm64: dts: qcom: sm6375: Add QUPs and corresponding SPI/I2C hosts
+  arm64: dts: qcom: sm6375-pdx225: Enable QUPs & GPI DMA
+  arm64: dts: qcom: sm6375-pdx225: Add PMIC peripherals
+  arm64: dts: qcom: sm6375-pdx225: Configure SMD RPM regulators
+  arm64: dts: qcom: sm6375-pdx225: Configure Samsung touchscreen
+
+ .../devicetree/bindings/dma/qcom,gpi.yaml     |   1 +
+ .../devicetree/bindings/iommu/arm,smmu.yaml   |   2 +-
+ arch/arm64/boot/dts/qcom/pmk8350_sid6.dtsi    |  73 ++++
+ .../qcom/sm6375-sony-xperia-murray-pdx225.dts | 251 +++++++++++
+ arch/arm64/boot/dts/qcom/sm6375.dtsi          | 389 ++++++++++++++++++
+ 5 files changed, 715 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/pmk8350_sid6.dtsi
+
+-- 
+2.38.1
+
