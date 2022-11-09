@@ -2,86 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50AC762306F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 17:47:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3EC062310F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 18:08:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229678AbiKIQr2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Nov 2022 11:47:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49734 "EHLO
+        id S230469AbiKIRId (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Nov 2022 12:08:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229968AbiKIQr1 (ORCPT
+        with ESMTP id S231136AbiKIRIc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Nov 2022 11:47:27 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 2BDEF233A7;
-        Wed,  9 Nov 2022 08:47:26 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3CA251FB;
-        Wed,  9 Nov 2022 08:47:31 -0800 (PST)
-Received: from bogus (unknown [10.57.6.137])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 92CF23F534;
-        Wed,  9 Nov 2022 08:47:22 -0800 (PST)
-Date:   Wed, 9 Nov 2022 16:47:19 +0000
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        viresh.kumar@linaro.org
-Cc:     Manivannan Sadhasivam <mani@kernel.org>, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, rafael@kernel.org,
-        robh+dt@kernel.org, johan@kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH v5 3/3] cpufreq: qcom-hw: Add CPU clock provider support
-Message-ID: <20221109164719.d7kowdu7wskyzjsc@bogus>
-References: <20221108154037.111794-1-manivannan.sadhasivam@linaro.org>
- <20221108154037.111794-4-manivannan.sadhasivam@linaro.org>
- <20221108155717.srlnabls5ze2resx@bogus>
- <20221109074908.GC4651@thinkpad>
- <20221109110831.lngwmwyjqp4qj73r@bogus>
- <20221109123526.GA29805@thinkpad>
+        Wed, 9 Nov 2022 12:08:32 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 144F7D2F2
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Nov 2022 09:08:29 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id t25so48481542ejb.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Nov 2022 09:08:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=UGckoAKiL+PDGTYOUgV90XuQ0OsD8munY0lKgBlT8+s=;
+        b=NIOItJRTewEv5DYvzGdBGeSKT4mpKmy1pGwnHstesPtSCqn1tXV6A5AcJGX4WPtN13
+         YR5sM1Zo1yLI+FVdB+gbRVeHkS96fpcisi37Omz0g/e6V8SI9zO27z9Q1WMG8zvJajAc
+         1zmAbfyvQYU1nzXtbsQr0ABbAhJ/q3/iKYVZ4lIvcyQC7/5lwVHMen4OSLPhoAG01Bq8
+         89MrSUpJtPgSmsOhi8DUeTBVirY9VWZFleyPU9cYp2Ivll3eI+SMWS8an0kwCY6auMG8
+         C7stn7GLl2czqLWHeMbia7dGsJPSZVxGeZ3kt1mOKzJoDgK5AKt3S2wpPNBiaFT2Jh3Q
+         3S+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UGckoAKiL+PDGTYOUgV90XuQ0OsD8munY0lKgBlT8+s=;
+        b=1x78IisPCpuUHWQsgte0LFGdCnrCa+lCxA4AhfvOr1EBjseLeJqdkt5LRsVwxhK0cL
+         UFBY8MhJMqAZ7HIitDvhw+My5QlukiL6oLhHuFyjmKF+6fBFSYqmA5Ply3K7ikS1O9x1
+         eBHl+yzb3Bi5uAL6IJbEuwsezFAPRUZ4YuT7NEPSce89Q86oIhYeBOmekAW+Wx1JoQad
+         1CtoW0P4qgjxWHHbSOmENdOyW+GTUAUlkyupDSklWalnN36ULgb1mdRMDMJfwxYVLmAt
+         DezMzjCTSxU2zfs1/Vf7LK1VoafRluYQy9jMzyBUxTpQk3gU8svJOPTD0hn/UvstpFN3
+         VXfA==
+X-Gm-Message-State: ACrzQf3KjEs5eNpioA1+njOTmM0bXSnWvxs+SoduRKwsXSzqf7hAmOK0
+        0nhlDIJfJnnyvY5eFHVfsdpfX9JhKUL3QIc7
+X-Google-Smtp-Source: AMsMyM6Fmko3ZwqfkYv4RDk0uzq7sMO+AwhwNSzC3++RWkc09dWpeViELtKxZUiXmPtkvGuE1F9FvA==
+X-Received: by 2002:a17:907:217a:b0:7ae:415:3fb5 with SMTP id rl26-20020a170907217a00b007ae04153fb5mr1136935ejb.255.1668013707262;
+        Wed, 09 Nov 2022 09:08:27 -0800 (PST)
+Received: from localhost.localdomain ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id w6-20020a056402070600b0046191f5e946sm7207012edx.21.2022.11.09.09.08.25
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 09 Nov 2022 09:08:26 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] dt-bindings: remoteproc: qcom,adsp: Add SM6375 ADSP and CDSP
+Date:   Wed,  9 Nov 2022 18:08:21 +0100
+Message-Id: <20221109170822.58281-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.32.0 (Apple Git-132)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221109123526.GA29805@thinkpad>
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 09, 2022 at 06:05:26PM +0530, Manivannan Sadhasivam wrote:
-> I don't think using the final DCVS frequency would be applicable for cpufreq
-> core.
-> 
-> cpufreq core sets the desired frequency in the form of index using the
-> target_index() callback and the qcom-cpufreq-hw driver uses that index directly
-> to select the specific entry in the hardware LUT (Look Up Table).
-> 
-> Then with get() callback, the frequency will be returned based on the LUT index
-> read from the hardware. In this case, the frequency is going to be static
-> (i.e, what gets set by the cpufreq core will be the same). I believe this is
-> what the API also expects.
->
+Add entries for SM6375 ADSP and CDSP. They are effectively the same
+as SM6350 ADSP and SM8150 CDSP respectively.
 
-I guessed so and hence thought of asking. Is the cpufreq_get() API expected
-to return something close to what was set or is it expected to return the
-real set h/w value if and when possible. I wanted to confirm if that is the
-expectation from the cpufreq core or is it just the way qcom cpufreq-hw
-driver(probably many others too) work today.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ .../devicetree/bindings/remoteproc/qcom,adsp.yaml         | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-> In the case of qcom_lmh_get_throttle_freq(), the frequency is going to be
-> dynamic (i.e changes with every internal DCVS operation). But this is exactly
-> what the OPP core expects with clk_get_rate() of CPU clock, so using
-> qcom_lmh_get_throttle_freq() makes sense there.
->
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+index db9e0f0c2bea..a9219c7c8349 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+@@ -40,6 +40,8 @@ properties:
+       - qcom,sm6350-adsp-pas
+       - qcom,sm6350-cdsp-pas
+       - qcom,sm6350-mpss-pas
++      - qcom,sm6375-adsp-pas
++      - qcom,sm6375-cdsp-pas
+       - qcom,sm8150-adsp-pas
+       - qcom,sm8150-cdsp-pas
+       - qcom,sm8150-mpss-pas
+@@ -197,6 +199,8 @@ allOf:
+               - qcom,sm6350-adsp-pas
+               - qcom,sm6350-cdsp-pas
+               - qcom,sm6350-mpss-pas
++              - qcom,sm6375-adsp-pas
++              - qcom,sm6375-cdsp-pas
+               - qcom,sm8150-adsp-pas
+               - qcom,sm8150-cdsp-pas
+               - qcom,sm8150-mpss-pas
+@@ -315,6 +319,8 @@ allOf:
+               - qcom,sdm845-cdsp-pas
+               - qcom,sm6350-adsp-pas
+               - qcom,sm6350-cdsp-pas
++              - qcom,sm6375-adsp-pas
++              - qcom,sm6375-cdsp-pas
+               - qcom,sm8150-adsp-pas
+               - qcom,sm8150-cdsp-pas
+               - qcom,sm8150-slpi-pas
+@@ -372,6 +378,7 @@ allOf:
+               - qcom,msm8226-adsp-pil
+               - qcom,msm8996-adsp-pil
+               - qcom,msm8998-adsp-pas
++              - qcom,sm6375-cdsp-pas
+               - qcom,sm8150-adsp-pas
+               - qcom,sm8150-cdsp-pas
+     then:
+@@ -468,6 +475,7 @@ allOf:
+               - qcom,sc8180x-cdsp-pas
+               - qcom,sc8280xp-adsp-pas
+               - qcom,sm6350-adsp-pas
++              - qcom,sm6375-adsp-pas
+               - qcom,sm8150-slpi-pas
+               - qcom,sm8250-adsp-pas
+               - qcom,sm8250-slpi-pas
+-- 
+2.38.1
 
-OK, the reason I ask is that IIRC the ACPI CPPC driver might get the exact
-delivered frequency rather than something based on the set value, so it
-shouldn't be a requirement but I may be wrong.
-
-Viresh, thoughts ?
-
---
-Regards,
-Sudeep
