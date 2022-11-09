@@ -2,67 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D2716229D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 12:12:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7BA26229DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 12:12:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229588AbiKILMs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Nov 2022 06:12:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57750 "EHLO
+        id S229993AbiKILMx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Nov 2022 06:12:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229669AbiKILMq (ORCPT
+        with ESMTP id S229853AbiKILMu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Nov 2022 06:12:46 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAE6127CEB
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Nov 2022 03:12:44 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id l11so26693492edb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Nov 2022 03:12:44 -0800 (PST)
+        Wed, 9 Nov 2022 06:12:50 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE33127CEB
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Nov 2022 03:12:48 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id z18so26682599edb.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Nov 2022 03:12:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=f/pc7jhWkIohCmzvLPeFxuZOhmufYr1Nl7f4rSC4zF4=;
-        b=CuYAPoJXdqq8N/Hkqw6+Dyphx6DZiSKDjujPOlLyWRAxasWQOjLGr0mDvDWXoz0LfG
-         wd/cMAMguAOFiOumC2hM7NQhgDNWyucdDdBhx1PBoqFhG9rQKfUsjRbWMBTWDao31/Tg
-         Xnyzbg6Alum5LrezL0ZhqG+bsaka3rGY4Ml5QHHrbdMxBJft0Ul42cT0TDRvPikeulk2
-         Wh6kyjBF0Z6TOY2Ab081x7OjhMv05XhAHbELPiMGftSpoJUpYyuCs968qPwY2o1PDfiJ
-         Bfhgc4K491D9RUQ2zyN7ClaRF2KojHazUQ5NfCSSS8FSWlXR/xUGgReuaIiyk0h0Ccyu
-         DLIA==
+        bh=dw8yiTzUnE0/1jed/kvyGb1dCoZQTp6ZbqhV1sxsfZ0=;
+        b=LgW7dKax1lUQHPezWxwMRSeDeHZcYqMQBQqKjPC55A582VnN+e75uJI772OUM4vS6A
+         zf9WuuxvZUZ9YCXKczzJ4tNiiiZXrkaAjARV7vJfp80FasOdqBIqIRaCLavH07eQGFj9
+         iIlBLdHzhkbGnrHkDVR+fE7/l3m4V+YSkRJdc2QOCip4Wjhf+LlfWEMhCaYqP9tjGL1i
+         Uc57G1u09ZU+8s0WakgNHJ+I9azokFhmdQjx9yqO3yDpiOqT4BbfUp7FzWUvjlRVnjUl
+         uxH55k5Cf7gpVa0/FLQsgx6mFFvxA+gUYTJIvvobMeJEK+H7sXBSWxfkM5IW1WuNzq6p
+         Wncw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=f/pc7jhWkIohCmzvLPeFxuZOhmufYr1Nl7f4rSC4zF4=;
-        b=6c7bwcQc5nAWMJ9iL6V81gRrO5W2v4xxqgKOJEASV8L4Etxdbm5iJKhIe1bzo+XnBn
-         Q/nJXxu/P9wWOWq0qhfFAiwdKekMpYf9QjmHDHa3D4YHfN3S/FF0eDos4ZX16i1ngrWM
-         K6XVGZBTo+L356uSsXGOfDeRSRcfWktdS9RNy0D5TzDczf8Kf63UJSWSg1H/4xCRWXSG
-         PJ6hFfsE5dZB4eZPx7dHCfvgNVL7/8klpiVinzgdGtVonLYaAVyW0qTJUiaJs6CHi40w
-         GEvqw1183YILYsSroBEhhuLlTSlOT8HZyRsgKzBq2p3rU2BTG3uKRO94PNX/zGtkkUpX
-         DJvQ==
-X-Gm-Message-State: ACrzQf2q9p4VNRyATnI1+AYKdlgvxxbzVdH97WQtqB87SYAqnATc+BEd
-        tirWcmscqhxTAtKiX/4eDnAAoOmzhlVi7OYF
-X-Google-Smtp-Source: AMsMyM7GeVr/zvBHi6rK2a85LLgMSVm6NEWavbdp+4Oo2zE/I5mfFViR3XR+UwerJ7HyyO3kN5UJqw==
-X-Received: by 2002:a05:6402:2793:b0:462:39d7:3bbc with SMTP id b19-20020a056402279300b0046239d73bbcmr59490539ede.47.1667992363232;
-        Wed, 09 Nov 2022 03:12:43 -0800 (PST)
+        bh=dw8yiTzUnE0/1jed/kvyGb1dCoZQTp6ZbqhV1sxsfZ0=;
+        b=KV5xIRGupdlRyRlLXo9p8ZSKXHUCbuHo+g7993tvspQpLBz70HwFDPpq9fPPsRn26P
+         fVpLyIL3tp2Zo1inlx+XNUwSUsDNHYUPq1FJt1KLV8X83EvGMxba/HzZQz6nksLibkSA
+         eFj7zB5ZzhenjBcUWNW73mD2PuGiIc1ZBTMu5/UEjQw1rUbwW6gc0g6F3nnfJfjKQK2s
+         aQwUcMeSf6wB6jEjzVTGhuLvy2YI0iuaE5bEO1Z17ullVoJ7TM/JUQ9GldjMGa7+8pHY
+         +vRpMavC5gmgA4nmAGjS0AfsZv5e9RS1l4eDcTN5pLxjo5/ZvBSIBCHKzl4ktBZxoYZ3
+         LtQw==
+X-Gm-Message-State: ACrzQf06v6C/ndJFE9ZP6qjTuxN1rYre1XXkv1GtHQJ/KhlDvCknbEwL
+        yR68L7P/IFohhI6ZRjUVuku75FglMzuKQ4lB
+X-Google-Smtp-Source: AMsMyM4AkeeOBGLFE9c17vhZZpE95yA+NmUlhsM0m0/uy0qQjk/oLXIWqskqcLe4+RlXjAkxr4ZVnA==
+X-Received: by 2002:a50:c302:0:b0:463:26d6:25fb with SMTP id a2-20020a50c302000000b0046326d625fbmr55347903edb.204.1667992367157;
+        Wed, 09 Nov 2022 03:12:47 -0800 (PST)
 Received: from localhost.localdomain ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id k8-20020a1709062a4800b007ad9c826d75sm5825899eje.61.2022.11.09.03.12.41
+        by smtp.gmail.com with ESMTPSA id k8-20020a1709062a4800b007ad9c826d75sm5825899eje.61.2022.11.09.03.12.45
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 09 Nov 2022 03:12:42 -0800 (PST)
+        Wed, 09 Nov 2022 03:12:46 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org
 Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 02/10] dt-bindings: dmaengine: qcom: gpi: add compatible for SM6375
-Date:   Wed,  9 Nov 2022 12:12:27 +0100
-Message-Id: <20221109111236.46003-3-konrad.dybcio@linaro.org>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 03/10] arm64: dts: qcom: Add a device tree for PMK8350 on SID6
+Date:   Wed,  9 Nov 2022 12:12:28 +0100
+Message-Id: <20221109111236.46003-4-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.32.0 (Apple Git-132)
 In-Reply-To: <20221109111236.46003-1-konrad.dybcio@linaro.org>
 References: <20221109111236.46003-1-konrad.dybcio@linaro.org>
@@ -78,25 +76,99 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the compatible for GPI DMA controller on SM6375 SoC.
+PMK8350 is shipped on SID6 with some SoCs, for example with SM6375.
+Add a DT with the SID changed to allow it to work.
+
+Unfortunately, the entire DT needs to be copied even if the diff is
+very little, as the node names are not unique. Including pm6125 and
+pmk8350 together for example, would make pmk8350 overwrite the pm6125
+node, as both are defined as 'pmic@0'.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/pmk8350_sid6.dtsi | 73 ++++++++++++++++++++++
+ 1 file changed, 73 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/pmk8350_sid6.dtsi
 
-diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-index 232895fa1d8d..e7ba1c47a88e 100644
---- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-+++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-@@ -26,6 +26,7 @@ properties:
-           - enum:
-               - qcom,sc7280-gpi-dma
-               - qcom,sm6115-gpi-dma
-+              - qcom,sm6375-gpi-dma
-               - qcom,sm8350-gpi-dma
-               - qcom,sm8450-gpi-dma
-           - const: qcom,sm6350-gpi-dma
+diff --git a/arch/arm64/boot/dts/qcom/pmk8350_sid6.dtsi b/arch/arm64/boot/dts/qcom/pmk8350_sid6.dtsi
+new file mode 100644
+index 000000000000..00390f8b9c97
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/pmk8350_sid6.dtsi
+@@ -0,0 +1,73 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Copyright (c) 2022, Linaro Limited
++ */
++
++#include <dt-bindings/input/input.h>
++#include <dt-bindings/input/linux-event-codes.h>
++#include <dt-bindings/interrupt-controller/irq.h>
++#include <dt-bindings/spmi/spmi.h>
++
++&spmi_bus {
++	pmk8350: pmic@6 {
++		compatible = "qcom,pmk8350", "qcom,spmi-pmic";
++		reg = <0x6 SPMI_USID>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		pmk8350_pon: pon@1300 {
++			compatible = "qcom,pm8998-pon";
++			reg = <0x1300>;
++
++			pon_pwrkey: pwrkey {
++				compatible = "qcom,pmk8350-pwrkey";
++				interrupts = <0x6 0x13 0x7 IRQ_TYPE_EDGE_BOTH>;
++				linux,code = <KEY_POWER>;
++				status = "disabled";
++			};
++
++			pon_resin: resin {
++				compatible = "qcom,pmk8350-resin";
++				interrupts = <0x6 0x13 0x6 IRQ_TYPE_EDGE_BOTH>;
++				status = "disabled";
++			};
++		};
++
++		pmk8350_vadc: adc@3100 {
++			compatible = "qcom,spmi-adc7";
++			reg = <0x3100>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <0x6 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
++			#io-channel-cells = <1>;
++		};
++
++		pmk8350_adc_tm: adc-tm@3400 {
++			compatible = "qcom,adc-tm7";
++			reg = <0x3400>;
++			interrupts = <0x6 0x34 0x0 IRQ_TYPE_EDGE_RISING>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			#thermal-sensor-cells = <1>;
++			status = "disabled";
++		};
++
++		pmk8350_rtc: rtc@6100 {
++			compatible = "qcom,pmk8350-rtc";
++			reg = <0x6100>, <0x6200>;
++			reg-names = "rtc", "alarm";
++			interrupts = <0x6 0x62 0x1 IRQ_TYPE_EDGE_RISING>;
++			status = "disabled";
++		};
++
++		pmk8350_gpios: gpio@b000 {
++			compatible = "qcom,pmk8350-gpio", "qcom,spmi-gpio";
++			reg = <0xb000>;
++			gpio-controller;
++			gpio-ranges = <&pmk8350_gpios 0 0 4>;
++			#gpio-cells = <2>;
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
++	};
++};
 -- 
 2.38.1
 
