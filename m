@@ -2,78 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B37D623372
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 20:27:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F3BC6233AB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 20:42:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230307AbiKIT1v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Nov 2022 14:27:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60682 "EHLO
+        id S231812AbiKITmZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Nov 2022 14:42:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbiKIT1u (ORCPT
+        with ESMTP id S231818AbiKITmX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Nov 2022 14:27:50 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B778226121
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Nov 2022 11:27:48 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id a29so8894349lfj.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Nov 2022 11:27:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SXJn3wRJvG74Ahsr/X+Onmc/VKFhlVPUovnUVOo53U4=;
-        b=YbYvLSxSpYE+jt7vwxj7OVhLmXgAPOA/TY5Je8XqU9owlGQFKjDO3t/JmRNDnjxxLV
-         H5L3GQJwuG/EOjwoT7lkMxIDqwPg3uQfnzHV+XfFQ5QPMbqmRZqO20kMCA+VmSNyCkvn
-         BmspsC9tMAaWus3aLITiTU9yP/TCJ/qw7Zc4lAkmC/1cUHPCcaNMzdjtdJruAY10tpRm
-         7Mz9g0NSrpqQejpQ0br+TUli0qY9eZ8z5/VwK2eu8HFqEWF9xgBKcvGrQD+yRMCcA4OX
-         GhL+biyiE3/t5Y4wxA7OPX8wq/VCIwxtslhHCZgWu5spdi+iAB99DhVIyy57uQt47BR3
-         dtZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SXJn3wRJvG74Ahsr/X+Onmc/VKFhlVPUovnUVOo53U4=;
-        b=Xcj2iKCzkmm1RepdLV+pvUpR+RYeROrGWW+NZQz42sL0ku2fLFf4TO4DIyqSYqXlpE
-         ogN3tLVMim4ItrHt6pJDG8spf8trCK3VjEcGdDPByxPsbxlsVImiO4YIBSe8arKk1HMu
-         NFuEy2lvQSTBWPX6SKd8/0uB/qbjfiYX4w6GAKfIJPIrWOL0SU9J543eUBt/JUL8WrYc
-         ohEq2YBP8dIJpA/dG5bP4lGtFA7ppfOhqm+noG08jTcab6oDCMGaMLkqQYUJdUf0H5hd
-         /rJGJ/Lc/7Jb27YRa+7Mpa5I5HLAYz/ER/CqwPA5OPYcW9aGzfrq7HQU8uPMYLX+Aq/h
-         w26Q==
-X-Gm-Message-State: ACrzQf0Pc96hWLOiGD14IZqi3A4Jo5b6LemA0q6tLyWzOgCVV3Hz0Xwh
-        Xr6bi532wPIEVtXlgh9vdqpPYw==
-X-Google-Smtp-Source: AMsMyM4EbNcHKhibXcvKZHiCPuO2vkJu1vdpocAjRZub4zhkTfio9MoqToCwPRo7wk7zZeYvd0WJJQ==
-X-Received: by 2002:a05:6512:12c9:b0:4a2:8760:47f1 with SMTP id p9-20020a05651212c900b004a2876047f1mr20715550lfg.24.1668022067060;
-        Wed, 09 Nov 2022 11:27:47 -0800 (PST)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id e23-20020a196917000000b004979df1c1fasm2378780lfc.61.2022.11.09.11.27.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Nov 2022 11:27:46 -0800 (PST)
-Message-ID: <776f0e3b-932f-d4fe-d949-9001866d0093@linaro.org>
-Date:   Wed, 9 Nov 2022 22:27:45 +0300
+        Wed, 9 Nov 2022 14:42:23 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 979632CCB2;
+        Wed,  9 Nov 2022 11:42:22 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2A9GEBeW027591;
+        Wed, 9 Nov 2022 19:42:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=iU+F5f3S0/rtAFzzRYlGjPbAihXLF7zJpBtF2etbfs0=;
+ b=VUHJU+yl5MFZzpq14V3aJEPix6YRflImrvuc77cf3scNQtjWtc0NT31gKaKPgvd0C6VU
+ Qz2rSNTOEQHAy23aZdPH+lQ9Jd5LsA8TKzbVE+azt2UemSj5YnvkIcXSfnjWFQDYTch2
+ 7xoIoGagUt3ef4NKNzYPFSCJoJFiLSVjbPdxm2rEjxgSa59luguEg8P/WUyOK2D50kl0
+ 7YztP30s4vwvpJlkjtCo+3+yRWKxaJnZQBJ4O9f853NemNBTUvEqwBtdqqdNM3l1Qv9V
+ NKyrgXhOHMsLuh+fJZGhBywFx5/jU8UVa62apUn+paD9CQ+KQJ19F6XNWeUbwpV36ZH7 aA== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kr6b42a90-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 09 Nov 2022 19:42:09 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2A9Jg9rb030040
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 9 Nov 2022 19:42:09 GMT
+Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Wed, 9 Nov 2022 11:42:08 -0800
+From:   Asutosh Das <quic_asutoshd@quicinc.com>
+To:     <quic_cang@quicinc.com>, <martin.petersen@oracle.com>,
+        <linux-scsi@vger.kernel.org>
+CC:     <quic_nguyenb@quicinc.com>, <quic_xiaosenh@quicinc.com>,
+        <stanley.chu@mediatek.com>, <eddie.huang@mediatek.com>,
+        <daejun7.park@samsung.com>, <bvanassche@acm.org>,
+        <avri.altman@wdc.com>, <mani@kernel.org>, <beanhuo@micron.com>,
+        Asutosh Das <quic_asutoshd@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH v4 00/16] Add Multi Circular Queue Support 
+Date:   Wed, 9 Nov 2022 11:41:25 -0800
+Message-ID: <cover.1668022680.git.quic_asutoshd@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: Add link-frequencies property to
- specify the max link rate allowed
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
-        agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1668018895-29023-1-git-send-email-quic_khsieh@quicinc.com>
- <1668018895-29023-2-git-send-email-quic_khsieh@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1668018895-29023-2-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: y7km4BzyXJ6HdUUpaauiNgxB5toUUGKR
+X-Proofpoint-ORIG-GUID: y7km4BzyXJ6HdUUpaauiNgxB5toUUGKR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-09_06,2022-11-09_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 phishscore=0
+ adultscore=0 spamscore=0 clxscore=1015 suspectscore=0 malwarescore=0
+ mlxlogscore=999 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211090148
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,35 +77,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/11/2022 21:34, Kuogee Hsieh wrote:
-> This patch add link-frequencies property to allow each platform to specify its
-> DP max link rate.
-> 
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->   arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> index 93e39fc..7e5d755 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> @@ -441,6 +441,7 @@ ap_i2c_tpm: &i2c14 {
->   	pinctrl-names = "default";
->   	pinctrl-0 = <&dp_hot_plug_det>;
->   	data-lanes = <0 1>;
-> +        link-frequencies = <810000>;
+UFS Multi-Circular Queue (MCQ) has been added in UFSHCI v4.0 to improve storage performance.
+The implementation uses the shared tagging mechanism so that tags are shared
+among the hardware queues. The number of hardware queues is configurable.
+This series doesn't include the ESI implementation for completion handling.
 
-The link frequency is a property of the link - in other words a graph 
-connection. Please don't put random propreties into DT nodes where they 
-are not to be used.
+This implementation has been verified by booting on a Qualcomm platform.
+During testing, all low power modes were disabled and it was in HS-G1 mode.
+
+Please take a look and let us know your thoughts.
+
+v3 -> v4:
+- Added a kernel module parameter to disable MCQ mode
+- Added Bart's reviewed-by tag for some patches
+- Addressed Bart's comments
+
+v2 -> v3:
+- Split ufshcd_config_mcq() into ufshcd_alloc_mcq() and ufshcd_config_mcq()
+- Use devm_kzalloc() in ufshcd_mcq_init()
+- Free memory and resource allocation on error paths
+- Corrected typos in code comments
+
+v1 -> v2:
+- Added a non MCQ related change to use a function to extrace ufs extended
+feature
+- Addressed Mani's comments
+- Addressed Bart's comments
+
+v1:
+- Split the changes
+- Addressed Bart's comments
+- Addressed Bean's comments
+
+* RFC versions:
+v2 -> v3:
+- Split the changes based on functionality
+- Addressed queue configuration issues
+- Faster SQE tail pointer increments
+- Addressed comments from Bart and Manivannan
+
+v1 -> v2:
+- Enabled host_tagset
+- Added queue num configuration support
+- Added one more vops to allow vendor provide the wanted MAC
+- Determine nutrs and can_queue by considering both MAC, bqueuedepth and EXT_IID support
+- Postponed MCQ initialization and scsi_add_host() to async probe
+- Used (EXT_IID, Task Tag) tuple to support up to 4096 tasks (theoretically)
 
 
->   };
->   
->   &mdss_mdp {
+Asutosh Das (16):
+  ufs: core: Optimize duplicate code to read extended feature
+  ufs: core: Probe for ext_iid support
+  ufs: core: Introduce Multi-circular queue capability
+  ufs: core: Defer adding host to scsi if mcq is supported
+  ufs: core: mcq: Add Multi Circular Queue support
+  ufs: core: mcq: Configure resource regions
+  ufs: core: mcq: Calculate queue depth
+  ufs: core: mcq: Allocate memory for mcq mode
+  ufs: core: mcq: Configure operation and runtime interface
+  ufs: core: mcq: Use shared tags for MCQ mode
+  ufs: core: Prepare ufshcd_send_command for mcq
+  ufs: core: mcq: Find hardware queue to queue request
+  ufs: core: Prepare for completion in mcq
+  ufs: mcq: Add completion support of a cqe
+  ufs: core: mcq: Add completion support in poll
+  ufs: core: mcq: Enable Multi Circular Queue
+
+ drivers/ufs/core/Makefile      |   2 +-
+ drivers/ufs/core/ufs-mcq.c     | 494 +++++++++++++++++++++++++++++++++++++++++
+ drivers/ufs/core/ufshcd-priv.h |  84 ++++++-
+ drivers/ufs/core/ufshcd.c      | 381 +++++++++++++++++++++++++------
+ drivers/ufs/host/ufs-qcom.c    |  48 ++++
+ drivers/ufs/host/ufs-qcom.h    |   4 +
+ include/ufs/ufs.h              |   6 +
+ include/ufs/ufshcd.h           | 125 +++++++++++
+ include/ufs/ufshci.h           |  63 ++++++
+ 9 files changed, 1140 insertions(+), 67 deletions(-)
+ create mode 100644 drivers/ufs/core/ufs-mcq.c
 
 -- 
-With best wishes
-Dmitry
+2.7.4
 
