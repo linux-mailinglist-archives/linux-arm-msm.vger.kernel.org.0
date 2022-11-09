@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22309622B61
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 13:19:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B3BF622B6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 13:22:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229802AbiKIMTI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Nov 2022 07:19:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51272 "EHLO
+        id S229981AbiKIMWq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Nov 2022 07:22:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229629AbiKIMTI (ORCPT
+        with ESMTP id S229629AbiKIMWq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Nov 2022 07:19:08 -0500
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07C1322528
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Nov 2022 04:19:07 -0800 (PST)
-Received: by mail-lj1-x234.google.com with SMTP id u11so25484507ljk.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Nov 2022 04:19:06 -0800 (PST)
+        Wed, 9 Nov 2022 07:22:46 -0500
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E580250
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Nov 2022 04:22:43 -0800 (PST)
+Received: by mail-lj1-x229.google.com with SMTP id l8so25489712ljh.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Nov 2022 04:22:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ye8sH1zl6sSv9DGDAjB1eEzXhmWboI2vsCHxYwdnJz0=;
-        b=ZybYS6nV5FlcTXdHMLqh4gUjeCEABntLlbBDQEVcOAR1CZiPzbrwizoLaTkmEBRDoB
-         nlxOmUVmwDcNHB9sx27cVU8h2xk0UuRyv8dTsTHL9ZhMRfRnb9jKGr0RuovM/JgfmAZl
-         lxUPM4QzTpDcZJfxMpf8n0omxEYk42BKMKNGGmQufJ1+vfgNulurWPIvCC68Cx18q6FC
-         T/9FEZngmNYLRa7CRlwPJF260cUIr5/s/iQbWzhjlPFaNHvracynMpdkxg60nTsk4pTw
-         UOc2Ls4pdJy6SmAR/FlX0w9/udujOo3QWnowkPJB/m+iwAFzn6yvCl4FfqCRAi/j0vPp
-         gpng==
+        bh=u6bYmj95aYxYd2nESG4KU3TCBJLsIJxzWeCnkVXkQyk=;
+        b=WExzNggAGe5OKIJ9cMNb+sIkuEwrEYklRDwGbHbc6POJy5NVTauCp9Qv4hzYLx+DvI
+         MzSpnT1HBuysb+BZEpZA8RfIaAhrjtINzt8VALikTn5AEe54xBpVZL9+mEC/atuMbl49
+         RJ41v01RzSvDksCgvqu5Tas+S7B9vPn6LLWRxM71d9TyHywokPBkRYaEYQglgLZLjN/g
+         TrV2GeO4TdFfBQW9R0cq2A46BL8T9GTw3pz5VyiKF6eLLeCNGPiDjTxHyZMZUCZNxlJs
+         AJ5xOQ5/ARm/lbnwq1065Nkyrshxv3pCdxYxSCQMRsiJiru18G9PBo4rINlinOrFR/At
+         1/GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ye8sH1zl6sSv9DGDAjB1eEzXhmWboI2vsCHxYwdnJz0=;
-        b=faN/4+rVVvbRg9RVTjEoHgFzX9F3ZZsTVd+MkOSNyxzQMTvcJb9kRcEtHI+/a+KBhF
-         W1+moqIUFnJqzgB+3J4SnjQqujLUR2Sn6utoDTC2bETuqi4LJS39iFuW8GvY44E1ytQP
-         txvCcq8SI2/kyKUur6eci6oXQka3JCognZkmS0y/s61BGbUqkLLvvpSoZBRfVxHm3r9T
-         vHBuD3cOpex7Ir7OMmXP3W0RjT9bmQo0FVKLHmpwXH3MMmzcXomTMtXdczK7MEdpa8lB
-         ep+4lFNtvs7tx+eTzZZYd1i4pORb4hxxSi0agP+blUdoVd2mjPBAKeJ5TtnO0z8Yi1o7
-         VulQ==
-X-Gm-Message-State: ANoB5pkPnTq17b9UNZ/bAQSZd3sFqp07g0XYWIQx9I6saWfA5hY+2NPS
-        3mXsk8qWUmEStXIy5wJDJX9q1w==
-X-Google-Smtp-Source: AA0mqf6Qt3W69twHjBbljDgjSSNO7IveTjCXXa66ab4tN+ev2MwpKhm0I2pTcRY2KRSEbjJplOS3zQ==
-X-Received: by 2002:a2e:544d:0:b0:278:ba60:d4f0 with SMTP id y13-20020a2e544d000000b00278ba60d4f0mr1986815ljd.351.1667996345347;
-        Wed, 09 Nov 2022 04:19:05 -0800 (PST)
+        bh=u6bYmj95aYxYd2nESG4KU3TCBJLsIJxzWeCnkVXkQyk=;
+        b=2pXJb2nedXmkGqCNBnWvIyZH+wJcQtF+QpG+/riD+lYKc8WpifwfDBPejYudKcCrpN
+         KqMBz+Cyq7EPQH0u5Sx3x1JUnu/y6SNP2RI99CnwB9gF4+R/lgCr/VK6hBCcTrroJ++v
+         UPd3TyzNUszYxcWrROnZPfyRnXtaiDzDcYcl0PsXZA5tX32+ZKx6iknL0Fn01pkNFYjF
+         dg92HBZdNFvooschsGWMhRwrdw6gwEAMKadGVASJ3OB5DbaQolnQ9eHYiX1wEKC150da
+         TtTkirT820bB8KNaK0uWYEc8Ns3/N3hHCPp6cg8BsOAdgADUspmhDw2VrYkKHUL6abMk
+         XgmQ==
+X-Gm-Message-State: ACrzQf2dm9WNbaz8vKQWOVMqKwtw5oGqEjbH6xIaPQF5Ko/Ff+v9oa0u
+        Wl8uFMD6M5xLvmYaB2VsIdltGA==
+X-Google-Smtp-Source: AMsMyM7TUZsz21JDWX1Zkb+DNCX6wszIdVrI2ylvIfk3s6uy/4NlfcfXNr7abQyizceTJ/0qz2vl2w==
+X-Received: by 2002:a2e:92c8:0:b0:25d:6ddf:e71d with SMTP id k8-20020a2e92c8000000b0025d6ddfe71dmr20012719ljh.170.1667996561748;
+        Wed, 09 Nov 2022 04:22:41 -0800 (PST)
 Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id c15-20020a056512238f00b004979da67114sm2192382lfv.255.2022.11.09.04.19.04
+        by smtp.gmail.com with ESMTPSA id c11-20020a056512074b00b004947984b385sm2191397lfs.87.2022.11.09.04.22.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Nov 2022 04:19:04 -0800 (PST)
-Message-ID: <414280e3-6954-6832-10fa-66cdcdbfac18@linaro.org>
-Date:   Wed, 9 Nov 2022 15:19:04 +0300
+        Wed, 09 Nov 2022 04:22:41 -0800 (PST)
+Message-ID: <e0c5b9b3-338a-f589-0883-066db5bcbf21@linaro.org>
+Date:   Wed, 9 Nov 2022 15:22:40 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.1
-Subject: Re: [PATCH 1/4] drm/msm/disp/dpu1: pin 1 crtc to 1 encoder
+Subject: Re: [PATCH 2/4] drm/msm/disp/dpu1: populate disp_info if an interface
+ is external
 Content-Language: en-GB
 To:     Kalyan Thota <quic_kalyant@quicinc.com>,
         dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
@@ -64,8 +65,9 @@ Cc:     linux-kernel@vger.kernel.org, robdclark@chromium.org,
         dianders@chromium.org, swboyd@chromium.org,
         quic_vpolimer@quicinc.com, quic_abhinavk@quicinc.com
 References: <1667996206-4153-1-git-send-email-quic_kalyant@quicinc.com>
+ <1667996206-4153-2-git-send-email-quic_kalyant@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1667996206-4153-1-git-send-email-quic_kalyant@quicinc.com>
+In-Reply-To: <1667996206-4153-2-git-send-email-quic_kalyant@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -78,51 +80,153 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 09/11/2022 15:16, Kalyan Thota wrote:
-> Pin each crtc with one encoder. This arrangement will
-> disallow crtc switching between encoders and also will
-> facilitate to advertise certain features on crtc based
-> on encoder type.
+> DRM encoder type is same for eDP and DP (DRM_MODE_ENCODER_TMDS)
+> populate is_external information in the disp_info so as to
+> differentiate between eDP and DP on the DPU encoder side.
 > 
 > Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 20 +++++++++++++++++---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 14 +++++++++++---
+>   drivers/gpu/drm/msm/dp/dp_display.c         |  5 +++++
+>   drivers/gpu/drm/msm/msm_drv.h               |  7 ++++++-
+>   4 files changed, 39 insertions(+), 7 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 7a5fabc..552a89c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -798,19 +798,19 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
->   	max_crtc_count = min(max_crtc_count, primary_planes_idx);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 9c6817b..5d6ad1f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -2412,7 +2412,7 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
+>   	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
+>   	struct drm_encoder *drm_enc = NULL;
+>   	struct dpu_encoder_virt *dpu_enc = NULL;
+> -	int ret = 0;
+> +	int ret = 0, intf_i;
 >   
->   	/* Create one CRTC per encoder */
-> +	encoder = list_first_entry(&(dev)->mode_config.encoder_list,
-> +		struct drm_encoder, head);
-
-Please use drm_for_each_encoder() here.
-
->   	for (i = 0; i < max_crtc_count; i++) {
->   		crtc = dpu_crtc_init(dev, primary_planes[i], cursor_planes[i]);
-> -		if (IS_ERR(crtc)) {
-> +		if (IS_ERR(crtc) || IS_ERR_OR_NULL(encoder)) {
-
-Why? Not to mention that the OR_NULL part is quite frequently a mistake.
-
->   			ret = PTR_ERR(crtc);
->   			return ret;
->   		}
->   		priv->crtcs[priv->num_crtcs++] = crtc;
-> +		encoder->possible_crtcs = 1 << drm_crtc_index(crtc);
-> +		encoder = list_next_entry(encoder, head);
->   	}
+>   	dpu_enc = to_dpu_encoder_virt(enc);
 >   
-> -	/* All CRTCs are compatible with all encoders */
-> -	drm_for_each_encoder(encoder, dev)
-> -		encoder->possible_crtcs = (1 << priv->num_crtcs) - 1;
-> -
->   	return 0;
+> @@ -2424,13 +2424,16 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
+>   	timer_setup(&dpu_enc->frame_done_timer,
+>   			dpu_encoder_frame_done_timeout, 0);
+>   
+> +	intf_i = disp_info->h_tile_instance[0];
+>   	if (disp_info->intf_type == DRM_MODE_ENCODER_DSI)
+>   		timer_setup(&dpu_enc->vsync_event_timer,
+>   				dpu_encoder_vsync_event_handler,
+>   				0);
+> -	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS)
+> +	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS) {
+>   		dpu_enc->wide_bus_en = msm_dp_wide_bus_available(
+> -				priv->dp[disp_info->h_tile_instance[0]]);
+> +				priv->dp[intf_i]);
+> +		disp_info->is_external = msm_dp_is_external(priv->dp[intf_i]);
+> +	}
+
+I will quite myself: "And DSI can be pluggable too. Please enumerate 
+connector types here rather than doing that in DP driver."
+Your s/pluggable/external/ doesn't fix the issue.
+
+>   
+>   	INIT_DELAYED_WORK(&dpu_enc->delayed_off_work,
+>   			dpu_encoder_off_work);
+> @@ -2455,6 +2458,17 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
+>   
 >   }
 >   
+> +bool dpu_encoder_is_external(struct drm_encoder *drm_enc)
+> +{
+> +	struct dpu_encoder_virt *dpu_enc;
+> +
+> +	if (!drm_enc)
+> +		return false;
+> +
+> +	dpu_enc = to_dpu_encoder_virt(drm_enc);
+> +	return dpu_enc->disp_info.is_external;
+> +}
+> +
+>   struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
+>   		int drm_enc_mode)
+>   {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> index 9e7236e..43f0d8b 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> @@ -25,16 +25,18 @@
+>    * @num_of_h_tiles:     Number of horizontal tiles in case of split interface
+>    * @h_tile_instance:    Controller instance used per tile. Number of elements is
+>    *                      based on num_of_h_tiles
+> - * @is_cmd_mode		Boolean to indicate if the CMD mode is requested
+> + * @is_cmd_mode:        Boolean to indicate if the CMD mode is requested
+> + * @is_external:        Boolean to indicate if the intf is external
+>    * @is_te_using_watchdog_timer:  Boolean to indicate watchdog TE is
+> - *				 used instead of panel TE in cmd mode panels
+> - * @dsc:		DSC configuration data for DSC-enabled displays
+> + *                      used instead of panel TE in cmd mode panels
+> + * @dsc:                DSC configuration data for DSC-enabled displays
+>    */
+>   struct msm_display_info {
+>   	int intf_type;
+>   	uint32_t num_of_h_tiles;
+>   	uint32_t h_tile_instance[MAX_H_TILES_PER_DISPLAY];
+>   	bool is_cmd_mode;
+> +	bool is_external;
+>   	bool is_te_using_watchdog_timer;
+>   	struct drm_dsc_config *dsc;
+>   };
+> @@ -128,6 +130,12 @@ enum dpu_intf_mode dpu_encoder_get_intf_mode(struct drm_encoder *encoder);
+>   void dpu_encoder_virt_runtime_resume(struct drm_encoder *encoder);
+>   
+>   /**
+> + * dpu_encoder_is_external - find if the encoder is of type external
+> + * @drm_enc:    Pointer to previously created drm encoder structure
+> + */
+> +bool dpu_encoder_is_external(struct drm_encoder *drm_enc);
+> +
+> +/**
+>    * dpu_encoder_init - initialize virtual encoder object
+>    * @dev:        Pointer to drm device structure
+>    * @disp_info:  Pointer to display information structure
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index bfd0aef..0bbdcca5 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1509,6 +1509,11 @@ bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
+>   	return dp->wide_bus_en;
+>   }
+>   
+> +bool msm_dp_is_external(const struct msm_dp *dp_display)
+> +{
+> +	return (dp_display->connector_type == DRM_MODE_CONNECTOR_DisplayPort);
+> +}
+> +
+>   void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
+>   {
+>   	struct dp_display_private *dp;
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index ea80846..3b9f8d2 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -331,7 +331,7 @@ void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_displa
+>   
+>   void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor);
+>   bool msm_dp_wide_bus_available(const struct msm_dp *dp_display);
+> -
+> +bool msm_dp_is_external(const struct msm_dp *dp_display);
+>   #else
+>   static inline int __init msm_dp_register(void)
+>   {
+> @@ -365,6 +365,11 @@ static inline bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
+>   	return false;
+>   }
+>   
+> +static inline bool msm_dp_is_external(const struct msm_dp *dp_display)
+> +{
+> +	return false;
+> +}
+> +
+>   #endif
+>   
+>   #ifdef CONFIG_DRM_MSM_MDP4
 
 -- 
 With best wishes
