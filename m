@@ -2,106 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5DA3623567
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 22:09:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D8D4623591
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Nov 2022 22:16:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229784AbiKIVJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Nov 2022 16:09:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60584 "EHLO
+        id S231567AbiKIVQY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Nov 2022 16:16:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229561AbiKIVJL (ORCPT
+        with ESMTP id S231543AbiKIVQV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Nov 2022 16:09:11 -0500
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D6CB12D38;
-        Wed,  9 Nov 2022 13:09:10 -0800 (PST)
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-13c569e5ff5so167791fac.6;
-        Wed, 09 Nov 2022 13:09:10 -0800 (PST)
+        Wed, 9 Nov 2022 16:16:21 -0500
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB41E31237;
+        Wed,  9 Nov 2022 13:16:20 -0800 (PST)
+Received: by mail-pl1-f175.google.com with SMTP id k7so18274570pll.6;
+        Wed, 09 Nov 2022 13:16:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=8s7hI8Zud53E/E/LGzGpSycc8sTlYS9S0JeTQWZw1BE=;
-        b=UHhYLXYYLO1vALkxjqk8LTf/bWb4DbFoNd83qCLsc97RTJ7itzyGWBOttTrSf4sTvZ
-         0ZORPOanaOShPT7r7KOlh1P4To5VGCSGvtUbAsv3JhvNSeT5RBdoI1E/zSjNAVto1smY
-         ljSA3ppVJuK/dYIMtWHPNlHMqTCgNbEMUGkX81lqbeT6xxQyRKuGWrHLxf0ck+huyM/Y
-         IfDikbJ4GRiF43J/QJWaP4fqevx0s9tZaE2IlKbARobBysjSde37p9SN81ltrQQsjFvF
-         KhiaCqmwm4CcukXukG2jo8DPCjCUuKGCspN+vU6LY1nrk+/nvXQ444sWIm9Bl/eQ12y2
-         Brlg==
-X-Gm-Message-State: ACrzQf0jpeJBGMM/LMThJREY4aUqUn92dy3uLVgvubj7LLFINIhxS0oV
-        0U+greTtCxOdMF+MF+VB4A==
-X-Google-Smtp-Source: AMsMyM5pyAb0lxvqFEiih871wsejSy/ryTVCST1bIhwXfBgU1eV0o3m98wEwHeZxJ1wdpmrhvz7RAA==
-X-Received: by 2002:a05:6871:401:b0:13b:c222:456 with SMTP id d1-20020a056871040100b0013bc2220456mr47300571oag.234.1668028149580;
-        Wed, 09 Nov 2022 13:09:09 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id g20-20020a4ab814000000b00480fd9f311esm4583432oop.13.2022.11.09.13.09.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Nov 2022 13:09:09 -0800 (PST)
-Received: (nullmailer pid 2868041 invoked by uid 1000);
-        Wed, 09 Nov 2022 21:09:10 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sv2S8v8aoIMkFk8Z4x5Dwl/WF1J53tF7mO3deU2RxH4=;
+        b=fZineH2xMMs5kSWrTdHOhG5xu3sRXY37FHckr786byS8ggjBR4vBAV5HRLT8ue+z8f
+         yFAoRyKk+Ag6bU1rb6OzUMbiPnJ5IWv2YBdrZiNU4bInUHqB9RmvwRk6YZXchr+5+a+F
+         /u7Y5fb08HXncKVjjdRdomgEdfUI16aLoB9/NZcJ1849gmMkc5NGjTWsR9I+qely7wSI
+         qvck/L2e9XTRtcwMOYV3d2QutAKMP+H5hr97jLFxlIof1cTXnlrOMxHYbavhmItNMePG
+         LY7f1mcJTp0Dsz67tLynJMQZhbYQUY5RcB+05menRhTjBpaD5uFYtnnimO0oBGpbkXlI
+         08Pw==
+X-Gm-Message-State: ACrzQf2t5RhueKScV+nnGAvifqdKS3GLq9PKlC4+FlEJtX/fBscLlf7X
+        J8C4d1h3iuXkfbVSKcyBpsIqK7dykr0=
+X-Google-Smtp-Source: AMsMyM4Z33DzYBqAFNPYNm40x5e/hzUYtWYeSl/cmk8tx/NFjuGTcXEQ3UiY9NkahDb0Nf5ytXqrPA==
+X-Received: by 2002:a17:902:ced1:b0:186:b18a:d0d5 with SMTP id d17-20020a170902ced100b00186b18ad0d5mr63284859plg.60.1668028580058;
+        Wed, 09 Nov 2022 13:16:20 -0800 (PST)
+Received: from ?IPV6:2620:15c:211:201:68b6:5dae:a00c:c3b? ([2620:15c:211:201:68b6:5dae:a00c:c3b])
+        by smtp.gmail.com with ESMTPSA id i16-20020a632210000000b0043a18cef977sm7781598pgi.13.2022.11.09.13.16.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Nov 2022 13:16:19 -0800 (PST)
+Message-ID: <e92d248b-6041-49bc-a3dd-1e17abf0fb26@acm.org>
+Date:   Wed, 9 Nov 2022 13:16:16 -0800
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org,
-        Will Deacon <will@kernel.org>, iommu@lists.linux.dev,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        patches@linaro.org, andersson@kernel.org
-In-Reply-To: <20221109111236.46003-2-konrad.dybcio@linaro.org>
-References: <20221109111236.46003-1-konrad.dybcio@linaro.org>
- <20221109111236.46003-2-konrad.dybcio@linaro.org>
-Message-Id: <166802788099.2832919.14556738707192792770.robh@kernel.org>
-Subject: Re: [PATCH 01/10] dt-bindings: arm-smmu: Allow up to 3 power-domains
-Date:   Wed, 09 Nov 2022 15:09:10 -0600
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH v4 05/16] ufs: core: mcq: Add Multi Circular Queue support
+Content-Language: en-US
+To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_cang@quicinc.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
+        stanley.chu@mediatek.com, eddie.huang@mediatek.com,
+        daejun7.park@samsung.com, avri.altman@wdc.com, mani@kernel.org,
+        beanhuo@micron.com, linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Arthur Simchaev <Arthur.Simchaev@wdc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Jinyoung Choi <j-young.choi@samsung.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <cover.1668022680.git.quic_asutoshd@quicinc.com>
+ <5f3cfdaee098ef245e19824b45c092acd8cc48c8.1668022680.git.quic_asutoshd@quicinc.com>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <5f3cfdaee098ef245e19824b45c092acd8cc48c8.1668022680.git.quic_asutoshd@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 11/9/22 11:41, Asutosh Das wrote:
+> +static int ufshcd_mcq_config_nr_queues(struct ufs_hba *hba)
+> +{
+> +	int i;
+> +	u32 hba_maxq, rem, tot_queues;
+> +	struct Scsi_Host *host = hba->host;
+> +
+> +	hba_maxq = FIELD_GET(GENMASK(7, 0), hba->mcq_capabilities);
+> +
+> +	if (!rw_queues)
+> +		rw_queues = num_possible_cpus();
+> +
+> +	tot_queues = UFS_MCQ_NUM_DEV_CMD_QUEUES + read_queues + poll_queues +
+> +			rw_queues;
+> +
+> +	if (hba_maxq < tot_queues) {
+> +		dev_err(hba->dev, "Total queues (%d) exceeds HC capacity (%d)\n",
+> +			tot_queues, hba_maxq);
+> +		return -EOPNOTSUPP;
+> +	}
 
-On Wed, 09 Nov 2022 12:12:26 +0100, Konrad Dybcio wrote:
-> Some SMMUs require that a vote is held on as much as 3 separate PDs
-> (hello Qualcomm). Allow it in bindings.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
+This function can fail with default kernel module parameters, e.g. 
+num_possible_cpus() == 8 and hba_maxq == 4. This is not acceptable. A 
+better solution is required, e.g. reducing rw_queues if the user has not 
+set this kernel module parameter.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Thanks,
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/iommu/arm,smmu.example.dtb: iommu@d00000: power-domains: [[4294967295, 0]] is too short
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+Bart.
