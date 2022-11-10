@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 886A1624088
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 11:58:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 695DB6240A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 12:02:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230362AbiKJK6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 05:58:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49426 "EHLO
+        id S229929AbiKJLCj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 06:02:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230357AbiKJK6y (ORCPT
+        with ESMTP id S230406AbiKJLCX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Nov 2022 05:58:54 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4692862CE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 02:58:52 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id 13so4043092ejn.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 02:58:52 -0800 (PST)
+        Thu, 10 Nov 2022 06:02:23 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 572316CA0A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 03:02:19 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id f5so4031684ejc.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 03:02:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=j9v0NQl0KfKBC4DHwYquqtrofNZ7QFlryD3QBLl4KBs=;
-        b=NLw6Q54kJJe7lJBpU95vDKD1QE5G5OIihBBLqMEU8o5BhHkjLWipkMTy6xunEplxFn
-         6VqGf9qkVB1pmYN6tcBKHzjy+vDzcWulz3zeWb0AIQ1p9+vOxj/Op2FCsvcUg7okQl5z
-         uvc7ODsb6nEUyErFOj8hohKPQYaU1scFgampmcHgqJL09zoVJoShFqukjP4ol7BuWZcL
-         /vJJWtCP3vNlL6dRKgUHzdERHwTzRnhyf9g5aLmCWm2X2ubW8V8u1gK/fKQFcgc2lG/O
-         Fa94hLCp5vc/pMJz+Cy0v0ofCDGiLirGSpzHBUeDCpBELDtmpgwMTQiaPtaReaqmtVoK
-         h5IQ==
+        bh=L0kPvLa286AkbDNXKbVvuHvXORMmCyLOgPXXU67P4LE=;
+        b=PHYzcSvS5Cg+0YumNw0/zyCi6KbcdAz8iyrHoBxvgLqGUYBNRUnc1WrXPJmaWEpL3i
+         hGnVhaAVckFbEIYT9wOyJ5RSEiwgzzdl4kDJSAEu21lrddYdV5FWf9W880mjMwAz6BZr
+         e1H0ipusQX91xQmYYPpi8cq2d3QYG7R09fSNMAw3/+D9iNB8ih0QUDtMSA1b5ADA3Elt
+         Ej9sd1t4sdaJPxZcmbXU00fBIkE8HXWedbysX5BRBSabYClBzYXxx2Vm4461nL6UYvAu
+         ZnATUNr59HdihMAAv2fovqhUa+nLfxa3PRH2nG0AgF+3iYU0ee+PkdEKmcHL14peOhh4
+         DoYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
          :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=j9v0NQl0KfKBC4DHwYquqtrofNZ7QFlryD3QBLl4KBs=;
-        b=qLI/NvAJTmu+vkD2C5VlMU1488rexcUAHrKwRvtofxryLmDg4n4LmhYVsSwwEBTapc
-         AMc+A9BS32OG1108bxQeIjrdSA/N2XkHPE4gcfgjlHLfEEh4yqfZxO7UbsO1sNpmZ+Jj
-         eej9HooHAavgDxVmNrmJXz7I6FhiGBD1+E9anj1dWxjAQxenPwtNs+Myl7nIJplY8n2V
-         Epr4jRrzvbBTqPH6m3UTNcjqDOSKzUYJIE73G1pX7xooMGNVYbDJ/8M8WvgCJlD6euhs
-         Kvj8wAVhGJDJE4eEpkLrFld/X0k1W9qIDllj+NpDn201LzzK6Z3fnPAsMMSKlhAAMid1
-         Frig==
-X-Gm-Message-State: ACrzQf2ygd+GGtY/58JD5lKFOKrqmsT3YfaMySrbJ2PfL/OvQ3Z1py9L
-        as8jRlMuvTPtqD9BQgO9KaQ1KA==
-X-Google-Smtp-Source: AMsMyM5hdouEf+WKGGMUdkcAlH8i4BPCBdmIjJAflPa89gqw+sEiFzlUwb57sefzp7H815Yd9torGA==
-X-Received: by 2002:a17:906:846d:b0:7ad:90dd:4b6 with SMTP id hx13-20020a170906846d00b007ad90dd04b6mr58411135ejc.492.1668077930775;
-        Thu, 10 Nov 2022 02:58:50 -0800 (PST)
+        bh=L0kPvLa286AkbDNXKbVvuHvXORMmCyLOgPXXU67P4LE=;
+        b=6yg1/pf1lCJ7YBqDqW0D8Th/+TEIVCNHKCbefagQJpqCiMO9B2nzLRmvMgzLMen4Qz
+         BRnYxFW4/CSHfTwKEhm72x/ZujAhZVqPSatN52lo9Z3MGWYk16IDLxZ0+NqoaCLZ6n+P
+         nlAHw4c1iLuff0naun/y4pwMp0jAET7KYi+QnnIGAdiqmIMPomCavxVvFw/+xoIMqIGM
+         IdVu+EDrxKZtKJiTzeFmNMSgaId8qGx3i+Eidb7SAhnvlo8rmVLaamRxRmSF3KNfZuAC
+         DB4+xM6v9vpeacgaNOrRXKRDDXRnQ+ZuzM1ojMEJrr3lG2KGRJfom2gmLzOSwh5xm2D5
+         c3Qg==
+X-Gm-Message-State: ACrzQf3xuDQNk3aH7bI7zuRNGA5urY2RfRyU9ZQZ8ny3FIyTYzdmdBnl
+        hUvvLDejXdh//7Eu2di1th1Lpw==
+X-Google-Smtp-Source: AMsMyM4eoIcB1m6CVRlycwyz47fsHzxOyh/cX46U03mvjMK3MHFI9FrnDPjDwAbTgGFH2BeKjf+TtA==
+X-Received: by 2002:a17:907:7b93:b0:770:1d4f:4de9 with SMTP id ne19-20020a1709077b9300b007701d4f4de9mr59897802ejc.201.1668078138469;
+        Thu, 10 Nov 2022 03:02:18 -0800 (PST)
 Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id n20-20020aa7c794000000b00459012e5145sm8327840eds.70.2022.11.10.02.58.49
+        by smtp.gmail.com with ESMTPSA id w16-20020a170906481000b007a9a56e2a07sm7041267ejq.49.2022.11.10.03.02.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Nov 2022 02:58:50 -0800 (PST)
-Message-ID: <8fc72b74-80b5-1e9c-2341-4e9c4d78c4e9@linaro.org>
-Date:   Thu, 10 Nov 2022 11:58:47 +0100
+        Thu, 10 Nov 2022 03:02:18 -0800 (PST)
+Message-ID: <517cde25-83b3-e9be-a56b-e08c4e84b660@linaro.org>
+Date:   Thu, 10 Nov 2022 12:02:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH 1/9] arm64: dts: qcom: sc8280xp/sa8540p: add PCIe2-4 nodes
+Subject: Re: [PATCH 2/9] arm64: dts: qcom: sa8295p-adp: enable PCIe
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
@@ -63,14 +63,15 @@ Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20221110103558.12690-1-johan+linaro@kernel.org>
- <20221110103558.12690-2-johan+linaro@kernel.org>
+ <20221110103558.12690-3-johan+linaro@kernel.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221110103558.12690-2-johan+linaro@kernel.org>
+In-Reply-To: <20221110103558.12690-3-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -79,19 +80,11 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 10/11/2022 11:35, Johan Hovold wrote:
-> The SC8280XP platform has seven PCIe controllers:
+> The SA8295P-ADP has up to four PCIe interfaces implemented by three or
+> four controllers: PCIe2A, PCIe3A/PCIe3B and PCIe4.
 >
-> 	PCIe0	USB4
-> 	PCIe1	USB4
-> 	PCIe2A	4-lane
-> 	PCIe2B	2-lane
-> 	PCIe3A	4-lane
-> 	PCIe3B	2-lane
-> 	PCIe4	1-lane
->
-> while SA8540P only has five (PCIe2-4).
->
-> Add devicetree nodes for the PCIe2-4 controllers and their PHYs.
+> PCIe2 is used in x4 mode, while PCIe3 can be used in either x2 or x4
+> mode. Enable both PCIe3A and PCI3B in x2 mode for now.
 >
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
@@ -101,588 +94,199 @@ Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
->   arch/arm64/boot/dts/qcom/sa8540p.dtsi  |  59 +++
->   arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 493 ++++++++++++++++++++++++-
->   2 files changed, 547 insertions(+), 5 deletions(-)
+>   arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 171 +++++++++++++++++++++++
+>   1 file changed, 171 insertions(+)
 >
-> diff --git a/arch/arm64/boot/dts/qcom/sa8540p.dtsi b/arch/arm64/boot/dts/qcom/sa8540p.dtsi
-> index 8ea2886fbab2..01a24b6a5e6d 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8540p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8540p.dtsi
-> @@ -128,6 +128,65 @@ opp-2592000000 {
+> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> index b608b82dff03..ff1e6a674913 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> @@ -57,6 +57,13 @@ vreg_l13a: ldo13 {
+>   			regulator-max-microvolt = <3072000>;
+>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>   		};
+> +
+> +		vreg_l11a: ldo11 {
+> +			regulator-name = "vreg_l11a";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <880000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+>   	};
+>   
+>   	pmm8540-c-regulators {
+> @@ -151,6 +158,76 @@ vreg_l8g: ldo8 {
 >   	};
 >   };
 >   
 > +&pcie2a {
-> +	compatible = "qcom,pcie-sa8540p";
+> +	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
+> +	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
 > +
-> +	linux,pci-domain = <0>;
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pcie2a_default>;
 > +
-> +	interrupts = <GIC_SPI 440 IRQ_TYPE_LEVEL_HIGH>;
-> +	interrupt-names = "msi";
+> +	status = "okay";
 > +};
 > +
-> +&pcie2b {
-> +	compatible = "qcom,pcie-sa8540p";
+> +&pcie2a_phy {
+> +	vdda-phy-supply = <&vreg_l11a>;
+> +	vdda-pll-supply = <&vreg_l3a>;
 > +
-> +	linux,pci-domain = <1>;
-> +
-> +	interrupts = <GIC_SPI 263 IRQ_TYPE_LEVEL_HIGH>;
-> +	interrupt-names = "msi";
+> +	status = "okay";
 > +};
 > +
 > +&pcie3a {
-> +	compatible = "qcom,pcie-sa8540p";
-> +	reg = <0x0 0x01c10000 0x0 0x3000>,
-> +	      <0x0 0x40000000 0x0 0xf1d>,
-> +	      <0x0 0x40000f20 0x0 0xa8>,
-> +	      <0x0 0x40001000 0x0 0x1000>,
-> +	      <0x0 0x40100000 0x0 0x100000>;
-> +	reg-names = "parf", "dbi", "elbi", "atu", "config";
+> +	num-lanes = <2>;
 > +
-> +	ranges = <0x01000000 0x0 0x40200000 0x0 0x40200000 0x0 0x100000>,
-> +		 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1d00000>;
+> +	perst-gpios = <&tlmm 151 GPIO_ACTIVE_LOW>;
+> +	wake-gpios = <&tlmm 56 GPIO_ACTIVE_LOW>;
 > +
-> +	linux,pci-domain = <2>;
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pcie3a_default>;
 > +
-> +	interrupts =  <GIC_SPI 567 IRQ_TYPE_LEVEL_HIGH>;
-> +	interrupt-names = "msi";
+> +	status = "okay";
+> +};
 > +
-> +	interrupt-map = <0 0 0 1 &intc 0 0 GIC_SPI 541 IRQ_TYPE_LEVEL_HIGH>,
-> +			<0 0 0 2 &intc 0 0 GIC_SPI 542 IRQ_TYPE_LEVEL_HIGH>,
-> +			<0 0 0 3 &intc 0 0 GIC_SPI 543 IRQ_TYPE_LEVEL_HIGH>,
-> +			<0 0 0 4 &intc 0 0 GIC_SPI 544 IRQ_TYPE_LEVEL_HIGH>;
+> +&pcie3a_phy {
+> +	vdda-phy-supply = <&vreg_l11a>;
+> +	vdda-pll-supply = <&vreg_l3a>;
+> +
+> +	status = "okay";
 > +};
 > +
 > +&pcie3b {
-> +	compatible = "qcom,pcie-sa8540p";
+> +	perst-gpios = <&tlmm 153 GPIO_ACTIVE_LOW>;
+> +	wake-gpios = <&tlmm 130 GPIO_ACTIVE_LOW>;
 > +
-> +	linux,pci-domain = <3>;
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pcie3b_default>;
 > +
-> +	interrupts = <GIC_SPI 565 IRQ_TYPE_LEVEL_HIGH>;
-> +	interrupt-names = "msi";
+> +	status = "okay";
+> +};
+> +
+> +&pcie3b_phy {
+> +	vdda-phy-supply = <&vreg_l11a>;
+> +	vdda-pll-supply = <&vreg_l3a>;
+> +
+> +	status = "okay";
 > +};
 > +
 > +&pcie4 {
-> +	compatible = "qcom,pcie-sa8540p";
+> +	perst-gpios = <&tlmm 141 GPIO_ACTIVE_LOW>;
+> +	wake-gpios = <&tlmm 139 GPIO_ACTIVE_LOW>;
 > +
-> +	linux,pci-domain = <4>;
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pcie4_default>;
 > +
-> +	interrupts = <GIC_SPI 518 IRQ_TYPE_LEVEL_HIGH>;
-> +	interrupt-names = "msi";
+> +	status = "okay";
 > +};
 > +
->   &rpmhpd {
->   	compatible = "qcom,sa8540p-rpmhpd";
+> +&pcie4_phy {
+> +	vdda-phy-supply = <&vreg_l11a>;
+> +	vdda-pll-supply = <&vreg_l3a>;
+> +
+> +	status = "okay";
+> +};
+> +
+>   &qup2 {
+>   	status = "okay";
 >   };
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index 6bc12e507d21..27f5c2f82338 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -729,11 +729,11 @@ gcc: clock-controller@100000 {
->   				 <0>,
->   				 <0>,
->   				 <0>,
-> -				 <0>,
-> -				 <0>,
-> -				 <0>,
-> -				 <0>,
-> -				 <0>,
-> +				 <&pcie2a_phy>,
-> +				 <&pcie2b_phy>,
-> +				 <&pcie3a_phy>,
-> +				 <&pcie3b_phy>,
-> +				 <&pcie4_phy>,
->   				 <0>,
->   				 <0>;
->   			power-domains = <&rpmhpd SC8280XP_CX>;
-> @@ -839,6 +839,489 @@ qup1: geniqup@ac0000 {
->   			status = "disabled";
->   		};
+> @@ -380,3 +457,97 @@ &xo_board_clk {
+>   };
 >   
-> +		pcie4: pcie@1c00000 {
-> +			device_type = "pci";
-> +			compatible = "qcom,pcie-sc8280xp";
-> +			reg = <0x0 0x01c00000 0x0 0x3000>,
-> +			      <0x0 0x30000000 0x0 0xf1d>,
-> +			      <0x0 0x30000f20 0x0 0xa8>,
-> +			      <0x0 0x30001000 0x0 0x1000>,
-> +			      <0x0 0x30100000 0x0 0x100000>;
-> +			reg-names = "parf", "dbi", "elbi", "atu", "config";
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +			ranges = <0x01000000 0x0 0x30200000 0x0 0x30200000 0x0 0x100000>,
-> +				 <0x02000000 0x0 0x30300000 0x0 0x30300000 0x0 0x1d00000>;
-> +			bus-range = <0x00 0xff>;
+>   /* PINCTRL */
 > +
-> +			linux,pci-domain = <6>;
-> +			num-lanes = <1>;
-> +
-> +			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "msi0", "msi1", "msi2", "msi3";
-> +
-> +			#interrupt-cells = <1>;
-> +			interrupt-map-mask = <0 0 0 0x7>;
-> +			interrupt-map = <0 0 0 1 &intc 0 0 GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 2 &intc 0 0 GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 3 &intc 0 0 GIC_SPI 151 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 4 &intc 0 0 GIC_SPI 152 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			clocks = <&gcc GCC_PCIE_4_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_4_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_4_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_4_SLV_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_4_SLV_Q2A_AXI_CLK>,
-> +				 <&gcc GCC_DDRSS_PCIE_SF_TBU_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_4_AXI_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_SOUTH_SF_AXI_CLK>,
-> +				 <&gcc GCC_CNOC_PCIE4_QX_CLK>;
-> +			clock-names = "aux",
-> +				      "cfg",
-> +				      "bus_master",
-> +				      "bus_slave",
-> +				      "slave_q2a",
-> +				      "ddrss_sf_tbu",
-> +				      "noc_aggr_4",
-> +				      "noc_aggr_south_sf",
-> +				      "cnoc_qx";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE_4_AUX_CLK>;
-> +			assigned-clock-rates = <19200000>;
-> +
-> +			interconnects = <&aggre2_noc MASTER_PCIE_4 0 &mc_virt SLAVE_EBI1 0>,
-> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_4 0>;
-> +			interconnect-names = "pcie-mem", "cpu-pcie";
-> +
-> +			resets = <&gcc GCC_PCIE_4_BCR>;
-> +			reset-names = "pci";
-> +
-> +			power-domains = <&gcc PCIE_4_GDSC>;
-> +
-> +			phys = <&pcie4_phy>;
-> +			phy-names = "pciephy";
-> +
-> +			status = "disabled";
+> +&tlmm {
+> +	pcie2a_default: pcie2a-default-state {
+> +		clkreq-n-pins {
+> +			pins = "gpio142";
+> +			function = "pcie2a_clkreq";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
 > +		};
 > +
-> +		pcie4_phy: phy@1c06000 {
-> +			compatible = "qcom,sc8280xp-qmp-gen3x1-pcie-phy";
-> +			reg = <0x0 0x01c06000 0x0 0x2000>;
-> +
-> +			clocks = <&gcc GCC_PCIE_4_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_4_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_4_CLKREF_CLK>,
-> +				 <&gcc GCC_PCIE4_PHY_RCHNG_CLK>,
-> +				 <&gcc GCC_PCIE_4_PIPE_CLK>,
-> +				 <&gcc GCC_PCIE_4_PIPEDIV2_CLK>;
-> +			clock-names = "aux", "cfg_ahb", "ref", "rchng",
-> +				      "pipe", "pipediv2";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE4_PHY_RCHNG_CLK>;
-> +			assigned-clock-rates = <100000000>;
-> +
-> +			power-domains = <&gcc PCIE_4_GDSC>;
-> +
-> +			resets = <&gcc GCC_PCIE_4_PHY_BCR>;
-> +			reset-names = "phy";
-> +
-> +			#clock-cells = <0>;
-> +			clock-output-names = "pcie_4_pipe_clk";
-> +
-> +			#phy-cells = <0>;
-> +
-> +			status = "disabled";
+> +		perst-n-pins {
+> +			pins = "gpio143";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-down;
 > +		};
 > +
-> +		pcie3b: pcie@1c08000 {
-> +			device_type = "pci";
-> +			compatible = "qcom,pcie-sc8280xp";
-> +			reg = <0x0 0x01c08000 0x0 0x3000>,
-> +			      <0x0 0x32000000 0x0 0xf1d>,
-> +			      <0x0 0x32000f20 0x0 0xa8>,
-> +			      <0x0 0x32001000 0x0 0x1000>,
-> +			      <0x0 0x32100000 0x0 0x100000>;
-> +			reg-names = "parf", "dbi", "elbi", "atu", "config";
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +			ranges = <0x01000000 0x0 0x32200000 0x0 0x32200000 0x0 0x100000>,
-> +				 <0x02000000 0x0 0x32300000 0x0 0x32300000 0x0 0x1d00000>;
-> +			bus-range = <0x00 0xff>;
+> +		wake-n-pins {
+> +			pins = "gpio145";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +	};
 > +
-> +			linux,pci-domain = <5>;
-> +			num-lanes = <2>;
-> +
-> +			interrupts = <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "msi0", "msi1", "msi2", "msi3";
-> +
-> +			#interrupt-cells = <1>;
-> +			interrupt-map-mask = <0 0 0 0x7>;
-> +			interrupt-map = <0 0 0 1 &intc 0 0 GIC_SPI 526 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 2 &intc 0 0 GIC_SPI 527 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 3 &intc 0 0 GIC_SPI 528 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 4 &intc 0 0 GIC_SPI 529 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			clocks = <&gcc GCC_PCIE_3B_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_3B_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_3B_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_3B_SLV_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_3B_SLV_Q2A_AXI_CLK>,
-> +				 <&gcc GCC_DDRSS_PCIE_SF_TBU_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_4_AXI_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_SOUTH_SF_AXI_CLK>;
-> +			clock-names = "aux",
-> +				      "cfg",
-> +				      "bus_master",
-> +				      "bus_slave",
-> +				      "slave_q2a",
-> +				      "ddrss_sf_tbu",
-> +				      "noc_aggr_4",
-> +				      "noc_aggr_south_sf";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE_3B_AUX_CLK>;
-> +			assigned-clock-rates = <19200000>;
-> +
-> +			interconnects = <&aggre2_noc MASTER_PCIE_3B 0 &mc_virt SLAVE_EBI1 0>,
-> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_3B 0>;
-> +			interconnect-names = "pcie-mem", "cpu-pcie";
-> +
-> +			resets = <&gcc GCC_PCIE_3B_BCR>;
-> +			reset-names = "pci";
-> +
-> +			power-domains = <&gcc PCIE_3B_GDSC>;
-> +
-> +			phys = <&pcie3b_phy>;
-> +			phy-names = "pciephy";
-> +
-> +			status = "disabled";
+> +	pcie3a_default: pcie3a-default-state {
+> +		clkreq-n-pins {
+> +			pins = "gpio150";
+> +			function = "pcie3a_clkreq";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
 > +		};
 > +
-> +		pcie3b_phy: phy@1c0e000 {
-> +			compatible = "qcom,sc8280xp-qmp-gen3x2-pcie-phy";
-> +			reg = <0x0 0x01c0e000 0x0 0x2000>;
-> +
-> +			clocks = <&gcc GCC_PCIE_3B_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_3B_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_3A3B_CLKREF_CLK>,
-> +				 <&gcc GCC_PCIE3B_PHY_RCHNG_CLK>,
-> +				 <&gcc GCC_PCIE_3B_PIPE_CLK>,
-> +				 <&gcc GCC_PCIE_3B_PIPEDIV2_CLK>;
-> +			clock-names = "aux", "cfg_ahb", "ref", "rchng",
-> +				      "pipe", "pipediv2";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE3B_PHY_RCHNG_CLK>;
-> +			assigned-clock-rates = <100000000>;
-> +
-> +			power-domains = <&gcc PCIE_3B_GDSC>;
-> +
-> +			resets = <&gcc GCC_PCIE_3B_PHY_BCR>;
-> +			reset-names = "phy";
-> +
-> +			#clock-cells = <0>;
-> +			clock-output-names = "pcie_3b_pipe_clk";
-> +
-> +			#phy-cells = <0>;
-> +
-> +			status = "disabled";
+> +		perst-n-pins {
+> +			pins = "gpio151";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-down;
 > +		};
 > +
-> +		pcie3a: pcie@1c10000 {
-> +			device_type = "pci";
-> +			compatible = "qcom,pcie-sc8280xp";
-> +			reg = <0x0 0x01c10000 0x0 0x3000>,
-> +			      <0x0 0x34000000 0x0 0xf1d>,
-> +			      <0x0 0x34000f20 0x0 0xa8>,
-> +			      <0x0 0x34001000 0x0 0x1000>,
-> +			      <0x0 0x34100000 0x0 0x100000>;
-> +			reg-names = "parf", "dbi", "elbi", "atu", "config";
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +			ranges = <0x01000000 0x0 0x34200000 0x0 0x34200000 0x0 0x100000>,
-> +				 <0x02000000 0x0 0x34300000 0x0 0x34300000 0x0 0x1d00000>;
-> +			bus-range = <0x00 0xff>;
+> +		wake-n-pins {
+> +			pins = "gpio56";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +	};
 > +
-> +			linux,pci-domain = <4>;
-> +			num-lanes = <4>;
-> +
-> +			interrupts = <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "msi0", "msi1", "msi2", "msi3";
-> +
-> +			#interrupt-cells = <1>;
-> +			interrupt-map-mask = <0 0 0 0x7>;
-> +			interrupt-map = <0 0 0 1 &intc 0 0 GIC_SPI 499 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 2 &intc 0 0 GIC_SPI 542 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 3 &intc 0 0 GIC_SPI 543 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 4 &intc 0 0 GIC_SPI 544 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			clocks = <&gcc GCC_PCIE_3A_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_3A_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_3A_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_3A_SLV_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_3A_SLV_Q2A_AXI_CLK>,
-> +				 <&gcc GCC_DDRSS_PCIE_SF_TBU_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_4_AXI_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_SOUTH_SF_AXI_CLK>;
-> +			clock-names = "aux",
-> +				      "cfg",
-> +				      "bus_master",
-> +				      "bus_slave",
-> +				      "slave_q2a",
-> +				      "ddrss_sf_tbu",
-> +				      "noc_aggr_4",
-> +				      "noc_aggr_south_sf";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE_3A_AUX_CLK>;
-> +			assigned-clock-rates = <19200000>;
-> +
-> +			interconnects = <&aggre2_noc MASTER_PCIE_3A 0 &mc_virt SLAVE_EBI1 0>,
-> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_3A 0>;
-> +			interconnect-names = "pcie-mem", "cpu-pcie";
-> +
-> +			resets = <&gcc GCC_PCIE_3A_BCR>;
-> +			reset-names = "pci";
-> +
-> +			power-domains = <&gcc PCIE_3A_GDSC>;
-> +
-> +			phys = <&pcie3a_phy>;
-> +			phy-names = "pciephy";
-> +
-> +			status = "disabled";
+> +	pcie3b_default: pcie3b-default-state {
+> +		clkreq-n-pins {
+> +			pins = "gpio152";
+> +			function = "pcie3b_clkreq";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
 > +		};
 > +
-> +		pcie3a_phy: phy@1c14000 {
-> +			compatible = "qcom,sc8280xp-qmp-gen3x4-pcie-phy";
-> +			reg = <0x0 0x01c14000 0x0 0x2000>,
-> +			      <0x0 0x01c16000 0x0 0x2000>;
-> +
-> +			clocks = <&gcc GCC_PCIE_3A_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_3A_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_3A3B_CLKREF_CLK>,
-> +				 <&gcc GCC_PCIE3A_PHY_RCHNG_CLK>,
-> +				 <&gcc GCC_PCIE_3A_PIPE_CLK>,
-> +				 <&gcc GCC_PCIE_3A_PIPEDIV2_CLK>;
-> +			clock-names = "aux", "cfg_ahb", "ref", "rchng",
-> +				      "pipe", "pipediv2";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE3A_PHY_RCHNG_CLK>;
-> +			assigned-clock-rates = <100000000>;
-> +
-> +			power-domains = <&gcc PCIE_3A_GDSC>;
-> +
-> +			resets = <&gcc GCC_PCIE_3A_PHY_BCR>;
-> +			reset-names = "phy";
-> +
-> +			qcom,4ln-config-sel = <&tcsr 0xa044 1>;
-> +
-> +			#clock-cells = <0>;
-> +			clock-output-names = "pcie_3a_pipe_clk";
-> +
-> +			#phy-cells = <0>;
-> +
-> +			status = "disabled";
+> +		perst-n-pins {
+> +			pins = "gpio153";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-down;
 > +		};
 > +
-> +		pcie2b: pcie@1c18000 {
-> +			device_type = "pci";
-> +			compatible = "qcom,pcie-sc8280xp";
-> +			reg = <0x0 0x01c18000 0x0 0x3000>,
-> +			      <0x0 0x38000000 0x0 0xf1d>,
-> +			      <0x0 0x38000f20 0x0 0xa8>,
-> +			      <0x0 0x38001000 0x0 0x1000>,
-> +			      <0x0 0x38100000 0x0 0x100000>;
-> +			reg-names = "parf", "dbi", "elbi", "atu", "config";
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +			ranges = <0x01000000 0x0 0x38200000 0x0 0x38200000 0x0 0x100000>,
-> +				 <0x02000000 0x0 0x38300000 0x0 0x38300000 0x0 0x1d00000>;
-> +			bus-range = <0x00 0xff>;
+> +		wake-n-pins {
+> +			pins = "gpio130";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +	};
 > +
-> +			linux,pci-domain = <3>;
-> +			num-lanes = <2>;
-> +
-> +			interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "msi0", "msi1", "msi2", "msi3";
-> +
-> +			#interrupt-cells = <1>;
-> +			interrupt-map-mask = <0 0 0 0x7>;
-> +			interrupt-map = <0 0 0 1 &intc 0 0 GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 2 &intc 0 0 GIC_SPI 434 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 3 &intc 0 0 GIC_SPI 435 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 4 &intc 0 0 GIC_SPI 438 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			clocks = <&gcc GCC_PCIE_2B_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_2B_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_2B_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_2B_SLV_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_2B_SLV_Q2A_AXI_CLK>,
-> +				 <&gcc GCC_DDRSS_PCIE_SF_TBU_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_4_AXI_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_SOUTH_SF_AXI_CLK>;
-> +			clock-names = "aux",
-> +				      "cfg",
-> +				      "bus_master",
-> +				      "bus_slave",
-> +				      "slave_q2a",
-> +				      "ddrss_sf_tbu",
-> +				      "noc_aggr_4",
-> +				      "noc_aggr_south_sf";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE_2B_AUX_CLK>;
-> +			assigned-clock-rates = <19200000>;
-> +
-> +			interconnects = <&aggre2_noc MASTER_PCIE_2B 0 &mc_virt SLAVE_EBI1 0>,
-> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_2B 0>;
-> +			interconnect-names = "pcie-mem", "cpu-pcie";
-> +
-> +			resets = <&gcc GCC_PCIE_2B_BCR>;
-> +			reset-names = "pci";
-> +
-> +			power-domains = <&gcc PCIE_2B_GDSC>;
-> +
-> +			phys = <&pcie2b_phy>;
-> +			phy-names = "pciephy";
-> +
-> +			status = "disabled";
+> +	pcie4_default: pcie4-default-state {
+> +		clkreq-n-pins {
+> +			pins = "gpio140";
+> +			function = "pcie4_clkreq";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
 > +		};
 > +
-> +		pcie2b_phy: phy@1c1e000 {
-> +			compatible = "qcom,sc8280xp-qmp-gen3x2-pcie-phy";
-> +			reg = <0x0 0x01c1e000 0x0 0x2000>;
-> +
-> +			clocks = <&gcc GCC_PCIE_2B_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_2B_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_2A2B_CLKREF_CLK>,
-> +				 <&gcc GCC_PCIE2B_PHY_RCHNG_CLK>,
-> +				 <&gcc GCC_PCIE_2B_PIPE_CLK>,
-> +				 <&gcc GCC_PCIE_2B_PIPEDIV2_CLK>;
-> +			clock-names = "aux", "cfg_ahb", "ref", "rchng",
-> +				      "pipe", "pipediv2";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE2B_PHY_RCHNG_CLK>;
-> +			assigned-clock-rates = <100000000>;
-> +
-> +			power-domains = <&gcc PCIE_2B_GDSC>;
-> +
-> +			resets = <&gcc GCC_PCIE_2B_PHY_BCR>;
-> +			reset-names = "phy";
-> +
-> +			#clock-cells = <0>;
-> +			clock-output-names = "pcie_2b_pipe_clk";
-> +
-> +			#phy-cells = <0>;
-> +
-> +			status = "disabled";
+> +		perst-n-pins {
+> +			pins = "gpio141";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-down;
 > +		};
 > +
-> +		pcie2a: pcie@1c20000 {
-> +			device_type = "pci";
-> +			compatible = "qcom,pcie-sc8280xp";
-> +			reg = <0x0 0x01c20000 0x0 0x3000>,
-> +			      <0x0 0x3c000000 0x0 0xf1d>,
-> +			      <0x0 0x3c000f20 0x0 0xa8>,
-> +			      <0x0 0x3c001000 0x0 0x1000>,
-> +			      <0x0 0x3c100000 0x0 0x100000>;
-> +			reg-names = "parf", "dbi", "elbi", "atu", "config";
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +			ranges = <0x01000000 0x0 0x3c200000 0x0 0x3c200000 0x0 0x100000>,
-> +				 <0x02000000 0x0 0x3c300000 0x0 0x3c300000 0x0 0x1d00000>;
-> +			bus-range = <0x00 0xff>;
-> +
-> +			linux,pci-domain = <2>;
-> +			num-lanes = <4>;
-> +
-> +			interrupts = <GIC_SPI 86 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 523 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 524 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 525 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "msi0", "msi1", "msi2", "msi3";
-> +
-> +			#interrupt-cells = <1>;
-> +			interrupt-map-mask = <0 0 0 0x7>;
-> +			interrupt-map = <0 0 0 1 &intc 0 0 GIC_SPI 530 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 2 &intc 0 0 GIC_SPI 531 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 3 &intc 0 0 GIC_SPI 532 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 4 &intc 0 0 GIC_SPI 533 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			clocks = <&gcc GCC_PCIE_2A_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_2A_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_2A_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_2A_SLV_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_2A_SLV_Q2A_AXI_CLK>,
-> +				 <&gcc GCC_DDRSS_PCIE_SF_TBU_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_4_AXI_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_SOUTH_SF_AXI_CLK>;
-> +			clock-names = "aux",
-> +				      "cfg",
-> +				      "bus_master",
-> +				      "bus_slave",
-> +				      "slave_q2a",
-> +				      "ddrss_sf_tbu",
-> +				      "noc_aggr_4",
-> +				      "noc_aggr_south_sf";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE_2A_AUX_CLK>;
-> +			assigned-clock-rates = <19200000>;
-> +
-> +			interconnects = <&aggre2_noc MASTER_PCIE_2A 0 &mc_virt SLAVE_EBI1 0>,
-> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_2A 0>;
-> +			interconnect-names = "pcie-mem", "cpu-pcie";
-> +
-> +			resets = <&gcc GCC_PCIE_2A_BCR>;
-> +			reset-names = "pci";
-> +
-> +			power-domains = <&gcc PCIE_2A_GDSC>;
-> +
-> +			phys = <&pcie2a_phy>;
-> +			phy-names = "pciephy";
-> +
-> +			status = "disabled";
+> +		wake-n-pins {
+> +			pins = "gpio139";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
 > +		};
-> +
-> +		pcie2a_phy: phy@1c24000 {
-> +			compatible = "qcom,sc8280xp-qmp-gen3x4-pcie-phy";
-> +			reg = <0x0 0x01c24000 0x0 0x2000>,
-> +			      <0x0 0x01c26000 0x0 0x2000>;
-> +
-> +			clocks = <&gcc GCC_PCIE_2A_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_2A_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_2A2B_CLKREF_CLK>,
-> +				 <&gcc GCC_PCIE2A_PHY_RCHNG_CLK>,
-> +				 <&gcc GCC_PCIE_2A_PIPE_CLK>,
-> +				 <&gcc GCC_PCIE_2A_PIPEDIV2_CLK>;
-> +			clock-names = "aux", "cfg_ahb", "ref", "rchng",
-> +				      "pipe", "pipediv2";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE2A_PHY_RCHNG_CLK>;
-> +			assigned-clock-rates = <100000000>;
-> +
-> +			power-domains = <&gcc PCIE_2A_GDSC>;
-> +
-> +			resets = <&gcc GCC_PCIE_2A_PHY_BCR>;
-> +			reset-names = "phy";
-> +
-> +			qcom,4ln-config-sel = <&tcsr 0xa044 0>;
-> +
-> +			#clock-cells = <0>;
-> +			clock-output-names = "pcie_2a_pipe_clk";
-> +
-> +			#phy-cells = <0>;
-> +
-> +			status = "disabled";
-> +		};
-> +
->   		ufs_mem_hc: ufs@1d84000 {
->   			compatible = "qcom,sc8280xp-ufshc", "qcom,ufshc",
->   				     "jedec,ufs-2.0";
+> +	};
+> +};
