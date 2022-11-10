@@ -2,173 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22D7E623E6D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 10:17:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 29FFE623E95
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 10:28:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229809AbiKJJRu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 04:17:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46254 "EHLO
+        id S229905AbiKJJ20 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 04:28:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229814AbiKJJRt (ORCPT
+        with ESMTP id S229791AbiKJJ2Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Nov 2022 04:17:49 -0500
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9D8768ACE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 01:17:47 -0800 (PST)
-Received: by mail-lj1-x22f.google.com with SMTP id b9so720879ljr.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 01:17:47 -0800 (PST)
+        Thu, 10 Nov 2022 04:28:25 -0500
+Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E1202DC;
+        Thu, 10 Nov 2022 01:28:24 -0800 (PST)
+Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-13b23e29e36so1548516fac.8;
+        Thu, 10 Nov 2022 01:28:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OXJcyenTe5vrVQO4BXPfziVJuW4vZr13iBtdffMSgQY=;
-        b=TH8f0c9RT08oEvIJLhqIa7LuTwbjaWhcUm5EI/rPbB5bDQ42vhkN87UbVrukAeeRGB
-         1CL0tR32h6X0s2EmcuOl/HiDyPnwFOUAl2uFNLNX32VrKk9y/Mc57h98TaftwvKF6hzQ
-         3xRdgaEO12ll2sroV954nwT7qWECND+d0nmBEgfYkOp3qFihDcFwkg6dorrCxFgKqPjq
-         V8BsyUQouyEA8utOrBlOgkNglT9u8pVtcBFxpuPzbXio9RVYUZB5f4jr/rG+rlpN1KFk
-         I4OCeYoOqKtqxhM9sGRHRbPVsVuvsvRjavP8+XBEgYwQen2ybxbB31I5gb6TqPVIFfZy
-         Rqlg==
+        bh=rGO0ip7w97EnTI7AeEZExC1C/s0SPOAF/+gJW/arOas=;
+        b=NLICpqWIL0oh8UeRnPS3bbaVWziUjgVrUCmoRKINtKXcM1AYSm0nkGmbakc670hive
+         K/WgPCHnPdqo3MvIzNom3wJbJjFCF5zKKdHsdJ3qTnpyHW5xzyUhimFR6GBkivLYBxsW
+         eWjIp7AGe/Z8dTjb5qXORiMZ9XG0rttbX+SmO+1JJEfCua1F0bmQ15bp9w7hzr52gwCW
+         LSSs+MQx11ItkSKhJOWfX47Lv0G4oOCe06+TpAAfD068lgcm3xt0UxQtiNBqESvVNN2E
+         /UX9i93wAoBpo+rAmA5OyW7ymX2U35ISeWH4SG3SGaYo8hBTI1OI4nbVPQqXLEdBvYAQ
+         IbSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OXJcyenTe5vrVQO4BXPfziVJuW4vZr13iBtdffMSgQY=;
-        b=X545EuASUQM1d/WIRBVFnagTQQZ67oBA2bMWoyGRMBj2oDGOZib3UiYKripr2SxAvy
-         pa+IUveOIT9caqE7/Yw+7xd1uZd1KcOS75in1NXbWFCcT6U+40DvWGYiijW0gOnQ+Rgb
-         wXz3mIjAViZ5hZjQGMIE1reUNHD4UJz2OS8JDkHBuLgxZS/+gDMV8mBMVaxwqZuB4GVY
-         5zSHiE1stXcpOYqDoOjzjOxLoaydv5+MNWmKT32gXSyo88jAGPJL/tMxCuKrmOg0JXl6
-         mv+y9X4t2lDT+Qv9MVqt6S08t9wJMyQZHUqqJHPs6TEuejxoRvrJ+xQn73ihmBm+im5x
-         AYaA==
-X-Gm-Message-State: ACrzQf0cBXSgucbmEG3egzQyg4i9kY4VVUqRZzAbAUpXSm2bfCZrTCb5
-        ZfV3uFHmNq5fs1zB4M6ssOD4cNSR3XYByzHY
-X-Google-Smtp-Source: AMsMyM4MjOfDR5ztaydaO4hjmHxa97bEYlC7KNQ+NMoQZBLkNKrhrQVqoNDLJmBX0qcsAh+25/7YOQ==
-X-Received: by 2002:a2e:b614:0:b0:277:5df:9728 with SMTP id r20-20020a2eb614000000b0027705df9728mr8115662ljn.337.1668071865942;
-        Thu, 10 Nov 2022 01:17:45 -0800 (PST)
-Received: from localhost.localdomain ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id r18-20020a2e8e32000000b00278d3123a16sm101219ljk.50.2022.11.10.01.17.44
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 10 Nov 2022 01:17:45 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
+        bh=rGO0ip7w97EnTI7AeEZExC1C/s0SPOAF/+gJW/arOas=;
+        b=3tHLkxLnDuUw7hzOPMBlgRMwRQNXiu6aP3ghd957vuyrXC6p+aQ0nxrIeIDXcB8ae6
+         cwmMx2OsN1giwOdEm5JNyX3b+OMA+quKTSlvz8tblGSERRlEMIT3t5fMIqey3n10LEAn
+         fxsNDSonsgKjBZvmVzfuLLtIHCkWoqZXOqF4VmOUy3xTUwcQI5i4LY/y4MNF9GwcX7Km
+         l58qugynq1a4ZnSD9+mGVJxX+PXvSjdqrH/XmK6I4+09K/TSYKqrElrQBGokXGms9zCd
+         IyFASO2cZku3uPAO0kHdSPCNExEE0nTML65veLCQFx5aIKoZmJW3WXr0ow6jS8RwEIci
+         eRjA==
+X-Gm-Message-State: ACrzQf1E2WuUXk08BOkLfu8a41bLD/sPiXsfj3SzSHSH/K//m/YYPgp5
+        e1YI0HjViyY5XSXKSufz4q8K/tQPEOANNt2hWzo=
+X-Google-Smtp-Source: AMsMyM5a9kSvD119ASRMT5PLTan+Njl0imIQy40yppsugaLk4qbvFSsFoYojJ1DghWVOk4H6rr/sJ7TfhNoAPaQosZ4=
+X-Received: by 2002:a05:6870:350:b0:13b:7165:3ae2 with SMTP id
+ n16-20020a056870035000b0013b71653ae2mr44802717oaf.11.1668072503816; Thu, 10
+ Nov 2022 01:28:23 -0800 (PST)
+MIME-Version: 1.0
+References: <20221102155558.1895829-1-dsankouski@gmail.com>
+ <20221102155558.1895829-3-dsankouski@gmail.com> <1a8bab07-46c4-1585-45ff-8780c02afd4e@linaro.org>
+ <CABTCjFBth=jON-uuMU54cQi3zDcGYtGMbpaKitc1WHx+ciNiRQ@mail.gmail.com> <c0ffd719-f1d6-9a2f-acb0-b777d9758397@linaro.org>
+In-Reply-To: <c0ffd719-f1d6-9a2f-acb0-b777d9758397@linaro.org>
+From:   Dzmitry Sankouski <dsankouski@gmail.com>
+Date:   Thu, 10 Nov 2022 12:28:12 +0300
+Message-ID: <CABTCjFARy+CKsqQM+4pAwKnkP-EeW3p2swzTZzH9j2NpeMnT9Q@mail.gmail.com>
+Subject: Re: [PATCH v11 2/2] arm64: dts: qcom: sagit: add initial device tree
+ for sagit
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v2 2/2] regulator: qcom_smd: Add PMR735a regulators
-Date:   Thu, 10 Nov 2022 10:17:36 +0100
-Message-Id: <20221110091736.3344-2-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.32.0 (Apple Git-132)
-In-Reply-To: <20221110091736.3344-1-konrad.dybcio@linaro.org>
-References: <20221110091736.3344-1-konrad.dybcio@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-PMR735a is already supported in the RPMH regulator driver, but
-there are cases where it's bundled with SMD RPM SoCs. Port it over
-to qcom_smd-regulator to enable usage in such cases.
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-Changes since v1:
-- Add and use pmic5_ftsmps520 in place of pms405_hfsmps3 for s3
-
- drivers/regulator/qcom_smd-regulator.c | 33 ++++++++++++++++++++++++++
- include/linux/soc/qcom/smd-rpm.h       |  2 ++
- 2 files changed, 35 insertions(+)
-
-diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
-index f98168d58dce..9f2b58458841 100644
---- a/drivers/regulator/qcom_smd-regulator.c
-+++ b/drivers/regulator/qcom_smd-regulator.c
-@@ -677,6 +677,24 @@ static const struct regulator_desc pm6125_ftsmps = {
- 	.ops = &rpm_smps_ldo_ops,
- };
- 
-+static const struct regulator_desc pmic5_ftsmps520 = {
-+	.linear_ranges = (struct linear_range[]) {
-+		REGULATOR_LINEAR_RANGE(300000, 0, 263, 4000),
-+	},
-+	.n_linear_ranges = 1,
-+	.n_voltages = 264,
-+	.ops = &rpm_smps_ldo_ops,
-+};
-+
-+static const struct regulator_desc pmic5_hfsmps515 = {
-+	.linear_ranges = (struct linear_range[]) {
-+		REGULATOR_LINEAR_RANGE(320000, 0, 235, 16000),
-+	},
-+	.n_linear_ranges = 1,
-+	.n_voltages = 236,
-+	.ops = &rpm_smps_ldo_ops,
-+};
-+
- static const struct regulator_desc pms405_hfsmps3 = {
- 	.linear_ranges = (struct linear_range[]) {
- 		REGULATOR_LINEAR_RANGE(320000, 0, 215, 8000),
-@@ -1265,6 +1283,20 @@ static const struct rpm_regulator_data rpm_pmi8998_regulators[] = {
- 	{}
- };
- 
-+static const struct rpm_regulator_data rpm_pmr735a_regulators[] = {
-+	{ "s1", QCOM_SMD_RPM_SMPE, 1, &pmic5_ftsmps520, "vdd_s1"},
-+	{ "s2", QCOM_SMD_RPM_SMPE, 2, &pmic5_ftsmps520, "vdd_s2"},
-+	{ "s3", QCOM_SMD_RPM_SMPE, 3, &pmic5_hfsmps515, "vdd_s3"},
-+	{ "l1", QCOM_SMD_RPM_LDOE, 1, &pm660_nldo660, "vdd_l1_l2"},
-+	{ "l2", QCOM_SMD_RPM_LDOE, 2, &pm660_nldo660, "vdd_l1_l2"},
-+	{ "l3", QCOM_SMD_RPM_LDOE, 3, &pm660_nldo660, "vdd_l3"},
-+	{ "l4", QCOM_SMD_RPM_LDOE, 4, &pm660_ht_lvpldo, "vdd_l4"},
-+	{ "l5", QCOM_SMD_RPM_LDOE, 5, &pm660_nldo660, "vdd_l5_l6"},
-+	{ "l6", QCOM_SMD_RPM_LDOE, 6, &pm660_nldo660, "vdd_l5_l6"},
-+	{ "l7", QCOM_SMD_RPM_LDOE, 7, &pm660_pldo660, "vdd_l7_bob"},
-+	{}
-+};
-+
- static const struct rpm_regulator_data rpm_pms405_regulators[] = {
- 	{ "s1", QCOM_SMD_RPM_SMPA, 1, &pms405_hfsmps3, "vdd_s1" },
- 	{ "s2", QCOM_SMD_RPM_SMPA, 2, &pms405_hfsmps3, "vdd_s2" },
-@@ -1305,6 +1337,7 @@ static const struct of_device_id rpm_of_match[] = {
- 	{ .compatible = "qcom,rpm-pma8084-regulators", .data = &rpm_pma8084_regulators },
- 	{ .compatible = "qcom,rpm-pmi8994-regulators", .data = &rpm_pmi8994_regulators },
- 	{ .compatible = "qcom,rpm-pmi8998-regulators", .data = &rpm_pmi8998_regulators },
-+	{ .compatible = "qcom,rpm-pmr735a-regulators", .data = &rpm_pmr735a_regulators },
- 	{ .compatible = "qcom,rpm-pms405-regulators", .data = &rpm_pms405_regulators },
- 	{}
- };
-diff --git a/include/linux/soc/qcom/smd-rpm.h b/include/linux/soc/qcom/smd-rpm.h
-index 3ab8c07f71c0..62de54992e49 100644
---- a/include/linux/soc/qcom/smd-rpm.h
-+++ b/include/linux/soc/qcom/smd-rpm.h
-@@ -19,6 +19,7 @@ struct qcom_smd_rpm;
- #define QCOM_SMD_RPM_CLK_BUF_A	0x616B6C63
- #define QCOM_SMD_RPM_LDOA	0x616f646c
- #define QCOM_SMD_RPM_LDOB	0x626F646C
-+#define QCOM_SMD_RPM_LDOE	0x656f646c
- #define QCOM_SMD_RPM_RWCX	0x78637772
- #define QCOM_SMD_RPM_RWMX	0x786d7772
- #define QCOM_SMD_RPM_RWLC	0x636c7772
-@@ -32,6 +33,7 @@ struct qcom_smd_rpm;
- #define QCOM_SMD_RPM_QUP_CLK	0x707571
- #define QCOM_SMD_RPM_SMPA	0x61706d73
- #define QCOM_SMD_RPM_SMPB	0x62706d73
-+#define QCOM_SMD_RPM_SMPE	0x65706d73
- #define QCOM_SMD_RPM_SPDM	0x63707362
- #define QCOM_SMD_RPM_VSA	0x00617376
- #define QCOM_SMD_RPM_MMAXI_CLK	0x69786d6d
--- 
-2.38.1
-
+=D0=BF=D0=BD, 7 =D0=BD=D0=BE=D1=8F=D0=B1. 2022 =D0=B3. =D0=B2 17:33, Krzysz=
+tof Kozlowski
+<krzysztof.kozlowski@linaro.org>:
+>
+> On 07/11/2022 15:24, Dzmitry Sankouski wrote:
+(...)
+> > A lot of warnings for msm8998.dtsi, though. I think it should be fixed
+> > in a separate patch series.
+>
+> Your DTS is not OK and it introduces wrong pinctrl entry, which I
+> commented under. It also does not pass test, as I said:
+My bad, I'll fix that
+>
+(...)
+>
