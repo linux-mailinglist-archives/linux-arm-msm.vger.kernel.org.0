@@ -2,74 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46C52624983
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 19:32:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A404624A89
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 20:22:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231996AbiKJScN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 13:32:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34578 "EHLO
+        id S229952AbiKJTWx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 14:22:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232043AbiKJScL (ORCPT
+        with ESMTP id S230174AbiKJTWw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Nov 2022 13:32:11 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92DE54E419
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 10:32:08 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id d20so1888131ljc.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 10:32:08 -0800 (PST)
+        Thu, 10 Nov 2022 14:22:52 -0500
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AFA348760
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 11:22:51 -0800 (PST)
+Received: by mail-lj1-x22c.google.com with SMTP id u2so2071608ljl.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 11:22:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3kQxK8NfNtnZoSTX7rrGRiciyplegH3K6ehkOZtQW+E=;
-        b=U01PAeiPFS2Y7qDuxW3DbYZwvOQbpCSH81D+jkRN+hP1m8aTXsoFg80zLwh3olKH19
-         qVUOzA6MFwPkHBk9Am05Z7hZ7uisPOePQ+XqK1t5HIVOm/6eS3E8GTgt5Lkk3z1WWxOx
-         mv5317Ln6OdSRcq4xa2i+RLNT+o9BkBPGNKN9r9PHeSB88Ev4GilLSEj3o/8VJXq+hGc
-         iJaq2UZoPFfDq+viKewhOqbECPmn62tdVRZlwPfYLY8laIqnZyOYGMqZqD6XLxWlAf9B
-         lPPbW3vPmQkHx8ukyb1Ed9gVoODT+HMX05AgqPs6qGeyxez+LZ2Rx+1JWXcWUDHQK67X
-         1HoA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wrNpg77ahRGEeTxAe9TFC45qA5bJL7st8wtKiHZ8uas=;
+        b=rtxETIm4InRDMRkVYJbmbeZX6R/9E239duFoSda+BPk4jYypOBm+KJ7L/FLNY2qoBO
+         S+4sUKCBd3qQkOCfIqV5GM7nyiBL+ySATYawA0LX9z/ycXnL0W5GQk4MJglsqbzcU3gq
+         +z0SXLf4OUx1Vo9MJ8C3SN/X7GopAiSYDLIMXkAO2e9cRnxOG4LBtMlnwUNHUoRj4SW/
+         nc2TshyuTKeyeCkU7DHNdoaEVe9rV3jZ2x2fJCMDNVWfHBJJ+8Br/sp7/UNzO2U2nvwz
+         b/faZVw4yxGLpj2FArshJz4Lzmzf+08enJ1WOYZYUA/xelO6g2Q1PfGoEP2b+PaqbEwK
+         chJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3kQxK8NfNtnZoSTX7rrGRiciyplegH3K6ehkOZtQW+E=;
-        b=DHkbF460M4YICJevwUaUVlKktVRgadBEvuZsqMyEcQbq+CzBEAstq3ID2p52HIBJO5
-         BmdivhZ3Rpck2vxr984i7u/GTKTo/sZsXQeQ3GSK5aMn7LjKi69onwf+K4IZr9/HWESb
-         yHH2jW90kAJx5aaPrhrI0GGYK/8+8rP4wa2o88VlqC/UtXf0FRU3TfP3HbMCPtQwXUNT
-         DLSfD1DxqWbhpN4e+53MIXrgACf4oqTUyY7NBGJSdF2EyxpKnaBxZUV0P+6MIPCT7eCz
-         +5K6zWnoAWxz9Wc70/16GA489QDGtbYj0T6Uj9m4ZH+Amm0STl1GeNTYv4W2Yfbckvg6
-         KM0Q==
-X-Gm-Message-State: ACrzQf0CENBh91x+fBFfdOVI/GS6nooHPqk7AdGTUgchS0+bSlo2/v4V
-        o65IfteXeMbbkhe5S3+VcDZjzQ==
-X-Google-Smtp-Source: AMsMyM5rV/gc33ltXWx966I4qPP19/94ZPZJtbpnZndyWoBe5Acmf9klXeJeH9USXuGsf/v4d90nEQ==
-X-Received: by 2002:a2e:9057:0:b0:26f:bda0:cf0d with SMTP id n23-20020a2e9057000000b0026fbda0cf0dmr8727991ljg.227.1668105125517;
-        Thu, 10 Nov 2022 10:32:05 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wrNpg77ahRGEeTxAe9TFC45qA5bJL7st8wtKiHZ8uas=;
+        b=Il2NBpOVXC7K3YytGdGKT3WSHuFm+v6GnQgf0n23ChNJYbg1syBrAJLSJ8b2HYgw0K
+         n28XCD80qOeQMSYAhh0CyD+mtSkZh4hbE2ohQiDKKymcy7SYWnMjtCsOVoiKLGFfmeb1
+         1HZQwgVB/k55lffsqIEsPtbMY0j4ZhwqrcAhYJs9v89QJmb3y7xq7Ur824eY1PmntbV6
+         uctkfeETLVirBJjkgjiYwboiBjNn0uo9KDanVsVD5C1Wsms8CFxRNrQxYaVTGCZR9XLa
+         8LBYV49KzQuE6fFQYkGnE75F0QrNMTYq+Dt0pk7BsXm9QHHy7VTEC7l9XTnnVhY++Anl
+         8z4g==
+X-Gm-Message-State: ACrzQf2cNjIm78YCMY9fduk6bQdXmC+ACdqLWL5KXdiO25K7sljurjjk
+        Uyol9NjoSn/DvWwLEuoyjMhFPw==
+X-Google-Smtp-Source: AMsMyM6ymy+U6hwgMTw5b9I7p/kKDSr2005t0hmOwsiHcwtLZDTzvGVa1akOwmCgD0g8kHq+9DPQNw==
+X-Received: by 2002:a2e:bf0b:0:b0:277:63f7:492c with SMTP id c11-20020a2ebf0b000000b0027763f7492cmr9079122ljr.259.1668108169386;
+        Thu, 10 Nov 2022 11:22:49 -0800 (PST)
 Received: from eriador.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id m18-20020a197112000000b004a2550db9ddsm2837087lfc.245.2022.11.10.10.32.04
+        by smtp.gmail.com with ESMTPSA id h8-20020a05651c124800b0027758f0619fsm40345ljh.132.2022.11.10.11.22.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Nov 2022 10:32:05 -0800 (PST)
+        Thu, 10 Nov 2022 11:22:49 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v3 8/8] arm64: dts: qcom: sm8350-hdk: enable PCIe devices
-Date:   Thu, 10 Nov 2022 21:31:58 +0300
-Message-Id: <20221110183158.856242-9-dmitry.baryshkov@linaro.org>
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: [PATCH v3 00/13] phy: qcom-qmp: rework register layout tables
+Date:   Thu, 10 Nov 2022 22:22:35 +0300
+Message-Id: <20221110192248.873973-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221110183158.856242-1-dmitry.baryshkov@linaro.org>
-References: <20221110183158.856242-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,44 +72,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable PCIe0 and PCIe1 hosts found on SM8350 HDK board.
+Rework register layout tables in QMP PHY drivers to use defined symbolic
+names rather than bare numbers. Also rename each register layout array
+to name the exact QMP version. While doing this, drop few unused
+registers and apply other misc cleanups.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+Dependencies:
+- phy/next
+- https://lore.kernel.org/linux-phy/20221110103345.729018-1-dmitry.baryshkov@linaro.org/
+- https://lore.kernel.org/linux-phy/20221110151748.795767-1-dmitry.baryshkov@linaro.org
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-index 0fcf5bd88fc7..d3c851ec3501 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-@@ -222,6 +222,26 @@ &mpss {
- 	firmware-name = "qcom/sm8350/modem.mbn";
- };
- 
-+&pcie0 {
-+	status = "okay";
-+};
-+
-+&pcie0_phy {
-+	status = "okay";
-+	vdda-phy-supply = <&vreg_l5b_0p88>;
-+	vdda-pll-supply = <&vreg_l6b_1p2>;
-+};
-+
-+&pcie1 {
-+	status = "okay";
-+};
-+
-+&pcie1_phy {
-+	status = "okay";
-+	vdda-phy-supply = <&vreg_l5b_0p88>;
-+	vdda-pll-supply = <&vreg_l6b_1p2>;
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
+Changes since v2:
+ - Rebased onto phy/next
+ - Added two generic fixes
+ - Dropped combo changes, they will be sent after Johan's pending
+   series
+ - Fixed names of the ufs regs layout tables
+
+Changes since v1:
+ - Rebased on top v2 of Johan's patchset rather than including a set of
+   patches from him
+ - Fixed the ipq8074 regs layout name
+
+Dmitry Baryshkov (13):
+  phy: qcom-qmp: fix typo in QSERDES_COM_CMN_RSVD5 value
+  phy: qcom-qmp: remove duplicate v5_5nm register definitions
+  phy: qcom-qmp-pcie: rework regs layout arrays
+  phy: qcom-qmp-pcie: rename regs layout arrays
+  phy: qcom-qmp-pcie-msm8996: rework regs layout arrays
+  phy: qcom-qmp-ufs: split UFS-specific v2 PCS registers to a separate
+    header
+  phy: qcom-qmp-ufs: rework regs layout arrays
+  phy: qcom-qmp-ufs: rename regs layout arrays
+  phy: qcom-qmp-usb: remove QPHY_PCS_LFPS_RXTERM_IRQ_STATUS reg
+  phy: qcom-qmp-usb: remove QPHY_PCS_MISC_TYPEC_CTRL reg
+  phy: qcom-qmp-usb: rework regs layout arrays
+  phy: qcom-qmp-usb: fix regs layout arrays
+  phy: qcom-qmp: move type-specific headers to particular driver
+
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     |  3 +
+ .../phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c  |  6 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 82 ++++++++++---------
+ .../phy/qualcomm/phy-qcom-qmp-pcs-ufs-v2.h    | 25 ++++++
+ .../phy/qualcomm/phy-qcom-qmp-pcs-ufs-v3.h    |  3 +
+ .../phy/qualcomm/phy-qcom-qmp-pcs-ufs-v5.h    |  4 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v2.h    | 19 ++---
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h    |  4 +
+ .../phy/qualcomm/phy-qcom-qmp-qserdes-com.h   |  2 +-
+ .../phy-qcom-qmp-qserdes-txrx-v5_5nm.h        |  5 --
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       | 67 ++++++++-------
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 76 ++++++++---------
+ drivers/phy/qualcomm/phy-qcom-qmp.h           | 14 +---
+ 13 files changed, 168 insertions(+), 142 deletions(-)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v2.h
+
 -- 
 2.35.1
 
