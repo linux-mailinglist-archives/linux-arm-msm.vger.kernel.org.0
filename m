@@ -2,114 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9DC3624209
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 13:12:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 70554624264
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 13:31:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230430AbiKJMMh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 07:12:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60560 "EHLO
+        id S229537AbiKJMbb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 07:31:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230235AbiKJMMg (ORCPT
+        with ESMTP id S229530AbiKJMbb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Nov 2022 07:12:36 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92ABF20F72
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 04:12:35 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id be13so2843496lfb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 04:12:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=3m2vparsJ0IvTRoDQtc/C+sx5KcO7jtZEv/Wo5rLyfI=;
-        b=vYlOSEfSdDsa2OulOt0SwI1aMtr0j3/AxT1vf8GpEYJpd5DLlfJblTc0oGSh+aklLG
-         xJyc6JbYzpB/go8XbKOmiNIFCuxKpNh4iG/jicF4jHtoinXvPFEDGQh+4dKVG0UEHkKC
-         iuJmdurSeMa4YLIckEychviG4tbYJq655apEzjt+vBKNw8x8u635r9ILbJ2uLj0YHdDM
-         5+sqVmnKO+FpO/27A0znGhZ72kBKrUs6Zd507+lEvTEqtXqYzbmYVFDinyNFAXVORedT
-         Yee/EoH6E2Yu1WUumXbOOnQYuOx1QfNPN/uZientm8sA6qti5aAlC5rfemx72xFk83CA
-         Xu7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3m2vparsJ0IvTRoDQtc/C+sx5KcO7jtZEv/Wo5rLyfI=;
-        b=O61XKfUJ998sSdYbJUvMyNIWCPV2X88f2s7yUipC3TrH3WWkC4LdT26KWiH6gCoyl1
-         VrHu+sxyxdR7S9Ncm5F5RKID4rSsrqBKfF6OwUjpaMP5AxTk50PhqScIZFzG+5uZaqaI
-         H7Atm6uodYQC8J2RhFwtEPmGRAWv7pYi1cfxqFEMkhiKZS6iGrlm9fQXCPrOVB1U0Ja1
-         b8cUfSEALmmEiN6jNIldUeHyuDyjLZTzYpew1lYZj4pRVqRVeOp3UW83I8VDuvbpBM+V
-         kErcalMbczY9TwnYE+Gtkqa6grb1qbZfxhZdsVVhjGT1yqH5LNE0QkoRx4l4Na8yM7R3
-         bGGA==
-X-Gm-Message-State: ACrzQf1rQt1pJtq+WlYTtpwR7+S3stvkb2hQW3WbVxZrrwGHoHDS3BtQ
-        w5QAt8UTnT5HYwRZS4qchQ+P52/twT4aF3rb
-X-Google-Smtp-Source: AMsMyM6SlvmEsSoFiqy4iwt0g1PZnQCNBN2X5qFIOknPJADNVl2vkQRJY+J9ghjykqYcOmyXwMB/Jg==
-X-Received: by 2002:ac2:47e1:0:b0:4af:5088:9576 with SMTP id b1-20020ac247e1000000b004af50889576mr21098188lfp.468.1668082352920;
-        Thu, 10 Nov 2022 04:12:32 -0800 (PST)
-Received: from localhost.localdomain ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id y13-20020a19640d000000b004a91d1b3070sm2733423lfb.308.2022.11.10.04.12.30
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 10 Nov 2022 04:12:32 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thu, 10 Nov 2022 07:31:31 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ADB66BDD2;
+        Thu, 10 Nov 2022 04:31:30 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 29CB761638;
+        Thu, 10 Nov 2022 12:31:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12594C433C1;
+        Thu, 10 Nov 2022 12:31:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668083489;
+        bh=2E5hv2r7AZmXX2yuakf8ltitF0UslUzE1kVGsGiQao4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=th656oem0Dt0plFopWGpua7+J9aYc6xJhWh6AyfWm0f8N+pchEWZ+ritDMtB87ByX
+         BTg+R8egYohS3vrbUlqy/Bv90ov22EUr0FinA8tVZ4P78OVSE6zAJurmPbH5n/RzOY
+         6D3YhO9aZ2yPAfA/7nCDHzsRmHDDg6O5SWDL6kvDd7ZE+FgTdkLIGtPSZ5M6y5qwBt
+         sxk9RosaH6UTDoQm2mLVREw7IAwZzo54/fnIAujXi9qm8da1u9+KPD99Qdt/7blrG1
+         Xjfv9Ex6N9Z6R8hD2neWJU5IJhzvVsqhyQRCYMcA9O3VZDnsw0i+IcP1eVKmQmk+2B
+         RCh/EUmC6Ry3Q==
+Date:   Thu, 10 Nov 2022 12:31:23 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, patches@linaro.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org
-Subject: [PATCH] regulator: qcom_smd: Fix PMR735a S3 regulator spec
-Date:   Thu, 10 Nov 2022 13:12:25 +0100
-Message-Id: <20221110121225.9216-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.32.0 (Apple Git-132)
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] regulator: qcom_smd: Fix PMR735a S3 regulator spec
+Message-ID: <Y2zvGxmUyl/kpieu@sirena.org.uk>
+References: <20221110121225.9216-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="7H6ScoooF8pWRyKa"
+Content-Disposition: inline
+In-Reply-To: <20221110121225.9216-1-konrad.dybcio@linaro.org>
+X-Cookie: Torque is cheap.
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-PMR735a has a wider range than previously defined. Fix it.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-No Fixes tag, as the patch is only in -next, so the hash will change.
+--7H6ScoooF8pWRyKa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- drivers/regulator/qcom_smd-regulator.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+On Thu, Nov 10, 2022 at 01:12:25PM +0100, Konrad Dybcio wrote:
+> PMR735a has a wider range than previously defined. Fix it.
+>=20
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> No Fixes tag, as the patch is only in -next, so the hash will change.
 
-diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
-index 9eaae13fd385..9f2b58458841 100644
---- a/drivers/regulator/qcom_smd-regulator.c
-+++ b/drivers/regulator/qcom_smd-regulator.c
-@@ -686,6 +686,15 @@ static const struct regulator_desc pmic5_ftsmps520 = {
- 	.ops = &rpm_smps_ldo_ops,
- };
- 
-+static const struct regulator_desc pmic5_hfsmps515 = {
-+	.linear_ranges = (struct linear_range[]) {
-+		REGULATOR_LINEAR_RANGE(320000, 0, 235, 16000),
-+	},
-+	.n_linear_ranges = 1,
-+	.n_voltages = 236,
-+	.ops = &rpm_smps_ldo_ops,
-+};
-+
- static const struct regulator_desc pms405_hfsmps3 = {
- 	.linear_ranges = (struct linear_range[]) {
- 		REGULATOR_LINEAR_RANGE(320000, 0, 215, 8000),
-@@ -1277,7 +1286,7 @@ static const struct rpm_regulator_data rpm_pmi8998_regulators[] = {
- static const struct rpm_regulator_data rpm_pmr735a_regulators[] = {
- 	{ "s1", QCOM_SMD_RPM_SMPE, 1, &pmic5_ftsmps520, "vdd_s1"},
- 	{ "s2", QCOM_SMD_RPM_SMPE, 2, &pmic5_ftsmps520, "vdd_s2"},
--	{ "s3", QCOM_SMD_RPM_SMPE, 3, &pms405_hfsmps3, "vdd_s3"},
-+	{ "s3", QCOM_SMD_RPM_SMPE, 3, &pmic5_hfsmps515, "vdd_s3"},
- 	{ "l1", QCOM_SMD_RPM_LDOE, 1, &pm660_nldo660, "vdd_l1_l2"},
- 	{ "l2", QCOM_SMD_RPM_LDOE, 2, &pm660_nldo660, "vdd_l1_l2"},
- 	{ "l3", QCOM_SMD_RPM_LDOE, 3, &pm660_nldo660, "vdd_l3"},
--- 
-2.38.1
+No, it won't.
 
+--7H6ScoooF8pWRyKa
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmNs7xoACgkQJNaLcl1U
+h9C5dAf+NZWkTN7Hnmen4YrXKFI0KUXn5uPN01YHixe4hTiQ9M4z8z8ZhDXWzum6
+MqQB01rohiGeEa2JCDVSWW2I0jtviqKF0NygjZacr3vTPogv5jt390gSSXQjhcfK
+tjIl3Ef4hFyAq4+n7RBJxZopkUCbP7oPiQd2vBonRRJ625T5Tf9TE/zdnVdDcNNJ
+0qk/V6zU6CUgxJd0M3G64MPCDgNnz1uSVzJMoRmKhe6GUDbzdy7rTr5vLty/BtIJ
+HeQpsorUZFOILsfU2+0K5vehR7AZ5mVcbBse0kPrMOrUb7SQ0malLadHISZGpxvo
+B6T6vyGxVTsn3mzoIJ4U5ooSOG65wg==
+=oiEz
+-----END PGP SIGNATURE-----
+
+--7H6ScoooF8pWRyKa--
