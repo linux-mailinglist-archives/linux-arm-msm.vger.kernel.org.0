@@ -2,96 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E848F62412B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 12:15:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F1B44624180
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 12:35:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230437AbiKJLPS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 06:15:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59872 "EHLO
+        id S230235AbiKJLfY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 06:35:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229938AbiKJLPC (ORCPT
+        with ESMTP id S230233AbiKJLfX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Nov 2022 06:15:02 -0500
-Received: from m13114.mail.163.com (m13114.mail.163.com [220.181.13.114])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A4DB02870A;
-        Thu, 10 Nov 2022 03:14:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=TZJpb
-        OcFFeyqiQRDIdE1+HY4QipIZ+rgMxxRMwDZS/g=; b=ppEhLeQgq44r2pTSflDs2
-        YN7Orx3I4HDxgRiIN2OoR0QNcya/fWqJQAiFT/3NphvGJijSaYaEB7gquelOPS6D
-        arRitsxR1d2CqROgoT5Lr2AayL5/RHF0r/pdqpvHypp20Lt6jqC4ieRhRUVth4lD
-        nq9x1a8YBGOUUrAhtQPa6s=
-Received: from slark_xiao$163.com ( [223.104.68.226] ) by
- ajax-webmail-wmsvr114 (Coremail) ; Thu, 10 Nov 2022 19:14:28 +0800 (CST)
-X-Originating-IP: [223.104.68.226]
-Date:   Thu, 10 Nov 2022 19:14:28 +0800 (CST)
-From:   "Slark Xiao" <slark_xiao@163.com>
-To:     "Greg KH" <gregkh@linuxfoundation.org>
-Cc:     mani@kernel.org, loic.poulain@linaro.org, dnlplm@gmail.com,
-        yonglin.tan@outlook.com, fabio.porcedda@gmail.com,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        Thu, 10 Nov 2022 06:35:23 -0500
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5229716DF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 03:35:21 -0800 (PST)
+Received: by mail-pf1-x42d.google.com with SMTP id q9so1770363pfg.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 03:35:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=czhmg8w6fCMkXUIfJozgJqRjYjP3QZdO8mkjxxSqqg0=;
+        b=L34nsiKJho8HIN+dXht0sd19S/QtDAa/+T6+Sw+6OWNMJAtDXxS41Ujw15PQEwPMcb
+         /EjLTqGA8mWnL4NLPamcwr8UMIQV9Ny59VFkJ1iAJwp181hBXyl8ZPdfALs6lLNMQl33
+         yNP5RlK6Uk7Bh7H3zAX8oXNfWKveGKLAJ/j5doz9cD9cQZEbOO5Vzx8oyx7/8JxxztmP
+         /pEd4Bsul0YD/tFG3jJG1WMupni6WtB3JdlWiEwLE1paBoD1GB3N64KOYLordIK7H+pa
+         ogTShjdYNszYkUjhWBsFpYo1duTSmsALtRa0PDyu7kMv55i+M2Hhm8MJ04NYNp8i8AwZ
+         U4cA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=czhmg8w6fCMkXUIfJozgJqRjYjP3QZdO8mkjxxSqqg0=;
+        b=4ZafmqG0wGl+bqXEttS8BIYIJB98nn8oMD9e82E18o4zOzLJfUKqmYvZaSC9os2Wx/
+         1yijwRV352wpbSGgc0LXK1nPimnJZ3jVoY2z+jU+F1R5JFyLzU4feBfIMd32bagVPZgk
+         kwq+H1TtvGp0h1s9NntjGADiwsRN78KnR4+WJH3NDbziIhy/YWFRGj4rtDXc3/d+7DKZ
+         2N5Fc5gU1caeOVU15tMFO/U2scT9mNXgqcfs5IQJdl8R5JFw66CiAbKXmlwX/ocG3GZr
+         YetrSiFK6xwpCuQmrj4j/hU+IrrzYbTcNX21WZqPL/psstu3ltbtZloatOyNQ56MPAuu
+         slVQ==
+X-Gm-Message-State: ACrzQf0hsicCaQKUP2Oy9ix94LY4Yon/OrPjsrL0Us7hOXrys6fKg863
+        aQy9C5N/+lxATzNP3xsOXoFT
+X-Google-Smtp-Source: AMsMyM57AqT08jdCpsdF+MMkrOn2eIKJCwPLOpWN0N7vaxof6c0c5wHe7jTPTNPijNKQPM+L1HFCeg==
+X-Received: by 2002:a63:2c90:0:b0:439:ee2c:ab2f with SMTP id s138-20020a632c90000000b00439ee2cab2fmr57202235pgs.2.1668080121097;
+        Thu, 10 Nov 2022 03:35:21 -0800 (PST)
+Received: from thinkpad ([59.92.98.170])
+        by smtp.gmail.com with ESMTPSA id a19-20020aa794b3000000b0056c2e497ad6sm10287605pfl.93.2022.11.10.03.35.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Nov 2022 03:35:20 -0800 (PST)
+Date:   Thu, 10 Nov 2022 17:05:13 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re:Re: Re: Re: [PATCH v2] bus: mhi: host: pci_generic: Add macro
- for some VIDs
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20220113(9671e152)
- Copyright (c) 2002-2022 www.mailtech.cn 163com
-In-Reply-To: <Y2j1GBLQB2N8+lUM@kroah.com>
-References: <20221107084826.8888-1-slark_xiao@163.com>
- <Y2jJpT5//xBUOQMq@kroah.com>
- <28f1e702.28d7.184516dbbbb.Coremail.slark_xiao@163.com>
- <Y2jVtWPdTybNCYqX@kroah.com>
- <5b96b2e2.3a97.18451a061a3.Coremail.slark_xiao@163.com>
- <Y2j1GBLQB2N8+lUM@kroah.com>
-X-NTES-SC: AL_QuydCvyct0At7iibYekWkkcRjuo+UMC0vfgh249fPJs0qCvE/wwrQFR+F1rx/e+lFTy9mzO1UCBpx+NEeYJhR695DCdo2uH20/GJ89V8YS59
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+Subject: Re: [PATCH 6/9] arm64: dts: qcom: sc8280xp-crd: enable WiFi
+ controller
+Message-ID: <20221110113513.GA18247@thinkpad>
+References: <20221110103558.12690-1-johan+linaro@kernel.org>
+ <20221110103558.12690-7-johan+linaro@kernel.org>
 MIME-Version: 1.0
-Message-ID: <28434d76.39c6.184613f9965.Coremail.slark_xiao@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: csGowABXiNMU3WxjBoJYAA--.62578W
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiGRS1ZFyPfTbhcgAAsX
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221110103558.12690-7-johan+linaro@kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-CkF0IDIwMjItMTEtMDcgMjA6MDc6NTIsICJHcmVnIEtIIiA8Z3JlZ2toQGxpbnV4Zm91bmRhdGlv
-bi5vcmc+IHdyb3RlOgo+T24gTW9uLCBOb3YgMDcsIDIwMjIgYXQgMDY6MjY6MTZQTSArMDgwMCwg
-U2xhcmsgWGlhbyB3cm90ZToKPldoeSBhbGwgdGhlIGJsYW5rIGxpbmVzPwoKMTYzIG1haWwgYXV0
-b21hdGljYWxseSBhZGQgaXQgLCBhbmQgSSBmb3JnZXQgcmVtb3ZlIGl0LgoKPgo+PiBBdCAyMDIy
-LTExLTA3IDE3OjUzOjU3LCAiR3JlZyBLSCIgPGdyZWdraEBsaW51eGZvdW5kYXRpb24ub3JnPiB3
-cm90ZToKPj4gPk9uIE1vbiwgTm92IDA3LCAyMDIyIGF0IDA1OjMwOjU2UE0gKzA4MDAsIFNsYXJr
-IFhpYW8gd3JvdGU6Cj4+ID5BcyBJIHNhaWQsIHRoaXMgaXMganVzdCBhIGRlZmluZSwgbm90IGEg
-bWFjcm8gYXQgYWxsLgo+PiA+Cj4+ID4+IEFuZCBjb3VsZCB5b3UgZ2l2ZSB5b3VyIGNvbW1lbnRz
-IGluIHByZXZpb3VzIHBhdGNoLCBub3QgdGhlICdmaW5hbCcgb25lPwo+PiA+Cj4+ID5JIGRvIG5v
-dCB1bmRlcnN0YW5kLCB3aGF0IHByZXZpb3VzIHBhdHJjaD8gIFdoYXQgImZpbmFsIiBvbmU/ICBX
-aGF0IGlzCj4+ID50aGUgImxhdGVzdCIgcGF0Y2g/Cj4+IHByZXZpb3VzIHBhdGNoOgo+PiBodHRw
-czovL2xvcmUua2VybmVsLm9yZy9sa21sLzIwMjIxMDI3MTE1MTIzLjUzMjYtMS1zbGFya194aWFv
-QDE2My5jb20vCj4+IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2xrbWwvMjAyMjEwMjgwMjM3MTEu
-NDE5Ni0xLXNsYXJrX3hpYW9AMTYzLmNvbS8KPj4gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvbGtt
-bC8yMDIyMTEwMjAyNDQzNy4xNTI0OC0xLXNsYXJrX3hpYW9AMTYzLmNvbS8KPj4gCj4+ICdmaW5h
-bCcgcGF0Y2g6Cj4+IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2xrbWwvMjAyMjExMDcwODQ4MjYu
-ODg4OC0xLXNsYXJrX3hpYW9AMTYzLmNvbS8KPj4gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvbGtt
-bC8yMDIyMTEwMTAxNTg1OC42Nzc3LTEtc2xhcmtfeGlhb0AxNjMuY29tLwo+Cj5UaGF0J3MgMiBk
-aWZmZXJlbnQgdmVyc2lvbnMsIHdpdGggYSB0b3RhbCBvZiAzLgo+Cj4+IAo+PiBUaGUgJ2ZpbmFs
-JyBwYXRjaCB3YXMgY29tbWl0dGVkIGFjY29yZGluZyB0byB0aGUgYWR2aWNlIG9mIHRoZSBmZWF0
-dXJlCj4+IG1haW50YWluZXIuIAo+PiA+Cj4+ID4+IEluIGFub3RoZXIgcGNpX2lkcyBwYXRjaCwg
-eW91IGJyZWFrIGl0IGluIHYzIGFuZCBicmVhayBpdCBoZXJlIGFnYWluIGluIHYyLgo+PiA+Cj4+
-ID5JIGJyb2tlIHdoYXQ/Cj4+IFlvdSBjb3VsZCBoYXZlICB2b2ljZWQgb3V0IHN1Y2ggY29tbWVu
-dCBpbiBWMSwgVjIgYmVmb3JlIHRoZSAnZmluYWwnLiAKPgo+V2UgYWxsIHJldmlldyBwYXRjaGVz
-IHdoZW4gd2UgY2FuLiAgVGhlcmUgaXMgbm8gcnVsZSB0aGF0IHBlb3BsZSBjYW4gbm90Cj5jb21t
-ZW50IG9uIG5ld2VyIHBhdGNoZXMsIG9yIG9sZGVyIG9uZXMuCj4KPkluIGZhY3QsIGl0IHdvdWxk
-IGJlIHdvbmRlcmZ1bCBpZiB5b3UgY291bGQgdGFrZSBzb21lIHRpbWUgYW5kIHJldmlldwo+cGF0
-Y2hlcyBmcm9tIG90aGVycy4gIEl0IHdvdWxkIGhlbHAgeW91ciB1bmRlcnN0YW5kaW5nIG9mIHRo
-ZSBjb2RlIGFuZAo+aG93IHRoZSBrZXJuZWwgZGV2ZWxvcG1lbnQgcHJvY2VzcyB3b3Jrcy4KPgo+
-dGhhbmtzLAo+Cj5ncmVnIGstaApBZ3JlZSB3aXRoIHRoaXMuICBCdXQgeW91IGtub3csIDUgYXR0
-ZW1wdCAgIGp1c3QgZm9yIGEgbGl0dGxlIHVwZGF0ZSAgd2VyZSByZWplY3RlZApJdCdzIHNvIGZy
-dXN0cmF0aW5nLiBBbnl3YXksIEkgcmUtc3VibWl0IGFub3RoZXIgdjMgcGF0Y2ggZm9yIHRoaXMg
-Y2hhbmdlLgpQbGVhc2UgZ2l2ZSB5b3VyIGNvbW1lbnQgaWYgeW91IGFyZSBmcmVlLgoKVGhhbmtz
-Cg==
+On Thu, Nov 10, 2022 at 11:35:55AM +0100, Johan Hovold wrote:
+> Enable the Qualcomm QCNFA765 Wireless Network Adapter connected to
+> PCIe4.
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 65 +++++++++++++++++++++++
+>  1 file changed, 65 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> index 5b9e37a16f9f..ab5b0aadeead 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> @@ -81,6 +81,22 @@ vreg_misc_3p3: regulator-misc-3p3 {
+>  		regulator-always-on;
+>  	};
+>  
+> +	vreg_wlan: regulator-wlan {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VCC_WLAN_3R9";
+> +		regulator-min-microvolt = <3900000>;
+> +		regulator-max-microvolt = <3900000>;
+> +
+> +		gpio = <&pmr735a_gpios 1 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&hastings_reg_en>;
+
+Hastings is the family name of QCA639x WLAN chipsets. I don't think it would be
+applicable here. Please use "wlan_reg_en" as that matches the convention used
+throughout this file.
+
+Thanks,
+Mani
+
+> +
+> +		regulator-boot-on;
+> +	};
+> +
+>  	vreg_wwan: regulator-wwan {
+>  		compatible = "regulator-fixed";
+>  
+> @@ -246,6 +262,25 @@ &pcie3a_phy {
+>  	status = "okay";
+>  };
+>  
+> +&pcie4 {
+> +	perst-gpios = <&tlmm 141 GPIO_ACTIVE_LOW>;
+> +	wake-gpios = <&tlmm 139 GPIO_ACTIVE_LOW>;
+> +
+> +	vddpe-3v3-supply = <&vreg_wlan>;
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pcie4_default>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pcie4_phy {
+> +	vdda-phy-supply = <&vreg_l6d>;
+> +	vdda-pll-supply = <&vreg_l4d>;
+> +
+> +	status = "okay";
+> +};
+> +
+>  &pmc8280c_lpg {
+>  	status = "okay";
+>  };
+> @@ -445,6 +480,13 @@ edp_bl_pwm: edp-bl-pwm-state {
+>  	};
+>  };
+>  
+> +&pmr735a_gpios {
+> +	hastings_reg_en: hastings-reg-en-state {
+> +		pins = "gpio1";
+> +		function = "normal";
+> +	};
+> +};
+> +
+>  &tlmm {
+>  	gpio-reserved-ranges = <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
+>  
+> @@ -521,6 +563,29 @@ wake-n-pins {
+>  		};
+>  	};
+>  
+> +	pcie4_default: pcie4-default-state {
+> +		clkreq-n-pins {
+> +			pins = "gpio140";
+> +			function = "pcie4_clkreq";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		perst-n-pins {
+> +			pins = "gpio141";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-down;
+> +		};
+> +
+> +		wake-n-pins {
+> +			pins = "gpio139";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+>  	qup0_i2c4_default: qup0-i2c4-default-state {
+>  		pins = "gpio171", "gpio172";
+>  		function = "qup4";
+> -- 
+> 2.37.4
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
