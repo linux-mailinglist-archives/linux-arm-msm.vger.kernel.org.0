@@ -2,88 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CC90623F4A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 11:02:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C196A623F71
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 11:08:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229606AbiKJKCh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 05:02:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43126 "EHLO
+        id S229952AbiKJKIL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 05:08:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230045AbiKJKCc (ORCPT
+        with ESMTP id S229776AbiKJKIK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Nov 2022 05:02:32 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 462AD6B38F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 02:02:30 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id g12so2231898lfh.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 02:02:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=n/6SrizfTmUVEtJIffAUGFwzONi39uLHSNRwhX0sifc=;
-        b=MorZi0LfuylaZSi8INxPDy4Q6asBHC9zP7jPOfm5P7jgT0tXI7S2vZdJih3EPrUTwO
-         +cI3Gr1YY9qYHkss0jSWazs2Ab8eNw0uuKATKUpnPXE0WqTdokmbbH/tQvT+jn9wdt2n
-         d75xioRlw65Ok6CSR7b6c/Y8xxq/Rw2qSNM/JyEzofu31cU0Bg7Eh1cAn79KMq2UpK/a
-         DRtz36Bc3zy3K6TsZCQdszGp/DToTWLXhaIqdyuQjLIa+YetpSpL949aa6qr44yY9P+3
-         3aspK5EafgXhAgjgnLrtTBNKHjVBKT3rkA6mmjdFtszg1618YSSiKU55DHnCW9nlkjNO
-         cXxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n/6SrizfTmUVEtJIffAUGFwzONi39uLHSNRwhX0sifc=;
-        b=tQRO27LzArot9Sz+htEqMDGtdrEJmyQ6l8vTwqdBAYEqrVcBJNZuXd/BUm/IozgUr2
-         b346CIO8M4wJlB8OYOu8Qsnq/GrES/cLR1yYzhJeHABRicZzAPDFB1nciVtjvQK39vo0
-         Yj1gJ3hyjr6PNB6xTLTxiu3wqVTv37DXEm8yaw4TrcD4l2uebawGuibYaR9oR/OsIh1I
-         b7MO5hwCaAACxhWivWDmc4tDNwr6f8F/LdFfKXdw14+qYFKB/NhE31oGQJFBKbWeSiMi
-         R8YTMnTB1C+WoTtB/mXzsG4SM3jNLxS/d37YB3cgZXKKEK0W9HfAyAGZi4Y8mXO6TgcM
-         joUA==
-X-Gm-Message-State: ACrzQf2FDbLSPSaNbC95CzfMDwZXSbV7Om43FSLv68L8ka/7dF8U+8gC
-        w1MlgdoIP7rpreK4uoIy3fKa4w==
-X-Google-Smtp-Source: AMsMyM4obFX0u1CtxFRrJsqzbZXm9vc1VDTaOMa2c+zVOh/77kMGvTAQg1lneODWqpLf74et2+SAww==
-X-Received: by 2002:a05:6512:3089:b0:4a2:586a:e77a with SMTP id z9-20020a056512308900b004a2586ae77amr20583426lfd.286.1668074548549;
-        Thu, 10 Nov 2022 02:02:28 -0800 (PST)
-Received: from [10.27.10.248] ([195.165.23.90])
-        by smtp.gmail.com with ESMTPSA id x2-20020a2e9c82000000b00276ff51649csm2619295lji.43.2022.11.10.02.02.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Nov 2022 02:02:28 -0800 (PST)
-Message-ID: <c7cc5afb-ec58-9c76-13c1-a1d519285898@linaro.org>
-Date:   Thu, 10 Nov 2022 13:02:26 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v1 1/7] dt-bindings: PCI: qcom: Add sm8350 to bindings
-Content-Language: en-GB
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Thu, 10 Nov 2022 05:08:10 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C45D6B39C;
+        Thu, 10 Nov 2022 02:08:08 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 2AA9EB8213F;
+        Thu, 10 Nov 2022 10:08:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B1E4C433C1;
+        Thu, 10 Nov 2022 10:08:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668074885;
+        bh=MiaY7DJhi+fcXaSNy1/u+xMsWvH1dSzjh8nCFQMgDng=;
+        h=From:To:Cc:Subject:Date:From;
+        b=e6Yo7Cq07iOgyiB/oZmTK9Yzne+iLx+rSTZVJ+rmB4f1dtu6AVQpPjyw7vwgnUQ+I
+         sZb58YF11URMWkh3BYlr4GPVCrMB7W0gyAJfP1fwMebFrAGaa8kWyV6vo7iRx+0odH
+         DtbEt3lHojvD+4+g+h7cq/gCBiC60HDllQJ4WaiZXGqAWoLiBxflHIpzOQeZ2joQeM
+         7q/+3ule+QAIxwdhtBWQkCnxcjweLwBUUJKf4u0257ZcSXp4kXrlBL5D02QR1BAcyv
+         XGipVSqjcEyU37+jrEksgiv0Bqa1Uy94bI+7bW7gjNarQQTci1N/BBqMYwWfmTBSht
+         jVdioyIniWohw==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Greg KH <gregkh@linuxfoundation.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org
-References: <20221029211312.929862-1-dmitry.baryshkov@linaro.org>
- <20221029211312.929862-2-dmitry.baryshkov@linaro.org>
- <20221031214055.GA3613285-robh@kernel.org>
- <CAA8EJpqt+UvWHwd90Cdm3iCi2sbxbwbC3ADY6PW053Tw8r94VA@mail.gmail.com>
- <CAL_JsqLVzPawSFh9e6b3nVfn+dNDFooVgOa7B_iTGU13tzXTRQ@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAL_JsqLVzPawSFh9e6b3nVfn+dNDFooVgOa7B_iTGU13tzXTRQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Subject: [PATCH v6 0/2] spmi: pmic-arb: Add support for PMIC v7
+Date:   Thu, 10 Nov 2022 15:37:53 +0530
+Message-Id: <20221110100755.4032505-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.37.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,100 +56,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/11/2022 20:22, Rob Herring wrote:
-> On Mon, Oct 31, 2022 at 4:47 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> On Tue, 1 Nov 2022 at 00:40, Rob Herring <robh@kernel.org> wrote:
->>>
->>> On Sun, Oct 30, 2022 at 12:13:06AM +0300, Dmitry Baryshkov wrote:
->>>> Add bindings for two PCIe hosts on SM8350 platform. The only difference
->>>> between them is in the aggre0 clock, which warrants the oneOf clause for
->>>> the clocks properties.
->>>>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>>   .../devicetree/bindings/pci/qcom,pcie.yaml    | 54 +++++++++++++++++++
->>>>   1 file changed, 54 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->>>> index 54f07852d279..55bf5958ef79 100644
->>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->>>> @@ -32,6 +32,7 @@ properties:
->>>>         - qcom,pcie-sdm845
->>>>         - qcom,pcie-sm8150
->>>>         - qcom,pcie-sm8250
->>>> +      - qcom,pcie-sm8350
->>>>         - qcom,pcie-sm8450-pcie0
->>>>         - qcom,pcie-sm8450-pcie1
->>>>         - qcom,pcie-ipq6018
->>>> @@ -185,6 +186,7 @@ allOf:
->>>>                 - qcom,pcie-sc8180x
->>>>                 - qcom,pcie-sc8280xp
->>>>                 - qcom,pcie-sm8250
->>>> +              - qcom,pcie-sm8350
->>>>                 - qcom,pcie-sm8450-pcie0
->>>>                 - qcom,pcie-sm8450-pcie1
->>>>       then:
->>>> @@ -540,6 +542,57 @@ allOf:
->>>>             items:
->>>>               - const: pci # PCIe core reset
->>>>
->>>> +  - if:
->>>> +      properties:
->>>> +        compatible:
->>>> +          contains:
->>>> +            enum:
->>>> +              - qcom,pcie-sm8350
->>>> +    then:
->>>> +      oneOf:
->>>> +          # Unfortunately the "optional" ref clock is used in the middle of the list
->>>> +        - properties:
->>>> +            clocks:
->>>> +              maxItems: 13
->>>> +            clock-names:
->>>> +              items:
->>>> +                - const: pipe # PIPE clock
->>>> +                - const: pipe_mux # PIPE MUX
->>>> +                - const: phy_pipe # PIPE output clock
->>>> +                - const: ref # REFERENCE clock
->>>> +                - const: aux # Auxiliary clock
->>>> +                - const: cfg # Configuration clock
->>>> +                - const: bus_master # Master AXI clock
->>>> +                - const: bus_slave # Slave AXI clock
->>>> +                - const: slave_q2a # Slave Q2A clock
->>>> +                - const: tbu # PCIe TBU clock
->>>> +                - const: ddrss_sf_tbu # PCIe SF TBU clock
->>>> +                - const: aggre0 # Aggre NoC PCIe0 AXI clock
->>>
->>> 'enum: [ aggre0, aggre1 ]' and 'minItems: 12' would eliminate the 2nd
->>> case. There's a implicit requirement that string names are unique (by
->>> default).
->>
->> Wouldn't it also allow a single 'aggre0' string?
-> 
-> No, because it's only for the 12th entry in the list.
+Hello Greg,
 
-If I got your suggestion right, it would be:
-clock-names:
-   minItems: 12
-   items:
-     ..... 11 names
-     - enum: [ aggre0, aggre1 ]
-     - const: aggre1
+Since Stephen has not been responding [1] or applying these patches, I would
+like to request you to review and apply them to char-misc (thru which spmi
+tree anyway merges). I have been trying to get this in since last
+Decemeber!
 
-Having 11 clocks + aggre0 would pass this schema (incorrectly) because 
-there will be no duplicate to fail the check.
+The is version 6 of support for PMIC v7. I have added a new property
+qcom,bus-id for supporting v7 and then add driver changes for v7 of PMIC
 
-We have two cases here:
-  - 11 common clocks + aggre0 + aggre1
-  - 11 common clocks + aggre1
+[1]:
+v5: https://lore.kernel.org/all/20220914165212.3705892-1-vkoul@kernel.org/
+v4: https://lore.kernel.org/all/20220914112139.3680354-1-vkoul@kernel.org/
+v3: https://lore.kernel.org/all/20220201134108.2677578-1-vkoul@kernel.org/
+v2: https://lore.kernel.org/all/20220131172450.2528065-1-vkoul@kernel.org/
+v1: https://lore.kernel.org/all/20211201072718.3969011-1-vkoul@kernel.org/
 
-I think I'll keep the oneOf in v2. Please tell me if I got your 
-suggestion incorrectly or if there is any other way to express my case.
+Changes since v5:
+ - rebase on linux-next
+
+Changes since v4:
+ - Fix David name and email
+ - remove trailing line in binding
+
+Changes since v3:
+ - rebase on spmi/next
+
+David Collins (1):
+  spmi: pmic-arb: Add support for PMIC v7
+
+Vinod Koul (1):
+  dt-bindings: spmi: Add qcom,bus-id
+
+ .../bindings/spmi/qcom,spmi-pmic-arb.yaml     |  10 +
+ drivers/spmi/spmi-pmic-arb.c                  | 242 ++++++++++++++++--
+ 2 files changed, 231 insertions(+), 21 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.37.3
 
