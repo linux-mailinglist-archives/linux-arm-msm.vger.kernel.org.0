@@ -2,86 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70F5E62391D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 02:45:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EF5D623A5A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 04:25:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232193AbiKJBpI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Nov 2022 20:45:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43666 "EHLO
+        id S232438AbiKJDZT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Nov 2022 22:25:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232190AbiKJBox (ORCPT
+        with ESMTP id S232450AbiKJDZN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Nov 2022 20:44:53 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C33982982A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Nov 2022 17:44:48 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AA0WjW0015498;
-        Thu, 10 Nov 2022 01:44:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=OdLE+TuxhRZtAUF+DVlWvnXLX0aWwsGqekatk5qNFpo=;
- b=eGALCP4T6iqtlx4uRSOhFZMBRLzM4rDWasd5w3dN6EY4fAQTWWjJlrXHMJz+6r8h6EDb
- FaeKYC6zmVY/Hq8dNlNGdm3jUngPxxy+YMgUlvr7jE/Cny1ktDZxzM72UaV2oPsPA7Xe
- nJddz4V4Vu07mpZyuZx+kih7F5PRVZ8F5CvkboLYKJV2KMaest4fMfdAefYSc2zMwEHO
- 8PUdvCdRCQZjTNPXio0UZrq/2gbh7vHK2Fq/L4RbZCeaNNIJvB0bBUN1fgs6aebIpolV
- shCusRM68CtyKaRhr7Lk11M0T/SBJfb9p6Id839Fw94cX3P8tahgFrHcs3vDJzGKjUBr VA== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kqugbbx9s-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 10 Nov 2022 01:44:40 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AA1ich7008279
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 10 Nov 2022 01:44:38 GMT
-Received: from [10.71.111.47] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 9 Nov 2022
- 17:44:38 -0800
-Message-ID: <1f291321-1319-f6d8-b2cb-85ddbe970766@quicinc.com>
-Date:   Wed, 9 Nov 2022 17:44:37 -0800
+        Wed, 9 Nov 2022 22:25:13 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CECBC1AF1F;
+        Wed,  9 Nov 2022 19:25:10 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 799C6B82083;
+        Thu, 10 Nov 2022 03:25:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E5E6C433C1;
+        Thu, 10 Nov 2022 03:25:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668050708;
+        bh=+oBQRQRKGOx/bxxQ4d3T1WtdN/WNJGx7LQ/mUoMIC6E=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=BQjc/gqh+5t2sz7/iqPFGvwRI3UVAV6A9JVX3E4Hp8CZAvYfOB90QCfchcvcUBgY6
+         0e9BUOTMhQvpVZABErjAlHid3M80QKuN4OkZfNXXEx1LKnO4C26G1rxRSxMd2/yDDb
+         wCjt5MABJ55R8nl7Ii/YvD+KiW3iZriZdEICJRk0xFKhfhx1PuXBzw2IrIFp7naVGL
+         DBZQBgE2BGllEkr3s8Qo5YF72kiN62mLWf4HD2dkp75faId7p+Dn5PBjHX7dYE9FLd
+         rNDaZWNMAbIxs17tzK+wusVo+5w87btP0Bl+W3vZOVhk1IHE0aOkHO8gx/KkbdGmAA
+         fNWZXLKWwcIVw==
+Date:   Wed, 9 Nov 2022 21:25:05 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     agross@kernel.org, konrad.dybcio@somainline.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>
+Subject: Re: [PATCH] clk: qcom: ipq8074: populate fw_name for all parents
+Message-ID: <20221110032505.hkdlaad2vb7pqpdu@builder.lan>
+References: <20221108194217.553303-1-robimarko@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [RFC PATCH 1/3] drm: Introduce color fill properties for drm
- plane
-Content-Language: en-US
-To:     Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Simon Ser <contact@emersion.fr>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>,
-        <swboyd@chromium.org>, <quic_abhinavk@quicinc.com>,
-        <daniel.vetter@ffwll.ch>, <laurent.pinchart@ideasonboard.com>
-References: <20221028225952.160-1-quic_jesszhan@quicinc.com>
- <20221028225952.160-2-quic_jesszhan@quicinc.com>
- <eddf4726-3d7e-601a-51ac-03adb2dd822b@linaro.org>
- <fqY-wVvRxd553E0flH80_NaZMpmiVTIdhvu6F31qM9T4yQ0L5fbT9JiixWIhDcDAt3Hxy1roQxwntvgVEnqm5WK6dzEIKqXnlLRcywGhYH4=@emersion.fr>
- <Y2uwjKCN4KGzm3aN@phenom.ffwll.local>
- <ee755c43-434a-a990-0efa-ed5c6baa237e@linaro.org>
- <Y2uyOcVbadRwr9/O@phenom.ffwll.local>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <Y2uyOcVbadRwr9/O@phenom.ffwll.local>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: g36m7ROXu3t7PPwc0PyEZ9tfpCOqEndQ
-X-Proofpoint-ORIG-GUID: g36m7ROXu3t7PPwc0PyEZ9tfpCOqEndQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-09_06,2022-11-09_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
- mlxlogscore=999 clxscore=1011 phishscore=0 mlxscore=0 lowpriorityscore=0
- adultscore=0 bulkscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
- definitions=main-2211100010
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221108194217.553303-1-robimarko@gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,77 +56,143 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 11/9/2022 5:59 AM, Daniel Vetter wrote:
-> On Wed, Nov 09, 2022 at 04:53:45PM +0300, Dmitry Baryshkov wrote:
->> On 09/11/2022 16:52, Daniel Vetter wrote:
->>> On Tue, Nov 08, 2022 at 06:25:29PM +0000, Simon Ser wrote:
->>>> On Saturday, October 29th, 2022 at 13:23, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
->>>>
->>>>> On 29/10/2022 01:59, Jessica Zhang wrote:
->>>>>
->>>>>> Add support for COLOR_FILL and COLOR_FILL_FORMAT properties for
->>>>>> drm_plane. In addition, add support for setting and getting the values
->>>>>> of these properties.
->>>>>>
->>>>>> COLOR_FILL represents the color fill of a plane while COLOR_FILL_FORMAT
->>>>>> represents the format of the color fill. Userspace can set enable solid
->>>>>> fill on a plane by assigning COLOR_FILL to a uint64_t value, assigning
->>>>>> the COLOR_FILL_FORMAT property to a uint32_t value, and setting the
->>>>>> framebuffer to NULL.
->>>>>
->>>>> I suppose that COLOR_FILL should override framebuffer rather than
->>>>> requiring that FB is set to NULL. In other words, if color_filL_format
->>>>> is non-zero, it would make sense to ignore the FB. Then one can use the
->>>>> color_fill_format property to quickly switch between filled plane and
->>>>> FB-backed one.
->>>>
->>>> That would be inconsistent with the rest of the KMS uAPI. For instance,
->>>> the kernel will error out if CRTC has active=0 but a connector is still
->>>> linked to the CRTC. IOW, the current uAPI errors out if the KMS state
->>>> is inconsistent.
->>>
->>> So if the use-case here really is to solid-fill a plane (and not just
->>> provide a background color for the crtc overall), then I guess we could
->>> also extend addfb to make that happen. We've talked in the past about
->>> propertery-fying framebuffer objects, and that would sort out this uapi
->>> wart. And I agree the color fill vs PLANE_ID issue is a bit ugly at least.
->>>
->>> But if the use-cases are all background color then just doing the crtc
->>> background color would be tons simpler (and likely also easier to support
->>> for more hardware).
->>
->> No. The hardware supports multiple color-filled planes, which do not have to
->> cover the whole CRTC.
+On Tue, Nov 08, 2022 at 08:42:17PM +0100, Robert Marko wrote:
+> It appears that having only .name populated in parent_data for clocks
+> which are only globally searchable currently will not work as the clk core
+> won't copy that name if there is no .fw_name present as well.
 > 
-> The use case here means the userspace use-case. What the hw can do on any
-> given chip kinda doesnt matter, which is why I'm asking. KMD uapi is not
-> meant to reflect 100% exactly what a specific chip can do, but instead:
-> - provide features userspace actually needs. If you want per-plane fill,
->    you need userspace that makes use of per-plane fill, and if all you have
->    is crtc background, then that's it.
 
-Hey Daniel,
+While we want to migrate users to .fw_name and .index, that sounds like
+a bug. Where does this (not) happen?
 
-The userspace use case we're trying to support is the Android HWC 
-SOLID_FILL hint here [1], which is specifying per-plane fill.
+Regards,
+Bjorn
 
-Thanks,
-
-Jessica Zhang
-
-[1] 
-https://android.googlesource.com/platform/hardware/interfaces/+/refs/heads/master/graphics/composer/aidl/android/hardware/graphics/composer3/Composition.aidl#52
-
-> - we should create uapi with an eye towards what's actually possible on a
->    reasonable set of drivers and hw. Sometimes that means a slightly more
->    restricted set so that it's possible to implement in more places,
->    especially if that restricted feature set still gets the job done for
->    userspace.
+> So, populate .fw_name for all parent clocks in parent_data.
 > 
-> Cheers, Daniel
+> Fixes: ae55ad32e273 ("clk: qcom: ipq8074: convert to parent data")
+> 
+> Co-developed-by: Christian Marangi <ansuelsmth@gmail.com>
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+>  drivers/clk/qcom/gcc-ipq8074.c | 48 +++++++++++++++++-----------------
+>  1 file changed, 24 insertions(+), 24 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
+> index d231866804f6..bf64aa683605 100644
+> --- a/drivers/clk/qcom/gcc-ipq8074.c
+> +++ b/drivers/clk/qcom/gcc-ipq8074.c
+> @@ -1137,7 +1137,7 @@ static const struct freq_tbl ftbl_nss_noc_bfdcd_clk_src[] = {
+>  
+>  static const struct clk_parent_data gcc_xo_bias_pll_nss_noc_clk_gpll0_gpll2[] = {
+>  	{ .fw_name = "xo", .name = "xo" },
+> -	{ .name = "bias_pll_nss_noc_clk" },
+> +	{ .fw_name = "bias_pll_nss_noc_clk", .name = "bias_pll_nss_noc_clk" },
+>  	{ .hw = &gpll0.clkr.hw },
+>  	{ .hw = &gpll2.clkr.hw },
+>  };
+> @@ -1362,7 +1362,7 @@ static const struct freq_tbl ftbl_nss_ppe_clk_src[] = {
+>  
+>  static const struct clk_parent_data gcc_xo_bias_gpll0_gpll4_nss_ubi32[] = {
+>  	{ .fw_name = "xo", .name = "xo" },
+> -	{ .name = "bias_pll_cc_clk" },
+> +	{ .fw_name = "bias_pll_cc_clk", .name = "bias_pll_cc_clk" },
+>  	{ .hw = &gpll0.clkr.hw },
+>  	{ .hw = &gpll4.clkr.hw },
+>  	{ .hw = &nss_crypto_pll.clkr.hw },
+> @@ -1413,10 +1413,10 @@ static const struct freq_tbl ftbl_nss_port1_rx_clk_src[] = {
+>  
+>  static const struct clk_parent_data gcc_xo_uniphy0_rx_tx_ubi32_bias[] = {
+>  	{ .fw_name = "xo", .name = "xo" },
+> -	{ .name = "uniphy0_gcc_rx_clk" },
+> -	{ .name = "uniphy0_gcc_tx_clk" },
+> +	{ .fw_name = "uniphy0_gcc_rx_clk", .name = "uniphy0_gcc_rx_clk" },
+> +	{ .fw_name = "uniphy0_gcc_tx_clk", .name = "uniphy0_gcc_tx_clk" },
+>  	{ .hw = &ubi32_pll.clkr.hw },
+> -	{ .name = "bias_pll_cc_clk" },
+> +	{ .fw_name = "bias_pll_cc_clk", .name = "bias_pll_cc_clk" },
+>  };
+>  
+>  static const struct parent_map gcc_xo_uniphy0_rx_tx_ubi32_bias_map[] = {
+> @@ -1465,10 +1465,10 @@ static const struct freq_tbl ftbl_nss_port1_tx_clk_src[] = {
+>  
+>  static const struct clk_parent_data gcc_xo_uniphy0_tx_rx_ubi32_bias[] = {
+>  	{ .fw_name = "xo", .name = "xo" },
+> -	{ .name = "uniphy0_gcc_tx_clk" },
+> -	{ .name = "uniphy0_gcc_rx_clk" },
+> +	{ .fw_name = "uniphy0_gcc_tx_clk", .name = "uniphy0_gcc_tx_clk" },
+> +	{ .fw_name = "uniphy0_gcc_rx_clk", .name = "uniphy0_gcc_rx_clk" },
+>  	{ .hw = &ubi32_pll.clkr.hw },
+> -	{ .name = "bias_pll_cc_clk" },
+> +	{ .fw_name = "bias_pll_cc_clk", .name = "bias_pll_cc_clk" },
+>  };
+>  
+>  static const struct parent_map gcc_xo_uniphy0_tx_rx_ubi32_bias_map[] = {
+> @@ -1696,12 +1696,12 @@ static const struct freq_tbl ftbl_nss_port5_rx_clk_src[] = {
+>  
+>  static const struct clk_parent_data gcc_xo_uniphy0_rx_tx_uniphy1_rx_tx_ubi32_bias[] = {
+>  	{ .fw_name = "xo", .name = "xo" },
+> -	{ .name = "uniphy0_gcc_rx_clk" },
+> -	{ .name = "uniphy0_gcc_tx_clk" },
+> -	{ .name = "uniphy1_gcc_rx_clk" },
+> -	{ .name = "uniphy1_gcc_tx_clk" },
+> +	{ .fw_name = "uniphy0_gcc_rx_clk", .name = "uniphy0_gcc_rx_clk" },
+> +	{ .fw_name = "uniphy0_gcc_tx_clk", .name = "uniphy0_gcc_tx_clk" },
+> +	{ .fw_name = "uniphy1_gcc_rx_clk", .name = "uniphy1_gcc_rx_clk" },
+> +	{ .fw_name = "uniphy1_gcc_tx_clk", .name = "uniphy1_gcc_tx_clk" },
+>  	{ .hw = &ubi32_pll.clkr.hw },
+> -	{ .name = "bias_pll_cc_clk" },
+> +	{ .fw_name = "bias_pll_cc_clk", .name = "bias_pll_cc_clk" },
+>  };
+>  
+>  static const struct parent_map
+> @@ -1758,12 +1758,12 @@ static const struct freq_tbl ftbl_nss_port5_tx_clk_src[] = {
+>  
+>  static const struct clk_parent_data gcc_xo_uniphy0_tx_rx_uniphy1_tx_rx_ubi32_bias[] = {
+>  	{ .fw_name = "xo", .name = "xo" },
+> -	{ .name = "uniphy0_gcc_tx_clk" },
+> -	{ .name = "uniphy0_gcc_rx_clk" },
+> -	{ .name = "uniphy1_gcc_tx_clk" },
+> -	{ .name = "uniphy1_gcc_rx_clk" },
+> +	{ .fw_name = "uniphy0_gcc_tx_clk", .name = "uniphy0_gcc_tx_clk" },
+> +	{ .fw_name = "uniphy0_gcc_rx_clk", .name = "uniphy0_gcc_rx_clk" },
+> +	{ .fw_name = "uniphy1_gcc_tx_clk", .name = "uniphy1_gcc_tx_clk" },
+> +	{ .fw_name = "uniphy1_gcc_rx_clk", .name = "uniphy1_gcc_rx_clk" },
+>  	{ .hw = &ubi32_pll.clkr.hw },
+> -	{ .name = "bias_pll_cc_clk" },
+> +	{ .fw_name = "bias_pll_cc_clk", .name = "bias_pll_cc_clk" },
+>  };
+>  
+>  static const struct parent_map
+> @@ -1820,10 +1820,10 @@ static const struct freq_tbl ftbl_nss_port6_rx_clk_src[] = {
+>  
+>  static const struct clk_parent_data gcc_xo_uniphy2_rx_tx_ubi32_bias[] = {
+>  	{ .fw_name = "xo", .name = "xo" },
+> -	{ .name = "uniphy2_gcc_rx_clk" },
+> -	{ .name = "uniphy2_gcc_tx_clk" },
+> +	{ .fw_name = "uniphy2_gcc_rx_clk", .name = "uniphy2_gcc_rx_clk" },
+> +	{ .fw_name = "uniphy2_gcc_tx_clk", .name = "uniphy2_gcc_tx_clk" },
+>  	{ .hw = &ubi32_pll.clkr.hw },
+> -	{ .name = "bias_pll_cc_clk" },
+> +	{ .fw_name = "bias_pll_cc_clk", .name = "bias_pll_cc_clk" },
+>  };
+>  
+>  static const struct parent_map gcc_xo_uniphy2_rx_tx_ubi32_bias_map[] = {
+> @@ -1877,10 +1877,10 @@ static const struct freq_tbl ftbl_nss_port6_tx_clk_src[] = {
+>  
+>  static const struct clk_parent_data gcc_xo_uniphy2_tx_rx_ubi32_bias[] = {
+>  	{ .fw_name = "xo", .name = "xo" },
+> -	{ .name = "uniphy2_gcc_tx_clk" },
+> -	{ .name = "uniphy2_gcc_rx_clk" },
+> +	{ .fw_name = "uniphy2_gcc_tx_clk", .name = "uniphy2_gcc_tx_clk" },
+> +	{ .fw_name = "uniphy2_gcc_rx_clk", .name = "uniphy2_gcc_rx_clk" },
+>  	{ .hw = &ubi32_pll.clkr.hw },
+> -	{ .name = "bias_pll_cc_clk" },
+> +	{ .fw_name = "bias_pll_cc_clk", .name = "bias_pll_cc_clk" },
+>  };
+>  
+>  static const struct parent_map gcc_xo_uniphy2_tx_rx_ubi32_bias_map[] = {
 > -- 
-> Daniel Vetter
-> Software Engineer, Intel Corporation
-> http://blog.ffwll.ch
+> 2.38.1
+> 
