@@ -2,123 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99A0E6240D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 12:09:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E848F62412B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 12:15:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229678AbiKJLJR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 06:09:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56570 "EHLO
+        id S230437AbiKJLPS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 06:15:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229598AbiKJLJP (ORCPT
+        with ESMTP id S229938AbiKJLPC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Nov 2022 06:09:15 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2BD46C728
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 03:09:14 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id x2so2554140edd.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 03:09:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=z+zj47CxDazv5n5Weo6oSJ5S2zaBuccDAxOqSC3Ye4E=;
-        b=rLIZgsq79GQmr376cwc8RVovgmgoNwJ1K1r4jQhv/hMxNnCjlRBN9GGoVZoMv2MQ8W
-         Dx+7yV9A1P8d6/bNLjSZi2Mjgk7wmHr2CI8a6UWIlQ6pPKjTYLfV3l49ix5G+XNheQsg
-         06rYnGdpVYHIEbIGGKSRhspas2h42odmKUfAtLwG8Y/AqQZSMOMn8XU33r1SENhFNzqf
-         tS2iY2RZKUsM2ydNa1fTBdWlnR06AzMJpjo3iv7JMFlDFB3qKOyKgqGttK6oGxdfzkdq
-         zsYROGlQuJfzltdIbdryGkO/mDDjJY6QbNMKt9h+wmpXcUlMbu8t4YCXSpfLOqeoTfqI
-         zWAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=z+zj47CxDazv5n5Weo6oSJ5S2zaBuccDAxOqSC3Ye4E=;
-        b=e5uHMgqnxIrWZMF8EKHKLgud9+EHCNpRyRkYSXkDVvuLA2fTKDRPNJ0hNkVohrHD1r
-         OmLpndqd5cJLKQ7SVzx5KEGx/Z6P4SLQRALEGsLBXv6gtEOTa0Pr1khcls2EtF3nqZc0
-         I3wEx3ubfQnP0HhnWKmRC67PqxtAmwIgJO9RI3jJAu60xIlP8yZD4DFBEMynYCpYTEXl
-         A8W2S5rwkvN1LAv6vTltANoS1rolYKnH1gAe6Nn3jDR7DVRI1Wv8BGey2gO+q+sFP5Tb
-         /q/ZBQKUvhhg8jwX+KzjT2US1fLJGWziCu9kupURGPnGR4yHUWPB4S4wQ+8X/FUGiCHc
-         aHZg==
-X-Gm-Message-State: ANoB5plDyp3nU77wPls9F9Vpnouxp+yz+JNGzsKrifSUNY7g+AyaGwzo
-        A9HGHcVw8vCYFNQpVESwNdZaDg==
-X-Google-Smtp-Source: AA0mqf489JZ/W0OQS+ENK70ZqqTJfxAYOeGzJw0uwG/5NFavrLZIO/1J+m/WtaYIWKtWSS99ljo/tA==
-X-Received: by 2002:aa7:d385:0:b0:461:8cd3:b38b with SMTP id x5-20020aa7d385000000b004618cd3b38bmr24091150edq.172.1668078553506;
-        Thu, 10 Nov 2022 03:09:13 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id x6-20020a05640225c600b00463a83ce063sm8372518edb.96.2022.11.10.03.09.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Nov 2022 03:09:13 -0800 (PST)
-Message-ID: <bf3e5725-8cf7-3a0e-aa9b-0b05a4507868@linaro.org>
-Date:   Thu, 10 Nov 2022 12:09:10 +0100
+        Thu, 10 Nov 2022 06:15:02 -0500
+Received: from m13114.mail.163.com (m13114.mail.163.com [220.181.13.114])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A4DB02870A;
+        Thu, 10 Nov 2022 03:14:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=TZJpb
+        OcFFeyqiQRDIdE1+HY4QipIZ+rgMxxRMwDZS/g=; b=ppEhLeQgq44r2pTSflDs2
+        YN7Orx3I4HDxgRiIN2OoR0QNcya/fWqJQAiFT/3NphvGJijSaYaEB7gquelOPS6D
+        arRitsxR1d2CqROgoT5Lr2AayL5/RHF0r/pdqpvHypp20Lt6jqC4ieRhRUVth4lD
+        nq9x1a8YBGOUUrAhtQPa6s=
+Received: from slark_xiao$163.com ( [223.104.68.226] ) by
+ ajax-webmail-wmsvr114 (Coremail) ; Thu, 10 Nov 2022 19:14:28 +0800 (CST)
+X-Originating-IP: [223.104.68.226]
+Date:   Thu, 10 Nov 2022 19:14:28 +0800 (CST)
+From:   "Slark Xiao" <slark_xiao@163.com>
+To:     "Greg KH" <gregkh@linuxfoundation.org>
+Cc:     mani@kernel.org, loic.poulain@linaro.org, dnlplm@gmail.com,
+        yonglin.tan@outlook.com, fabio.porcedda@gmail.com,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re:Re: Re: Re: [PATCH v2] bus: mhi: host: pci_generic: Add macro
+ for some VIDs
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20220113(9671e152)
+ Copyright (c) 2002-2022 www.mailtech.cn 163com
+In-Reply-To: <Y2j1GBLQB2N8+lUM@kroah.com>
+References: <20221107084826.8888-1-slark_xiao@163.com>
+ <Y2jJpT5//xBUOQMq@kroah.com>
+ <28f1e702.28d7.184516dbbbb.Coremail.slark_xiao@163.com>
+ <Y2jVtWPdTybNCYqX@kroah.com>
+ <5b96b2e2.3a97.18451a061a3.Coremail.slark_xiao@163.com>
+ <Y2j1GBLQB2N8+lUM@kroah.com>
+X-NTES-SC: AL_QuydCvyct0At7iibYekWkkcRjuo+UMC0vfgh249fPJs0qCvE/wwrQFR+F1rx/e+lFTy9mzO1UCBpx+NEeYJhR695DCdo2uH20/GJ89V8YS59
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH 1/2] dt-bindings: regulator: qcom,smd: Document PMR735a
-To:     Mark Brown <broonie@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>, andersson@kernel.org,
-        linux-arm-msm@vger.kernel.org, krzysztof.kozlowski@linaro.org,
-        agross@kernel.org
-Cc:     Liam Girdwood <lgirdwood@gmail.com>, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org, patches@linaro.org,
-        Rob Herring <robh+dt@kernel.org>
-References: <20221109110846.45789-1-konrad.dybcio@linaro.org>
- <166807822235.115312.17138185226634439165.b4-ty@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <166807822235.115312.17138185226634439165.b4-ty@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Message-ID: <28434d76.39c6.184613f9965.Coremail.slark_xiao@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: csGowABXiNMU3WxjBoJYAA--.62578W
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiGRS1ZFyPfTbhcgAAsX
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/11/2022 12:03, Mark Brown wrote:
-> On Wed, 9 Nov 2022 12:08:45 +0100, Konrad Dybcio wrote:
->> PMR735a also appears to be bundled with some SMD RPM SoCs.
->> Document it.
->>
->>
-> 
-> Applied to
-> 
->     https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
-> 
-> Thanks!
-Please apply v2 instead:
-
-https://lore.kernel.org/linux-arm-msm/20221110091736.3344-2-konrad.dybcio@linaro.org/T/#u
-
-Konrad
-> 
-> [1/2] dt-bindings: regulator: qcom,smd: Document PMR735a
->        commit: 9263c69696c8c75ef97ebf57cb4f308c4c2420ea
-> [2/2] regulator: qcom_smd: Add PMR735a regulators
->        commit: 0cda8c43aa2477b7a9f9bed0adff2f34d3afc143
-> 
-> All being well this means that it will be integrated into the linux-next
-> tree (usually sometime in the next 24 hours) and sent to Linus during
-> the next merge window (or sooner if it is a bug fix), however if
-> problems are discovered then the patch may be dropped or reverted.
-> 
-> You may get further e-mails resulting from automated or manual testing
-> and review of the tree, please engage with people reporting problems and
-> send followup patches addressing any issues that are reported if needed.
-> 
-> If any updates are required or you are submitting further changes they
-> should be sent as incremental updates against current git, existing
-> patches will not be replaced.
-> 
-> Please add any relevant lists and maintainers to the CCs when replying
-> to this mail.
-> 
-> Thanks,
-> Mark
+CkF0IDIwMjItMTEtMDcgMjA6MDc6NTIsICJHcmVnIEtIIiA8Z3JlZ2toQGxpbnV4Zm91bmRhdGlv
+bi5vcmc+IHdyb3RlOgo+T24gTW9uLCBOb3YgMDcsIDIwMjIgYXQgMDY6MjY6MTZQTSArMDgwMCwg
+U2xhcmsgWGlhbyB3cm90ZToKPldoeSBhbGwgdGhlIGJsYW5rIGxpbmVzPwoKMTYzIG1haWwgYXV0
+b21hdGljYWxseSBhZGQgaXQgLCBhbmQgSSBmb3JnZXQgcmVtb3ZlIGl0LgoKPgo+PiBBdCAyMDIy
+LTExLTA3IDE3OjUzOjU3LCAiR3JlZyBLSCIgPGdyZWdraEBsaW51eGZvdW5kYXRpb24ub3JnPiB3
+cm90ZToKPj4gPk9uIE1vbiwgTm92IDA3LCAyMDIyIGF0IDA1OjMwOjU2UE0gKzA4MDAsIFNsYXJr
+IFhpYW8gd3JvdGU6Cj4+ID5BcyBJIHNhaWQsIHRoaXMgaXMganVzdCBhIGRlZmluZSwgbm90IGEg
+bWFjcm8gYXQgYWxsLgo+PiA+Cj4+ID4+IEFuZCBjb3VsZCB5b3UgZ2l2ZSB5b3VyIGNvbW1lbnRz
+IGluIHByZXZpb3VzIHBhdGNoLCBub3QgdGhlICdmaW5hbCcgb25lPwo+PiA+Cj4+ID5JIGRvIG5v
+dCB1bmRlcnN0YW5kLCB3aGF0IHByZXZpb3VzIHBhdHJjaD8gIFdoYXQgImZpbmFsIiBvbmU/ICBX
+aGF0IGlzCj4+ID50aGUgImxhdGVzdCIgcGF0Y2g/Cj4+IHByZXZpb3VzIHBhdGNoOgo+PiBodHRw
+czovL2xvcmUua2VybmVsLm9yZy9sa21sLzIwMjIxMDI3MTE1MTIzLjUzMjYtMS1zbGFya194aWFv
+QDE2My5jb20vCj4+IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2xrbWwvMjAyMjEwMjgwMjM3MTEu
+NDE5Ni0xLXNsYXJrX3hpYW9AMTYzLmNvbS8KPj4gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvbGtt
+bC8yMDIyMTEwMjAyNDQzNy4xNTI0OC0xLXNsYXJrX3hpYW9AMTYzLmNvbS8KPj4gCj4+ICdmaW5h
+bCcgcGF0Y2g6Cj4+IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2xrbWwvMjAyMjExMDcwODQ4MjYu
+ODg4OC0xLXNsYXJrX3hpYW9AMTYzLmNvbS8KPj4gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvbGtt
+bC8yMDIyMTEwMTAxNTg1OC42Nzc3LTEtc2xhcmtfeGlhb0AxNjMuY29tLwo+Cj5UaGF0J3MgMiBk
+aWZmZXJlbnQgdmVyc2lvbnMsIHdpdGggYSB0b3RhbCBvZiAzLgo+Cj4+IAo+PiBUaGUgJ2ZpbmFs
+JyBwYXRjaCB3YXMgY29tbWl0dGVkIGFjY29yZGluZyB0byB0aGUgYWR2aWNlIG9mIHRoZSBmZWF0
+dXJlCj4+IG1haW50YWluZXIuIAo+PiA+Cj4+ID4+IEluIGFub3RoZXIgcGNpX2lkcyBwYXRjaCwg
+eW91IGJyZWFrIGl0IGluIHYzIGFuZCBicmVhayBpdCBoZXJlIGFnYWluIGluIHYyLgo+PiA+Cj4+
+ID5JIGJyb2tlIHdoYXQ/Cj4+IFlvdSBjb3VsZCBoYXZlICB2b2ljZWQgb3V0IHN1Y2ggY29tbWVu
+dCBpbiBWMSwgVjIgYmVmb3JlIHRoZSAnZmluYWwnLiAKPgo+V2UgYWxsIHJldmlldyBwYXRjaGVz
+IHdoZW4gd2UgY2FuLiAgVGhlcmUgaXMgbm8gcnVsZSB0aGF0IHBlb3BsZSBjYW4gbm90Cj5jb21t
+ZW50IG9uIG5ld2VyIHBhdGNoZXMsIG9yIG9sZGVyIG9uZXMuCj4KPkluIGZhY3QsIGl0IHdvdWxk
+IGJlIHdvbmRlcmZ1bCBpZiB5b3UgY291bGQgdGFrZSBzb21lIHRpbWUgYW5kIHJldmlldwo+cGF0
+Y2hlcyBmcm9tIG90aGVycy4gIEl0IHdvdWxkIGhlbHAgeW91ciB1bmRlcnN0YW5kaW5nIG9mIHRo
+ZSBjb2RlIGFuZAo+aG93IHRoZSBrZXJuZWwgZGV2ZWxvcG1lbnQgcHJvY2VzcyB3b3Jrcy4KPgo+
+dGhhbmtzLAo+Cj5ncmVnIGstaApBZ3JlZSB3aXRoIHRoaXMuICBCdXQgeW91IGtub3csIDUgYXR0
+ZW1wdCAgIGp1c3QgZm9yIGEgbGl0dGxlIHVwZGF0ZSAgd2VyZSByZWplY3RlZApJdCdzIHNvIGZy
+dXN0cmF0aW5nLiBBbnl3YXksIEkgcmUtc3VibWl0IGFub3RoZXIgdjMgcGF0Y2ggZm9yIHRoaXMg
+Y2hhbmdlLgpQbGVhc2UgZ2l2ZSB5b3VyIGNvbW1lbnQgaWYgeW91IGFyZSBmcmVlLgoKVGhhbmtz
+Cg==
