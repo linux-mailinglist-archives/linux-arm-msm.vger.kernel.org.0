@@ -2,291 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 695DB6240A1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 12:02:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BD476240A4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 12:03:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229929AbiKJLCj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 06:02:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51226 "EHLO
+        id S229553AbiKJLDt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 06:03:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230406AbiKJLCX (ORCPT
+        with ESMTP id S229463AbiKJLDs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Nov 2022 06:02:23 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 572316CA0A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 03:02:19 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id f5so4031684ejc.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 03:02:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=L0kPvLa286AkbDNXKbVvuHvXORMmCyLOgPXXU67P4LE=;
-        b=PHYzcSvS5Cg+0YumNw0/zyCi6KbcdAz8iyrHoBxvgLqGUYBNRUnc1WrXPJmaWEpL3i
-         hGnVhaAVckFbEIYT9wOyJ5RSEiwgzzdl4kDJSAEu21lrddYdV5FWf9W880mjMwAz6BZr
-         e1H0ipusQX91xQmYYPpi8cq2d3QYG7R09fSNMAw3/+D9iNB8ih0QUDtMSA1b5ADA3Elt
-         Ej9sd1t4sdaJPxZcmbXU00fBIkE8HXWedbysX5BRBSabYClBzYXxx2Vm4461nL6UYvAu
-         ZnATUNr59HdihMAAv2fovqhUa+nLfxa3PRH2nG0AgF+3iYU0ee+PkdEKmcHL14peOhh4
-         DoYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=L0kPvLa286AkbDNXKbVvuHvXORMmCyLOgPXXU67P4LE=;
-        b=6yg1/pf1lCJ7YBqDqW0D8Th/+TEIVCNHKCbefagQJpqCiMO9B2nzLRmvMgzLMen4Qz
-         BRnYxFW4/CSHfTwKEhm72x/ZujAhZVqPSatN52lo9Z3MGWYk16IDLxZ0+NqoaCLZ6n+P
-         nlAHw4c1iLuff0naun/y4pwMp0jAET7KYi+QnnIGAdiqmIMPomCavxVvFw/+xoIMqIGM
-         IdVu+EDrxKZtKJiTzeFmNMSgaId8qGx3i+Eidb7SAhnvlo8rmVLaamRxRmSF3KNfZuAC
-         DB4+xM6v9vpeacgaNOrRXKRDDXRnQ+ZuzM1ojMEJrr3lG2KGRJfom2gmLzOSwh5xm2D5
-         c3Qg==
-X-Gm-Message-State: ACrzQf3xuDQNk3aH7bI7zuRNGA5urY2RfRyU9ZQZ8ny3FIyTYzdmdBnl
-        hUvvLDejXdh//7Eu2di1th1Lpw==
-X-Google-Smtp-Source: AMsMyM4eoIcB1m6CVRlycwyz47fsHzxOyh/cX46U03mvjMK3MHFI9FrnDPjDwAbTgGFH2BeKjf+TtA==
-X-Received: by 2002:a17:907:7b93:b0:770:1d4f:4de9 with SMTP id ne19-20020a1709077b9300b007701d4f4de9mr59897802ejc.201.1668078138469;
-        Thu, 10 Nov 2022 03:02:18 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id w16-20020a170906481000b007a9a56e2a07sm7041267ejq.49.2022.11.10.03.02.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Nov 2022 03:02:18 -0800 (PST)
-Message-ID: <517cde25-83b3-e9be-a56b-e08c4e84b660@linaro.org>
-Date:   Thu, 10 Nov 2022 12:02:14 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH 2/9] arm64: dts: qcom: sa8295p-adp: enable PCIe
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Thu, 10 Nov 2022 06:03:48 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC40F25C1;
+        Thu, 10 Nov 2022 03:03:47 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 94BEAB8216B;
+        Thu, 10 Nov 2022 11:03:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D72C433C1;
+        Thu, 10 Nov 2022 11:03:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668078225;
+        bh=Bg9efXol0ccwRMunJy8Gh3qhd8CXZJ2k6fchLXeoSUk=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=fflnf8+VIYGNGWrN9IRVzFZ0T9a7nk2zcdtDgFIEvg/vdWgYNNvzdR0vBb9AO9P0f
+         +vF1a6XnIOXl0M4c6Q3eOvpyvbvUEJSoHJCUJsJf0AII6iEMn3YP5prbGw+Nnm99mp
+         Og8bfb+13sFvNb0BQXi/OaUK8pbzcAooMD3m/bokFZq6JHwz/VwRX1rEF79bDpAwa2
+         B/X3k+JCoWTZIc+Y1raNfxBwigc2pyjuBIwgXrml8LXBapZnPldbPwp3dn7ScOlCT/
+         /KOmo/4TaIVWODvRHe7J7JrYlY06sKXTe+yPdsSyymxHv+heku6PqWEgrBRXWjm0iF
+         oqyB6IBJEaduw==
+From:   Mark Brown <broonie@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, andersson@kernel.org,
+        linux-arm-msm@vger.kernel.org, krzysztof.kozlowski@linaro.org,
+        agross@kernel.org
+Cc:     Liam Girdwood <lgirdwood@gmail.com>, devicetree@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221110103558.12690-1-johan+linaro@kernel.org>
- <20221110103558.12690-3-johan+linaro@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221110103558.12690-3-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-kernel@vger.kernel.org, patches@linaro.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20221109110846.45789-1-konrad.dybcio@linaro.org>
+References: <20221109110846.45789-1-konrad.dybcio@linaro.org>
+Subject: Re: [PATCH 1/2] dt-bindings: regulator: qcom,smd: Document PMR735a
+Message-Id: <166807822235.115312.17138185226634439165.b4-ty@kernel.org>
+Date:   Thu, 10 Nov 2022 11:03:42 +0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.10.0-dev-fc921
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, 9 Nov 2022 12:08:45 +0100, Konrad Dybcio wrote:
+> PMR735a also appears to be bundled with some SMD RPM SoCs.
+> Document it.
+> 
+> 
 
-On 10/11/2022 11:35, Johan Hovold wrote:
-> The SA8295P-ADP has up to four PCIe interfaces implemented by three or
-> four controllers: PCIe2A, PCIe3A/PCIe3B and PCIe4.
->
-> PCIe2 is used in x4 mode, while PCIe3 can be used in either x2 or x4
-> mode. Enable both PCIe3A and PCI3B in x2 mode for now.
->
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
+Applied to
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
+Thanks!
 
-Konrad
+[1/2] dt-bindings: regulator: qcom,smd: Document PMR735a
+      commit: 9263c69696c8c75ef97ebf57cb4f308c4c2420ea
+[2/2] regulator: qcom_smd: Add PMR735a regulators
+      commit: 0cda8c43aa2477b7a9f9bed0adff2f34d3afc143
 
->   arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 171 +++++++++++++++++++++++
->   1 file changed, 171 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> index b608b82dff03..ff1e6a674913 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> @@ -57,6 +57,13 @@ vreg_l13a: ldo13 {
->   			regulator-max-microvolt = <3072000>;
->   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->   		};
-> +
-> +		vreg_l11a: ldo11 {
-> +			regulator-name = "vreg_l11a";
-> +			regulator-min-microvolt = <880000>;
-> +			regulator-max-microvolt = <880000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
->   	};
->   
->   	pmm8540-c-regulators {
-> @@ -151,6 +158,76 @@ vreg_l8g: ldo8 {
->   	};
->   };
->   
-> +&pcie2a {
-> +	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
-> +	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pcie2a_default>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie2a_phy {
-> +	vdda-phy-supply = <&vreg_l11a>;
-> +	vdda-pll-supply = <&vreg_l3a>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie3a {
-> +	num-lanes = <2>;
-> +
-> +	perst-gpios = <&tlmm 151 GPIO_ACTIVE_LOW>;
-> +	wake-gpios = <&tlmm 56 GPIO_ACTIVE_LOW>;
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pcie3a_default>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie3a_phy {
-> +	vdda-phy-supply = <&vreg_l11a>;
-> +	vdda-pll-supply = <&vreg_l3a>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie3b {
-> +	perst-gpios = <&tlmm 153 GPIO_ACTIVE_LOW>;
-> +	wake-gpios = <&tlmm 130 GPIO_ACTIVE_LOW>;
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pcie3b_default>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie3b_phy {
-> +	vdda-phy-supply = <&vreg_l11a>;
-> +	vdda-pll-supply = <&vreg_l3a>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie4 {
-> +	perst-gpios = <&tlmm 141 GPIO_ACTIVE_LOW>;
-> +	wake-gpios = <&tlmm 139 GPIO_ACTIVE_LOW>;
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pcie4_default>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie4_phy {
-> +	vdda-phy-supply = <&vreg_l11a>;
-> +	vdda-pll-supply = <&vreg_l3a>;
-> +
-> +	status = "okay";
-> +};
-> +
->   &qup2 {
->   	status = "okay";
->   };
-> @@ -380,3 +457,97 @@ &xo_board_clk {
->   };
->   
->   /* PINCTRL */
-> +
-> +&tlmm {
-> +	pcie2a_default: pcie2a-default-state {
-> +		clkreq-n-pins {
-> +			pins = "gpio142";
-> +			function = "pcie2a_clkreq";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +
-> +		perst-n-pins {
-> +			pins = "gpio143";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		wake-n-pins {
-> +			pins = "gpio145";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +	};
-> +
-> +	pcie3a_default: pcie3a-default-state {
-> +		clkreq-n-pins {
-> +			pins = "gpio150";
-> +			function = "pcie3a_clkreq";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +
-> +		perst-n-pins {
-> +			pins = "gpio151";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		wake-n-pins {
-> +			pins = "gpio56";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +	};
-> +
-> +	pcie3b_default: pcie3b-default-state {
-> +		clkreq-n-pins {
-> +			pins = "gpio152";
-> +			function = "pcie3b_clkreq";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +
-> +		perst-n-pins {
-> +			pins = "gpio153";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		wake-n-pins {
-> +			pins = "gpio130";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +	};
-> +
-> +	pcie4_default: pcie4-default-state {
-> +		clkreq-n-pins {
-> +			pins = "gpio140";
-> +			function = "pcie4_clkreq";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +
-> +		perst-n-pins {
-> +			pins = "gpio141";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		wake-n-pins {
-> +			pins = "gpio139";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +	};
-> +};
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
