@@ -2,51 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A404624A89
+	by mail.lfdr.de (Postfix) with ESMTP id 90B09624A8A
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 20:22:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229952AbiKJTWx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 14:22:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32966 "EHLO
+        id S230173AbiKJTWy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 14:22:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230174AbiKJTWw (ORCPT
+        with ESMTP id S229591AbiKJTWx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Nov 2022 14:22:52 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AFA348760
+        Thu, 10 Nov 2022 14:22:53 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A81C8218A
         for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 11:22:51 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id u2so2071608ljl.3
+Received: by mail-lf1-x12e.google.com with SMTP id r12so5078168lfp.1
         for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 11:22:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=wrNpg77ahRGEeTxAe9TFC45qA5bJL7st8wtKiHZ8uas=;
-        b=rtxETIm4InRDMRkVYJbmbeZX6R/9E239duFoSda+BPk4jYypOBm+KJ7L/FLNY2qoBO
-         S+4sUKCBd3qQkOCfIqV5GM7nyiBL+ySATYawA0LX9z/ycXnL0W5GQk4MJglsqbzcU3gq
-         +z0SXLf4OUx1Vo9MJ8C3SN/X7GopAiSYDLIMXkAO2e9cRnxOG4LBtMlnwUNHUoRj4SW/
-         nc2TshyuTKeyeCkU7DHNdoaEVe9rV3jZ2x2fJCMDNVWfHBJJ+8Br/sp7/UNzO2U2nvwz
-         b/faZVw4yxGLpj2FArshJz4Lzmzf+08enJ1WOYZYUA/xelO6g2Q1PfGoEP2b+PaqbEwK
-         chJA==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2UIsc+krPU1fGDfYe329apj6IkVzAs3KMEB9BP123HE=;
+        b=xGsM2EAqwLZkorkLw2taqh3SSEK5T9RvT5LE0v8o0+f3q3wm/g9txVkNQ+hZp5/dXD
+         BN9Hi2CUksCV8LCOLWpBnn9pgKhNa44Gt2JPutTERmbMPjvqWaNwrsLNQKsv5Qo2nCnK
+         gOaXzc5qWhs5avgmf7V87AaXwEGEGkwnd+FkMVBMb8TivH0qJmIKzpF8vYf+4ParW1t2
+         ABAHJDpyzWVzgIhvRcr1DVc/H5WgYogLvlf77gmlRF5tVfl5q+WHNeHjNtKlFjrAzkNI
+         wHl6GoxlKOwLctZdtN1zFne428sshFayuGcrloj5FxBmG9h2UvJ4fhyS/r9GDi2YNaCr
+         4SkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wrNpg77ahRGEeTxAe9TFC45qA5bJL7st8wtKiHZ8uas=;
-        b=Il2NBpOVXC7K3YytGdGKT3WSHuFm+v6GnQgf0n23ChNJYbg1syBrAJLSJ8b2HYgw0K
-         n28XCD80qOeQMSYAhh0CyD+mtSkZh4hbE2ohQiDKKymcy7SYWnMjtCsOVoiKLGFfmeb1
-         1HZQwgVB/k55lffsqIEsPtbMY0j4ZhwqrcAhYJs9v89QJmb3y7xq7Ur824eY1PmntbV6
-         uctkfeETLVirBJjkgjiYwboiBjNn0uo9KDanVsVD5C1Wsms8CFxRNrQxYaVTGCZR9XLa
-         8LBYV49KzQuE6fFQYkGnE75F0QrNMTYq+Dt0pk7BsXm9QHHy7VTEC7l9XTnnVhY++Anl
-         8z4g==
-X-Gm-Message-State: ACrzQf2cNjIm78YCMY9fduk6bQdXmC+ACdqLWL5KXdiO25K7sljurjjk
-        Uyol9NjoSn/DvWwLEuoyjMhFPw==
-X-Google-Smtp-Source: AMsMyM6ymy+U6hwgMTw5b9I7p/kKDSr2005t0hmOwsiHcwtLZDTzvGVa1akOwmCgD0g8kHq+9DPQNw==
-X-Received: by 2002:a2e:bf0b:0:b0:277:63f7:492c with SMTP id c11-20020a2ebf0b000000b0027763f7492cmr9079122ljr.259.1668108169386;
-        Thu, 10 Nov 2022 11:22:49 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2UIsc+krPU1fGDfYe329apj6IkVzAs3KMEB9BP123HE=;
+        b=q5XxUpsPWhOp1eZ939qk7NsgY+U6xK6sdIxvSIMKUbk1WWnUnlda8msTXRUkN8ZCof
+         U4YMW7fgFgrvsq5l+60rs+31gfPxFxos43q3NfmC4FRxDoiEQz4w73mgL3M2vxPMZeLO
+         Ur4UxkW3cRFN3iEX6ez6jJUX6DYLtiNaMPZwsMNXYLztd+Z+vhNWAE5/t88pwklSuWhl
+         r6BGxq7gBiGXLuBLh2vEGvMhaBXWdsDXejdHukltPht/k1Gqz/T+B69PFT+hoKR1+0Er
+         i/EUy7X0zDp7Fsy8EpDAs6dNt5DgJiyIINxkRxN6et+NLbbPckfV9mRoJtvXkjOKEYKg
+         49cQ==
+X-Gm-Message-State: ACrzQf2Yqkh8gOkcjpjz0cCjDvsAT9nf4CXQTAMuJqZau1FyvBKFL3bD
+        Hu4MIO32yL5Uxf0uLvmdIhKqig==
+X-Google-Smtp-Source: AMsMyM7NS4nGToVkCC13upgnbeWT7NN05gXMSURAxNNTIE9HTHL4AQQDp0nTw2DXzJzoCihtZmd0kA==
+X-Received: by 2002:ac2:58e3:0:b0:4b0:fa45:9423 with SMTP id v3-20020ac258e3000000b004b0fa459423mr1892081lfo.154.1668108170073;
+        Thu, 10 Nov 2022 11:22:50 -0800 (PST)
 Received: from eriador.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id h8-20020a05651c124800b0027758f0619fsm40345ljh.132.2022.11.10.11.22.48
+        by smtp.gmail.com with ESMTPSA id h8-20020a05651c124800b0027758f0619fsm40345ljh.132.2022.11.10.11.22.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 10 Nov 2022 11:22:49 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -57,10 +58,12 @@ To:     Andy Gross <agross@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH v3 00/13] phy: qcom-qmp: rework register layout tables
-Date:   Thu, 10 Nov 2022 22:22:35 +0300
-Message-Id: <20221110192248.873973-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 01/13] phy: qcom-qmp: fix typo in QSERDES_COM_CMN_RSVD5 value
+Date:   Thu, 10 Nov 2022 22:22:36 +0300
+Message-Id: <20221110192248.873973-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20221110192248.873973-1-dmitry.baryshkov@linaro.org>
+References: <20221110192248.873973-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -72,60 +75,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rework register layout tables in QMP PHY drivers to use defined symbolic
-names rather than bare numbers. Also rename each register layout array
-to name the exact QMP version. While doing this, drop few unused
-registers and apply other misc cleanups.
+Fix typo in QSERDES_COM_CMN_RSVD5 register definition.
 
-Dependencies:
-- phy/next
-- https://lore.kernel.org/linux-phy/20221110103345.729018-1-dmitry.baryshkov@linaro.org/
-- https://lore.kernel.org/linux-phy/20221110151748.795767-1-dmitry.baryshkov@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Changes since v2:
- - Rebased onto phy/next
- - Added two generic fixes
- - Dropped combo changes, they will be sent after Johan's pending
-   series
- - Fixed names of the ufs regs layout tables
-
-Changes since v1:
- - Rebased on top v2 of Johan's patchset rather than including a set of
-   patches from him
- - Fixed the ipq8074 regs layout name
-
-Dmitry Baryshkov (13):
-  phy: qcom-qmp: fix typo in QSERDES_COM_CMN_RSVD5 value
-  phy: qcom-qmp: remove duplicate v5_5nm register definitions
-  phy: qcom-qmp-pcie: rework regs layout arrays
-  phy: qcom-qmp-pcie: rename regs layout arrays
-  phy: qcom-qmp-pcie-msm8996: rework regs layout arrays
-  phy: qcom-qmp-ufs: split UFS-specific v2 PCS registers to a separate
-    header
-  phy: qcom-qmp-ufs: rework regs layout arrays
-  phy: qcom-qmp-ufs: rename regs layout arrays
-  phy: qcom-qmp-usb: remove QPHY_PCS_LFPS_RXTERM_IRQ_STATUS reg
-  phy: qcom-qmp-usb: remove QPHY_PCS_MISC_TYPEC_CTRL reg
-  phy: qcom-qmp-usb: rework regs layout arrays
-  phy: qcom-qmp-usb: fix regs layout arrays
-  phy: qcom-qmp: move type-specific headers to particular driver
-
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c     |  3 +
- .../phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c  |  6 +-
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 82 ++++++++++---------
- .../phy/qualcomm/phy-qcom-qmp-pcs-ufs-v2.h    | 25 ++++++
- .../phy/qualcomm/phy-qcom-qmp-pcs-ufs-v3.h    |  3 +
- .../phy/qualcomm/phy-qcom-qmp-pcs-ufs-v5.h    |  4 +
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-v2.h    | 19 ++---
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h    |  4 +
- .../phy/qualcomm/phy-qcom-qmp-qserdes-com.h   |  2 +-
- .../phy-qcom-qmp-qserdes-txrx-v5_5nm.h        |  5 --
- drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       | 67 ++++++++-------
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 76 ++++++++---------
- drivers/phy/qualcomm/phy-qcom-qmp.h           | 14 +---
- 13 files changed, 168 insertions(+), 142 deletions(-)
- create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v2.h
-
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com.h
+index fbaf6ef467f8..7fa5363feeb9 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com.h
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com.h
+@@ -135,6 +135,6 @@
+ #define QSERDES_COM_CMN_MISC2				0x1b8
+ #define QSERDES_COM_CORECLK_DIV_MODE1			0x1bc
+ #define QSERDES_COM_CORECLK_DIV_MODE2			0x1c0
+-#define QSERDES_COM_CMN_RSVD5				0x1c0
++#define QSERDES_COM_CMN_RSVD5				0x1c4
+ 
+ #endif
 -- 
 2.35.1
 
