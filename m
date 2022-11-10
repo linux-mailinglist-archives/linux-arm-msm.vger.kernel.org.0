@@ -2,55 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 77BC6623C4D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 08:05:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C0FC623C64
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 08:08:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232560AbiKJHFW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 02:05:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33888 "EHLO
+        id S232761AbiKJHIq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 02:08:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229697AbiKJHFV (ORCPT
+        with ESMTP id S232766AbiKJHIo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Nov 2022 02:05:21 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A2DE25C55;
-        Wed,  9 Nov 2022 23:05:19 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B964061D7F;
-        Thu, 10 Nov 2022 07:05:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5ECC433D6;
-        Thu, 10 Nov 2022 07:05:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668063918;
-        bh=RFP7u4DtH4wfIt/9mEj6qpj0E+6kLfpEIQp8ULbixtc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=q5aODT/82s22PBaa/1LelNb9329TnNvYO2/Kq1ccoP+k+U4lmKwd8mY8rlEqkFxNf
-         meFs+QodxSJPgcpVtT9BzubnWhznsfUgVK/CSAA2YcMUwXeXRwM+EOTN7REBPSxqXt
-         50PdV6qmmJ4GLBPRTBVW2MTPNtGL6gb/vBAuG28iG5Z7l7rLqTh7q5OkBdHCrvT9To
-         c31hFgqSm30QvKaxpkUr6YcEksudNjU3W7Usni60xlzpkLJzzlsgyafdX4UDcFnXNB
-         FvRtNQQCTRE0xajX9JsJ6fLIrohPb1Q1geb0jCBCD9eDhZL4b2fdgdJEXi0ssqBF1O
-         jzcQSSTYATxiQ==
-Date:   Thu, 10 Nov 2022 12:35:13 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 00/16] phy: qcom-qmp-pcie: add support for sc8280xp
-Message-ID: <Y2yiqflyAXgVgZXG@matsya>
-References: <20221105145939.20318-1-johan+linaro@kernel.org>
+        Thu, 10 Nov 2022 02:08:44 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDD4531376;
+        Wed,  9 Nov 2022 23:08:43 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AA6SVCw018102;
+        Thu, 10 Nov 2022 07:08:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=jsDth2khnliRLU44iQ7XLuDUNqjpD61W0t0bVnckekM=;
+ b=AHOQxljvzWYfdsfpHgSeXVmdfr0vLfYay2Kk//HLM8sCY3128wpsNBNU+17eUvcvrknF
+ 8HRjChGb3cSc9BzmkIYHwxBRW5jnH11p7z0lVMpEXLHdf3xhLDufLCAfIa3VHik8QW9w
+ kyGHzpoYAWB9fVJv00/B8248zv8z2hv5+Qjr1SOsv5SH8Bcz9cIhQQHfaCMxtrrn9idK
+ BCCy4jQop+TxuX8/w1Uhye6YnkDZYcJtiOnPaPFa0XpZbgcrnuavx4khGsLXoNPWRBCl
+ QckoEZPaP7730OAf9nv3qeOnjuloQUgQw8tVNmNH0N+ODBzOj8dujBzAiVZLjXQdKRsu OQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kruprg3h5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 10 Nov 2022 07:08:33 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AA78XeL010583
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 10 Nov 2022 07:08:33 GMT
+Received: from blr-ubuntu-311.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Wed, 9 Nov 2022 23:08:29 -0800
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+To:     <andersson@kernel.org>, <dianders@chromium.org>,
+        <jinghung.chen3@hotmail.com>
+CC:     <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
+        <konrad.dybcio@linaro.org>, Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH V4 1/2] arm64: dts: qcom: sc7280: Mark all Qualcomm reference boards as LTE
+Date:   Thu, 10 Nov 2022 12:38:12 +0530
+Message-ID: <20221110070813.1777-1-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221105145939.20318-1-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: y4L8UBUCOUF_cWCU4jrCyMGRKqanlpTI
+X-Proofpoint-GUID: y4L8UBUCOUF_cWCU4jrCyMGRKqanlpTI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-09_06,2022-11-09_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
+ adultscore=0 clxscore=1011 priorityscore=1501 impostorscore=0 mlxscore=0
+ suspectscore=0 mlxlogscore=752 lowpriorityscore=0 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211100053
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -58,16 +75,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05-11-22, 15:59, Johan Hovold wrote:
-> This series adds support for the PCIe PHYs on SC8280XP including its
-> four-lane PHYs.
-> 
-> The first half of the series clean up the driver in preparation for
-> supporting SC8280XP and its new devicetree bindings that drops the
-> legacy child node and the (incomplete) description of register
-> subregions.
+When the modem node was re-located to a separate LTE source file
+"sc7280-herobrine-lte-sku.dtsi", some of the previous LTE users
+weren't marked appropriately. Fix this by marking all Qualcomm
+reference devices as LTE.
 
-Applied, thanks
+Suggested-by: Douglas Anderson <dianders@chromium.org>
+Fixes: d42fae738f3a ("arm64: dts: qcom: Add LTE SKUs for sc7280-villager family")
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+---
 
+v4:
+ * Remove duplicate lte source file [Doug]
+
+v3:
+ * Fix incorrect tag usage [Krzysztof]
+
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts  | 1 -
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 1 +
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+index 9ddfdfdd354e..ba64316b4427 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+@@ -10,7 +10,6 @@
+ #include <dt-bindings/iio/qcom,spmi-adc7-pmr735a.h>
+ #include "sc7280-idp.dtsi"
+ #include "pmr735a.dtsi"
+-#include "sc7280-herobrine-lte-sku.dtsi"
+ 
+ / {
+ 	model = "Qualcomm Technologies, Inc. sc7280 IDP SKU1 platform";
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+index 1ac7c091e03f..8ca228111681 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+@@ -13,6 +13,7 @@
+ #include "pmk8350.dtsi"
+ 
+ #include "sc7280-chrome-common.dtsi"
++#include "sc7280-herobrine-lte-sku.dtsi"
+ 
+ / {
+ 	aliases {
 -- 
-~Vinod
+2.17.1
+
