@@ -2,111 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DABC6241F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 13:08:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B9DC3624209
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 13:12:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229725AbiKJMIA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 07:08:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56752 "EHLO
+        id S230430AbiKJMMh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 07:12:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229628AbiKJMH7 (ORCPT
+        with ESMTP id S230235AbiKJMMg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Nov 2022 07:07:59 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAEA570544
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 04:07:58 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id l12so2807433lfp.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 04:07:58 -0800 (PST)
+        Thu, 10 Nov 2022 07:12:36 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92ABF20F72
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 04:12:35 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id be13so2843496lfb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 04:12:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wTZeoUecrKlOpac1f+l+tkMwOwFXx8RW3xq7DuV+DMM=;
-        b=OtYSVx109vXNxZR6GezrRVsY0MmmZtoobU4DmFkpd1Ns/JbNXoL923ZWlTehmQ/Gpf
-         GTvhutOnU9np1mi0Nbe6XMkBt4IVwB6F4GhrY3X8Tj6u8SlIjXLdS0KlybmYbPqs7sMs
-         rHLruuC6Gff6OvM0r+Bziqp/0OzwnEcnX52me9rqCd8FGDxtYxKZU7GKf56ef3EVOJaf
-         CrFEd8pOrgmPBuyu397MsrOUiNNfjQTIQ7OViY3RMaIKH3WWer9XbbI15Y4fdXNOM1Bt
-         AXOvD07WywGP+SD6TwhX1wAh1G9/fQHDTsIo7bYvmMgaNMh6iBE0iAbqwqvcu4upMys3
-         rbig==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3m2vparsJ0IvTRoDQtc/C+sx5KcO7jtZEv/Wo5rLyfI=;
+        b=vYlOSEfSdDsa2OulOt0SwI1aMtr0j3/AxT1vf8GpEYJpd5DLlfJblTc0oGSh+aklLG
+         xJyc6JbYzpB/go8XbKOmiNIFCuxKpNh4iG/jicF4jHtoinXvPFEDGQh+4dKVG0UEHkKC
+         iuJmdurSeMa4YLIckEychviG4tbYJq655apEzjt+vBKNw8x8u635r9ILbJ2uLj0YHdDM
+         5+sqVmnKO+FpO/27A0znGhZ72kBKrUs6Zd507+lEvTEqtXqYzbmYVFDinyNFAXVORedT
+         Yee/EoH6E2Yu1WUumXbOOnQYuOx1QfNPN/uZientm8sA6qti5aAlC5rfemx72xFk83CA
+         Xu7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=wTZeoUecrKlOpac1f+l+tkMwOwFXx8RW3xq7DuV+DMM=;
-        b=YOAP84uHtn17hxhx/BkWix1ZXhkFJbU5XYXZrNJs5guFSre02PXFtA5dpV52SnpZWT
-         Viqv2oAflZP4Ibv0AVz7vG9rzARs4+OECcet6gfAzMveIUwVpLGdCQLfJeL3g3D69aOj
-         KJKDbBQdQQcUlcAqyAT+rWccni7DXOkAvK5m5pojoa+Re+0YKv/AAbkh32dJW6z9qPQm
-         KWtBPVYa1Kbk2OERyui9xPRJKISm3caNkj7z4zWgccsuqYMPVuNAOLHAh1nlP84z5K91
-         LMJvh5mTsZv8tHJ9UJlNNOFYuzqLsOm8Oim4S/4xopkUrpd58QigO9SzWNXyJ81/2JwJ
-         PXJw==
-X-Gm-Message-State: ACrzQf3w1PCbsYMxh+R3nTdLMzjFfSCsDtNU1AGH79XsucMRriDXuRvl
-        CyiO/ZnyDJBDY0BpLW/mhKPx8Q==
-X-Google-Smtp-Source: AMsMyM5Fy2ozvGSmP1vbjydCPG2UhS0gqPhZr248VdsYUlWeNBm//9YGxeKM10fZPGnjA3WXzapXsQ==
-X-Received: by 2002:a19:790d:0:b0:4a2:3d87:8d14 with SMTP id u13-20020a19790d000000b004a23d878d14mr1548113lfc.161.1668082077160;
-        Thu, 10 Nov 2022 04:07:57 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id m4-20020a056512114400b004979db5aa5bsm2727460lfg.223.2022.11.10.04.07.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Nov 2022 04:07:56 -0800 (PST)
-Message-ID: <ae1ba550-4bee-4b3b-ba5e-716f4dba9917@linaro.org>
-Date:   Thu, 10 Nov 2022 13:07:54 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH 03/10] arm64: dts: qcom: Add a device tree for PMK8350 on
- SID6
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org,
-        patches@linaro.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221109111236.46003-1-konrad.dybcio@linaro.org>
- <20221109111236.46003-4-konrad.dybcio@linaro.org>
- <CAA8EJprNszfyyN9HLYoRK2Y-yUU-NuGd0QacqJ3UhkDjpvokdg@mail.gmail.com>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3m2vparsJ0IvTRoDQtc/C+sx5KcO7jtZEv/Wo5rLyfI=;
+        b=O61XKfUJ998sSdYbJUvMyNIWCPV2X88f2s7yUipC3TrH3WWkC4LdT26KWiH6gCoyl1
+         VrHu+sxyxdR7S9Ncm5F5RKID4rSsrqBKfF6OwUjpaMP5AxTk50PhqScIZFzG+5uZaqaI
+         H7Atm6uodYQC8J2RhFwtEPmGRAWv7pYi1cfxqFEMkhiKZS6iGrlm9fQXCPrOVB1U0Ja1
+         b8cUfSEALmmEiN6jNIldUeHyuDyjLZTzYpew1lYZj4pRVqRVeOp3UW83I8VDuvbpBM+V
+         kErcalMbczY9TwnYE+Gtkqa6grb1qbZfxhZdsVVhjGT1yqH5LNE0QkoRx4l4Na8yM7R3
+         bGGA==
+X-Gm-Message-State: ACrzQf1rQt1pJtq+WlYTtpwR7+S3stvkb2hQW3WbVxZrrwGHoHDS3BtQ
+        w5QAt8UTnT5HYwRZS4qchQ+P52/twT4aF3rb
+X-Google-Smtp-Source: AMsMyM6SlvmEsSoFiqy4iwt0g1PZnQCNBN2X5qFIOknPJADNVl2vkQRJY+J9ghjykqYcOmyXwMB/Jg==
+X-Received: by 2002:ac2:47e1:0:b0:4af:5088:9576 with SMTP id b1-20020ac247e1000000b004af50889576mr21098188lfp.468.1668082352920;
+        Thu, 10 Nov 2022 04:12:32 -0800 (PST)
+Received: from localhost.localdomain ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id y13-20020a19640d000000b004a91d1b3070sm2733423lfb.308.2022.11.10.04.12.30
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 10 Nov 2022 04:12:32 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJprNszfyyN9HLYoRK2Y-yUU-NuGd0QacqJ3UhkDjpvokdg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org
+Subject: [PATCH] regulator: qcom_smd: Fix PMR735a S3 regulator spec
+Date:   Thu, 10 Nov 2022 13:12:25 +0100
+Message-Id: <20221110121225.9216-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.32.0 (Apple Git-132)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+PMR735a has a wider range than previously defined. Fix it.
 
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+No Fixes tag, as the patch is only in -next, so the hash will change.
 
-On 10/11/2022 10:12, Dmitry Baryshkov wrote:
-> On Wed, 9 Nov 2022 at 14:12, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> PMK8350 is shipped on SID6 with some SoCs, for example with SM6375.
->> Add a DT with the SID changed to allow it to work.
->>
->> Unfortunately, the entire DT needs to be copied even if the diff is
->> very little, as the node names are not unique. Including pm6125 and
->> pmk8350 together for example, would make pmk8350 overwrite the pm6125
->> node, as both are defined as 'pmic@0'.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/pmk8350_sid6.dtsi | 73 ++++++++++++++++++++++
->>   1 file changed, 73 insertions(+)
->>   create mode 100644 arch/arm64/boot/dts/qcom/pmk8350_sid6.dtsi
-> 
-> Just to throw my 2c. If I was doing this myself, I'd allow pmk8350 to
-> receive external SID using the cpp #define (And to default to 0 if one
-> didn't use it).
-Hmm.. that's probably the least duplicative approach, but I'm not sure I
-want to see #ifdefs in DTs..
+ drivers/regulator/qcom_smd-regulator.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-Konrad
-> 
-> 
-> 
-> 
+diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
+index 9eaae13fd385..9f2b58458841 100644
+--- a/drivers/regulator/qcom_smd-regulator.c
++++ b/drivers/regulator/qcom_smd-regulator.c
+@@ -686,6 +686,15 @@ static const struct regulator_desc pmic5_ftsmps520 = {
+ 	.ops = &rpm_smps_ldo_ops,
+ };
+ 
++static const struct regulator_desc pmic5_hfsmps515 = {
++	.linear_ranges = (struct linear_range[]) {
++		REGULATOR_LINEAR_RANGE(320000, 0, 235, 16000),
++	},
++	.n_linear_ranges = 1,
++	.n_voltages = 236,
++	.ops = &rpm_smps_ldo_ops,
++};
++
+ static const struct regulator_desc pms405_hfsmps3 = {
+ 	.linear_ranges = (struct linear_range[]) {
+ 		REGULATOR_LINEAR_RANGE(320000, 0, 215, 8000),
+@@ -1277,7 +1286,7 @@ static const struct rpm_regulator_data rpm_pmi8998_regulators[] = {
+ static const struct rpm_regulator_data rpm_pmr735a_regulators[] = {
+ 	{ "s1", QCOM_SMD_RPM_SMPE, 1, &pmic5_ftsmps520, "vdd_s1"},
+ 	{ "s2", QCOM_SMD_RPM_SMPE, 2, &pmic5_ftsmps520, "vdd_s2"},
+-	{ "s3", QCOM_SMD_RPM_SMPE, 3, &pms405_hfsmps3, "vdd_s3"},
++	{ "s3", QCOM_SMD_RPM_SMPE, 3, &pmic5_hfsmps515, "vdd_s3"},
+ 	{ "l1", QCOM_SMD_RPM_LDOE, 1, &pm660_nldo660, "vdd_l1_l2"},
+ 	{ "l2", QCOM_SMD_RPM_LDOE, 2, &pm660_nldo660, "vdd_l1_l2"},
+ 	{ "l3", QCOM_SMD_RPM_LDOE, 3, &pm660_nldo660, "vdd_l3"},
+-- 
+2.38.1
+
