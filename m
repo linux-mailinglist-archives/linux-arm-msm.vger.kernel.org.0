@@ -2,200 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1B44624180
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 12:35:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B5886241B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 12:46:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230235AbiKJLfY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 06:35:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43208 "EHLO
+        id S229518AbiKJLqR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 06:46:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230233AbiKJLfX (ORCPT
+        with ESMTP id S230259AbiKJLqR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Nov 2022 06:35:23 -0500
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5229716DF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 03:35:21 -0800 (PST)
-Received: by mail-pf1-x42d.google.com with SMTP id q9so1770363pfg.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 03:35:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=czhmg8w6fCMkXUIfJozgJqRjYjP3QZdO8mkjxxSqqg0=;
-        b=L34nsiKJho8HIN+dXht0sd19S/QtDAa/+T6+Sw+6OWNMJAtDXxS41Ujw15PQEwPMcb
-         /EjLTqGA8mWnL4NLPamcwr8UMIQV9Ny59VFkJ1iAJwp181hBXyl8ZPdfALs6lLNMQl33
-         yNP5RlK6Uk7Bh7H3zAX8oXNfWKveGKLAJ/j5doz9cD9cQZEbOO5Vzx8oyx7/8JxxztmP
-         /pEd4Bsul0YD/tFG3jJG1WMupni6WtB3JdlWiEwLE1paBoD1GB3N64KOYLordIK7H+pa
-         ogTShjdYNszYkUjhWBsFpYo1duTSmsALtRa0PDyu7kMv55i+M2Hhm8MJ04NYNp8i8AwZ
-         U4cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=czhmg8w6fCMkXUIfJozgJqRjYjP3QZdO8mkjxxSqqg0=;
-        b=4ZafmqG0wGl+bqXEttS8BIYIJB98nn8oMD9e82E18o4zOzLJfUKqmYvZaSC9os2Wx/
-         1yijwRV352wpbSGgc0LXK1nPimnJZ3jVoY2z+jU+F1R5JFyLzU4feBfIMd32bagVPZgk
-         kwq+H1TtvGp0h1s9NntjGADiwsRN78KnR4+WJH3NDbziIhy/YWFRGj4rtDXc3/d+7DKZ
-         2N5Fc5gU1caeOVU15tMFO/U2scT9mNXgqcfs5IQJdl8R5JFw66CiAbKXmlwX/ocG3GZr
-         YetrSiFK6xwpCuQmrj4j/hU+IrrzYbTcNX21WZqPL/psstu3ltbtZloatOyNQ56MPAuu
-         slVQ==
-X-Gm-Message-State: ACrzQf0hsicCaQKUP2Oy9ix94LY4Yon/OrPjsrL0Us7hOXrys6fKg863
-        aQy9C5N/+lxATzNP3xsOXoFT
-X-Google-Smtp-Source: AMsMyM57AqT08jdCpsdF+MMkrOn2eIKJCwPLOpWN0N7vaxof6c0c5wHe7jTPTNPijNKQPM+L1HFCeg==
-X-Received: by 2002:a63:2c90:0:b0:439:ee2c:ab2f with SMTP id s138-20020a632c90000000b00439ee2cab2fmr57202235pgs.2.1668080121097;
-        Thu, 10 Nov 2022 03:35:21 -0800 (PST)
-Received: from thinkpad ([59.92.98.170])
-        by smtp.gmail.com with ESMTPSA id a19-20020aa794b3000000b0056c2e497ad6sm10287605pfl.93.2022.11.10.03.35.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Nov 2022 03:35:20 -0800 (PST)
-Date:   Thu, 10 Nov 2022 17:05:13 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 6/9] arm64: dts: qcom: sc8280xp-crd: enable WiFi
- controller
-Message-ID: <20221110113513.GA18247@thinkpad>
-References: <20221110103558.12690-1-johan+linaro@kernel.org>
- <20221110103558.12690-7-johan+linaro@kernel.org>
+        Thu, 10 Nov 2022 06:46:17 -0500
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00E321F2CE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 03:46:15 -0800 (PST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.nyi.internal (Postfix) with ESMTP id 577025C016A;
+        Thu, 10 Nov 2022 06:46:14 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Thu, 10 Nov 2022 06:46:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
+        :cc:content-transfer-encoding:content-type:date:date:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to; s=fm2; t=1668080774; x=
+        1668167174; bh=BsR56HSej5wLEnQIbihgAJ8HcMDp/WjCOHTnYkSXCSc=; b=a
+        JM8tc/TDyL0JuttNSK85/27V0lax0sxopBq2dEqHVaBvZjuGYNYVZ0Yupc+ZDGf4
+        Nlkrv3/l4hENMq6pe0WVQF7ahh4b9Q7bElOPVER37Y79lI/HKxsdHeTJD3sdqhk/
+        b6DhEbU0HZx+0XCyeCy8X8WYyWJhAkzTiz6phhLfArbE6i3CIlReCV27EA4jiFnQ
+        c1+JCoBrU9Ztqi7ktk7ZVEZZ7Cxrnfs3s325gH6VcPQ6wTbjyS6RBLLJH9SxVdXp
+        O0yMgfNhoKK8TL2itWKzEa6e0qDpX9ZOeodOk/zk0tjshA18uOe9jBnbWmc5Ur4W
+        bjIzKFxELs1Bg0vULQUJQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:date:date:feedback-id:feedback-id:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1668080774; x=
+        1668167174; bh=BsR56HSej5wLEnQIbihgAJ8HcMDp/WjCOHTnYkSXCSc=; b=g
+        ROc3FIYhnO5/VpJJTOrNoyJ0QVKhKZJ6IXReYR/CkFHl03mJQRWXQ/01k1nRZ7dc
+        LiD1FFGRIY6pIybtBjpOBSPJ6kYKIBSb4YzP+iPDpkbCYQ2RcA7nb0BdCC/xMiTa
+        OTVtJxBNxM7VDWX/XpKUfM1KsSe8up5kfJNJt8G8ADNqERlCOdkGe5ht9RmJIAYl
+        c87OTpgWGZzmWctSUPelc8+Nn+JqefaxOxv4GWA4OLxB/MXqAgNPrGe+LFjW+tGg
+        UAeABcLxTDx1gB8yAmlYqS0Cc46kzn2VgNCEK2Z6itbAL+iVlDsdrNvbJWI3bk1c
+        XDfJSrSLTncrsYtj0DdkQ==
+X-ME-Sender: <xms:heRsY0jsD-cArDSmxlAx6-ZnYz5dxCC6GrsUgvobauPUQj5qsArW4g>
+    <xme:heRsY9BmZjrjMJ3cjTMwfBv8-OEi4daGtz_afAdFppUVik7v4grdAKu8h-ZmJ4QUW
+    vBebA71E7GmdCO7Sl8>
+X-ME-Received: <xmr:heRsY8H-GP2nyxk-0ORlzWUGJ5F1q510yzefUHMxMEYsH9kGxWGlTbBcAhxej2MtvH2LSPSnlI3w-ZgA08kA2gfEMC7mbH7RJt8S0m2JU5-2uw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrfeeggdefvdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefhvfevjghfuffkffggtgfgofesthekredtredtjeenucfhrhhomhepofgrgihi
+    mhgvucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrg
+    htthgvrhhnpeeifeeigeelhfehkeeltdetjeetueelteeuveekueevffduhefffefhhfeh
+    gfehieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hmrgigihhmvgestggvrhhnohdrthgvtghh
+X-ME-Proxy: <xmx:heRsY1RKVbXkpoRjDaBAvP8voJX7kY3RumtVNUWgY9sHYDgudbDoPw>
+    <xmx:heRsYxziy2-f9hjmnmgzGqJkqrGhmvEwZZdhVRmYzOh5EASSu_Oeiw>
+    <xmx:heRsYz4KqwFD6CWLBDYu3xeZkNuXEweBpmX59TR8RLufxQ607jeXEA>
+    <xmx:huRsY4jKGMjMpzG0tJVFayEhRmgq-tyD5yOtfEDCHAz4P_qESK7X0w>
+Feedback-ID: i8771445c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 10 Nov 2022 06:46:12 -0500 (EST)
+From:   Maxime Ripard <maxime@cerno.tech>
+To:     brian.starkey@arm.com, liviu.dudau@arm.com,
+        angelogioacchino.delregno@somainline.org, mihail.atanassov@arm.com,
+        robdclark@gmail.com, mripard@kernel.org, vladimir.lypak@gmail.com,
+        olvaffe@gmail.com, dianders@chromium.org, daniel@ffwll.ch,
+        quic_abhinavk@quicinc.com, airlied@gmail.com, sean@poorly.run,
+        james.qian.wang@arm.com, emma@anholt.net, quic_akhilpo@quicinc.com,
+        marijn.suijten@somainline.org, thierry.reding@gmail.com,
+        Gaosheng Cui <cuigaosheng1@huawei.com>,
+        dmitry.baryshkov@linaro.org, sam@ravnborg.org
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+In-Reply-To: <20221110094445.2930509-6-cuigaosheng1@huawei.com>
+References: <20221110094445.2930509-1-cuigaosheng1@huawei.com> <20221110094445.2930509-6-cuigaosheng1@huawei.com>
+Subject: Re: (subset) [PATCH 5/5] drm/vc4: kms: Fix IS_ERR() vs NULL check for vc4_kms
+Message-Id: <166808077078.1000366.11533322573210640041.b4-ty@cerno.tech>
+Date:   Thu, 10 Nov 2022 12:46:10 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221110103558.12690-7-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Mailer: b4 0.11.0-dev-99e3a
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 10, 2022 at 11:35:55AM +0100, Johan Hovold wrote:
-> Enable the Qualcomm QCNFA765 Wireless Network Adapter connected to
-> PCIe4.
+On Thu, 10 Nov 2022 17:44:45 +0800, Gaosheng Cui wrote:
+> The drm_atomic_get_new_private_obj_state() function returns NULL
+> on error path, drm_atomic_get_old_private_obj_state() function
+> returns NULL on error path, too, they does not return error pointers.
 > 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 65 +++++++++++++++++++++++
->  1 file changed, 65 insertions(+)
+> By the way, vc4_hvs_get_new/old_global_state() should return
+> ERR_PTR(-EINVAL), otherwise there will be null-ptr-defer issue,
+> such as follows:
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> index 5b9e37a16f9f..ab5b0aadeead 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> @@ -81,6 +81,22 @@ vreg_misc_3p3: regulator-misc-3p3 {
->  		regulator-always-on;
->  	};
->  
-> +	vreg_wlan: regulator-wlan {
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "VCC_WLAN_3R9";
-> +		regulator-min-microvolt = <3900000>;
-> +		regulator-max-microvolt = <3900000>;
-> +
-> +		gpio = <&pmr735a_gpios 1 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&hastings_reg_en>;
+> [...]
 
-Hastings is the family name of QCA639x WLAN chipsets. I don't think it would be
-applicable here. Please use "wlan_reg_en" as that matches the convention used
-throughout this file.
+Applied to drm/drm-misc (drm-misc-fixes).
 
-Thanks,
-Mani
-
-> +
-> +		regulator-boot-on;
-> +	};
-> +
->  	vreg_wwan: regulator-wwan {
->  		compatible = "regulator-fixed";
->  
-> @@ -246,6 +262,25 @@ &pcie3a_phy {
->  	status = "okay";
->  };
->  
-> +&pcie4 {
-> +	perst-gpios = <&tlmm 141 GPIO_ACTIVE_LOW>;
-> +	wake-gpios = <&tlmm 139 GPIO_ACTIVE_LOW>;
-> +
-> +	vddpe-3v3-supply = <&vreg_wlan>;
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pcie4_default>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie4_phy {
-> +	vdda-phy-supply = <&vreg_l6d>;
-> +	vdda-pll-supply = <&vreg_l4d>;
-> +
-> +	status = "okay";
-> +};
-> +
->  &pmc8280c_lpg {
->  	status = "okay";
->  };
-> @@ -445,6 +480,13 @@ edp_bl_pwm: edp-bl-pwm-state {
->  	};
->  };
->  
-> +&pmr735a_gpios {
-> +	hastings_reg_en: hastings-reg-en-state {
-> +		pins = "gpio1";
-> +		function = "normal";
-> +	};
-> +};
-> +
->  &tlmm {
->  	gpio-reserved-ranges = <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
->  
-> @@ -521,6 +563,29 @@ wake-n-pins {
->  		};
->  	};
->  
-> +	pcie4_default: pcie4-default-state {
-> +		clkreq-n-pins {
-> +			pins = "gpio140";
-> +			function = "pcie4_clkreq";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +
-> +		perst-n-pins {
-> +			pins = "gpio141";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		wake-n-pins {
-> +			pins = "gpio139";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +	};
-> +
->  	qup0_i2c4_default: qup0-i2c4-default-state {
->  		pins = "gpio171", "gpio172";
->  		function = "qup4";
-> -- 
-> 2.37.4
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks!
+Maxime
