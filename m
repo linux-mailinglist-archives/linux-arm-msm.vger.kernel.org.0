@@ -2,109 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B5886241B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 12:46:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 52F316241D8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 13:01:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229518AbiKJLqR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 06:46:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48290 "EHLO
+        id S230425AbiKJMBF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 07:01:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230259AbiKJLqR (ORCPT
+        with ESMTP id S230063AbiKJMBF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Nov 2022 06:46:17 -0500
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00E321F2CE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 03:46:15 -0800 (PST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.nyi.internal (Postfix) with ESMTP id 577025C016A;
-        Thu, 10 Nov 2022 06:46:14 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Thu, 10 Nov 2022 06:46:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
-        :cc:content-transfer-encoding:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm2; t=1668080774; x=
-        1668167174; bh=BsR56HSej5wLEnQIbihgAJ8HcMDp/WjCOHTnYkSXCSc=; b=a
-        JM8tc/TDyL0JuttNSK85/27V0lax0sxopBq2dEqHVaBvZjuGYNYVZ0Yupc+ZDGf4
-        Nlkrv3/l4hENMq6pe0WVQF7ahh4b9Q7bElOPVER37Y79lI/HKxsdHeTJD3sdqhk/
-        b6DhEbU0HZx+0XCyeCy8X8WYyWJhAkzTiz6phhLfArbE6i3CIlReCV27EA4jiFnQ
-        c1+JCoBrU9Ztqi7ktk7ZVEZZ7Cxrnfs3s325gH6VcPQ6wTbjyS6RBLLJH9SxVdXp
-        O0yMgfNhoKK8TL2itWKzEa6e0qDpX9ZOeodOk/zk0tjshA18uOe9jBnbWmc5Ur4W
-        bjIzKFxELs1Bg0vULQUJQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:date:date:feedback-id:feedback-id:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1668080774; x=
-        1668167174; bh=BsR56HSej5wLEnQIbihgAJ8HcMDp/WjCOHTnYkSXCSc=; b=g
-        ROc3FIYhnO5/VpJJTOrNoyJ0QVKhKZJ6IXReYR/CkFHl03mJQRWXQ/01k1nRZ7dc
-        LiD1FFGRIY6pIybtBjpOBSPJ6kYKIBSb4YzP+iPDpkbCYQ2RcA7nb0BdCC/xMiTa
-        OTVtJxBNxM7VDWX/XpKUfM1KsSe8up5kfJNJt8G8ADNqERlCOdkGe5ht9RmJIAYl
-        c87OTpgWGZzmWctSUPelc8+Nn+JqefaxOxv4GWA4OLxB/MXqAgNPrGe+LFjW+tGg
-        UAeABcLxTDx1gB8yAmlYqS0Cc46kzn2VgNCEK2Z6itbAL+iVlDsdrNvbJWI3bk1c
-        XDfJSrSLTncrsYtj0DdkQ==
-X-ME-Sender: <xms:heRsY0jsD-cArDSmxlAx6-ZnYz5dxCC6GrsUgvobauPUQj5qsArW4g>
-    <xme:heRsY9BmZjrjMJ3cjTMwfBv8-OEi4daGtz_afAdFppUVik7v4grdAKu8h-ZmJ4QUW
-    vBebA71E7GmdCO7Sl8>
-X-ME-Received: <xmr:heRsY8H-GP2nyxk-0ORlzWUGJ5F1q510yzefUHMxMEYsH9kGxWGlTbBcAhxej2MtvH2LSPSnlI3w-ZgA08kA2gfEMC7mbH7RJt8S0m2JU5-2uw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrfeeggdefvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefhvfevjghfuffkffggtgfgofesthekredtredtjeenucfhrhhomhepofgrgihi
-    mhgvucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrg
-    htthgvrhhnpeeifeeigeelhfehkeeltdetjeetueelteeuveekueevffduhefffefhhfeh
-    gfehieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hmrgigihhmvgestggvrhhnohdrthgvtghh
-X-ME-Proxy: <xmx:heRsY1RKVbXkpoRjDaBAvP8voJX7kY3RumtVNUWgY9sHYDgudbDoPw>
-    <xmx:heRsYxziy2-f9hjmnmgzGqJkqrGhmvEwZZdhVRmYzOh5EASSu_Oeiw>
-    <xmx:heRsYz4KqwFD6CWLBDYu3xeZkNuXEweBpmX59TR8RLufxQ607jeXEA>
-    <xmx:huRsY4jKGMjMpzG0tJVFayEhRmgq-tyD5yOtfEDCHAz4P_qESK7X0w>
-Feedback-ID: i8771445c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Nov 2022 06:46:12 -0500 (EST)
-From:   Maxime Ripard <maxime@cerno.tech>
-To:     brian.starkey@arm.com, liviu.dudau@arm.com,
-        angelogioacchino.delregno@somainline.org, mihail.atanassov@arm.com,
-        robdclark@gmail.com, mripard@kernel.org, vladimir.lypak@gmail.com,
-        olvaffe@gmail.com, dianders@chromium.org, daniel@ffwll.ch,
-        quic_abhinavk@quicinc.com, airlied@gmail.com, sean@poorly.run,
-        james.qian.wang@arm.com, emma@anholt.net, quic_akhilpo@quicinc.com,
-        marijn.suijten@somainline.org, thierry.reding@gmail.com,
-        Gaosheng Cui <cuigaosheng1@huawei.com>,
-        dmitry.baryshkov@linaro.org, sam@ravnborg.org
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-In-Reply-To: <20221110094445.2930509-6-cuigaosheng1@huawei.com>
-References: <20221110094445.2930509-1-cuigaosheng1@huawei.com> <20221110094445.2930509-6-cuigaosheng1@huawei.com>
-Subject: Re: (subset) [PATCH 5/5] drm/vc4: kms: Fix IS_ERR() vs NULL check for vc4_kms
-Message-Id: <166808077078.1000366.11533322573210640041.b4-ty@cerno.tech>
-Date:   Thu, 10 Nov 2022 12:46:10 +0100
+        Thu, 10 Nov 2022 07:01:05 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D5D71B1D0;
+        Thu, 10 Nov 2022 04:01:04 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 231D6615D8;
+        Thu, 10 Nov 2022 12:01:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ADDBC433C1;
+        Thu, 10 Nov 2022 12:01:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668081663;
+        bh=nJA6lVr6zgeitszBqXo+vCIv1PWS9CxH/k89lrSezzM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=YwDUDPzxlqtjltIIWBWr8WtYZkATmN3l4/u1T//eXkcnmeOFo49LNvhT83dIufhj/
+         gOrTYoF49BrZYxvkQz8IuPVVXOzPdNl/H7xSnr8jdp+06HG1X4DAp8BTHF8FxM7c6e
+         LpAdRBQEgSEwAu5WBWa4ovqTZFWpZST8WbCpafllI+iYSXMKb5AZmZsYZO3Wm0lKFa
+         4qTvl2yhlL14iS1wk3GVbe8DosfgN/rIFEn1bs/xFSbFO5kq9OPjQQBhcbva4OT8Cf
+         tFWmMSkNazlukJ8zD+W0X6OjHOqImun/uRemLb1XrVQQq7lJPxcL1tNjxO/0CEufsk
+         o+2gSI6ggGyWg==
+Date:   Thu, 10 Nov 2022 12:00:57 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     andersson@kernel.org, linux-arm-msm@vger.kernel.org,
+        krzysztof.kozlowski@linaro.org, agross@kernel.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-kernel@vger.kernel.org, patches@linaro.org,
+        Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: regulator: qcom,smd: Document PMR735a
+Message-ID: <Y2zn+a7eL8PnGgWo@sirena.org.uk>
+References: <20221109110846.45789-1-konrad.dybcio@linaro.org>
+ <166807822235.115312.17138185226634439165.b4-ty@kernel.org>
+ <bf3e5725-8cf7-3a0e-aa9b-0b05a4507868@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.11.0-dev-99e3a
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="1soP19EYi/kSFqKE"
+Content-Disposition: inline
+In-Reply-To: <bf3e5725-8cf7-3a0e-aa9b-0b05a4507868@linaro.org>
+X-Cookie: Torque is cheap.
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 10 Nov 2022 17:44:45 +0800, Gaosheng Cui wrote:
-> The drm_atomic_get_new_private_obj_state() function returns NULL
-> on error path, drm_atomic_get_old_private_obj_state() function
-> returns NULL on error path, too, they does not return error pointers.
-> 
-> By the way, vc4_hvs_get_new/old_global_state() should return
-> ERR_PTR(-EINVAL), otherwise there will be null-ptr-defer issue,
-> such as follows:
-> 
-> [...]
 
-Applied to drm/drm-misc (drm-misc-fixes).
+--1soP19EYi/kSFqKE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Thanks!
-Maxime
+On Thu, Nov 10, 2022 at 12:09:10PM +0100, Konrad Dybcio wrote:
+> On 10/11/2022 12:03, Mark Brown wrote:
+
+> >     https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+
+> Please apply v2 instead:
+
+> https://lore.kernel.org/linux-arm-msm/20221110091736.3344-2-konrad.dybcio@linaro.org/T/#u
+
+As the mail you are replying to says:
+
+> > If any updates are required or you are submitting further changes they
+> > should be sent as incremental updates against current git, existing
+> > patches will not be replaced.
+
+--1soP19EYi/kSFqKE
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmNs5/kACgkQJNaLcl1U
+h9C4Ewf/SHnnNEjZLkzNtk+rdcrPTtswUMrxgkedFWh/57GMkuA7p5zDjAXECpYm
+2ePQYgKNfj3XmtXOfS+q+rRBO1xmncS9l8gvo1jKesSPk8jGsQ9KanBmjT2wH+Gb
+yz2RCLDusrNm7rz18H5CcVR9fSMb+lCugjywrb2GlTnfyax8hA3RtnuYEg/8QA1R
+bqZTm6E2cvK75GVIV0uKdvX4w2fcA8WmPfrJrHdEZXYvrdmLJVZQHUuMILvDroJW
+ZJQvQGZ3BYn5DZFE8J/DbWhQHfbWoNUMHVGHbNYKiNXxLtjcSbYVfeQlzjVG6luN
+OckQVWFaQfYiVIbWjsk8LWfit2fRzA==
+=ApaU
+-----END PGP SIGNATURE-----
+
+--1soP19EYi/kSFqKE--
