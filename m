@@ -2,62 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16E25624957
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 19:25:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EDD762496A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 19:32:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229591AbiKJSY7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 13:24:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32806 "EHLO
+        id S231862AbiKJScD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 13:32:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231804AbiKJSY6 (ORCPT
+        with ESMTP id S229932AbiKJScC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Nov 2022 13:24:58 -0500
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD6D111C26
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 10:24:56 -0800 (PST)
-Received: by mail-lj1-x234.google.com with SMTP id d3so1903362ljl.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 10:24:56 -0800 (PST)
+        Thu, 10 Nov 2022 13:32:02 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D7C94AF37
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 10:32:01 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id p8so4806280lfu.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 10:32:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oTCljyMcfKbw9XuCwVZ96+0GS37u6vdCB1YXTkk2DbY=;
-        b=vgY5Suhil67GTfIoiXw9WZ7OJAiXbWsB4vAomJN5mRDzZhxWWYIGtG4xXlaRZBVa+Q
-         3IX5M7+4kBtM8jmo5CaVSSckv6h0t/XEkpMYp6mPOrv+r8oMX41YEhUQaqJErBaKFUTC
-         xVZiSUmc0YTowc2kBjowNF9AG3gMLSqq9RblZW125yG00f3P7eidSvxx+AN30nETvTBd
-         ycMuObSamOfl5KDXJEPcDNSBfEk6QWCPlk7YF5pXh68FC2sNYFv8YMvoKLbNgInue0py
-         9upgXDIuRj3mFqML8LMsFOvnpsjreizn8WUFZ6oGrorR6AUhcQwjQXrmr+ZkjdefjHtS
-         ea0w==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=P0w6ifh3W55ssxBCHDKhFfL8ApImlsR3PhJUV68KXmQ=;
+        b=dqAY6ELHLoYHk8ekMGk/H+RnE1jsvtfHgWAXBq8WzJ2i7SvezqO5FoWS0uUgq+Q1fS
+         8TMO7nXrk0QoT18p4SeDD3nxHXHd0YSSxg5Oh7OX3vVVtAzQhFQNg8iBBP5Cf7xNkISi
+         zn6IzlS2WugybziDt7Kab0eIHA+XZr0oQ3HcZrZBcz+PF1S2pB1OZWsjjArnzox7Fr0h
+         N2hQu81+nTDGi/o4ej8RwoWI/OsMmHC4XG6x4p9b3MLJn4oGnxzbZ3jr7Ox/UuxPZed6
+         kAEWOV1lYX4e0KY11k6THC/aWlLwD/eVbdWS5AfRiZx8BstcQqLRcImAI8cxIYl8ORM5
+         W7tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oTCljyMcfKbw9XuCwVZ96+0GS37u6vdCB1YXTkk2DbY=;
-        b=jCXUQoBuoY4QscEds/xwDhxQ9CPnlIJTsWI8dIRjpZOMmdAjYDhwZBUzrhHne5Imvm
-         zGnijVYarSCoGA0HJJIpS0KDYgfV5vcYz2qAegqQtcs8V83oJ8c+K0mNHm3nFlgp/8A3
-         NRHv30LReoBU184NHwGYvUKnDYERUS16WMxNPSDx5q7W0whu7z5/vXGDMCxpKfzWfmwW
-         sBaVNlSQVFJicmHUqJJQxr2guBoMKPBmw3hPNczcfacm0Zhmr6D2idsYo2x9sg8SkrVY
-         uO7z34JLjRnXAYXXDzUFkkf9/eHtNWM8V+MTRYlrd+Uqo3B4NlD9sKZ2Vk+eIdH5a/yj
-         y1fQ==
-X-Gm-Message-State: ACrzQf1gxUV2tqouKMmyVFxPNIuoDC+yBrspXo9YTwp3ZBU8TAEd/Rdw
-        h53EuRio5HcLLovKxZJXl+pwAw==
-X-Google-Smtp-Source: AMsMyM76w/nQzUSHmnb3AL1cENN8yfaY5B4sedrM44S2hCEC45mvyP0EBMTkqxR882LvtfQBzQJtdA==
-X-Received: by 2002:a2e:9110:0:b0:277:aed:be6b with SMTP id m16-20020a2e9110000000b002770aedbe6bmr9330937ljg.322.1668104693699;
-        Thu, 10 Nov 2022 10:24:53 -0800 (PST)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id h8-20020a05651c124800b0027758f0619fsm21005ljh.132.2022.11.10.10.24.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Nov 2022 10:24:53 -0800 (PST)
-Message-ID: <a480bc4a-7088-dfed-7cd7-a14665022d15@linaro.org>
-Date:   Thu, 10 Nov 2022 21:24:52 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v2 6/8] phy: qcom-qmp-pcie: add support for sm8350
- platform
-Content-Language: en-GB
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=P0w6ifh3W55ssxBCHDKhFfL8ApImlsR3PhJUV68KXmQ=;
+        b=gYMM/nUnhXXGHm7w61gTTrzNrQmI063JQkIaaKmVClwn89w1HhSFAutffYI9erappF
+         062FUBqw5JgAkCnFhTc45ib4/T0uQ9nfzXeB7jdX4wVgBxufxE8kIs9KcdIfjInRB6v/
+         /IXv4Te/Q+Gsq0kKrg+c1Dd3VKTnPcHOZ5vAph9/yX+z5q/R0EkisoYM7faufXV5AHUY
+         Fka8yqmX92BqARal/UUlnXLnkDib1hqSR3n7Frjazg/8nu78e6ZudegkYD9oXmObBlhB
+         lFC/M2/GOJ9TZ49qeKZSLEJMGKqXiYARQVLGBosmDybBrwzQt5oK1emeA1Y1P+9VTmjw
+         Hc2Q==
+X-Gm-Message-State: ACrzQf0B75A7Ew76KvuOQyZRu8rDmDsGV7cnH17ZMhhsQIesSysfLuUh
+        Db5dzf2O/FHzGON8NBXyt8r4Pg==
+X-Google-Smtp-Source: AMsMyM4Np8thznuI2huzMD6NT4W7d8cCQMrCPgsi3stR6myY8i6AHx721i8He4MZOJjmA3y4Bu5viQ==
+X-Received: by 2002:ac2:4d4c:0:b0:4a4:6e90:c571 with SMTP id 12-20020ac24d4c000000b004a46e90c571mr1741400lfp.570.1668105119880;
+        Thu, 10 Nov 2022 10:31:59 -0800 (PST)
+Received: from eriador.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id m18-20020a197112000000b004a2550db9ddsm2837087lfc.245.2022.11.10.10.31.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Nov 2022 10:31:59 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -67,48 +58,63 @@ To:     Andy Gross <agross@kernel.org>,
         Jingoo Han <jingoohan1@gmail.com>,
         Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
         Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
         Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org
-References: <20221110103345.729018-1-dmitry.baryshkov@linaro.org>
- <20221110103345.729018-7-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221110103345.729018-7-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH v3 0/8] PCI/phy: Add support for PCI on sm8350 platform
+Date:   Thu, 10 Nov 2022 21:31:50 +0300
+Message-Id: <20221110183158.856242-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/11/2022 13:33, Dmitry Baryshkov wrote:
-> Add support for a single-lane and two-lane PCIe PHYs found on Qualcomm
-> SM8350 platform.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 120 ++++++++++++++++++++++-
->   1 file changed, 119 insertions(+), 1 deletion(-)
+SM8350 is one of the recent Qualcomm platforms which lacks PCIe support.
+Use sm8450 PHY tables to add support for the PCIe hosts on Qualcomm SM8350 platform.
 
-Argh, this will not compile against the current phy/next. I'll have to 
-send v3.
+Note: the PCIe0 table is based on the lahaina-v2.1.dtsi file, so it
+might work incorrectly on earlier SoC revisions.
 
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index 4a55b2439952..a1f5d31d161b 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+Dependencies:
+- phy/next (for PHY patches only)
+
+Changes since v2:
+ - Rebased onto phy/next
+ - Added voltge supplies to the HDK dts file (Johan)
+
+Changes since v1:
+ - removed pipe/ref clocks from the PCI schema, they are unused now
+ - split the sm8450 tables commit into separate split & rename (Bjorn)
+ - cleaned up the dtsi file, removing 'power-domain-names' and fixing
+   gpio proprety names.
+
+Dmitry Baryshkov (8):
+  dt-bindings: PCI: qcom: Add sm8350 to bindings
+  dt-bindings: phy: qcom,qmp-pcie: add sm8350 bindings
+  PCI: qcom: Add support for SM8350
+  phy: qcom-qmp-pcie: split sm8450 gen3 PHY config tables
+  phy: qcom-qmp-pcie: rename the sm8450 gen3 PHY config tables
+  phy: qcom-qmp-pcie: add support for sm8350 platform
+  arm64: dts: qcom: sm8350: add PCIe devices
+  arm64: dts: qcom: sm8350-hdk: enable PCIe devices
+
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |  46 ++++
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |  22 ++
+ arch/arm64/boot/dts/qcom/sm8350-hdk.dts       |  20 ++
+ arch/arm64/boot/dts/qcom/sm8350.dtsi          | 246 +++++++++++++++++-
+ drivers/pci/controller/dwc/pcie-qcom.c        |   1 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 164 ++++++++++--
+ 6 files changed, 481 insertions(+), 18 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.35.1
 
