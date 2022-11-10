@@ -2,53 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B7430623EE9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 10:45:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CC90623F4A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 11:02:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229979AbiKJJpB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 04:45:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33780 "EHLO
+        id S229606AbiKJKCh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 05:02:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229987AbiKJJoy (ORCPT
+        with ESMTP id S230045AbiKJKCc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Nov 2022 04:44:54 -0500
-Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46272220DE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 01:44:53 -0800 (PST)
-Received: from kwepemi500012.china.huawei.com (unknown [172.30.72.56])
-        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4N7H0r6xXZzJncC;
-        Thu, 10 Nov 2022 17:41:48 +0800 (CST)
-Received: from cgs.huawei.com (10.244.148.83) by
- kwepemi500012.china.huawei.com (7.221.188.12) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Thu, 10 Nov 2022 17:44:50 +0800
-From:   Gaosheng Cui <cuigaosheng1@huawei.com>
-To:     <james.qian.wang@arm.com>, <liviu.dudau@arm.com>,
-        <mihail.atanassov@arm.com>, <brian.starkey@arm.com>,
-        <airlied@gmail.com>, <daniel@ffwll.ch>, <robdclark@gmail.com>,
-        <quic_abhinavk@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        <sean@poorly.run>, <thierry.reding@gmail.com>, <sam@ravnborg.org>,
-        <emma@anholt.net>, <mripard@kernel.org>,
-        <vladimir.lypak@gmail.com>, <quic_akhilpo@quicinc.com>,
-        <dianders@chromium.org>, <cuigaosheng1@huawei.com>,
-        <olvaffe@gmail.com>, <angelogioacchino.delregno@somainline.org>,
-        <marijn.suijten@somainline.org>
-CC:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>
-Subject: [PATCH 5/5] drm/vc4: kms: Fix IS_ERR() vs NULL check for vc4_kms
-Date:   Thu, 10 Nov 2022 17:44:45 +0800
-Message-ID: <20221110094445.2930509-6-cuigaosheng1@huawei.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221110094445.2930509-1-cuigaosheng1@huawei.com>
-References: <20221110094445.2930509-1-cuigaosheng1@huawei.com>
+        Thu, 10 Nov 2022 05:02:32 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 462AD6B38F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 02:02:30 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id g12so2231898lfh.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 02:02:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=n/6SrizfTmUVEtJIffAUGFwzONi39uLHSNRwhX0sifc=;
+        b=MorZi0LfuylaZSi8INxPDy4Q6asBHC9zP7jPOfm5P7jgT0tXI7S2vZdJih3EPrUTwO
+         +cI3Gr1YY9qYHkss0jSWazs2Ab8eNw0uuKATKUpnPXE0WqTdokmbbH/tQvT+jn9wdt2n
+         d75xioRlw65Ok6CSR7b6c/Y8xxq/Rw2qSNM/JyEzofu31cU0Bg7Eh1cAn79KMq2UpK/a
+         DRtz36Bc3zy3K6TsZCQdszGp/DToTWLXhaIqdyuQjLIa+YetpSpL949aa6qr44yY9P+3
+         3aspK5EafgXhAgjgnLrtTBNKHjVBKT3rkA6mmjdFtszg1618YSSiKU55DHnCW9nlkjNO
+         cXxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=n/6SrizfTmUVEtJIffAUGFwzONi39uLHSNRwhX0sifc=;
+        b=tQRO27LzArot9Sz+htEqMDGtdrEJmyQ6l8vTwqdBAYEqrVcBJNZuXd/BUm/IozgUr2
+         b346CIO8M4wJlB8OYOu8Qsnq/GrES/cLR1yYzhJeHABRicZzAPDFB1nciVtjvQK39vo0
+         Yj1gJ3hyjr6PNB6xTLTxiu3wqVTv37DXEm8yaw4TrcD4l2uebawGuibYaR9oR/OsIh1I
+         b7MO5hwCaAACxhWivWDmc4tDNwr6f8F/LdFfKXdw14+qYFKB/NhE31oGQJFBKbWeSiMi
+         R8YTMnTB1C+WoTtB/mXzsG4SM3jNLxS/d37YB3cgZXKKEK0W9HfAyAGZi4Y8mXO6TgcM
+         joUA==
+X-Gm-Message-State: ACrzQf2FDbLSPSaNbC95CzfMDwZXSbV7Om43FSLv68L8ka/7dF8U+8gC
+        w1MlgdoIP7rpreK4uoIy3fKa4w==
+X-Google-Smtp-Source: AMsMyM4obFX0u1CtxFRrJsqzbZXm9vc1VDTaOMa2c+zVOh/77kMGvTAQg1lneODWqpLf74et2+SAww==
+X-Received: by 2002:a05:6512:3089:b0:4a2:586a:e77a with SMTP id z9-20020a056512308900b004a2586ae77amr20583426lfd.286.1668074548549;
+        Thu, 10 Nov 2022 02:02:28 -0800 (PST)
+Received: from [10.27.10.248] ([195.165.23.90])
+        by smtp.gmail.com with ESMTPSA id x2-20020a2e9c82000000b00276ff51649csm2619295lji.43.2022.11.10.02.02.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Nov 2022 02:02:28 -0800 (PST)
+Message-ID: <c7cc5afb-ec58-9c76-13c1-a1d519285898@linaro.org>
+Date:   Thu, 10 Nov 2022 13:02:26 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.244.148.83]
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- kwepemi500012.china.huawei.com (7.221.188.12)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [PATCH v1 1/7] dt-bindings: PCI: qcom: Add sm8350 to bindings
+Content-Language: en-GB
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org
+References: <20221029211312.929862-1-dmitry.baryshkov@linaro.org>
+ <20221029211312.929862-2-dmitry.baryshkov@linaro.org>
+ <20221031214055.GA3613285-robh@kernel.org>
+ <CAA8EJpqt+UvWHwd90Cdm3iCi2sbxbwbC3ADY6PW053Tw8r94VA@mail.gmail.com>
+ <CAL_JsqLVzPawSFh9e6b3nVfn+dNDFooVgOa7B_iTGU13tzXTRQ@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <CAL_JsqLVzPawSFh9e6b3nVfn+dNDFooVgOa7B_iTGU13tzXTRQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -56,52 +91,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The drm_atomic_get_new_private_obj_state() function returns NULL
-on error path, drm_atomic_get_old_private_obj_state() function
-returns NULL on error path, too, they does not return error pointers.
+On 01/11/2022 20:22, Rob Herring wrote:
+> On Mon, Oct 31, 2022 at 4:47 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+>>
+>> On Tue, 1 Nov 2022 at 00:40, Rob Herring <robh@kernel.org> wrote:
+>>>
+>>> On Sun, Oct 30, 2022 at 12:13:06AM +0300, Dmitry Baryshkov wrote:
+>>>> Add bindings for two PCIe hosts on SM8350 platform. The only difference
+>>>> between them is in the aggre0 clock, which warrants the oneOf clause for
+>>>> the clocks properties.
+>>>>
+>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>> ---
+>>>>   .../devicetree/bindings/pci/qcom,pcie.yaml    | 54 +++++++++++++++++++
+>>>>   1 file changed, 54 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>>>> index 54f07852d279..55bf5958ef79 100644
+>>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>>>> @@ -32,6 +32,7 @@ properties:
+>>>>         - qcom,pcie-sdm845
+>>>>         - qcom,pcie-sm8150
+>>>>         - qcom,pcie-sm8250
+>>>> +      - qcom,pcie-sm8350
+>>>>         - qcom,pcie-sm8450-pcie0
+>>>>         - qcom,pcie-sm8450-pcie1
+>>>>         - qcom,pcie-ipq6018
+>>>> @@ -185,6 +186,7 @@ allOf:
+>>>>                 - qcom,pcie-sc8180x
+>>>>                 - qcom,pcie-sc8280xp
+>>>>                 - qcom,pcie-sm8250
+>>>> +              - qcom,pcie-sm8350
+>>>>                 - qcom,pcie-sm8450-pcie0
+>>>>                 - qcom,pcie-sm8450-pcie1
+>>>>       then:
+>>>> @@ -540,6 +542,57 @@ allOf:
+>>>>             items:
+>>>>               - const: pci # PCIe core reset
+>>>>
+>>>> +  - if:
+>>>> +      properties:
+>>>> +        compatible:
+>>>> +          contains:
+>>>> +            enum:
+>>>> +              - qcom,pcie-sm8350
+>>>> +    then:
+>>>> +      oneOf:
+>>>> +          # Unfortunately the "optional" ref clock is used in the middle of the list
+>>>> +        - properties:
+>>>> +            clocks:
+>>>> +              maxItems: 13
+>>>> +            clock-names:
+>>>> +              items:
+>>>> +                - const: pipe # PIPE clock
+>>>> +                - const: pipe_mux # PIPE MUX
+>>>> +                - const: phy_pipe # PIPE output clock
+>>>> +                - const: ref # REFERENCE clock
+>>>> +                - const: aux # Auxiliary clock
+>>>> +                - const: cfg # Configuration clock
+>>>> +                - const: bus_master # Master AXI clock
+>>>> +                - const: bus_slave # Slave AXI clock
+>>>> +                - const: slave_q2a # Slave Q2A clock
+>>>> +                - const: tbu # PCIe TBU clock
+>>>> +                - const: ddrss_sf_tbu # PCIe SF TBU clock
+>>>> +                - const: aggre0 # Aggre NoC PCIe0 AXI clock
+>>>
+>>> 'enum: [ aggre0, aggre1 ]' and 'minItems: 12' would eliminate the 2nd
+>>> case. There's a implicit requirement that string names are unique (by
+>>> default).
+>>
+>> Wouldn't it also allow a single 'aggre0' string?
+> 
+> No, because it's only for the 12th entry in the list.
 
-By the way, vc4_hvs_get_new/old_global_state() should return
-ERR_PTR(-EINVAL), otherwise there will be null-ptr-defer issue,
-such as follows:
+If I got your suggestion right, it would be:
+clock-names:
+   minItems: 12
+   items:
+     ..... 11 names
+     - enum: [ aggre0, aggre1 ]
+     - const: aggre1
 
-In function vc4_atomic_commit_tail():
-  |-- old_hvs_state = vc4_hvs_get_old_global_state(state); <-- return NULL
-  |-- if (WARN_ON(IS_ERR(old_hvs_state))) <-- no return
-  |-- unsigned long state_rate = max(old_hvs_state->core_clock_rate,
-	new_hvs_state->core_clock_rate); <-- null-ptr-defer
+Having 11 clocks + aggre0 would pass this schema (incorrectly) because 
+there will be no duplicate to fail the check.
 
-Fixes: 9ec03d7f1ed3 ("drm/vc4: kms: Wait on previous FIFO users before a commit")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
----
- drivers/gpu/drm/vc4/vc4_kms.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+We have two cases here:
+  - 11 common clocks + aggre0 + aggre1
+  - 11 common clocks + aggre1
 
-diff --git a/drivers/gpu/drm/vc4/vc4_kms.c b/drivers/gpu/drm/vc4/vc4_kms.c
-index 5c97642ed66a..8fbeecdf2ec4 100644
---- a/drivers/gpu/drm/vc4/vc4_kms.c
-+++ b/drivers/gpu/drm/vc4/vc4_kms.c
-@@ -197,8 +197,8 @@ vc4_hvs_get_new_global_state(struct drm_atomic_state *state)
- 	struct drm_private_state *priv_state;
- 
- 	priv_state = drm_atomic_get_new_private_obj_state(state, &vc4->hvs_channels);
--	if (IS_ERR(priv_state))
--		return ERR_CAST(priv_state);
-+	if (!priv_state)
-+		return ERR_PTR(-EINVAL);
- 
- 	return to_vc4_hvs_state(priv_state);
- }
-@@ -210,8 +210,8 @@ vc4_hvs_get_old_global_state(struct drm_atomic_state *state)
- 	struct drm_private_state *priv_state;
- 
- 	priv_state = drm_atomic_get_old_private_obj_state(state, &vc4->hvs_channels);
--	if (IS_ERR(priv_state))
--		return ERR_CAST(priv_state);
-+	if (!priv_state)
-+		return ERR_PTR(-EINVAL);
- 
- 	return to_vc4_hvs_state(priv_state);
- }
+I think I'll keep the oneOf in v2. Please tell me if I got your 
+suggestion incorrectly or if there is any other way to express my case.
+
 -- 
-2.25.1
+With best wishes
+Dmitry
 
