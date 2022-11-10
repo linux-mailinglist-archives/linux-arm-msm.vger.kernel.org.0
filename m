@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FC0462497D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 19:32:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FFB6624980
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Nov 2022 19:32:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232048AbiKJScM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 13:32:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34574 "EHLO
+        id S232032AbiKJScN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 13:32:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232032AbiKJScK (ORCPT
+        with ESMTP id S231948AbiKJScK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 10 Nov 2022 13:32:10 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8943A4D5DB
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A2194C268
         for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 10:32:06 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id b9so1915971ljr.5
+Received: by mail-lj1-x233.google.com with SMTP id z24so1911686ljn.4
         for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 10:32:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tB9jFbThbMD2bOC/2HEirSrt55WjI9bnLTvqrvRkEJc=;
-        b=WUFK2+NWp8PI1uhxyrXPRG7a90ywfDxCEnsF4HoWvKAGmoeGUP+jnGT7Qt5881Oa6g
-         mMRCliH4tvmfzN31MT0HAmwGvEvfhtKroYbwRtV9RD84dr1bPLm477E45yiNeca7WnV/
-         EJlwCQ2xUkPpaiET69pPvGBa0zgDgNA9bGnK9hnEADl4p+oAHdJs/9S1aGBLPSbeOY56
-         osLRzaNJOlkdvMun3sJiUkkXdVtHbjqyaubLZDfvuFKQvJFgCDOuPWjarHmseqc9ROmH
-         vT828mvXj28wWEjoVmi/qZ1k1vh4IFp+kchqQVJ6vvCGLgQboNHEuyAqVMRBBGAZBdzi
-         fvKw==
+        bh=gfpRMK7MvLu2RRLRwF3zgwctmRqNQneOnndqnXYbSRc=;
+        b=q+YOocKWipaDiWlEmOvhL+2zjVlTd8tkYxwbi4f8ByfMiHkm4fU7m7A6jDfH9h+wZZ
+         aWbohHsFMZ9ZO5n+QsI068k53PA6PbpzNQ6WRxV7gXx1sKB0uFz4CG1TyJS3zACUUJUB
+         nXdLFh7It3uVwIgeg/8XFdfjQJLFpkZQaCAM4kaqi2j5TIWV9oB9EJ2zOX7Vaqz5ORc7
+         ypwGqgn4iDySmHU3y+YijqkoO4vnBvIMznlOW92fL1k7LIdgRFO2lHiZzbAJTOBBLEJ+
+         3ewonMvaQkP3CF3ioQIGYgBMv3b2a3L77Rfufj4vPNR/TJ0WQCSq9fq6kmDuY4AepCNG
+         V3rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tB9jFbThbMD2bOC/2HEirSrt55WjI9bnLTvqrvRkEJc=;
-        b=teu0Iy1H+OLKW715qpvNDq1/8fW0nhrJoZcTEnpCWM1uBmm89H3naYWZfs+HgKZYV6
-         u+fVmW9HP3x0bceM45o8FzCHmNQqWaIIUxQf6u1rGAHVeFA6VZSCXT3TGP4JVrHHDENI
-         JNd0XU4IOFaFvg2PSgKXZeRJAuKzdUPTokKlc4r/+18Kp9iG/GjL5Q33w9EA5D0bfaSE
-         ggE1mglPO4s6HdEE83VWmCFPXvsOA5l/FXJW3XStgUAzCqdeTKNQEbnK+EUy2PhLE5w5
-         quE3PEcs2S/rL0N4KIGjkn43MoHyoRjIis/Wl6FGv+fQe9k8OwD+mJRoWX1sNDcFA3+N
-         grWw==
-X-Gm-Message-State: ACrzQf3w2KgzRG9NPSKnM7sFyPGsRCG+dGVbgedzHcQ3MvRlyKA+vsB/
-        zLwqeAt2GFRVcD8UEvFLWsRZ6g==
-X-Google-Smtp-Source: AMsMyM6wmEhUNqaUX0UpkHoTgFAR6E5CquPrQEi4iK3tUvcSOasA3LTl2Aa4rEhospamJ8eNHEigSA==
-X-Received: by 2002:a2e:9bd7:0:b0:26c:532e:3cc with SMTP id w23-20020a2e9bd7000000b0026c532e03ccmr8626876ljj.66.1668105124194;
+        bh=gfpRMK7MvLu2RRLRwF3zgwctmRqNQneOnndqnXYbSRc=;
+        b=yQ+IvDM8fCohMr2p5So8/S9Y8ggr8ni7ghSu4pBWUKNiShJhoM2Fo2VZnkQSu2hbwD
+         KfliyOVEebPJYiXA/n+33F9G4aXopborafTuGh3taHwQ+G/42kUej16Dg4qkY1nAImw4
+         6B+kJox91XUkoXAXBnb+BoAylcvKUNMbl6MmBZrpYZudgFFwTssqPW/5Si8gfuBP7m20
+         IIhaAbpHXdXpzQmzzgGVny722UBxZuoJ2712BGBMeO0rIbPCNx6L6Dlt9SRhSvfUmxOW
+         VkqWbKdhAFvjCV4SmLe/fShh3v0atJKJNyGKRzHI6d51r4xK8tWeh/2NoVt5kHoDtLRz
+         7fJQ==
+X-Gm-Message-State: ACrzQf0yGzHVMB/b8+ZVjElgWNEieWf4DrZP6B5h04OTGykO9Mu8MH/U
+        /vSoH1+Mmfx64jQ01ZLDle1y0Q==
+X-Google-Smtp-Source: AMsMyM5Eju7duMVeQfswz+4VHsoguazZUY5QTFG6kcTsiyObMleJltJJyahMlNnn1wtUxD2lsC9Y5A==
+X-Received: by 2002:a2e:2241:0:b0:26e:8f7f:7103 with SMTP id i62-20020a2e2241000000b0026e8f7f7103mr8472912lji.386.1668105124826;
         Thu, 10 Nov 2022 10:32:04 -0800 (PST)
 Received: from eriador.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id m18-20020a197112000000b004a2550db9ddsm2837087lfc.245.2022.11.10.10.32.03
+        by smtp.gmail.com with ESMTPSA id m18-20020a197112000000b004a2550db9ddsm2837087lfc.245.2022.11.10.10.32.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Nov 2022 10:32:03 -0800 (PST)
+        Thu, 10 Nov 2022 10:32:04 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -64,9 +64,9 @@ To:     Andy Gross <agross@kernel.org>,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v3 6/8] phy: qcom-qmp-pcie: add support for sm8350 platform
-Date:   Thu, 10 Nov 2022 21:31:56 +0300
-Message-Id: <20221110183158.856242-7-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 7/8] arm64: dts: qcom: sm8350: add PCIe devices
+Date:   Thu, 10 Nov 2022 21:31:57 +0300
+Message-Id: <20221110183158.856242-8-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20221110183158.856242-1-dmitry.baryshkov@linaro.org>
 References: <20221110183158.856242-1-dmitry.baryshkov@linaro.org>
@@ -82,166 +82,285 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for a single-lane and two-lane PCIe PHYs found on Qualcomm
-SM8350 platform.
+Add PCIe0 and PCIe1 (and corresponding PHY) devices found on SM8350
+platform. The PCIe0 is a 1-lane Gen3 host, PCIe1 is a 2-lane Gen3 host.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 120 ++++++++++++++++++++++-
- 1 file changed, 119 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 246 ++++++++++++++++++++++++++-
+ 1 file changed, 244 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 4a55b2439952..8fa66458c259 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -1315,6 +1315,40 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen3x1_pcie_pcs_misc_tbl[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCIE_ENDPOINT_REFCLK_DRIVE, 0xc1),
- };
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index a86d9ea93b9d..90a26f406bf3 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -656,8 +656,8 @@ gcc: clock-controller@100000 {
+ 				      "usb3_uni_phy_sec_gcc_usb30_pipe_clk";
+ 			clocks = <&rpmhcc RPMH_CXO_CLK>,
+ 				 <&sleep_clk>,
+-				 <0>,
+-				 <0>,
++				 <&pcie0_phy>,
++				 <&pcie1_phy>,
+ 				 <0>,
+ 				 <0>,
+ 				 <0>,
+@@ -1582,6 +1582,202 @@ mmss_noc: interconnect@1740000 {
+ 			qcom,bcm-voters = <&apps_bcm_voter>;
+ 		};
  
-+static const struct qmp_phy_init_tbl sm8350_qmp_gen3x1_pcie_tx_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V5_TX_PI_QEC_CTRL, 0x20),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_1, 0x75),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_4, 0x3f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_TX_RES_CODE_LANE_OFFSET_TX, 0x1d),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_TX_RES_CODE_LANE_OFFSET_RX, 0x0c),
-+};
++		pcie0: pci@1c00000 {
++			compatible = "qcom,pcie-sm8350";
++			reg = <0 0x01c00000 0 0x3000>,
++			      <0 0x60000000 0 0xf1d>,
++			      <0 0x60000f20 0 0xa8>,
++			      <0 0x60001000 0 0x1000>,
++			      <0 0x60100000 0 0x100000>;
++			reg-names = "parf", "dbi", "elbi", "atu", "config";
++			device_type = "pci";
++			linux,pci-domain = <0>;
++			bus-range = <0x00 0xff>;
++			num-lanes = <1>;
 +
-+static const struct qmp_phy_init_tbl sm8350_qmp_gen3x1_pcie_rc_rx_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH2, 0xbf),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH3, 0x3f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_VGA_CAL_CNTRL2, 0x07),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_PI_CONTROLS, 0xf0),
-+};
++			#address-cells = <3>;
++			#size-cells = <2>;
 +
-+static const struct qmp_phy_init_tbl sm8350_qmp_gen3x2_pcie_rc_rx_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH2, 0x7f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH3, 0x34),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_VGA_CAL_CNTRL2, 0x0f),
-+};
++			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
++				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
 +
-+static const struct qmp_phy_init_tbl sm8350_qmp_gen3x2_pcie_tx_tbl[] = {
-+	QMP_PHY_INIT_CFG_LANE(QSERDES_V5_TX_PI_QEC_CTRL, 0x02, 1),
-+	QMP_PHY_INIT_CFG_LANE(QSERDES_V5_TX_PI_QEC_CTRL, 0x04, 2),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_1, 0xd5),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_4, 0x3f),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_TX_RES_CODE_LANE_OFFSET_TX, 0x1d),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_TX_RES_CODE_LANE_OFFSET_RX, 0x0c),
-+};
++			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "msi0", "msi1", "msi2", "msi3",
++					  "msi4", "msi5", "msi6", "msi7";
++			#interrupt-cells = <1>;
++			interrupt-map-mask = <0 0 0 0x7>;
++			interrupt-map = <0 0 0 1 &intc 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
++					<0 0 0 2 &intc 0 150 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
++					<0 0 0 3 &intc 0 151 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
++					<0 0 0 4 &intc 0 152 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
 +
-+static const struct qmp_phy_init_tbl sm8350_qmp_gen3x2_pcie_rc_pcs_tbl[] = {
-+	QMP_PHY_INIT_CFG(QPHY_V5_PCS_EQ_CONFIG2, 0x0f),
-+};
++			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
++				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
++				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
++				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>,
++				 <&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>,
++				 <&gcc GCC_AGGRE_NOC_PCIE_TBU_CLK>,
++				 <&gcc GCC_DDRSS_PCIE_SF_TBU_CLK>,
++				 <&gcc GCC_AGGRE_NOC_PCIE_0_AXI_CLK>,
++				 <&gcc GCC_AGGRE_NOC_PCIE_1_AXI_CLK>;
++			clock-names = "aux",
++				      "cfg",
++				      "bus_master",
++				      "bus_slave",
++				      "slave_q2a",
++				      "tbu",
++				      "ddrss_sf_tbu",
++				      "aggre0",
++				      "aggre1";
 +
- static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_serdes_tbl[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN, 0x14),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_IVCO, 0x0f),
-@@ -2021,6 +2055,80 @@ static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
- 	.phy_status		= PHYSTATUS_4_20,
- };
++			iommus = <&apps_smmu 0x1c00 0x7f>;
++			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
++				    <0x100 &apps_smmu 0x1c01 0x1>;
++
++			resets = <&gcc GCC_PCIE_0_BCR>;
++			reset-names = "pci";
++
++			power-domains = <&gcc PCIE_0_GDSC>;
++
++			phys = <&pcie0_phy>;
++			phy-names = "pciephy";
++
++			perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
++			wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
++
++			pinctrl-names = "default";
++			pinctrl-0 = <&pcie0_default_state>;
++
++			status = "disabled";
++		};
++
++		pcie0_phy: phy@1c06000 {
++			compatible = "qcom,sm8350-qmp-gen3x1-pcie-phy";
++			reg = <0 0x01c06000 0 0x2000>;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
++				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
++				 <&gcc GCC_PCIE_0_CLKREF_EN>,
++				 <&gcc GCC_PCIE0_PHY_RCHNG_CLK>,
++				 <&gcc GCC_PCIE_0_PIPE_CLK>;
++			clock-names = "aux", "cfg_ahb", "ref", "rchng", "pipe";
++
++			resets = <&gcc GCC_PCIE_0_PHY_BCR>;
++			reset-names = "phy";
++
++			assigned-clocks = <&gcc GCC_PCIE0_PHY_RCHNG_CLK>;
++			assigned-clock-rates = <100000000>;
++
++			#clock-cells = <0>;
++			clock-output-names = "pcie_0_pipe_clk";
++
++			#phy-cells = <0>;
++
++			status = "disabled";
++		};
++
++		pcie1: pci@1c08000 {
++			compatible = "qcom,pcie-sm8350";
++			reg = <0 0x01c08000 0 0x3000>,
++			      <0 0x40000000 0 0xf1d>,
++			      <0 0x40000f20 0 0xa8>,
++			      <0 0x40001000 0 0x1000>,
++			      <0 0x40100000 0 0x100000>;
++			reg-names = "parf", "dbi", "elbi", "atu", "config";
++			device_type = "pci";
++			linux,pci-domain = <1>;
++			bus-range = <0x00 0xff>;
++			num-lanes = <2>;
++
++			#address-cells = <3>;
++			#size-cells = <2>;
++
++			ranges = <0x01000000 0x0 0x40200000 0 0x40200000 0x0 0x100000>,
++				 <0x02000000 0x0 0x40300000 0 0x40300000 0x0 0x1fd00000>;
++
++			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "msi";
++			#interrupt-cells = <1>;
++			interrupt-map-mask = <0 0 0 0x7>;
++			interrupt-map = <0 0 0 1 &intc 0 434 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
++					<0 0 0 2 &intc 0 435 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
++					<0 0 0 3 &intc 0 438 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
++					<0 0 0 4 &intc 0 439 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
++
++			clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
++				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
++				 <&gcc GCC_PCIE_1_MSTR_AXI_CLK>,
++				 <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
++				 <&gcc GCC_PCIE_1_SLV_Q2A_AXI_CLK>,
++				 <&gcc GCC_AGGRE_NOC_PCIE_TBU_CLK>,
++				 <&gcc GCC_DDRSS_PCIE_SF_TBU_CLK>,
++				 <&gcc GCC_AGGRE_NOC_PCIE_1_AXI_CLK>;
++			clock-names = "aux",
++				      "cfg",
++				      "bus_master",
++				      "bus_slave",
++				      "slave_q2a",
++				      "tbu",
++				      "ddrss_sf_tbu",
++				      "aggre1";
++
++			iommus = <&apps_smmu 0x1c80 0x7f>;
++			iommu-map = <0x0   &apps_smmu 0x1c80 0x1>,
++				    <0x100 &apps_smmu 0x1c81 0x1>;
++
++			resets = <&gcc GCC_PCIE_1_BCR>;
++			reset-names = "pci";
++
++			power-domains = <&gcc PCIE_1_GDSC>;
++
++			phys = <&pcie1_phy>;
++			phy-names = "pciephy";
++
++			perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
++			wake-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
++
++			pinctrl-names = "default";
++			pinctrl-0 = <&pcie1_default_state>;
++
++			status = "disabled";
++		};
++
++		pcie1_phy: phy@1c0f000 {
++			compatible = "qcom,sm8350-qmp-gen3x2-pcie-phy";
++			reg = <0 0x01c0e000 0 0x2000>;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++			clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
++				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
++				 <&gcc GCC_PCIE_1_CLKREF_EN>,
++				 <&gcc GCC_PCIE1_PHY_RCHNG_CLK>,
++				 <&gcc GCC_PCIE_1_PIPE_CLK>;
++			clock-names = "aux", "cfg_ahb", "ref", "rchng", "pipe";
++
++			resets = <&gcc GCC_PCIE_1_PHY_BCR>;
++			reset-names = "phy";
++
++			assigned-clocks = <&gcc GCC_PCIE1_PHY_RCHNG_CLK>;
++			assigned-clock-rates = <100000000>;
++
++			#clock-cells = <0>;
++			clock-output-names = "pcie_1_pipe_clk";
++
++			#phy-cells = <0>;
++
++			status = "disabled";
++		};
++
+ 		lpass_ag_noc: interconnect@3c40000 {
+ 			compatible = "qcom,sm8350-lpass-ag-noc";
+ 			reg = <0 0x03c40000 0 0xf080>;
+@@ -1761,6 +1957,52 @@ tlmm: pinctrl@f100000 {
+ 			gpio-ranges = <&tlmm 0 0 204>;
+ 			wakeup-parent = <&pdc>;
  
-+static const struct qmp_phy_cfg sm8350_qmp_gen3x1_pciephy_cfg = {
-+	.lanes			= 1,
++			pcie0_default_state: pcie0-default-state {
++				perst-pins {
++					pins = "gpio94";
++					function = "gpio";
++					drive-strength = <2>;
++					bias-pull-down;
++				};
 +
-+	.offsets		= &qmp_pcie_offsets_v5,
++				clkreq-pins {
++					pins = "gpio95";
++					function = "pcie0_clkreqn";
++					drive-strength = <2>;
++					bias-pull-up;
++				};
 +
-+	.tbls = {
-+		.serdes		= sm8450_qmp_gen3_pcie_serdes_tbl,
-+		.serdes_num	= ARRAY_SIZE(sm8450_qmp_gen3_pcie_serdes_tbl),
-+		.tx		= sm8350_qmp_gen3x1_pcie_tx_tbl,
-+		.tx_num		= ARRAY_SIZE(sm8350_qmp_gen3x1_pcie_tx_tbl),
-+		.rx		= sm8450_qmp_gen3_pcie_rx_tbl,
-+		.rx_num		= ARRAY_SIZE(sm8450_qmp_gen3_pcie_rx_tbl),
-+		.pcs		= sm8450_qmp_gen3_pcie_pcs_tbl,
-+		.pcs_num	= ARRAY_SIZE(sm8450_qmp_gen3_pcie_pcs_tbl),
-+		.pcs_misc	= sm8450_qmp_gen3x1_pcie_pcs_misc_tbl,
-+		.pcs_misc_num	= ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_pcs_misc_tbl),
-+	},
++				wake-pins {
++					pins = "gpio96";
++					function = "gpio";
++					drive-strength = <2>;
++					bias-pull-up;
++				};
++			};
 +
-+	.tbls_rc = &(const struct qmp_phy_cfg_tbls) {
-+		.serdes		= sm8450_qmp_gen3x1_pcie_rc_serdes_tbl,
-+		.serdes_num	= ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_rc_serdes_tbl),
-+		.rx		= sm8350_qmp_gen3x1_pcie_rc_rx_tbl,
-+		.rx_num		= ARRAY_SIZE(sm8350_qmp_gen3x1_pcie_rc_rx_tbl),
-+	},
++			pcie1_default_state: pcie1-default-state {
++				perst-pins {
++					pins = "gpio97";
++					function = "gpio";
++					drive-strength = <2>;
++					bias-pull-down;
++				};
 +
-+	.clk_list		= sc8280xp_pciephy_clk_l,
-+	.num_clks		= ARRAY_SIZE(sc8280xp_pciephy_clk_l),
-+	.reset_list		= sdm845_pciephy_reset_l,
-+	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
-+	.vreg_list		= qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.regs			= sm8250_pcie_regs_layout,
++				clkreq-pins {
++					pins = "gpio98";
++					function = "pcie1_clkreqn";
++					drive-strength = <2>;
++					bias-pull-up;
++				};
 +
-+	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-+	.phy_status		= PHYSTATUS,
-+};
++				wake-pins {
++					pins = "gpio99";
++					function = "gpio";
++					drive-strength = <2>;
++					bias-pull-up;
++				};
++			};
 +
-+static const struct qmp_phy_cfg sm8350_qmp_gen3x2_pciephy_cfg = {
-+	.lanes			= 2,
-+
-+	.offsets		= &qmp_pcie_offsets_v5,
-+
-+	.tbls = {
-+		.serdes		= sm8450_qmp_gen3_pcie_serdes_tbl,
-+		.serdes_num	= ARRAY_SIZE(sm8450_qmp_gen3_pcie_serdes_tbl),
-+		.tx		= sm8350_qmp_gen3x2_pcie_tx_tbl,
-+		.tx_num		= ARRAY_SIZE(sm8350_qmp_gen3x2_pcie_tx_tbl),
-+		.rx		= sm8450_qmp_gen3_pcie_rx_tbl,
-+		.rx_num		= ARRAY_SIZE(sm8450_qmp_gen3_pcie_rx_tbl),
-+		.pcs		= sm8450_qmp_gen3_pcie_pcs_tbl,
-+		.pcs_num	= ARRAY_SIZE(sm8450_qmp_gen3_pcie_pcs_tbl),
-+		.pcs_misc	= sc8280xp_qmp_gen3x2_pcie_pcs_misc_tbl,
-+		.pcs_misc_num	= ARRAY_SIZE(sc8280xp_qmp_gen3x2_pcie_pcs_misc_tbl),
-+	},
-+
-+	.tbls_rc = &(const struct qmp_phy_cfg_tbls) {
-+		.rx		= sm8350_qmp_gen3x2_pcie_rc_rx_tbl,
-+		.rx_num		= ARRAY_SIZE(sm8350_qmp_gen3x2_pcie_rc_rx_tbl),
-+		.pcs		= sm8350_qmp_gen3x2_pcie_rc_pcs_tbl,
-+		.pcs_num	= ARRAY_SIZE(sm8350_qmp_gen3x2_pcie_rc_pcs_tbl),
-+	},
-+
-+	.clk_list		= sc8280xp_pciephy_clk_l,
-+	.num_clks		= ARRAY_SIZE(sc8280xp_pciephy_clk_l),
-+	.reset_list		= sdm845_pciephy_reset_l,
-+	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
-+	.vreg_list		= qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.regs			= sm8250_pcie_regs_layout,
-+
-+	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-+	.phy_status		= PHYSTATUS,
-+};
-+
- static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
- 	.lanes			= 1,
- 
-@@ -2617,7 +2725,11 @@ static int qmp_pcie_parse_dt(struct qmp_pcie *qmp)
- 	qmp->pipe_clks[0].id = "pipe";
- 	qmp->pipe_clks[1].id = "pipediv2";
- 
--	ret = devm_clk_bulk_get(dev, qmp->num_pipe_clks, qmp->pipe_clks);
-+	ret = devm_clk_bulk_get(dev, 1, qmp->pipe_clks);
-+	if (ret)
-+		return ret;
-+
-+	ret = devm_clk_bulk_get_optional(dev, qmp->num_pipe_clks - 1, qmp->pipe_clks + 1);
- 	if (ret)
- 		return ret;
- 
-@@ -2737,6 +2849,12 @@ static const struct of_device_id qmp_pcie_of_match_table[] = {
- 	}, {
- 		.compatible = "qcom,sm8250-qmp-modem-pcie-phy",
- 		.data = &sm8250_qmp_gen3x2_pciephy_cfg,
-+	}, {
-+		.compatible = "qcom,sm8350-qmp-gen3x1-pcie-phy",
-+		.data = &sm8350_qmp_gen3x1_pciephy_cfg,
-+	}, {
-+		.compatible = "qcom,sm8350-qmp-gen3x2-pcie-phy",
-+		.data = &sm8350_qmp_gen3x2_pciephy_cfg,
- 	}, {
- 		.compatible = "qcom,sm8450-qmp-gen3x1-pcie-phy",
- 		.data = &sm8450_qmp_gen3x1_pciephy_cfg,
+ 			qup_uart3_default_state: qup-uart3-default-state {
+ 				rx-pins {
+ 					pins = "gpio18";
 -- 
 2.35.1
 
