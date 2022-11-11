@@ -2,108 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3BF2626023
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 18:09:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 202306260DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 19:08:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234207AbiKKRJf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 12:09:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47820 "EHLO
+        id S233968AbiKKSI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 13:08:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234161AbiKKRJL (ORCPT
+        with ESMTP id S233681AbiKKSI4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 12:09:11 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72A271A3B1;
-        Fri, 11 Nov 2022 09:08:58 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2ABG8uCs017312;
-        Fri, 11 Nov 2022 17:08:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=03eezIBJKpj7j/9qQicis47eqBl7PzCBbko9n8Odntw=;
- b=kOOadAQhlY4zwHKiYPvrmOmjtKiym8vFfjo0fkSROG0rUkDtQG4/T8aLV1abIUNRRNzs
- KVhdJqh2dFX7UKzXv1Ox/GY2tQdSvd1eLiSUv/XOYkCMu6Fo6daP4RF0JQQKLjVpn5Z3
- 06TNBkvWXum/MG27j2DpecykoQL5mMYLh3IUR+bzHL8EUDvFQLN+JDFitQNkj6AOYhgN
- pA8yFevS7PrJeUOhqLzVkPq7gFFkkp+v1wKMsovkKAcETJeBRbzRtdFZAK2LAMbVJ+Uq
- 8S5+X6FKRDaOjLZ3FzR6w01rGp1hSkOQSN1huXcCXnz2Gc7HtQM7MVZ2qKUKs3+AkMgk 9w== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kshkdhqaw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 11 Nov 2022 17:08:42 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2ABH8fDq023857
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 11 Nov 2022 17:08:41 GMT
-Received: from [10.110.50.128] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Fri, 11 Nov
- 2022 09:08:40 -0800
-Message-ID: <e10ca37a-5d02-ce00-423d-18f9a9e6fe0d@quicinc.com>
-Date:   Fri, 11 Nov 2022 09:08:40 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v6 13/21] gunyah: vm_mgr: Introduce basic VM Manager
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Bjorn Andersson" <quic_bjorande@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
+        Fri, 11 Nov 2022 13:08:56 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8172F11172;
+        Fri, 11 Nov 2022 10:08:55 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id EF37CB826C6;
+        Fri, 11 Nov 2022 18:08:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF649C433D6;
+        Fri, 11 Nov 2022 18:08:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668190132;
+        bh=1LwbWLiM0eqVngc+n5UKw3OXRN8eN1ijL20vt5kIfvc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=NQJUR4QerNZHhDnRP7Laix+cZafg1YpBOLxx7wPkLceEDUQOZFS4TNQvtRrE90sa7
+         CjJ7UfMtiXjon7StgiZOBKiQaOikJsp4D8ujESpsZiXlfyh2WBMeT+/Rt4sKAUtb58
+         OqVfmcpk7VnLvx5aYeDjIu5fJd/JMMDSziXi/Seb0FwnbA6UyEXQnk+Op8YCaFyW7W
+         ifR/N6f4dd/cL/o4mQwNVywKm/LqSmQMA8bbnlRqVWJIgkCofb8UVIJnBzjdlur39Q
+         NTfv5qIElFI0LjvcGzqyZ548P73zxN/OTnfLL3lBNfFc+mbE4PD0xzXK0S9kl6A8N5
+         qkK2PpdIWB41w==
+Date:   Fri, 11 Nov 2022 12:08:49 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        "Will Deacon" <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Kalle Valo <kvalo@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20221026185846.3983888-1-quic_eberman@quicinc.com>
- <20221026185846.3983888-14-quic_eberman@quicinc.com>
- <Y2H8oh7AvYDiMqKs@kroah.com>
- <722b05a1-4bf5-0837-baea-b1d0a9cc1e43@quicinc.com>
- <Y2MKWOihjAPxfl6v@kroah.com>
- <96238455-73b6-bead-0fdb-55ca68e5bf0b@quicinc.com>
- <9dd597d9-a3f3-48f2-8416-b5b097a230d5@app.fastmail.com>
- <980db147-794e-ecd9-9626-64ff81109bab@quicinc.com>
- <95a9f253-984a-14e0-7e01-f168452576c4@quicinc.com>
- <543d95f8-be31-7553-4700-5dc04872e8ea@quicinc.com>
- <Y23qjcMmerVuKFdj@kroah.com>
-Content-Language: en-US
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <Y23qjcMmerVuKFdj@kroah.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9nZnTzysHz-yQwmjXf_a3mkpW5qatf5E
-X-Proofpoint-ORIG-GUID: 9nZnTzysHz-yQwmjXf_a3mkpW5qatf5E
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-11_08,2022-11-11_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 impostorscore=0 adultscore=0 phishscore=0 clxscore=1015
- spamscore=0 priorityscore=1501 malwarescore=0 mlxscore=0 suspectscore=0
- mlxlogscore=550 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211110115
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mike Tipton <quic_mdtipton@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 05/10] dt-bindings: interconnect: Add sm8350, sc8280xp
+ and generic OSM L3 compatibles
+Message-ID: <20221111180849.hegnho4qeaewuzwz@builder.lan>
+References: <20221111032515.3460-1-quic_bjorande@quicinc.com>
+ <20221111032515.3460-6-quic_bjorande@quicinc.com>
+ <d738cdd8-1963-78d4-2c6f-6597b3b02d0f@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d738cdd8-1963-78d4-2c6f-6597b3b02d0f@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -111,25 +63,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 11/10/2022 10:24 PM, Greg Kroah-Hartman wrote:
-> On Thu, Nov 10, 2022 at 04:03:10PM -0800, Elliot Berman wrote:
->>> Agree, tools can be updated and that is the easy part as we grow the s/w
->>> stack around Gunyah in userspace, like we already do w/ CrosVM (Virtual
->>> Machine Manager) and QEMU will be next followed by rust-vmm. All of them
->>> can be done without Gunyah ioctls relying anything on the KVM ioctls.
->>> Elliot has also explained very well that we don't to go to KVM
->>> maintainers for any of our additions and we also don't want them to come
->>> to us, since there is no interoperability testing. It is best that both
->>> Hypervisors and their Linux interfaces evolve independently.
->>
->> Are above explanations reasonable to not re-use KVM ioctl numbers?
+On Fri, Nov 11, 2022 at 04:02:42PM +0530, Sibi Sankar wrote:
 > 
-> Try getting close at least, where possible please.  As your ioctl
-> numbers didn't even start at 0, it's a bit odd...
+> 
+> On 11/11/22 08:55, Bjorn Andersson wrote:
+> > Add EPSS L3 compatibles for sm8350 and sc8280xp, but while at it also
+> > introduce generic compatible for both qcom,osm-l3 and qcom,epss-l3.
+> > 
+> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > Tested-by: Steev Klimaszewski <steev@kali.org>
+> > ---
+> > 
+> > Changes since v1:
+> > - Fixed oneOf to be valid schema
+> > - Fixed example to follow schema
+> > 
+> >   .../bindings/interconnect/qcom,osm-l3.yaml    | 24 ++++++++++++-------
+> >   1 file changed, 16 insertions(+), 8 deletions(-)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
+> > index bf538c0c5a81..aadae4424ba9 100644
+> > --- a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
+> > +++ b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
+> > @@ -16,13 +16,21 @@ description:
+> >   properties:
+> >     compatible:
+> > -    enum:
+> > -      - qcom,sc7180-osm-l3
+> > -      - qcom,sc7280-epss-l3
+> > -      - qcom,sc8180x-osm-l3
+> > -      - qcom,sdm845-osm-l3
+> > -      - qcom,sm8150-osm-l3
+> > -      - qcom,sm8250-epss-l3
+> > +    oneOf:
+> > +      - items:
+> > +          - enum:
+> > +              - qcom,sc7180-osm-l3
+> > +              - qcom,sc8180x-osm-l3
+> > +              - qcom,sdm845-osm-l3
+> > +              - qcom,sm8150-osm-l3
+> > +          - const: qcom,osm-l3
+> > +      - items:
+> > +          - enum:
+> > +              - qcom,sc7280-epss-l3
+> > +              - qcom,sc8280xp-epss-l3
+> > +              - qcom,sm8250-epss-l3
+> > +              - qcom,sm8350-epss-l3
+> > +          - const: qcom,epss-l3
+> 
+> isn't it incorrect to describe qcom,epss-l3 as a working
+> backup compatible for sc7280-epss-l3 and sm8250-epss-l3?
+> Shouldn't we just add another items list with those 2 as
+> enums?
+> 
 
-Ack, will do.
+I was about to agree, but the difference between the two sets are which
+registers we use to request the speed.
 
-Thanks,
-Elliot
+And per our recent discussion, I was under the impression that this
+would be a property of BIT(0) in 0xb0 being set, not which platform
+we're running on.
+
+If that's the case then they are indeed compatible and we should adjust
+.ref_perf_state based on per-core DCVS being set or not.
+
+
+So I do think this description is appropriate...
+
+Regards,
+Bjorn
+
+> >     reg:
+> >       maxItems: 1
+> > @@ -56,7 +64,7 @@ examples:
+> >       #define RPMH_CXO_CLK        0
+> >       osm_l3: interconnect@17d41000 {
+> > -      compatible = "qcom,sdm845-osm-l3";
+> > +      compatible = "qcom,sdm845-osm-l3", "qcom,osm-l3";
+> >         reg = <0x17d41000 0x1400>;
+> >         clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
