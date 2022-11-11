@@ -2,104 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC31C625D18
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 15:33:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C75DF625DAE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 15:59:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233851AbiKKOde (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 09:33:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44564 "EHLO
+        id S234818AbiKKO7r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 09:59:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234562AbiKKOdP (ORCPT
+        with ESMTP id S234769AbiKKO7b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 09:33:15 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25A8E5B580
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 06:33:14 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id c1so8580593lfi.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 06:33:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JZCkL39tKR5ttW+qJKB2t3gyWuB8VcBN7GauxzyOgrI=;
-        b=lHZh8n8x55B+MzDCbf2ins/MECWR60E/rKGiejeepH0pN88FyN8fHkxVTrJxJ8yJHM
-         THuEk4207LGGUNZtQuiVxSzPt1cV4QKnFht4q/VcPgJGxXskMUdmPVy1cMVfpbdOXXMD
-         +urR1Qdlbs5RFmiuNZdCVxYlTYimLtJgw/xIJ2wzbLNmH3VTGzAgLm43CfNYLHNByxdi
-         W4kDlknlDAwTicdt2b0bEo0K3R5SJ8qXw8RH78yv9YGPGBdd9JtyQ1jX0lsQjgMv82sD
-         uUpS27x1/VfBKy0yT21pNyygyL2kOTEQi2t+s3Uz8CVsazG/7o8oNRWM+J3ASMuLAAjI
-         NTfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JZCkL39tKR5ttW+qJKB2t3gyWuB8VcBN7GauxzyOgrI=;
-        b=73uK2+lJyI6IKlrBuA8UT09EeLILP1vuayP6ncV1r25XLkFAkJMSaHXqgt0oT8PLa3
-         ZPQLR7b0T6//20i9i5NN3wufIG3rQ/CI+lltHSVrFZlSKRNFrNGsmPiKOzYuRlB3RiZz
-         UKnvPsLo9OtJiOpmlKi58jbbpYrhX6ZDqcEui2YzuyoCfUb2YlsAhIFMO0c+9F6ijPVG
-         K4okBYsCn35a+OMezIpryFzAv0m1bJuSMiKWT3qQu0Sm4GLKftTrEctVAzfscpztIb9w
-         kKdJNazFNUDZSJpES/rMzXfX6UQcSXyoLkJbNjs2p55CI4woBeMQyivA0WbqQEkmv8ZD
-         75Wg==
-X-Gm-Message-State: ANoB5plokKGaMKfM4R6ti+y+Dex7QZdrY2wH2s3IixF6WCUWEmu2vkmJ
-        OU9sGCP8s1HG23KDzIW8RCAjAQ==
-X-Google-Smtp-Source: AA0mqf6/tmoTby061FizYgM0U//KfujjSuy0T07o4ZCbezgv/mR+qfC2CRHGEa+Wtd41eGEj+SQQQg==
-X-Received: by 2002:ac2:5095:0:b0:4a2:ec0:c4bf with SMTP id f21-20020ac25095000000b004a20ec0c4bfmr856566lfm.164.1668177192404;
-        Fri, 11 Nov 2022 06:33:12 -0800 (PST)
-Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
-        by smtp.gmail.com with ESMTPSA id x5-20020a056512046500b004a2386b8cf4sm351025lfd.258.2022.11.11.06.33.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Nov 2022 06:33:11 -0800 (PST)
-Message-ID: <29620da4-fda7-eb71-d9de-599e3bbd2de7@linaro.org>
-Date:   Fri, 11 Nov 2022 15:33:10 +0100
+        Fri, 11 Nov 2022 09:59:31 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1486F63BAB;
+        Fri, 11 Nov 2022 06:59:28 -0800 (PST)
+Received: from IcarusMOD.eternityproject.eu (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 8C5256602A42;
+        Fri, 11 Nov 2022 14:59:25 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1668178766;
+        bh=rIbdrDLpaw733WmSJUzHjZVOC/s/a21X3HVN9JEDUQg=;
+        h=From:To:Cc:Subject:Date:From;
+        b=gRunAnsOxtpt0SV/yPwoIRgHX+Teq96lqbE8crX33X59OyMg8EikW3XPRJ2dMGDSu
+         ZrRpm0DpvU1UzlOlrR++OvIwY1o8Ua8zr7kPNb3Pqkv5pw8qzks9FbtSY5QDVv1+Rk
+         Uij8xi3KsyMBEAzbPdgLFzy61Zn7WRtxxDHWUPeuORw/nbwFe0pAgDB0A4yIlHdd0q
+         TPniwDDzzM2DUpo38hXCf1/otHQ8fa2k3AEc/SImetjXmMoBQmGLD/xDFickBWUBqo
+         uPL6j9qzEUJ9zhtsovJl2zDS2+LHzeoBeSSjSDL+QajqWDMIgZ1gAOgd6kAH77jn8o
+         QVI8Riga8+IPA==
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+To:     agross@kernel.org
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, joro@8bytes.org,
+        will@kernel.org, robin.murphy@arm.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robdclark@gmail.com,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        marijn.suijten@somainline.org, kernel@collabora.com,
+        luca@z3ntu.xyz, a39.skl@gmail.com, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Subject: [PATCH v2 0/8] Add support for Qualcomm's legacy IOMMU v2
+Date:   Fri, 11 Nov 2022 15:59:11 +0100
+Message-Id: <20221111145919.221159-1-angelogioacchino.delregno@collabora.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH] ASoC: dt-bindings: qcom,wsa883x: Add sound-name-prefix
-Content-Language: en-US
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221111091738.34290-1-krzysztof.kozlowski@linaro.org>
- <Y246wC8zEGJp9SmC@sirena.org.uk>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <Y246wC8zEGJp9SmC@sirena.org.uk>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/11/2022 13:06, Mark Brown wrote:
-> On Fri, Nov 11, 2022 at 10:17:38AM +0100, Krzysztof Kozlowski wrote:
-> 
->> For multiple speakers attached, it's useful to give them some name.
->> Sound core already supports this, so reference name-prefix.yaml.
-> 
-> If we need to manually extend the schema like this it should probably be
-> done for all the CODEC devices.
+This series adds support for handling "v2" firmware's IOMMU, found
+on at least MSM8956 and MSM8976 (some other SoCs also need the same
+but I honestly don't remember which ones precisely).
 
-Several files already do it:
+This is strictly required to get functional IOMMUs on these SoCs.
 
-  git grep name-prefix.yaml
+I'm sorry for not performing a much needed schema conversion on
+qcom,iommu.txt, but I really didn't have time to do that :-(
 
-The trouble for me would be here to identify which devices qualify from
-bindings/sound.... everything having #sound-dai-cells?
+This series was tested on Sony Xperia X and X Compact (MSM8956):
+ADSP, LPASS, Venus, MSS, MDP and GPU are happy :-)
 
-Best regards,
-Krzysztof
+Changes in v2:
+ - Added back Marijn's notes (sorry man!)
+ - Added ARM_SMMU_CB_FSRRESTORE definition
+ - Changed context bank reset to properly set FSR and FSRRESTORE
+
+AngeloGioacchino Del Regno (8):
+  dt-bindings: iommu: qcom,iommu: Document qcom,ctx-num property
+  iommu/qcom: Use the asid read from device-tree if specified
+  iommu/arm-smmu: Add definition for ARM_SMMU_CB_FSRRESTORE
+  iommu/qcom: Properly reset the IOMMU context
+  iommu/qcom: Index contexts by asid number to allow asid 0
+  dt-bindings: iommu: qcom,iommu: Document QSMMU v2 compatibles
+  iommu/qcom: Add support for QSMMUv2 and QSMMU-500 secured contexts
+  dt-bindings: iommu: qcom,iommu: Document MSM8976 compatible
+
+ .../devicetree/bindings/iommu/qcom,iommu.txt  | 11 ++-
+ drivers/iommu/arm/arm-smmu/arm-smmu.h         |  1 +
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c       | 78 +++++++++++++++----
+ 3 files changed, 71 insertions(+), 19 deletions(-)
+
+-- 
+2.38.1
 
