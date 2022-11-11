@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83435625F79
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 17:28:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 102ED625F83
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 17:32:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233750AbiKKQ2Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 11:28:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54496 "EHLO
+        id S233943AbiKKQc1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 11:32:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233814AbiKKQ2Q (ORCPT
+        with ESMTP id S232901AbiKKQc0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 11:28:16 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B66407F576;
-        Fri, 11 Nov 2022 08:28:14 -0800 (PST)
+        Fri, 11 Nov 2022 11:32:26 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E3A4833BE;
+        Fri, 11 Nov 2022 08:32:25 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 54BDC62057;
-        Fri, 11 Nov 2022 16:28:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D30AC433D6;
-        Fri, 11 Nov 2022 16:28:13 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 29190B8261D;
+        Fri, 11 Nov 2022 16:32:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67FFC433D6;
+        Fri, 11 Nov 2022 16:32:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668184093;
-        bh=oskG4N4w1LS67QnYKG6094gwrkubDpJuJjbmW/oB4w8=;
+        s=k20201202; t=1668184342;
+        bh=p/hgZ3rU0we6hP1xNAjo5J5GgA5dWBa4Ua+wJnrBtcA=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=d0NiLl1GEeTWa57ChuX+PM3JA4RphDzPJgQovxipPe8T8WUOfVPRqlIP9bEwu1m6P
-         kbXhGsYWfTVGj2RRwW+UNdCwVxmkxZPpw4BZ/pxUcu4mhAQSJMK2YLpwSycWJkD956
-         z6rNwOA6pKfXNBaggjXXuiIqkBeVqlOU4GSiMp1pt8bx3y2javGRmFDzu+LFqSHeS4
-         lkd3VTvoxRy1l6SRtx15L+djnT4sBX3LdjaBYqco1PMYwfx4AXkfiJypRPUHvR8UYp
-         6K0+LrCWUVMwbH1pFg/7F4LMpde/n5OIx9GhhNjxhALV5REPeH3V7hGimHUJ84ZZm+
-         4bJOZ9KZSIv+A==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1otWsc-0003jD-2Q; Fri, 11 Nov 2022 17:27:46 +0100
-Date:   Fri, 11 Nov 2022 17:27:46 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        b=HWyh+C2s/UDZ7rwK5cpzxbj/PFRtcNOvk5ZIbNwHEdnSXf6BC/6ZE94yMKNQ9B8DI
+         efcq+ig+PgD6JKmOIK4wHtPWf9b1IISEjjJwXDOOZZIkr4HqpWHiGp/O+fY7OOqGkb
+         a9862wdfMp23Aujy1GqseZlxlPgswqwf9MeMhFY/vSb+Oiwpw2+O0WmOJ2CYqFCxCh
+         6ny3DRBplnJ9YtP/FUyZlK/4MD7/ox48jkUyIYBXcnj5nMcKjFA0I4bDa7sbAWnUCA
+         69z4zFjmt0gJA+8uzUgIuXNCUiocIQJ3+Z3YPA9eFLnNz5Q0NxeJjG0C8cC/ej+0iU
+         WOei1QLNDLx6g==
+Date:   Fri, 11 Nov 2022 16:32:11 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 6/9] arm64: dts: qcom: sc8280xp-crd: enable WiFi
- controller
-Message-ID: <Y254AvMKyDQ+tY0q@hovoldconsulting.com>
-References: <20221110103558.12690-1-johan+linaro@kernel.org>
- <20221110103558.12690-7-johan+linaro@kernel.org>
- <20221110113513.GA18247@thinkpad>
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] ASoC: dt-bindings: qcom,wsa883x: Add sound-name-prefix
+Message-ID: <Y255C+TGNVJ9fs8A@sirena.org.uk>
+References: <20221111091738.34290-1-krzysztof.kozlowski@linaro.org>
+ <Y246wC8zEGJp9SmC@sirena.org.uk>
+ <29620da4-fda7-eb71-d9de-599e3bbd2de7@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="yL7dWziKYiIamsqH"
 Content-Disposition: inline
-In-Reply-To: <20221110113513.GA18247@thinkpad>
+In-Reply-To: <29620da4-fda7-eb71-d9de-599e3bbd2de7@linaro.org>
+X-Cookie: Should I do my BOBBIE VINTON medley?
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -65,42 +65,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 10, 2022 at 05:05:13PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Nov 10, 2022 at 11:35:55AM +0100, Johan Hovold wrote:
-> > Enable the Qualcomm QCNFA765 Wireless Network Adapter connected to
-> > PCIe4.
-> > 
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 65 +++++++++++++++++++++++
-> >  1 file changed, 65 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> > index 5b9e37a16f9f..ab5b0aadeead 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> > @@ -81,6 +81,22 @@ vreg_misc_3p3: regulator-misc-3p3 {
-> >  		regulator-always-on;
-> >  	};
-> >  
-> > +	vreg_wlan: regulator-wlan {
-> > +		compatible = "regulator-fixed";
-> > +
-> > +		regulator-name = "VCC_WLAN_3R9";
-> > +		regulator-min-microvolt = <3900000>;
-> > +		regulator-max-microvolt = <3900000>;
-> > +
-> > +		gpio = <&pmr735a_gpios 1 GPIO_ACTIVE_HIGH>;
-> > +		enable-active-high;
-> > +
-> > +		pinctrl-names = "default";
-> > +		pinctrl-0 = <&hastings_reg_en>;
-> 
-> Hastings is the family name of QCA639x WLAN chipsets. I don't think it would be
-> applicable here. Please use "wlan_reg_en" as that matches the convention used
-> throughout this file.
 
-The pin name here comes from the schematics, which is what we should use
-for naming when we can.
+--yL7dWziKYiIamsqH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Johan
+On Fri, Nov 11, 2022 at 03:33:10PM +0100, Krzysztof Kozlowski wrote:
+> On 11/11/2022 13:06, Mark Brown wrote:
+> > On Fri, Nov 11, 2022 at 10:17:38AM +0100, Krzysztof Kozlowski wrote:
+
+> >> For multiple speakers attached, it's useful to give them some name.
+> >> Sound core already supports this, so reference name-prefix.yaml.
+
+> > If we need to manually extend the schema like this it should probably be
+> > done for all the CODEC devices.
+
+> Several files already do it:
+
+>   git grep name-prefix.yaml
+
+> The trouble for me would be here to identify which devices qualify from
+> bindings/sound.... everything having #sound-dai-cells?
+
+Pretty much anything could potentially do it, it's a system level thing
+for when the same device gets instantiated multiple times.  It's most
+relevant when something creates user visible controls.
+
+--yL7dWziKYiIamsqH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmNueQoACgkQJNaLcl1U
+h9DiTgf9F5Oet7q8wby5hcHu+I8U1kwyboOcEArroSZEaYzKVe2n1mmtTR0UZcUp
+BCLDSI5wI4cGZS1O251ItWJP2OH/YVTob/tqu1Ywt/vupPOTZdHRKkIGsawuqvyn
+PVB4MVmLJfwutlN1kUMAQAY8mU/69DBNRngRR5aa3mUBDWv5guex4fpMhMNCfvnT
+e/0wPAWtWDmGzZcr/p66siZwyYN8jaU7JZH4Ddn/DHRWxu0uXF5xKRqWV2JCYmGC
+M+5rqvZIBovkAnv9MFVDt6cSy7NekJwwkfFcuEsv9FCldXJvPBw6NvRIP2sHbhDa
+PXHLb4fI3VkUqbzKdHPU1we7F09XeQ==
+=hl+y
+-----END PGP SIGNATURE-----
+
+--yL7dWziKYiIamsqH--
