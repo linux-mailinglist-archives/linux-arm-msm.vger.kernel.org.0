@@ -2,73 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B4F6625550
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 09:30:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C6A5862556B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 09:36:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230181AbiKKIap (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 03:30:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53520 "EHLO
+        id S232877AbiKKIgB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 03:36:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232341AbiKKIao (ORCPT
+        with ESMTP id S232614AbiKKIf7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 03:30:44 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E75687C8E6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 00:30:42 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id p8so7281671lfu.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 00:30:42 -0800 (PST)
+        Fri, 11 Nov 2022 03:35:59 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2021E63142
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 00:35:58 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id bp15so7282500lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 00:35:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hrnI1MMknS51ZDdp7gq4JuxX4S3fw0/B9/ygHLoG+Gc=;
-        b=mpuPULLEet7biTYrB7NHYa6DedN1VB3nlS8l2m/zyWnAvnFRpMxlO4HkR2WNDFnzR/
-         pBCG3HAR4S+qnjkskeZ6EakD+VABTquYZqnfV1SCcQWOGi7VGDSjyXudDlSbzuW4MrIb
-         vzha6MT03hIgC/dGq6jTl56uzC+ED9tGPYMo+JtsDFsj6uNiS8sFFCQa2wSsBFnV4mT/
-         LzAmJsmJUSQnkOaeoSvkxZV/+2UEIy2nGCWWEBeKBsBwQXXQryygi/gOn6n6l2cSSfMe
-         XRp1zaFpDB1EVQoGGgrpBm6VDcutbkqn9s7A72IQTHLZ4DKIeXAeesJIL1nDP/J/Xux3
-         ExDw==
+        bh=twgHmIPH9il7il5wbqgTra+YIwMN83kWBZp7hPMXf2w=;
+        b=FVxWsRl4Kvf+vS3Y4w9Gu1eXDiw5q5d6pHyvGRxI+mXJBSW2j/Ll7z5OoouutImAlK
+         d2lfqSM/radzGvAlV1o2SK6EkOfFU+dTG6rFVAKF2JJGqA+JYSrd45J8vcig0bgWrNep
+         rEKQlIZEJ7K7W8B++EIpU73XtR269vhTE31kIn9+r3C+5B8EHFatUrguyEKSmFspgexj
+         b7pV2wTwImPQRvTLac9p2ywf0D6OSkcutPC60xYkEuW9+N0RdVYQGVupgQqmQlhL7XjV
+         nAHIfV9IiAHn3W5mcA5/UJK4TB97y8+a+0i+YPNXlQ9bOkQ52vw4DVw112AGhXAKWrnd
+         b9PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hrnI1MMknS51ZDdp7gq4JuxX4S3fw0/B9/ygHLoG+Gc=;
-        b=RuXhP8vznlqfzKWu3NfmFaQd7ZCM6NfzFqTd2S4LHA6mwvMPNZWpTaHDg3OI60L420
-         MysnAjalVDpVUjS7+LI8rm2v6sBE+1n6Zcd2tViXUZop4Vc3X69fatdL1hEpkZCH2wFP
-         q8jOCo45T9rMSJx/0FNXI6ODWUhZsO2wW7GOQ/LjpkSdGE9ZFPgaU6+oaADC4aIlOVls
-         8C0uO6BdBmh9LRYBZQedB1eOLaVPAVeyUFdMoUa3s0nBkOCl/jR6AGHbaVevG0GWLii+
-         H+CQaJ4NwQbSKcqDOtBYuhrnLgqRz74CrLvLnDik4mKKEYUyCgkgX6FHkhOpxqz74OdF
-         3lYQ==
-X-Gm-Message-State: ANoB5pmLcJvIqy8FfuajUm1AycsZfQLuG6EOV8zGEQUoYm495rRWeFKy
-        PGkiAOIqy4A7isEfFLBIQC3/ng==
-X-Google-Smtp-Source: AA0mqf7c+RlYfpF8xEXHp48mDlPI+cGjAyFcyWDabKp9R6pOqfNE3GDhhGpOZMMpvoAagMn7dABTww==
-X-Received: by 2002:ac2:5461:0:b0:4a2:8cac:96ab with SMTP id e1-20020ac25461000000b004a28cac96abmr378149lfn.415.1668155441159;
-        Fri, 11 Nov 2022 00:30:41 -0800 (PST)
+        bh=twgHmIPH9il7il5wbqgTra+YIwMN83kWBZp7hPMXf2w=;
+        b=UqkC+nFMfN4GQnLicQgElE3LYUzTvJfO30WvfWb8d3xhgzDCd0Any3Jc4m8hQN0bUP
+         r8On7o9fAvdDUJbpn5xgZlgCs3RGVrEpX7beH7A8FIZ8tv0OIuGipVtaQct/CusTJED/
+         0ivx5dpjJxlQSiGQxcrF63yYKrRuRkROktQ7965Hy9jOMXiiseQZAt42S+YBX3A0PKhe
+         KlmmyOeATIX5plRfG2rbGbT+Tz/a1qLuMIf+boTEXNGOhc5uHkP4GLu+tSikevQzhTWP
+         Gl8ZM/lfNyprKH/kITieh5pOfLn6AxF/9Az8GJGsULk8mLR2dvGgpjXbXzhE0fhMpWHx
+         YgOw==
+X-Gm-Message-State: ANoB5pmtIhpjUxtCOSgw39BuMzmJRhVD27EHAfytKEupVTAD+Q2JvWnY
+        qvcz3lQKHTAxwpQNonh/46mygg==
+X-Google-Smtp-Source: AA0mqf60iJpcrCMeahPcVkfeMPwgzC+qBrMypg018HfvSO7QD+mOoz8pMAfYCPhQ0s2W7nN55HmYlA==
+X-Received: by 2002:a05:6512:252c:b0:4aa:bad8:9b5d with SMTP id be44-20020a056512252c00b004aabad89b5dmr387326lfb.540.1668155756533;
+        Fri, 11 Nov 2022 00:35:56 -0800 (PST)
 Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
-        by smtp.gmail.com with ESMTPSA id s11-20020a2eb62b000000b00277050abd55sm277444ljn.130.2022.11.11.00.30.39
+        by smtp.gmail.com with ESMTPSA id h28-20020a2eb0fc000000b0027741daec09sm269129ljl.107.2022.11.11.00.35.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Nov 2022 00:30:40 -0800 (PST)
-Message-ID: <81890fa5-5793-1ee4-14a4-78c08024f3fb@linaro.org>
-Date:   Fri, 11 Nov 2022 09:30:39 +0100
+        Fri, 11 Nov 2022 00:35:55 -0800 (PST)
+Message-ID: <9918fb9d-b5d8-1521-8f16-bcc7362d2138@linaro.org>
+Date:   Fri, 11 Nov 2022 09:35:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH net-next 2/2] dt-bindings: net: qcom,ipa: restate a
- requirement
+Subject: Re: [PATCH v2 09/10] dt-bindings: interconnect: qcom,msm8998-bwmon:
+ Add sc8280xp bwmon instances
 Content-Language: en-US
-To:     Alex Elder <elder@linaro.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, davem@davemloft.net,
-        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, agross@kernel.org,
-        elder@kernel.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221110195619.1276302-1-elder@linaro.org>
- <20221110195619.1276302-3-elder@linaro.org>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mike Tipton <quic_mdtipton@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221111032515.3460-1-quic_bjorande@quicinc.com>
+ <20221111032515.3460-10-quic_bjorande@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221110195619.1276302-3-elder@linaro.org>
+In-Reply-To: <20221111032515.3460-10-quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,22 +84,13 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/11/2022 20:56, Alex Elder wrote:
-> Either the AP or modem loads GSI firmware.  If the modem-init
-> property is present, the modem loads it.  Otherwise, the AP loads
-> it, and in that case the memory-region property must be defined.
+On 11/11/2022 04:25, Bjorn Andersson wrote:
+> The sc8280xp platform has two BWMON instances, one v4 and one v5. Extend
+> the existing qcom,msm8998-bwmon and qcom,sc7280-llcc-bwmon to describe
+> these.
 > 
-> Currently this requirement is expressed as one or the other of the
-> modem-init or the memory-region property being required.  But it's
-> harmless for the memory-region to be present if the modem is loading
-> firmware (it'll just be ignored).
-> 
-> Restate the requirement so that the memory-region property is
-> required only if modem-init is not present.
-> 
-> Signed-off-by: Alex Elder <elder@linaro.org>
-> ---
->  Documentation/devicetree/bindings/net/qcom,ipa.yaml | 13 ++++++++-----
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Tested-by: Steev Klimaszewski <steev@kali.org>
 
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
