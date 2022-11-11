@@ -2,116 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1537625E20
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 16:18:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BFD9E625E22
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 16:18:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234809AbiKKPSf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 10:18:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42238 "EHLO
+        id S234100AbiKKPSm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 10:18:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235049AbiKKPRY (ORCPT
+        with ESMTP id S234180AbiKKPRh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 10:17:24 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9175121
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 07:17:23 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id v27so8071143eda.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 07:17:23 -0800 (PST)
+        Fri, 11 Nov 2022 10:17:37 -0500
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 361CC77E54
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 07:17:32 -0800 (PST)
+Received: by mail-lj1-x22c.google.com with SMTP id s24so4845269ljs.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 07:17:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=496UFFIC10qt1M6UVRQKPJnGchRATjnymhhjWaLmr1w=;
-        b=RSyI8hdVimJvxqP1L25E2r+IvvfMghhQQhG4xOOGVGNagBkKs6PdvtDlIFJedry2gy
-         c4NW9SoTQO+eAxMKq9tmrqF+NJVhiOQvpkx7SAriIF+w8Fa/PfUuCJkpNNmzTkfgxyWe
-         mFLzBV3BZO794b6pKcm/Gfvtjgus14npORj6oBVn7ULgjX/RZckFZLa316Wk7nrU3doP
-         /4PuEyIa+MCiCVTrIVb1gTKTM4y8FKJa+1AL90s5UDqqVSPNYnC1JP7oAZPUvt08XcKz
-         qhPCywtOwwhNgCRuc+ykquvOBHCdJ90Z1WHv+UypB4qihvG51Pxrd9HhHzZlfD3roSPn
-         MzhQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kBeLtt806xuAVLanhVYNh3Yb8OkYSIv62TYrl3SBTCg=;
+        b=NpUQ1k7cnJ6Y+btt/QCKgUHDvfM24FoMAzrWdP2kHUVvRcdX39YHGWI7RhlKIvRtfY
+         Fvqc7DfeHIZB8nWuKjzVacMTbB2q+eUW9FbYki/rYpF4RyhNkou+OrxE2fVthb+90zff
+         SvYuUeqT8TsFNm2OjorlexvawJkgedmJLil4EPu38CXdFZT14sPIptQw7tjp601UWDR8
+         EkkjcVXQ5zQcFoVBp9VoZQcI3pBz+Yx2wUmaUJ9HZsF3wNPzDgEn4ryA2hMYlxK4OT3j
+         LchupSZEtoaB1SoYHnaKv6t3WOwqGv1KFGsDAevEHy3Jls7iYNJCVYxI+QwB+FUNr2mq
+         xWoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=496UFFIC10qt1M6UVRQKPJnGchRATjnymhhjWaLmr1w=;
-        b=FfssVjVLxJQJAuzx/SeGV4+jU6aLg/g20AXdnm4mq+LvI4bloyIevTXI/Y/UcBC3ce
-         KrQWsgIKOIG4SABtNg9ExkWw/sFxpoEsS+PqThP+HZ9Sy0lWALX6FoDPDUghrzeTuR9I
-         hfXSf7uirKhdqxFFxDKn8SuRPz03cklNgeGAVmg6IBNAEP8Bw/E01/2z8Xfjjhj+JEnh
-         XN/Bw/iNFK25UFltE2tlNSv689yJSAtXZGScHbZSFjG+ULb9n8lKNgXP704lEUaj7xdt
-         dRMqWquwitL48DHLpGlxcVLnjErZu6Q3RWKj0saEbM2i8LRMxZ97U2G3xoJcdupTopFe
-         YjRA==
-X-Gm-Message-State: ANoB5plVFNoGw61ab8CBc0t/wR2k47MD4RUgjd+J+2gXiLzi4UQUQ43j
-        DJVFJ6FlBlku3sBLSiYzZ1eyV9TVJhnqqa2mmy6jpA==
-X-Google-Smtp-Source: AA0mqf7rUnO1t4y0ADfVMEYjKFri9CWgvqhmDL2US1Uq9KFQrYcX4hZNCB5JQzEzP8ka8n7ON29oaQb+5yBamEHWx7E=
-X-Received: by 2002:a05:6402:298a:b0:461:4c59:12d6 with SMTP id
- eq10-20020a056402298a00b004614c5912d6mr1877018edb.250.1668179842232; Fri, 11
- Nov 2022 07:17:22 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kBeLtt806xuAVLanhVYNh3Yb8OkYSIv62TYrl3SBTCg=;
+        b=nDScl/4pjkzdzX9qlHxvRCb0VMdMrJ9z61te/jxuPeMslV5T9Ljas0vFA85T2aMZKR
+         fJiB4lGrwOYSOwnmVGhV6vdXo5cZlq7xskixq28bxnsgo7OtjOG2ALi5GPh57XRi2XdH
+         15+qZARFIscnk4k+7/KsHfUP5o7NY7wG5i6vF3J4rw77nwXo68MrINssctByBNIu9eHq
+         E9FHsfrK5i5zKaLpF0ws/acmWVrtMZy0QO9pDVftpp2oysCAZBjDtuszIWILoMWYP+/I
+         LSMm43anRifdZgBHSwxloYT00OR+jqBjYE+tqOstE9sKLUX2YG72AbouXAX9mAf1i561
+         hDyw==
+X-Gm-Message-State: ANoB5pnLxuEp2kQDyU+QvjpDO/eZapsBS6X78mRwq6/eJRPe1JlS9FrB
+        g+o80MzXv2E1ZkctX2oocynerQ==
+X-Google-Smtp-Source: AA0mqf67yeOajmW2PCp/0xsLFqXNEMXfRV/CNsGFNrg6CE4V6sENMpCjMFr1JbX99+cv2DrS5QSDSw==
+X-Received: by 2002:a2e:9ec2:0:b0:277:2600:9cc0 with SMTP id h2-20020a2e9ec2000000b0027726009cc0mr797972ljk.437.1668179850436;
+        Fri, 11 Nov 2022 07:17:30 -0800 (PST)
+Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
+        by smtp.gmail.com with ESMTPSA id d8-20020a056512368800b0049110ba325asm367089lfs.158.2022.11.11.07.17.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Nov 2022 07:17:29 -0800 (PST)
+Message-ID: <a22888cd-34cb-3453-0dc2-096da208564c@linaro.org>
+Date:   Fri, 11 Nov 2022 16:17:29 +0100
 MIME-Version: 1.0
-References: <20221028120812.339100-1-robert.foss@linaro.org>
- <20221028120812.339100-9-robert.foss@linaro.org> <eeeefa55-1782-2768-8d47-0f315ed9888b@linaro.org>
-In-Reply-To: <eeeefa55-1782-2768-8d47-0f315ed9888b@linaro.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Fri, 11 Nov 2022 16:17:11 +0100
-Message-ID: <CAG3jFyvp1q=VvL6XXLTtkF2BsxUbXCu5+3-psi80A=avkgrAoA@mail.gmail.com>
-Subject: Re: [PATCH v1 8/9] arm64: dts: qcom: sm8350-hdk: Enable display & dsi nodes
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
-        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
-        quic_kalyant@quicinc.com, swboyd@chromium.org,
-        angelogioacchino.delregno@somainline.org, loic.poulain@linaro.org,
-        quic_vpolimer@quicinc.com, vkoul@kernel.org, dianders@chromium.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Jonathan Marek <jonathan@marek.ca>, vinod.koul@linaro.org,
-        quic_jesszhan@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 02/14] dt-bindings: phy: qcom,qmp-usb3-dp: fix sc8280xp
+ bindings
+Content-Language: en-US
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221111092457.10546-1-johan+linaro@kernel.org>
+ <20221111092457.10546-3-johan+linaro@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221111092457.10546-3-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 29 Oct 2022 at 00:03, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 28/10/2022 08:08, Robert Foss wrote:
-> > Enable the display subsystem and the dsi0 output for
-> > the sm8350-hdk board.
-> >
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 22 ++++++++++++++++++++++
-> >  1 file changed, 22 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> > index e6deb08c6da0..6e07feb4b3b2 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> > @@ -213,10 +213,32 @@ &cdsp {
-> >       firmware-name = "qcom/sm8350/cdsp.mbn";
-> >  };
-> >
-> > +&dispcc {
-> > +     status = "okay";
-> > +};
-> > +
-> > +&dsi0 {
-> > +     status = "okay";
->
-> Status is the last property.
+On 11/11/2022 10:24, Johan Hovold wrote:
+> The current QMP USB3-DP PHY bindings are based on the original MSM8996
+> binding which provided multiple PHYs per IP block and these in turn were
+> described by child nodes.
+> 
 
-Ack.
+Thank you for your patch. There is something to discuss/improve.
 
->
->
-> Best regards,
-> Krzysztof
->
+
+> +
+> +maintainers:
+> +  - Vinod Koul <vkoul@kernel.org>
+
+Maybe you want to add also yourself?
+
+> +
+> +description:
+> +  The QMP PHY controller supports physical layer functionality for a number of
+> +  controllers on Qualcomm chipsets, such as, PCIe, UFS and USB.
+> +
+> +  See also:
+> +    - include/dt-bindings/dt-bindings/phy/phy.h
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sc8280xp-qmp-usb43dp-phy
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 4
+> +
+> +  clock-names:
+> +    items:
+> +      - const: aux
+> +      - const: ref
+> +      - const: com_aux
+> +      - const: usb3_pipe
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  resets:
+> +    maxItems: 2
+> +
+> +  reset-names:
+> +    items:
+> +      - const: phy
+> +      - const: common
+> +
+> +  vdda-phy-supply: true
+> +
+> +  vdda-pll-supply: true
+> +
+> +  "#clock-cells":
+> +    const: 1
+> +
+> +  clock-output-names:
+> +    items:
+> +      - const: usb3_pipe
+> +      - const: dp_link
+> +      - const: dp_vco_div
+
+Why defining here fixed names? The purpose of this field is to actually
+allow customizing these - at least in most cases. If these have to be
+fixed, then driver should just instantiate these clocks with such names,
+right?
+
+Best regards,
+Krzysztof
+
