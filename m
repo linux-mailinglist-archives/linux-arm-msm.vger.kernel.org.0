@@ -2,193 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89B5E624EA5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 01:03:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EC4F7624ECA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 01:19:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231511AbiKKADh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Nov 2022 19:03:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43536 "EHLO
+        id S231266AbiKKAS6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Nov 2022 19:18:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229675AbiKKADg (ORCPT
+        with ESMTP id S229777AbiKKAS5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Nov 2022 19:03:36 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6D0C49B52;
-        Thu, 10 Nov 2022 16:03:34 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AANU1EL005940;
-        Fri, 11 Nov 2022 00:03:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=8PHwJILADgwdipE7zP40ijyqZwmjfhC7ELa8FFACbUY=;
- b=oJFv2GwLODupXfH93b/oGPNuDP8hYUem34OBFCcLWOVTfxymMzA+zpND2K01FvGZyGpH
- BT0A92MrTD5h8zeh/lk4bhiIzMJPltrdB8yhvyw5+laay01nl+disbCIHsTB4zMBBcd4
- EJi9DHCbtEeTcsApWSwPjdq/AyN0drnD62nOBj4qwKsgO+hmiAkkl7J32wvG95Ohhipx
- DD2YualjKP/6T4PZixQO6SHVFvM57tdYT035zM8OAWJgfpPUURkd40ChMmI/ik7uME24
- Z0K6TBBRv0TAyjXYuuW2hpSt24Qp0lECEuhgqkqvu8mAgaXTe1lNpyT1MyCicnkyCmEy Pw== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ksahhg2ym-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 11 Nov 2022 00:03:13 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AB03BAk031092
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 11 Nov 2022 00:03:11 GMT
-Received: from [10.110.39.85] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 10 Nov
- 2022 16:03:10 -0800
-Message-ID: <543d95f8-be31-7553-4700-5dc04872e8ea@quicinc.com>
-Date:   Thu, 10 Nov 2022 16:03:10 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v6 13/21] gunyah: vm_mgr: Introduce basic VM Manager
-Content-Language: en-US
-To:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
-CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Thu, 10 Nov 2022 19:18:57 -0500
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F01013CC4;
+        Thu, 10 Nov 2022 16:18:55 -0800 (PST)
+Received: by mail-io1-xd35.google.com with SMTP id y6so2583859iof.9;
+        Thu, 10 Nov 2022 16:18:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OOo4SlvSYIOiiuy0BanXYMqfarUb0SF2ty1xhFNdmnE=;
+        b=nRFIY9VGGIOwfnuPc6t4kHopKZPYwsMGQDje5X+2U1KHyRLZWmVn0hTFyuuMnRkUR+
+         XRiS7uWCIRwCgBcL4iJ9+/HNKgFjJPHSDm/BE3CzEyvQJMOJaK6mf6/YbcpJKllPR9WB
+         tDJ0+9RZ4wUtXfl5P8jZBSgKwlw/BX5rdxmy+h9V/+4YBL139DhH/ufI7ZojN7iZM2pz
+         /QasToHzjwq0gFD2/tfAwetCkcCxR8Egt5Y2LzWTqaidA4q4/+fTMTt+Gp16PSEZgpw6
+         s6ZsTn1q3FPk346veNFGDsEUijk7McA5ARD+CNdiZv32TubMnKxDwPBW+TN67TZlKfAq
+         tyqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OOo4SlvSYIOiiuy0BanXYMqfarUb0SF2ty1xhFNdmnE=;
+        b=7ko/ZA72ckzgUc5E2E8eM6Fjg4HtC1GnR7w51FpNkWZs/+gtJOugNZhNdZksB1Bqwo
+         DKDqqQGdiZrqdrhxJxJMF4QSTH1NO1yCuCPqaxs79mJlgUmHvlvwJ+mE+4/9rVnnlkRW
+         kvQBAtWn46xxGV0tBhnoa9R1t5duUimlJpOh+nPqfrQmts4WX+Q7q/kb3Q0hSS7J+7kZ
+         BAwXMLspWYUAMvrIKg0Fz4P4iyqOe8d+XmePK308Ycq5Hy1Sc8+836XDhCQCa5hAR2be
+         EXAc9x0lW4hF9Rcvr3yCJeTLCd3cJomLNCMz0uvy4wHsAAP9harwJaeCS0HWOKQKICDx
+         1EpQ==
+X-Gm-Message-State: ACrzQf1sPtFaUDZD0SfbT6XipsEM3ePEaqrHunQsQB2i7fSr0G7UBysX
+        QHnMq4mBL+QLLn5C8gr3p4Q=
+X-Google-Smtp-Source: AMsMyM7JYY2ROReRJCPYMJwG9O0lZeX7mP1eBDVcFq2I+Puc6oRTV+TaW8GTwMDOcvv6vB90mGdFgQ==
+X-Received: by 2002:a02:740b:0:b0:375:b32f:7c75 with SMTP id o11-20020a02740b000000b00375b32f7c75mr3680131jac.162.1668125934657;
+        Thu, 10 Nov 2022 16:18:54 -0800 (PST)
+Received: from localhost ([2607:fea8:a2e2:2d00::61cc])
+        by smtp.gmail.com with ESMTPSA id v5-20020a056602058500b00688faad4741sm236050iox.24.2022.11.10.16.18.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Nov 2022 16:18:54 -0800 (PST)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        "Will Deacon" <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Kalle Valo <kvalo@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20221026185846.3983888-1-quic_eberman@quicinc.com>
- <20221026185846.3983888-14-quic_eberman@quicinc.com>
- <Y2H8oh7AvYDiMqKs@kroah.com>
- <722b05a1-4bf5-0837-baea-b1d0a9cc1e43@quicinc.com>
- <Y2MKWOihjAPxfl6v@kroah.com>
- <96238455-73b6-bead-0fdb-55ca68e5bf0b@quicinc.com>
- <9dd597d9-a3f3-48f2-8416-b5b097a230d5@app.fastmail.com>
- <980db147-794e-ecd9-9626-64ff81109bab@quicinc.com>
- <95a9f253-984a-14e0-7e01-f168452576c4@quicinc.com>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <95a9f253-984a-14e0-7e01-f168452576c4@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Z_I6qo3MRu1stJfpFb1gxi7dMmaGmUYD
-X-Proofpoint-ORIG-GUID: Z_I6qo3MRu1stJfpFb1gxi7dMmaGmUYD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-10_14,2022-11-09_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 phishscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
- bulkscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 impostorscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211100166
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Chanho Park <chanho61.park@samsung.com>,
+        Thierry Reding <treding@nvidia.com>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Richard Acayan <mailingradian@gmail.com>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Subject: [PATCH v4 0/4] Initial SDM670 and Pixel 3a support
+Date:   Thu, 10 Nov 2022 19:18:15 -0500
+Message-Id: <20221111001818.124901-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.38.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Arnd, Greg,
+Changes since v3:
+ - remove qcom,msm-id and qcom,board-id (4/4)
 
-On 11/4/2022 9:19 PM, Trilok Soni wrote:
-> On 11/4/2022 3:38 PM, Elliot Berman wrote:
->>
->>
->> On 11/4/2022 1:10 AM, Arnd Bergmann wrote:
->>> On Fri, Nov 4, 2022, at 01:11, Elliot Berman wrote:
->>>> On 11/2/2022 5:24 PM, Greg Kroah-Hartman wrote:
->>>>> On Wed, Nov 02, 2022 at 11:45:12AM -0700, Elliot Berman wrote:
->>>>>
->>>>> Even if you don't support it 1:1, at least for the ones that are the
->>>>> same thing, pick the same numbers as that's a nicer thing to do, 
->>>>> right?
->>>>>
->>>>
->>>> Does same thing == interpretation of arguments is the same? For
->>>> instance, GH_CREATE_VM and KVM_CREATE_VM interpret the arguments
->>>> differently. Same for KVM_SET_USERSPACE_MEMORY. The high level
->>>> functionality should be similar for most all hypervisors since they 
->>>> will
->>>> all support creating a VM and probably sharing memory with that VM. The
->>>> arguments for that will necessarily look similar, but they will 
->>>> probably
->>>> be subtly different because the hypervisors support different features.
->>>
->>> I think in the ideal case, you should make the arguments and the
->>> command codes the same for any command where that is possible. If
->>> you come across a command that is shared with KVM but just needs
->>> another flag, that would involve coordinating with the KVM maintainers
->>> about sharing the definition so the same flag does not get reused
->>> in an incompatible way.
->>>
->>
->> I think the converse also needs to be true; KVM would need to check that
->> new flags don't get used in some incompatible way with Gunyah, even if
->> one of us is just -EINVAL'ing. I don't think Gunyah and KVM should be
->> reliant on the other reviewing shared ioctls.
->>
->> The problem is a bit worse because "machine type" is architecture-
->> dependent whereas the planned Gunyah flags are architecture-independent.
->> KVM within itself re-uses flags between architectures so Gunyah would
->> need to reserve some flags from all architectures that KVM supports.
-> 
-> I agree w/ Elliot. We would like to keep Gunyah independent and not rely 
-> on the existing KVM ioctls space. We should allow new hypervisor drivers 
-> interfaces addition in Linux kernel without them relying on KVM.
-> 
->>
->>> For commands that cannot fit into the existing definition, there
->>> should be a different command code, using your own namespace and
->>> not the 0xAE block that KVM has. It still makes sense to follow
->>> the argument structure roughly here, unless there is a technical
->>> reason for making it different.
->>>
->>>> I don't think userspace that supports both KVM and Gunyah will benefit
->>>> much from re-using the same numbers since those re-used ioctl calls
->>>> still need to sit within the context of a Gunyah VM.
->>>
->>> One immediate benefit is for tools that work on running processes,
->>> such as strace, gdb or qemu-user. If they encounter a known command,
->>> they can correctly display the arguments etc.
->>>
->>
->> We can update these tools and anyway there will be different ioctls to
->> get started. There are important ioctls that wouldn't be correctly
->> displayed off the bat anyway; work would need to be done to support the
->> Gunyah ioctls either way. Whereas tooling update is temporary, the
->> coupling of KVM and Gunyah ioctls would be permanent.
-> 
-> Agree, tools can be updated and that is the easy part as we grow the s/w 
-> stack around Gunyah in userspace, like we already do w/ CrosVM (Virtual 
-> Machine Manager) and QEMU will be next followed by rust-vmm. All of them 
-> can be done without Gunyah ioctls relying anything on the KVM ioctls. 
-> Elliot has also explained very well that we don't to go to KVM 
-> maintainers for any of our additions and we also don't want them to come 
-> to us, since there is no interoperability testing. It is best that both 
-> Hypervisors and their Linux interfaces evolve independently.
+Changes since v2:
+ - remove intc address and size cells (4/4)
+ - move apps_rsc label property down (4/4)
+ - move properties in intc (4/4)
+ - remove leading zeroes in iommus (4/4)
+ - change 0x0 to 0 in regs except cpu (4/4)
+ - change 0 to 0x0 in memory regs (4/4)
+ - convert hex to decimal in rmi4 #cells properties (4/4)
 
-Are above explanations reasonable to not re-use KVM ioctl numbers?
+Changes since v1:
+ - remove i2c interconnects (4/4)
+ - change regulator phandle names (4/4)
+ - change regulators node names (4/4)
+ - remove clock-output-names from xo-board (4/4)
+ - remove vdd-supply from touchscreen (4/4)
+ - move clocks to device dts (4/4)
+ - reorder pmic nodes, root nodes, and phandle references in dts (4/4)
+ - move status properties to bottom of nodes (4/4)
+ - accumulate commit message tags (1-3/4)
 
-Thanks,
-Elliot
+Do not apply this series yet. It is only for review comments. It can be
+applied once the "qcom,sdm670-smmu-500" compatible string gets added (or
+now if you don't care about handling an unnecessary quirk).
+
+This adds the device trees and bindings to support the Qualcomm
+Snapdragon 670 and Google Pixel 3a. This patch series, specifically the
+last patch, depends on:
+
+[PATCH v4 0/3] SDM670 Global Clocks
+  https://lore.kernel.org/all/20220914013922.198778-1-mailingradian@gmail.com/T/
+[PATCH v2 0/2] RPMh Support for PM660 and PM660L
+  https://lore.kernel.org/all/20220920223331.150635-1-mailingradian@gmail.com/T/
+[PATCH v2 0/2] SDM670 RPMh Clocks
+  https://lore.kernel.org/all/20220920223734.151135-1-mailingradian@gmail.com/T/
+[PATCH v2 0/2] SDM670 USB 2.0 support
+  https://lore.kernel.org/all/20220922024656.178529-1-mailingradian@gmail.com/T/
+[PATCH 0/2] SDM670 SDHCI support
+  https://lore.kernel.org/all/20220923014322.33620-1-mailingradian@gmail.com/T/
+[PATCH v2 0/2] SDM670 Power Domains
+  https://lore.kernel.org/all/20221004221130.14076-1-mailingradian@gmail.com/T/
+[PATCH v10 0/3] SDM670 Pin Control Driver
+  https://lore.kernel.org/all/20221014001934.4995-1-mailingradian@gmail.com/T/
+[PATCH v6 0/4] SDM670 GPI DMA support
+  https://lore.kernel.org/all/20221018005740.23952-1-mailingradian@gmail.com/T/
+[RFC PATCH v2 0/11] iommu/arm-smmu-qcom: Rework Qualcomm SMMU bindings and implementation
+  https://lore.kernel.org/linux-arm-msm/20221102184420.534094-1-dmitry.baryshkov@linaro.org/T/
+[PATCH v4 0/1] iommu: SMMU for SDM670
+  https://lore.kernel.org/linux-arm-msm/20221108025847.58352-1-mailingradian@gmail.com/T/
+
+Richard Acayan (4):
+  dt-bindings: arm: cpus: add qcom kryo 360 compatible
+  dt-bindings: arm: qcom: add sdm670 and pixel 3a compatible
+  dt-bindings: firmware: scm: add sdm670 compatible
+  arm64: dts: qcom: add sdm670 and pixel 3a device trees
+
+ .../devicetree/bindings/arm/cpus.yaml         |    1 +
+ .../devicetree/bindings/arm/qcom.yaml         |    6 +
+ .../bindings/firmware/qcom,scm.yaml           |    1 +
+ arch/arm64/boot/dts/qcom/Makefile             |    1 +
+ .../boot/dts/qcom/sdm670-google-sargo.dts     |  531 ++++++++
+ arch/arm64/boot/dts/qcom/sdm670.dtsi          | 1160 +++++++++++++++++
+ 6 files changed, 1700 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm670.dtsi
+
+P.S.: Thank you to all the maintainers and reviewers who went through
+everything and made helpful comments!
+
+-- 
+2.38.1
+
