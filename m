@@ -2,195 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 177D46259AE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 12:43:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D5F306259E0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 12:54:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232907AbiKKLnN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 06:43:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48532 "EHLO
+        id S229675AbiKKLya (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 06:54:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233267AbiKKLnE (ORCPT
+        with ESMTP id S233252AbiKKLy3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 06:43:04 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA0CE45ECF;
-        Fri, 11 Nov 2022 03:43:02 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2ABAt9kZ025079;
-        Fri, 11 Nov 2022 11:42:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=seBFUaRp3ouDX4be0OELujUijoj4Q03BoNVadg0/LK4=;
- b=oVitbTaMdAuM7waoylsi39KLcq28CejbgAl/pb+ujA7f78qkVkD0+774T9TRPwDhxz26
- Vzo8MkcDofre/6lm2Cbng98/C98GDb4t9ZkLmy6UjuRoNMDvHCUK7n9o7xJpKt1jP14N
- /VNhtcx8lC8vXuCUjLVPkyptYqTgmuBrv+1od+YUBSS9li6Q+o0bvwWfrWyTEsxYeeRx
- 7q0Nj5nk7Au+a2DOO9SIPltuGl6GDDtoT6GEGemn8ZDrkHJayH4PWnJPpZ2nm9i/nk/q
- HDD+MS65+iR8kd3cQ/nEJIj35Z4vofYmph0g9YXzCY8uE4DWoNrMsoIlKFyFnSx9a8y0 fw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ksada1t6k-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 11 Nov 2022 11:42:57 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2ABBgu7J010956
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 11 Nov 2022 11:42:56 GMT
-Received: from youghand-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Fri, 11 Nov 2022 03:42:54 -0800
-From:   Youghandhar Chintala <quic_youghand@quicinc.com>
-To:     <ath11k@lists.infradead.org>
-CC:     <linux-wireless@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_mpubbise@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        "Youghandhar Chintala" <quic_youghand@quicinc.com>,
-        kernel test robot <lkp@intel.com>
-Subject: [PATCH v3] wifi: ath10k: Add WLAN firmware image version info into smem
-Date:   Fri, 11 Nov 2022 17:12:35 +0530
-Message-ID: <20221111114235.10287-1-quic_youghand@quicinc.com>
-X-Mailer: git-send-email 2.38.0
+        Fri, 11 Nov 2022 06:54:29 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 629775EF93
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 03:54:28 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id ud5so12063782ejc.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 03:54:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KT+IyUbDPgQQlWcRFzbSRfNvsGmzKx+Z/uhCme7VWmc=;
+        b=kVCO20cy5h0hDmnQoPeqHuKZrVNqVsfbNR1k3H9g+pDEMYkfizlmqWzDbuKrsViL1M
+         2F4P6UINavWtbo/IlrFZsMLvrR5zjl8yxcF77Oazajh9lAvtv9Qcqf1aMzDU9/KI0SzZ
+         vn3X4zR4kbSijDnL2S5rNHPQ4rb1BL0twyBEA7kjewSaxBoOk+ONGQ/pCH13NMR1gqHT
+         Q08HqlbE6SKMZ1EQnbL57ldNAaSS/jkO3tm1eVq/xBU6+bhMv0ckilxN3CVabwJZeE6e
+         I/aqQF0d4H1+lIZCShy83MfQuir35Arn+pEod6egWz4W6sw8OfDZR1TmMXsrOPQsTiZ+
+         MxFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KT+IyUbDPgQQlWcRFzbSRfNvsGmzKx+Z/uhCme7VWmc=;
+        b=eySGpT1+uZmNL9ZLBP1UXHKdIoa00WHo6yLRiwiudGQB89SkMeDKh7YlOIdPyH+bU0
+         +5d8wI2Y4BKRO2OHcGzJvz3nq3IwTvysEPBb0QbLY5pm03uwOeOGGxgtCpDS23G2piri
+         mK2WqPe0rwqLGu8ZQ4lX0J5aeYv4JVmS1860mLpgoI/n8242dKXj8wjwDPuOKkg702TN
+         QFGdFyuUMGD/+qp2mUAiOH/r5JVBvv54OgvqgfcAbm0llw2Vpw+kdb5mgrbpRkm50PLe
+         fisSHpnEoaTBwLoP6JsQsUPfWKv4TEmmbL2ZQiOCm4nbF3Z1fPJRYVo69l0C0dbUdrVs
+         SUUQ==
+X-Gm-Message-State: ANoB5pn9h687bkhJ16LeoYtW4GeSXdtkM24AZKk8+Y32d8/v7/2AZYum
+        Rw9/22vlObiJ/JChQfDCTKtGaB/Sk+l6Wz1R
+X-Google-Smtp-Source: AA0mqf51E4kTEKCPNnbmq3zFSgb7r6KxMO7F0HshK6l1kGpAw8myLB5RotXH1wK5b7pzP59BHhz0Cw==
+X-Received: by 2002:a17:906:3c14:b0:7ae:c9d4:7073 with SMTP id h20-20020a1709063c1400b007aec9d47073mr1295102ejg.711.1668167666768;
+        Fri, 11 Nov 2022 03:54:26 -0800 (PST)
+Received: from otso.arnhem.chello.nl (k10064.upc-k.chello.nl. [62.108.10.64])
+        by smtp.gmail.com with ESMTPSA id kz6-20020a17090777c600b007adb86a1e1csm770859ejc.186.2022.11.11.03.54.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Nov 2022 03:54:26 -0800 (PST)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Siddharth Gupta <sidgup@codeaurora.org>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] remoteproc: qcom_q6v5_pas: disable wakeup on probe fail or remove
+Date:   Fri, 11 Nov 2022 12:54:13 +0100
+Message-Id: <20221111115414.153961-1-luca.weiss@fairphone.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: pn7p2lM7IEusjRFCpMHEAhgXTRTm8JN8
-X-Proofpoint-GUID: pn7p2lM7IEusjRFCpMHEAhgXTRTm8JN8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-11_06,2022-11-11_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
- mlxscore=0 mlxlogscore=999 spamscore=0 malwarescore=0 impostorscore=0
- bulkscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211110078
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In a SoC based solution, it would be useful to know the versions of the
-various binary firmware blobs the system is running on. On a QCOM based
-SoC, this info can be obtained from socinfo debugfs infrastructure. For
-this to work, respective subsystem drivers have to export the firmware
-version information to an SMEM based version information table.
+Leaving wakeup enabled during probe fail (-EPROBE_DEFER) or remove makes
+the subsequent probe fail.
 
-Having firmware version information at one place will help quickly
-figure out the firmware versions of various subsystems on the device
-instead of going through builds/logs in an event of a system crash.
+[    3.749454] remoteproc remoteproc0: releasing 3000000.remoteproc
+[    3.752949] qcom_q6v5_pas: probe of 3000000.remoteproc failed with error -17
+[    3.878935] remoteproc remoteproc0: releasing 4080000.remoteproc
+[    3.887602] qcom_q6v5_pas: probe of 4080000.remoteproc failed with error -17
+[    4.319552] remoteproc remoteproc0: releasing 8300000.remoteproc
+[    4.332716] qcom_q6v5_pas: probe of 8300000.remoteproc failed with error -17
 
-Fill WLAN firmware version information in SMEM version table to be
-printed as part of socinfo debugfs infrastructure on a Qualcomm based
-SoC.
+Fix this by disabling wakeup in both cases so the driver can properly
+probe on the next try.
 
-This change is applicable only for WCN399X targets.
-
-Example:
-cat /sys/kernel/debug/qcom_socinfo/cnss/name
-QC_IMAGE_VERSION_STRING=WLAN.HL.3.2.2.c10-00754-QCAHLSWMTPL-1
-
-Reported-by: kernel test robot <lkp@intel.com>
-
-Tested-on: WCN3990 hw1.0 SNOC WLAN.HL.3.2.2.c10-00754-QCAHLSWMTPL-1
-
-Signed-off-by: Youghandhar Chintala <quic_youghand@quicinc.com>
+Fixes: a781e5aa5911 ("remoteproc: core: Prevent system suspend during remoteproc recovery")
+Fixes: dc86c129b4fb ("remoteproc: qcom: pas: Mark devices as wakeup capable")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
-Changes from v2:
- - Removed blank line between trailers
- - Changed memcpy to strscpy
- - Removed version_string_size
- - Added new condition fw_build_id against max length
- - Added depends on QCOM_SMEM for ath10k_snoc
----
- drivers/net/wireless/ath/ath10k/Kconfig |  1 +
- drivers/net/wireless/ath/ath10k/qmi.c   | 34 +++++++++++++++++++++++++
- 2 files changed, 35 insertions(+)
+ drivers/remoteproc/qcom_q6v5_pas.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath10k/Kconfig b/drivers/net/wireless/ath/ath10k/Kconfig
-index ca007b800f75..e6ea884cafc1 100644
---- a/drivers/net/wireless/ath/ath10k/Kconfig
-+++ b/drivers/net/wireless/ath/ath10k/Kconfig
-@@ -44,6 +44,7 @@ config ATH10K_SNOC
- 	tristate "Qualcomm ath10k SNOC support"
- 	depends on ATH10K
- 	depends on ARCH_QCOM || COMPILE_TEST
-+	depends on QCOM_SMEM
- 	select QCOM_SCM
- 	select QCOM_QMI_HELPERS
- 	help
-diff --git a/drivers/net/wireless/ath/ath10k/qmi.c b/drivers/net/wireless/ath/ath10k/qmi.c
-index 66cb7a1e628a..6c3ddad26417 100644
---- a/drivers/net/wireless/ath/ath10k/qmi.c
-+++ b/drivers/net/wireless/ath/ath10k/qmi.c
-@@ -14,6 +14,7 @@
- #include <linux/net.h>
- #include <linux/platform_device.h>
- #include <linux/qcom_scm.h>
-+#include <linux/soc/qcom/smem.h>
- #include <linux/string.h>
- #include <net/sock.h>
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 6afd0941e552..d830bf13c32c 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -557,6 +557,7 @@ static int adsp_probe(struct platform_device *pdev)
+ 	adsp_pds_detach(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
+ free_rproc:
+ 	rproc_free(rproc);
++	device_init_wakeup(adsp->dev, false);
  
-@@ -22,6 +23,8 @@
- 
- #define ATH10K_QMI_CLIENT_ID		0x4b4e454c
- #define ATH10K_QMI_TIMEOUT		30
-+#define ATH10K_SMEM_IMAGE_VERSION_TABLE       469
-+#define ATH10K_SMEM_IMAGE_TABLE_CNSS_INDEX     13
- 
- static int ath10k_qmi_map_msa_permission(struct ath10k_qmi *qmi,
- 					 struct ath10k_msa_mem_info *mem_info)
-@@ -536,6 +539,35 @@ int ath10k_qmi_wlan_disable(struct ath10k *ar)
- 	return ath10k_qmi_mode_send_sync_msg(ar, QMI_WLFW_OFF_V01);
+ 	return ret;
  }
+@@ -573,6 +574,7 @@ static int adsp_remove(struct platform_device *pdev)
+ 	qcom_remove_smd_subdev(adsp->rproc, &adsp->smd_subdev);
+ 	qcom_remove_ssr_subdev(adsp->rproc, &adsp->ssr_subdev);
+ 	rproc_free(adsp->rproc);
++	device_init_wakeup(adsp->dev, false);
  
-+static void ath10k_qmi_add_wlan_ver_smem(struct ath10k *ar, const char *fw_build_id)
-+{
-+	u8 *smem_table_ptr;
-+	size_t smem_block_size;
-+	const u32 smem_img_idx_wlan = ATH10K_SMEM_IMAGE_TABLE_CNSS_INDEX * 128;
-+
-+	smem_table_ptr = qcom_smem_get(QCOM_SMEM_HOST_ANY,
-+				       ATH10K_SMEM_IMAGE_VERSION_TABLE,
-+				       &smem_block_size);
-+	if (IS_ERR(smem_table_ptr)) {
-+		ath10k_dbg(ar, ATH10K_DBG_QMI,
-+			   "smem image version table not found\n");
-+		return;
-+	}
-+
-+	if (smem_img_idx_wlan + MAX_BUILD_ID_LEN > smem_block_size) {
-+		ath10k_dbg(ar, ATH10K_DBG_QMI, "smem block size too small: %zu\n",
-+			   smem_block_size);
-+		return;
-+	}
-+
-+	if (strlen(fw_build_id) > MAX_BUILD_ID_LEN) {
-+		ath10k_dbg(ar, ATH10K_DBG_QMI, "fw_build_id length more than max length\n");
-+		return;
-+	}
-+
-+	strscpy(smem_table_ptr + smem_img_idx_wlan, fw_build_id, MAX_BUILD_ID_LEN);
-+}
-+
- static int ath10k_qmi_cap_send_sync_msg(struct ath10k_qmi *qmi)
- {
- 	struct wlfw_cap_resp_msg_v01 *resp;
-@@ -606,6 +638,8 @@ static int ath10k_qmi_cap_send_sync_msg(struct ath10k_qmi *qmi)
- 			    qmi->fw_version, qmi->fw_build_timestamp, qmi->fw_build_id);
- 	}
- 
-+	ath10k_qmi_add_wlan_ver_smem(ar, qmi->fw_build_id);
-+
- 	kfree(resp);
  	return 0;
- 
+ }
 -- 
-2.38.0
+2.38.1
 
