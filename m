@@ -2,60 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FF23625A3B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 13:07:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFF48625A4A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 13:10:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233886AbiKKMHQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 07:07:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34454 "EHLO
+        id S233644AbiKKMKb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 07:10:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233697AbiKKMGo (ORCPT
+        with ESMTP id S233802AbiKKMK0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 07:06:44 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5FA583B8A;
-        Fri, 11 Nov 2022 04:06:33 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 995B4B825D2;
-        Fri, 11 Nov 2022 12:06:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A108C433D6;
-        Fri, 11 Nov 2022 12:06:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668168391;
-        bh=Gn4LvE+gx8Rx+slzeOMcx1mv1gCVWfnMcM0vY/o8S3w=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=XRszRJtecPe+gjrCiPdOdwf65kR+1xmgcioWKZFrpMHAfHXbkvEvbs07Vm1I+Juc8
-         IJwuN2+X6fu/GSSS8gQKKsWeCjgF5VS41UN8V4LVPcvzQPmySTDAl7x2P6Dnr1wmgd
-         hj+1/9WgwLEbmiT8pbuWJRDW6H0/jhOR25ezA2fvaOqX8qdEBF9n3qJZ+cofsTRH4m
-         6KHJqQ55Da41fCGKNbYCQtImsyJ6xzFHJ8NGbk0fE+uh4/sdZi5SYfd7Wm8O2oHJpe
-         XghyqZAq+G/KB2SJ4fNzNMr8meCcoB/CsCKA6SkPFJAUDnDHFUVOqUWgmFweG9192Y
-         H+3JHeNTA4j0A==
-Date:   Fri, 11 Nov 2022 12:06:24 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Fri, 11 Nov 2022 07:10:26 -0500
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB70CFFA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 04:10:24 -0800 (PST)
+Received: by mail-lj1-x236.google.com with SMTP id d3so4320357ljl.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 04:10:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=unHednunizHpJ9XYvBpXmDyswFth3w2fStIquZQtGM4=;
+        b=fb+8Ulj+zRyO2Cvtl9I917QMAzXK32UPWTI5QSYGEpij5ABswFP7924qVwk32FEIYF
+         0/e+X5RZG5epyZNjbV9MT2Gp57yhg76jua/2c47Sq5+4NH7E9KGGWDHILvKXb4ex9P2B
+         dkz9GN2D07iOZXz2VDrE8ntzXDDx6gMwNZlBY3cE4Z3aYH4leKe12MAUbUA8CQylfp8X
+         fEnUb0Cem51PcMFOv6TskUu+ItjXNacrxFedqM2YbqXaL7/vc5VH9qYQ9co1aQI29gZy
+         v4Dsly1HCRoZVqqpbjp7CkRDtc37FplstdOgv/SPSKQCQYYNIR5zI9WA8r3fwBommQyj
+         rN/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=unHednunizHpJ9XYvBpXmDyswFth3w2fStIquZQtGM4=;
+        b=wgDsW74dP96pzl9jbznmZapenUl96J5s6hgv9jHfqEvOmY+lONNlHX0R5qTiny7mBm
+         M++ngSvJsh25epNNHQVWrZbp62ynlokg02gDDMTMrNCnkvILNpTmLGU49kQwSPXxS09w
+         j37lPgpw1Bj24AHBcucZxCWrnOnFP0rr3SyIrmRJATanUkmfQsBkj3oIi9EbKYKLRbR3
+         zn5F6FJUiIrK/NL3OXmmd7MilQrZ6ni5Bp+OwOqMLCFqro9pH8wIXk2l7Kakd1VPyxTs
+         nfNawnaIC9eZOCY8L5VTsLnfijsLjprNyO3WfBLsBkVQkWLWIXn709rbQD8SmsfwQ8ft
+         UTgw==
+X-Gm-Message-State: ANoB5pnEyX+uiuT05gqsppPqBRxadq2lBS1fxT/IPeWhdozg7NJV7+BU
+        gyGjli+9JndIfwddQ1qJ5ox5AA==
+X-Google-Smtp-Source: AA0mqf59BDk8ngoeEGvwxhB9aPi4roFQAKaW4lD9URgYoXD01XXj0+ZbYjZzySAkxgKwcFSTWvjzlw==
+X-Received: by 2002:a2e:b602:0:b0:277:8df:88a7 with SMTP id r2-20020a2eb602000000b0027708df88a7mr599088ljn.139.1668168623320;
+        Fri, 11 Nov 2022 04:10:23 -0800 (PST)
+Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
+        by smtp.gmail.com with ESMTPSA id s17-20020a056512315100b004aa95889063sm301404lfi.43.2022.11.11.04.10.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Nov 2022 04:10:22 -0800 (PST)
+Message-ID: <78602d4c-913a-04b3-dbca-40f672c78a53@linaro.org>
+Date:   Fri, 11 Nov 2022 13:10:21 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 00/10] ASoC: dt-bindings: Rework Qualcomm APR/GPR Sound
+ nodes for SM8450
+Content-Language: en-US
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] ASoC: dt-bindings: qcom,wsa883x: Add sound-name-prefix
-Message-ID: <Y246wC8zEGJp9SmC@sirena.org.uk>
-References: <20221111091738.34290-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="EFmww+5b01DXaZ+W"
-Content-Disposition: inline
-In-Reply-To: <20221111091738.34290-1-krzysztof.kozlowski@linaro.org>
-X-Cookie: Should I do my BOBBIE VINTON medley?
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Patrick Lai <plai@qti.qualcomm.com>,
+        Srinivasa Rao Mandadapu <srivasam@qti.qualcomm.com>
+References: <20221111113547.100442-1-krzysztof.kozlowski@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221111113547.100442-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,32 +85,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 11/11/2022 12:35, Krzysztof Kozlowski wrote:
+> Adding sound support for Qualcomm SM8450 SoC (and later for SC8280XP) brought
+> some changes to APR/GPR services bindings.  These bindings are part of
+> qcom,apr.yaml:
+> 
+>   apr-or-gpr-device-node <- qcom,apr.yaml
+>     apr-gpr-service@[0-9] <- qcom,apr.yaml
+>       service-specific-components <- /schemas/sound/qcom,q6*.yaml
+> 
+> The schema for services (apr-gpr-service@[0-9]) already grows considerably and
+> is still quite not specific.  It allows several incorrect combinations, like
+> adding a clock-controller to a APM device.  Restricting it would complicate the
+> schema even more.  Bringing new support for sound on Qualcomm SM8450 and
+> SC8280XP SoC would grow it as well.
+> 
+> Refactor the bindings before extending them for Qualcomm SM8450 SoC.
+> 
 
---EFmww+5b01DXaZ+W
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I forgot to mention that DTS in progress is available here:
+https://github.com/krzk/linux/blob/wip/sm8450/arch/arm64/boot/dts/qcom/sm8450-hdk.dts#L459
+https://github.com/krzk/linux/blob/wip/sm8450/arch/arm64/boot/dts/qcom/sm8450.dtsi#L2345
 
-On Fri, Nov 11, 2022 at 10:17:38AM +0100, Krzysztof Kozlowski wrote:
+Best regards,
+Krzysztof
 
-> For multiple speakers attached, it's useful to give them some name.
-> Sound core already supports this, so reference name-prefix.yaml.
-
-If we need to manually extend the schema like this it should probably be
-done for all the CODEC devices.
-
---EFmww+5b01DXaZ+W
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmNuOr8ACgkQJNaLcl1U
-h9DGiwf/fZ7jw/Q4mz/4pgYUjRUhOS6l78Wnnz7FzW8zik92s2e0N8q9DNs6YOJe
-pJNlVLVUhtSLyzYE9XQoTLjfnVKfLHFVCsZuwHgxncwLbdYetaRrpQlTdOgbbAqL
-qrqD6QxNf9nkjafDSCpOPdMJLUOaV0jz7oVY3vdJTWgN16OosMr/KuW15ZNwmsjG
-A+AlqT7G75ffl/JmImjep/krhp32zkdFpQzq+Q5Wbx2UTxJz6R4w7sB1Y7NZZ6dt
-VPUGF3oCgOlwN3phFsMk3ijI1SfUVTo4dvnbqjefdClVrfm/SFtt0fLWRmKW59Ut
-G7C6ARmprB4wHeEZYHBxvGo1ygYHCA==
-=1awU
------END PGP SIGNATURE-----
-
---EFmww+5b01DXaZ+W--
