@@ -2,428 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6668625A91
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 13:39:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A4715625AAB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 13:47:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233436AbiKKMjT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 07:39:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52416 "EHLO
+        id S233102AbiKKMrp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 07:47:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233262AbiKKMjS (ORCPT
+        with ESMTP id S232416AbiKKMro (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 07:39:18 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71ADA787B7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 04:39:16 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id f7so7454156edc.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 04:39:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=cLINDIBaT9Y/w404CBXNAbKwXG6vwoYdNQOEUcgL5PE=;
-        b=H0uD8Uw+bAlp9InbIYjHeNfaWitQuu3V4IORyQ/t+VVRpC7H3HhsAEFXgDK/7/E0oT
-         fXnL0Of1XAj1gLDL5DT+zNGeEW2em3IufCFOSYk/Y/hHAI0CaN+VKYJV4lyXJElx3pZY
-         sawxsLPU+AMEdMFg92Phay9ZhE9bh7Caki8SpdgRx6Hsb51FN+tbzsWBLo5VRYTfYtT0
-         ulQzyq4RG/4KVQotums8X9Jj8H2+YHU8/XoouaVVsx/qXoXZrBCCmr22vd04MFtACbac
-         WaQMDAUg7F1NI6PB43/6BhedUimB5hW4B58jzEU4DZkH3xPg0ic5rtqElTwN67mXOrU0
-         pAZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cLINDIBaT9Y/w404CBXNAbKwXG6vwoYdNQOEUcgL5PE=;
-        b=GUuzEB/NPw0xWGpt6dSpMLVE7OoBEoaFxEgo9IU3WIshvXK1e+r153WBh4cWcDXJUG
-         yh7ZIBxT5b/tIn+JG1Rf2yNijykWxOq3dZTwWhXyG3L9PfT9l7Nt6e5VXYW5CiRQnig+
-         v2rrv2UFRxB4V5s921EsWIjJx94FPnHL7W77MgaeYcZY3QDCAJ82+lCk/Nc9Uu2EKMAp
-         ShStyv3+ByAYPn6QG2cs75EGznemh6IHBwmaCmCoRG1fF6lPvrqYBfVimji4EKQH5QGY
-         h+4FTDVIo91yuTyJKOsE+O8PkoRFjwInDSk2AL2stVzekJBUeNrAv+OQ1T90cwGF+oB3
-         hwTQ==
-X-Gm-Message-State: ANoB5pm2dXMM4acxpEVxDVVM6v+WVkDCtT00TX36MF8uU7AdlS/pENJd
-        FliSqs10vTw3NoxOejuOTRK5+WMbIqROAzeA/LRxBw==
-X-Google-Smtp-Source: AA0mqf6KkSardAexkHjBQ0Va30Fmez2FnONS9ZtkQFZobXkLXoMvYAIScGRmBJBiS1d9/KlJeFvJNzlurRRwyTn0wNA=
-X-Received: by 2002:a05:6402:22e9:b0:464:1297:8412 with SMTP id
- dn9-20020a05640222e900b0046412978412mr1289683edb.50.1668170354903; Fri, 11
- Nov 2022 04:39:14 -0800 (PST)
+        Fri, 11 Nov 2022 07:47:44 -0500
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2057.outbound.protection.outlook.com [40.107.223.57])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3709A663F6;
+        Fri, 11 Nov 2022 04:47:43 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=WXcZVlyzyER8RMbnJF8v/+bqxUdzws261OwdDQF9iN6eROefh7LcbpMr1SB6+oopWGqjmOfzxRoZM4jZHAUf0ZbSGzAOsiPLGcxbGWUAVRJPtCN5WFemA37iE2LfAT+2LNFbU7+ogzryvqAntKrRx3LbI2ZbNwmq3PbFy1fq1QwT6dgCJgZaFkk9Gv2HkI9EdpcL+FcpyUcQ37rAAK4ZEG/9/4+YeT9sEnbWS9rLt5sk00N8FK/QCckSjNzVjr8i6JZcWyJcILJ8OqAgziP0Im5Z7IEQNvvtKox/wqdQ2enmFRe9kkUBRer7NmfrKzKq+6UwOwmVh3DhOJwM49Jyow==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HJLNPcFWzS5LAsaAXKd+bnp5iG4de7O6aWUVA6YX2Xw=;
+ b=mhEPt3f6r52Xge5dEn/iIJFYIFG8XnIgw3xGj5xFTgA1rXn6F7PHV/31/QzvYyvO/XldhiLpAnxwaeOr8lSaTTpPa0lIaRqXT/D/SNOYNPx/sjlmPrqUN3fAxBwiJFHZcH6u7hbWAJ3m0eIbUys1HAH5pFRiQZv+PYXTn9h/9KUlC4zfcb4CIgxlV/hmR5LmKtOP4kHpp678QZZw7GFjukxMCEvWpgS9Nzl9YVfIJmd4MEqiOsJCygwiQonE15YA38N4rUxIMsUNmLxOj1fvJLsCfC/yfiyvjbwoEIf+HitMeM7Qg1dMhvQAqEx4ZDJ1P4nSrD4oG64eZE4ToQM+mA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HJLNPcFWzS5LAsaAXKd+bnp5iG4de7O6aWUVA6YX2Xw=;
+ b=2yY6LRc3CYF+JZbSIR8m9lssrVBW8kIMFdUQ5X8qfmLJwlxWibpEHPZ1xu8EgyZH1N6wgizoSKpwu81s2h9VR7PrLRL31wn/SUUOd2+Yr1APd8Y8/TrMewDmSb0j5cFGmne/Dm19TN6XPjEZpilzw2Yd5RX5izno5UPD9v5yljA=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com (2603:10b6:408:43::13)
+ by CH2PR12MB4199.namprd12.prod.outlook.com (2603:10b6:610:a7::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5813.13; Fri, 11 Nov
+ 2022 12:47:40 +0000
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::7d43:3f30:4caf:7421]) by BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::7d43:3f30:4caf:7421%7]) with mapi id 15.20.5813.013; Fri, 11 Nov 2022
+ 12:47:40 +0000
+Message-ID: <ea11a25a-51cf-fbc8-bcd0-004ec47ff582@amd.com>
+Date:   Fri, 11 Nov 2022 13:47:26 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH v1 1/6] dma-buf: Move dma_buf_mmap_internal() to dynamic
+ locking specification
+Content-Language: en-US
+To:     Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        Liam Mark <lmark@codeaurora.org>,
+        Brian Starkey <Brian.Starkey@arm.com>,
+        John Stultz <jstultz@google.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>
+Cc:     linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        kernel@collabora.com
+References: <20221110201349.351294-1-dmitry.osipenko@collabora.com>
+ <20221110201349.351294-2-dmitry.osipenko@collabora.com>
+From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
+In-Reply-To: <20221110201349.351294-2-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: FR3P281CA0175.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:a0::12) To BN8PR12MB3587.namprd12.prod.outlook.com
+ (2603:10b6:408:43::13)
 MIME-Version: 1.0
-References: <20221028120812.339100-1-robert.foss@linaro.org>
- <20221028120812.339100-4-robert.foss@linaro.org> <f09429f2-0b21-7f8a-ad64-e51af056ea08@linaro.org>
-In-Reply-To: <f09429f2-0b21-7f8a-ad64-e51af056ea08@linaro.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Fri, 11 Nov 2022 13:39:03 +0100
-Message-ID: <CAG3jFyuaaw-uXVc=84ViiZdxCN80hZSCZv0V-8wfbovjQsFgbA@mail.gmail.com>
-Subject: Re: [PATCH v1 3/9] drm/msm/dpu: Add SM8350 to hw catalog
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, quic_kalyant@quicinc.com, swboyd@chromium.org,
-        angelogioacchino.delregno@somainline.org, loic.poulain@linaro.org,
-        quic_vpolimer@quicinc.com, vkoul@kernel.org, dianders@chromium.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Jonathan Marek <jonathan@marek.ca>, vinod.koul@linaro.org,
-        quic_jesszhan@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN8PR12MB3587:EE_|CH2PR12MB4199:EE_
+X-MS-Office365-Filtering-Correlation-Id: f89c8762-41b6-4bc3-f266-08dac3e2eaec
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: nwCY2YXDKaT4SOcSZ2Hlh9R1/2lM21XVJ4WgHHqI9s8fILGmlu5cedKcumDnyn0euxgBZEg+bjLiP8cVGNn0+7vXQZtcNBx8Q8rPTgJGmHT9qGdXJ/wYdOV7KLaIw3Xpe/z6T8obSCUxVFj+DSVKNcIrsBkLOLeFYJuPRubBvnmaNR5FybzwpdtOacYizNjNfYVW7KtPKbmMKrW5S7wKeAX5szs4+6UTNC3+Kw1isz0uV9jfe7rcKmd6vdkbileIHQWGSfTzD3JdoD32R/PWuxP31C0n4xBtICIDUj9yCpq7FYV6vfNZJ7V48+S+YhUb1oDCnYutnlZm3cqtXIERSyU43GHqsGXYBhMLLQZKxuvPryhIWW/Znb7vxkjXuxCo1egzP/ey50XNdlA9T5X0JjEe3opgLPq6xfRnVZFwRHcpXbFq4oeZy1H4o/fE5IeZu6ehqAesELoU4ttXDE2/G48Ekw7f1i6rlVJZdzY/FALGwRET4R8rFVnwhNquTyzTM1uKO6sTnpk/BafEZ6o9Hn2MFbc+dLrvB22jgrjAAYHbnCa3TAHUd7+1YB+tzYpLuaDQQ/fhYX1mRfM67YAYv/QctVYv/GwJ2rij/twEFg3luRyCkSuGc0GULh7Ir8YuQhS/IMasboIZU1kl+l8URw6ZcUaLn9QOtPNAEG5/9hJvZpBL8AzjubPT0i333IckQdSkmG1HtK2Z+RbyVwo915E3EAwCJVBaQ97NXTnd/PzJY3iwlV+qyJg7SLaRVOV2FlPig1hEpWTZPhkuMDEL/ISt7TWgRjqNxh9/pcdBOYGTWCO0ybf1UPs/60iaRyVh
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3587.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(346002)(376002)(366004)(39860400002)(136003)(396003)(451199015)(2616005)(83380400001)(66574015)(38100700002)(186003)(6512007)(6506007)(66556008)(5660300002)(7416002)(2906002)(6486002)(8936002)(41300700001)(110136005)(6666004)(478600001)(4326008)(66946007)(66476007)(316002)(8676002)(31686004)(921005)(86362001)(31696002)(36756003)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TnhCeTdMc2FMZ1JCcWlSSkJjTlRKR3NKRkswMmFSUzB5OHVrTzI0ZzVPNXhM?=
+ =?utf-8?B?ak96N1R6YStnY1FaS1RkektpSzVhbFg5bUtVbXZEbGM1ZHNrNHBWQ0ZoK2Zp?=
+ =?utf-8?B?cXlzKytjSXFkUTF0Q04wSDU2V0orUG9LTjVNdzl4T3I4Q3hvQ0o0a0dCSnYz?=
+ =?utf-8?B?cTJreVRpUWFETFFveW5LNVF0QkUzT0R3bld1NUlWQ3FVUXhGMzdGRCt0amhY?=
+ =?utf-8?B?NU1zc2hGWExacGVsYlpieTRkWENjSWY0U0pKTWl4aFN5dFpDUkxiSXhQQ3BK?=
+ =?utf-8?B?dTNKV2dUT3gvaDJZTVVDNXNLQVFEbXZhWUVCZDlmWHRDTGU1a1hSb2RBMUZG?=
+ =?utf-8?B?b2NyM255WEJlNEJ5Unk0aHR6M2lGelV2Y05GUDJtUXVWQVI2OWI3WVA4MWhP?=
+ =?utf-8?B?aDFMT3JsN0k4bE5Tc1ZuTkViUThpWEJiV1Y4bE5BTXNtcVNneEQrT2ZFTW55?=
+ =?utf-8?B?YlZ3SGZ3bVZWNnFnREh5UlZnTGxtWjkyc0JiakRyNm1QUnVIU3dZL3M3dVBF?=
+ =?utf-8?B?TjBCNmdodHZvSWgrRmNpUU04QjZ3NlNNd1JMQnIraTFtaWthZkpVZjJCVFBJ?=
+ =?utf-8?B?ZDZmK0hOaVA4RTFvYmZYa09HTHZsSk5YRW0yb1FMMVV3WVRFUzVVczNzeGp0?=
+ =?utf-8?B?eFExUjBIZmhCR0pCbXFNR1labG5vRkRUUGZnS3dDRWxrY29DdU9VaHd1T3VP?=
+ =?utf-8?B?UUs4NEVXdmFpN0tJTFFEbnA4VHg1cEdEM0RVeDFDamhqM3VtOTljWlJvS3BW?=
+ =?utf-8?B?NTd5b3FDWnpDS0I5dWpvSG55RXV6VlZwSGErZEVaQjJOUEUzbXZtMDJ3dHhs?=
+ =?utf-8?B?ZHd6UjdDNmtrOGZ2S3hpWERIOEdoSjFOc2pxQy9XanRLUzJBQTl6MmZNdXYv?=
+ =?utf-8?B?amk3ckh4Q2wzOWtoajlZOFJqellpWTZlaFd4Y3E3K2hkRGQ4aHpIWkM1a1Ir?=
+ =?utf-8?B?TkRlMFRMd3BmY1ZPWC9GZ1gwekliWmYrMUtxbDVKQm5rV2JOUUl6UXd3ekhQ?=
+ =?utf-8?B?WXpxRzh5V1p3eXo3Sll0Njd5eGEwM09iSFk3N0Qxa1NoSkM3b3c1RXd1UWd0?=
+ =?utf-8?B?Q0NNdmFTQm1vQ1oxd3VyOEl4clZrbXRYKzNyK2FJME5lY3krV2I3S3VFTVpU?=
+ =?utf-8?B?VUYxbGdKY3A2MGxUK245SFN0Q0hDSmh0UFJzSFJERmxtcmkra1hXMHBQRlJE?=
+ =?utf-8?B?WTI5dDZJcUYxWDZPVGFWL3ZNQnFyMSt0aTgrWEVOa3JLOVZiR2xSZjlDWk5v?=
+ =?utf-8?B?a0pUTlFHQW96c3RHb3VYTHhXR0YwblRjQ3dadUpnbFRsaklWWUtjSlVXMzJ4?=
+ =?utf-8?B?ek9WNkR3K2t2Ym9mYndxM2hTYnUydzdSTmo0MzlFUFlFdzBiellrNzlZTWN0?=
+ =?utf-8?B?dDZkNUpRUzI1cXpZaVR2RVZBV3VZZDV5QnVHTHFzbFBPeXcySElkcEZVL3B0?=
+ =?utf-8?B?WE4wUWd1anlnRUhieE9ZSExMa2hibldPbm5OUDF2UGxSVlhINEhRK0wyY0JN?=
+ =?utf-8?B?WTRua2lnOTM3YUhMMmlVWGFwNHVsYTZzVitWWFp4ZjlZeCtqNHYwbDQwVGk0?=
+ =?utf-8?B?ZWlBaTNxcUNQbXorSVRDSFBjOTNkSGhqT29QU2t2RzVzeWRFUTVJRW1kc3dl?=
+ =?utf-8?B?V251OWZ0Wmk2Q1lQRzByVDNDN2IrbmQxdjVEa0RDSEYrcVhLbGowVkZhY2F2?=
+ =?utf-8?B?U0FaRGZFSFFNWFF6d2FQRHhWbGI4S204amlwdEJrb0xwVkNxZWRWNG1zYnhp?=
+ =?utf-8?B?djQ4ZkFiSXdnQmlRVi9CdVRTUWRwdkhwaHIwNHhISVNtWWtvM3F0TzlheGsz?=
+ =?utf-8?B?SDJ2Nk9jZUZWak95cm1wUkJxNUwzU0wzVjdSd3JEOGpEaEdBb29uaUQ4bmwz?=
+ =?utf-8?B?ZVpDSUUzKy9wZVdzUmVCbzRiYzZKQzBOZVNtYzFjNFRpRHVUTFJ0ZXpJMk1j?=
+ =?utf-8?B?VWNHLyt4YzVGc3lldE1CUEJXV1MwZXFXMERFenNkb0FvMWVxOEJmaUYzUjEw?=
+ =?utf-8?B?QURJRXFReUNSK0Y3cURaMDZnVFFCOWJIcThXcUR3N1RuVjZseXpVdnVrYWhs?=
+ =?utf-8?B?cTFCcGhhNk1ScHI0UFNMQ1hGMjVwSjV5QjdJd2xaMHkxWDArd3o1ellVRURE?=
+ =?utf-8?B?VHFjSDNVM1JmdFMxSlFrbm9rcmpKaERPdENzdUczQXpndytVTG1ZMUJuRWJP?=
+ =?utf-8?Q?MPcLhqYbqPcewTTcAh5Hkm7qPbL9eMIyXZ/YdVEPqCON?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f89c8762-41b6-4bc3-f266-08dac3e2eaec
+X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3587.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2022 12:47:40.4643
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4Lcrb/9myqqM+nDq2DY5EPNWQbX1d3ePsRW/zGwcyIpIw7VZvzKozkyUn02f43xl
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4199
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 28 Oct 2022 at 14:27, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
+Am 10.11.22 um 21:13 schrieb Dmitry Osipenko:
+> All dma-buf functions has been moved to dynamic locking specification
+> The dma_buf_mmap_internal() was missed out by accident. Take reservation
+> lock around file mapping operation to adhere the common locking convention.
 >
-> On 28/10/2022 15:08, Robert Foss wrote:
-> > Add compatibility for SM8350 display subsystem, including
-> > required entries in DPU hw catalog.
-> > ---
-> >   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 217 ++++++++++++++++++
-> >   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   1 +
-> >   2 files changed, 218 insertions(+)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> > index d0ce7612fee8..bc829d7bdd6e 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> > @@ -112,6 +112,15 @@
-> >                        BIT(MDP_INTF3_INTR) | \
-> >                        BIT(MDP_INTF4_INTR))
-> >
-> > +#define IRQ_SM8350_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
-> > +                      BIT(MDP_SSPP_TOP0_INTR2) | \
-> > +                      BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> > +                      BIT(MDP_INTF0_7xxx_INTR) | \
-> > +                      BIT(MDP_INTF1_7xxx_INTR) | \
-> > +                      BIT(MDP_INTF2_7xxx_INTR) | \
-> > +                      BIT(MDP_INTF3_7xxx_INTR) | \
-> > +                      0)
-> > +
-> >   #define IRQ_SC8180X_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
-> >                         BIT(MDP_SSPP_TOP0_INTR2) | \
-> >                         BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> > @@ -364,6 +373,20 @@ static const struct dpu_caps sm8250_dpu_caps = {
-> >       .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
-> >   };
-> >
-> > +static const struct dpu_caps sm8350_dpu_caps = {
-> > +     .max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
-> > +     .max_mixer_blendstages = 0xb,
-> > +     .qseed_type = DPU_SSPP_SCALER_QSEED3LITE,
-> > +     .smart_dma_rev = DPU_SSPP_SMART_DMA_V2, /* TODO: v2.5 */
-> > +     .ubwc_version = DPU_HW_UBWC_VER_40,
-> > +     .has_src_split = true,
-> > +     .has_dim_layer = true,
-> > +     .has_idle_pc = true,
-> > +     .has_3d_merge = true,
-> > +     .max_linewidth = 4096,
->
-> Is it 4096 or 5120?
+> Reported-by: Daniel Vetter <daniel@ffwll.ch>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-4096 is what I'm seeing in the downstream dts, except for the
-wb-linewidth-linear property which is 5120.
+Reviewed-by: Christian König <christian.koenig@amd.com> for this patch here.
 
-So I would think 4096 is the correct value, what do you think?
+Acked-by: Christian König <christian.koenig@amd.com> for the rest of the 
+series.
 
->
-> > +     .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
-> > +};
-> > +
-> >   static const struct dpu_caps sc7280_dpu_caps = {
-> >       .max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
-> >       .max_mixer_blendstages = 0x7,
-> > @@ -501,6 +524,33 @@ static const struct dpu_mdp_cfg sm8250_mdp[] = {
-> >       },
-> >   };
-> >
-> > +static const struct dpu_mdp_cfg sm8350_mdp[] = {
-> > +     {
-> > +     .name = "top_0", .id = MDP_TOP,
-> > +     .base = 0x0, .len = 0x494,
-> > +     .features = 0,
-> > +     .highest_bank_bit = 0x3, /* TODO: 2 for LP_DDR4 */
-> > +     .clk_ctrls[DPU_CLK_CTRL_VIG0] = {
-> > +                     .reg_off = 0x2AC, .bit_off = 0},
-> > +     .clk_ctrls[DPU_CLK_CTRL_VIG1] = {
-> > +                     .reg_off = 0x2B4, .bit_off = 0},
-> > +     .clk_ctrls[DPU_CLK_CTRL_VIG2] = {
-> > +                     .reg_off = 0x2BC, .bit_off = 0},
-> > +     .clk_ctrls[DPU_CLK_CTRL_VIG3] = {
-> > +                     .reg_off = 0x2C4, .bit_off = 0},
-> > +     .clk_ctrls[DPU_CLK_CTRL_DMA0] = {
-> > +                     .reg_off = 0x2AC, .bit_off = 8},
-> > +     .clk_ctrls[DPU_CLK_CTRL_DMA1] = {
-> > +                     .reg_off = 0x2B4, .bit_off = 8},
-> > +     .clk_ctrls[DPU_CLK_CTRL_CURSOR0] = {
-> > +                     .reg_off = 0x2BC, .bit_off = 8},
-> > +     .clk_ctrls[DPU_CLK_CTRL_CURSOR1] = {
-> > +                     .reg_off = 0x2C4, .bit_off = 8},
-> > +     .clk_ctrls[DPU_CLK_CTRL_REG_DMA] = {
-> > +                     .reg_off = 0x2BC, .bit_off = 20},
-> > +     },
-> > +};
-> > +
-> >   static const struct dpu_mdp_cfg sc7280_mdp[] = {
-> >       {
-> >       .name = "top_0", .id = MDP_TOP,
-> > @@ -659,6 +709,66 @@ static const struct dpu_ctl_cfg sm8150_ctl[] = {
-> >       },
-> >   };
-> >
-> > +static const struct dpu_ctl_cfg sm8350_ctl[] = {
-> > +     {
-> > +     .name = "ctl_0", .id = CTL_0,
-> > +     .base = 0x15000, .len = 0x1e8,
-> > +     .features = BIT(DPU_CTL_SPLIT_DISPLAY) |
-> > +                 BIT(DPU_CTL_PINGPONG_SPLIT) |
-> > +                 BIT(DPU_CTL_ACTIVE_CFG) |
-> > +                 BIT(DPU_CTL_FETCH_ACTIVE) |
-> > +                 BIT(DPU_CTL_VM_CFG) |
-> > +                 BIT(DPU_CTL_UNIFIED_DSPP_FLUSH),
-> > +     .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 9),
-> > +     },
-> > +     {
-> > +     .name = "ctl_1", .id = CTL_1,
-> > +     .base = 0x16000, .len = 0x1e8,
-> > +     .features = BIT(DPU_CTL_SPLIT_DISPLAY) |
-> > +                 BIT(DPU_CTL_ACTIVE_CFG) |
-> > +                 BIT(DPU_CTL_FETCH_ACTIVE) |
-> > +                 BIT(DPU_CTL_VM_CFG) |
-> > +                 BIT(DPU_CTL_UNIFIED_DSPP_FLUSH),
->
-> The UNIFIED_DSPP_FLUSH is not merged. Could you please change this to
-> BIT(DPU_CTL_SPLIT_DISPLAY) | CTL_SC7280_MASK (for first two CTLs) and
-> just CTL_SC7280_MASK for the rest of them?
+Regards,
+Christian.
 
-Ack.
+> ---
+>   drivers/dma-buf/dma-buf.c | 7 ++++++-
+>   1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/dma-buf/dma-buf.c b/drivers/dma-buf/dma-buf.c
+> index 13bfd2d09c56..b809513b03fe 100644
+> --- a/drivers/dma-buf/dma-buf.c
+> +++ b/drivers/dma-buf/dma-buf.c
+> @@ -129,6 +129,7 @@ static struct file_system_type dma_buf_fs_type = {
+>   static int dma_buf_mmap_internal(struct file *file, struct vm_area_struct *vma)
+>   {
+>   	struct dma_buf *dmabuf;
+> +	int ret;
+>   
+>   	if (!is_dma_buf_file(file))
+>   		return -EINVAL;
+> @@ -144,7 +145,11 @@ static int dma_buf_mmap_internal(struct file *file, struct vm_area_struct *vma)
+>   	    dmabuf->size >> PAGE_SHIFT)
+>   		return -EINVAL;
+>   
+> -	return dmabuf->ops->mmap(dmabuf, vma);
+> +	dma_resv_lock(dmabuf->resv, NULL);
+> +	ret = dmabuf->ops->mmap(dmabuf, vma);
+> +	dma_resv_unlock(dmabuf->resv);
+> +
+> +	return ret;
+>   }
+>   
+>   static loff_t dma_buf_llseek(struct file *file, loff_t offset, int whence)
 
->
-> > +     .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 10),
-> > +     },
-> > +     {
-> > +     .name = "ctl_2", .id = CTL_2,
-> > +     .base = 0x17000, .len = 0x1e8,
-> > +     .features = BIT(DPU_CTL_ACTIVE_CFG) |
-> > +                 BIT(DPU_CTL_FETCH_ACTIVE) |
-> > +                 BIT(DPU_CTL_VM_CFG) |
-> > +                 BIT(DPU_CTL_UNIFIED_DSPP_FLUSH),
-> > +     .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 11),
-> > +     },
-> > +     {
-> > +     .name = "ctl_3", .id = CTL_3,
-> > +     .base = 0x18000, .len = 0x1e8,
-> > +     .features = BIT(DPU_CTL_ACTIVE_CFG) |
-> > +                 BIT(DPU_CTL_FETCH_ACTIVE) |
-> > +                 BIT(DPU_CTL_VM_CFG) |
-> > +                 BIT(DPU_CTL_UNIFIED_DSPP_FLUSH),
-> > +     .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 12),
-> > +     },
-> > +     {
-> > +     .name = "ctl_4", .id = CTL_4,
-> > +     .base = 0x19000, .len = 0x1e8,
-> > +     .features = BIT(DPU_CTL_ACTIVE_CFG) |
-> > +                 BIT(DPU_CTL_FETCH_ACTIVE) |
-> > +                 BIT(DPU_CTL_VM_CFG) |
-> > +                 BIT(DPU_CTL_UNIFIED_DSPP_FLUSH),
-> > +     .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 13),
-> > +     },
-> > +     {
-> > +     .name = "ctl_5", .id = CTL_5,
-> > +     .base = 0x1a000, .len = 0x1e8,
-> > +     .features = BIT(DPU_CTL_ACTIVE_CFG) |
-> > +                 BIT(DPU_CTL_FETCH_ACTIVE) |
-> > +                 BIT(DPU_CTL_VM_CFG) |
-> > +                 BIT(DPU_CTL_UNIFIED_DSPP_FLUSH),
-> > +     .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 23),
-> > +     },
-> > +};
-> > +
-> >   static const struct dpu_ctl_cfg sc7280_ctl[] = {
-> >       {
-> >       .name = "ctl_0", .id = CTL_0,
-> > @@ -1182,6 +1292,27 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
-> >       PP_BLK("pingpong_3", PINGPONG_3, 0x6c000, 0, sc7280_pp_sblk, -1, -1),
-> >   };
-> >
-> > +static const struct dpu_pingpong_cfg sm8350_pp[] = {
-> > +     PP_BLK_TE("pingpong_0", PINGPONG_0, 0x69000, MERGE_3D_0, sdm845_pp_sblk_te,
-> > +                     DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-> > +                     DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
-> > +     PP_BLK_TE("pingpong_1", PINGPONG_1, 0x6a000, MERGE_3D_0, sdm845_pp_sblk_te,
-> > +                     DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
-> > +                     DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
-> > +     PP_BLK("pingpong_2", PINGPONG_2, 0x6b000, MERGE_3D_1, sdm845_pp_sblk,
-> > +                     DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
-> > +                     DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14)),
-> > +     PP_BLK("pingpong_3", PINGPONG_3, 0x6c000, MERGE_3D_1, sdm845_pp_sblk,
-> > +                     DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
-> > +                     DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
-> > +     PP_BLK("pingpong_4", PINGPONG_4, 0x6d000, MERGE_3D_2, sdm845_pp_sblk,
-> > +                     DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
-> > +                     -1),
-> > +     PP_BLK("pingpong_5", PINGPONG_5, 0x6e000, MERGE_3D_2, sdm845_pp_sblk,
-> > +                     DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31),
-> > +                     -1),
-> > +};
-> > +
-> >   static struct dpu_pingpong_cfg qcm2290_pp[] = {
-> >       PP_BLK("pingpong_0", PINGPONG_0, 0x70000, 0, sdm845_pp_sblk,
-> >               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-> > @@ -1205,6 +1336,12 @@ static const struct dpu_merge_3d_cfg sm8150_merge_3d[] = {
-> >       MERGE_3D_BLK("merge_3d_2", MERGE_3D_2, 0x83200),
-> >   };
-> >
-> > +static const struct dpu_merge_3d_cfg sm8350_merge_3d[] = {
-> > +     MERGE_3D_BLK("merge_3d_0", MERGE_3D_0, 0x4e000),
-> > +     MERGE_3D_BLK("merge_3d_1", MERGE_3D_1, 0x4f000),
-> > +     MERGE_3D_BLK("merge_3d_2", MERGE_3D_2, 0x50000),
-> > +};
-> > +
-> >   /*************************************************************
-> >    * DSC sub blocks config
-> >    *************************************************************/
-> > @@ -1222,6 +1359,12 @@ static struct dpu_dsc_cfg sdm845_dsc[] = {
-> >       DSC_BLK("dsc_3", DSC_3, 0x80c00),
-> >   };
-> >
-> > +static struct dpu_dsc_cfg sm8350_dsc[] = {
-> > +     DSC_BLK("dsc_0", DSC_0, 0x80000),
-> > +     DSC_BLK("dsc_1", DSC_1, 0x81000),
-> > +     DSC_BLK("dsc_2", DSC_2, 0x82000),
-> > +};
-> > +
-> >   /*************************************************************
-> >    * INTF sub blocks config
-> >    *************************************************************/
-> > @@ -1269,6 +1412,13 @@ static const struct dpu_intf_cfg sc7280_intf[] = {
-> >       INTF_BLK("intf_5", INTF_5, 0x39000, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
-> >   };
-> >
-> > +static const struct dpu_intf_cfg sm8350_intf[] = {
-> > +     INTF_BLK("intf_0", INTF_0, 0x34000, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
-> > +     INTF_BLK("intf_1", INTF_1, 0x35000, INTF_DSI, 0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
-> > +     INTF_BLK("intf_2", INTF_2, 0x36000, INTF_DSI, 1, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 28, 29),
-> > +     INTF_BLK("intf_3", INTF_3, 0x37000, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 30, 31),
-> > +};
-> > +
-> >   static const struct dpu_intf_cfg sc8180x_intf[] = {
-> >       INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7180_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
-> >       INTF_BLK("intf_1", INTF_1, 0x6A800, INTF_DSI, 0, 24, INTF_SC7180_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
-> > @@ -1397,6 +1547,14 @@ static const struct dpu_reg_dma_cfg sm8250_regdma = {
-> >       .clk_ctrl = DPU_CLK_CTRL_REG_DMA,
-> >   };
-> >
-> > +static const struct dpu_reg_dma_cfg sm8350_regdma = {
-> > +     .base = 0x0,
-> > +     .version = 0x00020000,
-> > +     .trigger_sel_off = 0x119c,
-> > +     .xin_id = 7,
-> > +     .clk_ctrl = DPU_CLK_CTRL_REG_DMA,
-> > +};
-> > +
-> >   /*************************************************************
-> >    * PERF data config
-> >    *************************************************************/
-> > @@ -1700,6 +1858,36 @@ static const struct dpu_perf_cfg sc7280_perf_data = {
-> >       .bw_inefficiency_factor = 120,
-> >   };
-> >
-> > +static const struct dpu_perf_cfg sm8350_perf_data = {
-> > +     .max_bw_low = 11800000,
-> > +     .max_bw_high = 18200000,
-> > +     .min_core_ib = 2500000,
-> > +     .min_llcc_ib = 0,
-> > +     .min_dram_ib = 800000,
-> > +     .min_prefill_lines = 40,
-> > +     /* FIXME: lut tables */
-> > +     .danger_lut_tbl = {0x3ffff, 0x3ffff, 0x0},
-> > +     .safe_lut_tbl = {0xfe00, 0xfe00, 0xffff},
-> > +     .qos_lut_tbl = {
-> > +             {.nentry = ARRAY_SIZE(sc7180_qos_linear),
-> > +             .entries = sc7180_qos_linear
-> > +             },
-> > +             {.nentry = ARRAY_SIZE(sc7180_qos_macrotile),
-> > +             .entries = sc7180_qos_macrotile
-> > +             },
-> > +             {.nentry = ARRAY_SIZE(sc7180_qos_nrt),
-> > +             .entries = sc7180_qos_nrt
-> > +             },
-> > +             /* TODO: macrotile-qseed is different from macrotile */
-> > +     },
-> > +     .cdp_cfg = {
-> > +             {.rd_enable = 1, .wr_enable = 1},
-> > +             {.rd_enable = 1, .wr_enable = 0}
-> > +     },
-> > +     .clk_inefficiency_factor = 105,
-> > +     .bw_inefficiency_factor = 120,
-> > +};
-> > +
-> >   static const struct dpu_perf_cfg qcm2290_perf_data = {
-> >       .max_bw_low = 2700000,
-> >       .max_bw_high = 2700000,
-> > @@ -1876,6 +2064,34 @@ static const struct dpu_mdss_cfg sm8250_dpu_cfg = {
-> >       .mdss_irqs = IRQ_SM8250_MASK,
-> >   };
-> >
-> > +static const struct dpu_mdss_cfg sm8350_dpu_cfg = {
-> > +     .caps = &sm8350_dpu_caps,
-> > +     .mdp_count = ARRAY_SIZE(sm8350_mdp),
-> > +     .mdp = sm8350_mdp,
-> > +     .ctl_count = ARRAY_SIZE(sm8350_ctl),
-> > +     .ctl = sm8350_ctl,
-> > +     .sspp_count = ARRAY_SIZE(sm8250_sspp),
-> > +     .sspp = sm8250_sspp,
-> > +     .mixer_count = ARRAY_SIZE(sm8150_lm),
-> > +     .mixer = sm8150_lm,
-> > +     .dspp_count = ARRAY_SIZE(sm8150_dspp),
-> > +     .dspp = sm8150_dspp,
-> > +     .pingpong_count = ARRAY_SIZE(sm8350_pp),
-> > +     .pingpong = sm8350_pp,
-> > +     .dsc_count = ARRAY_SIZE(sm8350_dsc),
-> > +     .dsc = sm8350_dsc,
-> > +     .merge_3d_count = ARRAY_SIZE(sm8350_merge_3d),
-> > +     .merge_3d = sm8350_merge_3d,
-> > +     .intf_count = ARRAY_SIZE(sm8350_intf),
-> > +     .intf = sm8350_intf,
-> > +     .vbif_count = ARRAY_SIZE(sdm845_vbif),
-> > +     .vbif = sdm845_vbif,
-> > +     .reg_dma_count = 1,
-> > +     .dma_cfg = &sm8250_regdma,
-> > +     .perf = &sm8350_perf_data,
-> > +     .mdss_irqs = IRQ_SM8350_MASK,
-> > +};
-> > +
-> >   static const struct dpu_mdss_cfg sc7280_dpu_cfg = {
-> >       .caps = &sc7280_dpu_caps,
-> >       .mdp_count = ARRAY_SIZE(sc7280_mdp),
-> > @@ -1933,6 +2149,7 @@ static const struct dpu_mdss_hw_cfg_handler cfg_handler[] = {
-> >       { .hw_rev = DPU_HW_VER_600, .dpu_cfg = &sm8250_dpu_cfg},
-> >       { .hw_rev = DPU_HW_VER_620, .dpu_cfg = &sc7180_dpu_cfg},
-> >       { .hw_rev = DPU_HW_VER_650, .dpu_cfg = &qcm2290_dpu_cfg},
-> > +     { .hw_rev = DPU_HW_VER_700, .dpu_cfg = &sm8350_dpu_cfg},
-> >       { .hw_rev = DPU_HW_VER_720, .dpu_cfg = &sc7280_dpu_cfg},
-> >   };
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> > index 71fe4c505f5b..e59630e06110 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> > @@ -45,6 +45,7 @@
-> >   #define DPU_HW_VER_600      DPU_HW_VER(6, 0, 0) /* sm8250 */
-> >   #define DPU_HW_VER_620      DPU_HW_VER(6, 2, 0) /* sc7180 v1.0 */
-> >   #define DPU_HW_VER_650      DPU_HW_VER(6, 5, 0) /* qcm2290|sm4125 */
-> > +#define DPU_HW_VER_700       DPU_HW_VER(7, 0, 0) /* sm8350 */
-> >   #define DPU_HW_VER_720      DPU_HW_VER(7, 2, 0) /* sc7280 */
-> >
-> >   #define IS_MSM8996_TARGET(rev) IS_DPU_MAJOR_MINOR_SAME((rev), DPU_HW_VER_170)
->
-> --
-> With best wishes
-> Dmitry
->
