@@ -2,150 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1181625B38
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 14:30:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AC630625B82
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 14:52:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233900AbiKKNa1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 08:30:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46556 "EHLO
+        id S230270AbiKKNw2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 08:52:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233829AbiKKNa0 (ORCPT
+        with ESMTP id S233338AbiKKNw1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 08:30:26 -0500
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6395460359;
-        Fri, 11 Nov 2022 05:30:25 -0800 (PST)
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-13c2cfd1126so5395096fac.10;
-        Fri, 11 Nov 2022 05:30:25 -0800 (PST)
+        Fri, 11 Nov 2022 08:52:27 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89E4222BEA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 05:52:25 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id v17so7696757edc.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 05:52:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=JXM+RlfecQsl8R3fGlmC6x2JLEc2q3nlhhTEJRNAqbQ=;
+        b=mj7EW2C4wI/AYrFuJnRR3eDzgId1RmzDGW48XzKmelMZyNEnRLGZxFruOa2GzQX7pG
+         9MLy4XDPrtTHeNIOp4CQhL6m7V+lisnBvntxIxnA9z80qjgzEBkrylHNLE3q965PTSoZ
+         MJNyPhzJFl7IZpvHrOLcQBFZ7DJ5Ief6N9gaVsbRGPRdRSYyjGQ5ECz6/3U+NSzahXF+
+         yrlIzAWBGc8dG+U0VZvsUqIyMMDbd6HGh9a5r0akpvZiho/UyndEZJUzqHAyUkB9yAHp
+         as5oFzLT/3JZ3J5jT3BzvjD8PhGQPNcmTe9JmUesqI9OrQhQd0e7KiwBN17ZcTMFB7i6
+         8PFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Lo2p58cHEgV1SDnl6XTUQGUtHBgdDU1qqKkHovtNXaI=;
-        b=49nrLbtqNjWXh0EjGzONm/Hug+gI8EVajt5pYYFtcQ82SU4evlqU7EbAYvP/3hV5vx
-         L6llixEdSWzR8IXDZa336+q9WWSviYQU+hDXGNpsy32zRbw6tVH22VpEXs071zygXXFD
-         +ThcCdJBBFJ5p8mGrZpIhHlVBgkJ+v0UCNHASWNCKVGjeTFB8jBERDRUJ+EQ/DWYtl9A
-         E5WhM+j+dEdK0JlWjY11/1WBLH9QGyc16MFBLuE983Vos56H1eMjVJUuj6SEiXEkaVg/
-         vhx6JUUgUA8BzWjpDl7fHDZjT2CzevrAVq3xEYriunrq/LnRhgT0xLTn/zwL+sh8Vpru
-         zzeg==
-X-Gm-Message-State: ANoB5pmZEmTKKuLfd6pSiJydFsFEYxoe2kRL2H5mEAG2qAxiKqeAdqu8
-        r/g/OIh3NOnBCT69W3d8hA==
-X-Google-Smtp-Source: AA0mqf71ZDnvJcVvYaHMWcT9ADtsziN74fdU+bu2Y8OC6CWAn6wtqLDgukiurl08AE4CGWhs2VIu8g==
-X-Received: by 2002:a05:6870:1708:b0:13c:59d5:3f5e with SMTP id h8-20020a056870170800b0013c59d53f5emr879353oae.129.1668173424622;
-        Fri, 11 Nov 2022 05:30:24 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id g14-20020a4adc8e000000b004768f725b7csm798456oou.23.2022.11.11.05.30.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Nov 2022 05:30:24 -0800 (PST)
-Received: (nullmailer pid 3073770 invoked by uid 1000);
-        Fri, 11 Nov 2022 13:30:24 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JXM+RlfecQsl8R3fGlmC6x2JLEc2q3nlhhTEJRNAqbQ=;
+        b=VzT2L26o9AJdh7BYq3Zxz/ZhM7FS/1p1uZj1hmNJvA7owfY6I228+PufnReFbmRBhy
+         8OI9MUIldziNXkm5wtXiiEWgjfqUQEE/gJ2VDuQW4hOABoCruelI71+sEHXWVnpXLWm7
+         37tWRwBOLfIYVWEYVE13ZtxcU9NT5Mrt2irllUCDUtejkp7I/SNcIEry/ysVkSb2JK48
+         UNbNXSHgz+yPeNQpMmI4U5L9SLa96qJl1Yg1vSSVigAGEn9/MZrsrZnni8Gk0sfJle8i
+         UY8qmK6e2gQGyqfAiSyFukTU9IQWwMVT0gtac0Z9YbzzvToS0Es268Afk8a07c6LmUMV
+         CnGA==
+X-Gm-Message-State: ANoB5pm6q3NZj9vFlr7bmrgHdH091zSfV6Iwjn3Fu6Z/VpB9zE724Mi/
+        FxVNZfYrIMZagjm4/W9EThlNFMl0GiaRx1vUDkc5/g==
+X-Google-Smtp-Source: AA0mqf6c96jhEwp5IIcqNLzVQh7v/brBFkuXH94v9FZGLFHBvHuFSMAHGSUBmt76nOSVZW30mNXKo7pEKrfyx0BQZrA=
+X-Received: by 2002:aa7:d716:0:b0:461:cdfb:3072 with SMTP id
+ t22-20020aa7d716000000b00461cdfb3072mr1594817edq.56.1668174744060; Fri, 11
+ Nov 2022 05:52:24 -0800 (PST)
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Patrick Lai <plai@qti.qualcomm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Srinivasa Rao Mandadapu <srivasam@qti.qualcomm.com>,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org
-In-Reply-To: <20221111113547.100442-3-krzysztof.kozlowski@linaro.org>
-References: <20221111113547.100442-1-krzysztof.kozlowski@linaro.org>
- <20221111113547.100442-3-krzysztof.kozlowski@linaro.org>
-Message-Id: <166817308876.3060199.17933327732327950670.robh@kernel.org>
-Subject: Re: [PATCH 02/10] ASoC: dt-bindings: qcom,apr: Split services to
- shared schema
-Date:   Fri, 11 Nov 2022 07:30:24 -0600
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+References: <20221028120812.339100-1-robert.foss@linaro.org>
+ <20221028120812.339100-7-robert.foss@linaro.org> <20221028134439.ugja55guopmql4nk@baldur>
+In-Reply-To: <20221028134439.ugja55guopmql4nk@baldur>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Fri, 11 Nov 2022 14:52:12 +0100
+Message-ID: <CAG3jFysvDa7QR5cXZCjHx-28ir40TVngBDUfEy0-Xgo-_jhBmQ@mail.gmail.com>
+Subject: Re: [PATCH v1 6/9] arm64: dts: qcom: sm8350: Use 2 interconnect cells
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
+        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        quic_kalyant@quicinc.com, swboyd@chromium.org,
+        angelogioacchino.delregno@somainline.org, loic.poulain@linaro.org,
+        quic_vpolimer@quicinc.com, vkoul@kernel.org, dianders@chromium.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Jonathan Marek <jonathan@marek.ca>, vinod.koul@linaro.org,
+        quic_jesszhan@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 28 Oct 2022 at 15:44, Bjorn Andersson <andersson@kernel.org> wrote:
+>
+> On Fri, Oct 28, 2022 at 02:08:09PM +0200, Robert Foss wrote:
+> > Use two interconnect cells in order to optionally
+> > support a path tag.
+> >
+> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sm8350.dtsi | 20 ++++++++++----------
+> >  1 file changed, 10 insertions(+), 10 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> > index 606fab087945..b6e44cd3b394 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> > @@ -1543,56 +1543,56 @@ apps_smmu: iommu@15000000 {
+> >               config_noc: interconnect@1500000 {
+> >                       compatible = "qcom,sm8350-config-noc";
+> >                       reg = <0 0x01500000 0 0xa580>;
+> > -                     #interconnect-cells = <1>;
+> > +                     #interconnect-cells = <2>;
+>
+> You also need amend all the interconnects references with the additional
+> tag cell.
 
-On Fri, 11 Nov 2022 12:35:39 +0100, Krzysztof Kozlowski wrote:
-> The APR/GPR nodes are organized like:
-> 
->   apr-or-gpr-device-node <- qcom,apr.yaml
->     apr-gpr-service@[0-9] <- qcom,apr.yaml
->       service-specific-components <- /schemas/sound/qcom,q6*.yaml
-> 
-> The schema for services (apr-gpr-service@[0-9]) already grows
-> considerably and is still quite not specific.  It allows several
-> incorrect combinations, like adding a clock-controller to a APM device.
-> Restricting it would complicate the schema even more.  Bringing new
-> support for sound on Qualcomm SM8450 and SC8280XP SoC would grow it as
-> well.
-> 
-> Simplify the qcom,apr.yaml by splitting the services to a shared file
-> which will be:
-> 1. Referenced by qcom,apr.yaml with additionalProperties:true,
-> 2. Referenced by specific bindings for services with
->    additionalProperties:false (not yet in this commit).
-> 
-> While moving the code, add also required 'reg' and
-> 'qcom,protection-domain' to further constrain the bindings.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../bindings/soc/qcom/qcom,apr-services.yaml  |  54 +++++++++
->  .../bindings/soc/qcom/qcom,apr.yaml           | 108 +-----------------
->  MAINTAINERS                                   |   2 +-
->  3 files changed, 58 insertions(+), 106 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,apr-services.yaml
-> 
+Ack
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/soc/qcom/qcom,apr.example.dtb:0:0: /example-0/apr/service@3: failed to match any schema with compatible: ['qcom,q6core']
-Documentation/devicetree/bindings/soc/qcom/qcom,apr.example.dtb:0:0: /example-0/apr/service@4: failed to match any schema with compatible: ['qcom,q6afe']
-Documentation/devicetree/bindings/soc/qcom/qcom,apr.example.dtb:0:0: /example-0/apr/service@7: failed to match any schema with compatible: ['qcom,q6asm']
-Documentation/devicetree/bindings/soc/qcom/qcom,apr.example.dtb:0:0: /example-0/apr/service@8: failed to match any schema with compatible: ['qcom,q6adm']
-Documentation/devicetree/bindings/soc/qcom/qcom,apr.example.dtb:0:0: /example-1/gpr/service@1: failed to match any schema with compatible: ['qcom,q6apm']
-Documentation/devicetree/bindings/sound/qcom,q6adm-routing.example.dtb:0:0: /example-0/apr/service@8: failed to match any schema with compatible: ['qcom,q6adm']
-Documentation/devicetree/bindings/sound/qcom,q6asm-dais.example.dtb:0:0: /example-0/apr/service@7: failed to match any schema with compatible: ['qcom,q6asm']
-Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-clocks.example.dtb:0:0: /example-0/apr/service@4: failed to match any schema with compatible: ['qcom,q6afe']
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-clocks.example.dtb: gpr: service@2: 'qcom,protection-domain' is a required property
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
-Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-clocks.example.dtb:0:0: /example-1/gpr/service@2: failed to match any schema with compatible: ['qcom,q6prm']
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,q6apm-dai.example.dtb: gpr: service@1: 'qcom,protection-domain' is a required property
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
-Documentation/devicetree/bindings/sound/qcom,q6apm-dai.example.dtb:0:0: /example-0/gpr/service@1: failed to match any schema with compatible: ['qcom,q6apm']
-Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.example.dtb:0:0: /example-0/apr/service@4: failed to match any schema with compatible: ['qcom,q6afe']
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.example.dtb: gpr: service@1: 'qcom,protection-domain' is a required property
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
-Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.example.dtb:0:0: /example-1/gpr/service@1: failed to match any schema with compatible: ['qcom,q6apm']
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+>
+> Regards,
+> Bjorn
+>
+> >                       qcom,bcm-voters = <&apps_bcm_voter>;
+> >               };
+> >
+> >               mc_virt: interconnect@1580000 {
+> >                       compatible = "qcom,sm8350-mc-virt";
+> >                       reg = <0 0x01580000 0 0x1000>;
+> > -                     #interconnect-cells = <1>;
+> > +                     #interconnect-cells = <2>;
+> >                       qcom,bcm-voters = <&apps_bcm_voter>;
+> >               };
+> >
+> >               system_noc: interconnect@1680000 {
+> >                       compatible = "qcom,sm8350-system-noc";
+> >                       reg = <0 0x01680000 0 0x1c200>;
+> > -                     #interconnect-cells = <1>;
+> > +                     #interconnect-cells = <2>;
+> >                       qcom,bcm-voters = <&apps_bcm_voter>;
+> >               };
+> >
+> >               aggre1_noc: interconnect@16e0000 {
+> >                       compatible = "qcom,sm8350-aggre1-noc";
+> >                       reg = <0 0x016e0000 0 0x1f180>;
+> > -                     #interconnect-cells = <1>;
+> > +                     #interconnect-cells = <2>;
+> >                       qcom,bcm-voters = <&apps_bcm_voter>;
+> >               };
+> >
+> >               aggre2_noc: interconnect@1700000 {
+> >                       compatible = "qcom,sm8350-aggre2-noc";
+> >                       reg = <0 0x01700000 0 0x33000>;
+> > -                     #interconnect-cells = <1>;
+> > +                     #interconnect-cells = <2>;
+> >                       qcom,bcm-voters = <&apps_bcm_voter>;
+> >               };
+> >
+> >               mmss_noc: interconnect@1740000 {
+> >                       compatible = "qcom,sm8350-mmss-noc";
+> >                       reg = <0 0x01740000 0 0x1f080>;
+> > -                     #interconnect-cells = <1>;
+> > +                     #interconnect-cells = <2>;
+> >                       qcom,bcm-voters = <&apps_bcm_voter>;
+> >               };
+> >
+> >               lpass_ag_noc: interconnect@3c40000 {
+> >                       compatible = "qcom,sm8350-lpass-ag-noc";
+> >                       reg = <0 0x03c40000 0 0xf080>;
+> > -                     #interconnect-cells = <1>;
+> > +                     #interconnect-cells = <2>;
+> >                       qcom,bcm-voters = <&apps_bcm_voter>;
+> >               };
+> >
+> >               compute_noc: interconnect@a0c0000{
+> >                       compatible = "qcom,sm8350-compute-noc";
+> >                       reg = <0 0x0a0c0000 0 0xa180>;
+> > -                     #interconnect-cells = <1>;
+> > +                     #interconnect-cells = <2>;
+> >                       qcom,bcm-voters = <&apps_bcm_voter>;
+> >               };
+> >
+> > @@ -2420,14 +2420,14 @@ usb_2_ssphy: phy@88ebe00 {
+> >               dc_noc: interconnect@90c0000 {
+> >                       compatible = "qcom,sm8350-dc-noc";
+> >                       reg = <0 0x090c0000 0 0x4200>;
+> > -                     #interconnect-cells = <1>;
+> > +                     #interconnect-cells = <2>;
+> >                       qcom,bcm-voters = <&apps_bcm_voter>;
+> >               };
+> >
+> >               gem_noc: interconnect@9100000 {
+> >                       compatible = "qcom,sm8350-gem-noc";
+> >                       reg = <0 0x09100000 0 0xb4000>;
+> > -                     #interconnect-cells = <1>;
+> > +                     #interconnect-cells = <2>;
+> >                       qcom,bcm-voters = <&apps_bcm_voter>;
+> >               };
+> >
+> > --
+> > 2.34.1
+> >
