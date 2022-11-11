@@ -2,103 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E811625741
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 10:48:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CE5462578F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 11:02:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233338AbiKKJsO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 04:48:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34098 "EHLO
+        id S233153AbiKKKC0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 05:02:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233493AbiKKJsK (ORCPT
+        with ESMTP id S232918AbiKKKCZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 04:48:10 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9D86F015;
-        Fri, 11 Nov 2022 01:48:09 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Fri, 11 Nov 2022 05:02:25 -0500
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6191FB872
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 02:02:24 -0800 (PST)
+Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A76B2B824B3;
-        Fri, 11 Nov 2022 09:48:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50200C43149;
-        Fri, 11 Nov 2022 09:48:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668160087;
-        bh=k7HWwmkJ5Tj0P6Rb2U81O5MNZ1lTYtGf+8AT/P4q3L8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=iBoJ71x9S5lfZTP0sVVv2XlkBss9uRA/cqs+7WyDIOmnq3x1D6V8rY9wK3ZszpdiB
-         p5dwNwkX2pBBqDEs2EnwuuxFxi610EYPMedBKenpJmb4ihq3kY8r+i3V09G1pGBApm
-         2Yi16SzsFrjT6lLi0n8BzVecd+hn/HyWrWuu2Ohie6OWsy+GaFhE2UEyl/yrnUa2zN
-         jAMxVd7PlAeMjJuZ2nDDJiQy2UA3f+n4mfiPFmYhDCLSrbOCmOTuqCPt+PTSDwjCk/
-         V1+ZYI8iJihI+UUHx6D+EsIM97ciodtE81+tTjxxXtbASLALIgBPoxbuS3mmcJH2mw
-         64jzMq7ctaPDw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1otQdP-00035J-6Y; Fri, 11 Nov 2022 10:47:39 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>, stable@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8250: fix USB-DP PHY registers
-Date:   Fri, 11 Nov 2022 10:47:29 +0100
-Message-Id: <20221111094729.11842-3-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.37.4
-In-Reply-To: <20221111094729.11842-1-johan+linaro@kernel.org>
-References: <20221111094729.11842-1-johan+linaro@kernel.org>
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A0E6F3EE66;
+        Fri, 11 Nov 2022 11:02:20 +0100 (CET)
+Date:   Fri, 11 Nov 2022 11:02:18 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Gaosheng Cui <cuigaosheng1@huawei.com>
+Cc:     james.qian.wang@arm.com, liviu.dudau@arm.com,
+        mihail.atanassov@arm.com, brian.starkey@arm.com, airlied@gmail.com,
+        daniel@ffwll.ch, robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run,
+        thierry.reding@gmail.com, sam@ravnborg.org, emma@anholt.net,
+        mripard@kernel.org, vladimir.lypak@gmail.com,
+        quic_akhilpo@quicinc.com, dianders@chromium.org, olvaffe@gmail.com,
+        angelogioacchino.delregno@somainline.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 3/5] drm/msm: Fix IS_ERR_OR_NULL() vs NULL check in
+ msm_icc_get()
+Message-ID: <20221111100218.6h47vtyu67ovda3d@SoMainline.org>
+References: <20221110094445.2930509-1-cuigaosheng1@huawei.com>
+ <20221110094445.2930509-4-cuigaosheng1@huawei.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221110094445.2930509-4-cuigaosheng1@huawei.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When adding support for the DisplayPort part of the QMP PHY the binding
-(and devicetree parser) for the (USB) child node was simply reused and
-this has lead to some confusion.
+On 2022-11-10 17:44:43, Gaosheng Cui wrote:
+> The of_icc_get() function returns NULL or error pointers on error path,
+> so we should use IS_ERR_OR_NULL() to check the return value.
+> 
+> Fixes: 5ccdcecaf8f7 ("drm/msm: lookup the ICC paths in both mdp5/dpu and mdss devices")
+> Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+> ---
+>  drivers/gpu/drm/msm/msm_io_utils.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_io_utils.c b/drivers/gpu/drm/msm/msm_io_utils.c
+> index d02cd29ce829..950083b2f092 100644
+> --- a/drivers/gpu/drm/msm/msm_io_utils.c
+> +++ b/drivers/gpu/drm/msm/msm_io_utils.c
+> @@ -133,7 +133,7 @@ struct icc_path *msm_icc_get(struct device *dev, const char *name)
+>  	struct icc_path *path;
+>  
+>  	path = of_icc_get(dev, name);
+> -	if (path)
+> +	if (IS_ERR_OR_NULL(path))
 
-The third DP register region is really the DP_PHY region, not "PCS" as
-the binding claims, and lie at offset 0x2a00 (not 0x2c00).
+NAK. This path should be returned if it is NON-NULL, otherwise we defer
+to of_icc_get() on the parent device.  See the code-comment below.
 
-Similarly, there likely are no "RX", "RX2" or "PCS_MISC" regions as
-there are for the USB part of the PHY (and in any case the Linux driver
-does not use them).
+- Marijn
 
-Note that the sixth "PCS_MISC" region is not even in the binding.
-
-Fixes: 5aa0d1becd5b ("arm64: dts: qcom: sm8250: switch usb1 qmp phy to USB3+DP mode")
-Cc: stable@vger.kernel.org      # 5.13
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 52686f963dfc..0e86ed688fc2 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2891,10 +2891,9 @@ usb_1_ssphy: usb3-phy@88e9200 {
- 			dp_phy: dp-phy@88ea200 {
- 				reg = <0 0x088ea200 0 0x200>,
- 				      <0 0x088ea400 0 0x200>,
--				      <0 0x088eac00 0 0x400>,
-+				      <0 0x088eaa00 0 0x200>,
- 				      <0 0x088ea600 0 0x200>,
--				      <0 0x088ea800 0 0x200>,
--				      <0 0x088eaa00 0 0x100>;
-+				      <0 0x088ea800 0 0x200>;
- 				#phy-cells = <0>;
- 				#clock-cells = <1>;
- 			};
--- 
-2.37.4
-
+>  		return path;
+>  
+>  	/*
+> -- 
+> 2.25.1
+> 
