@@ -2,108 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EA40626313
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 21:40:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D1FD626351
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 21:59:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234506AbiKKUk2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 15:40:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34480 "EHLO
+        id S234146AbiKKU74 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 15:59:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231840AbiKKUk0 (ORCPT
+        with ESMTP id S231300AbiKKU74 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 15:40:26 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC3A183BBA;
-        Fri, 11 Nov 2022 12:40:25 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Fri, 11 Nov 2022 15:59:56 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B7B77BE71;
+        Fri, 11 Nov 2022 12:59:55 -0800 (PST)
+Received: from [192.168.2.108] (unknown [109.252.117.140])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 288EF620EA;
-        Fri, 11 Nov 2022 20:40:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8BC8C433C1;
-        Fri, 11 Nov 2022 20:40:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668199224;
-        bh=7WEo0XEdF37ad3EKSE0JnRvIRzSv8as0e854gPjKdVs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=gS9iygnD8njjdMi9uvK01Y9cMjjVNQSpj3WQldG5XseUPMgMhAmebjMBmKPe1bvn7
-         Xw4ZmqaUPhBUpRgFsrHJfzAlTh9t62zJ88V8D+2Knp5VDYD/MZ9kraYoMixooNXB50
-         7r+q0ano1GSTBnsUJTPLF8T2Cta/I71/yNqdTIQQaMTsbPRL7tn/SrMjL5C9PpOJBK
-         0dYCN/LBqIgyacmGf8HzQ4mU5A+hzCDxBx6ObVVrry2usrGXsgAe2kzZR337bBgd4c
-         he1HYE6jo+YIYwsw07r0cnGw4FFx40dFKsgbPzgTGmFcCBaGRU7lF3fFTHf6eGt2UU
-         g8O3Y7EET5Tgg==
-Date:   Fri, 11 Nov 2022 14:40:21 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 6/9] arm64: dts: qcom: sc8280xp-crd: enable WiFi
- controller
-Message-ID: <20221111204021.myjms5c2rntu4a76@builder.lan>
-References: <20221110103558.12690-1-johan+linaro@kernel.org>
- <20221110103558.12690-7-johan+linaro@kernel.org>
- <20221110113513.GA18247@thinkpad>
- <Y254AvMKyDQ+tY0q@hovoldconsulting.com>
+        (Authenticated sender: dmitry.osipenko)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 5CDA66602A68;
+        Fri, 11 Nov 2022 20:59:50 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1668200392;
+        bh=TrKdFBPru086RSsfc5wIzyFVxFZ3a1YCkJzhICjKkFM=;
+        h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+        b=kTzmPkaJO6D9W0IEssnpVYn8a0dml3ZRppn1qMWG4J42UsMw0cTQn/a79AsEqsy6X
+         QMrYQYyC8OxRUVB5zQFJrKCVAXk0bJ8lzcA/P1uBAGVtFYj/6P3E36H7NotZfUXQlA
+         m2J00IbXu60OvZGQx0RMmb7M4IIYhWVFKyaPRVOkHD/eqZ5Wfj3ySQg/WI6Ad+DAef
+         nPvkNldq/VIa3A2nmhJSI7PnY0IhPvdxhv49NeWamYwI+4Mfs5X4K69Hy0Kql9cqfk
+         7XBjipx8WNWslnDHQMpiUXQCpO0KfknfBszxAN5doYyGy+65O+6Y9l+KzgTo5o0jdg
+         3B3qBv+X+50cg==
+Message-ID: <b4dd0426-05fc-e33e-66b1-a2131c8c47dc@collabora.com>
+Date:   Fri, 11 Nov 2022 23:59:47 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y254AvMKyDQ+tY0q@hovoldconsulting.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Subject: Re: [PATCH v1 0/6] Move dma_buf_mmap_internal() to dynamic locking
+ specification
+Content-Language: en-US
+From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To:     Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        Liam Mark <lmark@codeaurora.org>,
+        Brian Starkey <Brian.Starkey@arm.com>,
+        John Stultz <jstultz@google.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>
+Cc:     linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        kernel@collabora.com
+References: <20221110201349.351294-1-dmitry.osipenko@collabora.com>
+In-Reply-To: <20221110201349.351294-1-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 11, 2022 at 05:27:46PM +0100, Johan Hovold wrote:
-> On Thu, Nov 10, 2022 at 05:05:13PM +0530, Manivannan Sadhasivam wrote:
-> > On Thu, Nov 10, 2022 at 11:35:55AM +0100, Johan Hovold wrote:
-> > > Enable the Qualcomm QCNFA765 Wireless Network Adapter connected to
-> > > PCIe4.
-> > > 
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 65 +++++++++++++++++++++++
-> > >  1 file changed, 65 insertions(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> > > index 5b9e37a16f9f..ab5b0aadeead 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> > > @@ -81,6 +81,22 @@ vreg_misc_3p3: regulator-misc-3p3 {
-> > >  		regulator-always-on;
-> > >  	};
-> > >  
-> > > +	vreg_wlan: regulator-wlan {
-> > > +		compatible = "regulator-fixed";
-> > > +
-> > > +		regulator-name = "VCC_WLAN_3R9";
-> > > +		regulator-min-microvolt = <3900000>;
-> > > +		regulator-max-microvolt = <3900000>;
-> > > +
-> > > +		gpio = <&pmr735a_gpios 1 GPIO_ACTIVE_HIGH>;
-> > > +		enable-active-high;
-> > > +
-> > > +		pinctrl-names = "default";
-> > > +		pinctrl-0 = <&hastings_reg_en>;
-> > 
-> > Hastings is the family name of QCA639x WLAN chipsets. I don't think it would be
-> > applicable here. Please use "wlan_reg_en" as that matches the convention used
-> > throughout this file.
+On 11/10/22 23:13, Dmitry Osipenko wrote:
+> Hello,
 > 
-> The pin name here comes from the schematics, which is what we should use
-> for naming when we can.
+> Recently, dma-buf got a common locking convention for importers and
+> exporters. All the dma-buf functions were moved to the new locking
+> convention, apart from the dma_buf_mmap_internal() that was missed out
+> by accident. This series moves dma_buf_mmap_internal() to the dynamic
+> locking specification and updates drivers that support mmaping of
+> dma-bufs to use the debug-assert of the lock.
+> 
+> Thanks to Daniel Vetter for spotting the missed function!
+> 
+> Dmitry Osipenko (6):
+>   dma-buf: Move dma_buf_mmap_internal() to dynamic locking specification
+>   drm: Assert held reservation lock for dma-buf mmapping
+>   udmabuf: Assert held reservation lock for dma-buf mmapping
+>   dma-buf/heaps: Assert held reservation lock for dma-buf mmapping
+>   media: videobuf2: Assert held reservation lock for dma-buf mmapping
+>   fastrpc: Assert held reservation lock for dma-buf mmapping
+> 
+>  drivers/dma-buf/dma-buf.c                             | 7 ++++++-
+>  drivers/dma-buf/heaps/cma_heap.c                      | 3 +++
+>  drivers/dma-buf/heaps/system_heap.c                   | 3 +++
+>  drivers/dma-buf/udmabuf.c                             | 3 +++
+>  drivers/gpu/drm/drm_prime.c                           | 2 ++
+>  drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c            | 2 ++
+>  drivers/gpu/drm/omapdrm/omap_gem_dmabuf.c             | 2 ++
+>  drivers/gpu/drm/tegra/gem.c                           | 2 ++
+>  drivers/media/common/videobuf2/videobuf2-dma-contig.c | 3 +++
+>  drivers/media/common/videobuf2/videobuf2-dma-sg.c     | 3 +++
+>  drivers/media/common/videobuf2/videobuf2-vmalloc.c    | 3 +++
+>  drivers/misc/fastrpc.c                                | 3 +++
+>  12 files changed, 35 insertions(+), 1 deletion(-)
 > 
 
-Following the naming in the schematics is the right thing to do.
+Applied to drm-misc-next
 
-Regards,
-Bjorn
+-- 
+Best regards,
+Dmitry
+
