@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C6A5862556B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 09:36:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E307F62556F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 09:37:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232877AbiKKIgB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 03:36:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56426 "EHLO
+        id S233242AbiKKIhH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 03:37:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232614AbiKKIf7 (ORCPT
+        with ESMTP id S233212AbiKKIhD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 03:35:59 -0500
+        Fri, 11 Nov 2022 03:37:03 -0500
 Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2021E63142
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 00:35:58 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id bp15so7282500lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 00:35:58 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 895E86315A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 00:37:02 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id j4so7414054lfk.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 00:37:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=twgHmIPH9il7il5wbqgTra+YIwMN83kWBZp7hPMXf2w=;
-        b=FVxWsRl4Kvf+vS3Y4w9Gu1eXDiw5q5d6pHyvGRxI+mXJBSW2j/Ll7z5OoouutImAlK
-         d2lfqSM/radzGvAlV1o2SK6EkOfFU+dTG6rFVAKF2JJGqA+JYSrd45J8vcig0bgWrNep
-         rEKQlIZEJ7K7W8B++EIpU73XtR269vhTE31kIn9+r3C+5B8EHFatUrguyEKSmFspgexj
-         b7pV2wTwImPQRvTLac9p2ywf0D6OSkcutPC60xYkEuW9+N0RdVYQGVupgQqmQlhL7XjV
-         nAHIfV9IiAHn3W5mcA5/UJK4TB97y8+a+0i+YPNXlQ9bOkQ52vw4DVw112AGhXAKWrnd
-         b9PQ==
+        bh=8rUBEcHbs/F0HT8odG0ezJDK7pXeDb8dy84o7pdHdqA=;
+        b=fPuWjo9Oy0xjUyK5FX3r02t8rQPNZ35FMRT7PS1iux7AQ2LCdt4tgALNAC1MDXCjag
+         ML9iPHR3DG/Af+w8cZwcrsL9SwyCWmBC46E7wmfD9Of+i2a0pn/4rowSm0H4YD+sd0X3
+         jxXStxEsXGvbV7SNoX74MuQRZIlPjIL+5bYwGfvIQcVVO+dBOvZhyvmhAUb9U4HHL++v
+         rs0+6A9Mwe7b25HtSh32FFyt+1/TAfrWykGiofRZRez77c9eYSouu1yCVIOwO97J50S1
+         N73qDBBkH89PVc/B9oYfSBfM+SDhuOs4IGL1jh0Qk2G8EuC+shJRWuio19apynVjMDYv
+         0dVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=twgHmIPH9il7il5wbqgTra+YIwMN83kWBZp7hPMXf2w=;
-        b=UqkC+nFMfN4GQnLicQgElE3LYUzTvJfO30WvfWb8d3xhgzDCd0Any3Jc4m8hQN0bUP
-         r8On7o9fAvdDUJbpn5xgZlgCs3RGVrEpX7beH7A8FIZ8tv0OIuGipVtaQct/CusTJED/
-         0ivx5dpjJxlQSiGQxcrF63yYKrRuRkROktQ7965Hy9jOMXiiseQZAt42S+YBX3A0PKhe
-         KlmmyOeATIX5plRfG2rbGbT+Tz/a1qLuMIf+boTEXNGOhc5uHkP4GLu+tSikevQzhTWP
-         Gl8ZM/lfNyprKH/kITieh5pOfLn6AxF/9Az8GJGsULk8mLR2dvGgpjXbXzhE0fhMpWHx
-         YgOw==
-X-Gm-Message-State: ANoB5pmtIhpjUxtCOSgw39BuMzmJRhVD27EHAfytKEupVTAD+Q2JvWnY
-        qvcz3lQKHTAxwpQNonh/46mygg==
-X-Google-Smtp-Source: AA0mqf60iJpcrCMeahPcVkfeMPwgzC+qBrMypg018HfvSO7QD+mOoz8pMAfYCPhQ0s2W7nN55HmYlA==
-X-Received: by 2002:a05:6512:252c:b0:4aa:bad8:9b5d with SMTP id be44-20020a056512252c00b004aabad89b5dmr387326lfb.540.1668155756533;
-        Fri, 11 Nov 2022 00:35:56 -0800 (PST)
+        bh=8rUBEcHbs/F0HT8odG0ezJDK7pXeDb8dy84o7pdHdqA=;
+        b=sSID0gaRl6q6z3KjNx91Ax6iUzn7BXwGkAGB+OmGJ1sosFtUo6yw6uvubLEh2SNpt0
+         mnfBqgsn4N3WD6uTDw9Tj7mxpGbFKIG1Wny2pVdJl+e6B/ZiQgxl4fudpW0820szAvhd
+         nzwI8hVGnxZ9ANsxJDwoug1/+LM6J9yRfBwrBM7wcloc3RWuTT/5GNFweeCkIMxU7/Vo
+         sOrN60GipnZa5nxqLid817DGZdph8tx7skNkiSbbbBsyDz7F7c031qFXX5dnW0FPoo28
+         MNXxUHa7FY88ennGXyaIl354CR9fgJ36wdx49BqxaIAOzCY/pDx+bl+plqkuJWAAdxt2
+         RqEg==
+X-Gm-Message-State: ANoB5pkTFDQg/aiBVrofK54paOikTGeue6uneAyWc96a6O+GJX0i2xwM
+        OiF5HzU1sAgLK8n+bkSkTlulgA==
+X-Google-Smtp-Source: AA0mqf4qFhHk8uSIrPbd/RlUqh9/stHjBF8Qhw2dAKKjm6Fc2yhZKsq25Op3IUnJSftTA21vobdlBg==
+X-Received: by 2002:a05:6512:298f:b0:4a4:5e83:e07d with SMTP id du15-20020a056512298f00b004a45e83e07dmr384605lfb.409.1668155820961;
+        Fri, 11 Nov 2022 00:37:00 -0800 (PST)
 Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
-        by smtp.gmail.com with ESMTPSA id h28-20020a2eb0fc000000b0027741daec09sm269129ljl.107.2022.11.11.00.35.55
+        by smtp.gmail.com with ESMTPSA id m21-20020a05651202f500b004b01305732bsm213360lfq.216.2022.11.11.00.36.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Nov 2022 00:35:55 -0800 (PST)
-Message-ID: <9918fb9d-b5d8-1521-8f16-bcc7362d2138@linaro.org>
-Date:   Fri, 11 Nov 2022 09:35:55 +0100
+        Fri, 11 Nov 2022 00:36:59 -0800 (PST)
+Message-ID: <3e313f07-4d14-bd49-d2d5-05165ee69b3a@linaro.org>
+Date:   Fri, 11 Nov 2022 09:36:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH v2 09/10] dt-bindings: interconnect: qcom,msm8998-bwmon:
- Add sc8280xp bwmon instances
+Subject: Re: [PATCH v2 05/10] dt-bindings: interconnect: Add sm8350, sc8280xp
+ and generic OSM L3 compatibles
 Content-Language: en-US
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Georgi Djakov <djakov@kernel.org>,
@@ -69,15 +69,14 @@ Cc:     Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20221111032515.3460-1-quic_bjorande@quicinc.com>
- <20221111032515.3460-10-quic_bjorande@quicinc.com>
+ <20221111032515.3460-6-quic_bjorande@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221111032515.3460-10-quic_bjorande@quicinc.com>
+In-Reply-To: <20221111032515.3460-6-quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,13 +84,12 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 11/11/2022 04:25, Bjorn Andersson wrote:
-> The sc8280xp platform has two BWMON instances, one v4 and one v5. Extend
-> the existing qcom,msm8998-bwmon and qcom,sc7280-llcc-bwmon to describe
-> these.
+> Add EPSS L3 compatibles for sm8350 and sc8280xp, but while at it also
+> introduce generic compatible for both qcom,osm-l3 and qcom,epss-l3.
 > 
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > Tested-by: Steev Klimaszewski <steev@kali.org>
-
+> ---
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
