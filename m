@@ -2,120 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D1FD626351
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 21:59:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 680ED626364
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 22:09:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234146AbiKKU74 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 15:59:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43374 "EHLO
+        id S233900AbiKKVJC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 16:09:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231300AbiKKU74 (ORCPT
+        with ESMTP id S233225AbiKKVJB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 15:59:56 -0500
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B7B77BE71;
-        Fri, 11 Nov 2022 12:59:55 -0800 (PST)
-Received: from [192.168.2.108] (unknown [109.252.117.140])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: dmitry.osipenko)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 5CDA66602A68;
-        Fri, 11 Nov 2022 20:59:50 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1668200392;
-        bh=TrKdFBPru086RSsfc5wIzyFVxFZ3a1YCkJzhICjKkFM=;
-        h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-        b=kTzmPkaJO6D9W0IEssnpVYn8a0dml3ZRppn1qMWG4J42UsMw0cTQn/a79AsEqsy6X
-         QMrYQYyC8OxRUVB5zQFJrKCVAXk0bJ8lzcA/P1uBAGVtFYj/6P3E36H7NotZfUXQlA
-         m2J00IbXu60OvZGQx0RMmb7M4IIYhWVFKyaPRVOkHD/eqZ5Wfj3ySQg/WI6Ad+DAef
-         nPvkNldq/VIa3A2nmhJSI7PnY0IhPvdxhv49NeWamYwI+4Mfs5X4K69Hy0Kql9cqfk
-         7XBjipx8WNWslnDHQMpiUXQCpO0KfknfBszxAN5doYyGy+65O+6Y9l+KzgTo5o0jdg
-         3B3qBv+X+50cg==
-Message-ID: <b4dd0426-05fc-e33e-66b1-a2131c8c47dc@collabora.com>
-Date:   Fri, 11 Nov 2022 23:59:47 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH v1 0/6] Move dma_buf_mmap_internal() to dynamic locking
- specification
-Content-Language: en-US
-From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To:     Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        Liam Mark <lmark@codeaurora.org>,
-        Brian Starkey <Brian.Starkey@arm.com>,
-        John Stultz <jstultz@google.com>,
-        Gerd Hoffmann <kraxel@redhat.com>,
+        Fri, 11 Nov 2022 16:09:01 -0500
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13CD31260B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 13:09:00 -0800 (PST)
+Received: by mail-qk1-x734.google.com with SMTP id x18so3728092qki.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 13:09:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=joelfernandes.org; s=google;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bROYZrzq8ksP4Ro+JNVkWP32z7zm0wBccnD8PyVknkk=;
+        b=nnNe6gIiX2oaJmMb0Zf+A6eMK1xh+WidduaPO1APzWsmzR/WCGTZvKoC2MFvWTC5yQ
+         lzF5sfanzcorSiYUaKg0niNGR66cSg8vwCgaur30DRHNRQy0pmAfjBA9867XTLqgo2P0
+         +S70VUtDTDMX7CutNc/jmMmE8OXtIhYKQvuV8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bROYZrzq8ksP4Ro+JNVkWP32z7zm0wBccnD8PyVknkk=;
+        b=ymqHYlW9C04IG/+a1yIhPpKAKSdz/zBa5+42O27GKFfMyCjPwB5SVeeeFL0dV+aqBI
+         GhipAG31i03VEp3RXcCllHnI8t9F0BZtrxpzF0B5QAasGVjww2X5N7+OMCMnKMcYagl7
+         Z8phyOkNw1rMCXQKwzIAMju1k8BGz5dEghZte70Ex9hXA0MK4ByeXjPHPCrualsw+eSP
+         J4W2X2ImhQ7KqlF6yRl4gb3pQ0ZqLjlgzmUp9ROhaNWoEOTO0PSf2eekKqO+xFibrRU1
+         /fpIARyBBctOVEDDy3Pdqfcp96PgOU3AlHKXsgcXKijEBLu/GmC6l72nqqTaI5cgX0DV
+         VxAA==
+X-Gm-Message-State: ANoB5pniGfUsZOHeRNv0uwLfvsi8NbixMEx0+4+gaic/jty9ifjd7G8B
+        gE3PeLwlQHhWkQgrX8TPspEFVQ==
+X-Google-Smtp-Source: AA0mqf64fIUX0YyuVZ6OqIhrI44mQQVYhld8dPGWlO9tJrLDTHPJl6XGChWD9oWvVJnXwRNZtzEcJw==
+X-Received: by 2002:a37:8004:0:b0:6fa:26d8:77d with SMTP id b4-20020a378004000000b006fa26d8077dmr2806945qkd.354.1668200939133;
+        Fri, 11 Nov 2022 13:08:59 -0800 (PST)
+Received: from smtpclient.apple (c-73-148-104-166.hsd1.va.comcast.net. [73.148.104.166])
+        by smtp.gmail.com with ESMTPSA id x28-20020a05620a01fc00b006ed30a8fb21sm1948568qkn.76.2022.11.11.13.08.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Nov 2022 13:08:57 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From:   Joel Fernandes <joel@joelfernandes.org>
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH 1/2] adreno: Shutdown the GPU properly
+Date:   Fri, 11 Nov 2022 16:08:56 -0500
+Message-Id: <B336E259-FB18-4E16-8BC7-2117614ABE4D@joelfernandes.org>
+References: <20221111194957.4046771-1-joel@joelfernandes.org>
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Ricardo Ribalda <ribalda@chromium.org>,
+        Ross Zwisler <zwisler@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>
-Cc:     linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        kernel@collabora.com
-References: <20221110201349.351294-1-dmitry.osipenko@collabora.com>
-In-Reply-To: <20221110201349.351294-1-dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        David Airlie <airlied@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        dri-devel@lists.freedesktop.org, Emma Anholt <emma@anholt.net>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>
+In-Reply-To: <20221111194957.4046771-1-joel@joelfernandes.org>
+To:     linux-kernel@vger.kernel.org
+X-Mailer: iPhone Mail (19G82)
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/10/22 23:13, Dmitry Osipenko wrote:
-> Hello,
-> 
-> Recently, dma-buf got a common locking convention for importers and
-> exporters. All the dma-buf functions were moved to the new locking
-> convention, apart from the dma_buf_mmap_internal() that was missed out
-> by accident. This series moves dma_buf_mmap_internal() to the dynamic
-> locking specification and updates drivers that support mmaping of
-> dma-bufs to use the debug-assert of the lock.
-> 
-> Thanks to Daniel Vetter for spotting the missed function!
-> 
-> Dmitry Osipenko (6):
->   dma-buf: Move dma_buf_mmap_internal() to dynamic locking specification
->   drm: Assert held reservation lock for dma-buf mmapping
->   udmabuf: Assert held reservation lock for dma-buf mmapping
->   dma-buf/heaps: Assert held reservation lock for dma-buf mmapping
->   media: videobuf2: Assert held reservation lock for dma-buf mmapping
->   fastrpc: Assert held reservation lock for dma-buf mmapping
-> 
->  drivers/dma-buf/dma-buf.c                             | 7 ++++++-
->  drivers/dma-buf/heaps/cma_heap.c                      | 3 +++
->  drivers/dma-buf/heaps/system_heap.c                   | 3 +++
->  drivers/dma-buf/udmabuf.c                             | 3 +++
->  drivers/gpu/drm/drm_prime.c                           | 2 ++
->  drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c            | 2 ++
->  drivers/gpu/drm/omapdrm/omap_gem_dmabuf.c             | 2 ++
->  drivers/gpu/drm/tegra/gem.c                           | 2 ++
->  drivers/media/common/videobuf2/videobuf2-dma-contig.c | 3 +++
->  drivers/media/common/videobuf2/videobuf2-dma-sg.c     | 3 +++
->  drivers/media/common/videobuf2/videobuf2-vmalloc.c    | 3 +++
->  drivers/misc/fastrpc.c                                | 3 +++
->  12 files changed, 35 insertions(+), 1 deletion(-)
-> 
 
-Applied to drm-misc-next
 
--- 
-Best regards,
-Dmitry
+> On Nov 11, 2022, at 2:50 PM, Joel Fernandes (Google) <joel@joelfernandes.o=
+rg> wrote:
+>=20
+> =EF=BB=BFDuring kexec on ARM device, we notice that device_shutdown() only=
+ calls
+> pm_runtime_force_suspend() while shutting down the GPU. This means the GPU=
 
+> kthread is still running and further, there maybe active submits.
+>=20
+> This causes all kinds of issues during a kexec reboot:
+>=20
+> Warning from shutdown path:
+>=20
+> [  292.509662] WARNING: CPU: 0 PID: 6304 at [...] adreno_runtime_suspend+0=
+x3c/0x44
+> [  292.509863] Hardware name: Google Lazor (rev3 - 8) with LTE (DT)
+> [  292.509872] pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=
+=3D--)
+> [  292.509881] pc : adreno_runtime_suspend+0x3c/0x44
+> [  292.509891] lr : pm_generic_runtime_suspend+0x30/0x44
+> [  292.509905] sp : ffffffc014473bf0
+> [...]
+> [  292.510043] Call trace:
+> [  292.510051]  adreno_runtime_suspend+0x3c/0x44
+> [  292.510061]  pm_generic_runtime_suspend+0x30/0x44
+> [  292.510071]  pm_runtime_force_suspend+0x54/0xc8
+> [  292.510081]  adreno_shutdown+0x1c/0x28
+> [  292.510090]  platform_shutdown+0x2c/0x38
+> [  292.510104]  device_shutdown+0x158/0x210
+> [  292.510119]  kernel_restart_prepare+0x40/0x4c
+>=20
+> And here from GPU kthread, an SError OOPs:
+>=20
+> [  192.648789]  el1h_64_error+0x7c/0x80
+> [  192.648812]  el1_interrupt+0x20/0x58
+> [  192.648833]  el1h_64_irq_handler+0x18/0x24
+> [  192.648854]  el1h_64_irq+0x7c/0x80
+> [  192.648873]  local_daif_inherit+0x10/0x18
+> [  192.648900]  el1h_64_sync_handler+0x48/0xb4
+> [  192.648921]  el1h_64_sync+0x7c/0x80
+> [  192.648941]  a6xx_gmu_set_oob+0xbc/0x1fc
+> [  192.648968]  a6xx_hw_init+0x44/0xe38
+> [  192.648991]  msm_gpu_hw_init+0x48/0x80
+> [  192.649013]  msm_gpu_submit+0x5c/0x1a8
+> [  192.649034]  msm_job_run+0xb0/0x11c
+> [  192.649058]  drm_sched_main+0x170/0x434
+> [  192.649086]  kthread+0x134/0x300
+> [  192.649114]  ret_from_fork+0x10/0x20
+>=20
+> Fix by calling adreno_system_suspend() in the device_shutdown() path.
+>=20
+> Cc: Rob Clark <robdclark@chromium.org>
+> Cc: Steven Rostedt <rostedt@goodmis.org>
+> Cc: Ricardo Ribalda <ribalda@chromium.org>
+> Cc: Ross Zwisler <zwisler@kernel.org>
+> Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+> ---
+> drivers/gpu/drm/msm/adreno/adreno_device.c | 5 ++++-
+> 1 file changed, 4 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/=
+msm/adreno/adreno_device.c
+> index 24b489b6129a..f0cff62812c3 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -607,9 +607,12 @@ static int adreno_remove(struct platform_device *pdev=
+)
+>    return 0;
+> }
+>=20
+> +static int adreno_system_suspend(struct device *dev);
+> static void adreno_shutdown(struct platform_device *pdev)
+> {
+> -    pm_runtime_force_suspend(&pdev->dev);
+> +    struct msm_gpu *gpu =3D dev_to_gpu(&pdev->dev);
+> +
+
+This local variable definition should go to patch 2/2. Will fix in v2.
+
+Thanks,
+
+ - Joel
+
+
+> +    WARN_ON_ONCE(adreno_system_suspend(&pdev->dev));
+> }
+>=20
+> static const struct of_device_id dt_match[] =3D {
+> --=20
+> 2.38.1.493.g58b659f92b-goog
+>=20
