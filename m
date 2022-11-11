@@ -2,67 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E5A0625B35
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 14:30:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C1181625B38
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 14:30:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233969AbiKKNa0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 08:30:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46540 "EHLO
+        id S233900AbiKKNa1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 08:30:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233967AbiKKNaY (ORCPT
+        with ESMTP id S233829AbiKKNa0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 08:30:24 -0500
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E21A66035E;
-        Fri, 11 Nov 2022 05:30:23 -0800 (PST)
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-13bd2aea61bso5475962fac.0;
-        Fri, 11 Nov 2022 05:30:23 -0800 (PST)
+        Fri, 11 Nov 2022 08:30:26 -0500
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6395460359;
+        Fri, 11 Nov 2022 05:30:25 -0800 (PST)
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-13c2cfd1126so5395096fac.10;
+        Fri, 11 Nov 2022 05:30:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=date:subject:message-id:references:in-reply-to:cc:to:from
          :mime-version:content-transfer-encoding:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=oN/OJ/Hi5zpbBCRFQ/GdYDUjCbgG4tvmpft/DiCNH/Y=;
-        b=r/S4XIy9DVfyHatnGr7Sphuvglw3TRdXx/eOdyecNcl9Iq6S2/WFoyhULv0e0ZIPli
-         tsXc8mhPC7ic3vlsYd7+gQpzN9qZjDg/iLMx6p/PYjmcNk7dubL8aUvqzaFfDqQCYhOH
-         FN1yfhUXxhh5kx9jGEYIIZzJy9zCDig2Z5IQyPIAqOmhgMolnzw6md40RTwrGqZxzZb8
-         ZMjYQpbSPVFo5phksDS7b0KmgbhHM1ZJS6MljDmiuFNDFXcGBi4TtFetsc1+XtwXZe57
-         ltcBagvQr9hABVzxtICLGh8+iax+finUdDU6lMs8UwxIyW/Kxk1pgfwCBrExSy48QJtJ
-         hOSA==
-X-Gm-Message-State: ANoB5pn0c3wLT4sQJaMfsH++SD12Z5qnUsL1kWUQ306exNb/iFEHaeHD
-        nqcw3vqN+H3cNIwovZzBByDa9o0Zrg==
-X-Google-Smtp-Source: AA0mqf6lMRZgX0pEcYG9YMsnrIHWktD7j72B9DQqtMKpSchtIooro6x+NpPfiOK3qEo/URWNngPDFw==
-X-Received: by 2002:a05:6870:3e0b:b0:13a:eee0:199a with SMTP id lk11-20020a0568703e0b00b0013aeee0199amr854823oab.61.1668173422972;
-        Fri, 11 Nov 2022 05:30:22 -0800 (PST)
+        bh=Lo2p58cHEgV1SDnl6XTUQGUtHBgdDU1qqKkHovtNXaI=;
+        b=49nrLbtqNjWXh0EjGzONm/Hug+gI8EVajt5pYYFtcQ82SU4evlqU7EbAYvP/3hV5vx
+         L6llixEdSWzR8IXDZa336+q9WWSviYQU+hDXGNpsy32zRbw6tVH22VpEXs071zygXXFD
+         +ThcCdJBBFJ5p8mGrZpIhHlVBgkJ+v0UCNHASWNCKVGjeTFB8jBERDRUJ+EQ/DWYtl9A
+         E5WhM+j+dEdK0JlWjY11/1WBLH9QGyc16MFBLuE983Vos56H1eMjVJUuj6SEiXEkaVg/
+         vhx6JUUgUA8BzWjpDl7fHDZjT2CzevrAVq3xEYriunrq/LnRhgT0xLTn/zwL+sh8Vpru
+         zzeg==
+X-Gm-Message-State: ANoB5pmZEmTKKuLfd6pSiJydFsFEYxoe2kRL2H5mEAG2qAxiKqeAdqu8
+        r/g/OIh3NOnBCT69W3d8hA==
+X-Google-Smtp-Source: AA0mqf71ZDnvJcVvYaHMWcT9ADtsziN74fdU+bu2Y8OC6CWAn6wtqLDgukiurl08AE4CGWhs2VIu8g==
+X-Received: by 2002:a05:6870:1708:b0:13c:59d5:3f5e with SMTP id h8-20020a056870170800b0013c59d53f5emr879353oae.129.1668173424622;
+        Fri, 11 Nov 2022 05:30:24 -0800 (PST)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id t127-20020a4a5485000000b0049b17794d19sm794048ooa.20.2022.11.11.05.30.21
+        by smtp.gmail.com with ESMTPSA id g14-20020a4adc8e000000b004768f725b7csm798456oou.23.2022.11.11.05.30.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Nov 2022 05:30:22 -0800 (PST)
-Received: (nullmailer pid 3073765 invoked by uid 1000);
+        Fri, 11 Nov 2022 05:30:24 -0800 (PST)
+Received: (nullmailer pid 3073770 invoked by uid 1000);
         Fri, 11 Nov 2022 13:30:24 -0000
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
 From:   Rob Herring <robh@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>,
-        Andy Gross <agross@kernel.org>
-In-Reply-To: <20221111092457.10546-3-johan+linaro@kernel.org>
-References: <20221111092457.10546-1-johan+linaro@kernel.org>
- <20221111092457.10546-3-johan+linaro@kernel.org>
-Message-Id: <166817308692.3060117.13177587252682485028.robh@kernel.org>
-Subject: Re: [PATCH 02/14] dt-bindings: phy: qcom,qmp-usb3-dp: fix sc8280xp bindings
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Patrick Lai <plai@qti.qualcomm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Srinivasa Rao Mandadapu <srivasam@qti.qualcomm.com>,
+        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org
+In-Reply-To: <20221111113547.100442-3-krzysztof.kozlowski@linaro.org>
+References: <20221111113547.100442-1-krzysztof.kozlowski@linaro.org>
+ <20221111113547.100442-3-krzysztof.kozlowski@linaro.org>
+Message-Id: <166817308876.3060199.17933327732327950670.robh@kernel.org>
+Subject: Re: [PATCH 02/10] ASoC: dt-bindings: qcom,apr: Split services to
+ shared schema
 Date:   Fri, 11 Nov 2022 07:30:24 -0600
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -70,69 +77,62 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Fri, 11 Nov 2022 10:24:45 +0100, Johan Hovold wrote:
-> The current QMP USB3-DP PHY bindings are based on the original MSM8996
-> binding which provided multiple PHYs per IP block and these in turn were
-> described by child nodes.
+On Fri, 11 Nov 2022 12:35:39 +0100, Krzysztof Kozlowski wrote:
+> The APR/GPR nodes are organized like:
 > 
-> The QMP USB3-DP PHY block provides a single multi-protocol PHY and even
-> if some resources are only used by either the USB or DP part of the
-> device there is no real benefit in describing these resources in child
-> nodes.
+>   apr-or-gpr-device-node <- qcom,apr.yaml
+>     apr-gpr-service@[0-9] <- qcom,apr.yaml
+>       service-specific-components <- /schemas/sound/qcom,q6*.yaml
 > 
-> The original MSM8996 binding also ended up describing the individual
-> register blocks as belonging to either the wrapper node or the PHY child
-> nodes.
+> The schema for services (apr-gpr-service@[0-9]) already grows
+> considerably and is still quite not specific.  It allows several
+> incorrect combinations, like adding a clock-controller to a APM device.
+> Restricting it would complicate the schema even more.  Bringing new
+> support for sound on Qualcomm SM8450 and SC8280XP SoC would grow it as
+> well.
 > 
-> This is an unnecessary level of detail which has lead to problems when
-> later IP blocks using different register layouts have been forced to fit
-> the original mould rather than updating the binding. The bindings are
-> arguable also incomplete as they only the describe register blocks used
-> by the current Linux drivers (e.g. does not include the PCS LANE
-> registers).
+> Simplify the qcom,apr.yaml by splitting the services to a shared file
+> which will be:
+> 1. Referenced by qcom,apr.yaml with additionalProperties:true,
+> 2. Referenced by specific bindings for services with
+>    additionalProperties:false (not yet in this commit).
 > 
-> This is specifically true for later USB4-USB3-DP QMP PHYs where the TX
-> registers are used by both the USB3 and DP parts of the PHY (and where
-> the USB4 part of the PHY was not covered by the binding at all). Notably
-> there are also no DP "RX" (sic) registers as described by the current
-> bindings and the DP "PCS" region is really a set of DP_PHY registers.
+> While moving the code, add also required 'reg' and
+> 'qcom,protection-domain' to further constrain the bindings.
 > 
-> Add a new binding for the USB4-USB3-DP QMP PHYs found on SC8280XP which
-> further bindings can be based on.
-> 
-> Note that the binding uses a PHY type index to access either the USB3 or
-> DP part of the PHY and that this can later be used also for the USB4
-> part if needed.
-> 
-> Similarly, the clock inputs and outputs can later be extended to support
-> USB4.
-> 
-> Also note that the current binding is simply removed instead of being
-> deprecated as it was only recently merged and would not allow for
-> supporting DP mode.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  .../phy/qcom,sc7180-qmp-usb3-dp-phy.yaml      |  12 --
->  .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml    | 111 ++++++++++++++++++
->  2 files changed, 111 insertions(+), 12 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+>  .../bindings/soc/qcom/qcom,apr-services.yaml  |  54 +++++++++
+>  .../bindings/soc/qcom/qcom,apr.yaml           | 108 +-----------------
+>  MAINTAINERS                                   |   2 +-
+>  3 files changed, 58 insertions(+), 106 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,apr-services.yaml
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
 on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
 yamllint warnings/errors:
-./Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml:16:11: [error] syntax error: mapping values are not allowed here (syntax)
 
 dtschema/dtc warnings/errors:
-make[1]: *** Deleting file 'Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.example.dts'
-Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml:16:11: mapping values are not allowed here
-make[1]: *** [Documentation/devicetree/bindings/Makefile:26: Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.example.dts] Error 1
-make[1]: *** Waiting for unfinished jobs....
-./Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml:16:11: mapping values are not allowed here
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml: ignoring, error parsing file
-make: *** [Makefile:1492: dt_binding_check] Error 2
+Documentation/devicetree/bindings/soc/qcom/qcom,apr.example.dtb:0:0: /example-0/apr/service@3: failed to match any schema with compatible: ['qcom,q6core']
+Documentation/devicetree/bindings/soc/qcom/qcom,apr.example.dtb:0:0: /example-0/apr/service@4: failed to match any schema with compatible: ['qcom,q6afe']
+Documentation/devicetree/bindings/soc/qcom/qcom,apr.example.dtb:0:0: /example-0/apr/service@7: failed to match any schema with compatible: ['qcom,q6asm']
+Documentation/devicetree/bindings/soc/qcom/qcom,apr.example.dtb:0:0: /example-0/apr/service@8: failed to match any schema with compatible: ['qcom,q6adm']
+Documentation/devicetree/bindings/soc/qcom/qcom,apr.example.dtb:0:0: /example-1/gpr/service@1: failed to match any schema with compatible: ['qcom,q6apm']
+Documentation/devicetree/bindings/sound/qcom,q6adm-routing.example.dtb:0:0: /example-0/apr/service@8: failed to match any schema with compatible: ['qcom,q6adm']
+Documentation/devicetree/bindings/sound/qcom,q6asm-dais.example.dtb:0:0: /example-0/apr/service@7: failed to match any schema with compatible: ['qcom,q6asm']
+Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-clocks.example.dtb:0:0: /example-0/apr/service@4: failed to match any schema with compatible: ['qcom,q6afe']
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-clocks.example.dtb: gpr: service@2: 'qcom,protection-domain' is a required property
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
+Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-clocks.example.dtb:0:0: /example-1/gpr/service@2: failed to match any schema with compatible: ['qcom,q6prm']
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,q6apm-dai.example.dtb: gpr: service@1: 'qcom,protection-domain' is a required property
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
+Documentation/devicetree/bindings/sound/qcom,q6apm-dai.example.dtb:0:0: /example-0/gpr/service@1: failed to match any schema with compatible: ['qcom,q6apm']
+Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.example.dtb:0:0: /example-0/apr/service@4: failed to match any schema with compatible: ['qcom,q6afe']
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.example.dtb: gpr: service@1: 'qcom,protection-domain' is a required property
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
+Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.example.dtb:0:0: /example-1/gpr/service@1: failed to match any schema with compatible: ['qcom,q6apm']
 
 doc reference errors (make refcheckdocs):
 
