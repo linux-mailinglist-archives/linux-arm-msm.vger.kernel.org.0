@@ -2,75 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C3A43625537
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 09:27:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B4F6625550
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 09:30:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231235AbiKKI1s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 03:27:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51102 "EHLO
+        id S230181AbiKKIap (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 03:30:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233153AbiKKI1p (ORCPT
+        with ESMTP id S232341AbiKKIao (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 03:27:45 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72B0A78323
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 00:27:42 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id be13so7320841lfb.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 00:27:42 -0800 (PST)
+        Fri, 11 Nov 2022 03:30:44 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E75687C8E6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 00:30:42 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id p8so7281671lfu.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 00:30:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xx7LXGsQ1UybmGpbrTODqg39yWDhEchfX49PVTgfsiQ=;
-        b=Dv2m87uGwk9M6MuktyNavmEClgVM+K6T3sS9jKf0PJuFe+TJsNESLx8l5EypLjRTpr
-         0D86vIkiX8Tviw5NUYsMWvWu29TUXBbWc8N5ldKgMY2VAOBk7dbqLK+OEm+PBxKdU2zB
-         0Bog737EpaHTQZ3aEwgXUt8PBsVzTdVQb3hN8eGZgxNStU5xqnjD7fd67b1Oj6jGlghz
-         KT91ppeO2QWpKZ6ifxEAOvKFKlJb9ZbkrNHJc48YC00dnSl6/F724AP1PfRgPJTrKoQK
-         75UFKfY06UJNT+Nol++auIGHm9bhCVFKetyVCZLMkshnmBM8aSgpi8wfm/dYhavmiPPL
-         hBWQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hrnI1MMknS51ZDdp7gq4JuxX4S3fw0/B9/ygHLoG+Gc=;
+        b=mpuPULLEet7biTYrB7NHYa6DedN1VB3nlS8l2m/zyWnAvnFRpMxlO4HkR2WNDFnzR/
+         pBCG3HAR4S+qnjkskeZ6EakD+VABTquYZqnfV1SCcQWOGi7VGDSjyXudDlSbzuW4MrIb
+         vzha6MT03hIgC/dGq6jTl56uzC+ED9tGPYMo+JtsDFsj6uNiS8sFFCQa2wSsBFnV4mT/
+         LzAmJsmJUSQnkOaeoSvkxZV/+2UEIy2nGCWWEBeKBsBwQXXQryygi/gOn6n6l2cSSfMe
+         XRp1zaFpDB1EVQoGGgrpBm6VDcutbkqn9s7A72IQTHLZ4DKIeXAeesJIL1nDP/J/Xux3
+         ExDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xx7LXGsQ1UybmGpbrTODqg39yWDhEchfX49PVTgfsiQ=;
-        b=infFaAW2Ax5RLLSkGgGlEPFLzo4/IeQIx1s2o3BeeRFPk5ue0G0eubtIHk8BeWbrcW
-         DM/K7bAXE5js2aV23fWwqCuVcHZ9bH8K0r+PQsktskLgNLyDdDr5mRnMxsO1rNgFeWIi
-         eG/HMJI7aV7Tb+83gIeBA0FtNy7AR3xw+Tc1uqaxoVtGWBZ4S2kOO+9wcayYnxzgmxU3
-         8jyjCvDjDIYNgBUPMrtwc8mUtGN2T/h7KlP565GBCpWMlPL8W9W/lZiku0+7ejBvvGl1
-         aBNNf+rGhcTX2yjmc8MUOaU1JsDyRdwiYxwg10/KtAO+OBF74IwJUajhzPw1/gxozm48
-         FZOA==
-X-Gm-Message-State: ANoB5pnLtTxtk0yRXs32rWM5f1lgY16fIzmfkoxrfEWswKdj5Vc4gUtp
-        3HAZcgsChJ3bDPqBxwETpjajtQ==
-X-Google-Smtp-Source: AA0mqf77hOpbW33UTEyrvrjdY4j8ukRUH+BixcU7n6vB6+hL3EoiEVloZPKw3opau7Dr7zr/Ft5tHw==
-X-Received: by 2002:a19:8c1e:0:b0:4b4:6460:24d with SMTP id o30-20020a198c1e000000b004b46460024dmr378243lfd.386.1668155260865;
-        Fri, 11 Nov 2022 00:27:40 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
-        by smtp.gmail.com with ESMTPSA id k17-20020a2e6f11000000b0027754bdd667sm265888ljc.109.2022.11.11.00.27.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Nov 2022 00:27:40 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        devicetree@vger.kernel.org
-Subject: Re: (subset) [PATCH 1/2] dt-bindings: pinctrl: qcom,msm8660: convert to dtschema
-Date:   Fri, 11 Nov 2022 09:27:37 +0100
-Message-Id: <166815525483.8898.4129334640616218143.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221107185931.22075-1-krzysztof.kozlowski@linaro.org>
-References: <20221107185931.22075-1-krzysztof.kozlowski@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hrnI1MMknS51ZDdp7gq4JuxX4S3fw0/B9/ygHLoG+Gc=;
+        b=RuXhP8vznlqfzKWu3NfmFaQd7ZCM6NfzFqTd2S4LHA6mwvMPNZWpTaHDg3OI60L420
+         MysnAjalVDpVUjS7+LI8rm2v6sBE+1n6Zcd2tViXUZop4Vc3X69fatdL1hEpkZCH2wFP
+         q8jOCo45T9rMSJx/0FNXI6ODWUhZsO2wW7GOQ/LjpkSdGE9ZFPgaU6+oaADC4aIlOVls
+         8C0uO6BdBmh9LRYBZQedB1eOLaVPAVeyUFdMoUa3s0nBkOCl/jR6AGHbaVevG0GWLii+
+         H+CQaJ4NwQbSKcqDOtBYuhrnLgqRz74CrLvLnDik4mKKEYUyCgkgX6FHkhOpxqz74OdF
+         3lYQ==
+X-Gm-Message-State: ANoB5pmLcJvIqy8FfuajUm1AycsZfQLuG6EOV8zGEQUoYm495rRWeFKy
+        PGkiAOIqy4A7isEfFLBIQC3/ng==
+X-Google-Smtp-Source: AA0mqf7c+RlYfpF8xEXHp48mDlPI+cGjAyFcyWDabKp9R6pOqfNE3GDhhGpOZMMpvoAagMn7dABTww==
+X-Received: by 2002:ac2:5461:0:b0:4a2:8cac:96ab with SMTP id e1-20020ac25461000000b004a28cac96abmr378149lfn.415.1668155441159;
+        Fri, 11 Nov 2022 00:30:41 -0800 (PST)
+Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
+        by smtp.gmail.com with ESMTPSA id s11-20020a2eb62b000000b00277050abd55sm277444ljn.130.2022.11.11.00.30.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Nov 2022 00:30:40 -0800 (PST)
+Message-ID: <81890fa5-5793-1ee4-14a4-78c08024f3fb@linaro.org>
+Date:   Fri, 11 Nov 2022 09:30:39 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH net-next 2/2] dt-bindings: net: qcom,ipa: restate a
+ requirement
+Content-Language: en-US
+To:     Alex Elder <elder@linaro.org>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, davem@davemloft.net,
+        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, agross@kernel.org,
+        elder@kernel.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221110195619.1276302-1-elder@linaro.org>
+ <20221110195619.1276302-3-elder@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221110195619.1276302-3-elder@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,19 +81,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 7 Nov 2022 19:59:30 +0100, Krzysztof Kozlowski wrote:
-> Convert Qualcomm MSM8660 pin controller bindings to DT schema.  Keep the
-> parsing of pin configuration subnodes consistent with other Qualcomm
-> schemas (children named with '-state' suffix, their children with
-> '-pins').
+On 10/11/2022 20:56, Alex Elder wrote:
+> Either the AP or modem loads GSI firmware.  If the modem-init
+> property is present, the modem loads it.  Otherwise, the AP loads
+> it, and in that case the memory-region property must be defined.
 > 
+> Currently this requirement is expressed as one or the other of the
+> modem-init or the memory-region property being required.  But it's
+> harmless for the memory-region to be present if the modem is loading
+> firmware (it'll just be ignored).
 > 
+> Restate the requirement so that the memory-region property is
+> required only if modem-init is not present.
+> 
+> Signed-off-by: Alex Elder <elder@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/net/qcom,ipa.yaml | 13 ++++++++-----
 
-Applied, thanks!
 
-[1/2] dt-bindings: pinctrl: qcom,msm8660: convert to dtschema
-      https://git.kernel.org/krzk/linux-dt/c/aa191ab79a3e94d51a52155ad85fea40620c1dc8
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
--- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Krzysztof
+
