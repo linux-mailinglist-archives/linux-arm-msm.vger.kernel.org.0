@@ -2,85 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 78546625F93
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 17:35:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AE47625FB2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 17:42:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233315AbiKKQfL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 11:35:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59006 "EHLO
+        id S234150AbiKKQmH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 11:42:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233613AbiKKQfJ (ORCPT
+        with ESMTP id S232004AbiKKQmG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 11:35:09 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 052828368D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 08:35:08 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id c3-20020a1c3503000000b003bd21e3dd7aso5922865wma.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 08:35:07 -0800 (PST)
+        Fri, 11 Nov 2022 11:42:06 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 821035BD6D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 08:42:05 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id bs21so7158628wrb.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 08:42:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=lLecHsefSGwTn9OHylqjdg2CdAZ+fI//h3Wum+aYsyY=;
-        b=vuKd5X/Zu33J2300xeVTEJMptBmVJg8pwE4EcgBrRhflJwsp9pAXxy7yunna6bVdvS
-         F3muHms18Q7avaPWYVemZ60zDLavmZ+hVPMmJ8if/mnmVosRpd2Z7wvUuu31bU+TR1x5
-         KfsPH//VuI6xIKaWLj9H5l3cAhzM8U9R/+/ax78gZ9EkTEW0x86MqaxmH4n+pcAuPTF/
-         abB8BLvG48bQp5A9QVp4SrkWKejkz72cmd5Vag+W0rJuJS0HygaDI85gJP/zDj0KZace
-         fPCf143+O3+mOjRc0u1wmGFF//Yn3lvuu7FrrRn3QHW9AnVAUpOmLNLIRGJPVIDr9nGe
-         LV9w==
+        bh=KRDq3YvWP3xlx40agy7LwTpV95X9uRpVaWN3hJZiIrE=;
+        b=CVsNX79HlQ0xGOF1Z1TKcpj8NMOVjQOldIQpoV1xWeKqERQAHxdQfwaVlfzXCpjA/0
+         QFuj9ImG3K0oOKY+xgpIvc06pSuEnvTxfITNulGEfv/Q+VluUGXs6XGbLS7JHWMk8Ncq
+         62Y5wSWP1JUVMzcXLtKhZ5cpoQgqkj+DhD6oU4rIn/YOvky3+//LewKDXNxVSSFQt2gB
+         rgBq/8DDq74p0bOp0yWsSzJl6ppvhItIllWn3wG8hxANEprfRGg0FryKrHFr9vUVn5Jb
+         RAj0NVLpco40QSCw2A/B+Zftk81f26r3BkkCM3vzoEUTJKZffoczl1c1+ycdSvbxYt/C
+         OGmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lLecHsefSGwTn9OHylqjdg2CdAZ+fI//h3Wum+aYsyY=;
-        b=eWW7wdCeYRrh58MVKb5n+WEVCERQtBZkgMPmGeNt+CkPMVDIq05LzsRGpNCzFMcSOZ
-         wpNDsWFUVFM3JUoMhNVnl7/mKz2Ngi4G26HLRwt7XGLqMWVHGOae236lwx5ZQI6nOaCP
-         Zzg6vzeWVqkh/1i+sDclVHoTNnfe7i2kbFonJo82xvKAlisHx2W4LIcdBFIXr6MeUVv9
-         B96egw5EOVG5HnbcUMF8Po9rGY5CXJkhlXqwHwF4M9rHL5ZI9JBBbUwclAI1xzMCV1hd
-         AIBMT6C3Mq9dAgnjO/Rfmi+fv89SPl198MTs4WMb2w0o6UVhNv7CsRPhvH37XJ3W65Ym
-         fhmg==
-X-Gm-Message-State: ANoB5pmc1FTC6aK4i5CKa5lsFa2MgHWXSR3tWIu2VO1rZFGvefqTjDZt
-        QNSrIBD27GpDaSnHPymQBPzlbQ==
-X-Google-Smtp-Source: AA0mqf5iRWGYftAb/MYMip4SBBbOkKMeTG7lLAQ35eX7p9PjCA11YT4U3IIcJqguyMfeSqERTn64MQ==
-X-Received: by 2002:a05:600c:5d5:b0:3cf:74ef:3313 with SMTP id p21-20020a05600c05d500b003cf74ef3313mr1855841wmd.41.1668184506380;
-        Fri, 11 Nov 2022 08:35:06 -0800 (PST)
+        bh=KRDq3YvWP3xlx40agy7LwTpV95X9uRpVaWN3hJZiIrE=;
+        b=yDKMu36mNycomjSwk44EUqGlpGnq0e2dBZVXi3wivJvaWprq0DqxAzQ9D4g2pfkY8m
+         9DPPDYrtXMfQzVEmhIaTmFFvUcSqp+ol5yRqBqkx8F8sTp5pqHwk1UeUTIollSNek/3B
+         4WEoLO8qLXzG4DF/A8ZuRky7wKIbmJU7dImR99eCFRRRJAZ5pgMUx3DXPY6P4mqTb1sX
+         Rwz+7hWSVf+nTeXZdh7hvhxmormx0eyH9128Y4QznIVI8dRPE2tfC9yA/o6ZwNjkWymz
+         zVtKybHTLpMqsXDrXh8gIVmIezT9UruKLB5T6oNm3F7TE8rzxLJEeLuyGafdJ1z4SSa4
+         GUxQ==
+X-Gm-Message-State: ANoB5plJc04uFdFtoLGAE3FyOMAwqlbxzwB2Ywq5RUoaEO1DFb6mMELi
+        vBDBUD+IwrZdifV1cFARIP4TJA==
+X-Google-Smtp-Source: AA0mqf4CB8B5ldRLG2ZTP+StIEXMyDGoczXmUgfdXQ4MPh8CPep7VpfwIc0MBXZUi8VEgrQHfbasnQ==
+X-Received: by 2002:adf:f08a:0:b0:22e:37d1:b598 with SMTP id n10-20020adff08a000000b0022e37d1b598mr1796487wro.377.1668184924029;
+        Fri, 11 Nov 2022 08:42:04 -0800 (PST)
 Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id i18-20020a5d5592000000b002365921c9aesm2358895wrv.77.2022.11.11.08.35.05
+        by smtp.googlemail.com with ESMTPSA id r15-20020a05600c35cf00b003a84375d0d1sm10299100wmq.44.2022.11.11.08.42.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Nov 2022 08:35:05 -0800 (PST)
-Message-ID: <5207a28b-9c8c-5014-28c1-15635ad30143@linaro.org>
-Date:   Fri, 11 Nov 2022 16:35:03 +0000
+        Fri, 11 Nov 2022 08:42:03 -0800 (PST)
+Message-ID: <7cdb914a-df88-ca11-45d3-d370d5c94bcd@linaro.org>
+Date:   Fri, 11 Nov 2022 16:42:02 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.2
-Subject: Re: [PATCH 02/10] ASoC: dt-bindings: qcom,apr: Split services to
- shared schema
+Subject: Re: [PATCH v2 2/2] ASoC: codecs: wsa883x: Use proper shutdown GPIO
+ polarity
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Banajit Goswami <bgoswami@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, alsa-devel@alsa-project.org,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     Patrick Lai <plai@qti.qualcomm.com>,
-        Srinivasa Rao Mandadapu <srivasam@qti.qualcomm.com>
-References: <20221111113547.100442-1-krzysztof.kozlowski@linaro.org>
- <20221111113547.100442-3-krzysztof.kozlowski@linaro.org>
+References: <20221110133512.478831-1-krzysztof.kozlowski@linaro.org>
+ <20221110133512.478831-2-krzysztof.kozlowski@linaro.org>
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20221111113547.100442-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221110133512.478831-2-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -89,250 +88,46 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 11/11/2022 11:35, Krzysztof Kozlowski wrote:
-> The APR/GPR nodes are organized like:
+On 10/11/2022 13:35, Krzysztof Kozlowski wrote:
+> The shutdown GPIO is active low (SD_N), but this depends on actual board
+> layout.  Linux drivers should only care about logical state, where high
+> (1) means shutdown and low (0) means do not shutdown.
 > 
->    apr-or-gpr-device-node <- qcom,apr.yaml
->      apr-gpr-service@[0-9] <- qcom,apr.yaml
->        service-specific-components <- /schemas/sound/qcom,q6*.yaml
+> Invert the GPIO to match logical value.
 > 
-> The schema for services (apr-gpr-service@[0-9]) already grows
-
-I have not seen these grow or change alteast in the past 9 years.
-
-Old APR (Elite f/w) and new GPR (AudioReach) interface provides access 
-to static services on the DSP.
-
-> considerably and is still quite not specific.  It allows several
-> incorrect combinations, like adding a clock-controller to a APM device.
-
-This should be fixed for sure for validation.
-
-We had dedicated bindings per service before.
-
-As the service has changed as part of new AudioReach Firmware, we could 
-have added new bindings for these services again. But as we are dealing 
-with the same audio hardware and clock resources a new bindings per 
-service did not make sense. Since then we moved all the lpass audio 
-ports and clocks related bindings to qcom,q6dsp-lpass-clocks.yaml and 
-qcom,q6dsp-lpass-ports.yaml.
-
---srini
-
-> Restricting it would complicate the schema even more.  Bringing new
-> support for sound on Qualcomm SM8450 and SC8280XP SoC would grow it as
-> well.
-> 
-> Simplify the qcom,apr.yaml by splitting the services to a shared file
-> which will be:
-> 1. Referenced by qcom,apr.yaml with additionalProperties:true,
-> 2. Referenced by specific bindings for services with
->     additionalProperties:false (not yet in this commit).
-> 
-> While moving the code, add also required 'reg' and
-> 'qcom,protection-domain' to further constrain the bindings.
-> 
+> Fixes: 43b8c7dc85a1 ("ASoC: codecs: add wsa883x amplifier support")
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->   .../bindings/soc/qcom/qcom,apr-services.yaml  |  54 +++++++++
->   .../bindings/soc/qcom/qcom,apr.yaml           | 108 +-----------------
->   MAINTAINERS                                   |   2 +-
->   3 files changed, 58 insertions(+), 106 deletions(-)
->   create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,apr-services.yaml
 > 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,apr-services.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,apr-services.yaml
-> new file mode 100644
-> index 000000000000..290555426c39
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,apr-services.yaml
-> @@ -0,0 +1,54 @@
-> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/soc/qcom/qcom,apr-services.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm APR/GPR services shared parts
-> +
-> +maintainers:
-> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> +
-> +description:
-> +  Common parts of a static service in Qualcomm APR/GPR (Asynchronous/Generic
-> +  Packet Router).
-> +
-> +properties:
-> +  reg:
-> +    minimum: 1
-> +    maximum: 13
-> +    description: |
-> +      APR Service ID
-> +        3 = DSP Core Service
-> +        4 = Audio  Front End Service.
-> +        5 = Voice Stream Manager Service.
-> +        6 = Voice processing manager.
-> +        7 = Audio Stream Manager Service.
-> +        8 = Audio Device Manager Service.
-> +        9 = Multimode voice manager.
-> +        10 = Core voice stream.
-> +        11 = Core voice processor.
-> +        12 = Ultrasound stream manager.
-> +        13 = Listen stream manager.
-> +      GPR Service ID
-> +        1 = Audio Process Manager Service
-> +        2 = Proxy Resource Manager Service.
-> +        3 = AMDB Service.
-> +        4 = Voice processing manager.
-> +
-> +  qcom,protection-domain:
-> +    $ref: /schemas/types.yaml#/definitions/string-array
-> +    description: |
-> +      Protection domain service name and path for APR service
-> +      possible values are::
-> +      "avs/audio", "msm/adsp/audio_pd".
-> +      "kernel/elf_loader", "msm/modem/wlan_pd".
-> +      "tms/servreg", "msm/adsp/audio_pd".
-> +      "tms/servreg", "msm/modem/wlan_pd".
-> +      "tms/servreg", "msm/slpi/sensor_pd".
-> +
-> +required:
-> +  - reg
-> +  - qcom,protection-domain
-> +
-> +additionalProperties: true
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
-> index 0a7a34cb2497..9302ffe567d6 100644
-> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
-> @@ -80,115 +80,13 @@ properties:
->     '#size-cells':
->       const: 0
+> ---
+
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+
+> 
+> Changes since v1:
+> 1. None.
+> ---
+>   sound/soc/codecs/wsa883x.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
+> index c7b10bbfba7e..77a7dd3cf495 100644
+> --- a/sound/soc/codecs/wsa883x.c
+> +++ b/sound/soc/codecs/wsa883x.c
+> @@ -1392,7 +1392,7 @@ static int wsa883x_probe(struct sdw_slave *pdev,
+>   	}
 >   
-> -#APR/GPR Services
->   patternProperties:
->     "^service@[1-9a-d]$":
->       type: object
-> +    $ref: /schemas/soc/qcom/qcom,apr-services.yaml
-> +    additionalProperties: true
->       description:
-> -      APR/GPR node's client devices use subnodes for desired static port services.
-> -
-> -    properties:
-> -      compatible:
-> -        enum:
-> -          - qcom,q6core
-> -          - qcom,q6asm
-> -          - qcom,q6afe
-> -          - qcom,q6adm
-> -          - qcom,q6apm
-> -          - qcom,q6prm
-> -
-> -      reg:
-> -        minimum: 1
-> -        maximum: 13
-> -        description:
-> -          APR Service ID
-> -            3 = DSP Core Service
-> -            4 = Audio  Front End Service.
-> -            5 = Voice Stream Manager Service.
-> -            6 = Voice processing manager.
-> -            7 = Audio Stream Manager Service.
-> -            8 = Audio Device Manager Service.
-> -            9 = Multimode voice manager.
-> -            10 = Core voice stream.
-> -            11 = Core voice processor.
-> -            12 = Ultrasound stream manager.
-> -            13 = Listen stream manager.
-> -          GPR Service ID
-> -            1 = Audio Process Manager Service
-> -            2 = Proxy Resource Manager Service.
-> -            3 = AMDB Service.
-> -            4 = Voice processing manager.
-> -
-> -      clock-controller:
-> -        $ref: /schemas/sound/qcom,q6dsp-lpass-clocks.yaml#
-> -        description: Qualcomm DSP LPASS clock controller
-> -        unevaluatedProperties: false
-> -
-> -      dais:
-> -        type: object
-> -        oneOf:
-> -          - $ref: /schemas/sound/qcom,q6apm-dai.yaml#
-> -          - $ref: /schemas/sound/qcom,q6dsp-lpass-ports.yaml#
-> -          - $ref: /schemas/sound/qcom,q6asm-dais.yaml#
-> -        unevaluatedProperties: false
-> -        description: Qualcomm DSP audio ports
-> -
-> -      routing:
-> -        type: object
-> -        $ref: /schemas/sound/qcom,q6adm-routing.yaml#
-> -        unevaluatedProperties: false
-> -        description: Qualcomm DSP LPASS audio routing
-> -
-> -      qcom,protection-domain:
-> -        $ref: /schemas/types.yaml#/definitions/string-array
-> -        description: protection domain service name and path for apr service
-> -          possible values are
-> -          "avs/audio", "msm/adsp/audio_pd".
-> -          "kernel/elf_loader", "msm/modem/wlan_pd".
-> -          "tms/servreg", "msm/adsp/audio_pd".
-> -          "tms/servreg", "msm/modem/wlan_pd".
-> -          "tms/servreg", "msm/slpi/sensor_pd".
-> -
-> -    allOf:
-> -      - if:
-> -          properties:
-> -            compatible:
-> -              enum:
-> -                - qcom,q6afe
-> -        then:
-> -          properties:
-> -            dais:
-> -              properties:
-> -                compatible:
-> -                  const: qcom,q6afe-dais
-> -
-> -      - if:
-> -          properties:
-> -            compatible:
-> -              enum:
-> -                - qcom,q6apm
-> -        then:
-> -          properties:
-> -            dais:
-> -              properties:
-> -                compatible:
-> -                  enum:
-> -                    - qcom,q6apm-dais
-> -                    - qcom,q6apm-lpass-dais
-> -
-> -      - if:
-> -          properties:
-> -            compatible:
-> -              enum:
-> -                - qcom,q6asm
-> -        then:
-> -          properties:
-> -            dais:
-> -              properties:
-> -                compatible:
-> -                  const: qcom,q6asm-dais
-> -
-> -    additionalProperties: false
-> +      APR/GPR static port services.
+>   	wsa883x->sd_n = devm_gpiod_get_optional(&pdev->dev, "powerdown",
+> -						GPIOD_FLAGS_BIT_NONEXCLUSIVE);
+> +						GPIOD_FLAGS_BIT_NONEXCLUSIVE | GPIOD_OUT_HIGH);
+>   	if (IS_ERR(wsa883x->sd_n)) {
+>   		dev_err(&pdev->dev, "Shutdown Control GPIO not found\n");
+>   		ret = PTR_ERR(wsa883x->sd_n);
+> @@ -1411,7 +1411,7 @@ static int wsa883x_probe(struct sdw_slave *pdev,
+>   	pdev->prop.simple_clk_stop_capable = true;
+>   	pdev->prop.sink_dpn_prop = wsa_sink_dpn_prop;
+>   	pdev->prop.scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY;
+> -	gpiod_direction_output(wsa883x->sd_n, 1);
+> +	gpiod_direction_output(wsa883x->sd_n, 0);
 >   
->   required:
->     - compatible
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 3df7b9a3f5ba..804e4a700477 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -16893,7 +16893,7 @@ M:	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->   M:	Banajit Goswami <bgoswami@quicinc.com>
->   L:	alsa-devel@alsa-project.org (moderated for non-subscribers)
->   S:	Supported
-> -F:	Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
-> +F:	Documentation/devicetree/bindings/soc/qcom/qcom,apr*
->   F:	Documentation/devicetree/bindings/sound/qcom,*
->   F:	drivers/soc/qcom/apr.c
->   F:	include/dt-bindings/sound/qcom,wcd9335.h
+>   	wsa883x->regmap = devm_regmap_init_sdw(pdev, &wsa883x_regmap_config);
+>   	if (IS_ERR(wsa883x->regmap)) {
