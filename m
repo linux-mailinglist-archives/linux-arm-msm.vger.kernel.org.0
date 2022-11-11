@@ -2,109 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B409D6254B4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 08:56:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C34A6254B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 08:56:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232343AbiKKH40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 02:56:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36224 "EHLO
+        id S232836AbiKKH4j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 02:56:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229675AbiKKH4Z (ORCPT
+        with ESMTP id S231221AbiKKH4i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 02:56:25 -0500
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AA7A63CCF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 23:56:25 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id x21so3643957ljg.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 23:56:24 -0800 (PST)
+        Fri, 11 Nov 2022 02:56:38 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E285C63CFF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 23:56:36 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id c1so7206543lfi.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Nov 2022 23:56:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=w/Iu4CEI39UAfFhQsd226xNTRIuJLpZNpM7aahMWDJI=;
-        b=YLAMmPR8XvFijVBooaEVEjc7fGWjM7VcDGaePHyH9FX1PSQZLq6gmxDD5xY/Zx6VUJ
-         qMVwx7Rfswu9pwAofNTTULIiUVirrNtZ9iZU42OGoQqxZUkv/vwMVhkJBi5guLi+2v5C
-         weUM/HZ4vSypxstT8j3HcjyTHmfI+hdfIkmQRJzsXS8ZO0eM4dNFdOiEAc9O+vHOt3xt
-         iR8H4zytTyiUGJc/YiygBY4Kgp+RHMvcPi46xgX0oWRpTkvrNwIlR6fFxdOcUvhaVE9A
-         fYoFuoJ0fFJ+iRrnQqhE9jHx8kM56MgxaDBIjTkrlcwrgkWVftYoSaIjjJVGOFrUEJ/A
-         nhDg==
+        bh=WvPhcAqcbyfFn2kvkMngEVsRIEmbMyFX/b7V+85Aacs=;
+        b=DGu9HLw0FnasPlRYFvYz5KjUHaixwv8RUXdMR7wnNdt03V8Oy7B/skPBYKLHdKMhXT
+         4LzQ8BoEBCV6F1dYjzGObS4ggX7lg5zkbi+8PHWd5VOxOq0Xq6g0OM/hGcX6KRv8c9kp
+         Se/JzKOARZ5Zpql1uOUBceNI50CXhqOExs7cXct2UshvxVUozcEsdcpWKGH6oY9iYpOl
+         111WSd0OkAaR7Xb+055qQTZ1JZGgtjw8hkit/0b+9JHczhPRnKQrxYiC/5Zwjg1PgLmn
+         9FEnyV2igWnPcXN0Jq1coH2WZoqjRPNMRE3JShB7QA3dSPt5CS9jafuNMX0Z6fYzEqun
+         1e+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w/Iu4CEI39UAfFhQsd226xNTRIuJLpZNpM7aahMWDJI=;
-        b=fl/34KaZyKxnZrsRKkt2T723pW4lgLlvsyXlrtGKrEOrZh4+Ff98Joggv7UyhMUtsF
-         35tp94rzDrsp6RrB6vmCkJmVQhU57Xy9vFGlknsuk2vuGs3wPNsJDB3/F1MBuVKVJbgc
-         RuCMmN0+UD3RKydTi+DG0VuJ9GTJpefxRp6WrG5YNaAmT97EEJkJL3qx7cU7xcO+SJGM
-         eqVVtL9LQYfIq+oZDxAcVO3iVIz+3XA5eDVL0QkElrVAgTTEnt0dOadpt05xJLauVum6
-         9JzOMp25cxOWZV6oppcBf/6qSu5quXfusQpCksJEnW46/TgTFXr5sR6pwsw3TTQIHnYS
-         bUwQ==
-X-Gm-Message-State: ANoB5pkpKw/zEVmlIUaxb2YtAjcQFa9zUFBouYADbJsbowm+uWWICrLi
-        NnYDUNzKIIfHsAsZ4ajYg4c+Dg==
-X-Google-Smtp-Source: AA0mqf4CXgp6RSjsayp7+lJEN8b658DQOYP1PwWFxEKDrjbMnsfX43KI8kyV2Q+vJJahTAHG9L8cQA==
-X-Received: by 2002:a2e:908f:0:b0:277:328:affd with SMTP id l15-20020a2e908f000000b002770328affdmr283115ljg.517.1668153383421;
-        Thu, 10 Nov 2022 23:56:23 -0800 (PST)
+        bh=WvPhcAqcbyfFn2kvkMngEVsRIEmbMyFX/b7V+85Aacs=;
+        b=rpAFFymA7k2lphLUqJmuSpPeZeUiC2ovRqToYN8HOLls9IDG7oV+sUI4q0riQ99FZH
+         +rvz7VdvBu8CZ5WGe6Gdw/7zMaJCMtFyj+6qzkp6AIzmogGD4/Nm7K7bi1laPCUHbFH+
+         bKFLaCncwWfzSBBqn4Gd8Q8Os3bRDiTCLeUxSEI7AdQquoAS/L7cDzUkBlohTfZTjBVH
+         0hS2lcrLdyanFDGqe/jyDBFQ833bnKPsE/nXSWaGMjlFtXsL0JU32uMyXhd6Yf4ES4at
+         a4EIc1hqjsurF7eWD0hHGYm0gVW6ULxaDf24ZGw8fwSg3jIKz9kfEy8qy0KjGc61NXTz
+         nWtw==
+X-Gm-Message-State: ANoB5pleeGlrRy+HWni+sL0KPj32TlGfrIhcET1UY/2dW12t2jI5fBsh
+        JruNSe1g+f5OhWX1X1BP0/OOew==
+X-Google-Smtp-Source: AA0mqf4amzRhnZfeOZ1gXLHNr6d3DtBV/BPWHz2rUpSPxEe0KDoDNV6NKXGh0fyRowQqUAJYsJw5Vg==
+X-Received: by 2002:a05:6512:3baa:b0:4b1:2aab:7cc4 with SMTP id g42-20020a0565123baa00b004b12aab7cc4mr350872lfv.241.1668153395329;
+        Thu, 10 Nov 2022 23:56:35 -0800 (PST)
 Received: from [192.168.0.20] (088156142199.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.199])
-        by smtp.gmail.com with ESMTPSA id b7-20020a0565120b8700b004a240eb0217sm199790lfv.251.2022.11.10.23.56.21
+        by smtp.gmail.com with ESMTPSA id o15-20020ac2494f000000b00499aefcf68esm197237lfi.292.2022.11.10.23.56.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Nov 2022 23:56:22 -0800 (PST)
-Message-ID: <a187db7b-1f42-af79-f50d-3f71f378c010@linaro.org>
-Date:   Fri, 11 Nov 2022 08:56:21 +0100
+        Thu, 10 Nov 2022 23:56:34 -0800 (PST)
+Message-ID: <e6a87653-0623-1452-ae56-ab5837dd6746@linaro.org>
+Date:   Fri, 11 Nov 2022 08:56:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH v9 05/12] dt-bindings: display/msm: move common MDSS
- properties to mdss-common.yaml
+Subject: Re: [PATCH 1/4] dt-bindings: arm: qcom: Add Xperia 5 IV (PDX224)
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Rob Herring <robh@kernel.org>
-References: <20221024164225.3236654-1-dmitry.baryshkov@linaro.org>
- <20221024164225.3236654-6-dmitry.baryshkov@linaro.org>
- <f72aeaa0-0c0a-86d9-0b9b-db3810c35fad@linaro.org>
- <b62e7239-0fef-e19c-5653-96f72b7b89b5@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221110223929.134655-1-konrad.dybcio@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <b62e7239-0fef-e19c-5653-96f72b7b89b5@linaro.org>
+In-Reply-To: <20221110223929.134655-1-konrad.dybcio@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/11/2022 22:45, Dmitry Baryshkov wrote:
->>
->>> +  - reg
->>> +  - reg-names
->>> +  - power-domains
->>> +  - clocks
->>> +  - interrupts
->>> +  - interrupt-controller
->>> +  - iommus
->>> +  - ranges
->>
->> Keep the same order as in list of top-level properties.
+On 10/11/2022 23:39, Konrad Dybcio wrote:
+> Add a compatible for Sony Xperia 5 IV.
 > 
-> But the order is the same.
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
 
-Yes, you're right.
 
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
