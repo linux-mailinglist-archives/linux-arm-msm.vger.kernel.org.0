@@ -2,60 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 202306260DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 19:08:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD579626263
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 20:50:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233968AbiKKSI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 13:08:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54122 "EHLO
+        id S233220AbiKKTuR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 14:50:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233681AbiKKSI4 (ORCPT
+        with ESMTP id S233015AbiKKTuQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 13:08:56 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8172F11172;
-        Fri, 11 Nov 2022 10:08:55 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id EF37CB826C6;
-        Fri, 11 Nov 2022 18:08:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF649C433D6;
-        Fri, 11 Nov 2022 18:08:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668190132;
-        bh=1LwbWLiM0eqVngc+n5UKw3OXRN8eN1ijL20vt5kIfvc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=NQJUR4QerNZHhDnRP7Laix+cZafg1YpBOLxx7wPkLceEDUQOZFS4TNQvtRrE90sa7
-         CjJ7UfMtiXjon7StgiZOBKiQaOikJsp4D8ujESpsZiXlfyh2WBMeT+/Rt4sKAUtb58
-         OqVfmcpk7VnLvx5aYeDjIu5fJd/JMMDSziXi/Seb0FwnbA6UyEXQnk+Op8YCaFyW7W
-         ifR/N6f4dd/cL/o4mQwNVywKm/LqSmQMA8bbnlRqVWJIgkCofb8UVIJnBzjdlur39Q
-         NTfv5qIElFI0LjvcGzqyZ548P73zxN/OTnfLL3lBNfFc+mbE4PD0xzXK0S9kl6A8N5
-         qkK2PpdIWB41w==
-Date:   Fri, 11 Nov 2022 12:08:49 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mike Tipton <quic_mdtipton@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 05/10] dt-bindings: interconnect: Add sm8350, sc8280xp
- and generic OSM L3 compatibles
-Message-ID: <20221111180849.hegnho4qeaewuzwz@builder.lan>
-References: <20221111032515.3460-1-quic_bjorande@quicinc.com>
- <20221111032515.3460-6-quic_bjorande@quicinc.com>
- <d738cdd8-1963-78d4-2c6f-6597b3b02d0f@quicinc.com>
+        Fri, 11 Nov 2022 14:50:16 -0500
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 921CF83398
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 11:50:15 -0800 (PST)
+Received: by mail-qt1-x82a.google.com with SMTP id a27so3241820qtw.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 11:50:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=joelfernandes.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=YU/dVE0ERRRiwLc0HKRhu2fVlyQiYjgDvyxIAHOZXz8=;
+        b=UTwWvPMR4j2f2p7up8Le/KvMZlwgGMWDnXQ8RcwwGzzkoHuyjeJwmie5C9GVXHQOeM
+         4nOE7CQbS2Rp5oNTgauj01OBG+ZZjUdaZ0z0IfnaKX4HNjv6IZ2fHaOWlPCl9B5mridB
+         2dt9pYevIUdALZ+hmKfj0ybst/f34okv6UyGw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YU/dVE0ERRRiwLc0HKRhu2fVlyQiYjgDvyxIAHOZXz8=;
+        b=G/lQFa5CbJD8jNO4b6nTDG1axhnBRMBYn6l3EyJuKsn0EVwnsbkRpYxLeRsBum7OHs
+         s+iJwtTfK5TOqu3XHGzp4ATReEc7V4YYR4EZNea65X7gUMSTlmOSOTvEmW2gCgTjilmi
+         XY+DmdV6tZU2LXDyiaBrSDIHrEoW6DKj9bTSV0JSYxwd7qckO12WfME63KId5qRA2G9u
+         M+Spml/XYWmQhNcZTh1E31+093bgP/XyvrK6+QHlEONr4hJ9VdB+L0Lhj4ZmB7b17PkD
+         yC2/SJc+cGEciQwUpMYUN08Gtny31Px6gh5TloIPv5nkUyq3/SK5CCej3U/qbpouRNdX
+         RVCw==
+X-Gm-Message-State: ANoB5pnxI+omjjp451kWpCofXbx8OhsSeIa+snKIug0frserUuxfFWUy
+        Gg+3gSvukVTPqbljcONwvdfvRQ==
+X-Google-Smtp-Source: AA0mqf4f379m8qQ4NDG8WIoePs17+iR7zz+GPC8xaMp8RokfgQW72ZP6ejmf+n05qXiKrn00RS9fgw==
+X-Received: by 2002:a05:622a:5083:b0:3a5:404:4c36 with SMTP id fp3-20020a05622a508300b003a504044c36mr2767678qtb.653.1668196214671;
+        Fri, 11 Nov 2022 11:50:14 -0800 (PST)
+Received: from joelboxx.c.googlers.com.com (228.221.150.34.bc.googleusercontent.com. [34.150.221.228])
+        by smtp.gmail.com with ESMTPSA id y11-20020a05620a25cb00b006ef1a8f1b81sm1985277qko.5.2022.11.11.11.50.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Nov 2022 11:50:13 -0800 (PST)
+From:   "Joel Fernandes (Google)" <joel@joelfernandes.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     "Joel Fernandes (Google)" <joel@joelfernandes.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Ricardo Ribalda <ribalda@chromium.org>,
+        Ross Zwisler <zwisler@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        dri-devel@lists.freedesktop.org, Emma Anholt <emma@anholt.net>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>
+Subject: [PATCH 1/2] adreno: Shutdown the GPU properly
+Date:   Fri, 11 Nov 2022 19:49:56 +0000
+Message-Id: <20221111194957.4046771-1-joel@joelfernandes.org>
+X-Mailer: git-send-email 2.38.1.493.g58b659f92b-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d738cdd8-1963-78d4-2c6f-6597b3b02d0f@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,82 +77,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 11, 2022 at 04:02:42PM +0530, Sibi Sankar wrote:
-> 
-> 
-> On 11/11/22 08:55, Bjorn Andersson wrote:
-> > Add EPSS L3 compatibles for sm8350 and sc8280xp, but while at it also
-> > introduce generic compatible for both qcom,osm-l3 and qcom,epss-l3.
-> > 
-> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > Tested-by: Steev Klimaszewski <steev@kali.org>
-> > ---
-> > 
-> > Changes since v1:
-> > - Fixed oneOf to be valid schema
-> > - Fixed example to follow schema
-> > 
-> >   .../bindings/interconnect/qcom,osm-l3.yaml    | 24 ++++++++++++-------
-> >   1 file changed, 16 insertions(+), 8 deletions(-)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-> > index bf538c0c5a81..aadae4424ba9 100644
-> > --- a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-> > +++ b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
-> > @@ -16,13 +16,21 @@ description:
-> >   properties:
-> >     compatible:
-> > -    enum:
-> > -      - qcom,sc7180-osm-l3
-> > -      - qcom,sc7280-epss-l3
-> > -      - qcom,sc8180x-osm-l3
-> > -      - qcom,sdm845-osm-l3
-> > -      - qcom,sm8150-osm-l3
-> > -      - qcom,sm8250-epss-l3
-> > +    oneOf:
-> > +      - items:
-> > +          - enum:
-> > +              - qcom,sc7180-osm-l3
-> > +              - qcom,sc8180x-osm-l3
-> > +              - qcom,sdm845-osm-l3
-> > +              - qcom,sm8150-osm-l3
-> > +          - const: qcom,osm-l3
-> > +      - items:
-> > +          - enum:
-> > +              - qcom,sc7280-epss-l3
-> > +              - qcom,sc8280xp-epss-l3
-> > +              - qcom,sm8250-epss-l3
-> > +              - qcom,sm8350-epss-l3
-> > +          - const: qcom,epss-l3
-> 
-> isn't it incorrect to describe qcom,epss-l3 as a working
-> backup compatible for sc7280-epss-l3 and sm8250-epss-l3?
-> Shouldn't we just add another items list with those 2 as
-> enums?
-> 
+During kexec on ARM device, we notice that device_shutdown() only calls
+pm_runtime_force_suspend() while shutting down the GPU. This means the GPU
+kthread is still running and further, there maybe active submits.
 
-I was about to agree, but the difference between the two sets are which
-registers we use to request the speed.
+This causes all kinds of issues during a kexec reboot:
 
-And per our recent discussion, I was under the impression that this
-would be a property of BIT(0) in 0xb0 being set, not which platform
-we're running on.
+Warning from shutdown path:
 
-If that's the case then they are indeed compatible and we should adjust
-.ref_perf_state based on per-core DCVS being set or not.
+[  292.509662] WARNING: CPU: 0 PID: 6304 at [...] adreno_runtime_suspend+0x3c/0x44
+[  292.509863] Hardware name: Google Lazor (rev3 - 8) with LTE (DT)
+[  292.509872] pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  292.509881] pc : adreno_runtime_suspend+0x3c/0x44
+[  292.509891] lr : pm_generic_runtime_suspend+0x30/0x44
+[  292.509905] sp : ffffffc014473bf0
+[...]
+[  292.510043] Call trace:
+[  292.510051]  adreno_runtime_suspend+0x3c/0x44
+[  292.510061]  pm_generic_runtime_suspend+0x30/0x44
+[  292.510071]  pm_runtime_force_suspend+0x54/0xc8
+[  292.510081]  adreno_shutdown+0x1c/0x28
+[  292.510090]  platform_shutdown+0x2c/0x38
+[  292.510104]  device_shutdown+0x158/0x210
+[  292.510119]  kernel_restart_prepare+0x40/0x4c
 
+And here from GPU kthread, an SError OOPs:
 
-So I do think this description is appropriate...
+[  192.648789]  el1h_64_error+0x7c/0x80
+[  192.648812]  el1_interrupt+0x20/0x58
+[  192.648833]  el1h_64_irq_handler+0x18/0x24
+[  192.648854]  el1h_64_irq+0x7c/0x80
+[  192.648873]  local_daif_inherit+0x10/0x18
+[  192.648900]  el1h_64_sync_handler+0x48/0xb4
+[  192.648921]  el1h_64_sync+0x7c/0x80
+[  192.648941]  a6xx_gmu_set_oob+0xbc/0x1fc
+[  192.648968]  a6xx_hw_init+0x44/0xe38
+[  192.648991]  msm_gpu_hw_init+0x48/0x80
+[  192.649013]  msm_gpu_submit+0x5c/0x1a8
+[  192.649034]  msm_job_run+0xb0/0x11c
+[  192.649058]  drm_sched_main+0x170/0x434
+[  192.649086]  kthread+0x134/0x300
+[  192.649114]  ret_from_fork+0x10/0x20
 
-Regards,
-Bjorn
+Fix by calling adreno_system_suspend() in the device_shutdown() path.
 
-> >     reg:
-> >       maxItems: 1
-> > @@ -56,7 +64,7 @@ examples:
-> >       #define RPMH_CXO_CLK        0
-> >       osm_l3: interconnect@17d41000 {
-> > -      compatible = "qcom,sdm845-osm-l3";
-> > +      compatible = "qcom,sdm845-osm-l3", "qcom,osm-l3";
-> >         reg = <0x17d41000 0x1400>;
-> >         clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
+Cc: Rob Clark <robdclark@chromium.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Ricardo Ribalda <ribalda@chromium.org>
+Cc: Ross Zwisler <zwisler@kernel.org>
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+---
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index 24b489b6129a..f0cff62812c3 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -607,9 +607,12 @@ static int adreno_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
++static int adreno_system_suspend(struct device *dev);
+ static void adreno_shutdown(struct platform_device *pdev)
+ {
+-	pm_runtime_force_suspend(&pdev->dev);
++	struct msm_gpu *gpu = dev_to_gpu(&pdev->dev);
++
++	WARN_ON_ONCE(adreno_system_suspend(&pdev->dev));
+ }
+ 
+ static const struct of_device_id dt_match[] = {
+-- 
+2.38.1.493.g58b659f92b-goog
+
