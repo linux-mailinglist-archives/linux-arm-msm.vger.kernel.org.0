@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AE47625FB2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 17:42:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 40FE4625FB7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Nov 2022 17:42:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234150AbiKKQmH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 11:42:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35524 "EHLO
+        id S234319AbiKKQmU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Nov 2022 11:42:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232004AbiKKQmG (ORCPT
+        with ESMTP id S233940AbiKKQmR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 11:42:06 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 821035BD6D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 08:42:05 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id bs21so7158628wrb.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 08:42:05 -0800 (PST)
+        Fri, 11 Nov 2022 11:42:17 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0444D845D5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 08:42:15 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id h9so7212569wrt.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 08:42:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=KRDq3YvWP3xlx40agy7LwTpV95X9uRpVaWN3hJZiIrE=;
-        b=CVsNX79HlQ0xGOF1Z1TKcpj8NMOVjQOldIQpoV1xWeKqERQAHxdQfwaVlfzXCpjA/0
-         QFuj9ImG3K0oOKY+xgpIvc06pSuEnvTxfITNulGEfv/Q+VluUGXs6XGbLS7JHWMk8Ncq
-         62Y5wSWP1JUVMzcXLtKhZ5cpoQgqkj+DhD6oU4rIn/YOvky3+//LewKDXNxVSSFQt2gB
-         rgBq/8DDq74p0bOp0yWsSzJl6ppvhItIllWn3wG8hxANEprfRGg0FryKrHFr9vUVn5Jb
-         RAj0NVLpco40QSCw2A/B+Zftk81f26r3BkkCM3vzoEUTJKZffoczl1c1+ycdSvbxYt/C
-         OGmQ==
+        bh=jLuR2VWvIX9pMUk66TarZozpZh1wCQd9RADTJwmvxkM=;
+        b=oy6gPYB5GEObYkXtO86u2ukNIhs4ZE4MkQHohRL1Io8Jsuv79Qxy2NhphVAKjSiURu
+         bbL11/gsu2Iix8RrqLDXHp7poDVunxH1jd0u3PFZaclwSXmZwnOGp552IwB04brJSLPU
+         8A+aRMjSvDmuFsueyrhC/y8nNACHPFu1pAKNe5ez5BYcBeTFeUTxQ4X12VmgxnLWe6jz
+         X4FrfkEvdR+efUCUNi2fYFD4ZaWAL2rralFmzBf+tGIA5xh1NC/hI5RV7ZuV9RsRFaJq
+         YZ75CZJku5nVXKsRSrfxOLz64XeuO/nwXYLwaVK6n/xddJv46PZVYiwp6Riez2iw1mEc
+         q4wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KRDq3YvWP3xlx40agy7LwTpV95X9uRpVaWN3hJZiIrE=;
-        b=yDKMu36mNycomjSwk44EUqGlpGnq0e2dBZVXi3wivJvaWprq0DqxAzQ9D4g2pfkY8m
-         9DPPDYrtXMfQzVEmhIaTmFFvUcSqp+ol5yRqBqkx8F8sTp5pqHwk1UeUTIollSNek/3B
-         4WEoLO8qLXzG4DF/A8ZuRky7wKIbmJU7dImR99eCFRRRJAZ5pgMUx3DXPY6P4mqTb1sX
-         Rwz+7hWSVf+nTeXZdh7hvhxmormx0eyH9128Y4QznIVI8dRPE2tfC9yA/o6ZwNjkWymz
-         zVtKybHTLpMqsXDrXh8gIVmIezT9UruKLB5T6oNm3F7TE8rzxLJEeLuyGafdJ1z4SSa4
-         GUxQ==
-X-Gm-Message-State: ANoB5plJc04uFdFtoLGAE3FyOMAwqlbxzwB2Ywq5RUoaEO1DFb6mMELi
-        vBDBUD+IwrZdifV1cFARIP4TJA==
-X-Google-Smtp-Source: AA0mqf4CB8B5ldRLG2ZTP+StIEXMyDGoczXmUgfdXQ4MPh8CPep7VpfwIc0MBXZUi8VEgrQHfbasnQ==
-X-Received: by 2002:adf:f08a:0:b0:22e:37d1:b598 with SMTP id n10-20020adff08a000000b0022e37d1b598mr1796487wro.377.1668184924029;
-        Fri, 11 Nov 2022 08:42:04 -0800 (PST)
+        bh=jLuR2VWvIX9pMUk66TarZozpZh1wCQd9RADTJwmvxkM=;
+        b=cNhVQML6shW3j9l7UIk5PnU6+71zIvCLKhJiOSJz7cTqwVNGDeKr5PbY12DQ4I1F2d
+         9vSN4u6ilb++C2blMsN0zV0mbT09aHK0JZYZCthN8vUSBXPV/gvfxe5wnQ2uzcso3v4c
+         LZm9x37O4r+y/UV6TIc6igrQ9LcB2IAvllQ+Qfbcj1aLgGqBb+EmFNbjJz9eZAAagkhw
+         d4nCnvE5jhUG0wte4p+17phrWhWTVrihR42EY2/ZHn9imKFSuUr0sDaj/3HVq4P5hMv+
+         MmaYgiBoa9b1POzcVNVh2E/uDKzIT5DTAeKDV6ZWn2uyJV672z4ZX3f0nJWyMobI83yp
+         DUTA==
+X-Gm-Message-State: ANoB5pk8vBbUsbTSsgZqMpvQLhvu76nsb8mVt5Cx08T7PdzaeqO1LXBw
+        yE5+qmQM8To46Z2/VF/5eAtGag==
+X-Google-Smtp-Source: AA0mqf5Hhw3d5lwAqvy2lPvMVZhb9BL560UK90bhcGji4XJfrDGDLN1s2XcJv0l2tnXnm++pw4DYSg==
+X-Received: by 2002:a5d:4cd0:0:b0:236:757c:54a1 with SMTP id c16-20020a5d4cd0000000b00236757c54a1mr1791120wrt.106.1668184934550;
+        Fri, 11 Nov 2022 08:42:14 -0800 (PST)
 Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id r15-20020a05600c35cf00b003a84375d0d1sm10299100wmq.44.2022.11.11.08.42.02
+        by smtp.googlemail.com with ESMTPSA id j5-20020a05600c1c0500b003cfbbd54178sm14270442wms.2.2022.11.11.08.42.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Nov 2022 08:42:03 -0800 (PST)
-Message-ID: <7cdb914a-df88-ca11-45d3-d370d5c94bcd@linaro.org>
-Date:   Fri, 11 Nov 2022 16:42:02 +0000
+        Fri, 11 Nov 2022 08:42:13 -0800 (PST)
+Message-ID: <c227c62e-4906-698c-fc27-11d17d6b0817@linaro.org>
+Date:   Fri, 11 Nov 2022 16:42:13 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.2
-Subject: Re: [PATCH v2 2/2] ASoC: codecs: wsa883x: Use proper shutdown GPIO
+Subject: Re: [PATCH v2 1/2] ASoC: dt-bindings: qcom,wsa883x: Use correct SD_N
  polarity
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
@@ -72,14 +72,14 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20221110133512.478831-1-krzysztof.kozlowski@linaro.org>
- <20221110133512.478831-2-krzysztof.kozlowski@linaro.org>
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20221110133512.478831-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221110133512.478831-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -89,45 +89,57 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 10/11/2022 13:35, Krzysztof Kozlowski wrote:
-> The shutdown GPIO is active low (SD_N), but this depends on actual board
-> layout.  Linux drivers should only care about logical state, where high
-> (1) means shutdown and low (0) means do not shutdown.
+> Use correct polarity in example and powerdown-gpios description.
 > 
-> Invert the GPIO to match logical value.
-> 
-> Fixes: 43b8c7dc85a1 ("ASoC: codecs: add wsa883x amplifier support")
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
-> ---
 
 Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
+> ---
 > 
 > Changes since v1:
-> 1. None.
+> 1. New patch.
 > ---
->   sound/soc/codecs/wsa883x.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml | 8 +++++---
+>   1 file changed, 5 insertions(+), 3 deletions(-)
 > 
-> diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
-> index c7b10bbfba7e..77a7dd3cf495 100644
-> --- a/sound/soc/codecs/wsa883x.c
-> +++ b/sound/soc/codecs/wsa883x.c
-> @@ -1392,7 +1392,7 @@ static int wsa883x_probe(struct sdw_slave *pdev,
->   	}
+> diff --git a/Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml b/Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml
+> index 6113f65f2990..99f9c10bbc83 100644
+> --- a/Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml
+> +++ b/Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml
+> @@ -23,7 +23,7 @@ properties:
+>       maxItems: 1
 >   
->   	wsa883x->sd_n = devm_gpiod_get_optional(&pdev->dev, "powerdown",
-> -						GPIOD_FLAGS_BIT_NONEXCLUSIVE);
-> +						GPIOD_FLAGS_BIT_NONEXCLUSIVE | GPIOD_OUT_HIGH);
->   	if (IS_ERR(wsa883x->sd_n)) {
->   		dev_err(&pdev->dev, "Shutdown Control GPIO not found\n");
->   		ret = PTR_ERR(wsa883x->sd_n);
-> @@ -1411,7 +1411,7 @@ static int wsa883x_probe(struct sdw_slave *pdev,
->   	pdev->prop.simple_clk_stop_capable = true;
->   	pdev->prop.sink_dpn_prop = wsa_sink_dpn_prop;
->   	pdev->prop.scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY;
-> -	gpiod_direction_output(wsa883x->sd_n, 1);
-> +	gpiod_direction_output(wsa883x->sd_n, 0);
+>     powerdown-gpios:
+> -    description: GPIO spec for Powerdown/Shutdown line to use
+> +    description: GPIO spec for Powerdown/Shutdown line to use (pin SD_N)
+>       maxItems: 1
 >   
->   	wsa883x->regmap = devm_regmap_init_sdw(pdev, &wsa883x_regmap_config);
->   	if (IS_ERR(wsa883x->regmap)) {
+>     vdd-supply:
+> @@ -47,6 +47,8 @@ additionalProperties: false
+>   
+>   examples:
+>     - |
+> +    #include <dt-bindings/gpio/gpio.h>
+> +
+>       soundwire-controller@3250000 {
+>           #address-cells = <2>;
+>           #size-cells = <0>;
+> @@ -55,7 +57,7 @@ examples:
+>           speaker@0,1 {
+>               compatible = "sdw10217020200";
+>               reg = <0 1>;
+> -            powerdown-gpios = <&tlmm 1 0>;
+> +            powerdown-gpios = <&tlmm 1 GPIO_ACTIVE_LOW>;
+>               vdd-supply = <&vreg_s10b_1p8>;
+>               #thermal-sensor-cells = <0>;
+>               #sound-dai-cells = <0>;
+> @@ -64,7 +66,7 @@ examples:
+>           speaker@0,2 {
+>               compatible = "sdw10217020200";
+>               reg = <0 2>;
+> -            powerdown-gpios = <&tlmm 89 0>;
+> +            powerdown-gpios = <&tlmm 89 GPIO_ACTIVE_LOW>;
+>               vdd-supply = <&vreg_s10b_1p8>;
+>               #thermal-sensor-cells = <0>;
+>               #sound-dai-cells = <0>;
