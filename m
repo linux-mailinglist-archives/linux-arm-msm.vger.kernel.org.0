@@ -2,284 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10B11626A7B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Nov 2022 17:15:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 30F51626ACB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Nov 2022 18:27:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234927AbiKLQPO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Nov 2022 11:15:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44354 "EHLO
+        id S235044AbiKLR06 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Nov 2022 12:26:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230257AbiKLQPN (ORCPT
+        with ESMTP id S235011AbiKLR05 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Nov 2022 11:15:13 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F7A5B7EE;
-        Sat, 12 Nov 2022 08:15:11 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id D55FDCE09B6;
-        Sat, 12 Nov 2022 16:15:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1754DC433C1;
-        Sat, 12 Nov 2022 16:15:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668269707;
-        bh=+yY8VWmr5oG/wcPckVmlmWdGPcJ6L9XIl3WO5KeARlA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=COJZ8JsrdbqL3HocmgkOr9NG61vQpxF9Jh577oc06PL/qLnW7YAftB9BGU2E69eAu
-         Z9qTLjj4cEmf4Phiex7yzoy7B8ZpvxMwCh9Sbt4USuTzIG6FUSFRtQ1qS3i+K+zy3C
-         6+VyWW7s8NoVwT5Ra1buvZloce76yAeckN1F3NDBI/Q4fJDmkrpm6aQI8mDEFFteuG
-         tJO82ucgKEWCbvemXLb4VG1EEWICk/inLdQvujkn7h3Icbn3DmIsnir11L6XtlbPtB
-         4lrYUhEG4biMqUCda+2weejGj4QW0WpjeSdN+OUrb34rLMueICHk3ODm8BI2bnG/XI
-         An61wabOUc9Iw==
-Date:   Sat, 12 Nov 2022 16:27:19 +0000
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>,
-        Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
-        linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [RFC PATCH] iio: adc: qcom-spmi-vadc: Propagate fw node
- name/label to extend_name
-Message-ID: <20221112162719.0ac87998@jic23-huawei>
-In-Reply-To: <20221106202445.fkobsyc3mohmzqod@SoMainline.org>
-References: <20221106193018.270106-1-marijn.suijten@somainline.org>
-        <20221106202445.fkobsyc3mohmzqod@SoMainline.org>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.34; x86_64-pc-linux-gnu)
+        Sat, 12 Nov 2022 12:26:57 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7C351742E
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Nov 2022 09:26:54 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id f5so19180886ejc.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Nov 2022 09:26:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wqjqQ1Vg/0IcV3TkPWiIq1SGrZdW30HijXn2AsH/aS8=;
+        b=aFqe4qykN7xWbN6aiXfuOEwj+g0+sfHM/DMzghu3ceVsncETH/sVbwzN1vI6dn299R
+         hbLxtEWe14Y598TWowsxr/FmWaLPnvzMyoykXHSGkJdHG0g6IR2uwXvjEkIGw2Mnxi01
+         Ep7Vi8ARGGoRQNrwqSyz3Wvy9hAzoIAAi0OUjnK20o8eeDi3uP5NvpDkVaGz7Y8qv8I3
+         jQNLRbcKX9XbqOD6ITegjkltjV2HfT8gZEtHmJgixNzv7MHgZxsLE01SalDyKaBIc6uK
+         dUNLdDtj5QemJWWoi4LJP6mdfIjjXoBRBXkFnCu8z7U1SM/k/Lt58/ZrmMPYz4efVsuQ
+         ZQiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wqjqQ1Vg/0IcV3TkPWiIq1SGrZdW30HijXn2AsH/aS8=;
+        b=tHMmdU5BSdGhuBUxIhBV4GzfnHGUKMGA4VZbHQyEeSypyn2J83XZVllyiGFbIKRynR
+         CACOlgYYxgl9mBj2YgLlpLWeZrLiYcpB62c3ecVXBD2WPAKRLp2S1UHNNlp3+oS/B7p8
+         iluSrITkt9iw1C/rHkk8pwHfseawikEUiBFDYxLF+mjCkqlqWsoeMJkOmYxpSnqBT15H
+         HXbArWQ01bdRxKXr/oEK4QZWb3aZfyS/AxSc/WUSaGxUWytZFmqIkorAbfWC0gvKJ1tt
+         DFL53qqqhBb1ONfunMAOKOt4xmT4SLREyKDX8sJ5SfOb8AaNlZJcaSxYeJ9QLSUMAwSm
+         MFWg==
+X-Gm-Message-State: ANoB5pm52hpt5k9uh+0U7zKUM9mnmdelsuEax5Iu/LnoA9dX/0PB6NJ7
+        94yP7tkWn/N//TST8lKtKWvrUQ==
+X-Google-Smtp-Source: AA0mqf5f0yV+WvjeyOFhItlwOnTZEbu3BDhI2q7HuTubjLFYoU641NWAIvdtM1dUgp4mOyomaC6afA==
+X-Received: by 2002:a17:906:814:b0:78e:ebd:bf96 with SMTP id e20-20020a170906081400b0078e0ebdbf96mr5653976ejd.625.1668274013399;
+        Sat, 12 Nov 2022 09:26:53 -0800 (PST)
+Received: from localhost.localdomain (2001-1c06-2302-5600-3861-6a56-0346-9c90.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:3861:6a56:346:9c90])
+        by smtp.gmail.com with ESMTPSA id qo9-20020a170907874900b0078c1e174e11sm2099265ejc.136.2022.11.12.09.26.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 12 Nov 2022 09:26:52 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        mchehab@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org,
+        vladimir.zapolskiy@linaro.org
+Cc:     sakari.ailus@iki.fi, hverkuil@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, quic_mmitkov@quicinc.com,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v5 0/6] Switch on IMX577 on RB5
+Date:   Sat, 12 Nov 2022 17:26:44 +0000
+Message-Id: <20221112172650.127280-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 6 Nov 2022 21:24:45 +0100
-Marijn Suijten <marijn.suijten@somainline.org> wrote:
+V5:
+- Rolls three identified dts non-confirmances into three separate patches - Konrad
+- Fixes the "both" left in the git log - Konrad
 
-> Adding Krzysztof to CC for the DT bindings discussion.
->=20
-> On 2022-11-06 20:30:18, Marijn Suijten wrote:
-> > Much like the ADC5 driver iio_chan_spec::extend_name has to be set for
-> > friendly/useful names to show up in sysfs, allowing users to correlate
-> > readout values with the corresponding probe. This name is read from
-> > firmware, taking both the node name and - if set - node label into
-> > account.  This is particularly useful for custom thermistors being
-> > attached to otherwise-generically-named GPIOs.
-> >=20
+Previous
+https://lore.kernel.org/all/20221112124126.86815-1-bryan.odonoghue@linaro.org/
 
-If you are attaching thermistors to an ADC channel, then you should have
-a driver for that thermistor.  It will be a consumer of the ADC channel
-in question and any labels etc should apply there (along with scaling
-/ non linear transforms to get to a temperature), not at the ADC
-level.
+V4:
+- Rebases on top of Konrad's comment fixes to migrate into rb3 mezz.dts -Bjorn
+- Adds -state suffix - Bjorn
+- Adds -pins suffix - Bjorn
+- Removes redundant newline - Krzysztof
 
-> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> >=20
-> > ---
-> >=20
-> > This RFC may seem a bit controversial as there are multiple patches
-> > going around in DT-land changing how nodes are labeled [1] (or
-> > introducing new ones: [2]), seemingly to appease binding conventions
-> > without considering how the driver propagates them to IIO (and in turn
-> > what userspace sees in sysfs).  I hope we can put together the right
-> > conventions with this RFC.
+Previous
+https://lore.kernel.org/all/20221108021816.213084-1-bryan.odonoghue@linaro.org/
 
-> >=20
-> > Before getting started, note that ADC5 provides this DT/FW node
-> > name/label in *both* extend_name *and* datasheet_name;
-> > adc5_channels::datasheet_name provided by the macros remains *unread*
-> > (except for a non-null check).
+Dependency for the imx577 should be merged in 6.2
+https://git.linuxtv.org/sailus/media_tree.git/log/?h=for-6.2-2-signed&ofs=50
 
-There was some history here if I recall correctly.  Until recently(ish) we =
-didn't
-have the "label" attribute for channels so the only route was to use
-extended_name. That makes a mess for userspace developers however because
-it is harder to write a parser that is happy with free form sections
-of an attribute name.  So extended_name is more or less deprecated with the
-exception of a few legacy cases that we might carry forwards into very simi=
-lar
-drivers.
+V3:
+- Ordering patch was applied separately, now dropped from this series.
+- camcc disable patch similarly is already applied, dropped here.
+- RB5 and RB3 now have separate camera specific DTSI files
+  per perferences expressed on the mailing list by Konrad, Vladimir and
+  Bjorn.
+- Agreeing a imx412 change spiralled a bit into a wider discussion however
+  after a good bit of debate and testing on different hardware there is a
+  series to add imx577 as a compat string to the imx412.c driver.
+  So this series depends on that series being merged.
+  https://www.spinics.net/lists/linux-media/msg219989.html
 
-datasheet_name was introduced to allow binding the channels to consumers
-in a human readable form. Note that this dates back to predevice tree
-days - so mostly you'll see it used when an mfd registers its own
-consumers.  They weren't at the time intended to be used directly by the
-drivers at all.
+  Given the addition of mezzanine specific dtsi I thought it was worthwhile
+  to kick off a review now since the sensor name change is agreed but not
+  yet applied and all other outstanding comments have been addressed.
+ 
+V2:
 
+- Adds fix for bug identified by Vladimir
+  The CCI i2c_adapter_add() and pm_runtime_enable() are racy.
+  This is a generic problem not related to the rb5/imx577 but, for the sake
+  of our conversation/review's context I'll add it into this series.
+- Include Vladimir's camcc patch
+  I've also opted to include Vladimir's disable of camcc to make the enable
+  of it in my patchset logical.
+- Move address/size cells Konrad
+- Remove newline in pin definitions - Konrad
+- Remove sensor 'status = "okay"' - Konrad
+- Add comment to qrb5165-rb5.dts re: imx412 and imx577 difference - Konrad
+- Move pin definitions to 8250 dtsi - Vladimir
+- Drop power domain from sensor definition - Vladimir
+- Correct to "add to cam2" not "cam1" in commit log - bod
 
-> > Since the names hardcoded in the driver seem to be somewhat
-> > "datasheet"-y, and the names in DT typically take the form of a more
-> > friendly "<device>-therm" indicating where the thermistor (or voltage
-> > probe) is located on the board or attached to, I have opted to persist
-> > the original use of vadc_channels::datasheet_name in
-> > iio_chan_spec::datasheet_name, and only propagate the data from DT/FW
-> > into extend_name.
+To make verification of the CCI race eaiser I've provided a defconfig both
+with and without modules enabled.
 
-To clarify datasheet_name is the name on the datasheet of the provider part
-not the naming on the board datasheet - basically it's meant to be the pin =
-name.
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=linux-next-24-05-22%2bimx577-rb5
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=linux-next-24-05-22%2bimx577-rb5-compiled-in
 
-If you modify extend_name at all you break userspace ABI.
-So that's pretty much a non starter (and one reason why we added the label
-attribute).
+git diff linaro/linux-next-22-05-22+imx577-rb5 linaro/linux-next-24-05-22+imx577-rb5
 
-Also, if the ADC channel is labelled with what it is consumed by that feels
-backwards.  The thermistor could be connected to any channel.  Any nice
-naming should be at the thermistor driver end.  So say I put a thermistor
-on input 8.  It should just bind to input 8. The bit of the binding for
-the ADC just provides the consumer services for that input 8.
+V1:
+Linux-next now has everything we need to switch on this sensor both in the
+qcom DTS and in the imx412 driver.
 
-> > (We should likely rename vadc_channel_prop::datasheet_name to
-> > extend_name to this end.)
-> >=20
-> > Back when I submitted patches for pm6125 [3] (utilizing ADC5)
-> > 4f47a236a23d ("iio: adc: qcom-spmi-adc5: convert to device properties")
-> > didn't yet land, and these patches use the node name to convey a
-> > useful/friendly name (again, the string literals in ADC5 are unused).
-> > fwnode_get_name() however includes the `@xx` reg suffix, making for an
-> > unpleasant reading experience in sysfs.
-> >=20
-> > With all that context in mind, I feel like we should answer the
-> > following questions:
-> >=20
-> > 1. Should we propagate names from DT/FW at all?
+After this, no further dts or driver work is required to capture images on
+the RB5.
 
-This question needs to make it clear - which name?  Propagating channel
-labels to sysfs is often useful via the in_voltageX_label type attributes.
-Whether it is useful in this specific driver depends on whether we have
-information to convey that isn't provided by channel numbers alone.
+Here's a bootable linux-next with a kernel config. I added Vladimir's
+power-domain changes on-top to verify nothing breaks for me.
 
-> > 2. If so, how should a node be represented in DT?  Should it use generic
-> >    node names (which we might not want to use anyway considering the
-> >    `@xx` suffix highlighted above) or labels exclusively?
+https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=linux-next-18-05-22%2bimx577-rb5
 
-I would suggest only labels.  Though in the case you give of a thermistor a=
-ttached
-this handling is wrong anyway.
+Bryan O'Donoghue (6):
+  arm64: dts: qcom: sdm845-db845c: Drop redundant address-cells,
+    size-cells declaration
+  arm64: dts: qcom: sdm845-db845c: Use okay not ok for status
+  arm64: dts: qcom: sdm845-db845c: Use status disabled not disable
+  arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: Add navigation
+    mezzanine dts
+  arm64: dts: qcom: sm8250: camss: Define ports address/size cells
+  arm64: dts: qcom: qrb5165-rb5-vision-mezzanine: Add vision mezzanine
 
-> > 3. If only labels are going to be used in conjunction with generic node
-> >    names, should ADC5 be changed to ignore the node name?
-=46rom a quick search, I'm only seeing the node name used in debug prints cur=
-rently.
-That feels fine to me as it's telling us where the binding parsing went wro=
-ng...
-Am I missing some use outside of vadc_get_fw_channel_data()?
+ arch/arm64/boot/dts/qcom/Makefile             |   2 +
+ .../dts/qcom/qrb5165-rb5-vision-mezzanine.dts |  63 +++++++++++
+ .../sdm845-db845c-navigation-mezzanine.dts    | 107 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts    | 101 -----------------
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  38 +++++++
+ 5 files changed, 210 insertions(+), 101 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts
 
-> > 4. If a label (or node name) is not set, do we fall back to
-> >    datasheet_name hardcoded in the driver?
-
-Hmm. Probably not.
-
-> > 5. What do we use for datasheet_name vs extend_name?
-Expand that to include label.
-datasheet_name : When you want to have human readable pin names from the ADC
-  datasheet, used as part of provide services to consumer drivers. Doesn't
-  work with DT though as it wasn't part of the binding for consumers.
-  So largely irrelevant unless you have an MFD where the ADC consumers are
-  also part of the MFD children and so the map is set up in the way we used
-  to do it for board files.
-extended_name: Short answer is don't use it today.  It was a bad design dec=
-ision
-  a long time back.
-label: This is the one you should info from DT through to today.  As it is =
-freeform
-  and comes from the bindings - we don't encode this in the const iio_chan_=
-spec array
-  but rather use the iio_info->read_label() callback.  It is provided to us=
-erspace
-  as a per channel _label attribute.
-
-> > 6. Any other vadc drivers that need the same treatment, when we come to
-> >    a resolution?
-Any resolution can only 'add' ABI to userspace.  So adding labels is fine.
-extend_name never is.
-
-Hope that helps.
-
-Jonathan
-
-> >=20
-> > [1]: https://lore.kernel.org/linux-arm-msm/20221031181022.947412-1-luca=
-@z3ntu.xyz/T/#u
-> > [2]: https://lore.kernel.org/linux-arm-msm/20221101161801.1058969-2-luc=
-a@z3ntu.xyz/
-> > [3]: https://lore.kernel.org/linux-arm-msm/20220926190148.283805-1-mari=
-jn.suijten@somainline.org/T/#u
-> >=20
-> > Thanks for considering this!
-> > - Marijn
-> >=20
-> >  drivers/iio/adc/qcom-spmi-vadc.c | 11 ++++++++++-
-> >  1 file changed, 10 insertions(+), 1 deletion(-)
-> >=20
-> > diff --git a/drivers/iio/adc/qcom-spmi-vadc.c b/drivers/iio/adc/qcom-sp=
-mi-vadc.c
-> > index bcff0f62b70e..8c6c7fa13cfe 100644
-> > --- a/drivers/iio/adc/qcom-spmi-vadc.c
-> > +++ b/drivers/iio/adc/qcom-spmi-vadc.c
-> > @@ -84,6 +84,7 @@
-> >   *	that is an average of multiple measurements.
-> >   * @scale_fn_type: Represents the scaling function to convert voltage
-> >   *	physical units desired by the client for the channel.
-> > + * @datasheet_name: Channel name used in device tree.
-> >   */
-> >  struct vadc_channel_prop {
-> >  	unsigned int channel;
-> > @@ -93,6 +94,7 @@ struct vadc_channel_prop {
-> >  	unsigned int hw_settle_time;
-> >  	unsigned int avg_samples;
-> >  	enum vadc_scale_fn_type scale_fn_type;
-> > +	const char *datasheet_name;
-> >  };
-> >=20
-> >  /**
-> > @@ -652,7 +654,7 @@ static int vadc_get_fw_channel_data(struct device *=
-dev,
-> >  				    struct vadc_channel_prop *prop,
-> >  				    struct fwnode_handle *fwnode)
-> >  {
-> > -	const char *name =3D fwnode_get_name(fwnode);
-> > +	const char *name =3D fwnode_get_name(fwnode), *channel_name;
-> >  	u32 chan, value, varr[2];
-> >  	int ret;
-> >=20
-> > @@ -670,6 +672,12 @@ static int vadc_get_fw_channel_data(struct device =
-*dev,
-> >  	/* the channel has DT description */
-> >  	prop->channel =3D chan;
-> >=20
-> > +	ret =3D fwnode_property_read_string(fwnode, "label", &channel_name);
-> > +	if (ret)
-> > +		channel_name =3D name;
-> > +
-> > +	prop->datasheet_name =3D channel_name;
-> > +
-> >  	ret =3D fwnode_property_read_u32(fwnode, "qcom,decimation", &value);
-> >  	if (!ret) {
-> >  		ret =3D qcom_vadc_decimation_from_dt(value);
-> > @@ -771,6 +779,7 @@ static int vadc_get_fw_data(struct vadc_priv *vadc)
-> >=20
-> >  		iio_chan->channel =3D prop.channel;
-> >  		iio_chan->datasheet_name =3D vadc_chan->datasheet_name;
-> > +		iio_chan->extend_name =3D prop.datasheet_name;
-> >  		iio_chan->info_mask_separate =3D vadc_chan->info_mask;
-> >  		iio_chan->type =3D vadc_chan->type;
-> >  		iio_chan->indexed =3D 1;
-> > --
-> > 2.38.1
-> >  =20
+-- 
+2.34.1
 
