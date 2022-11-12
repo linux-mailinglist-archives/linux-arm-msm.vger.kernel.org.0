@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21A8A6267C9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Nov 2022 08:48:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 441BE6267CB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Nov 2022 08:49:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233542AbiKLHsz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Nov 2022 02:48:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60244 "EHLO
+        id S233223AbiKLHtS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Nov 2022 02:49:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234237AbiKLHsy (ORCPT
+        with ESMTP id S234519AbiKLHtP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Nov 2022 02:48:54 -0500
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E29D71A04E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 23:48:51 -0800 (PST)
-Received: by mail-lj1-x230.google.com with SMTP id u11so6868498ljk.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 23:48:51 -0800 (PST)
+        Sat, 12 Nov 2022 02:49:15 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 668FE268
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 23:49:14 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id g12so11496399lfh.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 23:49:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=1WxsG42LKTQVTkXlEAiYKa0OwGib2EgN2ooRMVwZbEg=;
-        b=Df1TvR67pZNpHd/nMYAZhVgQhoZiK2vlxVz1PDLu8R2Mhr1/Ial8EIiSDmsBoqieYC
-         l9MhlstcmHHHDw3p+gKuskhYPSA81RUUht08dHc2p+CoyJnGR5wgQOD3i7t7gvgIMoTb
-         Q7KfHSQvzGrDwjZzKHbenr4ru/yleOxyAulRdbf1aTzqrYTKQ5/EVxmZUQuK53wwXEiI
-         u+YGFf4XBmIbqNUlTKiR0n5W8wSsq0fkCiloWzSuGBLzV2Hrm4k6mAQMFVaY9xTkjs9F
-         5io8LF+JJ/2qvY40HgW+F77tS/ljuc0MZlHWc0jqGlRhG4IdccLBLTcTKE+j1kOLHups
-         LD4Q==
+        bh=ip4CQbUOur2Z8auOo98Z8DR+uOdUvnl6ncRfh2kyCII=;
+        b=bh/yt6zArCdN5ziU8NmNZu8cgH2NJ65gpkVTng+6UWgXQIbh4kWESXIxMe8OzKs9dK
+         XMgliczUl3QQO7AKUkh54lVGaTMVUWVcrXaTVAtrororWEcG+Jxoh19TLPNUtJNs5jd7
+         jYewpduAsjuywcgdv2HQDytTEGw9niWpkDWB/MDZZxunTHdLhuGt8yBE7iXfsIlzkyWb
+         /dcsdzo9IRORDRf5x9Pk5v/oFZe4vJURPv9OZAxUYPcMBBfvdh9fyVA8G3EEyC+yKlL1
+         Fub4iStp1ABEy+BjJ7I8d1nbPIuq9SyWXXuHmR9m4iMzBX11D4k2FJtKO8X4npCu3gLt
+         8yNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1WxsG42LKTQVTkXlEAiYKa0OwGib2EgN2ooRMVwZbEg=;
-        b=J6CCrNc6VTlAZi98juN5Uz75F4/pXlWuPJ0fq0ffcAxw6mkVBpyL44bEHvlXY6A7u4
-         UVK8XCY1kvDE/Uw6djLZ2ZT0wVScT4k9T4IYix9JgjESy+GUtAzWpwOk4ADeUItiHZ9H
-         snFB5dIcfFjRcxV1IFsI9r+Sy5c3liHD/wgffGs4OUXblplKkUzWXPfFdMgNErb5dAau
-         6y5QpK5DOFaGV2lAqBFM72k2T+wNsX4IWNCsJy6euo9fjhCxoVDAnN+35jPfLK9PLaix
-         0HcAnPZOlk5zQCNfe6Bz7m3wimzcalkx8pZgeSXt5IqTqgDFGBj/kzamd5x0Apu6RieQ
-         NEcw==
-X-Gm-Message-State: ANoB5pm8CX9DLjbkJrP3Kkx4OX7rg8OfYdVHEFL9+62pwhxbTL5E5e4w
-        oZAf3ORAcNuxn/GxChJ5DNu3fA==
-X-Google-Smtp-Source: AA0mqf5r/HaUD2qsEtfli181hg72rtsQbgum/yeB7dEGR+HqiCBJxpv2t1ri1kePIjScYIH/P4bE9A==
-X-Received: by 2002:a2e:a590:0:b0:277:3ca2:dac6 with SMTP id m16-20020a2ea590000000b002773ca2dac6mr1531460ljp.143.1668239330269;
-        Fri, 11 Nov 2022 23:48:50 -0800 (PST)
+        bh=ip4CQbUOur2Z8auOo98Z8DR+uOdUvnl6ncRfh2kyCII=;
+        b=dg5jG6GftLIGiSM9xRI/8K/hC90bFqeBhS+Qrv7x/foa6RUQ5liilmb4+RRioVANfA
+         e7NEK2RJRyK2is9OY9O+QGTGhkLuTKYNCiMwdfhW7JdyCsJ3cRqjxZ9Csobz/vUR9CMH
+         oSASwLzY4fb+6yh0RWK9v1CxL3uV+4BtvJYjjR2PLm/TBJ3K1beCypUO8iC4BjDaBZK5
+         PyQzctl40BsVz0XQ+FICC49vlfvYQ/9MBPW4JpO1RojivU5nmBhTfsrqlWDJDah+So+M
+         fCEaLdOrSQsFunVACZYpa2fsHNXRtfcSkG++xpJZbGS4OfvG1jZQb//4FIkDwFbW183z
+         oOKw==
+X-Gm-Message-State: ANoB5pmFbZGx9IWYfSbxZHrcgqRarT4Rw9vVuHqMaDt2vh1d+SNT86SG
+        Ghyu+qvohAskAkkhViYc1S2f8A==
+X-Google-Smtp-Source: AA0mqf43xUwIvzvUyPDv0Q3clCPGeMtgNl1ERzq5AEHoxIosoBwwdE1dpbE5Ve18pKHx1spyQh1ztw==
+X-Received: by 2002:a19:651a:0:b0:4b0:a1e7:9160 with SMTP id z26-20020a19651a000000b004b0a1e79160mr1614933lfb.566.1668239352827;
+        Fri, 11 Nov 2022 23:49:12 -0800 (PST)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id j29-20020a056512029d00b0048b365176d9sm733775lfp.286.2022.11.11.23.48.49
+        by smtp.gmail.com with ESMTPSA id o6-20020a05651205c600b004a26ba3458fsm747077lfo.62.2022.11.11.23.49.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Nov 2022 23:48:49 -0800 (PST)
-Message-ID: <7f892a0d-56f0-6811-0111-6922c2159b56@linaro.org>
-Date:   Sat, 12 Nov 2022 10:48:49 +0300
+        Fri, 11 Nov 2022 23:49:12 -0800 (PST)
+Message-ID: <dfd3a8ef-6be1-dcdf-20bb-94d4c17a1203@linaro.org>
+Date:   Sat, 12 Nov 2022 10:49:12 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.1
-Subject: Re: [PATCH 20/22] phy: qcom-qmp-combo: clean up probe initialisation
+Subject: Re: [PATCH 21/22] phy: qcom-qmp-combo: clean up PHY init
 Content-Language: en-GB
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>
@@ -65,15 +65,14 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
 References: <20221111085643.9478-1-johan+linaro@kernel.org>
- <20221111085643.9478-21-johan+linaro@kernel.org>
+ <20221111085643.9478-22-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221111085643.9478-21-johan+linaro@kernel.org>
+In-Reply-To: <20221111085643.9478-22-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -81,14 +80,13 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 11/11/2022 11:56, Johan Hovold wrote:
-> Stop abusing the driver data pointer and instead pass the driver state
-> structure directly to the initialisation helpers during probe.
+> Clean up the USB PHY initialisation somewhat by programming both tx and
+> rx for the second lane after the first lane.
 > 
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 62 ++++++++++-------------
->   1 file changed, 28 insertions(+), 34 deletions(-)
-> 
+>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 8 +++-----
+>   1 file changed, 3 insertions(+), 5 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
