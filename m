@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C7ED6626754
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Nov 2022 07:11:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F2BE162675D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Nov 2022 07:15:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234623AbiKLGL5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Nov 2022 01:11:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38294 "EHLO
+        id S234665AbiKLGPu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Nov 2022 01:15:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234656AbiKLGL4 (ORCPT
+        with ESMTP id S234540AbiKLGPs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Nov 2022 01:11:56 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFC352715D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 22:11:54 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id u2so6716642ljl.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 22:11:54 -0800 (PST)
+        Sat, 12 Nov 2022 01:15:48 -0500
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68E8C6A6BF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 22:15:46 -0800 (PST)
+Received: by mail-lj1-x22d.google.com with SMTP id a15so6715078ljb.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 22:15:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=z3ejbUlFun9OEgk/KT8vHWfd5C3xhdILnxWcphsdzjE=;
-        b=CdeddQVF1TO9jEQYCpMwrZcdEGwrnTwcDH2RMAAXZKXtvijrn2fLc6JiCwQ1W8qzVO
-         DMbPBg3GqqvxSzr7Rz5s2oI8OmSJ8RqJvRKEdtNETbxquW8F0YP3AthAPMLnYCirGcX5
-         d72ejQSJ9WJG95SyN05164TZ9AqtEeeZVzcmPszY94diOxvooVFRFMsp1bxSQqTFFE2b
-         gaVWmrjCNDOhBZFOcSbMwKTz7HYIFNg8HosXowWSF9BPRJaJIQ9Logt9jr/ISXhxBq8x
-         l4oiqMrDXnk5bMaEkiZbit3G3JaWbDWLkJoOL9hoMoYQRr8YJN9WA9ZqtUzIoaTCUnNe
-         AtxQ==
+        bh=V6HHp3kjp2Y5eg27eh7Uy6SYCKJuVG3gDdAuKss9nCY=;
+        b=e7TM8jPBMUFp+fjzQ8p+CrhgMAoc2vMhsqVLbf3TY2L56K74Ynq5gYojbu3qggnc0/
+         K5jlxFhDjn3TSYAQnE7cnibPhbGhagjkWIAoUK7ZaJW+qBAoxWiHjR6o4b+OrfMOvicN
+         0mOPiuYeBmxBvG9Bv7LYrJuHfTPbvMeHKS6w/le4Oi30Gi/LWzdlrurX4SYirFvFXLL2
+         zeALUmb0bC5dy9XCIiMue0dZz38djou+F44Wiv/WvTIt8dLi8/PkoJO1uMCz+juHdWpW
+         ylbw48SJrJg3Xx9eFrr3SDtuP4CerB5nFGTii23Fl//Zx1xonVwYHHu/kXi0w/9Xd7Ty
+         3UrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=z3ejbUlFun9OEgk/KT8vHWfd5C3xhdILnxWcphsdzjE=;
-        b=z1tzyYrmS2mysSmFgrEo7nQ2QZshyuiAaQ/Aj+Gpf50kvTmRohutB0ALkB49hTJEX3
-         lTgxnTrgpRCOx5FOKu111lY+RnuGsBbjBKZE/o+KceeyrYwknVfYgi31RzAZocaicl3T
-         CHo7TTvNCtnZ62wMhAZi8L8CoJ9CXFwHSk+8Ty7ABzsmWHNdZRlbZTlomWv3I8l41cre
-         lEDQGXG7YdvZKzbw1okkD6ggOU6QuWBNC7P6/pleqIsWorZHDznNVxOHk4l6sgEVMazu
-         32RPEFK7REIwJx5GIG9mX0mLL1xgtlp1ZNYnVTlmLgUV9VeRvYg+c7DE1vajiyS60Kkh
-         TC/Q==
-X-Gm-Message-State: ANoB5pknrzx/1KSXYXq42zIQDd5HR5tc0f0rvCVNxN0YDoiJ4JBqdh3T
-        A/fIwwqtMFyVUJjSGBxTusdc0g==
-X-Google-Smtp-Source: AA0mqf6XAXIkgfNs1O58usH4KLMuIJnBykFNQGvvGHPaohPzz/O/3cpZ5coGzCG+NB5SBy5Yb0s5Xg==
-X-Received: by 2002:a2e:b117:0:b0:277:96a:5c32 with SMTP id p23-20020a2eb117000000b00277096a5c32mr1449233ljl.415.1668233513135;
-        Fri, 11 Nov 2022 22:11:53 -0800 (PST)
+        bh=V6HHp3kjp2Y5eg27eh7Uy6SYCKJuVG3gDdAuKss9nCY=;
+        b=mx2oF3SftpRzsj0ecfekkW2eT6oqQDiVI7YeeQlnd0AhJINNkLhKKxROd38VdZKqtH
+         hUpSs4tdOOjqXXOLb20m07SMvbcDKD//SsAvlzXV7bNENMElOVcfwRKU1plrm+Phce7y
+         Xn2K/fFGroBXEZBWKWruvaNvfK037H4qKPtq2DGl+gK1k71xZUY95XCZ04Nr7XbcHLtk
+         7o1u4nBSHBE/2CsOGoQTpKkdZ5k7N1QlcsyqrJhU3kt5nnRL2B33k3m9s52I7yzD47jQ
+         wY9mN+5bDFghx3pnD2anJ/3NBn6yUHC+rlUccvq2Qh8MCmM7m/j4ajIhg4MsJC7CVgou
+         aKVA==
+X-Gm-Message-State: ANoB5pn0MBh5DAvlLNww/7J8ovlfbmYKc1JPNcBC2oJWJIYpBWLUHfGb
+        QxjVVf+ilCZnxblNYlV9rvJOfj1lTbSJeFf4
+X-Google-Smtp-Source: AA0mqf6A7M+SMFfpLiKhUvuklixhziPDNQLKFdS4we5IQFgEAup7ijFKwgKsLZDrnjW6I9JqyxSfxQ==
+X-Received: by 2002:a2e:6a03:0:b0:277:24b8:9bd4 with SMTP id f3-20020a2e6a03000000b0027724b89bd4mr1554878ljc.470.1668233744781;
+        Fri, 11 Nov 2022 22:15:44 -0800 (PST)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id m18-20020a194352000000b0049d3614463dsm705066lfj.77.2022.11.11.22.11.52
+        by smtp.gmail.com with ESMTPSA id t23-20020a056512209700b004b0a1e77cb2sm707385lfr.137.2022.11.11.22.15.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Nov 2022 22:11:52 -0800 (PST)
-Message-ID: <b9951e2f-b958-ec4c-331d-dd50ffc6d31e@linaro.org>
-Date:   Sat, 12 Nov 2022 09:11:52 +0300
+        Fri, 11 Nov 2022 22:15:44 -0800 (PST)
+Message-ID: <e4a423c6-e92d-1c40-2609-e8512bd9c03c@linaro.org>
+Date:   Sat, 12 Nov 2022 09:15:43 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.1
-Subject: Re: [PATCH 2/6] phy: qcom-qmp-combo: fix sdm845 reset
+Subject: Re: [PATCH 4/6] phy: qcom-qmp-combo: fix broken power on
 Content-Language: en-GB
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>
@@ -65,9 +65,9 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org, stable@vger.kernel.org
 References: <20221111084255.8963-1-johan+linaro@kernel.org>
- <20221111084255.8963-3-johan+linaro@kernel.org>
+ <20221111084255.8963-5-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221111084255.8963-3-johan+linaro@kernel.org>
+In-Reply-To: <20221111084255.8963-5-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,24 +81,86 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 11/11/2022 11:42, Johan Hovold wrote:
-> The SDM845 has two resets but the DP configuration erroneously described
-> only one.
+> The PHY is powered on during phy-init by setting the SW_PRWDN bit in the
+
+Nit: SW_PWRDN
+
+> COM_POWER_DOWN_CTRL register and then setting the same bit in the in the
+> PCS_POWER_DOWN_CONTROL register that belongs to the USB part of the
+> PHY.
 > 
-> In case the DP part of the PHY is initialised before the USB part (e.g.
-> depending on probe order), then only the first reset would be asserted.
+> Currently, whether power on succeeds depends on probe order and having
+> the USB part of the PHY be initialised first. In case the DP part of the
+> PHY is instead initialised first, the intended power on of the USB block
+> results in a corrupted DP_PHY register (e.g. DP_PHY_AUX_CFG8).
 > 
-> Add a dedicated configuration for SDM845 rather than reuse the
-> incompatible SC7180 configuration.
+> Add a pointer to the USB part of the PHY to the driver data and use that
+> to power on the PHY also if the DP part of the PHY is initialised first.
 > 
-> Fixes: d88497fb6bbd ("phy: qualcomm: phy-qcom-qmp: add support for combo USB3+DP phy on SDM845")
-> Cc: stable@vger.kernel.org	# 6.1
+> Fixes: 52e013d0bffa ("phy: qcom-qmp: Add support for DP in USB3+DP combo phy")
+> Cc: stable@vger.kernel.org	# 5.10
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+
+I can only hope that at some point in your cleanup this hack is going to 
+be removed.
+Nevertheless, I don't see a good way to do this at this moment. Thus:
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 > ---
->   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 39 ++++++++++++++++++++++-
->   1 file changed, 38 insertions(+), 1 deletion(-)
+>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 11 +++++++++--
+>   1 file changed, 9 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> index 40c25a0ead23..17707f68d482 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> @@ -932,6 +932,7 @@ struct qcom_qmp {
+>   	struct regulator_bulk_data *vregs;
+>   
+>   	struct qmp_phy **phys;
+> +	struct qmp_phy *usb_phy;
+>   
+>   	struct mutex phy_mutex;
+>   	int init_count;
+> @@ -1911,7 +1912,7 @@ static int qmp_combo_com_init(struct qmp_phy *qphy)
+>   {
+>   	struct qcom_qmp *qmp = qphy->qmp;
+>   	const struct qmp_phy_cfg *cfg = qphy->cfg;
+> -	void __iomem *pcs = qphy->pcs;
+> +	struct qmp_phy *usb_phy = qmp->usb_phy;
+>   	void __iomem *dp_com = qmp->dp_com;
+>   	int ret;
+>   
+> @@ -1963,7 +1964,8 @@ static int qmp_combo_com_init(struct qmp_phy *qphy)
+>   	qphy_clrbits(dp_com, QPHY_V3_DP_COM_SWI_CTRL, 0x03);
+>   	qphy_clrbits(dp_com, QPHY_V3_DP_COM_SW_RESET, SW_RESET);
+>   
+> -	qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL], SW_PWRDN);
+> +	qphy_setbits(usb_phy->pcs, usb_phy->cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
+> +			SW_PWRDN);
+>   
+>   	mutex_unlock(&qmp->phy_mutex);
+>   
+> @@ -2831,6 +2833,8 @@ static int qmp_combo_probe(struct platform_device *pdev)
+>   				goto err_node_put;
+>   			}
+>   
+> +			qmp->usb_phy = qmp->phys[id];
+> +
+>   			/*
+>   			 * Register the pipe clock provided by phy.
+>   			 * See function description to see details of this pipe clock.
+> @@ -2846,6 +2850,9 @@ static int qmp_combo_probe(struct platform_device *pdev)
+>   		id++;
+>   	}
+>   
+> +	if (!qmp->usb_phy)
+> +		return -EINVAL;
+> +
+>   	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
+>   
+>   	return PTR_ERR_OR_ZERO(phy_provider);
 
 -- 
 With best wishes
