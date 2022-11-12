@@ -2,363 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A8316269FE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Nov 2022 15:37:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A33D8626A00
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Nov 2022 15:40:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234794AbiKLOhv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Nov 2022 09:37:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47202 "EHLO
+        id S234627AbiKLOkH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Nov 2022 09:40:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234809AbiKLOhu (ORCPT
+        with ESMTP id S231146AbiKLOkG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Nov 2022 09:37:50 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A12ED1C125
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Nov 2022 06:37:48 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id kt23so18542900ejc.7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Nov 2022 06:37:48 -0800 (PST)
+        Sat, 12 Nov 2022 09:40:06 -0500
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4A121C40F
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Nov 2022 06:40:03 -0800 (PST)
+Received: by mail-pl1-x62d.google.com with SMTP id k7so6463089pll.6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Nov 2022 06:40:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vE9vHQ1GxZrhNxIqKdhrGPPNxHu5WjObDhAr7v58OGs=;
-        b=K8ZqOnGkyoGS8KXqk4X+gJJ1L2foUkItW/ICjLcl2wZCnjOt2Bs2spBCh2EuZaZ855
-         U6hZMRgpTgH8iQdSriSIiGNsBB21hqYVsjnlnKheW8MuaytVDPHBZ8z5d/pPJReyk5aL
-         WNP5XS6GM9rTkRmeQgrUxMfzrBGoCwl9yu4cw/4GPqXb44TPp9oRzr17KxLuPsTTwIdd
-         HDaeK3HBWtFG/0N57bBSK7XaXxNPVp7TqVSf82PAsLYdXZk73nb/V0G2lsQyOo+tHUp3
-         vnTcV8nkM7nZCJTv0SmK/kNONnnX7XkTWazcVWPYPR+Y48ThMEvgO1iDppBArQbZhzYa
-         5kEQ==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=bIZDCVzPPjeVdKIk8F8Uv0L3duOYsMu0/eWhzix57vE=;
+        b=SgtHZqh9wD+qbdxjkCbxLhKl2gLUkSUxEOoQ/Yiftl9N9XRaN42vlI0WUcwXwfVXTn
+         J6E2JYQ8k4+o0ExPP46zeFzPP9gkSID52C1MH3BDWFsznZDOQ22cUReZmwSGEONfC0jr
+         CTZwDa+yLcLl/rugWxr0sFDXiAq1CrC8GZ5m01Am09CHbV6Yu0LL67moMmJdL4jX3wG3
+         yR9xJ6ITd0obGZcqR+FCEawTV3cFC1OcWkRcu4hQ+KsLl7XO+MjVPvJnrX7k6fuNitoM
+         9oEiK5THRlXDHQ1pysOPZt5UNwvGmEtyepvH59+xxN5ItKPE0WQEeGCdNOF7NbnZ6G11
+         s8mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vE9vHQ1GxZrhNxIqKdhrGPPNxHu5WjObDhAr7v58OGs=;
-        b=zWrbpXCRmLWIU2zw52mPxqdEV0AbIsKeCoe3jvlvLczTOP/AeU6Qbbrx4NLD4Qx+Zo
-         7pCDqwKdbXWklr4GLTNvMCxwQRpmM8f+2JbYkJWPRpXQgHdEOfqFGDA7EJsEciqVeAAf
-         Eh87K3h2zKZjNM9iCW2O+0cRd8PPjbfCReqCXLwCQjIlwuRtWn4KkvbxgfLcFP2ZlVUS
-         uAFlnaxoEfHH2y9oYcUKDzIXXz5oz08tcJMxJzZDkBlgZ46IIURpN+LVq0s4gMFe5OGC
-         2D1JDJea67pvGmfayGtAQhvVlkFTF0iVxZ3wQmGb3Amk12xWRTAdrNRMnItrT/a3ed64
-         Gqlg==
-X-Gm-Message-State: ANoB5pnmvWmfmatEJmywD8SjkGPAHyPPnbjT+Z1x5XbNezsQoALcCtnJ
-        hdVG4Ci/rg7OAfbgrSjuG9tz2A==
-X-Google-Smtp-Source: AA0mqf6GQjcU1H6BnA5a+CimHeHjbbDLUyt7tJQwf3fSo8uh5kB+qYf9VGdvXINTUhgh3QSLfgTkBQ==
-X-Received: by 2002:a17:906:3ace:b0:7ad:9028:4b17 with SMTP id z14-20020a1709063ace00b007ad90284b17mr5354884ejd.366.1668263867159;
-        Sat, 12 Nov 2022 06:37:47 -0800 (PST)
-Received: from ?IPV6:2001:1c06:2302:5600:3861:6a56:346:9c90? (2001-1c06-2302-5600-3861-6a56-0346-9c90.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:3861:6a56:346:9c90])
-        by smtp.gmail.com with ESMTPSA id i15-20020a05640200cf00b00463c5c32c6esm2371982edu.89.2022.11.12.06.37.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 12 Nov 2022 06:37:46 -0800 (PST)
-Message-ID: <836531bb-e2ae-e851-82d1-e2c7f39482a3@linaro.org>
-Date:   Sat, 12 Nov 2022 14:37:44 +0000
+        bh=bIZDCVzPPjeVdKIk8F8Uv0L3duOYsMu0/eWhzix57vE=;
+        b=CeT5xobLJOzrsT1m5tgGQoPzgAtLoYmaWbxVafeEQ7FQcUeDJd/LxddRf9z6ziY0Y6
+         XD6E/FkXxcDAES1hVQ/xxdBX52STHvQnEri4ZWU5l2bUIfZZBVrfD1rW7tkLyUSklnul
+         BAOcYFXHXKQDOizOO+GO0rWOaVQJXWtzxBMLNNxUdnAO4CTEpQzLuvYrZ6M7Cm4ccXok
+         ZyprlqisbptvBIV95X8qbLTb8npCI1UP5b+1XgGAXHwWOnAwRX42cTd/X4Z/iTkWC/zq
+         RvQfSap14z/OdqDK0I3/X5wIDRRLBHTUw+moVd65lFxJwIdaYHXbcxN3MGl7iufML7yz
+         XkxQ==
+X-Gm-Message-State: ANoB5pkpduC0TM340rDvsKBMgqzHy0GjSyltT1GOJdiI41Fyr6w7KheP
+        11Hqk1EP0DebFh0U2k8KfuUa
+X-Google-Smtp-Source: AA0mqf4V0MvKh/F4vjxhQra+NmLToI21qXSfrRqdxC8PQ11CWY9xPpq9a08b0yLlvng1AqaZ7MEfvA==
+X-Received: by 2002:a17:902:7247:b0:186:6f97:fe90 with SMTP id c7-20020a170902724700b001866f97fe90mr6684390pll.75.1668264003242;
+        Sat, 12 Nov 2022 06:40:03 -0800 (PST)
+Received: from thinkpad ([2409:4072:6d03:e3e3:883:ee9e:a771:761d])
+        by smtp.gmail.com with ESMTPSA id d187-20020a6236c4000000b0056bdb5197f4sm3386924pfa.35.2022.11.12.06.39.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 12 Nov 2022 06:40:02 -0800 (PST)
+Date:   Sat, 12 Nov 2022 20:09:55 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Johan Hovold <johan@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 6/9] arm64: dts: qcom: sc8280xp-crd: enable WiFi
+ controller
+Message-ID: <20221112143537.GA140906@thinkpad>
+References: <20221110103558.12690-1-johan+linaro@kernel.org>
+ <20221110103558.12690-7-johan+linaro@kernel.org>
+ <20221110113513.GA18247@thinkpad>
+ <Y254AvMKyDQ+tY0q@hovoldconsulting.com>
+ <20221111204021.myjms5c2rntu4a76@builder.lan>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v4 3/3] arm64: dts: qcom:
- sdm845-db845c-navigation-mezzanine: Add navigation mezzanine dts
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, robert.foss@linaro.org,
-        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
-        mchehab@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org,
-        vladimir.zapolskiy@linaro.org
-Cc:     sakari.ailus@iki.fi, hverkuil@xs4all.nl,
-        laurent.pinchart@ideasonboard.com, quic_mmitkov@quicinc.com,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20221112124126.86815-1-bryan.odonoghue@linaro.org>
- <20221112124126.86815-4-bryan.odonoghue@linaro.org>
- <5729af47-8e18-535d-8e3a-299e82f54a06@linaro.org>
-Content-Language: en-US
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <5729af47-8e18-535d-8e3a-299e82f54a06@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221111204021.myjms5c2rntu4a76@builder.lan>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/11/2022 13:17, Konrad Dybcio wrote:
-> 
-> 
-> On 12/11/2022 13:41, Bryan O'Donoghue wrote:
->> Move the dts data for the rb3 navigation mezzanine into its own dts file.
->>
->> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
->>   .../sdm845-db845c-navigation-mezzanine.dts    | 109 ++++++++++++++++++
->>   arch/arm64/boot/dts/qcom/sdm845-db845c.dts    | 101 ----------------
->>   3 files changed, 110 insertions(+), 101 deletions(-)
->>   create mode 100644 
->> arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts
->>
->> diff --git a/arch/arm64/boot/dts/qcom/Makefile 
->> b/arch/arm64/boot/dts/qcom/Makefile
->> index cd88efa19e750..5eadd251a0a16 100644
->> --- a/arch/arm64/boot/dts/qcom/Makefile
->> +++ b/arch/arm64/boot/dts/qcom/Makefile
->> @@ -132,6 +132,7 @@ dtb-$(CONFIG_ARCH_QCOM)    += sdm845-cheza-r1.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)    += sdm845-cheza-r2.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)    += sdm845-cheza-r3.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)    += sdm845-db845c.dtb
->> +dtb-$(CONFIG_ARCH_QCOM)    += sdm845-db845c-navigation-mezzanine.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)    += sdm845-lg-judyln.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)    += sdm845-lg-judyp.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)    += sdm845-mtp.dtb
->> diff --git 
->> a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts 
->> b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts
->> new file mode 100644
->> index 0000000000000..0862ca30c8963
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts
->> @@ -0,0 +1,109 @@
->> +// SPDX-License-Identifier: GPL-2.0
->> +/*
->> + * Copyright (c) 2022, Linaro Ltd.
->> + */
->> +
->> +/dts-v1/;
->> +
->> +#include "sdm845-db845c.dts"
->> +
->> +&cci {
->> +    status = "okay";
->> +};
->> +
->> +&camss {
->> +    vdda-phy-supply = <&vreg_l1a_0p875>;
->> +    vdda-pll-supply = <&vreg_l26a_1p2>;
->> +
->> +    status = "ok";
-> "okay" is preferred.
-> 
->> +
->> +    ports {
->> +        #address-cells = <1>;
->> +        #size-cells = <0>;
-> Looks like the -cells properties are defined in 845 dtsi already.
-> 
-> 
->> +        port@0 {
->> +            reg = <0>;
->> +            csiphy0_ep: endpoint {
->> +                data-lanes = <0 1 2 3>;
->> +                remote-endpoint = <&ov8856_ep>;
->> +            };
->> +        };
->> +    };
->> +};
->> +
->> +&cci_i2c0 {
->> +    camera@10 {
->> +        compatible = "ovti,ov8856";
->> +        reg = <0x10>;
->> +
->> +        /* CAM0_RST_N */
->> +        reset-gpios = <&tlmm 9 GPIO_ACTIVE_LOW>;
->> +        pinctrl-names = "default";
->> +        pinctrl-0 = <&cam0_default>;
->> +
->> +        clocks = <&clock_camcc CAM_CC_MCLK0_CLK>;
->> +        clock-names = "xvclk";
->> +        clock-frequency = <19200000>;
->> +
->> +        /*
->> +         * The &vreg_s4a_1p8 trace is powered on as a,
->> +         * so it is represented by a fixed regulator.
->> +         *
->> +         * The 2.8V vdda-supply and 1.2V vddd-supply regulators
->> +         * both have to be enabled through the power management
->> +         * gpios.
->> +         */
->> +        dovdd-supply = <&vreg_lvs1a_1p8>;
->> +        avdd-supply = <&cam0_avdd_2v8>;
->> +        dvdd-supply = <&cam0_dvdd_1v2>;
->> +
->> +        status = "ok";
-> "okay" is prefered.
-> 
->> +
->> +        port {
->> +            ov8856_ep: endpoint {
->> +                link-frequencies = /bits/ 64
->> +                    <360000000 180000000>;
->> +                data-lanes = <1 2 3 4>;
->> +                remote-endpoint = <&csiphy0_ep>;
->> +            };
->> +        };
->> +    };
->> +};
->> +
->> +&cci_i2c1 {
->> +    camera@60 {
->> +        compatible = "ovti,ov7251";
->> +
->> +        /* I2C address as per ov7251.txt linux documentation */
->> +        reg = <0x60>;
->> +
->> +        /* CAM3_RST_N */
->> +        enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
->> +        pinctrl-names = "default";
->> +        pinctrl-0 = <&cam3_default>;
->> +
->> +        clocks = <&clock_camcc CAM_CC_MCLK3_CLK>;
->> +        clock-names = "xclk";
->> +        clock-frequency = <24000000>;
->> +
->> +        /*
->> +         * The &vreg_s4a_1p8 trace always powered on.
->> +         *
->> +         * The 2.8V vdda-supply regulator is enabled when the
->> +         * vreg_s4a_1p8 trace is pulled high.
->> +         * It too is represented by a fixed regulator.
->> +         *
->> +         * No 1.2V vddd-supply regulator is used.
->> +         */
->> +        vdddo-supply = <&vreg_lvs1a_1p8>;
->> +        vdda-supply = <&cam3_avdd_2v8>;
->> +
->> +        status = "disable";
-> Missing d
-> 
-> Konrad
->> +
->> +        port {
->> +            ov7251_ep: endpoint {
->> +                data-lanes = <0 1>;
->> +/*                remote-endpoint = <&csiphy3_ep>; */
->> +            };
->> +        };
->> +    };
->> +};
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts 
->> b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
->> index 3e7ceb0861eb0..f41c6d600ea8c 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
->> @@ -1174,107 +1174,6 @@ &pm8998_gpio {
->>   };
->> -&cci {
->> -    status = "okay";
->> -};
->> -
->> -&camss {
->> -    vdda-phy-supply = <&vreg_l1a_0p875>;
->> -    vdda-pll-supply = <&vreg_l26a_1p2>;
->> -
->> -    status = "ok";
->> -
->> -    ports {
->> -        #address-cells = <1>;
->> -        #size-cells = <0>;
->> -        port@0 {
->> -            reg = <0>;
->> -            csiphy0_ep: endpoint {
->> -                data-lanes = <0 1 2 3>;
->> -                remote-endpoint = <&ov8856_ep>;
->> -            };
->> -        };
->> -    };
->> -};
->> -
->> -&cci_i2c0 {
->> -    camera@10 {
->> -        compatible = "ovti,ov8856";
->> -        reg = <0x10>;
->> -
->> -        /* CAM0_RST_N */
->> -        reset-gpios = <&tlmm 9 GPIO_ACTIVE_LOW>;
->> -        pinctrl-names = "default";
->> -        pinctrl-0 = <&cam0_default>;
->> -
->> -        clocks = <&clock_camcc CAM_CC_MCLK0_CLK>;
->> -        clock-names = "xvclk";
->> -        clock-frequency = <19200000>;
->> -
->> -        /*
->> -         * The &vreg_s4a_1p8 trace is powered on as a,
->> -         * so it is represented by a fixed regulator.
->> -         *
->> -         * The 2.8V vdda-supply and 1.2V vddd-supply regulators
->> -         * both have to be enabled through the power management
->> -         * gpios.
->> -         */
->> -        dovdd-supply = <&vreg_lvs1a_1p8>;
->> -        avdd-supply = <&cam0_avdd_2v8>;
->> -        dvdd-supply = <&cam0_dvdd_1v2>;
->> -
->> -        status = "ok";
->> -
->> -        port {
->> -            ov8856_ep: endpoint {
->> -                link-frequencies = /bits/ 64
->> -                    <360000000 180000000>;
->> -                data-lanes = <1 2 3 4>;
->> -                remote-endpoint = <&csiphy0_ep>;
->> -            };
->> -        };
->> -    };
->> -};
->> -
->> -&cci_i2c1 {
->> -    camera@60 {
->> -        compatible = "ovti,ov7251";
->> -
->> -        /* I2C address as per ov7251.txt linux documentation */
->> -        reg = <0x60>;
->> -
->> -        /* CAM3_RST_N */
->> -        enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
->> -        pinctrl-names = "default";
->> -        pinctrl-0 = <&cam3_default>;
->> -
->> -        clocks = <&clock_camcc CAM_CC_MCLK3_CLK>;
->> -        clock-names = "xclk";
->> -        clock-frequency = <24000000>;
->> -
->> -        /*
->> -         * The &vreg_s4a_1p8 trace always powered on.
->> -         *
->> -         * The 2.8V vdda-supply regulator is enabled when the
->> -         * vreg_s4a_1p8 trace is pulled high.
->> -         * It too is represented by a fixed regulator.
->> -         *
->> -         * No 1.2V vddd-supply regulator is used.
->> -         */
->> -        vdddo-supply = <&vreg_lvs1a_1p8>;
->> -        vdda-supply = <&cam3_avdd_2v8>;
->> -
->> -        status = "disable";
->> -
->> -        port {
->> -            ov7251_ep: endpoint {
->> -                data-lanes = <0 1>;
->> -/*                remote-endpoint = <&csiphy3_ep>; */
->> -            };
->> -        };
->> -    };
->> -};
->> -
->>   /* PINCTRL - additions to nodes defined in sdm845.dtsi */
->>   &qup_spi0_default {
->>       config {
+On Fri, Nov 11, 2022 at 02:40:21PM -0600, Bjorn Andersson wrote:
+> On Fri, Nov 11, 2022 at 05:27:46PM +0100, Johan Hovold wrote:
+> > On Thu, Nov 10, 2022 at 05:05:13PM +0530, Manivannan Sadhasivam wrote:
+> > > On Thu, Nov 10, 2022 at 11:35:55AM +0100, Johan Hovold wrote:
+> > > > Enable the Qualcomm QCNFA765 Wireless Network Adapter connected to
+> > > > PCIe4.
+> > > > 
+> > > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > > > ---
+> > > >  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 65 +++++++++++++++++++++++
+> > > >  1 file changed, 65 insertions(+)
+> > > > 
+> > > > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> > > > index 5b9e37a16f9f..ab5b0aadeead 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> > > > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> > > > @@ -81,6 +81,22 @@ vreg_misc_3p3: regulator-misc-3p3 {
+> > > >  		regulator-always-on;
+> > > >  	};
+> > > >  
+> > > > +	vreg_wlan: regulator-wlan {
+> > > > +		compatible = "regulator-fixed";
+> > > > +
+> > > > +		regulator-name = "VCC_WLAN_3R9";
+> > > > +		regulator-min-microvolt = <3900000>;
+> > > > +		regulator-max-microvolt = <3900000>;
+> > > > +
+> > > > +		gpio = <&pmr735a_gpios 1 GPIO_ACTIVE_HIGH>;
+> > > > +		enable-active-high;
+> > > > +
+> > > > +		pinctrl-names = "default";
+> > > > +		pinctrl-0 = <&hastings_reg_en>;
+> > > 
+> > > Hastings is the family name of QCA639x WLAN chipsets. I don't think it would be
+> > > applicable here. Please use "wlan_reg_en" as that matches the convention used
+> > > throughout this file.
+> > 
+> > The pin name here comes from the schematics, which is what we should use
+> > for naming when we can.
 
-Hmm.
+If hastings is what mentioned in the schematics then it is fine (I can see that
+now). For a moment I thought it came from downstream...
 
-I wasn't really looking to do anything other than move existing upstream 
-stuff from one location to another.
+Thanks,
+Mani
 
-But, since you flag it I will generate a number of Fixes: and append 
-them to the head of this series.
+> > 
+> 
+> Following the naming in the schematics is the right thing to do.
+> 
+> Regards,
+> Bjorn
 
----
-bod
+-- 
+மணிவண்ணன் சதாசிவம்
