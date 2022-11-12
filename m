@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C8C8626763
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Nov 2022 07:17:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 218A1626766
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Nov 2022 07:18:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234116AbiKLGRf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Nov 2022 01:17:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40354 "EHLO
+        id S233542AbiKLGS1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Nov 2022 01:18:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229800AbiKLGRe (ORCPT
+        with ESMTP id S233445AbiKLGS0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Nov 2022 01:17:34 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3806BBE0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 22:17:32 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id u2so6724685ljl.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 22:17:32 -0800 (PST)
+        Sat, 12 Nov 2022 01:18:26 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C98F6FFE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 22:18:24 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id a29so11256411lfj.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 22:18:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=pb0xzePKTvk1sIDJI6C17RlkL9caXSOtGAOsYmi0A4U=;
-        b=P1JK8356e8F/P7MiYDq+M8azjFuPmn4c3oEkM6Xlr62VxdYhGebooK27xnGI0Q0/C0
-         aW4huooHMAgUHqwCVzlCfwVycWigqVMIeRGK8f75TnHuNO0iU8O0da6zOpq6VGgaHRLD
-         S0rxsnAMKVVpUkCF/7G+vsF2WHE5eIPjucdfdYFB2YyvHU/iZVFcLEXRjzTchQjiJEKR
-         DK87WNrOjDGaaLFn8rSs8dHRrGQhyET+JVY43/AKG3Gh4+m/lZ8R7ct2v8iWJZhtDU2a
-         VmQi9lnZbwj2FHA/bOX3bIesjZ6F0KBi5RGq315/bEaw3l4xXoRx947UJCRJrEodv/aB
-         I8LA==
+        bh=RnfzUAs88i86Mx8MvJyKETPrtvIl8xH62MVXOdfgEDM=;
+        b=ujRLphb6doSkzYlyhU70mBqozOQZeYOOlnmKT5EOraFSNRDeC3e8fuUPt9BpYL120U
+         Jxy5bxDLN7BsU02vEsECIEwpWTCmGtWUf6r8LV0D16j/SsWf4so9TkHkdkd/t+A9nwln
+         Y4Jp6pqtC+IBmt+4Dtc3JoOhYnksYnFXW1SjRohvccg0qxXexw92WEbwxpEZ+x7KegD0
+         oWKevOcvXuck5PF/kp8Tbcq0QwQNITrfIMNcA0gkcYre2bWPkYcSqNuT1scFTV3vk0ip
+         d0v2bUMp/h4NMjHMUWuetAsn6wg2ZW3zMCOgPcQXVyuehk63jtzYXsmqLjk1aTjtYxco
+         37/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pb0xzePKTvk1sIDJI6C17RlkL9caXSOtGAOsYmi0A4U=;
-        b=CDg5BLvUR4HWJF6w5Rf2/wjTyIT8xLDKhy6pvLXcpQsyShYpU5IVHHxJFAPEmy3ugr
-         N/mNNtxeOtI1o6++IVjj+60lWrcDlm9gigSElZhfo3xSQpp0WqO3Zs33rIL8sLwNFl7d
-         lYClu4EjUxBIWd3tnCS/DpVCFa4KZavWsBkqSNwluERn5FGCA5t0N/m+hqYJ8bsY09DU
-         y/Dmm7V5FKl6f6lgsO44glZCGwPY/In1hTiME8aYN1tncqVFg/Fe+9a1yXFoywbdag+E
-         mKKtrV+Qi4gi3AO/F5zFd4Z7SYSdt0byWqk4C4cLVZIf+3J4m+VczIMuC68gInkiMyZ5
-         C7wg==
-X-Gm-Message-State: ANoB5plryD/A44mPNGlwOXC3aFn9cT0wQkILOdoZQ0MwdWeQhEewIj/B
-        A1Cxz0YjQpQrLNfMdeVq1TtwjA==
-X-Google-Smtp-Source: AA0mqf5J3YdRUe9n4OzmClvX4Xdm3vOmLCnK3EXmHB6pS6yT+quSrtsn/e9A0DVJG4BR6ODbVqmE0w==
-X-Received: by 2002:a2e:9d85:0:b0:277:100c:db42 with SMTP id c5-20020a2e9d85000000b00277100cdb42mr1442858ljj.417.1668233850616;
-        Fri, 11 Nov 2022 22:17:30 -0800 (PST)
+        bh=RnfzUAs88i86Mx8MvJyKETPrtvIl8xH62MVXOdfgEDM=;
+        b=AvblxkwQVVS1nZwJHhbbNc+g1Z9XL3KpUy47eRXv/fueGATfUEYTsRt7QQApUzIOvY
+         jAsOQTJbojtz29J8cXU35bnSZYciKPCL+Y376+wkBpNyVbWA04A3PI++1qRlgqz1S/Pm
+         TDQ5CoPPjeDd2IGZPZl56oQljH84q6EK193xCDZ/xJ0BMsMNnnubkIMN/XvHExr+FYSm
+         MkLfCJosQyRzwfQzkPXjZP70+hGxx3h9/F9PZxitN8BGql8c3MyNubRj4xBeIdrS/UL6
+         SmEW2WzzQSWd483foszjxCFXgqQrwE7uTr2vhs4BQ01pTlGX87kidHf0ZS+qrDzfpfo/
+         6ikw==
+X-Gm-Message-State: ANoB5pmF3eqtjOlPnE7Yg0dfq0Dp1jkPP/+eMtzLPfAijPIWBto6xOeG
+        vG79VcvCQqWAU0qQ5Z7u7K+VFg==
+X-Google-Smtp-Source: AA0mqf4J66Bf8He+wVlLo2Ko+2upfofJLXmBCfkAoj1i3U3m6pu7Uiz8J5oRrbIzGfA36scUM2WMZg==
+X-Received: by 2002:a05:6512:201c:b0:4a4:6991:71c4 with SMTP id a28-20020a056512201c00b004a4699171c4mr1839436lfb.355.1668233903190;
+        Fri, 11 Nov 2022 22:18:23 -0800 (PST)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u11-20020a2eb80b000000b0026dc7b59d8esm759476ljo.22.2022.11.11.22.17.30
+        by smtp.gmail.com with ESMTPSA id s17-20020a056512203100b0048a921664e8sm714498lfs.37.2022.11.11.22.18.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Nov 2022 22:17:30 -0800 (PST)
-Message-ID: <c685cfc8-adec-31e6-c45a-f0e63d85cfcf@linaro.org>
-Date:   Sat, 12 Nov 2022 09:17:29 +0300
+        Fri, 11 Nov 2022 22:18:22 -0800 (PST)
+Message-ID: <1e8f27c7-3848-38d7-e658-5f2578a28137@linaro.org>
+Date:   Sat, 12 Nov 2022 09:18:22 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.1
-Subject: Re: [PATCH 5/6] phy: qcom-qmp-combo: fix runtime suspend
+Subject: Re: [PATCH 6/6] phy: qcom-qmp-combo: clean up common initialisation
 Content-Language: en-GB
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>
@@ -65,9 +65,9 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
 References: <20221111084255.8963-1-johan+linaro@kernel.org>
- <20221111084255.8963-6-johan+linaro@kernel.org>
+ <20221111084255.8963-7-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221111084255.8963-6-johan+linaro@kernel.org>
+In-Reply-To: <20221111084255.8963-7-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,21 +80,20 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 11/11/2022 11:42, Johan Hovold wrote:
-> Drop the confused runtime-suspend type check which effectively broke
-> runtime PM if the DP child node happens to be parsed before the USB
-> child node during probe (e.g. due to order of child nodes in the
-> devicetree).
+> Commit 52e013d0bffa ("phy: qcom-qmp: Add support for DP in USB3+DP combo
+> phy") added support for the DisplayPort part of QMP PHYs but
+> unfortunately did so by duplicating parts of the shared configuration,
+> something which has lead to subtle bugs depending on probe order.
 > 
-> Instead use the new driver data USB PHY pointer to access the USB
-> configuration and resources.
+> As the resources have always been requested based on the USB
+> configuration, make sure to not rely on fields from the DP configuration
+> when using them (e.g. in case they get out of sync) and remove the now
+> unused fields from the DP configurations.
 > 
-> Fixes: ac0d239936bd ("phy: qcom-qmp: Add support for runtime PM")
-
-I belive the Fixes tag is incorrect. One can not easily backport this 
-patch on top of the original ac0d239936bd. I'd suggest to point the 
-Fixes tags to the addition of phy-qcom-qmp-combo.c
-
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 47 ++---------------------
+>   1 file changed, 4 insertions(+), 43 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
