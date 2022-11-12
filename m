@@ -2,136 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3EFB626B76
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Nov 2022 21:07:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 55B83626B97
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Nov 2022 21:33:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234973AbiKLUHq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Nov 2022 15:07:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35722 "EHLO
+        id S233619AbiKLUdg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Nov 2022 15:33:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235000AbiKLUHa (ORCPT
+        with ESMTP id S229584AbiKLUdf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Nov 2022 15:07:30 -0500
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAD9915FEC
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Nov 2022 12:07:29 -0800 (PST)
-Received: by mail-il1-x12d.google.com with SMTP id z9so4015374ilu.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Nov 2022 12:07:29 -0800 (PST)
+        Sat, 12 Nov 2022 15:33:35 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71ED6DBB;
+        Sat, 12 Nov 2022 12:33:32 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id t25so19752249ejb.8;
+        Sat, 12 Nov 2022 12:33:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=umpLk1dbP5jy5ZPV4Q21UM7cr1nZKFjsXDStFsdzpxA=;
-        b=Ut/gqy52LOxFagWry8zJuDnyu69bte+omzwmYqNJjdvDmQX60UlPpo692bej4Zhl9C
-         tiH32C6p562bFsgNQA8qY2bXfS9xVCJDURVWy9Axdoe4EDtoH3XEqI0TZ2T7qjHfcFJB
-         PaY2LK/FfpGEuv0LrqIoWWh6tWDsbtR+x8kK1rs4TBR9zzW2uRrVBikuYPEPu/LI/3vX
-         BRKu2HCJ9gP608jB7pEpv+zCebScrj1VyC87MTS0v8ueM5/5I6Ilt3hRJUlw1su3zUAf
-         wkjT+etQqpiHzS1wCY+eYesaBbyEXYjEPwEMwYfygSVfg68S6NMNma9zaalqmkK3WA77
-         QdPg==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3uQnyMkfHV2JZkc9Ftq7KUX0pW3IG1YkRo3sfduWCHQ=;
+        b=BvjZunhMCrS4ml64CqULd94Gnqt8jgl9tJ/shrfGtvFwW28okOpximVcMiTrz6DUnk
+         qY6lFHjRKDlTjDGdoIAkCBcYIwwLa0xmtnkoZJ0eipBgoRDbM0RP1pZe8WEgSHY4JwQ6
+         jLmf6EkfmA7eIWfBmJ5x5hRZU4tj6sn3Er9nWS+VERTO4tHxNVQEI5d6II3eHo94gbQW
+         MTxexyKENavqpHqNLUSrUvtCfXn/XXKx3blMI59oVSFO7PQt0m3FhGHKPYqGlww6LMHD
+         Yo+ZStQgdqB1G9Ge//AryeuF6PiSrDlpt3RkPuE4m98BhHLp9J3dU6M1LOQPdbPQBjyu
+         j5Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=umpLk1dbP5jy5ZPV4Q21UM7cr1nZKFjsXDStFsdzpxA=;
-        b=efb/RwmugYT93/+H0OLS7aePuvFUS19KtqbVPyRfY2ELKhTo1ZSF3KwLeBYmQJn+Ab
-         ZwLebinYWPvHdETaBrj/4U9jkStm7Zk8mvm3tIjRr+rBmMO1fXekSfZPd7CXozrYxWjF
-         bZTJFEyo6AFgHSsDSU1CXX4Kqn88d0U/M30sXpA0FIMz4jyLVge4i6qxqymIgaomcuhG
-         f933YOLs75DItMTQ/cU+lVxR3YrSmRVsr526RDeO3k1So2Y6JZHRQU6WaiJu6OIjZcu3
-         YgCIzKWIZ0u2jaMzDnN4GBdTMtGCsGa5uKvy10bGDagehjqUbFviRgncAlTIYMSXGaX6
-         NyvA==
-X-Gm-Message-State: ANoB5plKoVFd3lWtAl0FIw2SpCQA7hJs32UFygtpuE4RQEKdthDnBlQw
-        TmZ5hlkDKaFpAHWMjsy+XAWZZg==
-X-Google-Smtp-Source: AA0mqf6wJzsiyKserLnxFT3qmoxPiw6AwBOUHizEn6i/Wpy285f3kTXAf8dscv0fIstCOJQ0uE9myA==
-X-Received: by 2002:a92:da45:0:b0:302:568e:b493 with SMTP id p5-20020a92da45000000b00302568eb493mr210216ilq.183.1668283649429;
-        Sat, 12 Nov 2022 12:07:29 -0800 (PST)
-Received: from presto.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id j28-20020a02cb1c000000b00363dee286edsm2036870jap.60.2022.11.12.12.07.27
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3uQnyMkfHV2JZkc9Ftq7KUX0pW3IG1YkRo3sfduWCHQ=;
+        b=qdyblWoi6Idv+ZZ8sgDMuSQXxtnOMfTX/F7XmtmvtIRYE56YdVYSSLqLfayif2m8hf
+         O/7pnOHXVleblHufMaBjOw47TaIbPFzBlTLY8cQEzys7nG4WzJhskeZgcat9nplJqhwf
+         gVT82G7RyI5nzF2e+qr7MlQxFke2rW2Q4SsA7Gn+tRpNR9zFh1+l4D9LhccXLu2DZHCL
+         kBq+fETNIpIUQWvRLgqKvHUFQ7AJ9VqldeX7s8zsyGJ2nnwq+b5B8pnieWE1fup6QMjf
+         cn//TGI+7ULhdJ0j5JBDPSoPyNl+jZxwIv03QGV7/pxd/OuPKnO7Vz4OFZjX+o2OJQYQ
+         gm2Q==
+X-Gm-Message-State: ANoB5plyX4PAkCq+pZ9XSwMbLIEHkI32TbtGi2GX7kseisL+jq/wRZo5
+        eesP3c7Ghj6VuC/lJU/RNwW99WHGS5c=
+X-Google-Smtp-Source: AA0mqf7oYSDBawFhy682HCoZhpa/BntmWjFY+T60Xv2PFMsKLi5GDMUMtyW4sNoLN9WZTvAzkfJeUg==
+X-Received: by 2002:a17:906:f74e:b0:7ad:975f:b576 with SMTP id jp14-20020a170906f74e00b007ad975fb576mr6062515ejb.49.1668285210602;
+        Sat, 12 Nov 2022 12:33:30 -0800 (PST)
+Received: from localhost.localdomain ([46.216.4.225])
+        by smtp.googlemail.com with ESMTPSA id n1-20020aa7c441000000b004638ba0ea96sm2648962edr.97.2022.11.12.12.33.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Nov 2022 12:07:28 -0800 (PST)
-From:   Alex Elder <elder@linaro.org>
-To:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, agross@kernel.org,
-        elder@kernel.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 5/5] net: ipa: permit GSI firmware loading to be skipped
-Date:   Sat, 12 Nov 2022 14:07:17 -0600
-Message-Id: <20221112200717.1533622-6-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221112200717.1533622-1-elder@linaro.org>
-References: <20221112200717.1533622-1-elder@linaro.org>
+        Sat, 12 Nov 2022 12:33:30 -0800 (PST)
+From:   Dzmitry Sankouski <dsankouski@gmail.com>
+To:     linux-kernel@vger.kernel.org
+Cc:     Dzmitry Sankouski <dsankouski@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
+        DEVICE TREE BINDINGS)
+Subject: [PATCH v12 0/2] add device Xiaomi Mi 6 (codename sagit) and board binding
+Date:   Sat, 12 Nov 2022 23:32:58 +0300
+Message-Id: <20221112203300.536010-1-dsankouski@gmail.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Define a new value "skip" for the "qcom,gsi-loader" Device Tree
-property.  If used, it indicates that neither the AP nor the modem
-need to load GSI firmware (because it has already been loaded--for
-example by the boot loader).
+Add initial support for Xiaomi Mi 6 phone (codename sagit)
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/ipa_main.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+Dzmitry Sankouski (2):
+  dt-bindings: arm: add xiaomi,sagit board based on msm8998 chip
+  arm64: dts: qcom: sagit: add initial device tree for sagit
 
-diff --git a/drivers/net/ipa/ipa_main.c b/drivers/net/ipa/ipa_main.c
-index 214e524dce795..8f20825675a1a 100644
---- a/drivers/net/ipa/ipa_main.c
-+++ b/drivers/net/ipa/ipa_main.c
-@@ -87,12 +87,14 @@
-  * @IPA_LOADER_DEFER:		System not ready; try again later
-  * @IPA_LOADER_SELF:		AP loads GSI firmware
-  * @IPA_LOADER_MODEM:		Modem loads GSI firmware, signals when done
-+ * @IPA_LOADER_SKIP:		Neither AP nor modem need to load GSI firmware
-  * @IPA_LOADER_INVALID:	GSI firmware loader specification is invalid
-  */
- enum ipa_firmware_loader {
- 	IPA_LOADER_DEFER,
- 	IPA_LOADER_SELF,
- 	IPA_LOADER_MODEM,
-+	IPA_LOADER_SKIP,
- 	IPA_LOADER_INVALID,
- };
- 
-@@ -740,6 +742,10 @@ static enum ipa_firmware_loader ipa_firmware_loader(struct device *dev)
- 	if (!strcmp(str, "modem"))
- 		return IPA_LOADER_MODEM;
- 
-+	/* No GSI firmware load is needed for "skip" */
-+	if (!strcmp(str, "skip"))
-+		return IPA_LOADER_SKIP;
-+
- 	/* Any value other than "self" is an error */
- 	if (strcmp(str, "self"))
- 		return IPA_LOADER_INVALID;
-@@ -872,10 +878,12 @@ static int ipa_probe(struct platform_device *pdev)
- 	if (loader == IPA_LOADER_MODEM)
- 		goto done;
- 
--	/* The AP is loading GSI firmware; do so now */
--	ret = ipa_firmware_load(dev);
--	if (ret)
--		goto err_deconfig;
-+	if (loader == IPA_LOADER_SELF) {
-+		/* The AP is loading GSI firmware; do so now */
-+		ret = ipa_firmware_load(dev);
-+		if (ret)
-+			goto err_deconfig;
-+	} /* Otherwise loader == IPA_LOADER_SKIP */
- 
- 	/* GSI firmware is loaded; proceed to setup */
- 	ret = ipa_setup(ipa);
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/msm8998-xiaomi-sagit.dts    | 711 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/pm8998.dtsi          |   8 +
+ 4 files changed, 721 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts
+
 -- 
-2.34.1
+2.30.2
 
