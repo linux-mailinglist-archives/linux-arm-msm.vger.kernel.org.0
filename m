@@ -2,110 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9A50626789
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Nov 2022 07:50:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1449B6267A5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Nov 2022 08:32:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234684AbiKLGuJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Nov 2022 01:50:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49476 "EHLO
+        id S234515AbiKLHch (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Nov 2022 02:32:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230257AbiKLGuJ (ORCPT
+        with ESMTP id S230043AbiKLHcg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Nov 2022 01:50:09 -0500
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2678C11A23
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 22:50:06 -0800 (PST)
-Received: from kwepemi500012.china.huawei.com (unknown [172.30.72.55])
-        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4N8R5D4dKFzHvm6;
-        Sat, 12 Nov 2022 14:49:36 +0800 (CST)
-Received: from [10.67.110.176] (10.67.110.176) by
- kwepemi500012.china.huawei.com (7.221.188.12) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Sat, 12 Nov 2022 14:50:03 +0800
-Subject: Re: [PATCH 3/5] drm/msm: Fix IS_ERR_OR_NULL() vs NULL check in
- msm_icc_get()
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-CC:     <james.qian.wang@arm.com>, <liviu.dudau@arm.com>,
-        <mihail.atanassov@arm.com>, <brian.starkey@arm.com>,
-        <airlied@gmail.com>, <daniel@ffwll.ch>, <robdclark@gmail.com>,
-        <quic_abhinavk@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        <sean@poorly.run>, <thierry.reding@gmail.com>, <sam@ravnborg.org>,
-        <emma@anholt.net>, <mripard@kernel.org>,
-        <vladimir.lypak@gmail.com>, <quic_akhilpo@quicinc.com>,
-        <dianders@chromium.org>, <olvaffe@gmail.com>,
-        <angelogioacchino.delregno@somainline.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20221110094445.2930509-1-cuigaosheng1@huawei.com>
- <20221110094445.2930509-4-cuigaosheng1@huawei.com>
- <20221111100218.6h47vtyu67ovda3d@SoMainline.org>
-From:   cuigaosheng <cuigaosheng1@huawei.com>
-Message-ID: <6b4e25fb-635a-bb8d-d06e-f1765f22f9f5@huawei.com>
-Date:   Sat, 12 Nov 2022 14:50:02 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+        Sat, 12 Nov 2022 02:32:36 -0500
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7A132FC21
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 23:32:34 -0800 (PST)
+Received: by mail-lj1-x235.google.com with SMTP id l8so6820117ljh.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Nov 2022 23:32:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pBE8mTVZNOCDexI2LZd9kRkhIvtiQCngd0IeOQt9iqo=;
+        b=rli1ruYmdULOcEGpSwKzzw5kMjZOc0pjMS+AjAVFNlkDSsbEGQsGcBmpcPeFfcwE0U
+         ByUtU0uOgMj87JYi4cXmyvZ8hpZ8cxyS32cO2rhRydP56Buk2wbnDVlBi8U/ESflGVMR
+         LRR59Oem7kFtvyclqcW6+s80xcO5BI+uzm21B/mUFWkemHrWsNPMRrfpSUu+aspIMfDf
+         VL+a9jK+iuKMi/6miaMJbG6fpEMbFD9g6nPx643M0ksOTUQrtf1coJjhf7O3AmA8Tk8K
+         JXbylbKMwKF+pED7rB+EzSSOhqInsM0rDdNQDywXC1Q7iuJBtVneb1JeJCRXV/xee7mW
+         rgCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pBE8mTVZNOCDexI2LZd9kRkhIvtiQCngd0IeOQt9iqo=;
+        b=cAGIHAyg7nPgrd9TMr2yrQemz4qzEVPZqcTDUBxn2p8rkwGIaq5Je4aLTdQ/0sZA1G
+         oTFEyBGc+W5ByHLDQp2tU7HXLuf3LU6UmphqAmOYM7rVhBT8q0odcwtYYr0GDi+eCVi0
+         Io2YEdS5+RrgxKDZWJOa/4KRIWx34ixQ3SNiYOy3tijBIt5rqgpin4m8zKqqzGT/sSwH
+         ayc01kll+/vVANy+WWQ+Bq26M5l+2t2AAId+onW8XJf5ay73LWXn/rlB/y9zJrH8VK7m
+         SWTS91d6KCqr1iKeuR133NRx0DdVNkTn/ibcwt+xgebBOmlkcPYAttp5oraO2MEJIw7J
+         PsiQ==
+X-Gm-Message-State: ANoB5pll+5OcfrWleUgE2dya1MJKHPVu1KhoDsfcBQaAtfkQvMGLHy16
+        6AjDfLaClKstsD4bCVATm0dYtrhxyq2TNbUY
+X-Google-Smtp-Source: AA0mqf64GHv5fPsVLYitVzUKEc52bQfCAC+HN/3kkGC9Ix+S8fK2p2bjIX8hlXNOgyR4F6ymnSq4EQ==
+X-Received: by 2002:a2e:b705:0:b0:277:1c8f:7e8c with SMTP id j5-20020a2eb705000000b002771c8f7e8cmr1752443ljo.296.1668238353012;
+        Fri, 11 Nov 2022 23:32:33 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id t13-20020a19ad0d000000b004946e72711bsm734062lfc.76.2022.11.11.23.32.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Nov 2022 23:32:32 -0800 (PST)
+Message-ID: <82d49d67-d012-fb49-9551-6cfaa06e8ed1@linaro.org>
+Date:   Sat, 12 Nov 2022 10:32:32 +0300
 MIME-Version: 1.0
-In-Reply-To: <20221111100218.6h47vtyu67ovda3d@SoMainline.org>
-Content-Type: text/plain; charset="utf-8"; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [PATCH 10/22] phy: qcom-qmp-combo: separate USB and DP power-on
+ ops
+Content-Language: en-GB
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+References: <20221111085643.9478-1-johan+linaro@kernel.org>
+ <20221111085643.9478-11-johan+linaro@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221111085643.9478-11-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.67.110.176]
-X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
- kwepemi500012.china.huawei.com (7.221.188.12)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> NAK. This path should be returned if it is NON-NULL, otherwise we defer
-> to of_icc_get() on the parent device.  See the code-comment below.
+On 11/11/2022 11:56, Johan Hovold wrote:
+> Separate the USB and DP power-on and power-off operations in two
+> dedicated implementations.
+> 
+> Note that the pipe clock is only used by the USB part of the PHY and
+> that no DP configuration has a pcs (or rx) table or has has_pwrdn_delay
+> set.
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 100 +++++++++++++---------
+>   1 file changed, 59 insertions(+), 41 deletions(-)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Thanks for taking time to review this patch, how do you think of the following changes:
-  
-> diff --git a/drivers/gpu/drm/msm/msm_io_utils.c 
-> b/drivers/gpu/drm/msm/msm_io_utils.c index d02cd29ce829..a112d8c74d59 
-> 100644 --- a/drivers/gpu/drm/msm/msm_io_utils.c +++ 
-> b/drivers/gpu/drm/msm/msm_io_utils.c @@ -133,7 +133,7 @@ struct 
-> icc_path *msm_icc_get(struct device *dev, const char *name) struct 
-> icc_path *path; path = of_icc_get(dev, name); - if (path) + if 
-> (!IS_ERR_OR_NULL(path)) return path; 
+-- 
+With best wishes
+Dmitry
 
-Looking forward to your reply, thanks again!
-
-On 2022/11/11 18:02, Marijn Suijten wrote:
-> On 2022-11-10 17:44:43, Gaosheng Cui wrote:
->> The of_icc_get() function returns NULL or error pointers on error path,
->> so we should use IS_ERR_OR_NULL() to check the return value.
->>
->> Fixes: 5ccdcecaf8f7 ("drm/msm: lookup the ICC paths in both mdp5/dpu and mdss devices")
->> Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
->> ---
->>   drivers/gpu/drm/msm/msm_io_utils.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/msm_io_utils.c b/drivers/gpu/drm/msm/msm_io_utils.c
->> index d02cd29ce829..950083b2f092 100644
->> --- a/drivers/gpu/drm/msm/msm_io_utils.c
->> +++ b/drivers/gpu/drm/msm/msm_io_utils.c
->> @@ -133,7 +133,7 @@ struct icc_path *msm_icc_get(struct device *dev, const char *name)
->>   	struct icc_path *path;
->>   
->>   	path = of_icc_get(dev, name);
->> -	if (path)
->> +	if (IS_ERR_OR_NULL(path))
-> NAK. This path should be returned if it is NON-NULL, otherwise we defer
-> to of_icc_get() on the parent device.  See the code-comment below.
->
-> - Marijn
->
->>   		return path;
->>   
->>   	/*
->> -- 
->> 2.25.1
->>
-> .
