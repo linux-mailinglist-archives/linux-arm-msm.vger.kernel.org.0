@@ -2,52 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA09E6266C9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Nov 2022 04:52:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BB7F62673F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Nov 2022 07:00:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234705AbiKLDwI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Nov 2022 22:52:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36762 "EHLO
+        id S234540AbiKLGAW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Nov 2022 01:00:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234682AbiKLDwD (ORCPT
+        with ESMTP id S233446AbiKLGAV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Nov 2022 22:52:03 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E2442F01A;
-        Fri, 11 Nov 2022 19:52:00 -0800 (PST)
+        Sat, 12 Nov 2022 01:00:21 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68EC61183A;
+        Fri, 11 Nov 2022 22:00:19 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id CF417B828B7;
-        Sat, 12 Nov 2022 03:51:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C4AC4314B;
-        Sat, 12 Nov 2022 03:51:56 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E25FE60B7C;
+        Sat, 12 Nov 2022 06:00:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2F361C433D6;
+        Sat, 12 Nov 2022 06:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668225117;
-        bh=9oweQIKdrj9Nx/dhkCcrj8Xg5ujkFiJoN7MCtRIaOco=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=h2Q2AZllk1z4d2HcY5mT3/bKdTuVnXl5v2liaxwFaFADsRpteBRXlLeZFTzoobemP
-         kYPYBe5pZWZ5SIKR+uYhMDyDVB+U1YO5UXSo/XGGG56dLW7QlgP6NHc93FHAb4MCxo
-         NtbfD+Z6RlrER9ors52qLgxLgdtEIdGxNLTImjZcVoAcw0OB9I7RljFe3fyWM8KM/X
-         capWrYDkC15BayjseozPfDSpB1WIE9KzI0TtoDBwks7ho0/NvfBOI4fBL7WZOAeYOq
-         nLHWX/LKEkF+FdeGFcfHb7hZVIHR/mhsFCaq9I4kVi01JC+rilqdwTCFBxoNXCqJOo
-         8+umECPLXIoiw==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     dianders@chromium.org, quic_sibis@quicinc.com,
-        jinghung.chen3@hotmail.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, agross@kernel.org,
-        konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        robh+dt@kernel.org
-Subject: Re: (subset) [PATCH V4 1/2] arm64: dts: qcom: sc7280: Mark all Qualcomm reference boards as LTE
-Date:   Fri, 11 Nov 2022 21:51:50 -0600
-Message-Id: <166822510242.978218.15698539853307364233.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221110070813.1777-1-quic_sibis@quicinc.com>
-References: <20221110070813.1777-1-quic_sibis@quicinc.com>
-MIME-Version: 1.0
+        s=k20201202; t=1668232818;
+        bh=Cc00GUziqpEEUO2BSbvzg6qh2KbXsDUerRvn2urwehE=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=JZUjRRdgPq1XPkkWGuabvIGGQPiqmYtVzXkyQAyNJgnSEQtUeJ2qJ3OJ21Z7t8Jqk
+         6lYmt9p5zeFEM+Llaa5+YC9Fpn1wKxDtdgxKN0B+1dzjwV+3rmwt+mlmBOhCrKjWe2
+         0TesZrqXYkDZ4MEFHwaTVQW3Tts8R744seZtXYqu76076gZqk4jftGV7z6uHQQymZ7
+         ZNuuh8RtqY02kNhU72kfnTzHp7ozJ5qWp4JZgdneEiUoFMGn1XXt+Pix7iCl9ky4FJ
+         r+7cHg6MHKPeiavVmUCGMe/O8HNvuR6wKy/pUJzbH1+pt8KsLv+IN6s//fi1hFeImt
+         yTQCsC5YkX/AA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 119ADE270C3;
+        Sat, 12 Nov 2022 06:00:18 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next 0/2] dt-bindings: net: qcom,ipa: relax some
+ restrictions
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <166823281806.10181.477421817831482606.git-patchwork-notify@kernel.org>
+Date:   Sat, 12 Nov 2022 06:00:18 +0000
+References: <20221110195619.1276302-1-elder@linaro.org>
+In-Reply-To: <20221110195619.1276302-1-elder@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, andersson@kernel.org, konrad.dybcio@linaro.org,
+        agross@kernel.org, elder@kernel.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -57,21 +61,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 10 Nov 2022 12:38:12 +0530, Sibi Sankar wrote:
-> When the modem node was re-located to a separate LTE source file
-> "sc7280-herobrine-lte-sku.dtsi", some of the previous LTE users
-> weren't marked appropriately. Fix this by marking all Qualcomm
-> reference devices as LTE.
+Hello:
+
+This series was applied to netdev/net-next.git (master)
+by Jakub Kicinski <kuba@kernel.org>:
+
+On Thu, 10 Nov 2022 13:56:16 -0600 you wrote:
+> The first patch in this series simply removes an unnecessary
+> requirement in the IPA binding.  Previously, if the modem was doing
+> GSI firmware loading, the firmware name property was required to
+> *not* be present.  There is no harm in having the firmware name be
+> specified, so this restriction isn't needed.
 > 
+> The second patch restates a requirement on the "memory-region"
+> property more accurately.
 > 
+> [...]
 
-Applied, thanks!
+Here is the summary with links:
+  - [net-next,1/2] dt-bindings: net: qcom,ipa: remove an unnecessary restriction
+    https://git.kernel.org/netdev/net-next/c/9d26628a4ce2
+  - [net-next,2/2] dt-bindings: net: qcom,ipa: restate a requirement
+    https://git.kernel.org/netdev/net-next/c/7a6ca44c1e61
 
-[1/2] arm64: dts: qcom: sc7280: Mark all Qualcomm reference boards as LTE
-      commit: 3c800bcf07a5957da01593e8f83d797b285a37e0
-[2/2] arm64: dts: qcom: sc7280: Add Google Herobrine WIFI SKU dts fragment
-      commit: 87548e54b86e06190e018665bd77528f72038fbe
-
-Best regards,
+You are awesome, thank you!
 -- 
-Bjorn Andersson <andersson@kernel.org>
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
