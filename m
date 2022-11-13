@@ -2,101 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E44646271CC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Nov 2022 19:47:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 73D9A6272E0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Nov 2022 23:24:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234130AbiKMSrx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 13 Nov 2022 13:47:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37218 "EHLO
+        id S235452AbiKMWX5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 13 Nov 2022 17:23:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235554AbiKMSrq (ORCPT
+        with ESMTP id S235447AbiKMWX4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 13 Nov 2022 13:47:46 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 382461180A;
-        Sun, 13 Nov 2022 10:47:39 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id f7so14370363edc.6;
-        Sun, 13 Nov 2022 10:47:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pVDig1RRKsZiaPOKlAeQRhmQ8lXaiXxKccYF0IZ+PBk=;
-        b=k5kLPtjxsguN5R8wefRr6oX7rk0Qfkth/BbCL1XwrqGgQR0iQ6wCHMAyo2fdVd6CFa
-         S03Clzz1Pbulp09EcMnqUIzSKs53AXz9bEHigDsw7E3CPnU3G+Uk3dKXsbJDlg/u3D3W
-         bdRuRQyH815QHPAEEBCD5nqnuJFr4azzjj9z03zcvuynRhoVQTlc+0WoNLbRzCk4q3FQ
-         xf7VfjpEuQ29i9t2qzeYsed/prPLAUOJg9zs0kXSgskaWwfs/JOSOHSGWZatO9YoSvUI
-         YAXv+FXfgrnen88fV8f/p0Yeyko+UupjTec+xis6iXRRMMl5hlOzpde7TfMcuvN5OnB1
-         1WRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pVDig1RRKsZiaPOKlAeQRhmQ8lXaiXxKccYF0IZ+PBk=;
-        b=VbElGyU29Cw2pqA199WPJKHN9hCHM4EKqFkm9q3WRDkwWr1TXS7EyhGyDvdXgxNdAa
-         Y4orrhBhGjYqxI+c+fttS8DrGNxYPS+0Vy/jIWO+bEixL20GuzTNb5MpE+91Ni8Fa2E4
-         uISGtV9StDVQVuwdaINn3DiRzGNNjalNwtGhsOsy0YH9BKsYGm8iG6ayGp+qFDy63fHb
-         y1D4F8p1e+0UDatfXGyb9NBTmaOFb6JZl7UUlBTecagVu/ws9Y7oqGZ9k5BhO3sMF5Zk
-         R1Gd+sUmKKeg8mNT3rdbpezEcKg2KcCx3uSHZMsNHPzWuu3LTq88+Lbm+4f9cXCPU/2x
-         rm8w==
-X-Gm-Message-State: ANoB5pkWbWPEFKWGyuJNCt4612sVSLawNaqOBVZzrNjVIx9eVr4ZzOz2
-        vQnoqh/QRYDQuLvLDozORrs=
-X-Google-Smtp-Source: AA0mqf5kySzMP+W7wXHErU8epLpNPKZx5FZo07Zl8CqTzEeHygv5MweEvgDnzCIQD42Wgh5VZ1WEqQ==
-X-Received: by 2002:a05:6402:6c8:b0:467:205b:723d with SMTP id n8-20020a05640206c800b00467205b723dmr9150411edy.69.1668365257789;
-        Sun, 13 Nov 2022 10:47:37 -0800 (PST)
-Received: from fedora.. (dh207-97-48.xnet.hr. [88.207.97.48])
-        by smtp.googlemail.com with ESMTPSA id a2-20020aa7d742000000b004623028c594sm3760050eds.49.2022.11.13.10.47.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Nov 2022 10:47:37 -0800 (PST)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH 5/5] arm64: dts: qcom: ipq8074: add SoC specific compatible to MDIO
-Date:   Sun, 13 Nov 2022 19:47:27 +0100
-Message-Id: <20221113184727.44923-5-robimarko@gmail.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221113184727.44923-1-robimarko@gmail.com>
-References: <20221113184727.44923-1-robimarko@gmail.com>
+        Sun, 13 Nov 2022 17:23:56 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B88D925C1;
+        Sun, 13 Nov 2022 14:23:55 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 275E1B80CB8;
+        Sun, 13 Nov 2022 22:23:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8072C433C1;
+        Sun, 13 Nov 2022 22:23:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668378232;
+        bh=qy55WPYerqcowUha2cX++DDpKUAHFQlKC0fdFGVcpHw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SoQ/8IZXKeJoAmMxfCyyKF45rJlVx7biYRJuwEa1vHJV+4VpmfIQJZU310sVIY461
+         UyETUaEUL8pGSUYDnT5bL+wvSW9ndL0E7OfHKaVlxpUl1Gs/CI2MnkW3ORaFnkDB4S
+         S7pizrgGDcS7NdbCPoe0rpol9vBOoYaDFhDarwxk0PhW8Na42UWF216GK6mMT7pS4/
+         EgKyf0waOMFEZugZQfRz7wosYxYbPIyF8O5nwO987MxYz9LOm8vs+VSyFuFDxEzXnU
+         7hGcgbCwaWcz0/keEnJhCZS0rVYtNdMsFVWqPnOTf5G3+/2GLOHcrEIaY3gI0fagRG
+         X0BKamPIfaA5w==
+Date:   Mon, 14 Nov 2022 03:53:48 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Sireesh Kodali <sireeshkodali1@gmail.com>
+Cc:     linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v2 0/3] dmaengine: Add support for immediate commands
+Message-ID: <Y3FudBqc1vQ8fEgU@matsya>
+References: <20221027051429.46593-1-sireeshkodali1@gmail.com>
+ <Y2UIS7P0alvqT4jn@matsya>
+ <CO97J91UP8IF.23GNHUUM2KTVH@skynet-linux>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CO97J91UP8IF.23GNHUUM2KTVH@skynet-linux>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the newly documented SoC compatible to MDIO in order to be able to
-validate clocks for it.
+On 11-11-22, 10:42, Sireesh Kodali wrote:
+> On Fri Nov 4, 2022 at 6:10 PM IST, Vinod Koul wrote:
+> > On 27-10-22, 10:44, Sireesh Kodali wrote:
+> > > The IPA v2.x block, found on some older Qualcomm SoCs, uses BAM DMA to
+> > > send and receive packets from the AP. It also uses BAM to receive
+> > > commands from the AP (and possibly the modem). These commands are
+> > > encoded as "Immediate Commands". They vary from regular BAM DMA
+> > > commands. Adding support for immediate commands is trivial, but requires
+> > > also adding Immediate Commands to the dmaengine API, which is what this
+> > > patch series does.
+> >
+> > Can you explain a bit more. I understand you need "Immediate Commands"
+> > but am really reluctant to add another interface to support a specific
+> > use case
+> >
+> 
+> Apologies for the delayed response
+> 
+> BAM supports both regular commands, and "immediate commands". Currently,
+> commands are used by the Qualcom NAND chip driver, while "immediate
+> commands" are intended to be used by the (yet to be mainlined) IPA
+> driver. From the BAM driver perspective, both immediate and regular
+> commands are simply a matter of setting the appropriate flag in the
+> descriptor. I don't have access to the documentation on BAM to know
+> exactly how these two modes differ, however I do know they are not
+> interchangable. If a different API is suggested, I can change the
+> implementation as needed.
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Ok, can you please explain what is meant by 'regular' cmd and
+'immediate', lets see what is required here
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index a0481c671faf..583871c29586 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -331,7 +331,7 @@ pcie_phy1: phy@8e200 {
- 		};
- 
- 		mdio: mdio@90000 {
--			compatible = "qcom,ipq4019-mdio";
-+			compatible = "qcom,ipq8074-mdio", "qcom,ipq4019-mdio";
- 			reg = <0x00090000 0x64>;
- 			#address-cells = <1>;
- 			#size-cells = <0>;
 -- 
-2.38.1
-
+~Vinod
