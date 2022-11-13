@@ -2,134 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DD6F626FE8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Nov 2022 14:50:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C95C6271BC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Nov 2022 19:47:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235258AbiKMNuS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 13 Nov 2022 08:50:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55258 "EHLO
+        id S235376AbiKMSrf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 13 Nov 2022 13:47:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232884AbiKMNuR (ORCPT
+        with ESMTP id S233909AbiKMSre (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 13 Nov 2022 08:50:17 -0500
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55A1511157
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Nov 2022 05:50:16 -0800 (PST)
-Received: by mail-yb1-xb36.google.com with SMTP id z192so10768183yba.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Nov 2022 05:50:16 -0800 (PST)
+        Sun, 13 Nov 2022 13:47:34 -0500
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13D0EFCED;
+        Sun, 13 Nov 2022 10:47:33 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id k2so23588401ejr.2;
+        Sun, 13 Nov 2022 10:47:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=eceknYWf5pXSjf3uYAdpptzDpxH4rWxr35RcE2M9s1g=;
-        b=FkMNT5XysKQDnMO4RcQWSQ6H7JCNFeKZZrJ2RLstMOmDyEPOw5EcHE0WBI5VTbk4Qr
-         XR3eYK45+vctcOxbt3m64ODnkQhxCc8VxSO6pDr8uOeYZJCrCtrxFNJSvRp6Cfd/EYN2
-         3GUeyTC5bjLbCPZHJEJ219NcIcqu3jKi2nvEAC1pEK3cLsSfm2/cIMJMUodj+yyOgoAH
-         vVNL1n2OsEXwwJjcSA5PswuzthJu5PrWiB5y5ldAjsdlb2fAOoszqRkrWC1px0D0fHOm
-         k7kxYvddZ1Z/iC1KvOEBUEyfWy2zh/A2ulFOjqMx+043APYWlftEZvQ9Zq9xgU3DrEoQ
-         jnNA==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cF1JXmpvIU3CzjntusQxhImrsMqCHteTbq+Gdn0gF3w=;
+        b=VwulM1DxMMZAdPmKaU5pRHcknEnSWhZ+ZS+cm/qhesVu753uIxQqRNTW3WprlBk2Z4
+         AUCGknMqRMaS2ptUFyOcpkoQqiKhijCWaNEnUnZc8tFUOeZ7rdvq6eRhHXEEmwQs7Y9+
+         9svKmgz38DDhlYcIwXdn7NlI1I9n3XTxiLjFYV+JgLebR0MU6IxGplS26TuikyKB0RsN
+         qWuSZKFEeHRu4+268tGLwB5jcPjXBUlajXd5k+k7DB2nA5jXNoLDH4yHXJNZ6P42rhB7
+         9Cjc05UV0uwqp3phf/FiQBO69VT7FYlBn7r0v7EpgKFMMYBufXswZTyQvWwonH38cHMP
+         oPWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=eceknYWf5pXSjf3uYAdpptzDpxH4rWxr35RcE2M9s1g=;
-        b=Q1Rn3S/eljOFjEBh2ztyn/c2+4xhdMGj1PxGE9VF0yV8/4pxwBp/SFDwNERQMA2fh1
-         6BR6/nm0ndmzlBmyhKgcEfPzrFbv07QfuFWcBaPQNO3clanIO5xPK008jN8xG+5OnmiL
-         CIgbSGfoWLDHAlUd5K2wQEUJM3dOSaPXCHBmLxziCIyzegIA9/h34N6LXnWGaWAfe11y
-         0BAa6gF7dtGNlwQy4gXIWSK6JKDt9gX1Rd1TYSbXpyrF+yz4jtmtv820Mj1nZ62/B2iq
-         98p5aIVMRlCHa+RditpxZ9Fft8U2zqtmwElUZaxYo5JiknmnWoeQ1fmTH4H/LDqUDtoV
-         Z3hA==
-X-Gm-Message-State: ANoB5pkL62R7JOGra/QjWr5mArsL+l93dJ3yJU7fKJmAgxAuDAz/shy3
-        U6niODH+lCbdbx9eLVjWXaZmU+9VhsQQ6Mx936RrwQ==
-X-Google-Smtp-Source: AA0mqf6sABYM0kp61+uu3VEcuDtmXePEQdU78gemQ06iM60ToPaMLunsSHhpQ/NJfefnF7ny12NVXGvpNKORe+MuZos=
-X-Received: by 2002:a25:8445:0:b0:6de:4801:a09b with SMTP id
- r5-20020a258445000000b006de4801a09bmr8780968ybm.15.1668347415574; Sun, 13 Nov
- 2022 05:50:15 -0800 (PST)
+        bh=cF1JXmpvIU3CzjntusQxhImrsMqCHteTbq+Gdn0gF3w=;
+        b=J7lk0Rxs7OW3MgX1nTOcXVF1ObjX+NvMOATt56zDiHn/k4KQNKZnjg6XyiFgOs8Qbs
+         wSbZbXgR6oU2WrarJQkRXn6IRbLkV1lpQewPQHUSsnejJhtTaZMf6NJ/pw2A8AZl0yqc
+         6hschcrWhnUaI2L2j1OCiD7W6thLCnfJ+JBHnHp2e4sRruYRmVfl497EpVcdZL1zQKH+
+         fZ2WKAD+vmi38Ox8NLDYdnNIdG5WreP4uKSoLdyRIOjZhrdNHqOw+h+EzRxu9r8ZWMHf
+         eusl5rCdvOW5cNInM6qa2213EGxMD5T6uEz15CJLN08SOC/PGB9lenZtpsN9SZUvfdqk
+         BBOA==
+X-Gm-Message-State: ANoB5pnpoBxk2W8bfvkNdP1dKdLEbgpWXUjeKm25rBu2tUkdQjwepMd0
+        Tjkvdp3p9ap/2Ql2KoU548In9UBd4Bky4g==
+X-Google-Smtp-Source: AA0mqf4AOAg99Nr8UQojmJv5ffuuHVE4LG9bwbnrO4f91z2yI6QvjiE3MtOGyX1+pOhT+uDad6iJuA==
+X-Received: by 2002:a17:907:2168:b0:78d:48ac:9041 with SMTP id rl8-20020a170907216800b0078d48ac9041mr8107636ejb.361.1668365251410;
+        Sun, 13 Nov 2022 10:47:31 -0800 (PST)
+Received: from fedora.. (dh207-97-48.xnet.hr. [88.207.97.48])
+        by smtp.googlemail.com with ESMTPSA id a2-20020aa7d742000000b004623028c594sm3760050eds.49.2022.11.13.10.47.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 13 Nov 2022 10:47:30 -0800 (PST)
+From:   Robert Marko <robimarko@gmail.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Robert Marko <robimarko@gmail.com>
+Subject: [PATCH 1/5] dt-bindings: net: ipq4019-mdio: document IPQ6018 compatible
+Date:   Sun, 13 Nov 2022 19:47:23 +0100
+Message-Id: <20221113184727.44923-1-robimarko@gmail.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-References: <20220830065744.161163-1-krzysztof.kozlowski@linaro.org>
- <20220830065744.161163-2-krzysztof.kozlowski@linaro.org> <fe747000-a650-ed2f-8581-92b044f86f2f@linaro.org>
-In-Reply-To: <fe747000-a650-ed2f-8581-92b044f86f2f@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sun, 13 Nov 2022 16:50:04 +0300
-Message-ID: <CAA8EJpruwhOVacH6_kN2TABmVR5Peu1pjFa1b4sag5p1zouqRA@mail.gmail.com>
-Subject: Re: [PATCH v7 1/3] dt-bindings: arm: qcom: document qcom,msm-id and qcom,board-id
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Kumar Gala <galak@codeaurora.org>,
-        Rob Herring <robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn, Krzysztof,
+Document IPQ6018 compatible that is already being used in the DTS along
+with the fallback IPQ4019 compatible as driver itself only gets probed
+on IPQ4019 and IPQ5018 compatibles.
 
-On Mon, 26 Sept 2022 at 13:30, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 30/08/2022 08:57, Krzysztof Kozlowski wrote:
-> > The top level qcom,msm-id and qcom,board-id properties are utilized by
-> > bootloaders on Qualcomm MSM platforms to determine which device tree
-> > should be used and passed to the kernel.
-> >
-> > The commit b32e592d3c28 ("devicetree: bindings: Document qcom board
-> > compatible format") from 2015 was a consensus during discussion about
-> > upstreaming qcom,msm-id and qcom,board-id fields.  There are however still
-> > problems with that consensus:
-> > 1. It was reached 7 years ago but it turned out its implementation did
-> >    not reach all possible products.
-> >
-> > 2. Initially additional tool (dtbTool) was needed for parsing these
-> >    fields to create a QCDT image consisting of multiple DTBs, later the
-> >    bootloaders were improved and they use these qcom,msm-id and
-> >    qcom,board-id properties directly.
-> >
-> > 3. Extracting relevant information from the board compatible requires
-> >    this additional tool (dtbTool), which makes the build process more
-> >    complicated and not easily reproducible (DTBs are modified after the
-> >    kernel build).
-> >
-> > 4. Some versions of Qualcomm bootloaders expect these properties even
-> >    when booting with a single DTB.  The community is stuck with these
-> >    bootloaders thus they require properties in the DTBs.
-> >
-> > Since several upstreamed Qualcomm SoC-based boards require these
-> > properties to properly boot and the properties are reportedly used by
-> > bootloaders, document them along with the bindings header with constants
-> > used by: bootloader, some DTS and socinfo driver.
-> >
-> > Link: https://lore.kernel.org/r/a3c932d1-a102-ce18-deea-18cbbd05ecab@linaro.org/
-> > Co-developed-by: Kumar Gala <galak@codeaurora.org>
-> > Signed-off-by: Kumar Gala <galak@codeaurora.org>
-> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Reviewed-by: Rob Herring <robh@kernel.org>
-> >
-> > ---
-> >
-> > Changes since v6:
-> > 1. Update header with defines
-> > 2. Add Rb tag
->
-> Hi Bjorn,
->
-> Any further comments on this? Can it be applied?
+This is also required in order to specify which platform require clock to
+be defined and validate it in schema.
 
-A gracious ping from my side. I think it would be better to apply this
-patch rather than having the undocumented and controversial propreties
-in the device trees.
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+---
+ .../devicetree/bindings/net/qcom,ipq4019-mdio.yaml  | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
+diff --git a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
+index ad8b2b41c140..2463c0bad203 100644
+--- a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
++++ b/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
+@@ -14,9 +14,16 @@ allOf:
+ 
+ properties:
+   compatible:
+-    enum:
+-      - qcom,ipq4019-mdio
+-      - qcom,ipq5018-mdio
++    oneOf:
++      - items:
++          - enum:
++              - qcom,ipq4019-mdio
++              - qcom,ipq5018-mdio
++
++      - items:
++          - enum:
++              - qcom,ipq6018-mdio
++          - const: qcom,ipq4019-mdio
+ 
+   "#address-cells":
+     const: 1
 -- 
-With best wishes
-Dmitry
+2.38.1
+
