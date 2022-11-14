@@ -2,52 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D11E7627F76
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 13:59:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DEA7627F8E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 14:00:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237622AbiKNM7k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 07:59:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53118 "EHLO
+        id S237651AbiKNNA3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 08:00:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237623AbiKNM7j (ORCPT
+        with ESMTP id S237644AbiKNNA1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 07:59:39 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 730C52610C;
-        Mon, 14 Nov 2022 04:59:38 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 12DBB6117F;
-        Mon, 14 Nov 2022 12:59:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BDEC433D7;
-        Mon, 14 Nov 2022 12:59:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668430777;
-        bh=Bqo8VHEKOh4b2/t4IKtYamnmb4QITdYQ/EJfORddcJk=;
-        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-        b=ciRd/Wku/AsQYh4opphPAa7JXWu1GgVorWniVQ5/xseSsNCWOywBbKqe6RMF+ZPFt
-         G4XLEvA51Th350+mE1g8JFpdBaJXwUGEt01zv2OcHVQQgsMNeyw8bIyyEyxHE9MgK8
-         x7mNGyK+z7+4rb+YiMtLx8krXVUDApP2wfoflnXYB/htCwTaNkLzxeBd7g4PtJcgMH
-         Ojkt0QuIKGoatmlSquzA742Q6lIzXRaB2+gj18z+4/LAOdUm10WWBHSXboOWk2arW0
-         Bvn6RNUvNce4bquYp1QfM/8t7WzgBzoLL3FElrcoqN6pGlw5u7joVgbfghgHP0jszW
-         6SoZY3rPqi1Ig==
-From:   Kalle Valo <kvalo@kernel.org>
-To:     Youghandhar Chintala <quic_youghand@quicinc.com>
-Cc:     <ath11k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_mpubbise@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH v3] wifi: ath10k: Add WLAN firmware image version info into smem
-References: <20221111114235.10287-1-quic_youghand@quicinc.com>
-Date:   Mon, 14 Nov 2022 14:59:31 +0200
-In-Reply-To: <20221111114235.10287-1-quic_youghand@quicinc.com> (Youghandhar
-        Chintala's message of "Fri, 11 Nov 2022 17:12:35 +0530")
-Message-ID: <87edu5bsjw.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Mon, 14 Nov 2022 08:00:27 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D147027930
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 05:00:25 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id p8so19109852lfu.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 05:00:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=n2v6dXeivccfrn+WhZzJKqoLRW18Q+k95BcJxS2Nft8=;
+        b=rl4Z7TiqBNvWPnhXh20wrOVuEE0wnCeMX6CSjyrdR3T1EEkoA1NKS/aVGWZYFtAZcr
+         vLqkdcGuxLaLEfazCkIBb0gwRhCTBZD6F4IBBXheK5Re9GoiZ7Eut6vScYrrLU6W5ZgI
+         EJEbQ54BV70qZwc6xuX3tq+j1Yuhtu6kON4IfDpQMB+cxsn9s2fYUW4V1LHvDj1b/eE9
+         FCIWE5HsPKK8+Vmfo75AUev7GvEUZxC+HIVVbxw9fGbCgKY30b59b77YmaraD+v+SF+t
+         odwE8AjsyIp5yRnRZ8V7oFyVtnOJVBH/941y61HKOBBsU1wLO9iOPs85TX4GnJbOvOnT
+         0AhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=n2v6dXeivccfrn+WhZzJKqoLRW18Q+k95BcJxS2Nft8=;
+        b=0vVdg97Er+W499yhafiinpyxxedLwuqPYZdYHthW1PX0ohYdxki/bJSFa9Cw4rulxc
+         +eZsvwLUmpBJKoM6p7Hnn71G0zR2pg45oQk4kZSOqy645eIDbRddS/T2QLGXZ/lBWvnZ
+         eTVnNrYFeKBor15fSX9IH0uEC11pMA5UBNwUn2SfNniAnQW+WHbmucolJXsNWU2S4IZy
+         Pr/0Pbven/0+6Wt/OaJjg0Pua48qy7fUh0q6tGqADAWCg9WcgYsbbYlLFQAuNRV3JRbL
+         EzaAOSn2u6Y+Z7iN4pVFSKk7ws+k4c7Qb8dK6eBO7sVCzVAKSZe8LN+P8QdwKzZYTUyX
+         pkJQ==
+X-Gm-Message-State: ANoB5pnlDM1ocy0g9dY+g415rvbUOLNKug+luO/KpuqUrui/R2s7Zl9h
+        uXtYbQKt84KZBl6knfhr5FqgQlbjF0Fngwdl
+X-Google-Smtp-Source: AA0mqf6Y/jRSNo3kplGT/QnTrZAPtMxVjojG2hI/OrS5/UtbcwQzGqM++6h36xwYu9aPAcYHLeGkkg==
+X-Received: by 2002:ac2:5b9d:0:b0:4a2:19e0:1266 with SMTP id o29-20020ac25b9d000000b004a219e01266mr3679582lfn.264.1668430824179;
+        Mon, 14 Nov 2022 05:00:24 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id l10-20020a056512110a00b004948b667d95sm1814784lfg.265.2022.11.14.05.00.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Nov 2022 05:00:23 -0800 (PST)
+Message-ID: <0121fc03-b027-7659-5e6e-b42089c9888d@linaro.org>
+Date:   Mon, 14 Nov 2022 14:00:22 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v2 1/9] dt-bindings: arm-smmu: Allow up to 3 power-domains
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     patches@linaro.org, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221114104222.36329-1-konrad.dybcio@linaro.org>
+ <20221114104222.36329-2-konrad.dybcio@linaro.org>
+ <6fa8e3ea-2113-d930-96bc-3726d53e5bcd@linaro.org>
+ <a4b160d8-0faa-3f4c-a925-0beaf6ace721@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <a4b160d8-0faa-3f4c-a925-0beaf6ace721@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -55,63 +84,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Youghandhar Chintala <quic_youghand@quicinc.com> writes:
+On 14/11/2022 12:17, Konrad Dybcio wrote:
+> 
+> On 14/11/2022 12:01, Krzysztof Kozlowski wrote:
+>> On 14/11/2022 11:42, Konrad Dybcio wrote:
+>>> Some SMMUs require that a vote is held on as much as 3 separate PDs
+>>> (hello Qualcomm). Allow it in bindings.
+>>>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>> Changes since v1:
+>>> - Add minItems
+>>>
+>>>   Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 ++-
+>>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>> index 9066e6df1ba1..82bc696de662 100644
+>>> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>> @@ -159,7 +159,8 @@ properties:
+>>>             through the TCU's programming interface.
+>>>   
+>>>     power-domains:
+>>> -    maxItems: 1
+>>> +    minItems: 0
+>> It cannot be 0.
+>>
+>> minItems: 1
+>>
+>> Anyway you still need to restrict it per variant, as I said in previous
+>> version.
+> 
+> Hm.. I'm not entirely sure what you mean.. Should I add a list of 
+> compatibles
 
-> In a SoC based solution, it would be useful to know the versions of the
-> various binary firmware blobs the system is running on. On a QCOM based
-> SoC, this info can be obtained from socinfo debugfs infrastructure. For
-> this to work, respective subsystem drivers have to export the firmware
-> version information to an SMEM based version information table.
->
-> Having firmware version information at one place will help quickly
-> figure out the firmware versions of various subsystems on the device
-> instead of going through builds/logs in an event of a system crash.
->
-> Fill WLAN firmware version information in SMEM version table to be
-> printed as part of socinfo debugfs infrastructure on a Qualcomm based
-> SoC.
->
-> This change is applicable only for WCN399X targets.
->
-> Example:
-> cat /sys/kernel/debug/qcom_socinfo/cnss/name
-> QC_IMAGE_VERSION_STRING=WLAN.HL.3.2.2.c10-00754-QCAHLSWMTPL-1
->
-> Reported-by: kernel test robot <lkp@intel.com>
->
-> Tested-on: WCN3990 hw1.0 SNOC WLAN.HL.3.2.2.c10-00754-QCAHLSWMTPL-1
->
-> Signed-off-by: Youghandhar Chintala <quic_youghand@quicinc.com>
-> ---
-> Changes from v2:
->  - Removed blank line between trailers
->  - Changed memcpy to strscpy
->  - Removed version_string_size
->  - Added new condition fw_build_id against max length
->  - Added depends on QCOM_SMEM for ath10k_snoc
-> ---
->  drivers/net/wireless/ath/ath10k/Kconfig |  1 +
->  drivers/net/wireless/ath/ath10k/qmi.c   | 34 +++++++++++++++++++++++++
->  2 files changed, 35 insertions(+)
->
-> diff --git a/drivers/net/wireless/ath/ath10k/Kconfig b/drivers/net/wireless/ath/ath10k/Kconfig
-> index ca007b800f75..e6ea884cafc1 100644
-> --- a/drivers/net/wireless/ath/ath10k/Kconfig
-> +++ b/drivers/net/wireless/ath/ath10k/Kconfig
-> @@ -44,6 +44,7 @@ config ATH10K_SNOC
->  	tristate "Qualcomm ath10k SNOC support"
->  	depends on ATH10K
->  	depends on ARCH_QCOM || COMPILE_TEST
-> +	depends on QCOM_SMEM
->  	select QCOM_SCM
->  	select QCOM_QMI_HELPERS
+Yes and limit it to maxItems: 1 for "else".
 
-Is there a reason why you used "depends on"? Other QCOM dependencies
-used "select", so I'm wondering if QCOM_SMEM should also use select?
+> that are allowed to have 3 power-domains and leave it as it was before 
+> in the
+> 'else' case?
 
-Please also use ath10k list for ath10k patches, not ath11k.
+Best regards,
+Krzysztof
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
