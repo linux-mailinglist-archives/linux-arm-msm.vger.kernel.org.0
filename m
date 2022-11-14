@@ -2,83 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 892DE628AA8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 21:43:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FC7F628AC4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 21:49:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237062AbiKNUno (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 15:43:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55896 "EHLO
+        id S236133AbiKNUt1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 15:49:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237054AbiKNUno (ORCPT
+        with ESMTP id S236205AbiKNUt0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 15:43:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CFFDB07
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 12:42:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1668458569;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=LbWjPGYhr+GO1H5x0EkUkfhuZivLdlj/zRgU+tW9BQ0=;
-        b=MXTNb2oB0xcmVqd0QMFNoz5h4VEfNKe+i/Qw6uDeutkP7MzjmMAbvRSOV30uSJRnEgTNlO
-        dgyWtPjrNJVIssGl8Q+YqLFlJOQZ6hmg/UeEE7ZgvGFEdgtJ2LNPIOZfo7YKi/VhDVPIW5
-        A0gvUu7yt4GLxGgvEAkzmD0AuwphhE0=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-569-qB21m15ZPDWGxSqFayJ_NA-1; Mon, 14 Nov 2022 15:42:48 -0500
-X-MC-Unique: qB21m15ZPDWGxSqFayJ_NA-1
-Received: by mail-qv1-f72.google.com with SMTP id q17-20020a056214019100b004b1d3c9f3acso9172313qvr.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 12:42:47 -0800 (PST)
+        Mon, 14 Nov 2022 15:49:26 -0500
+Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08F3D1583C;
+        Mon, 14 Nov 2022 12:49:26 -0800 (PST)
+Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-13ba86b5ac0so13918952fac.1;
+        Mon, 14 Nov 2022 12:49:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=/zs5GFS4zX5I6/Faq+e+SUg4iVEYXlwxarNYXij8AkM=;
+        b=ImPaTYpH20pxonMgoWCi8i5Qs38yYeoMefN7Ur6gCETa7/kYYYRJoRy4jpTu1Vpzn3
+         hWLLOgAeDNUPVTO+5huo0TYVcwfWujK0Aw1JE/wJwtx//tDBo9QX57HtwqowqYi+65MH
+         3v3CO/F0ngn4sRyzWvOXMehFGzagpS0FBLRlphqddJCIOtVf0miMSb3Qsx6VfbltPPPz
+         rwAVxmLlrArcsS97jBiWyztSuCfBFEehxgy0Ck+9LbqJHYbe//kCtwbRZsJQNO6veN/7
+         J3DXqrlpMQxiGuUN9aDF4KMoC6Ld18+V4aHI/oXi83S5KpWO/sq5NJt+6H9JILlgOhOk
+         3a/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LbWjPGYhr+GO1H5x0EkUkfhuZivLdlj/zRgU+tW9BQ0=;
-        b=BpuOIDumrv6tgHpYEsTbGapSEQkNzoW8zbsa4uP5+sp0l5o3ogE03imfCj1YlndHtR
-         gAguU2UaGEx0PL8FwlL6slkx7sWuvL/6uSYavhBXUJrrhM2qz1CVGMC9jILzJX72AS+5
-         2DuCFblPqMZJyAu/UqDAe0njIDLmO5i7Pyjoboo/Ghvzwct9CoD6LilMpx25QrTlnhZX
-         pQuyaSbkCVwEXxjb1UoYyAWRgT1o30rtFUZAfJUNfY8hHFzvdNCF1ROL6m6jCWalq5Nh
-         blOCvMh48K47Y95yQmae4fssZVyUHvweJ1AxLau/k6tjxHshVeQFWWlx7j7qLy0uUFJd
-         PM4Q==
-X-Gm-Message-State: ANoB5pl+QWPu4BTyinKC8QTiSlJgQi+NeUJ4dx3zxgzbZQFiOJlOHWWy
-        7e/jxBFPG+HPRxBkoChon6d1savwRtzldiIH5wR84SORK4aOvfdj0jPpyrFCVblVzPa5Xln/z/0
-        UVoTxwtTjgcJ33srKmKTAIaN6kg==
-X-Received: by 2002:a05:620a:909:b0:6fa:e58e:f32b with SMTP id v9-20020a05620a090900b006fae58ef32bmr13332611qkv.739.1668458567433;
-        Mon, 14 Nov 2022 12:42:47 -0800 (PST)
-X-Google-Smtp-Source: AA0mqf7C5iPdOS7Y7CDRc1SZGacqtA4vD0Ot5AYZigwkzzm705pOdGXhMaQJbKJaIAOm+XVaX0Wwvg==
-X-Received: by 2002:a05:620a:909:b0:6fa:e58e:f32b with SMTP id v9-20020a05620a090900b006fae58ef32bmr13332591qkv.739.1668458567223;
-        Mon, 14 Nov 2022 12:42:47 -0800 (PST)
-Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id h5-20020ac85685000000b003a4ec43f2b5sm6069969qta.72.2022.11.14.12.42.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Nov 2022 12:42:46 -0800 (PST)
-Date:   Mon, 14 Nov 2022 15:42:45 -0500
-From:   Brian Masney <bmasney@redhat.com>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc8280xp: update UFS PHY nodes
-Message-ID: <Y3KoRULjQCYK+H3+@x1>
-References: <20221104092045.17410-1-johan+linaro@kernel.org>
- <20221104092045.17410-3-johan+linaro@kernel.org>
- <Y3J4YGPsn8D9wzny@x1>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/zs5GFS4zX5I6/Faq+e+SUg4iVEYXlwxarNYXij8AkM=;
+        b=UrcSgWLc7UQBi2DM6ormDDgYFtFxg6V8WZMSXGXQehwxcEg42cLkZsR7AbsTqizDwz
+         HZWopCOffr72dYrTh202HYdS+WFtzPtaoRTmTPLWd0j40u++ZRbRpnLx7wqLs3sWCTa/
+         NGUJ1GrHDwUhHv+kcOHJlCI9uyYRvbEbOsrIW0ew6WuA62m1DDIKDlq3EN04XnxHiC+w
+         vYT6oah4cclVpninIAWPSE6AD0iYVemYp6VKHfFRmABLWKedDacdnNzoUzA0W1Ftliun
+         37co6w7oKtAJd7CB7hw77Qye0oePUD6IkazFKOM8nt8h631Wuc3iBjiqg0pceyFIF79v
+         4Sng==
+X-Gm-Message-State: ANoB5pmTx+dVi3CUCfv2EU2amXJW8l1dj1EC/VQQqo8ChUtJFD2L0j79
+        wYYa41Lol2y1hSVhvj6Q8ek8/8CuF1GEIk0eSuk=
+X-Google-Smtp-Source: AA0mqf5Oo2AzjTceHKiJk2Mi+Kzjn7EOsa7GoBX8c8TdPP3ULdrZxu7oElvFZNnKbpBB817J/M/OWPoG7FxpTmV9EYw=
+X-Received: by 2002:a05:6870:b87:b0:13d:51fe:3404 with SMTP id
+ lg7-20020a0568700b8700b0013d51fe3404mr7667561oab.183.1668458965345; Mon, 14
+ Nov 2022 12:49:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y3J4YGPsn8D9wzny@x1>
-User-Agent: Mutt/2.2.7 (2022-08-07)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
+References: <20221114194133.1535178-1-robdclark@gmail.com> <97429a67-e763-4226-828c-8381a2abe9f9@quicinc.com>
+In-Reply-To: <97429a67-e763-4226-828c-8381a2abe9f9@quicinc.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 14 Nov 2022 12:49:45 -0800
+Message-ID: <CAF6AEGu2soY3Xm_obivcLKqgJ0HVj0H90C7zN5YOTFK0RmRbdA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/a6xx: Fix speed-bin detection vs probe-defer
+To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Chia-I Wu <olvaffe@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,20 +74,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 14, 2022 at 12:18:24PM -0500, Brian Masney wrote:
-> On Fri, Nov 04, 2022 at 10:20:45AM +0100, Johan Hovold wrote:
-> > Update the UFS PHY nodes to match the new binding.
-> > 
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> 
-> This is needed in order to boot the sa8540p on linux-next-20221110.
+On Mon, Nov 14, 2022 at 11:59 AM Akhil P Oommen
+<quic_akhilpo@quicinc.com> wrote:
+>
+> On 11/15/2022 1:11 AM, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > If we get an error (other than -ENOENT) we need to propagate that up the
+> > stack.  Otherwise if the nvmem driver hasn't probed yet, we'll end up with
+> > whatever OPP(s) are represented by bit zero.
+> >
+> > Fixed: fe7952c629da ("drm/msm: Add speed-bin support to a618 gpu")
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > index 7fe60c65a1eb..96de2202c86c 100644
+> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > @@ -1956,7 +1956,7 @@ static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
+> >               DRM_DEV_ERROR(dev,
+> >                             "failed to read speed-bin (%d). Some OPPs may not be supported by hardware",
+> I just noticed and was going to send a similar fix. We should remove ".
+> Some OPPs may not be supported by hardware" here.
+>
+> Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>
+> Btw, on msm-next-external-fixes + this fix,  I still see boot up issue
+> in herobrine due to drm_dev_alloc() failure with -ENOSPC error.
 
-Actually, I take that back... This is not needed to boot on -next. There
-was a separate problem on the latest -next that I describe at:
+Could you track it down one level deeper? I wonder if there is some
+missing cleanup in the probe-defer path and we end up failing in
+drm_minor_alloc() or something along those lines
 
-https://lore.kernel.org/linux-arm-msm/20221114202943.2389489-1-bmasney@redhat.com/T/#u
+BR,
+-R
 
-My Reviewed-by still applies for the patch.
-
-Brian
-
+> -Akhil.
+> >                             ret);
+> > -             goto done;
+> > +             return ret;
+> >       }
+> >
+> >       supp_hw = fuse_to_supp_hw(dev, rev, speedbin);
+>
