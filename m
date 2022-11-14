@@ -2,109 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C6B5627B3F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 11:59:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D015627B58
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 12:01:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236178AbiKNK7Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 05:59:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54172 "EHLO
+        id S236449AbiKNLBP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 06:01:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236320AbiKNK7Y (ORCPT
+        with ESMTP id S236428AbiKNLBO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 05:59:24 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9242E1C10D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 02:59:23 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id v27so16734551eda.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 02:59:23 -0800 (PST)
+        Mon, 14 Nov 2022 06:01:14 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5062E1E73D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 03:01:13 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id b9so12658141ljr.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 03:01:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TFo6xyXzYm1Z62iYsNaJ8ArmDJI5GLoTpJMyLcKsERg=;
-        b=Ri+2vTNDvigT+aG4H1KgN64EAR0ptZzMaKxGsKFn2h3BI+WhllUqRbpLVsu0Q63Aeg
-         S7EVSsYBGL49Q7AxLfsID4aHPXnP99HwgncT1REK3RkpVhhLsHVoiCjc5xgowFgAGogK
-         Zmy6GEd9Z5/eQ3lg5ZnvocewVT5tT9+F/jcU8wQzcB48uUCIPsOnCobdu0Ue1I2Yx7BO
-         vRTDybPzGN5q2NIMI8x09xLHVh+kOtRmg6407ZHB+Xmm5zGzoHZWdq/fD8nLXxyOzH1u
-         sMEGfmnZMEHC6JU8BFnli7cfsEq6jInacSujBjDdI/YcqllwWnSnuijXQDkK8sEhX0JP
-         YC3Q==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Z0K2PDFt9eg+OLvMvtV5tszL+A3jKSFv8/ermJSvM6I=;
+        b=SKWEe4rvqLJRNVtWqBQfk1NKhxFf8kIc3YODoMj0UljFyOSVi7j17YCxNArprTIjx/
+         JHJPUcYXwHqp2Tzsv2RTQ4hIwFt5VATCnE6Lb1riuALSsV1lul/31mqB9GEGgFYNYcwH
+         /CYxP1zvZJlRtl4um28l6Lx5S7u+Bs8Askx+rKZke1tDpMisnZBpbuYYyShhfy4oJSwR
+         qU+h/Ql/ef0xUuTKpv5DroMWWNiZqmyFA4Bl2vnR+aStS6sXCA6HGIZZK+E73/+aS16O
+         WEGTNFxqcEX8PE6tHEFlyGmq8rwIly88mU+Z7QF/bN3gndPq9QXawan9IJ1V14XLQqjB
+         vzkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TFo6xyXzYm1Z62iYsNaJ8ArmDJI5GLoTpJMyLcKsERg=;
-        b=SSy2DKz7wl1XLiCMWNgi/kcs8bifn6TBc+Alxv1fX2ZPXaJpySm1DO3wrPWhIzzh4/
-         Zt/jcpI8tgvBV69GgP8ASe6S4p4gg6VR38/t2Q0RGnNy/JByWQNGl7Ga665G2wW/7/A5
-         ajbzOHV0SZrQIAgHgtC2zOgoJ6ncemV091oNf0IRSutq0aqZaoMF6r/zFNEMMSHvFIiI
-         SnBVUo75nh8DnQDu1CuGBihlDsI6pzCMd/B90q4Ukd47wIj8PmxgC636ie2yfXSrLK7y
-         a87wzMz3DdjiiDvjsbDu6Nx5Dq4zd8R50qPPv9fswWAoZMiYyjWG5nKuddJjEbTndWNO
-         tP5w==
-X-Gm-Message-State: ANoB5pkXi1ZadMCiELY7LYuKlzzWWpLhbPqBjI3RK8NizJhOCEI+e2uz
-        OU22nzwLnDf8cHuUV4xjq19wdMdtTzKq1Kv9
-X-Google-Smtp-Source: AA0mqf6za7PwKHKcOt/pIA+1hyeMx2bNfUHGvPuTJWzcb6vQNP6IgLO1nnfTmEpzmis4oRIH3v6BrA==
-X-Received: by 2002:a05:6402:17d0:b0:458:d064:a8c2 with SMTP id s16-20020a05640217d000b00458d064a8c2mr10642182edy.346.1668423561949;
-        Mon, 14 Nov 2022 02:59:21 -0800 (PST)
-Received: from localhost.localdomain ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id 9-20020a170906210900b007a4e02e32ffsm4036308ejt.60.2022.11.14.02.59.20
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 14 Nov 2022 02:59:21 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z0K2PDFt9eg+OLvMvtV5tszL+A3jKSFv8/ermJSvM6I=;
+        b=vTmH/bE8xTFtQzg1uuDdl9OYThE/YYXquV/U9Zm05grSEN1CbbaXxFks0Tf/ItZdxM
+         Mk4Bv5Uq6k08ICi6gp2vhSCSi4pTChFLFzmV57iTB1/vWXzpNcUvUA8jCqrzl39LMGsq
+         pifeWilFkCp91MXtPNMonTqE3mHaZc2gj49pzawiNHI1zycoxkwIhX/4f+Xz+OcWd0kr
+         /fR+9uKOdugpJ9aBtrhc+0sTSv9/WWO7pYksG5YoQNGjjPZwo3ZNO6fTVxpKTrbc5CJf
+         nHrH9rdi038v6zphAENd8lW4YnTZLhRgRwyGwA+dJKT20n0S9gIZyu9xGoTfKb1u4ynK
+         Fd+w==
+X-Gm-Message-State: ANoB5pmMP/9tsG3gw7RLim9qY4jOuMDxaYekdW68u+H5wdyXaDHdpFWY
+        AYs7BFw6ORTkCDgtmRahM5Khaw==
+X-Google-Smtp-Source: AA0mqf5ycgoBx4Z8VaCrIUY0xVHbM2bYVeNsPBV0K1lSLmoZB6Fpf2cQQT5MxKBnrnZby9GLMJXJpQ==
+X-Received: by 2002:a05:651c:194f:b0:278:eef5:8d19 with SMTP id bs15-20020a05651c194f00b00278eef58d19mr2834105ljb.429.1668423671598;
+        Mon, 14 Nov 2022 03:01:11 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id p5-20020a2ea405000000b00278e9c0d3a2sm1753511ljn.33.2022.11.14.03.01.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Nov 2022 03:01:11 -0800 (PST)
+Message-ID: <6fa8e3ea-2113-d930-96bc-3726d53e5bcd@linaro.org>
+Date:   Mon, 14 Nov 2022 12:01:09 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v2 1/9] dt-bindings: arm-smmu: Allow up to 3 power-domains
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     patches@linaro.org, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] arm64: dts: qcom: sm6375-pdx225: Enable ADSP & CDSP
-Date:   Mon, 14 Nov 2022 11:59:13 +0100
-Message-Id: <20221114105913.37044-4-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.32.0 (Apple Git-132)
-In-Reply-To: <20221114105913.37044-1-konrad.dybcio@linaro.org>
-References: <20221114105913.37044-1-konrad.dybcio@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20221114104222.36329-1-konrad.dybcio@linaro.org>
+ <20221114104222.36329-2-konrad.dybcio@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221114104222.36329-2-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the newly added remote processors and assign them a firmware
-path.
+On 14/11/2022 11:42, Konrad Dybcio wrote:
+> Some SMMUs require that a vote is held on as much as 3 separate PDs
+> (hello Qualcomm). Allow it in bindings.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> Changes since v1:
+> - Add minItems
+> 
+>  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> index 9066e6df1ba1..82bc696de662 100644
+> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> @@ -159,7 +159,8 @@ properties:
+>            through the TCU's programming interface.
+>  
+>    power-domains:
+> -    maxItems: 1
+> +    minItems: 0
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- .../boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+It cannot be 0.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-index 4741b9120aa2..25b0c5a33c74 100644
---- a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-@@ -123,6 +123,16 @@ &qupv3_id_1 {
- 	status = "okay";
- };
- 
-+&remoteproc_adsp {
-+	firmware-name = "qcom/Sony/murray/adsp.mbn";
-+	status = "okay";
-+};
-+
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/Sony/murray/cdsp.mbn";
-+	status = "okay";
-+};
-+
- &rpm_requests {
- 	regulators-0 {
- 		compatible = "qcom,rpm-pm6125-regulators";
--- 
-2.38.1
+minItems: 1
+
+Anyway you still need to restrict it per variant, as I said in previous
+version.
+
+Best regards,
+Krzysztof
 
