@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0154262794B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 10:45:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 059D862794E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 10:45:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236008AbiKNJpU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 04:45:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48654 "EHLO
+        id S236087AbiKNJpj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 04:45:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235825AbiKNJpT (ORCPT
+        with ESMTP id S235551AbiKNJpi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 04:45:19 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5790BE08
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 01:45:16 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id k19so12417123lji.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 01:45:16 -0800 (PST)
+        Mon, 14 Nov 2022 04:45:38 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C6BC1B9F3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 01:45:36 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id a29so18327974lfj.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 01:45:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=v2yksaLVj9+vuiqSJ6WzTREotkd4r80eEGPII8mGimA=;
-        b=k/LBP+JpL1Q++aBHW7YBpXUkOkhpA1oYdqQBJkXsy67D/LzaasVQ/k054sR2ndApPv
-         J80MhPWLc2di4j9Z73gtYAB9K3/H48a2RAqBOrD4uZXcD88mQUYrENg68YIDcVarWY6H
-         eE8M0tQPacNVI6z7OD5e9tTQ0i0WOT4M2uJ9x2V0SKgbf7qKEkVqoShH3qPnN7WQ5j68
-         WoCuvcioN4OiBmmfg0mZrOVhGdxE2rZVoHw7L/weonwNlI+OCkCSlkCOhQ4LFi8q5o9W
-         iqYar/1+m7+9Li176BLbwsvafIMArD2ni6KprCoQy3Q37k+dYEUZmQ708g985XeEDlbK
-         kynQ==
+        bh=Zqd2K4z1fA0XIu+ZObBGQxf9eETFlsgwxL+hKDVstmE=;
+        b=JL1ZB3znH+osJvc6tWS8DQnin1bt31dmezKN1aWK/qmRl/M3XczFgE24kN4/A+2bBC
+         szKCUmei3SH054XiL5f8lxKDo5sCy6U3Z0ncX4xBZKV7q1iojq/7StPv66B0El9l9QoL
+         EBq/GJW9HmsDaMMe39X4tcwSfEOaZqfTSlJ56zJxDsURNYVeMDP7y6lGrqBDuM+jn+RO
+         Wjrj5MikKLnNnWVhAWgxzV2AJRDcByt3b1Gw/rZpTwIL3wVXUN8hBSc+Jo2fukP5Y+qQ
+         9juT6IiduS7Jd4w3T3+W64BGGPtlcGM1v3qjn3OE2/I/TpB2NRzYvAg1F6m/g1eUTxPY
+         Md6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
          :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=v2yksaLVj9+vuiqSJ6WzTREotkd4r80eEGPII8mGimA=;
-        b=hqls4IORezbjRYB1N9/OLGuSGHNY7sOjuj26sFXIWFiolGXgqN0P65ZvkXaf36s3Yy
-         Uv0ipL4wAs+TfLxfO3XB1HgJLLczw5FV+UIn0odVbBncapefOdGqlLXEUWgJLcuLf+yv
-         v1itQpwA3aDcb0UPzcT20b7EitOzmV2yEnDzPtbKlEaGkLpenLnEVOAx0HKH2I9poGFh
-         D2xEdfCkN1UCtwq4yULXWbngW9pZfQ8rk58sxyxymPlLa4CvaQh6X5qbN2GGfSLmR30i
-         yKsoyb7jWEHsK+pl3HBYFExEjZO+SpIwXa15/CgxUTwFkkKieSdfEwTTesV/h/5gJ34G
-         QXoA==
-X-Gm-Message-State: ANoB5pm9zHyjbDwkq1P/yEwbIe8e88prnSGMRobynJ7mbN4/EPsxvd0c
-        05Jk9hzjaCtd/s+DpEI2NXkuTg==
-X-Google-Smtp-Source: AA0mqf4CpqVq9z8AaQPat2gQ2PmSLie+L8U3GJgdRID4woojzx0ELBptdaFg14QieWkPGqPyu02n2g==
-X-Received: by 2002:a2e:9ec3:0:b0:277:309:73cb with SMTP id h3-20020a2e9ec3000000b00277030973cbmr4119484ljk.371.1668419115156;
-        Mon, 14 Nov 2022 01:45:15 -0800 (PST)
+        bh=Zqd2K4z1fA0XIu+ZObBGQxf9eETFlsgwxL+hKDVstmE=;
+        b=PikkGYzQ5vCdTJ6WuJgiA5KDlGCRL4qfChlrn23NoOqCqP8TCxEF27tmtVCO6z3oAI
+         Ty5Ug5UKfpdRGGLUHvuhj2Ky3EZMUhjms2yd5FbHZ9ueRq3lxCV/cJg7gEGC18QbEmxH
+         BBp7cI0ucZ6DSnFULnqkdXuYgRBsdubw++z1dwzEd6PybBFD+TFU5VXX/kNhfJ0eAT6P
+         rE8MtDpgdW7ugARgNc3ExifHZXWne8QnKJwF75br6lwH0BtXA4duem0c4jr64YgsSuen
+         BxKX3JthJq7bDiZ8cWM3sblUrgJYs3rHcu4v3lG5uOh3qyfBfEW3D3FS8BauUcTlKtic
+         Sulg==
+X-Gm-Message-State: ANoB5pkNUelX/XrXprvTLJj9GEi7rtAFdCIOAo5o+cA1Vowz9qIa3k1z
+        cZbbHMcAomEUde2kaWRKHkBRFw==
+X-Google-Smtp-Source: AA0mqf685CP0YwOXUV1Pzk/qyGLaPI4OguhcA653K/DIrr029DRoftMnGdmmrOAw5EyxBMaScfStKQ==
+X-Received: by 2002:a05:6512:3134:b0:4a8:3a6a:c2b8 with SMTP id p20-20020a056512313400b004a83a6ac2b8mr3851220lfd.557.1668419134615;
+        Mon, 14 Nov 2022 01:45:34 -0800 (PST)
 Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id n25-20020a2e86d9000000b0026dcfc2bf4csm1949349ljj.57.2022.11.14.01.45.13
+        by smtp.gmail.com with ESMTPSA id n1-20020ac24901000000b004b4823f02b0sm1756115lfi.152.2022.11.14.01.45.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Nov 2022 01:45:14 -0800 (PST)
-Message-ID: <718385d0-b2fd-7c7a-4b2c-ccbf641496e3@linaro.org>
-Date:   Mon, 14 Nov 2022 10:45:11 +0100
+        Mon, 14 Nov 2022 01:45:34 -0800 (PST)
+Message-ID: <3febe250-c99b-1086-20b6-9364d6ee3179@linaro.org>
+Date:   Mon, 14 Nov 2022 10:45:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.2
@@ -78,7 +78,8 @@ Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -97,7 +98,7 @@ On 12/11/2022 21:33, Dzmitry Sankouski wrote:
 > 
 > Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
 > ---
-Reviewed-by: Konrad Dybcio <konra.dybcio@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 > Changes for v2:
