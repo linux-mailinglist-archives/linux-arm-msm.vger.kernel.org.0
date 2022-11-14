@@ -2,129 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 29CB962769F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 08:48:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EFDE86276FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 09:02:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236013AbiKNHsW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 02:48:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42036 "EHLO
+        id S236112AbiKNICI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 03:02:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236002AbiKNHsV (ORCPT
+        with ESMTP id S236125AbiKNIBq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 02:48:21 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72F962BC6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Nov 2022 23:48:20 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id l12so17926479lfp.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Nov 2022 23:48:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RtaXBhnGo8MVscIrQnKGheYkcw3Kx7+UsbUghToyCVI=;
-        b=SMH/wDR0ipSJQ9BUzSRMG2RWykZI8v94NQ6rQnIPL3+Oq+ZKPi/veswxkIv+yEMztD
-         2QmI0HH5GldekYzi2aGpmm2oQ8bYqWvWukggo1oah2jteXry9sKr9hhszaCUNhe7JaZB
-         wtQ2IWfLRze8qnIqqOUGV270budQ2QuruVB/5jdcg93GlDmIcmNOQ93VZ2dwFWHN/cNM
-         JLIE+7LyCVT068CkPRhtyAPK3R1eNs1lvDXpLB6AOz3Qp4VaXNsJRRW7UsnXmx6847Yu
-         TDymNZOPJZcegB76FHBGkSFkdBDkb9j47VZng4bShYGV0+c1jYTr0NOza+VNBooBqfle
-         LnBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RtaXBhnGo8MVscIrQnKGheYkcw3Kx7+UsbUghToyCVI=;
-        b=IxOQEkAVMGvZq5HMuNsJXTIwKB2QKgTx/IuuqW9N2QTNCFNThNzKYTaQsKRFRO/QVQ
-         CynyYGHVI3gnM9LLjaj3eODhUNCoV8UVVbwi1Hd+6zb5T61WfWeatsPF/ZH47cWT+Aqh
-         heMZQkzitLlMDNuPNE5bfqXAF+LFzh1Hg8IxO7CsMwMeO3Wo8zmAPIPSDjfetWT5ZgJE
-         +3fxK+y67y1HIbXugJHXo/nYe4OlsBYqYcemgVNZjAdhe//Ku5jTgpt8FWD1zppAhaC/
-         gj4v1/aFmIy8a1R+YxbIXgLCDOZXerQW+tjI7hE0KZUrH5d2PvyaN04seyQkSMhHgbuI
-         1R5w==
-X-Gm-Message-State: ANoB5pmPgND4vsy/iZbUvBY2H2dbr5tq55nXqGy6AUnI/Lwvp2xc6VXY
-        NLrVqAmzOpMyF9wQKRly7Kz3yw==
-X-Google-Smtp-Source: AA0mqf4L855tMQ/hmtg1Tuny5MoKVDR9pzpMX2tlC4Cl8NJCd/Q5ZQSx1O0gm5QI6BjibY6zuXXH2w==
-X-Received: by 2002:a05:6512:6d5:b0:4a9:6659:40d5 with SMTP id u21-20020a05651206d500b004a9665940d5mr4232367lff.516.1668412098837;
-        Sun, 13 Nov 2022 23:48:18 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id k20-20020a2eb754000000b0026b2094f6fcsm1899097ljo.73.2022.11.13.23.48.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 13 Nov 2022 23:48:18 -0800 (PST)
-Message-ID: <0ee5db9e-d80c-947d-73d6-6214e9299b23@linaro.org>
-Date:   Mon, 14 Nov 2022 08:48:17 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 00/10] ASoC: dt-bindings: Rework Qualcomm APR/GPR Sound
- nodes for SM8450
-Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+        Mon, 14 Nov 2022 03:01:46 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F912192B6;
+        Mon, 14 Nov 2022 00:01:44 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id EEDEB60EEF;
+        Mon, 14 Nov 2022 08:01:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D94C433C1;
+        Mon, 14 Nov 2022 08:01:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668412903;
+        bh=+kGmZ2sr1MoPvw4pQEbx/x2LSke6RIWI3WFIYXcquC0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=qoxRhZKBInOC5h2N75rNgmfDJiMzUYwas+6qSzBFYdRPbgVF46SahuG/Xk73Gl/2/
+         FENZvSKkiCgUCo9mbsQXDgSepuIBH4llVukrwTAoYENc/pMxPYZkjKuXXSXqISjw3Q
+         QKolX1/bThNCpaQQLCsO8G2JoOnC7apghRvabEUdmrq6NPwLVCYuyj+ynzFb//xXAe
+         mJS+xAX+Lzw5X4XpWoluergq8yzAz9TQSq5rwJcH44H0Zwcx2CvNN/RoV7PvvQM1/D
+         kmSk3x4IEkEpfeFjxG17e0BJjGU/nPedp8WVAPBVvk5NdV5neDB+/TSL1L8B+kFJKi
+         oKBV8fjLEWqdA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1ouUP0-0000za-RS; Mon, 14 Nov 2022 09:01:10 +0100
+Date:   Mon, 14 Nov 2022 09:01:10 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
-Cc:     Patrick Lai <plai@qti.qualcomm.com>,
-        Srinivasa Rao Mandadapu <srivasam@qti.qualcomm.com>
-References: <20221111113547.100442-1-krzysztof.kozlowski@linaro.org>
- <06da072c-8cf0-8181-3c32-4592fe41f9c2@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <06da072c-8cf0-8181-3c32-4592fe41f9c2@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Subject: Re: [PATCH 5/6] phy: qcom-qmp-combo: fix runtime suspend
+Message-ID: <Y3H1xjtl+dMGssDU@hovoldconsulting.com>
+References: <20221111084255.8963-1-johan+linaro@kernel.org>
+ <20221111084255.8963-6-johan+linaro@kernel.org>
+ <c685cfc8-adec-31e6-c45a-f0e63d85cfcf@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c685cfc8-adec-31e6-c45a-f0e63d85cfcf@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/11/2022 17:15, Srinivas Kandagatla wrote:
+On Sat, Nov 12, 2022 at 09:17:29AM +0300, Dmitry Baryshkov wrote:
+> On 11/11/2022 11:42, Johan Hovold wrote:
+> > Drop the confused runtime-suspend type check which effectively broke
+> > runtime PM if the DP child node happens to be parsed before the USB
+> > child node during probe (e.g. due to order of child nodes in the
+> > devicetree).
+> > 
+> > Instead use the new driver data USB PHY pointer to access the USB
+> > configuration and resources.
+> > 
+> > Fixes: ac0d239936bd ("phy: qcom-qmp: Add support for runtime PM")
 > 
-> 
-> On 11/11/2022 11:35, Krzysztof Kozlowski wrote:
->> Adding sound support for Qualcomm SM8450 SoC (and later for SC8280XP) brought
->> some changes to APR/GPR services bindings.  These bindings are part of
->> qcom,apr.yaml:
->>
->>    apr-or-gpr-device-node <- qcom,apr.yaml
->>      apr-gpr-service@[0-9] <- qcom,apr.yaml
->>        service-specific-components <- /schemas/sound/qcom,q6*.yaml
->>
->> The schema for services (apr-gpr-service@[0-9]) already grows considerably and
->> is still quite not specific.  It allows several incorrect combinations, like
->> adding a clock-controller to a APM device.  Restricting it would complicate the
->> schema even more.  Bringing new support for sound on Qualcomm SM8450 and
->> SC8280XP SoC would grow it as well.
-> 
-> Why would this grow? All the dsp services are static and they will not 
-> change per SoC unless there is a total firmware change in DSP.
+> I belive the Fixes tag is incorrect. One can not easily backport this 
+> patch on top of the original ac0d239936bd. I'd suggest to point the 
+> Fixes tags to the addition of phy-qcom-qmp-combo.c
 
-They grow now with SM8450 which requires changes there. Otherwise DTS
-does not pass with current bindings. The bindings before my fixing in
-2022 were really incomplete. Now they are complete, but:
-1. Not for SM8450 - this will bring new things,
-2. Very unspecific as they allow multiple invalid configurations.
+The Fixes tag should document the commit introducing the bug regardless
+of what kind of changes happened in between.
 
-> 
->>
->> Refactor the bindings before extending them for Qualcomm SM8450 SoC.
-> 
-> I dont understand this bit, what is SoC audio support to do with DSP 
-> bindings. DSP bindings should be totally independent of this.
+That said, the tag should have been
 
-APR/GPR bindings are for SoC audio, so while adding SoC audio the first
-are affected. If you went through the commits here, you would notice the
-changes.
+Fixes: 52e013d0bffa ("phy: qcom-qmp: Add support for DP in USB3+DP combo phy")
 
-Best regards,
-Krzysztof
+as this wasn't an issue before adding DP support, which intentionally
+relied on these hard-coded indexes ("luckily USB3 is the first phy").
 
+Johan
