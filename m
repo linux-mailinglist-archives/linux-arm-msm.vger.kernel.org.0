@@ -2,120 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F10CD628243
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 15:20:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E97EF62824D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 15:21:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237032AbiKNOUF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 09:20:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59902 "EHLO
+        id S229484AbiKNOVF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 09:21:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236898AbiKNOT5 (ORCPT
+        with ESMTP id S236316AbiKNOVE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 09:19:57 -0500
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8229B26563;
-        Mon, 14 Nov 2022 06:19:56 -0800 (PST)
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-13ba86b5ac0so12629702fac.1;
-        Mon, 14 Nov 2022 06:19:56 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=T363VWdQ5ocnDSQ5x4Cz3XrYjoogVZHJUwppT1WNaYs=;
-        b=fPC7iIMJGuU1X4mMWkcTFVHs+WXS4aXNtMie5HaniXUltcXU0rIa/bdKaIo88gRKI6
-         ELVeftegAMTj4qk6xGN6Hnp6rLjimeHv8L/ujO8YvJzg8V5TictttbUlqoX2QF/DGibR
-         tTT2MZiSIP9xOxE1hUDeXYxxQj8T7rD62eRdeWusD6yozuo/6Ql6oO5ldTERq9jHSv3V
-         z6iM3iHlQVA8uLOTTnS19Y4yFfsdGrCCJBMAkiz3jhecboe4jmMJzAtGBPGgaAcdcavk
-         hvt07XTAPFK3zwaJv5GBpjCBwOxfgQJ0oH499eVGSTbTkhNkjtMbntxLboavfrwskneA
-         Xbvg==
-X-Gm-Message-State: ANoB5pncwS1bjXX2pbXiD98gAwyBeDC30Am1X5vEYx2CkEBJJGk8hJ6D
-        yF0EncHityHCRYjeE25RCHUC0r0ksg==
-X-Google-Smtp-Source: AA0mqf5YD2ya3ZXS0A73Y8ieA+ETvdMBfmcetHL50rNO1AXEo7hvIHk3FznZiOxaGoOQxPiD6GLxBg==
-X-Received: by 2002:a05:6870:8dc3:b0:13b:b3b7:1082 with SMTP id lq3-20020a0568708dc300b0013bb3b71082mr7186742oab.71.1668435595440;
-        Mon, 14 Nov 2022 06:19:55 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id h3-20020a9d7983000000b0063b24357269sm4138272otm.13.2022.11.14.06.19.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Nov 2022 06:19:54 -0800 (PST)
-Received: (nullmailer pid 2686451 invoked by uid 1000);
-        Mon, 14 Nov 2022 14:19:56 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>, patches@linaro.org,
+        Mon, 14 Nov 2022 09:21:04 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C2F6286D8;
+        Mon, 14 Nov 2022 06:21:02 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2A3826119C;
+        Mon, 14 Nov 2022 14:21:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77E4FC433C1;
+        Mon, 14 Nov 2022 14:20:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668435661;
+        bh=13/JHxTH9gKiHuuYZdFMKPZEuHbRRp3X/FpHo3JG1Rc=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=IUcEvmPBxbw6KVFrAso0Ew9Bn3MIaR/7Yx6y5vGNGSi9dn3yj1E31rpZRzumjgr0D
+         gOidG7RIMbS4iUErMPH7KCT+/bvJE93KsIKWYgeTprS7pxhN8ch53gM0w6uTtQ5ffj
+         mwvNa2iiHwcc/dJ5smKbzpjJenzFwi8uZFC0xSNn3aE90a9of6S1k7wfWPhyFwmF79
+         Dg40I7tiEqC+nlWavGZ/DCLyJfWmhlPgQaPvcxSj7qeWOlWCv6G8p9ho+SQJUVo5wG
+         gnuRPHjQMIl+y/n3zvC83SQXvEo6ptzifTWkbMhB+7WFWxfdxeR9onHO42/QLy84Yf
+         98xMpup9YtXjQ==
+From:   Will Deacon <will@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        krzysztof.kozlowski@linaro.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        andersson@kernel.org, linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux.dev
-In-Reply-To: <20221114104222.36329-2-konrad.dybcio@linaro.org>
-References: <20221114104222.36329-1-konrad.dybcio@linaro.org>
- <20221114104222.36329-2-konrad.dybcio@linaro.org>
-Message-Id: <166843545485.2679805.16057396300948126713.robh@kernel.org>
-Subject: Re: [PATCH v2 1/9] dt-bindings: arm-smmu: Allow up to 3 power-domains
-Date:   Mon, 14 Nov 2022 08:19:56 -0600
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     catalin.marinas@arm.com, kernel-team@android.com,
+        Will Deacon <will@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v5 0/8] Add support for sm6115,4250 and OnePlus Nord N100
+Date:   Mon, 14 Nov 2022 14:20:53 +0000
+Message-Id: <166843335275.2454481.8195401602727658140.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20221030094258.486428-1-iskren.chernev@gmail.com>
+References: <20221030094258.486428-1-iskren.chernev@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Mon, 14 Nov 2022 11:42:14 +0100, Konrad Dybcio wrote:
-> Some SMMUs require that a vote is held on as much as 3 separate PDs
-> (hello Qualcomm). Allow it in bindings.
+On Sun, 30 Oct 2022 11:42:50 +0200, Iskren Chernev wrote:
+> Changes from v4
+> v4: https://lore.kernel.org/linux-arm-msm/20220919180618.1840194-1-iskren.chernev@gmail.com/
+> - rebase on next-20221028
+> - drop merged patches
+> - add unmerged patches from https://lore.kernel.org/linux-devicetree/20220815100952.23795-1-a39.skl@gmail.com/
+> - all in all, treat this as a resend
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> Changes since v1:
-> - Add minItems
-> 
->  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
+> [...]
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Applied SMMU bindings to arm64 (for-joerg/arm-smmu/bindings), thanks!
 
-yamllint warnings/errors:
+[4/8] dt-bindings: arm-smmu: Add compatible for Qualcomm SM6115
+      https://git.kernel.org/arm64/c/728b22a57232
+[5/8] iommu/arm-smmu-qcom: Add SM6115 support
+      https://git.kernel.org/arm64/c/2fd6e1ad7e19
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/iommu/arm,smmu.yaml: properties:power-domains:minItems: 0 is less than the minimum of 1
-	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/iommu/arm,smmu.yaml: properties:power-domains: 'anyOf' conditional failed, one must be fixed:
-	'minItems' is not one of ['maxItems', 'description', 'deprecated']
-		hint: Only "maxItems" is required for a single entry if there are no constraints defined for the values.
-	'minItems' is not one of ['description', 'deprecated', 'const', 'enum', 'minimum', 'maximum', 'multipleOf', 'default', '$ref', 'oneOf']
-	'maxItems' is not one of ['description', 'deprecated', 'const', 'enum', 'minimum', 'maximum', 'multipleOf', 'default', '$ref', 'oneOf']
-	1 was expected
-		hint: Only "maxItems" is required for a single entry if there are no constraints defined for the values.
-	0 is less than the minimum of 1
-		hint: Arrays must be described with a combination of minItems/maxItems/items
-	hint: cell array properties must define how many entries and what the entries are when there is more than one entry.
-	from schema $id: http://devicetree.org/meta-schemas/power-domain.yaml#
+Cheers,
+-- 
+Will
 
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
