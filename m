@@ -2,151 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79B07628232
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 15:19:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F10CD628243
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 15:20:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230030AbiKNOTL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 09:19:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59206 "EHLO
+        id S237032AbiKNOUF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 09:20:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230486AbiKNOTK (ORCPT
+        with ESMTP id S236898AbiKNOT5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 09:19:10 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF7E026132;
-        Mon, 14 Nov 2022 06:19:09 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 66CE3611D5;
-        Mon, 14 Nov 2022 14:19:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8FCC433C1;
-        Mon, 14 Nov 2022 14:19:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668435548;
-        bh=2aKLftbQ7d7X94QwhHlY7BeiBnwhGJBLiqbExnanIN8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nnQcKOceHdszQBHmXt4YpVtWaHfZiYkZkfDpnusEGZrY4Vv9uQgnbVZQ/RGiPkgiZ
-         sFOzB9BZX66U2KnZBLMqcDHY29kn9iiWTe3h3PVkFaNL/Xs6uDKYoYOgNUIkB0iiJ8
-         mo7N1hmq6AH0lGstWNpaqYM+9z0rP3iil4q7QHpM5/XWyNf3y3AjecelEIYeIkN27N
-         YMOPJJP5miD+l9liUN5NBVknix+kLUq0KgMmDkvNK82Pi3HHIylg4Z0n7faO0Zuijp
-         RYzMFak/kf+i4ZMvtx7+ECmFlVwg7iNr7NaNmNJW73p6+OowEEEECZrwOISZVp5Q/h
-         q+8fOPLy6rA4A==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ouaIG-0003WR-00; Mon, 14 Nov 2022 15:18:36 +0100
-Date:   Mon, 14 Nov 2022 15:18:35 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 02/14] dt-bindings: phy: qcom,qmp-usb3-dp: fix sc8280xp
- bindings
-Message-ID: <Y3JOO0kNnaNhnW3K@hovoldconsulting.com>
-References: <20221111092457.10546-1-johan+linaro@kernel.org>
- <20221111092457.10546-3-johan+linaro@kernel.org>
- <a22888cd-34cb-3453-0dc2-096da208564c@linaro.org>
- <Y3JCVzJ74YsfcDz4@hovoldconsulting.com>
- <de3a426a-03e8-ed15-a9a1-bb300e776e5f@linaro.org>
+        Mon, 14 Nov 2022 09:19:57 -0500
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8229B26563;
+        Mon, 14 Nov 2022 06:19:56 -0800 (PST)
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-13ba86b5ac0so12629702fac.1;
+        Mon, 14 Nov 2022 06:19:56 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=T363VWdQ5ocnDSQ5x4Cz3XrYjoogVZHJUwppT1WNaYs=;
+        b=fPC7iIMJGuU1X4mMWkcTFVHs+WXS4aXNtMie5HaniXUltcXU0rIa/bdKaIo88gRKI6
+         ELVeftegAMTj4qk6xGN6Hnp6rLjimeHv8L/ujO8YvJzg8V5TictttbUlqoX2QF/DGibR
+         tTT2MZiSIP9xOxE1hUDeXYxxQj8T7rD62eRdeWusD6yozuo/6Ql6oO5ldTERq9jHSv3V
+         z6iM3iHlQVA8uLOTTnS19Y4yFfsdGrCCJBMAkiz3jhecboe4jmMJzAtGBPGgaAcdcavk
+         hvt07XTAPFK3zwaJv5GBpjCBwOxfgQJ0oH499eVGSTbTkhNkjtMbntxLboavfrwskneA
+         Xbvg==
+X-Gm-Message-State: ANoB5pncwS1bjXX2pbXiD98gAwyBeDC30Am1X5vEYx2CkEBJJGk8hJ6D
+        yF0EncHityHCRYjeE25RCHUC0r0ksg==
+X-Google-Smtp-Source: AA0mqf5YD2ya3ZXS0A73Y8ieA+ETvdMBfmcetHL50rNO1AXEo7hvIHk3FznZiOxaGoOQxPiD6GLxBg==
+X-Received: by 2002:a05:6870:8dc3:b0:13b:b3b7:1082 with SMTP id lq3-20020a0568708dc300b0013bb3b71082mr7186742oab.71.1668435595440;
+        Mon, 14 Nov 2022 06:19:55 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id h3-20020a9d7983000000b0063b24357269sm4138272otm.13.2022.11.14.06.19.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Nov 2022 06:19:54 -0800 (PST)
+Received: (nullmailer pid 2686451 invoked by uid 1000);
+        Mon, 14 Nov 2022 14:19:56 -0000
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <de3a426a-03e8-ed15-a9a1-bb300e776e5f@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>, patches@linaro.org,
+        Rob Herring <robh+dt@kernel.org>,
+        krzysztof.kozlowski@linaro.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux.dev
+In-Reply-To: <20221114104222.36329-2-konrad.dybcio@linaro.org>
+References: <20221114104222.36329-1-konrad.dybcio@linaro.org>
+ <20221114104222.36329-2-konrad.dybcio@linaro.org>
+Message-Id: <166843545485.2679805.16057396300948126713.robh@kernel.org>
+Subject: Re: [PATCH v2 1/9] dt-bindings: arm-smmu: Allow up to 3 power-domains
+Date:   Mon, 14 Nov 2022 08:19:56 -0600
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 14, 2022 at 03:07:41PM +0100, Krzysztof Kozlowski wrote:
-> On 14/11/2022 14:27, Johan Hovold wrote:
-> > On Fri, Nov 11, 2022 at 04:17:29PM +0100, Krzysztof Kozlowski wrote:
-> >> On 11/11/2022 10:24, Johan Hovold wrote:
-> >>> The current QMP USB3-DP PHY bindings are based on the original MSM8996
-> >>> binding which provided multiple PHYs per IP block and these in turn were
-> >>> described by child nodes.
 
-> >>> +  "#clock-cells":
-> >>> +    const: 1
-> >>> +
-> >>> +  clock-output-names:
-> >>> +    items:
-> >>> +      - const: usb3_pipe
-> >>> +      - const: dp_link
-> >>> +      - const: dp_vco_div
-> >>
-> >> Why defining here fixed names? The purpose of this field is to actually
-> >> allow customizing these - at least in most cases. If these have to be
-> >> fixed, then driver should just instantiate these clocks with such names,
-> >> right?
-> > 
-> > I'm only using these names as documentation of the indexes. The driver
+On Mon, 14 Nov 2022 11:42:14 +0100, Konrad Dybcio wrote:
+> Some SMMUs require that a vote is held on as much as 3 separate PDs
+> (hello Qualcomm). Allow it in bindings.
 > 
-> What do you mean by documentation of indexes? You require these specific
-> entries and do not allow anything else.
-
-I'm using this property as documentation of the valid indexes that can
-be used when referring to clocks provided by this device.
-
-There are currently three and the mapping is described by the
-'clock-output-names' property.
- 
-> > doesn't use these names, but that's a Linux-specific implementation
-> > detail.
-> > 
-> > I noticed that several bindings leave the clock indexes unspecified, or
-> > have header files defining some or all of them. I first added a QMP
-> > header but that seemed like overkill, especially if we'd end up with
-> > one header per SoC (cf. the GCC headers) due to (known and potential)
-> > platform differences.
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> Changes since v1:
+> - Add minItems
 > 
-> Headers for the names? I do not recall such but that does not seem right.
-
-Headers for the indexes.
-
-> > 
-> > On the other hand reproducing this list in each node is admittedly a bit
-> > redundant.
-> > 
-> > Shall I add back a shared header for all PHYs handled by this driver
-> > (another implementation detail) even if this could eventually lead to
-> > describing clocks not supported by a particular SoC (so such constraints
-> > would still need to be described by the binding somehow):
-> > 
-> > 	/* QMP clocks */
-> > 	#define QMP_USB3_PIPE_CLK	0
-> > 	#define QMP_DP_LINK_CLK		1
-> > 	#define QMP_DP_VCO_DIV_CLK	2
+>  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> What are these about? To remind - we talk about names of clocks this
-> device creates. The output names. Whatever IDs you have are not related
-> to the names.
 
-As I mentioned above, this is not about the names that Linux gives to
-its representation of these clocks. Its just about defining the valid
-indexes in the binding.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-If you think that that using 'clock-output-names' for this is a bit too
-unconventional, I can add back the header with defines like the above
-instead.
+yamllint warnings/errors:
 
-Note that the clock schema has:
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/iommu/arm,smmu.yaml: properties:power-domains:minItems: 0 is less than the minimum of 1
+	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/iommu/arm,smmu.yaml: properties:power-domains: 'anyOf' conditional failed, one must be fixed:
+	'minItems' is not one of ['maxItems', 'description', 'deprecated']
+		hint: Only "maxItems" is required for a single entry if there are no constraints defined for the values.
+	'minItems' is not one of ['description', 'deprecated', 'const', 'enum', 'minimum', 'maximum', 'multipleOf', 'default', '$ref', 'oneOf']
+	'maxItems' is not one of ['description', 'deprecated', 'const', 'enum', 'minimum', 'maximum', 'multipleOf', 'default', '$ref', 'oneOf']
+	1 was expected
+		hint: Only "maxItems" is required for a single entry if there are no constraints defined for the values.
+	0 is less than the minimum of 1
+		hint: Arrays must be described with a combination of minItems/maxItems/items
+	hint: cell array properties must define how many entries and what the entries are when there is more than one entry.
+	from schema $id: http://devicetree.org/meta-schemas/power-domain.yaml#
 
-  clock-output-names:
-    description: |
-      Recommended to be a list of strings of clock output signal
-      names indexed by the first cell in the clock specifier.
-      However, the meaning of clock-output-names is domain
-      specific to the clock provider, ...
+doc reference errors (make refcheckdocs):
 
-Johan
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
