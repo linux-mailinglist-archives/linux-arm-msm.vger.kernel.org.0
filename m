@@ -2,187 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFA776285C8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 17:45:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3808B6285FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 17:50:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237908AbiKNQpa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 11:45:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54632 "EHLO
+        id S235782AbiKNQuo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 11:50:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237840AbiKNQp3 (ORCPT
+        with ESMTP id S237813AbiKNQu0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 11:45:29 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8363B2F014
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 08:45:26 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id z24so13972759ljn.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 08:45:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Y9dc45aT/JX/FTR0wgHvwdtMlLaHpziOS1SHGLUZmJo=;
-        b=RsAuOQaCs1ObI5owjuNOo6L6z9OgvX+6gWIi7MrN0PtqC6XS0mYLk6jf+i7vRPaSVB
-         WrKmgFF39r7PbiwVZrxykzO4DmP4m7JWdogkMC7cJO1wy4WhvVNseFVRL26o4YCKWWir
-         iJimBjkv4CObcYKaRwzkj/ciCIs8lYeJ1GYwz/VnnGbC6+igomma3XFhHd9vuIimbR14
-         YtGnc4GW4NvFOvrwSR8JE+BO3KPjhbalvLQGRKTWDASynwP6pL7lhRYCbEEwwbxnQmXb
-         NY0BuNHIXevHkjUbGPZ0fnfWo3MtMboTwHdTqKxOucHRhDo7cuQiNkTC19JM+yYJjcYk
-         wCig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y9dc45aT/JX/FTR0wgHvwdtMlLaHpziOS1SHGLUZmJo=;
-        b=Ro1ztTWaIdgjw3HQ1vrJXIhXSuMF0ojRIBSEcTDps8tsUnZ57ZUubzO7AYYI8sWljc
-         UVV4GinVYA0S22smq/ms01MUbP42I8lOt3JA5mhDuIi1PYHVxW3hbmxcg1O/E7G6aEH2
-         iQYB9Fu1BYz2R6RVRmyHYabtj0QthfJH7Ppg/gFIamenwdojxakCMMar/GGUTqr9ClN3
-         H0wVjWU9hBhA07YHfV3VbnDWwLdqXnyQQhNWK3rUFvOCjqw3I9pH/U7gqSWN7FwLwhNx
-         o2+stgWxrC2yddOj6A2wjNPtR3uSkf/RGSsZUEEZbSiOdUlvbpsuiDlKQKejc2rFNoaA
-         Ud/w==
-X-Gm-Message-State: ANoB5pmcvBV2RBHYFTL4gEgVz97cnC9tr4lIPF9NojH09ikuEuujP1nr
-        DifN7e5wJPmF5dUBC53Y2NP/3A==
-X-Google-Smtp-Source: AA0mqf5oWsRFwI4o8EBhGbnJXOfSWE3mB6JPvEc2qERcM73WyXLi5uBVbcg+Z1b5VccvhXZ/XqHVIg==
-X-Received: by 2002:a2e:940f:0:b0:277:2f7f:a14c with SMTP id i15-20020a2e940f000000b002772f7fa14cmr4209836ljh.96.1668444324898;
-        Mon, 14 Nov 2022 08:45:24 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id s8-20020a05651c200800b00277522fc29bsm2086012ljo.3.2022.11.14.08.45.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Nov 2022 08:45:24 -0800 (PST)
-Message-ID: <ea17f523-a21f-6af8-7aec-db0a5825f6b2@linaro.org>
-Date:   Mon, 14 Nov 2022 17:45:22 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v15 8/8] arm64: dts: qcom: sm8250: Add tpdm mm/prng
-Content-Language: en-US
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
+        Mon, 14 Nov 2022 11:50:26 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09F3F3F06A;
+        Mon, 14 Nov 2022 08:49:15 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B054BB8109E;
+        Mon, 14 Nov 2022 16:49:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2CCC433D6;
+        Mon, 14 Nov 2022 16:49:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668444552;
+        bh=LuJxQ9ZanWwnw6gRktwMAxkqB/xkzJBmxo3YkByYA9w=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ceHRkkVHhXHdYIA5qM3TOM53J0yknkuAm0/hqLxZTaEEg7wILiap84KIy08zO+IqN
+         WRpfRlwc23A7NxuimodBlrgbL58XAk/YjRN269HxMKl0Ekg7iXs1efW1GSd7qZXYSd
+         5jdg6nthpl+hAAyykmMdUAaPzE/mOI5KV8wKLXwW4MeBWo1F2MD3kjM+dik+l5df2F
+         bFQ/EmKVmd/rTDSXTAUenNoOGaq4TiOPFVs4/7UAjw7n4HPfu2ZyGqsAO9agkvAESY
+         PNp1nW1iVj3mHemhWa3sMLmQtoAQNQs3r+2QpOMxh2A1+z002TmPI+MlUc/Q740YZ3
+         FgEOVC0+2fPfQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oucdT-0005EO-Oy; Mon, 14 Nov 2022 17:48:40 +0100
+Date:   Mon, 14 Nov 2022 17:48:39 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20221114144027.14365-1-quic_jinlmao@quicinc.com>
- <20221114144027.14365-9-quic_jinlmao@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221114144027.14365-9-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 02/14] dt-bindings: phy: qcom,qmp-usb3-dp: fix sc8280xp
+ bindings
+Message-ID: <Y3JxZ+yFMLZkwNBi@hovoldconsulting.com>
+References: <20221111092457.10546-1-johan+linaro@kernel.org>
+ <20221111092457.10546-3-johan+linaro@kernel.org>
+ <a22888cd-34cb-3453-0dc2-096da208564c@linaro.org>
+ <Y3JCVzJ74YsfcDz4@hovoldconsulting.com>
+ <de3a426a-03e8-ed15-a9a1-bb300e776e5f@linaro.org>
+ <Y3JOO0kNnaNhnW3K@hovoldconsulting.com>
+ <02725b78-04ad-8f4a-25c2-9cdaa1e37ab7@linaro.org>
+ <Y3JthM1jC2vH1Kn+@hovoldconsulting.com>
+ <efd412d0-7411-8b0b-4700-9e183a592048@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <efd412d0-7411-8b0b-4700-9e183a592048@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/11/2022 15:40, Mao Jinlong wrote:
-> Add tpdm mm and tpdm prng for sm8250.
+On Mon, Nov 14, 2022 at 05:39:26PM +0100, Krzysztof Kozlowski wrote:
+> On 14/11/2022 17:32, Johan Hovold wrote:
+
+> > Fair enough, I'll drop it. But there doesn't seem to be a good way to
+> > describe the indexes currently and most bindings simply ignore to do so.
+> > 
+> > So what is the preference then? Just leave things undocumented, listing
+> > indexes in a free-text 'description', or adding a free-text reference to
+> > a binding header file and using those define names in a free-text
+> > 'description'?
 > 
-> +---------------+                +-------------+
-> |  tpdm@6c08000 |                |tpdm@684C000 |
-> +-------|-------+                +------|------+
->         |                               |
-> +-------|-------+                       |
-> | funnel@6c0b000|                       |
-> +-------|-------+                       |
->         |                               |
-> +-------|-------+                       |
-> |funnel@6c2d000 |                       |
-> +-------|-------+                       |
->         |                               |
->         |    +---------------+          |
->         +----- tpda@6004000  -----------+
->              +-------|-------+
->                      |
->              +-------|-------+
->              |funnel@6005000 |
->              +---------------+
+> Either 2 or 3. Several bindings for small number of constants choose
+> option 2.
+
+Ok, we have three now, but USB4 will bump this to ten or so.
+ 
+> > And if going with the last option, does this mean that every SoC and PHY
+> > type needs its own header for those three clocks or so to avoid having
+> > a common dumping ground header file where indexes will not necessarily
+> > be 0-based and consecutive.
 > 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 173 +++++++++++++++++++++++++++
->  1 file changed, 173 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index 80193bb3c478..0914b4b9c862 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -2746,6 +2746,76 @@
->  			};
->  		};
->  
-> +		tpda@6004000 {
-> +			compatible = "arm,primecell";
+> phy-qcom-qmp-combo.c has one qcom_qmp_dp_clks_hw_get(), so why would you
+> have many of header files?
 
-Does not look like you tested the DTS against bindings. Please run `make
-dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
-for instructions).
+We don't know what kind of clock outputs later revisions of these PHYs
+will have. The only way to guarantee 0-based consecutive indexes appears
+to be to use per-SoC defines (e.g. as for the GCC bindings).
 
-I don't think your bindings allow this to be alone...
-
-Beside, your patch does not apply. Is it based on Bjorn's tree?
-
-> +			reg = <0 0x06004000 0 0x1000>;
-> +			reg-names = "tpda-base";
-> +
-> +			clocks = <&aoss_qmp>;
-> +			clock-names = "apb_pclk";
-> +
-> +			out-ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				port@0 {
-> +					reg = <0>;
-> +					tpda_out_funnel_qatb: endpoint {
-> +						remote-endpoint = <&funnel_qatb_in_tpda>;
-> +					};
-> +				};
-> +			};
-> +
-> +			in-ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				port@9 {
-> +					reg = <9>;
-> +					tpda_9_in_tpdm_mm: endpoint {
-> +						remote-endpoint = <&tpdm_mm_out_tpda9>;
-> +					};
-> +				};
-> +
-> +				port@17 {
-> +					reg = <23>;
-> +					tpda_23_in_tpdm_prng: endpoint {
-> +						remote-endpoint = <&tpdm_prng_out_tpda_23>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		funnel@6005000 {
-> +			compatible = "arm,primecell";
-
-Same problem, I guess.
-
-
-Best regards,
-Krzysztof
-
+Johan
