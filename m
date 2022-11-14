@@ -2,111 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7662A62869D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 18:07:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EAAD6286A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 18:08:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238152AbiKNRHy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 12:07:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46810 "EHLO
+        id S236399AbiKNRI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 12:08:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238147AbiKNRHx (ORCPT
+        with ESMTP id S238101AbiKNRI4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 12:07:53 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37B1B2CE31
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 09:07:51 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id u11so14019408ljk.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 09:07:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/fM40YsHG69XSps9sYkKuoIaYvYZTcDub0ndtXX1Pvw=;
-        b=kjSmJdC6Mfa9wOoKRy+htVdYDPOpvub0TN6pbQE+j8u4+a+UM/QFiVHrLsrjWUNnbD
-         UHDvGNmiHaesMZ50QWLs3OchlpqHvtTPMTy7DpM0P170FKAQMhlRlTec/Vi7rb3hwN3z
-         zhMyNmte5yxkxqAODU9OtCXZW8QiisaWfz6HgA90DbUYs2TQ9T7dc1aOJZ1znOVIPQZ0
-         LeHpQl7HWNM8ycNYI/70mYxKICSUeBDHh7RA4tsncsLBtwB8+TnxotIJpjVXxRpv1zLh
-         y8sIxJTperHHwqKIeTLjLkSMDM0k3akxb5oZfUKI58WjMu6CyDdQoUaOUtbux+/bbBas
-         s6+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/fM40YsHG69XSps9sYkKuoIaYvYZTcDub0ndtXX1Pvw=;
-        b=yGTRPdA1NZA+G2rKAMc4J9av1u8L6rT2VLbrKs46CpYEnRXBjTNHoT5RTlo/vdnS8n
-         nJwye8XV7T7h4Zp907ie9GWgn2Sb3kX4dS+FJnIH6ZvN5Htqn6pAb4eXDRIkoKYp+i6Y
-         0gRNVyNPi2douk1fVuhw+VKTa+8Kny9kODfeOR9Y1US7wtVv/28f6PFGj1XU+RiULzRe
-         oJjth078RDsIKgrKof5uDEu52O+iWlotHtPlQbmqJb0LmJeE5QSIoWjllKsxMhdBHN8t
-         XTLLD3OEZM04HEtb7gM2DRy+OcVEOfpgZvtNYZaQRdCh+YWp1pDZKkQ1HCeb0kYe8YGp
-         sa+A==
-X-Gm-Message-State: ANoB5pmu8kNntekaIdUDPyCBSHIqe2qBwWCGzgVrY7MiUIgJusCNaWur
-        2B9Haw2juyA9+LXYCSpMvtYNLQ==
-X-Google-Smtp-Source: AA0mqf4lEIKNad99guFwwYc4jeiWore22u9FDVNQkYDR6JMjsV1sTvL7Q9zluHk9OLGTXJjxMQr3LQ==
-X-Received: by 2002:a05:651c:210a:b0:277:1295:31ca with SMTP id a10-20020a05651c210a00b00277129531camr4422149ljq.280.1668445669605;
-        Mon, 14 Nov 2022 09:07:49 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id b10-20020a056512070a00b004948378080csm1886391lfs.290.2022.11.14.09.07.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Nov 2022 09:07:49 -0800 (PST)
-Message-ID: <47ff366c-c860-e9ad-c5ad-485eff6f649b@linaro.org>
-Date:   Mon, 14 Nov 2022 20:07:48 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [RFC PATCH v2 00/11] iommu/arm-smmu-qcom: Rework Qualcomm SMMU
- bindings and implementation
-Content-Language: en-GB
-To:     Will Deacon <will@kernel.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
+        Mon, 14 Nov 2022 12:08:56 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8C87C74D;
+        Mon, 14 Nov 2022 09:08:53 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5CCE9B8109E;
+        Mon, 14 Nov 2022 17:08:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07EB5C433D6;
+        Mon, 14 Nov 2022 17:08:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668445731;
+        bh=nLP0ZNboWVONXh3vcZ+RBsQATflLw39DNNAy7jBUUuY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=tysbVSveryf2eeWISCylrpUo/1kIP5i8+Ys+T7IwLJ0h7M60xDS2EBR0DMS2uBYaT
+         WMvdNsgE44bqARSBvkj0H4QCdsiC9Pu4085CBqyxd8Y6y5nMeYHJiCJSa8MEydj6Pr
+         9r0vBOxRpLHET7wbB2XDH/WNj+LR8Rejh9v5bOijlsP9Sp+r2zaKm0CXj4TXirQXBg
+         B8pH5CBDHw2fxgs0KPLHR/M0dImtozbGEHnxpAzJu2SyVM7GPDyhfsZ4TmcxLFNsk/
+         JLX4Y165Dk39Ktw7RmouUJg3ltxLemklC+vItFC4WstEJmW1FfOh3xMyJTKYmh03EZ
+         V9bRt8YMl7H4A==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oucwU-0005RO-H9; Mon, 14 Nov 2022 18:08:19 +0100
+Date:   Mon, 14 Nov 2022 18:08:18 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Vinod Koul <vkoul@kernel.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20221102184420.534094-1-dmitry.baryshkov@linaro.org>
- <20221114142326.GH30263@willie-the-truck>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221114142326.GH30263@willie-the-truck>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 02/14] dt-bindings: phy: qcom,qmp-usb3-dp: fix sc8280xp
+ bindings
+Message-ID: <Y3J2AjjjsybI9mKd@hovoldconsulting.com>
+References: <20221111092457.10546-3-johan+linaro@kernel.org>
+ <a22888cd-34cb-3453-0dc2-096da208564c@linaro.org>
+ <Y3JCVzJ74YsfcDz4@hovoldconsulting.com>
+ <de3a426a-03e8-ed15-a9a1-bb300e776e5f@linaro.org>
+ <Y3JOO0kNnaNhnW3K@hovoldconsulting.com>
+ <02725b78-04ad-8f4a-25c2-9cdaa1e37ab7@linaro.org>
+ <Y3JthM1jC2vH1Kn+@hovoldconsulting.com>
+ <efd412d0-7411-8b0b-4700-9e183a592048@linaro.org>
+ <Y3JxZ+yFMLZkwNBi@hovoldconsulting.com>
+ <8420c342-9dce-aea7-8d1e-f141e0c1ebb5@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8420c342-9dce-aea7-8d1e-f141e0c1ebb5@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/11/2022 17:23, Will Deacon wrote:
-> On Wed, Nov 02, 2022 at 09:44:09PM +0300, Dmitry Baryshkov wrote:
->> The main goal of this patchset is to define a generic qcom,smmu-500
->> binding to be used by newer Qualcomm platforms instead of defining each
->> and every SoC line with no actual differences between the compats.
+On Mon, Nov 14, 2022 at 05:56:21PM +0100, Krzysztof Kozlowski wrote:
+> On 14/11/2022 17:48, Johan Hovold wrote:
+> > On Mon, Nov 14, 2022 at 05:39:26PM +0100, Krzysztof Kozlowski wrote:
+> >> On 14/11/2022 17:32, Johan Hovold wrote:
+> > 
+> >>> Fair enough, I'll drop it. But there doesn't seem to be a good way to
+> >>> describe the indexes currently and most bindings simply ignore to do so.
+> >>>
+> >>> So what is the preference then? Just leave things undocumented, listing
+> >>> indexes in a free-text 'description', or adding a free-text reference to
+> >>> a binding header file and using those define names in a free-text
+> >>> 'description'?
+> >>
+> >> Either 2 or 3. Several bindings for small number of constants choose
+> >> option 2.
+> > 
+> > Ok, we have three now, but USB4 will bump this to ten or so.
 > 
-> Thanks for doing this, I really like the cleanup and the possibility
-> that we can stop adding all these pointless strings every release!
+> Then probably header file is the way to go.
 > 
-> It looks like Bjorn picked up patch 1, so could you please rebase the
-> rest of the series onto my SMMU bindings queue:
+> >  
+> >>> And if going with the last option, does this mean that every SoC and PHY
+> >>> type needs its own header for those three clocks or so to avoid having
+> >>> a common dumping ground header file where indexes will not necessarily
+> >>> be 0-based and consecutive.
+> >>
+> >> phy-qcom-qmp-combo.c has one qcom_qmp_dp_clks_hw_get(), so why would you
+> >> have many of header files?
+> > 
+> > We don't know what kind of clock outputs later revisions of these PHYs
+> > will have. The only way to guarantee 0-based consecutive indexes appears
+> > to be to use per-SoC defines (e.g. as for the GCC bindings).
 > 
-> https://git.kernel.org/pub/scm/linux/kernel/git/will/linux.git/log/?h=for-joerg/arm-smmu/bindings
-> 
-> and address the minor review comments you had so that I can pick this up?
+> Which is also fine. I don't understand still why it is a problem - even
+> if you have multiple files, one for each SoC/phy. If USB4 brings here 10
+> more clocks and other SoCs/phys might bring many more options, then what
+> else can you do? Grow the binding file with big text-based mapping of
+> IDs? It's not a viable solution. Header or headers is the only
+> maintainable way for such cases.
 
-Done, thank you!
+So then we must add per-SoC (and PHY type) headers even if we can
+possibly reuse defines from one platform for another as long as they
+appear to be similar enough? For example, using a "SC7180_USB3_DP" infix
+for the current platforms and add a new series of indexes for SC8280XP:
 
-https://lore.kernel.org/linux-arm-msm/20221114170635.1406534-1-dmitry.baryshkov@linaro.org
+	QMP_SC7180_USB3_DP_USB3_PIPE			0
+	QMP_SC7180_USB3_DP_DP_LINK			1
+	QMP_SC7180_USB3_DP_DP_VCO_DIV			2
 
--- 
-With best wishes
-Dmitry
+	QMP_SC8280XP_USB4_USB3_DP_USB3_PIPE		0
+	QMP_SC8280XP_USB4_USB3_DP_DP_LINK		1
+	QMP_SC8280XP_USB4_USB3_DP_DP_VCO_DIV		2
+	QMP_SC8280XP_USB4_USB3_DP_USB4_PCIE_PIPE	3
+	...
+	QMP_SC8280XP_USB4_USB3_DP_USB4_RX1		9
 
+Johan
