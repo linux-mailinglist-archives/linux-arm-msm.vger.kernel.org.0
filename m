@@ -2,102 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D26B62782E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 09:55:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 824C462783D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 09:56:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235903AbiKNIzJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 03:55:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37684 "EHLO
+        id S236031AbiKNI4x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 03:56:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236274AbiKNIzE (ORCPT
+        with ESMTP id S236405AbiKNI4x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 03:55:04 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B0CB1C93C;
-        Mon, 14 Nov 2022 00:54:53 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EBB7360F33;
-        Mon, 14 Nov 2022 08:54:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C008C433D6;
-        Mon, 14 Nov 2022 08:54:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668416092;
-        bh=pp5pDQZWN6NVccBVIUaPNVdc4w9kyJ+/i8wyV2Ao5/g=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=TM6hdfxGKtq2rX9QM4eMo3x3NSdDkyzMnPsOCbXreJK/TyrHS4KSYoMz+xf7pwtkk
-         BB3C/2v+PUUgk1g5sjiFKlIVfbONn1GP+52rmOXLLMVtQaTOTYVpgxAhziwfVXGtBX
-         3LMbJDgJjWVDlPTKX0jxGvInveBsT4L6YKHOIK9gFYeqKWW/ZQmFb0mKYNpMKe8X7t
-         Wea6I7lkAyN8mcjxJSINQDJfjYWq1vqnARWJ1+bcEUYl0aPQ+GUktHDKkUDXaMNmlB
-         yMvle51AFzQqSDHvXM/oj9DIvGeFrZZBolNDZG4Ib8X55pIwoAVYL4qn416K0gd8lX
-         EGKyUxf1ffXmQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ouVER-0001zw-7f; Mon, 14 Nov 2022 09:54:19 +0100
-Date:   Mon, 14 Nov 2022 09:54:19 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 17/22] phy: qcom-qmp-combo: merge USB and DP
- configurations
-Message-ID: <Y3ICOwr2ld9cdgrK@hovoldconsulting.com>
-References: <20221111085643.9478-1-johan+linaro@kernel.org>
- <20221111085643.9478-18-johan+linaro@kernel.org>
- <5fd7a56f-db12-deb3-753a-22867526d90b@linaro.org>
+        Mon, 14 Nov 2022 03:56:53 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A94C21CB32
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 00:56:51 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id l12so18150694lfp.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 00:56:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ri4akwZ0xvUVLQAp/5Ob5aHzDoTUSCyhLpmOby1nQCE=;
+        b=h0T5rgIAh7mvHK11S0KL46dtaY+MFMB2vP/4rDFE8nbNRF9o2HKDLQiLTc+fpr20HZ
+         42MO3SLavKuwlATTUzcKz/iskwa58jrXYPG9gcFxp/5gH/J5CrTX7TWAo3gImqqfaau7
+         Rp/kyRoyJm3cPsXQkzLWftVKcoXrgoyH4PJ6q/Wf3s7X9afgrb0hSx0SDGFliSulr531
+         alMKRkBsuwSbVbIaIq3FXG56Y2jl8s+GAuWz4ERBD/1652wG8euqJhC5V70rVA5BdxeQ
+         wHrTwM9xOMojVKrM01tmgd7H/akeDt2g7QmYdEKSxtGGt9HfqTss+0l6NMNZn7QQqLAw
+         JbmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ri4akwZ0xvUVLQAp/5Ob5aHzDoTUSCyhLpmOby1nQCE=;
+        b=4QsbNjFo+9/kDJly25vSWvLThhrgqp3CXOTxBLT8WIGvuTBVEx0HdT16hgZTvI/jfH
+         ccvlI4PelHPgzL24kp1TCNm/5t55tZX6lGou55lQUp6MWcIuEVEsUAMBZvBdyunaJZBS
+         2LLVdGAma4ylzmFneD180VvMseHYXnmfPpp1HUDKX6I0GKmAuTysGNA2nwz6IPREC0lU
+         olkFH2anwgmApq0PPupGR6tYjx6869RXaq5p3Zi5K0gwyQvgcZ+DyDop1j2gjFeokhUa
+         glQFTsMKTgW5AKVEdzSsmhKP8vImG39+0hAkU8sf27OJxWjtg/uY8UuAQ0FZ2HND1zk8
+         G0WA==
+X-Gm-Message-State: ANoB5pm8+zEIo95fLGvh9kYI/4Wj0RNXorzE5YvxS4AQ3PdyUdLhiLlI
+        NIH//KiN4R4ILMKvTYCherwc5Q==
+X-Google-Smtp-Source: AA0mqf7peKRHOfCrkrkLDpU9XwhXqp0/gEdWNtYaDrKgTLc4JGRKjljBQ9dpCMgBLUVQjztufP6+aw==
+X-Received: by 2002:a05:6512:548:b0:4a2:253:715b with SMTP id h8-20020a056512054800b004a20253715bmr4121713lfl.315.1668416210027;
+        Mon, 14 Nov 2022 00:56:50 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id bi36-20020a05651c232400b002771057e0e5sm1930786ljb.76.2022.11.14.00.56.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Nov 2022 00:56:49 -0800 (PST)
+Message-ID: <69862090-6cf0-6a9d-7564-3bc375a4e6d2@linaro.org>
+Date:   Mon, 14 Nov 2022 09:56:48 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5fd7a56f-db12-deb3-753a-22867526d90b@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH V18 1/7] dt-bindings: Added the yaml bindings for DCC
+Content-Language: en-US
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Alex Elder <elder@ieee.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, vkoul@kernel.org
+References: <cover.1668159970.git.quic_schowdhu@quicinc.com>
+ <b3712e758f3c7bb91233d0cd330fc6616fc1f32d.1668159970.git.quic_schowdhu@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <b3712e758f3c7bb91233d0cd330fc6616fc1f32d.1668159970.git.quic_schowdhu@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Nov 12, 2022 at 10:43:14AM +0300, Dmitry Baryshkov wrote:
-> On 11/11/2022 11:56, Johan Hovold wrote:
-> > It does not really make any sense to keep separate configuration
-> > structures for the USB and DP parts of the same PHY so merge them.
-> > 
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > ---
-> >   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 182 +++++++---------------
-> >   1 file changed, 57 insertions(+), 125 deletions(-)
-> > 
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> > index b27d1821116c..249912b75964 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> > @@ -798,10 +798,7 @@ static const u8 qmp_dp_v5_voltage_swing_hbr_rbr[4][4] = {
-> >   
-> >   struct qmp_phy;
-> >   
-> > -/* struct qmp_phy_cfg - per-PHY initialization config */
-> >   struct qmp_phy_cfg {
-> > -	/* phy-type - PCIE/UFS/USB */
-> > -	unsigned int type;
-> >   	int lanes;
+On 11/11/2022 11:50, Souradeep Chowdhury wrote:
+> Documentation for Data Capture and Compare(DCC) device tree bindings
+> in yaml format.
 > 
-> int lanes doesn't really make sense here in my opinion. It should be 
-> usb_lanes and dp_lanes.
+> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> ---
+>  .../devicetree/bindings/soc/qcom/qcom,dcc.yaml     | 44 ++++++++++++++++++++++
+>  1 file changed, 44 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml
+> new file mode 100644
+> index 0000000..15c56df
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,dcc.yaml
+> @@ -0,0 +1,44 @@
+> +# SPDX-License-Identifier: (GPL-2.0-or-later OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/soc/qcom/qcom,dcc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Data Capture and Compare
+> +
+> +maintainers:
+> +  - Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> +
+> +description: |
+> +    DCC (Data Capture and Compare) is a DMA engine which is used to save
+> +    configuration data or system memory contents during catastrophic failure
+> +    or SW trigger. DCC is used to capture and store data for debugging purpose
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,sm8150-dcc
+> +          - qcom,sc7280-dcc
+> +          - qcom,sc7180-dcc
+> +          - qcom,sdm845-dcc
+> +      - const: qcom,dcc
+> +
+> +  reg:
+> +    items:
+> +      - description: DCC base register region
+> +      - description: DCC RAM base register region
 
-It doesn't make much less sense than having it here currently do.
+I propose to drop redundant "register region" from both. With this:
 
-All of these USB-C PHYs are dual lane for bi-directional SS USB and
-quad lane for uni-directional DP (even if only CC1 orientation and lanes
-2 and 3 are currently supported).
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-I should probably just drop the lanes parameter completely, either as a
-preparatory clean up or as follow-on one (e.g. also a bit depending on
-if there are other reasons for respinning a v2).
 
-Johan
+Best regards,
+Krzysztof
+
