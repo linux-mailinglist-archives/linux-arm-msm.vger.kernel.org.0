@@ -2,74 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB09162797A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 10:50:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9888B62797C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 10:50:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236504AbiKNJuR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 04:50:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52642 "EHLO
+        id S236323AbiKNJui (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 04:50:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236350AbiKNJtu (ORCPT
+        with ESMTP id S236343AbiKNJuM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 04:49:50 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 563E4DEC0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 01:49:49 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id a15so12409119ljb.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 01:49:49 -0800 (PST)
+        Mon, 14 Nov 2022 04:50:12 -0500
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 258841EC75
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 01:50:07 -0800 (PST)
+Received: by mail-lj1-x22b.google.com with SMTP id z24so12418381ljn.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 01:50:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fEpSeStuRn6i3Xa8okbXnlW3DvC16HOL1lzWLEAD62s=;
-        b=fpleBB82HKuLtMiWywncqgMrGbUiwlSnDtPH/ram/gZBFEdLsz2oXFHYwIM3ydHpha
-         lM1WqOqTZYrPY2I0GiZMI8GLLaxDxTt9rYNLrrFJI/hVYGldUQNvFevi8RzRgwiovGdM
-         QgfQoKUHcyIOjW5ju+XlX6wDujXgwPr5ODGD3Akj0DZqH133BG/SndVNTnZkIEf0jrc+
-         r5uxL2k1tTMy9m3yz3xmD2bIb3RF6AH7cj3o9kwZxsDeJaXlUBipe+qY3ReT2hfCdOEB
-         LmrP9VKMQEQP4DopP8g2CpYVfYN5VxfxN/jiRzNcY04nTlgq0flxjZZGUUIo6tTHg7qu
-         n9iA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Bb1XdXznzYLeTlfpjaMwLLPlS8dogxRK+xeWlIfRthY=;
+        b=Bba7Br3qW4MJ9GT+nWtvv1YOAFcLlyAQxGyr6H6Wx8+l9sdgEpkaxc01+cFXdJaeDm
+         PVWICyz4l/EeStCaOzCk5/yPKKlljE6QAcki4QjDFy2ht96P/RsteKIO4tPuJV5F7gNM
+         pGqGNKBjAK41ZdEP5eFbdN675TTyjImehn7rIwKojvozCVG38aUyVDO0pdPZIEhxz9/g
+         LePNCsWAAw4f+iqp6am/ZANGSWCmz3vIQps6LL/1ZMgqHINvZ2l5akmq9p3v2RKOUtAt
+         sDJYrKfmv45zuKinQQFHRlXQlehysdH+lH/lhfIGFs3A32ZsOqodDr60tZizxnK/QCa9
+         NyWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=fEpSeStuRn6i3Xa8okbXnlW3DvC16HOL1lzWLEAD62s=;
-        b=BNyInHa6hDieaT9TizaHrwnWpugG437Mqnk/Z1TagG99VUU50NB2hgPRqondYiZ5Bg
-         eHWdXTyGrYjjFFN4z6gOKUlfottAX6pIKL0r42AyOY6bO03XcD1nzklbOZZ055DHqy0J
-         MMu5B5E9o9gpSA4BkxZaH4nxzf1jCuBGua4bjS8ebodmorNVHuDtiaAAr5a3wqvjP9H9
-         /2iTdW4p74q8TwieuC3sWy7dTbB6037j7kQ+dCvEPNfADskYoXuSnbDJQXV+v2RyXLLN
-         ZjoUYLT78T3c+55I6caOGkcBUdd4WJWsqhDlKWyPHcN3dchR4FWABHZtQ/TN66c11+c5
-         x7ZQ==
-X-Gm-Message-State: ANoB5pn6rCDPRNs/rpkd4QwTOtG1jC45rFgEaAv/sqCy9vOuEsXE5BuI
-        b938/EvyM3E7BLEQGrCTYNDe2iklwjScylnW
-X-Google-Smtp-Source: AA0mqf4C6S4rD8fPTf2Me8DQtgca63HWFBLgqjISq+p6wSqaDu0Iq1b/kcuXgfG8VfjKLZg6IiymAA==
-X-Received: by 2002:a2e:7d0b:0:b0:277:5279:1b8 with SMTP id y11-20020a2e7d0b000000b00277527901b8mr3882494ljc.58.1668419387558;
-        Mon, 14 Nov 2022 01:49:47 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id bq38-20020a056512152600b0048b1b2233ddsm1760031lfb.120.2022.11.14.01.49.46
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Bb1XdXznzYLeTlfpjaMwLLPlS8dogxRK+xeWlIfRthY=;
+        b=HDnVOUWRtkpF3fM8Xa3aAsK1TfRQDgfJjrUD6stkQWsLZJUH5GwxsBKAv0HntgvUAk
+         vf7JiEk6zPLKRwI85Q6s6EDIM5Wm9KzmPUUP1TqGfHBq9YUbZjtv7j75yvQzzlgosPXU
+         daeRh48W4x9sCUuKCS99y2+lcP/vN9KDIV9ppOI80G4guQtZxCAvwU7MB8ty7SXTb1l/
+         sHuyHGCptoBhxH/ygHl9CRYUMtwdMAT7zMEyJiNheO4PnnKodHIPDwJCOHIe8XJjm0K5
+         btkI9GURNoiWXKMVn6i7GOPjy/lrjqvsgD/isp26Xkjdejz2n/T13eQRS6MfNdZvtwdc
+         UY+w==
+X-Gm-Message-State: ANoB5pnvhr0XspyLviEoZJEbPBhnQUvVwXGzYvGCfUlunGriNYoW5J2a
+        /BORKiXpsImVRgkFcF76I72/Ug==
+X-Google-Smtp-Source: AA0mqf6s18w6QWcr71EVCTgdz+uIIb4iJNURL08uyDNDCOMA8RbN/aaZ6bd6Wb3S/bg+o99lX+EhKw==
+X-Received: by 2002:a2e:711a:0:b0:26e:3292:12ad with SMTP id m26-20020a2e711a000000b0026e329212admr4189418ljc.271.1668419406135;
+        Mon, 14 Nov 2022 01:50:06 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id 14-20020ac25f4e000000b004a03eb21c4fsm1747994lfz.288.2022.11.14.01.50.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Nov 2022 01:49:47 -0800 (PST)
-Message-ID: <0dcca394-1e90-6743-a50d-33b26c1a4836@linaro.org>
-Date:   Mon, 14 Nov 2022 10:49:44 +0100
+        Mon, 14 Nov 2022 01:50:05 -0800 (PST)
+Message-ID: <9a782abf-378d-08ab-aae2-683178622890@linaro.org>
+Date:   Mon, 14 Nov 2022 12:50:05 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH v5 6/6] arm64: dts: qcom: qrb5165-rb5-vision-mezzanine:
- Add vision mezzanine
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        andersson@kernel.org, mchehab@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org,
-        vladimir.zapolskiy@linaro.org
-Cc:     sakari.ailus@iki.fi, hverkuil@xs4all.nl,
-        laurent.pinchart@ideasonboard.com, quic_mmitkov@quicinc.com,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20221112172650.127280-1-bryan.odonoghue@linaro.org>
- <20221112172650.127280-7-bryan.odonoghue@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221112172650.127280-7-bryan.odonoghue@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [PATCH 16/22] phy: qcom-qmp-combo: add DP configuration tables
+Content-Language: en-GB
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+References: <20221111085643.9478-1-johan+linaro@kernel.org>
+ <20221111085643.9478-17-johan+linaro@kernel.org>
+ <56752623-d865-2848-3132-4df769a31d39@linaro.org>
+ <Y3H+gpKZsOH05RET@hovoldconsulting.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <Y3H+gpKZsOH05RET@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,161 +82,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 14/11/2022 11:38, Johan Hovold wrote:
+> On Sat, Nov 12, 2022 at 10:39:12AM +0300, Dmitry Baryshkov wrote:
+>> On 11/11/2022 11:56, Johan Hovold wrote:
+>>> In preparation for merging the USB and DP configurations, add dedicated
+>>> pointers for the DP serdes and tx tables to the configurations.
+>>>
+>>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>>> ---
+>>>    drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 45 ++++++++++++-----------
+>>>    1 file changed, 24 insertions(+), 21 deletions(-)
+>>>
+>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+>>> index 499368e19e00..b27d1821116c 100644
+>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+>>> @@ -816,6 +816,11 @@ struct qmp_phy_cfg {
+>>>    	const struct qmp_phy_init_tbl *pcs_usb_tbl;
+>>>    	int pcs_usb_tbl_num;
+>>>    
+>>> +	const struct qmp_phy_init_tbl *dp_serdes_tbl;
+>>> +	int dp_serdes_tbl_num;
+>>> +	const struct qmp_phy_init_tbl *dp_tx_tbl;
+>>> +	int dp_tx_tbl_num;
+>>> +
+>>
+>> I'd prefer to have DP-specific instance of struct qmp_phy_cfg_tbls here
+>> instead of having separate dp-specific fields. WDYT?
+> 
+> No, I don't see any good reason for doing so currently.
+> 
+> You may be able to share a few pointers between some of the SoCs but
+> only until it turns out they need to override certain sequences anyway
+> (e.g. sc8280xp which mixes v4 and v5 tables currently).
+> 
+> You'd also need dedicated aggregate table structs for USB and DP and it
+> seems all of this would just make things more opaque for little gain.
 
+Forgot:
 
-On 12/11/2022 18:26, Bryan O'Donoghue wrote:
-> The Vision Mezzanine for the RB5 ships with an imx517 and ov9282 populated.
-> Other sensors and components may be added or stacked with additional
-> mezzanines.
-> 
-> Enable the IMX577 on the vision mezzanine.
-> 
-> An example media-ctl pipeline for the imx577 is:
-> 
-> media-ctl --reset
-> media-ctl -v -d /dev/media0 -V '"imx577 '22-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
-> media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
-> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-> 
-> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/Makefile             |  1 +
->   .../dts/qcom/qrb5165-rb5-vision-mezzanine.dts | 63 +++++++++++++++++++
->   arch/arm64/boot/dts/qcom/sm8250.dtsi          | 33 ++++++++++
->   3 files changed, 97 insertions(+)
->   create mode 100644 arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 70ce09bc63a33..5eadd251a0a16 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -54,6 +54,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-poplar.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5-vision-mezzanine.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts
-> new file mode 100644
-> index 0000000000000..315d524045cf3
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts
-> @@ -0,0 +1,63 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2022, Linaro Ltd.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "qrb5165-rb5.dts"
-> +
-> +&camss {
-> +	status = "okay";
-> +	vdda-phy-supply = <&vreg_l5a_0p88>;
-> +	vdda-pll-supply = <&vreg_l9a_1p2>;
-> +
-> +	ports {
-> +		/* The port index denotes CSIPHY id i.e. csiphy2 */
-> +		port@2 {
-> +			reg = <2>;
-> +			csiphy2_ep: endpoint {
-> +				clock-lanes = <7>;
-> +				data-lanes = <0 1 2 3>;
-> +				remote-endpoint = <&imx577_ep>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&camcc {
-> +	status = "okay";
-> +};
-camcc goes before camss alphabetically. Though I see no reason why a 
-clock controller would be disabled, even if the clocks sit unused.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Konrad
-> +
-> +&cci1 {
-> +	status = "okay";
-> +};
-> +
-> +&cci1_i2c0 {
-> +	camera@1a {
-> +		compatible = "sony,imx577";
-> +		reg = <0x1a>;
-> +
-> +		reset-gpios = <&tlmm 78 GPIO_ACTIVE_LOW>;
-> +		pinctrl-names = "default", "suspend";
-> +		pinctrl-0 = <&cam2_default>;
-> +		pinctrl-1 = <&cam2_suspend>;
-> +
-> +		clocks = <&camcc CAM_CC_MCLK2_CLK>;
-> +		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
-> +		assigned-clock-rates = <24000000>;
-> +
-> +		dovdd-supply  = <&vreg_l7f_1p8>;
-> +		avdd-supply = <&vdc_5v>;
-> +		dvdd-supply = <&vdc_5v>;
-> +
-> +		port {
-> +			imx577_ep: endpoint {
-> +				clock-lanes = <1>;
-> +				link-frequencies = /bits/ 64 <600000000>;
-> +				data-lanes = <1 2 3 4>;
-> +				remote-endpoint = <&csiphy2_ep>;
-> +			};
-> +		};
-> +	};
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index f28a8893d00d7..83604b9772766 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -3798,6 +3798,39 @@ tlmm: pinctrl@f100000 {
->   			gpio-ranges = <&tlmm 0 0 181>;
->   			wakeup-parent = <&pdc>;
->   
-> +			cam2_default: cam2-default-state {
-> +				rst-pins {
-> +					pins = "gpio78";
-> +					function = "gpio";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +
-> +				mclk-pins {
-> +					pins = "gpio96";
-> +					function = "cam_mclk";
-> +					drive-strength = <16>;
-> +					bias-disable;
-> +				};
-> +			};
-> +
-> +			cam2_suspend: cam2-suspend-state {
-> +				rst-pins {
-> +					pins = "gpio78";
-> +					function = "gpio";
-> +					drive-strength = <2>;
-> +					bias-pull-down;
-> +					output-low;
-> +				};
-> +
-> +				mclk-pins {
-> +					pins = "gpio96";
-> +					function = "cam_mclk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +			};
-> +
->   			cci0_default: cci0-default-state {
->   				cci0_i2c0_default: cci0-i2c0-default-pins {
->   					/* SDA, SCL */
+-- 
+With best wishes
+Dmitry
+
