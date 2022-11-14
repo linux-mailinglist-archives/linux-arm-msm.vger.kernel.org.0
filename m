@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22AF8628684
+	by mail.lfdr.de (Postfix) with ESMTP id BA38C628686
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 18:06:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238128AbiKNRGo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S238135AbiKNRGo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 14 Nov 2022 12:06:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46304 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238108AbiKNRGm (ORCPT
+        with ESMTP id S238107AbiKNRGm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 14 Nov 2022 12:06:42 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F9222CE23
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 09:06:40 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id d6so20290897lfs.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 09:06:40 -0800 (PST)
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 249112CE2A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 09:06:41 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id d20so14024943ljc.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 09:06:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jDEaZjmzqx8exActshsUHKTWCuLF7PJxcmbrYAR4hkM=;
-        b=GH81Klr7lucWed8YnqhzsuvYKD+nSeyRRDQqJfIDZ854Z5id2bJONr3TbdF24cHjRf
-         67kpmW7G/bqvMIUNcDs8V6rcVwp52z69v6byVIRVdncoRiUG5bNsFiO2QGG2CLsNwZJx
-         Otc1X5Vthc1vK/ITzJBYmxB90xTWNQRP7soWB/I/feiDfK8hdsLC7IUKyN9LSygvblKn
-         Sc3vxid+CdduQa9aznWhuUMiAsjuGPdDYghPYW9gPK2kFel4/0ud/gywPU2lrJiv5xf7
-         58FYc6EFXMg3to4H0m+cP/r1yF/w7e8NrYp1yCfw0wIYydxSZnbVG/moBtGrn6EZDCoW
-         CjaA==
+        bh=EUpOXZplYygOFJYQ/Eovt7Mfl+x2PVcVjO1mYmiWcnw=;
+        b=hR4olOQCeOJ3leKrvuAX8Za3AY0LVQDDpbj7rSxQSmSbYsIa3m4frYC0gamfKtigCr
+         t7Z9bf2Yh4GWsXeU4BwOLgfCkyt/8woJHmkkO9f9L2A3unhIPnb5ouKtCfPs+d0PFH9x
+         tEriGhHJd4t2JaAiv4TpD2RFjB6gWkMoV6Ue273LuOifG9LanUFTlE/NXjmJpXS80Qt2
+         aY8qtjKms5N9y1PTEYI7dhKee7afQ8daJq+OQPGVc4EZXD0kFVu9/Pj6Ut5PNmVoaqHZ
+         S6I2chJeM9YC0Cj2mWj1hzhiqifdoibX6pWvuHMJmjgM5DYrCa6bWLHPMSMEx/XMF1lv
+         uf0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jDEaZjmzqx8exActshsUHKTWCuLF7PJxcmbrYAR4hkM=;
-        b=ywxB/vLH2RIq+H1V8rd3xFFmrKyc1xcebIxjzeB7Od14q1Yjbxz+CuHFv7EEhFRrNq
-         hrWGmRwFISFSjxfh6jIdnoy7P1XGZAs20CjbEDumm/aCpyLmZE9Gc8T9uiRPfyGzZZbW
-         f/HBLmG9tPu9onAKufAkTOYlLrQ5cYEF+MaIN01/qv7pz109J1hjxwZQxZx2gfteccYg
-         pv1hZ/E6RsWHVfZqK8oEIzcBpdQJ4CYbiTuv7Rm4zPngsJV0WgDJLgq3EBeMUvRSO4xJ
-         N/8zCG6k2yVcrA+8riQoaXtMWE72qFlJV+95PU2HfyjvQHCIAa+4PF9EudZCGJG7Bj9y
-         EpXQ==
-X-Gm-Message-State: ANoB5pnNq01IzWf/rHyM1u6qSI0nNRnjyWFIW0JdZTJt83fcYer/xkDt
-        OqhejkYJx7U7nu2bb67C+DGEYEPARoEYlA==
-X-Google-Smtp-Source: AA0mqf66spNpdKTJ2WcweQAyVh4VeLjS4VD02sJmjSOfgFJGSGA1WPaGV6Prl57/geFIG0rBSWnxpw==
-X-Received: by 2002:ac2:4c55:0:b0:4b0:38df:e825 with SMTP id o21-20020ac24c55000000b004b038dfe825mr5037462lfk.471.1668445599972;
-        Mon, 14 Nov 2022 09:06:39 -0800 (PST)
+        bh=EUpOXZplYygOFJYQ/Eovt7Mfl+x2PVcVjO1mYmiWcnw=;
+        b=xjNCyHQyvv5g63mXTE0lSeyV+4dvJDwmblIzYEiXpLtKH4BTUgAkFpJXuFBhXs43MD
+         y0JKsb4+DNEf/W0HZH4MWlquICDjk9LBrHrk23W+BlHhDTr8czMyLHpepDEmDuIKdOP/
+         AbJJXtH3ys/0w5z3Rb7Kn2awEjav8gw1RwW7TY1bbpM1gZaJ9DWZ05lJZLwHgmASoql4
+         OHrzkAc3G5Znyt4uJcfDvh5WkajkqlLGQo7rR1dimaOQrHUam6Hg2ruwbF3BjoM6LUCj
+         13FGQi4ng3Ky3hBWy4PkGar2EVy/LaeCWuUaZIegR7wXJWLkOhj9O5lG0CTFmqNhtFXk
+         oMmg==
+X-Gm-Message-State: ANoB5pmrN9XjwK4nZ7RlgiimHyX9qcTFULLyG+M9IDcdWb5vMzPRw37D
+        Uf9W4weY8GJ3BX70ENYW45vmHw==
+X-Google-Smtp-Source: AA0mqf7FYagvYU1fN9spwrg5NIANTgK9iGRQ8UaQGkw87Xfpaz3rc+dF88YYRTV43mjySDrt0EphWQ==
+X-Received: by 2002:a05:651c:553:b0:26d:e6c4:1df7 with SMTP id q19-20020a05651c055300b0026de6c41df7mr4841683ljp.89.1668445600688;
+        Mon, 14 Nov 2022 09:06:40 -0800 (PST)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id q7-20020a056512210700b004a2ae643b99sm1896344lfr.170.2022.11.14.09.06.38
+        by smtp.gmail.com with ESMTPSA id q7-20020a056512210700b004a2ae643b99sm1896344lfr.170.2022.11.14.09.06.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Nov 2022 09:06:39 -0800 (PST)
+        Mon, 14 Nov 2022 09:06:40 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
         Joerg Roedel <joro@8bytes.org>,
@@ -62,11 +62,10 @@ Cc:     Vinod Koul <vkoul@kernel.org>,
         Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
         linux-arm-kernel@lists.infradead.org,
         linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v1 04/10] dt-bindings: arm-smmu: Add generic qcom,smmu-500 bindings
-Date:   Mon, 14 Nov 2022 20:06:29 +0300
-Message-Id: <20221114170635.1406534-5-dmitry.baryshkov@linaro.org>
+        devicetree@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: [PATCH v1 05/10] iommu/arm-smmu-qcom: Move implementation data into match data
+Date:   Mon, 14 Nov 2022 20:06:30 +0300
+Message-Id: <20221114170635.1406534-6-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20221114170635.1406534-1-dmitry.baryshkov@linaro.org>
 References: <20221114170635.1406534-1-dmitry.baryshkov@linaro.org>
@@ -81,71 +80,137 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add generic bindings for the Qualcomm variant of the ARM MMU-500. It is
-expected that all future platforms will use the generic qcom,smmu-500
-compat string in addition to SoC-specific and the generic arm,mmu-500
-ones. Older bindings are now described as deprecated.
+In preparation to rework of the implementation and configuration
+details, make qcom_smmu_create() accept new qcom_smmu_match_data
+structure pointer. Make implementation a field in this struct.
 
-Note: I have split the sdx55 and sdx65 from the legacy bindings. They
-are not supported by the qcom SMMU implementation. I can suppose that
-they are using the generic implementation rather than the
-Qualcomm-speicific one.
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Tested-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../devicetree/bindings/iommu/arm,smmu.yaml   | 29 ++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 62 ++++++++++++++--------
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h |  4 ++
+ 2 files changed, 44 insertions(+), 22 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-index 29a8b3ff8fa0..28f5720824cd 100644
---- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-+++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-@@ -31,7 +31,7 @@ properties:
-               - qcom,sdm630-smmu-v2
-           - const: qcom,smmu-v2
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index 0f4eaf217983..a7bd49e44bca 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -405,10 +405,18 @@ static const struct arm_smmu_impl qcom_adreno_smmu_impl = {
+ };
  
--      - description: Qcom SoCs implementing "arm,mmu-500"
-+      - description: Qcom SoCs implementing "qcom,smmu-500" and "arm,mmu-500"
-         items:
-           - enum:
-               - qcom,qcm2290-smmu-500
-@@ -42,8 +42,35 @@ properties:
-               - qcom,sc8280xp-smmu-500
-               - qcom,sdm670-smmu-500
-               - qcom,sdm845-smmu-500
-+              - qcom,sm6115-smmu-500
-+              - qcom,sm6350-smmu-500
-+              - qcom,sm6375-smmu-500
-+              - qcom,sm8150-smmu-500
-+              - qcom,sm8250-smmu-500
-+              - qcom,sm8350-smmu-500
-+              - qcom,sm8450-smmu-500
-+          - const: qcom,smmu-500
-+          - const: arm,mmu-500
+ static struct arm_smmu_device *qcom_smmu_create(struct arm_smmu_device *smmu,
+-		const struct arm_smmu_impl *impl)
++		const struct qcom_smmu_match_data *data)
+ {
++	const struct arm_smmu_impl *impl;
+ 	struct qcom_smmu *qsmmu;
+ 
++	if (!data)
++		return ERR_PTR(-EINVAL);
 +
-+      - description: Qcom SoCs implementing "arm,mmu-500" (non-qcom implementation)
-+        deprecated: true
-+        items:
-+          - enum:
-               - qcom,sdx55-smmu-500
-               - qcom,sdx65-smmu-500
-+          - const: arm,mmu-500
++	impl = data->impl;
++	if (!impl)
++		return smmu;
 +
-+      - description: Qcom SoCs implementing "arm,mmu-500" (legacy binding)
-+        deprecated: true
-+        items:
-+          # Do not add additional SoC to this list. Instead use two previous lists.
-+          - enum:
-+              - qcom,qcm2290-smmu-500
-+              - qcom,sc7180-smmu-500
-+              - qcom,sc7280-smmu-500
-+              - qcom,sc8180x-smmu-500
-+              - qcom,sc8280xp-smmu-500
-+              - qcom,sdm845-smmu-500
-               - qcom,sm6115-smmu-500
-               - qcom,sm6350-smmu-500
-               - qcom,sm6375-smmu-500
+ 	/* Check to make sure qcom_scm has finished probing */
+ 	if (!qcom_scm_is_available())
+ 		return ERR_PTR(-EPROBE_DEFER);
+@@ -423,24 +431,32 @@ static struct arm_smmu_device *qcom_smmu_create(struct arm_smmu_device *smmu,
+ 	return &qsmmu->smmu;
+ }
+ 
++static const struct qcom_smmu_match_data qcom_smmu_data = {
++	.impl = &qcom_smmu_impl,
++};
++
++static const struct qcom_smmu_match_data qcom_adreno_smmu_data = {
++	.impl = &qcom_adreno_smmu_impl,
++};
++
+ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+-	{ .compatible = "qcom,msm8998-smmu-v2" },
+-	{ .compatible = "qcom,qcm2290-smmu-500" },
+-	{ .compatible = "qcom,qdu1000-smmu-500" },
+-	{ .compatible = "qcom,sc7180-smmu-500" },
+-	{ .compatible = "qcom,sc7280-smmu-500" },
+-	{ .compatible = "qcom,sc8180x-smmu-500" },
+-	{ .compatible = "qcom,sc8280xp-smmu-500" },
+-	{ .compatible = "qcom,sdm630-smmu-v2" },
+-	{ .compatible = "qcom,sdm845-smmu-500" },
+-	{ .compatible = "qcom,sm6115-smmu-500" },
+-	{ .compatible = "qcom,sm6125-smmu-500" },
+-	{ .compatible = "qcom,sm6350-smmu-500" },
+-	{ .compatible = "qcom,sm6375-smmu-500" },
+-	{ .compatible = "qcom,sm8150-smmu-500" },
+-	{ .compatible = "qcom,sm8250-smmu-500" },
+-	{ .compatible = "qcom,sm8350-smmu-500" },
+-	{ .compatible = "qcom,sm8450-smmu-500" },
++	{ .compatible = "qcom,msm8998-smmu-v2", .data = &qcom_smmu_data },
++	{ .compatible = "qcom,qcm2290-smmu-500", .data = &qcom_smmu_data },
++	{ .compatible = "qcom,qdu1000-smmu-500", .data = &qcom_smmu_data  },
++	{ .compatible = "qcom,sc7180-smmu-500", .data = &qcom_smmu_data },
++	{ .compatible = "qcom,sc7280-smmu-500", .data = &qcom_smmu_data },
++	{ .compatible = "qcom,sc8180x-smmu-500", .data = &qcom_smmu_data },
++	{ .compatible = "qcom,sc8280xp-smmu-500", .data = &qcom_smmu_data },
++	{ .compatible = "qcom,sdm630-smmu-v2", .data = &qcom_smmu_data },
++	{ .compatible = "qcom,sdm845-smmu-500", .data = &qcom_smmu_data },
++	{ .compatible = "qcom,sm6115-smmu-500", .data = &qcom_smmu_data },
++	{ .compatible = "qcom,sm6125-smmu-500", .data = &qcom_smmu_data },
++	{ .compatible = "qcom,sm6350-smmu-500", .data = &qcom_smmu_data },
++	{ .compatible = "qcom,sm6375-smmu-500", .data = &qcom_smmu_data },
++	{ .compatible = "qcom,sm8150-smmu-500", .data = &qcom_smmu_data },
++	{ .compatible = "qcom,sm8250-smmu-500", .data = &qcom_smmu_data },
++	{ .compatible = "qcom,sm8350-smmu-500", .data = &qcom_smmu_data },
++	{ .compatible = "qcom,sm8450-smmu-500", .data = &qcom_smmu_data },
+ 	{ }
+ };
+ 
+@@ -455,12 +471,13 @@ static struct acpi_platform_list qcom_acpi_platlist[] = {
+ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+ {
+ 	const struct device_node *np = smmu->dev->of_node;
++	const struct of_device_id *match;
+ 
+ #ifdef CONFIG_ACPI
+ 	if (np == NULL) {
+ 		/* Match platform for ACPI boot */
+ 		if (acpi_match_platform_list(qcom_acpi_platlist) >= 0)
+-			return qcom_smmu_create(smmu, &qcom_smmu_impl);
++			return qcom_smmu_create(smmu, &qcom_smmu_data);
+ 	}
+ #endif
+ 
+@@ -471,10 +488,11 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+ 	 * features if the order is changed.
+ 	 */
+ 	if (of_device_is_compatible(np, "qcom,adreno-smmu"))
+-		return qcom_smmu_create(smmu, &qcom_adreno_smmu_impl);
++		return qcom_smmu_create(smmu, &qcom_adreno_smmu_data);
+ 
+-	if (of_match_node(qcom_smmu_impl_of_match, np))
+-		return qcom_smmu_create(smmu, &qcom_smmu_impl);
++	match = of_match_node(qcom_smmu_impl_of_match, np);
++	if (match)
++		return qcom_smmu_create(smmu, match->data);
+ 
+ 	return smmu;
+ }
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
+index 99ec8f8629a0..2424f10b7110 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
+@@ -14,6 +14,10 @@ struct qcom_smmu {
+ 	u32 stall_enabled;
+ };
+ 
++struct qcom_smmu_match_data {
++	const struct arm_smmu_impl *impl;
++};
++
+ #ifdef CONFIG_ARM_SMMU_QCOM_DEBUG
+ void qcom_smmu_tlb_sync_debug(struct arm_smmu_device *smmu);
+ const void *qcom_smmu_impl_data(struct arm_smmu_device *smmu);
 -- 
 2.35.1
 
