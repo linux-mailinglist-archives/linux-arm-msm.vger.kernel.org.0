@@ -2,240 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64DA16278EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 10:22:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 79382627922
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 10:39:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236152AbiKNJW5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 04:22:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35962 "EHLO
+        id S236825AbiKNJj2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 04:39:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235615AbiKNJW5 (ORCPT
+        with ESMTP id S236478AbiKNJj1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 04:22:57 -0500
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97D7515717
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 01:22:55 -0800 (PST)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-370547b8ca0so100769807b3.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 01:22:55 -0800 (PST)
+        Mon, 14 Nov 2022 04:39:27 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4727F1A82B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 01:39:26 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id g12so18365416lfh.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 01:39:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=YTSPKqKmSzN7Y9ddQTOuim0BwGIV+0OUYKAM+OJAgxU=;
-        b=FJ8f0IlKEyuFd9c7FRLCSKtPbw3QibehiiaGqUeq13/pnK5SBl1WAZuZCgYVpNe3k4
-         nIFNx26dIzPHHJJMcAJJzbYkpBv9TRwhr8h3Nn85SVR1C4jOzcg9x4IyqLcQQCgUZRaf
-         NEdfibo8iCzpRAWzKALEdeq3EuKnP5EKCDNi0FnghnveIVjSVLTcXsD8P19jRerKOAR0
-         ifvE9S/xti3oOvKMN5soUdNK9kFamqamD42vr5Zvh0qwFkcRNsLKBvjMFYTdrdI+h4Qf
-         0aA2LzoB96c8hAus+8eZ9UtahFBWs+oMBlK+zns8VlU6TeLfhiMzoR6lKDH7k4SaAl2W
-         fA/w==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=k9XCkUeelflv0OvZlPTdiVOkOo+oSDAdHLbSak8ToQo=;
+        b=mCY53LUKaJZ5o4feNXdaLfJEoFH+MlvQ9YtHKi3BBSBaY1U7P8fnx/yl5U0F0mFS2D
+         LMdhxt9HYMFtwmbxbMfdElHaXEw8+6sdgCeO9N/gXbccLW1/wbAOzXX1YzR+8E8snThn
+         lLP7HF32qRYZe/eC2BigWPU+RBKf9rQXvlELML585STcgmcFS6DPP2rMz6AhUW9tl8B4
+         B2j6f4banrRSrHIm2sf8SyVkpwqFoO9reAaf/44+EKl2dp9ZX/8XCtDUjYz1OJXu6m/B
+         C4ALWI0KC9g3gGEKCn2k/h6v8jRNWDScxGpyr9kJccrTh4qmEiNoCd5hwndogsqwFVT3
+         4ufA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YTSPKqKmSzN7Y9ddQTOuim0BwGIV+0OUYKAM+OJAgxU=;
-        b=39IgQaGY/SKZ1xxqE1F319pY8HSJZBXjX0VgB0hKlwIMkE2AJu091zfKm9H/UCQAV9
-         e0DXNQf7c0LAFsOtonpSCiuuo6VSw8ZgZeCrTF2gWaXRmtUawieIvsxR2pwvYBRpWd5K
-         TcqN/o2o01cgZMSBgpvCTO1ODIjxYPPA1S3hyehCmuD52DaecEB+kEWarcLrCxBhnV+f
-         WEtK9wCUcpq+BXz0VnEMGGHAS/iLaD4AwulIFCXAHGwk10BbcKzXBhbERj7VpxxYOHeA
-         S6UIapVfiiE8yiAez5lCBXdCal5GyeGfuiMK40tfF1dhPRpNd+m4hsBmc4zN6wHhIZiA
-         j1wg==
-X-Gm-Message-State: ANoB5pmBUbjsK7/6kF+CiFVZiOTl7LXQQbMqKwJS1qcXoI+3r/wQdneD
-        jfmpfIP4bQoh6Lt+gUuBa2CjyIR11Tkbj8E7WOveAA==
-X-Google-Smtp-Source: AA0mqf6Eb3N3yWA9GPPGTDup7DI7EWbsnHCkjc6p+IN70Fp46vORCtD3Crhhj/Vg7Sc8Pa8MQ7wdH5SW7I+84etan38=
-X-Received: by 2002:a81:9297:0:b0:370:547a:9d03 with SMTP id
- j145-20020a819297000000b00370547a9d03mr12582358ywg.132.1668417774745; Mon, 14
- Nov 2022 01:22:54 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=k9XCkUeelflv0OvZlPTdiVOkOo+oSDAdHLbSak8ToQo=;
+        b=z5wRaqFGQHbFRshfE8ztjE9eMc91agfV9SzOEmjsym9skoS/mhWdSCulauyjsrZifW
+         NLRxfbY005fp3CCvTYHkNLo7/fSEGSHn/eZaF0y3kVKAEx74cLTuwaC442WF8axbN08D
+         9mXGCNOVse1Z6aaUAh5cMpEUq+/7oZbcXpYW1JYOgFIbaRkfnOFTLSv5pHQfQac05P7U
+         wGB6b3xa//QA8Dt9Sndgk28L9MalC8yrNDDuVp2Ojm/ut/fXUExx1v7AwzRhgnIhS5Wr
+         iEvCTHwqGaeOQapPCTy+YkoYfsEoSPu7UR2nRVowEo6VCtXy9ryKtNMZNbH8MECd4BEL
+         QkrA==
+X-Gm-Message-State: ANoB5pkl2RYGzSyUSC/sl3ZIr0Bjc4Kc2HGELDnL/gW/T8jGFYCKOekL
+        J596s04/eh8xpjAJdEf6fkySkQ==
+X-Google-Smtp-Source: AA0mqf6BjkXQmHn8zZLevpw4U3qXzZF296n/9D4aB48QjECYDiMKnX7ASO/YTJr4Odu2XE+Ni5hr4Q==
+X-Received: by 2002:a05:6512:3baa:b0:4b1:2aab:7cc4 with SMTP id g42-20020a0565123baa00b004b12aab7cc4mr3564609lfv.241.1668418764651;
+        Mon, 14 Nov 2022 01:39:24 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id bi39-20020a0565120ea700b004a91df49508sm1767001lfb.177.2022.11.14.01.39.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Nov 2022 01:39:24 -0800 (PST)
+Message-ID: <b69afa6a-119a-41cc-a1d8-da900d452941@linaro.org>
+Date:   Mon, 14 Nov 2022 10:39:20 +0100
 MIME-Version: 1.0
-References: <20221111085643.9478-1-johan+linaro@kernel.org>
- <20221111085643.9478-19-johan+linaro@kernel.org> <54d3d1b4-29de-4d18-a39e-bf74a5c61509@linaro.org>
- <Y3ID+jTI4Bf6wvh2@hovoldconsulting.com>
-In-Reply-To: <Y3ID+jTI4Bf6wvh2@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 14 Nov 2022 12:22:43 +0300
-Message-ID: <CAA8EJpqbrefwFxsudjm=-P8xYSg2Q5tXkvjOSKCt6qqbO5ubPg@mail.gmail.com>
-Subject: Re: [PATCH 18/22] phy: qcom-qmp-combo: merge driver data
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH v2 06/11] dt-bindings: arm: qcom,ids: Add SoC IDs for
+ MSM8956 and MSM8976
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>, agross@kernel.org
+Cc:     andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, jassisinghbrar@gmail.com,
+        srinivas.kandagatla@linaro.org, jic23@kernel.org, lars@metafoo.de,
+        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        evgreen@chromium.org, gregkh@linuxfoundation.org,
+        a39.skl@gmail.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-iio@vger.kernel.org, linux-hardening@vger.kernel.org,
+        marijn.suijten@somainline.org, kernel@collabora.com, luca@z3ntu.xyz
+References: <20221111120156.48040-1-angelogioacchino.delregno@collabora.com>
+ <20221111120156.48040-7-angelogioacchino.delregno@collabora.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221111120156.48040-7-angelogioacchino.delregno@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 14 Nov 2022 at 12:02, Johan Hovold <johan@kernel.org> wrote:
->
-> On Sat, Nov 12, 2022 at 10:46:53AM +0300, Dmitry Baryshkov wrote:
-> > On 11/11/2022 11:56, Johan Hovold wrote:
-> > > The QMP combo driver manages a single PHY (even if it provides two
-> > > interfaces for USB and DP, respectively) so merge the old qcom_qmp and
-> > > qmp_phy structures and drop the PHY array.
-> > >
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > > ---
-> > >   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 690 ++++++++++------------
-> > >   1 file changed, 313 insertions(+), 377 deletions(-)
-> > >
->
-> > > -/**
-> > > - * struct qmp_phy - per-lane phy descriptor
-> > > - *
-> > > - * @phy: generic phy
-> > > - * @cfg: phy specific configuration
-> > > - * @serdes: iomapped memory space for phy's serdes (i.e. PLL)
-> > > - * @tx: iomapped memory space for lane's tx
-> > > - * @rx: iomapped memory space for lane's rx
-> > > - * @pcs: iomapped memory space for lane's pcs
-> > > - * @tx2: iomapped memory space for second lane's tx (in dual lane PHYs)
-> > > - * @rx2: iomapped memory space for second lane's rx (in dual lane PHYs)
-> > > - * @pcs_misc: iomapped memory space for lane's pcs_misc
-> > > - * @pcs_usb: iomapped memory space for lane's pcs_usb
-> > > - * @pipe_clk: pipe clock
-> > > - * @qmp: QMP phy to which this lane belongs
-> > > - * @mode: current PHY mode
-> > > - * @dp_aux_cfg: Display port aux config
-> > > - * @dp_opts: Display port optional config
-> > > - * @dp_clks: Display port clocks
-> > > - */
-> > > -struct qmp_phy {
-> > > -   struct phy *phy;
-> > > +struct qmp_phy_dp_clks {
-> > > +   struct qmp_combo *qmp;
-> > > +   struct clk_hw dp_link_hw;
-> > > +   struct clk_hw dp_pixel_hw;
-> > > +};
-> > > +
-> >
-> > It would make sense to keep the kerneldoc here.
->
-> I disagree. The above kernel doc is at best pointless and mostly just
-> restates what can be understood from the field names.
 
-Well, if viewed this way, 80% of kerneldocs's are pointless, as most
-of the fields are self-describing.
-In this case I can agree with you though. Especially since the struct
-is not a part of the public API.
-
+On 11/11/2022 13:01, AngeloGioacchino Del Regno wrote:
+> Document the identifier of MSM8956/76.
 >
-> Note how it also incorrect by referring to "memory space for *lane's*
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> ---
 
-I assumed that `lane's rx' and `lane's tx' were ugly wording. But yeah.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-> ...".
->
-> > > +struct qmp_combo {
-> > > +   struct device *dev;
-> > > +
-> > >     const struct qmp_phy_cfg *cfg;
-> > > +
-> > > +   void __iomem *dp_com;
-> > > +
-> > >     void __iomem *serdes;
-> > >     void __iomem *tx;
-> > >     void __iomem *rx;
-> > > @@ -899,59 +889,33 @@ struct qmp_phy {
-> > >     void __iomem *dp_pcs;
-> > >
-> > >     struct clk *pipe_clk;
-> > > -   struct qcom_qmp *qmp;
-> > > -   enum phy_mode mode;
-> > > -   unsigned int dp_aux_cfg;
-> > > -   struct phy_configure_opts_dp dp_opts;
-> > > -   struct qmp_phy_dp_clks *dp_clks;
-> > > -};
-> > > -
-> > > -struct qmp_phy_dp_clks {
-> > > -   struct qmp_phy *qphy;
-> > > -   struct clk_hw dp_link_hw;
-> > > -   struct clk_hw dp_pixel_hw;
-> > > -};
-> > > -
-> > > -/**
-> > > - * struct qcom_qmp - structure holding QMP phy block attributes
-> > > - *
-> > > - * @dev: device
-> > > - * @dp_com: iomapped memory space for phy's dp_com control block
-> > > - *
-> > > - * @clks: array of clocks required by phy
-> > > - * @resets: array of resets required by phy
-> > > - * @vregs: regulator supplies bulk data
-> > > - *
-> > > - * @phys: array of per-lane phy descriptors
-> > > - * @phy_mutex: mutex lock for PHY common block initialization
-> > > - * @init_count: phy common block initialization count
-> > > - */
-> > > -struct qcom_qmp {
-> > > -   struct device *dev;
-> > > -   void __iomem *dp_com;
-> > > -
-> > >     struct clk_bulk_data *clks;
-> > >     struct reset_control_bulk_data *resets;
-> > >     struct regulator_bulk_data *vregs;
-> > >
-> > > -   struct qmp_phy **phys;
-> > > -   struct qmp_phy *usb_phy;
-> > > -
-> > >     struct mutex phy_mutex;
-> > >     int init_count;
-> > > +
-> > > +   struct phy *usb_phy;
-> > > +   enum phy_mode mode;
-> > > +
-> > > +   struct phy *dp_phy;
-> > > +   unsigned int dp_aux_cfg;
-> > > +   struct phy_configure_opts_dp dp_opts;
-> > > +   struct qmp_phy_dp_clks *dp_clks;
-> > >   };
-> > >
-> > > -static void qcom_qmp_v3_phy_dp_aux_init(struct qmp_phy *qphy);
-> > > -static void qcom_qmp_v3_phy_configure_dp_tx(struct qmp_phy *qphy);
-> > > -static int qcom_qmp_v3_phy_configure_dp_phy(struct qmp_phy *qphy);
-> > > -static int qcom_qmp_v3_dp_phy_calibrate(struct qmp_phy *qphy);
-> > > +static void qcom_qmp_v3_phy_dp_aux_init(struct qmp_combo *qmp);
-> > > +static void qcom_qmp_v3_phy_configure_dp_tx(struct qmp_combo *qmp);
-> > > +static int qcom_qmp_v3_phy_configure_dp_phy(struct qmp_combo *qmp);
-> > > +static int qcom_qmp_v3_dp_phy_calibrate(struct qmp_combo *qmp);
-> > >
-> > > -static void qcom_qmp_v4_phy_dp_aux_init(struct qmp_phy *qphy);
-> > > -static void qcom_qmp_v4_phy_configure_dp_tx(struct qmp_phy *qphy);
-> > > -static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_phy *qphy);
-> > > -static int qcom_qmp_v4_dp_phy_calibrate(struct qmp_phy *qphy);
-> > > +static void qcom_qmp_v4_phy_dp_aux_init(struct qmp_combo *qmp);
-> > > +static void qcom_qmp_v4_phy_configure_dp_tx(struct qmp_combo *qmp);
-> > > +static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_combo *qmp);
-> > > +static int qcom_qmp_v4_dp_phy_calibrate(struct qmp_combo *qmp);
-> > >
-> > > -static int qcom_qmp_v5_phy_configure_dp_phy(struct qmp_phy *qphy);
-> > > +static int qcom_qmp_v5_phy_configure_dp_phy(struct qmp_combo *qmp);
-> >
-> >
-> > As you are doing the cleanup anyway, would it make sense to move these
-> > functions up to be able to drop these prototypes?
->
-> Nah, we want to keep the DP implementation together and for now the
-> configuration structs live at the top of the file.
->
-> > >
-> > >   static inline void qphy_setbits(void __iomem *base, u32 offset, u32 val)
-> > >   {
-> > > @@ -1265,11 +1229,11 @@ static void qmp_combo_configure(void __iomem *base,
-> >
-> >
-> > The rest LGTM
->
-> Thanks for reviewing all of these these.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Konrad
 
--- 
-With best wishes
-Dmitry
+>   include/dt-bindings/arm/qcom,ids.h | 2 ++
+>   1 file changed, 2 insertions(+)
+>
+> diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
+> index 8b1a0f43bd93..91633da5fcf6 100644
+> --- a/include/dt-bindings/arm/qcom,ids.h
+> +++ b/include/dt-bindings/arm/qcom,ids.h
+> @@ -78,6 +78,8 @@
+>   #define QCOM_ID_MSM8616			250
+>   #define QCOM_ID_MSM8992			251
+>   #define QCOM_ID_APQ8094			253
+> +#define QCOM_ID_MSM8956			266
+> +#define QCOM_ID_MSM8976			278
+>   #define QCOM_ID_MDM9607			290
+>   #define QCOM_ID_APQ8096			291
+>   #define QCOM_ID_MSM8998			292
