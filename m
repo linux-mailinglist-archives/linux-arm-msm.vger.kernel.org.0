@@ -2,143 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DA34628B22
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 22:11:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C23E9628B36
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 22:17:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235636AbiKNVLv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 16:11:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49162 "EHLO
+        id S237534AbiKNVRN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 16:17:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236825AbiKNVLt (ORCPT
+        with ESMTP id S235941AbiKNVRL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 16:11:49 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5D2DB56
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 13:11:47 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id e13so10185496edj.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 13:11:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nYM63RRvqlC+PbmanyesAjjHnH9NOqGbj+n/5jkMu0U=;
-        b=f6dGIMl/KDjY03GU6eHJICav9uByHOVeuMW5WTXsr/PPVzAO2OVCrNu3ZCYaiWIXQC
-         xddtEHYtvDDIjNVmfmQu7E8l8/gRZfKcaEjXgcRTZTgugEbXu+NbNtCF5jDwvbV1zA4B
-         R8ogtQrLOKDOxW3o/ArmlL52u2IMNNZtB0amA=
+        Mon, 14 Nov 2022 16:17:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1DF8D10B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 13:16:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1668460574;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=pPyHbVIhVXxAvPHXANuB0471/7HtR2HBTgw/R/uDUnU=;
+        b=BYRu6cMftb7uCp/ojXk24w8QhCPFPMLjAQVGbL8yEH9LOUvvginfAwJphyKYNmIE4SSzKO
+        KKD8yYoNTX/kzGi488AFGMPctqx7Ti+uyHEqs+JRohrsm7qG8PongYyAo41f0nqAR3kVOj
+        sKKBX6s/QaGe8vowPqfu9OT/cDMC2CI=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-647-riZGmKTOOWKqGxYzghKSCA-1; Mon, 14 Nov 2022 16:16:12 -0500
+X-MC-Unique: riZGmKTOOWKqGxYzghKSCA-1
+Received: by mail-qk1-f197.google.com with SMTP id j13-20020a05620a410d00b006e08208eb31so12001845qko.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 13:16:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nYM63RRvqlC+PbmanyesAjjHnH9NOqGbj+n/5jkMu0U=;
-        b=XYmU2BXwoGC5hXs77u2bEKdVn2UoivYaMbbViVwnxXHyDqsNqhOOHcgq1mwdhoZmzh
-         kMpMRMkfEjZvrN/V7N3uHVqMV6AKD2lZ1ICxtI7rli4929MDvNxmtYAqwjsaigQwxjVg
-         7u39HvLkaHbnk3w2vq0n/tWysXLTVJb1Apx8r/0iZpyxktvBlHaFigSkjxpc6SQw3ui0
-         QlRIb2YLrL54HKwcw/XT6nQo0pmQ8mPqc4/d2QDpujdCG69vHR3lXqwkxPE5ofrMkq1M
-         EzH5aFApGkuhTD091gRTAzkw+aXM0nbl6YjISotWAxNQBaTomlqea0Xrlp3gyERowgEz
-         xvPw==
-X-Gm-Message-State: ANoB5pnjLeUrTexUVATQGQ9sJcCv1orYZbi6dypP6ZxRb5T91nzHOyKO
-        O6fI5rR+42wxKIa8QkzLSUrmHuCZEDgki2Ws
-X-Google-Smtp-Source: AA0mqf791XjUwTINGHr0Zl1I52wNg6Mqx1PQwhEgC1QSyE/57ZdcQY/ERlq2kwow5FSshACvALmbBw==
-X-Received: by 2002:a05:6402:d64:b0:461:fe2b:3225 with SMTP id ec36-20020a0564020d6400b00461fe2b3225mr12876929edb.292.1668460305645;
-        Mon, 14 Nov 2022 13:11:45 -0800 (PST)
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com. [209.85.221.53])
-        by smtp.gmail.com with ESMTPSA id b16-20020a17090630d000b00795bb7d64d8sm4643182ejb.217.2022.11.14.13.11.44
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Nov 2022 13:11:44 -0800 (PST)
-Received: by mail-wr1-f53.google.com with SMTP id o4so20566518wrq.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 13:11:44 -0800 (PST)
-X-Received: by 2002:a05:6000:1376:b0:236:7741:fa7b with SMTP id
- q22-20020a056000137600b002367741fa7bmr8968202wrz.138.1668460304144; Mon, 14
- Nov 2022 13:11:44 -0800 (PST)
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pPyHbVIhVXxAvPHXANuB0471/7HtR2HBTgw/R/uDUnU=;
+        b=VJmEzThiWnZoaBiInem8jAZG3IwjRF3ha+bf8ugMfWrH+i8j5Wp0O0I6sX+FnMNlRs
+         Y9zdJIfS7dyYPUrpxNXydTRmC65dU4LqWydehsktZndqrAYJ30a+sMjMRYf6EcNcTn8E
+         brN2MWQfPFpmBPdyYCzZZwYGCUT4qwCk+xUwC8MbnEz3I5Xq9eL2KVYX7C1+H2dYCjXq
+         JrQMwoS+46pyOz3s7k+BFjnUGri/oMa+Aqp1df6DTIM/3/bsOBQoDMnixc+auvcnaVHO
+         5EHHnNArdMY/dcoioPaKn+ak6qcjDqskis/ugPWaPN5A7KDyiHFTRAFrny+fo+ZqbLo+
+         pqBw==
+X-Gm-Message-State: ANoB5pn4Zjb2PNZDYC3zW8kXY4/RBKnHyyN7ddiVy3nxfBBH7J5zeyuz
+        CzqRGGvI4AEQQ9VWCqB6eMVhvcTzwQ6pO+5m9HqG+Buagk1doP3CZKHjPrAf8GJ/EyPspZUe+Ga
+        2yyz3JAVaLREbx2QV7gjkX22ppg==
+X-Received: by 2002:a05:620a:3711:b0:6ee:96d8:962d with SMTP id de17-20020a05620a371100b006ee96d8962dmr12629985qkb.209.1668460572151;
+        Mon, 14 Nov 2022 13:16:12 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf6YzbTn7dUc6FTHqSRbY4M/FChvve5lyZZaDUwzmqNtHLCpgpJUTe0OMVn9VSvRM4ckJMFevw==
+X-Received: by 2002:a05:620a:3711:b0:6ee:96d8:962d with SMTP id de17-20020a05620a371100b006ee96d8962dmr12629974qkb.209.1668460571935;
+        Mon, 14 Nov 2022 13:16:11 -0800 (PST)
+Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id s8-20020a05620a254800b006ee8874f5fasm6999677qko.53.2022.11.14.13.16.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Nov 2022 13:16:11 -0800 (PST)
+Date:   Mon, 14 Nov 2022 16:16:10 -0500
+From:   Brian Masney <bmasney@redhat.com>
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     linus.walleij@linaro.org, brgl@bgdev.pl,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, psodagud@quicinc.com,
+        quic_shazhuss@quicinc.com, quic_ppareek@quicinc.com,
+        ahalaney@redhat.com, echanude@redhat.com,
+        nicolas.dechesne@linaro.org
+Subject: Re: [PATCH RFC] gpiolib: ensure that fwnode is properly set
+Message-ID: <Y3KwGg0als0NyQ/I@x1>
+References: <20221114202943.2389489-1-bmasney@redhat.com>
+ <b3860cbd-0967-0b8d-3d67-f2a09f1e0042@gmail.com>
 MIME-Version: 1.0
-References: <20221114205055.1547497-1-robdclark@gmail.com>
-In-Reply-To: <20221114205055.1547497-1-robdclark@gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 14 Nov 2022 13:11:31 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=XbYYxP4kFBeGP3AGOwvbc8qNn746qpcZ8zVPc8re0o5Q@mail.gmail.com>
-Message-ID: <CAD=FV=XbYYxP4kFBeGP3AGOwvbc8qNn746qpcZ8zVPc8re0o5Q@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/a6xx: Fix speed-bin detection vs probe-defer
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, Chia-I Wu <olvaffe@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b3860cbd-0967-0b8d-3d67-f2a09f1e0042@gmail.com>
+User-Agent: Mutt/2.2.7 (2022-08-07)
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Mon, Nov 14, 2022 at 10:02:11PM +0100, Robert Marko wrote:
+> Hi, the following patch should fix it for you, I have hit the same issue on
+> IPQ8074.
+> 
+> https://patchwork.ozlabs.org/project/linux-gpio/patch/20221111113732.461881-1-thierry.reding@gmail.com/
 
-On Mon, Nov 14, 2022 at 12:50 PM Rob Clark <robdclark@gmail.com> wrote:
->
-> From: Rob Clark <robdclark@chromium.org>
->
-> If we get an error (other than -ENOENT) we need to propagate that up the
-> stack.  Otherwise if the nvmem driver hasn't probed yet, we'll end up
-> end up claiming that we support all the OPPs which is not likely to be
-> true (and on some generations impossible to be true, ie. if there are
-> conflicting OPPs).
->
-> v2: Update commit msg, gc unused label, etc
->
-> Fixed: fe7952c629da ("drm/msm: Add speed-bin support to a618 gpu")
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 10 ++++------
->  1 file changed, 4 insertions(+), 6 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 7fe60c65a1eb..6ae77e88060f 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1941,7 +1941,7 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_rev rev, u32 fuse)
->
->  static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
->  {
-> -       u32 supp_hw = UINT_MAX;
-> +       u32 supp_hw;
->         u32 speedbin;
->         int ret;
->
-> @@ -1953,15 +1953,13 @@ static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
->         if (ret == -ENOENT) {
->                 return 0;
->         } else if (ret) {
-> -               DRM_DEV_ERROR(dev,
-> -                             "failed to read speed-bin (%d). Some OPPs may not be supported by hardware",
-> -                             ret);
-> -               goto done;
-> +               dev_err_probe(dev, ret,
-> +                             "failed to read speed-bin. Some OPPs may not be supported by hardware");
-> +               return ret;
+That fixed the issue. Thanks, Robert.
 
-Both before and after this change, I think you're missing a "\n" at
-the end of your error string?
+Brian
 
-If you want to get even fancier, dev_err_probe is designed to run
-"braceless" and returns "ret" as its return value. This you could do:
-
-if (ret == -ENOENT)
-  return ret;
-else if (ret)
-  return dev_err_probe(dev, ret, ...)
-
-After adding the "\n" then either with the extra fanciness or as you have it:
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-
--Doug
