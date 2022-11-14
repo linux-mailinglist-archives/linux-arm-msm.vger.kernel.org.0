@@ -2,174 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9919F627C89
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 12:41:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9433E627D11
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 12:55:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236195AbiKNLlp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 06:41:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38258 "EHLO
+        id S236797AbiKNLzK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 06:55:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233300AbiKNLlm (ORCPT
+        with ESMTP id S236786AbiKNLyt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 06:41:42 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52EF955A3;
-        Mon, 14 Nov 2022 03:41:41 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 0E492B80E6E;
-        Mon, 14 Nov 2022 11:41:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77942C433B5;
-        Mon, 14 Nov 2022 11:41:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668426098;
-        bh=6D6hVNiZU/7ohRvqBuzhJil3F0K7wsJf9shuuz0C8mY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=l8RMPVQphsi+/fPvPr9IrVDIsMPl//vBLf9NcA6X3/XOxJojhCVkdF2dtyB8K/lfM
-         JcKrg9YNEMLhjqHUoaf48h4lwpthX8yNJct4MML0FydlurOis/xXInTPNnpCFvac8Q
-         3pyHAC04Y6v48EI+N7spU5Arf+W9b7FyrNbelo9/RSfwWpOhvEZF+ybQsgkHPz8Fvx
-         sy0La28rWToC+HUMKWQGuv7qLidhktM8MPsiiCaeNAGlw2e3G4fPTB4OnX/LQtMYe+
-         8KwHeABAicXCXDvTMKgRKiqO6LzF8Sm+U8ESE8JPDL/5IXRBaeJYtPeHv7sCBwkqM+
-         OXwBVl8HYginQ==
-Date:   Mon, 14 Nov 2022 19:41:04 +0800
-From:   Shawn Guo <shawnguo@kernel.org>
-To:     Pierre Gondois <pierre.gondois@arm.com>
-Cc:     linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Tsahee Zidenberg <tsahee@annapurnalabs.com>,
-        Antoine Tenart <atenart@kernel.org>,
-        Brijesh Singh <brijeshkumar.singh@amd.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        Tom Lendacky <thomas.lendacky@amd.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Khuong Dinh <khuong@os.amperecomputing.com>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        William Zhang <william.zhang@broadcom.com>,
-        Anand Gore <anand.gore@broadcom.com>,
-        Kursad Oney <kursad.oney@broadcom.com>,
-        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Li Yang <leoyang.li@nxp.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Chester Lin <clin@suse.com>,
-        Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-        Matthias Brugger <mbrugger@suse.com>,
-        NXP S32 Linux Team <s32@nxp.com>,
-        Wei Xu <xuwei5@hisilicon.com>, Chanho Min <chanho.min@lge.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Lars Povlsen <lars.povlsen@microchip.com>,
-        Steen Hegelund <Steen.Hegelund@microchip.com>,
-        Daniel Machon <daniel.machon@microchip.com>,
-        UNGLinuxDriver@microchip.com, Avi Fishman <avifishman70@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Patrick Venture <venture@google.com>,
-        Nancy Yuen <yuenn@google.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
+        Mon, 14 Nov 2022 06:54:49 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A81682E9C4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 03:50:22 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id z14so17598515wrn.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 03:50:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xq2tLSCLZkgPzxgMCTyBgdDINhDq1LxipubitB9NtGc=;
+        b=jp5LIGFyzgk18hF30BUu0NW++CriKjixjmz09zSAaf+g7nwjzDof+dXGKg6RhtzK3B
+         vWzHHt82Av++1rTsXceQ0OgBcf+nrBHDKS7ZZakYiZP5LEP4PSp5lGeo6zXWZdjCZSGy
+         uVCQpaR/YYBwADrGEdpTEvFgl44KhnkYC2qbSL7nGNY/C8PHlVmuWGLVq3wvjzlRmBVq
+         l6D52DiE8OySgVb5fHw7yeAsNdx7u6ANS/KGSLWfALg9ccfhigNYytzy1CzCqpu6JPtJ
+         OoluBvWlyFEGwRPUyR6NpzC7XvNTNbaCUalAp8bXsdu0EObbhpNNmdBJNLXJaOJPIVph
+         lJdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xq2tLSCLZkgPzxgMCTyBgdDINhDq1LxipubitB9NtGc=;
+        b=cVQP5Jy9Zf3OuwajnT7onwj/D7eg0s6KRsurMy8wJeREzem04GsOiByrUCFrV/9y/S
+         T0uC6mqv4UvQ8j3wPjxgIYXdqVYOnJnAhU7lVui9xQ/qp5LG8krdIDsAoBoeOX183mg5
+         urP6JYpC+yXBzC/nMzDkGg/haE9vpcMQY6ws3anY7VvbJV8qF4wv8hVlV5Q73jGW9kHG
+         O5WDg6RpvSConXO3rYlieVa74hJWOItg2qekMi/ITaDBg4CBJb8s3mUMi2RSFfYyvGWI
+         G6R7XXm/mDbJZo59e8TZ7OW5XY0t6N6Lkbp5IXDscIkQ+PWd6nioqTd8v9Nzz+ZuyFjs
+         Cbsg==
+X-Gm-Message-State: ANoB5pla/qDaWBVhMlgmHQY40FCCvjE86JTVuS2QbJs7y85hewumFgk2
+        xzBEh0ylCTXXYV7mrU4/65x/2w==
+X-Google-Smtp-Source: AA0mqf4rMQ5IoaeqZxSBWClknQ8RJO+tiaua1Mop1YSfULd72iGpshuFtqP45IWvYkcMSG9XheN5cQ==
+X-Received: by 2002:a5d:6e55:0:b0:23a:239b:7e73 with SMTP id j21-20020a5d6e55000000b0023a239b7e73mr7200305wrz.233.1668426620997;
+        Mon, 14 Nov 2022 03:50:20 -0800 (PST)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id x11-20020a5d54cb000000b002415dd45320sm9329910wrv.112.2022.11.14.03.50.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Nov 2022 03:50:20 -0800 (PST)
+Message-ID: <48883bd6-217d-f513-316c-2b5caf486e5e@linaro.org>
+Date:   Mon, 14 Nov 2022 11:50:19 +0000
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 00/10] ASoC: dt-bindings: Rework Qualcomm APR/GPR Sound
+ nodes for SM8450
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Jisheng Zhang <jszhang@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Tero Kristo <kristo@kernel.org>,
-        Viorel Suman <viorel.suman@nxp.com>,
-        Abel Vesa <abelvesa@kernel.org>,
-        Shenwei Wang <shenwei.wang@nxp.com>,
-        Shijie Qin <shijie.qin@nxp.com>, Ming Qian <ming.qian@nxp.com>,
-        Peng Fan <peng.fan@nxp.com>, Adam Ford <aford173@gmail.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Tim Harvey <tharvey@gateworks.com>, Li Jun <jun.li@nxp.com>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Joakim Zhang <qiangqing.zhang@nxp.com>,
-        Markus Niebel <Markus.Niebel@ew.tq-group.com>,
-        Marek Vasut <marex@denx.de>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Paul Elder <paul.elder@ideasonboard.com>,
-        Alexander Stein <alexander.stein@ew.tq-group.com>,
-        Martin Kepplinger <martink@posteo.de>,
-        David Heidelberg <david@ixit.cz>,
-        Liu Ying <victor.liu@nxp.com>,
-        Oliver Graute <oliver.graute@kococonnector.com>,
-        Zhou Peng <eagle.zhou@nxp.com>,
-        Haibo Chen <haibo.chen@nxp.com>,
-        Ahmad Fatoum <a.fatoum@pengutronix.de>,
-        Clark Wang <xiaoning.wang@nxp.com>,
-        Jacky Bai <ping.bai@nxp.com>,
-        Chris Packham <chris.packham@alliedtelesis.co.nz>,
-        Vadym Kochan <vadym.kochan@plvision.eu>,
-        Sameer Pujar <spujar@nvidia.com>,
-        Prathamesh Shete <pshete@nvidia.com>,
-        Mikko Perttunen <mperttunen@nvidia.com>,
-        Akhil R <akhilrajeev@nvidia.com>,
-        Sumit Gupta <sumitg@nvidia.com>,
-        Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
-        Vidya Sagar <vidyas@nvidia.com>,
-        Ashish Mhetre <amhetre@nvidia.com>,
-        Johan Jonker <jbx6244@gmail.com>,
-        Christopher Obbard <chris.obbard@collabora.com>,
-        Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
-        Aswani Reddy <aswani.reddy@samsung.com>,
-        Shashank Prashar <s.prashar@samsung.com>,
-        Ajay Kumar <ajaykumar.rs@samsung.com>,
-        devicetree@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org,
-        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-realtek-soc@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org
-Subject: Re: [PATCH v2 08/23] arm64: dts: Update cache properties for
- freescale
-Message-ID: <20221114114104.GX2649582@dragon>
-References: <20221107155825.1644604-1-pierre.gondois@arm.com>
- <20221107155825.1644604-9-pierre.gondois@arm.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221107155825.1644604-9-pierre.gondois@arm.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Patrick Lai <plai@qti.qualcomm.com>,
+        Srinivasa Rao Mandadapu <srivasam@qti.qualcomm.com>
+References: <20221111113547.100442-1-krzysztof.kozlowski@linaro.org>
+ <06da072c-8cf0-8181-3c32-4592fe41f9c2@linaro.org>
+ <0ee5db9e-d80c-947d-73d6-6214e9299b23@linaro.org>
+Content-Language: en-US
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <0ee5db9e-d80c-947d-73d6-6214e9299b23@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 07, 2022 at 04:57:01PM +0100, Pierre Gondois wrote:
-> The DeviceTree Specification v0.3 specifies that the cache node
-> 'compatible' and 'cache-level' properties are 'required'. Cf.
-> s3.8 Multi-level and Shared Cache Nodes
-> The 'cache-unified' property should be present if one of the
-> properties for unified cache is present ('cache-size', ...).
-> 
-> Update the Device Trees accordingly.
-> 
-> Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
 
-Applied, thanks!
+
+On 14/11/2022 07:48, Krzysztof Kozlowski wrote:
+> On 11/11/2022 17:15, Srinivas Kandagatla wrote:
+>>
+>>
+>> On 11/11/2022 11:35, Krzysztof Kozlowski wrote:
+>>> Adding sound support for Qualcomm SM8450 SoC (and later for SC8280XP) brought
+>>> some changes to APR/GPR services bindings.  These bindings are part of
+>>> qcom,apr.yaml:
+>>>
+>>>     apr-or-gpr-device-node <- qcom,apr.yaml
+>>>       apr-gpr-service@[0-9] <- qcom,apr.yaml
+>>>         service-specific-components <- /schemas/sound/qcom,q6*.yaml
+>>>
+>>> The schema for services (apr-gpr-service@[0-9]) already grows considerably and
+>>> is still quite not specific.  It allows several incorrect combinations, like
+>>> adding a clock-controller to a APM device.  Restricting it would complicate the
+>>> schema even more.  Bringing new support for sound on Qualcomm SM8450 and
+>>> SC8280XP SoC would grow it as well.
+>>
+>> Why would this grow? All the dsp services are static and they will not
+>> change per SoC unless there is a total firmware change in DSP.
+> 
+> They grow now with SM8450 which requires changes there. Otherwise DTS
+> does not pass with current bindings. The bindings before my fixing in
+> 2022 were really incomplete. Now they are complete, but:
+> 1. Not for SM8450 - this will bring new things,
+> 2. Very unspecific as they allow multiple invalid configurations.
+> 
+Okay, I looked at all the patches, they are fine as it is, the confusion 
+part is the subject and comments which are misleading and trying to say 
+that these are specific to SM8450 or SC8280XP. Infact this is not true, 
+none of these changes are specific to any SoC, they are part of AudioReach.
+
+--srini
+>>
+>>>
+>>> Refactor the bindings before extending them for Qualcomm SM8450 SoC.
+>>
+>> I dont understand this bit, what is SoC audio support to do with DSP
+>> bindings. DSP bindings should be totally independent of this.
+> 
+> APR/GPR bindings are for SoC audio, so while adding SoC audio the first
+> are affected. If you went through the commits here, you would notice the
+> changes.
+> 
+> Best regards,
+> Krzysztof
+> 
