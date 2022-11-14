@@ -2,76 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FEF6628341
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 15:53:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ACE33628380
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 16:07:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236881AbiKNOxj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 09:53:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57686 "EHLO
+        id S235835AbiKNPHe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 10:07:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236785AbiKNOxh (ORCPT
+        with ESMTP id S235795AbiKNPHd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 09:53:37 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2518B334;
-        Mon, 14 Nov 2022 06:53:36 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AEEPFLN029937;
-        Mon, 14 Nov 2022 14:53:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3zTrcoF9Xv6zFxIKUZYqy883VlNmHoFuse9W+M5yNfM=;
- b=N1edgSAdC0sHauGXExZPlPzxrAJM4KGXqoHxKoHiALtVrEeQJiT/CzmqIXWbR43F9tDo
- jsqD6FiAmGu/nyR/v6NPkhvA/EUHUmw/z67ZGji5T6Hv98xoYZpb9mbudNLY7D4pkaPX
- e6uP334bKUomVlF96eRT5lbmWBLvRb+iu2+Hh3W5ZjRcmsOxAusDBcACWh9jeRZUrco5
- SwzA84GN6t22TlxdHoRxDLI5ev1rqJbbVQOqIidsWcRW9KYIC0ZygBI7xfIriKPlvyab
- ZzyUZzZ/jOYL5eJgYhvkshBTxZvcatP/FM3SBOLsOcfJ0PDkZ/8D9PEYW9VgxYDwiRSM 9Q== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kug3hh923-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 14 Nov 2022 14:53:31 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AEErUUm019083
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 14 Nov 2022 14:53:30 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 14 Nov
- 2022 06:53:29 -0800
-Message-ID: <8aae17cf-7c2b-85bb-d0f5-a5f71e792d16@quicinc.com>
-Date:   Mon, 14 Nov 2022 07:53:28 -0700
+        Mon, 14 Nov 2022 10:07:33 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FBBD1F9D3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 07:07:32 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id p8so19723673lfu.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 07:07:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ULzF3p3L8oeTaQhvXffg+8XN5ZeIieb8W7hDny3blHE=;
+        b=EIYzol6rNEK4IblHJWChN1Zv9nIa45kXVtlbW7+frCM/IHuRXbM5rBBThXv689sbHz
+         EsfkoilCGeYJhJj8M+94v2mp2MpR/oxGu0fs3jVF8dNG8hODo2Gf9Y52Eb65e3bDy+eH
+         KtlW/9wd0f90k0tuX7Gxd9GOEFavhZOCGBOa0TV0OufauJOERiffrWYiPGmHzJwXBakj
+         FEkBhrsQZFuJHj9GBH8Ht6P8bzzMW3wx5IbtMm4cl86uJ1mJQvurtDTzlNNC4M+TVMFE
+         4boicbnmAW7xD47h6lZfQLpXyR4F0/goHIRtrsV0MhDZhOX1/gA9N31itM0D46SW1kgs
+         fCcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ULzF3p3L8oeTaQhvXffg+8XN5ZeIieb8W7hDny3blHE=;
+        b=mcD/9uJoXMkHUjMJhi4jAbHrIrOZtSAkR3XcRW/8IEQ8GITkiriItNHhrOveftbsv+
+         UVgxnIGHZB967yBrEawZN/bPwxHmwh4BraW9X3cIJgq8d/mV/3vdlG/YkO88WiDpKDpB
+         dtc9+etwdQZBGl+qF3gBoDZQpnHTcOaLEF9M/BPYHvL44Am2g7EmGRmo3kJoCk7Pyo5B
+         dKpKx2BO4oxJg9m6Ryg5Gnz2uh/gYP3dI7fmMBdeKFcTUloGW3OBGkiSl/nY0Kb6hmY8
+         4tZ8Vn6NTLteZk+42dhVH4WhmkgDsAhhkyRZHYcuNBSBMCotpoSO6LMFd9BQykPXfNVR
+         rDvg==
+X-Gm-Message-State: ANoB5plAZMiDTHCe8iETedLkGXTh5UsxiCyRS2mAntdhWVUvr+1cNhWT
+        FbprY5SNEcn8CI6CI8BkbXClnMndETPZuA==
+X-Google-Smtp-Source: AA0mqf5XBicCBoB4vSCpkSphHF/48SBezZ1w3GLHz+YbYHdSbavWvaHmS8Y8p5y2gVmokZ9rb+T/uA==
+X-Received: by 2002:a05:6512:32a6:b0:4b1:4933:d0de with SMTP id q6-20020a05651232a600b004b14933d0demr3974642lfe.10.1668438450553;
+        Mon, 14 Nov 2022 07:07:30 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id b6-20020a196706000000b004a4754c5db5sm1841388lfc.244.2022.11.14.07.07.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Nov 2022 07:07:30 -0800 (PST)
+Message-ID: <44973b9e-d1d2-b7e1-74aa-0b72505f2552@linaro.org>
+Date:   Mon, 14 Nov 2022 18:07:29 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v2] bus: mhi: host: Disable preemption while processing
- data events
-Content-Language: en-US
-To:     Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>,
-        <loic.poulain@linaro.org>
-CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <mrana@quicinc.com>
-References: <1668419923-20292-1-git-send-email-quic_qianyu@quicinc.com>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <1668419923-20292-1-git-send-email-quic_qianyu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [PATCH v2 17/22] phy: qcom-qmp-combo: drop lanes config parameter
+Content-Language: en-GB
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+References: <20221114110621.4639-1-johan+linaro@kernel.org>
+ <20221114110621.4639-18-johan+linaro@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221114110621.4639-18-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TRr4WJFTY27fxiDlceDvQZMtsvrrxCId
-X-Proofpoint-ORIG-GUID: TRr4WJFTY27fxiDlceDvQZMtsvrrxCId
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-14_12,2022-11-11_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
- priorityscore=1501 adultscore=0 clxscore=1015 lowpriorityscore=0
- phishscore=0 mlxlogscore=999 impostorscore=0 malwarescore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211140105
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -81,47 +79,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/14/2022 2:58 AM, Qiang Yu wrote:
-> If data processing of an event is scheduled out because core
-> is busy handling multiple irqs, this can starve the processing
-> of MHI M0 state change event on another core. Fix this issue by
-> disabling irq on the core processing data events.
+On 14/11/2022 14:06, Johan Hovold wrote:
+> Since the QMP driver split there is really no need for the 'lanes'
+> configuration parameter as all of these USB-C PHYs support dual-lane
+> SuperSpeed USB and quad-lane (uni-directional) DP (even if the driver
+> still only supports CC1 orientation using lanes 2 and 3).
 > 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 > ---
-> v1->v2: add comments about why we disable local irq
-> 
->   drivers/bus/mhi/host/main.c | 11 +++++++++--
->   1 file changed, 9 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index f3aef77a..fcb2586 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -1027,13 +1027,20 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
->   
->   void mhi_ev_task(unsigned long data)
->   {
-> +	unsigned long flags;
->   	struct mhi_event *mhi_event = (struct mhi_event *)data;
->   	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
->   
->   	/* process all pending events */
-> -	spin_lock_bh(&mhi_event->lock);
-> +	spin_lock_irqsave(&mhi_event->lock, flags);
-> +	/*
-> +	 * When muiltiple IRQs come, the tasklet will be scheduled out with event ring lock
-
-multiple
-
-> +	 * remaining acquired, causing M0 event process on another core gets stuck when it
-> +	 * tries to acquire the same event ring lock. Thus let's disable local IRQs here.
-> +	 */
-> +
->   	mhi_event->process_event(mhi_cntrl, mhi_event, U32_MAX);
-> -	spin_unlock_bh(&mhi_event->lock);
-> +	spin_unlock_irqrestore(&mhi_event->lock, flags);
->   }
->   
->   void mhi_ctrl_ev_task(unsigned long data)
+>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 62 ++++++++---------------
+>   1 file changed, 20 insertions(+), 42 deletions(-)
+-- 
+With best wishes
+Dmitry
 
