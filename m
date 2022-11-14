@@ -2,94 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1BD86277B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 09:30:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB59A6277F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 09:40:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236446AbiKNIaq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 03:30:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49616 "EHLO
+        id S236587AbiKNIkO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 03:40:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236462AbiKNIak (ORCPT
+        with ESMTP id S236595AbiKNIkM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 03:30:40 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAB551B795
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 00:30:39 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id b3so18080282lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 00:30:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=j0IQsUMsq/danVFAsXOJQk7VxhiCEHCgZvuXYQZsPNw=;
-        b=kZ+gfXhEHvCQ4i5fXaMGbyRs9ISamrJOufucrFkcHxvQoh4vBw/cwIZUfUf4JYNiSv
-         26Bpr4SFOlHcgALinLxqix2jc/n+/nI2/+CpEQTf+yttEW/6G8rUIW2HutvLV/W2pkdB
-         a1DQd3OfBOFy1pY2P+dhrAMzba32FqUCh3ssyF1mOhkaGInJgGCLRGWh6vyan2lYaqgt
-         URIHHUT9URj3BNT3x7xI5ONIm1mzffBeq86x7QfjnugQSPPUgV9hDdOvfIPmh0nGO58r
-         mevYIk2qWe+wi2w8cv2hXuEnz9Gy3ym+F1MVW4rQhSbQpeP3gu9Vw0kzjECVUreorCK0
-         ZeIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=j0IQsUMsq/danVFAsXOJQk7VxhiCEHCgZvuXYQZsPNw=;
-        b=Zyu9Uxbr9BdZhOLEjXawl0aqSb37ENr7/mBtM64WzNT8rYjGxSeoE174ssbIUgfRSb
-         G8RnMpSKOAWqiApA+f+pJ5HvOgFpOiE+THcOzeBoT0HKHXm0SqlAtRAyjaXDzos+b4wd
-         /vrDkdwKqjsIElTgMvGgZk2B0mb0G3nLWTEvJ4avtevTCdyvLjaReF+yP1IaUSJKa7/R
-         pNagevoo/RRQI9fQeLeLCSJfOIjIV5l0WlZ6GE8Yo7cIJKGDkNqVkgJBVft3pngt1ejj
-         rsO2BoKzxX6JbO4HqCEg5+d9IMDaFIByhgOuNSHzsVCk22M0Z6oHUeAfkDrOcCi8UMft
-         bI6Q==
-X-Gm-Message-State: ANoB5pmTFMhoSE4TLeZVivjMBcPImg1XQ2HdWYinv18zuspqKEyTH5T5
-        QaVklImBaGnYen1Exr0BriaJoQ==
-X-Google-Smtp-Source: AA0mqf5PXmLuqjVSEr72QK0K2RYhUlJwXF8LIcf4TRIc4twexmGAV0cltA+P/zb2eai/Dn2DYG/CTQ==
-X-Received: by 2002:ac2:5314:0:b0:4b1:8fbb:d3f4 with SMTP id c20-20020ac25314000000b004b18fbbd3f4mr4016325lfh.70.1668414638117;
-        Mon, 14 Nov 2022 00:30:38 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id c11-20020a056512324b00b00494942bec60sm1750581lfr.17.2022.11.14.00.30.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Nov 2022 00:30:37 -0800 (PST)
-Message-ID: <ca43ac46-9ccf-7723-966b-9d3f8bc3b4fd@linaro.org>
-Date:   Mon, 14 Nov 2022 09:30:36 +0100
+        Mon, 14 Nov 2022 03:40:12 -0500
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 417D51C128;
+        Mon, 14 Nov 2022 00:40:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1668415030;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Fdzji2ULixgnjflPg6rEtbWAJEIuwOyBu5+qeCT4SJI=;
+    b=n3FbW+IxO87ovNz43XhQO/gO1Pgvy/zAPXjFlydfAlvK9K3/lzSiLhrI5mu8g2zZEO
+    JOYtTR66jszMm8Mezb6Ajb7b98GxbZc0v53NN4btralHMJuwwAzGOS6Y8HQFyykAc0s+
+    mvjK2ac0LV0CnI97UGZ24KbsfEZPSQI0kaY7oR/BDEjIfGIf0tbElIsYi0+jdjKAwG6m
+    qerVQwWmvyCjOX1YjEcUUDEypOy9wLW4mVnJKlmrfkNMLyn5+qDAZG500R7jpGKzHLSt
+    /K/iRsfKhJ+HrdTZ87pFMZveLw2jAQj3Fta4ng3vUT27PiqhBx//So7OHtRvWqpVzUh+
+    Jn7g==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJAhdlWwvqttQ=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 48.2.1 DYNA|AUTH)
+    with ESMTPSA id Yce349yAE8b95Xg
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 14 Nov 2022 09:37:09 +0100 (CET)
+Date:   Mon, 14 Nov 2022 09:36:59 +0100
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Paul Menzel <pmenzel@molgen.mpg.de>
+Subject: Re: [PATCH RESEND v2] Bluetooth: btqcomsmd: Fix command timeout
+ after setting BD address
+Message-ID: <Y3H+K/6LWVcxdNK/@gerhold.net>
+References: <20221018085431.2913217-1-stephan.gerhold@kernkonzept.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: ipq8074: add SoC specific
- compatible to MDIO
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221113184727.44923-1-robimarko@gmail.com>
- <20221113184727.44923-5-robimarko@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221113184727.44923-5-robimarko@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221018085431.2913217-1-stephan.gerhold@kernkonzept.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/11/2022 19:47, Robert Marko wrote:
-> Add the newly documented SoC compatible to MDIO in order to be able to
-> validate clocks for it.
+Hi Luiz,
+
+It looks like this patch will get archived again in patchwork end of
+this week. Is there anything I can change to make it acceptable?
+
+This is a fairly important fix to have Bluetooth working on these
+devices, since it fails to initialize most of the times without it.
+
+Thanks!
+Stephan
+
+On Tue, Oct 18, 2022 at 10:54:31AM +0200, Stephan Gerhold wrote:
+> On most devices using the btqcomsmd driver (e.g. the DragonBoard 410c
+> and other devices based on the Qualcomm MSM8916/MSM8909/... SoCs)
+> the Bluetooth firmware seems to become unresponsive for a while after
+> setting the BD address. On recent kernel versions (at least 5.17+)
+> this often causes timeouts for subsequent commands, e.g. the HCI reset
+> sent by the Bluetooth core during initialization:
 > 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+>     Bluetooth: hci0: Opcode 0x c03 failed: -110
+> 
+> Unfortunately this behavior does not seem to be documented anywhere.
+> Experimentation suggests that the minimum necessary delay to avoid
+> the problem is ~150us. However, to be sure add a sleep for > 1ms
+> in case it is a bit longer on other firmware versions.
+> 
+> Older kernel versions are likely also affected, although perhaps with
+> slightly different errors or less probability. Side effects can easily
+> hide the issue in most cases, e.g. unrelated incoming interrupts that
+> cause the necessary delay.
+> 
+> Fixes: 1511cc750c3d ("Bluetooth: Introduce Qualcomm WCNSS SMD based HCI driver")
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
 > ---
->  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
-
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+> (Unmodified resend of the v2 I sent back in June, it seems to have
+>  disappeared from patchwork)
+> 
+> I tested this using a script that reboots repeatedly and checks for the
+> error. With this patch, BT shows up successfully for 100+ consecutive
+> boots. Without this patch it usually fails after 1-5 boots (or even
+> always on some boards).
+> 
+> Changes in v2:
+>   - Clarify commit message: Add affected devices and kernel versions
+> ---
+>  drivers/bluetooth/btqcomsmd.c | 17 ++++++++++++++++-
+>  1 file changed, 16 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bluetooth/btqcomsmd.c b/drivers/bluetooth/btqcomsmd.c
+> index 2acb719e596f..11c7e04bf394 100644
+> --- a/drivers/bluetooth/btqcomsmd.c
+> +++ b/drivers/bluetooth/btqcomsmd.c
+> @@ -122,6 +122,21 @@ static int btqcomsmd_setup(struct hci_dev *hdev)
+>  	return 0;
+>  }
+>  
+> +static int btqcomsmd_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr)
+> +{
+> +	int ret;
+> +
+> +	ret = qca_set_bdaddr_rome(hdev, bdaddr);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* The firmware stops responding for a while after setting the bdaddr,
+> +	 * causing timeouts for subsequent commands. Sleep a bit to avoid this.
+> +	 */
+> +	usleep_range(1000, 10000);
+> +	return 0;
+> +}
+> +
+>  static int btqcomsmd_probe(struct platform_device *pdev)
+>  {
+>  	struct btqcomsmd *btq;
+> @@ -162,7 +177,7 @@ static int btqcomsmd_probe(struct platform_device *pdev)
+>  	hdev->close = btqcomsmd_close;
+>  	hdev->send = btqcomsmd_send;
+>  	hdev->setup = btqcomsmd_setup;
+> -	hdev->set_bdaddr = qca_set_bdaddr_rome;
+> +	hdev->set_bdaddr = btqcomsmd_set_bdaddr;
+>  
+>  	ret = hci_register_dev(hdev);
+>  	if (ret < 0)
+> -- 
+> 2.30.2
+> 
