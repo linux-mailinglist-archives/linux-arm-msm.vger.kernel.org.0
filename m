@@ -2,96 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ACE33628380
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 16:07:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 81A486283AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 16:19:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235835AbiKNPHe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 10:07:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38352 "EHLO
+        id S237219AbiKNPTb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 10:19:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235795AbiKNPHd (ORCPT
+        with ESMTP id S237211AbiKNPTa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 10:07:33 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FBBD1F9D3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 07:07:32 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id p8so19723673lfu.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 07:07:32 -0800 (PST)
+        Mon, 14 Nov 2022 10:19:30 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97EC9B840
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 07:19:28 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id g12so19856820lfh.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 07:19:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ULzF3p3L8oeTaQhvXffg+8XN5ZeIieb8W7hDny3blHE=;
-        b=EIYzol6rNEK4IblHJWChN1Zv9nIa45kXVtlbW7+frCM/IHuRXbM5rBBThXv689sbHz
-         EsfkoilCGeYJhJj8M+94v2mp2MpR/oxGu0fs3jVF8dNG8hODo2Gf9Y52Eb65e3bDy+eH
-         KtlW/9wd0f90k0tuX7Gxd9GOEFavhZOCGBOa0TV0OufauJOERiffrWYiPGmHzJwXBakj
-         FEkBhrsQZFuJHj9GBH8Ht6P8bzzMW3wx5IbtMm4cl86uJ1mJQvurtDTzlNNC4M+TVMFE
-         4boicbnmAW7xD47h6lZfQLpXyR4F0/goHIRtrsV0MhDZhOX1/gA9N31itM0D46SW1kgs
-         fCcw==
+        bh=s4qZK+7Yu5In+UGyLhgCuDgQLMaWOt08UJeOqh2oGhw=;
+        b=emhOMbjzzww1AVtCE0BIcdbg90+NXwBG+sDpW2IiOedAX1gNoTeO/3Gkg+NP3Ipc65
+         AZOPsqLXQOvmn1vF6ZmBVwiFG00UXe5sc1RyAYEe+s2odFUJ2+9l5DxYPx7nL7u+XE9e
+         5KZlqWQC07nothoXFiTKx/c7IyUt1fcBCE09xJ6hzPw4/F7dVrExcOVJCk+CkqnsMMZv
+         HXuHjOiA6cst3u0dz/tFnhJ2e5O1Oei0tmVrxeZVimU0M0hwwd0Q1Il2/+xuCBX5OlPo
+         qIe1wtMjAOYcLMq+XtcuZNAVWnZGJw5ZQF47P3lxUG1yG73TQ61ZNUk8Zj6bXSOldsXr
+         0v6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ULzF3p3L8oeTaQhvXffg+8XN5ZeIieb8W7hDny3blHE=;
-        b=mcD/9uJoXMkHUjMJhi4jAbHrIrOZtSAkR3XcRW/8IEQ8GITkiriItNHhrOveftbsv+
-         UVgxnIGHZB967yBrEawZN/bPwxHmwh4BraW9X3cIJgq8d/mV/3vdlG/YkO88WiDpKDpB
-         dtc9+etwdQZBGl+qF3gBoDZQpnHTcOaLEF9M/BPYHvL44Am2g7EmGRmo3kJoCk7Pyo5B
-         dKpKx2BO4oxJg9m6Ryg5Gnz2uh/gYP3dI7fmMBdeKFcTUloGW3OBGkiSl/nY0Kb6hmY8
-         4tZ8Vn6NTLteZk+42dhVH4WhmkgDsAhhkyRZHYcuNBSBMCotpoSO6LMFd9BQykPXfNVR
-         rDvg==
-X-Gm-Message-State: ANoB5plAZMiDTHCe8iETedLkGXTh5UsxiCyRS2mAntdhWVUvr+1cNhWT
-        FbprY5SNEcn8CI6CI8BkbXClnMndETPZuA==
-X-Google-Smtp-Source: AA0mqf5XBicCBoB4vSCpkSphHF/48SBezZ1w3GLHz+YbYHdSbavWvaHmS8Y8p5y2gVmokZ9rb+T/uA==
-X-Received: by 2002:a05:6512:32a6:b0:4b1:4933:d0de with SMTP id q6-20020a05651232a600b004b14933d0demr3974642lfe.10.1668438450553;
-        Mon, 14 Nov 2022 07:07:30 -0800 (PST)
+        bh=s4qZK+7Yu5In+UGyLhgCuDgQLMaWOt08UJeOqh2oGhw=;
+        b=bFPLd5jxDV+40JgftHPKJMqVAOEEaIOWpdgvSPWlp/bKWlhX5mXrrw4jQEVC9/XC9d
+         Mkh1QySWILrFNi/A+GUHj6tDKQZZ66NKUvFilz1MJPcaYnz+q+Ds8V67XVOPTWYP+/O/
+         CcEnShQ+MgQ7OLWepnqBjn9zi6Nb1uMJ34MHvvDQM98YbCqJ1U1Uc3WjN8xSsydINJ3f
+         rGvK1TgDkxDLlZwQi7M8e5in7A6inwkOtoeKjNjoqZbEoZqkqWUhq3cepMzrNILflFSF
+         x/BBhC7qy3+oHriF1orUHJmbYPeukXZfPRCdzhCYDCmdZJl6We6xg6NY1jNBtWxpHxmU
+         YGBA==
+X-Gm-Message-State: ANoB5pmpYYKKuv8AOuqk/RFxoJgIohjcbvPMeG+VtoCOEuopidZ9UQjy
+        7B8Bq84djTaCfj7uvAHA2ncQ8xkb/nGh9g==
+X-Google-Smtp-Source: AA0mqf7veRF5xNa75Gb2ttLpByTFoLlWD7Us1WXZrNtszCy+XYC07Ejh2ODD7bykiw3P1st5l3kUjg==
+X-Received: by 2002:a05:6512:2345:b0:4ae:d4db:9f89 with SMTP id p5-20020a056512234500b004aed4db9f89mr4098057lfu.174.1668439166935;
+        Mon, 14 Nov 2022 07:19:26 -0800 (PST)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id b6-20020a196706000000b004a4754c5db5sm1841388lfc.244.2022.11.14.07.07.30
+        by smtp.gmail.com with ESMTPSA id p4-20020ac24ec4000000b00498f570aef2sm1854905lfr.209.2022.11.14.07.19.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Nov 2022 07:07:30 -0800 (PST)
-Message-ID: <44973b9e-d1d2-b7e1-74aa-0b72505f2552@linaro.org>
-Date:   Mon, 14 Nov 2022 18:07:29 +0300
+        Mon, 14 Nov 2022 07:19:26 -0800 (PST)
+Message-ID: <78cda6f8-849c-219a-8dbb-966c283c1a92@linaro.org>
+Date:   Mon, 14 Nov 2022 18:19:25 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.1
-Subject: Re: [PATCH v2 17/22] phy: qcom-qmp-combo: drop lanes config parameter
+Subject: Re: [PATCH 02/14] dt-bindings: phy: qcom,qmp-usb3-dp: fix sc8280xp
+ bindings
 Content-Language: en-GB
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Johan Hovold <johan@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-References: <20221114110621.4639-1-johan+linaro@kernel.org>
- <20221114110621.4639-18-johan+linaro@kernel.org>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221111092457.10546-1-johan+linaro@kernel.org>
+ <20221111092457.10546-3-johan+linaro@kernel.org>
+ <a22888cd-34cb-3453-0dc2-096da208564c@linaro.org>
+ <Y3JCVzJ74YsfcDz4@hovoldconsulting.com>
+ <de3a426a-03e8-ed15-a9a1-bb300e776e5f@linaro.org>
+ <Y3JOO0kNnaNhnW3K@hovoldconsulting.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221114110621.4639-18-johan+linaro@kernel.org>
+In-Reply-To: <Y3JOO0kNnaNhnW3K@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/11/2022 14:06, Johan Hovold wrote:
-> Since the QMP driver split there is really no need for the 'lanes'
-> configuration parameter as all of these USB-C PHYs support dual-lane
-> SuperSpeed USB and quad-lane (uni-directional) DP (even if the driver
-> still only supports CC1 orientation using lanes 2 and 3).
+On 14/11/2022 17:18, Johan Hovold wrote:
+> On Mon, Nov 14, 2022 at 03:07:41PM +0100, Krzysztof Kozlowski wrote:
+>> On 14/11/2022 14:27, Johan Hovold wrote:
+>>> On Fri, Nov 11, 2022 at 04:17:29PM +0100, Krzysztof Kozlowski wrote:
+>>>> On 11/11/2022 10:24, Johan Hovold wrote:
+>>>>> The current QMP USB3-DP PHY bindings are based on the original MSM8996
+>>>>> binding which provided multiple PHYs per IP block and these in turn were
+>>>>> described by child nodes.
 > 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>>>>> +  "#clock-cells":
+>>>>> +    const: 1
+>>>>> +
+>>>>> +  clock-output-names:
+>>>>> +    items:
+>>>>> +      - const: usb3_pipe
+>>>>> +      - const: dp_link
+>>>>> +      - const: dp_vco_div
+>>>>
+>>>> Why defining here fixed names? The purpose of this field is to actually
+>>>> allow customizing these - at least in most cases. If these have to be
+>>>> fixed, then driver should just instantiate these clocks with such names,
+>>>> right?
+>>>
+>>> I'm only using these names as documentation of the indexes. The driver
+>>
+>> What do you mean by documentation of indexes? You require these specific
+>> entries and do not allow anything else.
+> 
+> I'm using this property as documentation of the valid indexes that can
+> be used when referring to clocks provided by this device.
+> 
+> There are currently three and the mapping is described by the
+> 'clock-output-names' property.
+>   
+>>> doesn't use these names, but that's a Linux-specific implementation
+>>> detail.
+>>>
+>>> I noticed that several bindings leave the clock indexes unspecified, or
+>>> have header files defining some or all of them. I first added a QMP
+>>> header but that seemed like overkill, especially if we'd end up with
+>>> one header per SoC (cf. the GCC headers) due to (known and potential)
+>>> platform differences.
+>>
+>> Headers for the names? I do not recall such but that does not seem right.
+> 
+> Headers for the indexes.
+> 
+>>>
+>>> On the other hand reproducing this list in each node is admittedly a bit
+>>> redundant.
+>>>
+>>> Shall I add back a shared header for all PHYs handled by this driver
+>>> (another implementation detail) even if this could eventually lead to
+>>> describing clocks not supported by a particular SoC (so such constraints
+>>> would still need to be described by the binding somehow):
+>>>
+>>> 	/* QMP clocks */
+>>> 	#define QMP_USB3_PIPE_CLK	0
+>>> 	#define QMP_DP_LINK_CLK		1
+>>> 	#define QMP_DP_VCO_DIV_CLK	2
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Maybe QMP_COMBO_USB3_PIPE_CLK, QMP_COMBO_DP_LINK_CLK, 
+QMP_COMBO_DP_VCO_DIV_CLK?
 
-> ---
->   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 62 ++++++++---------------
->   1 file changed, 20 insertions(+), 42 deletions(-)
+I'll then extend this header with QMP_UFS_RX_SYMBOL_0_CLK 
+QMP_UFS_RX_SYMBOL_1_CLK and QMP_UFS_TX_SYMBOL_0_CLK.
+
+>>
+>> What are these about? To remind - we talk about names of clocks this
+>> device creates. The output names. Whatever IDs you have are not related
+>> to the names.
+> 
+> As I mentioned above, this is not about the names that Linux gives to
+> its representation of these clocks. Its just about defining the valid
+> indexes in the binding.
+> 
+> If you think that that using 'clock-output-names' for this is a bit too
+> unconventional, I can add back the header with defines like the above
+> instead.
+> 
+> Note that the clock schema has:
+> 
+>    clock-output-names:
+>      description: |
+>        Recommended to be a list of strings of clock output signal
+>        names indexed by the first cell in the clock specifier.
+>        However, the meaning of clock-output-names is domain
+>        specific to the clock provider, ...
+> 
+> Johan
+
 -- 
 With best wishes
 Dmitry
