@@ -2,79 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D015627B58
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 12:01:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 75561627B8C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 12:07:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236449AbiKNLBP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 06:01:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56430 "EHLO
+        id S236563AbiKNLHp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 06:07:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236428AbiKNLBO (ORCPT
+        with ESMTP id S236627AbiKNLH0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 06:01:14 -0500
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5062E1E73D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 03:01:13 -0800 (PST)
-Received: by mail-lj1-x22f.google.com with SMTP id b9so12658141ljr.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 03:01:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Z0K2PDFt9eg+OLvMvtV5tszL+A3jKSFv8/ermJSvM6I=;
-        b=SKWEe4rvqLJRNVtWqBQfk1NKhxFf8kIc3YODoMj0UljFyOSVi7j17YCxNArprTIjx/
-         JHJPUcYXwHqp2Tzsv2RTQ4hIwFt5VATCnE6Lb1riuALSsV1lul/31mqB9GEGgFYNYcwH
-         /CYxP1zvZJlRtl4um28l6Lx5S7u+Bs8Askx+rKZke1tDpMisnZBpbuYYyShhfy4oJSwR
-         qU+h/Ql/ef0xUuTKpv5DroMWWNiZqmyFA4Bl2vnR+aStS6sXCA6HGIZZK+E73/+aS16O
-         WEGTNFxqcEX8PE6tHEFlyGmq8rwIly88mU+Z7QF/bN3gndPq9QXawan9IJ1V14XLQqjB
-         vzkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z0K2PDFt9eg+OLvMvtV5tszL+A3jKSFv8/ermJSvM6I=;
-        b=vTmH/bE8xTFtQzg1uuDdl9OYThE/YYXquV/U9Zm05grSEN1CbbaXxFks0Tf/ItZdxM
-         Mk4Bv5Uq6k08ICi6gp2vhSCSi4pTChFLFzmV57iTB1/vWXzpNcUvUA8jCqrzl39LMGsq
-         pifeWilFkCp91MXtPNMonTqE3mHaZc2gj49pzawiNHI1zycoxkwIhX/4f+Xz+OcWd0kr
-         /fR+9uKOdugpJ9aBtrhc+0sTSv9/WWO7pYksG5YoQNGjjPZwo3ZNO6fTVxpKTrbc5CJf
-         nHrH9rdi038v6zphAENd8lW4YnTZLhRgRwyGwA+dJKT20n0S9gIZyu9xGoTfKb1u4ynK
-         Fd+w==
-X-Gm-Message-State: ANoB5pmMP/9tsG3gw7RLim9qY4jOuMDxaYekdW68u+H5wdyXaDHdpFWY
-        AYs7BFw6ORTkCDgtmRahM5Khaw==
-X-Google-Smtp-Source: AA0mqf5ycgoBx4Z8VaCrIUY0xVHbM2bYVeNsPBV0K1lSLmoZB6Fpf2cQQT5MxKBnrnZby9GLMJXJpQ==
-X-Received: by 2002:a05:651c:194f:b0:278:eef5:8d19 with SMTP id bs15-20020a05651c194f00b00278eef58d19mr2834105ljb.429.1668423671598;
-        Mon, 14 Nov 2022 03:01:11 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id p5-20020a2ea405000000b00278e9c0d3a2sm1753511ljn.33.2022.11.14.03.01.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Nov 2022 03:01:11 -0800 (PST)
-Message-ID: <6fa8e3ea-2113-d930-96bc-3726d53e5bcd@linaro.org>
-Date:   Mon, 14 Nov 2022 12:01:09 +0100
+        Mon, 14 Nov 2022 06:07:26 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECF2A20BF0;
+        Mon, 14 Nov 2022 03:07:16 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 19582B80DEB;
+        Mon, 14 Nov 2022 11:07:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E46C433C1;
+        Mon, 14 Nov 2022 11:07:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668424033;
+        bh=49UtItfLQZcbV45mXRG9vFVDAY6GdI89kbkn+0l94+A=;
+        h=From:To:Cc:Subject:Date:From;
+        b=eD9lTovwvWHP2VNP+oiRZjWXyNqlj3Ukcw8+RvDMevESCNjqWq+TVTp+yIt5n9hBm
+         zMqXlJt1FHwLx8a6W7qhnegDoNjY2LwxCoK+EognPsxoE83qddkVhE4t5w7Ry2EnbD
+         HK/rH70VyeSyjANLqLrvlqUEC8NE3MqnxeU8fPrRsH6WjjTyXWuFnSRbtRqr+Emqwz
+         37nIhiRLydSBT8uwUViiRTF01ZsuEkA4j42OgQaCWhxSTyMwVtkxzJ8wGEbom9aQxK
+         otlH6HL8ZOsyHkaJX2mgmQO6UvGWOtgtPxEfVPso8Yddz2hEwe5T9dTnd+3h7G++WY
+         /55tO5mzkX8WA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1ouXIX-0001EP-1g; Mon, 14 Nov 2022 12:06:41 +0100
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v2 00/22] phy: qcom-qmp-combo: preparatory cleanups (set 2/3)
+Date:   Mon, 14 Nov 2022 12:05:59 +0100
+Message-Id: <20221114110621.4639-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.37.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v2 1/9] dt-bindings: arm-smmu: Allow up to 3 power-domains
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     patches@linaro.org, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221114104222.36329-1-konrad.dybcio@linaro.org>
- <20221114104222.36329-2-konrad.dybcio@linaro.org>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221114104222.36329-2-konrad.dybcio@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,36 +59,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/11/2022 11:42, Konrad Dybcio wrote:
-> Some SMMUs require that a vote is held on as much as 3 separate PDs
-> (hello Qualcomm). Allow it in bindings.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> Changes since v1:
-> - Add minItems
-> 
->  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-> index 9066e6df1ba1..82bc696de662 100644
-> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-> @@ -159,7 +159,8 @@ properties:
->            through the TCU's programming interface.
->  
->    power-domains:
-> -    maxItems: 1
-> +    minItems: 0
+Here's a set of preparatory cleanups needed to fix the devicetree
+binding and add (proper) support for SC8280XP to the combo driver but
+that are otherwise self-contained.
 
-It cannot be 0.
+The full series is over forty patches and I'll be posting these in three
+parts of which this is the second. In an effort to get all of these into
+6.2, I'll also be submitting all three series before waiting for the
+previous ones to be applied.
 
-minItems: 1
+This series specifically separates the USB and DP PHY ops
+implementations, and merges the USB and DP driver data and
+configurations.
 
-Anyway you still need to restrict it per variant, as I said in previous
-version.
+Johan
 
-Best regards,
-Krzysztof
+
+Changes in v2
+ - remove pcs_misc also from comment in DP legacy DT helper as this has
+   never been part of the binding (even if some SoC dtsi got that wrong)
+ - drop the lanes configuration parameter (new patch)
+ - drop USB PHY init sequence cleanup (not needed after removing the
+   lanes parameter)
+
+
+Johan Hovold (22):
+  phy: qcom-qmp-combo: sort device-id table
+  phy: qcom-qmp-combo: move device-id table
+  phy: qcom-qmp-combo: move pm ops
+  phy: qcom-qmp-combo: rename PHY ops structures
+  phy: qcom-qmp-combo: drop unused DP PHY mode op
+  phy: qcom-qmp-combo: rename USB PHY ops
+  phy: qcom-qmp-combo: drop unnecessary debug message
+  phy: qcom-qmp-combo: separate USB and DP init ops
+  phy: qcom-qmp-combo: rename DP PHY ops
+  phy: qcom-qmp-combo: separate USB and DP power-on ops
+  phy: qcom-qmp-combo: clean up serdes initialisation
+  phy: qcom-qmp-combo: separate USB and DP devicetree parsing
+  phy: qcom-qmp-combo: add dedicated DP iomem pointers
+  phy: qcom-qmp-combo: clean up DP configurations
+  phy: qcom-qmp-combo: rename sc8280xp config
+  phy: qcom-qmp-combo: add DP configuration tables
+  phy: qcom-qmp-combo: drop lanes config parameter
+  phy: qcom-qmp-combo: merge USB and DP configurations
+  phy: qcom-qmp-combo: merge driver data
+  phy: qcom-qmp-combo: clean up device-tree parsing
+  phy: qcom-qmp-combo: clean up probe initialisation
+  phy: qcom-qmp-combo: clean up DP callback names
+
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 1344 ++++++++++-----------
+ 1 file changed, 608 insertions(+), 736 deletions(-)
+
+-- 
+2.37.4
 
