@@ -2,102 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D1BC627774
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 09:23:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 76412627798
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 09:27:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236371AbiKNIXR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 03:23:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42336 "EHLO
+        id S236472AbiKNI1a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 03:27:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236369AbiKNIXP (ORCPT
+        with ESMTP id S236434AbiKNI1U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 03:23:15 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3911D1AD9D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 00:23:14 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id bp15so17987908lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 00:23:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UzuIXzgVBbI4qXY2baaAexD3LrP49vG6Bo5QwNa8cpA=;
-        b=YJMlPhqFeNe/En5JSvNaDhA15oD31ZMse9whRM9R5LPwhtsPN/ROaaQ6xqXUhrb+2I
-         nmWp6UwRwQEEqEia7NDpwEbD4ooM7Z//wQOI5Ncx/7f4B3ZjU+4w+BSs0JjqjLmiHaxU
-         /XJDDRYCathOvQJxVI9v70feKtVRThE/5yYbOLIXtLKNUSa+GOHpVcWxePFgEeo98chV
-         mxu4HS6ep/qv/bcQZK2oSyl2dIeCzvwtAPgd9jcwO6GQHGswalz1HzLndib1oZgbAx5h
-         RgzkHfIP7KqUOV5OJjAqEQxvmG32uGIDyfAgQyZ+aq41D6+nJ4Mj4fNslZ/xuELk84oL
-         PlTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UzuIXzgVBbI4qXY2baaAexD3LrP49vG6Bo5QwNa8cpA=;
-        b=n0iMHYyuGjuE2/wTg6Fynk2aqVmievmRcxR5MM17vf90PdoGJqG/04q1PRHyq7HLNS
-         D4pdHPSyVSgThGaRJekZLAR+T0ANgKf2zsT5I9RHJlCu5gKU1v7XVYkp/5CgY+iejgO+
-         i1bY2V3To6GGguGdZeP8H88gYNsADpvDBCUsLW4r+j00gXOcw9dmJ7GZ9Nu6vw76uzRW
-         Dlzmh7TT2K2KrpWYEeRyIQ00Ou3JLdrfP26WMUGXsdly6ferHMtvqs3vJngZDAQ6affx
-         ju9V0+7dYUJDEuOxjte11dLn/k+9MSSCBzFdFNgRSP6ltQCVRr11QaVekzLca+Y4qSGL
-         Htkg==
-X-Gm-Message-State: ANoB5pnpH4o6mHW6hXGLVG1Qgv1yX1QYD6VXvbVBuGAYJOPq51amPmes
-        H/8JTry7jYwfNuerxvsa0Sz3lQ==
-X-Google-Smtp-Source: AA0mqf7OUWm5Rtc5riD3KjJncb+wbHHVjUlqyYJCIr+E9i9SC0nA2fTXhPR4SKM4Ub72vdqTFuJ6OQ==
-X-Received: by 2002:a05:6512:3f19:b0:4ac:3f87:151f with SMTP id y25-20020a0565123f1900b004ac3f87151fmr4039536lfa.398.1668414192605;
-        Mon, 14 Nov 2022 00:23:12 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id d9-20020a056512368900b004b373f61a60sm1741674lfs.96.2022.11.14.00.23.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Nov 2022 00:23:12 -0800 (PST)
-Message-ID: <c0dca253-77a0-2a0a-8a03-2a727512eedb@linaro.org>
-Date:   Mon, 14 Nov 2022 09:23:10 +0100
+        Mon, 14 Nov 2022 03:27:20 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EB5E1B7A6;
+        Mon, 14 Nov 2022 00:27:17 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AE84Nf0007838;
+        Mon, 14 Nov 2022 08:27:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type :
+ content-transfer-encoding; s=qcppdkim1;
+ bh=7+J08TV+0Iia79MFT0vTqGM4PT7GfAZUdItBGmxImpE=;
+ b=XQLgNTCUl6yvrclkz2TY5VeAHGxZmRLdX/zwcT5kZOlBq5OuOL+dqJ5RQRkC7UNh9H+Z
+ q0x2r5Q9jjTB99t9+t55abneCRtcUA6bB2LmyHHKMj91YI+lS5ZgL9QzNsgDGe0yNnyW
+ tBgQngjbQK5PxQASVmWw1HvtE+kcnjXStYi6m5ofBxm7kWnJI/lBOkvnyAJyQ66rs5ux
+ SWcVgVQwwfxm2fy4UaNSvyeVw9C3bJFAKMOIS2+YaD1qtZlGpqN5sH9jfwdjmFInS6yq
+ Xmwm3awXvZKcrAUxKiijB1pbo8fSsPodz/4w4WYsNF+Wh/bxndlYx/mYXagmoDQacFon jg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kufk20cnt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 14 Nov 2022 08:27:04 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AE8R3Hw028145
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 14 Nov 2022 08:27:03 GMT
+Received: from blr-ubuntu-311.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Mon, 14 Nov 2022 00:27:00 -0800
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+To:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <robh+dt@kernel.org>
+CC:     <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <konrad.dybcio@somainline.org>, <robimarko@gmail.com>,
+        <quic_gurus@quicinc.com>, <quic_rjendra@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH V4 0/2] SCM: Add support for wait-queue aware firmware
+Date:   Mon, 14 Nov 2022 13:56:42 +0530
+Message-ID: <20221114082644.28739-1-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 1/7] dt-bindings: iommu: qcom,iommu: Document qcom,ctx-num
- property
-Content-Language: en-US
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>, agross@kernel.org
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, joro@8bytes.org,
-        will@kernel.org, robin.murphy@arm.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robdclark@gmail.com,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        marijn.suijten@somainline.org, kernel@collabora.com,
-        luca@z3ntu.xyz, a39.skl@gmail.com, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20221111135525.204134-1-angelogioacchino.delregno@collabora.com>
- <20221111135525.204134-2-angelogioacchino.delregno@collabora.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221111135525.204134-2-angelogioacchino.delregno@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: x6J54nauQurWYnwkqqXXG7E3pDWajQK3
+X-Proofpoint-GUID: x6J54nauQurWYnwkqqXXG7E3pDWajQK3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-14_07,2022-11-11_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
+ suspectscore=0 bulkscore=0 clxscore=1015 impostorscore=0 malwarescore=0
+ priorityscore=1501 adultscore=0 spamscore=0 lowpriorityscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
+ definitions=main-2211140061
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/11/2022 14:55, AngeloGioacchino Del Regno wrote:
-> Add a new "qcom,ctx-num" property to force an ASID number on IOMMU
-> contexts where required.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> ---
->  Documentation/devicetree/bindings/iommu/qcom,iommu.txt | 1 +
+This patch series enables the QCOM SCM driver to support firmware (FW) versions
+that expect the high-level OS (HLOS) to be tolerant of SCM call requests not
+being processed right away and, instead, being placed on a wait-queue in FW and
+processed accordingly.
 
-This is already a v2:
-https://lore.kernel.org/all/20220527212901.29268-1-konrad.dybcio@somainline.org/
+The problem this feature is fixing is as follows. In a scenario where there is
+a VM in addition to HLOS (and an underlying hypervisor):
 
-and your v2 was a v3...
+1. HLOS makes an SMC call on core 5
+2. The hypervisor scheduling interrupt interrupts this SMC call.
+3. The hypervisor schedules the VM on core 5.
+4. The VM makes an SMC call on core 5.
+5. The SMC call is non-interruptibly stuck on FW spinlock on core 5.
+6. HLOS cannot reschedule since core 5 is not responding to Reschedule IPIs.
+7. Watchdog timer expires waiting for core 5.
 
-Best regards,
-Krzysztof
+This problem is solved by FW returning a new return code SCM_WAITQ_SLEEP to
+HLOS right away when it is overwhelmed by the VM's SMC call. HLOS then places
+the call on a wait-queue and wakes it up when it receives an interrupt that
+signifies "all-clear".
+
+There are two new SMC calls also being defined in this design that, together
+with one new return code, form the handshake protocol between Linux and FW.
+
+This design is also backwards-compatible with existing firmware versions that
+do not support this feature.
+
+v4:
+- Use a single completion as it satisfies all of the current usecases [Bjorn]
+- Misc. logic/style fixes [Bjorn]
+- Qualify bindings [Krzysztoff]
+
+v3:
+- Drop allow-multi-call property since HLOS doesn't completely support it
+  yet.
+- Fixup irq handling so as not to affect SoCs without the interrupt.
+  - Fix warnings reported by kernel test-bot.
+
+v2:
+- Changes made to patches 4 and 5 are listed therein.
+- Rebased dt-bindings on top of the YAML conversion patch [1].
+
+  Older version of the series:
+  [v2] https://patchwork.kernel.org/project/linux-arm-msm/cover/1661898311-30126-1-git-send-email-quic_gurus@quicinc.com/
+  [v1] https://patchwork.kernel.org/project/linux-arm-msm/cover/1656359076-13018-1-git-send-email-quic_gurus@quicinc.com/
+
+Guru Das Srinagesh (2):
+  dt-bindings: firmware: qcom-scm: Add optional interrupt
+  firmware: qcom: scm: Add wait-queue handling logic
+
+ .../bindings/firmware/qcom,scm.yaml           |   6 ++
+ drivers/firmware/qcom_scm-smc.c               |  94 ++++++++++++++--
+ drivers/firmware/qcom_scm.c                   | 102 +++++++++++++++++-
+ drivers/firmware/qcom_scm.h                   |   9 ++
+ 4 files changed, 203 insertions(+), 8 deletions(-)
+
+-- 
+2.17.1
 
