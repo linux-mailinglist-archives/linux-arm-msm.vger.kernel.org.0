@@ -2,70 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EAAD6286A9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 18:08:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4255B6286D0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 18:19:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236399AbiKNRI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 12:08:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48322 "EHLO
+        id S235613AbiKNRSo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 12:18:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238101AbiKNRI4 (ORCPT
+        with ESMTP id S237054AbiKNRS3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 12:08:56 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8C87C74D;
-        Mon, 14 Nov 2022 09:08:53 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 5CCE9B8109E;
-        Mon, 14 Nov 2022 17:08:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07EB5C433D6;
-        Mon, 14 Nov 2022 17:08:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668445731;
-        bh=nLP0ZNboWVONXh3vcZ+RBsQATflLw39DNNAy7jBUUuY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tysbVSveryf2eeWISCylrpUo/1kIP5i8+Ys+T7IwLJ0h7M60xDS2EBR0DMS2uBYaT
-         WMvdNsgE44bqARSBvkj0H4QCdsiC9Pu4085CBqyxd8Y6y5nMeYHJiCJSa8MEydj6Pr
-         9r0vBOxRpLHET7wbB2XDH/WNj+LR8Rejh9v5bOijlsP9Sp+r2zaKm0CXj4TXirQXBg
-         B8pH5CBDHw2fxgs0KPLHR/M0dImtozbGEHnxpAzJu2SyVM7GPDyhfsZ4TmcxLFNsk/
-         JLX4Y165Dk39Ktw7RmouUJg3ltxLemklC+vItFC4WstEJmW1FfOh3xMyJTKYmh03EZ
-         V9bRt8YMl7H4A==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oucwU-0005RO-H9; Mon, 14 Nov 2022 18:08:19 +0100
-Date:   Mon, 14 Nov 2022 18:08:18 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 02/14] dt-bindings: phy: qcom,qmp-usb3-dp: fix sc8280xp
- bindings
-Message-ID: <Y3J2AjjjsybI9mKd@hovoldconsulting.com>
-References: <20221111092457.10546-3-johan+linaro@kernel.org>
- <a22888cd-34cb-3453-0dc2-096da208564c@linaro.org>
- <Y3JCVzJ74YsfcDz4@hovoldconsulting.com>
- <de3a426a-03e8-ed15-a9a1-bb300e776e5f@linaro.org>
- <Y3JOO0kNnaNhnW3K@hovoldconsulting.com>
- <02725b78-04ad-8f4a-25c2-9cdaa1e37ab7@linaro.org>
- <Y3JthM1jC2vH1Kn+@hovoldconsulting.com>
- <efd412d0-7411-8b0b-4700-9e183a592048@linaro.org>
- <Y3JxZ+yFMLZkwNBi@hovoldconsulting.com>
- <8420c342-9dce-aea7-8d1e-f141e0c1ebb5@linaro.org>
+        Mon, 14 Nov 2022 12:18:29 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA075BC6;
+        Mon, 14 Nov 2022 09:18:27 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AEGTkYv006912;
+        Mon, 14 Nov 2022 17:18:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=RrO1iy8UfPdosaJpH1XKYTCIqCwYtw6qosnHAMp6E3Q=;
+ b=kXLB3DNeKDCTbKNd1cfolWxw5Q9M0wCdsVyy48m8ye5wbTs5XF15UjmU2HAZwpJRjNsG
+ JinJ1XgmUXscmMaQw2dGaWwtKO6TrtcFm3zKj1yago3FjQpZMCFIpcCsO8U3uP7to3ln
+ 1v8nN9V2wyUvLQzjVAhTtKC0L0xQr9wxg+5+fmuYUfiTrBmMkKceMNwJS5iwJzo+psDe
+ nqs64ikLq4mP+v0jaubqNHtsOll08KG5X2oqYNtXEVgaIoNuOKoVB5jRu2mGJ1olAI8R
+ BlVeaMK6DbMWJHxNjpc43Uofc6/tFgCprSk2qJ8zQMw4ZDRmFJfX7HpLIywGZOIgVbLd Cg== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kus8cg47h-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 14 Nov 2022 17:18:18 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AEHIHEq016778
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 14 Nov 2022 17:18:17 GMT
+Received: from [10.251.44.51] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 14 Nov
+ 2022 09:18:13 -0800
+Message-ID: <a4364e85-7970-d215-17f2-d5ff9a3dbaab@quicinc.com>
+Date:   Mon, 14 Nov 2022 19:18:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8420c342-9dce-aea7-8d1e-f141e0c1ebb5@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v4 0/4] media: camss: sm8250: Virtual channels support for
+ SM8250
+To:     Robert Foss <robert.foss@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+CC:     <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <akapatra@quicinc.com>, <jzala@quicinc.com>, <todor.too@gmail.com>,
+        <agross@kernel.org>, <konrad.dybcio@somainline.org>,
+        <mchehab@kernel.org>, <cgera@qti.qualcomm.com>,
+        <gchinnab@quicinc.com>, <ayasan@qti.qualcomm.com>,
+        <laurent.pinchart@ideasonboard.com>
+References: <20221013121255.1977-1-quic_mmitkov@quicinc.com>
+ <46d82762-8b6b-8a3e-0bdd-5598163244de@linaro.org>
+ <CAG3jFysAfymcFS54CyxBYhJbQ4Qh7bvhpE8UPc3S1o_8uQq7Xg@mail.gmail.com>
+Content-Language: en-US
+From:   "Milen Mitkov (Consultant)" <quic_mmitkov@quicinc.com>
+In-Reply-To: <CAG3jFysAfymcFS54CyxBYhJbQ4Qh7bvhpE8UPc3S1o_8uQq7Xg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: cWuTbfoONGsq_PgAamLH4vIUaM21jkJa
+X-Proofpoint-ORIG-GUID: cWuTbfoONGsq_PgAamLH4vIUaM21jkJa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-14_12,2022-11-11_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ impostorscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0 clxscore=1011
+ priorityscore=1501 malwarescore=0 mlxlogscore=999 suspectscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211140124
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,60 +86,119 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 14, 2022 at 05:56:21PM +0100, Krzysztof Kozlowski wrote:
-> On 14/11/2022 17:48, Johan Hovold wrote:
-> > On Mon, Nov 14, 2022 at 05:39:26PM +0100, Krzysztof Kozlowski wrote:
-> >> On 14/11/2022 17:32, Johan Hovold wrote:
-> > 
-> >>> Fair enough, I'll drop it. But there doesn't seem to be a good way to
-> >>> describe the indexes currently and most bindings simply ignore to do so.
-> >>>
-> >>> So what is the preference then? Just leave things undocumented, listing
-> >>> indexes in a free-text 'description', or adding a free-text reference to
-> >>> a binding header file and using those define names in a free-text
-> >>> 'description'?
-> >>
-> >> Either 2 or 3. Several bindings for small number of constants choose
-> >> option 2.
-> > 
-> > Ok, we have three now, but USB4 will bump this to ten or so.
-> 
-> Then probably header file is the way to go.
-> 
-> >  
-> >>> And if going with the last option, does this mean that every SoC and PHY
-> >>> type needs its own header for those three clocks or so to avoid having
-> >>> a common dumping ground header file where indexes will not necessarily
-> >>> be 0-based and consecutive.
-> >>
-> >> phy-qcom-qmp-combo.c has one qcom_qmp_dp_clks_hw_get(), so why would you
-> >> have many of header files?
-> > 
-> > We don't know what kind of clock outputs later revisions of these PHYs
-> > will have. The only way to guarantee 0-based consecutive indexes appears
-> > to be to use per-SoC defines (e.g. as for the GCC bindings).
-> 
-> Which is also fine. I don't understand still why it is a problem - even
-> if you have multiple files, one for each SoC/phy. If USB4 brings here 10
-> more clocks and other SoCs/phys might bring many more options, then what
-> else can you do? Grow the binding file with big text-based mapping of
-> IDs? It's not a viable solution. Header or headers is the only
-> maintainable way for such cases.
 
-So then we must add per-SoC (and PHY type) headers even if we can
-possibly reuse defines from one platform for another as long as they
-appear to be similar enough? For example, using a "SC7180_USB3_DP" infix
-for the current platforms and add a new series of indexes for SC8280XP:
+On 08/11/2022 12:35, Robert Foss wrote:
+> On Tue, 8 Nov 2022 at 01:12, Bryan O'Donoghue
+> <bryan.odonoghue@linaro.org> wrote:
+>> On 13/10/2022 13:12, quic_mmitkov@quicinc.com wrote:
+>>> From: Milen Mitkov <quic_mmitkov@quicinc.com>
+>>>
+>>> For v4:
+>>> - fixes the warning reported by the kernel test robot
+>>> - tiny code change to enable the vc functionality with the partially-applied
+>>>     multistream patches on linux-next (tested on tag:next-20221010)
+>>>
+>>> For v3:
+>>> - setting the sink pad format on the CSID entity will now propagate the
+>>>     format to the source pads to keep the subdev in a valid internal state.
+>>> - code syntax improvements
+>>>
+>>> For v2:
+>>> - code syntax improvements
+>>> - The info print for the enabled VCs was demoted to a dbg print. Can be
+>>>     enabled with dynamic debug, e.g.:
+>>> echo "file drivers/media/platform/qcom/camss/* +p" > /sys/kernel/debug/dynamic_debug/control
+>>>
+>>> NOTE: These changes depend on the multistream series, that as of yet
+>>> is still not merged upstream. However, part of the
+>>> multistream patches are merged in linux-next (tested on
+>>> tag:next-20221010), including the patch that introduces the
+>>> video_device_pipeline_alloc_start() functionality. This allows
+>>> applying and using this series on linux-next without applying the
+>>> complete multistream set.
+>>>
+>>> The CSID hardware on SM8250 can demux the input data stream into
+>>> maximum of 4 multiple streams depending on virtual channel (vc)
+>>> or data type (dt) configuration.
+>>>
+>>> Situations in which demuxing is useful:
+>>> - HDR sensors that produce a 2-frame HDR output, e.g. a light and a dark frame
+>>>     (the setup we used for testing, with the imx412 sensor),
+>>>     or a 3-frame HDR output - light, medium-lit, dark frame.
+>>> - sensors with additional metadata that is streamed over a different
+>>>     virtual channel/datatype.
+>>> - sensors that produce frames with multiple resolutions in the same pixel
+>>>     data stream
+>>>
+>>> With these changes, the CSID entity has, as it did previously, a single
+>>> sink port (0), and always exposes 4 source ports (1, 2,3, 4). The
+>>> virtual channel configuration is determined by which of the source ports
+>>> are linked to an output VFE line. For example, the link below will
+>>> configure the CSID driver to enable vc 0 and vc 1:
+>>>
+>>> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+>>> media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
+>>>
+>>> which will be demuxed and propagated into /dev/video0
+>>> and /dev/video1 respectively. With this, the userspace can use
+>>> any normal V4L2 client app to start/stop/queue/dequeue from these
+>>> video nodes. Tested with the yavta app.
+>>>
+>>> The format of each RDI channel of the used VFE(s) (msm_vfe0_rdi0,
+>>> msm_vfe0_rdi1,...) must also be configured explicitly.
+>>>
+>>> Note that in order to keep a valid internal subdevice state,
+>>> setting the sink pad format of the CSID subdevice will propagate
+>>> this format to the source pads. However, since the CSID hardware
+>>> can demux the input stream into several streams each of which can
+>>> be a different format, in that case each source pad's
+>>> format must be set individually, e.g.:
+>>>
+>>> media-ctl -V '"msm_csid0":1[fmt:SRGGB10/3840x2160]'
+>>> media-ctl -V '"msm_csid0":2[fmt:SRGGB10/960x540]'
+>>>
+>>> Milen Mitkov (4):
+>>>     media: camss: sm8250: Virtual channels for CSID
+>>>     media: camss: vfe: Reserve VFE lines on stream start and link to CSID
+>>>     media: camss: vfe-480: Multiple outputs support for SM8250
+>>>     media: camss: sm8250: Pipeline starting and stopping for multiple
+>>>       virtual channels
+>>>
+>>>    .../platform/qcom/camss/camss-csid-gen2.c     | 54 ++++++++++------
+>>>    .../media/platform/qcom/camss/camss-csid.c    | 44 +++++++++----
+>>>    .../media/platform/qcom/camss/camss-csid.h    | 11 +++-
+>>>    .../media/platform/qcom/camss/camss-vfe-480.c | 61 ++++++++++++-------
+>>>    drivers/media/platform/qcom/camss/camss-vfe.c |  7 +++
+>>>    .../media/platform/qcom/camss/camss-video.c   | 21 ++++++-
+>>>    drivers/media/platform/qcom/camss/camss.c     |  2 +-
+>>>    7 files changed, 140 insertions(+), 60 deletions(-)
+>>>
+>> I've done some offline work with Milen on this.
+>>
+>> I'm happy enough to add my
+>>
+>> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>
+>> to the series. I don't have - currently a VC enabled setup but for the
+>> simple case this set doesn't break anything on RB5 for me.
+>>
+>> ---
+>> bod
+> This series has my ack.
+>
+> Acked-by: Robert Foss <robert.foss@linaro.org>
 
-	QMP_SC7180_USB3_DP_USB3_PIPE			0
-	QMP_SC7180_USB3_DP_DP_LINK			1
-	QMP_SC7180_USB3_DP_DP_VCO_DIV			2
+Hi Robert, Bryan et al,
 
-	QMP_SC8280XP_USB4_USB3_DP_USB3_PIPE		0
-	QMP_SC8280XP_USB4_USB3_DP_DP_LINK		1
-	QMP_SC8280XP_USB4_USB3_DP_DP_VCO_DIV		2
-	QMP_SC8280XP_USB4_USB3_DP_USB4_PCIE_PIPE	3
-	...
-	QMP_SC8280XP_USB4_USB3_DP_USB4_RX1		9
+Thanks for the Tested-by and Acked-by.
 
-Johan
+Do I need to resubmit the patches with the added new tags?
+
+If this is not needed, is there something else I can do to help the 
+merging process?
+
+
+Thank you,
+
+Milen
+
