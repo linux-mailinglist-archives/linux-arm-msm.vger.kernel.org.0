@@ -2,117 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F89D627B29
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 11:57:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1209C627B39
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 11:59:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236006AbiKNK5l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 05:57:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52654 "EHLO
+        id S236179AbiKNK7U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 05:59:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235758AbiKNK5k (ORCPT
+        with ESMTP id S235983AbiKNK7T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 05:57:40 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 968011D0F0;
-        Mon, 14 Nov 2022 02:57:39 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 4B580B80DDF;
-        Mon, 14 Nov 2022 10:57:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B5DC433C1;
-        Mon, 14 Nov 2022 10:57:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668423457;
-        bh=fUQ9vpvOPE5lm++N751vUFvd8FWP71h+ikUD+qipnFw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=P9Y9QF3gyLnULxGSOG70vhOS13YMbNd6ulz2UXtYzXr/4muZvQ9G4sjuFJngy0iFW
-         zTQ6ruoB44v/QHRlLJTF2bAr9UfToR8CQGZkDIZ6ZULOouDAb3WNdfmTkKvriogcHS
-         d1MbFwy/MQAFMawia7USsV4woKNYd0l4tvAXdVnvp+r63SNV35iCwYfx5bO9MNHkKf
-         zzHDtLN2s2Ni8rc/ZfazsvXd8+QjvrdWVF5jFrB3EWa4GEySV3ZvqjHzU3EGnkXUTH
-         Cs/NcVJ7mVT19kWgYeZoOM6XZLH2kJRYdcq6NfzEZX3FpEIL0RXTufNJLVVX8zabx4
-         1lv+/meEFsb7Q==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ouX9E-00010k-Jv; Mon, 14 Nov 2022 11:57:04 +0100
-Date:   Mon, 14 Nov 2022 11:57:04 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 17/22] phy: qcom-qmp-combo: merge USB and DP
- configurations
-Message-ID: <Y3IfAEhpPRLnFRhr@hovoldconsulting.com>
-References: <20221111085643.9478-1-johan+linaro@kernel.org>
- <20221111085643.9478-18-johan+linaro@kernel.org>
- <5fd7a56f-db12-deb3-753a-22867526d90b@linaro.org>
- <Y3ICOwr2ld9cdgrK@hovoldconsulting.com>
- <8802255c-16a9-1fb7-bbc5-d8e0d44a6f1f@linaro.org>
+        Mon, 14 Nov 2022 05:59:19 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D6B9F59B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 02:59:19 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id f7so16701885edc.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 02:59:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=D8YGXQQoceru8xg26Tk1VwC8A8r+/gdTVSnEGfsNUm0=;
+        b=RJCFaa7sh3dvpYealcjXNEO68n35wly4GRBuqubGlODw5dRBvxb7dDUSYntR5/CNB0
+         xFyNh3XzaUotyilA4VWhUS0/EX0iG7Vww6AHCchigtHWkv4KdGOB6k0e2xwY49ABLfEZ
+         pKEPIBnUMGXxB/vr6g+XYFrLACRDhwGRnXjAD+Ydq/r3F71/uKeSNT0sJim3c1cdlhDG
+         SOXh3Ts1qMd/SShNBMSLwUoxTqCmJ042z6n1g9GRak91ETgMANUlqiK4wYVmwu6lXR9J
+         msPVyTB85BxuVbOyUzWmhy882hVEQsKZYn9zBDNGudStkKF3BB1iOCJX2JOcFbWyZsic
+         Zgjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=D8YGXQQoceru8xg26Tk1VwC8A8r+/gdTVSnEGfsNUm0=;
+        b=AbyiaV3MeA9/fxBCWpiOIpj6zplRF1kM/5Wez57tUF2foAXlGTtWiFUwPBUpPtu1B8
+         QiGhTHH3gFnWgwsm87CNnjIYf2r1WVapL/llBkgIV0IiITrUfFV4VyaVu3arqPk+7I3D
+         Hqb9JJukbA8UqWWqBHh2S2hMLq9t2/GThzTnKD+BvdkzjXvlrVUFAw6W3rMikHlV1Qa/
+         AkAKeui43pjelbrXk6O41mY2Uc/b+A8JHcpbNZCCiVZ8YM/79isPRGe1jYMx7ZMeOu5V
+         pGrIkWCBUXGm1QRvN5C15tLM5XBTEqk8p7mlFoxbWj5y+Npxo7grQuwC0ar1PabrBiS5
+         wFCw==
+X-Gm-Message-State: ANoB5pnVkkC7PXZIQ0LpSQABEbYm19XC5C08wXtUdH7S9nzl+p/eGuNb
+        jTsPbeSicsB4PQo4ocb+GnMvqHhQoDCUYuLV
+X-Google-Smtp-Source: AA0mqf5GLCwbo/E4+NsGCgm6Exg8CnbbSg+Mtsxfz+bXr/ORd9wEm6tvmXjKmNf4fcCH9WR96QPP7w==
+X-Received: by 2002:a50:fb01:0:b0:459:cdb:92ad with SMTP id d1-20020a50fb01000000b004590cdb92admr10629129edq.77.1668423557348;
+        Mon, 14 Nov 2022 02:59:17 -0800 (PST)
+Received: from localhost.localdomain ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id 9-20020a170906210900b007a4e02e32ffsm4036308ejt.60.2022.11.14.02.59.16
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 14 Nov 2022 02:59:16 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/3] SM6375 / PDX225 [AC]DSP DTS
+Date:   Mon, 14 Nov 2022 11:59:10 +0100
+Message-Id: <20221114105913.37044-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.32.0 (Apple Git-132)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8802255c-16a9-1fb7-bbc5-d8e0d44a6f1f@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 14, 2022 at 01:10:43PM +0300, Dmitry Baryshkov wrote:
-> On 14/11/2022 11:54, Johan Hovold wrote:
-> > On Sat, Nov 12, 2022 at 10:43:14AM +0300, Dmitry Baryshkov wrote:
-> >> On 11/11/2022 11:56, Johan Hovold wrote:
-> >>> It does not really make any sense to keep separate configuration
-> >>> structures for the USB and DP parts of the same PHY so merge them.
-   
-> >>> -/* struct qmp_phy_cfg - per-PHY initialization config */
-> >>>    struct qmp_phy_cfg {
-> >>> -	/* phy-type - PCIE/UFS/USB */
-> >>> -	unsigned int type;
-> >>>    	int lanes;
-> >>
-> >> int lanes doesn't really make sense here in my opinion. It should be
-> >> usb_lanes and dp_lanes.
-> > 
-> > It doesn't make much less sense than having it here currently do.
-> > 
-> > All of these USB-C PHYs are dual lane for bi-directional SS USB and
-> > quad lane for uni-directional DP (even if only CC1 orientation and lanes
-> > 2 and 3 are currently supported).
-> 
-> I was under impression that sdm845 has just a single lane for each of 
-> USB and DP. After rechecking the phy/next, I see that it was my mistake 
-> (quite logical, SS is two lanes, so the compliant PHY must have two 
-> lanes too).
-> 
-> I wander how/if 4-lane DP works. The only thing that we do is 
-> programming of the QSERDES_DP_PHY_PD_CTL register, however judging e.g. 
-> your 4-lane PCIe changes, one should probably also program the other two 
-> lanes. Maybe it is handled automatically inside the hardware.
+Add the required nodes for ADSP and CDSP on SM6375 (and by extension,
+PDX225).
 
-4-lane PCIe on SC8280XP is a different thing entirely (and remember that
-that's actually 8 uni-directional lanes).
+Depends on:
+[1] https://lore.kernel.org/linux-arm-msm/20221114104222.36329-1-konrad.dybcio@linaro.org/T/#t
+[2] https://lore.kernel.org/linux-arm-msm/20221109170822.58281-2-konrad.dybcio@linaro.org/T/#u
 
-I'm sure there are further problems with the current DP alt mode
-implementation, but hopefully that can be resolved when adding support
-for orientation detection. I'm just fixing the obvious bugs and try to
-stay "bug compatible" otherwise. :)
+Konrad Dybcio (3):
+  arm64: dts: qcom: sm6375: Add SMP2P for ADSP&CDSP
+  arm64: dts: qcom: sm6375: Add ADSP&CDSP
+  arm64: dts: qcom: sm6375-pdx225: Enable ADSP & CDSP
 
-> > I should probably just drop the lanes parameter completely, either as a
-> > preparatory clean up or as follow-on one (e.g. also a bit depending on
-> > if there are other reasons for respinning a v2).
-> 
-> I think a follow up is enough, but let's get it. Having a single lanes=2 
-> field looks... strange.
+ .../qcom/sm6375-sony-xperia-murray-pdx225.dts |  10 ++
+ arch/arm64/boot/dts/qcom/sm6375.dtsi          | 121 ++++++++++++++++++
+ 2 files changed, 131 insertions(+)
 
-I dropped the lane parameter as a preparatory patch to this one in v2
-that I'll post in a bit.
+-- 
+2.38.1
 
-Johan
