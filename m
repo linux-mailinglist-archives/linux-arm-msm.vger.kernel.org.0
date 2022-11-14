@@ -2,142 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 77C8C627AD3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 11:43:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BC1F627AEE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 11:49:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236478AbiKNKnB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 05:43:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39262 "EHLO
+        id S235975AbiKNKtE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 05:49:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236324AbiKNKmr (ORCPT
+        with ESMTP id S235874AbiKNKtD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 05:42:47 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A1BF1FCCA
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 02:42:46 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id c1so18553966lfi.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 02:42:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nItdB8eAMelscjG++jq869kf8s0YiV/Dw6cuOez7lOk=;
-        b=IvHcqfKhnZveNhejhcrkOLY3/IUVU7YVS62Qdr/0gXXMsHFRh2HS4OXPAPMdFgkN5I
-         xWLMbFhtu8TP41RJuC0l6XNU5IYwOvHJYh7wVobbIKMsG1iWSAxZwlfJaKsIi0khZn7a
-         r0ONVmBBKioW76jtjHKd6xO9WahfgR24xt2cSW/X7rwtDqh7icn5m6JFBQidcg0vWOP/
-         QQDL2QtZxRSPCyKlUZeV64k4ryln+zX7el4tAqlpz06pd3eoFIfMzMBhIHoK4EqVkoRo
-         5NhC328LQ74jUiaetfElmViTtZfHaLXLO/8LNoRt98qMzFSVZmL5oWipb75aOFtP4zey
-         TvNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nItdB8eAMelscjG++jq869kf8s0YiV/Dw6cuOez7lOk=;
-        b=v8mexNSsRnknS6zqnaHyb3uRnJ9mhqLgskyeLeM2zpvvugAh77cxUPOjTztlXJ37z3
-         mhrb6dsfjX4ja+vvEI4IBCaiFaSlRJBZP4QTI4GwNvekn6UqnhFQMNqZR5MRyCFqgbKa
-         1vFfcU/u5+xJwvoT3V5UVicrhNixJQOCmimFCgm9jpqswcgD4r8kKGoRaqwebbli+08C
-         H9Ktoz0XGVJcxKb05LMgEPt/yVpGTmtxipNbIEmYHsDhf7/yCe3O6CdJGRjVpIpEhuaC
-         u+HxoRKwSqJr1F93xEyCe/pT5xiQ0Sdt0csiTEJHDx9QNR6dBp91J5OWOsztxpKgWlCF
-         Pw+w==
-X-Gm-Message-State: ANoB5pkEho0rGT6/unMwdNA4ZO+OOruSW3lHY2w7huXdyUaKg0PMFq8k
-        VwniKs80B7sGwXEjvtKK5TYlX1A1sMc6wyy2
-X-Google-Smtp-Source: AA0mqf5iNmdaQzZztLQqFNo881nTgTNZbZNI9+KtHf1xoaF8oAlIWFaai+bWbqmsv7PwkjLyanux0A==
-X-Received: by 2002:a05:6512:224d:b0:4a2:be5c:688f with SMTP id i13-20020a056512224d00b004a2be5c688fmr3605583lfu.121.1668422565886;
-        Mon, 14 Nov 2022 02:42:45 -0800 (PST)
-Received: from localhost.localdomain ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id bs21-20020a05651c195500b0026c4e922fb2sm1946486ljb.48.2022.11.14.02.42.44
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 14 Nov 2022 02:42:45 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 9/9] arm64: dts: qcom: sm6375-pdx225: Configure Samsung touchscreen
-Date:   Mon, 14 Nov 2022 11:42:22 +0100
-Message-Id: <20221114104222.36329-10-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.32.0 (Apple Git-132)
-In-Reply-To: <20221114104222.36329-1-konrad.dybcio@linaro.org>
-References: <20221114104222.36329-1-konrad.dybcio@linaro.org>
+        Mon, 14 Nov 2022 05:49:03 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B11E3FAF2;
+        Mon, 14 Nov 2022 02:49:02 -0800 (PST)
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 718DC6601E4C;
+        Mon, 14 Nov 2022 10:48:59 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1668422940;
+        bh=b59RAUdgvzBDzIoLF/FN/FbsHdKBekzyW613jZm6ADQ=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=WxjiIOjL9B3Vy5WWMdALNveVc0c5liT/GntHkm2C/hnfmCMT8kYAgsMHB1EsaML3B
+         m39QcPqz0J9JdMoQkoCSI3GUxp+fKRcsBywaDbc8HAPXlRQz2gri2sGOzAygB+JdYd
+         uOdoaKAmHoOqGaoYY00zhK2T+tuMTWxNNS8iSpiixdhv9M25ksRevkiTlBs/pw3bNd
+         2buCwfspt8D438Mit/6CE2oj7I8agdlcmT8v8qoYjOPtcYeLPpjRSxT+LIh8h1LweV
+         9acTigFkVy78oZfrL+zZ00P7roep6OSQb/CqVbhb/5i/0/of7P+rZydPMuhd6QMpJ3
+         gPlORjjzF1Dbw==
+Message-ID: <f8f84113-c6f0-706c-cc87-4b57bacea059@collabora.com>
+Date:   Mon, 14 Nov 2022 11:48:56 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Subject: Re: [PATCH v2 3/8] iommu/arm-smmu: Add definition for
+ ARM_SMMU_CB_FSRRESTORE
+To:     Robin Murphy <robin.murphy@arm.com>, agross@kernel.org
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, joro@8bytes.org,
+        will@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robdclark@gmail.com,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        marijn.suijten@somainline.org, kernel@collabora.com,
+        luca@z3ntu.xyz, a39.skl@gmail.com, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20221111145919.221159-1-angelogioacchino.delregno@collabora.com>
+ <20221111145919.221159-4-angelogioacchino.delregno@collabora.com>
+ <d677f7c1-8c99-4bb0-d363-7a538b38a83a@arm.com>
+Content-Language: en-US
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <d677f7c1-8c99-4bb0-d363-7a538b38a83a@arm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a pretty bog-standard-for-Xperias-for-the-past-3-years
-touchscreen setup.
+Il 11/11/22 16:18, Robin Murphy ha scritto:
+> On 11/11/2022 2:59 pm, AngeloGioacchino Del Regno wrote:
+>> In preparation for adding a proper context bank reset sequence in
+>> qcom_iommu, add a definition for the implementation defined Fault
+>> Status Restore register (FSRRESTORE).
+> 
+> It's not implementation defined, it's architectural. But I don't follow why we 
+> should need this. If we're resetting FSR, we don't need to restore any previous 
+> value to it; all we want to do is clear it, which we do already via its own mechanism.
+> 
 
-The OEM that built the Xperia 10 IV for SONY decided to use some
-kind of a GPIO regulator that needs to be enabled at all times
-for both the touch panel and the display panel to function.
+The spec says "configurations" -> implementation defined whether the system
+implements stage 1 translation.... and that's how I got confused about it, sorry.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-No changes since v1.
+Thanks for the review, this clears up my doubts: I can reset FSR without caring
+about FSRRESTORE.
+I'll send a v3 ASAP.
 
- .../qcom/sm6375-sony-xperia-murray-pdx225.dts | 31 +++++++++++++++++++
- 1 file changed, 31 insertions(+)
+Regards,
+Angelo
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-index 0f1ddfa28c89..d18167bcb41f 100644
---- a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-@@ -81,6 +81,23 @@ &gpi_dma1 {
- 	status = "okay";
- };
- 
-+&i2c8 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	touchscreen@48 {
-+		compatible = "samsung,s6sy761";
-+		reg = <0x48>;
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <22 0x2008>;
-+
-+		vdd-supply = <&pm6125_l13>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&ts_int_default &ts_avdd_default>;
-+	};
-+};
-+
- &pmk8350_adc_tm {
- 	status = "okay";
- };
-@@ -290,6 +307,20 @@ pmr735a_l7: l7 {
- 
- &tlmm {
- 	gpio-reserved-ranges = <13 4>;
-+
-+	ts_int_default: ts-int-default-state {
-+		pins = "gpio22";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+
-+	ts_avdd_default: ts-avdd-default-state {
-+		pins = "gpio59";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		output-high;
-+	};
- };
- 
- &usb_1 {
--- 
-2.38.1
+> Thanks,
+> Robin.
+> 
+>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+>> ---
+>>   drivers/iommu/arm/arm-smmu/arm-smmu.h | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h 
+>> b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+>> index 703fd5817ec1..5015138799c5 100644
+>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
+>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+>> @@ -219,6 +219,7 @@ enum arm_smmu_cbar_type {
+>>                        ARM_SMMU_FSR_TF |        \
+>>                        ARM_SMMU_FSR_IGN)
+>> +#define ARM_SMMU_CB_FSRRESTORE        0x5c
+>>   #define ARM_SMMU_CB_FAR            0x60
+>>   #define ARM_SMMU_CB_FSYNR0        0x68
+
 
