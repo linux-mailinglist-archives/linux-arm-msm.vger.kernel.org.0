@@ -2,103 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A09762761E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 07:51:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92F9C62767B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 08:38:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235878AbiKNGvs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 01:51:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48126 "EHLO
+        id S235955AbiKNHi3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 02:38:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235872AbiKNGvr (ORCPT
+        with ESMTP id S235948AbiKNHiW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 01:51:47 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F199C12A89
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Nov 2022 22:51:46 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id d13-20020a17090a3b0d00b00213519dfe4aso9762601pjc.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Nov 2022 22:51:46 -0800 (PST)
+        Mon, 14 Nov 2022 02:38:22 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8110418B02
+        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Nov 2022 23:38:19 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id g7so17929279lfv.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Nov 2022 23:38:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=as5OGi88eO1eBiQbZ3n0aEvSa6v8k/oQH4L8VWw5Fm8=;
-        b=KM7+QYjMRyl2lel/gkm+jBZ6omtODOEk/bUmQzB4c18uz9I+Ek/DEeqwvjEwAQxoz7
-         0THq7q3p0DQUv5PjhUxsxBvl251FZPu5FUkER4Dpafmc3jtdRDEtjomSSqbJwYcXqxsB
-         e+1Ffm/nbMAiR+wihGXKLjYwIDmwKecww4JvygNZLxiqExFmjcr5mRdSWF5zlTSLzvHZ
-         I3HqwQBO22tfk7RXfz/ZlKR2L21A5MLuWbmSNXtDDpornoxTgrlnzlzy5TCeP1YRKX+g
-         mbtzS3EinGMO17K6S+L0nvWavuUOr/nMJD6dMbwlOgt/jrbuQMO3DIuzOWDRUUfyHflJ
-         CWCw==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ynFSxiJnjGqJ7rZL3EFsUj6XQR8YJiiuP8vs5lqtRho=;
+        b=WdjHDL38LC/Li53xZO92ra0FtYQlpfAc3Y5kOBwd5fAt9FtmF27p53IlmgzlZaAP4m
+         B2Aj6tMvkr3T2gSOovlZtZOkn3j5buFcBC4BnrnuedDPQ52BMxoYiqTC3jCQRkc7jmRn
+         D+q3yHfSqRbjST/c/B0dtw2sPnRkK6fYeG8I/JGoaLz7U709SvqmfI6y78bIpQRD8ig9
+         7yckc+F2pHDdpHUCEIr5tTD+bQKxSZaAFqXPD7ebZbZXOjA7zkzxjJ5CrKIIyPg8Z5Ah
+         F8uACRgUnsvOP5B101OrZ4cNwBS3jNpk0njv3bu3+AFrpCsbJHkRlRJJCJoS6G8UV3UU
+         HpuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=as5OGi88eO1eBiQbZ3n0aEvSa6v8k/oQH4L8VWw5Fm8=;
-        b=P175+H+dzg807e8pjDmidDe/S03w/FUJCA3L6UJIF+x8WNvcyppxnIOAErj/jtKHNd
-         I9EhWNgpG7PmiCHpRFHSJVcU3QTJHI5CRB/d5NhgfN9v21XfOD3w9Vchx7AIoqsugFvv
-         t1aRf5qhuiCla5glPLSIqEhBo1QxkWlGgBcKyj7O2iY7LqDQfgS8FmY3mPtpnjN2UUzb
-         JwpXqIV6Lvp3WsMXLj4+WkptZhx0d+Pk7cYPB4eP22YTwZi8r3ZmloSJQ4p0xqi3bQZe
-         +dj8YBw7DP2LU46Vn9BtH7UPp4Ogi49dyNj4Aj2tcIejqR6tMGm7Lrzn+GdD8U5V4ljZ
-         WBLQ==
-X-Gm-Message-State: ANoB5pkode40UeKPiRSiEBATtwR1zSV2WlMQWZEgmiUQ7IZ/iYwqHD0a
-        vufvpgruD/lPXlhcjoUnAc1kyA==
-X-Google-Smtp-Source: AA0mqf7Ge7+F7+F6cj0KFKkoKYjFuZkiLPBYWjkyKmpDmWJ+FIYKEhWzDB3Hk6wekApwXSEjwUNBSg==
-X-Received: by 2002:a17:90a:3884:b0:213:5de3:13e with SMTP id x4-20020a17090a388400b002135de3013emr12638207pjb.6.1668408706408;
-        Sun, 13 Nov 2022 22:51:46 -0800 (PST)
-Received: from localhost ([122.172.85.60])
-        by smtp.gmail.com with ESMTPSA id a4-20020a170902ecc400b001869d71228bsm6506628plh.170.2022.11.13.22.51.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Nov 2022 22:51:45 -0800 (PST)
-Date:   Mon, 14 Nov 2022 12:21:43 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Sudeep Holla <sudeep.holla@arm.com>,
-        Manivannan Sadhasivam <mani@kernel.org>, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, rafael@kernel.org,
-        robh+dt@kernel.org, johan@kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH v5 3/3] cpufreq: qcom-hw: Add CPU clock provider support
-Message-ID: <20221114065143.73gbfzfoihwobzjz@vireshk-i7>
-References: <20221108154037.111794-1-manivannan.sadhasivam@linaro.org>
- <20221108154037.111794-4-manivannan.sadhasivam@linaro.org>
- <20221108155717.srlnabls5ze2resx@bogus>
- <20221109074908.GC4651@thinkpad>
- <20221109110831.lngwmwyjqp4qj73r@bogus>
- <20221109123526.GA29805@thinkpad>
- <20221109164719.d7kowdu7wskyzjsc@bogus>
- <20221114031658.pnbf7uiqqgiq3uk7@vireshk-i7>
- <20221114062510.GB3869@thinkpad>
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ynFSxiJnjGqJ7rZL3EFsUj6XQR8YJiiuP8vs5lqtRho=;
+        b=c/Yi0iOghI4zWl0REWmrJrPqRqE46b9sF+KtFMoULLsLeM66FB+wHKO841B5Fiqbvr
+         KBK0ICARqwyfHu2l43TwjTPLOaCs4HRhA7SJEEDy4lsG5lk6W7HM5szLU5vT+tDJkMxM
+         +tzgdO39yVkSGE7he0mPardL4A4AGU9B7GNLX3PVvOf3ji7CO0DCcetJAbJfnkELaJwf
+         taDt/JOcfd/nIMSpijH0KNVVL3JaVJisFqM6HAJt/u5f/E+u4XcPytygrcRbLUbgu9Om
+         Aq3kVOcIT3UJDFX1LERKFi+i3zzkXqhn2I0E9Anl4YTOu8416kx2YSPARkv/+xBTwguU
+         MIoQ==
+X-Gm-Message-State: ANoB5pnnOWzKgmT664AxfDahM9sMv/DJXDbLG2HgRFNg0BdRx5U0M77A
+        akkOyfvXQzQ7YzyJ7I1GlBSPOcY2wlCN06jv
+X-Google-Smtp-Source: AA0mqf40WZsaBjXPKJLW/aKC+AQS9c32GAyp37yNggevTH9rilspqXmsdXtNW+xu77WmIls7Q4TKrg==
+X-Received: by 2002:a05:6512:687:b0:4a2:51a2:9326 with SMTP id t7-20020a056512068700b004a251a29326mr3596758lfe.594.1668411497888;
+        Sun, 13 Nov 2022 23:38:17 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id g13-20020a2eb5cd000000b0026dffa29989sm1888071ljn.23.2022.11.13.23.38.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 13 Nov 2022 23:38:17 -0800 (PST)
+Message-ID: <e3776784-ac9a-8de2-f6e6-393e5dc1041c@linaro.org>
+Date:   Mon, 14 Nov 2022 08:38:16 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221114062510.GB3869@thinkpad>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v7 1/3] dt-bindings: arm: qcom: document qcom,msm-id and
+ qcom,board-id
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Kumar Gala <galak@codeaurora.org>,
+        Rob Herring <robh@kernel.org>
+References: <20220830065744.161163-1-krzysztof.kozlowski@linaro.org>
+ <20220830065744.161163-2-krzysztof.kozlowski@linaro.org>
+ <fe747000-a650-ed2f-8581-92b044f86f2f@linaro.org>
+ <CAA8EJpruwhOVacH6_kN2TABmVR5Peu1pjFa1b4sag5p1zouqRA@mail.gmail.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAA8EJpruwhOVacH6_kN2TABmVR5Peu1pjFa1b4sag5p1zouqRA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14-11-22, 11:55, Manivannan Sadhasivam wrote:
-> On Mon, Nov 14, 2022 at 08:46:58AM +0530, Viresh Kumar wrote:
-> > On 09-11-22, 16:47, Sudeep Holla wrote:
-> > > Is the cpufreq_get() API expected
-> > > to return something close to what was set or is it expected to return the
-> > > real set h/w value if and when possible.
-> > 
-> > The real frequency the hardware is running at.
-> > 
+On 13/11/2022 14:50, Dmitry Baryshkov wrote:
+>>> ---
+>>>
+>>> Changes since v6:
+>>> 1. Update header with defines
+>>> 2. Add Rb tag
+>>
+>> Hi Bjorn,
+>>
+>> Any further comments on this? Can it be applied?
 > 
-> Oh... In that case, qcom-cpufreq-hw driver is not returning the real frequency
-> but instead whatever set by the cpufreq core previously using target_index().
-> 
-> Should I fix it too in the next version of this series?
+> A gracious ping from my side. I think it would be better to apply this
+> patch rather than having the undocumented and controversial propreties
+> in the device trees.
 
-Yes.
+The patch was applied.
 
--- 
-viresh
+
+Best regards,
+Krzysztof
+
