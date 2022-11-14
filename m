@@ -2,288 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90189628439
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 16:40:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 83E3D628458
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 16:49:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237018AbiKNPkK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 10:40:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60278 "EHLO
+        id S237160AbiKNPtn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 10:49:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236399AbiKNPkD (ORCPT
+        with ESMTP id S236651AbiKNPtm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 10:40:03 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9D926258
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 07:40:01 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id g12so19956798lfh.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 07:40:01 -0800 (PST)
+        Mon, 14 Nov 2022 10:49:42 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 259D51B7B1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 07:49:41 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id d20so13710877ljc.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 07:49:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nT6MgmNBvZWKRQFDoYARVRQ41WCdAZRAjkt/TvnRGaU=;
-        b=cjmkbQ564vxesHH2AB77D897AVaKI5Ejrrdy0+4HI7NFl32fb9SIJ9l9wMSCm5qXfX
-         f62rrso0vEVC5D9MMsQoZT/tZ6Mhb6vq0t71AvMkyxhM4f/Avh6Q6ofdwxT7HKB0FMTJ
-         lOGtWCs6EgQoZBpw4jf1Y2XCaJTfL8+RGUFsfLZ03sPqMp0ff1WT3aSsyortAtibN3FJ
-         PaPNvdkxjqwb/VzgkJTJVgZ/NNwtKBRBAcvmjBXti2wyHilvo1ovnEHV+XIOAuIvNMXf
-         UY5JRp+MdYsgNhwHAbuQOIw1V+LlLOcPro80a84kvoHVGWJFFv6wH+bZfh9XrNGPmj4Y
-         nilw==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6wSuGB76l81gaOZPm77HZM6lioiS7r+dfc+W7xsVPIc=;
+        b=HskIouhVyi2ue7+LEhRN1RNzMQvR2PC9gCYjtggrfbJLkrjQSaDW8HSkDC2ngq/GGY
+         T7CvhwkLZcQEP7RHrGRISmnitfx1GOUeqhMkImP7385hiYtqtnfPuY/NtKgTeaQqK3Xe
+         pgnx9nvuaNp7VJQmCWdEWilqgSbOoYiQaafmZWrfPz3T5RNkTyrhRLcqj8zrIUN70ITz
+         +sC3HeCliR8IXBCJsa3SMVIofiy0Tji4L7fXbJSgzNGYnkKuJ7GwIYGgnCvLzdst8IxB
+         U3bTqm76MPVBtBftuH8k2gpUyo6abWhlTUVle9NCp/FMZf2QYl7CRVCjNFI1i/z+XNXn
+         GgAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=nT6MgmNBvZWKRQFDoYARVRQ41WCdAZRAjkt/TvnRGaU=;
-        b=04gntgpzbFjPHZ3aB0bakE7WGxW16wdPjwEVBD6fy/uOM5Cp/bHyDcC/qYxClfG/2R
-         WUf/BsyC+w+5EYL1q03+Njm/onDj6TWuSJyelF0uRlYShbabjD4MehyvV6076Q2sx+Uf
-         ez+ZNk+s+dVgq8m7zjmY0hKy6HJi99YQ+Vf4Up5X4PGObXvzOpd396UUurDIRbxyyVIV
-         +hOyuLs/HflB4MizU9dOzb4Svd6zTkRzClWa2Z6IZlY5AiO0pDWNvhonXmQefro+yyF+
-         4EVkGuioUmi7a2N37lrRsEp+9VGZQHpQP8RzeJoEOs+KtO18hwJNO0a3byO8E1idfvm+
-         1Ueg==
-X-Gm-Message-State: ANoB5pmGFZpSDldWcm6zXhx1rXJQz5AM09D1g6Ba1Os9nSnlEGtKUNQi
-        HhMBYvq9jvqbZOa5nILofBkUKXyzcMtEdGFg
-X-Google-Smtp-Source: AA0mqf6rMbuavD6VLXj06hA0/KezQJEXmLeavpaO/odyLjFvQ+qwF1ysjMMUHp97jmpFlqDSDaWkoA==
-X-Received: by 2002:a05:6512:3ac:b0:4a2:25b5:a2aa with SMTP id v12-20020a05651203ac00b004a225b5a2aamr4968464lfp.531.1668440400258;
-        Mon, 14 Nov 2022 07:40:00 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id o22-20020ac25e36000000b0049fbf5facf4sm1853204lfg.75.2022.11.14.07.39.59
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6wSuGB76l81gaOZPm77HZM6lioiS7r+dfc+W7xsVPIc=;
+        b=Suk+faQjNzFIKnm+d+lkMzP29giYY0Bi9fWfA+Tk4Je/wt37A7ZV/biFd70ZNi8HLr
+         BCkdpQpEBGQPTOrAgRe7z0D3bUHs27nMK2HZiDZtChgEqDGngsGhwNIgqiJ6SEUzEzXF
+         6Vh2HN9+Eas9dTZkdRkt6LctcScNGXrSQ+0gdNn2DPPOmRMpopswsCMS0xXf5fhpgyK5
+         9XBWyU9wyP9qF6CFEADnrTNQZqyYcCAk/+laRpVBdIbi+5aqDPFTef4wiXWcJc6MPWBS
+         IZwj4RvW9U2xBbrFE43uSC2vj43gZZ6q8QHn9KKtkGhk1zhOqcerJIq0xXG0uyje6nN8
+         HeLw==
+X-Gm-Message-State: ANoB5pka2yuSr+3vCKNVvSbUyWH0RTHObzPO5PIz3IMwDxZKqkv7Vx0R
+        cxdfwkkrEGp9urXz21QE9f8X7g==
+X-Google-Smtp-Source: AA0mqf6z1dI9nYxuRJzt3DSAk7mzSPHDwCDS+Nlxum6G3BtXxkcMr8KPa73iixm4aEeEjQ4yKM8BNQ==
+X-Received: by 2002:a2e:460a:0:b0:26f:ab25:8a77 with SMTP id t10-20020a2e460a000000b0026fab258a77mr4098788lja.93.1668440979411;
+        Mon, 14 Nov 2022 07:49:39 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id e10-20020a19674a000000b0049311968ca4sm1855621lfj.261.2022.11.14.07.49.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Nov 2022 07:39:59 -0800 (PST)
-Message-ID: <f52157c7-d198-9c26-089a-c5227a1c1f4f@linaro.org>
-Date:   Mon, 14 Nov 2022 16:39:56 +0100
+        Mon, 14 Nov 2022 07:49:38 -0800 (PST)
+Message-ID: <02725b78-04ad-8f4a-25c2-9cdaa1e37ab7@linaro.org>
+Date:   Mon, 14 Nov 2022 16:49:37 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm8450-hdk: add sound support
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 02/14] dt-bindings: phy: qcom,qmp-usb3-dp: fix sc8280xp
+ bindings
+Content-Language: en-US
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-References: <20221114152130.385871-1-krzysztof.kozlowski@linaro.org>
- <20221114152130.385871-4-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221114152130.385871-4-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221111092457.10546-1-johan+linaro@kernel.org>
+ <20221111092457.10546-3-johan+linaro@kernel.org>
+ <a22888cd-34cb-3453-0dc2-096da208564c@linaro.org>
+ <Y3JCVzJ74YsfcDz4@hovoldconsulting.com>
+ <de3a426a-03e8-ed15-a9a1-bb300e776e5f@linaro.org>
+ <Y3JOO0kNnaNhnW3K@hovoldconsulting.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <Y3JOO0kNnaNhnW3K@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 14/11/2022 15:18, Johan Hovold wrote:
+> On Mon, Nov 14, 2022 at 03:07:41PM +0100, Krzysztof Kozlowski wrote:
+>> On 14/11/2022 14:27, Johan Hovold wrote:
+>>> On Fri, Nov 11, 2022 at 04:17:29PM +0100, Krzysztof Kozlowski wrote:
+>>>> On 11/11/2022 10:24, Johan Hovold wrote:
+>>>>> The current QMP USB3-DP PHY bindings are based on the original MSM8996
+>>>>> binding which provided multiple PHYs per IP block and these in turn were
+>>>>> described by child nodes.
+> 
+>>>>> +  "#clock-cells":
+>>>>> +    const: 1
+>>>>> +
+>>>>> +  clock-output-names:
+>>>>> +    items:
+>>>>> +      - const: usb3_pipe
+>>>>> +      - const: dp_link
+>>>>> +      - const: dp_vco_div
+>>>>
+>>>> Why defining here fixed names? The purpose of this field is to actually
+>>>> allow customizing these - at least in most cases. If these have to be
+>>>> fixed, then driver should just instantiate these clocks with such names,
+>>>> right?
+>>>
+>>> I'm only using these names as documentation of the indexes. The driver
+>>
+>> What do you mean by documentation of indexes? You require these specific
+>> entries and do not allow anything else.
+> 
+> I'm using this property as documentation of the valid indexes that can
+> be used when referring to clocks provided by this device.
+> 
+> There are currently three and the mapping is described by the
+> 'clock-output-names' property.
 
-On 14/11/2022 16:21, Krzysztof Kozlowski wrote:
-> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->
-> Add sound support to SM8450 HDK board.  Tested setup so far is only two
-> speakers (working) and head-phones (only one channel working).
->
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Co-developed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 161 ++++++++++++++++++++++++
->   1 file changed, 161 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> index 4d75f9db08c2..c177283b6764 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> @@ -6,6 +6,8 @@
->   /dts-v1/;
->   
->   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include <dt-bindings/sound/qcom,q6afe.h>
-> +#include <dt-bindings/sound/qcom,q6asm.h>
->   #include "sm8450.dtsi"
->   
->   / {
-> @@ -421,6 +423,147 @@ &uart7 {
->   	status = "okay";
->   };
->   
-> +&soc {
+That's not the purpose of this property. Drop it then. The names do not
+define the ABI and do not document it, actually. You require now that
+every DTB, if providing clock-output-names, will have exactly such names
+instead of having fixed IDs. DTBs are not for defining the ABI.
 
-soc should go before uart alphabetically.
+>  
+>>> doesn't use these names, but that's a Linux-specific implementation
+>>> detail.
+>>>
+>>> I noticed that several bindings leave the clock indexes unspecified, or
+>>> have header files defining some or all of them. I first added a QMP
+>>> header but that seemed like overkill, especially if we'd end up with
+>>> one header per SoC (cf. the GCC headers) due to (known and potential)
+>>> platform differences.
+>>
+>> Headers for the names? I do not recall such but that does not seem right.
+> 
+> Headers for the indexes.
+> 
+>>>
+>>> On the other hand reproducing this list in each node is admittedly a bit
+>>> redundant.
+>>>
+>>> Shall I add back a shared header for all PHYs handled by this driver
+>>> (another implementation detail) even if this could eventually lead to
+>>> describing clocks not supported by a particular SoC (so such constraints
+>>> would still need to be described by the binding somehow):
+>>>
+>>> 	/* QMP clocks */
+>>> 	#define QMP_USB3_PIPE_CLK	0
+>>> 	#define QMP_DP_LINK_CLK		1
+>>> 	#define QMP_DP_VCO_DIV_CLK	2
+>>
+>> What are these about? To remind - we talk about names of clocks this
+>> device creates. The output names. Whatever IDs you have are not related
+>> to the names.
+> 
+> As I mentioned above, this is not about the names that Linux gives to
+> its representation of these clocks. Its just about defining the valid
+> indexes in the binding.
 
+With or without the header, the IDs are part of ABI and are fixed. The
+headers are I think always encouraged because it makes above sentence
+explicit. Without the headers developers might want to change the IDs.
 
-Other than that:
+> 
+> If you think that that using 'clock-output-names' for this is a bit too
+> unconventional, I can add back the header with defines like the above
+> instead.
+> 
+> Note that the clock schema has:
+> 
+>   clock-output-names:
+>     description: |
+>       Recommended to be a list of strings of clock output signal
+>       names indexed by the first cell in the clock specifier.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Exactly. Not to describe the ABI behind the ID.
 
+>       However, the meaning of clock-output-names is domain
+>       specific to the clock provider, ...
 
-Konrad
+... because you might have more cells. Just because clock-output-names
+do not fit some drivers it does not mean you can use it any way you
+wish. It is still for names of provided clocks.
 
-> +	wcd938x: codec {
-> +		compatible = "qcom,wcd9380-codec";
-> +
-> +		qcom,micbias1-microvolt = <1800000>;
-> +		qcom,micbias2-microvolt = <1800000>;
-> +		qcom,micbias3-microvolt = <1800000>;
-> +		qcom,micbias4-microvolt = <1800000>;
-> +		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
-> +		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
-> +		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-> +		qcom,rx-device = <&wcd_rx>;
-> +		qcom,tx-device = <&wcd_tx>;
-> +
-> +		reset-gpios = <&tlmm 43 GPIO_ACTIVE_HIGH>;
-> +		#sound-dai-cells = <1>;
-> +
-> +		vdd-buck-supply = <&vreg_s10b_1p8>;
-> +		vdd-rxtx-supply = <&vreg_s10b_1p8>;
-> +		vdd-io-supply = <&vreg_s10b_1p8>;
-> +		vdd-mic-bias-supply = <&vreg_bob>;
-> +	};
-> +};
-> +
-> +&sound {
-> +	compatible = "qcom,sm8450-sndcard";
-> +	model = "SM8450-HDK";
-> +	audio-routing = "SpkrLeft IN", "WSA_SPK1 OUT",
-> +			"SpkrRight IN", "WSA_SPK2 OUT",
-> +			"IN1_HPHL", "HPHL_OUT",
-> +			"IN2_HPHR", "HPHR_OUT",
-> +			"AMIC1", "MIC BIAS1",
-> +			"AMIC2", "MIC BIAS2",
-> +			"AMIC3", "MIC BIAS3",
-> +			"AMIC4", "MIC BIAS3",
-> +			"AMIC5", "MIC BIAS4";
-> +
-> +	wcd-playback-dai-link {
-> +		link-name = "WCD Playback";
-> +		cpu {
-> +			sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
-> +		};
-> +
-> +		codec {
-> +			sound-dai = <&wcd938x 0>, <&swr1 0>, <&rxmacro 0>;
-> +		};
-> +
-> +		platform {
-> +			sound-dai = <&q6apm>;
-> +		};
-> +	};
-> +
-> +	wcd-playback-dai-link {
-> +		link-name = "WCD Playback";
-> +		cpu {
-> +			sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
-> +		};
-> +
-> +		codec {
-> +			sound-dai = <&wcd938x 0>, <&swr1 0>, <&rxmacro 0>;
-> +		};
-> +
-> +		platform {
-> +			sound-dai = <&q6apm>;
-> +		};
-> +	};
-> +
-> +	wsa-dai-link {
-> +		link-name = "WSA Playback";
-> +		cpu {
-> +			sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
-> +		};
-> +
-> +		codec {
-> +			sound-dai = <&left_spkr>, <&right_spkr>, <&swr0 0>, <&wsamacro 0>;
-> +		};
-> +
-> +		platform {
-> +			sound-dai = <&q6apm>;
-> +		};
-> +	};
-> +
-> +	va-dai-link {
-> +		link-name = "VA Capture";
-> +		cpu {
-> +			sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
-> +		};
-> +
-> +		platform {
-> +			sound-dai = <&q6apm>;
-> +		};
-> +	};
-> +};
-> +
-> +&swr0 {
-> +	right_spkr: speaker@0,1{
-> +		compatible = "sdw10217020200";
-> +		reg = <0 1>;
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&spkr_1_sd_n_active>;
-> +		powerdown-gpios = <&tlmm 1 GPIO_ACTIVE_LOW>;
-> +		#sound-dai-cells = <0>;
-> +		sound-name-prefix = "SpkrRight";
-> +		#thermal-sensor-cells = <0>;
-> +		vdd-supply = <&vreg_s10b_1p8>;
-> +	};
-> +
-> +	left_spkr: speaker@0,2{
-> +		compatible = "sdw10217020200";
-> +		reg = <0 2>;
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&spkr_2_sd_n_active>;
-> +		powerdown-gpios = <&tlmm 89 GPIO_ACTIVE_LOW>;
-> +		#sound-dai-cells = <0>;
-> +		sound-name-prefix = "SpkrLeft";
-> +		#thermal-sensor-cells = <0>;
-> +		vdd-supply = <&vreg_s10b_1p8>;
-> +	};
-> +};
-> +
-> +&swr1 {
-> +	status = "okay";
-> +
-> +	wcd_rx: codec@0,4 {
-> +		compatible = "sdw20217010d00";
-> +		reg = <0 4>;
-> +		qcom,rx-port-mapping = <1 2 3 4 5>;
-> +	};
-> +};
-> +
-> +&swr2 {
-> +	status = "okay";
-> +
-> +	wcd_tx: codec@0,3 {
-> +		compatible = "sdw20217010d00";
-> +		reg = <0 3>;
-> +		/* ports: adc1_2, adc3_4, dmic0_3_mbhc, dmic4_7 */
-> +		qcom,tx-port-mapping = <1 1 2 3>;
-> +	};
-> +};
-> +
->   &ufs_mem_hc {
->   	status = "okay";
->   
-> @@ -461,3 +604,21 @@ &usb_1_qmpphy {
->   	vdda-phy-supply = <&vreg_l6b_1p2>;
->   	vdda-pll-supply = <&vreg_l1b_0p91>;
->   };
-> +
-> +&tlmm {
-> +	spkr_1_sd_n_active: spkr-1-sd-n-active-state {
-> +		pins = "gpio1";
-> +		function = "gpio";
-> +		drive-strength = <4>;
-> +		bias-disable;
-> +		output-low;
-> +	};
-> +
-> +	spkr_2_sd_n_active: spkr-2-sd-n-active-state {
-> +		pins = "gpio89";
-> +		function = "gpio";
-> +		drive-strength = <4>;
-> +		bias-disable;
-> +		output-low;
-> +	};
-> +};
+Best regards,
+Krzysztof
+
