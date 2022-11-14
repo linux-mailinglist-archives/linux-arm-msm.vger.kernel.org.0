@@ -2,146 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 737A7628A38
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 21:12:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E075628A79
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 21:33:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237017AbiKNUML (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 15:12:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37948 "EHLO
+        id S237077AbiKNUd2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 15:33:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237567AbiKNULz (ORCPT
+        with ESMTP id S235592AbiKNUd1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 15:11:55 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2237D1CB29
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 12:11:53 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id gw22so11355819pjb.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 12:11:53 -0800 (PST)
+        Mon, 14 Nov 2022 15:33:27 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 281A3276
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 12:33:23 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id n20so10617222ejh.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 12:33:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=F8YJKTEaSjeWZUEi+lCVZoSmHdKaA45O5/BX7Jv9leE=;
-        b=Bo4ud/9wy/hrzT1vvhDfzIZliKL3nHdYeO1xarp/GBtmeBMu1ebHsicCRbtzgA4VvD
-         zhsCLmYqXAuFGyZ2iJDfrGzsRIfcQNJ7Y4Wg6aOgZKxatMr/2V88oS2o+LK3CFByBcAy
-         wPb3b62Csfvpo/22qIFNqV1MXqzfNfF9PWmixTMiZGauBYITr61tA5ZtWXU0rBHMRt+H
-         rygyifAQLrP0osA+HOHDhYKOu+XXlcDQhf9PYuaDl2rTJuKTkVqI1fM6Q/EJI0xF8DiD
-         QAJzD0uRu4y39bHmuiGEqt4gnA0rEpUbR25D9M0CqdA/+2RCiSSO7Y43j5t+1rl9FcgD
-         swGw==
+        bh=QCfG+hOC32UcE1+jvceujSzl/rFR67fnp9HdOcb9XXo=;
+        b=YZbBARaiZIN5w5hmUzF7Yt5HUb8Fu8ZcAoW26h5RlMwSHRIVsAdn1PNguLoBw9ki+I
+         avs6Bhr7b7wxAMHDI3giIi54k5CDbe4SATViP+LZnOobPbn85eYeB7PNCat8brXZqZ/T
+         AhbN07fijNjTdg2kBJYXr5RMz1Nf5+naQTzsQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=F8YJKTEaSjeWZUEi+lCVZoSmHdKaA45O5/BX7Jv9leE=;
-        b=My9HKujTQnG9vg/r1PpSLFtAAPQr7zr//oH+Sf0i5QojtJr4Nlb/jKUkFJboNDLsIF
-         //hty5ZXz/SwxYWKJV7OmmunLdCxmmzuF0cUcb/qSn/RJXAzpNVORg0jiEshBY7TV40y
-         y/1MGGZw6zYa0hUVlmT1lTi2mLdBRnI3sWb0raCjiRqcGFV3Jo5i6UdWFrA+MYN4k9k+
-         gtdd4+EdsOzNYuFRK7N+36tFJenEA8w95i38Lm0pZKv/7i3mLBP6yV0NzOzeVF/XyN8J
-         EGdfMbyLH/re9x6RGfsAZFqNLUpQSkJSHI8hqiPLlPnaktmnUwrFDA/Ucyr2j7EXeC/H
-         SnUA==
-X-Gm-Message-State: ANoB5plmyjPr59Mz8drRJbomdalOeMvybSRPUoPKokrHtzm4COhf0yb4
-        P2Dwflu+6STuJYGmoufQdcsFR7ozbVBrmv5vhephvQ==
-X-Google-Smtp-Source: AA0mqf67zLfaITSHy+eAhqfQdT/uWKph5nU4Nbw6RfC1+A1fyleHLDtSWtGzZ6dKgqVm0q4ZyoONgDwQ/zFsYrOeAlo=
-X-Received: by 2002:a17:90a:e64b:b0:20d:b124:33b1 with SMTP id
- ep11-20020a17090ae64b00b0020db12433b1mr14918522pjb.202.1668456713336; Mon, 14
- Nov 2022 12:11:53 -0800 (PST)
+        bh=QCfG+hOC32UcE1+jvceujSzl/rFR67fnp9HdOcb9XXo=;
+        b=IyRgNylel/9sFVfzAArvUEBDbWDpt4sfJnnGXhxbHOsW1hLHNu5yuW0RsZz7N9XkSm
+         P24/wnxqNyIWsnRkXlFyMXLrucJPov+8h+O79VzP8V7mJo96q+WESS/Xx6NL+Uxws5S/
+         SmgXGwemfSOmldpK5N+H3tbbbivaNE0sHiprHd5gyBo2gQEzXIRb0aHDdEvz7KV3I4db
+         lA9eyImrh6DFdSFH5AgxW6QB4AgtuMesL1d5koKPYV+l2QJuZAI9oIq+Pilbp3kHgLv4
+         OQVQAcuWNzaNSWNYcUROFeaCnQwwXNjPZQcMm0tPYypJ60/C7y+IazncK+Zj8SZ5/dxX
+         gc7g==
+X-Gm-Message-State: ANoB5pn6ticftLWEHaY055cNWXadI9FmWC6ccKt31HeyvpcOPqTILoc9
+        c2KRTkDN/EuRRqiL86aWeCrOEDsAjTCcn4fK
+X-Google-Smtp-Source: AA0mqf5BW/rPnE8URppeCx8txjqdhuahYKUmlH7Hk+K9FNn5Qb7BCns+qkQrJhP9w0x/CfQafK2nSA==
+X-Received: by 2002:a17:907:765c:b0:7ad:49b8:1687 with SMTP id kj28-20020a170907765c00b007ad49b81687mr11601519ejc.407.1668458001521;
+        Mon, 14 Nov 2022 12:33:21 -0800 (PST)
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com. [209.85.128.49])
+        by smtp.gmail.com with ESMTPSA id 13-20020a170906318d00b007822196378asm4659068ejy.176.2022.11.14.12.33.20
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Nov 2022 12:33:20 -0800 (PST)
+Received: by mail-wm1-f49.google.com with SMTP id v124-20020a1cac82000000b003cf7a4ea2caso11591316wme.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 12:33:20 -0800 (PST)
+X-Received: by 2002:a1c:f611:0:b0:3cf:9ad3:a20e with SMTP id
+ w17-20020a1cf611000000b003cf9ad3a20emr9535222wmc.151.1668457654755; Mon, 14
+ Nov 2022 12:27:34 -0800 (PST)
 MIME-Version: 1.0
-References: <20221101233421.997149-1-swboyd@chromium.org> <CAD=FV=XkhtgL_4-cpj-Xi3uH6FAtmWhk5u6sfakXABTnv5eYvw@mail.gmail.com>
- <CAE-0n539akxzrof5nZXb1=8tM9=A7NKaB98LjkQ4tWJmSbWm_A@mail.gmail.com>
-In-Reply-To: <CAE-0n539akxzrof5nZXb1=8tM9=A7NKaB98LjkQ4tWJmSbWm_A@mail.gmail.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 14 Nov 2022 21:11:16 +0100
-Message-ID: <CAPDyKFqLx8rnjN0=ysdE7=1osiug1Si13ywJPan9jCM=nrxYVA@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, patches@lists.linux.dev,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org,
+References: <20221114194133.1535178-1-robdclark@gmail.com>
+In-Reply-To: <20221114194133.1535178-1-robdclark@gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 14 Nov 2022 12:27:22 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=WB__v5TPFOqnQMajR6MvLGjLYrKrV+qosJYQFTCpROzQ@mail.gmail.com>
+Message-ID: <CAD=FV=WB__v5TPFOqnQMajR6MvLGjLYrKrV+qosJYQFTCpROzQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/a6xx: Fix speed-bin detection vs probe-defer
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya <quic_c_skakit@quicinc.com>,
-        Matthias Kaehlcke <mka@chromium.org>
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Chia-I Wu <olvaffe@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,GUARANTEED_100_PERCENT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2 Nov 2022 at 04:16, Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Doug Anderson (2022-11-01 17:45:03)
-> >
-> > One small nit is that the kernel doc for "@dev" in "struct gdsc" is
-> > incorrect after your patch. It still says this even though we're not
-> > using it for pm_runtime calls anymore:
-> >
-> >  * @dev: the device holding the GDSC, used for pm_runtime calls
->
-> Good catch! I can remove the part after the comma.
->
-> >
-> > Other than that, this seems OK to me. I don't feel like I have a lot
-> > of good intuition around PM Clocks and genpd and all the topics talked
-> > about here, but I tried to look at the diff from before all the
-> > "recent" patches to "drivers/clk/qcom/gdsc.c" till the state after
-> > your patch. In other words the combined diff of these 4 patches:
-> >
-> > clk: qcom: gdsc: Remove direct runtime PM calls
-> > clk: qcom: gdsc: add missing error handling
-> > clk: qcom: gdsc: Bump parent usage count when GDSC is found enabled
-> > clk: qcom: gdsc: enable optional power domain support
-> >
-> > That basically shows a combined change that does two things:
-> >
-> > a) Adds error handling if pm_genpd_init() returns an error.
-> >
-> > b) Says that if "scs[i]->parent" wasn't provided that we can imply a
-> > parent from "dev->pm_domain".
-> >
-> > That seems to make sense, but one thing I'm wondering about for "b)"
-> > is how you know that "dev->pm_domain" can be safely upcast to a genpd.
-> > In other words, I'm hesitant about the "pd_to_genpd(dev->pm_domain)"
-> > call. I'll assume that "dev->pm_domain" isn't 100% guaranteed to be a
-> > genpd or else (presumably) we would have stored a genpd. Is there
-> > something about the "dev" that's passed in with "struct gdsc_desc"
-> > that gives the stronger guarantee about this being a genpd?
->
-> Not really any stronger guarantee. The guarantee is pretty strong
-> already though. You can look at the callers of dev_pm_domain_set() and
-> see that nothing is calling that really besides the genpd attachment
-> logic when a driver is bound to a device (follow dev_pm_domain_attach()
-> from platform_probe()). The dev->pm_domain is going to be assigned to a
-> genpd assuming the 'dev' pointer is a platform device and has
-> 'power-domains' in DT.
->
-> It's not great, but it works for now. Certainly if we ever want to
-> replace the pm_domain with something that isn't a genpd then we'll be in
-> trouble. I'm not sure it will ever happen. Ulf, can you provide more
-> assurances here?
+Hi,
 
-I think the call to pd_to_genpd() should be considered as safe, as
-long as the call is made in a controlled way from within a genpd
-provider.
+On Mon, Nov 14, 2022 at 11:41 AM Rob Clark <robdclark@gmail.com> wrote:
+>
+> From: Rob Clark <robdclark@chromium.org>
+>
+> If we get an error (other than -ENOENT) we need to propagate that up the
+> stack.  Otherwise if the nvmem driver hasn't probed yet, we'll end up with
+> whatever OPP(s) are represented by bit zero.
 
-However, in some cases, we want to pick up a genpd from the
-dev->pm_domain, that isn't a genpd provider. Internally in genpd we
-use dev_to_genpd_safe(). Is that something that would be valuable to
-use here? If so, I don't see any issues with exporting that as a new
-genpd helper function.
+Can you explain the "whatever OPP(s) are represented by bit zero"
+part? This doesn't seem to be true because `supp_hw` is initiated to
+UINT_MAX. If I'm remembering how this all works, doesn't that mean
+that if we get an error we'll assume all OPPs are OK?
 
-[...]
+I'm not saying that I'm against your change, but I think maybe you're
+misdescribing the old behavior.
 
-Kind regards
-Uffe
+Speaking of the initialization of supp_hw, if we want to change the
+behavior like your patch does then we should be able to remove that
+initialization, right?
+
+I would also suspect that your patch will result in a compiler
+warning, at least on some compilers. The goto label `done` is no
+longer needed, right?
+
+-Doug
