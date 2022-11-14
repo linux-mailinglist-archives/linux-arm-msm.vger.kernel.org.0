@@ -2,103 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFAD66289B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 20:48:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 762136289F8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 21:00:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236879AbiKNTr6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 14:47:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48716 "EHLO
+        id S236128AbiKNUAJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 15:00:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237334AbiKNTrq (ORCPT
+        with ESMTP id S236432AbiKNUAH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 14:47:46 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 307E81DA5A;
-        Mon, 14 Nov 2022 11:47:45 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id s5so2638595edc.12;
-        Mon, 14 Nov 2022 11:47:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n0D7hYmWxMOtktKnG+ggFebq/O5+c5dEuQKnJ0LxuN4=;
-        b=gR45i7+KvzT5jP0/lIxPmNVCWai+tRNTod1sjTUZx8BVPkjlyChFdBbK6PUQOzl3fw
-         r47MKvc6KJ/Kmjr85S+merePtXs+s+yKUaqytkK36KgK2swnJcVCgVBPBdz0AGTRDZhj
-         eRet/paI0d5z0ozlj1c6gSsHmSXgTa75o3RK01FMzR+yV6WW+Q4c7QHvZvnfgrQ4c+Yk
-         x1/Yp8IYhJ1UJEguLYw7M0xXf2QTt0s3LpTfeVnE87GiJeQRIQpyye1vFQOmdqCGz+Ml
-         WASIXGx2IdAk59Uc9RNLFNCZwxGrKQghxtvm83BJV8ElPfT3vCNJ+PWz70h+42O8FqBX
-         57Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=n0D7hYmWxMOtktKnG+ggFebq/O5+c5dEuQKnJ0LxuN4=;
-        b=f6UhLD0cuEzchv/Q9kwzeyrbkFng+wmE+Iu61giowC0jZfLxpSnLXRvHxAs8mX3o7x
-         XJYda3+i6xgvHfFQWx3/hwpSIfHvj5eBPGRMx5hLcK9ONjWpWgEdaxh9oRwEoOVslI9t
-         FnQKMXqDD9b/OcfIyawmy/ZI4QqwXxGrrtPaklFNRNsOMRQNNTKjicYUDLCd5jm8maQg
-         1aqn34to6jbd+YJ598roygYlmsEpOeUZldiNZTXKGogaY/kCGEtiwzVaCsaU03U6mtuN
-         7rkZv7X+cJYocYPkmAKrc/hyULSLoGs4Qi97jkvJFvhzsPWUHehGn0YlLUGqNYwDyS3P
-         U8sw==
-X-Gm-Message-State: ANoB5pl32H9cV2UFBHj8uehZOcknnVryESWkeoLjUqx5Bgcfx4MZh92Q
-        q8Xy5ghOq2X02iySB8o3sAg=
-X-Google-Smtp-Source: AA0mqf7w4sHb8RKj3Oe0o8FjnulwnnXsTmezWgQOnBefQW6jlUhCDCqGmmHKwWFrn7YL/kZe3HMfnQ==
-X-Received: by 2002:a05:6402:70e:b0:459:7673:6f33 with SMTP id w14-20020a056402070e00b0045976736f33mr12461215edx.30.1668455263652;
-        Mon, 14 Nov 2022 11:47:43 -0800 (PST)
-Received: from fedora.. (dh207-97-48.xnet.hr. [88.207.97.48])
-        by smtp.googlemail.com with ESMTPSA id k8-20020a17090632c800b007a62215eb4esm4666405ejk.16.2022.11.14.11.47.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Nov 2022 11:47:43 -0800 (PST)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 5/5] arm64: dts: qcom: ipq8074: add SoC specific compatible to MDIO
-Date:   Mon, 14 Nov 2022 20:47:34 +0100
-Message-Id: <20221114194734.3287854-5-robimarko@gmail.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221114194734.3287854-1-robimarko@gmail.com>
-References: <20221114194734.3287854-1-robimarko@gmail.com>
+        Mon, 14 Nov 2022 15:00:07 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 173EA2BF1;
+        Mon, 14 Nov 2022 12:00:06 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AEIo38q032663;
+        Mon, 14 Nov 2022 19:59:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=sQ1nJeVmiRxwoa8l/Qgl0ojbQH6TvWVv+gIlJxEaOcU=;
+ b=UMdArAdjNcVb1t1a0b0OTYp1rm4JK+N5zF9OwUdEXWsc5wa40V/koRSlGiZbv+qoIKRR
+ mDYFxfeHkISseh3b9ivFU9JwT6zDaFJZd48Lc6cQ35D+AWYFBMU2DOxm64OMsFAF6a5i
+ pZUbo6D7rrzQe5ZFQUrdv5ruFSW4kKdD/We6eEETNDVg6flrvKzPciPyonwWaQRlVHMj
+ 6OX1DFHC8Rq58a0VOfQ9BntkX+vdva+THp1L/GRh6EbOIex8ETmDypRuQQ1eva0+mcJx
+ ypiH0NVZ8Qa3sOw+MGwBjeX4KBlu0xI4I/mQPeoPs4fus7lbjIYmV1u9bvLGm16NmYh5 +A== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kut23gfa2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 14 Nov 2022 19:59:55 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AEJxtc5028627
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 14 Nov 2022 19:59:55 GMT
+Received: from [10.216.50.94] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 14 Nov
+ 2022 11:59:50 -0800
+Message-ID: <97429a67-e763-4226-828c-8381a2abe9f9@quicinc.com>
+Date:   Tue, 15 Nov 2022 01:29:46 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH] drm/msm/a6xx: Fix speed-bin detection vs probe-defer
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>, <dri-devel@lists.freedesktop.org>
+CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        "Rob Clark" <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Chia-I Wu <olvaffe@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Douglas Anderson" <dianders@chromium.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20221114194133.1535178-1-robdclark@gmail.com>
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+In-Reply-To: <20221114194133.1535178-1-robdclark@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: -M5lczxghDAPoBbgTMz1x9Z-AWpRgyJo
+X-Proofpoint-ORIG-GUID: -M5lczxghDAPoBbgTMz1x9Z-AWpRgyJo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-14_13,2022-11-11_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ impostorscore=0 suspectscore=0 bulkscore=0 malwarescore=0
+ priorityscore=1501 mlxscore=0 spamscore=0 mlxlogscore=999 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211140141
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the newly documented SoC compatible to MDIO in order to be able to
-validate clocks for it.
+On 11/15/2022 1:11 AM, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+>
+> If we get an error (other than -ENOENT) we need to propagate that up the
+> stack.  Otherwise if the nvmem driver hasn't probed yet, we'll end up with
+> whatever OPP(s) are represented by bit zero.
+>
+> Fixed: fe7952c629da ("drm/msm: Add speed-bin support to a618 gpu")
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 7fe60c65a1eb..96de2202c86c 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1956,7 +1956,7 @@ static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
+>   		DRM_DEV_ERROR(dev,
+>   			      "failed to read speed-bin (%d). Some OPPs may not be supported by hardware",
+I just noticed and was going to send a similar fix. We should remove ". 
+Some OPPs may not be supported by hardware" here.
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index a0481c671faf..583871c29586 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -331,7 +331,7 @@ pcie_phy1: phy@8e200 {
- 		};
- 
- 		mdio: mdio@90000 {
--			compatible = "qcom,ipq4019-mdio";
-+			compatible = "qcom,ipq8074-mdio", "qcom,ipq4019-mdio";
- 			reg = <0x00090000 0x64>;
- 			#address-cells = <1>;
- 			#size-cells = <0>;
--- 
-2.38.1
+Btw, on msm-next-external-fixes + this fix,  I still see boot up issue 
+in herobrine due to drm_dev_alloc() failure with -ENOSPC error.
+
+-Akhil.
+>   			      ret);
+> -		goto done;
+> +		return ret;
+>   	}
+>   
+>   	supp_hw = fuse_to_supp_hw(dev, rev, speedbin);
 
