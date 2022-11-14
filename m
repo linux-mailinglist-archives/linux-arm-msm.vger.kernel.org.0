@@ -2,121 +2,230 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE2CE6279DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 11:01:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 534516279E6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Nov 2022 11:04:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237050AbiKNKBm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 05:01:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59374 "EHLO
+        id S236981AbiKNKEH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 05:04:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237088AbiKNKBS (ORCPT
+        with ESMTP id S236984AbiKNKDr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 05:01:18 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40EBA1FCEC;
-        Mon, 14 Nov 2022 01:59:01 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AE9BFMK000999;
-        Mon, 14 Nov 2022 09:58:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=gGPlH0J0ZgP0fl1WELCt3mZvXB6Imkjsv9bFWRfwdkI=;
- b=brObxU1LSSsqKjtU0MJAllt3s9y9WnJxFyDOnc1i1XnTjooLc+bGLqMNkmldwmMdY/g2
- UCDvSWklOoAAl6DUgobJ1h/NValQiqB6c1tSaUTYckpMPxlADRw704t+CVMts4k8A+kS
- uoXltxXzMRNa20jBCei67XYunQ8FLjIgX5I1oTyUo5wxe76Ja0wUM0zzzrvawOqrRsuW
- TP4sUhSHerS19Gfa02pRSEMMz8ens7BqzUJ1IMZtpmm+DRF+y+s+3x2/GJ51YrprwH5P
- sgdcCOfbg7yRhGuxZWaJSBmfC9oh9r/q48ZWcTKTPXpj0+1IZqjTo0Aj2ftOFJqGIS0y aA== 
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kug3hghjx-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 14 Nov 2022 09:58:50 +0000
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2AE9wm9J015080;
-        Mon, 14 Nov 2022 09:58:48 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 3kt4jp62k0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 14 Nov 2022 09:58:48 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2AE9wmj2015017;
-        Mon, 14 Nov 2022 09:58:48 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 2AE9wlB2014930;
-        Mon, 14 Nov 2022 09:58:47 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
-        id 1A21F2A97; Mon, 14 Nov 2022 17:58:46 +0800 (CST)
-From:   Qiang Yu <quic_qianyu@quicinc.com>
-To:     mani@kernel.org, loic.poulain@linaro.org
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>
-Subject: [PATCH v2] bus: mhi: host: Disable preemption while processing data events
-Date:   Mon, 14 Nov 2022 17:58:43 +0800
-Message-Id: <1668419923-20292-1-git-send-email-quic_qianyu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TSLA5vhrL16Q6X0EnwBuYprbX9H-76Qr
-X-Proofpoint-ORIG-GUID: TSLA5vhrL16Q6X0EnwBuYprbX9H-76Qr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-14_07,2022-11-11_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
- priorityscore=1501 adultscore=0 clxscore=1015 lowpriorityscore=0
- phishscore=0 mlxlogscore=734 impostorscore=0 malwarescore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211140073
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=no
-        autolearn_force=no version=3.4.6
+        Mon, 14 Nov 2022 05:03:47 -0500
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BA641FFBD
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 02:00:15 -0800 (PST)
+Received: by mail-lj1-x22a.google.com with SMTP id a15so12440996ljb.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 02:00:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gTF/lKGIlNvJ5JKo1MaDuAhO5E3597vV7o1H0BtcntA=;
+        b=vSkZuEcwcZgG8bif5Ls9RqexdcOd01YzG+1/3MCKLluKmmlPCcMI0mrmoNnz4GPYh3
+         aynrNVghpAbS0dH51C5xOw5mtu94qOa6e2yXkgzf+bI6fefpOBuC2hzC9lBcRqxl27tS
+         6Pj9g8v7nwwRGn7rbAM7lXTXvTF2X4SzHFt9woR2K7sV26n/N1aFmg2dILPpqPCRAxKn
+         4h0agnAW6+nfoz9lCXYaknjj/XgF8urLLyLJ6UcCKvq1CQ5Kn9X829E+ySBvUbk5VYTt
+         v/gGmmgQgPosTYCdBsZW5UExTPpBZBKVpSgvsX/QbkwEyRmA1DWyclW6FyackBN2V+6y
+         SUoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gTF/lKGIlNvJ5JKo1MaDuAhO5E3597vV7o1H0BtcntA=;
+        b=CscGu2SBQKZ0RlYpPm2QbZ2SS8bfIxdBNXY4AC5rMT4LkMwXr34/DVVOJof9KoEpv3
+         Bp7RH2UvrEvjS84SnXjEHsmxKAr7MqyDg6GPFdew7dFoELsAjt0L9jn+DilENj9pUrpn
+         mtmzVt2dSLG9Vi1eZN9X2zBC03QXNoNlIFLMDJl7xyFOZKrUQRiJJ+M/RSfs3bS8yXcB
+         FhPxlLrBbPlsZsbQtj6sJcwYbBCxojDYRg1j8IzWrEQHcACa+/e76w7wgdtPkeIC+qRY
+         k8XPfDZBs2ZX67KHHBzAs3OMEM6GFjZEOAgwFs6mOQU7nmAKj+EqaBAgJDE+fTi8VNl7
+         5z0g==
+X-Gm-Message-State: ANoB5pkt/tnQEMiB6vuFCAeVuBs22YGaZKkyRJ+5pS/gFFYPw4hy1PNx
+        vM1AjEt4nCvD3na3eXPqWTwOJw==
+X-Google-Smtp-Source: AA0mqf6UgXTHRoFqkiILt1hCtPFoZjkqNVjdQKqxyzYG/leNa/gRESGHzXGs43jcW94OVLdB0aARIQ==
+X-Received: by 2002:a2e:b8c5:0:b0:277:8144:2eb6 with SMTP id s5-20020a2eb8c5000000b0027781442eb6mr4152040ljp.45.1668420013386;
+        Mon, 14 Nov 2022 02:00:13 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id b21-20020a056512071500b00494978b0caesm1752696lfs.276.2022.11.14.02.00.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Nov 2022 02:00:12 -0800 (PST)
+Message-ID: <37c8fd73-a35b-a822-0666-38a4ead4eec3@linaro.org>
+Date:   Mon, 14 Nov 2022 11:00:11 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v4 3/3] arm64: dts: qcom:
+ sdm845-db845c-navigation-mezzanine: Add navigation mezzanine dts
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        mchehab@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org,
+        vladimir.zapolskiy@linaro.org
+Cc:     sakari.ailus@iki.fi, hverkuil@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, quic_mmitkov@quicinc.com,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20221112124126.86815-1-bryan.odonoghue@linaro.org>
+ <20221112124126.86815-4-bryan.odonoghue@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221112124126.86815-4-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If data processing of an event is scheduled out because core
-is busy handling multiple irqs, this can starve the processing
-of MHI M0 state change event on another core. Fix this issue by
-disabling irq on the core processing data events.
+On 12/11/2022 13:41, Bryan O'Donoghue wrote:
+> Move the dts data for the rb3 navigation mezzanine into its own dts file.
+> 
+> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../sdm845-db845c-navigation-mezzanine.dts    | 109 ++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts    | 101 ----------------
+>  3 files changed, 110 insertions(+), 101 deletions(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index cd88efa19e750..5eadd251a0a16 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -132,6 +132,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c-navigation-mezzanine.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-lg-judyln.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-lg-judyp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts
+> new file mode 100644
+> index 0000000000000..0862ca30c8963
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts
+> @@ -0,0 +1,109 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2022, Linaro Ltd.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sdm845-db845c.dts"
+> +
+> +&cci {
+> +	status = "okay";
+> +};
+> +
+> +&camss {
+> +	vdda-phy-supply = <&vreg_l1a_0p875>;
+> +	vdda-pll-supply = <&vreg_l26a_1p2>;
+> +
+> +	status = "ok";
 
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
----
-v1->v2: add comments about why we disable local irq
+These are "okay".
 
- drivers/bus/mhi/host/main.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+> +
+> +	ports {
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		port@0 {
+> +			reg = <0>;
+> +			csiphy0_ep: endpoint {
+> +				data-lanes = <0 1 2 3>;
+> +				remote-endpoint = <&ov8856_ep>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&cci_i2c0 {
+> +	camera@10 {
+> +		compatible = "ovti,ov8856";
+> +		reg = <0x10>;
+> +
+> +		/* CAM0_RST_N */
+> +		reset-gpios = <&tlmm 9 GPIO_ACTIVE_LOW>;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&cam0_default>;
+> +
+> +		clocks = <&clock_camcc CAM_CC_MCLK0_CLK>;
+> +		clock-names = "xvclk";
+> +		clock-frequency = <19200000>;
+> +
+> +		/*
+> +		 * The &vreg_s4a_1p8 trace is powered on as a,
+> +		 * so it is represented by a fixed regulator.
+> +		 *
+> +		 * The 2.8V vdda-supply and 1.2V vddd-supply regulators
+> +		 * both have to be enabled through the power management
+> +		 * gpios.
+> +		 */
+> +		dovdd-supply = <&vreg_lvs1a_1p8>;
+> +		avdd-supply = <&cam0_avdd_2v8>;
+> +		dvdd-supply = <&cam0_dvdd_1v2>;
+> +
+> +		status = "ok";
 
-diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-index f3aef77a..fcb2586 100644
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -1027,13 +1027,20 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
- 
- void mhi_ev_task(unsigned long data)
- {
-+	unsigned long flags;
- 	struct mhi_event *mhi_event = (struct mhi_event *)data;
- 	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
- 
- 	/* process all pending events */
--	spin_lock_bh(&mhi_event->lock);
-+	spin_lock_irqsave(&mhi_event->lock, flags);
-+	/*
-+	 * When muiltiple IRQs come, the tasklet will be scheduled out with event ring lock
-+	 * remaining acquired, causing M0 event process on another core gets stuck when it
-+	 * tries to acquire the same event ring lock. Thus let's disable local IRQs here.
-+	 */
-+
- 	mhi_event->process_event(mhi_cntrl, mhi_event, U32_MAX);
--	spin_unlock_bh(&mhi_event->lock);
-+	spin_unlock_irqrestore(&mhi_event->lock, flags);
- }
- 
- void mhi_ctrl_ev_task(unsigned long data)
--- 
-2.7.4
+drop
+
+> +
+> +		port {
+> +			ov8856_ep: endpoint {
+> +				link-frequencies = /bits/ 64
+> +					<360000000 180000000>;
+> +				data-lanes = <1 2 3 4>;
+> +				remote-endpoint = <&csiphy0_ep>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&cci_i2c1 {
+> +	camera@60 {
+> +		compatible = "ovti,ov7251";
+> +
+> +		/* I2C address as per ov7251.txt linux documentation */
+> +		reg = <0x60>;
+> +
+> +		/* CAM3_RST_N */
+> +		enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&cam3_default>;
+> +
+> +		clocks = <&clock_camcc CAM_CC_MCLK3_CLK>;
+> +		clock-names = "xclk";
+> +		clock-frequency = <24000000>;
+> +
+> +		/*
+> +		 * The &vreg_s4a_1p8 trace always powered on.
+> +		 *
+> +		 * The 2.8V vdda-supply regulator is enabled when the
+> +		 * vreg_s4a_1p8 trace is pulled high.
+> +		 * It too is represented by a fixed regulator.
+> +		 *
+> +		 * No 1.2V vddd-supply regulator is used.
+> +		 */
+> +		vdddo-supply = <&vreg_lvs1a_1p8>;
+> +		vdda-supply = <&cam3_avdd_2v8>;
+> +
+> +		status = "disable";
+> +
+> +		port {
+> +			ov7251_ep: endpoint {
+> +				data-lanes = <0 1>;
+> +/*				remote-endpoint = <&csiphy3_ep>; */
+
+
+Best regards,
+Krzysztof
 
