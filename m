@@ -2,73 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87685629B9B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 15:11:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 03A70629BA2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 15:11:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229929AbiKOOLU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 09:11:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37082 "EHLO
+        id S229937AbiKOOL0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 09:11:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229626AbiKOOLT (ORCPT
+        with ESMTP id S229981AbiKOOLU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 09:11:19 -0500
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FC13FD10;
-        Tue, 15 Nov 2022 06:11:18 -0800 (PST)
-Received: by mail-ot1-f44.google.com with SMTP id p10-20020a9d76ca000000b0066d6c6bce58so5512619otl.7;
-        Tue, 15 Nov 2022 06:11:18 -0800 (PST)
+        Tue, 15 Nov 2022 09:11:20 -0500
+Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C549665B8;
+        Tue, 15 Nov 2022 06:11:19 -0800 (PST)
+Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-13bd19c3b68so16323775fac.7;
+        Tue, 15 Nov 2022 06:11:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=date:subject:message-id:references:in-reply-to:cc:to:from
          :mime-version:content-transfer-encoding:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=TacVoOO9NDNFIMt31qzCtRgln1ccwtifAk7PyC4xZ0s=;
-        b=Yc81WYSMHcoQCFkUjglHBXlPO3FslTCzFdfDy8+cbx6s9/JRQVnGlBYJWBcXwsWVcK
-         Vqne5MyMZlxsNE/ziQbazFAE45WlMdVJQposhQHNxU3mNbNh0tD+NtwxQVhrUv2mYdc2
-         7YCwIWAEHfdzHVEztGWxFlHadSwdmu51xi4VrO1LGopkVNUovMrZn7mLHgpWyhqIQl75
-         dH/Z0wdHuWWwZi6xGklO24vv8TKwFE1tOh2u4x0ZLhJS38olUMBYhcvGbmwSiFzBWEoq
-         AhdFdhjAgbr+asQIhomOSa2a3+iZ0QUVsh27yJef8F3Ho4+QLv5g/cmqZ/THyrNgHqEN
-         1U2w==
-X-Gm-Message-State: ANoB5pnFTlq+kR+snLRiNr+BaMQLrxcbesrJ+CDvGdD1WFz0Njj+mEwo
-        N5+6yrvbt3ln+9SN2bdd+g==
-X-Google-Smtp-Source: AA0mqf41qwNznHD4daQ+Mhz0sumypTqDXe1dh5cjhOzl/ybpdXvQQEyrHv+3a+htI5DwxWlPOz3B+g==
-X-Received: by 2002:a05:6830:153:b0:66c:a3a8:3870 with SMTP id j19-20020a056830015300b0066ca3a83870mr8901401otp.54.1668521477402;
-        Tue, 15 Nov 2022 06:11:17 -0800 (PST)
+        bh=c5N91/KhOasWYPhexzTdP8VafBqdlF1gEW+N65BWXt8=;
+        b=Az6WiAjntBLV9RU/3XUaxbAbZa5qoTldktEJaROJCQRrydR8trledzSZxK9CWepld2
+         BNcqC+kw5J9qFawXw85DJ2geVnVDkm1pd/YbFdTX+w5BWkfdU1+K4bjj15qNmIiDqBHt
+         qsuGJy0p9wlK9ZrxgKqoTqzG+kq9QbUer+xMlEBD/1uAibULTWLF0NH7//nFisLp4qwi
+         FBa323XaTk85ddWyBNDV+93pfz0MfHxEs6nnA08a3FS2i6LB2a9biCgRgIZp1t6IAbmc
+         ieQ0tCPUXtUpYKLqNGJuJz8BuqT6uTBg9dkcL6XYZhCopGS0UhvzYVcwVXBOCLjdHEey
+         XpyA==
+X-Gm-Message-State: ANoB5pl3Nc0us2GqExUizm0qzWgHS9aj275xUpkmx1SZqIswtDBPQB3a
+        5Qe9zbHQaer/Uj9KzZXiTA2dFEi9JQ==
+X-Google-Smtp-Source: AA0mqf6nYfASooBBF6z9v/cD7taFztOAnQfXgMwa2knN6vvGmeETBJghAeI6PSSUhC1CWCqvEuuVUg==
+X-Received: by 2002:a05:6870:781b:b0:132:68d8:703e with SMTP id hb27-20020a056870781b00b0013268d8703emr406826oab.174.1668521478957;
+        Tue, 15 Nov 2022 06:11:18 -0800 (PST)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id s5-20020a4adb85000000b00499527def25sm4840834oou.47.2022.11.15.06.11.15
+        by smtp.gmail.com with ESMTPSA id w13-20020a9d450d000000b00661948e6119sm5504101ote.47.2022.11.15.06.11.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Nov 2022 06:11:16 -0800 (PST)
-Received: (nullmailer pid 908584 invoked by uid 1000);
+        Tue, 15 Nov 2022 06:11:18 -0800 (PST)
+Received: (nullmailer pid 908578 invoked by uid 1000);
         Tue, 15 Nov 2022 14:11:14 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 From:   Rob Herring <robh@kernel.org>
-To:     Robert Foss <robert.foss@linaro.org>
-Cc:     airlied@linux.ie, linux-kernel@vger.kernel.org,
-        konrad.dybcio@somainline.org, quic_abhinavk@quicinc.com,
-        quic_jesszhan@quicinc.com, devicetree@vger.kernel.org,
-        agross@kernel.org, robh+dt@kernel.org, quic_vpolimer@quicinc.com,
-        vkoul@kernel.org, robdclark@gmail.com,
-        dri-devel@lists.freedesktop.org, krzysztof.kozlowski+dt@linaro.org,
-        swboyd@chromium.org, dianders@chromium.org,
-        bjorn.andersson@linaro.org, quic_kalyant@quicinc.com,
-        Jonathan Marek <jonathan@marek.ca>, vinod.koul@linaro.org,
-        loic.poulain@linaro.org, dmitry.baryshkov@linaro.org,
-        daniel@ffwll.ch, angelogioacchino.delregno@somainline.org,
-        andersson@kernel.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, sean@poorly.run
-In-Reply-To: <20221115111721.891404-3-robert.foss@linaro.org>
-References: <20221115111721.891404-1-robert.foss@linaro.org>
- <20221115111721.891404-3-robert.foss@linaro.org>
-Message-Id: <166851961892.867704.17058917320073105789.robh@kernel.org>
-Subject: Re: [PATCH v2 02/12] dt-bindings: display: msm: Add qcom,sm8350-mdss binding
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mark Brown <broonie@kernel.org>, Lee Jones <lee@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org
+In-Reply-To: <20221005-mdm9615-pinctrl-yaml-v4-1-463523919c19@linaro.org>
+References: <20221005-mdm9615-pinctrl-yaml-v4-0-463523919c19@linaro.org>
+ <20221005-mdm9615-pinctrl-yaml-v4-1-463523919c19@linaro.org>
+Message-Id: <166851961643.867594.12105329661363857830.robh@kernel.org>
+Subject: Re: [PATCH v4 1/2] dt-bindings: regulators: convert non-smd RPM
+ Regulators bindings to dt-schema
 Date:   Tue, 15 Nov 2022 08:11:14 -0600
 X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -76,16 +72,15 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Tue, 15 Nov 2022 12:17:11 +0100, Robert Foss wrote:
-> Mobile Display Subsystem (MDSS) encapsulates sub-blocks
-> like DPU display controller, DSI etc. Add YAML schema for MDSS device
-> tree bindings
+On Tue, 15 Nov 2022 11:12:35 +0100, Neil Armstrong wrote:
+> Convert the non-SMD Regulators bindings to dt-schema, the old text based
+> bindings will be deleted later since the RPM bindings are not yet converted.
 > 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
 > ---
->  .../display/msm/qcom,sm8350-mdss.yaml         | 240 ++++++++++++++++++
->  1 file changed, 240 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.yaml
+>  .../bindings/regulator/qcom,rpm-regulator.yaml     | 128 +++++++++++++++++++++
+>  1 file changed, 128 insertions(+)
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
@@ -94,15 +89,11 @@ on your patch (DT_CHECKER_FLAGS is new in v5.13):
 yamllint warnings/errors:
 
 dtschema/dtc warnings/errors:
-./Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/display/msm/mdss-common.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.example.dtb: display-subsystem@ae00000: False schema does not allow {'compatible': ['qcom,sm8350-mdss'], 'reg': [[182452224, 4096]], 'reg-names': ['mdss'], 'interconnects': [[4294967295, 7, 0, 4294967295, 1, 0], [4294967295, 8, 0, 4294967295, 1, 0]], 'interconnect-names': ['mdp0-mem', 'mdp1-mem'], 'power-domains': [[4294967295, 0]], 'resets': [[4294967295, 0]], 'clocks': [[4294967295, 0], [4294967295, 27], [4294967295, 28], [4294967295, 32]], 'clock-names': ['iface', 'bus', 'nrt_bus', 'core'], 'iommus': [[4294967295, 2080, 1026]], 'interrupts': [[0, 83, 4]], 'interrupt-controller': True, '#interrupt-cells': [[1]], '#address-cells': [[1]], '#size-cells': [[1]], 'ranges': True, 'display-controller@ae01000': {'compatible': ['qcom,sm8350-dpu'], 'reg': [[182456320, 585728], [183173120, 8200]], 'reg-names': ['mdp', 'vbif'], 'clocks': [[4294967295, 27], [4294967295, 28], [4294967295, 0], [42
- 94967295, 34], [4294967295, 32], [4294967295, 44]], 'clock-names': ['bus', 'nrt_bus', 'iface', 'lut', 'core', 'vsync'], 'assigned-clocks': [[4294967295, 44]], 'assigned-clock-rates': [[19200000]], 'operating-points-v2': [[1]], 'power-domains': [[4294967295, 6]], 'interrupts': [[0]], 'ports': {'#address-cells': [[1]], '#size-cells': [[0]], 'port@0': {'reg': [[0]], 'endpoint': {'remote-endpoint': [[2]], 'phandle': [[4]]}}}, 'opp-table': {'compatible': ['operating-points-v2'], 'phandle': [[1]], 'opp-200000000': {'opp-hz': [[0], [200000000]], 'required-opps': [[4294967295]]}, 'opp-300000000': {'opp-hz': [[0], [300000000]], 'required-opps': [[4294967295]]}, 'opp-345000000': {'opp-hz': [[0], [345000000]], 'required-opps': [[4294967295]]}, 'opp-460000000': {'opp-hz': [[0], [460000000]], 'required-opps': [[4294967295]]}}}, 'dsi@ae94000': {'compatible': ['qcom,mdss-dsi-ctrl'], 'reg': [[183058432, 1024]], 'reg-names': ['dsi_ctrl'], 'interrupts': [[4]], 'clocks': [[4294967295, 2], [4294967295,
-  5], [4294967295, 36], [4294967295, 28], [4294967295, 0], [4294967295, 27]], 'clock-names': ['byte', 'byte_intf', 'pixel', 'core', 'iface', 'bus'], 'assigned-clocks': [[4294967295, 3], [4294967295, 37]], 'assigned-clock-parents': [[3, 0], [3, 1]], 'operating-points-v2': [[4294967295]], 'power-domains': [[4294967295, 6]], 'phys': [[3]], 'phy-names': ['dsi'], 'ports': {'#address-cells': [[1]], '#size-cells': [[0]], 'port@0': {'reg': [[0]], 'endpoint': {'remote-endpoint': [[4]], 'phandle': [[2]]}}, 'port@1': {'reg': [[1]], 'endpoint': {}}}}, 'phy@ae94400': {'compatible': ['qcom,dsi-phy-5nm-8350'], 'reg': [[183059456, 512], [183059968, 640], [183060736, 608]], 'reg-names': ['dsi_phy', 'dsi_phy_lane', 'dsi_pll'], '#clock-cells': [[1]], '#phy-cells': [[0]], 'clocks': [[4294967295, 0], [4294967295, 0]], 'clock-names': ['iface', 'ref'], 'vdds-supply': [[4294967295]], 'phandle': [[3]]}, '$nodename': ['display-subsystem@ae00000']}
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.example.dtb: display-subsystem@ae00000: Unevaluated properties are not allowed ('#address-cells', '#interrupt-cells', '#size-cells', 'interrupt-controller', 'interrupts', 'power-domains', 'ranges', 'reg', 'reg-names', 'resets' were unexpected)
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.yaml
+./Documentation/devicetree/bindings/regulator/qcom,rpm-regulator.yaml: $id: relative path/filename doesn't match actual path or filename
+	expected: http://devicetree.org/schemas/regulator/qcom,rpm-regulator.yaml#
 
 doc reference errors (make refcheckdocs):
+Documentation/devicetree/bindings/regulator/qcom,rpm-regulator.yaml: Documentation/devicetree/bindings/soc/qcom/qcom,ipc-rpm.yaml
 
 See https://patchwork.ozlabs.org/patch/
 
