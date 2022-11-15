@@ -2,122 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FAD4628FD9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 03:24:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A84C4629185
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 06:33:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232466AbiKOCYV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 21:24:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59322 "EHLO
+        id S229458AbiKOFdv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 00:33:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232262AbiKOCYO (ORCPT
+        with ESMTP id S231786AbiKOFds (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 21:24:14 -0500
+        Tue, 15 Nov 2022 00:33:48 -0500
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 772BA10FD5;
-        Mon, 14 Nov 2022 18:24:11 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22CAB10BA;
+        Mon, 14 Nov 2022 21:33:47 -0800 (PST)
 Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AF0kKOK002498;
-        Tue, 15 Nov 2022 02:23:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=SGMfU72faLq0V2Muc1DUzPpZ0LBVZTnLSg8NaPV5rrg=;
- b=gdFRC5uEbQAVbxwFLAkvN0+dnPZGD95TFuFqKE8+Qn9T9dx0Kn5gmCdtx4G6jjFA6s7d
- whIa8RDTLkroBEj1HpUMANwUMV2NeWatD9FrLMSMmJdVPBxv8TGRowclbU2Hhk+ddgIf
- /9nXK9QTAuYOBPNvLLpAJ8qGKBd1ETZnobO2WvIimEvYcPw7jLH3t7ZkizH1B90aUxFE
- ZnddFrwamB2oFSsQN+tSCFaKhYrYFbi7Vbx693dQM8keZP0NeHbokm0pTwZ/uDZznZHg
- nzA3Yp/xuYAkXAVyM0eFOMnbEZrvf5vk/7VjrXwkkw9OTJ7M20QTZ7MtBAad5roi6KaP fg== 
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kut9rrvj7-1
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AF57wxa020298;
+        Tue, 15 Nov 2022 05:33:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=b/59L43usoKzRtQpoB91HVlS8TPRiKRWN8UcCjU7Kh4=;
+ b=BDe+SZiw37948l5v4bHK+KbID4n5+8a+lakAPQnYlc19gPovR8k+1f46OIXxUlB+0Pn8
+ R7lFtq546H8rkf4K3+jhEhuzJ5lXAWzmSrFR3F9ubtWWxdFAtbupuVXgM612yFgV4saZ
+ H/RLssJciCZofJNu2v5IRuMIFV2eCFmVYDo/uiKz0lxh+85zzzppfDz7KrTC3HGtkOB0
+ qpg5m219hprMj3elhppPH/qd+V9uBdKiwtKiJT7HgkXIZfM2w5pXC8AZak9rIr1TrF6/
+ YShShwxwQCM8aRWG4hHHB8JnudC6itCka43R/xH9UDooepaT3uaqJclZbAD7ilk1qflh UQ== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kut9rs8hh-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 15 Nov 2022 02:23:59 +0000
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-        by APTAIPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2AF2NuAJ023580;
-        Tue, 15 Nov 2022 02:23:56 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 3kt4jnqy4x-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 15 Nov 2022 02:23:56 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2AF2Ntnx023574;
-        Tue, 15 Nov 2022 02:23:56 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-        by APTAIPPMTA02.qualcomm.com (PPS) with ESMTP id 2AF2NtxN023573;
-        Tue, 15 Nov 2022 02:23:55 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
-        id 2152E38A8; Tue, 15 Nov 2022 10:23:54 +0800 (CST)
-From:   Qiang Yu <quic_qianyu@quicinc.com>
-To:     mani@kernel.org, loic.poulain@linaro.org
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>
-Subject: [PATCH v3] bus: mhi: host: Disable preemption while processing data events
-Date:   Tue, 15 Nov 2022 10:23:51 +0800
-Message-Id: <1668479031-12853-1-git-send-email-quic_qianyu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
+        Tue, 15 Nov 2022 05:33:39 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AF5XcdQ017171
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 15 Nov 2022 05:33:38 GMT
+Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 14 Nov
+ 2022 21:33:37 -0800
+Date:   Mon, 14 Nov 2022 21:33:36 -0800
+From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+CC:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <robh+dt@kernel.org>, <agross@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <konrad.dybcio@somainline.org>,
+        <robimarko@gmail.com>, <quic_rjendra@quicinc.com>
+Subject: Re: [PATCH V4 2/2] firmware: qcom: scm: Add wait-queue handling logic
+Message-ID: <20221115053336.GA29781@quicinc.com>
+References: <20221114082644.28739-1-quic_sibis@quicinc.com>
+ <20221114082644.28739-3-quic_sibis@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20221114082644.28739-3-quic_sibis@quicinc.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: jaKNDo45Ksx3zBuzoHxMuGcHRZ1olxH4
-X-Proofpoint-GUID: jaKNDo45Ksx3zBuzoHxMuGcHRZ1olxH4
+X-Proofpoint-ORIG-GUID: G8MqgC9_5CTL3Nhyj7b6hQjsEiz8sfyd
+X-Proofpoint-GUID: G8MqgC9_5CTL3Nhyj7b6hQjsEiz8sfyd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
  definitions=2022-11-14_15,2022-11-11_01,2022-06-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=771 clxscore=1015 phishscore=0 lowpriorityscore=0
+ mlxlogscore=768 clxscore=1011 phishscore=0 lowpriorityscore=0
  malwarescore=0 bulkscore=0 mlxscore=0 adultscore=0 priorityscore=1501
  spamscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211150015
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=no
-        autolearn_force=no version=3.4.6
+ engine=8.12.0-2210170000 definitions=main-2211150040
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If data processing of an event is scheduled out because core
-is busy handling multiple irqs, this can starve the processing
-of MHI M0 state change event on another core. Fix this issue by
-disabling irq on the core processing data events.
+On Nov 14 2022 13:56, Sibi Sankar wrote:
 
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
----
-v2->v3: modify the comment
-v1->v2: add comments about why we disable local irq
+(snip)
 
- drivers/bus/mhi/host/main.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+> +static irqreturn_t qcom_scm_irq_handler(int irq, void *data)
+> +{
+> +	int ret;
+> +	struct qcom_scm *scm = data;
+> +	struct completion *wq_to_wake;
+> +	u32 wq_ctx, flags, more_pending = 0;
+> +
+> +	do {
+> +		ret = scm_get_wq_ctx(&wq_ctx, &flags, &more_pending);
+> +		if (ret) {
+> +			dev_err(scm->dev, "GET_WQ_CTX SMC call failed: %d\n", ret);
+> +			goto out;
+> +		}
+> +
+> +		wq_to_wake = qcom_scm_lookup_wq(scm, wq_ctx);
+> +		if (IS_ERR_OR_NULL(wq_to_wake)) {
+> +			dev_err(scm->dev, "No waitqueue found for wq_ctx %d: %ld\n",
+> +				wq_ctx, PTR_ERR(wq_to_wake));
+> +			goto out;
+> +		}
+> +
+> +		if (flags != QCOM_SMC_WAITQ_FLAG_WAKE_ONE &&
+> +		    flags != QCOM_SMC_WAITQ_FLAG_WAKE_ALL) {
+> +			dev_err(scm->dev, "Invalid Flags found for wq_ctx: %u\n", flags);
+> +			goto out;
+> +		}
+> +
+> +		complete(wq_to_wake);
 
-diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-index f3aef77a..5dca0a0 100644
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -1027,13 +1027,20 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
- 
- void mhi_ev_task(unsigned long data)
- {
-+	unsigned long flags;
- 	struct mhi_event *mhi_event = (struct mhi_event *)data;
- 	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
- 
- 	/* process all pending events */
--	spin_lock_bh(&mhi_event->lock);
-+	spin_lock_irqsave(&mhi_event->lock, flags);
-+	/*
-+	 * When multiple IRQs come, the tasklet will be scheduled out with event ring lock
-+	 * remaining acquired, causing M0 event process on another core gets stuck when it
-+	 * tries to acquire the same event ring lock. Thus, let's disable local IRQs here.
-+	 */
-+
- 	mhi_event->process_event(mhi_cntrl, mhi_event, U32_MAX);
--	spin_unlock_bh(&mhi_event->lock);
-+	spin_unlock_irqrestore(&mhi_event->lock, flags);
- }
- 
- void mhi_ctrl_ev_task(unsigned long data)
--- 
-2.7.4
+Need to call complete() or complete_all() based on the flags.
 
+> +	} while (more_pending);
+> +
+> +out:
+> +	return IRQ_HANDLED;
+> +}
