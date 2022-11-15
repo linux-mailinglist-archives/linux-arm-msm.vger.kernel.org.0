@@ -2,129 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 73F10629FF3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 18:07:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DED562A009
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 18:13:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230283AbiKORHn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 12:07:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44076 "EHLO
+        id S229593AbiKORNv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 12:13:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229650AbiKORHm (ORCPT
+        with ESMTP id S231186AbiKORNv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 12:07:42 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D307AC35
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 09:07:41 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id v1so25350186wrt.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 09:07:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RQjpj5u7PFoOUJhgcEag0ttflPQAZOv9S9P/L0Xm91Y=;
-        b=kiLUTD+i51VhKgQ10Ak9K2x4ap4mef9+7pQKDqHor/PCrAykQBu1I0BLnsYw8Hlmiw
-         v7mcc+73JG3hlFwjEXIClxKxEQ+yEU4LjWNtC4hiLmf5KKn3hr/2EUjC5/MPp06diH9L
-         rUre30NwFWslMj4EgamzoUDmkoLJDGrz9UL3LCJOF0jpb4YJFmfdzbkEEIDUepOMtOwS
-         PnDZSYhIsGKhIO4RNfFc4RO+46e+rlo2p/ZH5eLHOzbI9lon4DQnoPAfoClqYs2G1XUV
-         MhvRsS6vlbHzqUAhipm4Xf8hUPOBngGBUKPYMzG62IEtHyqZjC0DdsD1YIKFWJrVPAr1
-         gt1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RQjpj5u7PFoOUJhgcEag0ttflPQAZOv9S9P/L0Xm91Y=;
-        b=CJBmTuHR0DopBsbs9cWdoVSmy4Tbnfz5PV7Ms5mMIIe8cxCyrPOmcRB1Lp1NncXF5x
-         99lfcaMUkP2Lqh5vz+cDnbDkLtkxJWDu04FZcmHXcRXT8SPaOIXOQtEgJK4pXjqpyuQG
-         X1AsHLqpJmgdkwFMYee85gourOdrsS9LaeixbH3rYPmA85IRL964bgQBVtu2yqA+MvGd
-         +w61FCR8pE4mO5K/fDygeziDbW5rlvF1fpEu/w7mXv97KvOxWCggMep+kJy33E3bOM2C
-         FJnPVuYfwA/U59+zZPnV73WuAvdYrzIbyYvBOujrFzQvQB5K0xYAIYm24vH9i72fpE5r
-         hnaQ==
-X-Gm-Message-State: ANoB5pkCx9zUHITKpLvmH57eQfpqMY+HMrONE1p5N6lvd2EJpwG7fGAZ
-        I7GRVIa7VZ+7kr0odlrKEBaVBg==
-X-Google-Smtp-Source: AA0mqf7PtdtHRajTlaqMHDcH2mNqPpmOPmMmG/PdHH/RFWBat2xbodEL5AxDUejiQS5DFZfPeF6bjA==
-X-Received: by 2002:a05:6000:510:b0:241:792f:b1fb with SMTP id a16-20020a056000051000b00241792fb1fbmr9910342wrf.436.1668532060357;
-        Tue, 15 Nov 2022 09:07:40 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id o24-20020a5d58d8000000b00236695ff94fsm12769481wrf.34.2022.11.15.09.07.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Nov 2022 09:07:39 -0800 (PST)
-Message-ID: <7420da17-d6d6-10e6-c87e-d3dc37d17ffb@linaro.org>
-Date:   Tue, 15 Nov 2022 17:07:38 +0000
+        Tue, 15 Nov 2022 12:13:51 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23316EE08;
+        Tue, 15 Nov 2022 09:13:48 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 25D7EB81A2F;
+        Tue, 15 Nov 2022 17:13:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDA0C433D6;
+        Tue, 15 Nov 2022 17:13:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668532425;
+        bh=E2Ix0booTdpUdUIVDbuoAPq8iFBqUQnyUJ0GGMyLTVA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=eB2SkQegJqT9LR5HkZTMj5ejtasKn/azCQj5kmf9jqf1Ev+F33SZVEot+fWkQVd8r
+         bq9Lim3hEmna0Djtks3LcjqrQU3ZDpgZi3axc7UNkMOF0k3xZD7yedNJV6LgrTulpS
+         0XNxc3fxCEtmWnbOjTQMDFcydJSo/wFTbK9OFCwwtBdD3zvZyLB0ksZapq4cdFOIW9
+         eiQuSLDWKls+qdC8xfQNgOaSSS9+5+9yEztCSOUMmW9+qoZ6ct7CUTwO0O84F152CH
+         QE1ZFkb6I9rmk1ceGjtsY+F4f5EYD4T+5SHaPScvXjsQn84yhiGW6sz+dkif2iyyCh
+         Sp8owc0MKTEhA==
+Date:   Tue, 15 Nov 2022 11:13:42 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Shazad Hussain <quic_shazhuss@quicinc.com>, sboyd@kernel.org
+Cc:     johan@kernel.org, bmasney@redhat.com, agross@kernel.org,
+        mturquette@baylibre.com, ahalaney@redhat.com,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] clk: qcom: gcc-sc8280xp: add cxo as parent for three
+ ufs ref clks
+Message-ID: <20221115171342.v37vq4cqe7pxatlk@builder.lan>
+References: <20221115152956.21677-1-quic_shazhuss@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH RFC] gpiolib: ensure that fwnode is properly set
-Content-Language: en-US
-To:     Brian Masney <bmasney@redhat.com>, linus.walleij@linaro.org,
-        brgl@bgdev.pl
-Cc:     linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, psodagud@quicinc.com,
-        quic_shazhuss@quicinc.com, quic_ppareek@quicinc.com,
-        ahalaney@redhat.com, echanude@redhat.com,
-        nicolas.dechesne@linaro.org
-References: <20221114202943.2389489-1-bmasney@redhat.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20221114202943.2389489-1-bmasney@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221115152956.21677-1-quic_shazhuss@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/11/2022 20:29, Brian Masney wrote:
-> Note that this is a RFC patch and not meant to be merged. I looked into
-> a problem with linux-next-20221110 on the Qualcomm SA8540P automotive
-> board (sc8280xp) where the UFS host controller would fail to probe due
-> to repeated probe deferrals when trying to get reset-gpios via
-> devm_gpiod_get_optional().
+On Tue, Nov 15, 2022 at 08:59:56PM +0530, Shazad Hussain wrote:
+> The three UFS reference clocks, gcc_ufs_ref_clkref_clk for external
+> UFS devices, gcc_ufs_card_clkref_clk and gcc_ufs_1_card_clkref_clk for
+> two PHYs are all sourced from CXO.
 > 
-> of_get_named_gpiod_flags() returns -EPROBE_DEFER, which is caused by
-> of_gpiochip_match_node_and_xlate() returning 0 since the of_xlate function
-> pointer is not set for the qcom,sc8280xp-tlmm pinctrl driver. The
-> pinctrl driver doesn't define one, so of_gpiochip_add() should
-> automatically setup of_gpio_simple_xlate() on it's behalf. This doesn't
-> happen since the fwnode member on the struct gpiochip is set to null
-> when of_gpiochip_add() is called. Let's work around this by ensuring
-> that it's set if available.
+> Added parent_data for all three reference clocks described above to
+> reflect that all three clocks are sourced from CXO to have valid
+> frequency for the ref clock needed by UFS controller driver.
 > 
-> Note that this broke sometime within the last few weeks within
-> linux-next and I haven't bisected this. I'm posting this in the hopes
-> that someone may know offhand which patch(es) may have broken this.
-> 
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
+> Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
+> Link: https://lore.kernel.org/lkml/Y2Tber39cHuOSR%2FW@hovoldconsulting.com/
+> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
+> Tested-by: Johan Hovold <johan+linaro@kernel.org>
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> Tested-by: Andrew Halaney <ahalaney@redhat.com>
+> Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+> Reviewed-by: Reviewed-by: Brian Masney <bmasney@redhat.com>
+
+Really-really-reviewed-by? ;)
+
+
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+
+
+@Stephen, could you please pick this for clk-fixes?
+
+Thanks,
+Bjorn
+
 > ---
->   drivers/gpio/gpiolib.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> Changes since v2:
+> -  Tweaked commit message and added R-b T-b from v2
 > 
-> diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-> index 11fb7ec883e9..8bec66008869 100644
-> --- a/drivers/gpio/gpiolib.c
-> +++ b/drivers/gpio/gpiolib.c
-> @@ -678,7 +678,7 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
->   	 * Assign fwnode depending on the result of the previous calls,
->   	 * if none of them succeed, assign it to the parent's one.
->   	 */
-> -	gdev->dev.fwnode = dev_fwnode(&gdev->dev) ?: fwnode;
-> +	gc->fwnode = gdev->dev.fwnode = dev_fwnode(&gdev->dev) ?: fwnode;
->   
->   	gdev->id = ida_alloc(&gpio_ida, GFP_KERNEL);
->   	if (gdev->id < 0) {
-
-Fixes repeated failure to get GPIO despite the controller having 
-successfully probed.
-
-[    6.151075] ov9282 21-0060: failed to get reset gpio -517
-[    6.160599] ov9282 21-0060: HW configuration is not supported
-[    6.160970] hub 1-1:1.0: USB hub found
-[    6.168054] imx412 22-001a: failed to get reset gpio -517
-[    6.170710] hub 1-1:1.0: 4 ports detected
-[    6.175904] imx412 22-001a: HW configuration is not supported
-
+> v2 of this patch can be found at
+> https://lore.kernel.org/all/20221115102217.6381-1-quic_shazhuss@quicinc.com/
+> 
+> v1 of this patch can be found at
+> https://lore.kernel.org/all/20221030142333.31019-1-quic_shazhuss@quicinc.com/
+> 
+> used below patches for verification on next-20221114
+> https://lore.kernel.org/lkml/20221104092045.17410-2-johan+linaro@kernel.org/
+> https://lore.kernel.org/lkml/20221104092045.17410-3-johan+linaro@kernel.org/
+> https://lore.kernel.org/lkml/20221111113732.461881-1-thierry.reding@gmail.com/
+> 
+>  drivers/clk/qcom/gcc-sc8280xp.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+> index a18ed88f3b82..b3198784e1c3 100644
+> --- a/drivers/clk/qcom/gcc-sc8280xp.c
+> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
+> @@ -5364,6 +5364,8 @@ static struct clk_branch gcc_ufs_1_card_clkref_clk = {
+>  		.enable_mask = BIT(0),
+>  		.hw.init = &(const struct clk_init_data) {
+>  			.name = "gcc_ufs_1_card_clkref_clk",
+> +			.parent_data = &gcc_parent_data_tcxo,
+> +			.num_parents = 1,
+>  			.ops = &clk_branch2_ops,
+>  		},
+>  	},
+> @@ -5432,6 +5434,8 @@ static struct clk_branch gcc_ufs_card_clkref_clk = {
+>  		.enable_mask = BIT(0),
+>  		.hw.init = &(const struct clk_init_data) {
+>  			.name = "gcc_ufs_card_clkref_clk",
+> +			.parent_data = &gcc_parent_data_tcxo,
+> +			.num_parents = 1,
+>  			.ops = &clk_branch2_ops,
+>  		},
+>  	},
+> @@ -5848,6 +5852,8 @@ static struct clk_branch gcc_ufs_ref_clkref_clk = {
+>  		.enable_mask = BIT(0),
+>  		.hw.init = &(const struct clk_init_data) {
+>  			.name = "gcc_ufs_ref_clkref_clk",
+> +			.parent_data = &gcc_parent_data_tcxo,
+> +			.num_parents = 1,
+>  			.ops = &clk_branch2_ops,
+>  		},
+>  	},
+> -- 
+> 2.38.0
+> 
