@@ -2,81 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 810C6629983
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 14:01:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47A73629986
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 14:03:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229968AbiKONBh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 08:01:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38118 "EHLO
+        id S229695AbiKONDb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 08:03:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229695AbiKONBf (ORCPT
+        with ESMTP id S229634AbiKONDa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 08:01:35 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 031896458;
-        Tue, 15 Nov 2022 05:01:35 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9262A61736;
-        Tue, 15 Nov 2022 13:01:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F204BC433D6;
-        Tue, 15 Nov 2022 13:01:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668517294;
-        bh=cghDh8Va/Q5LQMx7fDxebOXRPrb9UBTPEQAnugP4Wq8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=UQEqRBZumHPNLBw3c3qmEi6My9KaZH222LzaWmJvlnzLzeFMIakStZP/DorPVjpiD
-         3qR2wS5R6A8NZZFardBqj6NayLGsZ/3Un70CGsQhlU9z/umUZs4IE6YdCn6NUA89bS
-         Yv7D6Imc0lNIUkW6xpTj1j+voSA593SGyezGZxqkmGnkNjDs5pf+aEIZqIf+KnAIsw
-         uOnoockxAbRYOTQZqJObCtRtDM4K/3IKw+T6WoVoBd1Rhu21iVbMx1tyDF6kKKcT+L
-         b9uqd+uvapJrCSwQh10YeKYk5hxT5Dv+L8J7TE/AJ6PoOABExytcNeCn2lJDz3zba/
-         CTeXyA1rffzkQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ouvYm-0002Cu-0D; Tue, 15 Nov 2022 14:01:04 +0100
-Date:   Tue, 15 Nov 2022 14:01:04 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Brian Masney <bmasney@redhat.com>
-Cc:     Shazad Hussain <quic_shazhuss@quicinc.com>, andersson@kernel.org,
-        sboyd@kernel.org, agross@kernel.org, mturquette@baylibre.com,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] clk: qcom: gcc-sc8280xp: add cxo as parent for three
- ufs ref clks
-Message-ID: <Y3ONkOhcdK+gt46g@hovoldconsulting.com>
-References: <20221115102217.6381-1-quic_shazhuss@quicinc.com>
- <Y3OLDj6xzOVjvEdV@x1>
+        Tue, 15 Nov 2022 08:03:30 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82A9B62FF;
+        Tue, 15 Nov 2022 05:03:28 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id i186-20020a1c3bc3000000b003cfe29a5733so3207022wma.3;
+        Tue, 15 Nov 2022 05:03:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2YXSEudsc9acCjyZ9gI8tQXstRzlGGklsZOdLPbwiNo=;
+        b=PMayZRM3eFKCloLvTyzjYH6LundInUpmC31aN3lOF2x/ELF21FR0on5O7mVTSts3wO
+         g6qm9lIbCtI8Tu8FHtJix+MBnLjKr1/rkxg/+WE9K9PKjLveqXUvHcQ85bWBsSDINlSr
+         NrpD7YfIdnWlboCxGpzoS3BzxReT2llXaselZxlKWSyqXa4VfI+0D8cdeBnK2GSvVVSi
+         6njp/YfDclStsXVecpjj6FjKKKFzw4TMCIafqnL7riRl+pFgXkts9fkurtXGeyEqTs7C
+         bmGnN9KdjMwud2LsVHKBIE3ht7urWyxIWIv5WLaXjQr2dE5th7oKBXOc0xOaz/UcvLoZ
+         ZSeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2YXSEudsc9acCjyZ9gI8tQXstRzlGGklsZOdLPbwiNo=;
+        b=xzccDxg0lfc4UGIR+vLtVzmbTlNOb8wPhpkSZAMLQnQN84D/QptpUi9GtXqq8FirIm
+         xKzxu+stbaZKHfUBwHIIwdLRmKebt8nJTECOCEhGazGjz7jyYJaf4rkWXoeExbml8KJb
+         jzo2hUVKRijm/gggWgrLXJJL7yGk2EKGMU8msldN9AXRCY0vxbDmKG2YoYiOeKfT1Wsz
+         3PRSqFXOcerXWky5Vutr7xc5xOF+iKGu9HkmS5ifuEpaO2NgckyNIc3awLotFgAog0A/
+         PqzRH/afyxW4yTZRMibZonV2e5oRaB8Jr/0epawSzbkH9cQsslH04lPpyCAYqfkmRfYc
+         /z7A==
+X-Gm-Message-State: ANoB5pmXXqAbi3jWX8azV6fBMt/ZOzaIvcHSMSu6rOZWq9rWcqa0V9nV
+        kUkJ7rGBncB+P2a+GgEOP1M=
+X-Google-Smtp-Source: AA0mqf71K83H64nJ0Vkrsq1NmTXORfV6reFULGsEXiSiBsSthy861Vt8C3VPP8OLOOHxWLuqHMIZ4Q==
+X-Received: by 2002:a1c:740c:0:b0:3cf:b49e:1638 with SMTP id p12-20020a1c740c000000b003cfb49e1638mr1449541wmc.50.1668517406464;
+        Tue, 15 Nov 2022 05:03:26 -0800 (PST)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id c2-20020a05600c0a4200b003cfd4cf0761sm13933778wmq.1.2022.11.15.05.03.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Nov 2022 05:03:26 -0800 (PST)
+Date:   Tue, 15 Nov 2022 16:03:22 +0300
+From:   Dan Carpenter <error27@gmail.com>
+To:     Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, kernel-janitors@vger.kernel.org
+Subject: [PATCH] drm/msm/hdmi: remove unnecessary NULL check
+Message-ID: <Y2o0TKZ5WRYnQXna@kili>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Y3OLDj6xzOVjvEdV@x1>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Mailer: git-send-email haha only kidding
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 15, 2022 at 07:50:22AM -0500, Brian Masney wrote:
-> On Tue, Nov 15, 2022 at 03:52:17PM +0530, Shazad Hussain wrote:
-> > Added parent_data as CXO for three UFS reference clocks named,
-> > gcc_ufs_ref_clkref_clk, gcc_ufs_card_clkref_clk and
-> > gcc_ufs_1_card_clkref_clk.
-> > 
-> > Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
-> > Link: https://lore.kernel.org/lkml/Y2Tber39cHuOSR%2FW@hovoldconsulting.com/
-> > Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
-> 
-> Put this Link beneath the --- since Bjorn will add one that's specific
-> to your patch when he adds it to his tree.
+This code was refactored in commit 69a88d8633ec ("drm/msm/hdmi: move
+resource allocation to probe function") and now the "hdmi" pointer can't
+be NULL.  Checking causes a Smatch warning:
 
-I think it's ok to keep that Link if it was intended as a reference to
-the discussions leading up to this patch. There can be more than one
-Link tag, and this one is more in line with how Linus thinks they should
-be used than the ones added by tooling such as b4 when applying.
+    drivers/gpu/drm/msm/hdmi/hdmi.c:141 msm_hdmi_init()
+    warn: variable dereferenced before check 'hdmi' (see line 119)
 
-Johan
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+---
+ drivers/gpu/drm/msm/hdmi/hdmi.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+index 7001fabd0977..4d3fdc806bef 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+@@ -138,8 +138,7 @@ static int msm_hdmi_init(struct hdmi *hdmi)
+ 	return 0;
+ 
+ fail:
+-	if (hdmi)
+-		msm_hdmi_destroy(hdmi);
++	msm_hdmi_destroy(hdmi);
+ 
+ 	return ret;
+ }
+-- 
+2.35.1
+
