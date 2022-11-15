@@ -2,133 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3EB56295AB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 11:22:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B831C629614
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 11:39:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237699AbiKOKWp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 05:22:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41056 "EHLO
+        id S232322AbiKOKjA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 05:39:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232786AbiKOKWo (ORCPT
+        with ESMTP id S229817AbiKOKi7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 05:22:44 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FFDD1F621
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 02:22:42 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id s8so6564164lfc.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 02:22:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3ZbREAzKGWsIEWUQJpy4XElK+ime7W53jXwcpw2dqzo=;
-        b=URWmS52KU77TWjmjG6UB4lH6yXLsHtFdFoDjqDZDTqW8s8fgbpukZVncpNKzxXkXiK
-         Ig37LGNmjMnu1U2f/1pomq95OJLikyGVyB+4ABQ0POWetHCFlHhL94EXdNn5+7UpOX4Q
-         ZhKHee8n+38c/rLKiVvjJQ8SSexQrhnSFzsNoRNLejRYqPK/7mdYwYG5stAufYWtyK+O
-         7jp0YZoE+rK/1zIWDtCV4jMq6ttRkqDgjFxIo/+bG5zNIpxmTe73E5QIux/rYqHA+M0n
-         +w4RiGEYZ599h0aPvRTuCJ4evleTgjqQ/pZsMEpOn1E4kCr2nM6UkMljIEeQgqCv7ecL
-         Mx8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3ZbREAzKGWsIEWUQJpy4XElK+ime7W53jXwcpw2dqzo=;
-        b=gBxZK46hTZrhlGLSveWyAzRDZYo5ZdWNhrivXjmTy0Vqoqo2nsCeo3zDdE0tHPDGKz
-         Aa0sXDhi8SzAtMccFpJmgmRl/zSFLhZhMRFkZX8QHKdJIbL1OiPS5pi8xKY3E040X6Je
-         0JbohPOYVaeReQUvtdfXfwuRgvYdNMSRdrGQFW9YZGQ9O3a5sMc63G/PE6/0KfiM5x5+
-         nLkYi9RlGbbGYcIZA1koyE6vxnKjA6+qKsAROUlYsID3VJphACcXeO2q61uXtxBoCdY+
-         ka9io5trznHIjDsMFEa4kq3g1yRDHRoSfZ9FBip1iW4zM4MGC3W+KkDSrhW6zwrYqbdj
-         Rcww==
-X-Gm-Message-State: ANoB5pnFBpqrhB6S282uf05IA7Xrg19smXY/qIk+TGo+gdAGAoTxa9Uf
-        ylAi1pkDiclCkR1XsNbxfhjSwMmr6jFVOTP5
-X-Google-Smtp-Source: AA0mqf7Eoob8tu5VvSML0bCXRs+5OlrwB4RhRTonYV8TvWwQfLAeC7eqY+781izx5/9lW5imSf++mA==
-X-Received: by 2002:a05:6512:258f:b0:4af:ad16:8a08 with SMTP id bf15-20020a056512258f00b004afad168a08mr5231106lfb.664.1668507761001;
-        Tue, 15 Nov 2022 02:22:41 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id c18-20020ac25f72000000b00492dc29be7bsm2148197lfc.227.2022.11.15.02.22.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Nov 2022 02:22:40 -0800 (PST)
-Message-ID: <5dae76ba-bd48-233d-4d4a-14111ff1b2ec@linaro.org>
-Date:   Tue, 15 Nov 2022 11:22:39 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 02/10] ASoC: dt-bindings: qcom,apr: Split services to
- shared schema
-Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
+        Tue, 15 Nov 2022 05:38:59 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83A74BCAB;
+        Tue, 15 Nov 2022 02:38:58 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AF5o2hk029287;
+        Tue, 15 Nov 2022 10:38:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=M8GxFPIyo4nZ9hX0GVj/NlDeZ34UvPmBcex0ya7dlBM=;
+ b=LZl1YyrCWM6S4wGLxyarUW1W6TAreeLuRH8LgWr+1WCffSBzjs9Jb927+FMoiaUoEUui
+ S8B9PaxsVbAWwT60KdzYx+rRB/g+VeJmlvz3IAZPydBbpFHnSSBNwQwJB4V2X7WNuc8P
+ UFTD2Jejsag32YXliDO+jITB0Crc/i41EhfHaNt2WF1F+3Y6Hrqc698Rt6xg1RJSDB8k
+ 6X2E2ar1pdA1uRMJ3CvfUZ9BgEOnOw2CobCfZtyOuRU03H7Ev1i7NkZE1V80nzYySY/f
+ u79K9Uknj9buEfpCZe2oAIdnL6rLZRdVbGxkLAj+vXKblH4umrFWVAMqDyxo+WBTpL7W Tw== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kv4yf18ns-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 15 Nov 2022 10:38:48 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2AFAbtqM010408;
+        Tue, 15 Nov 2022 10:38:44 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3kt4jkdp0n-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 15 Nov 2022 10:38:44 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2AFAchDi011149;
+        Tue, 15 Nov 2022 10:38:44 GMT
+Received: from vboma-linux.qualcomm.com (vboma-linux.qualcomm.com [10.204.65.94])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 2AFAchnh011148;
+        Tue, 15 Nov 2022 10:38:43 +0000
+Received: by vboma-linux.qualcomm.com (Postfix, from userid 72083)
+        id BF725900886; Tue, 15 Nov 2022 16:08:42 +0530 (IST)
+From:   quic_vboma@quicinc.com
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     Patrick Lai <plai@qti.qualcomm.com>,
-        Srinivasa Rao Mandadapu <srivasam@qti.qualcomm.com>
-References: <20221111113547.100442-1-krzysztof.kozlowski@linaro.org>
- <20221111113547.100442-3-krzysztof.kozlowski@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221111113547.100442-3-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Cc:     Viswanath Boma <quic_vboma@quicinc.com>
+Subject: [PATCH 0/1] Fix for VP9 DRC and Decoder STOP issue.
+Date:   Tue, 15 Nov 2022 16:08:25 +0530
+Message-Id: <20221115103826.28726-1-quic_vboma@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: cYCDBcmSZtt67UfPUohP4yytQ4egJRc-
+X-Proofpoint-ORIG-GUID: cYCDBcmSZtt67UfPUohP4yytQ4egJRc-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-15_05,2022-11-15_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1011
+ mlxscore=0 suspectscore=0 impostorscore=0 phishscore=0 malwarescore=0
+ priorityscore=1501 bulkscore=0 mlxlogscore=853 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211150072
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/11/2022 12:35, Krzysztof Kozlowski wrote:
-> The APR/GPR nodes are organized like:
-> 
->   apr-or-gpr-device-node <- qcom,apr.yaml
->     apr-gpr-service@[0-9] <- qcom,apr.yaml
->       service-specific-components <- /schemas/sound/qcom,q6*.yaml
-> 
+From: Viswanath Boma <quic_vboma@quicinc.com>
 
-(...)
+Tested the changes on v5.15 and v5.4 kernels .
+For testing Chrome Utilities were used .
 
-> +additionalProperties: true
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
-> index 0a7a34cb2497..9302ffe567d6 100644
-> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
-> @@ -80,115 +80,13 @@ properties:
->    '#size-cells':
->      const: 0
->  
-> -#APR/GPR Services
->  patternProperties:
->    "^service@[1-9a-d]$":
->      type: object
-> +    $ref: /schemas/soc/qcom/qcom,apr-services.yaml
-> +    additionalProperties: true
->      description:
-> -      APR/GPR node's client devices use subnodes for desired static port services.
-> -
-> -    properties:
-> -      compatible:
-> -        enum:
-> -          - qcom,q6core
-> -          - qcom,q6asm
-> -          - qcom,q6afe
-> -          - qcom,q6adm
-> -          - qcom,q6apm
-> -          - qcom,q6prm
 
-I think that this piece could stay here. Otherwise we allow any
-compatible which matches the qcom,apr-services.yaml binding, but that's
-easy to achieve.
+Viswanath Boma (1):
+  venus: Enable sufficient sequence change support for sc7180 and Fix
+    for Decoder STOP command issue.
 
-Best regards,
-Krzysztof
+ drivers/media/platform/qcom/venus/core.h       | 10 ++++++++++
+ drivers/media/platform/qcom/venus/hfi_cmds.c   |  1 +
+ drivers/media/platform/qcom/venus/hfi_helper.h |  2 ++
+ drivers/media/platform/qcom/venus/hfi_msgs.c   | 11 +++++++++--
+ drivers/media/platform/qcom/venus/vdec.c       | 12 +++++++++++-
+ 5 files changed, 33 insertions(+), 3 deletions(-)
+
+-- 
+2.17.1
 
