@@ -2,75 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 05C6662994B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 13:53:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB84C629958
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 13:54:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232818AbiKOMxW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 07:53:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59702 "EHLO
+        id S229508AbiKOMy0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 07:54:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237169AbiKOMxV (ORCPT
+        with ESMTP id S237988AbiKOMyO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 07:53:21 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3532227FD5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 04:53:20 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id b3so24264267lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 04:53:20 -0800 (PST)
+        Tue, 15 Nov 2022 07:54:14 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74FBD115C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 04:54:12 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id kt23so35784009ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 04:54:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=V5UwppQzNSEVKKmCNAy4gJeoujszl/Jk2qfjcyRy+IM=;
-        b=MsB9AsCa/sd8I7/62v6UCvzF1xIbj8MxtsKhezVxbCC/LnvvNgOt/pvU+mUvmz/7g8
-         TTh+fQiF8E4xsQ7vPy+lk1DaVME5kkfZLImPhwg9qPpkZqE0Ey04+QqMFVXvRCunROuI
-         3teTjnJOzeOQEP1M5RAMxsyZeeiLF5lZhnDsMeKfbl2xjgt7JqNvTcqHI9Cf1xEYlaHJ
-         Nq+JQ+6cw/wBiPOZE+Qep1ZuXVoSgYlSStAG7HgLqp0XKdPRgQAlQjJNiO7dISC0d29T
-         5F62Zmy7tEijF1oUBZmnMkJFOXsEbHA8S8rJ0mw7cDP8OFgXg7ocM+DXfHqlD+rbtIHr
-         uEAw==
+        bh=4z+vcQIa+TDGxCARqFIzwt2He1hOQxmdiWKApcem7GQ=;
+        b=YBur8QGH9B9DZJb9Crmk5KuOxYHrJWzxdseDQl+IeoL+2tRYVKgX79q6/QfRdi2v4i
+         dGVvct0uk34s0I8Tj5z+wSNuYem5A2EDF+VqbvgbdeL2r+/u25BGmPePMAOp1TGcpigK
+         ycjgIAhVgYGfsGJPY7xcvVLepm4KgYt1RwuMbyjRgjJzGldhtsX+QgriBy/0r3aJtUC1
+         8e8xjsBUwqb3kmcidNMjfc4clzDOMhbgE5co459zupfdmvYmonS63k45OqPQRbmpv7q0
+         VUJoV0lSgfvHdijK1wrLvRE/RGe68xeSzJzC71XB9PVBpcxorwRHPAMA4JPh7+RQ56t1
+         boyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=V5UwppQzNSEVKKmCNAy4gJeoujszl/Jk2qfjcyRy+IM=;
-        b=mcZToVZ65yt6ZZBdwDZNtn5h3XkDEhOIsI0BLCWpTmd2OJWYcUgw3Cza1dvQUMkUR0
-         9v4cmaKUU5eHA5AqcCg55WLVqneuUZDdefy4rp4lXR56PsLoqeljJyxAaYch95xoUUS8
-         MEfnxzHxMpVuxLeZFQPWZARQer9KScX3KckoOj4xHKnxAcQTZ5/ESCVmH6QR43YPRo/g
-         49pkP3cvHOdQn3xVhij2zjNUf+w+10FyOi/zdReyWfTS6v2r7YpgxCHhvr2Yu7wFpdU6
-         cHGu431vf/qDCTfxHfSD5tatq59NYO49UJ24Ra03BbuZt8ER02QrrqMlMB9N5kB/8NQV
-         GnWw==
-X-Gm-Message-State: ANoB5pkIvy0nPQwWhb2RN8NogBqSqdz4KMK4mfumfEl/LIai1tUZdE8y
-        bVMV74AoHVh8PG2PwpjhSQjxeg==
-X-Google-Smtp-Source: AA0mqf6uAkyoQgNM086tURqg97P1KuaThc/HXEgKMiVq3Fzrq4lDB/c5TP/DiAM4OQfBOuAZ43z5zw==
-X-Received: by 2002:a19:4f43:0:b0:4a0:44bb:d1a8 with SMTP id a3-20020a194f43000000b004a044bbd1a8mr6530800lfk.556.1668516798602;
-        Tue, 15 Nov 2022 04:53:18 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id d8-20020a056512368800b0049110ba325asm2177224lfs.158.2022.11.15.04.53.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Nov 2022 04:53:18 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=4z+vcQIa+TDGxCARqFIzwt2He1hOQxmdiWKApcem7GQ=;
+        b=tA8Cg4AIAg+UgOdQ1ld5wCw7/W1cyzMovpWgxNJv3W6YEOdSKZF1/qA7cYKXUYBeRy
+         Ge2xMrR1kPdWK27kXOCkSdlZhkiSZGvdpLXracycbBzaeAEd6vsw4Mu1EMPOQctsea20
+         1ExS2oQEJNVIjIwyhD/WX2h2OYvPlFPPjZf3np5F7HCfNly058sY8I/lurHm9+vm53Nw
+         fFV2nOtxqF9V0CVTmdnM7c9Pjr7fYlFOGrhXm8N+mavrCfovKa1ErkXvphkxB1z3zDVs
+         MqR3h4hX9ZCIZGAz6m+k9BAjFN4YmN5Wg2nUfFKKVpvloanon2cc6FqddXl1pH43vViA
+         fayg==
+X-Gm-Message-State: ANoB5pkNsL0D+x+ifb9BFT3ttbyV386AV3NZe1tRmqBQp4J5dXbbGIsw
+        FnNlz8lOzvduZ4EAoEFeYJlNRQ==
+X-Google-Smtp-Source: AA0mqf7itE9nf4WRqEIO+vTD+BPP7Gr3FkphD9bLXegoH3gu+/hOfOjZOYe3Gji0QSO05rw767Q+hQ==
+X-Received: by 2002:a17:907:770f:b0:78d:c16e:dfc9 with SMTP id kw15-20020a170907770f00b0078dc16edfc9mr13754413ejc.327.1668516850970;
+        Tue, 15 Nov 2022 04:54:10 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id c2-20020a17090618a200b007ad96726c42sm2946289ejf.91.2022.11.15.04.54.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Nov 2022 04:54:10 -0800 (PST)
+Message-ID: <f59ddce1-c2e1-4055-3bce-1319c68ddf94@linaro.org>
+Date:   Tue, 15 Nov 2022 13:54:03 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH v2 1/9] dt-bindings: arm-smmu: Allow up to 3 power-domains
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     patches@linaro.org, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 4/4] arm64: dts: msm8998: unify PCIe clock order withMSM8996
-Date:   Tue, 15 Nov 2022 13:53:10 +0100
-Message-Id: <20221115125310.184012-4-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221115125310.184012-1-krzysztof.kozlowski@linaro.org>
-References: <20221115125310.184012-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
+References: <20221114104222.36329-1-konrad.dybcio@linaro.org>
+ <20221114104222.36329-2-konrad.dybcio@linaro.org>
+ <6fa8e3ea-2113-d930-96bc-3726d53e5bcd@linaro.org>
+ <a4b160d8-0faa-3f4c-a925-0beaf6ace721@linaro.org>
+ <0121fc03-b027-7659-5e6e-b42089c9888d@linaro.org>
+ <12578e05-ced9-e5f7-7922-0af2f2159333@linaro.org>
+ <878402e7-7f80-31c7-3a6b-989a6ca29841@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <878402e7-7f80-31c7-3a6b-989a6ca29841@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,34 +87,142 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-PCIe on MSM8996 and MSM8998 use the same clocks, so use one order to
-make the binding simpler.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 320a28232a32..539382dab0ad 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -929,11 +929,11 @@ pcie0: pci@1c00000 {
- 					<0 0 0 4 &intc 0 0 139 IRQ_TYPE_LEVEL_HIGH>;
- 
- 			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
--				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
--				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>,
-+				 <&gcc GCC_PCIE_0_AUX_CLK>,
- 				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
--				 <&gcc GCC_PCIE_0_AUX_CLK>;
--			clock-names = "pipe", "bus_master", "bus_slave", "cfg", "aux";
-+				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
-+				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>;
-+			clock-names = "pipe", "aux", "cfg", "bus_master", "bus_slave";
- 
- 			power-domains = <&gcc PCIE_0_GDSC>;
- 			iommu-map = <0x100 &anoc1_smmu 0x1480 1>;
--- 
-2.34.1
+On 14/11/2022 17:58, Krzysztof Kozlowski wrote:
+> On 14/11/2022 16:53, Konrad Dybcio wrote:
+>>
+>> On 14/11/2022 14:00, Krzysztof Kozlowski wrote:
+>>> On 14/11/2022 12:17, Konrad Dybcio wrote:
+>>>> On 14/11/2022 12:01, Krzysztof Kozlowski wrote:
+>>>>> On 14/11/2022 11:42, Konrad Dybcio wrote:
+>>>>>> Some SMMUs require that a vote is held on as much as 3 separate PDs
+>>>>>> (hello Qualcomm). Allow it in bindings.
+>>>>>>
+>>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>>>> ---
+>>>>>> Changes since v1:
+>>>>>> - Add minItems
+>>>>>>
+>>>>>>     Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 ++-
+>>>>>>     1 file changed, 2 insertions(+), 1 deletion(-)
+>>>>>>
+>>>>>> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>>>>> index 9066e6df1ba1..82bc696de662 100644
+>>>>>> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>>>>> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>>>>> @@ -159,7 +159,8 @@ properties:
+>>>>>>               through the TCU's programming interface.
+>>>>>>     
+>>>>>>       power-domains:
+>>>>>> -    maxItems: 1
+>>>>>> +    minItems: 0
+>>>>> It cannot be 0.
+>>>>>
+>>>>> minItems: 1
+>>>>>
+>>>>> Anyway you still need to restrict it per variant, as I said in previous
+>>>>> version.
+>>>> Hm.. I'm not entirely sure what you mean.. Should I add a list of
+>>>> compatibles
+>>> Yes and limit it to maxItems: 1 for "else".
+>>
+>> I tried adding:
+>>
+>>
+>>
+>>     - if:
+>>         properties:
+>>           compatible:
+>>             contains:
+>>               enum:
+>>                 - qcom,sm6375-smmu-500
+>>       then:
+>>         properties:
+>>           power-domains:
+>>             minItems: 3
+>>             maxItems: 3
+>>       else:
+>>         properties:
+>>           power-domains:
+>>             maxItems: 1
+>>
+>>
+>> Right under the nvidia reg if-else in the allOf, but dtbs_check throws
+>> errors like:
+>>
+>>
+>> /home/konrad/linux/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-poplar.dtb:
+>> iommu@5040000: 'power-domains' does not match any of the regexes:
+>> 'pinctrl-[0-9]+'
+>>
+>>
+>> Any clues as to why?
+> 
+> I don't know what code do you have there, but generic pattern is:
+> 
+> https://elixir.bootlin.com/linux/v5.19-rc6/source/Documentation/devicetree/bindings/clock/samsung,exynos7-clock.yaml#L38
+> 
+I tried many things, but I still don't seem to get a hang of it.. Here's 
+my current diff rebased on top of Dmitry's recent cleanups (available at 
+[1])
 
+
+diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml 
+b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+index 28f5720824cd..55759aebc4a0 100644
+--- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
++++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+@@ -200,7 +200,7 @@ properties:
+      maxItems: 7
+
+    power-domains:
+-    maxItems: 1
++    maxItems: 3
+
+    nvidia,memory-controller:
+      description: |
+@@ -364,6 +364,26 @@ allOf:
+              - description: interface clock required to access smmu's 
+registers
+                  through the TCU's programming interface.
+
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: qcom,sm6375-smmu-500
++    then:
++      properties:
++        power-domains:
++          items:
++            - description: SNoC MMU TBU RT GDSC
++            - description: SNoC MMU TBU NRT GDSC
++            - description: SNoC TURING MMU TBU0 GDSC
++
++      required:
++        - power-domains
++    else:
++      properties:
++        power-domains:
++          maxItems: 1
++
+  examples:
+    - |+
+      /* SMMU with stream matching or stream indexing */
+
+
+In my eyes, this should work, but I still get errors like:
+
+/home/konrad/linux/arch/arm64/boot/dts/qcom/sm8250-hdk.dtb: 
+iommu@3da0000: power-domains: [[108, 0]] is too short
+
+as if the else: path was never taken..
+
+[1] 
+https://git.kernel.org/pub/scm/linux/kernel/git/will/linux.git/log/?h=for-joerg/arm-smmu/bindings
+
+Konrad
+> Best regards,
+> Krzysztof
+> 
