@@ -2,228 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B33A1629C53
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 15:41:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AF19629C7C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 15:45:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229672AbiKOOlE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 09:41:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55522 "EHLO
+        id S230167AbiKOOpo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 09:45:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232197AbiKOOk4 (ORCPT
+        with ESMTP id S238159AbiKOOp3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 09:40:56 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AE932A24C;
-        Tue, 15 Nov 2022 06:40:55 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Tue, 15 Nov 2022 09:45:29 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58CCF2D1D3;
+        Tue, 15 Nov 2022 06:44:39 -0800 (PST)
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D5FE4617E1;
-        Tue, 15 Nov 2022 14:40:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29BCFC4FF1F;
-        Tue, 15 Nov 2022 14:40:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668523253;
-        bh=S2uFsZNL8KCSy0MjdXARA3YnKzPzvstaWp9vcv8/aFY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Mf5uFpFymnYFkN0eVTFtnJ0vZRjvBTeDjQ2QP4hABjB0tvWpC8z1quUHeUKUcdsQ5
-         F2pQ+zo3NRRYF6NhMddbjcwOfY5f1DypYXsstQH23oxwDpEUdVDmFDSgvZsirQDXhg
-         lNonDDM0JDmWBFFh2+CKPY5jc9S3SvvapCxYF8BNkNJz0Ye8NbEwA5mUIFMqQqnxFq
-         E6kHILwQ22xa4hekw2yKUiZq2iEH+3c0vPxchUatRtjLtEBItyIPwm71K8Mdw90VoL
-         fE3TjW4cec/lAcM9sDjwBOwbdDyXkPPklvqHnWtXAAW1u+nvrb0ac7CZDbsIHsxpUd
-         UmqtidQw+vk3A==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1oux6t-0000g9-NW; Tue, 15 Nov 2022 15:40:23 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v2 15/15] arm64: dts: qcom: sc8280xp: fix USB-DP PHY nodes
-Date:   Tue, 15 Nov 2022 15:40:05 +0100
-Message-Id: <20221115144005.2478-16-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.37.4
-In-Reply-To: <20221115144005.2478-1-johan+linaro@kernel.org>
-References: <20221115144005.2478-1-johan+linaro@kernel.org>
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 1B7C46602A2B;
+        Tue, 15 Nov 2022 14:44:37 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1668523477;
+        bh=MIYpf0mHYDWLVle4bO/msR94U3fhD3OM3lpPL+REXds=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=ZWWpeYupRWST7G8bfRnYxT4+c7E8Bs/m/C2+5YC1qEiPPTjz0gwNN/ers00Vvhhu1
+         5KVmOJP873AYidT2hJdIa3GraNG6fYFH2IAP6shlqbFRl0Z3RhESkdo0dWiysJVTXc
+         qW20/OO3of6PpWUtC/o8+o9fpfZCX6ylGNUr6B6afuV3qZrf19yuOahyG3pydf4qD9
+         gHsWENDAFd5VQZVYeoHW3ntpJ3FwEJw+t4p+90T2jcs29jbEvl1gbPJfoFG8KXSC4c
+         ipb9n+16BQyUCm4qRjxgsiBtItA3rRMiHOtWB0YN9O42nsVH/H0e6JLugQ42tMO1kR
+         ahdH1PH2ACz3A==
+Message-ID: <3e9deab6-58ca-3a58-5f06-c1e4d181bc94@collabora.com>
+Date:   Tue, 15 Nov 2022 15:44:34 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Subject: Re: [PATCH v2 1/2] dt-bindings: soc: qcom: Add bindings for Qualcomm
+ Ramp Controller
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     marijn.suijten@somainline.org, konrad.dybcio@somainline.org,
+        kernel@collabora.com, andersson@kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, robh+dt@kernel.org,
+        agross@kernel.org
+References: <20221104142204.156333-1-angelogioacchino.delregno@collabora.com>
+ <20221104142204.156333-2-angelogioacchino.delregno@collabora.com>
+ <166758411781.2066027.6365889663189109123.robh@kernel.org>
+ <160cb3fc-176e-bc0e-1bff-9334478af8ec@collabora.com>
+ <342d556a-e710-590c-3c81-fcc60bbaa6e7@linaro.org>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <342d556a-e710-590c-3c81-fcc60bbaa6e7@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update the USB4-USB3-DP QMP PHY nodes to match the new binding which
-specifically includes the missing register regions (e.g. DP_PHY) and
-allows for supporting DisplayPort Alternate Mode.
+Il 15/11/22 14:36, Krzysztof Kozlowski ha scritto:
+> On 11/11/2022 11:05, AngeloGioacchino Del Regno wrote:
+>> Il 04/11/22 18:54, Rob Herring ha scritto:
+>>>
+>>> On Fri, 04 Nov 2022 15:22:03 +0100, AngeloGioacchino Del Regno wrote:
+>>>> Document bindings for the Qualcomm Ramp Controller, found on various
+>>>> legacy Qualcomm SoCs.
+>>>>
+>>>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+>>>> ---
+>>>>    .../qcom/qcom,msm8976-ramp-controller.yaml    | 37 +++++++++++++++++++
+>>>>    1 file changed, 37 insertions(+)
+>>>>    create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,msm8976-ramp-controller.yaml
+>>>>
+>>>
+>>> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+>>> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+>>>
+>>> yamllint warnings/errors:
+>>>
+>>> dtschema/dtc warnings/errors:
+>>> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,msm8976-ramp-controller.example.dtb: power-controller@b014000: '#power-domain-cells' is a required property
+>>> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/power/power-domain.yaml
+>>>
+>>> doc reference errors (make refcheckdocs):
+>>>
+>>> See https://patchwork.ozlabs.org/patch/
+>>>
+>>> This check can fail if there are any dependencies. The base for a patch
+>>> series is generally the most recent rc1.
+>>>
+>>> If you already ran 'make dt_binding_check' and didn't see the above
+>>> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+>>> date:
+>>>
+>>> pip3 install dtschema --upgrade
+>>>
+>>> Please check and re-submit.
+>>>
+>>
+>> I'm unsure about what I should do about this one.
+>> This is a power-controller, but does *not* need any #power-domain-cells, as it is
+>> standalone and doesn't require being attached to anything.
+> 
+> power-domain-cells are for power domain providers, not consumers. The
+> generic binding expect that nodes called power-controller are exactly
+> like that.
+> 
+> Solutions could be:
+> 1. Rename the node to something else. I cannot deduct the type of the
+> device based on description. What is "sequence ID" and how is it even
+> closely related to power control?
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 77 ++++++++------------------
- 1 file changed, 23 insertions(+), 54 deletions(-)
+This uC is mainly controlling DCVS, automagically plays with voltages for
+each ramp up/down step and from what I understand also decides to shut down
+or bring up *power* to "certain clocks" before ungating (CPU related, mainly
+big cluster).
+This also interacts with LMH - setting the LMH part makes it possible to
+later use CPR (otherwise CPR errors out internally and won't start, as it
+requires this controller, SAW and LMH to be set up in order to work).
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 85c674e7e1a5..3c5bc56e68fc 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -11,6 +11,7 @@
- #include <dt-bindings/interconnect/qcom,sc8280xp.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
-+#include <dt-bindings/phy/phy-qcom-qmp.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
- #include <dt-bindings/thermal/thermal.h>
-@@ -763,7 +764,7 @@ gcc: clock-controller@100000 {
- 				 <0>,
- 				 <0>,
- 				 <0>,
--				 <&usb_0_ssphy>,
-+				 <&usb_0_qmpphy QMP_USB43DP_USB3_PIPE_CLK>,
- 				 <0>,
- 				 <0>,
- 				 <0>,
-@@ -771,7 +772,7 @@ gcc: clock-controller@100000 {
- 				 <0>,
- 				 <0>,
- 				 <0>,
--				 <&usb_1_ssphy>,
-+				 <&usb_1_qmpphy QMP_USB43DP_USB3_PIPE_CLK>,
- 				 <0>,
- 				 <0>,
- 				 <0>,
-@@ -1666,42 +1667,26 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 			};
- 		};
- 
--		usb_0_qmpphy: phy-wrapper@88ec000 {
-+		usb_0_qmpphy: phy@88eb000 {
- 			compatible = "qcom,sc8280xp-qmp-usb43dp-phy";
--			reg = <0 0x088ec000 0 0x1e4>,
--			      <0 0x088eb000 0 0x40>,
--			      <0 0x088ed000 0 0x1c8>;
--			#address-cells = <2>;
--			#size-cells = <2>;
--			ranges;
-+			reg = <0 0x088eb000 0 0x4000>;
- 
- 			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
--				 <&rpmhcc RPMH_CXO_CLK>,
- 				 <&gcc GCC_USB4_EUD_CLKREF_CLK>,
--				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
--			clock-names = "aux", "ref_clk_src", "ref", "com_aux";
-+				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
-+				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-+			clock-names = "aux", "ref", "com_aux", "usb3_pipe";
-+
-+			power-domains = <&gcc USB30_PRIM_GDSC>;
- 
- 			resets = <&gcc GCC_USB3_PHY_PRIM_BCR>,
- 				 <&gcc GCC_USB4_DP_PHY_PRIM_BCR>;
- 			reset-names = "phy", "common";
- 
--			power-domains = <&gcc USB30_PRIM_GDSC>;
-+			#clock-cells = <1>;
-+			#phy-cells = <1>;
- 
- 			status = "disabled";
--
--			usb_0_ssphy: usb3-phy@88eb400 {
--				reg = <0 0x088eb400 0 0x100>,
--				      <0 0x088eb600 0 0x3ec>,
--				      <0 0x088ec400 0 0x364>,
--				      <0 0x088eba00 0 0x100>,
--				      <0 0x088ebc00 0 0x3ec>,
--				      <0 0x088ec200 0 0x18>;
--				#phy-cells = <0>;
--				#clock-cells = <0>;
--				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
--				clock-names = "pipe0";
--				clock-output-names = "usb0_phy_pipe_clk_src";
--			};
- 		};
- 
- 		usb_1_hsphy: phy@8902000 {
-@@ -1718,42 +1703,26 @@ usb_1_hsphy: phy@8902000 {
- 			status = "disabled";
- 		};
- 
--		usb_1_qmpphy: phy-wrapper@8904000 {
-+		usb_1_qmpphy: phy@8903000 {
- 			compatible = "qcom,sc8280xp-qmp-usb43dp-phy";
--			reg = <0 0x08904000 0 0x1e4>,
--			      <0 0x08903000 0 0x40>,
--			      <0 0x08905000 0 0x1c8>;
--			#address-cells = <2>;
--			#size-cells = <2>;
--			ranges;
-+			reg = <0 0x08903000 0 0x4000>;
- 
- 			clocks = <&gcc GCC_USB3_SEC_PHY_AUX_CLK>,
--				 <&rpmhcc RPMH_CXO_CLK>,
- 				 <&gcc GCC_USB4_CLKREF_CLK>,
--				 <&gcc GCC_USB3_SEC_PHY_COM_AUX_CLK>;
--			clock-names = "aux", "ref_clk_src", "ref", "com_aux";
-+				 <&gcc GCC_USB3_SEC_PHY_COM_AUX_CLK>,
-+				 <&gcc GCC_USB3_SEC_PHY_PIPE_CLK>;
-+			clock-names = "aux", "ref", "com_aux", "usb3_pipe";
-+
-+			power-domains = <&gcc USB30_SEC_GDSC>;
- 
- 			resets = <&gcc GCC_USB3_PHY_SEC_BCR>,
- 				 <&gcc GCC_USB4_1_DP_PHY_PRIM_BCR>;
- 			reset-names = "phy", "common";
- 
--			power-domains = <&gcc USB30_SEC_GDSC>;
-+			#clock-cells = <1>;
-+			#phy-cells = <1>;
- 
- 			status = "disabled";
--
--			usb_1_ssphy: usb3-phy@8903400 {
--				reg = <0 0x08903400 0 0x100>,
--				      <0 0x08903600 0 0x3ec>,
--				      <0 0x08904400 0 0x364>,
--				      <0 0x08903a00 0 0x100>,
--				      <0 0x08903c00 0 0x3ec>,
--				      <0 0x08904200 0 0x18>;
--				#phy-cells = <0>;
--				#clock-cells = <0>;
--				clocks = <&gcc GCC_USB3_SEC_PHY_PIPE_CLK>;
--				clock-names = "pipe0";
--				clock-output-names = "usb1_phy_pipe_clk_src";
--			};
- 		};
- 
- 		mdss1_dp0_phy: phy@8909a00 {
-@@ -1941,7 +1910,7 @@ usb_0_dwc3: usb@a600000 {
- 				reg = <0 0x0a600000 0 0xcd00>;
- 				interrupts = <GIC_SPI 803 IRQ_TYPE_LEVEL_HIGH>;
- 				iommus = <&apps_smmu 0x820 0x0>;
--				phys = <&usb_0_hsphy>, <&usb_0_ssphy>;
-+				phys = <&usb_0_hsphy>, <&usb_0_qmpphy QMP_USB43DP_USB3_PHY>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 			};
- 		};
-@@ -1995,7 +1964,7 @@ usb_1_dwc3: usb@a800000 {
- 				reg = <0 0x0a800000 0 0xcd00>;
- 				interrupts = <GIC_SPI 810 IRQ_TYPE_LEVEL_HIGH>;
- 				iommus = <&apps_smmu 0x860 0x0>;
--				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
-+				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 			};
- 		};
--- 
-2.37.4
+What I've seen is that without it I can't bring up the big cluster at all,
+not even at minimum frequency, as the HF2PLL (a clock source for that cluster)
+will not power up.
+All it takes is to initialize these params and start the controller, then
+everything goes as it should.
+
+If you're wondering why my explanation may not be particularly satisfying,
+that's because downstream contains practically no information about this
+one, apart from a bunch of lines of code and because this controller is
+just a big black box.
+
+> 
+> 2. Narrow the node name in power-domain.yaml which would require changes
+> in multiple DTS and bindings.
+> 
+> 3. Do not require power-domain-cells for power-controllers, only for
+> power-domains.
+> 
+
+Solutions 2 and 3... well, I don't think that this would be really feasible
+as I envision this being the one and only driver that will ever require
+that kind of thing.
+Also, this programming was later moved to bootloaders and the only SoCs that
+will ever require this are MSM8956/76, MSM8953 and.. I think MSM8952 as well,
+but nothing more.
+
+Even if I can imagine the answer, I'm still tempted to ask: can we eventually
+just name it ramp-controller@xxxx or qcom-rc@xxxx or something "special" like
+that to overcome to this binding issue?
+
+Regards,
+Angelo
 
