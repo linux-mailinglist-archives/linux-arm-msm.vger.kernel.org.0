@@ -2,86 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAFA7629CCF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 15:59:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 27451629CD2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 16:00:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229598AbiKOO75 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 09:59:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42282 "EHLO
+        id S230519AbiKOPAI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 10:00:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229613AbiKOO74 (ORCPT
+        with ESMTP id S230489AbiKOPAG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 09:59:56 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 680A123387
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 06:59:55 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id k8so24760828wrh.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 06:59:55 -0800 (PST)
+        Tue, 15 Nov 2022 10:00:06 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D04C2BB20
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 07:00:03 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id l14so24730570wrw.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 07:00:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:reply-to:organization:from
+        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
          :references:cc:to:content-language:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=VZvJ6/3BqvyPf+pzGos2oDLHrGIaz7vagLhxMIbbdag=;
-        b=E7xm6VJfsawpfWB8Jt6W2hrRrvISw4FVgxyFm6Edw2eInKscMIixwZ3hHVYzm+tnel
-         YuVb6XV4vthoKczmyW/ItA5ljymXLJ9q5rYVpNoWpXztFZFNkZY7Tj0uVOi4YrOxahIz
-         SRxtpwhfQ4XdRkxvSESf31Ycj/DziujLUelMamVZ/8PlOkhm5/tKcirB7NtNIKu2bhyR
-         x8FlWyhT9sVwQkfAzkS0mM/kWNh1BrkBQvSGxP9Y29S+W1p3chilLv7+OzltJ21b9lWs
-         CSzGfWRv5Gu+MztMbcrW3LYuVJ1A4j9Vh32T+SH8ka97F9u0pKeDDtECMmqEfrybhyrX
-         t6xw==
+        bh=wGd0eX9dHnbMWbZ42d1c86XckxWPxOIEV8Vb6s6+IpQ=;
+        b=BcsGr0Rq+viCW0Ll8pHykvGWU6QJ+XVHP6g81m7DojwvWk4YbMmyPOYnWs8FLuyUNi
+         INdfeAe7wkRlUSu/t2vgaCkEze5QxvBhiWHCGRgP8ZE0Pn2YXjvoDqV7jLk/E6ChYh9m
+         yBUwQwoCbLaYigIYIxL6kt+9IAuDaLGyHmFoRXJYfRoHr8N1lYNRLVq4ej2shT93aCti
+         5sUbr+3mo1NM3/fH4lV6vSg7C2aZARlqch4wswroCGHoDqIhHdtX8Zd2ANA/rGo6FOUE
+         qahVHa4PiqXqWqmnaA1kSH79Jn8dlJB0BV2tGqCsNxafM24cNZ2djdtR4goUXrNCiePm
+         2yBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:reply-to:organization:from
+        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
          :references:cc:to:content-language:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VZvJ6/3BqvyPf+pzGos2oDLHrGIaz7vagLhxMIbbdag=;
-        b=CfVx9HN03Z2ZD5R2Vtu3AN+e0lZ62/iU8hmGmEYKUHIklwtGe0eaMeQAAeIzA6Pw2G
-         nESxomGmdD5zIHkqtQ0LRuKRPcYywQuxtQrk/Ya3jAHFdGfqBOylozED1GhDfDvsg7p8
-         aDRfmYM9BoQz+T4NWbzrqb/eYn9I52O2Fs8UYoK4bd0HnBSPsRslMwlsCG/UoFW8Fppw
-         eMEvzBIFVJVHxe75QJ7zLtiNExs6Dqg+8WD2+Wx0fbd0cBlBjFaQZczvlQafnQxMt3z5
-         iewmgOx/hRbUnuBSfJGFcLW1JUnBJaefRnBn5cMcHtYX5TrWdg8I7sxjmX0G7fXBRbQN
-         pnXA==
-X-Gm-Message-State: ANoB5plUp+uIxPH+bZxmpzmHX2+vU+kfelOIaC2qHvo8lXwFd+znpKvp
-        OcbTrifaKFsURF5oL1gs1tcyjA==
-X-Google-Smtp-Source: AA0mqf6Jor9LYoLr9QBx6i0iQ3nk/BYX/fdO0UrwfcTyHitEt0Gq4DsOS2gB8DRtRgiEpkmPPcG4qQ==
-X-Received: by 2002:a5d:604c:0:b0:22e:7630:dfa with SMTP id j12-20020a5d604c000000b0022e76300dfamr11357620wrt.1.1668524393957;
-        Tue, 15 Nov 2022 06:59:53 -0800 (PST)
+        bh=wGd0eX9dHnbMWbZ42d1c86XckxWPxOIEV8Vb6s6+IpQ=;
+        b=e+1L/yStjyRtCxi5jGlqvYrc0R09XoOOIie1q4oVAv+iXJ5H0d4ECT+Nfh03CGOKoF
+         AjW4BBufz/jyM4wqiHWbcROSpz1i4SuytwhFD+4hAoPeU3hgghRY4mkEHTtQyJxxzREH
+         ybogBvUq6jlqpIqDdd7bzd6WCZOmOYeOTRteo6XYbOIu8YNILGEBq2nZf0z/P5FLCOe2
+         ZSf96BMogH8OaJFhSZsnj0VbpceCNraXbo7tZSc0cwKkYUQezphWO9XpfGzVFciw63r0
+         Dy/vdPa31AolmmioQKFHjtoEiN7Q6FoWHT5fJdHFmckLDnDzFxb5xT/akGderzO1uhlX
+         hjJA==
+X-Gm-Message-State: ANoB5pmO4g+GetbPlqOflOa7x/Xp9SD1eTXKT96x1DBMW6rZDKHPwPnH
+        H5xHFnHd2asOCfJUWpFcZ68MwA==
+X-Google-Smtp-Source: AA0mqf5BIhE9LqTRNtr8yELm7gIiWdFkyK3CdvNNzl1T0wlk3NkIVEvus9hfeCAuUASWJI2txLvtdQ==
+X-Received: by 2002:a5d:6086:0:b0:22e:71db:47ba with SMTP id w6-20020a5d6086000000b0022e71db47bamr11491222wrt.359.1668524401507;
+        Tue, 15 Nov 2022 07:00:01 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:982:cbb0:fcf3:1c15:2e51:def7? ([2a01:e0a:982:cbb0:fcf3:1c15:2e51:def7])
-        by smtp.gmail.com with ESMTPSA id b13-20020adff90d000000b0022584c82c80sm12485483wrr.19.2022.11.15.06.59.53
+        by smtp.gmail.com with ESMTPSA id b3-20020adff903000000b002366fb99cdasm12567649wrr.50.2022.11.15.07.00.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Nov 2022 06:59:53 -0800 (PST)
-Message-ID: <0b5ad94a-c470-422d-45eb-1ec0e77a27da@linaro.org>
-Date:   Tue, 15 Nov 2022 15:59:52 +0100
+        Tue, 15 Nov 2022 07:00:01 -0800 (PST)
+Message-ID: <1ec5c839-ea5d-e6eb-3a51-f5824c322b76@linaro.org>
+Date:   Tue, 15 Nov 2022 16:00:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.3
-Subject: Re: [PATCH v4 1/2] dt-bindings: regulators: convert non-smd RPM
- Regulators bindings to dt-schema
+Subject: Re: [PATCH v4 2/2] dt-bindings: soc: qcom: convert non-smd RPM
+ bindings to dt-schema
 Content-Language: en-US
 To:     Rob Herring <robh@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mark Brown <broonie@kernel.org>, Lee Jones <lee@kernel.org>,
+Cc:     devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
         Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org
+        Mark Brown <broonie@kernel.org>, Lee Jones <lee@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
 References: <20221005-mdm9615-pinctrl-yaml-v4-0-463523919c19@linaro.org>
- <20221005-mdm9615-pinctrl-yaml-v4-1-463523919c19@linaro.org>
- <166851961643.867594.12105329661363857830.robh@kernel.org>
+ <20221005-mdm9615-pinctrl-yaml-v4-2-463523919c19@linaro.org>
+ <166851961723.867617.14976811191392756271.robh@kernel.org>
+Reply-To: neil.armstrong@linaro.org
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Organization: Linaro Developer Services
-Reply-To: neil.armstrong@linaro.org
-In-Reply-To: <166851961643.867594.12105329661363857830.robh@kernel.org>
+In-Reply-To: <166851961723.867617.14976811191392756271.robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -90,15 +88,17 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 15/11/2022 15:11, Rob Herring wrote:
 > 
-> On Tue, 15 Nov 2022 11:12:35 +0100, Neil Armstrong wrote:
->> Convert the non-SMD Regulators bindings to dt-schema, the old text based
->> bindings will be deleted later since the RPM bindings are not yet converted.
+> On Tue, 15 Nov 2022 11:12:36 +0100, Neil Armstrong wrote:
+>> Convert the non-SMD RPM node bindings to dt-schema, the old txt bindings
+>> are now removed since all bindings were converted.
 >>
 >> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 >> Reviewed-by: Rob Herring <robh@kernel.org>
+>> Acked-by: Lee Jones <lee@kernel.org>
 >> ---
->>   .../bindings/regulator/qcom,rpm-regulator.yaml     | 128 +++++++++++++++++++++
->>   1 file changed, 128 insertions(+)
+>>   Documentation/devicetree/bindings/mfd/qcom-rpm.txt | 283 ---------------------
+>>   .../devicetree/bindings/soc/qcom/qcom,rpm.yaml     | 101 ++++++++
+>>   2 files changed, 101 insertions(+), 283 deletions(-)
 >>
 > 
 > My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
@@ -107,11 +107,16 @@ On 15/11/2022 15:11, Rob Herring wrote:
 > yamllint warnings/errors:
 > 
 > dtschema/dtc warnings/errors:
-> ./Documentation/devicetree/bindings/regulator/qcom,rpm-regulator.yaml: $id: relative path/filename doesn't match actual path or filename
-> 	expected: http://devicetree.org/schemas/regulator/qcom,rpm-regulator.yaml#
+> ./Documentation/devicetree/bindings/soc/qcom/qcom,rpm.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/regulator/qcom,ipc-rpm-regulator.yaml
+> ./Documentation/devicetree/bindings/soc/qcom/qcom,rpm.yaml: $id: relative path/filename doesn't match actual path or filename
+> 	expected: http://devicetree.org/schemas/soc/qcom/qcom,rpm.yaml#
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,rpm.example.dtb: rpm@108000: regulators: False schema does not allow {'compatible': ['qcom,rpm-pm8921-regulators'], 'vdd_l1_l2_l12_l18-supply': [[1]], 's1': {'regulator-min-microvolt': [[1225000]], 'regulator-max-microvolt': [[1225000]], 'bias-pull-down': True, 'qcom,switch-mode-frequency': [[3200000]]}, 's4': {'regulator-min-microvolt': [[1800000]], 'regulator-max-microvolt': [[1800000]], 'qcom,switch-mode-frequency': [[1600000]], 'bias-pull-down': True, 'qcom,force-mode': [[3]], 'phandle': [[1]]}}
+> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,rpm.yaml
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,rpm.example.dtb: rpm@108000: regulators: Unevaluated properties are not allowed ('compatible', 's1', 's4', 'vdd_l1_l2_l12_l18-supply' were unexpected)
+> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,rpm.yaml
+> Documentation/devicetree/bindings/soc/qcom/qcom,rpm.example.dtb:0:0: /example-0/rpm@108000/regulators: failed to match any schema with compatible: ['qcom,rpm-pm8921-regulators']
 > 
 > doc reference errors (make refcheckdocs):
-> Documentation/devicetree/bindings/regulator/qcom,rpm-regulator.yaml: Documentation/devicetree/bindings/soc/qcom/qcom,ipc-rpm.yaml
 > 
 > See https://patchwork.ozlabs.org/patch/
 > 
