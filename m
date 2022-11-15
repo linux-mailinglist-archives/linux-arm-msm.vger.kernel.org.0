@@ -2,104 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E9E8629ECA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 17:19:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F36B629F3D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 17:42:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238606AbiKOQTQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 11:19:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37636 "EHLO
+        id S238682AbiKOQmG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 11:42:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238652AbiKOQTC (ORCPT
+        with ESMTP id S238686AbiKOQl6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 11:19:02 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44E0BC67
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 08:18:27 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id l8so18139060ljh.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 08:18:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=M+CzAkDFHmdMgl4j2DtvxmhnqVrVZWAc9Wn/m7gqc2E=;
-        b=X0c/8PFj10auVUGpFbGxu7DN+PI9HmL9eHBPdbSwb0V1VYE/8FWQ0hxchocw8Rp9fN
-         HBH2cYvgcIxXfMOx4Dis6k1YMlrnsUI/gL487IzJc+nMS3r+FEg/qq1oFSWawTvoNjL/
-         FLLubKfHwBo/nNBDwSRrpskjcurzGREIrvO4Zj5qVwkUPni2PW4MVD7CwiqHf+urMyJ1
-         THqhrfjcIrAIyLL1DmVnAVLNegKCcwLPeW3F129XfhgOMzC4oPLeiXoDHqBtmIW7d3bs
-         blYHjh/vkpmyblTPrVr/lICaEqBda0pOs8GcTy+OeFa2eiTPmrDp/TluSyN0r/kDTErK
-         E5Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M+CzAkDFHmdMgl4j2DtvxmhnqVrVZWAc9Wn/m7gqc2E=;
-        b=AgwN5vPdiiP595k6A2FWZrdyvKEJmTEIwcTS02WrImp9g2oIXOafAhS1Zb0RHr7Epe
-         3g1xsQ2k3j3mz7j4SwQeTGsxmAtLkdj3wAGnioTBnnlPKBiS6F2ZVRybNIQwlawaBw0f
-         rPxL3swWZs5u7LC5h4VpOGSZCdDZ+k5VgL/s8zVh1fKmR5OdCnMeLPRl4lriwGTVnhET
-         sgTKTSVxQJDJepU/WqvBDY/Io3zuWCJ2WcYdOtanld7gZhcMgxMbHRxpyF0hohHcRqGQ
-         H0olOwVugn6wpjAOa6ZJVDmY+qK1r4vSC5doTm9nfHocjM5SxE5ttGU8x8L058gKVk6D
-         2+Yw==
-X-Gm-Message-State: ANoB5pnR/l2i2n7ah7ZbiUgUobZpAopTEbuVnn/hX/nJyU6zcXVxaCVy
-        yic/TFzv5W1VqpiWSly+ygHkhw==
-X-Google-Smtp-Source: AA0mqf5AqaaZmA92crIbJFDiqqgI+iCSQJ4Z/1LSWLrXQ0IglXC99waP1UTkiIZAWVKU/ECdp/xBYw==
-X-Received: by 2002:a2e:b0cd:0:b0:277:14bc:50f9 with SMTP id g13-20020a2eb0cd000000b0027714bc50f9mr6800122ljl.359.1668529106271;
-        Tue, 15 Nov 2022 08:18:26 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id b11-20020a056512070b00b004a46a9cebe2sm2250332lfs.289.2022.11.15.08.18.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Nov 2022 08:18:25 -0800 (PST)
-Message-ID: <68ed4cb6-3c8b-e0a4-8a41-2cf7321e46ab@linaro.org>
-Date:   Tue, 15 Nov 2022 17:18:24 +0100
+        Tue, 15 Nov 2022 11:41:58 -0500
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C6D92D1EE;
+        Tue, 15 Nov 2022 08:41:57 -0800 (PST)
+Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 12DD03F30C;
+        Tue, 15 Nov 2022 17:41:55 +0100 (CET)
+Date:   Tue, 15 Nov 2022 17:41:53 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Subject: Re: [PATCH v2] dt-bindings: pinctrl: qcom,msm8976: convert to
+ dtschema
+Message-ID: <20221115164153.rcyo3h35bj6vxy4r@SoMainline.org>
+References: <20221110085230.15108-1-krzysztof.kozlowski@linaro.org>
+ <166852857073.244019.11894552754264671717.b4-ty@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v2 1/2] dt-bindings: clock: add QCOM SM6375 display clock
- bindings
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     patches@linaro.org, Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221115155808.10899-1-konrad.dybcio@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221115155808.10899-1-konrad.dybcio@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <166852857073.244019.11894552754264671717.b4-ty@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/11/2022 16:58, Konrad Dybcio wrote:
-> Add device tree bindings for display clock controller for
-> Qualcomm Technology Inc's SM6375 SoC.
+On 2022-11-15 17:09:33, Krzysztof Kozlowski wrote:
+> On Thu, 10 Nov 2022 09:52:30 +0100, Krzysztof Kozlowski wrote:
+> > Convert Qualcomm MSM8976 pin controller bindings to DT schema.  Keep the
+> > parsing of pin configuration subnodes consistent with other Qualcomm
+> > schemas (children named with '-state' suffix, their children with
+> > '-pins').
+> > 
+> > Changes during conversion: update the list of non-mux pins (like sdc1)
+> > to match Linux driver.
+> > 
+> > [...]
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> Changes in v2:
-> - Switch to dual licensing in both files
-> - Adjust the wording with the recent refactoring
-> - use qcom,gcc.yaml for common properties
+> Applied, thanks!
+> 
+> [1/1] dt-bindings: pinctrl: qcom,msm8976: convert to dtschema
+>       https://git.kernel.org/krzk/linux-dt/c/966d0a44f103950265db458180b581275a225b89
 
-If there is going to be a resend, please drop second "bindings" word
-from subject (the trailing one). It's redundant.
+I did not get cc'd after providing review, but with the fixes this
+obviously gets my:
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
