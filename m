@@ -2,74 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A986F6299CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 14:14:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE9DC629A05
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 14:23:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229745AbiKONO4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 08:14:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47296 "EHLO
+        id S238090AbiKONXs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 08:23:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230152AbiKONOz (ORCPT
+        with ESMTP id S232544AbiKONXq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 08:14:55 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 066B9BA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 05:14:54 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id p8so24332216lfu.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 05:14:53 -0800 (PST)
+        Tue, 15 Nov 2022 08:23:46 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C551E1116B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 05:23:42 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id j4so24447804lfk.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 05:23:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to:subject
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ooyl1uFqat+f2ZNpkIjPxta1ZbRx2XG5h0e61uujqKk=;
-        b=Le74PuhyssQXy39UPs3dvmgG7S+szyOwSa9W0c/Uxly7crv/XWyEfo/WDS01afAYCZ
-         YXthv+RFSKt2FWOymLaBCAblLi0Vbrqex7wNGRnCbj3NhFLJ5ub0oQaOQ09pbZPIZmYl
-         cQeUI0xOMJuoX6Ye2URpIdAQYtHZ0shGX9dx2zRb8GB0SkgHMBqqoyMqhcU8/PUBNA+W
-         LOxmv+fpQAXT2e2woqIVlDRVU6DHlrfEhmiMnpEzB+clsq4D0CEpNSDbzxutKM/obSGF
-         FbCSwB1DKWk6fQwj5Dxf6FsOqylkojIw1gvoCYNGHulpNhRTM2bvSVaHBbojVEqFgHzN
-         Y33A==
+        bh=FqH00M5tmI+hJaxcTJuo6fH1GrWWsoOr/MknXsui2eE=;
+        b=Nltim8rZvpTvTZ7pTQ+/8Gx82aBXz5lw5ke1QBpq3c+LocGqtCtn1/6Stckq+Il3zV
+         5ruuF/Zqqjx4K9dLBDERJDofKCMxQ9ufaPTL9SFIUGO0wRyG5qrAt9ihgo6fQduY2fTi
+         TuYCM7r61DP2vrSEGfsF1W1mk3hBrZwNrnO751Pi0ExY1UW47kjy3Qmrctr0IEdgabTd
+         +h1H/5wtUK8b7DsKZ028xikl8tyFKr7zj8a4r43m2RTGoW+RhaygRJWL7C+QPruO/k+U
+         g19v1kZYLqb6PqnECKVDKoO9fz4HVwfPoD4hR+R50WlQAdCtbg9PztoCOccxW9RCl0yK
+         0m/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to:subject
          :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=Ooyl1uFqat+f2ZNpkIjPxta1ZbRx2XG5h0e61uujqKk=;
-        b=tfHRvGmMlWYmLmMA5NRB53dgYL3+oIN96oS+s+O3/oLs4+toYPzz2hzUqDjQ7pbxtD
-         mqjEzS8bt3BKyXNyGh4CMWpf6LKEFfY+GCJaFsUWbANR8ZKmnuCj6sGw2QWWtNg0ggEt
-         g4EZVkHKBXJmut8p6nW3R7QQFsT1VZaVkfTgj3am0A1h1zXmR26USHtTdvA1Eg9hYpUv
-         CCOzudd3pNfAzHWBX7znOib4Dqob+PxzGbzYSfzbMGyINVvFAPb6nIkB1kOyfYxlKwzH
-         WJsS5RMGrPa/lfwEvokZGrzWllVRGzSzfoygHFJP1ew7KhXvhOQOGC4mBiqwDGb1P8vi
-         WjpQ==
-X-Gm-Message-State: ANoB5plfvPj31ZhID/JQjhk3amDXwTM87JF67qCvDHRkIrXAIp1dmph2
-        RWIiA09yZCP7tQ6KDcHDl7Z7IQ==
-X-Google-Smtp-Source: AA0mqf5bf1tHm6zM/I+mQqK8jSttcy4XiXKdKL0ZzsOi9LJQ8cWmKlYfrjYcjMksIRh1tYVEjHzR0A==
-X-Received: by 2002:a19:6442:0:b0:497:a17d:d848 with SMTP id b2-20020a196442000000b00497a17dd848mr5302938lfj.381.1668518092400;
-        Tue, 15 Nov 2022 05:14:52 -0800 (PST)
+        bh=FqH00M5tmI+hJaxcTJuo6fH1GrWWsoOr/MknXsui2eE=;
+        b=mPlk7+pmJA7u+wf+uppkYViSuWpy+H0EbFtlVxf0ixAeb2NDaFo+gBc6PwBS50q1BP
+         dsWm3LjASgAnS3E6DRN0R0vDthcLhsvXnFJlLyyyb/3d4FSpxyNE4Axv4OtoysZ/o8H5
+         srPPucQWzCxhMUF1dCbgogN9mHqBKDOzZQmSBPieACD3w6V9c4tUY8n+mjL6dkIjUNR7
+         h73bNUjsQWtS+CEpRak0g3TnYFVni+oFiO1ftW1DuOa7dgfPsF8HX2ief3EPgmVcYxbl
+         pip+x8SNwr7BhAX2gQI8lGZ7k46J9NZsrcu7fR43ptN2u5E+srYoGKTd7q22p79wvlU9
+         VF3w==
+X-Gm-Message-State: ANoB5plK8dqczRauljHpNuRZcip+nyNb0wM5uphxPtPPiRx3kl1BWUP2
+        SCMKx2pfq5jgqlmxOyPTOBkxFA==
+X-Google-Smtp-Source: AA0mqf5RdniR/Ee7x0mXUJxIEQ22iEk//HmT/2HMJe3jl/3wCB3uyHvScYI+6SXd/oMtdJrhfu1akw==
+X-Received: by 2002:a05:6512:329c:b0:494:79b6:c7a2 with SMTP id p28-20020a056512329c00b0049479b6c7a2mr6218139lfe.513.1668518621156;
+        Tue, 15 Nov 2022 05:23:41 -0800 (PST)
 Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id s21-20020a056512203500b004a8b9c68735sm2200581lfs.102.2022.11.15.05.14.51
+        by smtp.gmail.com with ESMTPSA id p12-20020a2eb98c000000b00278e7800715sm2402884ljp.16.2022.11.15.05.23.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Nov 2022 05:14:51 -0800 (PST)
-Message-ID: <93d30faf-da88-7bdc-dca7-82435b5f9fe9@linaro.org>
-Date:   Tue, 15 Nov 2022 14:14:46 +0100
+        Tue, 15 Nov 2022 05:23:40 -0800 (PST)
+Message-ID: <d2ed5161-7411-359c-021f-548fa45352ac@linaro.org>
+Date:   Tue, 15 Nov 2022 14:23:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 4/4] arm64: dts: msm8998: unify PCIe clock order
- withMSM8996
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221115125310.184012-1-krzysztof.kozlowski@linaro.org>
- <20221115125310.184012-4-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 00/12] Enable Display for SM8350
+To:     Robert Foss <robert.foss@linaro.org>, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
+        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        quic_kalyant@quicinc.com, swboyd@chromium.org,
+        angelogioacchino.delregno@somainline.org, loic.poulain@linaro.org,
+        vkoul@kernel.org, quic_vpolimer@quicinc.com, dianders@chromium.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jonathan Marek <jonathan@marek.ca>,
+        vinod.koul@linaro.org, quic_jesszhan@quicinc.com,
+        andersson@kernel.org
+References: <20221115111721.891404-1-robert.foss@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221115125310.184012-4-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221115111721.891404-1-robert.foss@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,35 +86,63 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 15/11/2022 13:53, Krzysztof Kozlowski wrote:
-> PCIe on MSM8996 and MSM8998 use the same clocks, so use one order to
-> make the binding simpler.
+On 15/11/2022 12:17, Robert Foss wrote:
+> Dependencies:
+> https://lore.kernel.org/all/20221102231309.583587-1-dmitry.baryshkov@linaro.org/
+> https://lore.kernel.org/all/20221024164225.3236654-1-dmitry.baryshkov@linaro.org/
+> https://lore.kernel.org/all/20221104130324.1024242-5-dmitry.baryshkov@linaro.org/
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Looks like only patches 0-3 reached linux-arm-msm and freedreno lists?
 
 Konrad
->   arch/arm64/boot/dts/qcom/msm8998.dtsi | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+> Branch:
+> https://git.linaro.org/people/robert.foss/linux.git/log/?h=sm8350_dsi_v2
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> index 320a28232a32..539382dab0ad 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> @@ -929,11 +929,11 @@ pcie0: pci@1c00000 {
->   					<0 0 0 4 &intc 0 0 139 IRQ_TYPE_LEVEL_HIGH>;
+> This series implements display support for SM8350 and
+> enables HDMI output for the SM8350-HDK platform.
+> 
+> Changes from v1:
+>   - Added R-b tags from v1
+>   - Added qcom,sm8350-dpu binding patch
+>   - Added qcom,sm8350-mdss binding patch
+>   - Corrected sm8350.dtsi according to new dpu/mdss bindings
+>   - Bjorn: Removed regulator-always-on property from lt9611_1v2 regulator
+>   - Bjorn: Moved lt9611 pinctl pins into a common node
+>   - Bjorn/Krzysztof: Moved status property to last in node
+>   - Krzysztof: Changed hdmi-out to hdmi-connector
+>   - Krzysztof: Fixed regulator node name
+>   - Krzysztof: Changed &mdss to status=disabled as default
+>   - Krzysztof: Changed &mdss_mdp node name to display-controller
+>   - Krzysztof: Fixed opp-table node name
+>   - Krzysztof: Fixed phy node name
+>   - Dmitry: Split commit containing dpu & mdss compatibles string
+>   - Dmitry: Added msm_mdss_enable case
+>   - Dmitry: Fixed dpu ctl features
 >   
->   			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
-> -				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
-> -				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_0_AUX_CLK>,
->   				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
-> -				 <&gcc GCC_PCIE_0_AUX_CLK>;
-> -			clock-names = "pipe", "bus_master", "bus_slave", "cfg", "aux";
-> +				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>;
-> +			clock-names = "pipe", "aux", "cfg", "bus_master", "bus_slave";
->   
->   			power-domains = <&gcc PCIE_0_GDSC>;
->   			iommu-map = <0x100 &anoc1_smmu 0x1480 1>;
+> 
+> Robert Foss (12):
+>    dt-bindings: display: msm: Add qcom,sm8350-dpu binding
+>    dt-bindings: display: msm: Add qcom,sm8350-mdss binding
+>    drm/msm/dpu: Refactor sc7280_pp location
+>    drm/msm/dpu: Add SM8350 to hw catalog
+>    drm/msm/dpu: Add support for SM8350
+>    drm/msm: Add support for SM8350
+>    arm64: dts: qcom: sm8350: Add &tlmm gpio-line-names
+>    arm64: dts: qcom: sm8350: Remove mmxc power-domain-name
+>    arm64: dts: qcom: sm8350: Use 2 interconnect cells
+>    arm64: dts: qcom: sm8350: Add display system nodes
+>    arm64: dts: qcom: sm8350-hdk: Enable display & dsi nodes
+>    arm64: dts: qcom: sm8350-hdk: Enable lt9611uxc dsi-hdmi bridge
+> 
+>   .../bindings/display/msm/qcom,sm8350-dpu.yaml | 120 +++++++
+>   .../display/msm/qcom,sm8350-mdss.yaml         | 240 +++++++++++++
+>   arch/arm64/boot/dts/qcom/sm8350-hdk.dts       | 332 ++++++++++++++++++
+>   arch/arm64/boot/dts/qcom/sm8350.dtsi          | 226 +++++++++++-
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 210 ++++++++++-
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   1 +
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   1 +
+>   drivers/gpu/drm/msm/msm_mdss.c                |   4 +
+>   8 files changed, 1108 insertions(+), 26 deletions(-)
+>   create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm8350-dpu.yaml
+>   create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.yaml
+> 
