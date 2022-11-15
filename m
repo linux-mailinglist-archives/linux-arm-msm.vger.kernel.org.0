@@ -2,205 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83DA76293BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 10:00:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B80EC6294D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 10:52:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232708AbiKOJAi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 04:00:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33874 "EHLO
+        id S232212AbiKOJw5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 04:52:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231602AbiKOJAh (ORCPT
+        with ESMTP id S229716AbiKOJw4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 04:00:37 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FCC76578
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 01:00:34 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id l14so23057857wrw.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 01:00:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ieee.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UqMA6Tje+3ZsVcAAIQPTB3aQZjTGfrywbsqDdzk9JQs=;
-        b=KIp2+/chwKI09PZkHXOBaaLZqJANenWBoecDu/vhLEPD8onbbS1Dlly1mkfV7tefeZ
-         6sw8kVUIFff+j7w99uAp1bPMm5B8+hngwOFKybRZBl0BhBYmWMmsMzSaTxCLetRaLhNE
-         hdkGZwUdt7t8k9QhYgHQU8zJ7bVLuZ2IErfgQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UqMA6Tje+3ZsVcAAIQPTB3aQZjTGfrywbsqDdzk9JQs=;
-        b=QvsvwLDfJcMLYATSK80+hPqkLpHILE39YIb/A8w2EziAOKTt8aesSLx+eiQrShNW3r
-         FlC3gjsROlYEe282WnPk6jy12+ahCr1dKxXJwT3UUFq6z7I9jUAGLUxr2BUCkBLTmrCD
-         WIVKNQIF0PC193RdmdrgVipOhYWA8Kp5PfIxKwfDZPQlfb1UBODCxB2pHjxagcsRcngt
-         eM5NtlUY4za5CFz0UOdLDa2YcccRRUqpoIAcjuvLnC+ugBrAzVz+56MCTbYgIMEcmyk/
-         JPnTg9Mk2kqOYfKuGkU6xw3ht2d5LZF4BTGi9B7ElNuhq8LURz7h2k5hRJ98SVXhjTwB
-         +SgA==
-X-Gm-Message-State: ANoB5pmoGM1czssAEMBT3yxeKhgYIVAUEVgij33wIQGL89qzA0Jaj4Dn
-        s73t+13ALx17bDkWK3RAx3EzQA==
-X-Google-Smtp-Source: AA0mqf54F/lZDKhCg3Oy0nmHzH6qldXo1KDM/vSOj3Y+3NQg4tQNXmzbhq8Eh9Boh+IgZWdHw86TQw==
-X-Received: by 2002:adf:a4c1:0:b0:236:6f18:37e6 with SMTP id h1-20020adfa4c1000000b002366f1837e6mr9637216wrb.262.1668502833056;
-        Tue, 15 Nov 2022 01:00:33 -0800 (PST)
-Received: from [10.211.55.3] ([167.98.215.174])
-        by smtp.googlemail.com with ESMTPSA id w9-20020adfee49000000b00228cd9f6349sm11842579wro.106.2022.11.15.01.00.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Nov 2022 01:00:32 -0800 (PST)
-Message-ID: <48fbae83-728e-d7ec-7516-4f8c972a1a1d@ieee.org>
-Date:   Tue, 15 Nov 2022 03:00:31 -0600
+        Tue, 15 Nov 2022 04:52:56 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0F6212AA1;
+        Tue, 15 Nov 2022 01:52:55 -0800 (PST)
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        (No client certificate requested)
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 8E9916602A0B;
+        Tue, 15 Nov 2022 09:52:53 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1668505974;
+        bh=fTz1/LN3UJg7iGi864PNg/UpPBmLtN7Aac88qggrMqc=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=fnK2ETBoLYl0jFzGtqol98jYRtaoaU2ghK6T6YxMvG6AWKtz1sTk2+/raMyvhYa01
+         qDQs9wRUxrhEZ3IOoZb/pWUIAcYR71xq57IudW1u6ErKbATs6qE/Fmmp+pp52y2RNt
+         89bUWxbQo7A57BSmfvOAgEGI7J6iJR5kWjEnKmHGQLDYjvSpg/sMrmq3lIVgCt0yfm
+         8SFxaL3BT19jdF44+W9hto0JHj4b1ks2enjhbSqEZmMEWpE1Quijc1NsgLLk3lNE2C
+         nFX8MFUdDlFMWpENTXF/Drf3uTS8cV1biqXRM28JlSqXSHhL0hzw8NHMknjIgkKRSs
+         2cUbXwYp1f0Yw==
+Message-ID: <2883ef06-7293-d5fd-4b62-ba796a6a2c69@collabora.com>
+Date:   Tue, 15 Nov 2022 10:52:50 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH net-next 1/5] dt-bindings: net: qcom,ipa: deprecate
- modem-init
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alex Elder <elder@linaro.org>, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, davem@davemloft.net,
-        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, agross@kernel.org,
-        elder@kernel.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221112200717.1533622-1-elder@linaro.org>
- <20221112200717.1533622-2-elder@linaro.org>
- <de98dbb4-afb5-de05-1e75-2959aa720333@linaro.org>
- <2f827660-ae9d-01dd-ded8-7fd4c2f8f8ae@ieee.org>
- <88fd2f42-6f20-7bbe-1a4d-1f482c153f07@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Subject: Re: [PATCH v2 8/8] dt-bindings: iommu: qcom,iommu: Document MSM8976
+ compatible
 Content-Language: en-US
-From:   Alex Elder <elder@ieee.org>
-In-Reply-To: <88fd2f42-6f20-7bbe-1a4d-1f482c153f07@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        agross@kernel.org
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, joro@8bytes.org,
+        will@kernel.org, robin.murphy@arm.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robdclark@gmail.com,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        marijn.suijten@somainline.org, kernel@collabora.com,
+        luca@z3ntu.xyz, a39.skl@gmail.com, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20221111145919.221159-1-angelogioacchino.delregno@collabora.com>
+ <20221111145919.221159-9-angelogioacchino.delregno@collabora.com>
+ <92a75ab2-ffb9-9acd-4a98-a91589ad7e14@linaro.org>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <92a75ab2-ffb9-9acd-4a98-a91589ad7e14@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/15/22 01:59, Krzysztof Kozlowski wrote:
-> On 14/11/2022 18:48, Alex Elder wrote:
->> On 11/14/22 03:56, Krzysztof Kozlowski wrote:
->>> On 12/11/2022 21:07, Alex Elder wrote:
->>>> GSI firmware for IPA must be loaded during initialization, either by
->>>> the AP or by the modem.  The loader is currently specified based on
->>>> whether the Boolean modem-init property is present.
->>>>
->>>> Instead, use a new property with an enumerated value to indicate
->>>> explicitly how GSI firmware gets loaded.  With this in place, a
->>>> third approach can be added in an upcoming patch.
->>>>
->>>> The new qcom,gsi-loader property has two defined values:
->>>>     - self:   The AP loads GSI firmware
->>>>     - modem:  The modem loads GSI firmware
->>>> The modem-init property must still be supported, but is now marked
->>>> deprecated.
->>>>
->>>> Signed-off-by: Alex Elder <elder@linaro.org>
->>>> ---
->>>>    .../devicetree/bindings/net/qcom,ipa.yaml     | 59 +++++++++++++++----
->>>>    1 file changed, 46 insertions(+), 13 deletions(-)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
->>>> index e752b76192df0..0dfd6c721e045 100644
->>>> --- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
->>>> +++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
->>>> @@ -124,12 +124,22 @@ properties:
->>>>          - const: ipa-clock-enabled-valid
->>>>          - const: ipa-clock-enabled
->>>>    
->>>> +  qcom,gsi-loader:
->>>> +    enum:
->>>> +      - self
->>>> +      - modem
->>>> +    description:
->>>> +      This indicates how GSI firmware should be loaded.  If the AP loads
->>>
->>> s/This indicates/Indicate/
->>> (or any other grammar without describing DT syntax but hardware/system)
+Il 14/11/22 09:22, Krzysztof Kozlowski ha scritto:
+> On 11/11/2022 15:59, AngeloGioacchino Del Regno wrote:
+>> Add "qcom,msm8976-iommu" to support IOMMUs on this SoC.
 >>
->> OK.
+>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+>> ---
+>>   Documentation/devicetree/bindings/iommu/qcom,iommu.txt | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
 >>
->>>> +      and validates GSI firmware, this property has value "self".  If the
->>>> +      modem does this, this property has value "modem".
->>>> +
->>>>      modem-init:
->>>> +    deprecated: true
->>>>        type: boolean
->>>>        description:
->>>> -      If present, it indicates that the modem is responsible for
->>>> -      performing early IPA initialization, including loading and
->>>> -      validating firwmare used by the GSI.
->>>> +      This is the older (deprecated) way of indicating how GSI firmware
->>>> +      should be loaded.  If present, the modem loads GSI firmware; if
->>>> +      absent, the AP loads GSI firmware.
->>>>    
->>>>      memory-region:
->>>>        maxItems: 1
->>>> @@ -155,15 +165,36 @@ required:
->>>>      - interconnects
->>>>      - qcom,smem-states
->>>>    
->>>> -# If modem-init is not present, the AP loads GSI firmware, and
->>>> -# memory-region must be specified
->>>> -if:
->>>> -  not:
->>>> -    required:
->>>> -      - modem-init
->>>> -then:
->>>> -  required:
->>>> -    - memory-region
->>>> +allOf:
->>>> +  # If qcom,gsi-loader is present, modem-init must not be present
->>>> +  - if:
->>>> +      required:
->>>> +        - qcom,gsi-loader
->>>> +    then:
->>>> +      properties:
->>>> +        modem-init: false
->>>
->>> This is ok, but will not allow you to keep deprecated property in DTS
->>> for the transition period. We talked about this that you need to keep
->>> both or wait few cycles before applying DTS cleanups.
->>
->> My intention is expressed in the comment.  Is it because of the
->> "if .... required ... qcom,gsi-loader"?
->>
->> Should it be "if ... properties ... qcom,gsi-loader"?
+>> diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
+>> index b762772f80e7..b7a5822ac00d 100644
+>> --- a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
+>> +++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
+>> @@ -9,7 +9,8 @@ to non-secure vs secure interrupt line.
+>>   
+>>   - compatible       : Should be one of:
+>>   
+>> -                        "qcom,msm8916-iommu"
+>> +                        - "qcom,msm8916-iommu"
+>> +                        - "qcom,msm8976-iommu"
 > 
-> You disallow modem-init here, so it cannot be present in DTS if
-> gsi-loader is present. Therefore the deprecated case like this:
->    qcom,gsi-loader = "modem"
->    modem-init;
-> is not allowed by the schema.
+> Shouldn't the new compatible be followed by IOMMU v2, not v1?
 > 
-> As I said, it is fine, but your DTS should wait a cycle.
 
-OK, then this is exactly as I intended.  I am planning to wait
-until Linux v6.2-rc1 is published before I post the DTS updates
-that implement this change.  It is not technically necessary
-until IPA v5.0 is fully supported, and I don't have confidence
-all of that will accepted before then.
+Yes, effectively, it should.
 
-If I did it "your way" first I could get it done now, but then
-I'd want to do another round later to make it this way.
+I'll have to partially rewrite also commit 6/8, so I'll have to drop your
+Acked-by tag on both....
+Will send a new one shortly.
 
-I will still send an updated series shortly, to address your
-other comment about wording in the description.  But I will
-not be changing this part.
-
-Thanks for the explanation Krzysztof.
-
-					-Alex
-
-
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+Cheers,
+Angelo
 
