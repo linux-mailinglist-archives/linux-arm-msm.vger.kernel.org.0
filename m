@@ -2,78 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D7ED46295A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 11:19:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 416676295AF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 11:22:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236921AbiKOKTy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 05:19:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39932 "EHLO
+        id S232435AbiKOKWz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 05:22:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229959AbiKOKTx (ORCPT
+        with ESMTP id S238127AbiKOKWx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 05:19:53 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F7E51274C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 02:19:52 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id be13so23715399lfb.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 02:19:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mYrT9Brqn6UtjqQy0f2wcD8We2xi1ytM62MKdkElEIc=;
-        b=zPOwLqNRx+Rvcg06eNoUDm7x/jiIf5hrEQuvGceAw7mabXYpnSVhCUaLumgEULiu5p
-         aZzNQF6L5r4sv5UEKlYAuObSWFcjY+e2G6c/+8IkI6cipfXQ06IcwfMMwkpfu+Z/y3fi
-         /T2THfTowctZUoEoKpG5vkY7Kcvg4iOVQw76BxFMiBovpIGhkSf4GVVkXIhZEpsxU2hE
-         eV6wIIsb0J8mxt+ELF3hMNKCy8TlFOB8Hr3edPoxQw8xWtSiX+WNS07sNfH/N5Am3GhG
-         nG3BzFlB0txIWlKUzv263qPf6uDJHut4XYqvMx6xAKF5TTihSk195dLXbNp/5O1I/nLW
-         mfSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=mYrT9Brqn6UtjqQy0f2wcD8We2xi1ytM62MKdkElEIc=;
-        b=RggF4QplPpltRISCCFcu2IJ7nqaPtuXP0In1mE10wOb5lZHhnBFs/gowNtqQLMkr60
-         ceQwZ9S8IWE3nTs4zRNUrGSFMyb9HIWVIoBi04XTIZaDmMNA5GoUbSKlw6FER9kjiiEN
-         9RTa1avAImAL3/4HEWg+17DyohmNfezxAr8ZxZ9AY0L2P+zhLPzPeaEtDN+8P+Vk5UjF
-         owSapx8i7jeC6/kfc2mCQEJnv+rTWBizr5M7k5nBVkJc0dpODcescanX80O5RbGBiGk3
-         G1P/sPvWsUq6Hp+PNShiSsOetGtb6DPRUuylitjqechtZX2Gu60ueUgwbm7uj21bWvmG
-         pkmw==
-X-Gm-Message-State: ANoB5pmNs3brXEksPWqX6qI8FrjSKOPjIGp5Pfz7NnaEWVbMUxCHsCGo
-        hdjh+yE32wEYS1uaj7EMugqOmznVtdWvqi+h
-X-Google-Smtp-Source: AA0mqf6OSY+BxeZ/rDrQTLVfmBTjbBE796KQVAihHAavbB/aVKpB9sHlRYPkhEnCzazf32e/rEIXcA==
-X-Received: by 2002:a05:6512:3414:b0:4a2:2b23:f17f with SMTP id i20-20020a056512341400b004a22b23f17fmr4998120lfr.688.1668507590808;
-        Tue, 15 Nov 2022 02:19:50 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id i15-20020a056512340f00b004b4a0482a48sm490918lfr.139.2022.11.15.02.19.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Nov 2022 02:19:50 -0800 (PST)
-Message-ID: <096f390b-39e7-302b-ec54-3301cadd39aa@linaro.org>
-Date:   Tue, 15 Nov 2022 11:19:45 +0100
+        Tue, 15 Nov 2022 05:22:53 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2317D1F9F1;
+        Tue, 15 Nov 2022 02:22:50 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AF8Ek4k004588;
+        Tue, 15 Nov 2022 10:22:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=BIGCnaiFy7YNCZXdgVkrUvh5iKWcR3W3fZ3jy0dp1jQ=;
+ b=c4mKFTlUgeS9PeUxCR49hJAlRYpREABMY68/zuQJeClx838WWELy8zSpM6VCQKXFThC6
+ /RGbS1v7DkroR5KvGqnUe+ppmjkEzFhpQs41Ps3rvRXU8uzBPz01cSoVJ0geNcsfIcsu
+ 0Va7MEtqm5l9UargEXTCsnGhh6UVOasa5XAks86Eudvxp2XFKgwMw7Uq724YXtFHdeSn
+ zJKxdYgYhB/J7ru7OcJ2wO72BuXnIIxxqEsHXrG2c0/yX93cRepRbwv09tRVveF1X/jx
+ z3jGU8N2DgX/DQCf7/5w0OWH/BGweDySC6zkahxI6jEFfEEMBVjlSP9EW0LxLvreVyFn fg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kuxm09hkb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 15 Nov 2022 10:22:40 +0000
+Received: from pps.filterd (NALASPPMTA03.qualcomm.com [127.0.0.1])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2AFAMdJ6019979;
+        Tue, 15 Nov 2022 10:22:39 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by NALASPPMTA03.qualcomm.com (PPS) with ESMTPS id 3kt4jm3e7k-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 15 Nov 2022 10:22:39 +0000
+Received: from NALASPPMTA03.qualcomm.com (NALASPPMTA03.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2AFAL60l018263;
+        Tue, 15 Nov 2022 10:22:39 GMT
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA03.qualcomm.com (PPS) with ESMTPS id 2AFAMdhY019973
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 15 Nov 2022 10:22:39 +0000
+Received: from shazhuss-linux.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Tue, 15 Nov 2022 02:22:35 -0800
+From:   Shazad Hussain <quic_shazhuss@quicinc.com>
+To:     <andersson@kernel.org>, <johan@kernel.org>
+CC:     <sboyd@kernel.org>, <bmasney@redhat.com>, <agross@kernel.org>,
+        <mturquette@baylibre.com>,
+        Shazad Hussain <quic_shazhuss@quicinc.com>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v2] clk: qcom: gcc-sc8280xp: add cxo as parent for three ufs ref clks
+Date:   Tue, 15 Nov 2022 15:52:17 +0530
+Message-ID: <20221115102217.6381-1-quic_shazhuss@quicinc.com>
+X-Mailer: git-send-email 2.38.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8450: add Soundwire and LPASS
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-References: <20221114152130.385871-1-krzysztof.kozlowski@linaro.org>
- <20221114152130.385871-3-krzysztof.kozlowski@linaro.org>
- <fbf1fc09-31a9-a08f-6ffd-551fdd317ec0@linaro.org>
- <d1177e53-a4f2-70e5-9214-671910ea28ac@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <d1177e53-a4f2-70e5-9214-671910ea28ac@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: C2DtN1PIcxxMrpKWkG_95hEwGahN2_yD
+X-Proofpoint-GUID: C2DtN1PIcxxMrpKWkG_95hEwGahN2_yD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-15_05,2022-11-15_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 bulkscore=0 mlxlogscore=793 spamscore=0 clxscore=1011
+ lowpriorityscore=0 impostorscore=0 suspectscore=0 mlxscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211150071
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,76 +90,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Added parent_data as CXO for three UFS reference clocks named,
+gcc_ufs_ref_clkref_clk, gcc_ufs_card_clkref_clk and
+gcc_ufs_1_card_clkref_clk.
 
+Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
+Link: https://lore.kernel.org/lkml/Y2Tber39cHuOSR%2FW@hovoldconsulting.com/
+Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
+---
+Changes since v1:
+- Renamed patch subject. Did not include Brian's T-b comment.
+- Added parent data for two ufs phy ref clocks.
 
-On 15/11/2022 11:15, Krzysztof Kozlowski wrote:
-> On 14/11/2022 16:37, Konrad Dybcio wrote:
->>
->> On 14/11/2022 16:21, Krzysztof Kozlowski wrote:
->>> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->>>
->>> Add Soundwire controllers, Low Power Audio SubSystem (LPASS) devices and
->>> LPASS pin controller.
->>>
->>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->>> Co-developed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> ---
->>>    arch/arm64/boot/dts/qcom/sm8450.dtsi | 295 +++++++++++++++++++++++++++
->>>    1 file changed, 295 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>> index 4b0a1eee8bd9..c99740591467 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>> @@ -15,6 +15,7 @@
->>>    #include <dt-bindings/interconnect/qcom,sm8450.h>
->>>    #include <dt-bindings/soc/qcom,gpr.h>
->>>    #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->>> +#include <dt-bindings/sound/qcom,q6afe.h>
->>>    #include <dt-bindings/thermal/thermal.h>
->>>    
->>>    / {
->>> @@ -2097,6 +2098,212 @@ compute-cb@3 {
->>>    			};
->>>    		};
->>>    
->>> +		wsa2macro: codec@31e0000 {
->>> +			compatible = "qcom,sm8450-lpass-wsa-macro";
->>> +			reg = <0 0x031e0000 0 0x1000>;
->> The sorting will be off, as adsp and cdsp have been mistakenly put in
->> the wrong place (notice adsp @ 32300000 is actually at an address
->> that's 8 hex digits long, but the reg addr is padded to 9 hex digits..).
-> 
-> I don't get it. This has address:
-> 31e0000
-> ADSP has
-> 30000000
-> 
-> so why sorting is odd?
-It's gonna be fine, you're right, I can't read properly...
+v1 of this patch can be found at
+https://lore.kernel.org/all/20221030142333.31019-1-quic_shazhuss@quicinc.com/
 
-Konrad
-> 
->>> Could you submit a fix for that as well?
-> 
-> For 9 digits, sure, but this is independent issue.
-> 
->>
->>> +			clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->>> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->>> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->>> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->>> +				 <&vamacro>;
->>> +			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
->>> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->>> +					  <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK  LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
->>
->> Remove the duplicated space before LPASS_CLK_ATTRIBUTE_COUPLE_NO.
-> 
-> Ack.
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+used below patches for verification on next-20221114
+https://lore.kernel.org/lkml/20221104092045.17410-2-johan+linaro@kernel.org/
+https://lore.kernel.org/lkml/20221104092045.17410-3-johan+linaro@kernel.org/
+https://lore.kernel.org/lkml/20221111113732.461881-1-thierry.reding@gmail.com/
+
+ drivers/clk/qcom/gcc-sc8280xp.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+index a18ed88f3b82..b3198784e1c3 100644
+--- a/drivers/clk/qcom/gcc-sc8280xp.c
++++ b/drivers/clk/qcom/gcc-sc8280xp.c
+@@ -5364,6 +5364,8 @@ static struct clk_branch gcc_ufs_1_card_clkref_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "gcc_ufs_1_card_clkref_clk",
++			.parent_data = &gcc_parent_data_tcxo,
++			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -5432,6 +5434,8 @@ static struct clk_branch gcc_ufs_card_clkref_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "gcc_ufs_card_clkref_clk",
++			.parent_data = &gcc_parent_data_tcxo,
++			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -5848,6 +5852,8 @@ static struct clk_branch gcc_ufs_ref_clkref_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "gcc_ufs_ref_clkref_clk",
++			.parent_data = &gcc_parent_data_tcxo,
++			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+-- 
+2.38.0
+
