@@ -2,116 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 04082629BA7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 15:11:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 67E5E629BF2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 15:23:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230158AbiKOOLb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 09:11:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37280 "EHLO
+        id S229716AbiKOOXa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 09:23:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230215AbiKOOLZ (ORCPT
+        with ESMTP id S229836AbiKOOX3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 09:11:25 -0500
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D7010541;
-        Tue, 15 Nov 2022 06:11:21 -0800 (PST)
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-13b23e29e36so16316147fac.8;
-        Tue, 15 Nov 2022 06:11:21 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Ko/Jm2Crg/0IdcHGiNY7XpYLJ5KYFoRqG/YZh7PVLyY=;
-        b=FhWMyJsA3vsxjdc9rv6A/uAcrw9ZhihR+NxIiv6FSWvpqzIGcBPx79WwC7UNYllooT
-         lNX1e3xO6EW9xslIEtL3VRMAC+t1Ts1L3rJy3t560HgQ1q5aD5FoMM+RfYn4I2sZtLYS
-         CFuN/JoOTRWXk7LtZXHS1v8o/RL3ZPbafuqWHgXTsFuS/RX4KfEoiYfddXqV/akWaxHA
-         XfoP8XiJ7VIh1ubuSalIzB0pc+EwUmYjAEjD+6TpF8aj2YDNMJX3UOMJOGIBIVDx6zUZ
-         yDamXChlKRWV3ogSPEMS6Cbs6nx4758xzt490+yzRltn/tNkKI2oQfYFYw6jXChGA5gm
-         qyXA==
-X-Gm-Message-State: ANoB5plzWjaJDgWDmZRDCMB76Mp86Lej4mIS0fFTifhWMaWJghGxXlS5
-        dlG89Vh/L0GoBIa9YMZ3Zg==
-X-Google-Smtp-Source: AA0mqf4uFfNYExut1Ar/priZ+hCGhKrNBdRZ8B91gwC+ZnuPQ2gqm3VuCjdMAE7iq3CCnmQj84NR9g==
-X-Received: by 2002:a05:6870:5246:b0:13b:d7c0:d66b with SMTP id o6-20020a056870524600b0013bd7c0d66bmr472834oai.36.1668521480911;
-        Tue, 15 Nov 2022 06:11:20 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id q204-20020acaf2d5000000b0035418324b78sm4937480oih.11.2022.11.15.06.11.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Nov 2022 06:11:20 -0800 (PST)
-Received: (nullmailer pid 908580 invoked by uid 1000);
-        Tue, 15 Nov 2022 14:11:14 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, Lee Jones <lee@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Tue, 15 Nov 2022 09:23:29 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 725F9DF2;
+        Tue, 15 Nov 2022 06:23:28 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0DDFC6179B;
+        Tue, 15 Nov 2022 14:23:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612C4C433C1;
+        Tue, 15 Nov 2022 14:23:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668522207;
+        bh=6MybgYS++YBsa14WSMeMsE+CurMBOnWwTePlaWVNdAU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=bXBhJuDfqCrmRoK3Wouw3dWT4IdtX2aEnsUF+G9YfKy/vi1bX/0NIMCCOoy4IF08Z
+         UBA3zFlrHBfXg4Rosxr2K3VI525n+8TNv5rxqvMdMA2fU9gRBjtrc8FIYHFMTd4kx/
+         kpcqRz8Py7MK8/k/CIajiPSqGmrS/ihoh0OZvDQxbVhFHxadK9hG8VhcTPRNehOvoz
+         bSnJSdAoQ2vcGfbZIR5IcBNPkjCwvsp9kVjPecFnVtHF1ffFQsxCI3iGn3ljrcO3Y9
+         y/qebzR3/zDueIByh8KYxb+TlP3L6JZWsjGnU3hrrUOHo8ombknmlyoo3WsuRck3kp
+         g2SdLMD4Kkg/g==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1ouwq0-0000Nf-NH; Tue, 15 Nov 2022 15:22:57 +0100
+Date:   Tue, 15 Nov 2022 15:22:56 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
-In-Reply-To: <20221005-mdm9615-pinctrl-yaml-v4-2-463523919c19@linaro.org>
-References: <20221005-mdm9615-pinctrl-yaml-v4-0-463523919c19@linaro.org>
- <20221005-mdm9615-pinctrl-yaml-v4-2-463523919c19@linaro.org>
-Message-Id: <166851961723.867617.14976811191392756271.robh@kernel.org>
-Subject: Re: [PATCH v4 2/2] dt-bindings: soc: qcom: convert non-smd RPM
- bindings to dt-schema
-Date:   Tue, 15 Nov 2022 08:11:14 -0600
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 02/14] dt-bindings: phy: qcom,qmp-usb3-dp: fix sc8280xp
+ bindings
+Message-ID: <Y3OgwLlNaqcd5SwW@hovoldconsulting.com>
+References: <Y3JCVzJ74YsfcDz4@hovoldconsulting.com>
+ <de3a426a-03e8-ed15-a9a1-bb300e776e5f@linaro.org>
+ <Y3JOO0kNnaNhnW3K@hovoldconsulting.com>
+ <02725b78-04ad-8f4a-25c2-9cdaa1e37ab7@linaro.org>
+ <Y3JthM1jC2vH1Kn+@hovoldconsulting.com>
+ <efd412d0-7411-8b0b-4700-9e183a592048@linaro.org>
+ <Y3JxZ+yFMLZkwNBi@hovoldconsulting.com>
+ <8420c342-9dce-aea7-8d1e-f141e0c1ebb5@linaro.org>
+ <Y3J2AjjjsybI9mKd@hovoldconsulting.com>
+ <61df3c4f-f41c-9525-606d-1b8261163080@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <61df3c4f-f41c-9525-606d-1b8261163080@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Tue, 15 Nov 2022 11:12:36 +0100, Neil Armstrong wrote:
-> Convert the non-SMD RPM node bindings to dt-schema, the old txt bindings
-> are now removed since all bindings were converted.
+On Tue, Nov 15, 2022 at 09:12:54AM +0100, Krzysztof Kozlowski wrote:
+> On 14/11/2022 18:08, Johan Hovold wrote:
+> >>
+> >> Which is also fine. I don't understand still why it is a problem - even
+> >> if you have multiple files, one for each SoC/phy. If USB4 brings here 10
+> >> more clocks and other SoCs/phys might bring many more options, then what
+> >> else can you do? Grow the binding file with big text-based mapping of
+> >> IDs? It's not a viable solution. Header or headers is the only
+> >> maintainable way for such cases.
+> > 
+> > So then we must add per-SoC (and PHY type) headers even if we can
+> > possibly reuse defines from one platform for another as long as they
+> > appear to be similar enough?
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Acked-by: Lee Jones <lee@kernel.org>
-> ---
->  Documentation/devicetree/bindings/mfd/qcom-rpm.txt | 283 ---------------------
->  .../devicetree/bindings/soc/qcom/qcom,rpm.yaml     | 101 ++++++++
->  2 files changed, 101 insertions(+), 283 deletions(-)
+> No, you don't have to. I just got impression that future devices will
+> bring so many changes that anyway you will end up with per-SoC defines.
 > 
+> > For example, using a "SC7180_USB3_DP" infix
+> > for the current platforms and add a new series of indexes for SC8280XP:
+> > 
+> > 	QMP_SC7180_USB3_DP_USB3_PIPE			0
+> > 	QMP_SC7180_USB3_DP_DP_LINK			1
+> > 	QMP_SC7180_USB3_DP_DP_VCO_DIV			2
+> > 
+> > 	QMP_SC8280XP_USB4_USB3_DP_USB3_PIPE		0
+> > 	QMP_SC8280XP_USB4_USB3_DP_DP_LINK		1
+> > 	QMP_SC8280XP_USB4_USB3_DP_DP_VCO_DIV		2
+> > 	QMP_SC8280XP_USB4_USB3_DP_USB4_PCIE_PIPE	3
+> > 	...
+> > 	QMP_SC8280XP_USB4_USB3_DP_USB4_RX1		9
+> 
+> The names are just a names, you can even use QMP_SC7180_* on SC8280XP.
+> You can skip the SoC part and have something shared. We already have
+> such patterns - although maybe more often for outside components (like
+> PMICs). The differences are:
+> 1. For per-SoC name it's quite obvious which clock is supported on fiven
+> SoC,
+> 2. With shared names, you should document somewhere mapping between
+> supported clocks and SoCs. Also what to do if new device comes with 10
+> new clocks entirely different - re-use/map existing defines or add
+> completely new set of 10 of them?
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Ok, thanks. I'll go with a common prefix per PHY type for now, and we
+can worry about hypothetical hardware revisions later.
 
-yamllint warnings/errors:
+I'll use a "QMP_USB43DP_" prefix for the new SC8280XP binding, which can
+be reused also for the older SoCs with USB3-DP PHYs if/when we convert
+them as their indexes will be a subset of the SC8280XP ones:
 
-dtschema/dtc warnings/errors:
-./Documentation/devicetree/bindings/soc/qcom/qcom,rpm.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/regulator/qcom,ipc-rpm-regulator.yaml
-./Documentation/devicetree/bindings/soc/qcom/qcom,rpm.yaml: $id: relative path/filename doesn't match actual path or filename
-	expected: http://devicetree.org/schemas/soc/qcom/qcom,rpm.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,rpm.example.dtb: rpm@108000: regulators: False schema does not allow {'compatible': ['qcom,rpm-pm8921-regulators'], 'vdd_l1_l2_l12_l18-supply': [[1]], 's1': {'regulator-min-microvolt': [[1225000]], 'regulator-max-microvolt': [[1225000]], 'bias-pull-down': True, 'qcom,switch-mode-frequency': [[3200000]]}, 's4': {'regulator-min-microvolt': [[1800000]], 'regulator-max-microvolt': [[1800000]], 'qcom,switch-mode-frequency': [[1600000]], 'bias-pull-down': True, 'qcom,force-mode': [[3]], 'phandle': [[1]]}}
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,rpm.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,rpm.example.dtb: rpm@108000: regulators: Unevaluated properties are not allowed ('compatible', 's1', 's4', 'vdd_l1_l2_l12_l18-supply' were unexpected)
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,rpm.yaml
-Documentation/devicetree/bindings/soc/qcom/qcom,rpm.example.dtb:0:0: /example-0/rpm@108000/regulators: failed to match any schema with compatible: ['qcom,rpm-pm8921-regulators']
+	/* QMP USB4-USB3-DP clocks */
+	#define QMP_USB43DP_USB3_PIPE_CLK	0
+	#define QMP_USB43DP_DP_LINK_CLK		1
+	#define QMP_USB43DP_DP_VCO_DIV_CLK	2
 
-doc reference errors (make refcheckdocs):
+Since I'm adding a new header anyway, I decided to go with dedicated
+indexes also for the PHY selection (instead of using the PHY_TYPE
+defines):
 
-See https://patchwork.ozlabs.org/patch/
+	/* QMP USB4-USB3-DP PHYs */
+	#define QMP_USB43DP_USB3_PHY		0
+	#define QMP_USB43DP_DP_PHY		1
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
+I'll add these to a common dt-bindings/phy/phy-qcom-qmp.h header so that
+it can be used also for the UFS clocks (with a "QMP_UFS_" prefix).
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+Johan
