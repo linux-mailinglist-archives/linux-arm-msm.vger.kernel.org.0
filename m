@@ -2,78 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC3A1629E54
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 17:01:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 650B9629E80
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 17:09:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229533AbiKOQB3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 11:01:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55604 "EHLO
+        id S230322AbiKOQJk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 11:09:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230393AbiKOQB3 (ORCPT
+        with ESMTP id S229602AbiKOQJi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 11:01:29 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3062BD5C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 08:01:28 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id s5so6303288edc.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 08:01:28 -0800 (PST)
+        Tue, 15 Nov 2022 11:09:38 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A23531C43F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 08:09:37 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id d3so18165010ljl.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 08:09:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=YCH6PtmHj3XKQVwXY2Gm1n1n5KTgNrZ2aoxjacIPkLA=;
-        b=XSZ1UsKd72WGVsU13AkxPx13kvV7eBMN2rk9mYv5/1BlvJuWdPfmvCjHqGY1YHuX1S
-         ZKcO4QYOE4Wc2+/sm0oCJqKm0mbgDpEta1QZXmLqmoik9/WEh1cA5d8rjRXkfeZwUrS2
-         t1agO5hRMm5K5WuuenC90gkUkRgs3BSOw1BPI=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wPBg3aPup1TQrck1IA/Yv4HNABzho1ILiMaAmTFfgE0=;
+        b=J2H4Z7E5myou0P94ccP1VezICVHOCg9j1V9hyj6oTeYMShonkKMCxchRDEF4WtW++z
+         oc2zj743sE+gfFI/bgkhBneMySmqq1ARc1G1sU0SjvaouB1HUnwV0723wnuv6u1469Jo
+         ya4LnWztcX5F4bu6SqC9Szf6fsCut0aR4LW6lghE6yKQayaprxfeHUi8Ua1zolYmtz9y
+         eCiFwYILjnL7DaRVn/Og4cnaHHYhIqcCJd3eHjyKj7aYXiGpdNW24hvgagGVoikOmPMN
+         Vk+pIZt0L3T1xLaBbpfVyKdHUZXlbWldJFLWuBObCPTzlfjm95KsCMn17vY/jZceYT4a
+         ScZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YCH6PtmHj3XKQVwXY2Gm1n1n5KTgNrZ2aoxjacIPkLA=;
-        b=ZaaPhZAA4qK2rTDXi53o8h7cC1bWZW18rS4woqO5RS7BfKOKTqXfxot8L9XVZW3i3w
-         jIF/it8O1WSbSfYVCOfAExYbfgnXfWnC7JJV+1EH/mBNg5ub6HFvcDYeFb15QeMdkRm4
-         AWv88F6wTcP/LZobP47BlEQ8vliXIstayint0x4tMPP1ekmEjKTDpB91sWG0gfVLlnhL
-         RyVWzXrxCuHrqNdRbhZocYRRkOcvIyc6bFXLxg0hbICYrXyVDVVA+UARcyRK1u2WTOpX
-         A+asqsBSmHds5ARkeIHMmVF/7+j2JU0HvkaPrl0WFV0Z9U2VnpRQzIP/XajI+hCZk7CL
-         VT4A==
-X-Gm-Message-State: ANoB5plTagQebsSAvuDsSPXy6v7f8UzHWFFAHWqhKyzCOujz7UG8u9NB
-        8I4ue1KvsmHWszWliQHfbVHxjbACp27DKMeG
-X-Google-Smtp-Source: AA0mqf4h24CGDob9i0IQbAv1vSSY6dJlPHzB0ovRNfb8c78eED8jDuBnnA1zojw1vshPEQ+ZPKC/Ww==
-X-Received: by 2002:a05:6402:e8a:b0:463:53c6:56a5 with SMTP id h10-20020a0564020e8a00b0046353c656a5mr15476681eda.223.1668528086310;
-        Tue, 15 Nov 2022 08:01:26 -0800 (PST)
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com. [209.85.221.46])
-        by smtp.gmail.com with ESMTPSA id t23-20020aa7d717000000b0046800749670sm2409337edq.53.2022.11.15.08.01.24
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Nov 2022 08:01:25 -0800 (PST)
-Received: by mail-wr1-f46.google.com with SMTP id z14so24898549wrn.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 08:01:24 -0800 (PST)
-X-Received: by 2002:adf:f145:0:b0:236:5270:735e with SMTP id
- y5-20020adff145000000b002365270735emr10938918wro.659.1668528084437; Tue, 15
- Nov 2022 08:01:24 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wPBg3aPup1TQrck1IA/Yv4HNABzho1ILiMaAmTFfgE0=;
+        b=oQJ4YAZmLTpxxbBTB6FOtjzXJ1iMPOQzqvaof9dZmopoWP2JQc9aRUB1DAYevipSiF
+         UDTIXxzGZKxMgGz8avcSeIQLmmdzOd+i0+jz+Bmr9zRb1hRQApxAS0/5b9GG0n6zHGWE
+         BfJaAdKhZOEEPlI5qfeyaYIgNUX1xsYnxDMIKXOPmZM+rXz+GqHQaoDPB1YN4HnfiBuk
+         vIvhzcjjK+rfUcBno2NNWHq2cvm5gRk3KAjgO4s+Kf70MxaFi3p2MmXKgUxJySH6K2cz
+         LVpocc6wwm+t0W5P8NFY5DpAMwDiZfMyifIfHjiEbwQDOZ49Ujt8YmHFZZwoHQFPyIt7
+         MmeA==
+X-Gm-Message-State: ANoB5plcRxd4FNhSVdCMoPazcWqLEwNOr2q8GVelw9eooeTxVOyejhgc
+        U9wjTp+QOsMJLmel+DWLWlAKzw==
+X-Google-Smtp-Source: AA0mqf7yzjjbUJbfMhhx5CM/cCMWU0lHJVOEzMQnKBEhluX3cCqwirDxVh/yWeaZHBkZ4WGhQ5pjBQ==
+X-Received: by 2002:a2e:a803:0:b0:278:f5de:8478 with SMTP id l3-20020a2ea803000000b00278f5de8478mr4436665ljq.65.1668528575904;
+        Tue, 15 Nov 2022 08:09:35 -0800 (PST)
+Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id s2-20020a2eb622000000b0026fe0a052c5sm2555134ljn.129.2022.11.15.08.09.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Nov 2022 08:09:35 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Subject: Re: [PATCH v2] dt-bindings: pinctrl: qcom,msm8976: convert to dtschema
+Date:   Tue, 15 Nov 2022 17:09:33 +0100
+Message-Id: <166852857073.244019.11894552754264671717.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20221110085230.15108-1-krzysztof.kozlowski@linaro.org>
+References: <20221110085230.15108-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-References: <20221115155535.1615278-1-robdclark@gmail.com>
-In-Reply-To: <20221115155535.1615278-1-robdclark@gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 15 Nov 2022 08:01:10 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=VJKTHf7qLZkygfnMRSjXEdQ09opCpFM2brUc=uiTGyTw@mail.gmail.com>
-Message-ID: <CAD=FV=VJKTHf7qLZkygfnMRSjXEdQ09opCpFM2brUc=uiTGyTw@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Enable clamp_to_idle for 7c3
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, Chia-I Wu <olvaffe@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,17 +78,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Thu, 10 Nov 2022 09:52:30 +0100, Krzysztof Kozlowski wrote:
+> Convert Qualcomm MSM8976 pin controller bindings to DT schema.  Keep the
+> parsing of pin configuration subnodes consistent with other Qualcomm
+> schemas (children named with '-state' suffix, their children with
+> '-pins').
+> 
+> Changes during conversion: update the list of non-mux pins (like sdc1)
+> to match Linux driver.
+> 
+> [...]
 
-On Tue, Nov 15, 2022 at 7:55 AM Rob Clark <robdclark@gmail.com> wrote:
->
-> From: Rob Clark <robdclark@chromium.org>
->
-> This was overlooked.
->
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
+Applied, thanks!
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+[1/1] dt-bindings: pinctrl: qcom,msm8976: convert to dtschema
+      https://git.kernel.org/krzk/linux-dt/c/966d0a44f103950265db458180b581275a225b89
+
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
