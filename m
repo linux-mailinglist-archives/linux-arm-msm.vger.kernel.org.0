@@ -2,185 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EE336292D4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 08:59:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 24FC6629304
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 09:13:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232617AbiKOH76 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 02:59:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33620 "EHLO
+        id S231828AbiKOIM7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 03:12:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232630AbiKOH7y (ORCPT
+        with ESMTP id S231185AbiKOIM7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 02:59:54 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D16E420BD3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 23:59:51 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id g7so23224974lfv.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 23:59:51 -0800 (PST)
+        Tue, 15 Nov 2022 03:12:59 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD8AA6306
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 00:12:57 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id d3so16527692ljl.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 00:12:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=HJPFTJOGuPRhd7ksoWE06DkherlyxwNY/RJOZ9ATVqs=;
-        b=hO1pWG9FFw6lcA0dz0nGIKvIKA4R/SiXFR4HgemXVKeuy4ri+jgZm9KmbvhcTkPemv
-         9ZPEmoWV29gKa+KZ3+bVE3krOfiof6B2Miohku1IQFC6r1ZB2pa+OckJ9K/AgXva+/1C
-         qV8JLBtSUR8i9ufUY/1Zw5bUQqOvy6uGGzVol5BxOvWR5XsDP7P3g7Er/spdOOdVPuK5
-         9I2nC8zz2eG+VcaF1vK9Z34SeBvF/iSThHPxPxjH2jvy/9qHtcXuS56MAmVamZ7jixxm
-         1zjcu/F9Wdp4X/UurrUyZow9zrbqD+7cA+gSrPT843Smx57rhfuqTqyfHh0euoXhAWbK
-         lIvQ==
+        bh=JDkqh0tAJJ4X7eNluhZEGW7LBA4YZb7PqjBBGMFZ9o8=;
+        b=xAYAcYiqz6vAihbiQR5GhFuz1tcemWPVKQgq85Cxv/HD3SYZ1whRQelsHKBF+5/G4j
+         I9am9IWQeZk/s4NVUQlr/GG/5pCD9GgypXy4S7Kwop9mp2lBCGbcaG8ztDCaWngpEDbj
+         HyVca9Xi9F63aGv8ELFQZez0V/i7MM7Pcv/Ac1XYG2YhFmgvTryuF5XY92bsnkkEMCTv
+         qt94KP13Vin3Fbf48xnKfWosutfGpKUuY3nw9Xoow1TsTWiXaGqOOx++L8exdwVi/saq
+         9Cc1NQNmts2U/s6r/xiddO454NQjvqQDYIxmJHCBzkLHfofNAXA1dOjupTOC2/3+ZMIv
+         7pZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HJPFTJOGuPRhd7ksoWE06DkherlyxwNY/RJOZ9ATVqs=;
-        b=f+faW2sJpuePihwRCbYK9rPjgWVbTsWDg7A36gOWF2ght9o/LHwL0Uxtvlo3P4hDdu
-         YkxmzoUz9SKY5OBITOWK13fhHMoJWBLSTtvtoOGI6XwMZvR4Zw/ISp7ndR2qWS4jO5Rf
-         D2Yig14sUTJ6M+LhhsoxtRQENPwk5eiMtzQBXlPUdDMihpG9XWfavWiTfuqnQB9BHQrX
-         d4BlqGhhxqpsEBn+3OZEofpOxQ4kLX6zLLZWAUh9OorS5DxzqnhzJHyMAS35foQIaA3i
-         2n172fejOxdM8Ev+ozLzskFso6tZJl94VvXgxoJy9FhjHtl267kJKyGrgE6oPFnpzTIj
-         IadQ==
-X-Gm-Message-State: ANoB5pmJwHGNqfEtEgHHduiC9ESAlo5LSZEjxvbQWIgHb3NltcZcQoBP
-        /jlLP56c2ly8YMJ2d/ed0F8B9A==
-X-Google-Smtp-Source: AA0mqf4DsOuYz5YY9s6MWxbp9QH+GSKO3GjqvZ5CD3NNuQLOAKv/l/8yIDLggMj1iSKZHpcGsP8elg==
-X-Received: by 2002:a05:6512:2803:b0:4a6:2ff6:f32f with SMTP id cf3-20020a056512280300b004a62ff6f32fmr6024570lfb.1.1668499190153;
-        Mon, 14 Nov 2022 23:59:50 -0800 (PST)
+        bh=JDkqh0tAJJ4X7eNluhZEGW7LBA4YZb7PqjBBGMFZ9o8=;
+        b=watj9C97oF84fQajREsNA/2zIKYkkh+5tXdYqA/4wVIMhoAwd4gg1McC8ql/1ecq4l
+         9q0cgEkRavADaDk8RZBAtd3smcivsoYdZhbciOljRLh9xIBnD+LLCOMI4Ro++d/0E3M1
+         OhQAVBgjXkiDmOlHdzkIa5rh+CSadWRwxbhwy0vy5L4VmCOpFOv38ooW4n2yfronWhpN
+         NARQxQOnuK7zdEIM/I1uf9MupEu0a00YvXEDSZAA8FQ+FkHvQOROFFmedj+2pjbmcrZT
+         8j6GUg9Sg/JJt9THHOTnL/kvL51NgkVXdS8ibhkzsEh04s5BZyeAoD6GisNfk2pW2Z73
+         BGtQ==
+X-Gm-Message-State: ANoB5plD2aZ3IiRCopezLjoyZZDdIKmswaGflF0UNSrjIWjzhFwbZiDw
+        iivh57eGvmPJIEpOg+U0Ifu5OgTsGKwZV6O7
+X-Google-Smtp-Source: AA0mqf47HmClxjlAW9DxMF2bgWVxgI7npM2Ar0tsu0fsJS2xY8RI9H87d0FG/XSIJ41uOriL/+Xzcw==
+X-Received: by 2002:a2e:b706:0:b0:277:d75:f1de with SMTP id j6-20020a2eb706000000b002770d75f1demr5794184ljo.272.1668499976198;
+        Tue, 15 Nov 2022 00:12:56 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id a27-20020a2eb55b000000b0026e8b82eba6sm2388385ljn.34.2022.11.14.23.59.48
+        by smtp.gmail.com with ESMTPSA id 28-20020ac25f5c000000b004b491fe071fsm1635595lfz.36.2022.11.15.00.12.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Nov 2022 23:59:49 -0800 (PST)
-Message-ID: <88fd2f42-6f20-7bbe-1a4d-1f482c153f07@linaro.org>
-Date:   Tue, 15 Nov 2022 08:59:48 +0100
+        Tue, 15 Nov 2022 00:12:55 -0800 (PST)
+Message-ID: <61df3c4f-f41c-9525-606d-1b8261163080@linaro.org>
+Date:   Tue, 15 Nov 2022 09:12:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH net-next 1/5] dt-bindings: net: qcom,ipa: deprecate
- modem-init
+Subject: Re: [PATCH 02/14] dt-bindings: phy: qcom,qmp-usb3-dp: fix sc8280xp
+ bindings
 Content-Language: en-US
-To:     Alex Elder <elder@ieee.org>, Alex Elder <elder@linaro.org>,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, agross@kernel.org,
-        elder@kernel.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221112200717.1533622-1-elder@linaro.org>
- <20221112200717.1533622-2-elder@linaro.org>
- <de98dbb4-afb5-de05-1e75-2959aa720333@linaro.org>
- <2f827660-ae9d-01dd-ded8-7fd4c2f8f8ae@ieee.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221111092457.10546-3-johan+linaro@kernel.org>
+ <a22888cd-34cb-3453-0dc2-096da208564c@linaro.org>
+ <Y3JCVzJ74YsfcDz4@hovoldconsulting.com>
+ <de3a426a-03e8-ed15-a9a1-bb300e776e5f@linaro.org>
+ <Y3JOO0kNnaNhnW3K@hovoldconsulting.com>
+ <02725b78-04ad-8f4a-25c2-9cdaa1e37ab7@linaro.org>
+ <Y3JthM1jC2vH1Kn+@hovoldconsulting.com>
+ <efd412d0-7411-8b0b-4700-9e183a592048@linaro.org>
+ <Y3JxZ+yFMLZkwNBi@hovoldconsulting.com>
+ <8420c342-9dce-aea7-8d1e-f141e0c1ebb5@linaro.org>
+ <Y3J2AjjjsybI9mKd@hovoldconsulting.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <2f827660-ae9d-01dd-ded8-7fd4c2f8f8ae@ieee.org>
+In-Reply-To: <Y3J2AjjjsybI9mKd@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/11/2022 18:48, Alex Elder wrote:
-> On 11/14/22 03:56, Krzysztof Kozlowski wrote:
->> On 12/11/2022 21:07, Alex Elder wrote:
->>> GSI firmware for IPA must be loaded during initialization, either by
->>> the AP or by the modem.  The loader is currently specified based on
->>> whether the Boolean modem-init property is present.
->>>
->>> Instead, use a new property with an enumerated value to indicate
->>> explicitly how GSI firmware gets loaded.  With this in place, a
->>> third approach can be added in an upcoming patch.
->>>
->>> The new qcom,gsi-loader property has two defined values:
->>>    - self:   The AP loads GSI firmware
->>>    - modem:  The modem loads GSI firmware
->>> The modem-init property must still be supported, but is now marked
->>> deprecated.
->>>
->>> Signed-off-by: Alex Elder <elder@linaro.org>
->>> ---
->>>   .../devicetree/bindings/net/qcom,ipa.yaml     | 59 +++++++++++++++----
->>>   1 file changed, 46 insertions(+), 13 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
->>> index e752b76192df0..0dfd6c721e045 100644
->>> --- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
->>> +++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
->>> @@ -124,12 +124,22 @@ properties:
->>>         - const: ipa-clock-enabled-valid
->>>         - const: ipa-clock-enabled
->>>   
->>> +  qcom,gsi-loader:
->>> +    enum:
->>> +      - self
->>> +      - modem
->>> +    description:
->>> +      This indicates how GSI firmware should be loaded.  If the AP loads
+On 14/11/2022 18:08, Johan Hovold wrote:
 >>
->> s/This indicates/Indicate/
->> (or any other grammar without describing DT syntax but hardware/system)
+>> Which is also fine. I don't understand still why it is a problem - even
+>> if you have multiple files, one for each SoC/phy. If USB4 brings here 10
+>> more clocks and other SoCs/phys might bring many more options, then what
+>> else can you do? Grow the binding file with big text-based mapping of
+>> IDs? It's not a viable solution. Header or headers is the only
+>> maintainable way for such cases.
 > 
-> OK.
-> 
->>> +      and validates GSI firmware, this property has value "self".  If the
->>> +      modem does this, this property has value "modem".
->>> +
->>>     modem-init:
->>> +    deprecated: true
->>>       type: boolean
->>>       description:
->>> -      If present, it indicates that the modem is responsible for
->>> -      performing early IPA initialization, including loading and
->>> -      validating firwmare used by the GSI.
->>> +      This is the older (deprecated) way of indicating how GSI firmware
->>> +      should be loaded.  If present, the modem loads GSI firmware; if
->>> +      absent, the AP loads GSI firmware.
->>>   
->>>     memory-region:
->>>       maxItems: 1
->>> @@ -155,15 +165,36 @@ required:
->>>     - interconnects
->>>     - qcom,smem-states
->>>   
->>> -# If modem-init is not present, the AP loads GSI firmware, and
->>> -# memory-region must be specified
->>> -if:
->>> -  not:
->>> -    required:
->>> -      - modem-init
->>> -then:
->>> -  required:
->>> -    - memory-region
->>> +allOf:
->>> +  # If qcom,gsi-loader is present, modem-init must not be present
->>> +  - if:
->>> +      required:
->>> +        - qcom,gsi-loader
->>> +    then:
->>> +      properties:
->>> +        modem-init: false
->>
->> This is ok, but will not allow you to keep deprecated property in DTS
->> for the transition period. We talked about this that you need to keep
->> both or wait few cycles before applying DTS cleanups.
-> 
-> My intention is expressed in the comment.  Is it because of the
-> "if .... required ... qcom,gsi-loader"?
-> 
-> Should it be "if ... properties ... qcom,gsi-loader"?
+> So then we must add per-SoC (and PHY type) headers even if we can
+> possibly reuse defines from one platform for another as long as they
+> appear to be similar enough?
 
-You disallow modem-init here, so it cannot be present in DTS if
-gsi-loader is present. Therefore the deprecated case like this:
-  qcom,gsi-loader = "modem"
-  modem-init;
-is not allowed by the schema.
+No, you don't have to. I just got impression that future devices will
+bring so many changes that anyway you will end up with per-SoC defines.
 
-As I said, it is fine, but your DTS should wait a cycle.
+> For example, using a "SC7180_USB3_DP" infix
+> for the current platforms and add a new series of indexes for SC8280XP:
+> 
+> 	QMP_SC7180_USB3_DP_USB3_PIPE			0
+> 	QMP_SC7180_USB3_DP_DP_LINK			1
+> 	QMP_SC7180_USB3_DP_DP_VCO_DIV			2
+> 
+> 	QMP_SC8280XP_USB4_USB3_DP_USB3_PIPE		0
+> 	QMP_SC8280XP_USB4_USB3_DP_DP_LINK		1
+> 	QMP_SC8280XP_USB4_USB3_DP_DP_VCO_DIV		2
+> 	QMP_SC8280XP_USB4_USB3_DP_USB4_PCIE_PIPE	3
+> 	...
+> 	QMP_SC8280XP_USB4_USB3_DP_USB4_RX1		9
 
+The names are just a names, you can even use QMP_SC7180_* on SC8280XP.
+You can skip the SoC part and have something shared. We already have
+such patterns - although maybe more often for outside components (like
+PMICs). The differences are:
+1. For per-SoC name it's quite obvious which clock is supported on fiven
+SoC,
+2. With shared names, you should document somewhere mapping between
+supported clocks and SoCs. Also what to do if new device comes with 10
+new clocks entirely different - re-use/map existing defines or add
+completely new set of 10 of them?
 
 Best regards,
 Krzysztof
