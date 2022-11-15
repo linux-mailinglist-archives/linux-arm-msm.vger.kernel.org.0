@@ -2,101 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08972629F40
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 17:42:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 12FC7629F38
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 17:41:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238686AbiKOQmL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 11:42:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53966 "EHLO
+        id S230086AbiKOQly (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 11:41:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238695AbiKOQmJ (ORCPT
+        with ESMTP id S238684AbiKOQlu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 11:42:09 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85B992B628
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 08:42:08 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id h12so18263380ljg.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 08:42:08 -0800 (PST)
+        Tue, 15 Nov 2022 11:41:50 -0500
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E3EC2D764;
+        Tue, 15 Nov 2022 08:41:49 -0800 (PST)
+Received: by mail-pg1-x533.google.com with SMTP id v3so13764259pgh.4;
+        Tue, 15 Nov 2022 08:41:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9jb1svEkUmggBlpVRHrknk39IWZlG+Y0uIqQEOYSyi8=;
-        b=w3GCgTOUTD0J7IW0L/hJ91pCWBJ3IwmBduHmODYjszPNbLFxeDh5/wKwrQzbQr4Kq0
-         YtGAT6VzrwHcOMb5i+8Sj0vbU+Twb9VNxJSISKn1r2yRx6as4Y+kY3vazoKVnURObgvW
-         ntpuceelBv+C1adAUHTFEx3vXbWdgkmRMhZVJZp393VZ0LNmbyAeBdxe8eIibe1e/34v
-         y6pGrGlcOD2Hw/LMbzVXjTVk7g5e63S+gqvUMJGYM0Rw55Q+wydi6Coht0BVgBMCcsTe
-         +xbyvkZ5D9kokEOZBQRvRV5sGoCPNO86Yj25VxCW1p2S5g7GKUwKFcaLCns9AJDI1oIN
-         RVgw==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+Vs3kQEHL0oTrTy5MR4m4bXaJPdcU0IKOmmtigZy0RQ=;
+        b=j1uDJjjED/dprSEJEMlZ1yfYS2WQkBO0HzjJ8V6lD93UppX4bhNioJRu/1W1T22Nma
+         w6kGSPxjxKRdya3t1xIGPPkhmONCkzLKlXjQNkkqBk6Ps0/eR1H4zpabOP2tJ4ZxbVo6
+         37ZEz5k6P/3ar+DOP7F735TH8riybkRhQOEE4916Rja/Tifsq2caYJG9Wx40EoNQcK2a
+         PAqV40oRIg+nuIX2CUSA+jeZOZjqBdqE2tVBl/b7IvDvWSnXBl+1/WRyIAQnnF4Hrc2k
+         fTAYMvbufVg14/I/hH4b3FdFAcErksij/c7UmLsnVi8znWi5pXJcVxqt9kIlnQoHVL/e
+         q7mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9jb1svEkUmggBlpVRHrknk39IWZlG+Y0uIqQEOYSyi8=;
-        b=cVUo2z71v5hzaJ8VOhSNjqc2MZEzXZcJ8m6SH4GWtgvWtBUFOd3CqpYcqve3Rai6Z9
-         rApK+KcmDuaKOkb4KM4wBDnFeh56pSQb1X/so/CetTpCoZKxjsERQI0Qb/2pkAt3A/Rb
-         sDN0oZdWPxt8a2f8QArlvLj+9kqyWdbH9o62yC5zgP6A4corzzP3QBfLlLmooP6BCbmh
-         I3Q0/sW7PBXy7HP/Q8DxZ0eQ/Nl97o7QMMbSV6wXVSOXq/zlI9JYCjqYcjOCahKreW+J
-         bHH9xSRJBqJiqkinEwUKgrWIc0tMOEzMCkFQExBXS3w28H6VUiw4ny6rLTZ3sS+YJbVr
-         RNUA==
-X-Gm-Message-State: ANoB5pm4i1xdwwx+aaGazLygymrjkdFvPKe566ES48dEFvO7dqPS2neZ
-        X6kSB8E9u8ZuvLeDEA0S+rTqFA==
-X-Google-Smtp-Source: AA0mqf75eymhe8iemrFEPOiuBlkfykZb27qfQ/xZRMN9Wv45n2T8ywkw2TqFyFY7j1uwmWrbhHSVyg==
-X-Received: by 2002:a2e:2201:0:b0:275:a127:cace with SMTP id i1-20020a2e2201000000b00275a127cacemr6071141lji.378.1668530526951;
-        Tue, 15 Nov 2022 08:42:06 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id a12-20020a19f80c000000b004ac088fdfd2sm2269353lff.85.2022.11.15.08.42.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Nov 2022 08:42:06 -0800 (PST)
-Message-ID: <b611f647-c46f-3780-c6b4-3cfb4fe402e7@linaro.org>
-Date:   Tue, 15 Nov 2022 17:42:05 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+Vs3kQEHL0oTrTy5MR4m4bXaJPdcU0IKOmmtigZy0RQ=;
+        b=OZk5dWYSZjUGpYTAf4dLkuSCB5VDiRyy2MgKgJUT1hxPFPVFJw7mO2GoOQ8Qt151/F
+         Kb5JZX1N8LyXQS05YoJH8PMQ97xlMqtk5ydyMdKOjLYyxljZ6BkAwHiEo/BWxj1hwq1l
+         fb0barnZt503ehUvto0jwpdSF7maTQWsb3Hj43kzaPxFY7z1IPcMZL/Tfx4XcXU6O2J9
+         4woT5iHB2kdAe4+zSmYXxG5SmSzxaY5TjZZSmko5OwHzLhix0v+OslpN2Fl5ku5RDxbp
+         9+/0UTALnb08eoPhleSoq8q5rFshxeQ5Y1YFNS9AOp5bz5Eeh2GjqJBJTVOeNrOYFwwV
+         KepQ==
+X-Gm-Message-State: ANoB5plgCdBGuhOBahPvMA4L+Uj/PvxSVgQvKPum8Hnrpblwe63DP7rK
+        FgA0qd6+7FeCvkCm3lFtWtg=
+X-Google-Smtp-Source: AA0mqf7djbrriQQMP2iaGU82u/FSoTUimc0HOuiGEe1GjVChTbR5YA+6lXVDqIK3EDM8kWDtP5UF0Q==
+X-Received: by 2002:a63:4d1d:0:b0:44b:d27e:520d with SMTP id a29-20020a634d1d000000b0044bd27e520dmr16272720pgb.124.1668530508704;
+        Tue, 15 Nov 2022 08:41:48 -0800 (PST)
+Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
+        by smtp.gmail.com with ESMTPSA id n12-20020a170902e54c00b00186f608c543sm10211678plf.304.2022.11.15.08.41.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Nov 2022 08:41:48 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm: Enable unpin/eviction by default
+Date:   Tue, 15 Nov 2022 08:42:12 -0800
+Message-Id: <20221115164212.1619306-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v2 02/11] dt-bindings: nvmem: Fix qcom,qfprom compatibles
- enum ordering
-Content-Language: en-US
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>, agross@kernel.org
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, jassisinghbrar@gmail.com,
-        srinivas.kandagatla@linaro.org, jic23@kernel.org, lars@metafoo.de,
-        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
-        evgreen@chromium.org, gregkh@linuxfoundation.org,
-        a39.skl@gmail.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-iio@vger.kernel.org, linux-hardening@vger.kernel.org,
-        marijn.suijten@somainline.org, kernel@collabora.com, luca@z3ntu.xyz
-References: <20221111120156.48040-1-angelogioacchino.delregno@collabora.com>
- <20221111120156.48040-3-angelogioacchino.delregno@collabora.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221111120156.48040-3-angelogioacchino.delregno@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/11/2022 13:01, AngeloGioacchino Del Regno wrote:
-> Move qcom,msm8974-qfprom after qcom,msm8916-qfprom to respect
-> alphabetical ordering.
-> 
-> Fixes: c8b336bb1aeb ("dt-bindings: nvmem: Add soc qfprom compatible strings")
+From: Rob Clark <robdclark@chromium.org>
 
-It's a style, code readability, but not a bug. I propose to drop the tag.
+We've had this enabled in the CrOS kernel for a while now without seeing
+issues, so let's flip the switch upstream now.
 
-With that:
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_gem_shrinker.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-Best regards,
-Krzysztof
+diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+index 8f83454ceedf..f6de1bd9d2e1 100644
+--- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
++++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+@@ -16,7 +16,7 @@
+ /* Default disabled for now until it has some more testing on the different
+  * iommu combinations that can be paired with the driver:
+  */
+-static bool enable_eviction = false;
++static bool enable_eviction = true;
+ MODULE_PARM_DESC(enable_eviction, "Enable swappable GEM buffers");
+ module_param(enable_eviction, bool, 0600);
+ 
+-- 
+2.38.1
 
