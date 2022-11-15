@@ -2,136 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFB9662982C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 13:08:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B78FA629831
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 13:10:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229880AbiKOMIq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 07:08:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60940 "EHLO
+        id S232772AbiKOMKS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 07:10:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230269AbiKOMIo (ORCPT
+        with ESMTP id S229709AbiKOMKR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 07:08:44 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EA7C19D;
-        Tue, 15 Nov 2022 04:08:43 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EBA34616F4;
-        Tue, 15 Nov 2022 12:08:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A03BC433C1;
-        Tue, 15 Nov 2022 12:08:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668514122;
-        bh=36O5ZVGHwpudvTRB6K/ShaxuTdaYXWLBRiw6cKRjPQw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=X4X2MSR0/9alcGjFPpwcz6tiznvVr/oN7cY9afoKsqW+iiKJPfJahQC0Ge0WPq8at
-         a8TNIxpjSLw/+c67G39RfdhcBSdnd7VeTYJET09y3C1HlNjK8Vk6/qu/hgPgFMbKCV
-         MG1ldcnOs5G6/4FyqdRqRFCX1/jaoULEqnDW3374uoTkccIGDYXNQsPej+6c0YKx+W
-         7cGt9Od2NFrA5j5m9IDMXPucZLRs+utfCkYN+SaE2ZJpJCLxUw1wMkd35um/ddZts1
-         59EuAtn/vguxDPEiyGhz6dB8o9xsOvRcBMYjyTSJGIkJs5W4FVYiimnHp7Z7zXSkcz
-         GEzKDcbzVBRng==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ouujb-0000HE-7s; Tue, 15 Nov 2022 13:08:11 +0100
-Date:   Tue, 15 Nov 2022 13:08:11 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Shazad Hussain <quic_shazhuss@quicinc.com>
-Cc:     andersson@kernel.org, sboyd@kernel.org, bmasney@redhat.com,
-        agross@kernel.org, mturquette@baylibre.com,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] clk: qcom: gcc-sc8280xp: add cxo as parent for three
- ufs ref clks
-Message-ID: <Y3OBK0PponwcsQB1@hovoldconsulting.com>
-References: <20221115102217.6381-1-quic_shazhuss@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221115102217.6381-1-quic_shazhuss@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Tue, 15 Nov 2022 07:10:17 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E5BF205;
+        Tue, 15 Nov 2022 04:10:16 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AFBp4JD024603;
+        Tue, 15 Nov 2022 12:10:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=OiEtkInJN1H+cUbk1AcUr0St1ccwdHQqzyvzbPnaXeU=;
+ b=Z4JVjEdUPnTVvZgDSxTz9nXkOjV0iOgKc5ki/YhoY+HdyPL2WmqlcnHa3ExnULxfwO/v
+ bZiTfSiATRrdfhuXtiJW7Q2Qdo+uSO9IXtFp/6iawkPGN5K/FrNl/9IybvTs2FeYJLpV
+ RYGqiKhCJu9CeVAJ1/N3nV/dW9NpFgZ5oGNWuWnx0j6+MHKF+4EuYljxbzTij39WDwFH
+ nhkMhCJE00tqWq4+x4onWA4soUs+m3e+Wh3e1YGgiH4pkMJY/bVGtKNmfOvY8emXKetD
+ M4QongdkX9LwA6rA1Ze1KF2nDRlpEuO2XsTID1dlmsDtl17Gd63kE39+JLnac079vG1v LQ== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kv4yf1mnt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 15 Nov 2022 12:10:12 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2AFCA8OP024583;
+        Tue, 15 Nov 2022 12:10:08 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3kt4jkds70-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 15 Nov 2022 12:10:08 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2AFCA71p024578;
+        Tue, 15 Nov 2022 12:10:07 GMT
+Received: from vboma-linux.qualcomm.com (vboma-linux.qualcomm.com [10.204.65.94])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 2AFCA7QZ024577;
+        Tue, 15 Nov 2022 12:10:07 +0000
+Received: by vboma-linux.qualcomm.com (Postfix, from userid 72083)
+        id 9CADA900889; Tue, 15 Nov 2022 17:40:06 +0530 (IST)
+From:   quic_vboma@quicinc.com
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Viswanath Boma <quic_vboma@quicinc.com>
+Subject: [PATCH 0/1] Fix for H265 decoding failure .
+Date:   Tue, 15 Nov 2022 17:40:03 +0530
+Message-Id: <20221115121004.28197-1-quic_vboma@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: TzVjGWPUQtuoiMSH39exatFh2VbUZJL5
+X-Proofpoint-ORIG-GUID: TzVjGWPUQtuoiMSH39exatFh2VbUZJL5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-15_06,2022-11-15_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
+ mlxscore=0 suspectscore=0 impostorscore=0 phishscore=0 malwarescore=0
+ priorityscore=1501 bulkscore=0 mlxlogscore=974 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211150084
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 15, 2022 at 03:52:17PM +0530, Shazad Hussain wrote:
-> Added parent_data as CXO for three UFS reference clocks named,
-> gcc_ufs_ref_clkref_clk, gcc_ufs_card_clkref_clk and
-> gcc_ufs_1_card_clkref_clk.
+From: Viswanath Boma <quic_vboma@quicinc.com>
 
-The commit message should explain why this is needed rather than just
-state what is being done. For example, something along the lines of
+Fixed the buffer size calculation mismatch with firmware requirements.
+Tested  on v5.15 and v5.4 kernels .
+For testing utilised the chrome utilities .
 
-	The three UFS reference clocks gcc_ufs_ref_clkref_clk,
-	gcc_ufs_card_clkref_clk and gcc_ufs_1_card_clkref_clk are all
-	sourced from CXO.
 
-	Update the clock driver to describe this.
+Viswanath Boma (1):
+  venus : Fix for H265 decoding failure.
 
-should do.
+ drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
-> Link: https://lore.kernel.org/lkml/Y2Tber39cHuOSR%2FW@hovoldconsulting.com/
-> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
+-- 
+2.17.1
 
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-
-And with a tweaked commit message you can also add:
-
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-
->---
-> Changes since v1:
-> - Renamed patch subject. Did not include Brian's T-b comment.
-> - Added parent data for two ufs phy ref clocks.
-> 
-> v1 of this patch can be found at
-> https://lore.kernel.org/all/20221030142333.31019-1-quic_shazhuss@quicinc.com/
-> 
-> used below patches for verification on next-20221114
-> https://lore.kernel.org/lkml/20221104092045.17410-2-johan+linaro@kernel.org/
-> https://lore.kernel.org/lkml/20221104092045.17410-3-johan+linaro@kernel.org/
-> https://lore.kernel.org/lkml/20221111113732.461881-1-thierry.reding@gmail.com/
-> 
->  drivers/clk/qcom/gcc-sc8280xp.c | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-> index a18ed88f3b82..b3198784e1c3 100644
-> --- a/drivers/clk/qcom/gcc-sc8280xp.c
-> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
-> @@ -5364,6 +5364,8 @@ static struct clk_branch gcc_ufs_1_card_clkref_clk = {
->  		.enable_mask = BIT(0),
->  		.hw.init = &(const struct clk_init_data) {
->  			.name = "gcc_ufs_1_card_clkref_clk",
-> +			.parent_data = &gcc_parent_data_tcxo,
-> +			.num_parents = 1,
->  			.ops = &clk_branch2_ops,
->  		},
->  	},
-> @@ -5432,6 +5434,8 @@ static struct clk_branch gcc_ufs_card_clkref_clk = {
->  		.enable_mask = BIT(0),
->  		.hw.init = &(const struct clk_init_data) {
->  			.name = "gcc_ufs_card_clkref_clk",
-> +			.parent_data = &gcc_parent_data_tcxo,
-> +			.num_parents = 1,
->  			.ops = &clk_branch2_ops,
->  		},
->  	},
-> @@ -5848,6 +5852,8 @@ static struct clk_branch gcc_ufs_ref_clkref_clk = {
->  		.enable_mask = BIT(0),
->  		.hw.init = &(const struct clk_init_data) {
->  			.name = "gcc_ufs_ref_clkref_clk",
-> +			.parent_data = &gcc_parent_data_tcxo,
-> +			.num_parents = 1,
->  			.ops = &clk_branch2_ops,
->  		},
->  	},
-
-Johan
