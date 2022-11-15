@@ -2,107 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02A476291B1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 07:01:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EE336292D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 08:59:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229966AbiKOGBD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 01:01:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42864 "EHLO
+        id S232617AbiKOH76 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 02:59:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiKOGBD (ORCPT
+        with ESMTP id S232630AbiKOH7y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 01:01:03 -0500
-Received: from m1323.mail.163.com (m1323.mail.163.com [220.181.13.23])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9BB9112AFF;
-        Mon, 14 Nov 2022 22:01:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=hrk0d
-        bbBKzxXX4+Dgcaj55QnrSIJ7qLn9WdJODoPrYk=; b=SIcCZz46ddQl7fblmYx05
-        Oi7txIxvms7eaQTRysvNNr4I698alBcz8dIC09p6rbxaEkVgGvU7LAVEnZAJj1ZI
-        WQhzwxu6wGpzq7LRM0ByVe/ZmAPXRfr94890nB9TVLeT+LTg4WoSWfjJfGkUCTBK
-        fm5J6dQDgnTDHGIfh1hrCw=
-Received: from slark_xiao$163.com ( [112.97.55.21] ) by ajax-webmail-wmsvr23
- (Coremail) ; Tue, 15 Nov 2022 14:00:10 +0800 (CST)
-X-Originating-IP: [112.97.55.21]
-Date:   Tue, 15 Nov 2022 14:00:10 +0800 (CST)
-From:   "Slark Xiao" <slark_xiao@163.com>
-To:     mani@kernel.org, gregkh@linuxfoundation.org,
-        loic.poulain@linaro.org
-Cc:     dnlplm@gmail.com, yonglin.tan@outlook.com,
-        fabio.porcedda@gmail.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re:[PATCH v3] bus: mhi: host: pci_generic: Add definition for some
- VIDs
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20220113(9671e152)
- Copyright (c) 2002-2022 www.mailtech.cn 163com
-In-Reply-To: <20221107112700.773-1-slark_xiao@163.com>
-References: <20221107112700.773-1-slark_xiao@163.com>
-X-NTES-SC: AL_QuydCviSvUgq5imaZekWkkcRjuo+UMC0vfgh249fPJs0qin81gUHeUVoHmn478SlCyK3iiKRSQFx6eB5cIp8QYC2Tz9ADnGZkVyEGwrYt/iL
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+        Tue, 15 Nov 2022 02:59:54 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D16E420BD3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 23:59:51 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id g7so23224974lfv.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 23:59:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HJPFTJOGuPRhd7ksoWE06DkherlyxwNY/RJOZ9ATVqs=;
+        b=hO1pWG9FFw6lcA0dz0nGIKvIKA4R/SiXFR4HgemXVKeuy4ri+jgZm9KmbvhcTkPemv
+         9ZPEmoWV29gKa+KZ3+bVE3krOfiof6B2Miohku1IQFC6r1ZB2pa+OckJ9K/AgXva+/1C
+         qV8JLBtSUR8i9ufUY/1Zw5bUQqOvy6uGGzVol5BxOvWR5XsDP7P3g7Er/spdOOdVPuK5
+         9I2nC8zz2eG+VcaF1vK9Z34SeBvF/iSThHPxPxjH2jvy/9qHtcXuS56MAmVamZ7jixxm
+         1zjcu/F9Wdp4X/UurrUyZow9zrbqD+7cA+gSrPT843Smx57rhfuqTqyfHh0euoXhAWbK
+         lIvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HJPFTJOGuPRhd7ksoWE06DkherlyxwNY/RJOZ9ATVqs=;
+        b=f+faW2sJpuePihwRCbYK9rPjgWVbTsWDg7A36gOWF2ght9o/LHwL0Uxtvlo3P4hDdu
+         YkxmzoUz9SKY5OBITOWK13fhHMoJWBLSTtvtoOGI6XwMZvR4Zw/ISp7ndR2qWS4jO5Rf
+         D2Yig14sUTJ6M+LhhsoxtRQENPwk5eiMtzQBXlPUdDMihpG9XWfavWiTfuqnQB9BHQrX
+         d4BlqGhhxqpsEBn+3OZEofpOxQ4kLX6zLLZWAUh9OorS5DxzqnhzJHyMAS35foQIaA3i
+         2n172fejOxdM8Ev+ozLzskFso6tZJl94VvXgxoJy9FhjHtl267kJKyGrgE6oPFnpzTIj
+         IadQ==
+X-Gm-Message-State: ANoB5pmJwHGNqfEtEgHHduiC9ESAlo5LSZEjxvbQWIgHb3NltcZcQoBP
+        /jlLP56c2ly8YMJ2d/ed0F8B9A==
+X-Google-Smtp-Source: AA0mqf4DsOuYz5YY9s6MWxbp9QH+GSKO3GjqvZ5CD3NNuQLOAKv/l/8yIDLggMj1iSKZHpcGsP8elg==
+X-Received: by 2002:a05:6512:2803:b0:4a6:2ff6:f32f with SMTP id cf3-20020a056512280300b004a62ff6f32fmr6024570lfb.1.1668499190153;
+        Mon, 14 Nov 2022 23:59:50 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id a27-20020a2eb55b000000b0026e8b82eba6sm2388385ljn.34.2022.11.14.23.59.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Nov 2022 23:59:49 -0800 (PST)
+Message-ID: <88fd2f42-6f20-7bbe-1a4d-1f482c153f07@linaro.org>
+Date:   Tue, 15 Nov 2022 08:59:48 +0100
 MIME-Version: 1.0
-Message-ID: <38bbe02b.1790.18479dfa5ac.Coremail.slark_xiao@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: F8GowACXZmnqKnNjNE1EAA--.17630W
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbivxW5ZFWB2Ued3QACs-
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH net-next 1/5] dt-bindings: net: qcom,ipa: deprecate
+ modem-init
+Content-Language: en-US
+To:     Alex Elder <elder@ieee.org>, Alex Elder <elder@linaro.org>,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, agross@kernel.org,
+        elder@kernel.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221112200717.1533622-1-elder@linaro.org>
+ <20221112200717.1533622-2-elder@linaro.org>
+ <de98dbb4-afb5-de05-1e75-2959aa720333@linaro.org>
+ <2f827660-ae9d-01dd-ded8-7fd4c2f8f8ae@ieee.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <2f827660-ae9d-01dd-ded8-7fd4c2f8f8ae@ieee.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-CkhpIE1hbmksCkFueSB1cGRhdGUgYWJvdXQgdGhpcyBwYXRjaD8gCkF0IDIwMjItMTEtMDcgMTk6
-Mjc6MDAsICJTbGFyayBYaWFvIiA8c2xhcmtfeGlhb0AxNjMuY29tPiB3cm90ZToKPlRvIG1ha2Ug
-Y29kZSBuZWF0IGFuZCBmb3IgY29udmVuaWVuY2UgcHVycG9zZSwgYWRkIGRlZmluaXRpb24gZm9y
-IHNvbWUKPlZJRHMuIEFkZGluZyBpdCBsb2NhbGx5IHVudGlsIHRoZXNlIFZJRHMgYXJlIHVzZWQg
-aW4gbXVsdGlwbGUgcGxhY2VzLgo+Cj5TaWduZWQtb2ZmLWJ5OiBTbGFyayBYaWFvIDxzbGFya194
-aWFvQDE2My5jb20+Cj4tLS0KPnYzOiBVcGRhdGUgZGVzY3JpcHRpb24KPnYyOiBVcGRhdGUgZGVz
-Y3JpcHRpb24gYW5kIGZpeCBmb3JtYXQgaXNzdWUKPi0tLQo+IGRyaXZlcnMvYnVzL21oaS9ob3N0
-L3BjaV9nZW5lcmljLmMgfCAxOCArKysrKysrKysrKy0tLS0tLS0KPiAxIGZpbGUgY2hhbmdlZCwg
-MTEgaW5zZXJ0aW9ucygrKSwgNyBkZWxldGlvbnMoLSkKPgo+ZGlmZiAtLWdpdCBhL2RyaXZlcnMv
-YnVzL21oaS9ob3N0L3BjaV9nZW5lcmljLmMgYi9kcml2ZXJzL2J1cy9taGkvaG9zdC9wY2lfZ2Vu
-ZXJpYy5jCj5pbmRleCBjNDI1OWNiMmQyODkuLjNhNzg5YmIyZjYzMSAxMDA2NDQKPi0tLSBhL2Ry
-aXZlcnMvYnVzL21oaS9ob3N0L3BjaV9nZW5lcmljLmMKPisrKyBiL2RyaXZlcnMvYnVzL21oaS9o
-b3N0L3BjaV9nZW5lcmljLmMKPkBAIC0yNCw2ICsyNCwxMCBAQAo+IAo+ICNkZWZpbmUgSEVBTFRI
-X0NIRUNLX1BFUklPRCAoSFogKiAyKQo+IAo+Ky8qIFBDSSBWSUQgZGVmaW5pdGlvbnMgKi8KPisj
-ZGVmaW5lIFBDSV9WRU5ET1JfSURfVEhBTEVTCTB4MTI2OQo+KyNkZWZpbmUgUENJX1ZFTkRPUl9J
-RF9RVUVDVEVMCTB4MWVhYwo+Kwo+IC8qKgo+ICAqIHN0cnVjdCBtaGlfcGNpX2Rldl9pbmZvIC0g
-TUhJIFBDSSBkZXZpY2Ugc3BlY2lmaWMgaW5mb3JtYXRpb24KPiAgKiBAY29uZmlnOiBNSEkgY29u
-dHJvbGxlciBjb25maWd1cmF0aW9uCj5AQCAtNTU3LDExICs1NjEsMTEgQEAgc3RhdGljIGNvbnN0
-IHN0cnVjdCBwY2lfZGV2aWNlX2lkIG1oaV9wY2lfaWRfdGFibGVbXSA9IHsKPiAJCS5kcml2ZXJf
-ZGF0YSA9IChrZXJuZWxfdWxvbmdfdCkgJm1oaV90ZWxpdF9mbjk5MF9pbmZvIH0sCj4gCXsgUENJ
-X0RFVklDRShQQ0lfVkVORE9SX0lEX1FDT00sIDB4MDMwOCksCj4gCQkuZHJpdmVyX2RhdGEgPSAo
-a2VybmVsX3Vsb25nX3QpICZtaGlfcWNvbV9zZHg2NV9pbmZvIH0sCj4tCXsgUENJX0RFVklDRSgw
-eDFlYWMsIDB4MTAwMSksIC8qIEVNMTIwUi1HTCAoc2R4MjQpICovCj4rCXsgUENJX0RFVklDRShQ
-Q0lfVkVORE9SX0lEX1FVRUNURUwsIDB4MTAwMSksIC8qIEVNMTIwUi1HTCAoc2R4MjQpICovCj4g
-CQkuZHJpdmVyX2RhdGEgPSAoa2VybmVsX3Vsb25nX3QpICZtaGlfcXVlY3RlbF9lbTF4eF9pbmZv
-IH0sCj4tCXsgUENJX0RFVklDRSgweDFlYWMsIDB4MTAwMiksIC8qIEVNMTYwUi1HTCAoc2R4MjQp
-ICovCj4rCXsgUENJX0RFVklDRShQQ0lfVkVORE9SX0lEX1FVRUNURUwsIDB4MTAwMiksIC8qIEVN
-MTYwUi1HTCAoc2R4MjQpICovCj4gCQkuZHJpdmVyX2RhdGEgPSAoa2VybmVsX3Vsb25nX3QpICZt
-aGlfcXVlY3RlbF9lbTF4eF9pbmZvIH0sCj4tCXsgUENJX0RFVklDRSgweDFlYWMsIDB4MjAwMSks
-IC8qIEVNMTIwUi1HTCBmb3IgRkNDTCAoc2R4MjQpICovCj4rCXsgUENJX0RFVklDRShQQ0lfVkVO
-RE9SX0lEX1FVRUNURUwsIDB4MjAwMSksIC8qIEVNMTIwUi1HTCBmb3IgRkNDTCAoc2R4MjQpICov
-Cj4gCQkuZHJpdmVyX2RhdGEgPSAoa2VybmVsX3Vsb25nX3QpICZtaGlfcXVlY3RlbF9lbTF4eF9p
-bmZvIH0sCj4gCS8qIFQ5OVcxNzUgKHNkeDU1KSwgQm90aCBmb3IgZVNJTSBhbmQgTm9uLWVTSU0g
-Ki8KPiAJeyBQQ0lfREVWSUNFKFBDSV9WRU5ET1JfSURfRk9YQ09OTiwgMHhlMGFiKSwKPkBAIC01
-ODUsMTYgKzU4OSwxNiBAQCBzdGF0aWMgY29uc3Qgc3RydWN0IHBjaV9kZXZpY2VfaWQgbWhpX3Bj
-aV9pZF90YWJsZVtdID0gewo+IAl7IFBDSV9ERVZJQ0UoUENJX1ZFTkRPUl9JRF9GT1hDT05OLCAw
-eGUwZDkpLAo+IAkJLmRyaXZlcl9kYXRhID0gKGtlcm5lbF91bG9uZ190KSAmbWhpX2ZveGNvbm5f
-c2R4NjVfaW5mbyB9LAo+IAkvKiBNVjMxLVcgKENpbnRlcmlvbikgKi8KPi0JeyBQQ0lfREVWSUNF
-KDB4MTI2OSwgMHgwMGIzKSwKPisJeyBQQ0lfREVWSUNFKFBDSV9WRU5ET1JfSURfVEhBTEVTLCAw
-eDAwYjMpLAo+IAkJLmRyaXZlcl9kYXRhID0gKGtlcm5lbF91bG9uZ190KSAmbWhpX212MzFfaW5m
-byB9LAo+IAkvKiBNVjMxLVcgKENpbnRlcmlvbiksIGJhc2VkIG9uIG5ldyBiYXNlbGluZSAqLwo+
-LQl7IFBDSV9ERVZJQ0UoMHgxMjY5LCAweDAwYjQpLAo+Kwl7IFBDSV9ERVZJQ0UoUENJX1ZFTkRP
-Ul9JRF9USEFMRVMsIDB4MDBiNCksCj4gCQkuZHJpdmVyX2RhdGEgPSAoa2VybmVsX3Vsb25nX3Qp
-ICZtaGlfbXYzMV9pbmZvIH0sCj4gCS8qIE1WMzItV0EgKENpbnRlcmlvbikgKi8KPi0JeyBQQ0lf
-REVWSUNFKDB4MTI2OSwgMHgwMGJhKSwKPisJeyBQQ0lfREVWSUNFKFBDSV9WRU5ET1JfSURfVEhB
-TEVTLCAweDAwYmEpLAo+IAkJLmRyaXZlcl9kYXRhID0gKGtlcm5lbF91bG9uZ190KSAmbWhpX212
-MzJfaW5mbyB9LAo+IAkvKiBNVjMyLVdCIChDaW50ZXJpb24pICovCj4tCXsgUENJX0RFVklDRSgw
-eDEyNjksIDB4MDBiYiksCj4rCXsgUENJX0RFVklDRShQQ0lfVkVORE9SX0lEX1RIQUxFUywgMHgw
-MGJiKSwKPiAJCS5kcml2ZXJfZGF0YSA9IChrZXJuZWxfdWxvbmdfdCkgJm1oaV9tdjMyX2luZm8g
-fSwKPiAJeyAgfQo+IH07Cj4tLSAKPjIuMTcuMQo=
+On 14/11/2022 18:48, Alex Elder wrote:
+> On 11/14/22 03:56, Krzysztof Kozlowski wrote:
+>> On 12/11/2022 21:07, Alex Elder wrote:
+>>> GSI firmware for IPA must be loaded during initialization, either by
+>>> the AP or by the modem.  The loader is currently specified based on
+>>> whether the Boolean modem-init property is present.
+>>>
+>>> Instead, use a new property with an enumerated value to indicate
+>>> explicitly how GSI firmware gets loaded.  With this in place, a
+>>> third approach can be added in an upcoming patch.
+>>>
+>>> The new qcom,gsi-loader property has two defined values:
+>>>    - self:   The AP loads GSI firmware
+>>>    - modem:  The modem loads GSI firmware
+>>> The modem-init property must still be supported, but is now marked
+>>> deprecated.
+>>>
+>>> Signed-off-by: Alex Elder <elder@linaro.org>
+>>> ---
+>>>   .../devicetree/bindings/net/qcom,ipa.yaml     | 59 +++++++++++++++----
+>>>   1 file changed, 46 insertions(+), 13 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+>>> index e752b76192df0..0dfd6c721e045 100644
+>>> --- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+>>> +++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+>>> @@ -124,12 +124,22 @@ properties:
+>>>         - const: ipa-clock-enabled-valid
+>>>         - const: ipa-clock-enabled
+>>>   
+>>> +  qcom,gsi-loader:
+>>> +    enum:
+>>> +      - self
+>>> +      - modem
+>>> +    description:
+>>> +      This indicates how GSI firmware should be loaded.  If the AP loads
+>>
+>> s/This indicates/Indicate/
+>> (or any other grammar without describing DT syntax but hardware/system)
+> 
+> OK.
+> 
+>>> +      and validates GSI firmware, this property has value "self".  If the
+>>> +      modem does this, this property has value "modem".
+>>> +
+>>>     modem-init:
+>>> +    deprecated: true
+>>>       type: boolean
+>>>       description:
+>>> -      If present, it indicates that the modem is responsible for
+>>> -      performing early IPA initialization, including loading and
+>>> -      validating firwmare used by the GSI.
+>>> +      This is the older (deprecated) way of indicating how GSI firmware
+>>> +      should be loaded.  If present, the modem loads GSI firmware; if
+>>> +      absent, the AP loads GSI firmware.
+>>>   
+>>>     memory-region:
+>>>       maxItems: 1
+>>> @@ -155,15 +165,36 @@ required:
+>>>     - interconnects
+>>>     - qcom,smem-states
+>>>   
+>>> -# If modem-init is not present, the AP loads GSI firmware, and
+>>> -# memory-region must be specified
+>>> -if:
+>>> -  not:
+>>> -    required:
+>>> -      - modem-init
+>>> -then:
+>>> -  required:
+>>> -    - memory-region
+>>> +allOf:
+>>> +  # If qcom,gsi-loader is present, modem-init must not be present
+>>> +  - if:
+>>> +      required:
+>>> +        - qcom,gsi-loader
+>>> +    then:
+>>> +      properties:
+>>> +        modem-init: false
+>>
+>> This is ok, but will not allow you to keep deprecated property in DTS
+>> for the transition period. We talked about this that you need to keep
+>> both or wait few cycles before applying DTS cleanups.
+> 
+> My intention is expressed in the comment.  Is it because of the
+> "if .... required ... qcom,gsi-loader"?
+> 
+> Should it be "if ... properties ... qcom,gsi-loader"?
+
+You disallow modem-init here, so it cannot be present in DTS if
+gsi-loader is present. Therefore the deprecated case like this:
+  qcom,gsi-loader = "modem"
+  modem-init;
+is not allowed by the schema.
+
+As I said, it is fine, but your DTS should wait a cycle.
+
+
+Best regards,
+Krzysztof
+
