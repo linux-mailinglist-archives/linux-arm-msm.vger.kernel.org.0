@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 40B58629AEE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 14:45:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F5A5629AFD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 14:47:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229583AbiKONpZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 08:45:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46524 "EHLO
+        id S230401AbiKONrX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 08:47:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231132AbiKONpY (ORCPT
+        with ESMTP id S230369AbiKONrW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 08:45:24 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73B5920BFA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 05:45:22 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id s8so7337657lfc.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 05:45:22 -0800 (PST)
+        Tue, 15 Nov 2022 08:47:22 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17C68264A4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 05:47:21 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id a29so24483155lfj.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 05:47:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to:subject
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=x6C4qzSxJODnTx3c8m8GXC7Qrtvk8RrOjz6X2ODydhg=;
-        b=pY51M7M/UwSYTsg5DV+5DQ0w5thPCNM1RQxRVuzP/72UBvJa5K+Bucxwuqg3K79Ldd
-         zqv6vBDd7GKivSGkZ/+tsIY6CEMrfYkCD13XZdlrfMb76O4a69jbmDl/Bl6/ZgmX5j3K
-         oys37HLAi70w/78m+g/BNjvYiyEXeKTfwmN3E1a1fOyFLtSibgwNLG+54huhseb4bBWq
-         z3k9ZR0/o8xKHoTzfuWtWGW393iIb5nRMDAK9xIj6Pd7wILhXcqHosFvYrb/VLxCaSeo
-         VbQdUoCUYkcRd6i7tI3y3Xt10hRW0U/5itOGHh9jOqnOFUP8vygd+WoFS923DPBK8HpQ
-         ofGA==
+        bh=D1lsJdjigIX8ZDz/U2Ud7ZNMW6v6rQsSpoxZd5XzRCU=;
+        b=toZYMHYHTMpkCtWeEVOJGZddt5opCfkJre25TDxhpInMjQ13zbH8ndmt4JbDPDyKI4
+         Ygx606/KjsyiP9FDUiRTSLYEi74hurhoTA7pAnMO6MPGAo4dMHHNSYB4LivXKi1OhD2g
+         NHRGtdtq6I3izbstBC7OHL8IaIp+njwTn3PVXkgEW+lUru48QoI0Kl7XEhbjxepVLfcU
+         RaDN3MdNZBt+bdUYqvAUiQBQJbv1nMxRKGcVg9sqH3E8pUlXZjWBBBaM4CnhM5yybMsw
+         Zkacv+sfli28hw4WE59YZhDvPNk9rvkIMtfQGQUQSlwOposIpikkeUJ6TJu7lG1eujoe
+         fTyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to:subject
          :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=x6C4qzSxJODnTx3c8m8GXC7Qrtvk8RrOjz6X2ODydhg=;
-        b=C9eHkH8RINyJfPLj6gUnzgfsYMJ6MNmNI3a9d6bCYI60CTwVIMoy67vxiYbDTu8nBb
-         9N4s/PcXqxfR6RiwEvWEp1Z6UvL//npLAVflQntCyN0S1UAFcnr81lKIBpM0DEciQgQ9
-         bg1/amzT+VLEMaJTril/eqSuATKqRgI0F++hlKUjiw7lh7tet+CWMSeyYhz7RuTwTXEy
-         HIjmIxgolFVPL7s4EQNg2pQ/UKtPXIdTNNBp9f5uH+TwyUBgfVz4z10UWKXRl1mGb/yq
-         YP/tIAxMuhIqA0bTwBF1Ryxlh6RFAuEcZxCIjTNvPOkoqtNCkihePMzYMy+cpKz8+d/9
-         rpjg==
-X-Gm-Message-State: ANoB5pmzyB8bG8bxSe1ew6icHlWmm60pMjBHcg+E5aQU2p5GVZbAqi3N
-        LtiGl6KbSQtbvh6/E/WBhFXT9Q==
-X-Google-Smtp-Source: AA0mqf50TlTdoUfXi64mbj+svVdUrwEsS9ZdgXwMQ5nQHsStzJxYzvsyunoaUV6LQ6PAUzgSkSY0rg==
-X-Received: by 2002:a05:6512:3766:b0:4ac:2fae:8a9e with SMTP id z6-20020a056512376600b004ac2fae8a9emr5404754lft.413.1668519920779;
-        Tue, 15 Nov 2022 05:45:20 -0800 (PST)
+        bh=D1lsJdjigIX8ZDz/U2Ud7ZNMW6v6rQsSpoxZd5XzRCU=;
+        b=d1ZwRacyO5hACrRuGRRxYrTI/n3ui9HfnJWd9ftEUJNGZ2QMsB2MQF1dBGPHnT/qn2
+         q/H15ji/P02emBtFAjP9IvQ5tWIEmAlKTPk3tZdSs2ka4hPK54VlsSYrDlclcV+gMg2B
+         cSufW/JeL3L0vn8MaNbGb1KLHLbyebvLukxGtvLOn79kF6r1pTs7/Dg4MfnWBTu4QIB5
+         SVgLk7RMYQSHzQ0BOmkAl4+OfKy9qHwrF4TXszF39M6m+QBDMlPZ5yNUa9SI+G+kd82c
+         kBSAAKPcaR7IXtoqDX+jjFCEZySDrh1RHjtPaJhTEzeGXkgmVf0ukGZ/FLqu8m8BQosR
+         fE7Q==
+X-Gm-Message-State: ANoB5plU8blrdGYGWI4G1lxQD3Ctgt/PqDKP1ZO95zAEI9ZX8tklQHnc
+        g/WvBLoBv3rDtzPA51/bHKoPaw==
+X-Google-Smtp-Source: AA0mqf5xZIdpKC+8d2I3BbXfsVS3Y6jQcYqCsbUQ+AHMtLAbUdSpt3NQjEc8eMotSJsgEv7BcpI0qQ==
+X-Received: by 2002:a19:e01a:0:b0:4b1:61a6:fc45 with SMTP id x26-20020a19e01a000000b004b161a6fc45mr5503018lfg.224.1668520039387;
+        Tue, 15 Nov 2022 05:47:19 -0800 (PST)
 Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id a19-20020a2eb553000000b002776eb5b1cesm2530344ljn.8.2022.11.15.05.45.18
+        by smtp.gmail.com with ESMTPSA id q23-20020a056512211700b0049e9122bd1bsm2209533lfr.164.2022.11.15.05.47.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Nov 2022 05:45:20 -0800 (PST)
-Message-ID: <760918b4-e94e-38b0-8a66-629f2eaf89af@linaro.org>
-Date:   Tue, 15 Nov 2022 14:45:14 +0100
+        Tue, 15 Nov 2022 05:47:18 -0800 (PST)
+Message-ID: <dc138171-f7b1-2761-d800-620e85afd6d9@linaro.org>
+Date:   Tue, 15 Nov 2022 14:47:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH v2 09/12] arm64: dts: qcom: sm8350: Use 2 interconnect
- cells
+Subject: Re: [PATCH v2 10/12] arm64: dts: qcom: sm8350: Add display system
+ nodes
 To:     Robert Foss <robert.foss@linaro.org>, robdclark@gmail.com,
         quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
         sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
@@ -72,15 +72,14 @@ To:     Robert Foss <robert.foss@linaro.org>, robdclark@gmail.com,
         vinod.koul@linaro.org, quic_jesszhan@quicinc.com,
         andersson@kernel.org
 References: <20221115133105.980877-1-robert.foss@linaro.org>
- <20221115133105.980877-10-robert.foss@linaro.org>
+ <20221115133105.980877-11-robert.foss@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221115133105.980877-10-robert.foss@linaro.org>
+In-Reply-To: <20221115133105.980877-11-robert.foss@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -90,129 +89,246 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 15/11/2022 14:31, Robert Foss wrote:
-> Use two interconnect cells in order to optionally
-> support a path tag.
+> Add mdss, mdss_mdp, dsi0, dsi0_phy nodes. With these
+> nodes the display subsystem is configured to support
+> one DSI output.
 > 
 > Signed-off-by: Robert Foss <robert.foss@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->   arch/arm64/boot/dts/qcom/sm8350.dtsi | 28 ++++++++++++++--------------
->   1 file changed, 14 insertions(+), 14 deletions(-)
+>   arch/arm64/boot/dts/qcom/sm8350.dtsi | 197 ++++++++++++++++++++++++++-
+>   1 file changed, 193 insertions(+), 4 deletions(-)
 > 
 > diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> index 805d53d91952..434f8e8b12c1 100644
+> index 434f8e8b12c1..5c98e5cf5ad0 100644
 > --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
 > +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> @@ -1543,56 +1543,56 @@ apps_smmu: iommu@15000000 {
->   		config_noc: interconnect@1500000 {
->   			compatible = "qcom,sm8350-config-noc";
->   			reg = <0 0x01500000 0 0xa580>;
-> -			#interconnect-cells = <1>;
-> +			#interconnect-cells = <2>;
->   			qcom,bcm-voters = <&apps_bcm_voter>;
+> @@ -3,6 +3,7 @@
+>    * Copyright (c) 2020, Linaro Limited
+>    */
+>   
+> +#include <dt-bindings/interconnect/qcom,sm8350.h>
+>   #include <dt-bindings/interrupt-controller/arm-gic.h>
+>   #include <dt-bindings/clock/qcom,dispcc-sm8350.h>
+>   #include <dt-bindings/clock/qcom,gcc-sm8350.h>
+> @@ -2536,14 +2537,201 @@ usb_2_dwc3: usb@a800000 {
+>   			};
 >   		};
 >   
->   		mc_virt: interconnect@1580000 {
->   			compatible = "qcom,sm8350-mc-virt";
->   			reg = <0 0x01580000 0 0x1000>;
-> -			#interconnect-cells = <1>;
-> +			#interconnect-cells = <2>;
->   			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		mdss: mdss@ae00000 {
+> +			compatible = "qcom,sm8350-mdss";
+> +			reg = <0 0x0ae00000 0 0x1000>;
+> +			reg-names = "mdss";
+> +
+> +			interconnects = <&mmss_noc MASTER_MDP0 0 &mc_virt SLAVE_EBI1 0>,
+> +					<&mmss_noc MASTER_MDP1 0 &mc_virt SLAVE_EBI1 0>;
+> +			interconnect-names = "mdp0-mem", "mdp1-mem";
+> +
+> +			power-domains = <&dispcc MDSS_GDSC>;
+> +			resets = <&dispcc DISP_CC_MDSS_CORE_BCR>;
+> +
+> +			clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +				 <&gcc GCC_DISP_HF_AXI_CLK>,
+> +				 <&gcc GCC_DISP_SF_AXI_CLK>,
+> +				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
+> +			clock-names = "iface", "bus", "nrt_bus", "core";
+> +
+> +			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <1>;
+> +
+> +			iommus = <&apps_smmu 0x820 0x402>;
+> +
+> +			status = "disabled";
+> +
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+> +
+> +			mdss_mdp: display-controller@ae01000 {
+> +				compatible = "qcom,sm8350-dpu";
+> +				reg = <0 0x0ae01000 0 0x8f000>,
+> +				      <0 0x0aeb0000 0 0x2008>;
+> +				reg-names = "mdp", "vbif";
+> +
+> +				clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
+> +					<&gcc GCC_DISP_SF_AXI_CLK>,
+> +					<&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					<&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
+> +					<&dispcc DISP_CC_MDSS_MDP_CLK>,
+> +					<&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+> +				clock-names = "bus",
+> +					      "nrt_bus",
+> +					      "iface",
+> +					      "lut",
+> +					      "core",
+> +					      "vsync";
+> +
+> +				assigned-clocks = <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+> +				assigned-clock-rates = <19200000>;
+> +
+> +				operating-points-v2 = <&mdp_opp_table>;
+> +				power-domains = <&rpmhpd SM8350_MMCX>;
+> +
+> +				interrupt-parent = <&mdss>;
+> +				interrupts = <0>;
+> +
+> +				status = "disabled";
+It doesn't make sense to disable mdp separately, as mdss is essentially 
+useless without it.
+
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +						dpu_intf1_out: endpoint {
+> +							remote-endpoint = <&dsi0_in>;
+> +						};
+> +					};
+> +				};
+> +
+> +				mdp_opp_table: opp-table {
+> +					compatible = "operating-points-v2";
+> +
+> +					opp-200000000 {
+> +						opp-hz = /bits/ 64 <200000000>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
+> +
+> +					opp-300000000 {
+> +						opp-hz = /bits/ 64 <300000000>;
+> +						required-opps = <&rpmhpd_opp_svs>;
+> +					};
+> +
+> +					opp-345000000 {
+> +						opp-hz = /bits/ 64 <345000000>;
+> +						required-opps = <&rpmhpd_opp_svs_l1>;
+> +					};
+> +
+> +					opp-460000000 {
+> +						opp-hz = /bits/ 64 <460000000>;
+> +						required-opps = <&rpmhpd_opp_nom>;
+> +					};
+> +				};
+> +			};
+> +
+> +			dsi0: dsi@ae94000 {
+> +				compatible = "qcom,mdss-dsi-ctrl";
+> +				reg = <0 0x0ae94000 0 0x400>;
+> +				reg-names = "dsi_ctrl";
+> +
+> +				interrupt-parent = <&mdss>;
+> +				interrupts = <4>;
+> +
+> +				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_ESC0_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&gcc GCC_DISP_HF_AXI_CLK>;
+> +				clock-names = "byte",
+> +					      "byte_intf",
+> +					      "pixel",
+> +					      "core",
+> +					      "iface",
+> +					      "bus";
+> +
+> +				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>,
+> +						  <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
+> +				assigned-clock-parents = <&dsi0_phy 0>,
+> +							 <&dsi0_phy 1>;
+> +
+> +				operating-points-v2 = <&dsi_opp_table>;
+> +				power-domains = <&rpmhpd SM8350_MMCX>;
+> +
+> +				phys = <&dsi0_phy>;
+> +				phy-names = "dsi";
+I think that was dropped as of late.
+
+> +
+> +				status = "disabled";
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +						dsi0_in: endpoint {
+> +							remote-endpoint = <&dpu_intf1_out>;
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +						dsi0_out: endpoint {
+> +						};
+> +					};
+> +				};
+> +			};
+> +
+> +			dsi0_phy: phy@ae94400 {
+> +				compatible = "qcom,dsi-phy-5nm-8350";
+> +				reg = <0 0x0ae94400 0 0x200>,
+> +				      <0 0x0ae94600 0 0x280>,
+> +				      <0 0x0ae94900 0 0x260>;
+> +				reg-names = "dsi_phy",
+> +					    "dsi_phy_lane",
+> +					    "dsi_pll";
+> +
+> +				#clock-cells = <1>;
+> +				#phy-cells = <0>;
+> +
+> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&rpmhcc RPMH_CXO_CLK>;
+> +				clock-names = "iface", "ref";
+> +
+> +				status = "disabled";
+> +
+> +				dsi_opp_table: dsi-opp-table {
+> +					compatible = "operating-points-v2";
+> +
+> +					opp-187500000 {
+> +						opp-hz = /bits/ 64 <187500000>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
+> +
+> +					opp-300000000 {
+> +						opp-hz = /bits/ 64 <300000000>;
+> +						required-opps = <&rpmhpd_opp_svs>;
+> +					};
+> +
+> +					opp-358000000 {
+> +						opp-hz = /bits/ 64 <358000000>;
+> +						required-opps = <&rpmhpd_opp_svs_l1>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+>   		dispcc: clock-controller@af00000 {
+>   			compatible = "qcom,sm8350-dispcc";
+>   			reg = <0 0x0af00000 0 0x10000>;
+>   			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> -				 <0>,
+> -				 <0>,
+> -				 <0>,
+> -				 <0>,
+> +				 <&dsi0_phy 0>, <&dsi0_phy 1>,
+> +				 <0>, <0>,
+>   				 <0>,
+>   				 <0>;
+>   			clock-names = "bi_tcxo",
+> @@ -2558,6 +2746,7 @@ dispcc: clock-controller@af00000 {
+>   			#power-domain-cells = <1>;
+>   
+>   			power-domains = <&rpmhpd SM8350_MMCX>;
+> +			required-opps = <&rpmhpd_opp_turbo>;
+A turbo vote is required for it to function? Seems a bit high..
+
+Konrad
 >   		};
 >   
->   		system_noc: interconnect@1680000 {
->   			compatible = "qcom,sm8350-system-noc";
->   			reg = <0 0x01680000 0 0x1c200>;
-> -			#interconnect-cells = <1>;
-> +			#interconnect-cells = <2>;
->   			qcom,bcm-voters = <&apps_bcm_voter>;
->   		};
->   
->   		aggre1_noc: interconnect@16e0000 {
->   			compatible = "qcom,sm8350-aggre1-noc";
->   			reg = <0 0x016e0000 0 0x1f180>;
-> -			#interconnect-cells = <1>;
-> +			#interconnect-cells = <2>;
->   			qcom,bcm-voters = <&apps_bcm_voter>;
->   		};
->   
->   		aggre2_noc: interconnect@1700000 {
->   			compatible = "qcom,sm8350-aggre2-noc";
->   			reg = <0 0x01700000 0 0x33000>;
-> -			#interconnect-cells = <1>;
-> +			#interconnect-cells = <2>;
->   			qcom,bcm-voters = <&apps_bcm_voter>;
->   		};
->   
->   		mmss_noc: interconnect@1740000 {
->   			compatible = "qcom,sm8350-mmss-noc";
->   			reg = <0 0x01740000 0 0x1f080>;
-> -			#interconnect-cells = <1>;
-> +			#interconnect-cells = <2>;
->   			qcom,bcm-voters = <&apps_bcm_voter>;
->   		};
->   
->   		lpass_ag_noc: interconnect@3c40000 {
->   			compatible = "qcom,sm8350-lpass-ag-noc";
->   			reg = <0 0x03c40000 0 0xf080>;
-> -			#interconnect-cells = <1>;
-> +			#interconnect-cells = <2>;
->   			qcom,bcm-voters = <&apps_bcm_voter>;
->   		};
->   
->   		compute_noc: interconnect@a0c0000{
->   			compatible = "qcom,sm8350-compute-noc";
->   			reg = <0 0x0a0c0000 0 0xa180>;
-> -			#interconnect-cells = <1>;
-> +			#interconnect-cells = <2>;
->   			qcom,bcm-voters = <&apps_bcm_voter>;
->   		};
->   
-> @@ -1620,8 +1620,8 @@ ipa: ipa@1e40000 {
->   			clocks = <&rpmhcc RPMH_IPA_CLK>;
->   			clock-names = "core";
->   
-> -			interconnects = <&aggre2_noc MASTER_IPA &mc_virt SLAVE_EBI1>,
-> -					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_IPA_CFG>;
-> +			interconnects = <&aggre2_noc MASTER_IPA 0 &mc_virt SLAVE_EBI1 0>,
-> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_IPA_CFG 0>;
->   			interconnect-names = "memory",
->   					     "config";
->   
-> @@ -1661,7 +1661,7 @@ mpss: remoteproc@4080000 {
->   					<&rpmhpd SM8350_MSS>;
->   			power-domain-names = "cx", "mss";
->   
-> -			interconnects = <&mc_virt MASTER_LLCC &mc_virt SLAVE_EBI1>;
-> +			interconnects = <&mc_virt MASTER_LLCC &mc_virt SLAVE_EBI1 0>;
->   
->   			memory-region = <&pil_modem_mem>;
->   
-> @@ -2239,7 +2239,7 @@ cdsp: remoteproc@98900000 {
->   					<&rpmhpd SM8350_MXC>;
->   			power-domain-names = "cx", "mxc";
->   
-> -			interconnects = <&compute_noc MASTER_CDSP_PROC &mc_virt SLAVE_EBI1>;
-> +			interconnects = <&compute_noc MASTER_CDSP_PROC 0 &mc_virt SLAVE_EBI1 0>;
->   
->   			memory-region = <&pil_cdsp_mem>;
->   
-> @@ -2421,14 +2421,14 @@ usb_2_ssphy: phy@88ebe00 {
->   		dc_noc: interconnect@90c0000 {
->   			compatible = "qcom,sm8350-dc-noc";
->   			reg = <0 0x090c0000 0 0x4200>;
-> -			#interconnect-cells = <1>;
-> +			#interconnect-cells = <2>;
->   			qcom,bcm-voters = <&apps_bcm_voter>;
->   		};
->   
->   		gem_noc: interconnect@9100000 {
->   			compatible = "qcom,sm8350-gem-noc";
->   			reg = <0 0x09100000 0 0xb4000>;
-> -			#interconnect-cells = <1>;
-> +			#interconnect-cells = <2>;
->   			qcom,bcm-voters = <&apps_bcm_voter>;
->   		};
->   
+>   		adsp: remoteproc@17300000 {
