@@ -2,101 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 816A3628E26
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 01:18:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FEC6628E55
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 01:28:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237266AbiKOASj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Nov 2022 19:18:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33738 "EHLO
+        id S235786AbiKOA25 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Nov 2022 19:28:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237221AbiKOASi (ORCPT
+        with ESMTP id S236658AbiKOA24 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Nov 2022 19:18:38 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE1486473
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 16:18:34 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id j15so21445677wrq.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 16:18:34 -0800 (PST)
+        Mon, 14 Nov 2022 19:28:56 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19BC6DF4E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 16:28:55 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id l2so11629209pld.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Nov 2022 16:28:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vINRtfn6z3E+dJUcb2ULBe4uIz62ELUPVczIYJcDNP0=;
-        b=oxZlVOKKnM9F7iabaPwwDM8tISZOpT++JMY8TD1BQZmIX3WNZjy6JoQIjBZr2H6Dd4
-         RGNggdZkcksxu/b54zZJC6iNvC76LbZfUpvel/2K8YRc8VQchAa5eOcseb9GJJRtpZEG
-         taR4d9erfpIpj+aW9r7ZL5GLBTpyoLYSjM1wM3E2BU9ru+ur+qIIrbKZOP9OFLalVUI+
-         gR1i4K77s01ZrdytoKIo4g28XqFv45RH4bpdNvicsL83wi9CAmKHBNVZyPgqtgBjv0Sl
-         J0QclC+OT6VcKiT3CHLeoM9cNTToQt7HSC0xnXaIk0D/1rZkTYVJd/d2yrLz5JCqJV9d
-         nlwA==
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zqa/dCF09CYPtWcDPmDkdrHUgSo98MYhImja7LLpGWs=;
+        b=R1dyKlEbVlo8osVeC8VlsU1VGebUwP2GvJlvEm4xVz+0ATcqxmYKgySABUPBaeH0Fc
+         MWgfxgOqOowYjPLJ73IkGsqE09IgBMVwc3kyUsuE13dCU1mvfdOL4l6VvavK37MhnNqJ
+         149ieoGKMOo+nQuXLO7wizlKxhVf8y/xwFiik=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vINRtfn6z3E+dJUcb2ULBe4uIz62ELUPVczIYJcDNP0=;
-        b=7Ai8jg2K2SVrFCWdlm8lW7nKwjje8uLteG9pHzOalAS8A1m3YkZjS7O6CWnq86TBer
-         Nbm7ej1LEA8MjfzEiF+rQnYz2cvEV8voTqNwkJ0wDO/AQC1R1Ij45TsNF475uW81JGxZ
-         c41B9Isv/lcoTXqfv4ojkKEVPmaCn43KnUFTXIR9eWy/TBf6khNHrQWLlcF5xh4KYXBD
-         m/ZtW+AgjLDSVOjTEP/V5NPDFqPmi/yhOSVJas9LzIKLQh3RdMpDYv/XNGDHZEIvfEsF
-         JT/YY+jlVwgbQZCXkvPaxNTnrm5qPhfxhiIc/vPxc9uKpupY5hA1ekusczRWgweuLBOc
-         MF7Q==
-X-Gm-Message-State: ANoB5pmJdGSYhBjYx21an7mwgzw8ChWogaYVg7+748kwa4vZyMkEbmYh
-        G8mtCwnO2TqFD7b2sziEEfLvAQ==
-X-Google-Smtp-Source: AA0mqf5MxXAPtzBuOLQT3qS44TsqKsMn6N6eJVG35c+m9XczzHnUmHpkG2e9NkdqNdyldSPjpM9w6g==
-X-Received: by 2002:adf:e38d:0:b0:236:78cd:f3d2 with SMTP id e13-20020adfe38d000000b0023678cdf3d2mr9498001wrm.719.1668471513384;
-        Mon, 14 Nov 2022 16:18:33 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id j5-20020a5d5645000000b0022da3977ec5sm10718504wrw.113.2022.11.14.16.18.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Nov 2022 16:18:32 -0800 (PST)
-Message-ID: <8ee87f1e-52d0-7c38-db25-339879f7448a@nexus-software.ie>
-Date:   Tue, 15 Nov 2022 00:18:31 +0000
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zqa/dCF09CYPtWcDPmDkdrHUgSo98MYhImja7LLpGWs=;
+        b=p/svjpgMmTJ3RTS5MunNswYXFBSUEIrYc3ZsU17GZiV6C53YOeqowNK8wgmQd/6eOy
+         9czqlZXXQYjt/fsWZBgPHl3XBnmH3xk9pLx80el5FkTAjUoPMKTWrsn/2qQMZCIHpLDm
+         5zRiGrgDdWwsg+DaxsYXqDBBKOl4K2CBbdHP+p/Eag/ZvR+XTidU6JHoJB9swMqz3SON
+         KzcuCORbqAmrIE/4KvJyIA3olAXWhy/YIW7ibTrmtTrPuIm2l4H3DboI+QgjIGlpRyce
+         kLTPlDUG7J0ERrtUQAaASDpIuyriFdMQxVX5TUqsMOGaRfZEXcTfy4dsbwqhFz7xrynV
+         0yNQ==
+X-Gm-Message-State: ANoB5pkRm2IIHZx02xIiRK4Ql5BUN5p5/tjLok6EPZdewX7786a8xdLm
+        NCRBvW8ykl9hpvWxHhgDaLk7hQ==
+X-Google-Smtp-Source: AA0mqf6UKV2CzeJLo8vDh5mePFoQP48h80o3f+bXxackBSbgzV9ujCMML6wLgaNd6BNUG6nhrUfKCA==
+X-Received: by 2002:a17:90a:4d04:b0:212:4544:2170 with SMTP id c4-20020a17090a4d0400b0021245442170mr16419488pjg.66.1668472134603;
+        Mon, 14 Nov 2022 16:28:54 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:7c63:b1c:8df9:ea0d])
+        by smtp.gmail.com with ESMTPSA id d12-20020a630e0c000000b00470537b9b0asm6521983pgl.51.2022.11.14.16.28.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Nov 2022 16:28:54 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     mka@chromium.org, swboyd@chromium.org,
+        Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
+        judyhsiao@chromium.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sc7280: Make herobrine-audio-rt5682 mic dtsi's match more
+Date:   Mon, 14 Nov 2022 16:28:28 -0800
+Message-Id: <20221114162807.1.I0900b97128f9bb03e5f96fcb3068c227a33f143a@changeid>
+X-Mailer: git-send-email 2.38.1.431.g37b22c650d-goog
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v4 0/4] media: camss: sm8250: Virtual channels support for
- SM8250
-Content-Language: en-US
-To:     "Milen Mitkov (Consultant)" <quic_mmitkov@quicinc.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        akapatra@quicinc.com, jzala@quicinc.com, todor.too@gmail.com,
-        agross@kernel.org, konrad.dybcio@somainline.org,
-        mchehab@kernel.org, cgera@qti.qualcomm.com, gchinnab@quicinc.com,
-        ayasan@qti.qualcomm.com, laurent.pinchart@ideasonboard.com,
-        hverkuil-cisco@xs4all.nl
-References: <20221013121255.1977-1-quic_mmitkov@quicinc.com>
- <46d82762-8b6b-8a3e-0bdd-5598163244de@linaro.org>
- <CAG3jFysAfymcFS54CyxBYhJbQ4Qh7bvhpE8UPc3S1o_8uQq7Xg@mail.gmail.com>
- <a4364e85-7970-d215-17f2-d5ff9a3dbaab@quicinc.com>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <a4364e85-7970-d215-17f2-d5ff9a3dbaab@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/11/2022 17:18, Milen Mitkov (Consultant) wrote:
-> 
-> Do I need to resubmit the patches with the added new tags?
+The 1-mic and 3-mic dtsi still had two minor cosmetic differences
+after commit 3d11e7e120ee ("arm64: dts: qcom: sc7280: sort out the
+"Status" to last property with
+sc7280-herobrine-audio-rt5682.dtsi"). Let's fix them so the two files
+diff better. This is expected to have no effect though it will
+slightly change the generated dtb by removing an unnecessary 'status =
+"okay"' from the sound node.
 
-Not the committer can do that for you.
-
-> If this is not needed, is there something else I can do to help the 
-> merging process?
-
-It looks like Hans has been merging most of this stuff on the 
-linux-media side.
-
-+ Hans
-
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
-bod
+
+ arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
+index fc7a659dfe4a..af685bc35e10 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
+@@ -19,8 +19,6 @@ sound: sound {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 
+-		status = "okay";
+-
+ 		dai-link@0 {
+ 			link-name = "MAX98360";
+ 			reg = <0>;
+@@ -96,6 +94,8 @@ dai-link@1 {
+ 	};
+ };
+ 
++/* PINCTRL - ADDITIONS TO NODES IN PARENT DEVICE TREE FILES */
++
+ &mi2s0_data0 {
+ 	drive-strength = <6>;
+ 	bias-disable;
+-- 
+2.38.1.431.g37b22c650d-goog
+
