@@ -2,81 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB84C629958
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 13:54:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 46A1A629968
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 13:56:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229508AbiKOMy0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 07:54:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60974 "EHLO
+        id S238203AbiKOM4Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 07:56:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237988AbiKOMyO (ORCPT
+        with ESMTP id S238029AbiKOM4X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 07:54:14 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74FBD115C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 04:54:12 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id kt23so35784009ejc.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 04:54:12 -0800 (PST)
+        Tue, 15 Nov 2022 07:56:23 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD84AF08
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 04:56:21 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id s8so7127226lfc.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 04:56:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4z+vcQIa+TDGxCARqFIzwt2He1hOQxmdiWKApcem7GQ=;
-        b=YBur8QGH9B9DZJb9Crmk5KuOxYHrJWzxdseDQl+IeoL+2tRYVKgX79q6/QfRdi2v4i
-         dGVvct0uk34s0I8Tj5z+wSNuYem5A2EDF+VqbvgbdeL2r+/u25BGmPePMAOp1TGcpigK
-         ycjgIAhVgYGfsGJPY7xcvVLepm4KgYt1RwuMbyjRgjJzGldhtsX+QgriBy/0r3aJtUC1
-         8e8xjsBUwqb3kmcidNMjfc4clzDOMhbgE5co459zupfdmvYmonS63k45OqPQRbmpv7q0
-         VUJoV0lSgfvHdijK1wrLvRE/RGe68xeSzJzC71XB9PVBpcxorwRHPAMA4JPh7+RQ56t1
-         boyg==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wjdv2UNqYCuw6JZR6Qee1XPUfMLpqLvp5AsLB1cS+Ik=;
+        b=OwUZ+bRXRknpv394jiyHB6iYAL8S+/dF0QDWH8P7Tycz1AVEtSjbg5cAP8RAF5DPh0
+         KGf6tu9eQ6EEOAtaHOEDCy2veq6w3RXOb77aBzBeZLmZ1kLBqo1MZ0/TepJVSi0CNPj5
+         q2YbOwO3mpUEaRmbwYPi/KO++T/o5sZJgrRa//3iMyxa1/hFejq5/insq9fyAGQzCz1S
+         /Q5bx6oZZygnFE1ZAuUPfTyDQFG76WxKeXqSrC5+DM8T0qCDEJ4PFDm93WvX/KS5kMbX
+         hmf47q3XHnzrgurhmN/e3PrMs48V4rfD1TerZ9ueSXbzmpFxiPSnLoem687ai8D+0Rk5
+         W/aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=4z+vcQIa+TDGxCARqFIzwt2He1hOQxmdiWKApcem7GQ=;
-        b=tA8Cg4AIAg+UgOdQ1ld5wCw7/W1cyzMovpWgxNJv3W6YEOdSKZF1/qA7cYKXUYBeRy
-         Ge2xMrR1kPdWK27kXOCkSdlZhkiSZGvdpLXracycbBzaeAEd6vsw4Mu1EMPOQctsea20
-         1ExS2oQEJNVIjIwyhD/WX2h2OYvPlFPPjZf3np5F7HCfNly058sY8I/lurHm9+vm53Nw
-         fFV2nOtxqF9V0CVTmdnM7c9Pjr7fYlFOGrhXm8N+mavrCfovKa1ErkXvphkxB1z3zDVs
-         MqR3h4hX9ZCIZGAz6m+k9BAjFN4YmN5Wg2nUfFKKVpvloanon2cc6FqddXl1pH43vViA
-         fayg==
-X-Gm-Message-State: ANoB5pkNsL0D+x+ifb9BFT3ttbyV386AV3NZe1tRmqBQp4J5dXbbGIsw
-        FnNlz8lOzvduZ4EAoEFeYJlNRQ==
-X-Google-Smtp-Source: AA0mqf7itE9nf4WRqEIO+vTD+BPP7Gr3FkphD9bLXegoH3gu+/hOfOjZOYe3Gji0QSO05rw767Q+hQ==
-X-Received: by 2002:a17:907:770f:b0:78d:c16e:dfc9 with SMTP id kw15-20020a170907770f00b0078dc16edfc9mr13754413ejc.327.1668516850970;
-        Tue, 15 Nov 2022 04:54:10 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id c2-20020a17090618a200b007ad96726c42sm2946289ejf.91.2022.11.15.04.54.09
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wjdv2UNqYCuw6JZR6Qee1XPUfMLpqLvp5AsLB1cS+Ik=;
+        b=wLlUx+VjcMDI9Pz2pJALfVEDnXKbIC0puh6vu1KVryOBkL2hS5SgMEnhon9aF7EWJk
+         YVJH2HvYNig2TY5cME9IVzKYDlBiZWGF236Te8EKxsUSnEd1DffEh8F67UGqXa65YCjo
+         fXxxwqxKO2NtWXhIiONQAXIiW+rBG7+BXdO+ypl6FxV2YOeqWWqC9CQBK4K2QBsA4kXc
+         EptmT8+LU4M6r/9JCGjVj7/gHfTDv1+DdsttQgIzxzzgiriL3FJAZQUhRJs9DR+wSYfq
+         TgcfNPn+4at1+3XIj0vBy/rz2zdYNAJ2Ms3ztKkFV6/p3HbCVj1MkhBm36QkDl++Tg/H
+         gtUw==
+X-Gm-Message-State: ANoB5pn/CUrjL2VJqYWY/YMh6oL4eGCQbVT08qb4JivB0t7elMW0ia0o
+        HYSN6VmxD7dpnfVwXyCVsDhJ6w==
+X-Google-Smtp-Source: AA0mqf6CP8Ur/mJFML2icvGxqrOoUsXzsngCLunz9VxC5g5y+d0aiTC9FJSlSZT9+Iyq9wF5rDUCfA==
+X-Received: by 2002:a05:6512:530:b0:4a4:77a8:45a4 with SMTP id o16-20020a056512053000b004a477a845a4mr5253259lfc.654.1668516980234;
+        Tue, 15 Nov 2022 04:56:20 -0800 (PST)
+Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
+        by smtp.gmail.com with ESMTPSA id v26-20020ac258fa000000b004a8b9c68728sm2206285lfo.105.2022.11.15.04.56.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Nov 2022 04:54:10 -0800 (PST)
-Message-ID: <f59ddce1-c2e1-4055-3bce-1319c68ddf94@linaro.org>
-Date:   Tue, 15 Nov 2022 13:54:03 +0100
+        Tue, 15 Nov 2022 04:56:19 -0800 (PST)
+Message-ID: <a4c4257b-1467-2ccb-f546-d58c6356a39a@linaro.org>
+Date:   Tue, 15 Nov 2022 13:56:18 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH v2 1/9] dt-bindings: arm-smmu: Allow up to 3 power-domains
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     patches@linaro.org, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221114104222.36329-1-konrad.dybcio@linaro.org>
- <20221114104222.36329-2-konrad.dybcio@linaro.org>
- <6fa8e3ea-2113-d930-96bc-3726d53e5bcd@linaro.org>
- <a4b160d8-0faa-3f4c-a925-0beaf6ace721@linaro.org>
- <0121fc03-b027-7659-5e6e-b42089c9888d@linaro.org>
- <12578e05-ced9-e5f7-7922-0af2f2159333@linaro.org>
- <878402e7-7f80-31c7-3a6b-989a6ca29841@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <878402e7-7f80-31c7-3a6b-989a6ca29841@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH net-next v2 4/5] dt-bindings: net: qcom,ipa: support
+ skipping GSI firmware load
+Content-Language: en-US
+To:     Alex Elder <elder@linaro.org>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, davem@davemloft.net,
+        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, agross@kernel.org,
+        elder@kernel.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221115113119.249893-1-elder@linaro.org>
+ <20221115113119.249893-5-elder@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221115113119.249893-5-elder@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -87,142 +81,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 14/11/2022 17:58, Krzysztof Kozlowski wrote:
-> On 14/11/2022 16:53, Konrad Dybcio wrote:
->>
->> On 14/11/2022 14:00, Krzysztof Kozlowski wrote:
->>> On 14/11/2022 12:17, Konrad Dybcio wrote:
->>>> On 14/11/2022 12:01, Krzysztof Kozlowski wrote:
->>>>> On 14/11/2022 11:42, Konrad Dybcio wrote:
->>>>>> Some SMMUs require that a vote is held on as much as 3 separate PDs
->>>>>> (hello Qualcomm). Allow it in bindings.
->>>>>>
->>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>>>> ---
->>>>>> Changes since v1:
->>>>>> - Add minItems
->>>>>>
->>>>>>     Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 ++-
->>>>>>     1 file changed, 2 insertions(+), 1 deletion(-)
->>>>>>
->>>>>> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
->>>>>> index 9066e6df1ba1..82bc696de662 100644
->>>>>> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
->>>>>> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
->>>>>> @@ -159,7 +159,8 @@ properties:
->>>>>>               through the TCU's programming interface.
->>>>>>     
->>>>>>       power-domains:
->>>>>> -    maxItems: 1
->>>>>> +    minItems: 0
->>>>> It cannot be 0.
->>>>>
->>>>> minItems: 1
->>>>>
->>>>> Anyway you still need to restrict it per variant, as I said in previous
->>>>> version.
->>>> Hm.. I'm not entirely sure what you mean.. Should I add a list of
->>>> compatibles
->>> Yes and limit it to maxItems: 1 for "else".
->>
->> I tried adding:
->>
->>
->>
->>     - if:
->>         properties:
->>           compatible:
->>             contains:
->>               enum:
->>                 - qcom,sm6375-smmu-500
->>       then:
->>         properties:
->>           power-domains:
->>             minItems: 3
->>             maxItems: 3
->>       else:
->>         properties:
->>           power-domains:
->>             maxItems: 1
->>
->>
->> Right under the nvidia reg if-else in the allOf, but dtbs_check throws
->> errors like:
->>
->>
->> /home/konrad/linux/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-poplar.dtb:
->> iommu@5040000: 'power-domains' does not match any of the regexes:
->> 'pinctrl-[0-9]+'
->>
->>
->> Any clues as to why?
+On 15/11/2022 12:31, Alex Elder wrote:
+> Add a new enumerated value to those defined for the qcom,gsi-loader
+> property.  If the qcom,gsi-loader is "skip", the GSI firmware will
+> already be loaded, so neither the AP nor modem is required to load
+> GSI firmware.
 > 
-> I don't know what code do you have there, but generic pattern is:
-> 
-> https://elixir.bootlin.com/linux/v5.19-rc6/source/Documentation/devicetree/bindings/clock/samsung,exynos7-clock.yaml#L38
-> 
-I tried many things, but I still don't seem to get a hang of it.. Here's 
-my current diff rebased on top of Dmitry's recent cleanups (available at 
-[1])
+> Signed-off-by: Alex Elder <elder@linaro.org>
+> ---
 
+This is a friendly reminder during the review process.
 
-diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml 
-b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-index 28f5720824cd..55759aebc4a0 100644
---- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-+++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-@@ -200,7 +200,7 @@ properties:
-      maxItems: 7
+It looks like you received a tag and forgot to add it.
 
-    power-domains:
--    maxItems: 1
-+    maxItems: 3
+If you do not know the process, here is a short explanation:
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions. However, there's no need to repost patches *only* to add the
+tags. The upstream maintainer will do that for acks received on the
+version they apply.
 
-    nvidia,memory-controller:
-      description: |
-@@ -364,6 +364,26 @@ allOf:
-              - description: interface clock required to access smmu's 
-registers
-                  through the TCU's programming interface.
+https://elixir.bootlin.com/linux/v5.17/source/Documentation/process/submitting-patches.rst#L540
 
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: qcom,sm6375-smmu-500
-+    then:
-+      properties:
-+        power-domains:
-+          items:
-+            - description: SNoC MMU TBU RT GDSC
-+            - description: SNoC MMU TBU NRT GDSC
-+            - description: SNoC TURING MMU TBU0 GDSC
-+
-+      required:
-+        - power-domains
-+    else:
-+      properties:
-+        power-domains:
-+          maxItems: 1
-+
-  examples:
-    - |+
-      /* SMMU with stream matching or stream indexing */
+If a tag was not added on purpose, please state why and what changed.
 
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-In my eyes, this should work, but I still get errors like:
+Best regards,
+Krzysztof
 
-/home/konrad/linux/arch/arm64/boot/dts/qcom/sm8250-hdk.dtb: 
-iommu@3da0000: power-domains: [[108, 0]] is too short
-
-as if the else: path was never taken..
-
-[1] 
-https://git.kernel.org/pub/scm/linux/kernel/git/will/linux.git/log/?h=for-joerg/arm-smmu/bindings
-
-Konrad
-> Best regards,
-> Krzysztof
-> 
