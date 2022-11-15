@@ -2,95 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C1FC629B43
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 14:57:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 87685629B9B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 15:11:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229725AbiKON5U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 08:57:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56192 "EHLO
+        id S229929AbiKOOLU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 09:11:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229627AbiKON5T (ORCPT
+        with ESMTP id S229626AbiKOOLT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 08:57:19 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF92C108A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 05:57:17 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id j16so24481584lfe.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 05:57:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eRDy77pLORMZ/XulovaxWyKY5V8oIS0uLhcTxtOQZjk=;
-        b=ih8E8fklramz2fm/5na93sr2QZeV4xQv9SRXu+nQBgU8zxhPDbkNEZfeBguyCyhN6g
-         8hLDWOItg8pG3YGEQM376J/9kGr3vNLtamH0ulRHB3BPlD31iqsYjllV4YMXi9EU3rc3
-         5p3lDezgSk409+a32ar9zhNxMQbYJSk0xs9KoQaQG3vojprSeNUL7CtnJbeJY46Qlq9r
-         tI/Ca+VE4UopJjOdJrEJtJG6SWFnwWuDk0Z85Jm83eyc+u6KuYcXjB6wcf8a4HN3BAtd
-         AKCnA6I5DOtrS2HVovVaxrvl/HC2eU5ZOfVLKqjIMf3yTXtPTXpdEr6dfArHbUXBwYYT
-         J3rA==
+        Tue, 15 Nov 2022 09:11:19 -0500
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FC13FD10;
+        Tue, 15 Nov 2022 06:11:18 -0800 (PST)
+Received: by mail-ot1-f44.google.com with SMTP id p10-20020a9d76ca000000b0066d6c6bce58so5512619otl.7;
+        Tue, 15 Nov 2022 06:11:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eRDy77pLORMZ/XulovaxWyKY5V8oIS0uLhcTxtOQZjk=;
-        b=A1I+CapDrSoXamxzNVRI29huHAJzdLVmX5h69o4oO/6kcu9BNQKaNgojxE+UT7jqir
-         ZWdO0lnqy/3yeISX9GrdYduc0e38xMYaLUEKU6I6Y7PrbmyA6UZVY/tqv76L1xVbqlNY
-         RgK/ReTtVKuLpWInMG5Fd+cje/bmNig17UnBuGbaabxIW5m1ygwbGBv6WOYlysFAbemw
-         tdYSVJ2IImTdRq0oJZWxSLh+tSGKUvj6v0FIeoTtcBsJKPwcLDJorTa3isU6ozsq5ibX
-         HswHX/NLRi8q5A9jOUIWT0ytgG+feUqgGOQerdIoS9SskqNCrK9BLh+ERBPhXbvmk/Ry
-         LHkQ==
-X-Gm-Message-State: ANoB5pmrfYkqrhUHfG3DlUGryNWid8sxN0MseHgcFJMlg1ZTRFbpcAgD
-        P6ShhLjLF8uSFylsTu8s0554bg==
-X-Google-Smtp-Source: AA0mqf7dCyJ6i1FCEJ9EudMl+bRs4RS1CImhCmmrmtULiRsWIYxofVo8G8JZ//VkKlUarOnUPvJhVw==
-X-Received: by 2002:a05:6512:2983:b0:4ae:6bbc:e8af with SMTP id du3-20020a056512298300b004ae6bbce8afmr5360869lfb.411.1668520636293;
-        Tue, 15 Nov 2022 05:57:16 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id d17-20020a2eb051000000b002770e6c620bsm2437751ljl.106.2022.11.15.05.57.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Nov 2022 05:57:15 -0800 (PST)
-Message-ID: <76d3c821-a5c1-952e-dc9a-6f1c2f927139@linaro.org>
-Date:   Tue, 15 Nov 2022 14:57:14 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH] arm64: dts: SC7280: Remove unused sleep pin control nodes
-Content-Language: en-US
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        vkoul@kernel.org, agross@kernel.org, andersson@kernel.org,
-        robh+dt@kernel.org, broonie@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_rohkumar@quicinc.com, srinivas.kandagatla@linaro.org,
-        dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
-        alsa-devel@alsa-project.org, quic_rjendra@quicinc.com,
-        konrad.dybcio@somainline.org, mka@chromium.org
-References: <1668510598-19535-1-git-send-email-quic_srivasam@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1668510598-19535-1-git-send-email-quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=TacVoOO9NDNFIMt31qzCtRgln1ccwtifAk7PyC4xZ0s=;
+        b=Yc81WYSMHcoQCFkUjglHBXlPO3FslTCzFdfDy8+cbx6s9/JRQVnGlBYJWBcXwsWVcK
+         Vqne5MyMZlxsNE/ziQbazFAE45WlMdVJQposhQHNxU3mNbNh0tD+NtwxQVhrUv2mYdc2
+         7YCwIWAEHfdzHVEztGWxFlHadSwdmu51xi4VrO1LGopkVNUovMrZn7mLHgpWyhqIQl75
+         dH/Z0wdHuWWwZi6xGklO24vv8TKwFE1tOh2u4x0ZLhJS38olUMBYhcvGbmwSiFzBWEoq
+         AhdFdhjAgbr+asQIhomOSa2a3+iZ0QUVsh27yJef8F3Ho4+QLv5g/cmqZ/THyrNgHqEN
+         1U2w==
+X-Gm-Message-State: ANoB5pnFTlq+kR+snLRiNr+BaMQLrxcbesrJ+CDvGdD1WFz0Njj+mEwo
+        N5+6yrvbt3ln+9SN2bdd+g==
+X-Google-Smtp-Source: AA0mqf41qwNznHD4daQ+Mhz0sumypTqDXe1dh5cjhOzl/ybpdXvQQEyrHv+3a+htI5DwxWlPOz3B+g==
+X-Received: by 2002:a05:6830:153:b0:66c:a3a8:3870 with SMTP id j19-20020a056830015300b0066ca3a83870mr8901401otp.54.1668521477402;
+        Tue, 15 Nov 2022 06:11:17 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id s5-20020a4adb85000000b00499527def25sm4840834oou.47.2022.11.15.06.11.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Nov 2022 06:11:16 -0800 (PST)
+Received: (nullmailer pid 908584 invoked by uid 1000);
+        Tue, 15 Nov 2022 14:11:14 -0000
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+MIME-Version: 1.0
+From:   Rob Herring <robh@kernel.org>
+To:     Robert Foss <robert.foss@linaro.org>
+Cc:     airlied@linux.ie, linux-kernel@vger.kernel.org,
+        konrad.dybcio@somainline.org, quic_abhinavk@quicinc.com,
+        quic_jesszhan@quicinc.com, devicetree@vger.kernel.org,
+        agross@kernel.org, robh+dt@kernel.org, quic_vpolimer@quicinc.com,
+        vkoul@kernel.org, robdclark@gmail.com,
+        dri-devel@lists.freedesktop.org, krzysztof.kozlowski+dt@linaro.org,
+        swboyd@chromium.org, dianders@chromium.org,
+        bjorn.andersson@linaro.org, quic_kalyant@quicinc.com,
+        Jonathan Marek <jonathan@marek.ca>, vinod.koul@linaro.org,
+        loic.poulain@linaro.org, dmitry.baryshkov@linaro.org,
+        daniel@ffwll.ch, angelogioacchino.delregno@somainline.org,
+        andersson@kernel.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, sean@poorly.run
+In-Reply-To: <20221115111721.891404-3-robert.foss@linaro.org>
+References: <20221115111721.891404-1-robert.foss@linaro.org>
+ <20221115111721.891404-3-robert.foss@linaro.org>
+Message-Id: <166851961892.867704.17058917320073105789.robh@kernel.org>
+Subject: Re: [PATCH v2 02/12] dt-bindings: display: msm: Add qcom,sm8350-mdss binding
+Date:   Tue, 15 Nov 2022 08:11:14 -0600
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/11/2022 12:09, Srinivasa Rao Mandadapu wrote:
-> Remove Unused and redundant sleep pin control entries
-> in herobrine device tree variants.
+
+On Tue, 15 Nov 2022 12:17:11 +0100, Robert Foss wrote:
+> Mobile Display Subsystem (MDSS) encapsulates sub-blocks
+> like DPU display controller, DSI etc. Add YAML schema for MDSS device
+> tree bindings
+> 
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> ---
+>  .../display/msm/qcom,sm8350-mdss.yaml         | 240 ++++++++++++++++++
+>  1 file changed, 240 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.yaml
 > 
 
-And these are redundant because... ? E.g. not referenced anywhere thus
-not used?
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Use subject prefixes matching the subsystem (git log --oneline -- ...).
+yamllint warnings/errors:
 
-Best regards,
-Krzysztof
+dtschema/dtc warnings/errors:
+./Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/display/msm/mdss-common.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.example.dtb: display-subsystem@ae00000: False schema does not allow {'compatible': ['qcom,sm8350-mdss'], 'reg': [[182452224, 4096]], 'reg-names': ['mdss'], 'interconnects': [[4294967295, 7, 0, 4294967295, 1, 0], [4294967295, 8, 0, 4294967295, 1, 0]], 'interconnect-names': ['mdp0-mem', 'mdp1-mem'], 'power-domains': [[4294967295, 0]], 'resets': [[4294967295, 0]], 'clocks': [[4294967295, 0], [4294967295, 27], [4294967295, 28], [4294967295, 32]], 'clock-names': ['iface', 'bus', 'nrt_bus', 'core'], 'iommus': [[4294967295, 2080, 1026]], 'interrupts': [[0, 83, 4]], 'interrupt-controller': True, '#interrupt-cells': [[1]], '#address-cells': [[1]], '#size-cells': [[1]], 'ranges': True, 'display-controller@ae01000': {'compatible': ['qcom,sm8350-dpu'], 'reg': [[182456320, 585728], [183173120, 8200]], 'reg-names': ['mdp', 'vbif'], 'clocks': [[4294967295, 27], [4294967295, 28], [4294967295, 0], [42
+ 94967295, 34], [4294967295, 32], [4294967295, 44]], 'clock-names': ['bus', 'nrt_bus', 'iface', 'lut', 'core', 'vsync'], 'assigned-clocks': [[4294967295, 44]], 'assigned-clock-rates': [[19200000]], 'operating-points-v2': [[1]], 'power-domains': [[4294967295, 6]], 'interrupts': [[0]], 'ports': {'#address-cells': [[1]], '#size-cells': [[0]], 'port@0': {'reg': [[0]], 'endpoint': {'remote-endpoint': [[2]], 'phandle': [[4]]}}}, 'opp-table': {'compatible': ['operating-points-v2'], 'phandle': [[1]], 'opp-200000000': {'opp-hz': [[0], [200000000]], 'required-opps': [[4294967295]]}, 'opp-300000000': {'opp-hz': [[0], [300000000]], 'required-opps': [[4294967295]]}, 'opp-345000000': {'opp-hz': [[0], [345000000]], 'required-opps': [[4294967295]]}, 'opp-460000000': {'opp-hz': [[0], [460000000]], 'required-opps': [[4294967295]]}}}, 'dsi@ae94000': {'compatible': ['qcom,mdss-dsi-ctrl'], 'reg': [[183058432, 1024]], 'reg-names': ['dsi_ctrl'], 'interrupts': [[4]], 'clocks': [[4294967295, 2], [4294967295,
+  5], [4294967295, 36], [4294967295, 28], [4294967295, 0], [4294967295, 27]], 'clock-names': ['byte', 'byte_intf', 'pixel', 'core', 'iface', 'bus'], 'assigned-clocks': [[4294967295, 3], [4294967295, 37]], 'assigned-clock-parents': [[3, 0], [3, 1]], 'operating-points-v2': [[4294967295]], 'power-domains': [[4294967295, 6]], 'phys': [[3]], 'phy-names': ['dsi'], 'ports': {'#address-cells': [[1]], '#size-cells': [[0]], 'port@0': {'reg': [[0]], 'endpoint': {'remote-endpoint': [[4]], 'phandle': [[2]]}}, 'port@1': {'reg': [[1]], 'endpoint': {}}}}, 'phy@ae94400': {'compatible': ['qcom,dsi-phy-5nm-8350'], 'reg': [[183059456, 512], [183059968, 640], [183060736, 608]], 'reg-names': ['dsi_phy', 'dsi_phy_lane', 'dsi_pll'], '#clock-cells': [[1]], '#phy-cells': [[0]], 'clocks': [[4294967295, 0], [4294967295, 0]], 'clock-names': ['iface', 'ref'], 'vdds-supply': [[4294967295]], 'phandle': [[3]]}, '$nodename': ['display-subsystem@ae00000']}
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.example.dtb: display-subsystem@ae00000: Unevaluated properties are not allowed ('#address-cells', '#interrupt-cells', '#size-cells', 'interrupt-controller', 'interrupts', 'power-domains', 'ranges', 'reg', 'reg-names', 'resets' were unexpected)
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm8350-mdss.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
 
