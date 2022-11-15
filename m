@@ -2,136 +2,277 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27451629CD2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 16:00:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 26A71629CEB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 16:04:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230519AbiKOPAI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 10:00:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42374 "EHLO
+        id S230231AbiKOPEr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 10:04:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230489AbiKOPAG (ORCPT
+        with ESMTP id S230226AbiKOPEo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 10:00:06 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D04C2BB20
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 07:00:03 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id l14so24730570wrw.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 07:00:02 -0800 (PST)
+        Tue, 15 Nov 2022 10:04:44 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83663D2EB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 07:04:42 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id gv23so3986557ejb.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 07:04:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:cc:to:content-language:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=wGd0eX9dHnbMWbZ42d1c86XckxWPxOIEV8Vb6s6+IpQ=;
-        b=BcsGr0Rq+viCW0Ll8pHykvGWU6QJ+XVHP6g81m7DojwvWk4YbMmyPOYnWs8FLuyUNi
-         INdfeAe7wkRlUSu/t2vgaCkEze5QxvBhiWHCGRgP8ZE0Pn2YXjvoDqV7jLk/E6ChYh9m
-         yBUwQwoCbLaYigIYIxL6kt+9IAuDaLGyHmFoRXJYfRoHr8N1lYNRLVq4ej2shT93aCti
-         5sUbr+3mo1NM3/fH4lV6vSg7C2aZARlqch4wswroCGHoDqIhHdtX8Zd2ANA/rGo6FOUE
-         qahVHa4PiqXqWqmnaA1kSH79Jn8dlJB0BV2tGqCsNxafM24cNZ2djdtR4goUXrNCiePm
-         2yBg==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=d9LeILXvw8L9LoEFMAR3miqDBARgsMFwg1ZrW9AFkIk=;
+        b=jDUHta9jtUjIl9jrU1sLbM7rBYUjPsoylRiLOMdRDqi+BOGmx5u4eRb4/HiKseL232
+         FhDu1k2nLxoNlP9n1hhtq+KMOjVaGWvccm/svuCSmvRH2z3U8+kMNhT66an9lZ2FJGLW
+         XjdMDFy6f7z2DlD/9Ja/5sivV+usDEtyPrpQrwbw3fSooNkoCXYRT+Quorpz88oWxstO
+         sBLsQHVlZGVFhavpiQp+62kfjGo4Xy6ryCZrRXuVk+pJNABdCXIP3CBLxdwGuO/Oc5IE
+         VHvIILZmgni9Dz+v1wQQDpV3JLR30W2HIgyCU3k2dbg0eaCx//UWVXCeuyU7UQv0CrOc
+         e/iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:cc:to:content-language:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wGd0eX9dHnbMWbZ42d1c86XckxWPxOIEV8Vb6s6+IpQ=;
-        b=e+1L/yStjyRtCxi5jGlqvYrc0R09XoOOIie1q4oVAv+iXJ5H0d4ECT+Nfh03CGOKoF
-         AjW4BBufz/jyM4wqiHWbcROSpz1i4SuytwhFD+4hAoPeU3hgghRY4mkEHTtQyJxxzREH
-         ybogBvUq6jlqpIqDdd7bzd6WCZOmOYeOTRteo6XYbOIu8YNILGEBq2nZf0z/P5FLCOe2
-         ZSf96BMogH8OaJFhSZsnj0VbpceCNraXbo7tZSc0cwKkYUQezphWO9XpfGzVFciw63r0
-         Dy/vdPa31AolmmioQKFHjtoEiN7Q6FoWHT5fJdHFmckLDnDzFxb5xT/akGderzO1uhlX
-         hjJA==
-X-Gm-Message-State: ANoB5pmO4g+GetbPlqOflOa7x/Xp9SD1eTXKT96x1DBMW6rZDKHPwPnH
-        H5xHFnHd2asOCfJUWpFcZ68MwA==
-X-Google-Smtp-Source: AA0mqf5BIhE9LqTRNtr8yELm7gIiWdFkyK3CdvNNzl1T0wlk3NkIVEvus9hfeCAuUASWJI2txLvtdQ==
-X-Received: by 2002:a5d:6086:0:b0:22e:71db:47ba with SMTP id w6-20020a5d6086000000b0022e71db47bamr11491222wrt.359.1668524401507;
-        Tue, 15 Nov 2022 07:00:01 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:fcf3:1c15:2e51:def7? ([2a01:e0a:982:cbb0:fcf3:1c15:2e51:def7])
-        by smtp.gmail.com with ESMTPSA id b3-20020adff903000000b002366fb99cdasm12567649wrr.50.2022.11.15.07.00.00
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=d9LeILXvw8L9LoEFMAR3miqDBARgsMFwg1ZrW9AFkIk=;
+        b=L2Qjw0kvChTAjMnIJehFIHcHjEhNx63I3XDxuILMniN5IiVPR3hv8ipktZtYFNknK7
+         8y1UNxh8hRny6yA8BcbaXDNoOMm18uTU5GjrZR5qWOMYrMWNY4uuMxc+05/rZAXC0/0W
+         qdUyJHF/DHeLujHfE2tU/u2buoMe5hPjTpdWKMvD8AhDYQi7/iJ/cCTyZy3PJuQ7Kj9P
+         Yz1LHJZBziZEbNPftCbuwLuHpdQTL64/PF00uWPJBe+hJ1bNnroIYaBGRPn0imqUooNs
+         bn2YvxB90bDiGV3F7XNfzxJn7NJXe9KVDQ6bB34IxrkAuFxwQAN0YiW17D77k69mgoWN
+         cjQQ==
+X-Gm-Message-State: ANoB5pnGs8YXMHetmzGjD1m73i7FzmJCby48xrSUl+N9PHTRgaRgoTbD
+        FVf8lGS4XC5c97xpU4XoFt6uHQ==
+X-Google-Smtp-Source: AA0mqf6KK9noe2qvxHfnjBSUJjx6KLuYgdcHS4UDhN/VuQX/gbwFigj+4fke8gGB5rAnslfFsSRCZg==
+X-Received: by 2002:a17:907:8e92:b0:7ad:a34f:1efe with SMTP id tx18-20020a1709078e9200b007ada34f1efemr14115723ejc.350.1668524681034;
+        Tue, 15 Nov 2022 07:04:41 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id b3-20020a170906728300b007a559542fcfsm5571581ejl.70.2022.11.15.07.04.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Nov 2022 07:00:01 -0800 (PST)
-Message-ID: <1ec5c839-ea5d-e6eb-3a51-f5824c322b76@linaro.org>
-Date:   Tue, 15 Nov 2022 16:00:00 +0100
+        Tue, 15 Nov 2022 07:04:40 -0800 (PST)
+Message-ID: <03a8c0e4-bc5c-1447-e3b6-a26f2f221862@linaro.org>
+Date:   Tue, 15 Nov 2022 16:04:34 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.3
-Subject: Re: [PATCH v4 2/2] dt-bindings: soc: qcom: convert non-smd RPM
- bindings to dt-schema
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, Lee Jones <lee@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH v2 1/9] dt-bindings: arm-smmu: Allow up to 3 power-domains
+To:     Robin Murphy <robin.murphy@arm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     patches@linaro.org, Will Deacon <will@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
-References: <20221005-mdm9615-pinctrl-yaml-v4-0-463523919c19@linaro.org>
- <20221005-mdm9615-pinctrl-yaml-v4-2-463523919c19@linaro.org>
- <166851961723.867617.14976811191392756271.robh@kernel.org>
-Reply-To: neil.armstrong@linaro.org
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <166851961723.867617.14976811191392756271.robh@kernel.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221114104222.36329-1-konrad.dybcio@linaro.org>
+ <20221114104222.36329-2-konrad.dybcio@linaro.org>
+ <6fa8e3ea-2113-d930-96bc-3726d53e5bcd@linaro.org>
+ <a4b160d8-0faa-3f4c-a925-0beaf6ace721@linaro.org>
+ <0121fc03-b027-7659-5e6e-b42089c9888d@linaro.org>
+ <12578e05-ced9-e5f7-7922-0af2f2159333@linaro.org>
+ <878402e7-7f80-31c7-3a6b-989a6ca29841@linaro.org>
+ <f59ddce1-c2e1-4055-3bce-1319c68ddf94@linaro.org>
+ <4b4ca3ba-8e4d-088e-8b3e-a47ad6ecb965@linaro.org>
+ <cff269c8-f944-9277-9df8-653522efbba0@linaro.org>
+ <4a9083fc-81ba-f5ca-5df7-cd04becb1dce@arm.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <4a9083fc-81ba-f5ca-5df7-cd04becb1dce@arm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/11/2022 15:11, Rob Herring wrote:
-> 
-> On Tue, 15 Nov 2022 11:12:36 +0100, Neil Armstrong wrote:
->> Convert the non-SMD RPM node bindings to dt-schema, the old txt bindings
->> are now removed since all bindings were converted.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> Reviewed-by: Rob Herring <robh@kernel.org>
->> Acked-by: Lee Jones <lee@kernel.org>
->> ---
->>   Documentation/devicetree/bindings/mfd/qcom-rpm.txt | 283 ---------------------
->>   .../devicetree/bindings/soc/qcom/qcom,rpm.yaml     | 101 ++++++++
->>   2 files changed, 101 insertions(+), 283 deletions(-)
->>
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> ./Documentation/devicetree/bindings/soc/qcom/qcom,rpm.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/regulator/qcom,ipc-rpm-regulator.yaml
-> ./Documentation/devicetree/bindings/soc/qcom/qcom,rpm.yaml: $id: relative path/filename doesn't match actual path or filename
-> 	expected: http://devicetree.org/schemas/soc/qcom/qcom,rpm.yaml#
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,rpm.example.dtb: rpm@108000: regulators: False schema does not allow {'compatible': ['qcom,rpm-pm8921-regulators'], 'vdd_l1_l2_l12_l18-supply': [[1]], 's1': {'regulator-min-microvolt': [[1225000]], 'regulator-max-microvolt': [[1225000]], 'bias-pull-down': True, 'qcom,switch-mode-frequency': [[3200000]]}, 's4': {'regulator-min-microvolt': [[1800000]], 'regulator-max-microvolt': [[1800000]], 'qcom,switch-mode-frequency': [[1600000]], 'bias-pull-down': True, 'qcom,force-mode': [[3]], 'phandle': [[1]]}}
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,rpm.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,rpm.example.dtb: rpm@108000: regulators: Unevaluated properties are not allowed ('compatible', 's1', 's4', 'vdd_l1_l2_l12_l18-supply' were unexpected)
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,rpm.yaml
-> Documentation/devicetree/bindings/soc/qcom/qcom,rpm.example.dtb:0:0: /example-0/rpm@108000/regulators: failed to match any schema with compatible: ['qcom,rpm-pm8921-regulators']
-> 
-> doc reference errors (make refcheckdocs):
-> 
-> See https://patchwork.ozlabs.org/patch/
-> 
-> This check can fail if there are any dependencies. The base for a patch
-> series is generally the most recent rc1.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit.
-> 
 
-Damn, will fix in v5.
 
-Neil
+On 15/11/2022 14:43, Robin Murphy wrote:
+> On 2022-11-15 13:06, Konrad Dybcio wrote:
+>>
+>>
+>> On 15/11/2022 14:00, Krzysztof Kozlowski wrote:
+>>> On 15/11/2022 13:54, Konrad Dybcio wrote:
+>>>>
+>>>>
+>>>> On 14/11/2022 17:58, Krzysztof Kozlowski wrote:
+>>>>> On 14/11/2022 16:53, Konrad Dybcio wrote:
+>>>>>>
+>>>>>> On 14/11/2022 14:00, Krzysztof Kozlowski wrote:
+>>>>>>> On 14/11/2022 12:17, Konrad Dybcio wrote:
+>>>>>>>> On 14/11/2022 12:01, Krzysztof Kozlowski wrote:
+>>>>>>>>> On 14/11/2022 11:42, Konrad Dybcio wrote:
+>>>>>>>>>> Some SMMUs require that a vote is held on as much as 3 
+>>>>>>>>>> separate PDs
+>>>>>>>>>> (hello Qualcomm). Allow it in bindings.
+>>>>>>>>>>
+>>>>>>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>>>>>>>> ---
+>>>>>>>>>> Changes since v1:
+>>>>>>>>>> - Add minItems
+>>>>>>>>>>
+>>>>>>>>>>      Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 
+>>>>>>>>>> ++-
+>>>>>>>>>>      1 file changed, 2 insertions(+), 1 deletion(-)
+>>>>>>>>>>
+>>>>>>>>>> diff --git 
+>>>>>>>>>> a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml 
+>>>>>>>>>> b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>>>>>>>>> index 9066e6df1ba1..82bc696de662 100644
+>>>>>>>>>> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>>>>>>>>> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>>>>>>>>> @@ -159,7 +159,8 @@ properties:
+>>>>>>>>>>                through the TCU's programming interface.
+>>>>>>>>>>        power-domains:
+>>>>>>>>>> -    maxItems: 1
+>>>>>>>>>> +    minItems: 0
+>>>>>>>>> It cannot be 0.
+>>>>>>>>>
+>>>>>>>>> minItems: 1
+>>>>>>>>>
+>>>>>>>>> Anyway you still need to restrict it per variant, as I said in 
+>>>>>>>>> previous
+>>>>>>>>> version.
+>>>>>>>> Hm.. I'm not entirely sure what you mean.. Should I add a list of
+>>>>>>>> compatibles
+>>>>>>> Yes and limit it to maxItems: 1 for "else".
+>>>>>>
+>>>>>> I tried adding:
+>>>>>>
+>>>>>>
+>>>>>>
+>>>>>>      - if:
+>>>>>>          properties:
+>>>>>>            compatible:
+>>>>>>              contains:
+>>>>>>                enum:
+>>>>>>                  - qcom,sm6375-smmu-500
+>>>>>>        then:
+>>>>>>          properties:
+>>>>>>            power-domains:
+>>>>>>              minItems: 3
+>>>>>>              maxItems: 3
+>>>>>>        else:
+>>>>>>          properties:
+>>>>>>            power-domains:
+>>>>>>              maxItems: 1
+>>>>>>
+>>>>>>
+>>>>>> Right under the nvidia reg if-else in the allOf, but dtbs_check 
+>>>>>> throws
+>>>>>> errors like:
+>>>>>>
+>>>>>>
+>>>>>> /home/konrad/linux/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-poplar.dtb:
+>>>>>> iommu@5040000: 'power-domains' does not match any of the regexes:
+>>>>>> 'pinctrl-[0-9]+'
+>>>>>>
+>>>>>>
+>>>>>> Any clues as to why?
+>>>>>
+>>>>> I don't know what code do you have there, but generic pattern is:
+>>>>>
+>>>>> https://elixir.bootlin.com/linux/v5.19-rc6/source/Documentation/devicetree/bindings/clock/samsung,exynos7-clock.yaml#L38
+>>>>>
+>>>> I tried many things, but I still don't seem to get a hang of it.. 
+>>>> Here's
+>>>> my current diff rebased on top of Dmitry's recent cleanups 
+>>>> (available at
+>>>> [1])
+>>>>
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>>> b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>>> index 28f5720824cd..55759aebc4a0 100644
+>>>> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>>> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>>> @@ -200,7 +200,7 @@ properties:
+>>>>        maxItems: 7
+>>>>
+>>>>      power-domains:
+>>>
+>>> As I mentioned before - minItems: 1.
+>> But not all SMMUs require a power domain :/
+> 
+> Right, so it's not a required property. However if it *is* present, then 
+> it needs to reference at least one power domain, because having an empty 
+> property, i.e.:
+> 
+>      power-domains = <>;
+> 
+> or
+>      power-domains;
+> 
+> makes no sense whatsoever.
+> 
+> Thanks,
+> Robin.
+OHHHH!
+
+That was the missing piece that made it click for me!
+Thanks Krzysztof, Robin for guiding me through this.
+
+Konrad
+> 
+>>
+>>>
+>>> Just like the link I gave you.
+>>>
+>>>> -    maxItems: 1
+>>>> +    maxItems: 3
+>>>>
+>>>>      nvidia,memory-controller:
+>>>>        description: |
+>>>> @@ -364,6 +364,26 @@ allOf:
+>>>>                - description: interface clock required to access smmu's
+>>>> registers
+>>>>                    through the TCU's programming interface.
+>>>>
+>>>> +  - if:
+>>>> +      properties:
+>>>> +        compatible:
+>>>> +          contains:
+>>>> +            const: qcom,sm6375-smmu-500
+>>>> +    then:
+>>>> +      properties:
+>>>> +        power-domains:
+>>>> +          items:
+>>>> +            - description: SNoC MMU TBU RT GDSC
+>>>> +            - description: SNoC MMU TBU NRT GDSC
+>>>> +            - description: SNoC TURING MMU TBU0 GDSC
+>>>> +
+>>>> +      required:
+>>>> +        - power-domains
+>>>> +    else:
+>>>> +      properties:
+>>>> +        power-domains:
+>>>> +          maxItems: 1
+>>>> +
+>>>>    examples:
+>>>>      - |+
+>>>>        /* SMMU with stream matching or stream indexing */
+>>>>
+>>>>
+>>>> In my eyes, this should work, but I still get errors like:
+>>>>
+>>>> /home/konrad/linux/arch/arm64/boot/dts/qcom/sm8250-hdk.dtb:
+>>>> iommu@3da0000: power-domains: [[108, 0]] is too short
+>>>>
+>>>> as if the else: path was never taken..
+>>>
+>>> It was, but the top-level property said that minItems=3 (implicitly), so
+>>> it is too short.
+>> So the top-level properties take precedence over the ones that come 
+>> from the if-then-else?? Ugh.
+>>
+>> Konrad
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>>
