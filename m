@@ -2,85 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 24FC6629304
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 09:13:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9876162930B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 09:14:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231828AbiKOIM7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 03:12:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38950 "EHLO
+        id S232601AbiKOIOn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 03:14:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231185AbiKOIM7 (ORCPT
+        with ESMTP id S229966AbiKOIOm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 03:12:59 -0500
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD8AA6306
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 00:12:57 -0800 (PST)
-Received: by mail-lj1-x230.google.com with SMTP id d3so16527692ljl.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 00:12:57 -0800 (PST)
+        Tue, 15 Nov 2022 03:14:42 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00945F5B1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 00:14:41 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id j4so23312258lfk.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 00:14:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JDkqh0tAJJ4X7eNluhZEGW7LBA4YZb7PqjBBGMFZ9o8=;
-        b=xAYAcYiqz6vAihbiQR5GhFuz1tcemWPVKQgq85Cxv/HD3SYZ1whRQelsHKBF+5/G4j
-         I9am9IWQeZk/s4NVUQlr/GG/5pCD9GgypXy4S7Kwop9mp2lBCGbcaG8ztDCaWngpEDbj
-         HyVca9Xi9F63aGv8ELFQZez0V/i7MM7Pcv/Ac1XYG2YhFmgvTryuF5XY92bsnkkEMCTv
-         qt94KP13Vin3Fbf48xnKfWosutfGpKUuY3nw9Xoow1TsTWiXaGqOOx++L8exdwVi/saq
-         9Cc1NQNmts2U/s6r/xiddO454NQjvqQDYIxmJHCBzkLHfofNAXA1dOjupTOC2/3+ZMIv
-         7pZA==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=NJUghkSUxVBongGauUcPJFS1lAxj3QqixAvKwjEubTk=;
+        b=cBBk8m7XmoFr0+Q0ylI8LxpLDJUcMCNuSMdeEOxc7yPbXe108qVEPbz/Z6pO+ZkKDu
+         5Bm3b5piP5RfvOFy9vxYmn0K5jEvQQfmCFta7dwmVl73PkoER5d9jwGgxl1UejDOns0x
+         wOG6xEr96rU+0FM0s/PmMjUeV1dg1OZw4nMZQjURpmDPXfmWNJNLM8eUG0WmCMYkqUna
+         jbtGKlSX5BmhDusrCOZzCiY9DuF5xIZA/SGKWlkX4cxF+zqEPFrHY4iVuCmc6jzr3ehb
+         h9bHf/CliNnllAVzMEWvcEya9wZ8tMaKd2ZAhZAAXJRYoSiv7WcLkW0yTxWL3CBsrylc
+         UjEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JDkqh0tAJJ4X7eNluhZEGW7LBA4YZb7PqjBBGMFZ9o8=;
-        b=watj9C97oF84fQajREsNA/2zIKYkkh+5tXdYqA/4wVIMhoAwd4gg1McC8ql/1ecq4l
-         9q0cgEkRavADaDk8RZBAtd3smcivsoYdZhbciOljRLh9xIBnD+LLCOMI4Ro++d/0E3M1
-         OhQAVBgjXkiDmOlHdzkIa5rh+CSadWRwxbhwy0vy5L4VmCOpFOv38ooW4n2yfronWhpN
-         NARQxQOnuK7zdEIM/I1uf9MupEu0a00YvXEDSZAA8FQ+FkHvQOROFFmedj+2pjbmcrZT
-         8j6GUg9Sg/JJt9THHOTnL/kvL51NgkVXdS8ibhkzsEh04s5BZyeAoD6GisNfk2pW2Z73
-         BGtQ==
-X-Gm-Message-State: ANoB5plD2aZ3IiRCopezLjoyZZDdIKmswaGflF0UNSrjIWjzhFwbZiDw
-        iivh57eGvmPJIEpOg+U0Ifu5OgTsGKwZV6O7
-X-Google-Smtp-Source: AA0mqf47HmClxjlAW9DxMF2bgWVxgI7npM2Ar0tsu0fsJS2xY8RI9H87d0FG/XSIJ41uOriL/+Xzcw==
-X-Received: by 2002:a2e:b706:0:b0:277:d75:f1de with SMTP id j6-20020a2eb706000000b002770d75f1demr5794184ljo.272.1668499976198;
-        Tue, 15 Nov 2022 00:12:56 -0800 (PST)
+        bh=NJUghkSUxVBongGauUcPJFS1lAxj3QqixAvKwjEubTk=;
+        b=JkBWbzOENiO5RCquWXwtFdYI/7qixJAqx3r1I7g75LzCYkc/ojlWenqOwxetR/Maw4
+         2kV2c+BdHOw2/F0f8/wh0NJbyplsUjk5A2p9TmD0r0x/rTn1JNxFv1XOjK1DvabfSrXz
+         0Ye6oXsdNSYLpgPV4i9GocWf3ZvSJjSZnwi7zNg207vm6JmO9vKE+tFLNtvMiJ8DXBDE
+         G3+iVgAklBjMgn/BoFlLL1vcKxcKszhep1+3Df5aZRpMFQd8ectmkXAr47sSlapvFrqF
+         hA0ehCg1KLc4UQh4/WOwjtQvqCbdyDs1Ef7Jv4XU+rtrSK5ApdMKSaAUzeI6AXfXJ1oB
+         lTkw==
+X-Gm-Message-State: ANoB5pm+3ou+/p7jFEGeqz4ByT1sc9F523j4Rwj9jDPBKcCdK7moXFKs
+        QQGU2a6kvgkpOJt6lO155aIhtQ==
+X-Google-Smtp-Source: AA0mqf6iiVRtWYnFEeY/1qHlfmPtscw/WYK0aqkvWvSBDGallokd8rzcWtuB1eWPEgrVm+gOuMRJWw==
+X-Received: by 2002:a19:f24d:0:b0:4a2:4d28:73b9 with SMTP id d13-20020a19f24d000000b004a24d2873b9mr5696619lfk.690.1668500080348;
+        Tue, 15 Nov 2022 00:14:40 -0800 (PST)
 Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id 28-20020ac25f5c000000b004b491fe071fsm1635595lfz.36.2022.11.15.00.12.54
+        by smtp.gmail.com with ESMTPSA id a21-20020ac25e75000000b00494603953b6sm2121955lfr.6.2022.11.15.00.14.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Nov 2022 00:12:55 -0800 (PST)
-Message-ID: <61df3c4f-f41c-9525-606d-1b8261163080@linaro.org>
-Date:   Tue, 15 Nov 2022 09:12:54 +0100
+        Tue, 15 Nov 2022 00:14:39 -0800 (PST)
+Message-ID: <18ed041b-1ebb-910e-b426-c284f89b11cc@linaro.org>
+Date:   Tue, 15 Nov 2022 09:14:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH 02/14] dt-bindings: phy: qcom,qmp-usb3-dp: fix sc8280xp
- bindings
+Subject: Re: [PATCH v2 1/5] dt-bindings: net: ipq4019-mdio: document IPQ6018
+ compatible
+To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221114194734.3287854-1-robimarko@gmail.com>
 Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221111092457.10546-3-johan+linaro@kernel.org>
- <a22888cd-34cb-3453-0dc2-096da208564c@linaro.org>
- <Y3JCVzJ74YsfcDz4@hovoldconsulting.com>
- <de3a426a-03e8-ed15-a9a1-bb300e776e5f@linaro.org>
- <Y3JOO0kNnaNhnW3K@hovoldconsulting.com>
- <02725b78-04ad-8f4a-25c2-9cdaa1e37ab7@linaro.org>
- <Y3JthM1jC2vH1Kn+@hovoldconsulting.com>
- <efd412d0-7411-8b0b-4700-9e183a592048@linaro.org>
- <Y3JxZ+yFMLZkwNBi@hovoldconsulting.com>
- <8420c342-9dce-aea7-8d1e-f141e0c1ebb5@linaro.org>
- <Y3J2AjjjsybI9mKd@hovoldconsulting.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <Y3J2AjjjsybI9mKd@hovoldconsulting.com>
+In-Reply-To: <20221114194734.3287854-1-robimarko@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -92,46 +79,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/11/2022 18:08, Johan Hovold wrote:
->>
->> Which is also fine. I don't understand still why it is a problem - even
->> if you have multiple files, one for each SoC/phy. If USB4 brings here 10
->> more clocks and other SoCs/phys might bring many more options, then what
->> else can you do? Grow the binding file with big text-based mapping of
->> IDs? It's not a viable solution. Header or headers is the only
->> maintainable way for such cases.
+On 14/11/2022 20:47, Robert Marko wrote:
+> Document IPQ6018 compatible that is already being used in the DTS along
+> with the fallback IPQ4019 compatible as driver itself only gets probed
+> on IPQ4019 and IPQ5018 compatibles.
 > 
-> So then we must add per-SoC (and PHY type) headers even if we can
-> possibly reuse defines from one platform for another as long as they
-> appear to be similar enough?
-
-No, you don't have to. I just got impression that future devices will
-bring so many changes that anyway you will end up with per-SoC defines.
-
-> For example, using a "SC7180_USB3_DP" infix
-> for the current platforms and add a new series of indexes for SC8280XP:
+> This is also required in order to specify which platform require clock to
+> be defined and validate it in schema.
 > 
-> 	QMP_SC7180_USB3_DP_USB3_PIPE			0
-> 	QMP_SC7180_USB3_DP_DP_LINK			1
-> 	QMP_SC7180_USB3_DP_DP_VCO_DIV			2
-> 
-> 	QMP_SC8280XP_USB4_USB3_DP_USB3_PIPE		0
-> 	QMP_SC8280XP_USB4_USB3_DP_DP_LINK		1
-> 	QMP_SC8280XP_USB4_USB3_DP_DP_VCO_DIV		2
-> 	QMP_SC8280XP_USB4_USB3_DP_USB4_PCIE_PIPE	3
-> 	...
-> 	QMP_SC8280XP_USB4_USB3_DP_USB4_RX1		9
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
 
-The names are just a names, you can even use QMP_SC7180_* on SC8280XP.
-You can skip the SoC part and have something shared. We already have
-such patterns - although maybe more often for outside components (like
-PMICs). The differences are:
-1. For per-SoC name it's quite obvious which clock is supported on fiven
-SoC,
-2. With shared names, you should document somewhere mapping between
-supported clocks and SoCs. Also what to do if new device comes with 10
-new clocks entirely different - re-use/map existing defines or add
-completely new set of 10 of them?
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
