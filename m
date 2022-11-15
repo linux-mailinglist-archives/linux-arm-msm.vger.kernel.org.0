@@ -2,78 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8434262972E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 12:20:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 15E1262976B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 12:31:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232649AbiKOLUN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 06:20:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55256 "EHLO
+        id S232253AbiKOLb2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 06:31:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230300AbiKOLT6 (ORCPT
+        with ESMTP id S229505AbiKOLb1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 06:19:58 -0500
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48BA723175
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 03:19:53 -0800 (PST)
-Received: by mail-lj1-x22f.google.com with SMTP id a15so17061749ljb.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 03:19:53 -0800 (PST)
+        Tue, 15 Nov 2022 06:31:27 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E4591A399
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 03:31:25 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id h9so23768507wrt.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 03:31:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4lKo+V+/mxDO3/qsvAi0/ZbXKoyl3LFK1hw6LW1/SD8=;
-        b=Ni6gjYbZtjVFN8KdLvdVDlSwoDI41ZswrAC60GP3jV7437Wo0E5qhMPq4QHGz8cCSt
-         +kAsWdipvjGZY1J2qOyiSnvYZsH3hsIiNVelr0n04FvVB7umXE+DRoXwQps8tyVl1TcW
-         NRH3K0yL/PAqPrTfN3KlPOP/uX63BiFSBMapGzjbhVo1Y+pjJ1OYVnBMCLFP7mQjcblH
-         vnq7zjFcYy21+I4hR39J3fOKewlfvbwjNPQv6xwugCA0VLa65UDt3iXTE0g4iDs0RHTi
-         Nx9jURgrKi0/d/lAxEQL28dNfsonGf1pYGFEWbyxLVO8FIUoNfoR7pQL4/b4UOmhhi/1
-         bMBg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=UddS6z+HZ5YVbRh2ru9NrfNaV2JxWhP7gmUffyLBQnQ=;
+        b=l8EZnFK7Henaqr9gMLielppZAarrfSFm/9FuMii4B0WDnShzG3XT8QiLbKz3BZ2scB
+         o9iZkEcvXEGji+8GqnYbfi5Pombeb2e90HcRXDawAJvBXSd3NOWk521J3w5FqFlMuVf+
+         /iH4luipNlK+/dQQNXWtEciXjpQya4W2/xNR2aHkT9KrHsXVkzDThCPk9SR+8VbAwwhl
+         7/4xmYDuNNfSiu8pMHx8Zg4gEYsygpzNbZNCTvhEJO+hymU0EgN5tyeVDZoT0Abf+iE+
+         FD8AG3PiKpFT4EpQxeAhFjeUBKxS9xsL8gc0Fxgk7uw7sf0OGVRNEvHdbOHfrkeb9J6q
+         Pk0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4lKo+V+/mxDO3/qsvAi0/ZbXKoyl3LFK1hw6LW1/SD8=;
-        b=Zzr/irwi2HA6RCBxnvOGk08jnA5B74UYupGjhMKC+ZIfhPdzEdCaOezGT16xLnppgb
-         v9Zib3KCASvEn1TNBZ47v2IyAiouwFpS6TEXyNfyjtmhtQa0/pz2PXdCAbaAo7OWc4Se
-         NyBRKIbuhoBgu1gs13z4gmHDaiqSj1KrSAa+rptBTvKFu62PsMqbhm8EArLRFfa3FUZd
-         eitjVAogx3ntfNP7apbaaPaVkzRuFLL89vklohOd29rZOvqeSylH7w2XGrD1u/AWP+jF
-         db4TBZ10JlAGipw1P3PcZhFh0qfH62vaATXamyei6mFncGZGDghsrBDoePUTT0ONw2yt
-         /iLA==
-X-Gm-Message-State: ANoB5pmtwR8q0Uzl/+sWRJchNpKnR7scfDNqQFLh4DRixqThq8hH3YTL
-        HKwIsHVnW2KXV/8O+A72W7wH5Q==
-X-Google-Smtp-Source: AA0mqf5X3GLTOwnVF3dsvfXWXrL8B0nguCYLMx/GK80WZHGuGrNNrShlI1/bwnNFEU7NAoyrYWGeeA==
-X-Received: by 2002:a2e:94cb:0:b0:277:3df:90d0 with SMTP id r11-20020a2e94cb000000b0027703df90d0mr5512248ljh.234.1668511191641;
-        Tue, 15 Nov 2022 03:19:51 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id a10-20020a056512020a00b004a45f2e49b1sm2160514lfo.273.2022.11.15.03.19.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Nov 2022 03:19:51 -0800 (PST)
-Message-ID: <e98df1b0-b91e-ff15-d20a-487d513d70f6@linaro.org>
-Date:   Tue, 15 Nov 2022 12:19:50 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sm8450: add Soundwire and LPASS
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UddS6z+HZ5YVbRh2ru9NrfNaV2JxWhP7gmUffyLBQnQ=;
+        b=0D24ubbPdTwTn7DEt5kq13qaFfSiyBXVXKbU7EB98oLlEMMmvCdgK9BKmsfXy/LNSX
+         a6kuDd8aWQRBOIn7a+pFd4E4KDMrJvUbupRLzagOQ0/HdsEqxFv3NS+6X5kt100/hYzD
+         gZJssSGPenQ4Cx2N6dqqCoKbWBlvP9RhJE0vJRkI2eJLD8nXDajQPNfVRD6Vn+kdjH7M
+         YM5X+7NY6kLTm6g+NFVglKIWHDjRGzCy7pnJ5Od1urTPgO2xetSm8Kb0/jvMbzDpzbhS
+         gdKaDBkMzhEnW0/l13TclQ1YGTgT+7v622qaM5SQiSj/2nDrRQQpFt6rLnayHtSS3A6K
+         8dvA==
+X-Gm-Message-State: ANoB5pmy09+/rgYfrlz3MhnqyQrKWr5SR3IG2dPFRSNlTyF8gMgjDeKG
+        UbLE5O6ghHk3mcsKxYgz+m0ycg==
+X-Google-Smtp-Source: AA0mqf7e8OfdxOKRfTIFGfYs2rOT+Ob6Xy7QeTxJe/DCYWFZIgWCHvvWJKR4Si+l/C4cddXA588gig==
+X-Received: by 2002:adf:ec10:0:b0:22e:48ee:dc64 with SMTP id x16-20020adfec10000000b0022e48eedc64mr10210424wrn.319.1668511883718;
+        Tue, 15 Nov 2022 03:31:23 -0800 (PST)
+Received: from zoltan.localdomain ([81.128.185.34])
+        by smtp.gmail.com with ESMTPSA id r18-20020adfe692000000b00238df11940fsm12273091wrm.16.2022.11.15.03.31.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Nov 2022 03:31:22 -0800 (PST)
+From:   Alex Elder <elder@linaro.org>
+To:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, agross@kernel.org,
+        elder@kernel.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-References: <20221115110053.110319-1-krzysztof.kozlowski@linaro.org>
- <20221115110053.110319-3-krzysztof.kozlowski@linaro.org>
- <4045756e-eff8-bdbe-7165-e21d28504cab@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <4045756e-eff8-bdbe-7165-e21d28504cab@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: [PATCH net-next v2 0/5] net: ipa: change GSI firmware load specification
+Date:   Tue, 15 Nov 2022 05:31:14 -0600
+Message-Id: <20221115113119.249893-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,93 +73,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/11/2022 12:17, Konrad Dybcio wrote:
-> 
-> 
-> On 15/11/2022 12:00, Krzysztof Kozlowski wrote:
->> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->>
->> Add Soundwire controllers, Low Power Audio SubSystem (LPASS) devices and
->> LPASS pin controller.
->>
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> Co-developed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>
->> ---
->>
->> Changes since v1:
->> 1. Whitespace cleanups.
->> 2. Correct include - do not use deprecated one.
->> ---
->>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 295 +++++++++++++++++++++++++++
->>   1 file changed, 295 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> index 4b0a1eee8bd9..e80a7d09646f 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> @@ -15,6 +15,7 @@
->>   #include <dt-bindings/interconnect/qcom,sm8450.h>
->>   #include <dt-bindings/soc/qcom,gpr.h>
->>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->> +#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
->>   #include <dt-bindings/thermal/thermal.h>
->>   
->>   / {
->> @@ -2097,6 +2098,212 @@ compute-cb@3 {
->>   			};
->>   		};
->>   
->> +		wsa2macro: codec@31e0000 {
->> +			compatible = "qcom,sm8450-lpass-wsa-macro";
->> +			reg = <0 0x031e0000 0 0x1000>;
->> +			clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +				 <&vamacro>;
->> +			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
->> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->> +					  <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
->> +			assigned-clock-rates = <19200000>, <19200000>;
->> +
->> +			#clock-cells = <0>;
->> +			clock-output-names = "wsa2-mclk";
->> +			#sound-dai-cells = <1>;
->> +
->> +			pinctrl-names = "default";
->> +			pinctrl-0 = <&wsa2_swr_active>;
->> +		};
->> +
->> +		/* WSA2 */
->> +		swr4: soundwire-controller@31f0000 {
->> +			reg = <0 0x031f0000 0 0x2000>;
->> +			compatible = "qcom,soundwire-v1.7.0";
->> +			interrupts = <GIC_SPI 171 IRQ_TYPE_LEVEL_HIGH>;
->> +			clocks = <&wsa2macro>;
->> +			clock-names = "iface";
->> +
->> +			qcom,din-ports = <2>;
->> +			qcom,dout-ports = <6>;
->> +
->> +			qcom,ports-sinterval-low =	/bits/ 8 <0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x0f 0x0f>;
->> +			qcom,ports-offset1 =		/bits/ 8 <0x01 0x02 0x0c 0x06 0x12 0x0d 0x07 0x0a>;
->> +			qcom,ports-offset2 =		/bits/ 8 <0xff 0x00 0x1f 0xff 0x00 0x1f 0x00 0x00>;
->> +			qcom,ports-hstart =		/bits/ 8 <0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF>;
->> +			qcom,ports-hstop =		/bits/ 8 <0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF>;
->> +			qcom,ports-word-length =	/bits/ 8 <0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF>;
->> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xFF 0xFF 0x01 0xFF 0xFF 0x01 0xFF 0xFF>;
->> +			qcom,ports-block-group-count =	/bits/ 8 <0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF>;
->> +			qcom,ports-lane-control =	/bits/ 8 <0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF>;
-> You didn't normalize the constants to be all-uppercase or all-lowercase.
-> I think lowercase is what's generally used in DTs.
-> 
-> The rest looks good though.
+Version 2 of this series modifies the first patch only.  One section
+in the description is reworded, and the example now consistenly
+describes the SC7180 SoC, both as suggested by Krzysztof.
 
-Uh, yeah, you said it last time. Sorry, I missed to implement it.
+Currently, GSI firmware must be loaded for IPA before it can be
+used--either by the modem, or by the AP.  New hardware supports a
+third option, with the bootloader taking responsibility for loading
+GSI firmware.  In that case, neither the AP nor the modem needs to
+do that.
 
+The first patch in this series deprecates the "modem-init" Device
+Tree property in the IPA binding, using a new "qcom,gsi-loader"
+property instead.  The second and third implement logic in the code
+to support either the "old" or the "new" way of specifying how GSI
+firmware is loaded.
 
-Best regards,
-Krzysztof
+The last two patches implement a new value for the "qcom,gsi-loader"
+property.  If the value is "skip", neither the AP nor modem needs to
+load the GSI firmware.  The first of these patches implements the
+change in the IPA binding; the second implements it in the code.
+
+					-Alex
+
+Alex Elder (5):
+  dt-bindings: net: qcom,ipa: deprecate modem-init
+  net: ipa: encapsulate decision about firmware load
+  net: ipa: introduce "qcom,gsi-loader" property
+  dt-bindings: net: qcom,ipa: support skipping GSI firmware load
+  net: ipa: permit GSI firmware loading to be skipped
+
+ .../devicetree/bindings/net/qcom,ipa.yaml     | 78 +++++++++++----
+ drivers/net/ipa/ipa_main.c                    | 95 +++++++++++++++----
+ 2 files changed, 135 insertions(+), 38 deletions(-)
+
+-- 
+2.34.1
 
