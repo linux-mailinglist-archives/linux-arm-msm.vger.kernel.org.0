@@ -2,151 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99B3E629329
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 09:18:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 83DA76293BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 10:00:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231992AbiKOISr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 03:18:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42756 "EHLO
+        id S232708AbiKOJAi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 04:00:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229685AbiKOISq (ORCPT
+        with ESMTP id S231602AbiKOJAh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 03:18:46 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36263D9B;
-        Tue, 15 Nov 2022 00:18:45 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AF5sBTo028476;
-        Tue, 15 Nov 2022 08:18:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=6rW4wCvpSBlG5C0IYxHX4R0N6/wMFIdsEgnlxS/vj2Y=;
- b=Na8d11Cmqo5V/9QxyWm8JoJtT5jOTiIhI1BaP1YA2nfZMazwF7Nwbi2h9S+M6DZJz8BS
- aRWB5Lj8r52lkQmqWeptq7cJ7K7Ow50xYI5GwU5th+bWZ9+SlHEwRLjWxMQ1L/T25sko
- GF8WYiITLVCn7kZOlaz7kXHEcRossBZ7u2nuLo37ybeR4xXlzoqqV0mVLfVLTSflZiQV
- aG4uO4NV/7X2UEzLAmUR43WvvEg8/zYisAqJInaGxTCnd1acvoSFc7KJbP7GciZbyIGX
- uK2/NvzMv4T/iymAGUQ4en3VX10bx1i7HrgIOvWs+ZlAHME9MFXMZDCq7OboTJX2beZD BQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kv51dgh5y-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 15 Nov 2022 08:18:41 +0000
-Received: from pps.filterd (NALASPPMTA03.qualcomm.com [127.0.0.1])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2AF8If6Q002808;
-        Tue, 15 Nov 2022 08:18:41 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by NALASPPMTA03.qualcomm.com (PPS) with ESMTPS id 3kt4jm2xjb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 15 Nov 2022 08:18:41 +0000
-Received: from NALASPPMTA03.qualcomm.com (NALASPPMTA03.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2AF8Iess002801;
-        Tue, 15 Nov 2022 08:18:40 GMT
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA03.qualcomm.com (PPS) with ESMTPS id 2AF8IeML002799
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 15 Nov 2022 08:18:40 +0000
-Received: from [10.206.12.35] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 15 Nov
- 2022 00:18:36 -0800
-Message-ID: <1cad3684-cc4a-9c45-c52c-95ffc2cdb680@quicinc.com>
-Date:   Tue, 15 Nov 2022 13:48:33 +0530
+        Tue, 15 Nov 2022 04:00:37 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FCC76578
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 01:00:34 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id l14so23057857wrw.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 01:00:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ieee.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UqMA6Tje+3ZsVcAAIQPTB3aQZjTGfrywbsqDdzk9JQs=;
+        b=KIp2+/chwKI09PZkHXOBaaLZqJANenWBoecDu/vhLEPD8onbbS1Dlly1mkfV7tefeZ
+         6sw8kVUIFff+j7w99uAp1bPMm5B8+hngwOFKybRZBl0BhBYmWMmsMzSaTxCLetRaLhNE
+         hdkGZwUdt7t8k9QhYgHQU8zJ7bVLuZ2IErfgQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UqMA6Tje+3ZsVcAAIQPTB3aQZjTGfrywbsqDdzk9JQs=;
+        b=QvsvwLDfJcMLYATSK80+hPqkLpHILE39YIb/A8w2EziAOKTt8aesSLx+eiQrShNW3r
+         FlC3gjsROlYEe282WnPk6jy12+ahCr1dKxXJwT3UUFq6z7I9jUAGLUxr2BUCkBLTmrCD
+         WIVKNQIF0PC193RdmdrgVipOhYWA8Kp5PfIxKwfDZPQlfb1UBODCxB2pHjxagcsRcngt
+         eM5NtlUY4za5CFz0UOdLDa2YcccRRUqpoIAcjuvLnC+ugBrAzVz+56MCTbYgIMEcmyk/
+         JPnTg9Mk2kqOYfKuGkU6xw3ht2d5LZF4BTGi9B7ElNuhq8LURz7h2k5hRJ98SVXhjTwB
+         +SgA==
+X-Gm-Message-State: ANoB5pmoGM1czssAEMBT3yxeKhgYIVAUEVgij33wIQGL89qzA0Jaj4Dn
+        s73t+13ALx17bDkWK3RAx3EzQA==
+X-Google-Smtp-Source: AA0mqf54F/lZDKhCg3Oy0nmHzH6qldXo1KDM/vSOj3Y+3NQg4tQNXmzbhq8Eh9Boh+IgZWdHw86TQw==
+X-Received: by 2002:adf:a4c1:0:b0:236:6f18:37e6 with SMTP id h1-20020adfa4c1000000b002366f1837e6mr9637216wrb.262.1668502833056;
+        Tue, 15 Nov 2022 01:00:33 -0800 (PST)
+Received: from [10.211.55.3] ([167.98.215.174])
+        by smtp.googlemail.com with ESMTPSA id w9-20020adfee49000000b00228cd9f6349sm11842579wro.106.2022.11.15.01.00.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Nov 2022 01:00:32 -0800 (PST)
+Message-ID: <48fbae83-728e-d7ec-7516-4f8c972a1a1d@ieee.org>
+Date:   Tue, 15 Nov 2022 03:00:31 -0600
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [PATCH RFC] gpiolib: ensure that fwnode is properly set
-To:     Robert Marko <robimarko@gmail.com>,
-        Brian Masney <bmasney@redhat.com>, <linus.walleij@linaro.org>,
-        <brgl@bgdev.pl>
-CC:     <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <psodagud@quicinc.com>,
-        <quic_ppareek@quicinc.com>, <ahalaney@redhat.com>,
-        <echanude@redhat.com>, <nicolas.dechesne@linaro.org>
-References: <20221114202943.2389489-1-bmasney@redhat.com>
- <b3860cbd-0967-0b8d-3d67-f2a09f1e0042@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH net-next 1/5] dt-bindings: net: qcom,ipa: deprecate
+ modem-init
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alex Elder <elder@linaro.org>, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, davem@davemloft.net,
+        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, agross@kernel.org,
+        elder@kernel.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221112200717.1533622-1-elder@linaro.org>
+ <20221112200717.1533622-2-elder@linaro.org>
+ <de98dbb4-afb5-de05-1e75-2959aa720333@linaro.org>
+ <2f827660-ae9d-01dd-ded8-7fd4c2f8f8ae@ieee.org>
+ <88fd2f42-6f20-7bbe-1a4d-1f482c153f07@linaro.org>
 Content-Language: en-US
-From:   Shazad Hussain <quic_shazhuss@quicinc.com>
-In-Reply-To: <b3860cbd-0967-0b8d-3d67-f2a09f1e0042@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: VvKUEOtYHWG17QWwGNvI4rLmbWCcBvb_
-X-Proofpoint-ORIG-GUID: VvKUEOtYHWG17QWwGNvI4rLmbWCcBvb_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-15_04,2022-11-11_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- phishscore=0 lowpriorityscore=0 bulkscore=0 mlxlogscore=838 spamscore=0
- clxscore=1011 adultscore=0 malwarescore=0 priorityscore=1501
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211150060
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+From:   Alex Elder <elder@ieee.org>
+In-Reply-To: <88fd2f42-6f20-7bbe-1a4d-1f482c153f07@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 11/15/22 01:59, Krzysztof Kozlowski wrote:
+> On 14/11/2022 18:48, Alex Elder wrote:
+>> On 11/14/22 03:56, Krzysztof Kozlowski wrote:
+>>> On 12/11/2022 21:07, Alex Elder wrote:
+>>>> GSI firmware for IPA must be loaded during initialization, either by
+>>>> the AP or by the modem.  The loader is currently specified based on
+>>>> whether the Boolean modem-init property is present.
+>>>>
+>>>> Instead, use a new property with an enumerated value to indicate
+>>>> explicitly how GSI firmware gets loaded.  With this in place, a
+>>>> third approach can be added in an upcoming patch.
+>>>>
+>>>> The new qcom,gsi-loader property has two defined values:
+>>>>     - self:   The AP loads GSI firmware
+>>>>     - modem:  The modem loads GSI firmware
+>>>> The modem-init property must still be supported, but is now marked
+>>>> deprecated.
+>>>>
+>>>> Signed-off-by: Alex Elder <elder@linaro.org>
+>>>> ---
+>>>>    .../devicetree/bindings/net/qcom,ipa.yaml     | 59 +++++++++++++++----
+>>>>    1 file changed, 46 insertions(+), 13 deletions(-)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+>>>> index e752b76192df0..0dfd6c721e045 100644
+>>>> --- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+>>>> +++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+>>>> @@ -124,12 +124,22 @@ properties:
+>>>>          - const: ipa-clock-enabled-valid
+>>>>          - const: ipa-clock-enabled
+>>>>    
+>>>> +  qcom,gsi-loader:
+>>>> +    enum:
+>>>> +      - self
+>>>> +      - modem
+>>>> +    description:
+>>>> +      This indicates how GSI firmware should be loaded.  If the AP loads
+>>>
+>>> s/This indicates/Indicate/
+>>> (or any other grammar without describing DT syntax but hardware/system)
+>>
+>> OK.
+>>
+>>>> +      and validates GSI firmware, this property has value "self".  If the
+>>>> +      modem does this, this property has value "modem".
+>>>> +
+>>>>      modem-init:
+>>>> +    deprecated: true
+>>>>        type: boolean
+>>>>        description:
+>>>> -      If present, it indicates that the modem is responsible for
+>>>> -      performing early IPA initialization, including loading and
+>>>> -      validating firwmare used by the GSI.
+>>>> +      This is the older (deprecated) way of indicating how GSI firmware
+>>>> +      should be loaded.  If present, the modem loads GSI firmware; if
+>>>> +      absent, the AP loads GSI firmware.
+>>>>    
+>>>>      memory-region:
+>>>>        maxItems: 1
+>>>> @@ -155,15 +165,36 @@ required:
+>>>>      - interconnects
+>>>>      - qcom,smem-states
+>>>>    
+>>>> -# If modem-init is not present, the AP loads GSI firmware, and
+>>>> -# memory-region must be specified
+>>>> -if:
+>>>> -  not:
+>>>> -    required:
+>>>> -      - modem-init
+>>>> -then:
+>>>> -  required:
+>>>> -    - memory-region
+>>>> +allOf:
+>>>> +  # If qcom,gsi-loader is present, modem-init must not be present
+>>>> +  - if:
+>>>> +      required:
+>>>> +        - qcom,gsi-loader
+>>>> +    then:
+>>>> +      properties:
+>>>> +        modem-init: false
+>>>
+>>> This is ok, but will not allow you to keep deprecated property in DTS
+>>> for the transition period. We talked about this that you need to keep
+>>> both or wait few cycles before applying DTS cleanups.
+>>
+>> My intention is expressed in the comment.  Is it because of the
+>> "if .... required ... qcom,gsi-loader"?
+>>
+>> Should it be "if ... properties ... qcom,gsi-loader"?
+> 
+> You disallow modem-init here, so it cannot be present in DTS if
+> gsi-loader is present. Therefore the deprecated case like this:
+>    qcom,gsi-loader = "modem"
+>    modem-init;
+> is not allowed by the schema.
+> 
+> As I said, it is fine, but your DTS should wait a cycle.
 
-On 11/15/2022 2:32 AM, Robert Marko wrote:
-> 
-> On 14. 11. 2022. 21:29, Brian Masney wrote:
->> Note that this is a RFC patch and not meant to be merged. I looked into
->> a problem with linux-next-20221110 on the Qualcomm SA8540P automotive
->> board (sc8280xp) where the UFS host controller would fail to probe due
->> to repeated probe deferrals when trying to get reset-gpios via
->> devm_gpiod_get_optional().
->>
->> of_get_named_gpiod_flags() returns -EPROBE_DEFER, which is caused by
->> of_gpiochip_match_node_and_xlate() returning 0 since the of_xlate 
->> function
->> pointer is not set for the qcom,sc8280xp-tlmm pinctrl driver. The
->> pinctrl driver doesn't define one, so of_gpiochip_add() should
->> automatically setup of_gpio_simple_xlate() on it's behalf. This doesn't
->> happen since the fwnode member on the struct gpiochip is set to null
->> when of_gpiochip_add() is called. Let's work around this by ensuring
->> that it's set if available.
->>
->> Note that this broke sometime within the last few weeks within
->> linux-next and I haven't bisected this. I'm posting this in the hopes
->> that someone may know offhand which patch(es) may have broken this.
-> 
-> Hi, the following patch should fix it for you, I have hit the same issue on
-> IPQ8074.
-> 
-> https://patchwork.ozlabs.org/project/linux-gpio/patch/20221111113732.461881-1-thierry.reding@gmail.com/
->
-This fixes the issue I was facing for sa8540p (sc8280xp). Thanks Robert.
+OK, then this is exactly as I intended.  I am planning to wait
+until Linux v6.2-rc1 is published before I post the DTS updates
+that implement this change.  It is not technically necessary
+until IPA v5.0 is fully supported, and I don't have confidence
+all of that will accepted before then.
 
-Shazad
+If I did it "your way" first I could get it done now, but then
+I'd want to do another round later to make it this way.
 
-> Regards,
-> Robert
+I will still send an updated series shortly, to address your
+other comment about wording in the description.  But I will
+not be changing this part.
+
+Thanks for the explanation Krzysztof.
+
+					-Alex
+
+
 > 
->>
->> Signed-off-by: Brian Masney <bmasney@redhat.com>
->> ---
->>   drivers/gpio/gpiolib.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
->> index 11fb7ec883e9..8bec66008869 100644
->> --- a/drivers/gpio/gpiolib.c
->> +++ b/drivers/gpio/gpiolib.c
->> @@ -678,7 +678,7 @@ int gpiochip_add_data_with_key(struct gpio_chip 
->> *gc, void *data,
->>        * Assign fwnode depending on the result of the previous calls,
->>        * if none of them succeed, assign it to the parent's one.
->>        */
->> -    gdev->dev.fwnode = dev_fwnode(&gdev->dev) ?: fwnode;
->> +    gc->fwnode = gdev->dev.fwnode = dev_fwnode(&gdev->dev) ?: fwnode;
->>       gdev->id = ida_alloc(&gpio_ida, GFP_KERNEL);
->>       if (gdev->id < 0) {
+> 
+> Best regards,
+> Krzysztof
+> 
+
