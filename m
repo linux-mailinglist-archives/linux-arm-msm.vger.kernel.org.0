@@ -2,165 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6C5662956A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 11:11:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B28FE629577
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Nov 2022 11:13:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238322AbiKOKLr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Nov 2022 05:11:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60496 "EHLO
+        id S238273AbiKOKNs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Nov 2022 05:13:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238296AbiKOKLm (ORCPT
+        with ESMTP id S238363AbiKOKNY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Nov 2022 05:11:42 -0500
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 983C9F3E;
-        Tue, 15 Nov 2022 02:11:41 -0800 (PST)
-Received: from IcarusMOD.eternityproject.eu (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 751E66602980;
-        Tue, 15 Nov 2022 10:11:39 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1668507100;
-        bh=nr11OW0GjXZZd+uqu9pF2DuJ8K92kyYL5cWgAQ18zqQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=kKPZyci6AotvDeCWL9iM2NEBpE7Z8BD20eVo35ib98AltVwiFBcwZmfIMnMFF1XPr
-         5vlVtGEjd11fz+YRLkMmUhn97qlpsdkc4DL6NhgMm7Mkwyq1oicoTZ7ILmmgDzuhjM
-         ze0fKEDW33y8MZR0UepcThvIbFu3/lAeZE00q+cOipZQ8Lcqot9TRVnTyQN8HPCKck
-         pMryKWdgZqXUNVnkCcUcU72ywyTz5g2+BhbOUwbY61ixF1hwqgKC+NR2GZoEY2LovL
-         adOi8bpXpHWwZ9iuBZ2twoRkkWBhNpLm4nS9wufTfY8QLx9jZPPZJENuxux6eG7vRa
-         qdyNF8dFcgZWw==
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-To:     agross@kernel.org
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, joro@8bytes.org,
-        will@kernel.org, robin.murphy@arm.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robdclark@gmail.com,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        marijn.suijten@somainline.org, kernel@collabora.com,
-        luca@z3ntu.xyz, a39.skl@gmail.com, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH v3 6/6] iommu/qcom: Add support for QSMMUv2 and QSMMU-500 secured contexts
-Date:   Tue, 15 Nov 2022 11:11:22 +0100
-Message-Id: <20221115101122.155440-7-angelogioacchino.delregno@collabora.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221115101122.155440-1-angelogioacchino.delregno@collabora.com>
-References: <20221115101122.155440-1-angelogioacchino.delregno@collabora.com>
+        Tue, 15 Nov 2022 05:13:24 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C424624F38
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 02:12:38 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id i186-20020a1c3bc3000000b003cfe29a5733so2875533wma.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Nov 2022 02:12:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:from:to:cc:subject:date:message-id:reply-to;
+        bh=HYUPzUV+S9Fy+mYwzh6CSP3umqa+7In6uixG2u9bF/E=;
+        b=a0+qfMKXjIvovlIGHjkV1WfW7ga7PZy0Eqh9MfJis5SerHAAdrfO/Ln3EtAEoo5TOA
+         NQb7EA5x5abu8j73no53C9tyB4hAw0HJBzCNTCZfLloLil87NNOiG+wXo6CiMEIwFCZ/
+         FwbNptzJsJUShD3S+B6D6PWEBtDIP/d8ftIhU5qqlMnOSiaR9vtbrnhmUJ8xoRe9rU7x
+         xiJTFkXDspL5NEyspZtI7Y9/ZVHGLzpU2jVUTg86Pz+ma1hog9R/WXgxyg4p3xoP+Duu
+         kSBpMX1LF5nd3+hWLuux0lCHjIqyHdm0Tsa2kSlD7gdAqf8eR2qjpQ6O9KdswyQyOwrT
+         v0rQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:message-id:date:from:content-transfer-encoding:mime-version
+         :subject:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HYUPzUV+S9Fy+mYwzh6CSP3umqa+7In6uixG2u9bF/E=;
+        b=gMfAIwQWoXPFg26YC756ZAyfrKELZGHrGGVhlZhURZH1g/LI72yN+KAa+ov0w2DZrv
+         ++y8yA2IGsu0mUj2UwubbqqYQnNNHjAEpc0XwpUnwcPsXKmLN78xM/FTTlorvpprxAEw
+         Hmt/ox2R9QB1NqLtJyftneGr8sUVKdehO8bc2Bo8/KryDHlqPY/MBFwkqh+tHPtjnuaB
+         NH7kFqzAJoMcRwsEHsvLB5c22I1JBbBPxrzJVEdE6OvN+0FG4iir4R6GsVrG8y531O2X
+         k/cfheHkjcVKMXyjtN20aeHoStYaYAsbhOZcXv/PTGyIUesGItFKUeJtrsIbm9qDJ2Ur
+         wzkQ==
+X-Gm-Message-State: ANoB5ploVKSFFhFT0wUfKPetirUOikXbjy5unWJXJsH1VNYXPOgJR5OC
+        8qidGXWUs9KzPkh1cdUL/Yi5uw==
+X-Google-Smtp-Source: AA0mqf6cqFMpLe4sdsSvweZOEAkruMlMvbfcomg5LEJX/mo3qjW1mryzLkhdNwpXKrX1k455qG5wHg==
+X-Received: by 2002:a7b:cb89:0:b0:3cf:8a44:e1eb with SMTP id m9-20020a7bcb89000000b003cf8a44e1ebmr891215wmi.189.1668507157277;
+        Tue, 15 Nov 2022 02:12:37 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id az40-20020a05600c602800b003b492753826sm15165154wmb.43.2022.11.15.02.12.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Nov 2022 02:12:36 -0800 (PST)
+Subject: [PATCH v4 0/2] arm: qcom: mdm9615: second round of bindings and DT fixes
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+X-b4-tracking: H4sIABJmc2MC/43NTQrCMBAF4KtI1kYmv1pX3kNcTNPRBtJUEi1I6d0d3IkLuxreg/fNLCqVSFUcN7
+ MoNMUax8zBbjci9JhvJGPHWWjQWgE4OXRD45WT95jDoyT5wiFJZa4uqAPazqDgaYuVZFswh57H+ZkS
+ l32sj7G8Pq8mxef8R52UBAmhDQCeNBo4pZixjLux3MSFxUmvUTQr3jRX8nsE29KPYtYohhVyBNZ5a5 u9+lKWZXkDb0ygeUoBAAA=
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Tue, 15 Nov 2022 11:12:34 +0100
+Message-Id: <20221005-mdm9615-pinctrl-yaml-v4-0-463523919c19@linaro.org>
+To:     Liam Girdwood <lgirdwood@gmail.com>, Lee Jones <lee@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Herring <robh@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+X-Mailer: b4 0.10.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On some SoCs like MSM8956, MSM8976 and others, secure contexts are
-also secured: these get programmed by the bootloader or TZ (as usual)
-but their "interesting" registers are locked out by the hypervisor,
-disallowing direct register writes from Linux and, in many cases,
-completely disallowing the reprogramming of TTBR, TCR, MAIR and other
-registers including, but not limited to, resetting contexts.
-This is referred downstream as a "v2" IOMMU but this is effectively
-a "v2 firmware configuration" instead.
+This is a second round of bindings & DT fixes for the MDM9615 platform.
 
-Luckily, the described behavior of version 2 is effective only on
-secure contexts and not on non-secure ones: add support for that,
-finally getting a completely working IOMMU on at least MSM8956/76.
+This second round focuses on less trivial changes like pinctrl & regulators bindings,
+the remaining work will mainly be fixing the qcom,kpss-timer/qcom,msm-timer situation and
+add bindings for qcom,lcc-mdm9615, qcom,kpss-gcc & swir,mangoh-iotport-spi.
 
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-[Marijn: Rebased over next-20221111]
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Dependencies: None
+
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@somainline.org>
+To: Liam Girdwood <lgirdwood@gmail.com>
+To: Mark Brown <broonie@kernel.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Lee Jones <lee@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+Changes in v4:
+- Removed applied patches
+- Removed "-ipc" from bindings file name and removed IPC from title & description
+- Added the review tags from v3 after file renaming & title/description change, after Lee's acceptation
+- Link to v3: https://lore.kernel.org/r/20221005-mdm9615-pinctrl-yaml-v3-0-e5e045644971@linaro.org
 
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index 94f51cafee17..db7d7cf5cc7d 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -59,6 +59,7 @@ struct qcom_iommu_ctx {
- 	struct device		*dev;
- 	void __iomem		*base;
- 	bool			 secure_init;
-+	bool			 secured_ctx;
- 	u8			 asid;      /* asid and ctx bank # are 1:1 */
- 	struct iommu_domain	*domain;
- };
-@@ -287,6 +288,12 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
- 			ctx->secure_init = true;
- 		}
- 
-+		/* Secured QSMMU-500/QSMMU-v2 contexts cannot be programmed */
-+		if (ctx->secured_ctx) {
-+			ctx->domain = domain;
-+			continue;
-+		}
-+
- 		qcom_iommu_reset_ctx(ctx);
- 
- 		/* TTBRs */
-@@ -418,7 +425,8 @@ static void qcom_iommu_detach_dev(struct iommu_domain *domain, struct device *de
- 		struct qcom_iommu_ctx *ctx = to_ctx(qcom_domain, fwspec->ids[i]);
- 
- 		/* Disable and reset the context bank */
--		qcom_iommu_reset_ctx(ctx);
-+		if (!ctx->secured_ctx)
-+			qcom_iommu_reset_ctx(ctx);
- 
- 		ctx->domain = NULL;
- 	}
-@@ -699,10 +707,14 @@ static int qcom_iommu_ctx_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return -ENODEV;
- 
-+	if (of_device_is_compatible(dev->of_node, "qcom,msm-iommu-v2-sec"))
-+		ctx->secured_ctx = true;
-+
- 	/* clear IRQs before registering fault handler, just in case the
- 	 * boot-loader left us a surprise:
- 	 */
--	iommu_writel(ctx, ARM_SMMU_CB_FSR, iommu_readl(ctx, ARM_SMMU_CB_FSR));
-+	if (!ctx->secured_ctx)
-+		iommu_writel(ctx, ARM_SMMU_CB_FSR, iommu_readl(ctx, ARM_SMMU_CB_FSR));
- 
- 	ret = devm_request_irq(dev, irq,
- 			       qcom_iommu_fault,
-@@ -744,6 +756,8 @@ static int qcom_iommu_ctx_remove(struct platform_device *pdev)
- static const struct of_device_id ctx_of_match[] = {
- 	{ .compatible = "qcom,msm-iommu-v1-ns" },
- 	{ .compatible = "qcom,msm-iommu-v1-sec" },
-+	{ .compatible = "qcom,msm-iommu-v2-ns" },
-+	{ .compatible = "qcom,msm-iommu-v2-sec" },
- 	{ /* sentinel */ }
- };
- 
-@@ -761,7 +775,8 @@ static bool qcom_iommu_has_secure_context(struct qcom_iommu_dev *qcom_iommu)
- 	struct device_node *child;
- 
- 	for_each_child_of_node(qcom_iommu->dev->of_node, child) {
--		if (of_device_is_compatible(child, "qcom,msm-iommu-v1-sec")) {
-+		if (of_device_is_compatible(child, "qcom,msm-iommu-v1-sec") ||
-+		    of_device_is_compatible(child, "qcom,msm-iommu-v2-sec")) {
- 			of_node_put(child);
- 			return true;
- 		}
-@@ -909,6 +924,7 @@ static const struct dev_pm_ops qcom_iommu_pm_ops = {
- 
- static const struct of_device_id qcom_iommu_of_match[] = {
- 	{ .compatible = "qcom,msm-iommu-v1" },
-+	{ .compatible = "qcom,msm-iommu-v2" },
- 	{ /* sentinel */ }
- };
- 
+Changes in v3:
+- Path 1: Removed from serie because applied
+- Path 2: None
+- Path 3: Added reviewed-by tag
+- Path 4: Fixed dt-schema title and added unevaluatedProperties
+- Path 5: Various schema fixes, uses same naming as other dt-schema for qcom regulators
+- New patch added changing regulators names of msm8660 to conform to bindings
+- Link to v2: https://lore.kernel.org/r/20221005-mdm9615-pinctrl-yaml-v2-0-639fe67a04be@linaro.org
+
+Changes in v2:
+- Rebased on v6.1-rc1
+- Patch 1: Fixed bindings and aligned with Krysztof's series
+- Patch 2: Rewrote patch title and added reviewed-by tag
+- Patch 3: Added reviewed-by tag
+- Patch 4: Moved to end, added support for (regulators|-regulators) sudnode
+- Patch 5: Fixed schema description and added missing unevaluatedProperties in patternProperties
+- Patch 6: Dropped & squashed with patch 4
+- Link to v1: https://lore.kernel.org/r/20221005-mdm9615-pinctrl-yaml-v1-0-0cbc006e2a30@linaro.org
+
+---
+Neil Armstrong (2):
+      dt-bindings: regulators: convert non-smd RPM Regulators bindings to dt-schema
+      dt-bindings: soc: qcom: convert non-smd RPM bindings to dt-schema
+
+ Documentation/devicetree/bindings/mfd/qcom-rpm.txt | 283 ---------------------
+ .../bindings/regulator/qcom,rpm-regulator.yaml     | 128 ++++++++++
+ .../devicetree/bindings/soc/qcom/qcom,rpm.yaml     | 101 ++++++++
+ 3 files changed, 229 insertions(+), 283 deletions(-)
+---
+base-commit: 19d64985796125c5e3820c3db995c5df6d13d6dc
+change-id: 20221005-mdm9615-pinctrl-yaml-13f5c18a4d3a
+
+Best regards,
 -- 
-2.38.1
-
+Neil Armstrong <neil.armstrong@linaro.org>
