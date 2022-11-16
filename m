@@ -2,124 +2,535 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A5C8662BB9D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:25:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 88DFF62BB91
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:24:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239252AbiKPLZo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 06:25:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37574 "EHLO
+        id S232802AbiKPLYz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 06:24:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233287AbiKPLZV (ORCPT
+        with ESMTP id S239126AbiKPLYf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 06:25:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FAA14508B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:14:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1668597245;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=AqO20RkBmPLk/Zsbvz4xja2ZPkggecsj1kg48NugNtU=;
-        b=Z/6XnAYVImU6vSBStf9MIEJs45vO96im9b/75gKcuxkRHddXbnHXxNjnEDt5Spu/YEarEm
-        YoZGo/dz5hNmfQ/eeUNWzLQV8eiTwiu/co1ZfCfH6OV0Qd/qI6+y6+TwP6JNAaUDhFe4/Q
-        NuNrVa8pX4q/+3T8j3F8Fj2J23rqWqE=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-443-Hnc7JJ0HMX6DKZrZ93LDIA-1; Wed, 16 Nov 2022 06:14:04 -0500
-X-MC-Unique: Hnc7JJ0HMX6DKZrZ93LDIA-1
-Received: by mail-qt1-f200.google.com with SMTP id fb5-20020a05622a480500b003a525d52abcso12650698qtb.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:14:04 -0800 (PST)
+        Wed, 16 Nov 2022 06:24:35 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE53845A04
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:14:39 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id t25so43195164ejb.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:14:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=J5R9lN7voVHn5YJtEmLYdaFijNlrjgbteto432YVCRk=;
+        b=SsY995Q0b1K4LVe5E+6APGvHxJ+dnBxKKaLS3KVbPNsGwfGFkqJzBPRidvFJYB2Xl/
+         9y/K9yBl7fq/ZZIzL77g3gngfIuB5P4wMlvDqEOfl5gH3YhluvToHVheNQ9AuobJIIXf
+         ZbGXNPhFhMbFBiLQa0GfQcly11/CXqkHCzIH7uewo87f5Olr8plIu9bSO8OIZkFHab6f
+         G6Ja+S5qso4kMR1coJQQ+MzWSazuKmBzIVGT3bYP0HEEDl0ZnVsLbGwSusyjHcbrgfDM
+         G/7SO0gEnolEIrwp78axTfp8Cmzsd6hWnpT3L/Ud54shAMzCQnR8JUxp5vpXEzHn2xCv
+         KU8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AqO20RkBmPLk/Zsbvz4xja2ZPkggecsj1kg48NugNtU=;
-        b=I2ODzvSvUbXvT8YE2/YDc5jZ/vsJ6zKSq7hZt7WHlR5bE8KAtwuPlg5NfrUkn8G7UL
-         eLjzxAv187XfPKNFAeKqjPWksjV8VMwMNu0QrZRWXIpEw5aOP5TkzV4F+kBgLam2oUK4
-         MSMnmsCidCgtaNChXEjbiYHlejZuE45GQXSs69Ex8DNp9vjwAthQ/rWe7J5dnGZ2s7Ah
-         5LlG/Gn9VXyP4HMB0z7mkBW9urUq3D6kxRp6eRtWTsglMsi+DOdOLxszQIgnwyhB2QCr
-         J0zKfZlpDeSUaW9bs819MZObxoQ+bPzJ3+YQRzLAqJK+n1w8o0t12zZjBpAX3mHx6hxH
-         Hv6g==
-X-Gm-Message-State: ANoB5pmBXj1m8FGFAu74iHuEhSruKiS3W8VY87MNR6XfCX1UrXqKIzsn
-        1z6G04O1dPmP9RZh05wf722Y4228DDXtvQb+djR1m7NZPCHIfEWNHegET8Z3dJU/mbtCdk/4UOq
-        z/atjxvg2wNWEwDKt6djnwLtw1Q==
-X-Received: by 2002:ad4:450d:0:b0:4c6:5a5f:3063 with SMTP id k13-20020ad4450d000000b004c65a5f3063mr6024309qvu.4.1668597243594;
-        Wed, 16 Nov 2022 03:14:03 -0800 (PST)
-X-Google-Smtp-Source: AA0mqf7zVoHnSML4pkn3Q4Eh7xfnZiowbK8L5hFzRTrOFF/MLKTx3usbbcLq0D+RjcLq4PE4cjVYNw==
-X-Received: by 2002:ad4:450d:0:b0:4c6:5a5f:3063 with SMTP id k13-20020ad4450d000000b004c65a5f3063mr6024286qvu.4.1668597243332;
-        Wed, 16 Nov 2022 03:14:03 -0800 (PST)
-Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id g6-20020ac870c6000000b003996aa171b9sm8427814qtp.97.2022.11.16.03.14.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 03:14:03 -0800 (PST)
-Date:   Wed, 16 Nov 2022 06:14:01 -0500
-From:   Brian Masney <bmasney@redhat.com>
-To:     Thierry Reding <thierry.reding@gmail.com>
-Cc:     linus.walleij@linaro.org, brgl@bgdev.pl,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, psodagud@quicinc.com,
-        quic_shazhuss@quicinc.com, quic_ppareek@quicinc.com,
-        ahalaney@redhat.com, echanude@redhat.com,
-        nicolas.dechesne@linaro.org
-Subject: Re: [PATCH RFC] gpiolib: ensure that fwnode is properly set
-Message-ID: <Y3TF+VbE5yFlz+OZ@x1>
-References: <20221114202943.2389489-1-bmasney@redhat.com>
- <Y3S5sZIVi2DPua0p@orome>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=J5R9lN7voVHn5YJtEmLYdaFijNlrjgbteto432YVCRk=;
+        b=p9m4MKGm+t4+useoblyFcsh646mYCejqPrhGQxwZUs/NkSUYNF7hQDM+PuI/8J+VeS
+         CXcyOySHjKgp5ZrXqiXHsv/CDdmGjl7uVXA4XAuSuIg9Awf8bB3/8vUk4R2qlmZeEDRF
+         drpw8zQK42VcJj0cgipVlknyeM+IlCLohaD/R0Phxn3SpdF9i2hdiHY74yaXG36BGQmg
+         Ip5HGiWBuS0+QmLityDGwRRfyXO0RTZD+/HV+XWo1C8qepPpd2xlC64YcQy2KI5zTs8x
+         Xyxy8VskfBiFTDgOyEx2Yd0gamAtO5158EtFbuB4WEn/k1JE74+/y/I8imGP6vSlIw/M
+         GtEg==
+X-Gm-Message-State: ANoB5pnZpqAbe5jibFqC5+/lMVanIyDm0LLYOxIZQL89ZS7VHNWqF1+k
+        /NZEKVXB5NpFB3ZjbGuvD65A6g==
+X-Google-Smtp-Source: AA0mqf5QXsjaA28t40k2NYY3T/Ekp1wTUkMGGfKFdQER6rmnaxk6s0dQyjr7HeEGbi+8Y1iQy6Shdw==
+X-Received: by 2002:a17:906:5e05:b0:7ae:21bc:89f0 with SMTP id n5-20020a1709065e0500b007ae21bc89f0mr17221131eju.132.1668597278372;
+        Wed, 16 Nov 2022 03:14:38 -0800 (PST)
+Received: from [192.168.31.208] ([194.29.137.22])
+        by smtp.gmail.com with ESMTPSA id d11-20020a170906304b00b007ab2d744801sm5948736ejd.190.2022.11.16.03.14.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Nov 2022 03:14:37 -0800 (PST)
+Message-ID: <9d24d10f-e6e8-2d4a-c75c-cb93d9cc4066@linaro.org>
+Date:   Wed, 16 Nov 2022 12:14:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y3S5sZIVi2DPua0p@orome>
-User-Agent: Mutt/2.2.7 (2022-08-07)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH 10/10] arm64: dts: qcom: Add base SM8550 MTP dts
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+References: <20221116103146.2556846-1-abel.vesa@linaro.org>
+ <20221116103146.2556846-11-abel.vesa@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20221116103146.2556846-11-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 16, 2022 at 11:21:37AM +0100, Thierry Reding wrote:
-> On Mon, Nov 14, 2022 at 03:29:43PM -0500, Brian Masney wrote:
-> > diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-> > index 11fb7ec883e9..8bec66008869 100644
-> > --- a/drivers/gpio/gpiolib.c
-> > +++ b/drivers/gpio/gpiolib.c
-> > @@ -678,7 +678,7 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
-> >  	 * Assign fwnode depending on the result of the previous calls,
-> >  	 * if none of them succeed, assign it to the parent's one.
-> >  	 */
-> > -	gdev->dev.fwnode = dev_fwnode(&gdev->dev) ?: fwnode;
-> > +	gc->fwnode = gdev->dev.fwnode = dev_fwnode(&gdev->dev) ?: fwnode;
+
+
+On 16/11/2022 11:31, Abel Vesa wrote:
+> Add dts file for Qualcomm MTP platform which uses SM8550 SoC.
 > 
-> This doesn't look right to me. Looking at the documentation of
-> gc->fwnode and how it is used, the purpose of this is to allow
-> explicitly overriding the fwnode that the GPIO chip will use.
+> Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/Makefile       |   1 +
+>   arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 419 ++++++++++++++++++++++++
+>   2 files changed, 420 insertions(+)
+>   create mode 100644 arch/arm64/boot/dts/qcom/sm8550-mtp.dts
 > 
-> So really this should not be used beyond the initial registration
-> in gpiochip_add_data_with_key(). If the above patch fixes anything,
-> then I suspect somebody is using gc->fwnode outside of this
-> registration.
-> 
-> Looking at gpiolib, the only remaining place that seems to do this is
-> the gpio-reserved-ranges handling code, in which case, the below on top
-> of my initial patch might fix that. That might explain why MSM is still
-> seeing issues.
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index afe496a93f94..b447b3082c84 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -169,3 +169,4 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-sony-xperia-sagami-pdx215.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-hdk.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-qrd.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-sony-xperia-nagara-pdx223.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-mtp.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+> new file mode 100644
+> index 000000000000..d4c8d5b2497e
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+> @@ -0,0 +1,419 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2022, Linaro Limited
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include "sm8550.dtsi"
+> +#include "pm8010.dtsi"
+> +#include "pm8550.dtsi"
+> +#include "pm8550b.dtsi"
+> +#include "pm8550ve.dtsi"
+> +#include "pm8550vs.dtsi"
+> +#include "pmk8550.dtsi"
+> +#include "pmr735d.dtsi"
+> +
+> +/ {
+> +	model = "Qualcomm Technologies, Inc. SM8550 MTP";
+> +	compatible = "qcom,sm8550-mtp", "qcom,sm8550";
+> +
+> +	aliases {
+> +		serial0 = &uart7;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +
+> +	vph_pwr: vph-pwr-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-min-microvolt = <3700000>;
+> +		regulator-max-microvolt = <3700000>;
+> +
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +	};
+> +};
+> +
+> +&apps_rsc {
+> +	pm8550b-rpmh-regulators {
+> +		compatible = "qcom,pm8550-rpmh-regulators";
+> +		qcom,pmic-id = "b";
+> +
+> +		vdd-bob1-supply = <&vph_pwr>;
+> +		vdd-bob2-supply = <&vph_pwr>;
+> +		vdd-l2-l13-l14-supply = <&vreg_bob1>;
+> +		vdd-l3-supply = <&vreg_s4g_1p3>;
+> +		vdd-l5-l16-supply = <&vreg_bob1>;
+> +		vdd-l6-l7-supply = <&vreg_bob1>;
+> +		vdd-l8-l9-supply = <&vreg_bob1>;
+> +		vdd-l11-supply = <&vreg_s4g_1p3>;
+> +		vdd-l12-supply = <&vreg_s6g_1p8>;
+> +		vdd-l15-supply = <&vreg_s6g_1p8>;
+> +		vdd-l17-supply = <&vreg_bob2>;
+> +
+> +		vreg_bob1: bob1 {
+> +			regulator-name = "vreg_bob1";
+> +			regulator-min-microvolt = <3296000>;
+> +			regulator-max-microvolt = <3960000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_bob2: bob2 {
+> +			regulator-name = "vreg_bob2";
+> +			regulator-min-microvolt = <2720000>;
+> +			regulator-max-microvolt = <3960000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l1b_1p8: ldo1 {
+> +			regulator-name = "vreg_l1b_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2b_3p0: ldo2 {
+> +			regulator-name = "vreg_l2b_3p0";
+> +			regulator-min-microvolt = <3008000>;
+> +			regulator-max-microvolt = <3008000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l5b_3p1: ldo5 {
+> +			regulator-name = "vreg_l5b_3p1";
+> +			regulator-min-microvolt = <3104000>;
+> +			regulator-max-microvolt = <3104000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l6b_1p8: ldo6 {
+> +			regulator-name = "vreg_l6b_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <3008000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l7b_1p8: ldo7 {
+> +			regulator-name = "vreg_l7b_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <3008000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l8b_1p8: ldo8 {
+> +			regulator-name = "vreg_l8b_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <3008000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l9b_2p9: ldo9 {
+> +			regulator-name = "vreg_l9b_2p9";
+> +			regulator-min-microvolt = <2960000>;
+> +			regulator-max-microvolt = <3008000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l11b_1p2: ldo11 {
+> +			regulator-name = "vreg_l11b_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1504000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l12b_1p8: ldo12 {
+> +			regulator-name = "vreg_l12b_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l13b_3p0: ldo13 {
+> +			regulator-name = "vreg_l13b_3p0";
+> +			regulator-min-microvolt = <3000000>;
+> +			regulator-max-microvolt = <3000000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l14b_3p2: ldo14 {
+> +			regulator-name = "vreg_l14b_3p2";
+> +			regulator-min-microvolt = <3200000>;
+> +			regulator-max-microvolt = <3200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l15b_1p8: ldo15 {
+> +			regulator-name = "vreg_l15b_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l16b_2p8: ldo16 {
+> +			regulator-name = "vreg_l16b_2p8";
+> +			regulator-min-microvolt = <2800000>;
+> +			regulator-max-microvolt = <2800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l17b_2p5: ldo17 {
+> +			regulator-name = "vreg_l17b_2p5";
+> +			regulator-min-microvolt = <2504000>;
+> +			regulator-max-microvolt = <2504000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	pm8550c-rpmh-regulators {
+> +		compatible = "qcom,pm8550vs-rpmh-regulators";
+> +		qcom,pmic-id = "c";
+> +
+> +		vdd-l3-supply = <&vreg_s4e_0p9>;
+> +
+> +		vreg_l3c_0p91: ldo3 {
+> +			regulator-name = "vreg_l3c_0p9";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <912000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	pm8550d-rpmh-regulators {
+> +		compatible = "qcom,pm8550vs-rpmh-regulators";
+> +		qcom,pmic-id = "d";
+> +
+> +		vdd-l1-supply = <&vreg_s4e_0p9>;
+> +
+> +		vreg_l1d_0p88: ldo1 {
+> +			regulator-name = "vreg_l1d_0p88";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	pm8550e-rpmh-regulators {
+> +		compatible = "qcom,pm8550vs-rpmh-regulators";
+> +		qcom,pmic-id = "e";
+> +
+> +		vdd-l1-supply = <&vreg_s4e_0p9>;
+> +		vdd-l2-supply = <&vreg_s4e_0p9>;
+> +		vdd-l3-supply = <&vreg_s4g_1p3>;
+> +		vdd-s4-supply = <&vph_pwr>;
+> +		vdd-s5-supply = <&vph_pwr>;
+> +
+> +		vreg_s4e_0p9: smps4 {
+> +			regulator-name = "vreg_s4e_0p9";
+> +			regulator-min-microvolt = <904000>;
+> +			regulator-max-microvolt = <984000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_s5e_1p1: smps5 {
+> +			regulator-name = "vreg_s5e_1p1";
+> +			regulator-min-microvolt = <1080000>;
+> +			regulator-max-microvolt = <1120000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l1e_0p88: ldo1 {
+> +			regulator-name = "vreg_l1e_0p88";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <880000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2e_0p9: ldo2 {
+> +			regulator-name = "vreg_l2e_0p9";
+> +			regulator-min-microvolt = <904000>;
+> +			regulator-max-microvolt = <970000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l3e_1p2: ldo3 {
+> +			regulator-name = "vreg_l3e_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	pm8550f-rpmh-regulators {
+> +		compatible = "qcom,pm8550ve-rpmh-regulators";
+> +		qcom,pmic-id = "f";
+> +
+> +		vdd-l1-supply = <&vreg_s4e_0p9>;
+> +		vdd-l2-supply = <&vreg_s4e_0p9>;
+> +		vdd-l3-supply = <&vreg_s4e_0p9>;
+> +		vdd-s4-supply = <&vph_pwr>;
+> +
+> +		vreg_s4f_0p5: smps4 {
+> +			regulator-name = "vreg_s4f_0p5";
+> +			regulator-min-microvolt = <500000>;
+> +			regulator-max-microvolt = <700000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l1f_0p9: ldo1 {
+> +			regulator-name = "vreg_l1f_0p9";
+> +			regulator-min-microvolt = <912000>;
+> +			regulator-max-microvolt = <912000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2f_0p88: ldo2 {
+> +			regulator-name = "vreg_l2f_0p88";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <912000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l3f_0p91: ldo3 {
+> +			regulator-name = "vreg_l3f_0p91";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <912000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	pm8550g-rpmh-regulators {
+> +		compatible = "qcom,pm8550vs-rpmh-regulators";
+> +		qcom,pmic-id = "g";
+> +
+> +		vdd-l1-supply = <&vreg_s4g_1p3>;
+> +		vdd-l2-supply = <&vreg_s4g_1p3>;
+> +		vdd-l3-supply = <&vreg_s4g_1p3>;
+> +		vdd-s1-supply = <&vph_pwr>;
+> +		vdd-s2-supply = <&vph_pwr>;
+> +		vdd-s3-supply = <&vph_pwr>;
+> +		vdd-s4-supply = <&vph_pwr>;
+> +		vdd-s5-supply = <&vph_pwr>;
+> +		vdd-s6-supply = <&vph_pwr>;
+> +
+> +		vreg_s1g_1p2: smps1 {
+> +			regulator-name = "vreg_s1g_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1300000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_s2g_0p8: smps2 {
+> +			regulator-name = "vreg_s2g_0p8";
+> +			regulator-min-microvolt = <800000>;
+> +			regulator-max-microvolt = <1000000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_s3g_0p7: smps3 {
+> +			regulator-name = "vreg_s3g_0p7";
+> +			regulator-min-microvolt = <300000>;
+> +			regulator-max-microvolt = <1004000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_s4g_1p3: smps4 {
+> +			regulator-name = "vreg_s4g_1p3";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1352000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_s5g_0p8: smps5 {
+> +			regulator-name = "vreg_s5g_0p8";
+> +			regulator-min-microvolt = <500000>;
+> +			regulator-max-microvolt = <1004000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_s6g_1p8: smps6 {
+> +			regulator-name = "vreg_s6g_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <2000000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l1g_1p2: ldo1 {
+> +			regulator-name = "vreg_l1g_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2g_1p2: ldo2 {
+> +			regulator-name = "vreg_l2g_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l3g_1p2: ldo3 {
+> +			regulator-name = "vreg_l3g_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +};
+> +
+> +&pm8550_gpios {
+> +	sdc2_card_det_n: sdc2-card-det-state {
+> +		card-det-pins {
+No need to add a child node if it's just a single set of configurations.
 
-That is correct. The Thinkpad x13s laptop uses the driver
-drivers/pinctrl/qcom/pinctrl-sc8280xp.c and
-arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts defines a
-gpio-reserved-ranges property. The SA8540p automotive board has the same
-SoC, however the DTS we are using doesn't use the gpio-reserved-ranges
-property, and why only your original patch fixed the issue for this
-board.
+> +			pins = "gpio12";
+> +			function = "normal";
+> +			input-enable;
+> +			output-disable;
+> +			bias-pull-up;
+> +			power-source = <1>; /* 1.8 V */
+> +		};
+> +	};
+> +};
+> +
+> +&qupv3_id_0 {
+> +	status = "okay";
+> +};
+> +
+> +&sdhc_2 {
+> +	status = "okay";
+> +
+> +	cd-gpios = <&pm8550_gpios 12 GPIO_ACTIVE_LOW>;
+> +	pinctrl-names = "default", "sleep";
+> +	pinctrl-0 = <&sdc2_default &sdc2_card_det_n>;
+> +	pinctrl-1 = <&sdc2_sleep &sdc2_card_det_n>;
+> +	vmmc-supply = <&vreg_l9b_2p9>;
+> +	vqmmc-supply = <&vreg_l8b_1p8>;
+> +	bus-width = <4>;
+> +	no-sdio;
+> +	no-emmc;
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <32 8>;
+> +
+> +	sdc2_default: sdc2-default-state {
+> +		clk-pins {
+> +			pins = "sdc2_clk";
+> +			bias-disable;
+> +			drive-strength = <16>;
+> +		};
+> +
+> +		cmd-pins {
+> +			pins = "sdc2_cmd";
+> +			bias-pull-up;
+> +			drive-strength = <10>;
+> +		};
+> +
+> +		data-pins {
+> +			pins = "sdc2_data";
+> +			bias-pull-up;
+> +			drive-strength = <10>;
+> +		};
+> +	};
+These are really SoC pins and can go to the SoC DTSI.
 
-I think my patch should be removed from the GPIO tree if Thierry's two
-patches work for everyone.
-
-Brian
-
+Konrad
+> +};
+> +
+> +&uart7 {
+> +	status = "okay";
+> +};
