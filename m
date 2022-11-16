@@ -2,99 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A3F862B5E0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 10:02:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E31C862B614
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 10:10:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237882AbiKPJCZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 04:02:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55300 "EHLO
+        id S231660AbiKPJK0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 04:10:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232130AbiKPJBu (ORCPT
+        with ESMTP id S238825AbiKPJKN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 04:01:50 -0500
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC3921AF33;
-        Wed, 16 Nov 2022 01:00:59 -0800 (PST)
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 176E26602A81;
-        Wed, 16 Nov 2022 09:00:57 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1668589258;
-        bh=GuVy2p92QW9W2mJLHekEdzZ8JahojsK0Oac56TKj1HU=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=CXKCdNla+P8jvn7BrlpAFuFlr4aWU/rubMcEDE6lQ78vXLYnSbQhRUVbqYgagAS6n
-         Ps0XyzQuavM0yLSNpKvlEm1Kdalv2t4TzYJe5fdFt3lsvSv0Aq0DSC8pkqoWGEHePW
-         0+lemygkwEauNI6ATm/uWO5fXjB3FuZaVUQ7SYERjpK3VSZjJapV/OV63IrvEbR5eV
-         XOSkFymt4UtY9OJ9NEqMGmYq1jSIYmkZQ6e4j0sLotYcsL+ZRfmuwsmwjDOZgFyC4N
-         dl7LGj37drAlcyXM5c4eOaTYCUA5IGp0xifi+8FtUrx6MvvUEMEBap9XTq38A7tUNT
-         U29nwQVQ2klnA==
-Message-ID: <f60ccd79-9c82-0844-2c5f-21ec29c14dcf@collabora.com>
-Date:   Wed, 16 Nov 2022 10:00:54 +0100
+        Wed, 16 Nov 2022 04:10:13 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5DB1248C4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 01:10:01 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id v1so28786770wrt.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 01:10:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:reply-to:organization:from
+         :references:cc:to:content-language:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=+EWQaz6AjRSmTYx1xAEW3ez1+waZqAXR8+3Ii5G6qKY=;
+        b=Jd5kxV1FSvOV6K7/6NukSVogzsjR8X+lPT7Ct8DTbnvGDiUGxegx2yd/nsSNJ6uRpa
+         2ew2U+0EN1+VHBkBlGKM0saoaLDKkDfIjFRheK/Hhp3HUh3wBCQ8q8l8Qcwa5I+yjARJ
+         j/uS3wa3AyTIsFEzcSI30hJnGjIb5byhITw81TjyaOrXmPTvr5uAfj/Fci1VUbpbww3g
+         TBwhUG6RgdOYsSVilN0zXmhvSwq8fBTDFO5pAb99PTrXn1ZCvFHDZMWoNGsebDBe1jWK
+         m0gcXfhMO75ViKcPsCpYcWIf/BPPE5aBbLEHD3L16qnYikygymvhfTaVqJSueCXr8Xfa
+         w+tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:reply-to:organization:from
+         :references:cc:to:content-language:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+EWQaz6AjRSmTYx1xAEW3ez1+waZqAXR8+3Ii5G6qKY=;
+        b=N6W5R189FNgL9S8cS2dJSqsZDXhyPb8P/ZZyREiQXML+qtUnmBheK91KnW8FEacMgp
+         olAfsLQLhhXQXF9j2r6CMgMCR38Co0s4EGUV5fOxJBK5e7VfnMECBu5AXP3GYIVbG4og
+         gNOSxwePDTBc0mcbdjMswOi0iUsmEd6u3ab3b+J5Oxp29boWzBf25x1LJqx7BnS0Gse0
+         BskRGatGSgqcC8IhgtH61Ytfh47tUqnxyaivA9pzGTYhZhftqvvapMMImUuKqtaHA2xw
+         LahU2oM/MGqh9qPTYCoZSE5n55yTTHiw0fblqRW9BO6poNZZRnP9SPv9vbBXgl4zzjtc
+         RvxA==
+X-Gm-Message-State: ANoB5pk58r/uFgRBBUqjG2bjaQik3QsEx0VfEKjeopvDL68FEGgdLH/q
+        kF4/RBN/1rpm4ikc7Sq+UJY5Uw==
+X-Google-Smtp-Source: AA0mqf7qtmWKrvfnyLLlcsy5HreT4080D+PHLRUfJtM7qj9c/DZNd9kmcoIZPKtDRZVHFWldDUgkjQ==
+X-Received: by 2002:a05:6000:22e:b0:236:6d6b:fb56 with SMTP id l14-20020a056000022e00b002366d6bfb56mr13467483wrz.198.1668589800269;
+        Wed, 16 Nov 2022 01:10:00 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:2a03:71a6:7a9d:9c71? ([2a01:e0a:982:cbb0:2a03:71a6:7a9d:9c71])
+        by smtp.gmail.com with ESMTPSA id e17-20020a05600c4e5100b003cfa81e2eb4sm1493890wmq.38.2022.11.16.01.09.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Nov 2022 01:09:59 -0800 (PST)
+Message-ID: <2ce5bc21-c4c5-ed61-3683-3288ed1057e2@linaro.org>
+Date:   Wed, 16 Nov 2022 10:09:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.3
-Subject: Re: [PATCH v2 05/11] dt-bindings: mailbox: qcom: Allow syscon on
- qcom,msm8976-apcs-kpss-global
+Subject: Re: [PATCH RFC] gpiolib: ensure that fwnode is properly set
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        agross@kernel.org
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, jassisinghbrar@gmail.com,
-        srinivas.kandagatla@linaro.org, jic23@kernel.org, lars@metafoo.de,
-        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
-        evgreen@chromium.org, gregkh@linuxfoundation.org,
-        a39.skl@gmail.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-iio@vger.kernel.org, linux-hardening@vger.kernel.org,
-        marijn.suijten@somainline.org, kernel@collabora.com, luca@z3ntu.xyz
-References: <20221111120156.48040-1-angelogioacchino.delregno@collabora.com>
- <20221111120156.48040-6-angelogioacchino.delregno@collabora.com>
- <14947ae2-c8d4-de86-ce9e-29175e73cbb2@linaro.org>
- <9f3e88fa-0aaf-2edd-366e-c3f5b2269dba@collabora.com>
- <513a2dc3-d053-6e4b-a125-394cf1f6c81b@linaro.org>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <513a2dc3-d053-6e4b-a125-394cf1f6c81b@linaro.org>
+To:     Brian Masney <bmasney@redhat.com>, linus.walleij@linaro.org,
+        brgl@bgdev.pl
+Cc:     linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, psodagud@quicinc.com,
+        quic_shazhuss@quicinc.com, quic_ppareek@quicinc.com,
+        ahalaney@redhat.com, echanude@redhat.com,
+        nicolas.dechesne@linaro.org, 'Abel Vesa' <abel.vesa@linaro.org>
+References: <20221114202943.2389489-1-bmasney@redhat.com>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+Reply-To: neil.armstrong@linaro.org
+In-Reply-To: <20221114202943.2389489-1-bmasney@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 16/11/22 09:57, Krzysztof Kozlowski ha scritto:
-> On 16/11/2022 09:52, AngeloGioacchino Del Regno wrote:
->> Il 15/11/22 17:44, Krzysztof Kozlowski ha scritto:
->>> On 11/11/2022 13:01, AngeloGioacchino Del Regno wrote:
->>>> MSM8976 supports SMSM, which needs this node to also be a syscon:
->>>> move the compatible to allow that.
->>>>
->>>> Fixes: bcc8d70f912d ("dt-bindings: mailbox: Add compatible for the MSM8976")
->>>
->>> I am not sure if this is still a bug. Maybe just a missing feature?
->>>
->>
->> This changes how you use this mailbox across the entire devicetree (as other
->> nodes will not use mboxes = xxxx, but qcom,ipc = xxxx as syscon), so I think
->> that this is not a missing feature?
+On 14/11/2022 21:29, Brian Masney wrote:
+> Note that this is a RFC patch and not meant to be merged. I looked into
+> a problem with linux-next-20221110 on the Qualcomm SA8540P automotive
+> board (sc8280xp) where the UFS host controller would fail to probe due
+> to repeated probe deferrals when trying to get reset-gpios via
+> devm_gpiod_get_optional().
 > 
-> Whether it is a bug depends on existing usage. If none of msm8976 DTSes
-> use it the other way, then it is just incomplete or missing support. Not
-> a bug. If existing DTSes use it as syscon, thus you need to add syscon
-> to compatible, then it would be a bugfix.
+> of_get_named_gpiod_flags() returns -EPROBE_DEFER, which is caused by
+> of_gpiochip_match_node_and_xlate() returning 0 since the of_xlate function
+> pointer is not set for the qcom,sc8280xp-tlmm pinctrl driver. The
+> pinctrl driver doesn't define one, so of_gpiochip_add() should
+> automatically setup of_gpio_simple_xlate() on it's behalf. This doesn't
+> happen since the fwnode member on the struct gpiochip is set to null
+> when of_gpiochip_add() is called. Let's work around this by ensuring
+> that it's set if available.
 > 
+> Note that this broke sometime within the last few weeks within
+> linux-next and I haven't bisected this. I'm posting this in the hopes
+> that someone may know offhand which patch(es) may have broken this.
+> 
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
+> ---
+>   drivers/gpio/gpiolib.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+> index 11fb7ec883e9..8bec66008869 100644
+> --- a/drivers/gpio/gpiolib.c
+> +++ b/drivers/gpio/gpiolib.c
+> @@ -678,7 +678,7 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
+>   	 * Assign fwnode depending on the result of the previous calls,
+>   	 * if none of them succeed, assign it to the parent's one.
+>   	 */
+> -	gdev->dev.fwnode = dev_fwnode(&gdev->dev) ?: fwnode;
+> +	gc->fwnode = gdev->dev.fwnode = dev_fwnode(&gdev->dev) ?: fwnode;
+>   
+>   	gdev->id = ida_alloc(&gpio_ida, GFP_KERNEL);
+>   	if (gdev->id < 0) {
 
-It's not a bugfix then. The Fixes tag shall be dropped.
+Fixes boot on 8550 on next-20221115
 
-Same question like the other commit, should I send a v3 or can it be dropped while
-applying?
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-
+Thanks,
+Neil
