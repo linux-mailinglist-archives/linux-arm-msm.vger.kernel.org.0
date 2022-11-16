@@ -2,106 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30A0C62C0FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 15:34:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 24EDC62C104
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 15:37:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233335AbiKPOeV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 09:34:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57310 "EHLO
+        id S233195AbiKPOhS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 09:37:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233016AbiKPOeN (ORCPT
+        with ESMTP id S233254AbiKPOhM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 09:34:13 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3EC1EB
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 06:34:11 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id q1-20020a17090a750100b002139ec1e999so2562913pjk.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 06:34:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Lhl1Yht7Jl4WGhfsN3KHnbxlZqqtqyTEjZ2u2REimHo=;
-        b=NQ/yAKYrWw5ryFKeCE0e7gFddbKS+fcQjrzAGvCCHJx7/OUhpC2Oc+B26Q8hkuNXKG
-         TZ46biv4Aj26yUpHbTmcsGXx3+wlGZLaf5iUs1YtpVHuzPFzWzdUCO1V7I+pJX1lTnVX
-         +RYT4mzGNjy6zz6klYzy0xiOAV3Be7OxM9wb+X774MAeaOBZTpJP79go/Y2mkHTukv9p
-         j0PrUqoNW5MDcAf76OszkkK3zzmY9rrotRmsAAqN1c+KcjtLeBIvas4E6Ev2hqpxnpv4
-         h5QUq+qaIc/qnKvh5ZtapY578Si6ijI024NofjRl7c5TKza/infaOmeZ1Psb1f11MBBi
-         Q1Ug==
+        Wed, 16 Nov 2022 09:37:12 -0500
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ADA82983E;
+        Wed, 16 Nov 2022 06:37:11 -0800 (PST)
+Received: by mail-oi1-f177.google.com with SMTP id r76so18646832oie.13;
+        Wed, 16 Nov 2022 06:37:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Lhl1Yht7Jl4WGhfsN3KHnbxlZqqtqyTEjZ2u2REimHo=;
-        b=N52BmnWEzt0L0MuRLAJqcLa3ejrTGCcBKs6uq2vaQRrHfIzaVobHpx/1RPm1lRHmOt
-         R10jX40HLEbpX449nFvOphrA672mVChTmYLwhZQKI7Fl5kFcViCe5IyFCRufHBMuduwG
-         h5f2dajWCaCLBGLyeusroYAsjcB2+tCJ6rzFfd3Kzn8KjMM3bi0khwG9/XiDYxa9ShfN
-         pStfgJCnZicfurysEFLgS714II3AfYG+qIjB7fjDsiII9dTzTaV3tMfrFbci8ligobYH
-         SP69ikvm/a7Z+ypjjB3FyTwnM+SSTB7jNNtmdiOqQxMOxqsjbFx1i2Ijk7UoYtC0mSd1
-         q7yA==
-X-Gm-Message-State: ANoB5pnz/xZUupJDlSnotBMOf8F74ZPGuoqgdS9g5NFnfO05OmEFz6yd
-        /svsb4rZ8dFx2DwL0LLPZOnn
-X-Google-Smtp-Source: AA0mqf7jrrj5npS2T7rtO8L5zePtZFKr1f2c6phSPRL0F+WKl76jwksE+P+kaHC4lT6Q1Edndg0T2Q==
-X-Received: by 2002:a17:902:76c4:b0:187:1c65:e208 with SMTP id j4-20020a17090276c400b001871c65e208mr9111929plt.173.1668609251468;
-        Wed, 16 Nov 2022 06:34:11 -0800 (PST)
-Received: from localhost.localdomain ([59.92.100.153])
-        by smtp.gmail.com with ESMTPSA id e8-20020a63e008000000b0043c732e1536sm9560974pgh.45.2022.11.16.06.34.07
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IFqEVeiOGdmdH2PP7fid7uM73jsm1VRTwjrkKfa7rbQ=;
+        b=cUpTPwFKWkHskXgDPRWwEqANmkQ6miU+ppLvDuNxpCey4dpEVyJdqx6NoxsKF81U9h
+         da1P+XLmqxF2itiql++Ota7T4LfygDEjpZgX0I19cgGdTvxmTMCufn6qOPef+3AduZII
+         +y1cVRyeJopH6EWAngyvhKo4urheNldyhnGwTGDZQHWQntDG/mzgou4t/Gt5oPi9Xozf
+         6HJahfr/vzNen6/tdriWeZiupKmSOluyxS2IypQdUVIIjs7pIKIr1fHr7M/Qnd1Uv0GX
+         EcQTwIB39NkeT7kZNp59imxV1saMRgQuT+n2oi7RsY9YP7Jt2Buj7U2cmVsdfpEZvomp
+         117w==
+X-Gm-Message-State: ANoB5pmDqkDVb5M9+fULrslNK3ZT9sDdyk30VpT96jXGgu3n2xLckk64
+        Z7T7VOjlzhrXnIfHB6Q3NQ==
+X-Google-Smtp-Source: AA0mqf6xFdK5qLXwDeKCyPu+fMM2QIrZuIBwEkqqZio1DIOYzfGje42p2s8TKZrMX+gIgDSiB4jcCw==
+X-Received: by 2002:a05:6808:1486:b0:35a:3662:c693 with SMTP id e6-20020a056808148600b0035a3662c693mr1630798oiw.192.1668609430601;
+        Wed, 16 Nov 2022 06:37:10 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id w6-20020a056830110600b0066d12f2441esm6633468otq.27.2022.11.16.06.37.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 06:34:10 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     bjorn.andersson@linaro.org, bp@alien8.de, mchehab@kernel.org
-Cc:     james.morse@arm.com, rric@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-edac@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_saipraka@quicinc.com,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v4 2/2] EDAC/qcom: Remove extra error no assignment in qcom_llcc_core_setup()
-Date:   Wed, 16 Nov 2022 20:03:52 +0530
-Message-Id: <20221116143352.289303-3-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221116143352.289303-1-manivannan.sadhasivam@linaro.org>
-References: <20221116143352.289303-1-manivannan.sadhasivam@linaro.org>
+        Wed, 16 Nov 2022 06:37:09 -0800 (PST)
+Received: (nullmailer pid 3814691 invoked by uid 1000);
+        Wed, 16 Nov 2022 14:37:12 -0000
+Date:   Wed, 16 Nov 2022 08:37:11 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
+        Andy Gross <agross@kernel.org>,
+        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        devicetree@vger.kernel.org, quic_srivasam@quicinc.com,
+        quic_plai@quicinc.com, Liam Girdwood <lgirdwood@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH v2 03/11] ASoC: dt-bindings: qcom,apr: Correct and extend
+ example
+Message-ID: <166860939523.3813949.14489034056819986470.robh@kernel.org>
+References: <20221115120235.167812-1-krzysztof.kozlowski@linaro.org>
+ <20221115120235.167812-4-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221115120235.167812-4-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If the ret variable is initialized with -EINVAL, then there is no need to
-assign it again in the default case of qcom_llcc_core_setup().
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/edac/qcom_edac.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+On Tue, 15 Nov 2022 13:02:27 +0100, Krzysztof Kozlowski wrote:
+> Correct the APR/GPR example:
+> 1. Use consistent 4-space indentation,
+> 2. Add required properties to services nodes, so the binding check
+>    passes once schema for these services is improved,
+> 3. Add few other properties as APR/GPR is part of a GLINK edge:
+>    qcom,glink-channels and qcom,intents.
+> 4. Drop unnecessary services, to make the example compact.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> Changes since v1:
+> 1. New patch.
+> 
+> Cc: quic_srivasam@quicinc.com
+> Cc: quic_plai@quicinc.com
+> ---
+>  .../bindings/soc/qcom/qcom,apr.yaml           | 61 ++++++++++++-------
+>  1 file changed, 39 insertions(+), 22 deletions(-)
+> 
 
-diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
-index 04df70b7fea3..0b6ca1f20b51 100644
---- a/drivers/edac/qcom_edac.c
-+++ b/drivers/edac/qcom_edac.c
-@@ -126,7 +126,7 @@ static int qcom_llcc_core_setup(struct llcc_drv_data *drv, struct regmap *llcc_b
- static int
- qcom_llcc_clear_error_status(int err_type, struct llcc_drv_data *drv)
- {
--	int ret = 0;
-+	int ret = -EINVAL;
- 
- 	switch (err_type) {
- 	case LLCC_DRAM_CE:
-@@ -158,7 +158,6 @@ qcom_llcc_clear_error_status(int err_type, struct llcc_drv_data *drv)
- 			return ret;
- 		break;
- 	default:
--		ret = -EINVAL;
- 		edac_printk(KERN_CRIT, EDAC_LLCC, "Unexpected error type: %d\n",
- 			    err_type);
- 	}
--- 
-2.25.1
-
+Reviewed-by: Rob Herring <robh@kernel.org>
