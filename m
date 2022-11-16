@@ -2,76 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9501762B7AF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:20:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 86E5762B7AD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 11:20:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238542AbiKPKUn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 05:20:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56758 "EHLO
+        id S237640AbiKPKUi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 05:20:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237368AbiKPKUg (ORCPT
+        with ESMTP id S236080AbiKPKUe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 05:20:36 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2513240BF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:20:15 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id g12so28810551lfh.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:20:15 -0800 (PST)
+        Wed, 16 Nov 2022 05:20:34 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 911BA21829
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:20:11 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id m7-20020a05600c090700b003cf8a105d9eso1100938wmp.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 02:20:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=I5aL5bBi60VmhqGVX72Tovv8qAE3jwwDAyPtMKlL6HE=;
-        b=wv1Rjpzver6kq6z8NbdV4T1E76qcaNaLDz6q3Rvw7By5YY0RPRD1F0hqzutIoDsetS
-         C4m4l4XlGMvyAi0wVsC14xsVDXz0g+bBnJT+wfYLUcfLzOuluiQ6KefISglcBxXFA3tW
-         ZjEQ/axFtBqsyJP2nfD4LIsMty0T2KAoowXW9msmzg8Gjg3dXiaJJgJXHI4pGFSj4G4J
-         ZNx7aswnACe3YZDYaDwaGOApFPcFhOS5mycWsefEV4FQyf7U3AcD2Y6lJWa0POqNk3Th
-         LUuJz4+WP53hu0qDOpn+bcvoR93Lm7u8CYgobUCGA7Fq82wooue/mgaAAE5kU+nqDPtc
-         jiew==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ibv+5YEHVAYxDSspsvnfANXTqnasTlWYJgau3UGpbZg=;
+        b=oqwKO0I4oUXU/WX3HEjhUkL3jbBmIiKg/61u7OXDVcOxweWRas/AE/BwkSrn/jpxdg
+         UI5PEwwWlHkBh6grH+IYllAJBT51uRmLx68VUqiKXVjezJEfvOf/EZbzmKPxgIDnRiRs
+         4ZJQSBLkDX3p5VjaDbR1HM9eT/jAgRQSt8Tg5rJvTFNDRcCAdKjMkGzoSQNjdBrkPHs7
+         8UB24gSxoLXdgy/StL/IWW8R43CeOe61zvZy0hC06POFhZjYhKkKZBGUYJTdt+EuXEn5
+         yXoGZWRKL7bed5AbgsnSGCQ36nf6WBV72EcnlIFyiU3u3rGrc3+n7asKEtQwWik6IxeU
+         uARA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=I5aL5bBi60VmhqGVX72Tovv8qAE3jwwDAyPtMKlL6HE=;
-        b=LWxrEjWrZaco5UJBXaq4yQ2TEvnjwCIxLo9IdGZAsNWXMT4abJQAvKpBNEu34L+SJn
-         vE+cr6JLtAyFTmzoaW6t1fj5gv3Y+/JZWpFQwejeUq9WKTtfAfS/iaIhMz99bJ5IhPPh
-         xY7ByxRgED2YcemQPyOJboExjjjd+Dm8v5h3NBD+FM87gEsdXkpiQ0GfteILnhobhT+j
-         QPa8P0mrh/mCdVW4+4QW0zTty+UTWqEXEECaz59rl/sAUi3t5dYUTUQstqEgFerdR7gI
-         WQOOgdlAjhbdyj2WzFfz/x/cZnxFGWVAig4vyJCLTRq+ccUDy6DbqNA6e8gruz5o4Cea
-         l2lA==
-X-Gm-Message-State: ANoB5pnGDmo2ELvU6hxJoUqrnq2M21LY56lZIK9oEpzfQJ7ksXwH5XUs
-        8AWVcu3IA6Mf8bgNajv4TVN5msFff8PYzv7G
-X-Google-Smtp-Source: AA0mqf7DjJOS1Z8RO0dZMtfkcsuHYYLSvIv01UUZZYZQZyOrZnyIv2DcMuXv4/b/VK+75F8OWDIvyQ==
-X-Received: by 2002:ac2:5f1d:0:b0:4b0:246a:f728 with SMTP id 29-20020ac25f1d000000b004b0246af728mr7392296lfq.534.1668594014092;
-        Wed, 16 Nov 2022 02:20:14 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id d25-20020a19e619000000b004ab52b0bcf9sm2519623lfh.207.2022.11.16.02.20.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 02:20:13 -0800 (PST)
-Message-ID: <7605af5f-a828-5df7-48b8-b543edb0f9b1@linaro.org>
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ibv+5YEHVAYxDSspsvnfANXTqnasTlWYJgau3UGpbZg=;
+        b=5YKshQzzSd6cFSxPQuldyFosFzIevlr9cKj7NK6hz6jGx4CqLbDM8aDZm8Mhvhv4Zy
+         HNQu2BJ1MQVGJmKJzqa5zjWbESWCkn9isagHJyl3l1QLvWF71J8OHGlHhEZoUCQ8CIjg
+         QEk4fj0nlAFG//Zbw0Mej0O4ltnp/CzI6c5IiswVQSq3o2PqmzOcjBgHPZvA1d74HER9
+         pgDPG+q77ahfqQGthif1nTRyIsaTYePPAfhXgk4cb6sw/1G5yosvxIN3fMrS9GKAwBxx
+         DKYO/16Ke+wB2fC2qO1jR/fbacdcclu7GxACAqviNHyGNsznFXlaj4eOZ6GmDJEymfjj
+         /VTQ==
+X-Gm-Message-State: ANoB5pkhTQNf73193HBiC5L7VXOpZWs3I7kI7VmX//W3Xo4DnhRnTKpK
+        odyot1Tv46aHbbe3naFILqivxg==
+X-Google-Smtp-Source: AA0mqf6fM7ZsDPtfpP7ah663PmKAcCanlgICfSh207kSCgxvqhSn88+AGeuSSxUDdN2XSjFioPrWRw==
+X-Received: by 2002:a7b:c04d:0:b0:3cf:a8a5:63ab with SMTP id u13-20020a7bc04d000000b003cfa8a563abmr1608489wmc.101.1668594010071;
+        Wed, 16 Nov 2022 02:20:10 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id l18-20020a05600c4f1200b003c6f3f6675bsm1709900wmq.26.2022.11.16.02.20.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Nov 2022 02:20:09 -0800 (PST)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
 Date:   Wed, 16 Nov 2022 11:20:07 +0100
+Subject: [PATCH 4/4] remoteproc: qcom_q6v5_pas: add sm8550 adsp, cdsp & mpss
+ compatible & data
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sm8450: add Soundwire and LPASS
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20221114-narmstrong-sm8550-upstream-remoteproc-v1-4-104c34cb3b91@linaro.org>
+References: <20221114-narmstrong-sm8550-upstream-remoteproc-v1-0-104c34cb3b91@linaro.org>
+In-Reply-To: <20221114-narmstrong-sm8550-upstream-remoteproc-v1-0-104c34cb3b91@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-References: <20221116101314.52887-1-krzysztof.kozlowski@linaro.org>
- <20221116101314.52887-3-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221116101314.52887-3-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     devicetree@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.10.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,365 +84,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This adds the compatible & data for the aDSP, cDSP and MPSS found in
+the SM8550 SoC.
 
+This platform requires the "Devicetree" firmware to be loaded along the
+main firmware.
 
-On 16/11/2022 11:13, Krzysztof Kozlowski wrote:
-> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> 
-> Add Soundwire controllers, Low Power Audio SubSystem (LPASS) devices and
-> LPASS pin controller.
-> 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Co-developed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Changes since v2:
-> 1. Use lower-case hex.
-> 
-> Changes since v1:
-> 1. Whitespace cleanups.
-> 2. Correct include - do not use deprecated one.
-> ---
->   arch/arm64/boot/dts/qcom/sm8450.dtsi | 295 +++++++++++++++++++++++++++
->   1 file changed, 295 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 4b0a1eee8bd9..747440d0445a 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -15,6 +15,7 @@
->   #include <dt-bindings/interconnect/qcom,sm8450.h>
->   #include <dt-bindings/soc/qcom,gpr.h>
->   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> +#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
->   #include <dt-bindings/thermal/thermal.h>
->   
->   / {
-> @@ -2097,6 +2098,212 @@ compute-cb@3 {
->   			};
->   		};
->   
-> +		wsa2macro: codec@31e0000 {
-> +			compatible = "qcom,sm8450-lpass-wsa-macro";
-> +			reg = <0 0x031e0000 0 0x1000>;
-> +			clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&vamacro>;
-> +			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
-> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +					  <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> +			assigned-clock-rates = <19200000>, <19200000>;
-> +
-> +			#clock-cells = <0>;
-> +			clock-output-names = "wsa2-mclk";
-> +			#sound-dai-cells = <1>;
-I think I'm being a bit too picky, but #-cells could go as the last 
-bunch of properties.
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ drivers/remoteproc/qcom_q6v5_pas.c | 65 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 65 insertions(+)
 
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index e79a5fcbc986..15e740815da0 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -1054,6 +1054,68 @@ static const struct adsp_data sm8450_mpss_resource = {
+ 	.ssctl_id = 0x12,
+ };
+ 
++static const struct adsp_data sm8550_adsp_resource = {
++	.crash_reason_smem = 423,
++	.firmware_name = "adsp.mdt",
++	.dtb_firmware_name = "adsp_dtb.mdt",
++	.pas_id = 1,
++	.dtb_pas_id = 0x24,
++	.minidump_id = 5,
++	.has_aggre2_clk = false,
++	.auto_boot = false,
++	.proxy_pd_names = (char*[]){
++		"lcx",
++		"lmx",
++		NULL
++	},
++	.load_state = "adsp",
++	.ssr_name = "lpass",
++	.sysmon_name = "adsp",
++	.ssctl_id = 0x14,
++};
++
++static const struct adsp_data sm8550_cdsp_resource = {
++	.crash_reason_smem = 601,
++	.firmware_name = "cdsp.mdt",
++	.dtb_firmware_name = "cdsp_dtb.mdt",
++	.pas_id = 18,
++	.dtb_pas_id = 0x25,
++	.minidump_id = 7,
++	.has_aggre2_clk = false,
++	.auto_boot = false,
++	.proxy_pd_names = (char*[]){
++		"cx",
++		"mxc",
++		"nsp",
++		NULL
++	},
++	.load_state = "cdsp",
++	.ssr_name = "cdsp",
++	.sysmon_name = "cdsp",
++	.ssctl_id = 0x17,
++};
++
++static const struct adsp_data sm8550_mpss_resource = {
++	.crash_reason_smem = 421,
++	.firmware_name = "modem.mdt",
++	.dtb_firmware_name = "modem_dtb.mdt",
++	.pas_id = 4,
++	.dtb_pas_id = 0x26,
++	.minidump_id = 3,
++	.has_aggre2_clk = false,
++	.auto_boot = false,
++	.decrypt_shutdown = true,
++	.proxy_pd_names = (char*[]){
++		"cx",
++		"mss",
++		NULL
++	},
++	.load_state = "modem",
++	.ssr_name = "mpss",
++	.sysmon_name = "modem",
++	.ssctl_id = 0x12,
++};
++
+ static const struct of_device_id adsp_of_match[] = {
+ 	{ .compatible = "qcom,msm8226-adsp-pil", .data = &adsp_resource_init},
+ 	{ .compatible = "qcom,msm8974-adsp-pil", .data = &adsp_resource_init},
+@@ -1094,6 +1156,9 @@ static const struct of_device_id adsp_of_match[] = {
+ 	{ .compatible = "qcom,sm8450-cdsp-pas", .data = &sm8350_cdsp_resource},
+ 	{ .compatible = "qcom,sm8450-slpi-pas", .data = &sm8350_slpi_resource},
+ 	{ .compatible = "qcom,sm8450-mpss-pas", .data = &sm8450_mpss_resource},
++	{ .compatible = "qcom,sm8550-adsp-pas", .data = &sm8550_adsp_resource},
++	{ .compatible = "qcom,sm8550-cdsp-pas", .data = &sm8550_cdsp_resource},
++	{ .compatible = "qcom,sm8550-mpss-pas", .data = &sm8550_mpss_resource},
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(of, adsp_of_match);
 
-> +
-> +			pinctrl-names = "default";
-> +			pinctrl-0 = <&wsa2_swr_active>;
-> +		};
-> +
-> +		/* WSA2 */
-> +		swr4: soundwire-controller@31f0000 {
-> +			reg = <0 0x031f0000 0 0x2000>;
-> +			compatible = "qcom,soundwire-v1.7.0";
-> +			interrupts = <GIC_SPI 171 IRQ_TYPE_LEVEL_HIGH>;
-> +			clocks = <&wsa2macro>;
-> +			clock-names = "iface";
-> +
-> +			qcom,din-ports = <2>;
-> +			qcom,dout-ports = <6>;
-> +
-> +			qcom,ports-sinterval-low =	/bits/ 8 <0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x0f 0x0f>;
-> +			qcom,ports-offset1 =		/bits/ 8 <0x01 0x02 0x0c 0x06 0x12 0x0d 0x07 0x0a>;
-> +			qcom,ports-offset2 =		/bits/ 8 <0xff 0x00 0x1f 0xff 0x00 0x1f 0x00 0x00>;
-> +			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
-> +			qcom,ports-hstop =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
-> +			qcom,ports-word-length =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
-> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0xff 0x01 0xff 0xff 0x01 0xff 0xff>;
-> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
-> +			qcom,ports-lane-control =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
-> +
-> +			#sound-dai-cells = <1>;
-> +			#address-cells = <2>;
-> +			#size-cells = <0>;
-> +		};
-> +
-> +		rxmacro: codec@3200000 {
-> +			compatible = "qcom,sm8450-lpass-rx-macro";
-> +			reg = <0 0x3200000 0 0x1000>;
-> +			clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&vamacro>;
-> +			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
-> +
-> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK  LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> +			assigned-clock-rates = <19200000>, <19200000>;
-> +
-> +			#clock-cells = <0>;
-> +			clock-output-names = "mclk";
-> +			#sound-dai-cells = <1>;
-> +
-> +			pinctrl-names = "default";
-> +			pinctrl-0 = <&rx_swr_active>;
-> +		};
-> +
-> +		swr1: soundwire-controller@3210000 {
-> +			reg = <0 0x3210000 0 0x2000>;
-> +			compatible = "qcom,soundwire-v1.7.0";
-Some nodes have reg and compatible flipped.
-
-> +			interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
-> +			clocks = <&rxmacro>;
-> +			clock-names = "iface";
-> +			label = "RX";
-> +			qcom,din-ports = <0>;
-> +			qcom,dout-ports = <5>;
-> +
-> +			qcom,ports-sinterval-low =	/bits/ 8 <0x03 0x1f 0x1f 0x07 0x00>;
-> +			qcom,ports-offset1 =		/bits/ 8 <0x00 0x00 0x0b 0x01 0x00>;
-> +			qcom,ports-offset2 =		/bits/ 8 <0x00 0x00 0x0b 0x00 0x00>;
-> +			qcom,ports-hstart =		/bits/ 8 <0xff 0x03 0xff 0xff 0xff>;
-> +			qcom,ports-hstop =		/bits/ 8 <0xff 0x06 0xff 0xff 0xff>;
-> +			qcom,ports-word-length =	/bits/ 8 <0x01 0x07 0x04 0xff 0xff>;
-> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0x00 0x01 0xff 0xff>;
-> +			qcom,ports-lane-control =	/bits/ 8 <0x01 0x00 0x00 0x00 0x00>;
-> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff 0x00>;
-> +			#sound-dai-cells = <1>;
-> +			#address-cells = <2>;
-> +			#size-cells = <0>;
-> +		};
-> +
-> +		txmacro: codec@3220000 {
-> +			compatible = "qcom,sm8450-lpass-tx-macro";
-> +			reg = <0 0x3220000 0 0x1000>;
-> +			clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&vamacro>;
-> +			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
-> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +					   <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> +			assigned-clock-rates = <19200000>, <19200000>;
-> +
-> +			#clock-cells = <0>;
-> +			clock-output-names = "mclk";
-> +			#sound-dai-cells = <1>;
-> +
-> +			pinctrl-names = "default";
-> +			pinctrl-0 = <&tx_swr_active>;
-> +		};
-> +
-> +		wsamacro: codec@3240000 {
-> +			compatible = "qcom,sm8450-lpass-wsa-macro";
-> +			reg = <0 0x03240000 0 0x1000>;
-> +			clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&vamacro>;
-> +			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
-> +
-> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +					  <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> +			assigned-clock-rates = <19200000>, <19200000>;
-> +
-> +			#clock-cells = <0>;
-> +			clock-output-names = "mclk";
-> +			#sound-dai-cells = <1>;
-> +
-> +			pinctrl-names = "default";
-> +			pinctrl-0 = <&wsa_swr_active>;
-> +		};
-> +
-> +		/* WSA */
-> +		swr0: soundwire-controller@3250000 {
-> +			reg = <0 0x03250000 0 0x2000>;
-> +			compatible = "qcom,soundwire-v1.7.0";
-> +			interrupts = <GIC_SPI 170 IRQ_TYPE_LEVEL_HIGH>;
-> +			clocks = <&wsamacro>;
-> +			clock-names = "iface";
-> +
-> +			qcom,din-ports = <2>;
-> +			qcom,dout-ports = <6>;
-> +
-> +			qcom,ports-sinterval-low =	/bits/ 8 <0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x0f 0x0f>;
-> +			qcom,ports-offset1 =		/bits/ 8 <0x01 0x02 0x0c 0x06 0x12 0x0d 0x07 0x0a>;
-> +			qcom,ports-offset2 =		/bits/ 8 <0xff 0x00 0x1f 0xff 0x00 0x1f 0x00 0x00>;
-> +			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
-> +			qcom,ports-hstop =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
-> +			qcom,ports-word-length =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
-> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0xff 0x01 0xff 0xff 0x01 0xff 0xff>;
-> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
-> +			qcom,ports-lane-control =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
-> +			qcom,port-offset = <1>;
-> +			#sound-dai-cells = <1>;
-> +			#address-cells = <2>;
-> +			#size-cells = <0>;
-> +		};
-> +
-> +		swr2: soundwire-controller@33b0000 {
-> +			reg = <0 0x33b0000 0 0x2000>;
-> +			compatible = "qcom,soundwire-v1.7.0";
-> +			interrupts-extended = <&intc GIC_SPI 496 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&intc GIC_SPI 520 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "core", "wake";
-> +
-> +			clocks = <&vamacro>;
-> +			clock-names = "iface";
-> +			label = "TX";
-> +
-> +			qcom,din-ports = <4>;
-> +			qcom,dout-ports = <0>;
-> +			qcom,ports-sinterval-low =	/bits/ 8 <0x01 0x01 0x03 0x03>;
-> +			qcom,ports-offset1 =		/bits/ 8 <0x00 0x00 0x01 0x01>;
-> +			qcom,ports-offset2 =		/bits/ 8 <0x00 0x00 0x00 0x00>;
-> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0xff 0xff 0xff>;
-> +			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff>;
-> +			qcom,ports-hstop =		/bits/ 8 <0xff 0xff 0xff 0xff>;
-> +			qcom,ports-word-length =	/bits/ 8 <0xff 0xff 0xff 0xff>;
-> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff>;
-> +			qcom,ports-lane-control =	/bits/ 8 <0x01 0x02 0x00 0x00>;
-> +			qcom,port-offset = <1>;
-> +			#sound-dai-cells = <1>;
-> +			#address-cells = <2>;
-> +			#size-cells = <0>;
-> +		};
-> +
-> +		vamacro: codec@33f0000 {
-> +			compatible = "qcom,sm8450-lpass-va-macro";
-> +			reg = <0 0x033f0000 0 0x1000>;
-> +			clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_CLK_ID_RX_CORE_MCLK2_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> +			clock-names = "mclk", "macro", "dcodec", "npl";
-> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> +			assigned-clock-rates = <19200000>;
-> +
-> +			#clock-cells = <0>;
-> +			clock-output-names = "fsgen";
-> +			#sound-dai-cells = <1>;
-> +		};
-> +
->   		remoteproc_adsp: remoteproc@30000000 {
->   			compatible = "qcom,sm8450-adsp-pas";
->   			reg = <0 0x030000000 0 0x100>;
-> @@ -3030,6 +3237,91 @@ qup_uart20_default: qup-uart20-default-state {
->   
->   		};
->   
-> +		lpass_tlmm: pinctrl@3440000{
-> +			compatible = "qcom,sm8450-lpass-lpi-pinctrl";
-> +			reg = <0 0x3440000 0x0 0x20000>,
-> +			      <0 0x34d0000 0x0 0x10000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			gpio-ranges = <&lpass_tlmm 0 0 23>;
-> +
-> +			clocks = <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> +			clock-names = "core", "audio";
-> +
-> +			wsa_swr_active: wsa-swr-active-state {
-> +				clk-pins {
-> +					pins = "gpio10";
-> +					function = "wsa_swr_clk";
-> +					drive-strength = <2>;
-> +					slew-rate = <1>;
-> +					bias-disable;
-> +				};
-> +
-> +				data-pins {
-> +					pins = "gpio11";
-> +					function = "wsa_swr_data";
-> +					drive-strength = <2>;
-> +					slew-rate = <1>;
-> +					bias-bus-hold;
-> +				};
-> +			};
-> +
-> +			tx_swr_active: tx-swr-active-state {
-> +				clk-pins {
-> +					pins = "gpio0";
-> +					function = "swr_tx_clk";
-> +					drive-strength = <2>;
-> +					slew-rate = <1>;
-> +					bias-disable;
-> +				};
-> +
-> +				data-pins {
-> +					pins = "gpio1", "gpio2", "gpio14";
-> +					function = "swr_tx_data";
-> +					drive-strength = <2>;
-> +					slew-rate = <1>;
-> +					bias-bus-hold;
-> +				};
-> +			};
-> +
-> +			rx_swr_active: rx-swr-active-state {
-> +				clk-pins {
-> +					pins = "gpio3";
-> +					function = "swr_rx_clk";
-> +					drive-strength = <2>;
-> +					slew-rate = <1>;
-> +					bias-disable;
-> +				};
-> +
-> +				data-pins {
-> +					pins = "gpio4", "gpio5";
-> +					function = "swr_rx_data";
-> +					drive-strength = <2>;
-> +					slew-rate = <1>;
-> +					bias-bus-hold;
-> +				};
-> +			};
-> +
-> +			wsa2_swr_active: wsa2-swr-active-state {
-> +				clk-pins {
-> +					pins = "gpio15";
-> +					function = "wsa2_swr_clk";
-> +					drive-strength = <2>;
-> +					slew-rate = <1>;
-> +					bias-disable;
-> +				};
-> +
-> +				data-pins {
-> +					pins = "gpio16";
-> +					function = "wsa2_swr_data";
-> +					drive-strength = <2>;
-> +					slew-rate = <1>;
-> +					bias-bus-hold;
-> +				};
-> +			};
-> +		};
-> +
->   		apps_smmu: iommu@15000000 {
->   			compatible = "qcom,sm8450-smmu-500", "arm,mmu-500";
->   			reg = <0 0x15000000 0 0x100000>;
-> @@ -3507,6 +3799,9 @@ lpass_ag_noc: interconnect@3c40000 {
->   		};
->   	};
->   
-> +	sound: sound {
-> +	};
-You asked another folk working on sa8540p to not include sound in the 
-SoC dtsi.
-
-Konrad
-
-> +
->   	thermal-zones {
->   		aoss0-thermal {
->   			polling-delay-passive = <0>;
+-- 
+b4 0.10.1
