@@ -2,481 +2,275 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5256562C669
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 18:32:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D6DB62C673
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 18:35:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238581AbiKPRcq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 12:32:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46564 "EHLO
+        id S233480AbiKPRfC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 12:35:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238551AbiKPRcq (ORCPT
+        with ESMTP id S233978AbiKPRfA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 12:32:46 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C31048753
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 09:32:44 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id c1so30650228lfi.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 09:32:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hfYVD9gPVLglWCAThpjQvlhgg1g4QFqwAOyUtYlY9+Y=;
-        b=aABRGrqOlt+N50NvL7oAJONVLzdplb7kI++G5BQz2QYpZFZ79RnUICDwAusv7BbV4N
-         eI44mi5+9s8YMiAGhy2m5rQiSGNsb5PamtjrtEjo3qYSvgguRO/tsUIoYJHFUspOp8uo
-         36YcaoQytNKBpnDgcndnWp8QS532xpxlKgXCD7JZX2DiuXq/36zz8+9Ya5iW1jtHBjtJ
-         klsPID5h46Xj6HvqFxCRzskZtPVUhMRTdtaqJvIuBKpR9OjGkeBIHV/6OuglYkoQcase
-         IfaD2HUQ/ntUfavVdKNimTZFokOssIbpBAwvoD3+qc01srrCewlbH7yAlffF3SBdlZb0
-         GN3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hfYVD9gPVLglWCAThpjQvlhgg1g4QFqwAOyUtYlY9+Y=;
-        b=AjzfGuV3vrlDoG3mA7TQ0HG6NRLv1U8wwu2K4jZfEbRIBphcE6eFKcmRyqzbBd0tf7
-         LJpwewxNEAhjzQRSCzN0Ti6EdLg0faFg/AmZwehTLOTuKeTnHeMKWGPJpQJaTh4I19Jm
-         cnl6BVbTgLQfUdmmlkMNQ0yWcylC0VvocsfWycLu7OdH3hkUw3AG+5Gdznyci047bpuJ
-         uG50j8bC4Cfy7mUKAHiADK1mIbqItrg/sN1EGa3WnAUyZH+qPUH7KWEw2vI9uiUJZ2r1
-         OJvqst8GZWuWzaOVAi+Jj7TcIJvr1Qsu/lZaMzpZpZYJQu3WrSdcx/cmjPVlnYLbdyoy
-         8+ag==
-X-Gm-Message-State: ANoB5pkydROEH6bEqBoytOXg+YFRgfu421riDmtQIM2XPV3wZZ7A8cpk
-        +mwEabRMig3w2Ry8wmO6kMEULg==
-X-Google-Smtp-Source: AA0mqf4sMXMi/GteutFIyr5f3fQ+qBHM363f9Silru1a9PHSWU19h24dDWIdg1KcCE65vihZWUmv8Q==
-X-Received: by 2002:ac2:47ee:0:b0:4b0:8df6:9043 with SMTP id b14-20020ac247ee000000b004b08df69043mr8600587lfp.517.1668619962546;
-        Wed, 16 Nov 2022 09:32:42 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id k12-20020ac257cc000000b004998d9ccb62sm115059lfo.99.2022.11.16.09.32.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 09:32:41 -0800 (PST)
-Message-ID: <282345e7-fa89-87b2-309d-15d0b0350900@linaro.org>
-Date:   Wed, 16 Nov 2022 18:32:40 +0100
+        Wed, 16 Nov 2022 12:35:00 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CD915E9CB;
+        Wed, 16 Nov 2022 09:34:57 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AGHNMbH021408;
+        Wed, 16 Nov 2022 17:34:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=pCmY/TXembAhK0ZarK5EouvrbuoPAQwsx4W32+FfMho=;
+ b=PJ10HWpu2FRJALXrOdNR5aJvyvQA1yRjeM8nvPn9w4YB+i6dXWS1n9dWfWDWuqtL9ff9
+ 6d/HIyt3/RJHX0QeoDBDOIwqin8s/P5IpaAJtZ5E7PARpp0rqy9Yk0au2kRzNzQQWxzY
+ tUSSZqDbXHbPQ+VUiRXQiToz78yZY7uA9k1+ukqG1ki1E5QMvFGNVMpdNRM3vGikYceF
+ 7YGEmyYIETvsXNMbPujUvQse0Clq3xeaH8+5ZPQNCIbylj1Od1qMA/l7QvkXhI86+8yh
+ JF+0trItpt5SDCm1JZ1J6lahYK04ktfB61ToxQO/sFgGc5FAa7xp8k7lkZ2ZFWKN626H sQ== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kw47f04rt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Nov 2022 17:34:49 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AGHYmxL012773
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Nov 2022 17:34:49 GMT
+Received: from [10.110.89.95] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 16 Nov
+ 2022 09:34:47 -0800
+Message-ID: <fad22171-fd6f-06e5-76f8-c9aed50adf41@quicinc.com>
+Date:   Wed, 16 Nov 2022 11:34:46 -0600
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 2/2] interconnect: qcom: Add SM8550 interconnect provider
- driver
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
+From:   Melody Olvera <quic_molvera@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20221026200429.162212-1-quic_molvera@quicinc.com>
+ <20221026200429.162212-4-quic_molvera@quicinc.com>
+ <ae4b2333-d243-17ee-1ebd-6b1c89eef9f3@linaro.org>
+ <d109cbdf-1b0e-ff67-879c-d0955da4898e@quicinc.com>
+ <9eaaf256-8de2-ddc9-ac95-aed9b0670f5e@linaro.org>
+ <4832b716-6caf-cf72-1c7e-f21a0670cbaa@quicinc.com>
+ <5109d728-ebea-21ca-3ee1-15710dfd6f1b@quicinc.com>
+ <23a0dc6b-b704-c094-96dc-cf2c083ef55e@somainline.org>
+ <8c1072a0-338e-7bf4-2d78-c59954cf8164@quicinc.com>
 Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-References: <20221116114526.2679041-1-abel.vesa@linaro.org>
- <20221116114526.2679041-2-abel.vesa@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20221116114526.2679041-2-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <8c1072a0-338e-7bf4-2d78-c59954cf8164@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: n_shHQx7EbNXKSyS8eNJVigpi05jIjt1
+X-Proofpoint-GUID: n_shHQx7EbNXKSyS8eNJVigpi05jIjt1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-16_03,2022-11-16_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 spamscore=0 impostorscore=0
+ mlxscore=0 suspectscore=0 mlxlogscore=999 phishscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
+ definitions=main-2211160121
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/11/2022 12:45, Abel Vesa wrote:
-> Add driver for the Qualcomm interconnect buses found in SM8550 based
-> platforms. The topology consists of several NoCs that are controlled by
-> a remote processor that collects the aggregated bandwidth for each
-> master-slave pairs.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-
-Thank you for your patch. There is something to discuss/improve.
 
 
+On 11/9/2022 12:19 PM, Melody Olvera wrote:
+>
+> On 11/4/2022 2:32 AM, Konrad Dybcio wrote:
+>> On 04/11/2022 05:05, Trilok Soni wrote:
+>>> + Adding Konrad, Bjorn is already there in this email
+>>>
+>>> On 11/3/2022 2:13 PM, Melody Olvera wrote:
+>>>>
+>>>> On 11/2/2022 9:24 AM, Krzysztof Kozlowski wrote:
+>>>>> On 31/10/2022 17:49, Melody Olvera wrote:
+>>>>>> On 10/27/2022 8:21 AM, Krzysztof Kozlowski wrote:
+>>>>>>> On 26/10/2022 16:04, Melody Olvera wrote:
+>>>>>>>> Add the base DTSI files for QDU1000 and QRU1000 SoCs, including base
+>>>>>>>> descriptions of CPUs, GCC, RPMHCC, QUP, TLMM, and interrupt-controller
+>>>>>>>> to boot to shell with console on these SoCs.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>>>>>>>> ---
+>>>>>>>>   arch/arm64/boot/dts/qcom/qdu1000.dtsi | 1406 +++++++++++++++++++++++++
+>>>>>>> Please use scripts/get_maintainers.pl to get a list of necessary people
+>>>>>>> and lists to CC.  It might happen, that command when run on an older
+>>>>>>> kernel, gives you outdated entries.  Therefore please be sure you base
+>>>>>>> your patches on recent Linux kernel.
+>>>>>> Sure thing; we talked about this on a different patch.
+>>>>>>>> arch/arm64/boot/dts/qcom/qru1000.dtsi |   27 +
+>>>>>>>>   2 files changed, 1433 insertions(+)
+>>>>>>>>   create mode 100644 arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>>>>>>>>   create mode 100644 arch/arm64/boot/dts/qcom/qru1000.dtsi
+>>>>>>>>
+>>>>>>>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>>>>>>>> new file mode 100644
+>>>>>>>> index 000000000000..76474106e931
+>>>>>>>> --- /dev/null
+>>>>>>>> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>>>>>>>> @@ -0,0 +1,1406 @@
+>>>>>>>> +// SPDX-License-Identifier: BSD-3-Clause
+>>>>>>>> +/*
+>>>>>>>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>>>>>>>> + */
+>>>>>>> (...)
+>>>>>>>
+>>>>>>>> +
+>>>>>>>> +    soc: soc@0 {
+>>>>>>>> +        #address-cells = <2>;
+>>>>>>>> +        #size-cells = <2>;
+>>>>>>>> +        ranges = <0 0 0 0 0x10 0>;
+>>>>>>>> +        dma-ranges = <0 0 0 0 0x10 0>;
+>>>>>>>> +        compatible = "simple-bus";
+>>>>>>>> +
+>>>>>>>> +        gcc: clock-controller@80000 {
+>>>>>>>> +            compatible = "qcom,gcc-qdu1000", "syscon";
+>>>>>>>> +            reg = <0x0 0x80000 0x0 0x1f4200>;
+>>>>>>>> +            #clock-cells = <1>;
+>>>>>>>> +            #reset-cells = <1>;
+>>>>>>>> +            #power-domain-cells = <1>;
+>>>>>>>> +            clocks = <&rpmhcc RPMH_CXO_CLK>, <&sleep_clk>;
+>>>>>>>> +            clock-names = "bi_tcxo", "sleep_clk";
+>>>>>>>> +        };
+>>>>>>>> +
+>>>>>>>> +        gpi_dma0: dma-controller@900000  {
+>>>>>>>> +            compatible = "qcom,sm6350-gpi-dma";
+>>>>>>> You should add here a specific compatible as well. Same in other places.
+>>>>>>> All places. I had impression we talked about this few times, so I don't
+>>>>>>> know what is missing on your side.
+>>>>>>>
+>>>>>>> This must be:
+>>>>>>> "qcom,qdu1000-gpi-dma", "qcom,sm6350-gpi-dma"
+>>>>>> Got it. I talked to Stephan and he said either your suggestion or just using
+>>>>>> preexisting compatibles would be ok. I thought it might be cleaner to not
+>>>>>> have the qdu compats, but I'm fine either way.
+>> We use specific compats so that if it turns out this specific SoC (or rather the
+>>
+>> bundled firmware) has some peculiar bugs, we can retroactively only apply them
+>>
+>> to that specific SoC by adding the compatible somewhere in .c code if need be.
+> Ah that makes plenty sense.
+>
+>>
+>>>>>>>> +            #dma-cells = <3>;
+>>>>>>>> +            reg = <0x0 0x900000 0x0 0x60000>;
+>>>>>>>> +            interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
+>>>>>>>> +                     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
+>>>>>>>> +                     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
+>>>>>>>> +                     <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>,
+>>>>>>>> +                     <GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>,
+>>>>>>>> +                     <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>,
+>>>>>>>> +                     <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
+>>>>>>>> +                     <GIC_SPI 251 IRQ_TYPE_LEVEL_HIGH>,
+>>>>>>>> +                     <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>,
+>>>>>>>> +                     <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>,
+>>>>>>>> +                     <GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
+>>>>>>>> +                     <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
+>>>>>>>> +            dma-channels = <12>;
+>>>>>>>> +            dma-channel-mask = <0x3f>;
+>>>>>>>> +            iommus = <&apps_smmu 0xf6 0x0>;
+>>>>>>>> +        };
+>>>>>>>> +
+>>>>>>> (...)
+>>>>>>>
+>>>>>>>
+>>>>>>>> +
+>>>>>>>> +        tlmm: pinctrl@f000000 {
+>>>>>>>> +            compatible = "qcom,qdu1000-tlmm";
+>>>>>>>> +            reg = <0x0 0xf000000 0x0 0x1000000>;
+>>>>>>>> +            interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+>>>>>>>> +            gpio-controller;
+>>>>>>>> +            #gpio-cells = <2>;
+>>>>>>>> +            interrupt-controller;
+>>>>>>>> +            #interrupt-cells = <2>;
+>>>>>>>> +            gpio-ranges = <&tlmm 0 0 151>;
+>>>>>>>> +            wakeup-parent = <&pdc>;
+>>>>>>>> +
+>>>>>>>> +            qup_uart0_default: qup-uart0-default-state {
+>>>>>>>> +                pins = "gpio6", "gpio7", "gpio8", "gpio9";
+>>>>>>>> +                function = "qup00";
+>>>>>>>> +            };
+>>>>>>>> +
+>>>>>>>> +            qup_i2c1_data_clk: qup-i2c1-data-clk-state {
+>>>>>>>> +                pins = "gpio10", "gpio11";
+>>>>>>>> +                function = "qup01";
+>>>>>>>> +                drive-strength = <2>;
+>>>>>>> Can we have some generic agreement where to put drive-strengths and bias?
+>>>>>>>
+>>>>>>> See also:
+>>>>>>> https://lore.kernel.org/linux-devicetree/20221026200357.391635-2-krzysztof.kozlowski@linaro.org/
+>>>>>>>
+>>>>>>> https://lore.kernel.org/lkml/CAD=FV=VUL4GmjaibAMhKNdpEso_Hg_R=XeMaqah1LSj_9-Ce4Q@mail.gmail.com/
+>> I agree with Doug on having 'generic' drive-strength. Moreover, maybe even adding some property like
+>>
+>> bias-type = <NONE/PULL_DOWN/...> would be cool to make it more flexible so that we could trim off
+>>
+>> A LOT of repeated lines (remember, most boards are more or less copies of the reference design for a
+>>
+>> given platform like QRD or CRD) going forward.
+> Huh so if I understand this correctly, like a generic QRD/CRD file which has the bias for specific pins?
+> That's a neat idea.
+>
+> I will say it kinda seems like this is a larger conversation happening here. Does it make sense to submit
+> a next version with these pins as they are or wait until this larger conversation concludes?
 
-> +static struct qcom_icc_node * const config_noc_nodes[] = {
-> +	[MASTER_CNOC_CFG] = &qsm_cfg,
-> +	[SLAVE_AHB2PHY_SOUTH] = &qhs_ahb2phy0,
-> +	[SLAVE_AHB2PHY_NORTH] = &qhs_ahb2phy1,
-> +	[SLAVE_APPSS] = &qhs_apss,
-> +	[SLAVE_CAMERA_CFG] = &qhs_camera_cfg,
-> +	[SLAVE_CLK_CTL] = &qhs_clk_ctl,
-> +	[SLAVE_RBCPR_CX_CFG] = &qhs_cpr_cx,
-> +	[SLAVE_RBCPR_MMCX_CFG] = &qhs_cpr_mmcx,
-> +	[SLAVE_RBCPR_MXA_CFG] = &qhs_cpr_mxa,
-> +	[SLAVE_RBCPR_MXC_CFG] = &qhs_cpr_mxc,
-> +	[SLAVE_CPR_NSPCX] = &qhs_cpr_nspcx,
-> +	[SLAVE_CRYPTO_0_CFG] = &qhs_crypto0_cfg,
-> +	[SLAVE_CX_RDPM] = &qhs_cx_rdpm,
-> +	[SLAVE_DISPLAY_CFG] = &qhs_display_cfg,
-> +	[SLAVE_GFX3D_CFG] = &qhs_gpuss_cfg,
-> +	[SLAVE_I2C] = &qhs_i2c,
-> +	[SLAVE_IMEM_CFG] = &qhs_imem_cfg,
-> +	[SLAVE_IPA_CFG] = &qhs_ipa,
-> +	[SLAVE_IPC_ROUTER_CFG] = &qhs_ipc_router,
-> +	[SLAVE_CNOC_MSS] = &qhs_mss_cfg,
-> +	[SLAVE_MX_RDPM] = &qhs_mx_rdpm,
-> +	[SLAVE_PCIE_0_CFG] = &qhs_pcie0_cfg,
-> +	[SLAVE_PCIE_1_CFG] = &qhs_pcie1_cfg,
-> +	[SLAVE_PDM] = &qhs_pdm,
-> +	[SLAVE_PIMEM_CFG] = &qhs_pimem_cfg,
-> +	[SLAVE_PRNG] = &qhs_prng,
-> +	[SLAVE_QDSS_CFG] = &qhs_qdss_cfg,
-> +	[SLAVE_QSPI_0] = &qhs_qspi,
-> +	[SLAVE_QUP_1] = &qhs_qup1,
-> +	[SLAVE_QUP_2] = &qhs_qup2,
-> +	[SLAVE_SDCC_2] = &qhs_sdc2,
-> +	[SLAVE_SDCC_4] = &qhs_sdc4,
-> +	[SLAVE_SPSS_CFG] = &qhs_spss_cfg,
-> +	[SLAVE_TCSR] = &qhs_tcsr,
-> +	[SLAVE_TLMM] = &qhs_tlmm,
-> +	[SLAVE_UFS_MEM_CFG] = &qhs_ufs_mem_cfg,
-> +	[SLAVE_USB3_0] = &qhs_usb3_0,
-> +	[SLAVE_VENUS_CFG] = &qhs_venus_cfg,
-> +	[SLAVE_VSENSE_CTRL_CFG] = &qhs_vsense_ctrl_cfg,
-> +	[SLAVE_LPASS_QTB_CFG] = &qss_lpass_qtb_cfg,
-> +	[SLAVE_CNOC_MNOC_CFG] = &qss_mnoc_cfg,
-> +	[SLAVE_NSP_QTB_CFG] = &qss_nsp_qtb_cfg,
-> +	[SLAVE_PCIE_ANOC_CFG] = &qss_pcie_anoc_cfg,
-> +	[SLAVE_QDSS_STM] = &xs_qdss_stm,
-> +	[SLAVE_TCU] = &xs_sys_tcu_cfg,
-> +};
-> +
-> +static struct qcom_icc_desc sm8550_config_noc = {
-> +	.nodes = config_noc_nodes,
-> +	.num_nodes = ARRAY_SIZE(config_noc_nodes),
-> +	.bcms = config_noc_bcms,
-> +	.num_bcms = ARRAY_SIZE(config_noc_bcms),
-> +};
-> +
-> +static struct qcom_icc_bcm *cnoc_main_bcms[] = {
+Ok, this conversation seems to have stalled for now. Will submit v4 with changes except for this;
+we'll see where this conversation lands.
 
-Const pointers. Also in several other places as well.
+Thanks,
+Melody
 
-> +	&bcm_cn0,
-> +};
-> +
-> +static struct qcom_icc_node *cnoc_main_nodes[] = {
-> +	[MASTER_GEM_NOC_CNOC] = &qnm_gemnoc_cnoc,
-> +	[MASTER_GEM_NOC_PCIE_SNOC] = &qnm_gemnoc_pcie,
-> +	[SLAVE_AOSS] = &qhs_aoss,
-> +	[SLAVE_TME_CFG] = &qhs_tme_cfg,
-> +	[SLAVE_CNOC_CFG] = &qss_cfg,
-> +	[SLAVE_DDRSS_CFG] = &qss_ddrss_cfg,
-> +	[SLAVE_BOOT_IMEM] = &qxs_boot_imem,
-> +	[SLAVE_IMEM] = &qxs_imem,
-> +	[SLAVE_PCIE_0] = &xs_pcie_0,
-> +	[SLAVE_PCIE_1] = &xs_pcie_1,
-> +};
-> +
-> +static struct qcom_icc_desc sm8550_cnoc_main = {
-
-This should be const.
-
-> +	.nodes = cnoc_main_nodes,
-> +	.num_nodes = ARRAY_SIZE(cnoc_main_nodes),
-> +	.bcms = cnoc_main_bcms,
-> +	.num_bcms = ARRAY_SIZE(cnoc_main_bcms),
-> +};
-> +
-> +static struct qcom_icc_bcm *gem_noc_bcms[] = {
-> +	&bcm_sh0,
-> +	&bcm_sh1,
-> +	&bcm_sh0_disp,
-> +	&bcm_sh1_disp,
-> +	&bcm_sh0_cam_ife_0,
-> +	&bcm_sh1_cam_ife_0,
-> +	&bcm_sh0_cam_ife_1,
-> +	&bcm_sh1_cam_ife_1,
-> +	&bcm_sh0_cam_ife_2,
-> +	&bcm_sh1_cam_ife_2,
-> +};
-> +
-> +static struct qcom_icc_node *gem_noc_nodes[] = {
-> +	[MASTER_GPU_TCU] = &alm_gpu_tcu,
-> +	[MASTER_SYS_TCU] = &alm_sys_tcu,
-> +	[MASTER_APPSS_PROC] = &chm_apps,
-> +	[MASTER_GFX3D] = &qnm_gpu,
-> +	[MASTER_LPASS_GEM_NOC] = &qnm_lpass_gemnoc,
-> +	[MASTER_MSS_PROC] = &qnm_mdsp,
-> +	[MASTER_MNOC_HF_MEM_NOC] = &qnm_mnoc_hf,
-> +	[MASTER_MNOC_SF_MEM_NOC] = &qnm_mnoc_sf,
-> +	[MASTER_COMPUTE_NOC] = &qnm_nsp_gemnoc,
-> +	[MASTER_ANOC_PCIE_GEM_NOC] = &qnm_pcie,
-> +	[MASTER_SNOC_GC_MEM_NOC] = &qnm_snoc_gc,
-> +	[MASTER_SNOC_SF_MEM_NOC] = &qnm_snoc_sf,
-> +	[SLAVE_GEM_NOC_CNOC] = &qns_gem_noc_cnoc,
-> +	[SLAVE_LLCC] = &qns_llcc,
-> +	[SLAVE_MEM_NOC_PCIE_SNOC] = &qns_pcie,
-> +	[MASTER_MNOC_HF_MEM_NOC_DISP] = &qnm_mnoc_hf_disp,
-> +	[MASTER_ANOC_PCIE_GEM_NOC_DISP] = &qnm_pcie_disp,
-> +	[SLAVE_LLCC_DISP] = &qns_llcc_disp,
-> +	[MASTER_MNOC_HF_MEM_NOC_CAM_IFE_0] = &qnm_mnoc_hf_cam_ife_0,
-> +	[MASTER_MNOC_SF_MEM_NOC_CAM_IFE_0] = &qnm_mnoc_sf_cam_ife_0,
-> +	[MASTER_ANOC_PCIE_GEM_NOC_CAM_IFE_0] = &qnm_pcie_cam_ife_0,
-> +	[SLAVE_LLCC_CAM_IFE_0] = &qns_llcc_cam_ife_0,
-> +	[MASTER_MNOC_HF_MEM_NOC_CAM_IFE_1] = &qnm_mnoc_hf_cam_ife_1,
-> +	[MASTER_MNOC_SF_MEM_NOC_CAM_IFE_1] = &qnm_mnoc_sf_cam_ife_1,
-> +	[MASTER_ANOC_PCIE_GEM_NOC_CAM_IFE_1] = &qnm_pcie_cam_ife_1,
-> +	[SLAVE_LLCC_CAM_IFE_1] = &qns_llcc_cam_ife_1,
-> +	[MASTER_MNOC_HF_MEM_NOC_CAM_IFE_2] = &qnm_mnoc_hf_cam_ife_2,
-> +	[MASTER_MNOC_SF_MEM_NOC_CAM_IFE_2] = &qnm_mnoc_sf_cam_ife_2,
-> +	[MASTER_ANOC_PCIE_GEM_NOC_CAM_IFE_2] = &qnm_pcie_cam_ife_2,
-> +	[SLAVE_LLCC_CAM_IFE_2] = &qns_llcc_cam_ife_2,
-> +};
-> +
-> +static struct qcom_icc_desc sm8550_gem_noc = {
-
-Const... and so on - multiple places.
-
-> +	.nodes = gem_noc_nodes,
-> +	.num_nodes = ARRAY_SIZE(gem_noc_nodes),
-> +	.bcms = gem_noc_bcms,
-> +	.num_bcms = ARRAY_SIZE(gem_noc_bcms),
-> +};
-> +
-> +static struct qcom_icc_bcm * const lpass_ag_noc_bcms[] = {
-> +};
-> +
-> +static struct qcom_icc_node * const lpass_ag_noc_nodes[] = {
-> +	[MASTER_LPIAON_NOC] = &qnm_lpiaon_noc,
-> +	[SLAVE_LPASS_GEM_NOC] = &qns_lpass_ag_noc_gemnoc,
-> +};
-> +
-> +static const struct qcom_icc_desc sm8550_lpass_ag_noc = {
-> +	.nodes = lpass_ag_noc_nodes,
-> +	.num_nodes = ARRAY_SIZE(lpass_ag_noc_nodes),
-> +	.bcms = lpass_ag_noc_bcms,
-> +	.num_bcms = ARRAY_SIZE(lpass_ag_noc_bcms),
-> +};
-> +
-> +static struct qcom_icc_bcm * const lpass_lpiaon_noc_bcms[] = {
-> +	&bcm_lp0,
-> +};
-> +
-> +static struct qcom_icc_node * const lpass_lpiaon_noc_nodes[] = {
-> +	[MASTER_LPASS_LPINOC] = &qnm_lpass_lpinoc,
-> +	[SLAVE_LPIAON_NOC_LPASS_AG_NOC] = &qns_lpass_aggnoc,
-> +};
-> +
-> +static const struct qcom_icc_desc sm8550_lpass_lpiaon_noc = {
-> +	.nodes = lpass_lpiaon_noc_nodes,
-> +	.num_nodes = ARRAY_SIZE(lpass_lpiaon_noc_nodes),
-> +	.bcms = lpass_lpiaon_noc_bcms,
-> +	.num_bcms = ARRAY_SIZE(lpass_lpiaon_noc_bcms),
-> +};
-> +
-> +static struct qcom_icc_bcm * const lpass_lpicx_noc_bcms[] = {
-> +};
-> +
-> +static struct qcom_icc_node * const lpass_lpicx_noc_nodes[] = {
-> +	[MASTER_LPASS_PROC] = &qxm_lpinoc_dsp_axim,
-> +	[SLAVE_LPICX_NOC_LPIAON_NOC] = &qns_lpi_aon_noc,
-> +};
-> +
-> +static const struct qcom_icc_desc sm8550_lpass_lpicx_noc = {
-> +	.nodes = lpass_lpicx_noc_nodes,
-> +	.num_nodes = ARRAY_SIZE(lpass_lpicx_noc_nodes),
-> +	.bcms = lpass_lpicx_noc_bcms,
-> +	.num_bcms = ARRAY_SIZE(lpass_lpicx_noc_bcms),
-> +};
-> +
-> +static struct qcom_icc_bcm * const mc_virt_bcms[] = {
-> +	&bcm_acv,
-> +	&bcm_mc0,
-> +	&bcm_acv_disp,
-> +	&bcm_mc0_disp,
-> +	&bcm_acv_cam_ife_0,
-> +	&bcm_mc0_cam_ife_0,
-> +	&bcm_acv_cam_ife_1,
-> +	&bcm_mc0_cam_ife_1,
-> +	&bcm_acv_cam_ife_2,
-> +	&bcm_mc0_cam_ife_2,
-> +};
-> +
-> +static struct qcom_icc_node * const mc_virt_nodes[] = {
-> +	[MASTER_LLCC] = &llcc_mc,
-> +	[SLAVE_EBI1] = &ebi,
-> +	[MASTER_LLCC_DISP] = &llcc_mc_disp,
-> +	[SLAVE_EBI1_DISP] = &ebi_disp,
-> +	[MASTER_LLCC_CAM_IFE_0] = &llcc_mc_cam_ife_0,
-> +	[SLAVE_EBI1_CAM_IFE_0] = &ebi_cam_ife_0,
-> +	[MASTER_LLCC_CAM_IFE_1] = &llcc_mc_cam_ife_1,
-> +	[SLAVE_EBI1_CAM_IFE_1] = &ebi_cam_ife_1,
-> +	[MASTER_LLCC_CAM_IFE_2] = &llcc_mc_cam_ife_2,
-> +	[SLAVE_EBI1_CAM_IFE_2] = &ebi_cam_ife_2,
-> +};
-> +
-> +static const struct qcom_icc_desc sm8550_mc_virt = {
-> +	.nodes = mc_virt_nodes,
-> +	.num_nodes = ARRAY_SIZE(mc_virt_nodes),
-> +	.bcms = mc_virt_bcms,
-> +	.num_bcms = ARRAY_SIZE(mc_virt_bcms),
-> +};
-> +
-> +static struct qcom_icc_bcm *mmss_noc_bcms[] = {
-> +	&bcm_mm0,
-> +	&bcm_mm1,
-> +	&bcm_mm0_disp,
-> +	&bcm_mm0_cam_ife_0,
-> +	&bcm_mm1_cam_ife_0,
-> +	&bcm_mm0_cam_ife_1,
-> +	&bcm_mm1_cam_ife_1,
-> +	&bcm_mm0_cam_ife_2,
-> +	&bcm_mm1_cam_ife_2,
-> +};
-> +
-> +static struct qcom_icc_node * const mmss_noc_nodes[] = {
-> +	[MASTER_CAMNOC_HF] = &qnm_camnoc_hf,
-> +	[MASTER_CAMNOC_ICP] = &qnm_camnoc_icp,
-> +	[MASTER_CAMNOC_SF] = &qnm_camnoc_sf,
-> +	[MASTER_MDP] = &qnm_mdp,
-> +	[MASTER_CDSP_HCP] = &qnm_vapss_hcp,
-> +	[MASTER_VIDEO] = &qnm_video,
-> +	[MASTER_VIDEO_CV_PROC] = &qnm_video_cv_cpu,
-> +	[MASTER_VIDEO_PROC] = &qnm_video_cvp,
-> +	[MASTER_VIDEO_V_PROC] = &qnm_video_v_cpu,
-> +	[MASTER_CNOC_MNOC_CFG] = &qsm_mnoc_cfg,
-> +	[SLAVE_MNOC_HF_MEM_NOC] = &qns_mem_noc_hf,
-> +	[SLAVE_MNOC_SF_MEM_NOC] = &qns_mem_noc_sf,
-> +	[SLAVE_SERVICE_MNOC] = &srvc_mnoc,
-> +	[MASTER_MDP_DISP] = &qnm_mdp_disp,
-> +	[SLAVE_MNOC_HF_MEM_NOC_DISP] = &qns_mem_noc_hf_disp,
-> +	[MASTER_CAMNOC_HF_CAM_IFE_0] = &qnm_camnoc_hf_cam_ife_0,
-> +	[MASTER_CAMNOC_ICP_CAM_IFE_0] = &qnm_camnoc_icp_cam_ife_0,
-> +	[MASTER_CAMNOC_SF_CAM_IFE_0] = &qnm_camnoc_sf_cam_ife_0,
-> +	[SLAVE_MNOC_HF_MEM_NOC_CAM_IFE_0] = &qns_mem_noc_hf_cam_ife_0,
-> +	[SLAVE_MNOC_SF_MEM_NOC_CAM_IFE_0] = &qns_mem_noc_sf_cam_ife_0,
-> +	[MASTER_CAMNOC_HF_CAM_IFE_1] = &qnm_camnoc_hf_cam_ife_1,
-> +	[MASTER_CAMNOC_ICP_CAM_IFE_1] = &qnm_camnoc_icp_cam_ife_1,
-> +	[MASTER_CAMNOC_SF_CAM_IFE_1] = &qnm_camnoc_sf_cam_ife_1,
-> +	[SLAVE_MNOC_HF_MEM_NOC_CAM_IFE_1] = &qns_mem_noc_hf_cam_ife_1,
-> +	[SLAVE_MNOC_SF_MEM_NOC_CAM_IFE_1] = &qns_mem_noc_sf_cam_ife_1,
-> +	[MASTER_CAMNOC_HF_CAM_IFE_2] = &qnm_camnoc_hf_cam_ife_2,
-> +	[MASTER_CAMNOC_ICP_CAM_IFE_2] = &qnm_camnoc_icp_cam_ife_2,
-> +	[MASTER_CAMNOC_SF_CAM_IFE_2] = &qnm_camnoc_sf_cam_ife_2,
-> +	[SLAVE_MNOC_HF_MEM_NOC_CAM_IFE_2] = &qns_mem_noc_hf_cam_ife_2,
-> +	[SLAVE_MNOC_SF_MEM_NOC_CAM_IFE_2] = &qns_mem_noc_sf_cam_ife_2,
-> +};
-> +
-> +static const struct qcom_icc_desc sm8550_mmss_noc = {
-> +	.nodes = mmss_noc_nodes,
-> +	.num_nodes = ARRAY_SIZE(mmss_noc_nodes),
-> +	.bcms = mmss_noc_bcms,
-> +	.num_bcms = ARRAY_SIZE(mmss_noc_bcms),
-> +};
-> +
-> +static struct qcom_icc_bcm * const nsp_noc_bcms[] = {
-> +	&bcm_co0,
-> +};
-> +
-> +static struct qcom_icc_node * const nsp_noc_nodes[] = {
-> +	[MASTER_CDSP_PROC] = &qxm_nsp,
-> +	[SLAVE_CDSP_MEM_NOC] = &qns_nsp_gemnoc,
-> +};
-> +
-> +static const struct qcom_icc_desc sm8550_nsp_noc = {
-> +	.nodes = nsp_noc_nodes,
-> +	.num_nodes = ARRAY_SIZE(nsp_noc_nodes),
-> +	.bcms = nsp_noc_bcms,
-> +	.num_bcms = ARRAY_SIZE(nsp_noc_bcms),
-> +};
-> +
-> +static struct qcom_icc_bcm * const pcie_anoc_bcms[] = {
-> +	&bcm_sn7,
-> +};
-> +
-> +static struct qcom_icc_node * const pcie_anoc_nodes[] = {
-> +	[MASTER_PCIE_ANOC_CFG] = &qsm_pcie_anoc_cfg,
-> +	[MASTER_PCIE_0] = &xm_pcie3_0,
-> +	[MASTER_PCIE_1] = &xm_pcie3_1,
-> +	[SLAVE_ANOC_PCIE_GEM_NOC] = &qns_pcie_mem_noc,
-> +	[SLAVE_SERVICE_PCIE_ANOC] = &srvc_pcie_aggre_noc,
-> +};
-> +
-> +static const struct qcom_icc_desc sm8550_pcie_anoc = {
-> +	.nodes = pcie_anoc_nodes,
-> +	.num_nodes = ARRAY_SIZE(pcie_anoc_nodes),
-> +	.bcms = pcie_anoc_bcms,
-> +	.num_bcms = ARRAY_SIZE(pcie_anoc_bcms),
-> +};
-> +
-> +static struct qcom_icc_bcm * const system_noc_bcms[] = {
-> +	&bcm_sn0,
-> +	&bcm_sn1,
-> +	&bcm_sn2,
-> +	&bcm_sn3,
-> +};
-> +
-> +static struct qcom_icc_node * const system_noc_nodes[] = {
-> +	[MASTER_GIC_AHB] = &qhm_gic,
-> +	[MASTER_A1NOC_SNOC] = &qnm_aggre1_noc,
-> +	[MASTER_A2NOC_SNOC] = &qnm_aggre2_noc,
-> +	[MASTER_GIC] = &xm_gic,
-> +	[SLAVE_SNOC_GEM_NOC_GC] = &qns_gemnoc_gc,
-> +	[SLAVE_SNOC_GEM_NOC_SF] = &qns_gemnoc_sf,
-> +};
-> +
-> +static const struct qcom_icc_desc sm8550_system_noc = {
-> +	.nodes = system_noc_nodes,
-> +	.num_nodes = ARRAY_SIZE(system_noc_nodes),
-> +	.bcms = system_noc_bcms,
-> +	.num_bcms = ARRAY_SIZE(system_noc_bcms),
-> +};
-> +
-> +static int qnoc_probe(struct platform_device *pdev)
-> +{
-> +	const struct qcom_icc_desc *desc;
-> +	struct icc_onecell_data *data;
-> +	struct icc_provider *provider;
-> +	struct qcom_icc_node * const *qnodes;
-> +	struct qcom_icc_provider *qp;
-> +	struct icc_node *node;
-> +	size_t num_nodes, i;
-> +	int ret;
-> +
-> +	desc = device_get_match_data(&pdev->dev);
-> +	if (!desc)
-> +		return -EINVAL;
-> +
-> +	qnodes = desc->nodes;
-> +	num_nodes = desc->num_nodes;
-> +
-> +	qp = devm_kzalloc(&pdev->dev, sizeof(*qp), GFP_KERNEL);
-> +	if (!qp)
-> +		return -ENOMEM;
-> +
-> +	data = devm_kcalloc(&pdev->dev, num_nodes, sizeof(*node), GFP_KERNEL);
-> +	if (!data)
-> +		return -ENOMEM;
-> +
-> +	provider = &qp->provider;
-> +	provider->dev = &pdev->dev;
-> +	provider->set = qcom_icc_set;
-> +	provider->pre_aggregate = qcom_icc_pre_aggregate;
-> +	provider->aggregate = qcom_icc_aggregate;
-> +	provider->xlate_extended = qcom_icc_xlate_extended;
-> +	INIT_LIST_HEAD(&provider->nodes);
-> +	provider->data = data;
-> +
-> +	qp->dev = &pdev->dev;
-> +	qp->bcms = desc->bcms;
-> +	qp->num_bcms = desc->num_bcms;
-> +
-> +	qp->voter = of_bcm_voter_get(qp->dev, NULL);
-> +	if (IS_ERR(qp->voter))
-> +		return PTR_ERR(qp->voter);
-> +
-> +	ret = icc_provider_add(provider);
-> +	if (ret) {
-> +		dev_err(&pdev->dev, "error adding interconnect provider\n");
-
-return dev_err_probe().
-
-> +		return ret;
-> +	}
-> +
-
-Best regards,
-Krzysztof
+>
+>>
+>>>>>> Not sure how much two-sense I have for the conversation at large, but generally I agree with Doug's
+>>>>>> point in the first paragraph. Pulls for this soc are consistent across boards so I don't think it makes
+>>>>>> sense to move them to the board files here. I vote that these stay here.
+>>>>> I would be great if Konrad and Bjorn shared their opinion on this... but
+>>>>> wait, you did not Cc all maintainers... Eh.
+>>>> I'm not sure why this is being brought up again; we've already discussed this here
+>>>> https://lore.kernel.org/all/9707bf67-1b22-8a77-7193-fc909b4f49de@quicinc.com/
+>>>> Would you like to discuss this issue here, on the next version, or not at all?
+>>>>
+>>>> On a side note, I'm uncomfortable with how our continued interactions are going
+>>>> and do not believe this to be conductive to continued collaboration. I would ask that
+>>>> we keep our correspondence polite and professional moving forward.
+>>> I have added Konrad and Bjorn is already there on the thread. Our understanding is that CCing maintainers comment is for next patch series after this one.
+>> BTW: you can feed git send-email with --cc-cmd='./scripts/get_maintainer.pl --norolestats' and
+>>
+>> it'll pick the right people for you (most of the time, anyway).
+> Sounds good; thanks for the help!
+>
+> Thanks,
+> Melody
+>
+>>
+>>> Bjorn, please check and comment on above? If requires we should start writing the guidelines for MSM boards since lot of comments are based on the experience or knowledge in the community Vs caught by tools - so it is easy to be missed by developers submitting new boards. Thoughts?
+>> Big yes! Some of the points should probably even be raised wrt the DT spec itself, such as property order.
+>>
+>>
+>> Konrad
+>>
+>>> ---Trilok Soni
+>>>
+>>>
 
