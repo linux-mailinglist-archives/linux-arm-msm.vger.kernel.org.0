@@ -2,76 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13D2462BC73
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:49:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 305C162BC80
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:50:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229489AbiKPLtI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 06:49:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60244 "EHLO
+        id S229939AbiKPLui (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 06:50:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239094AbiKPLs0 (ORCPT
+        with ESMTP id S238853AbiKPLt4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 06:48:26 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86E412CE1B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:35:15 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id bj12so43283682ejb.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:35:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lFpitQZPCSWmV4KA7TF9v27Tmab4o5r/cI7HcmDfwD0=;
-        b=BdcT7uFZ8E89eJyftSJmR4Mc8UNEcplvKOVj45D0zWF8CdKH1o9+DB/M1NZEMVIU5M
-         HjKqRuc9cyq2KKSEgV7rteWepSGrfTWXQMLRKG10dGoprBaLxC8TKoyk6P2YtWQj+A9W
-         U9Fzf9QwYI3cpEtfMa45weQq6F128DYDb3Iaokg3xKY5+vVStTBBOZ3mI4GmRCFAdxVb
-         iuLRzOwt2frl5LJxDumsS2mrEmAYD0Fmqyk7s+mdQuCt5vVylF2Eki0xxGvVSMJ5A3G1
-         4Dz6dXV/UB7q4DOHQFKOZp31siFyLkZRl0Dviqrg4jYY1tYRQ2PB+mjdGmqeo8fgVgi3
-         jUAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=lFpitQZPCSWmV4KA7TF9v27Tmab4o5r/cI7HcmDfwD0=;
-        b=qAIYbgy7GTU64MT3VGtdLivzNnqDlf1nKi7gmYLXBYH1uoblwslNc17kPlSCV8R0wc
-         RdJHfvPl7xNMFL4a3pJxWt1DYyhtYyFKbkE3+067SIihs+h2Rk1gs/DataOB4spiG6hJ
-         x9IeT5WXumtdFCFuo7t/6SBaE5pX+O4bAxZfn4Eb/YTWgk9MX9OQdSuSKNcG041l6e7Y
-         2yCmOFK7AwNRUNOFoLk5gjQ0cXg8O2V+qg9DDSHJmIUuDJpQjkyMGBKUg6/1CfzDvl0s
-         T0Fl+23xFU5JoVbLhC6SMWPYFQ1BLJA9c1dDcRFpN0AxkXw3zO9X2un4LY5SSKiAE7z2
-         9W7A==
-X-Gm-Message-State: ANoB5pmyGcw38u5JSJJLUnxtxqSyczR0IS+/2r1CYA1ZDH0UBftDnAeP
-        qBkdtc4hcAat/4pD9dAEqYvuWQ==
-X-Google-Smtp-Source: AA0mqf4RPlD4qaXv5hV8z02A2OS0cAmFX5lc4FTfvdfIDr+PYkSDp3IyOpwiJnvwFKktNfibc/XuzA==
-X-Received: by 2002:a17:906:66da:b0:7a5:f8a5:6f84 with SMTP id k26-20020a17090666da00b007a5f8a56f84mr16753704ejp.569.1668598514103;
-        Wed, 16 Nov 2022 03:35:14 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id ft31-20020a170907801f00b0078d9cd0d2d6sm6907537ejc.11.2022.11.16.03.35.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 03:35:13 -0800 (PST)
-Message-ID: <340c0769-d51f-88df-5cd5-02c3337a24c0@linaro.org>
-Date:   Wed, 16 Nov 2022 12:35:07 +0100
+        Wed, 16 Nov 2022 06:49:56 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E822D12094;
+        Wed, 16 Nov 2022 03:37:43 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AGBFuUn019569;
+        Wed, 16 Nov 2022 11:37:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=mYWyqR0JxIsWxTN/dLRBhftkgrfE7nEPqDROuKX2JFc=;
+ b=hBdyAQ6dnjo8Zl+K64QGFAFnAZYNUqp94/AWYghy62X3zJ+odz7CEnbD2SgirMJkaWV5
+ jkEimyOOC0uSDsdwRaadmutn9EhTwqQXE7PhVWUwU0R8UJRIEYrNMRBk6CGeseJJSkGT
+ WI0cmBZsicKvuhgKxpRrNZd1ua4V9qKthe7p9ukLdAjdKASMt74QVybCIE+5SMbcxy/8
+ MhwkP8i+avFPqHiaYK3RW7os5L7UYJQp82ohskeUTNK1BGvLpFgWdroPJ6m5k8RODrlL
+ Av9c28P/HSb41PNFmkXBD2V6gLHDdCMYCaGkk3nbgB7EwK3YmgRoaEUbjiBX8XxED6dZ 7Q== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kvwwg84sd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Nov 2022 11:37:35 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AGBbYr8025278
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Nov 2022 11:37:34 GMT
+Received: from [10.216.25.63] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 16 Nov
+ 2022 03:37:28 -0800
+Message-ID: <4f872825-e646-8a8c-dbd0-112328b9b5f2@quicinc.com>
+Date:   Wed, 16 Nov 2022 03:37:25 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 2/2] soc: qcom: rpmhpd: Add SM8550 power domains
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20221116111745.2633074-1-abel.vesa@linaro.org>
- <20221116111745.2633074-3-abel.vesa@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221116111745.2633074-3-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm/dpu1: Remove INTF4 IRQ from SDM845 IRQ mask
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>,
+        <agross@kernel.org>
+CC:     <patches@linaro.org>, Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        "AngeloGioacchino Del Regno" 
+        <angelogioacchino.delregno@somainline.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20221107103739.8993-1-konrad.dybcio@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20221107103739.8993-1-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: pn3OuoK3orfG4eeic5NRvt8rfaiM8CS_
+X-Proofpoint-ORIG-GUID: pn3OuoK3orfG4eeic5NRvt8rfaiM8CS_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-16_03,2022-11-16_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 spamscore=0 impostorscore=0 clxscore=1011 adultscore=0
+ bulkscore=0 mlxscore=0 suspectscore=0 priorityscore=1501 phishscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211160082
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -80,56 +91,40 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 16/11/2022 12:17, Abel Vesa wrote:
-> Add the power domains exposed by RPMH in the Qualcomm SM8550 platform.
+On 11/7/2022 2:37 AM, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@somainline.org>
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> SDM845 only has INTF0-3 and has no business caring about the INTF4 irq.
+> 
+> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Konrad
->   drivers/soc/qcom/rpmhpd.c | 24 ++++++++++++++++++++++++
->   1 file changed, 24 insertions(+)
+It is true that SDM845 doesnt have INTF4. I was a bit concerned whether 
+this would impact SM8150 as that re-uses the IRQ_SDM845_MASK but even 
+SM8150 doesnt have INTF4.
+
+A minor nit, the subject convention in this file seems to be drm/msm/dpu 
+and not drm/msm/dpu1.
+
+Other than that,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 1 -
+>   1 file changed, 1 deletion(-)
 > 
-> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-> index 7af68cd720f5..4c2d2c296790 100644
-> --- a/drivers/soc/qcom/rpmhpd.c
-> +++ b/drivers/soc/qcom/rpmhpd.c
-> @@ -372,6 +372,29 @@ static const struct rpmhpd_desc sm8450_desc = {
->   	.num_pds = ARRAY_SIZE(sm8450_rpmhpds),
->   };
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 27f029fdc682..06897a497eb7 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -86,7 +86,6 @@
+>   			 BIT(MDP_INTF1_INTR) | \
+>   			 BIT(MDP_INTF2_INTR) | \
+>   			 BIT(MDP_INTF3_INTR) | \
+> -			 BIT(MDP_INTF4_INTR) | \
+>   			 BIT(MDP_AD4_0_INTR) | \
+>   			 BIT(MDP_AD4_1_INTR))
 >   
-> +/* SM8550 RPMH powerdomains */
-> +static struct rpmhpd *sm8550_rpmhpds[] = {
-> +	[SM8550_CX] = &cx,
-> +	[SM8550_CX_AO] = &cx_ao,
-> +	[SM8550_EBI] = &ebi,
-> +	[SM8550_GFX] = &gfx,
-> +	[SM8550_LCX] = &lcx,
-> +	[SM8550_LMX] = &lmx,
-> +	[SM8550_MMCX] = &mmcx_w_cx_parent,
-> +	[SM8550_MMCX_AO] = &mmcx_ao_w_cx_parent,
-> +	[SM8550_MSS] = &mss,
-> +	[SM8550_MX] = &mx,
-> +	[SM8550_MX_AO] = &mx_ao,
-> +	[SM8550_MXC] = &mxc,
-> +	[SM8550_MXC_AO] = &mxc_ao,
-> +	[SM8550_NSP] = &nsp,
-> +};
-> +
-> +static const struct rpmhpd_desc sm8550_desc = {
-> +	.rpmhpds = sm8550_rpmhpds,
-> +	.num_pds = ARRAY_SIZE(sm8550_rpmhpds),
-> +};
-> +
->   /* QDU1000/QRU1000 RPMH powerdomains */
->   static struct rpmhpd *qdu1000_rpmhpds[] = {
->   	[QDU1000_CX] = &cx,
-> @@ -477,6 +500,7 @@ static const struct of_device_id rpmhpd_match_table[] = {
->   	{ .compatible = "qcom,sm8250-rpmhpd", .data = &sm8250_desc },
->   	{ .compatible = "qcom,sm8350-rpmhpd", .data = &sm8350_desc },
->   	{ .compatible = "qcom,sm8450-rpmhpd", .data = &sm8450_desc },
-> +	{ .compatible = "qcom,sm8550-rpmhpd", .data = &sm8550_desc },
->   	{ }
->   };
->   MODULE_DEVICE_TABLE(of, rpmhpd_match_table);
