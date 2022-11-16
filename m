@@ -2,76 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A2A462BBF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:30:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BCBF762BC01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:33:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233873AbiKPLaq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 06:30:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51602 "EHLO
+        id S238095AbiKPLdd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 06:33:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232515AbiKPLaS (ORCPT
+        with ESMTP id S232515AbiKPLdH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 06:30:18 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1280158016
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:19:18 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id m22so43204895eji.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:19:18 -0800 (PST)
+        Wed, 16 Nov 2022 06:33:07 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCF4A326E0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:23:00 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id 5so11669544wmo.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:23:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FeWum+jwtQ1whDFVKPUbXhMni0Nnturt1ejfH8g2XUA=;
-        b=Qqhtjd0wMFC08wTkboksL7OgpGOC4XPKjdpBtfdOJazcGCOC3hR717WUS8Evw8B+Gm
-         4NVR6m/Kl6X+ufVFaZotFT7+2cDUEVblaI7S5IdFD1bMpEs6FylKjJ7Rmr+A4u9c/HGy
-         CEo9ETpXgBSptBrc3fRHLvFeLiXVA/qDmWIZY3bNstlX2+1Wlb1JTEHFb1Cy2yXF0hvw
-         2Q4BPvs0UpBfav3cjascMJ3eXs9hoE8lVGuWHlkg2k1icV0b+YJCM4HNr6ALrPm6giJp
-         CpGrwTX96PWN6mZ78a0lfzuFLmmRmMx4nPcHixyFuZbPwduX8DwWsgiI1XKX42BO1v4S
-         /X+Q==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5N1mOPkZ3MzR0fsML9fgfG9WIBiiWvpE6G+bsj4JBTc=;
+        b=ZUMybwO/HC36h+YEBFiFcnrR8/RjEiEateLLSxPHoI0e4h3kgQKD5hxsY1lY8EkCvk
+         3CjCJfDJgDqREUf81LK53mdWnsDPtK/7zApQ9IFIp+/CaEo+4+9kmcdr+bJcgH98X+Jj
+         guj7CI30/LAXUwxtIFrQ2ixY/vUL2eyT9b+hyE91zoCIBwyW5p0vF/pjQG5jpvMmI6io
+         W5VUfdK6mvI7c1/GYwFFUTqMNdjhu9DHzTjvLogc3shwUJJsRCGFzY0AhJ/r6sxvrZ+x
+         myhDmcL8isLscu2LWLTZRLjjK+TPWokjEB+08jk9YbvugYHnwR9QJwqX0U3+c5XvGhIF
+         eXag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=FeWum+jwtQ1whDFVKPUbXhMni0Nnturt1ejfH8g2XUA=;
-        b=rZoxA4xpZOWZskVTNWHaIyNT+38ptPkxqlnMVQvAYYxUvZi2EcnTBzy7BGPH9A2C6o
-         C4CeXO9LRBs3DvJ9O+AtFsly1jdc+/Tb69/ogA4ubrbCJRC6LWYn8gaA8yrxnS/vtGIq
-         mPazio3VxRJbcUKJ/B+NAMVA5q+L46XNNHeMnAHGkU9X0dkHpRnKsEE4Fv9Y4SD6XexM
-         sKS3qbV/WddqHVabDpU/JmTKQG/sBwku/8wKO3zox61nY0GWDAJ9BpBfbShMInkkr+TK
-         jINmoxO+JzT7mUcHTkBdN0zhNb7uLABoGmrMyEFMbWSPcf4EQGbOzFojC+pVepED9gcj
-         bzpw==
-X-Gm-Message-State: ANoB5pkPxIpB1z4qmtx0g4XDAyuBl7C3vFr/Jgo4KnsP4OoWECbTJspD
-        15eWjfESk8gFAHjl92JAQAfQhA==
-X-Google-Smtp-Source: AA0mqf681U9AgV666Qi+4jOYh3qpckamV0H/ufvxfCFBUHFvnsZvNwNmrGOEhO7G9pRV8fW+OmhrKg==
-X-Received: by 2002:a17:906:43c2:b0:78d:8580:8e07 with SMTP id j2-20020a17090643c200b0078d85808e07mr17017198ejn.131.1668597556610;
-        Wed, 16 Nov 2022 03:19:16 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id jt4-20020a170906dfc400b007a1d4944d45sm6827587ejc.142.2022.11.16.03.19.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 03:19:16 -0800 (PST)
-Message-ID: <9c5b6037-c962-81d3-41c1-a9ec459c9adc@linaro.org>
-Date:   Wed, 16 Nov 2022 12:19:09 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 2/9] clk: qcom: gdsc: Add configurable poll timeout
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5N1mOPkZ3MzR0fsML9fgfG9WIBiiWvpE6G+bsj4JBTc=;
+        b=7Wy7SB+clx3AxxKEF8L1bQY0FasUSYe2IOnzXaCyhCsxEpNpjIdchFIqu04RKLDyfy
+         Ul13ZxxkVnEibf0rEBB1p4bS7SnTDSN0ljRRN4zqLXVW0C1B4uVNNxGm3MXl7dyn1oVa
+         c4vo5uR4x5t2f1AU76/TA8PMLVYtqgAXvpSliSzdU95Fs2vHDJWQZ1uZ4RcMuzngvHaL
+         Gi5ZpMBhPa9uOwjvohhpUeyQm/RVvp0clnFkO/G7Za/f9pVH00v87jmjxlzH133SFD2O
+         j/X0L/M4vO/Yf6mp4cxPPXd7lSjEs0HUdOy6hERHs62egi63656w7SeJ7uG8Cgbh7IUv
+         PXLw==
+X-Gm-Message-State: ANoB5pnknahi6ANKWzGaLfWWhb+OMje0GDNhndUS+fsd7BZGSnIEPC7I
+        xlGv/I/RLONr8DqMXfrTYYSpIfFuEzPO/w==
+X-Google-Smtp-Source: AA0mqf71+ajTcmJNX7P4cfklm/EFFrrdYgWdEfyfRhJ9ejBlnLInOH3FdtNj5i99pGGufHdMREzQhg==
+X-Received: by 2002:a05:600c:6890:b0:3cf:54f4:eea with SMTP id fn16-20020a05600c689000b003cf54f40eeamr1851925wmb.105.1668597779316;
+        Wed, 16 Nov 2022 03:22:59 -0800 (PST)
+Received: from localhost.localdomain ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id ay6-20020a05600c1e0600b003cfd42821dasm1972894wmb.3.2022.11.16.03.22.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Nov 2022 03:22:58 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-References: <20221116104716.2583320-1-abel.vesa@linaro.org>
- <20221116104716.2583320-3-abel.vesa@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221116104716.2583320-3-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 1/2] soc: qcom: rpmh-rsc: Add support for RSC v3 register offsets
+Date:   Wed, 16 Nov 2022 13:22:45 +0200
+Message-Id: <20221116112246.2640648-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,55 +71,362 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The SM8550 RSC has a new set of register offsets due to its version bump.
+So read the version from HW and use the proper register offsets based on
+that.
 
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+ drivers/soc/qcom/rpmh-internal.h |   7 ++
+ drivers/soc/qcom/rpmh-rsc.c      | 161 ++++++++++++++++++++-----------
+ 2 files changed, 110 insertions(+), 58 deletions(-)
 
-On 16/11/2022 11:47, Abel Vesa wrote:
-> Depending on the platform, the poll timeout delay might be different,
-> so allow the platform specific drivers to specify their own values.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->   drivers/clk/qcom/gdsc.c | 5 ++++-
->   drivers/clk/qcom/gdsc.h | 1 +
->   2 files changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index 0f21a8a767ac..3753f3ef7241 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -107,7 +107,7 @@ static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
->   	do {
->   		if (gdsc_check_status(sc, status))
->   			return 0;
-> -	} while (ktime_us_delta(ktime_get(), start) < TIMEOUT_US);
-> +	} while (ktime_us_delta(ktime_get(), start) < sc->poll_timeout);
-What about the second usage of TIMEOUT_US (in gdsc_toggle_logic)? Is it 
-fine for that to be the default value?
+diff --git a/drivers/soc/qcom/rpmh-internal.h b/drivers/soc/qcom/rpmh-internal.h
+index 39f53586f724..0160c1669583 100644
+--- a/drivers/soc/qcom/rpmh-internal.h
++++ b/drivers/soc/qcom/rpmh-internal.h
+@@ -86,6 +86,11 @@ struct rpmh_ctrlr {
+ 	struct list_head batch_cache;
+ };
+ 
++struct rsc_ver {
++	u32 major;
++	u32 minor;
++};
++
+ /**
+  * struct rsc_drv: the Direct Resource Voter (DRV) of the
+  * Resource State Coordinator controller (RSC)
+@@ -129,6 +134,8 @@ struct rsc_drv {
+ 	wait_queue_head_t tcs_wait;
+ 	struct rpmh_ctrlr client;
+ 	struct device *dev;
++	struct rsc_ver ver;
++	u32 *regs;
+ };
+ 
+ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg);
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index c51567b778ef..cc24874d0a95 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -36,16 +36,38 @@
+ #define CREATE_TRACE_POINTS
+ #include "trace-rpmh.h"
+ 
+-#define RSC_DRV_TCS_OFFSET		672
+-#define RSC_DRV_CMD_OFFSET		20
++
++#define RSC_DRV_ID			0
++
++#define MAJOR_VER_MASK			0xFF
++#define MAJOR_VER_SHIFT			16
++#define MINOR_VER_MASK			0xFF
++#define MINOR_VER_SHIFT			8
++
++enum {
++	RSC_DRV_TCS_OFFSET,
++	RSC_DRV_CMD_OFFSET,
++	DRV_SOLVER_CONFIG,
++	DRV_PRNT_CHLD_CONFIG,
++	RSC_DRV_IRQ_ENABLE,
++	RSC_DRV_IRQ_STATUS,
++	RSC_DRV_IRQ_CLEAR,
++	RSC_DRV_CMD_WAIT_FOR_CMPL,
++	RSC_DRV_CONTROL,
++	RSC_DRV_STATUS,
++	RSC_DRV_CMD_ENABLE,
++	RSC_DRV_CMD_MSGID,
++	RSC_DRV_CMD_ADDR,
++	RSC_DRV_CMD_DATA,
++	RSC_DRV_CMD_STATUS,
++	RSC_DRV_CMD_RESP_DATA,
++};
+ 
+ /* DRV HW Solver Configuration Information Register */
+-#define DRV_SOLVER_CONFIG		0x04
+ #define DRV_HW_SOLVER_MASK		1
+ #define DRV_HW_SOLVER_SHIFT		24
+ 
+ /* DRV TCS Configuration Information Register */
+-#define DRV_PRNT_CHLD_CONFIG		0x0C
+ #define DRV_NUM_TCS_MASK		0x3F
+ #define DRV_NUM_TCS_SHIFT		6
+ #define DRV_NCPT_MASK			0x1F
+@@ -59,35 +81,6 @@
+ #define RSC_DRV_CTL_TCS_DATA_LO_MASK	0xFFFFFFFF
+ #define RSC_DRV_CTL_TCS_DATA_SIZE	32
+ 
+-/* Offsets for common TCS Registers, one bit per TCS */
+-#define RSC_DRV_IRQ_ENABLE		0x00
+-#define RSC_DRV_IRQ_STATUS		0x04
+-#define RSC_DRV_IRQ_CLEAR		0x08	/* w/o; write 1 to clear */
+-
+-/*
+- * Offsets for per TCS Registers.
+- *
+- * TCSes start at 0x10 from tcs_base and are stored one after another.
+- * Multiply tcs_id by RSC_DRV_TCS_OFFSET to find a given TCS and add one
+- * of the below to find a register.
+- */
+-#define RSC_DRV_CMD_WAIT_FOR_CMPL	0x10	/* 1 bit per command */
+-#define RSC_DRV_CONTROL			0x14
+-#define RSC_DRV_STATUS			0x18	/* zero if tcs is busy */
+-#define RSC_DRV_CMD_ENABLE		0x1C	/* 1 bit per command */
+-
+-/*
+- * Offsets for per command in a TCS.
+- *
+- * Commands (up to 16) start at 0x30 in a TCS; multiply command index
+- * by RSC_DRV_CMD_OFFSET and add one of the below to find a register.
+- */
+-#define RSC_DRV_CMD_MSGID		0x30
+-#define RSC_DRV_CMD_ADDR		0x34
+-#define RSC_DRV_CMD_DATA		0x38
+-#define RSC_DRV_CMD_STATUS		0x3C
+-#define RSC_DRV_CMD_RESP_DATA		0x40
+-
+ #define TCS_AMC_MODE_ENABLE		BIT(16)
+ #define TCS_AMC_MODE_TRIGGER		BIT(24)
+ 
+@@ -160,16 +153,54 @@ static inline unsigned long xloops_to_cycles(u64 xloops)
+ 	return (xloops * loops_per_jiffy * HZ) >> 32;
+ }
+ 
++static u32 rpmh_rsc_reg_offset_ver_2_7[] = {
++	[RSC_DRV_TCS_OFFSET]		= 672,
++	[RSC_DRV_CMD_OFFSET]		= 20,
++	[DRV_SOLVER_CONFIG]		= 0x04,
++	[DRV_PRNT_CHLD_CONFIG]		= 0x0C,
++	[RSC_DRV_IRQ_ENABLE]		= 0x00,
++	[RSC_DRV_IRQ_STATUS]		= 0x04,
++	[RSC_DRV_IRQ_CLEAR]		= 0x08,
++	[RSC_DRV_CMD_WAIT_FOR_CMPL]	= 0x10,
++	[RSC_DRV_CONTROL]		= 0x14,
++	[RSC_DRV_STATUS]		= 0x18,
++	[RSC_DRV_CMD_ENABLE]		= 0x1C,
++	[RSC_DRV_CMD_MSGID]		= 0x30,
++	[RSC_DRV_CMD_ADDR]		= 0x34,
++	[RSC_DRV_CMD_DATA]		= 0x38,
++	[RSC_DRV_CMD_STATUS]		= 0x3C,
++	[RSC_DRV_CMD_RESP_DATA]		= 0x40,
++};
++
++static u32 rpmh_rsc_reg_offset_ver_3_0[] = {
++	[RSC_DRV_TCS_OFFSET]		= 672,
++	[RSC_DRV_CMD_OFFSET]		= 24,
++	[DRV_SOLVER_CONFIG]		= 0x04,
++	[DRV_PRNT_CHLD_CONFIG]		= 0x0C,
++	[RSC_DRV_IRQ_ENABLE]		= 0x00,
++	[RSC_DRV_IRQ_STATUS]		= 0x04,
++	[RSC_DRV_IRQ_CLEAR]		= 0x08,
++	[RSC_DRV_CMD_WAIT_FOR_CMPL]	= 0x20,
++	[RSC_DRV_CONTROL]		= 0x24,
++	[RSC_DRV_STATUS]		= 0x28,
++	[RSC_DRV_CMD_ENABLE]		= 0x2C,
++	[RSC_DRV_CMD_MSGID]		= 0x34,
++	[RSC_DRV_CMD_ADDR]		= 0x38,
++	[RSC_DRV_CMD_DATA]		= 0x3C,
++	[RSC_DRV_CMD_STATUS]		= 0x40,
++	[RSC_DRV_CMD_RESP_DATA]		= 0x44,
++};
++
+ static inline void __iomem *
+ tcs_reg_addr(const struct rsc_drv *drv, int reg, int tcs_id)
+ {
+-	return drv->tcs_base + RSC_DRV_TCS_OFFSET * tcs_id + reg;
++	return drv->tcs_base + drv->regs[RSC_DRV_TCS_OFFSET] * tcs_id + reg;
+ }
+ 
+ static inline void __iomem *
+ tcs_cmd_addr(const struct rsc_drv *drv, int reg, int tcs_id, int cmd_id)
+ {
+-	return tcs_reg_addr(drv, reg, tcs_id) + RSC_DRV_CMD_OFFSET * cmd_id;
++	return tcs_reg_addr(drv, reg, tcs_id) + drv->regs[RSC_DRV_CMD_OFFSET] * cmd_id;
+ }
+ 
+ static u32 read_tcs_cmd(const struct rsc_drv *drv, int reg, int tcs_id,
+@@ -237,7 +268,7 @@ static void tcs_invalidate(struct rsc_drv *drv, int type)
+ 		return;
+ 
+ 	for (m = tcs->offset; m < tcs->offset + tcs->num_tcs; m++)
+-		write_tcs_reg_sync(drv, RSC_DRV_CMD_ENABLE, m, 0);
++		write_tcs_reg_sync(drv, drv->regs[RSC_DRV_CMD_ENABLE], m, 0);
+ 
+ 	bitmap_zero(tcs->slots, MAX_TCS_SLOTS);
+ }
+@@ -351,24 +382,25 @@ static const struct tcs_request *get_req_from_tcs(struct rsc_drv *drv,
+ static void __tcs_set_trigger(struct rsc_drv *drv, int tcs_id, bool trigger)
+ {
+ 	u32 enable;
++	u32 reg = drv->regs[RSC_DRV_CONTROL];
+ 
+ 	/*
+ 	 * HW req: Clear the DRV_CONTROL and enable TCS again
+ 	 * While clearing ensure that the AMC mode trigger is cleared
+ 	 * and then the mode enable is cleared.
+ 	 */
+-	enable = read_tcs_reg(drv, RSC_DRV_CONTROL, tcs_id);
++	enable = read_tcs_reg(drv, reg, tcs_id);
+ 	enable &= ~TCS_AMC_MODE_TRIGGER;
+-	write_tcs_reg_sync(drv, RSC_DRV_CONTROL, tcs_id, enable);
++	write_tcs_reg_sync(drv, reg, tcs_id, enable);
+ 	enable &= ~TCS_AMC_MODE_ENABLE;
+-	write_tcs_reg_sync(drv, RSC_DRV_CONTROL, tcs_id, enable);
++	write_tcs_reg_sync(drv, reg, tcs_id, enable);
+ 
+ 	if (trigger) {
+ 		/* Enable the AMC mode on the TCS and then trigger the TCS */
+ 		enable = TCS_AMC_MODE_ENABLE;
+-		write_tcs_reg_sync(drv, RSC_DRV_CONTROL, tcs_id, enable);
++		write_tcs_reg_sync(drv, reg, tcs_id, enable);
+ 		enable |= TCS_AMC_MODE_TRIGGER;
+-		write_tcs_reg(drv, RSC_DRV_CONTROL, tcs_id, enable);
++		write_tcs_reg(drv, reg, tcs_id, enable);
+ 	}
+ }
+ 
+@@ -384,13 +416,14 @@ static void __tcs_set_trigger(struct rsc_drv *drv, int tcs_id, bool trigger)
+ static void enable_tcs_irq(struct rsc_drv *drv, int tcs_id, bool enable)
+ {
+ 	u32 data;
++	u32 reg = drv->regs[RSC_DRV_IRQ_ENABLE];
+ 
+-	data = readl_relaxed(drv->tcs_base + RSC_DRV_IRQ_ENABLE);
++	data = readl_relaxed(drv->tcs_base + reg);
+ 	if (enable)
+ 		data |= BIT(tcs_id);
+ 	else
+ 		data &= ~BIT(tcs_id);
+-	writel_relaxed(data, drv->tcs_base + RSC_DRV_IRQ_ENABLE);
++	writel_relaxed(data, drv->tcs_base + reg);
+ }
+ 
+ /**
+@@ -411,7 +444,7 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
+ 	const struct tcs_request *req;
+ 	struct tcs_cmd *cmd;
+ 
+-	irq_status = readl_relaxed(drv->tcs_base + RSC_DRV_IRQ_STATUS);
++	irq_status = readl_relaxed(drv->tcs_base + drv->regs[RSC_DRV_IRQ_STATUS]);
+ 
+ 	for_each_set_bit(i, &irq_status, BITS_PER_TYPE(u32)) {
+ 		req = get_req_from_tcs(drv, i);
+@@ -423,7 +456,7 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
+ 			u32 sts;
+ 
+ 			cmd = &req->cmds[j];
+-			sts = read_tcs_cmd(drv, RSC_DRV_CMD_STATUS, i, j);
++			sts = read_tcs_cmd(drv, drv->regs[RSC_DRV_CMD_STATUS], i, j);
+ 			if (!(sts & CMD_STATUS_ISSUED) ||
+ 			   ((req->wait_for_compl || cmd->wait) &&
+ 			   !(sts & CMD_STATUS_COMPL))) {
+@@ -444,8 +477,8 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
+ 			__tcs_set_trigger(drv, i, false);
+ skip:
+ 		/* Reclaim the TCS */
+-		write_tcs_reg(drv, RSC_DRV_CMD_ENABLE, i, 0);
+-		writel_relaxed(BIT(i), drv->tcs_base + RSC_DRV_IRQ_CLEAR);
++		write_tcs_reg(drv, drv->regs[RSC_DRV_CMD_ENABLE], i, 0);
++		writel_relaxed(BIT(i), drv->tcs_base + drv->regs[RSC_DRV_IRQ_CLEAR]);
+ 		spin_lock(&drv->lock);
+ 		clear_bit(i, drv->tcs_in_use);
+ 		/*
+@@ -496,14 +529,14 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
+ 		 */
+ 		msgid |= cmd->wait ? CMD_MSGID_RESP_REQ : 0;
+ 
+-		write_tcs_cmd(drv, RSC_DRV_CMD_MSGID, tcs_id, j, msgid);
+-		write_tcs_cmd(drv, RSC_DRV_CMD_ADDR, tcs_id, j, cmd->addr);
+-		write_tcs_cmd(drv, RSC_DRV_CMD_DATA, tcs_id, j, cmd->data);
++		write_tcs_cmd(drv, drv->regs[RSC_DRV_CMD_MSGID], tcs_id, j, msgid);
++		write_tcs_cmd(drv, drv->regs[RSC_DRV_CMD_ADDR], tcs_id, j, cmd->addr);
++		write_tcs_cmd(drv, drv->regs[RSC_DRV_CMD_DATA], tcs_id, j, cmd->data);
+ 		trace_rpmh_send_msg(drv, tcs_id, j, msgid, cmd);
+ 	}
+ 
+-	cmd_enable |= read_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id);
+-	write_tcs_reg(drv, RSC_DRV_CMD_ENABLE, tcs_id, cmd_enable);
++	cmd_enable |= read_tcs_reg(drv, drv->regs[RSC_DRV_CMD_ENABLE], tcs_id);
++	write_tcs_reg(drv, drv->regs[RSC_DRV_CMD_ENABLE], tcs_id, cmd_enable);
+ }
+ 
+ /**
+@@ -535,10 +568,10 @@ static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
+ 	int i = tcs->offset;
+ 
+ 	for_each_set_bit_from(i, drv->tcs_in_use, tcs->offset + tcs->num_tcs) {
+-		curr_enabled = read_tcs_reg(drv, RSC_DRV_CMD_ENABLE, i);
++		curr_enabled = read_tcs_reg(drv, drv->regs[RSC_DRV_CMD_ENABLE], i);
+ 
+ 		for_each_set_bit(j, &curr_enabled, MAX_CMDS_PER_TCS) {
+-			addr = read_tcs_cmd(drv, RSC_DRV_CMD_ADDR, i, j);
++			addr = read_tcs_cmd(drv, drv->regs[RSC_DRV_CMD_ADDR], i, j);
+ 			for (k = 0; k < msg->num_cmds; k++) {
+ 				if (addr == msg->cmds[k].addr)
+ 					return -EBUSY;
+@@ -649,7 +682,7 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
+ 		 * repurposed TCS to avoid triggering them. tcs->slots will be
+ 		 * cleaned from rpmh_flush() by invoking rpmh_rsc_invalidate()
+ 		 */
+-		write_tcs_reg_sync(drv, RSC_DRV_CMD_ENABLE, tcs_id, 0);
++		write_tcs_reg_sync(drv, drv->regs[RSC_DRV_CMD_ENABLE], tcs_id, 0);
+ 		enable_tcs_irq(drv, tcs_id, true);
+ 	}
+ 	spin_unlock_irqrestore(&drv->lock, flags);
+@@ -957,7 +990,7 @@ static int rpmh_probe_tcs_config(struct platform_device *pdev, struct rsc_drv *d
+ 		return ret;
+ 	drv->tcs_base = drv->base + offset;
+ 
+-	config = readl_relaxed(drv->base + DRV_PRNT_CHLD_CONFIG);
++	config = readl_relaxed(drv->base + drv->regs[DRV_PRNT_CHLD_CONFIG]);
+ 
+ 	max_tcs = config;
+ 	max_tcs &= DRV_NUM_TCS_MASK << (DRV_NUM_TCS_SHIFT * drv->id);
+@@ -1019,6 +1052,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+ 	char drv_id[10] = {0};
+ 	int ret, irq;
+ 	u32 solver_config;
++	u32 rsc_id;
+ 
+ 	/*
+ 	 * Even though RPMh doesn't directly use cmd-db, all of its children
+@@ -1049,6 +1083,17 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+ 	if (IS_ERR(drv->base))
+ 		return PTR_ERR(drv->base);
+ 
++	rsc_id = readl_relaxed(drv->base + RSC_DRV_ID);
++	drv->ver.major = rsc_id & (MAJOR_VER_MASK << MAJOR_VER_SHIFT);
++	drv->ver.major >>= MAJOR_VER_SHIFT;
++	drv->ver.minor = rsc_id & (MINOR_VER_MASK << MINOR_VER_SHIFT);
++	drv->ver.minor >>= MINOR_VER_SHIFT;
++
++	if (drv->ver.major == 3 && drv->ver.minor == 0)
++		drv->regs = rpmh_rsc_reg_offset_ver_3_0;
++	else
++		drv->regs = rpmh_rsc_reg_offset_ver_2_7;
++
+ 	ret = rpmh_probe_tcs_config(pdev, drv);
+ 	if (ret)
+ 		return ret;
+@@ -1072,7 +1117,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+ 	 * 'HW solver' mode where they can be in autonomous mode executing low
+ 	 * power mode to power down.
+ 	 */
+-	solver_config = readl_relaxed(drv->base + DRV_SOLVER_CONFIG);
++	solver_config = readl_relaxed(drv->base + drv->regs[DRV_SOLVER_CONFIG]);
+ 	solver_config &= DRV_HW_SOLVER_MASK << DRV_HW_SOLVER_SHIFT;
+ 	solver_config = solver_config >> DRV_HW_SOLVER_SHIFT;
+ 	if (!solver_config) {
+@@ -1088,7 +1133,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+ 
+ 	/* Enable the active TCS to send requests immediately */
+ 	writel_relaxed(drv->tcs[ACTIVE_TCS].mask,
+-		       drv->tcs_base + RSC_DRV_IRQ_ENABLE);
++		       drv->tcs_base + drv->regs[RSC_DRV_IRQ_ENABLE]);
+ 
+ 	spin_lock_init(&drv->client.cache_lock);
+ 	INIT_LIST_HEAD(&drv->client.cache);
+-- 
+2.34.1
 
-
-Konrad
->   
->   	if (gdsc_check_status(sc, status))
->   		return 0;
-> @@ -454,6 +454,9 @@ static int gdsc_init(struct gdsc *sc)
->   	if (ret)
->   		goto err_disable_supply;
->   
-> +	if (!sc->poll_timeout)
-> +		sc->poll_timeout = 500;
-> +
->   	return 0;
->   
->   err_disable_supply:
-> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
-> index 803512688336..9a1e1fb3d12f 100644
-> --- a/drivers/clk/qcom/gdsc.h
-> +++ b/drivers/clk/qcom/gdsc.h
-> @@ -36,6 +36,7 @@ struct gdsc {
->   	struct generic_pm_domain	*parent;
->   	struct regmap			*regmap;
->   	unsigned int			gdscr;
-> +	unsigned int			poll_timeout;
->   	unsigned int			collapse_ctrl;
->   	unsigned int			collapse_mask;
->   	unsigned int			gds_hw_ctrl;
