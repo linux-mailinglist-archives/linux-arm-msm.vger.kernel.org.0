@@ -2,133 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C02062CE1B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 23:55:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4101662CEDA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Nov 2022 00:39:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233825AbiKPWzk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 17:55:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38958 "EHLO
+        id S234546AbiKPXjT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 18:39:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238819AbiKPWze (ORCPT
+        with ESMTP id S234139AbiKPXjH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 17:55:34 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCBE96B23E;
-        Wed, 16 Nov 2022 14:55:31 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AGLJh6W029063;
-        Wed, 16 Nov 2022 22:55:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=3yEu/KpX2Z69PcMkvPCwi808XfPo3JBnARa9aFt/nO0=;
- b=ivZb2fqs2uT86XjgZ1I0H5CEpAzd5LvRCCtgl4OfpM1YRQb7QWO583MKC5mzdNHk2/mS
- nPsGUvl4nFgPpbja46cBEfoY2BCzH1FsPsdS9wjGolohQ0HgFf1KhrRZIdzUTyMJz58e
- uS74HhZy2L5QCg0tzhqTEin1g4RST5LCy6fSff+QkTF9XlMe9TdfCCHBNcWM4nEz68tW
- ZRRTJGrLg1W0moupnYVGgJJ5WP48MQqeqn0mdAYFcTHQVzP4WsIge42JCDN+eo6m5bWe
- VtlR1pgkgSQLH6LhTWAlucEFGXVnd83bmoTjuSfM0r+++qlCJ0DTcbeRo7Gg7klkHorW dQ== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kw0f5s5wn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 16 Nov 2022 22:55:24 +0000
-Received: from nasanex01b.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AGMtKSV025948
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 16 Nov 2022 22:55:20 GMT
-Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 16 Nov
- 2022 14:55:20 -0800
-Date:   Wed, 16 Nov 2022 14:55:18 -0800
-From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-CC:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <robh+dt@kernel.org>, <agross@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <konrad.dybcio@somainline.org>,
-        <robimarko@gmail.com>, <quic_rjendra@quicinc.com>
-Subject: Re: [PATCH V4 2/2] firmware: qcom: scm: Add wait-queue handling logic
-Message-ID: <20221116225518.GA14011@quicinc.com>
-References: <20221114082644.28739-1-quic_sibis@quicinc.com>
- <20221114082644.28739-3-quic_sibis@quicinc.com>
- <20221115053336.GA29781@quicinc.com>
- <1b462f1a-327b-4a8f-8de7-909dbad0ddf8@quicinc.com>
+        Wed, 16 Nov 2022 18:39:07 -0500
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B38D5686B9;
+        Wed, 16 Nov 2022 15:39:06 -0800 (PST)
+Received: by mail-oi1-f181.google.com with SMTP id b124so136333oia.4;
+        Wed, 16 Nov 2022 15:39:06 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=u6s4tcWtAUFsjBroYlDd5s5GJKQQ4LPC5QVVgj8A4GM=;
+        b=61ocBYGJheDSkzwtDRw71g0Ogtkj8JijAeBhbIcHTJSx51iosnQVhlfdMwL2SAmtL6
+         lH9cCH6SZ91jIhCa81YKxZzV90rBNaMx1oZJ8qsnhsC3ekOq3cMew3br/3qkQMTOiZuk
+         whxQZ4miNrUZIBBt8GOI7GUzyH0alOoPEBoF9WAxuvSOeuoSEw9aqakZRl3YSxx09Bk6
+         0gKgOz2OZdISae2//bjkMG5Xvv962qXTEqjTD7WDQGMU2dW8hqs9fq9WUNnMo/LC1pek
+         mpeGovpycum/BfQhKAPkZ5l35wsQy0N6M/8mz+RICJnIFMhCNQ3JK66HKwa3j5y9JMQv
+         ALZw==
+X-Gm-Message-State: ANoB5pl/BDdBb9jxSaovSJHnVluJUb8VFqYsphXv7VHB4qai01lKhxXX
+        aluPYXwmJiFBpgdyLCKTQw==
+X-Google-Smtp-Source: AA0mqf43xzoJ1xe+xrzJTvE2+mSfCD0TR8MqUBpy7LYxQ5OW20eQB64dUgBVeHO3fzRjLq2NPU751g==
+X-Received: by 2002:a05:6808:688:b0:35a:2de8:70b1 with SMTP id k8-20020a056808068800b0035a2de870b1mr41051oig.94.1668641945606;
+        Wed, 16 Nov 2022 15:39:05 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id s1-20020a4aad41000000b004968311a31asm6616574oon.39.2022.11.16.15.39.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Nov 2022 15:39:04 -0800 (PST)
+Received: (nullmailer pid 1231200 invoked by uid 1000);
+        Wed, 16 Nov 2022 23:39:07 -0000
+Date:   Wed, 16 Nov 2022 17:39:07 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        devicetree@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH 1/4] dt-bindings: remoteproc: qcom: adsp: document sm8550
+ adsp, cdsp & mpss compatible
+Message-ID: <20221116233907.GA1227164-robh@kernel.org>
+References: <20221114-narmstrong-sm8550-upstream-remoteproc-v1-0-104c34cb3b91@linaro.org>
+ <20221114-narmstrong-sm8550-upstream-remoteproc-v1-1-104c34cb3b91@linaro.org>
+ <b6eac577-f3a7-d1a4-f492-74782c2e5ff1@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1b462f1a-327b-4a8f-8de7-909dbad0ddf8@quicinc.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: SVM3yGXHAjs4FOV9cC5L2J3JSgeh1y2o
-X-Proofpoint-GUID: SVM3yGXHAjs4FOV9cC5L2J3JSgeh1y2o
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-16_03,2022-11-16_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 impostorscore=0 mlxscore=0 spamscore=0 mlxlogscore=933
- phishscore=0 adultscore=0 bulkscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211160157
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <b6eac577-f3a7-d1a4-f492-74782c2e5ff1@linaro.org>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Nov 16 2022 12:11, Sibi Sankar wrote:
-> Hey Guru,
+On Wed, Nov 16, 2022 at 01:28:11PM +0100, Krzysztof Kozlowski wrote:
+> On 16/11/2022 11:20, Neil Armstrong wrote:
+> > This documents the compatible for the component used to boot the
+> > aDSP, cDSP and MPSS on the SM8550 SoC.
+> > 
+> > The SM8550 boot process on SM8550 now requires a secondary "Devicetree"
+> > firmware to be passed along the main Firmware, and the cDSP a new power
+> > domain named "NSP".
+> > 
+> > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > ---
+> >  .../devicetree/bindings/remoteproc/qcom,adsp.yaml  | 60 +++++++++++++++++++++-
+> >  1 file changed, 59 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+> > index db9e0f0c2bea..678cb73f10de 100644
+> > --- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+> > +++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+> > @@ -55,6 +55,9 @@ properties:
+> >        - qcom,sm8450-cdsp-pas
+> >        - qcom,sm8450-mpss-pas
+> >        - qcom,sm8450-slpi-pas
+> > +      - qcom,sm8550-adsp-pas
+> > +      - qcom,sm8550-cdsp-pas
+> > +      - qcom,sm8550-mpss-pas
+> >  
+> >    reg:
+> >      maxItems: 1
+> > @@ -116,8 +119,13 @@ properties:
+> >      $ref: /schemas/types.yaml#/definitions/string
+> >      description: Firmware name for the Hexagon core
+> >  
+> > +  qcom,dtb-firmware-name:
+> > +    $ref: /schemas/types.yaml#/definitions/string
+> > +    description: Devicetree Firmware name for the Hexagon core
 > 
-> Thanks for taking time to review the series.
+> Not sure about this one.
 > 
-> On 11/15/22 11:03, Guru Das Srinagesh wrote:
-> >On Nov 14 2022 13:56, Sibi Sankar wrote:
-> >
-> >(snip)
-> >
-> >>+static irqreturn_t qcom_scm_irq_handler(int irq, void *data)
-> >>+{
-> >>+	int ret;
-> >>+	struct qcom_scm *scm = data;
-> >>+	struct completion *wq_to_wake;
-> >>+	u32 wq_ctx, flags, more_pending = 0;
-> >>+
-> >>+	do {
-> >>+		ret = scm_get_wq_ctx(&wq_ctx, &flags, &more_pending);
-> >>+		if (ret) {
-> >>+			dev_err(scm->dev, "GET_WQ_CTX SMC call failed: %d\n", ret);
-> >>+			goto out;
-> >>+		}
-> >>+
-> >>+		wq_to_wake = qcom_scm_lookup_wq(scm, wq_ctx);
-> >>+		if (IS_ERR_OR_NULL(wq_to_wake)) {
-> >>+			dev_err(scm->dev, "No waitqueue found for wq_ctx %d: %ld\n",
-> >>+				wq_ctx, PTR_ERR(wq_to_wake));
-> >>+			goto out;
-> >>+		}
-> >>+
-> >>+		if (flags != QCOM_SMC_WAITQ_FLAG_WAKE_ONE &&
-> >>+		    flags != QCOM_SMC_WAITQ_FLAG_WAKE_ALL) {
-> >>+			dev_err(scm->dev, "Invalid Flags found for wq_ctx: %u\n", flags);
-> >>+			goto out;
-> >>+		}
-> >>+
-> >>+		complete(wq_to_wake);
-> >
-> >Need to call complete() or complete_all() based on the flags.
-> 
-> with the current implementation we should get away with
-> just complete for now but I can add them back in the way
-> Bjorn wanted i.e. with the bool wake_all in the next
-> re-spin.
+> Rob,
+> Don't we want rather to have multiple items in firmware-name?
 
-Sounds good, let's consume the flags according to their intended purpose. 
+Yes, I think we already have that for some users. Should have been 
+'firmware-names' I guess but I don't think it's worth dealing with 
+another case of handling both (forever).
 
-Thank you.
-
-Guru Das.
+Rob
