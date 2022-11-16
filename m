@@ -2,184 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE5E462C2B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:35:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0121D62C2DD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:44:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230203AbiKPPf3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 10:35:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50506 "EHLO
+        id S231656AbiKPPoR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 10:44:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbiKPPf2 (ORCPT
+        with ESMTP id S232392AbiKPPoL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 10:35:28 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C0F11180B;
-        Wed, 16 Nov 2022 07:35:27 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AGDFiDp027890;
-        Wed, 16 Nov 2022 15:35:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=4bgSVWe2DupxOwRr4EOFbsHDsofmk+PFg9oISOvq07w=;
- b=AcC0d+H6Ykx45QyKTs91JvR5oMly//xnEMmuafbJ+4j5AFxQqRpBhfUI3lY3qBvo35U+
- w2tVbt3T66tD+Ep+qW3ZkpgjSikFo66wyZtdYgGVaD8PwpvmkCCd336cOSdWyxZfnQ4M
- Ar3WwuMqL9aOOQhxnO41GD6zp+hpdLrdriRjtnOdgSkQj4uC7LndSiM0kvzTHbMqXHzZ
- XVR9iQerh42i3I0+TNT2BrflTvF4cOOEGaFDyOhGC8PPouo4Op2/OMHyryA6juE16+27
- Vxnx1ZDH/LaQunuf9GW73GokZgHsU1esihFCQnR4bvRdhIBM/6n/Bcl6DxIl7L3kXSd1 Dw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kw03a8bcj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 16 Nov 2022 15:35:24 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AGFZNNY015031
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 16 Nov 2022 15:35:23 GMT
-Received: from [10.216.25.63] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 16 Nov
- 2022 07:35:19 -0800
-Message-ID: <0dd3e096-84ac-da81-ad43-bf07485e7b65@quicinc.com>
-Date:   Wed, 16 Nov 2022 07:35:16 -0800
+        Wed, 16 Nov 2022 10:44:11 -0500
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BA1915FD5;
+        Wed, 16 Nov 2022 07:44:07 -0800 (PST)
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-141ca09c2fbso10905273fac.6;
+        Wed, 16 Nov 2022 07:44:07 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wMo6J/xzRkf1qXE2NKBwI6pYJF06fUQVfFkcN76kkF8=;
+        b=O0elWtFf+jqfYVUr+llAdKZs1NG6xr9bZG+uO5RTaHPeYAU6We9tOiKrOqzuhRHOFH
+         gksLtoxHXnRl3jWCDAE8w3RdQfM9DSQ6Disx/9EC6UAIp9lHH0oNNv9wU1HOIQujv/ez
+         2UmigPR3r7J0h0FiZm81XyjHctWUvbqXqHuTQIgXrVYh6l14dLkUmdVixZok/WsVdyij
+         N/5IKjmo5BSoIAvec/QT0iw+u3DPg7zrfnztVgU/qWqIjPzDaWfFu8037E1PBVUjJGfu
+         CVJmkiBwMfxd05GwNpIpakdTyu8noqdg85hXl92UTsFzos3v/ow92jLRxTOzBbCLvrcn
+         Kcbw==
+X-Gm-Message-State: ANoB5pnMQ3wMdCueK0uTYiCLmDBCvrVqoozieUTHIrS1cepMsPLZeHEu
+        tUOmlXs1eAM0oiFXhfuErf8zgxoEVQ==
+X-Google-Smtp-Source: AA0mqf54pkgBbUpdwKOrjUT6QhVYiAi0ssoyyBFQndLmit2Qvve+VkWtQ12mUZTMUwvVfGPtCp7sdw==
+X-Received: by 2002:a05:6870:be97:b0:132:712d:75cb with SMTP id nx23-20020a056870be9700b00132712d75cbmr1977748oab.145.1668613447117;
+        Wed, 16 Nov 2022 07:44:07 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id j59-20020a9d17c1000000b0066da36d2c45sm2641748otj.22.2022.11.16.07.44.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Nov 2022 07:44:06 -0800 (PST)
+Received: (nullmailer pid 48656 invoked by uid 1000);
+        Wed, 16 Nov 2022 15:44:08 -0000
+Date:   Wed, 16 Nov 2022 09:44:08 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org
+Subject: Re: [PATCH 08/10] dt-bindings: phy: Add qcom,snps-eusb2-phy schema
+ file
+Message-ID: <20221116154408.GA4193429-robh@kernel.org>
+References: <20221116120157.2706810-1-abel.vesa@linaro.org>
+ <20221116120157.2706810-9-abel.vesa@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2 2/3] drm/msm/disp/dpu1: add helper to know if display
- is pluggable
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>
-CC:     <linux-kernel@vger.kernel.org>, <robdclark@chromium.org>,
-        <dianders@chromium.org>, <swboyd@chromium.org>,
-        <quic_vpolimer@quicinc.com>
-References: <1668609040-2549-1-git-send-email-quic_kalyant@quicinc.com>
- <1668609040-2549-3-git-send-email-quic_kalyant@quicinc.com>
- <e049f5b1-da41-6854-4731-b6697770ffde@linaro.org>
- <6b1907db-3fdb-8fe0-e5e3-21ea17021925@quicinc.com>
- <bf14540a-745c-c378-520a-f8edfd3e3adf@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <bf14540a-745c-c378-520a-f8edfd3e3adf@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nvibYndKs-Sx2SNACmfVRs8TtFf1DTqK
-X-Proofpoint-ORIG-GUID: nvibYndKs-Sx2SNACmfVRs8TtFf1DTqK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-16_03,2022-11-16_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- lowpriorityscore=0 adultscore=0 phishscore=0 impostorscore=0
- malwarescore=0 spamscore=0 mlxlogscore=999 bulkscore=0 suspectscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211160107
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221116120157.2706810-9-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 11/16/2022 7:18 AM, Dmitry Baryshkov wrote:
-> On 16/11/2022 18:11, Abhinav Kumar wrote:
->>
->>
->> On 11/16/2022 7:08 AM, Dmitry Baryshkov wrote:
->>> On 16/11/2022 17:30, Kalyan Thota wrote:
->>>> Since DRM encoder type for few encoders can be similar
->>>> (like eDP and DP) find out if the interface supports HPD
->>>> from encoder bridge to differentiate between builtin
->>>> and pluggable displays.
->>>>
->>>> Changes in v1:
->>>> - add connector type in the disp_info (Dmitry)
->>>> - add helper functions to know encoder type
->>>> - update commit text reflecting the change
->>>>
->>>> Changes in v2:
->>>> - avoid hardcode of connector type for DSI as it may not be true 
->>>> (Dmitry)
->>>> - get the HPD information from encoder bridge
->>>>
->>>> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
->>>> ---
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 16 ++++++++++++++++
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  6 ++++++
->>>>   2 files changed, 22 insertions(+)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
->>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>> index 9c6817b..be93269 100644
->>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>> @@ -15,6 +15,7 @@
->>>>   #include <drm/drm_crtc.h>
->>>>   #include <drm/drm_file.h>
->>>>   #include <drm/drm_probe_helper.h>
->>>> +#include <drm/drm_bridge.h>
->>>>   #include "msm_drv.h"
->>>>   #include "dpu_kms.h"
->>>> @@ -217,6 +218,21 @@ static u32 dither_matrix[DITHER_MATRIX_SZ] = {
->>>>       15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
->>>>   };
->>>> +bool dpu_encoder_is_pluggable(struct drm_encoder *encoder)
->>>> +{
->>>> +    struct drm_bridge *bridge;
->>>> +    int ops = 0;
->>>> +
->>>> +    if (!encoder)
->>>> +        return false;
->>>> +
->>>> +    /* Get last bridge in the chain to determine pluggable state */
->>>> +    drm_for_each_bridge_in_chain(encoder, bridge)
->>>> +        if (!drm_bridge_get_next_bridge(bridge))
->>>> +            ops = bridge->ops;
->>>> +
->>>> +    return ops & DRM_BRIDGE_OP_HPD;
->>>
->>> No. This is not what you should be checking (hint: polled connectors 
->>> also can be pluggable).
->>>
->>> Please check the type of the actual connector connected to this encoder.
->>>
->>
->> Even if we check the connector type as DSI or eDP that does not 
->> necessarily mean its built-in.
->>
->> We can even use DSI or eDP as a pluggable display.
+On Wed, Nov 16, 2022 at 02:01:55PM +0200, Abel Vesa wrote:
+> The SM8550 SoC uses Synopsis eUSB2 PHY. Add a dt-binding schema
+> for the new driver.
 > 
-> Well, I don't think so. eDP and DSI connectors are not pluggable per 
-> design. One can use them so, but they are not thought to be used this 
-> way. Unlike e.g. HDMI, DP, VGA, etc.
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  .../bindings/phy/qcom,snps-eusb2-phy.yaml     | 84 +++++++++++++++++++
+>  1 file changed, 84 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml
 > 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml
+> new file mode 100644
+> index 000000000000..d6a4bdd0cd42
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml
+> @@ -0,0 +1,84 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/phy/qcom,snps-eusb2-phy.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm SNPS eUSB2 phy controller
+> +
+> +maintainers:
+> +  - Abel Vesa <abel.vesa@linaro.org>
+> +
+> +description:
+> +  eUSB2 controller supports LS/FS/HS usb connectivity on Qualcomm chipsets.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sm8550-snps-eusb2-phy
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  "#phy-cells":
+> +    const: 0
+> +
+> +  clocks:
+> +    items:
+> +      - description: ref src
 
-We have had many products where we used HDMI as the primary display 
-where the HPD line was disconnected in the design, so now if we 
-generalize all HDMI connectors to be pluggable we can never enable color 
-management on those even though DSI is not even used in that product.
+parent to 'ref'? If so, parent clocks don't go in 'clocks'.
 
-Thats why I felt we should rely on the HPD_OPS as that way we know that 
-it will be set only if HPD will be used.
-
-Wouldnt it be just better to also check polling displays to complete 
-this check? Is there a way to do it?
-
-> I would say LVDS, eDP, DSI, DPI and SPI can be assumed to be constantly 
-> plugged.
+> +      - description: ref
+> +
+> +  clock-names:
+> +    items:
+> +      - const: ref_src
+> +      - const: ref
+> +
+> +  usb-repeater:
+> +    description:
+> +      Phandle to eUSB2 to USB 2.0 repeater
+> +
+> +  vdd-supply:
+> +    description:
+> +      Phandle to 0.88V regulator supply to PHY digital circuit.
+> +
+> +  vdda12-supply:
+> +    description:
+> +      Phandle to 1.2V regulator supply to PHY refclk pll block.
+> +
+> +  resets:
+> +    maxItems: 1
+> +    description:
+> +      Phandle to reset to phy block.
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - "#phy-cells"
+> +  - clocks
+> +  - clock-names
+> +  - vdd-supply
+> +  - vdda12-supply
+> +  - resets
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-sm8550.h>
+> +    #include <dt-bindings/clock/qcom,rpmh.h>
+> +    #include <dt-bindings/clock/qcom,tcsrcc-sm8550.h>
+> +
+> +    usb_1_hsphy: phy@88e3000 {
+> +        compatible = "qcom,sm8550-snps-eusb2-phy";
+> +        reg = <0x88e3000 0x154>;
+> +        #phy-cells = <0>;
+> +
+> +        clocks = <&rpmhcc RPMH_CXO_PAD_CLK>,
+> +                 <&tcsrcc TCSR_USB2_CLKREF_EN>;
+> +        clock-names = "ref_src", "ref";
+> +
+> +        vdd-supply = <&vreg_l1e_0p88>;
+> +        vdda12-supply = <&vreg_l3e_1p2>;
+> +
+> +        resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
+> +    };
+> -- 
+> 2.34.1
 > 
-> Compare this with Composite, SVIDEO, 9PinDIN, TV. They can be assumed to 
-> be external even if they do not have the HPD (or even polling). And 
-> these connectors usually don't have it.
 > 
->>
->> Thats why we thought of this check.
->>
