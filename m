@@ -2,123 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C945462B6D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 10:45:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AFA4E62B6F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 10:54:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233635AbiKPJpA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 04:45:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60832 "EHLO
+        id S229595AbiKPJyb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 04:54:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231235AbiKPJo7 (ORCPT
+        with ESMTP id S229910AbiKPJyX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 04:44:59 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 119CE616E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 01:44:58 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id j16so28576365lfe.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 01:44:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pgS+Ovv0eXOJwFTViusXUlwcEa0Tx7ZA7lRyTAv8k4w=;
-        b=RCe4P4IceE6ZUqJglE+YVt+Dny9tnUgYpgasdp8+S6rXcaCc7k9FtCvWd5x2Bj/sBV
-         NAVASAdFtSlrI+TrToOf3ARBu7wuCOzIF7KDffariJDavuOisxcP1b+91qua69biztg0
-         uGsemHhaMQ0pBs0UcTft6qARg9oiPnZVW2nn5ja8UU27z4v/vz42rv/nV2f2ZxqLyCMp
-         77qSLcgHngG/Eoh2HjSHgQY/VWAvQWZANyGvy/SbToN+hIU8RQN/ULzpAzOZk0n5d1Vr
-         AhDCUuR7iP8in6MICx3X2fC71sp1qR/COkLRjG4njZ8KAuK8zy1cbCpLq1uvSaWGwgS4
-         emEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pgS+Ovv0eXOJwFTViusXUlwcEa0Tx7ZA7lRyTAv8k4w=;
-        b=QN07VUa6qu/2lxOJxznm1qIFn4/gde/BgPOPC9GMxRf+eWbmDRStxvWWLLcUf/lFMR
-         vVuPRE6Ybe57bOuVHHpnsrFBKV8X5FP6HTQN0iigxfdp1fL3qwQEmcqY6mcc2EDk43oE
-         rDOvcTgRWBxqCe7qPjAUMjVk4uGY8TIeEOC1DPsP3UYpSkYcBhmCQHwrN2P62hEfzDNf
-         AWVyNBo7GAG+u9gGgw3PtOOyK0VRc7Uiv+BBtrLk2YcFqG1341j3q8i7nj65IlWMEDKG
-         CqIp+EdvdUce5YKAF5yyZ74iFAw8E9+cPsMblPhE/8scmu/JHgjmG95U4a32x9lCg4+j
-         xZAg==
-X-Gm-Message-State: ANoB5pkye0P8RdZgXjBighbnm+QWVdADNQ1dn/vJkDqemYhFFgnOpwB8
-        g6YidO5jLXLpfOtN21fHM0mX9A==
-X-Google-Smtp-Source: AA0mqf6rTJFMk6b2mLxnOY8Sft920fWk28nxriGe7jyDuJtMB+LZZKA6WnYqmqoNq3pFIBP+3eFblg==
-X-Received: by 2002:a05:6512:308a:b0:4a2:39e6:4d48 with SMTP id z10-20020a056512308a00b004a239e64d48mr6999988lfd.234.1668591896428;
-        Wed, 16 Nov 2022 01:44:56 -0800 (PST)
-Received: from [192.168.0.20] (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id g5-20020a056512118500b00496693860dcsm2516397lfr.232.2022.11.16.01.44.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 01:44:56 -0800 (PST)
-Message-ID: <0ac1f247-be87-0f92-9ef0-c653bcdb6c1f@linaro.org>
-Date:   Wed, 16 Nov 2022 10:44:54 +0100
+        Wed, 16 Nov 2022 04:54:23 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7367F1759D;
+        Wed, 16 Nov 2022 01:54:20 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AG641K2005817;
+        Wed, 16 Nov 2022 09:54:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=SLKxYZqGxj167jz0sYj8WG4KNM9owQ7O91/mF4XQLl8=;
+ b=YLQCh+QoW6vmIwOBdH63QykX5FQvZjjzYG9rm5AYSFU1iWWMUcUHF1qAbnEKI3DA9sSe
+ ORjavcwQfbHtHLKaasSb1yhCER+uGq/9PNuB5niZGCVPcrTT2Lk144I2KcY9kP6dyL8o
+ Ag65ZkVOwofRKEhjxvUE19H13xIGrt0qot7mtOIrydn9hg3OCfxWDh4J9wj1F5Qvji3p
+ KjDZUEA/5SK27BIImuItmqOhEXO8Y9B2hP5VOhxowlWljKIL9kDDT/PrvUPadeQSu3cX
+ w0NiZT3a3U/DEJJJnrnrTgUL+lxrwt58tweEyEjz0SxqIL8FQqu8ZaXI3B7Evz4KZ9Cv Zg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kvt928nf9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Nov 2022 09:54:14 +0000
+Received: from pps.filterd (NALASPPMTA02.qualcomm.com [127.0.0.1])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2AG9j99o012178;
+        Wed, 16 Nov 2022 09:54:13 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by NALASPPMTA02.qualcomm.com (PPS) with ESMTPS id 3kutnequck-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Nov 2022 09:54:13 +0000
+Received: from NALASPPMTA02.qualcomm.com (NALASPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2AG9peZN020815;
+        Wed, 16 Nov 2022 09:54:13 GMT
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (PPS) with ESMTPS id 2AG9sDiI023266
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Nov 2022 09:54:13 +0000
+Received: from hu-ppareek-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Wed, 16 Nov 2022 01:54:09 -0800
+Date:   Wed, 16 Nov 2022 15:24:05 +0530
+From:   Parikshit Pareek <quic_ppareek@quicinc.com>
+To:     Johan Hovold <johan@kernel.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        Shazad Hussain <quic_shazhuss@quicinc.com>,
+        "Brian Masney" <bmasney@redhat.com>
+Subject: Re: [PATCH v8 2/2] arm64: dts: qcom: add SA8540P ride(Qdrive-3)
+Message-ID: <20221116095405.GA16833@hu-ppareek-blr.qualcomm.com>
+References: <20221116075207.32363-1-quic_ppareek@quicinc.com>
+ <20221116075207.32363-3-quic_ppareek@quicinc.com>
+ <Y3ScYKVYIVyj/mG0@hovoldconsulting.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v2 05/11] dt-bindings: mailbox: qcom: Allow syscon on
- qcom,msm8976-apcs-kpss-global
-Content-Language: en-US
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>, agross@kernel.org
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, jassisinghbrar@gmail.com,
-        srinivas.kandagatla@linaro.org, jic23@kernel.org, lars@metafoo.de,
-        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
-        evgreen@chromium.org, gregkh@linuxfoundation.org,
-        a39.skl@gmail.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-iio@vger.kernel.org, linux-hardening@vger.kernel.org,
-        marijn.suijten@somainline.org, kernel@collabora.com, luca@z3ntu.xyz
-References: <20221111120156.48040-1-angelogioacchino.delregno@collabora.com>
- <20221111120156.48040-6-angelogioacchino.delregno@collabora.com>
- <14947ae2-c8d4-de86-ce9e-29175e73cbb2@linaro.org>
- <9f3e88fa-0aaf-2edd-366e-c3f5b2269dba@collabora.com>
- <513a2dc3-d053-6e4b-a125-394cf1f6c81b@linaro.org>
- <f60ccd79-9c82-0844-2c5f-21ec29c14dcf@collabora.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <f60ccd79-9c82-0844-2c5f-21ec29c14dcf@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <Y3ScYKVYIVyj/mG0@hovoldconsulting.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: hFIq7TZRebjQ1Gov3h16LvPmXZSu7zVn
+X-Proofpoint-ORIG-GUID: hFIq7TZRebjQ1Gov3h16LvPmXZSu7zVn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-15_08,2022-11-15_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ phishscore=0 malwarescore=0 priorityscore=1501 mlxscore=0 mlxlogscore=999
+ impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
+ definitions=main-2211160070
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/11/2022 10:00, AngeloGioacchino Del Regno wrote:
-> Il 16/11/22 09:57, Krzysztof Kozlowski ha scritto:
->> On 16/11/2022 09:52, AngeloGioacchino Del Regno wrote:
->>> Il 15/11/22 17:44, Krzysztof Kozlowski ha scritto:
->>>> On 11/11/2022 13:01, AngeloGioacchino Del Regno wrote:
->>>>> MSM8976 supports SMSM, which needs this node to also be a syscon:
->>>>> move the compatible to allow that.
->>>>>
->>>>> Fixes: bcc8d70f912d ("dt-bindings: mailbox: Add compatible for the MSM8976")
->>>>
->>>> I am not sure if this is still a bug. Maybe just a missing feature?
->>>>
->>>
->>> This changes how you use this mailbox across the entire devicetree (as other
->>> nodes will not use mboxes = xxxx, but qcom,ipc = xxxx as syscon), so I think
->>> that this is not a missing feature?
->>
->> Whether it is a bug depends on existing usage. If none of msm8976 DTSes
->> use it the other way, then it is just incomplete or missing support. Not
->> a bug. If existing DTSes use it as syscon, thus you need to add syscon
->> to compatible, then it would be a bugfix.
->>
+On Wed, Nov 16, 2022 at 09:16:32AM +0100, Johan Hovold wrote:
+> On Wed, Nov 16, 2022 at 01:22:07PM +0530, Parikshit Pareek wrote:
+> > Introduce the Qualcomm SA8540P ride automotive platform, also known as
+> > Qdrive-3 development board.
+> > 
+> > This initial contribution supports SMP, CPUFreq, cluster idle, UFS, RPMh
+> > regulators, debug UART, PMICs, remoteprocs and USB.
+> > 
+> > The SA8540P ride contains four PM8450 PMICs. A separate DTSI file has
+> > been created for PMIC, so that it can be used for future SA8540P based
+> > boards.
+> > 
+> > Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
 > 
-> It's not a bugfix then. The Fixes tag shall be dropped.
+> > +&ufs_mem_hc {
+> > +	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
+> > +
+> > +	vcc-supply = <&vreg_l17c>;
+> > +	vcc-max-microamp = <800000>;
+> > +	vccq-supply = <&vreg_l6c>;
+> > +	vccq-max-microamp = <900000>;
+> > +
+> > +	status = "disabled";
+> > +};
+> > +
+> > +&ufs_mem_phy {
+> > +	vdda-phy-supply = <&vreg_l8g>;
+> > +	vdda-pll-supply = <&vreg_l3g>;
+> > +
+> > +	status = "disabled";
+> > +};
 > 
-> Same question like the other commit, should I send a v3 or can it be dropped while
-> applying?
-
-Maybe better send a v3.
-
-Best regards,
-Krzysztof
-
+> Why are these disabled? This should be mentioned somewhere (e.g. commit
+> message and/or comment) or you can drop the nodes until support is in
+> place.
+My bad. Happened by mistake.
+> 
+> Johan
+Regards,
+Parikshit Pareek
