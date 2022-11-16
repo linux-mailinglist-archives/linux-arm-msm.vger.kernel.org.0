@@ -2,94 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DA2D62C17C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 15:55:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AEF262C19D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 15:57:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232035AbiKPOzk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 09:55:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47200 "EHLO
+        id S233540AbiKPO5g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 09:57:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231657AbiKPOzj (ORCPT
+        with ESMTP id S233959AbiKPO5T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 09:55:39 -0500
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 086D41163;
-        Wed, 16 Nov 2022 06:55:34 -0800 (PST)
-Received: by mail-oi1-f177.google.com with SMTP id r76so18708072oie.13;
-        Wed, 16 Nov 2022 06:55:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7k52RsIpzmIjTbZWyy00dgymBBcd65eObrR5Yxdag1M=;
-        b=rJBbZhKeQgNJPfy4SygCeT63cyc5Y1HAVKmrG4ZzgmrKWPn1g+qyR3ufgAsSWmp+go
-         UDq8EwtBUjO8/qDfPYnryVzfspFJEVbjX38KLX04pFSQ+kU7TzY7n2nQYjq8/v9jALaW
-         x4wspu3KHCvfstQPgFt1C6TdhVPfJ6+sqh6mnmRUtBKHXnKhBCRtclhDmUEMF4zD7FO/
-         ErwFamhQ7p3D2N34JFrkdixA5fpLeiov7LgCxlIfoKorJN7xWNUR8Hf/AVXvI4vapZnX
-         SiWfsrTYhGb0Xvd4pcEwLm7d4EQ5KAWEM/FwZnaHqhvnXsCp3ZOKZAz6gZ40qHKiM3L5
-         eH4w==
-X-Gm-Message-State: ANoB5pndhRMFAxptbASkgjm7FmFVr7mLIe4x+0izNwY4DEPDWHDIwAGo
-        14veuuSJcnoBEwldVKUORA==
-X-Google-Smtp-Source: AA0mqf4m1imWn+Vx90xbRU3LajAp2Wwgdv5+qbG6dWiLmAoZvRNxUkQS+t7NODLtlefTWzNnPKfKcQ==
-X-Received: by 2002:aca:e082:0:b0:35a:4069:85d8 with SMTP id x124-20020acae082000000b0035a406985d8mr1821869oig.101.1668610534178;
-        Wed, 16 Nov 2022 06:55:34 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id n10-20020a4ac70a000000b0049f07909c5fsm6141421ooq.3.2022.11.16.06.55.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 06:55:33 -0800 (PST)
-Received: (nullmailer pid 3837304 invoked by uid 1000);
-        Wed, 16 Nov 2022 14:55:35 -0000
-Date:   Wed, 16 Nov 2022 08:55:35 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     devicetree@vger.kernel.org, Mark Brown <broonie@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Wed, 16 Nov 2022 09:57:19 -0500
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 432B428E03;
+        Wed, 16 Nov 2022 06:57:18 -0800 (PST)
+Received: from g550jk.arnhem.chello.nl (unknown [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 7572EC4128;
+        Wed, 16 Nov 2022 14:56:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1668610606; bh=KsW+8ENBtu4UJFdA+5lLI+Dz/2DZB+GaYC01A1U7Lcw=;
+        h=From:To:Cc:Subject:Date;
+        b=XxUwPzofsEE7PuNWDE1ZT9obfxoeFh5cK+KEr/pUwMq2MVWJ6DjnSIg1ZOZGTcnpn
+         kHx7zp7fZXR1fp52oH1HOd9dqnCxDT+xh0t+kHf2/fZj6jYtJs+Dkha0D1bHDyBtk4
+         po2A1SEohZck7zotkdGTXiSsqOV9XS5Wq/bz70hw=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca@z3ntu.xyz>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        alsa-devel@alsa-project.org, Rob Herring <robh+dt@kernel.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, quic_plai@quicinc.com,
-        quic_srivasam@quicinc.com,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH v2 09/11] ASoC: dt-bindings: qcom,q6core: Split to
- separate schema
-Message-ID: <166861053490.3837248.6746478589858183717.robh@kernel.org>
-References: <20221115120235.167812-1-krzysztof.kozlowski@linaro.org>
- <20221115120235.167812-10-krzysztof.kozlowski@linaro.org>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Tony Luck <tony.luck@intel.com>, devicetree@vger.kernel.org,
+        linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/8] Add a bunch of msm8953 dts files
+Date:   Wed, 16 Nov 2022 15:56:01 +0100
+Message-Id: <20221116145616.17884-1-luca@z3ntu.xyz>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221115120235.167812-10-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        FROM_SUSPICIOUS_NTLD_FP,PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The following patches add a bunch of msm8953-based devices that have
+been created in the msm8953-mainline[0] repository, which includes
+Snapdragon 450 (SDM450), Snapdragon 625 (msm8953) and Snapdragon 632
+(SDM632) devices.
+The dts files are trimmed down to what is currently supported upstream,
+as a way to also minimizing diff for further patches.
 
-On Tue, 15 Nov 2022 13:02:33 +0100, Krzysztof Kozlowski wrote:
-> The APR/GPR bindings with services got complicated so move out the
-> Q6Core service to its own binding.  Previously the compatible was
-> documented in qcom,apr.yaml.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Cc: quic_srivasam@quicinc.com
-> Cc: quic_plai@quicinc.com
-> ---
->  .../bindings/sound/qcom,q6core.yaml           | 39 +++++++++++++++++++
->  1 file changed, 39 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/sound/qcom,q6core.yaml
-> 
+I've tried my best in keeping all the relevant author tags based on the
+git info I could find there.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+*This series depends on pmi8950.dtsi patches[1]*
+
+[0] https://github.com/msm8953-mainline/linux
+[1] https://lore.kernel.org/linux-arm-msm/20221101161801.1058969-2-luca@z3ntu.xyz/
+
+Adam Skladowski (1):
+  arm64: dts: qcom: msm8953: Add device tree for Xiaomi Redmi Note 4X
+
+Alejandro Tafalla (1):
+  arm64: dts: qcom: msm8953: Add device tree for Xiaomi Mi A2 Lite
+
+Danila Tikhonov (1):
+  arm64: dts: qcom: msm8953: Add device tree for Xiaomi Mi A1
+
+Eugene Lepshy (1):
+  arm64: dts: qcom: msm8953: Add device tree for Xiaomi Redmi 5 Plus
+
+Gabriela David (1):
+  arm64: dts: qcom: sdm632: Add device tree for Motorola G7 Power
+
+Julian Braha (1):
+  arm64: dts: qcom: sdm450: Add device tree for Motorola Moto G6
+
+Luca Weiss (1):
+  dt-bindings: arm: qcom: document new msm8953-family devices
+
+Sireesh Kodali (1):
+  arm64: dts: qcom: msm8953: Add device tree for Motorola G5 Plus
+
+ .../devicetree/bindings/arm/qcom.yaml         |  17 +
+ arch/arm64/boot/dts/qcom/Makefile             |   7 +
+ .../boot/dts/qcom/msm8953-motorola-potter.dts | 306 ++++++++++++++++
+ .../boot/dts/qcom/msm8953-xiaomi-daisy.dts    | 316 +++++++++++++++++
+ .../boot/dts/qcom/msm8953-xiaomi-mido.dts     | 331 ++++++++++++++++++
+ .../boot/dts/qcom/msm8953-xiaomi-tissot.dts   | 317 +++++++++++++++++
+ .../boot/dts/qcom/msm8953-xiaomi-vince.dts    | 330 +++++++++++++++++
+ .../boot/dts/qcom/sdm450-motorola-ali.dts     | 256 ++++++++++++++
+ .../boot/dts/qcom/sdm632-motorola-ocean.dts   | 287 +++++++++++++++
+ 9 files changed, 2167 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8953-motorola-potter.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8953-xiaomi-mido.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8953-xiaomi-tissot.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8953-xiaomi-vince.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm450-motorola-ali.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm632-motorola-ocean.dts
+
+-- 
+2.38.1
+
