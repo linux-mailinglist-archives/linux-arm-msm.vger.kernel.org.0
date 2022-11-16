@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F4AC62BD35
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 13:09:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4ADC762BD3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 13:10:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233116AbiKPMJc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 07:09:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52866 "EHLO
+        id S238631AbiKPMKy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 07:10:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236954AbiKPMId (ORCPT
+        with ESMTP id S232071AbiKPMKi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 07:08:33 -0500
+        Wed, 16 Nov 2022 07:10:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA8C919C26
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 04:02:09 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBBBA3FB8D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 04:03:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1668600128;
+        s=mimecast20190719; t=1668600180;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=sBCDaltTnEkyasPr95FrZvMKGG7154FaBt72snWNmEY=;
-        b=atfodMCYdecfbDQJ60P8Lqw4eVD3Amu/pklU3y2Xzo6mUL1x5BAthVnWaiHVCJ+hD9WUcz
-        rCfKPbyOqQVw1+GM+5HkHyrcLG1R/clgrK2EJdbmI4JTDupTolclD4ozM6SALDgvxnxaDa
-        PeYDUxY/O7GJV6ZUySr0uXE0Ofkjits=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+        bh=2bKdDWjb/yR9GkUK+RJy2/FRw0utp2NjQXlBH9JbbvI=;
+        b=IPV8qyDFPFjzs88q2JZ0G5xDmcAD5RmYhWZTeX5irfUPpnbQLJol7cIvTDMEsR8b2NYbQQ
+        4UcVPdJXb/6vUm91iVoRg5zq7z+aitwKVn9tDzrboJhguafbBz4lJqABilmk6+GxqNEi28
+        0JOOp/XdQq2nQ8bRyeErbgIijYR/86M=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-672-hRevfauwM1uMclX45nOxFg-1; Wed, 16 Nov 2022 07:02:07 -0500
-X-MC-Unique: hRevfauwM1uMclX45nOxFg-1
-Received: by mail-wr1-f70.google.com with SMTP id x17-20020adfbb51000000b0024182561cb2so2324915wrg.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 04:02:07 -0800 (PST)
+ us-mta-562-jEah19hQNbaEJJS7HMkbcA-1; Wed, 16 Nov 2022 07:02:58 -0500
+X-MC-Unique: jEah19hQNbaEJJS7HMkbcA-1
+Received: by mail-wr1-f71.google.com with SMTP id d23-20020adfa417000000b002364a31b7c9so3630052wra.15
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 04:02:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=sBCDaltTnEkyasPr95FrZvMKGG7154FaBt72snWNmEY=;
-        b=haXCmjEMecnfh341OLAW/xoeIuc0z7EdTJwL8lJscU4a9G83se4Yi7LnIPfxZzr8tP
-         8pkOOkZgx2YWcD+hqMFIiVJFmjUM2Pdwle3oGZ2YGDtfbX4kGiR+hZJSo/y82gFsIEJX
-         vqzH+8xGc0A6bW7vi5ZvByexLptJtpQjo9x5hHyJfEb9wMjJcMLXt6fB5Vhf8pnM71f8
-         oWyN8wS7iQq73hASuBlCTvls2BlCrBKDEkn9qgXoEF7y7uRp6t7/Z6PQFoQiPxXhVhm0
-         ACyiHTp2K9PNkyxHVNs2IF9rlbPQBkPfIzxYdqUMfzJ1NxbzPEE2zl+gZZSdNzDZAuAv
-         Obfw==
-X-Gm-Message-State: ANoB5pnx6o4kKpavfui36Wqg6gUcsVwD1MJvo35jb2v3gvutPfT1av1i
-        YRx5a6vHtCMYX5G5/6TM5HZ0Ocefmdlj1Ep3i59HJX/ovkH+oVZN5AmXHH0tCRdwexQ4irzHI1Q
-        xfHaJMJmDYFsOvGasMxFzIwpH7A==
-X-Received: by 2002:a05:600c:4b17:b0:3cf:8b22:b567 with SMTP id i23-20020a05600c4b1700b003cf8b22b567mr1858780wmp.144.1668600126290;
-        Wed, 16 Nov 2022 04:02:06 -0800 (PST)
-X-Google-Smtp-Source: AA0mqf6KcgmCL/QNhicRTBPFu1lqivBGGB3rknS3b5jX3oiZWxdz2L0DdR/VFWVJ9fiTIvp+K3GmAg==
-X-Received: by 2002:a05:600c:4b17:b0:3cf:8b22:b567 with SMTP id i23-20020a05600c4b1700b003cf8b22b567mr1858754wmp.144.1668600126011;
-        Wed, 16 Nov 2022 04:02:06 -0800 (PST)
+        bh=2bKdDWjb/yR9GkUK+RJy2/FRw0utp2NjQXlBH9JbbvI=;
+        b=76jDDv0BZRTcds+gmbB0GvQCyIQEzp3Q8Gg0rVAu3LltUaR/8ftB0umGiY4xR49Stz
+         VtSd32davF2LFW9yOEsu4DfukB/lydPf//qYA92dMyXKcSmKqmaibijoAIdb5DMJmne5
+         XBbCgnrL8QZp6GR6moj2GB2wRt63YCoT7bVRQqfkJNYYiWbn1Xwfl0wn81XRLHVEo0e4
+         wQPBeSrKLZwJYVC8YqCkK5TUKK5oRb3QjP2wSySzFM05MT3crSgHE+Kolk0meSLsAMiH
+         9aUBWTc70qpXmKh+h5iB0i4788eR0+OplPBJK44eCc+Ia6eqRpRLrA+bHLsBGz1gmZex
+         tR+w==
+X-Gm-Message-State: ANoB5pm4PvqfookxGt2Wt5z7TRW+4OYCoPf0TKaMr/NV7A43v/ogb0VR
+        zo4KJHv0r4k4GS10giPTEgkMjTOqW91TRNIlWZhmgl32ylzRXs4uXFMYiX/CtdY9f/ODyh23lhR
+        YYrT5DdKDaSQ04zcwSQn0cTvcrw==
+X-Received: by 2002:adf:e6ca:0:b0:22c:e009:a201 with SMTP id y10-20020adfe6ca000000b0022ce009a201mr13972062wrm.70.1668600177610;
+        Wed, 16 Nov 2022 04:02:57 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf6jrqx7xXE7iEAU+DPg8d7D/B8NwSeegMi83WIWnrRgYFjqPcupo1NUjghur0H1eJtRc3gdJw==
+X-Received: by 2002:adf:e6ca:0:b0:22c:e009:a201 with SMTP id y10-20020adfe6ca000000b0022ce009a201mr13972045wrm.70.1668600177318;
+        Wed, 16 Nov 2022 04:02:57 -0800 (PST)
 Received: from minerva.home (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
-        by smtp.gmail.com with ESMTPSA id i17-20020adfefd1000000b00236b2804d79sm15327240wrp.2.2022.11.16.04.02.05
+        by smtp.gmail.com with ESMTPSA id h3-20020a05600c2ca300b003b49bd61b19sm2025563wmc.15.2022.11.16.04.02.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 04:02:05 -0800 (PST)
+        Wed, 16 Nov 2022 04:02:56 -0800 (PST)
 From:   Javier Martinez Canillas <javierm@redhat.com>
 To:     linux-kernel@vger.kernel.org
 Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
@@ -71,9 +71,9 @@ Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
         Brian Masney <bmasney@redhat.com>,
         Rob Herring <robh@kernel.org>,
         Javier Martinez Canillas <javierm@redhat.com>
-Subject: [PATCH v2 3/4] driver core: Add fw_devlink.timeout param to stop waiting for devlinks
-Date:   Wed, 16 Nov 2022 13:01:59 +0100
-Message-Id: <20221116120159.519908-1-javierm@redhat.com>
+Subject: [PATCH v2 4/4] driver core: Disable driver deferred probe timeout by default
+Date:   Wed, 16 Nov 2022 13:02:36 +0100
+Message-Id: <20221116120236.520017-1-javierm@redhat.com>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221116115348.517599-1-javierm@redhat.com>
 References: <20221116115348.517599-1-javierm@redhat.com>
@@ -89,134 +89,97 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, the probe deferral timeout does two things:
+The driver_deferred_probe_timeout value has a long history. It was first
+set to -1 when was introduced by commit 25b4e70dcce9 ("driver core: allow
+stopping deferred probe after init"), meaning that the driver core would
+defer the probe forever unless a subsystem would opt-in by checking if the
+initcalls where done using the driver_deferred_probe_check_state() helper,
+or if a timeout was explicitly set with a "deferred_probe_timeout" param.
 
-1) Call to fw_devlink_drivers_done() to relax the device dependencies and
-   allow drivers to be probed if these dependencies are optional.
+Only the power domain, IOMMU and MDIO subsystems currently opt-in to check
+if the initcalls have completed with driver_deferred_probe_check_state().
 
-2) Disable the probe deferral mechanism so that drivers will fail to probe
-   if the required dependencies are not present, instead of adding them to
-   the deferred probe pending list.
+Commit c8c43cee29f6 ("driver core: Fix driver_deferred_probe_check_state()
+logic") then changed the driver_deferred_probe_check_state() helper logic,
+to take into account whether modules have been enabled or not and also to
+return -EPROBE_DEFER if the probe deferred timeout work was still running.
 
-But there is no need to couple these two, for example the probe deferral
-can be used even when the device links are disable (i.e: fw_devlink=off).
+Then in commit e2cec7d68537 ("driver core: Set deferred_probe_timeout to a
+longer default if CONFIG_MODULES is set"), the timeout was increased to 30
+seconds if modules are enabled. Because seems that some of the subsystems
+that were opt-in to not return -EPROBE_DEFER after the initcall where done
+could still have dependencies whose drivers were built as a module.
 
-So let's add a separate fw_devlink.timeout command line parameter to allow
-relaxing the device links and prevent drivers to wait for these to probe.
+This commit did a fundamental change to how probe deferral worked though,
+since now the default was not to attempt probing for drivers indefinitely
+but instead to timeout after 30 seconds, unless a different timeout is set
+using the "deferred_probe_timeout" command line parameter.
+
+The behavior was changed even more with commit ce68929f07de ("driver core:
+Revert default driver_deferred_probe_timeout value to 0"), since the value
+was set to 0 by default. Meaning that the probe deferral would be disabled
+after the initcalls where done. Unless a timeout was set in the cmdline.
+
+Notice that the commit said that it was reverting the default value to 0,
+but this was never 0. The default was -1 at the beginning and then changed
+to 30 in a later commit.
+
+This default value of 0 was reverted again by commit f516d01b9df2 ("Revert
+"driver core: Set default deferred_probe_timeout back to 0."") and set to
+10 seconds instead. Which was still less than the 30 seconds that was set
+at some point, to allow systems with drivers built as modules and loaded
+later by user-land to probe drivers that were still in the deferred list.
+
+The 10 seconds timeout isn't enough in some cases, for example the Fedora
+kernel builds as much drivers as possible as modules. And this leads to an
+Snapdragon SC7180 based HP X2 Chromebook to not have display, due the DRM
+driver failing to probe if CONFIG_ARM_SMMU=y and CONFIG_SC_GPUCC_7180=m.
+
+So let's change the default again to -1 as it was at the beginning. That's
+how probe deferral always worked. The kernel should try to avoid guessing
+when it should be safe to give up on deferred drivers to be probed.
+
+The reason why the default "deferred_probe_timeout" was changed from -1 to
+the other values was to allow drivers that have only optional dependencies
+to probe even if the suppliers are not available.
+
+But now there is a "fw_devlink.timeout" parameter to timeout the links and
+allow drivers to probe even when the dependencies are not present. Let's
+set the default for that timeout to 10 seconds, to give the same behaviour
+as expected by these driver with optional device links.
 
 Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
 ---
 
-(no changes since v1)
+Changes in v2:
+- Mention in the commit messsage the specific machine and drivers that
+  are affected by the issue (Greg).
+- Double check the commit message for accuracy (John).
+- Add a second workqueue to timeout the devlink enforcing and allow
+  drivers to probe even without their optional dependencies available.
 
- .../admin-guide/kernel-parameters.txt         |  7 ++++
- drivers/base/dd.c                             | 38 ++++++++++++++++++-
- 2 files changed, 44 insertions(+), 1 deletion(-)
+ drivers/base/dd.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index a465d5242774..38138a44d5ed 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -1581,6 +1581,13 @@
- 			dependencies. This only applies for fw_devlink=on|rpm.
- 			Format: <bool>
- 
-+	fw_devlink.timeout=
-+			[KNL] Debugging option to set a timeout in seconds for
-+			drivers to give up waiting on dependencies and to probe
-+			these are optional. A timeout of 0 will timeout at the
-+			end of initcalls. If the time out hasn't expired, it'll
-+			be restarted by each successful driver registration.
-+
- 	gamecon.map[2|3]=
- 			[HW,JOY] Multisystem joystick and NES/SNES/PSX pad
- 			support via parallel port (up to 5 devices per port)
 diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index 1e8f1afeac98..ea448df94d24 100644
+index ea448df94d24..5f18cd497850 100644
 --- a/drivers/base/dd.c
 +++ b/drivers/base/dd.c
-@@ -261,6 +261,7 @@ static int driver_deferred_probe_timeout = 10;
- #else
- static int driver_deferred_probe_timeout;
- #endif
-+static int fw_devlink_timeout = -1;
+@@ -256,12 +256,8 @@ static int deferred_devs_show(struct seq_file *s, void *data)
+ }
+ DEFINE_SHOW_ATTRIBUTE(deferred_devs);
+ 
+-#ifdef CONFIG_MODULES
+-static int driver_deferred_probe_timeout = 10;
+-#else
+-static int driver_deferred_probe_timeout;
+-#endif
+-static int fw_devlink_timeout = -1;
++static int driver_deferred_probe_timeout = -1;
++static int fw_devlink_timeout = 10;
  
  static int __init deferred_probe_timeout_setup(char *str)
  {
-@@ -272,6 +273,16 @@ static int __init deferred_probe_timeout_setup(char *str)
- }
- __setup("deferred_probe_timeout=", deferred_probe_timeout_setup);
- 
-+static int __init fw_devlink_timeout_setup(char *str)
-+{
-+	int timeout;
-+
-+	if (!kstrtoint(str, 10, &timeout))
-+		fw_devlink_timeout = timeout;
-+	return 1;
-+}
-+__setup("fw_devlink.timeout=", fw_devlink_timeout_setup);
-+
- /**
-  * driver_deferred_probe_check_state() - Check deferred probe state
-  * @dev: device to check
-@@ -318,6 +329,15 @@ static void deferred_probe_timeout_work_func(struct work_struct *work)
- }
- static DECLARE_DELAYED_WORK(deferred_probe_timeout_work, deferred_probe_timeout_work_func);
- 
-+static void fw_devlink_timeout_work_func(struct work_struct *work)
-+{
-+	fw_devlink_drivers_done();
-+
-+	driver_deferred_probe_trigger();
-+	flush_work(&deferred_probe_work);
-+}
-+static DECLARE_DELAYED_WORK(fw_devlink_timeout_work, fw_devlink_timeout_work_func);
-+
- void deferred_probe_extend_timeout(void)
- {
- 	/*
-@@ -330,6 +350,13 @@ void deferred_probe_extend_timeout(void)
- 		pr_debug("Extended deferred probe timeout by %d secs\n",
- 					driver_deferred_probe_timeout);
- 	}
-+
-+	if (cancel_delayed_work(&fw_devlink_timeout_work)) {
-+		schedule_delayed_work(&fw_devlink_timeout_work,
-+				      fw_devlink_timeout * HZ);
-+		pr_debug("Extended fw_devlink timeout by %d secs\n",
-+			 fw_devlink_timeout);
-+	}
- }
- 
- /**
-@@ -352,9 +379,12 @@ static int deferred_probe_initcall(void)
- 
- 	if (!IS_ENABLED(CONFIG_MODULES)) {
- 		driver_deferred_probe_timeout = 0;
--		fw_devlink_drivers_done();
-+		fw_devlink_timeout = 0;
- 	}
- 
-+	if (!fw_devlink_timeout)
-+		fw_devlink_drivers_done();
-+
- 	/*
- 	 * Trigger deferred probe again, this time we won't defer anything
- 	 * that is optional
-@@ -366,6 +396,12 @@ static int deferred_probe_initcall(void)
- 		schedule_delayed_work(&deferred_probe_timeout_work,
- 			driver_deferred_probe_timeout * HZ);
- 	}
-+
-+	if (fw_devlink_timeout > 0) {
-+		schedule_delayed_work(&fw_devlink_timeout_work,
-+				      fw_devlink_timeout * HZ);
-+	}
-+
- 	return 0;
- }
- late_initcall(deferred_probe_initcall);
 -- 
 2.38.1
 
