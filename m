@@ -2,114 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A88A762BBC7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:26:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A5C8662BB9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 12:25:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238972AbiKPL0f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 06:26:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42962 "EHLO
+        id S239252AbiKPLZo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 06:25:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239246AbiKPLZ5 (ORCPT
+        with ESMTP id S233287AbiKPLZV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 06:25:57 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7EC313E1B;
-        Wed, 16 Nov 2022 03:16:50 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AGB4i2r032753;
-        Wed, 16 Nov 2022 11:16:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=bTHb/iTIJ515U9ZD/ZdvnV3tGnX4kfcrHGl79HkwpXw=;
- b=mqCGk7wqrx5d9qaw744PTh+O1DswxvP2D+d01ThxkmKqDbsAB9A3QwNArAmF2rlWX3et
- SeYOhGgCb0oVh/VS+CU4CadK/oim8PsgAeaTX954HghF9CLF558eFFsuPnjtscZ6QLDp
- DqcTQzW8E4/IJUTxbqcOVMiVJDPXQGCcSv22VirflJAAEuHbhJzc5kAImPZNSEM1f7nf
- bQ/kgW98d3Z2agvo9vpaJ/M4fsPOMrNSPbgLuQSbAEZcsqtcFXiqgJxqPxpA769+EmFC
- CRcjxvjlgsi0qdldTL3XGMGRVZSYNyWwkyDjUbKSwlN36HJpXalgxyDEreL58YXmS2YK cg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3kvt4a8s7j-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 16 Nov 2022 11:16:20 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2AGBGJUX002197
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 16 Nov 2022 11:16:19 GMT
-Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Wed, 16 Nov 2022 03:16:13 -0800
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Alex Elder <elder@ieee.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        "Sai Prakash Ranjan" <saiprakash.ranjan@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>, <vkoul@kernel.org>,
-        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Subject: [PATCH V19 7/7] arm64: dts: qcom: sdm845: Add Data Capture and Compare(DCC) support node
-Date:   Wed, 16 Nov 2022 16:44:00 +0530
-Message-ID: <a737e4af0a86c09d07d82ee0610bc13efba64896.1668595616.git.quic_schowdhu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1668595616.git.quic_schowdhu@quicinc.com>
-References: <cover.1668595616.git.quic_schowdhu@quicinc.com>
+        Wed, 16 Nov 2022 06:25:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FAA14508B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:14:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1668597245;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=AqO20RkBmPLk/Zsbvz4xja2ZPkggecsj1kg48NugNtU=;
+        b=Z/6XnAYVImU6vSBStf9MIEJs45vO96im9b/75gKcuxkRHddXbnHXxNjnEDt5Spu/YEarEm
+        YoZGo/dz5hNmfQ/eeUNWzLQV8eiTwiu/co1ZfCfH6OV0Qd/qI6+y6+TwP6JNAaUDhFe4/Q
+        NuNrVa8pX4q/+3T8j3F8Fj2J23rqWqE=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-443-Hnc7JJ0HMX6DKZrZ93LDIA-1; Wed, 16 Nov 2022 06:14:04 -0500
+X-MC-Unique: Hnc7JJ0HMX6DKZrZ93LDIA-1
+Received: by mail-qt1-f200.google.com with SMTP id fb5-20020a05622a480500b003a525d52abcso12650698qtb.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 03:14:04 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AqO20RkBmPLk/Zsbvz4xja2ZPkggecsj1kg48NugNtU=;
+        b=I2ODzvSvUbXvT8YE2/YDc5jZ/vsJ6zKSq7hZt7WHlR5bE8KAtwuPlg5NfrUkn8G7UL
+         eLjzxAv187XfPKNFAeKqjPWksjV8VMwMNu0QrZRWXIpEw5aOP5TkzV4F+kBgLam2oUK4
+         MSMnmsCidCgtaNChXEjbiYHlejZuE45GQXSs69Ex8DNp9vjwAthQ/rWe7J5dnGZ2s7Ah
+         5LlG/Gn9VXyP4HMB0z7mkBW9urUq3D6kxRp6eRtWTsglMsi+DOdOLxszQIgnwyhB2QCr
+         J0zKfZlpDeSUaW9bs819MZObxoQ+bPzJ3+YQRzLAqJK+n1w8o0t12zZjBpAX3mHx6hxH
+         Hv6g==
+X-Gm-Message-State: ANoB5pmBXj1m8FGFAu74iHuEhSruKiS3W8VY87MNR6XfCX1UrXqKIzsn
+        1z6G04O1dPmP9RZh05wf722Y4228DDXtvQb+djR1m7NZPCHIfEWNHegET8Z3dJU/mbtCdk/4UOq
+        z/atjxvg2wNWEwDKt6djnwLtw1Q==
+X-Received: by 2002:ad4:450d:0:b0:4c6:5a5f:3063 with SMTP id k13-20020ad4450d000000b004c65a5f3063mr6024309qvu.4.1668597243594;
+        Wed, 16 Nov 2022 03:14:03 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf7zVoHnSML4pkn3Q4Eh7xfnZiowbK8L5hFzRTrOFF/MLKTx3usbbcLq0D+RjcLq4PE4cjVYNw==
+X-Received: by 2002:ad4:450d:0:b0:4c6:5a5f:3063 with SMTP id k13-20020ad4450d000000b004c65a5f3063mr6024286qvu.4.1668597243332;
+        Wed, 16 Nov 2022 03:14:03 -0800 (PST)
+Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id g6-20020ac870c6000000b003996aa171b9sm8427814qtp.97.2022.11.16.03.14.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Nov 2022 03:14:03 -0800 (PST)
+Date:   Wed, 16 Nov 2022 06:14:01 -0500
+From:   Brian Masney <bmasney@redhat.com>
+To:     Thierry Reding <thierry.reding@gmail.com>
+Cc:     linus.walleij@linaro.org, brgl@bgdev.pl,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, psodagud@quicinc.com,
+        quic_shazhuss@quicinc.com, quic_ppareek@quicinc.com,
+        ahalaney@redhat.com, echanude@redhat.com,
+        nicolas.dechesne@linaro.org
+Subject: Re: [PATCH RFC] gpiolib: ensure that fwnode is properly set
+Message-ID: <Y3TF+VbE5yFlz+OZ@x1>
+References: <20221114202943.2389489-1-bmasney@redhat.com>
+ <Y3S5sZIVi2DPua0p@orome>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: aQJWK3ZS690zbc7Jj4vNrCLpvZ1qOLJ_
-X-Proofpoint-GUID: aQJWK3ZS690zbc7Jj4vNrCLpvZ1qOLJ_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-16_02,2022-11-16_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- malwarescore=0 mlxlogscore=889 suspectscore=0 mlxscore=0
- lowpriorityscore=0 phishscore=0 priorityscore=1501 adultscore=0
- clxscore=1015 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211160080
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y3S5sZIVi2DPua0p@orome>
+User-Agent: Mutt/2.2.7 (2022-08-07)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the DCC(Data Capture and Compare) device tree node entry along with
-the address of the register region.
+On Wed, Nov 16, 2022 at 11:21:37AM +0100, Thierry Reding wrote:
+> On Mon, Nov 14, 2022 at 03:29:43PM -0500, Brian Masney wrote:
+> > diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+> > index 11fb7ec883e9..8bec66008869 100644
+> > --- a/drivers/gpio/gpiolib.c
+> > +++ b/drivers/gpio/gpiolib.c
+> > @@ -678,7 +678,7 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
+> >  	 * Assign fwnode depending on the result of the previous calls,
+> >  	 * if none of them succeed, assign it to the parent's one.
+> >  	 */
+> > -	gdev->dev.fwnode = dev_fwnode(&gdev->dev) ?: fwnode;
+> > +	gc->fwnode = gdev->dev.fwnode = dev_fwnode(&gdev->dev) ?: fwnode;
+> 
+> This doesn't look right to me. Looking at the documentation of
+> gc->fwnode and how it is used, the purpose of this is to allow
+> explicitly overriding the fwnode that the GPIO chip will use.
+> 
+> So really this should not be used beyond the initial registration
+> in gpiochip_add_data_with_key(). If the above patch fixes anything,
+> then I suspect somebody is using gc->fwnode outside of this
+> registration.
+> 
+> Looking at gpiolib, the only remaining place that seems to do this is
+> the gpio-reserved-ranges handling code, in which case, the below on top
+> of my initial patch might fix that. That might explain why MSM is still
+> seeing issues.
 
-Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+That is correct. The Thinkpad x13s laptop uses the driver
+drivers/pinctrl/qcom/pinctrl-sc8280xp.c and
+arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts defines a
+gpio-reserved-ranges property. The SA8540p automotive board has the same
+SoC, however the DTS we are using doesn't use the gpio-reserved-ranges
+property, and why only your original patch fixed the issue for this
+board.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index d761da4..7d476b2 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2137,6 +2137,12 @@
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		dma@10a2000 {
-+			compatible = "qcom,sdm845-dcc", "qcom,dcc";
-+			reg = <0x0 0x010a2000 0x0 0x1000>,
-+			      <0x0 0x010ae000 0x0 0x2000>;
-+		};
-+
- 		pmu@114a000 {
- 			compatible = "qcom,sdm845-llcc-bwmon";
- 			reg = <0 0x0114a000 0 0x1000>;
--- 
-2.7.4
+I think my patch should be removed from the GPIO tree if Thierry's two
+patches work for everyone.
+
+Brian
 
