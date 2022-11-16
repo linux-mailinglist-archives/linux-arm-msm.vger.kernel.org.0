@@ -2,126 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0081962BEC4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 13:57:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 03B8F62BEC9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 13:58:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232045AbiKPM4u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 07:56:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46446 "EHLO
+        id S233410AbiKPM6d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 07:58:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231565AbiKPM4s (ORCPT
+        with ESMTP id S229703AbiKPM6b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 07:56:48 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57AF83122C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 04:56:45 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id v27so26444747eda.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 04:56:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FpXPXex2pj+shAOqQ1Qkj2iiHvrTjroDhyNWQJmN94Y=;
-        b=uwAyUynBI4H0SytHKL+axjOZPqeGxypmmWoN1PVWXgo2T915dI6384z7FSwUV024hy
-         cy7/wxG94xGD/dy6UADeaz9JgEqWhCfiQ64qZW0bPLfWSXTo+hPEB/H/y9UOuvpJk+xT
-         xGgJjrblQ0vXWIKJ/GjIcn8KVZn1UHvNn4tqdJj2ChPWa/Zjgu5JdeOLoW7uPfIaRvEc
-         Cqs6eSv39AuGnUF8cxG3gg+sWRQ5cab0ZwhsteIwk7p/0taYb3twBj3+G9ZXdjasIkvV
-         3n6mLodYblv70Xe/0dx36ut3qEe61uaB1V+DIwbedhtCgFPQtRXkA9v8jGbSI+DHC4zP
-         0f6A==
+        Wed, 16 Nov 2022 07:58:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE5D51C910
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 04:57:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1668603456;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=P3dZVUJWS9YfhEwx2MGdoRYm/+IpeyLBcM/mBcpGfB4=;
+        b=X9gYXjWq4OwFmP+fSLQlgUIaz7LqFWrY4W4T5RRhqu1AQ1hn6XqXc0WX3MCgKX5pHUiA/c
+        4dbBEWSln87pu6WGEGd6FGglH8kPLFZkq2d+LWG0t/ypyRSumy+jfkR+lCKfOelXY7ZvW8
+        s/59pgcVvVH279tlne9TI9/cs1kEJ4o=
+Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
+ [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-44-HY2AnUlcPemQA0YxFCJAuQ-1; Wed, 16 Nov 2022 07:57:35 -0500
+X-MC-Unique: HY2AnUlcPemQA0YxFCJAuQ-1
+Received: by mail-oi1-f198.google.com with SMTP id s16-20020a056808009000b0035b227aa390so18308oic.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 04:57:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=FpXPXex2pj+shAOqQ1Qkj2iiHvrTjroDhyNWQJmN94Y=;
-        b=ZghT4GyLQ4DGbSZnxBKT4VnLZjoj+7sIQ3TOnVTLpugcruC5Y4yLqQonWja2Dw9o3W
-         I8W0IY5gZyrIHHWHPG8M6MEBffacegGIktArz3jMTMN8YlDpLQ4rnZg9aR0MR2B3bcFj
-         slmre9JoH7bBhK7af5sl6DUXss8R/c0czZLSIZwecTVfVqY2LY01jX1+b1B6AU6aFj2N
-         chaGkIgwa/MuPt4Ieqfc3IFo8/yf/5Z59XOpXzrMqv8FE2LmOhgCPidJgJMfl0p+uDlr
-         Iy1f9mDg1rNqfOEK/f14238gCIs3a7hH6kssHYQRnsoDfH+114ROYPKJPqXoLUHvWvSY
-         m++g==
-X-Gm-Message-State: ANoB5plQkaiaIOtyT8uILDUYWHc4D6OXHaJ/4DOH/NQCbAOGrT+cX0BF
-        NQwT3QMKuJXZ14ewc5xwwduoIvoPlETmihY7
-X-Google-Smtp-Source: AA0mqf7lWA/QwqvzGcqFNDfNRicifSvvzr+7KxdPHa48eaUPqyAWOlh4cLsWjWIdcLTzBewgPlGhdQ==
-X-Received: by 2002:a50:fe19:0:b0:462:70ee:fdb8 with SMTP id f25-20020a50fe19000000b0046270eefdb8mr19532589edt.66.1668603403903;
-        Wed, 16 Nov 2022 04:56:43 -0800 (PST)
-Received: from [192.168.31.208] ([194.29.137.22])
-        by smtp.gmail.com with ESMTPSA id qq18-20020a17090720d200b0078df3b4464fsm6939633ejb.19.2022.11.16.04.56.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 04:56:43 -0800 (PST)
-Message-ID: <22a41a8c-9b4a-ecca-ddd2-5e217d00d20c@linaro.org>
-Date:   Wed, 16 Nov 2022 13:56:36 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8550-mtp: Add UFS host controller
- and PHY node
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=P3dZVUJWS9YfhEwx2MGdoRYm/+IpeyLBcM/mBcpGfB4=;
+        b=LV1cCaPUoUOU6N0S798/GUUfYS3u/xco5W7ilIPyk8lVDOnVMUnDKpWs9eplzK3gE0
+         r+7Su34Kp3YyyHz3nDfmZ4zxDz7CRRm4lMg9NinparH7WD7vpKZVLF2v+JA2FioexcO9
+         O/t8WFFWwSraGcdkUv3siLqowK/ybFDhAybT/gZky//0pthZiVpVOFXVlm9L4p+WXRAJ
+         pqEFEE/bLlwJRDMphufSGG98KC+qH78BaLENmDTogBCCPvWpoFQmJE49zje8TpcObVT0
+         TQO3eVJf43VlDes+VmcZUq1Yaa7gqC+b0GdXf7b91Qv7fDP7nhCR5A0iyNtc78Mf3c2+
+         cDfQ==
+X-Gm-Message-State: ANoB5pkydBznMdMHknKUcBRUiGnz0yzT4ZIkaVOYOrAwPKUBrQz8eSeO
+        +HxTUwycItfkGKmWNUEOkoll/MZblpKKgYaWL/ZQwBE1WUTZEvrQ898ylQKlAkaM2Ol6b1UMA1Y
+        TOPUkGn7jmp76dSI9k5zLUExibA==
+X-Received: by 2002:a05:6870:d8b:b0:13c:f48b:7cc4 with SMTP id mj11-20020a0568700d8b00b0013cf48b7cc4mr1578220oab.196.1668603453538;
+        Wed, 16 Nov 2022 04:57:33 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf4vPwsXILiXdWzuZ31PUaS5KlMLO/I2br8NXWKvphTq/eBqG58DOWNeUUld0J4wDgO9fsqGeQ==
+X-Received: by 2002:a05:6870:d8b:b0:13c:f48b:7cc4 with SMTP id mj11-20020a0568700d8b00b0013cf48b7cc4mr1578215oab.196.1668603453333;
+        Wed, 16 Nov 2022 04:57:33 -0800 (PST)
+Received: from halaney-x13s ([2600:1700:1ff0:d0e0::41])
+        by smtp.gmail.com with ESMTPSA id g8-20020a056870d20800b0012d6f3d370bsm7848854oac.55.2022.11.16.04.57.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Nov 2022 04:57:32 -0800 (PST)
+Date:   Wed, 16 Nov 2022 06:57:30 -0600
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Javier Martinez Canillas <javierm@redhat.com>
+Cc:     linux-kernel@vger.kernel.org, Brian Masney <bmasney@redhat.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20221116125112.2788318-1-abel.vesa@linaro.org>
- <20221116125112.2788318-3-abel.vesa@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221116125112.2788318-3-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Douglas Anderson <dianders@chromium.org>,
+        John Stultz <jstultz@google.com>,
+        Peter Robinson <pbrobinson@redhat.com>,
+        Enric Balletbo i Serra <eballetbo@redhat.com>,
+        Steev Klimaszewski <steev@kali.org>,
+        Rob Herring <robh@kernel.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org,
+        Saravana Kannan <saravanak@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Alexei Starovoitov <ast@kernel.org>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+Subject: Re: [PATCH v2 1/4] driver core: Make driver_deferred_probe_timeout a
+ static variable
+Message-ID: <20221116125730.mvah5kxbxrll6ls4@halaney-x13s>
+References: <20221116115348.517599-1-javierm@redhat.com>
+ <20221116115348.517599-2-javierm@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221116115348.517599-2-javierm@redhat.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 16/11/2022 13:51, Abel Vesa wrote:
-> Enable UFS host controller and PHY node on SM8550 MTP board.
+On Wed, Nov 16, 2022 at 12:53:45PM +0100, Javier Martinez Canillas wrote:
+> It is not used outside of its compilation unit, so there's no need to
+> export this variable.
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+
 > ---
->   arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 22 ++++++++++++++++++++++
->   1 file changed, 22 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-> index d4c8d5b2497e..fef7793a7dec 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-> @@ -417,3 +417,25 @@ data-pins {
->   &uart7 {
->   	status = "okay";
->   };
-> +
-> +&ufs_mem_hc {
-> +	status = "okay";
-Status last, please.
+> (no changes since v1)
+> 
+>  drivers/base/dd.c             | 6 ++----
+>  include/linux/device/driver.h | 1 -
+>  2 files changed, 2 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+> index 3dda62503102..040b4060f903 100644
+> --- a/drivers/base/dd.c
+> +++ b/drivers/base/dd.c
+> @@ -257,13 +257,11 @@ static int deferred_devs_show(struct seq_file *s, void *data)
+>  DEFINE_SHOW_ATTRIBUTE(deferred_devs);
+>  
+>  #ifdef CONFIG_MODULES
+> -int driver_deferred_probe_timeout = 10;
+> +static int driver_deferred_probe_timeout = 10;
+>  #else
+> -int driver_deferred_probe_timeout;
+> +static int driver_deferred_probe_timeout;
+>  #endif
+>  
+> -EXPORT_SYMBOL_GPL(driver_deferred_probe_timeout);
+> -
+>  static int __init deferred_probe_timeout_setup(char *str)
+>  {
+>  	int timeout;
+> diff --git a/include/linux/device/driver.h b/include/linux/device/driver.h
+> index 2114d65b862f..50d0a416a5e7 100644
+> --- a/include/linux/device/driver.h
+> +++ b/include/linux/device/driver.h
+> @@ -240,7 +240,6 @@ driver_find_device_by_acpi_dev(struct device_driver *drv, const void *adev)
+>  }
+>  #endif
+>  
+> -extern int driver_deferred_probe_timeout;
+>  void driver_deferred_probe_add(struct device *dev);
+>  int driver_deferred_probe_check_state(struct device *dev);
+>  void driver_init(void);
+> -- 
+> 2.38.1
+> 
 
-> +
-> +	reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
-> +
-> +	vcc-supply = <&vreg_l17b_2p5>;
-> +	vcc-max-microamp = <1300000>;
-All these -microamp properties are downstream and do not exist in the 
-mainline kernel. Remove them.
-
-Konrad
-> +	vccq-supply = <&vreg_l1g_1p2>;
-> +	vccq-max-microamp = <1200000>;
-> +	vccq2-supply = <&vreg_l3g_1p2>;
-> +	vccq2-max-microamp = <100>;
-> +};
-> +
-> +&ufs_mem_phy {
-> +	status = "okay";
-> +
-> +	vdda-phy-supply = <&vreg_l1d_0p88>;
-> +	vdda-phy-max-microamp = <188000>;
-> +	vdda-pll-supply = <&vreg_l3e_1p2>;
-> +	vdda-pll-max-microamp = <18300>;
-> +};
