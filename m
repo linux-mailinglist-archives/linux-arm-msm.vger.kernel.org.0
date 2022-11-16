@@ -2,321 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7543962C326
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:54:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 52DDC62C330
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:56:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233483AbiKPPyi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 10:54:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35600 "EHLO
+        id S234126AbiKPP4h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 10:56:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233586AbiKPPy3 (ORCPT
+        with ESMTP id S234240AbiKPP4C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 10:54:29 -0500
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FBE251C30
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:54:26 -0800 (PST)
-Received: by mail-lj1-x233.google.com with SMTP id u2so22350965ljl.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:54:26 -0800 (PST)
+        Wed, 16 Nov 2022 10:56:02 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9F3556EEA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:55:29 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id j16so30140613lfe.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:55:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RCQr1z1wFwAd1N4S4Gfm4bIvE8xYgZpk3YOweYwBoP8=;
-        b=VhXvvsxy0oZ7u5eOmH8zlaXlosWHcNx6xj670/3wl2m7dx+TXjxfUwu7Ij8UP2Gt4J
-         H2wkk0m66AzQfDvLzSickRqZmbBxtJg/4K/RSE8r2DsoDVetCiCnBR/Gv6RMJuuKSzBN
-         1d10b/Da6Dvvx96E8UtBqJui2+WdyUfEuDdDiHpJ13bv6tDeBDznAAYA6HU1kWJVcKIF
-         zelAGib+mEijRHdj1J6O5cBwBakJ4A4sX3iJUKkRMGYhRlIXOlEYPyseBuJjikNh6oEC
-         dyIR0zqU1JplUZNJKzkQ+CDmdHrNf+jgkyZ8UKUCN3Orp8ImML0rHSOOwReQkZFYTIx6
-         m+XA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JxJZcTMnZ0d8Rsb8gNwZY8DF8ihKF/f84NGyK8FI2+k=;
+        b=OdkrzXZlviJotbnbYNfqAkvuWplWuARldk3To5s7pFnXd/3r98N9A4cNVBCikMwbWf
+         B7v1LwzTvzJlJZMQVXWmsxnR2BvMYuvc1t7w++68g90WR52ySHXwiLiFutmbCiU9wzP8
+         3AhWOySw97TIcS3tY9q65L1Jbw0eBiCe9WhM1ni1LIgOqQEoVHuyBt0ViF56w4IS6Pxt
+         h7No72Gmqm+3fMn9T+fu/YHKk7ey9ZuHSMLP/CVjWZr+4o7Jczg8NPe9JVW3ooTVFfag
+         zBmdZ7uxz34baQmj9gWHOklkyvKd0kzXNqXTYqZKR/43M8rqBS2GC/4fDfPITR0WTmLz
+         XaDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RCQr1z1wFwAd1N4S4Gfm4bIvE8xYgZpk3YOweYwBoP8=;
-        b=2A+5j6Sga7oA6ywVPeSR39b44mz428w/mUue5EGNWc8Nz3dY6nv74XyokH/KI7Skbn
-         0viy3SvKpT1781c3RKZb2+c/9TTzmD56S9F5Y+UjIh7bd9K7LzgQX8NperTHu5gAN7Tf
-         01kPLHt5H8Hl+eCVUDw4fZzmhBxIX5oWRVtH/gyNDY7nESjhWdGUcN+uKxLIX0rJXfi8
-         YeoTXDzeV982367bboT6UFpV4CJAp847hM81HWg0upHVX11jT2gepEQdH8qDlXAjtU3e
-         8OV46XIepMuc6G1J9bIHccKJ5JtX37jqI5N/L84ju7cY1sozQ/XmdoiMQJZtjHsoRhDq
-         jmRw==
-X-Gm-Message-State: ANoB5pnCGJHIevEXLd18afj2/qU0IDJ0ODV7+vqHj3hCFChMvh1Jgxe2
-        Xq3u3TZRHDqwiylrijaMiE7kXA==
-X-Google-Smtp-Source: AA0mqf479H9+o0ei4Cn8YCPA4bFqg7QHuiZQirxu/475dKHAR6f1nInwwJG8qWtAlLxyXBXsvm291A==
-X-Received: by 2002:a2e:bc11:0:b0:279:ab3:32e8 with SMTP id b17-20020a2ebc11000000b002790ab332e8mr4431430ljf.389.1668614065019;
-        Wed, 16 Nov 2022 07:54:25 -0800 (PST)
-Received: from krzk-bin.NAT.warszawa.vectranet.pl (088156142067.dynamic-2-waw-k-3-2-0.vectranet.pl. [88.156.142.67])
-        by smtp.gmail.com with ESMTPSA id u19-20020a05651220d300b0049462af8614sm2655128lfr.145.2022.11.16.07.54.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 07:54:24 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5/5] dt-bindings: remoteproc: qcom,sc8280xp-pas: split into separate file
-Date:   Wed, 16 Nov 2022 16:54:16 +0100
-Message-Id: <20221116155416.164239-6-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221116155416.164239-1-krzysztof.kozlowski@linaro.org>
-References: <20221116155416.164239-1-krzysztof.kozlowski@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JxJZcTMnZ0d8Rsb8gNwZY8DF8ihKF/f84NGyK8FI2+k=;
+        b=A13LG0UHBYFhaW+yxZgWlqgbKzySvGrTKx7u/yYOaoEAEF5fIQ4KalnTI7Y2LemKIl
+         AYk5i7YzoYY0FbMerhIF8jCcJcWsdb9Q4Ev3YY2+NL/CJIwtKxyJAS6/GyZ+nEP8HJUX
+         3J2Pg5/t9l+oto3BOjLEai/zHnVlWsJqxZgTuhGipFnnzyf+D6LeBUtRk/Mm5uNCJzji
+         aSbWNMETJAA8NEQJfdq6cuLCpgQ24nHCaSZ8gd+qN/R7VOQ77uNYWv0XDIOAidn4EpFa
+         TsqESrvCWxqXR8uTDt7gBefxyZSmVQJl07VCzhm6dxpRdeg4QROGkvIcd32TNxYsBWkc
+         dZjA==
+X-Gm-Message-State: ANoB5plQEX0zYuil2992EPCmYC0Lj5pIhDC82P5pLqj2DpSzLblgUgZ1
+        KHcmPzfuQAv4WXbnBA9+G2+3LpSMx32SrXBE
+X-Google-Smtp-Source: AA0mqf7GsGMN50F7hT+H8jQgsK382YAdUeXB75eSqqC6j3C8P+jtqJP4ldEXggpFL79RpOksVSV1Sw==
+X-Received: by 2002:a19:6449:0:b0:4ae:5dc5:82c5 with SMTP id b9-20020a196449000000b004ae5dc582c5mr8330451lfj.2.1668614128063;
+        Wed, 16 Nov 2022 07:55:28 -0800 (PST)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id g3-20020a05651222c300b00497feee98basm2626991lfu.274.2022.11.16.07.55.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Nov 2022 07:55:27 -0800 (PST)
+Message-ID: <dc656c7a-eab4-f547-ca52-51f7510c2858@linaro.org>
+Date:   Wed, 16 Nov 2022 17:55:27 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [PATCH v2 2/3] drm/msm/disp/dpu1: add helper to know if display
+ is pluggable
+Content-Language: en-GB
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, robdclark@chromium.org,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_vpolimer@quicinc.com
+References: <1668609040-2549-1-git-send-email-quic_kalyant@quicinc.com>
+ <1668609040-2549-3-git-send-email-quic_kalyant@quicinc.com>
+ <e049f5b1-da41-6854-4731-b6697770ffde@linaro.org>
+ <6b1907db-3fdb-8fe0-e5e3-21ea17021925@quicinc.com>
+ <bf14540a-745c-c378-520a-f8edfd3e3adf@linaro.org>
+ <0dd3e096-84ac-da81-ad43-bf07485e7b65@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <0dd3e096-84ac-da81-ad43-bf07485e7b65@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Split SC8280XP remote processor Peripheral Authentication Service bindings
-into their own file to reduce complexity and make maintenance easier.
+On 16/11/2022 18:35, Abhinav Kumar wrote:
+> 
+> 
+> On 11/16/2022 7:18 AM, Dmitry Baryshkov wrote:
+>> On 16/11/2022 18:11, Abhinav Kumar wrote:
+>>>
+>>>
+>>> On 11/16/2022 7:08 AM, Dmitry Baryshkov wrote:
+>>>> On 16/11/2022 17:30, Kalyan Thota wrote:
+>>>>> Since DRM encoder type for few encoders can be similar
+>>>>> (like eDP and DP) find out if the interface supports HPD
+>>>>> from encoder bridge to differentiate between builtin
+>>>>> and pluggable displays.
+>>>>>
+>>>>> Changes in v1:
+>>>>> - add connector type in the disp_info (Dmitry)
+>>>>> - add helper functions to know encoder type
+>>>>> - update commit text reflecting the change
+>>>>>
+>>>>> Changes in v2:
+>>>>> - avoid hardcode of connector type for DSI as it may not be true 
+>>>>> (Dmitry)
+>>>>> - get the HPD information from encoder bridge
+>>>>>
+>>>>> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+>>>>> ---
+>>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 16 ++++++++++++++++
+>>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  6 ++++++
+>>>>>   2 files changed, 22 insertions(+)
+>>>>>
+>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
+>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>>>> index 9c6817b..be93269 100644
+>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>>>> @@ -15,6 +15,7 @@
+>>>>>   #include <drm/drm_crtc.h>
+>>>>>   #include <drm/drm_file.h>
+>>>>>   #include <drm/drm_probe_helper.h>
+>>>>> +#include <drm/drm_bridge.h>
+>>>>>   #include "msm_drv.h"
+>>>>>   #include "dpu_kms.h"
+>>>>> @@ -217,6 +218,21 @@ static u32 dither_matrix[DITHER_MATRIX_SZ] = {
+>>>>>       15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
+>>>>>   };
+>>>>> +bool dpu_encoder_is_pluggable(struct drm_encoder *encoder)
+>>>>> +{
+>>>>> +    struct drm_bridge *bridge;
+>>>>> +    int ops = 0;
+>>>>> +
+>>>>> +    if (!encoder)
+>>>>> +        return false;
+>>>>> +
+>>>>> +    /* Get last bridge in the chain to determine pluggable state */
+>>>>> +    drm_for_each_bridge_in_chain(encoder, bridge)
+>>>>> +        if (!drm_bridge_get_next_bridge(bridge))
+>>>>> +            ops = bridge->ops;
+>>>>> +
+>>>>> +    return ops & DRM_BRIDGE_OP_HPD;
+>>>>
+>>>> No. This is not what you should be checking (hint: polled connectors 
+>>>> also can be pluggable).
+>>>>
+>>>> Please check the type of the actual connector connected to this 
+>>>> encoder.
+>>>>
+>>>
+>>> Even if we check the connector type as DSI or eDP that does not 
+>>> necessarily mean its built-in.
+>>>
+>>> We can even use DSI or eDP as a pluggable display.
+>>
+>> Well, I don't think so. eDP and DSI connectors are not pluggable per 
+>> design. One can use them so, but they are not thought to be used this 
+>> way. Unlike e.g. HDMI, DP, VGA, etc.
+>>
+> 
+> We have had many products where we used HDMI as the primary display 
+> where the HPD line was disconnected in the design, so now if we 
+> generalize all HDMI connectors to be pluggable we can never enable color 
+> management on those even though DSI is not even used in that product.
 
-While moving correctly constrain the number of interrupts per specific
-device.
+Did they use HDMI connector internally? Or was it just a panel wired 
+somehow to the HDMI pins?
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../bindings/remoteproc/qcom,adsp.yaml        |  26 ---
- .../remoteproc/qcom,sc8280xp-pas.yaml         | 154 ++++++++++++++++++
- 2 files changed, 154 insertions(+), 26 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc8280xp-pas.yaml
+If the former is true, then they still are pluggable. Even if you don't 
+have a way to detect that via the HPD pin.
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-index 1460fbd5adab..fc3d2363ac23 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-@@ -30,9 +30,6 @@ properties:
-       - qcom,sc8180x-adsp-pas
-       - qcom,sc8180x-cdsp-pas
-       - qcom,sc8180x-mpss-pas
--      - qcom,sc8280xp-adsp-pas
--      - qcom,sc8280xp-nsp0-pas
--      - qcom,sc8280xp-nsp1-pas
-       - qcom,sdm660-adsp-pas
-       - qcom,sdm845-adsp-pas
-       - qcom,sdm845-cdsp-pas
-@@ -70,9 +67,6 @@ allOf:
-               - qcom,sc8180x-adsp-pas
-               - qcom,sc8180x-cdsp-pas
-               - qcom,sc8180x-mpss-pas
--              - qcom,sc8280xp-adsp-pas
--              - qcom,sc8280xp-nsp0-pas
--              - qcom,sc8280xp-nsp1-pas
-               - qcom,sdm845-adsp-pas
-               - qcom,sdm845-cdsp-pas
-     then:
-@@ -171,9 +165,6 @@ allOf:
-               - qcom,qcs404-wcss-pas
-               - qcom,sc8180x-adsp-pas
-               - qcom,sc8180x-cdsp-pas
--              - qcom,sc8280xp-adsp-pas
--              - qcom,sc8280xp-nsp0-pas
--              - qcom,sc8280xp-nsp1-pas
-               - qcom,sdm845-adsp-pas
-               - qcom,sdm845-cdsp-pas
-     then:
-@@ -288,7 +279,6 @@ allOf:
-             enum:
-               - qcom,sc8180x-adsp-pas
-               - qcom,sc8180x-cdsp-pas
--              - qcom,sc8280xp-adsp-pas
-     then:
-       properties:
-         power-domains:
-@@ -300,22 +290,6 @@ allOf:
-             - const: lcx
-             - const: lmx
- 
--  - if:
--      properties:
--        compatible:
--          contains:
--            enum:
--              - qcom,sc8280xp-nsp0-pas
--              - qcom,sc8280xp-nsp1-pas
--    then:
--      properties:
--        power-domains:
--          items:
--            - description: NSP power domain
--        power-domain-names:
--          items:
--            - const: nsp
--
-   - if:
-       properties:
-         compatible:
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc8280xp-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc8280xp-pas.yaml
-new file mode 100644
-index 000000000000..7efdd684f0eb
---- /dev/null
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc8280xp-pas.yaml
-@@ -0,0 +1,154 @@
-+# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/remoteproc/qcom,sc8280xp-pas.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SC8280XP Peripheral Authentication Service
-+
-+maintainers:
-+  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-+
-+description:
-+  Qualcomm SC8280XP SoC Peripheral Authentication Service loads and boots
-+  firmware on the Qualcomm DSP Hexagon cores.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,sc8280xp-adsp-pas
-+      - qcom,sc8280xp-nsp0-pas
-+      - qcom,sc8280xp-nsp1-pas
-+
-+  reg:
-+    maxItems: 1
-+
-+  smd-edge: false
-+
-+required:
-+  - compatible
-+  - reg
-+
-+allOf:
-+  - $ref: /schemas/remoteproc/qcom,pas-common.yaml#
-+  - if:
-+      properties:
-+        compatible:
-+          enum:
-+            - qcom,sc8280xp-adsp-pas
-+            - qcom,sc8280xp-nsp0-pas
-+            - qcom,sc8280xp-nsp1-pas
-+    then:
-+      properties:
-+        clocks:
-+          items:
-+            - description: XO clock
-+        clock-names:
-+          items:
-+            - const: xo
-+
-+  - if:
-+      properties:
-+        compatible:
-+          enum:
-+            - qcom,sc8280xp-nsp0-pas
-+            - qcom,sc8280xp-nsp1-pas
-+    then:
-+      properties:
-+        interrupts:
-+          minItems: 5
-+        interrupt-names:
-+          maxItems: 5
-+
-+  - if:
-+      properties:
-+        compatible:
-+          enum:
-+            - qcom,sc8280xp-adsp-pas
-+    then:
-+      properties:
-+        interrupts:
-+          minItems: 6
-+        interrupt-names:
-+          minItems: 6
-+
-+  - if:
-+      properties:
-+        compatible:
-+          enum:
-+            - qcom,sc8280xp-adsp-pas
-+    then:
-+      properties:
-+        power-domains:
-+          items:
-+            - description: LCX power domain
-+            - description: LMX power domain
-+        power-domain-names:
-+          items:
-+            - const: lcx
-+            - const: lmx
-+
-+  - if:
-+      properties:
-+        compatible:
-+          enum:
-+            - qcom,sc8280xp-nsp0-pas
-+            - qcom,sc8280xp-nsp1-pas
-+    then:
-+      properties:
-+        power-domains:
-+          items:
-+            - description: NSP power domain
-+        power-domain-names:
-+          items:
-+            - const: nsp
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,rpmh.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/mailbox/qcom-ipcc.h>
-+    #include <dt-bindings/power/qcom-rpmpd.h>
-+
-+    remoteproc@3000000 {
-+        compatible = "qcom,sc8280xp-adsp-pas";
-+        reg = <0x03000000 0x100>;
-+
-+        clocks = <&rpmhcc RPMH_CXO_CLK>;
-+        clock-names = "xo";
-+
-+        interrupts-extended = <&intc GIC_SPI 162 IRQ_TYPE_LEVEL_HIGH>,
-+                              <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
-+                              <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
-+                              <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
-+                              <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>,
-+                              <&smp2p_adsp_in 7 IRQ_TYPE_EDGE_RISING>;
-+        interrupt-names = "wdog", "fatal", "ready",
-+                          "handover", "stop-ack", "shutdown-ack";
-+
-+        memory-region = <&pil_adsp_mem>;
-+
-+        power-domains = <&rpmhpd SC8280XP_LCX>,
-+                        <&rpmhpd SC8280XP_LMX>;
-+        power-domain-names = "lcx", "lmx";
-+
-+        qcom,qmp = <&aoss_qmp>;
-+        qcom,smem-states = <&smp2p_adsp_out 0>;
-+        qcom,smem-state-names = "stop";
-+
-+        glink-edge {
-+            interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
-+                                         IPCC_MPROC_SIGNAL_GLINK_QMP
-+                                         IRQ_TYPE_EDGE_RISING>;
-+            mboxes = <&ipcc IPCC_CLIENT_LPASS
-+                            IPCC_MPROC_SIGNAL_GLINK_QMP>;
-+
-+            label = "lpass";
-+            qcom,remote-pid = <2>;
-+
-+            /* ... */
-+        };
-+    };
+If the later is the case, then it shouldn't be DRM_MODE_CONNECTOR_HDMI.
+Well, even if this is an internal HDMI, I'd still use some other 
+connector (e.g. DRM_MODE_CONNECTOR_Unknown) just to point out that this 
+is not an externally visible HDMI connector one assumes to be able to 
+find on the body of the device.
+
+Last, but not least, how would you remove DRM_BRIDGE_OPS_HPD from the 
+corresponding bridge driver?
+
+
+> Thats why I felt we should rely on the HPD_OPS as that way we know that 
+> it will be set only if HPD will be used.
+> 
+> Wouldnt it be just better to also check polling displays to complete 
+> this check? Is there a way to do it?
+
+
+Yes, check DRM_BRIDGE_OP_DETECT. But as I noted, there is a list of 
+connectors that will not ever have HPD or polling, but still always are 
+external. Well, even for VGA there is no good way to detect whether it 
+is plugged in or not (see the comment in display-connector.c).
+
+
+
+>> I would say LVDS, eDP, DSI, DPI and SPI can be assumed to be 
+>> constantly plugged.
+>>
+>> Compare this with Composite, SVIDEO, 9PinDIN, TV. They can be assumed 
+>> to be external even if they do not have the HPD (or even polling). And 
+>> these connectors usually don't have it.
+>>
+>>>
+>>> Thats why we thought of this check.
+>>>
+
 -- 
-2.34.1
+With best wishes
+Dmitry
 
