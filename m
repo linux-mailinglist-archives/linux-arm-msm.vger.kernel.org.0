@@ -2,89 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50ED062C38B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 17:09:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B729662C3DC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 17:18:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233875AbiKPQJh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 11:09:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48266 "EHLO
+        id S234356AbiKPQSY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 11:18:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234049AbiKPQJ3 (ORCPT
+        with ESMTP id S234030AbiKPQSL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 11:09:29 -0500
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2137048751;
-        Wed, 16 Nov 2022 08:09:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-        Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-        Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-        bh=VmgAragsKad3DYDyPDvmvr2wQDM0kWOdioTveI4D4l0=; b=IzmhQ/hf+Y2l47FEm5QYxzZ+KY
-        hhl4Bq66giceiIZQUcJiz7IUC6+T1QgfP1Jks1Cng+Sf+jYxbLU+jFrg0vxrzLsLNW46loRXx0Dgn
-        slbyu9YZGav8WaHGFiZ56JbD1jyAjQgmV8NobnvKGcN+U/q4nweqwwFN49SHOWl61pciS9c9EkxjD
-        N0bnwD1Ammq7ZSlSWIsWzU1aYMghlMHA0ELu7aSadGhJFDNZHR6rPYAv4y4pNyqSIwzpL2wsukH5l
-        1zAC10TII8GMRRn5re5EW5gjLuLaswQXXA+WipDsK0+vtyrA3VVRmXGJhhMBJ4UiZ7Ww0961AtqVA
-        9MCtLhNw==;
-Received: from [2601:1c2:d80:3110::a2e7]
-        by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-        id 1ovKyW-005iVS-Em; Wed, 16 Nov 2022 16:09:20 +0000
-Message-ID: <a314cfc6-3d3a-7f45-55cd-187d9e575ab4@infradead.org>
-Date:   Wed, 16 Nov 2022 08:09:15 -0800
+        Wed, 16 Nov 2022 11:18:11 -0500
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93F8557B70
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:18:09 -0800 (PST)
+Received: by mail-pg1-x530.google.com with SMTP id b62so17146749pgc.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 08:18:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=U+6kofWK+lAk9nYMdFCTFYyZyxlN1y4m9eqx3Qu6bH8=;
+        b=J6QmENGbkz8JaelIwNWSJ8l299ttLiHNHQJbCutNLWXPp7HMamJ0nxlXFphKb5OFaC
+         cNygK5/QTbSUGOeFzpo0kXYYztKZpAwspryVy6TEKqFcPFI9jDBBSb8CZ5ucaBTQzqom
+         w1ckAJmV0OkD0oeTRLj3s8GjRwb7D7gq95HJwGYtjybJzDRUnVPNwr+JSFEBlchYhAvK
+         LGJK8+IKVMPEkojNgT7uG9WNA2Iq//VYKMFaCjp/+FFRlT4oge1JJCGlm6t/+2Vq4mvA
+         TmEBOpYcrquiRPrwE0C57a3LkkFXOKaDSsxk25BkjvxyXaUlmJXwp8x6Ul39kX8wkHQG
+         RMpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=U+6kofWK+lAk9nYMdFCTFYyZyxlN1y4m9eqx3Qu6bH8=;
+        b=1gGN8TKdR51pes9iVo3/Kp+ylc5EXqAnxW23JvsBc3fipzAW942ogqlzhG3uOcOB7h
+         qtmA8xXcGqiZ9SXRPcqSnQ3QQn2qpD+hJLf1dC3/Kfvx6jYJDdu7JReqTeVArzEDi9C2
+         38byWRAkUuuhmDbqHCOtWWjeS5yXmyNy5h1SHjPXv+O85hKWhyiQtrbjzXwidl1qh1cF
+         IdhpoFfWLuxrr3xOqUbo/CpVkWIE58wSZAkVEJ1cOroRMEOG/49YXfgLP2Ryen5+eDmr
+         OW2qFHv44kFLgSYqIPVZbUO3UNXaywQfJLsT3KVGZXCj2IcOfF1Ko+mW4UFVlZhCPW8E
+         LR2A==
+X-Gm-Message-State: ANoB5pkgKTCrGN0hDcnp8LI5jPhlfk60RsQvFE1tB5f7KC1NAVdtNYUX
+        WavypKt0LVXx8JePeiXVivkECOflf3NBw2A7aQR+sw==
+X-Google-Smtp-Source: AA0mqf7Yk01flNfOp6SxymOc+XEuglm7jqex2dsSPKvWtWPa80gI4EKbAlDuk8r2R4WzOyG+XpbjS2afb54fviVWB8w=
+X-Received: by 2002:a63:db03:0:b0:470:4f30:f743 with SMTP id
+ e3-20020a63db03000000b004704f30f743mr21500123pgg.434.1668615489044; Wed, 16
+ Nov 2022 08:18:09 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v2 3/4] driver core: Add fw_devlink.timeout param to stop
- waiting for devlinks
-Content-Language: en-US
-To:     Javier Martinez Canillas <javierm@redhat.com>,
+References: <20221114105043.36698-1-konrad.dybcio@linaro.org> <20221114105043.36698-2-konrad.dybcio@linaro.org>
+In-Reply-To: <20221114105043.36698-2-konrad.dybcio@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Wed, 16 Nov 2022 17:17:30 +0100
+Message-ID: <CAPDyKFq391+dvG-R=5S7RkW03hWvP2c+WEAvYLPhaoVUasm1VQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] dt-bindings: mmc: sdhci-msm: Document the SM6375 compatible
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        patch@linaro.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, John Stultz <jstultz@google.com>,
-        Peter Robinson <pbrobinson@redhat.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Enric Balletbo i Serra <eballetbo@redhat.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Brian Masney <bmasney@redhat.com>,
-        Rob Herring <robh@kernel.org>
-References: <20221116115348.517599-1-javierm@redhat.com>
- <20221116120159.519908-1-javierm@redhat.com>
-From:   Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <20221116120159.519908-1-javierm@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi--
+On Mon, 14 Nov 2022 at 11:50, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> Document the compatible for SDHCI on SM6375.
+>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-On 11/16/22 04:01, Javier Martinez Canillas wrote:
-> diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-> index a465d5242774..38138a44d5ed 100644
-> --- a/Documentation/admin-guide/kernel-parameters.txt
-> +++ b/Documentation/admin-guide/kernel-parameters.txt
-> @@ -1581,6 +1581,13 @@
->  			dependencies. This only applies for fw_devlink=on|rpm.
->  			Format: <bool>
->  
-> +	fw_devlink.timeout=
-> +			[KNL] Debugging option to set a timeout in seconds for
-> +			drivers to give up waiting on dependencies and to probe
-> +			these are optional. A timeout of 0 will timeout at the
-> +			end of initcalls. If the time out hasn't expired, it'll
+Applied for next, thanks!
 
-			                         timeout
+Kind regards
+Uffe
 
-> +			be restarted by each successful driver registration.
 
--- 
-~Randy
+> ---
+> No changes in v3.
+>
+> Changes in v2:
+> - pick up rb
+>
+>  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> index fc8a6b345d97..12def0f57e3e 100644
+> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> @@ -46,6 +46,7 @@ properties:
+>                - qcom,sm6115-sdhci
+>                - qcom,sm6125-sdhci
+>                - qcom,sm6350-sdhci
+> +              - qcom,sm6375-sdhci
+>                - qcom,sm8150-sdhci
+>                - qcom,sm8250-sdhci
+>                - qcom,sm8450-sdhci
+> --
+> 2.38.1
+>
