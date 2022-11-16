@@ -2,81 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52DDC62C330
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:56:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C494F62C339
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Nov 2022 16:58:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234126AbiKPP4h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Nov 2022 10:56:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36846 "EHLO
+        id S233265AbiKPP6i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Nov 2022 10:58:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234240AbiKPP4C (ORCPT
+        with ESMTP id S233430AbiKPP6f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Nov 2022 10:56:02 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9F3556EEA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:55:29 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id j16so30140613lfe.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Nov 2022 07:55:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JxJZcTMnZ0d8Rsb8gNwZY8DF8ihKF/f84NGyK8FI2+k=;
-        b=OdkrzXZlviJotbnbYNfqAkvuWplWuARldk3To5s7pFnXd/3r98N9A4cNVBCikMwbWf
-         B7v1LwzTvzJlJZMQVXWmsxnR2BvMYuvc1t7w++68g90WR52ySHXwiLiFutmbCiU9wzP8
-         3AhWOySw97TIcS3tY9q65L1Jbw0eBiCe9WhM1ni1LIgOqQEoVHuyBt0ViF56w4IS6Pxt
-         h7No72Gmqm+3fMn9T+fu/YHKk7ey9ZuHSMLP/CVjWZr+4o7Jczg8NPe9JVW3ooTVFfag
-         zBmdZ7uxz34baQmj9gWHOklkyvKd0kzXNqXTYqZKR/43M8rqBS2GC/4fDfPITR0WTmLz
-         XaDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JxJZcTMnZ0d8Rsb8gNwZY8DF8ihKF/f84NGyK8FI2+k=;
-        b=A13LG0UHBYFhaW+yxZgWlqgbKzySvGrTKx7u/yYOaoEAEF5fIQ4KalnTI7Y2LemKIl
-         AYk5i7YzoYY0FbMerhIF8jCcJcWsdb9Q4Ev3YY2+NL/CJIwtKxyJAS6/GyZ+nEP8HJUX
-         3J2Pg5/t9l+oto3BOjLEai/zHnVlWsJqxZgTuhGipFnnzyf+D6LeBUtRk/Mm5uNCJzji
-         aSbWNMETJAA8NEQJfdq6cuLCpgQ24nHCaSZ8gd+qN/R7VOQ77uNYWv0XDIOAidn4EpFa
-         TsqESrvCWxqXR8uTDt7gBefxyZSmVQJl07VCzhm6dxpRdeg4QROGkvIcd32TNxYsBWkc
-         dZjA==
-X-Gm-Message-State: ANoB5plQEX0zYuil2992EPCmYC0Lj5pIhDC82P5pLqj2DpSzLblgUgZ1
-        KHcmPzfuQAv4WXbnBA9+G2+3LpSMx32SrXBE
-X-Google-Smtp-Source: AA0mqf7GsGMN50F7hT+H8jQgsK382YAdUeXB75eSqqC6j3C8P+jtqJP4ldEXggpFL79RpOksVSV1Sw==
-X-Received: by 2002:a19:6449:0:b0:4ae:5dc5:82c5 with SMTP id b9-20020a196449000000b004ae5dc582c5mr8330451lfj.2.1668614128063;
-        Wed, 16 Nov 2022 07:55:28 -0800 (PST)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id g3-20020a05651222c300b00497feee98basm2626991lfu.274.2022.11.16.07.55.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 07:55:27 -0800 (PST)
-Message-ID: <dc656c7a-eab4-f547-ca52-51f7510c2858@linaro.org>
-Date:   Wed, 16 Nov 2022 17:55:27 +0200
+        Wed, 16 Nov 2022 10:58:35 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F15B5F70;
+        Wed, 16 Nov 2022 07:58:32 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id C916AB81DDE;
+        Wed, 16 Nov 2022 15:58:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61694C433D6;
+        Wed, 16 Nov 2022 15:58:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1668614309;
+        bh=v5GcVpco2YLS3UOar/6+Y/vprzGBgz2LJlb22kjusiU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=gEIiRkgR83HlnvuV8sgJO60s8Lcw5NrYVUlWrWKAqExRLVGb9GO6YkrAjHsOVNtnn
+         ip7pXssD5DmZTujPsLCCh8Y/liMiVqFjNBiGP5v2USFY67ZdB6at/U4kzWzLjTaogk
+         WRmzoMG2uhXakyEoAUXItG8pl4PR5wI+QWDwAQ/tHQL2OxDmoBT2u0CJiyaLIFSx7f
+         kDUmkOkcO0pDaigoR8LUk7INif9NyDgP5EIMcircjgbudgIDFbqkfadBoZqFAsatKb
+         T94H6n4x5dDjJGcJCc1xQt6JahHvjfBcVtUqPtQ3I8+a5TA4uRL1t+wsc/GXHjC/B2
+         5ijFyapQhub9A==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1ovKnX-0004A8-5t; Wed, 16 Nov 2022 16:57:59 +0100
+Date:   Wed, 16 Nov 2022 16:57:59 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Parikshit Pareek <quic_ppareek@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>,
+        Shazad Hussain <quic_shazhuss@quicinc.com>,
+        Brian Masney <bmasney@redhat.com>
+Subject: Re: [PATCH v9 0/2] arm64: dts: qcom: add dts for sa8540p-ride board
+Message-ID: <Y3UIh8e+KrWxfT/B@hovoldconsulting.com>
+References: <20221116154932.17127-1-quic_ppareek@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v2 2/3] drm/msm/disp/dpu1: add helper to know if display
- is pluggable
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, robdclark@chromium.org,
-        dianders@chromium.org, swboyd@chromium.org,
-        quic_vpolimer@quicinc.com
-References: <1668609040-2549-1-git-send-email-quic_kalyant@quicinc.com>
- <1668609040-2549-3-git-send-email-quic_kalyant@quicinc.com>
- <e049f5b1-da41-6854-4731-b6697770ffde@linaro.org>
- <6b1907db-3fdb-8fe0-e5e3-21ea17021925@quicinc.com>
- <bf14540a-745c-c378-520a-f8edfd3e3adf@linaro.org>
- <0dd3e096-84ac-da81-ad43-bf07485e7b65@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <0dd3e096-84ac-da81-ad43-bf07485e7b65@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221116154932.17127-1-quic_ppareek@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,130 +63,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/11/2022 18:35, Abhinav Kumar wrote:
+On Wed, Nov 16, 2022 at 09:19:30PM +0530, Parikshit Pareek wrote:
+> Changes in v9:
+>  - Enabled ufs_mem_hc/ufs_mem_phy nodes(John)
+
+My name is Johan (below as well).
+
+>  - Corrected the indentation of 'regulator-allowed-modes' properties.
+
 > 
+> Changes in v8:
+>  - Changed the schema of the regulators(Krzysztof)
+>  - Removed node remoteproc_adsp(Andrew)
+>  - Removed TODO comment for node usb_0_dwc3(Andrew)
+>  - Added Reviewed-by/Tested-by(Eric)
 > 
-> On 11/16/2022 7:18 AM, Dmitry Baryshkov wrote:
->> On 16/11/2022 18:11, Abhinav Kumar wrote:
->>>
->>>
->>> On 11/16/2022 7:08 AM, Dmitry Baryshkov wrote:
->>>> On 16/11/2022 17:30, Kalyan Thota wrote:
->>>>> Since DRM encoder type for few encoders can be similar
->>>>> (like eDP and DP) find out if the interface supports HPD
->>>>> from encoder bridge to differentiate between builtin
->>>>> and pluggable displays.
->>>>>
->>>>> Changes in v1:
->>>>> - add connector type in the disp_info (Dmitry)
->>>>> - add helper functions to know encoder type
->>>>> - update commit text reflecting the change
->>>>>
->>>>> Changes in v2:
->>>>> - avoid hardcode of connector type for DSI as it may not be true 
->>>>> (Dmitry)
->>>>> - get the HPD information from encoder bridge
->>>>>
->>>>> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
->>>>> ---
->>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 16 ++++++++++++++++
->>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  6 ++++++
->>>>>   2 files changed, 22 insertions(+)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
->>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>> index 9c6817b..be93269 100644
->>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>> @@ -15,6 +15,7 @@
->>>>>   #include <drm/drm_crtc.h>
->>>>>   #include <drm/drm_file.h>
->>>>>   #include <drm/drm_probe_helper.h>
->>>>> +#include <drm/drm_bridge.h>
->>>>>   #include "msm_drv.h"
->>>>>   #include "dpu_kms.h"
->>>>> @@ -217,6 +218,21 @@ static u32 dither_matrix[DITHER_MATRIX_SZ] = {
->>>>>       15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
->>>>>   };
->>>>> +bool dpu_encoder_is_pluggable(struct drm_encoder *encoder)
->>>>> +{
->>>>> +    struct drm_bridge *bridge;
->>>>> +    int ops = 0;
->>>>> +
->>>>> +    if (!encoder)
->>>>> +        return false;
->>>>> +
->>>>> +    /* Get last bridge in the chain to determine pluggable state */
->>>>> +    drm_for_each_bridge_in_chain(encoder, bridge)
->>>>> +        if (!drm_bridge_get_next_bridge(bridge))
->>>>> +            ops = bridge->ops;
->>>>> +
->>>>> +    return ops & DRM_BRIDGE_OP_HPD;
->>>>
->>>> No. This is not what you should be checking (hint: polled connectors 
->>>> also can be pluggable).
->>>>
->>>> Please check the type of the actual connector connected to this 
->>>> encoder.
->>>>
->>>
->>> Even if we check the connector type as DSI or eDP that does not 
->>> necessarily mean its built-in.
->>>
->>> We can even use DSI or eDP as a pluggable display.
->>
->> Well, I don't think so. eDP and DSI connectors are not pluggable per 
->> design. One can use them so, but they are not thought to be used this 
->> way. Unlike e.g. HDMI, DP, VGA, etc.
->>
+> Changes in v7:
+>  - Put the smpi bus related pmic changes in sseparate dtsi files(Konrad)
+>  - Mention allowed regulator modes via DT property regulator-allowed-modes
+>    (Konrad and Brian)
+>  - Remove unused ldo nodes vreg_l3c and vreg_l10c(Shazad)
 > 
-> We have had many products where we used HDMI as the primary display 
-> where the HPD line was disconnected in the design, so now if we 
-> generalize all HDMI connectors to be pluggable we can never enable color 
-> management on those even though DSI is not even used in that product.
-
-Did they use HDMI connector internally? Or was it just a panel wired 
-somehow to the HDMI pins?
-
-If the former is true, then they still are pluggable. Even if you don't 
-have a way to detect that via the HPD pin.
-
-If the later is the case, then it shouldn't be DRM_MODE_CONNECTOR_HDMI.
-Well, even if this is an internal HDMI, I'd still use some other 
-connector (e.g. DRM_MODE_CONNECTOR_Unknown) just to point out that this 
-is not an externally visible HDMI connector one assumes to be able to 
-find on the body of the device.
-
-Last, but not least, how would you remove DRM_BRIDGE_OPS_HPD from the 
-corresponding bridge driver?
-
-
-> Thats why I felt we should rely on the HPD_OPS as that way we know that 
-> it will be set only if HPD will be used.
+> Changes in v6:
+>  - Introduced the new dts for the board, rather than moving common nodes
+>    between this one and SA8295 ADP board into dtsi file(Bjorn)
+>  - Drop 'adp' term to imply it being unrelated with ADP board(Internal
+>    discussion with Bjorn)
+>  - Removed Acked-by(Krzysztof) tag in dt-binding document, due to content
+>    change.
+>  - Not including Reviewed-by(Krzysztof), because of the content change.
 > 
-> Wouldnt it be just better to also check polling displays to complete 
-> this check? Is there a way to do it?
+> Changes in v5:
+>  - Moved the usb and ufs nodes from sa8540p-adp.dtsi file to respective
+>    board specific dts files: sa8295p-adp.dts and sa8540p-adp-ride.dts.
+>    Took inputs from Shazad Hussain in this regard(John)
+>  - Added more description of the board differences(John)
+>  - Not including Reviewed-by for Krzysztof, because of the new changes to
+>    be reviewed.
+>  - Removed Reported-by tag(John).
+> 
+> Changes in v4:
+> - Removed the ufs_card_hc node, as it is not mounted on Qdrive-3 board.
+> - Removed usb_1 relared nodes, as usb1 doesn't have any port connected
+>    on Qdrive3 board.
+> - Added Reported-by tag for Shazad(for ufs and usb_1 node removals)
+> 
+> Changes in v3:
+>  - Added Acked-by tag (Krzysztof)
+>  - Renamed dtsi to sa8540p-adp.dtsi (John)
+>  - Removed copyright from sa8295-adp.dts and sa8295-adp.dtsi(John)
+>  - Added cover letter
 
-
-Yes, check DRM_BRIDGE_OP_DETECT. But as I noted, there is a list of 
-connectors that will not ever have HPD or polling, but still always are 
-external. Well, even for VGA there is no good way to detect whether it 
-is plugged in or not (see the comment in display-connector.c).
-
-
-
->> I would say LVDS, eDP, DSI, DPI and SPI can be assumed to be 
->> constantly plugged.
->>
->> Compare this with Composite, SVIDEO, 9PinDIN, TV. They can be assumed 
->> to be external even if they do not have the HPD (or even polling). And 
->> these connectors usually don't have it.
->>
->>>
->>> Thats why we thought of this check.
->>>
-
--- 
-With best wishes
-Dmitry
-
+Johan
